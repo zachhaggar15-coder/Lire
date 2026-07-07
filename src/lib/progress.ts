@@ -1,0 +1,91 @@
+import type { TextProgress } from "@/types";
+import { getTextById } from "@/data/texts";
+
+/**
+ * localStorage-backed reading progress: per-text status (unread /
+ * in-progress / completed) plus which text was opened most recently, so
+ * Review can filter to "words from current text".
+ */
+
+const PROGRESS_KEY = "lire.progress.v1";
+const LAST_OPENED_KEY = "lire.progress.lastOpened";
+
+function hasStorage(): boolean {
+  return typeof window !== "undefined" && !!window.localStorage;
+}
+
+const DEFAULT_PROGRESS: TextProgress = {
+  status: "unread",
+  openedAt: null,
+  completedAt: null,
+};
+
+function readAll(): Record<string, TextProgress> {
+  if (!hasStorage()) return {};
+  try {
+    const raw = window.localStorage.getItem(PROGRESS_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function persist(all: Record<string, TextProgress>): void {
+  if (!hasStorage()) return;
+  window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(all));
+}
+
+export function getAllProgress(): Record<string, TextProgress> {
+  return readAll();
+}
+
+export function getProgress(textId: string): TextProgress {
+  return readAll()[textId] ?? DEFAULT_PROGRESS;
+}
+
+/**
+ * Mark a text as opened: moves "unread" to "in-progress" and records
+ * openedAt (first open only). Already "completed" or "in-progress" texts
+ * are left as-is. Also records this text as the most recently opened one.
+ */
+export function markOpened(textId: string): void {
+  if (!hasStorage()) return;
+  const all = readAll();
+  const current = all[textId] ?? DEFAULT_PROGRESS;
+
+  all[textId] =
+    current.status === "unread"
+      ? { ...current, status: "in-progress", openedAt: new Date().toISOString() }
+      : current;
+
+  persist(all);
+  window.localStorage.setItem(LAST_OPENED_KEY, textId);
+}
+
+/** Mark a text as completed. */
+export function markCompleted(textId: string): void {
+  if (!hasStorage()) return;
+  const all = readAll();
+  const current = all[textId] ?? DEFAULT_PROGRESS;
+  all[textId] = {
+    ...current,
+    status: "completed",
+    completedAt: new Date().toISOString(),
+  };
+  persist(all);
+}
+
+/** The id of the most recently opened text, or null if none yet. */
+export function getLastOpenedTextId(): string | null {
+  if (!hasStorage()) return null;
+  return window.localStorage.getItem(LAST_OPENED_KEY);
+}
+
+/** The title of the most recently opened text, or null if none yet. */
+export function getCurrentTextTitle(): string | null {
+  const id = getLastOpenedTextId();
+  if (!id) return null;
+  return getTextById(id)?.title ?? null;
+}

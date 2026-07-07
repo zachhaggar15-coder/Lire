@@ -1,0 +1,19 @@
+{
+  "name": "Lire — French Reader",
+  "short_name": "Lire",
+  "description": "Read short French texts, tap words you don't know, review them later.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
