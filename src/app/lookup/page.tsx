@@ -21,8 +21,8 @@ export default function LookupPage() {
       </Link>
 
       <header className="mb-5 mt-2">
-        <h1 className="text-2xl font-extrabold text-slate-900">English → French</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="text-2xl font-extrabold text-ink">English → French</h1>
+        <p className="text-sm text-ink-muted">
           Look up an English word to find its French translation — offline,
           same as reader lookups.
         </p>
@@ -36,7 +36,7 @@ export default function LookupPage() {
             if (e.key === "Enter") runSearch();
           }}
           placeholder="e.g. house, big, to think"
-          className="min-w-0 flex-1 rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 shadow-sm"
+          className="min-w-0 flex-1 rounded-2xl bg-cream-card px-4 py-3 text-base text-ink shadow-sm"
         />
         <button
           onClick={runSearch}
@@ -48,35 +48,35 @@ export default function LookupPage() {
 
       {result &&
         (result.source === "local" ? (
-          <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900">{result.input}</h2>
+          <div className="mt-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+            <h2 className="text-xl font-bold text-ink">{result.input}</h2>
             {(result.partOfSpeech || result.cefr) && (
-              <span className="mt-1 inline-block rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">
+              <span className="mt-1 inline-block rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
                 {result.partOfSpeech}
                 {result.partOfSpeech && result.cefr && " · "}
                 {result.cefr}
               </span>
             )}
 
-            <p className="mt-3 text-lg text-slate-700">{result.translations[0]}</p>
+            <p className="mt-3 text-lg text-ink">{result.translations[0]}</p>
             {result.translations.length > 1 && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-ink-muted">
                 Also: {result.translations.slice(1).join(", ")}
               </p>
             )}
 
             {result.examples.length > 0 && (
-              <div className="mt-3 rounded-2xl bg-slate-50 p-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <div className="mt-3 rounded-2xl bg-cream p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                   Example
                 </p>
-                <p className="mt-1 text-sm italic text-slate-600">{result.examples[0].fr}</p>
-                <p className="mt-0.5 text-sm text-slate-500">{result.examples[0].en}</p>
+                <p className="mt-1 text-sm italic text-ink">{result.examples[0].fr}</p>
+                <p className="mt-0.5 text-sm text-ink-muted">{result.examples[0].en}</p>
               </div>
             )}
           </div>
         ) : (
-          <p className="mt-8 text-center text-sm italic text-slate-400">
+          <p className="mt-8 text-center text-sm italic text-ink-muted">
             No local dictionary entry yet for “{result.input}”.
           </p>
         ))}

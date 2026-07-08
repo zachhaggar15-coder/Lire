@@ -16,6 +16,9 @@ const FILTERS: { value: WordsFilter; label: string }[] = [
   { value: "missing", label: "Missing entries" },
 ];
 
+/** Cycled by row index purely for visual rhythm — matches the multi-colored word list in the design template. */
+const WORD_ACCENTS = ["border-sky-400", "border-orange-400", "border-violet-400", "border-emerald-400", "border-rose-400"];
+
 function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
   if (filter === "missing") return !!word.missingFromDictionary;
   return word.status === filter;
@@ -60,15 +63,15 @@ export default function WordsPage() {
     <div className="px-4 pt-6">
       <header className="mb-4 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900">Saved words</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-extrabold text-ink">Saved words</h1>
+          <p className="text-sm text-ink-muted">
             {words.length} {words.length === 1 ? "word" : "words"}
           </p>
         </div>
         {words.length > 0 && (
           <button
             onClick={handleClear}
-            className="rounded-full bg-rose-50 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
+            className="rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
           >
             Clear all
           </button>
@@ -77,7 +80,7 @@ export default function WordsPage() {
 
       {ready && words.length === 0 && (
         <div className="mt-16 text-center">
-          <p className="text-slate-500">No saved words yet.</p>
+          <p className="text-ink-muted">No saved words yet.</p>
           <Link
             href="/"
             className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
@@ -95,7 +98,7 @@ export default function WordsPage() {
                 key={f.value}
                 onClick={() => setFilter(f.value)}
                 className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
-                  filter === f.value ? "bg-brand text-white" : "bg-slate-100 text-slate-600"
+                  filter === f.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 {f.label} ({counts[f.value]})
@@ -104,29 +107,33 @@ export default function WordsPage() {
           </div>
 
           {filtered.length === 0 && (
-            <p className="mt-10 text-center text-sm text-slate-400">
+            <p className="mt-10 text-center text-sm text-ink-muted">
               No words in this list yet.
             </p>
           )}
 
           <ul className="space-y-3">
-            {filtered.map((w) => (
+            {filtered.map((w, i) => (
               <li
                 key={w.word}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                className={`rounded-3xl border-l-4 bg-cream-card p-4 shadow-sm ${WORD_ACCENTS[i % WORD_ACCENTS.length]}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-2">
-                      <p className="text-lg font-bold text-slate-900">{w.word}</p>
+                      <p className="text-lg font-bold text-ink">{w.word}</p>
                       {w.lemma && w.lemma !== w.word && (
-                        <span className="text-xs text-slate-400">({w.lemma})</span>
+                        <span className="text-xs text-ink-muted">({w.lemma})</span>
                       )}
                       {w.partOfSpeech && (
-                        <span className="text-[11px] font-medium text-slate-400">
+                        <span className="text-[11px] font-medium text-ink-muted">
                           {w.partOfSpeech}
                           {w.gender && ` · ${w.gender}`}
-                          {w.cefr && ` · ${w.cefr}`}
+                        </span>
+                      )}
+                      {w.cefr && (
+                        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
+                          {w.cefr}
                         </span>
                       )}
                     </div>
@@ -134,34 +141,34 @@ export default function WordsPage() {
                     <p
                       className={`text-sm ${
                         w.primaryTranslation === NOT_TRANSLATED_YET
-                          ? "italic text-slate-400"
-                          : "text-slate-500"
+                          ? "italic text-ink-muted"
+                          : "text-ink-muted"
                       }`}
                     >
                       {w.primaryTranslation}
                     </p>
                     {w.translations.length > 1 && (
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-ink-muted">
                         Also: {w.translations.slice(1).join(", ")}
                       </p>
                     )}
 
                     {w.exampleSentenceFr && (
-                      <p className="mt-1 text-xs italic text-slate-500">
+                      <p className="mt-1 text-xs italic text-ink-muted">
                         {w.exampleSentenceFr}
-                        <span className="not-italic text-slate-400"> — {w.exampleSentenceEn}</span>
+                        <span className="not-italic text-ink-muted"> — {w.exampleSentenceEn}</span>
                       </p>
                     )}
                     {w.articleContextSentence && (
-                      <p className="mt-1 line-clamp-2 text-[11px] text-slate-400">
+                      <p className="mt-1 line-clamp-2 text-[11px] text-ink-muted">
                         <span className="font-semibold uppercase tracking-wide">Original article context: </span>
                         “{w.articleContextSentence}”
                       </p>
                     )}
 
-                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-slate-400">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-ink-muted">
                       {w.sourceTextTitle && (
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-500">
+                        <span className="rounded-full bg-cream-dark px-2 py-0.5 font-medium text-ink-muted">
                           {w.sourceTextTitle}
                         </span>
                       )}
@@ -174,7 +181,7 @@ export default function WordsPage() {
                     <button
                       onClick={() => handleDelete(w.word)}
                       aria-label={`Delete ${w.word}`}
-                      className="rounded-full bg-slate-100 p-3 text-slate-500 active:scale-95"
+                      className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
                     >
                       <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
@@ -183,7 +190,7 @@ export default function WordsPage() {
                     {w.status !== "known" && (
                       <button
                         onClick={() => handleMarkKnown(w.word)}
-                        className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 active:scale-95"
+                        className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 active:scale-95"
                       >
                         Mark known
                       </button>

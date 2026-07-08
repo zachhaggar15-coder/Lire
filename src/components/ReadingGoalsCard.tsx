@@ -39,7 +39,7 @@ export default function ReadingGoalsCard() {
     return (
       <button
         onClick={() => setEditing(true)}
-        className="mb-5 w-full rounded-2xl border border-dashed border-slate-300 bg-white p-4 text-left text-sm text-slate-500 shadow-sm"
+        className="mb-5 w-full rounded-3xl border border-dashed border-cream-dark bg-cream-card p-4 text-left text-sm text-ink-muted shadow-sm"
       >
         Set a reading goal →
       </button>
@@ -47,9 +47,9 @@ export default function ReadingGoalsCard() {
   }
 
   return (
-    <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">Goals</h2>
+        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Goals</h2>
         <button
           onClick={() => setEditing((v) => !v)}
           className="text-xs font-semibold text-brand underline underline-offset-2"
@@ -65,13 +65,13 @@ export default function ReadingGoalsCard() {
             const pct = target > 0 ? Math.min(100, Math.round((row.progress / target) * 100)) : 0;
             return (
               <div key={row.key}>
-                <div className="flex items-center justify-between text-xs text-slate-500">
-                  <span className="font-semibold text-slate-700">{row.label}</span>
+                <div className="flex items-center justify-between text-xs text-ink-muted">
+                  <span className="font-semibold text-ink">{row.label}</span>
                   <span>
                     {row.progress} / {target} {row.unit}
                   </span>
                 </div>
-                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-cream-dark">
                   <div
                     className={`h-full rounded-full ${pct >= 100 ? "bg-emerald-500" : "bg-brand"}`}
                     style={{ width: `${pct}%` }}
@@ -93,7 +93,7 @@ export default function ReadingGoalsCard() {
               { key: "flashcardsPerDay", label: "Flashcard reviews per day" },
             ] as const
           ).map((field) => (
-            <label key={field.key} className="flex items-center justify-between gap-3 text-sm text-slate-600">
+            <label key={field.key} className="flex items-center justify-between gap-3 text-sm text-ink-muted">
               {field.label}
               <input
                 type="number"
@@ -104,7 +104,7 @@ export default function ReadingGoalsCard() {
                   updateGoal(field.key, raw === "" ? null : Math.max(0, Number(raw)));
                 }}
                 placeholder="off"
-                className="w-20 rounded-lg border border-slate-200 px-2 py-1 text-right text-sm"
+                className="w-20 rounded-lg bg-cream px-2 py-1 text-right text-sm text-ink"
               />
             </label>
           ))}

@@ -13,8 +13,8 @@ export default function ArticleSection({ title, subtitle, articles }: ArticleSec
 
   return (
     <section className="mb-6">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">{title}</h2>
-      {subtitle && <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>}
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      {subtitle && <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>}
       <div className="mt-3 space-y-4">
         {articles.map((article) => (
           <ReadingCard

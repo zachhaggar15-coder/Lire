@@ -55,13 +55,13 @@ export default function ReaderPageClient({ id, initialText }: ReaderPageClientPr
   }, [id, initialText]);
 
   if (!checked) {
-    return <div className="px-4 pt-10 text-center text-sm text-slate-400">Loading…</div>;
+    return <div className="px-4 pt-10 text-center text-sm text-ink-muted">Loading…</div>;
   }
 
   if (!text) {
     return (
       <div className="px-4 pt-10 text-center">
-        <p className="text-slate-500">
+        <p className="text-ink-muted">
           This article isn&apos;t available anymore.
         </p>
         <Link

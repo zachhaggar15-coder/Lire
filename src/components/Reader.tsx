@@ -179,17 +179,17 @@ export default function Reader({ text }: { text: ReadingText }) {
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
 
     if (known && settings.showKnownWordStyling) {
-      return `${base} text-slate-400`;
+      return `${base} text-ink-muted`;
     }
 
     if (settings.showSavedHighlights) {
       const wordStatus = wordStatusMap.get(clean);
       const missingUnderline =
         entry.source === "missing"
-          ? " underline decoration-dashed decoration-slate-400 underline-offset-2"
+          ? " underline decoration-dashed decoration-ink-muted underline-offset-2"
           : "";
-      if (wordStatus === "learning") return `${base} bg-amber-200/80 text-slate-900${missingUnderline}`;
-      if (wordStatus === "unsure") return `${base} bg-sky-200/70 text-slate-900${missingUnderline}`;
+      if (wordStatus === "learning") return `${base} bg-amber-200/80 text-ink${missingUnderline}`;
+      if (wordStatus === "unsure") return `${base} bg-sky-200/70 text-ink${missingUnderline}`;
     }
 
     return `${base} active:bg-brand/10`;
@@ -210,22 +210,27 @@ export default function Reader({ text }: { text: ReadingText }) {
         </Link>
       </div>
 
-      <h1 className="text-2xl font-extrabold leading-tight text-slate-900">
+      {(difficulty?.cefr ?? text.difficulty) && (
+        <span className="mb-2 inline-block rounded-full bg-brand-light px-2.5 py-0.5 text-xs font-semibold text-brand capitalize">
+          {text.category}
+        </span>
+      )}
+      <h1 className="text-2xl font-extrabold leading-tight text-ink">
         {text.title}
       </h1>
-      <p className="mt-1 text-xs text-slate-400">
+      <p className="mt-1 text-xs text-ink-muted">
         {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
         a sentence for more
       </p>
       {difficulty && (
-        <p className="mt-1 text-xs italic text-slate-400">
+        <p className="mt-1 text-xs italic text-ink-muted">
           This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
           {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
         </p>
       )}
 
       <article
-        className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-slate-800`}
+        className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
       >
         {paragraphs.map((sentences, pi) => (
           <p key={pi}>
@@ -233,7 +238,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               <Fragment key={si}>
                 <span
                   onClick={() => handleSentenceTap(sg.text)}
-                  className="cursor-pointer rounded underline decoration-dotted decoration-slate-300 underline-offset-4 transition-colors active:bg-sky-100/60"
+                  className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
                 >
                   {sg.tokens.map((tok, ti) =>
                     tok.isWord ? (
@@ -282,12 +287,12 @@ export default function Reader({ text }: { text: ReadingText }) {
         <div>
           <button
             onClick={() => setShowTranslateLaterNote((v) => !v)}
-            className="text-xs font-semibold text-slate-400 underline underline-offset-2"
+            className="text-xs font-semibold text-ink-muted underline underline-offset-2"
           >
             Translate article later
           </button>
           {showTranslateLaterNote && (
-            <p className="mx-auto mt-2 max-w-sm text-xs text-slate-400">
+            <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
               Full article translation is intentionally disabled for now. Use
               word and sentence support while reading.
             </p>
@@ -300,7 +305,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             href={text.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-xs text-slate-400 underline underline-offset-2"
+            className="block text-xs text-ink-muted underline underline-offset-2"
           >
             Original source
           </a>

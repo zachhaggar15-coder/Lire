@@ -48,7 +48,7 @@ export default function TodayCard() {
   }, []);
 
   if (!stats) {
-    return <div className="mb-5 h-32 animate-pulse rounded-2xl bg-slate-100" />;
+    return <div className="mb-5 h-32 animate-pulse rounded-3xl bg-cream-dark" />;
   }
 
   // "Continue reading" gets its own prominent banner above this card (see
@@ -65,28 +65,28 @@ export default function TodayCard() {
   }
 
   return (
-    <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">Today</h2>
-        {stats.streak > 0 && (
-          <span className="flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
-            🔥 {stats.streak}-day streak
-          </span>
-        )}
-      </div>
+    <div className="relative mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      {stats.streak > 0 && (
+        <span
+          className="absolute -top-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-extrabold text-white shadow-sm"
+          title={`${stats.streak}-day streak`}
+        >
+          {stats.streak}
+        </span>
+      )}
 
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+      <div className="grid grid-cols-3 gap-2 text-center">
         <div>
-          <p className="text-lg font-extrabold text-slate-900">{stats.articlesCompletedToday}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Read today</p>
+          <p className="text-xl font-extrabold text-ink">{stats.articlesCompletedToday}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Read today</p>
         </div>
         <div>
-          <p className="text-lg font-extrabold text-slate-900">{stats.wordsSavedToday}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Saved today</p>
+          <p className="text-xl font-extrabold text-ink">{stats.wordsSavedToday}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Saved today</p>
         </div>
         <div>
-          <p className="text-lg font-extrabold text-slate-900">{stats.dueReviewsToday}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Due reviews</p>
+          <p className="text-xl font-extrabold text-ink">{stats.dueReviewsToday}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Due reviews</p>
         </div>
       </div>
 
@@ -99,9 +99,9 @@ export default function TodayCard() {
             {action.label}
           </Link>
         ) : (
-          <p className="text-sm text-slate-500">{hint}</p>
+          <p className="text-sm text-ink-muted">{hint}</p>
         )}
-        <Link href="/archive" className="text-xs font-semibold text-slate-400 underline underline-offset-2">
+        <Link href="/archive" className="text-xs font-semibold text-ink-muted underline underline-offset-2">
           Reading history →
         </Link>
       </div>

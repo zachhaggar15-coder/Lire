@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2563eb",
+  themeColor: "#F4EEE0",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* App is capped to a phone-like width and centered on desktop. */}
-        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-slate-50 shadow-sm">
+        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream shadow-sm">
           <main className="flex-1 pb-24">{children}</main>
           <BottomNav />
         </div>

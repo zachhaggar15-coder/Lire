@@ -17,7 +17,7 @@ export default function Toast({ message }: ToastProps) {
         open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
       }`}
     >
-      <div className="rounded-full bg-slate-900/90 px-4 py-2 text-sm font-medium text-white shadow-lg">
+      <div className="rounded-full bg-ink/90 px-4 py-2 text-sm font-medium text-white shadow-lg">
         {message}
       </div>
     </div>

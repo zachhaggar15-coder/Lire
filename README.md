@@ -43,6 +43,33 @@ backend, works instantly.
   planned for later)
 - Deployable to **Vercel**
 
+## Visual design system
+
+A warm, paper-like palette replaces the earlier plain slate/blue theme —
+same functionality everywhere, purely a visual pass. Defined as Tailwind
+theme tokens in `tailwind.config.ts` so every component references a name,
+not a raw hex:
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `cream` | `#F4EEE0` | Page background |
+| `cream-card` | `#FFFFFF` | Card surfaces |
+| `cream-dark` | `#E8DFC9` | Neutral pills, dividers, skeleton loaders |
+| `ink` | `#2B2A22` | Primary text |
+| `ink-muted` | `#8C8570` | Secondary/tertiary text |
+| `brand` / `brand-dark` / `brand-light` | `#2F5D46` / `#1F4534` / `#E3EEE7` | Primary actions, active states, the streak badge, "Continue reading" banner |
+| `accent-pink` / `accent-pinktext` | `#F7DAD0` / `#B5563C` | The word-lookup sheet only, for visual distinction from the sentence sheet |
+
+Cards are `rounded-3xl` with a soft shadow and no visible border (`shadow-sm`
+does the separation, not a border line). Article cards
+(`src/components/ReadingCard.tsx`) and saved-word cards
+(`src/app/words/page.tsx`) each get a 4px colored left-border accent —
+category-based for articles (rose/orange/violet/sky/emerald for news-style/
+sport/culture/science/everyday life), cycled by row index for saved words,
+matching the "colored shelf" look from the design reference. Pills (CEFR,
+category, status, difficulty label) keep pastel Tailwind colors (`rose-100`,
+`sky-100`, etc.) since they already read well against the cream background.
+
 ## Run it locally
 
 ```bash

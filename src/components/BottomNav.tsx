@@ -15,7 +15,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-md border-t border-slate-200 bg-white/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-md rounded-t-3xl bg-cream-card/95 shadow-[0_-4px_16px_rgba(43,42,34,0.06)] backdrop-blur"
       style={{ paddingBottom: "var(--safe-bottom)" }}
     >
       <ul className="flex">
@@ -27,7 +27,7 @@ export default function BottomNav() {
               <Link
                 href={href}
                 className={`flex flex-col items-center gap-1 py-3 text-xs font-medium transition-colors ${
-                  active ? "text-brand" : "text-slate-400"
+                  active ? "text-brand" : "text-ink-muted"
                 }`}
               >
                 <Icon className="h-6 w-6" />

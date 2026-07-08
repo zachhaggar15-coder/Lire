@@ -62,9 +62,9 @@ export default function ReviewPage() {
         { label: "Not due yet", value: stats.notDueYet },
         { label: "Total", value: stats.totalLearning },
       ].map((s) => (
-        <div key={s.label} className="rounded-2xl border border-slate-200 bg-white p-2.5 text-center shadow-sm">
-          <p className="text-lg font-extrabold text-slate-900">{s.value}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">{s.label}</p>
+        <div key={s.label} className="rounded-2xl bg-cream-card p-2.5 text-center shadow-sm">
+          <p className="text-lg font-extrabold text-ink">{s.value}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{s.label}</p>
         </div>
       ))}
     </div>
@@ -74,10 +74,10 @@ export default function ReviewPage() {
   if (ready && stats.totalLearning === 0) {
     return (
       <div className="px-4 pt-6">
-        <h1 className="text-2xl font-extrabold text-slate-900">Review</h1>
+        <h1 className="text-2xl font-extrabold text-ink">Review</h1>
         <div className="mt-16 text-center">
-          <p className="text-slate-500">Nothing to review yet.</p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="text-ink-muted">Nothing to review yet.</p>
+          <p className="mt-1 text-xs text-ink-muted">
             Words you save as Learning or Unsure while reading show up here.
           </p>
           <Link
@@ -95,12 +95,12 @@ export default function ReviewPage() {
   if (ready && stats.totalLearning > 0 && queue.length === 0) {
     return (
       <div className="px-4 pt-6">
-        <h1 className="mb-1 text-2xl font-extrabold text-slate-900">Review</h1>
+        <h1 className="mb-1 text-2xl font-extrabold text-ink">Review</h1>
         {statsBar}
         <div className="mt-8 text-center">
           <p className="text-4xl">✅</p>
-          <p className="mt-2 text-slate-500">All caught up — nothing due right now.</p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-2 text-ink-muted">All caught up — nothing due right now.</p>
+          <p className="mt-1 text-xs text-ink-muted">
             {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
           </p>
         </div>
@@ -112,12 +112,12 @@ export default function ReviewPage() {
   if (done) {
     return (
       <div className="px-4 pt-6">
-        <h1 className="mb-1 text-2xl font-extrabold text-slate-900">Review</h1>
+        <h1 className="mb-1 text-2xl font-extrabold text-ink">Review</h1>
         {statsBar}
         <div className="mt-8 text-center">
           <p className="text-4xl">🎉</p>
-          <p className="mt-2 text-lg font-semibold text-slate-800">All done!</p>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
+          <p className="mt-1 text-sm text-ink-muted">
             Knew it: {score.knew} · Didn&apos;t know: {score.missed}
           </p>
           <button
@@ -134,9 +134,9 @@ export default function ReviewPage() {
   return (
     <div className="flex min-h-[70vh] flex-col px-4 pt-6">
       <header className="mb-1 flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold text-slate-900">Review</h1>
-        <span className="text-sm text-slate-400">
-          {ready ? `${index + 1} / ${queue.length}` : ""}
+        <h1 className="text-2xl font-extrabold text-ink">Review</h1>
+        <span className="text-sm text-ink-muted">
+          {ready ? `card ${index + 1} of ${queue.length} due` : ""}
         </span>
       </header>
 
@@ -145,51 +145,51 @@ export default function ReviewPage() {
       {current && (
         <div className="flex flex-1 flex-col">
           {/* Flashcard */}
-          <div className="flex flex-1 flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+          <div className="flex flex-1 flex-col items-center justify-center rounded-3xl bg-cream-card p-8 text-center shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
               French
             </p>
-            <p className="mt-2 text-3xl font-bold text-slate-900">{current.word}</p>
+            <p className="mt-2 text-3xl font-bold text-ink">{current.word}</p>
             {current.lemma && current.lemma !== current.word && (
-              <p className="text-xs text-slate-400">from “{current.lemma}”</p>
+              <p className="text-xs text-ink-muted">from “{current.lemma}”</p>
             )}
 
             {revealed ? (
-              <div className="mt-6 w-full border-t border-slate-100 pt-6">
+              <div className="mt-6 w-full border-t border-cream-dark pt-6">
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">
                   Meaning
                 </p>
                 <p
                   className={`mt-1 text-xl ${
-                    hasTranslation ? "text-slate-700" : "italic text-slate-400"
+                    hasTranslation ? "text-ink" : "italic text-ink-muted"
                   }`}
                 >
                   {current.primaryTranslation}
                 </p>
                 {current.translations.length > 1 && (
-                  <p className="mt-1 text-sm text-slate-400">
+                  <p className="mt-1 text-sm text-ink-muted">
                     Also: {current.translations.slice(1).join(", ")}
                   </p>
                 )}
                 {(current.partOfSpeech || current.gender) && (
-                  <p className="mt-1 text-xs text-slate-400">
+                  <p className="mt-1 text-xs text-ink-muted">
                     {current.partOfSpeech}
                     {current.gender && ` · ${current.gender}`}
                   </p>
                 )}
 
                 {current.exampleSentenceFr && (
-                  <div className="mt-4 rounded-2xl bg-slate-50 p-3 text-left">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                  <div className="mt-4 rounded-2xl bg-cream p-3 text-left">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
                       Example
                     </p>
-                    <p className="mt-1 text-sm italic text-slate-600">{current.exampleSentenceFr}</p>
-                    <p className="mt-0.5 text-sm text-slate-500">{current.exampleSentenceEn}</p>
+                    <p className="mt-1 text-sm italic text-ink">{current.exampleSentenceFr}</p>
+                    <p className="mt-0.5 text-sm text-ink-muted">{current.exampleSentenceEn}</p>
                   </div>
                 )}
 
                 {current.articleContextSentence && (
-                  <p className="mt-3 text-xs text-slate-400">
+                  <p className="mt-3 text-xs text-ink-muted">
                     <span className="font-semibold uppercase tracking-wide">Original article context: </span>
                     “{current.articleContextSentence}”
                   </p>
@@ -198,7 +198,7 @@ export default function ReviewPage() {
             ) : (
               <button
                 onClick={() => setRevealed(true)}
-                className="mt-6 rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700 active:scale-95"
+                className="mt-6 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
               >
                 Reveal meaning
               </button>
@@ -224,7 +224,7 @@ export default function ReviewPage() {
           </div>
           <button
             onClick={handleMarkKnown}
-            className="mt-2 rounded-2xl bg-slate-100 py-3 text-sm font-semibold text-slate-600 active:scale-95"
+            className="mt-2 rounded-2xl bg-cream-dark py-3 text-sm font-semibold text-ink-muted active:scale-95"
           >
             Mark as known
           </button>

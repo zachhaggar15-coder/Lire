@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply bg-cream text-ink antialiased;
   /* Prevent iOS text-size adjust and tap highlight for an app-like feel. */
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;

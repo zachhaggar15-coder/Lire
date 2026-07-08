@@ -26,16 +26,16 @@ function Toggle({
   return (
     <button
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm active:scale-[0.99]"
+      className="flex w-full items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 text-left shadow-sm active:scale-[0.99]"
       aria-pressed={checked}
     >
       <div className="min-w-0">
-        <p className="font-semibold text-slate-900">{label}</p>
-        <p className="mt-0.5 text-sm text-slate-500">{description}</p>
+        <p className="font-semibold text-ink">{label}</p>
+        <p className="mt-0.5 text-sm text-ink-muted">{description}</p>
       </div>
       <span
         className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
-          checked ? "bg-brand" : "bg-slate-200"
+          checked ? "bg-brand" : "bg-cream-dark"
         }`}
       >
         <span
@@ -72,8 +72,8 @@ export default function SettingsPage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <h1 className="text-2xl font-extrabold text-slate-900">Settings</h1>
-        <p className="text-sm text-slate-500">Tune how reading looks and feels.</p>
+        <h1 className="text-2xl font-extrabold text-ink">Settings</h1>
+        <p className="text-sm text-ink-muted">Tune how reading looks and feels.</p>
       </header>
 
       <div className="space-y-3">
@@ -89,21 +89,21 @@ export default function SettingsPage() {
           label="Show known word styling"
           description="De-emphasise words you've marked as known, so your eye goes to what's actually new."
         />
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="font-semibold text-slate-900">AI explanations</p>
-          <p className="mt-0.5 text-sm text-slate-500">
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <p className="font-semibold text-ink">AI explanations</p>
+          <p className="mt-0.5 text-sm text-ink-muted">
             “Ask AI for nuance” and “Ask AI to explain” call OpenAI on
             request only — never automatically while reading. Requires
-            <code className="mx-1 rounded bg-slate-100 px-1 py-0.5 text-xs">
+            <code className="mx-1 rounded bg-cream-dark px-1 py-0.5 text-xs">
               OPENAI_API_KEY
             </code>
             to be configured on the server.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="font-semibold text-slate-900">Font size</p>
-          <p className="mt-0.5 text-sm text-slate-500">
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <p className="font-semibold text-ink">Font size</p>
+          <p className="mt-0.5 text-sm text-ink-muted">
             Adjust the reading text size.
           </p>
           <div className="mt-3 grid grid-cols-3 gap-2">
@@ -114,7 +114,7 @@ export default function SettingsPage() {
                 className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
                   settings.fontSize === opt.value
                     ? "bg-brand text-white"
-                    : "bg-slate-100 text-slate-600"
+                    : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 {opt.label}
@@ -123,10 +123,10 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm">
           <div className="min-w-0">
-            <p className="font-semibold text-slate-900">Known words</p>
-            <p className="mt-0.5 text-sm text-slate-500">
+            <p className="font-semibold text-ink">Known words</p>
+            <p className="mt-0.5 text-sm text-ink-muted">
               {knownCount} {knownCount === 1 ? "word" : "words"} marked known.
               These are skipped in Review and de-emphasised in the reader.
             </p>
@@ -134,7 +134,7 @@ export default function SettingsPage() {
           {knownCount > 0 && (
             <button
               onClick={handleClearKnown}
-              className="shrink-0 rounded-full bg-rose-50 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
+              className="shrink-0 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
             >
               Clear
             </button>
@@ -143,15 +143,15 @@ export default function SettingsPage() {
 
         <Link
           href="/lookup"
-          className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm active:scale-[0.99]"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
         >
           <div className="min-w-0">
-            <p className="font-semibold text-slate-900">English → French lookup</p>
-            <p className="mt-0.5 text-sm text-slate-500">
+            <p className="font-semibold text-ink">English → French lookup</p>
+            <p className="mt-0.5 text-sm text-ink-muted">
               Look up an English word offline, the other direction.
             </p>
           </div>
-          <svg className="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />
           </svg>
         </Link>

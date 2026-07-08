@@ -106,8 +106,8 @@ export default function HomePage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">Lire</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
+        <p className="text-sm text-ink-muted">
           Read short French texts. Tap words you don&apos;t know.
         </p>
       </header>
@@ -119,19 +119,19 @@ export default function HomePage() {
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-32 animate-pulse rounded-2xl bg-slate-100" />
+            <div key={i} className="h-32 animate-pulse rounded-3xl bg-cream-dark" />
           ))}
         </div>
       )}
 
       {state === "error" && (
-        <p className="mb-4 rounded-xl bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
+        <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
           Couldn&apos;t load today&apos;s articles — showing saved texts instead.
         </p>
       )}
 
       {state === "success" && usedFallback && (
-        <p className="mb-4 rounded-xl bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
+        <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
           Some RSS articles were skipped because they were too short or not in
           French — showing saved texts to fill the rest.
         </p>
@@ -141,10 +141,10 @@ export default function HomePage() {
         <>
           {sections.todaysRecommendation && (
             <section className="mb-6">
-              <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
+              <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">
                 Today&apos;s Recommendation
               </h2>
-              <p className="mt-0.5 text-xs text-slate-400">
+              <p className="mt-0.5 text-xs text-ink-muted">
                 The single best match for you right now.
               </p>
               <div className="mt-3">
@@ -176,8 +176,8 @@ export default function HomePage() {
           <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} />
 
           {sections.saveForLater.length > 0 && (
-            <details className="mb-6 rounded-2xl border border-dashed border-slate-300 p-3">
-              <summary className="cursor-pointer text-sm font-semibold text-slate-600">
+            <details className="mb-6 rounded-3xl border border-dashed border-cream-dark p-3">
+              <summary className="cursor-pointer text-sm font-semibold text-ink-muted">
                 Save for later ({sections.saveForLater.length}) — above your level for today
               </summary>
               <div className="mt-3 space-y-4">
@@ -193,15 +193,15 @@ export default function HomePage() {
             </details>
           )}
 
-          <p className="mb-2 text-center text-xs text-slate-400">
+          <p className="mb-2 text-center text-xs text-ink-muted">
             <Link href="/archive" className="underline underline-offset-2">
               View reading history
             </Link>
           </p>
 
           {process.env.NODE_ENV !== "production" && debug && (
-            <details className="mt-2 rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
-              <summary className="cursor-pointer font-semibold text-slate-600">
+            <details className="mt-2 rounded-2xl bg-cream-dark p-3 text-xs text-ink-muted">
+              <summary className="cursor-pointer font-semibold text-ink-muted">
                 Debug: RSS selection (dev only)
               </summary>
               <ul className="mt-2 space-y-0.5">
