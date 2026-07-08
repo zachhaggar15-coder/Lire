@@ -1,5 +1,9 @@
 # Lire — French Reader (PWA)
 
+**Live demo:** [liree.vercel.app](https://liree.vercel.app) — the source is
+public on GitHub at
+[zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
+
 A mobile-first Progressive Web App for reading short French texts — built to
 feel like a language-learning Kindle. Open it on your phone, read a handful of
 fresh articles pulled live from French news RSS feeds (or the hardcoded
@@ -372,6 +376,29 @@ back. Migrated words default to `status: "learning"`.
   Add-to-Home-Screen experience (`apple-touch-icon` uses `icon-192.png`,
   since iOS doesn't support SVG there).
 
+## Deploying to Vercel
+
+The project deploys as a normal Next.js app — connect the GitHub repo and
+Vercel builds it automatically. Two gotchas hit during setup, worth knowing
+if you ever re-import this repo as a fresh project:
+
+- **Framework detection can silently fail.** If a Vercel project's
+  "Framework Preset" setting is unset (`null`), Vercel has been observed
+  falling back to a generic static-file build (`@vercel/static-build`)
+  instead of the Next.js builder — the build "succeeds" but produces no
+  serverless functions at all, so *every* route 404s in production. Fixed
+  for good by declaring `"framework": "nextjs"` directly in `vercel.json`
+  (see that file), so it no longer depends on a dashboard setting.
+- **Vercel Authentication (SSO deployment protection)**, if enabled with
+  `all_except_custom_domains`, gates the default `*.vercel.app` production
+  alias too (it isn't treated as a "custom domain"). Disable it under
+  Project Settings → Deployment Protection if you want the app publicly
+  viewable without a Vercel login — `vercel project protection disable
+  <project> --sso` does the same from the CLI.
+
+If you fork/re-import this repo, run `vercel project ls` and `vercel project
+protection <name>` to sanity-check both after the first deploy.
+
 ## A hydration gotcha worth knowing
 
 `Reader`'s settings state must start as `DEFAULT_SETTINGS` (not
@@ -386,6 +413,11 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fixed a Vercel deployment bug where every route 404'd in production** —
+  the project's framework setting was `null`, so Vercel silently built it as
+  a generic static site instead of a Next.js app. Now fixed for good via
+  `"framework": "nextjs"` in `vercel.json`; see "Deploying to Vercel" below.
+  The app is now live at [liree.vercel.app](https://liree.vercel.app).
 - **"Ask AI" buttons are now real**, behind a new **"Enable AI help"** setting
   (off by default). When enabled, tapping "Ask AI for nuance" or "Ask AI to
   explain" calls the existing `src/lib/ai/client/*.ts` services and
