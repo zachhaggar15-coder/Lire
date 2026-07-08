@@ -5,8 +5,9 @@ import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadin
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { putPersistedRssTexts } from "@/lib/rss/rssTextStore";
 
-// Re-fetch feeds at most every 15 minutes; serve the cached route response in between.
-export const revalidate = 900;
+// How long each upstream feed fetch is cached via Next's Data Cache (not the
+// route itself — this route is intentionally dynamic; see note below).
+const FEED_REVALIDATE_SECONDS = 900;
 
 const FEED_TIMEOUT_MS = 8000;
 const MAX_TEXTS = 5;
@@ -21,7 +22,7 @@ async function fetchOneFromSource(source: RssSource): Promise<RssReadingText | n
   try {
     const res = await fetch(source.feedUrl, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
-      next: { revalidate },
+      next: { revalidate: FEED_REVALIDATE_SECONDS },
       signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
     });
     if (!res.ok) return null;
