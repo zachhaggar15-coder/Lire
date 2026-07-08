@@ -8,7 +8,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
   showSavedHighlights: true,
   showKnownWordStyling: true,
   fontSize: "medium",
-  enableAiHelp: false,
 };
 
 function hasStorage(): boolean {

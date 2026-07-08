@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
-import type { WordAnalysis } from "@/lib/ai/types";
+import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
 import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
-import { getWordAnalysis } from "@/lib/ai/client/wordAnalysis";
+import { getWordExplanation } from "@/lib/ai/client";
 
 export interface ActiveWordState {
   word: string;
   contextSentence: string;
+  /** The sentence just before contextSentence, if any — extra context for the AI explanation. */
+  surroundingSentence: string | null;
   lookup: DictionaryLookupResult;
   /** The word's current saved/known status, or null if it's untouched. */
   existingStatus: WordStatus | null;
@@ -19,8 +21,7 @@ type AiState = "idle" | "loading" | "ready" | "error";
 
 interface WordSheetProps {
   state: ActiveWordState | null;
-  /** From Settings — "Enable AI help". When off, "Ask AI for nuance" just shows the placeholder message. */
-  aiEnabled: boolean;
+  articleTitle: string;
   onClose: () => void;
   onKnow: () => void;
   onUnsure: () => void;
@@ -37,39 +38,45 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * Bottom sheet shown on every word tap: an instant, fully-offline
  * dictionary lookup, plus three explicit actions (this is the whole
  * "learning signal" the app now asks for instead of auto-saving every tap).
+ * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, aiEnabled, onClose, onKnow, onUnsure, onSave }: WordSheetProps) {
-  const [showAiPlaceholder, setShowAiPlaceholder] = useState(false);
+export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
-  const [aiResult, setAiResult] = useState<WordAnalysis | null>(null);
+  const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
   const lookup = state?.lookup;
   const found = lookup?.source === "local";
   const [primary, ...rest] = lookup?.translations ?? [];
+  const firstExample = lookup?.examples[0];
 
   // Reset the AI panel whenever a different word/sentence is shown, so a
   // stale result from the previous word can't leak into this one.
   useEffect(() => {
-    setShowAiPlaceholder(false);
     setAiState("idle");
     setAiResult(null);
+    setAiError(null);
   }, [state?.word, state?.contextSentence]);
 
-  function handleAskAi() {
-    if (!aiEnabled) {
-      setShowAiPlaceholder(true);
-      return;
-    }
+  async function handleAskAi() {
     if (!state) return;
     setAiState("loading");
-    getWordAnalysis(state.word, state.contextSentence).then((result) => {
-      if (result) {
-        setAiResult(result);
-        setAiState("ready");
-      } else {
-        setAiState("error");
-      }
+    setAiError(null);
+    const result = await getWordExplanation({
+      word: state.word,
+      lemma: lookup?.lemma ?? null,
+      articleSentence: state.contextSentence,
+      simpleExampleSentence: firstExample?.fr ?? null,
+      surroundingSentence: state.surroundingSentence,
+      level: "A2/B1 French learner",
     });
+    if (result.data) {
+      setAiResult(result.data);
+      setAiState("ready");
+    } else {
+      setAiError(result.error);
+      setAiState("error");
+    }
   }
 
   return (
@@ -141,13 +148,13 @@ export default function WordSheet({ state, aiEnabled, onClose, onKnow, onUnsure,
               {rest.length > 0 && (
                 <p className="text-sm text-slate-500">Also: {rest.join(", ")}</p>
               )}
-              {lookup && lookup.examples.length > 0 && (
+              {firstExample && (
                 <div className="rounded-2xl bg-slate-50 p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                     Example
                   </p>
-                  <p className="mt-1 text-sm italic text-slate-600">{lookup.examples[0].fr}</p>
-                  <p className="mt-0.5 text-sm text-slate-500">{lookup.examples[0].en}</p>
+                  <p className="mt-1 text-sm italic text-slate-600">{firstExample.fr}</p>
+                  <p className="mt-0.5 text-sm text-slate-500">{firstExample.en}</p>
                 </div>
               )}
             </>
@@ -158,8 +165,8 @@ export default function WordSheet({ state, aiEnabled, onClose, onKnow, onUnsure,
 
         {state?.contextSentence && (
           <div className="mt-4 rounded-2xl bg-slate-50 p-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              In context
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+              Original article context
             </p>
             <p className="mt-1 text-sm italic text-slate-600">“{state.contextSentence}”</p>
           </div>
@@ -174,15 +181,14 @@ export default function WordSheet({ state, aiEnabled, onClose, onKnow, onUnsure,
               Ask AI for nuance
             </button>
           )}
-          {showAiPlaceholder && (
-            <p className="mt-1 text-xs text-slate-400">AI explanations are not enabled yet.</p>
-          )}
           {aiState === "loading" && (
-            <p className="text-xs italic text-slate-400">Asking the AI tutor…</p>
+            <button disabled className="text-xs italic text-slate-400">
+              Asking the AI tutor…
+            </button>
           )}
           {aiState === "error" && (
             <p className="text-xs text-rose-500">
-              Couldn&apos;t get an AI answer.{" "}
+              {aiError}{" "}
               <button onClick={handleAskAi} className="underline">
                 Try again
               </button>
@@ -193,9 +199,20 @@ export default function WordSheet({ state, aiEnabled, onClose, onKnow, onUnsure,
               <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">
                 AI nuance
               </p>
-              <p className="mt-1 text-sm text-violet-900">{aiResult.meaningInThisSentence}</p>
-              {aiResult.notes && (
-                <p className="mt-1 text-xs text-violet-700">{aiResult.notes}</p>
+              <p className="mt-1 text-sm font-semibold text-violet-900">{aiResult.translation}</p>
+              <p className="mt-1 text-sm text-violet-900">{aiResult.meaningInContext}</p>
+              <div className="mt-2 rounded-xl bg-white/60 p-2">
+                <p className="text-sm italic text-violet-800">{aiResult.simpleExampleFr}</p>
+                <p className="text-xs text-violet-600">{aiResult.simpleExampleEn}</p>
+              </div>
+              {aiResult.grammarOrUsageNote && (
+                <p className="mt-2 text-xs text-violet-700">{aiResult.grammarOrUsageNote}</p>
+              )}
+              {aiResult.commonMistake && (
+                <p className="mt-1 text-xs text-violet-700">
+                  <span className="font-semibold">Common mistake: </span>
+                  {aiResult.commonMistake}
+                </p>
               )}
             </div>
           )}

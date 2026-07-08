@@ -10,48 +10,51 @@ import { putPersistedRssTexts } from "@/lib/rss/rssTextStore";
 const FEED_REVALIDATE_SECONDS = 900;
 
 const FEED_TIMEOUT_MS = 8000;
-const MAX_TEXTS = 5;
+const MAX_PER_SOURCE = 2;
+const MAX_TEXTS = 20;
 
 /**
- * Fetches one source's feed and returns the first item that yields a usable
- * reading text. Any failure (network, timeout, bad XML, no suitable item)
- * resolves to null rather than throwing, so one broken feed never affects
- * the others — the caller runs every source through Promise.allSettled.
+ * Fetches one source's feed and returns up to MAX_PER_SOURCE items that
+ * yield a usable reading text. Any failure (network, timeout, bad XML, no
+ * suitable items) resolves to [] rather than throwing, so one broken feed
+ * never affects the others — the caller runs every source through
+ * Promise.allSettled.
  */
-async function fetchOneFromSource(source: RssSource): Promise<RssReadingText | null> {
+async function fetchUpToTwoFromSource(source: RssSource): Promise<RssReadingText[]> {
   try {
     const res = await fetch(source.feedUrl, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
       next: { revalidate: FEED_REVALIDATE_SECONDS },
       signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
     });
-    if (!res.ok) return null;
+    if (!res.ok) return [];
 
     const xml = await res.text();
     const items = parseRssFeed(xml);
 
+    const texts: RssReadingText[] = [];
     for (const item of items) {
+      if (texts.length >= MAX_PER_SOURCE) break;
       const text = await itemToRssReadingText(item, source);
-      if (text) return text;
+      if (text) texts.push(text);
     }
-    return null;
+    return texts;
   } catch {
     // Network error, timeout, or parsing failure — skip this source silently.
-    return null;
+    return [];
   }
 }
 
 export async function GET() {
   const enabledSources = rssSources.filter((s) => s.enabled);
 
-  const settled = await Promise.allSettled(enabledSources.map(fetchOneFromSource));
+  const settled = await Promise.allSettled(enabledSources.map(fetchUpToTwoFromSource));
 
   const texts: RssReadingText[] = settled
     .filter(
-      (r): r is PromiseFulfilledResult<RssReadingText | null> => r.status === "fulfilled"
+      (r): r is PromiseFulfilledResult<RssReadingText[]> => r.status === "fulfilled"
     )
-    .map((r) => r.value)
-    .filter((t): t is RssReadingText => t !== null)
+    .flatMap((r) => r.value)
     .slice(0, MAX_TEXTS);
 
   // Best-effort, optional persistence so a direct link to one of these

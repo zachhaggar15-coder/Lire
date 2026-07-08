@@ -2,51 +2,59 @@
 
 import { useEffect, useState } from "react";
 import type { SentenceExplanation } from "@/lib/ai/types";
-import { getSentenceExplanation } from "@/lib/ai/client/sentenceExplanation";
+import { getSentenceExplanation } from "@/lib/ai/client";
+
+export interface ActiveSentenceState {
+  sentence: string;
+  previousSentence: string | null;
+  nextSentence: string | null;
+}
 
 type AiState = "idle" | "loading" | "ready" | "error";
 
 interface SentenceSheetProps {
-  /** The tapped sentence's French text, or null when the sheet is closed. */
-  sentence: string | null;
-  /** From Settings — "Enable AI help". When off, "Ask AI to explain" just shows the placeholder message. */
-  aiEnabled: boolean;
+  /** The tapped sentence (plus its neighbours), or null when the sheet is closed. */
+  state: ActiveSentenceState | null;
+  articleTitle: string;
   onClose: () => void;
 }
 
 /**
- * Bottom sheet shown on a sentence tap. There is no automatic translation
- * or explanation here — the app only calls AI when a reader explicitly taps
- * "Ask AI to explain," and only if "Enable AI help" is on in Settings.
+ * Bottom sheet shown on a sentence tap. There is no automatic translation or
+ * explanation here — the app only calls AI when a reader explicitly taps
+ * "Ask AI to explain."
  */
-export default function SentenceSheet({ sentence, aiEnabled, onClose }: SentenceSheetProps) {
-  const [showAiPlaceholder, setShowAiPlaceholder] = useState(false);
+export default function SentenceSheet({ state, articleTitle, onClose }: SentenceSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<SentenceExplanation | null>(null);
-  const open = sentence !== null;
+  const [aiError, setAiError] = useState<string | null>(null);
+  const open = state !== null;
 
   // Reset whenever a different sentence is shown.
   useEffect(() => {
-    setShowAiPlaceholder(false);
     setAiState("idle");
     setAiResult(null);
-  }, [sentence]);
+    setAiError(null);
+  }, [state?.sentence]);
 
-  function handleAskAi() {
-    if (!aiEnabled) {
-      setShowAiPlaceholder(true);
-      return;
-    }
-    if (!sentence) return;
+  async function handleAskAi() {
+    if (!state) return;
     setAiState("loading");
-    getSentenceExplanation(sentence).then((result) => {
-      if (result) {
-        setAiResult(result);
-        setAiState("ready");
-      } else {
-        setAiState("error");
-      }
+    setAiError(null);
+    const result = await getSentenceExplanation({
+      sentence: state.sentence,
+      articleTitle,
+      previousSentence: state.previousSentence,
+      nextSentence: state.nextSentence,
+      level: "A2/B1 French learner",
     });
+    if (result.data) {
+      setAiResult(result.data);
+      setAiState("ready");
+    } else {
+      setAiError(result.error);
+      setAiState("error");
+    }
   }
 
   return (
@@ -62,7 +70,7 @@ export default function SentenceSheet({ sentence, aiEnabled, onClose }: Sentence
       <div
         role="dialog"
         aria-hidden={!open}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-w-md rounded-t-3xl border-t border-slate-200 bg-white p-5 shadow-2xl transition-transform duration-200 ${
+        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white p-5 shadow-2xl transition-transform duration-200 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
         style={{ paddingBottom: "calc(1.25rem + var(--safe-bottom))" }}
@@ -72,7 +80,7 @@ export default function SentenceSheet({ sentence, aiEnabled, onClose }: Sentence
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand">Sentence</p>
-            <p className="mt-1 text-base font-semibold leading-snug text-slate-900">{sentence}</p>
+            <p className="mt-1 text-base font-semibold leading-snug text-slate-900">{state?.sentence}</p>
           </div>
           <button
             onClick={onClose}
@@ -91,17 +99,17 @@ export default function SentenceSheet({ sentence, aiEnabled, onClose }: Sentence
               Ask AI to explain
             </button>
           )}
-          {showAiPlaceholder && (
-            <p className="mt-2 text-sm italic text-slate-400">
-              AI explanations are not enabled yet.
-            </p>
-          )}
           {aiState === "loading" && (
-            <p className="mt-2 text-sm italic text-slate-400">Asking the AI tutor…</p>
+            <button
+              disabled
+              className="rounded-full bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-400"
+            >
+              Asking the AI tutor…
+            </button>
           )}
           {aiState === "error" && (
             <p className="mt-2 text-sm text-rose-500">
-              Couldn&apos;t explain this sentence.{" "}
+              {aiError}{" "}
               <button onClick={handleAskAi} className="underline">
                 Try again
               </button>
@@ -113,14 +121,50 @@ export default function SentenceSheet({ sentence, aiEnabled, onClose }: Sentence
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                   English
                 </p>
-                <p className="mt-1 text-sm text-slate-700">{aiResult.translation}</p>
+                <p className="mt-1 text-sm text-slate-700">{aiResult.naturalEnglishTranslation}</p>
               </div>
+
+              <div className="mt-3 rounded-2xl bg-slate-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Simplified French
+                </p>
+                <p className="mt-1 text-sm italic text-slate-700">{aiResult.simplifiedFrench}</p>
+              </div>
+
               {aiResult.explanation && (
                 <div className="mt-3 rounded-2xl bg-violet-50 p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">
                     Explanation
                   </p>
                   <p className="mt-1 text-sm text-violet-900">{aiResult.explanation}</p>
+                </div>
+              )}
+
+              {aiResult.grammarNotes.length > 0 && (
+                <div className="mt-3 rounded-2xl bg-slate-50 p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                    Grammar notes
+                  </p>
+                  <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-slate-600">
+                    {aiResult.grammarNotes.map((note, i) => (
+                      <li key={i}>{note}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {aiResult.usefulVocabulary.length > 0 && (
+                <div className="mt-3 rounded-2xl bg-slate-50 p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                    Useful vocabulary
+                  </p>
+                  <ul className="mt-1 space-y-0.5 text-sm text-slate-600">
+                    {aiResult.usefulVocabulary.map((v, i) => (
+                      <li key={i}>
+                        <span className="font-semibold">{v.word}</span> — {v.meaning}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </>

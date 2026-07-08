@@ -1,5 +1,5 @@
 import type { SavedWord, WordStatus } from "@/types";
-import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
+import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { markKnown } from "@/lib/knownWords";
 
 /**
@@ -34,17 +34,20 @@ function normalize(entry: unknown): SavedWord | null {
       word,
       lemma: null,
       translations: [],
-      primaryTranslation: NO_DICTIONARY_ENTRY,
+      primaryTranslation: NOT_TRANSLATED_YET,
       partOfSpeech: null,
       gender: null,
       cefr: null,
       frequencyRank: null,
-      contextSentence: "",
+      articleContextSentence: "",
+      exampleSentenceFr: FALLBACK_EXAMPLE_FR,
+      exampleSentenceEn: FALLBACK_EXAMPLE_EN,
       sourceTextTitle: "",
       savedAt: new Date().toISOString(),
       reviewCount: 0,
       lastReviewedAt: null,
       status: "learning",
+      missingFromDictionary: true,
     };
   }
 
@@ -73,7 +76,16 @@ function normalize(entry: unknown): SavedWord | null {
   const primaryTranslation =
     typeof e.primaryTranslation === "string" && e.primaryTranslation
       ? e.primaryTranslation
-      : translations[0] ?? NO_DICTIONARY_ENTRY;
+      : translations[0] ?? NOT_TRANSLATED_YET;
+
+  // Older saves only had `contextSentence` (or the earliest `context`) and no
+  // separate learner example — treat the article sentence the same as
+  // before, and give the example fields a sensible fallback.
+  const articleContextSentence =
+    (typeof e.articleContextSentence === "string" && e.articleContextSentence) ||
+    (typeof e.contextSentence === "string" && e.contextSentence) ||
+    (typeof e.context === "string" && e.context) ||
+    "";
 
   return {
     word: e.word,
@@ -84,11 +96,9 @@ function normalize(entry: unknown): SavedWord | null {
     gender: typeof e.gender === "string" ? e.gender : null,
     cefr: typeof e.cefr === "string" ? e.cefr : null,
     frequencyRank: typeof e.frequencyRank === "number" ? e.frequencyRank : null,
-    // old field was `context`; new field is `contextSentence`.
-    contextSentence:
-      (typeof e.contextSentence === "string" && e.contextSentence) ||
-      (typeof e.context === "string" && e.context) ||
-      "",
+    articleContextSentence,
+    exampleSentenceFr: typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr ? e.exampleSentenceFr : FALLBACK_EXAMPLE_FR,
+    exampleSentenceEn: typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn ? e.exampleSentenceEn : FALLBACK_EXAMPLE_EN,
     // old field was `sourceId`; new field is `sourceTextTitle`.
     sourceTextTitle:
       (typeof e.sourceTextTitle === "string" && e.sourceTextTitle) ||
@@ -98,6 +108,8 @@ function normalize(entry: unknown): SavedWord | null {
     reviewCount: typeof e.reviewCount === "number" ? e.reviewCount : 0,
     lastReviewedAt: typeof e.lastReviewedAt === "string" ? e.lastReviewedAt : null,
     status: isValidStatus(e.status) ? e.status : "learning",
+    missingFromDictionary:
+      typeof e.missingFromDictionary === "boolean" ? e.missingFromDictionary : translations.length === 0,
   };
 }
 

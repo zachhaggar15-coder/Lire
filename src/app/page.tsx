@@ -105,6 +105,15 @@ export default function HomePage() {
 
       {state !== "loading" && (
         <>
+          <div className="mb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
+              {showingRss ? "Today's readings" : "Saved readings"}
+            </h2>
+            <span className="text-xs text-slate-400">
+              {filteredTexts.length} {filteredTexts.length === 1 ? "text" : "texts"}
+            </span>
+          </div>
+
           <div className="mb-2 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
             {CATEGORY_OPTIONS.map((opt) => (
               <button

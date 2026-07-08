@@ -41,14 +41,10 @@ class LocalStorageCacheStore implements CacheStore {
 /** The active cache store. Point this at a Supabase-backed implementation later. */
 export const cacheStore: CacheStore = new LocalStorageCacheStore();
 
-export function wordCacheKey(word: string, sentence: string): string {
-  return `word:${hashString(`${word.toLowerCase()}::${sentence}`)}`;
+export function wordCacheKey(word: string, articleSentence: string): string {
+  return `word:${hashString(`${word.toLowerCase()}::${articleSentence}`)}`;
 }
 
-export function sentenceCacheKey(sentence: string, previousSentence?: string): string {
-  return `sentence:${hashString(`${sentence}::${previousSentence ?? ""}`)}`;
-}
-
-export function articleCacheKey(textId: string): string {
-  return `article:${textId}`;
+export function sentenceCacheKey(sentence: string): string {
+  return `sentence:${hashString(sentence)}`;
 }

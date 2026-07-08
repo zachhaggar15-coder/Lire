@@ -42,8 +42,12 @@ export interface SavedWord {
   gender: string | null;
   cefr: string | null;
   frequencyRank: number | null;
-  /** The full sentence the word was tapped in, for context. */
-  contextSentence: string;
+  /** The full sentence the word was tapped in, exactly as it appeared in the article. */
+  articleContextSentence: string;
+  /** A short, simple learner-friendly French example sentence (not from the article). */
+  exampleSentenceFr: string;
+  /** English translation of exampleSentenceFr. */
+  exampleSentenceEn: string;
   /** Title of the text it came from. */
   sourceTextTitle: string;
   /** ISO timestamp of when it was first saved. */
@@ -59,6 +63,8 @@ export interface SavedWord {
    * never get a SavedWord at all — see src/lib/knownWords.ts.
    */
   status: WordStatus;
+  /** True when the local dictionary had no entry for this word at save time. */
+  missingFromDictionary?: boolean;
 }
 
 export type TextStatus = "unread" | "in-progress" | "completed";
@@ -79,14 +85,6 @@ export interface AppSettings {
   /** De-emphasise words already marked "known" while reading. */
   showKnownWordStyling: boolean;
   fontSize: FontSize;
-  /**
-   * Opt-in: lets the "Ask AI for nuance" / "Ask AI to explain" buttons
-   * actually call the AI provider layer (src/lib/ai/) instead of showing
-   * "AI explanations are not enabled yet." Off by default — AI is never
-   * used without this explicit opt-in, and even then only on request, not
-   * automatically while reading.
-   */
-  enableAiHelp: boolean;
 }
 
 export type ReviewFilter = "all" | "today" | "least-reviewed" | "current-text";

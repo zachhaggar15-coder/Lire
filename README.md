@@ -5,25 +5,26 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. Open it on your phone, read a handful of
+feel like a language-learning Kindle. Open it on your phone, read up to 20
 fresh articles pulled live from French news RSS feeds (or the hardcoded
 fallback texts), and tap any word for an **instant, fully offline** dictionary
-lookup — translation, part of speech, gender, CEFR level, an example — with no
-network round-trip and no AI in the loop. AI is there for when you explicitly
-want more (see "AI is optional" below), never automatically. Reading state
-lives in **localStorage** — no account, no backend, works instantly.
+lookup — translation, part of speech, gender, CEFR level, a simple example —
+with no network round-trip. AI is there for when you explicitly want more
+(see "AI explanations" below), never automatically. Reading state lives in
+**localStorage** — no account, no backend, works instantly.
 
 ## Tech stack
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS**
 - **Local offline dictionary** (`src/lib/dictionary/`, `src/data/dictionaries/`)
-  — the primary, instant word-lookup path; no network call, no API key needed
-- An **AI provider layer** (`src/lib/ai/`) from an earlier iteration, kept in
-  place but **dormant** — not called automatically anywhere; see "AI is
-  optional" below
+  — the primary, instant word-lookup path; no network call, no API key needed.
+  474 hand-curated entries plus a rule-based lemmatiser for unlisted
+  inflections.
+- **AI explanations** (`src/lib/ai/`) — on-demand only, via OpenAI. Never
+  called automatically; see "AI explanations" below.
 - Server-side **RSS fetching** (`/api/rss-texts`) — no external RSS/XML
-  package, just a small dependency-free parser
+  package, just a small dependency-free parser. Returns up to 20 texts.
 - **localStorage** for saved words, known words, reading progress, and
   settings (Supabase planned for later)
 - Deployable to **Vercel**
@@ -37,10 +38,11 @@ npm run dev
 
 Then open **http://localhost:3000**.
 
-No API key or setup is required — word lookup is fully local. If you later
-want to experiment with the dormant AI layer (see "AI is optional"), copy
-`.env.local.example` to `.env.local` and add an `OPENAI_API_KEY`; nothing in
-today's UI calls it yet.
+No API key or setup is required — word lookup is fully local. To enable
+**"Ask AI for nuance" / "Ask AI to explain"**, copy `.env.local.example` to
+`.env.local` and add an `OPENAI_API_KEY`. Without it, those buttons show
+"AI is not configured. Add OPENAI_API_KEY to enable explanations." — the
+rest of the app works exactly the same either way.
 
 To test the phone experience, open your browser dev tools and toggle the device
 toolbar (iPhone/Android), or visit the dev URL from your phone on the same
@@ -62,32 +64,38 @@ npm start
 Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
 
 1. **Read (home)** — `src/app/page.tsx`
-   On load, fetches `GET /api/rss-texts` and shows up to 5 **live French news
-   articles** pulled from RSS feeds, each with a title, difficulty (fixed at
-   B1 for RSS texts), category, estimated reading time, a short preview,
+   On load, fetches `GET /api/rss-texts` and shows a **"Today's readings"**
+   section with up to **20 live French news articles** pulled from RSS feeds
+   (up to 2 per feed, across 10 feeds), each with a title, difficulty (fixed
+   at B1 for RSS texts), category, estimated reading time, a short preview,
    **source name + published date**, and a **reading-progress badge** (Unread
-   / In progress / Completed). Shows a loading skeleton while fetching. If the
-   fetch fails or returns nothing, it falls back to the 5 hardcoded texts in
+   / In progress / Completed). Category and difficulty filter chips narrow
+   the list. Shows a loading skeleton while fetching. If the fetch fails or
+   returns nothing, it falls back to the 5 hardcoded texts in
    `src/data/texts.ts` with a small notice. See "RSS reading content" below.
 
 2. **Reader** — `src/app/reader/[id]/page.tsx` + `src/components/Reader.tsx`
    Renders the chosen text with punctuation and paragraph spacing preserved,
    split into sentences and words.
    - **Tap a word** — an **instant, offline dictionary lookup** opens in a
-     bottom sheet: translation(s), part of speech, gender, CEFR level, and an
-     example sentence when the dictionary has one, or "No local dictionary
-     entry yet" when it doesn't. Nothing is saved automatically — instead the
+     bottom sheet: translation(s), part of speech, gender, CEFR level, and a
+     short **learner-friendly example sentence** (not the article's own
+     wording — see "Example sentences vs. article context" below), or "Not in
+     local dictionary yet" when the word (and the rule-based lemmatiser's
+     guesses) match nothing. Nothing is saved automatically — instead the
      sheet offers three explicit actions:
      - **I know this** — adds the word (and its lemma) to a known-words list.
        No flashcard is created.
      - **Unsure** — saves it as a flashcard with status `"unsure"`.
-     - **Save** — saves it as a flashcard with status `"learning"`.
-     A small **"Ask AI for nuance"** link is also there, but it only shows
-     "AI explanations are not enabled yet." — see "AI is optional" below.
-   - **Tap a sentence** — a lightweight sheet shows the sentence and an
-     **"Ask AI to explain"** button. There's no automatic translation or
-     explanation here either; the button shows the same "not enabled yet"
-     message.
+     - **Save** — saves it as a flashcard with status `"learning"`. Works even
+       when the dictionary had nothing — see "Missing dictionary entries"
+       below.
+     A **"Ask AI for nuance"** button calls OpenAI on request only — see "AI
+     explanations" below.
+   - **Tap a sentence** — a sheet shows the sentence and an **"Ask AI to
+     explain"** button: a natural English translation, a simplified French
+     rewording, grammar notes, useful vocabulary, and a short explanation.
+     Nothing is fetched until the button is tapped.
    - Word highlighting is deliberately subtle: **learning** words get an
      amber background, **unsure** words a soft blue one, a saved word with no
      dictionary data gets a dashed underline on top of its color, and
@@ -106,9 +114,10 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
 3. **Words** — `src/app/words/page.tsx`
    Filterable list — **Learning**, **Unsure**, **Known**, **Missing entries**
    (saved words the dictionary had nothing for) — each showing the word,
-   lemma, translation(s), part of speech, gender, CEFR, context sentence,
-   source text, saved date, and review count. Delete any word, or promote it
-   straight to **known** from here.
+   lemma, translation(s), part of speech, gender, CEFR, its **learner example
+   sentence**, the **original article context** (labelled separately, in
+   smaller text), source text, saved date, and review count. Delete any word,
+   or promote it straight to **known** from here.
 
 4. **Review** — `src/app/review/page.tsx`
    Flashcards for words with status **learning** or **unsure** only — known
@@ -116,19 +125,17 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
    today / Least reviewed / Current text) apply within that reviewable set.
    Front: the French word (plus its lemma, if different). **Reveal meaning**
    shows the primary translation, other translations, part of speech, gender,
-   the context sentence, and a dictionary example if there is one. Three
-   buttons: **Knew it** / **Didn't know it** (record a review) and **Mark as
-   known** (promotes the word to known and removes it from the queue on the
-   spot, whether or not you've revealed it first).
+   the **learner example sentence** first, then the **original article
+   context** underneath in smaller text. Three buttons: **Knew it** /
+   **Didn't know it** (record a review) and **Mark as known** (promotes the
+   word to known and removes it from the queue on the spot, whether or not
+   you've revealed it first).
 
 5. **Settings** — `src/app/settings/page.tsx`
    - **Saved word highlights** on/off — the amber/blue coloring for
      learning/unsure words.
    - **Show known word styling** on/off — the muted gray for known words.
    - **Font size** — small / medium / large.
-   - **Enable AI help** on/off (default off) — turns "Ask AI for nuance" and
-     "Ask AI to explain" into real requests against the AI provider layer;
-     see "AI is optional" below.
    - **English → French lookup** — a link to `/lookup` for the reverse
      lookup direction.
    - **Known words** — a count of everything you've marked known, with a
@@ -152,20 +159,21 @@ nothing in the reading flow needed to know the difference.
 3. Clean each candidate item (`src/lib/rss/cleanContent.ts`): strip HTML tags,
    decode entities (named + numeric — covers accented French text reliably),
    collapse whitespace, and skip anything too short to be a real reading text.
-   The **first item per feed** that passes becomes that source's text; if it
-   doesn't, the next item in the feed is tried.
+   The **first two items per feed** that pass become that source's texts; if
+   an item fails, the next one in the feed is tried.
 4. Build the response object (`src/lib/rss/rssToReadingText.ts`). No
    translation happens here at all — words are looked up locally in the
    reader, and full-article translation is intentionally disabled (see
-   "Translate article later" and "AI is optional" below).
-5. Cap the combined result at 5 texts and return them as JSON.
+   "Translate article later" and "AI explanations" below).
+5. Cap the combined result at **20 texts** (up to 2 per feed × 10 feeds) and
+   return them as JSON.
 
 **Failure handling** — required and tested against real feeds:
 - **One feed down:** wrapped in `Promise.allSettled` + a per-source try/catch,
   so a single failure (timeout, non-200, bad XML, bot-protection redirect
   loop — Sud Ouest's Incapsula protection reliably triggers this) never stops
   the others. Verified live: 9/10 feeds succeeded, Sud Ouest failed, the route
-  still returned 5 good texts.
+  still returned a full set of good texts from the rest.
 - **All feeds down:** the route returns `{ texts: [] }`; the home page detects
   the empty result (or a fetch/network error) and falls back to the 5
   hardcoded texts with a small "Couldn't load today's articles" notice.
@@ -212,9 +220,15 @@ dictionary can slot in later without touching any calling code:
   `examples?`, `notes?`) and `DictionaryLookupResult`, the fixed shape every
   lookup returns regardless of hit or miss.
 - `src/data/dictionaries/fr-en.ts` — the active French→English dictionary:
-  hand-curated, 438 entries covering every function word, all vocabulary in
+  hand-curated, 474 entries covering every function word (articles, subject/
+  object pronouns, prepositions, conjunctions/connectors), all vocabulary in
   `src/data/texts.ts`'s five hardcoded articles, numbers, calendar, family,
-  colors, ~60 conjugated verbs, and common everyday nouns/adjectives.
+  colors, ~65 conjugated verbs (with fuller person/tense coverage for the
+  most common ones — être, avoir, aller, faire, pouvoir, vouloir, devoir,
+  prendre, dire, penser, trouver), common adjectives/adverbs, and everyday
+  news vocabulary (gouvernement, président, économie, crise, société, etc.).
+  Every entry added or edited in this pass carries a short, simple example
+  sentence — see "Example sentences vs. article context" below.
 - `src/data/dictionaries/en-fr.ts` — a modest English→French starter set,
   used by the reverse lookup at `/lookup` via `lookupEnglishWord`.
 - `src/lib/dictionary/lookup.ts` — `lookupWord(word)`, the only function the
@@ -236,8 +250,44 @@ if nothing matches, return `{ source: "missing", translations: [], ... }` —
 **Adding dictionary entries** — edit `src/data/dictionaries/fr-en.ts` and add
 an object matching `DictionaryEntry`. Only `lemma` and `translations` are
 required; everything else (`forms`, `gender`, `cefr`, `examples`, `notes`) is
-optional and improves what the word sheet shows. No other file needs to
-change — `lookup.ts` re-indexes whatever is in the array.
+optional and improves what the word sheet shows — but a short `examples`
+entry is strongly encouraged (see below). No other file needs to change —
+`lookup.ts` re-indexes whatever is in the array.
+
+### Example sentences vs. article context
+
+Every saved word now stores **two separate sentences**, so a flashcard's
+"example" is always a clean, simple sentence rather than whatever dense news
+prose the word happened to appear in:
+
+- **`exampleSentenceFr` / `exampleSentenceEn`** — a short, natural,
+  A1/B1-appropriate sentence, e.g. `"Je mange une pomme."` / `"I eat an
+  apple."`. Sourced from the dictionary entry's first `examples[]` item; if
+  the entry has none, a fixed fallback is used (`"Je vois ce mot dans un
+  texte." / "I see this word in a text."`).
+- **`articleContextSentence`** — the actual sentence from the article the
+  word was tapped in, kept for reference but shown secondarily (smaller
+  text, labelled "Original article context") on the Words and Review pages.
+
+This split exists because a word's context sentence in a real news article
+is often long and grammatically complex — not a great thing to see first on
+a flashcard. The word sheet, Words page, and Review page all show the simple
+example first and the article sentence underneath.
+
+### Missing dictionary entries
+
+Not every word a reader taps — especially proper nouns, rare vocabulary, or
+inflections the lemmatiser can't guess — is in the local dictionary. The word
+sheet still lets you act on it:
+
+- Shows **"Not in local dictionary yet"** instead of a translation.
+- **"Ask AI for nuance"** still works (AI doesn't need a local entry to
+  explain a word — see "AI explanations" below).
+- **Save** / **Unsure** still work. The resulting `SavedWord` gets
+  `primaryTranslation: "Not translated yet"`, `missingFromDictionary: true`,
+  and the fallback example sentence — so it shows up under the Words page's
+  **"Missing entries"** filter, ready to be filled in by hand or explained
+  by AI later.
 
 ### Known / unsure / learning word statuses
 
@@ -263,33 +313,67 @@ record on the Words page) **and** adds it to the known-words list, so
 reader highlighting and future lookups only need to check one source of
 truth (`isKnown`).
 
-### AI is optional (off by default)
+### AI explanations (on demand only)
 
-The reading flow **never** calls AI automatically — only when a reader
-explicitly taps a button *and* has turned on **"Enable AI help"** in
-Settings (off by default). With the toggle off, both the word sheet's **"Ask
-AI for nuance"** and the sentence sheet's **"Ask AI to explain"** button show
-"AI explanations are not enabled yet." with zero network calls, exactly as
-before. With the toggle on, tapping either button calls
-`src/lib/ai/client/wordAnalysis.ts` / `sentenceExplanation.ts` →
-`/api/ai/word` / `/api/ai/sentence` and renders a loading state, then the
-result (or an error message on failure).
+The reading flow **never** calls AI automatically — not on page load, not on
+a word tap, not on a sentence tap. AI only ever runs when a reader explicitly
+taps **"Ask AI for nuance"** (word sheet) or **"Ask AI to explain"** (sentence
+sheet).
 
-The underlying provider layer is unchanged from the earlier iteration:
-`src/lib/ai/types.ts` (provider interfaces), `src/lib/ai/providers/openai.ts`
-(an OpenAI implementation via plain `fetch`, no SDK), `src/lib/ai/cache.ts`
-(a localStorage `CacheStore`), and three route handlers under
-`src/app/api/ai/`. Requires `OPENAI_API_KEY` in `.env.local` — without it,
-enabling the toggle just means the request fails and the sheet shows an
-error state instead of the "not enabled yet" placeholder.
+**Architecture**:
+- `src/lib/ai/openai.ts` — `explainWord(req)` / `explainSentence(req)`, plain
+  `fetch` calls to OpenAI's Chat Completions API in JSON mode (no SDK).
+  Throws `AiNotConfiguredError` if `OPENAI_API_KEY` isn't set.
+- `src/lib/ai/types.ts` — `WordExplanationRequest`/`WordExplanation` and
+  `SentenceExplanationRequest`/`SentenceExplanation`, the fixed shapes for
+  each direction.
+- `src/app/api/ai/explain-word/route.ts` and
+  `src/app/api/ai/explain-sentence/route.ts` — the only two AI-backed
+  routes. Validate the request body, call the corresponding `openai.ts`
+  function, and translate `AiNotConfiguredError` into a `503` with a
+  friendly message rather than a raw error.
+- `src/lib/ai/client.ts` — `getWordExplanation` / `getSentenceExplanation`,
+  called from `WordSheet.tsx` / `SentenceSheet.tsx`. Cache-first: every
+  successful response is cached in `localStorage` (`src/lib/ai/cache.ts`)
+  under a stable key derived from the word + its article sentence (or just
+  the sentence, for sentence explanations), so re-opening the same word in
+  the same context never re-calls OpenAI.
 
-**Why AI is optional at all**: the goal here is a fast, uninterrupted reading
+**Word explanation** sends the word, its lemma (if the dictionary resolved
+one), the article sentence, the dictionary's simple example sentence (if
+any), the previous sentence, and a fixed learner level ("A2/B1 French
+learner"). Returns translation, part of speech, a context-specific meaning,
+a fresh simple example (French + English), a grammar/usage note, and an
+optional common-mistake warning.
+
+**Sentence explanation** sends the sentence, the article title, and the
+previous/next sentence. Returns a natural English translation, a simplified
+French rewording, 1–3 grammar notes, a short list of useful vocabulary
+(word + meaning), and a 2–4 sentence explanation.
+
+**Cost control**:
+- AI is never triggered by rendering a page or opening a sheet — only by
+  tapping the AI button itself.
+- The button shows a loading state and is effectively single-shot per tap
+  (no debounce needed — there's nothing to debounce since it only fires on
+  click).
+- Every successful result is cached in `localStorage`; a cache hit costs
+  nothing and never re-calls the API.
+
+**Failure handling**: if `OPENAI_API_KEY` is missing, the button shows *"AI
+is not configured. Add OPENAI_API_KEY to enable explanations."* with a "Try
+again" link (which will keep failing the same way until the key is set — no
+crash either way). Any other failure (network error, malformed OpenAI
+response, rate limit) shows a generic *"Couldn't get an AI answer"* message,
+also with "Try again." Local dictionary lookup, saving, and reviewing all
+keep working regardless of whether AI is configured or reachable.
+
+**Why AI is on-demand only**: the goal here is a fast, uninterrupted reading
 flow — instant local lookup for the common case, with deeper (slower,
 costlier, network-dependent) AI help available only when a reader explicitly
-asks for it. Calling AI on every tap, as a previous iteration did, works
-against that: it adds latency to the most frequent interaction in the app and
-turns a lightweight reading habit into something that depends on an API key
-and an internet connection.
+asks for it. Calling AI on every tap would add latency to the most frequent
+interaction in the app and turn a lightweight reading habit into something
+that depends on an API key and an internet connection.
 
 ### Saved word format
 
@@ -303,24 +387,29 @@ interface SavedWord {
   word: string;                 // clean lowercase key (unique)
   lemma: string | null;         // dictionary/citation form, if resolved
   translations: string[];       // every translation the dictionary had
-  primaryTranslation: string;   // translations[0], or "No local dictionary entry yet"
+  primaryTranslation: string;   // translations[0], or "Not translated yet"
   partOfSpeech: string | null;
   gender: string | null;
   cefr: string | null;
   frequencyRank: number | null;
-  contextSentence: string;      // full sentence the word was tapped in
-  sourceTextTitle: string;      // title of the source text
-  savedAt: string;              // ISO timestamp
+  articleContextSentence: string; // full sentence the word was tapped in
+  exampleSentenceFr: string;      // simple learner example (dictionary or fallback)
+  exampleSentenceEn: string;      // English translation of exampleSentenceFr
+  sourceTextTitle: string;        // title of the source text
+  savedAt: string;                // ISO timestamp
   reviewCount: number;
   lastReviewedAt: string | null;
   status: WordStatus;
+  missingFromDictionary?: boolean; // true if saved with no dictionary entry
 }
 ```
 
 `src/lib/storage.ts` transparently **migrates** older data on read — plain
-strings, the AI-era shape (a single `translation` string, no `status`), and
-the current shape are all normalised to the structure above and written
-back. Migrated words default to `status: "learning"`.
+strings, the AI-era shape (a single `translation` string, no `status`), the
+previous shape (`contextSentence`, no example-sentence split), and the
+current shape are all normalised to the structure above and written back.
+Migrated words default to `status: "learning"`, and get the fallback example
+sentence if they predate that field.
 
 ### Reading progress & settings storage
 
@@ -342,15 +431,18 @@ back. Migrated words default to `status: "learning"`.
 | `src/lib/dictionary/types.ts` | `DictionaryEntry`, `DictionaryLookupResult` — the generic entry/result shapes |
 | `src/lib/dictionary/lookup.ts` | `lookupWord` / `lookupEnglishWord` — the offline lookup functions the app calls |
 | `src/lib/dictionary/lemmatize.ts` | `guessLemmas` — rule-based fallback lemmatiser for unlisted inflections |
-| `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` — shown when the dictionary has nothing for a word |
-| `src/data/dictionaries/fr-en.ts` | The active French→English dictionary (438 entries) — add entries here |
+| `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` (live popup), `NOT_TRANSLATED_YET` (saved-word placeholder), fallback example sentence |
+| `src/data/dictionaries/fr-en.ts` | The active French→English dictionary (474 entries) — add entries here |
 | `src/data/dictionaries/en-fr.ts` | The English→French dictionary backing `/lookup` |
 | `src/lib/knownWords.ts` | Known-words list: `getKnownWords`, `markKnown`, `isKnown`, `removeKnown`, `clearKnownWords` |
 | `src/lib/storage.ts` | Saved words: `getSavedWords`, `saveWord`, `markWordAsKnown`, `recordReview`, `deleteWord`, `clearWords`, migration |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getCurrentTextTitle` |
 | `src/lib/settings.ts` | App settings: `getSettings`, `saveSettings`, `DEFAULT_SETTINGS` |
 | `src/lib/format.ts` | Shared `formatDate` helper used by ReadingCard and the Words page |
-| `src/lib/ai/*`, `src/app/api/ai/*` | The dormant AI provider layer (types, OpenAI provider, cache, client services, three routes) — see "AI is optional" |
+| `src/lib/ai/openai.ts` | `explainWord`, `explainSentence` — OpenAI calls, on-demand only |
+| `src/lib/ai/client.ts` | `getWordExplanation`, `getSentenceExplanation` — cache-first client wrappers |
+| `src/lib/ai/cache.ts` | localStorage `CacheStore` + stable cache-key helpers |
+| `src/app/api/ai/explain-word/route.ts`, `.../explain-sentence/route.ts` | The two AI-backed routes — see "AI explanations" |
 | `src/data/rssSources.ts` | The 10 configured RSS feeds — add/remove/disable feeds here |
 | `src/lib/rss/parseRss.ts` | Dependency-free RSS/Atom XML parsing (`parseRssFeed`) |
 | `src/lib/rss/cleanContent.ts` | HTML stripping, entity decoding, whitespace, length/reading-time checks |
@@ -358,7 +450,7 @@ back. Migrated words default to `status: "learning"`.
 | `src/lib/rss/adaptReadingText.ts` | Maps `RssReadingText` → the app's `ReadingText` (client-safe) |
 | `src/lib/rss/rssTextCache.ts` | `sessionStorage` cache so the reader can look up RSS texts by id |
 | `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
-| `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — fetches all enabled feeds, returns up to 5 texts |
+| `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — fetches all enabled feeds, up to 2 items each, returns up to 20 texts |
 | `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
 | `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings`, `ReviewFilter` |
 | `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `Toast`, `ServiceWorker` |
@@ -413,6 +505,45 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Dictionary coverage substantially widened again** (438 → 474 entries):
+  full subject/object pronoun set (je/tu/elle/nous/vous/ils/elles/me/te/lui/
+  leur), more common verbs (manger, passer) with fuller conjugations for the
+  highest-frequency irregulars (être, avoir, aller, faire, pouvoir, vouloir,
+  devoir, prendre, dire, penser, trouver), more connectors (donc, car, parce
+  que, cependant, pourtant, puis, ensuite), and everyday news vocabulary
+  (gouvernement, président, économie, crise, guerre, société, science,
+  technologie, climat, environnement, etc.). Every new/edited entry carries
+  a simple example sentence.
+- **Missing dictionary entries are now first-class**: the word sheet shows
+  "Not in local dictionary yet" (was "No local dictionary entry yet"), still
+  offers Ask AI and Save/Unsure, and saves with `primaryTranslation: "Not
+  translated yet"` and a new `missingFromDictionary: true` field (added to
+  `SavedWord`) instead of relying on an empty `translations[]` as a proxy.
+- **Saved words now separate the article's own sentence from a learner
+  example**: `SavedWord.contextSentence` was split into
+  `articleContextSentence` (unchanged, the real article sentence) and new
+  `exampleSentenceFr`/`exampleSentenceEn` fields (a short A1/B1 sentence from
+  the dictionary entry, or a fixed fallback). The Words and Review pages
+  show the simple example first and the article sentence underneath in
+  smaller text, labelled "Original article context."
+- **RSS now returns up to 20 texts** (was 5) — up to 2 items per feed across
+  all 10 feeds, instead of 1. The home page's "Today's readings" section
+  shows all of them, with a live count and the existing category/difficulty
+  filters.
+- **AI explanations are real and no longer gated by a settings toggle** —
+  "Ask AI for nuance" / "Ask AI to explain" call OpenAI directly on tap
+  (previous iteration added an "Enable AI help" setting; removed since AI
+  was already never automatic — the button itself is the opt-in). Rebuilt
+  on two new routes, `/api/ai/explain-word` and `/api/ai/explain-sentence`
+  (`src/lib/ai/openai.ts`, replacing the earlier multi-provider
+  abstraction), with richer response shapes (meaning-in-context, a fresh
+  example, a grammar/usage note, and a common-mistake warning for words;
+  natural translation, simplified French, grammar notes, and useful
+  vocabulary for sentences). Responses are cached in `localStorage`. Missing
+  `OPENAI_API_KEY` shows a friendly "AI is not configured" message instead
+  of failing silently. The dormant full-article-translation route/provider
+  method (`/api/ai/article`, `translateArticle`) was removed — it was never
+  called from any UI.
 - **Fixed a Vercel deployment bug where every route 404'd in production** —
   the project's framework setting was `null`, so Vercel silently built it as
   a generic static site instead of a Next.js app. Now fixed for good via
@@ -502,7 +633,11 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 - **A real morphological analyzer** to replace the rule-based lemmatiser for
   irregular stem changes it can't guess (e.g. `acheter` → `achète`,
   `vendre` → future-tense stem changes).
-- **A bigger/downloadable dictionary** beyond the current 438 hand-curated
+- **A bigger/downloadable dictionary** beyond the current 474 hand-curated
   entries — the architecture still supports swapping `fr-en.ts` for a much
   larger generated or user-imported wordlist without touching lookup logic.
+- **Let AI fill in missing dictionary entries** — when a saved word has
+  `missingFromDictionary: true`, an "Ask AI" result could be offered to
+  patch in a real `primaryTranslation` for future lookups, instead of only
+  ever showing "Not translated yet."
 - Audio / text-to-speech for pronunciation.

@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ReviewFilter, SavedWord } from "@/types";
 import { getSavedWords, recordReview, markWordAsKnown } from "@/lib/storage";
-import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
-import { lookupWord } from "@/lib/dictionary/lookup";
+import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { getCurrentTextTitle } from "@/lib/progress";
 
 const FILTERS: { value: ReviewFilter; label: string }[] = [
@@ -80,7 +79,6 @@ export default function ReviewPage() {
 
   const current = deck[index];
   const done = ready && deck.length > 0 && index >= deck.length;
-  const examples = current ? lookupWord(current.word).examples : [];
 
   function answer(knew: boolean) {
     if (current) recordReview(current.word);
@@ -194,7 +192,7 @@ export default function ReviewPage() {
     );
   }
 
-  const hasTranslation = current && current.primaryTranslation !== NO_DICTIONARY_ENTRY;
+  const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
   return (
     <div className="flex min-h-[70vh] flex-col px-4 pt-6">
@@ -243,14 +241,21 @@ export default function ReviewPage() {
                   </p>
                 )}
 
-                {current.contextSentence && (
-                  <p className="mt-4 text-sm italic text-slate-500">
-                    “{current.contextSentence}”
-                  </p>
+                {current.exampleSentenceFr && (
+                  <div className="mt-4 rounded-2xl bg-slate-50 p-3 text-left">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                      Example
+                    </p>
+                    <p className="mt-1 text-sm italic text-slate-600">{current.exampleSentenceFr}</p>
+                    <p className="mt-0.5 text-sm text-slate-500">{current.exampleSentenceEn}</p>
+                  </div>
                 )}
 
-                {examples.length > 0 && (
-                  <p className="mt-2 text-xs text-slate-400">{examples[0].fr}</p>
+                {current.articleContextSentence && (
+                  <p className="mt-3 text-xs text-slate-400">
+                    <span className="font-semibold uppercase tracking-wide">Original article context: </span>
+                    “{current.articleContextSentence}”
+                  </p>
                 )}
               </div>
             ) : (

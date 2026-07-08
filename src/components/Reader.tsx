@@ -1,17 +1,17 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
+import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { getKnownWords, isKnown, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
-import SentenceSheet from "@/components/SentenceSheet";
+import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import Toast from "@/components/Toast";
 
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
@@ -21,12 +21,21 @@ const FONT_SIZE_CLASSES: Record<FontSize, string> = {
 };
 
 export default function Reader({ text }: { text: ReadingText }) {
-  const paragraphs = tokenizeParagraphsToSentences(text.body);
+  const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
+  // Flat, ordered list of every sentence in the article, so a tapped word or
+  // sentence can look up its immediate neighbours for AI context.
+  const flatSentences = useMemo(() => paragraphs.flatMap((p) => p.map((s) => s.text)), [paragraphs]);
+
+  function neighbours(sentenceText: string): { previous: string | null; next: string | null } {
+    const i = flatSentences.indexOf(sentenceText);
+    if (i === -1) return { previous: null, next: null };
+    return { previous: i > 0 ? flatSentences[i - 1] : null, next: i < flatSentences.length - 1 ? flatSentences[i + 1] : null };
+  }
 
   const [wordStatusMap, setWordStatusMap] = useState<Map<string, WordStatus>>(new Map());
   const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
   const [activeWord, setActiveWord] = useState<ActiveWordState | null>(null);
-  const [activeSentence, setActiveSentence] = useState<string | null>(null);
+  const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   // Start with the neutral defaults (matching SSR output) so the first
   // client render can't mismatch the server-rendered markup; the effect
@@ -63,14 +72,22 @@ export default function Reader({ text }: { text: ReadingText }) {
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
+    const { previous } = neighbours(sentenceText);
 
     setActiveSentence(null);
-    setActiveWord({ word: clean, contextSentence: sentenceText, lookup, existingStatus });
+    setActiveWord({
+      word: clean,
+      contextSentence: sentenceText,
+      surroundingSentence: previous,
+      lookup,
+      existingStatus,
+    });
   }
 
   function handleSentenceTap(sentenceText: string) {
+    const { previous, next } = neighbours(sentenceText);
     setActiveWord(null);
-    setActiveSentence(sentenceText);
+    setActiveSentence({ sentence: sentenceText, previousSentence: previous, nextSentence: next });
   }
 
   function handleKnow() {
@@ -91,21 +108,26 @@ export default function Reader({ text }: { text: ReadingText }) {
   function saveActiveWord(wordStatus: Exclude<WordStatus, "known">) {
     if (!activeWord) return;
     const { lookup, contextSentence, word } = activeWord;
+    const missing = lookup.source === "missing";
+    const firstExample = lookup.examples[0];
     const entry: SavedWord = {
       word,
       lemma: lookup.lemma,
       translations: lookup.translations,
-      primaryTranslation: lookup.translations[0] ?? NO_DICTIONARY_ENTRY,
+      primaryTranslation: missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET,
       partOfSpeech: lookup.partOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
-      contextSentence,
+      articleContextSentence: contextSentence,
+      exampleSentenceFr: firstExample?.fr ?? FALLBACK_EXAMPLE_FR,
+      exampleSentenceEn: firstExample?.en ?? FALLBACK_EXAMPLE_EN,
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
       lastReviewedAt: null,
       status: wordStatus,
+      missingFromDictionary: missing,
     };
     saveWord(entry);
     setWordStatusMap((prev) => new Map(prev).set(word, wordStatus));
@@ -249,15 +271,15 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       <WordSheet
         state={activeWord}
-        aiEnabled={settings.enableAiHelp}
+        articleTitle={text.title}
         onClose={() => setActiveWord(null)}
         onKnow={handleKnow}
         onUnsure={() => saveActiveWord("unsure")}
         onSave={() => saveActiveWord("learning")}
       />
       <SentenceSheet
-        sentence={activeSentence}
-        aiEnabled={settings.enableAiHelp}
+        state={activeSentence}
+        articleTitle={text.title}
         onClose={() => setActiveSentence(null)}
       />
       <Toast message={toastMessage} />

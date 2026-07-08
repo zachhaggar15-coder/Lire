@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
 import { getSavedWords, deleteWord, clearWords, markWordAsKnown } from "@/lib/storage";
-import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
+import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate } from "@/lib/format";
 
 type WordsFilter = "learning" | "unsure" | "known" | "missing";
@@ -17,7 +17,7 @@ const FILTERS: { value: WordsFilter; label: string }[] = [
 ];
 
 function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
-  if (filter === "missing") return word.translations.length === 0;
+  if (filter === "missing") return !!word.missingFromDictionary;
   return word.status === filter;
 }
 
@@ -51,7 +51,7 @@ export default function WordsPage() {
     learning: words.filter((w) => w.status === "learning").length,
     unsure: words.filter((w) => w.status === "unsure").length,
     known: words.filter((w) => w.status === "known").length,
-    missing: words.filter((w) => w.translations.length === 0).length,
+    missing: words.filter((w) => w.missingFromDictionary).length,
   };
 
   const filtered = words.filter((w) => matchesFilter(w, filter));
@@ -133,7 +133,7 @@ export default function WordsPage() {
 
                     <p
                       className={`text-sm ${
-                        w.primaryTranslation === NO_DICTIONARY_ENTRY
+                        w.primaryTranslation === NOT_TRANSLATED_YET
                           ? "italic text-slate-400"
                           : "text-slate-500"
                       }`}
@@ -146,9 +146,16 @@ export default function WordsPage() {
                       </p>
                     )}
 
-                    {w.contextSentence && (
-                      <p className="mt-1 line-clamp-2 text-xs italic text-slate-400">
-                        “{w.contextSentence}”
+                    {w.exampleSentenceFr && (
+                      <p className="mt-1 text-xs italic text-slate-500">
+                        {w.exampleSentenceFr}
+                        <span className="not-italic text-slate-400"> — {w.exampleSentenceEn}</span>
+                      </p>
+                    )}
+                    {w.articleContextSentence && (
+                      <p className="mt-1 line-clamp-2 text-[11px] text-slate-400">
+                        <span className="font-semibold uppercase tracking-wide">Original article context: </span>
+                        “{w.articleContextSentence}”
                       </p>
                     )}
 

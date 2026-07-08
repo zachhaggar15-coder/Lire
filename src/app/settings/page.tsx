@@ -89,12 +89,17 @@ export default function SettingsPage() {
           label="Show known word styling"
           description="De-emphasise words you've marked as known, so your eye goes to what's actually new."
         />
-        <Toggle
-          checked={settings.enableAiHelp}
-          onChange={(v) => update({ enableAiHelp: v })}
-          label="Enable AI help"
-          description="Turns “Ask AI for nuance” and “Ask AI to explain” into real requests. Off by default — AI is only ever used when you explicitly tap one of those buttons, never automatically."
-        />
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="font-semibold text-slate-900">AI explanations</p>
+          <p className="mt-0.5 text-sm text-slate-500">
+            “Ask AI for nuance” and “Ask AI to explain” call OpenAI on
+            request only — never automatically while reading. Requires
+            <code className="mx-1 rounded bg-slate-100 px-1 py-0.5 text-xs">
+              OPENAI_API_KEY
+            </code>
+            to be configured on the server.
+          </p>
+        </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <p className="font-semibold text-slate-900">Font size</p>
