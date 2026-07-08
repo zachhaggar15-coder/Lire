@@ -73,6 +73,47 @@ export function isTextLongEnough(text: string, minWords = 12): boolean {
   return words.length >= minWords;
 }
 
+/** Phrases that indicate the "content" is really nav/cookie/legal boilerplate, not a reading text. */
+const BOILERPLATE_PATTERNS = [
+  /cookies?/i,
+  /politique de confidentialit[ée]/i,
+  /privacy policy/i,
+  /accept(er)?\s+(all\s+|tous\s+les\s+)?cookies?/i,
+  /subscribe to (our|the) newsletter/i,
+  /abonnez-vous/i,
+  /tous droits r[ée]serv[ée]s/i,
+  /all rights reserved/i,
+  /read more/i,
+  /lire la suite/i,
+  /click here/i,
+  /gdpr|rgpd/i,
+  /unsubscribe/i,
+  /se d[ée]sinscrire/i,
+];
+
+/**
+ * Heuristic check for RSS "content" that's actually navigation, a cookie
+ * banner, or other site chrome rather than real reading material: short
+ * text containing any boilerplate phrase, or text with several such
+ * phrases regardless of length (a real article rarely mentions more than
+ * one of these).
+ */
+export function looksLikeBoilerplate(text: string): boolean {
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  if (wordCount === 0) return true;
+  const hits = BOILERPLATE_PATTERNS.filter((re) => re.test(text)).length;
+  return (wordCount < 40 && hits > 0) || hits >= 3;
+}
+
+/**
+ * Some feeds leak unresolved CMS template syntax into their title/body when
+ * the site's template is broken (e.g. `$content.TitleNoTags`, `{{ title }}`,
+ * `#set(...)`). That's malformed content, not real reading material.
+ */
+export function hasBrokenTemplateSyntax(text: string): boolean {
+  return /\$content\.|\$\{|\{\{|#set\(|<%[=#]?/i.test(text);
+}
+
 /** ~200 words/minute, rounded, minimum 1 minute. */
 export function estimateReadingMinutes(text: string): number {
   const words = text.split(/\s+/).filter(Boolean).length;

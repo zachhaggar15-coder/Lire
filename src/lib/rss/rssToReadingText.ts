@@ -4,7 +4,9 @@ import type { RssItem } from "@/lib/rss/parseRss";
 import {
   cleanRssText,
   estimateReadingMinutes,
+  hasBrokenTemplateSyntax,
   isTextLongEnough,
+  looksLikeBoilerplate,
   truncateAtSentence,
 } from "@/lib/rss/cleanContent";
 import { hashString } from "@/lib/hash";
@@ -16,7 +18,8 @@ export interface RssReadingText {
   category: Category;
   difficulty: "B1";
   readingTimeMinutes: number;
-  originalLanguage: "fr";
+  /** The source feed's declared language — see RssSource.language. */
+  language: "fr" | "en" | "mixed";
   originalText: string;
   sourceName: string;
   sourceUrl: string;
@@ -44,7 +47,8 @@ function mapToKnownCategory(rawCategories: string[], fallback: Category): Catego
 
 /**
  * Converts one RSS item into a RssReadingText, or returns null if the item
- * doesn't have enough usable content (e.g. an empty/very short description).
+ * doesn't have enough usable content (missing link/title, too short, or
+ * looks like nav/cookie/legal boilerplate rather than a real reading text).
  * Prefers the feed's `description` as the reading body — it's normally a
  * short, self-contained summary, which suits a language-learning "short
  * text" better than a full `content:encoded` article dump.
@@ -54,27 +58,28 @@ export async function itemToRssReadingText(
   source: RssSource
 ): Promise<RssReadingText | null> {
   const title = cleanRssText(item.title);
-  if (!title) return null;
+  if (!title || !item.link || hasBrokenTemplateSyntax(title)) return null;
 
   const rawBody = item.description || item.contentEncoded || "";
   const cleanedBody = cleanRssText(rawBody);
-  if (!isTextLongEnough(cleanedBody)) return null;
+  if (
+    !isTextLongEnough(cleanedBody) ||
+    looksLikeBoilerplate(cleanedBody) ||
+    hasBrokenTemplateSyntax(cleanedBody)
+  ) {
+    return null;
+  }
 
   const body = truncateAtSentence(cleanedBody, MAX_BODY_LENGTH);
   const originalText = `${title}.\n\n${body}`;
 
-  // Full-article translation is no longer computed eagerly here — it's done
-  // on demand by the AI translation service (src/lib/ai) only when a reader
-  // actually opens the "Show full translation" disclosure, and cached from
-  // then on. That avoids paying for a translation on every fetched article,
-  // most of which are never opened.
   return {
     id: `rss-${source.id}-${hashString(item.link || title)}`,
     title,
     category: mapToKnownCategory(item.categories, source.category),
     difficulty: "B1",
     readingTimeMinutes: estimateReadingMinutes(originalText),
-    originalLanguage: "fr",
+    language: source.language,
     originalText,
     sourceName: source.name,
     sourceUrl: item.link,

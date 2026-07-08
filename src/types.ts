@@ -25,6 +25,8 @@ export interface ReadingText {
   sourceUrl?: string;
   /** ISO timestamp of the article's publication date. */
   publishedAt?: string;
+  /** The source feed's declared language, if known (RSS-sourced texts only). */
+  language?: "fr" | "en" | "mixed";
 }
 
 export type WordStatus = "learning" | "unsure" | "known";

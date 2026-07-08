@@ -3,48 +3,40 @@
 import { useEffect, useState } from "react";
 import ReadingCard from "@/components/ReadingCard";
 import { texts as hardcodedTexts } from "@/data/texts";
-import type { Category, Difficulty, ReadingText } from "@/types";
+import type { ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 
 type LoadState = "loading" | "success" | "empty" | "error";
-type CategoryFilter = "all" | Category;
-type DifficultyFilter = "all" | Difficulty;
 
-const CATEGORY_OPTIONS: { value: CategoryFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "news-style", label: "News" },
-  { value: "sport", label: "Sport" },
-  { value: "culture", label: "Culture" },
-  { value: "science", label: "Science" },
-  { value: "everyday life", label: "Everyday life" },
-];
+/** Only present in non-production responses — see /api/rss-texts/route.ts. */
+interface RssDebugInfo {
+  feedsSucceeded: number;
+  feedsFailed: number;
+  candidatePoolSize: number;
+  candidatePoolBuiltAt: string;
+  selectedIds: string[];
+  seed: string;
+}
 
-const DIFFICULTY_OPTIONS: { value: DifficultyFilter; label: string }[] = [
-  { value: "all", label: "All levels" },
-  { value: "A1", label: "A1" },
-  { value: "A2", label: "A2" },
-  { value: "B1", label: "B1" },
-  { value: "B2", label: "B2" },
-];
+const DAILY_LIMIT = 5;
 
 export default function HomePage() {
   const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
   const [state, setState] = useState<LoadState>("loading");
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
-  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
+  const [debug, setDebug] = useState<RssDebugInfo | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
-        const res = await fetch("/api/rss-texts");
+        const res = await fetch(`/api/rss-texts?limit=${DAILY_LIMIT}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
-        const data: { texts: RssReadingText[] } = await res.json();
+        const data: { texts: RssReadingText[]; debug?: RssDebugInfo } = await res.json();
         if (cancelled) return;
 
         const mapped = data.texts.map(rssReadingTextToReadingText);
@@ -54,10 +46,11 @@ export default function HomePage() {
         }
 
         cacheRssTexts(mapped);
-        // Drop progress for RSS ids that have rotated out of the feed, so
-        // lire.progress.v1 doesn't grow forever as headlines come and go.
+        // Drop progress for RSS ids that have rotated out of today's
+        // selection, so lire.progress.v1 doesn't grow forever.
         pruneStaleRssProgress(mapped.map((t) => t.id));
         setRssTexts(mapped);
+        setDebug(data.debug ?? null);
         setState("success");
       } catch {
         if (!cancelled) setState("error");
@@ -71,12 +64,14 @@ export default function HomePage() {
   }, []);
 
   const showingRss = state === "success";
-  const displayedTexts = showingRss ? rssTexts : hardcodedTexts;
-  const filteredTexts = displayedTexts.filter(
-    (t) =>
-      (categoryFilter === "all" || t.category === categoryFilter) &&
-      (difficultyFilter === "all" || t.difficulty === difficultyFilter)
-  );
+  // If RSS came back with fewer than 5 (a rough day for feeds), fill the
+  // remaining slots with hardcoded texts so the reader still sees a full
+  // set — never fewer than 5 when hardcoded texts are available.
+  const displayedTexts = !showingRss
+    ? hardcodedTexts
+    : rssTexts.length >= DAILY_LIMIT
+      ? rssTexts
+      : [...rssTexts, ...hardcodedTexts.slice(0, DAILY_LIMIT - rssTexts.length)];
 
   return (
     <div className="px-4 pt-6">
@@ -105,56 +100,34 @@ export default function HomePage() {
 
       {state !== "loading" && (
         <>
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
-              {showingRss ? "Today's readings" : "Saved readings"}
-            </h2>
-            <span className="text-xs text-slate-400">
-              {filteredTexts.length} {filteredTexts.length === 1 ? "text" : "texts"}
-            </span>
-          </div>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
+            Today&apos;s 5 readings
+          </h2>
+          <p className="mb-4 mt-0.5 text-xs text-slate-400">
+            Refreshes daily — the same 5 stay all day, picked from a much
+            bigger pool.
+          </p>
 
-          <div className="mb-2 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-            {CATEGORY_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => setCategoryFilter(opt.value)}
-                className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
-                  categoryFilter === opt.value
-                    ? "bg-brand text-white"
-                    : "bg-slate-100 text-slate-600"
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-          <div className="mb-4 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-            {DIFFICULTY_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => setDifficultyFilter(opt.value)}
-                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  difficultyFilter === opt.value
-                    ? "bg-slate-800 text-white"
-                    : "bg-slate-100 text-slate-500"
-                }`}
-              >
-                {opt.label}
-              </button>
+          <div className="space-y-4">
+            {displayedTexts.map((text) => (
+              <ReadingCard key={text.id} text={text} />
             ))}
           </div>
 
-          {filteredTexts.length === 0 ? (
-            <p className="mt-10 text-center text-sm text-slate-400">
-              No texts match these filters.
-            </p>
-          ) : (
-            <div className="space-y-4">
-              {filteredTexts.map((text) => (
-                <ReadingCard key={text.id} text={text} />
-              ))}
-            </div>
+          {process.env.NODE_ENV !== "production" && debug && (
+            <details className="mt-6 rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
+              <summary className="cursor-pointer font-semibold text-slate-600">
+                Debug: RSS selection (dev only)
+              </summary>
+              <ul className="mt-2 space-y-0.5">
+                <li>Feeds succeeded: {debug.feedsSucceeded}</li>
+                <li>Feeds failed: {debug.feedsFailed}</li>
+                <li>Candidate pool size: {debug.candidatePoolSize}</li>
+                <li>Pool built at: {debug.candidatePoolBuiltAt}</li>
+                <li>Seed: {debug.seed}</li>
+                <li className="break-all">Selected ids: {debug.selectedIds.join(", ")}</li>
+              </ul>
+            </details>
           )}
         </>
       )}

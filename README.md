@@ -5,13 +5,14 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. Open it on your phone, read up to 20
-fresh articles pulled live from French news RSS feeds (or the hardcoded
-fallback texts), and tap any word for an **instant, fully offline** dictionary
-lookup — translation, part of speech, gender, CEFR level, a simple example —
-with no network round-trip. AI is there for when you explicitly want more
-(see "AI explanations" below), never automatically. Reading state lives in
-**localStorage** — no account, no backend, works instantly.
+feel like a language-learning Kindle. Open it on your phone, read **today's 5
+readings** — deterministically selected once a day from a pool of 120+ RSS
+feeds (or the hardcoded fallback texts) — and tap any word for an **instant,
+fully offline** dictionary lookup — translation, part of speech, gender,
+CEFR level, a simple example — with no network round-trip. AI is there for
+when you explicitly want more (see "AI explanations" below), never
+automatically. Reading state lives in **localStorage** — no account, no
+backend, works instantly.
 
 ## Tech stack
 
@@ -24,7 +25,8 @@ with no network round-trip. AI is there for when you explicitly want more
 - **AI explanations** (`src/lib/ai/`) — on-demand only, via OpenAI. Never
   called automatically; see "AI explanations" below.
 - Server-side **RSS fetching** (`/api/rss-texts`) — no external RSS/XML
-  package, just a small dependency-free parser. Returns up to 20 texts.
+  package, just a small dependency-free parser. Builds a large candidate
+  pool from 120+ feeds and deterministically returns 5 for the day.
 - **localStorage** for saved words, known words, reading progress, and
   settings (Supabase planned for later)
 - Deployable to **Vercel**
@@ -64,15 +66,17 @@ npm start
 Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
 
 1. **Read (home)** — `src/app/page.tsx`
-   On load, fetches `GET /api/rss-texts` and shows a **"Today's readings"**
-   section with up to **20 live French news articles** pulled from RSS feeds
-   (up to 2 per feed, across 10 feeds), each with a title, difficulty (fixed
-   at B1 for RSS texts), category, estimated reading time, a short preview,
-   **source name + published date**, and a **reading-progress badge** (Unread
-   / In progress / Completed). Category and difficulty filter chips narrow
-   the list. Shows a loading skeleton while fetching. If the fetch fails or
-   returns nothing, it falls back to the 5 hardcoded texts in
-   `src/data/texts.ts` with a small notice. See "RSS reading content" below.
+   On load, fetches `GET /api/rss-texts?limit=5` and shows a **"Today's 5
+   readings"** section — exactly 5 articles, deterministically selected once
+   per day from a much larger RSS source pool (120+ feeds; see "RSS reading
+   content" below). The same 5 stay all day and only change the next day —
+   a small "Refreshes daily" line makes that explicit. Each card shows a
+   title, difficulty (fixed at B1 for RSS texts), category, estimated
+   reading time, **source name + published date**, and a **reading-progress
+   badge** (Unread / In progress / Completed). Shows a loading skeleton
+   while fetching. If fewer than 5 RSS texts come back, hardcoded texts from
+   `src/data/texts.ts` fill the remaining slots; if RSS fails entirely, all
+   5 come from the hardcoded set, with a small notice either way.
 
 2. **Reader** — `src/app/reader/[id]/page.tsx` + `src/components/Reader.tsx`
    Renders the chosen text with punctuation and paragraph spacing preserved,
@@ -141,43 +145,77 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
    - **Known words** — a count of everything you've marked known, with a
      **Clear** action to forget them all (they'll reappear for review).
 
-### RSS reading content
+### RSS reading content: a big pool, a calm daily selection
 
-The home page's articles come from **10 French RSS feeds**, fetched and parsed
-server-side, converted into the app's normal `ReadingText` shape, and rendered
-through the exact same Reader/ReadingCard components as the hardcoded texts —
-nothing in the reading flow needed to know the difference.
+The app pulls from **120+ RSS feeds** (`src/data/rssSources.ts`) — French
+news outlets, English-language expat/travel/culture blogs about France, and
+general publications' France-tagged sections — but a reader only ever sees
+**5 articles a day**. The goal isn't to show more articles; it's a large,
+resilient backend pool with a calm, predictable daily selection up front.
 
 **Pipeline** (`GET /api/rss-texts`, `src/app/api/rss-texts/route.ts`):
 
-1. Fetch every `enabled` feed in `src/data/rssSources.ts`, concurrently, each
-   with an 8s timeout.
-2. Parse the XML with a small dependency-free regex parser
-   (`src/lib/rss/parseRss.ts`) that reads `<item>`/`<entry>` blocks — titles,
-   links, publish dates, descriptions, richer content
-   (`content:encoded`/custom `<body>`/Atom `<content>`), and categories.
-3. Clean each candidate item (`src/lib/rss/cleanContent.ts`): strip HTML tags,
-   decode entities (named + numeric — covers accented French text reliably),
-   collapse whitespace, and skip anything too short to be a real reading text.
-   The **first two items per feed** that pass become that source's texts; if
-   an item fails, the next one in the feed is tried.
-4. Build the response object (`src/lib/rss/rssToReadingText.ts`). No
-   translation happens here at all — words are looked up locally in the
-   reader, and full-article translation is intentionally disabled (see
-   "Translate article later" and "AI explanations" below).
-5. Cap the combined result at **20 texts** (up to 2 per feed × 10 feeds) and
-   return them as JSON.
+1. **Build (or reuse) the candidate pool.** Fetch every `enabled` feed in
+   `rssSources.ts` concurrently (each with an 8s timeout), parse the XML
+   (`src/lib/rss/parseRss.ts` — handles RSS 2.0 `<item>` blocks and falls
+   back to Atom `<entry>` blocks, which covers Blogger and most Feedburner
+   feeds too), and pull up to **3 usable items per working feed** into one
+   big list. A feed that times out, 404s, or returns unparseable XML is
+   simply skipped (`Promise.allSettled` + a per-source try/catch) — it
+   never affects any other feed or breaks the route.
+2. **Clean and quality-filter each item** (`src/lib/rss/cleanContent.ts`):
+   strip HTML, decode entities, collapse whitespace, and reject anything
+   too short, mostly cookie/privacy/nav boilerplate
+   (`looksLikeBoilerplate`), or containing unresolved CMS template syntax
+   like `$content.TitleNoTags` or `{{ title }}` (`hasBrokenTemplateSyntax`)
+   — real-world feeds occasionally leak both.
+3. **Deduplicate** the pool by source URL and by title (case/whitespace
+   -insensitive), so the same story picked up by two feeds only appears
+   once.
+4. **Cache the pool** in memory for 12 hours (`CANDIDATE_POOL_TTL_MS`) —
+   the expensive part (120+ concurrent HTTP fetches) only happens once per
+   TTL window, not once per page load.
+5. **Deterministically select 5 for today.** A seeded shuffle
+   (`src/lib/rss/seededShuffle.ts`) keyed on today's date (`YYYY-MM-DD`,
+   plus the active `language`/`category` filter, if any) reorders the
+   candidate pool and the top `limit` (default 5) are returned. Critically,
+   this **never uses `Math.random()`** — the same seed always produces the
+   same order, so repeated requests on the same day return the exact same 5
+   articles; the date rolling over is what changes the selection, not a
+   page refresh. The plain (no filters) daily-5 result is itself cached
+   until the calendar day changes, so it doesn't even need to re-shuffle on
+   every request.
+
+**Query parameters** (structured for future UI controls, not required by
+today's UI):
+- `?limit=5` — how many texts to return (default 5, max 50).
+- `?language=fr` — filter the candidate pool to one `RssSource.language`
+  (`fr` / `en` / `mixed`) before selecting. Default: no filter.
+- `?category=culture` — filter to one `Category` before selecting. Default:
+  no filter.
+- `?refresh=true` — bypass the in-memory pool cache and re-fetch every feed
+  immediately. Since feeds are live, a forced refresh can change the
+  candidate pool itself (new posts appear), so it isn't guaranteed to
+  reproduce the exact same 5 as a non-refreshed request the same day — the
+  "same 5 all day" guarantee applies to normal (non-refresh) requests, which
+  reuse the cached pool.
 
 **Failure handling** — required and tested against real feeds:
-- **One feed down:** wrapped in `Promise.allSettled` + a per-source try/catch,
-  so a single failure (timeout, non-200, bad XML, bot-protection redirect
-  loop — Sud Ouest's Incapsula protection reliably triggers this) never stops
-  the others. Verified live: 9/10 feeds succeeded, Sud Ouest failed, the route
-  still returned a full set of good texts from the rest.
-- **All feeds down:** the route returns `{ texts: [] }`; the home page detects
-  the empty result (or a fetch/network error) and falls back to the 5
-  hardcoded texts with a small "Couldn't load today's articles" notice.
-  Verified by disabling every source and confirming the fallback renders.
+- **Some feeds down:** never breaks the route. A real run against all 122
+  sources typically sees 115+ succeed and a handful fail (dead domains,
+  timeouts, feeds that redirect through bot protection) — the candidate
+  pool is still 300+ items either way.
+- **All feeds down:** the route returns `{ texts: [] }`; the home page
+  detects the empty result (or a fetch/network error) and falls back to the
+  5 hardcoded texts, with a small "Couldn't load today's articles" notice.
+- **Fewer than 5 valid RSS texts:** the home page fills the remaining slots
+  with hardcoded texts rather than showing fewer than 5.
+
+**In development only**, the response includes a `debug` object (feeds
+succeeded/failed, candidate pool size, when the pool was built, the
+selection seed, and the selected ids) — the home page renders it in a
+collapsed `<details>` panel, gated on `process.env.NODE_ENV`. It's absent
+in production responses entirely, not just hidden in the UI.
 
 **Where to add/remove feeds** — edit `src/data/rssSources.ts`. Each entry is
 `{ id, name, category, feedUrl, language, enabled }`; set `enabled: false` to
@@ -185,9 +223,13 @@ turn a feed off without deleting it, or add a new entry with a fresh `id`.
 `category` reuses the app's fixed `Category` union (not a bare string) so
 every RSS card stays compatible with `ReadingCard`'s styling — pick whichever
 of `news-style` / `sport` / `culture` / `science` / `everyday life` fits best
-as that source's default (the actual per-article category can still be
-refined from the feed's own `<category>` tags, see `mapToKnownCategory` in
-`rssToReadingText.ts`).
+(the actual per-article category can still be refined from the feed's own
+`<category>` tags, see `mapToKnownCategory` in `rssToReadingText.ts`).
+`language` is `"fr"` (French-language), `"en"` (English-language, typically
+about France), or `"mixed"` (uncertain/varies by post) — it's carried onto
+every `RssReadingText`/`ReadingText` produced from that feed and is what
+`?language=` filters on; nothing in the reading flow enforces it yet (the
+reader doesn't check it), it's metadata for future filtering.
 
 **Why full-article scraping is intentionally avoided** — the task is to
 extract only what a feed publishes directly (title, link, date, summary,
@@ -443,14 +485,15 @@ sentence if they predate that field.
 | `src/lib/ai/client.ts` | `getWordExplanation`, `getSentenceExplanation` — cache-first client wrappers |
 | `src/lib/ai/cache.ts` | localStorage `CacheStore` + stable cache-key helpers |
 | `src/app/api/ai/explain-word/route.ts`, `.../explain-sentence/route.ts` | The two AI-backed routes — see "AI explanations" |
-| `src/data/rssSources.ts` | The 10 configured RSS feeds — add/remove/disable feeds here |
+| `src/data/rssSources.ts` | The 120+ configured RSS feeds — add/remove/disable feeds here |
 | `src/lib/rss/parseRss.ts` | Dependency-free RSS/Atom XML parsing (`parseRssFeed`) |
-| `src/lib/rss/cleanContent.ts` | HTML stripping, entity decoding, whitespace, length/reading-time checks |
+| `src/lib/rss/cleanContent.ts` | HTML stripping, entity decoding, length/boilerplate/template-syntax checks |
+| `src/lib/rss/seededShuffle.ts` | `seededShuffle`, `todayKey` — the deterministic date-seeded daily selection |
 | `src/lib/rss/rssToReadingText.ts` | Converts one RSS item into the API's `RssReadingText` shape (server-only) |
 | `src/lib/rss/adaptReadingText.ts` | Maps `RssReadingText` → the app's `ReadingText` (client-safe) |
 | `src/lib/rss/rssTextCache.ts` | `sessionStorage` cache so the reader can look up RSS texts by id |
 | `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
-| `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — fetches all enabled feeds, up to 2 items each, returns up to 20 texts |
+| `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — builds/caches the candidate pool, returns 5 deterministic daily texts by default |
 | `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
 | `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings`, `ReviewFilter` |
 | `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `Toast`, `ServiceWorker` |
@@ -505,6 +548,34 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **RSS source pool grown from 10 feeds to 120+** (`src/data/rssSources.ts`)
+  — French news outlets plus English-language expat/travel/culture blogs
+  and general publications' France sections, each tagged with an inferred
+  `name`, `category`, and `language` (`fr`/`en`/`mixed`).
+- **The home page now shows exactly 5 articles a day, not up to 20.**
+  `/api/rss-texts` fetches all enabled feeds, builds a deduplicated,
+  quality-filtered candidate pool (up to 3 items per working feed — often
+  300+ candidates), and deterministically selects 5 using a date-seeded
+  shuffle (`src/lib/rss/seededShuffle.ts`, never `Math.random()`) — the same
+  5 stay all day and only change the next day. See "RSS reading content:
+  a big pool, a calm daily selection" below for the full pipeline.
+- **New query params on `/api/rss-texts`**: `?limit=`, `?language=`,
+  `?category=`, `?refresh=` — not wired into the UI yet, but the route
+  fully supports them (each combination gets its own stable daily
+  selection).
+- **Server-side caching**: the candidate pool is cached in memory for 12
+  hours; the plain daily-5 selection is cached until the calendar day
+  changes. Both are process-lifetime caches — fine to reset on a
+  serverless cold start, since the next request just rebuilds them once.
+- **Better content-quality filtering**: rejects items that are mostly
+  cookie/privacy/nav boilerplate or contain unresolved CMS template syntax
+  (`$content.TitleNoTags`-style leaks seen on at least one real feed), on
+  top of the existing too-short-to-be-a-real-text check. Also deduplicates
+  by source URL and by title across the whole candidate pool.
+- **Dev-only debug info**: non-production `/api/rss-texts` responses
+  include a `debug` object (feeds succeeded/failed, pool size, when it was
+  built, the selection seed, selected ids), rendered as a collapsed panel
+  on the home page — absent entirely from production responses.
 - **Dictionary coverage substantially widened again** (438 → 474 entries):
   full subject/object pronoun set (je/tu/elle/nous/vous/ils/elles/me/te/lui/
   leur), more common verbs (manger, passer) with fuller conjugations for the
@@ -640,4 +711,14 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   `missingFromDictionary: true`, an "Ask AI" result could be offered to
   patch in a real `primaryTranslation` for future lookups, instead of only
   ever showing "Not translated yet."
+- **UI controls for the `/api/rss-texts` query params** — a language or
+  category picker on the home page that reuses the already-supported
+  `?language=`/`?category=` filters, and perhaps a manual "shuffle" action
+  that calls `?refresh=true` for someone who wants a different pick before
+  the day rolls over.
+- **Verify the newly-added feeds over time** — 122 sources were added in
+  one pass from a provided list and named/categorized/tagged by inference
+  (see `src/data/rssSources.ts`); a few are inevitably dead, rate-limited,
+  or mis-tagged (wrong language/category) and worth pruning or correcting
+  as that becomes apparent from real usage/the dev debug panel.
 - Audio / text-to-speech for pronunciation.
