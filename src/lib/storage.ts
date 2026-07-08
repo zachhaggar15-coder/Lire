@@ -1,5 +1,7 @@
 import type { SavedWord, WordStatus } from "@/types";
-import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
+import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
+import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
+import { lookupWord } from "@/lib/dictionary/lookup";
 import { markKnown } from "@/lib/knownWords";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
@@ -32,6 +34,17 @@ function normalize(entry: unknown): SavedWord | null {
   if (typeof entry === "string") {
     const word = entry.trim().toLowerCase();
     if (!word) return null;
+    // Legacy plain-string saves carry no dictionary data at all — re-look it
+    // up so the generated fallback example can still be word-specific
+    // (real part of speech/gender/translation) rather than fully generic.
+    const lookup = lookupWord(word);
+    const fallbackExample = generateFallbackExample({
+      word,
+      lemma: lookup.lemma,
+      partOfSpeech: lookup.partOfSpeech,
+      gender: lookup.gender,
+      translations: lookup.translations,
+    });
     return {
       word,
       lemma: null,
@@ -42,8 +55,8 @@ function normalize(entry: unknown): SavedWord | null {
       cefr: null,
       frequencyRank: null,
       articleContextSentence: "",
-      exampleSentenceFr: FALLBACK_EXAMPLE_FR,
-      exampleSentenceEn: FALLBACK_EXAMPLE_EN,
+      exampleSentenceFr: fallbackExample.fr,
+      exampleSentenceEn: fallbackExample.en,
       sourceTextTitle: "",
       savedAt: new Date().toISOString(),
       reviewCount: 0,
@@ -90,18 +103,28 @@ function normalize(entry: unknown): SavedWord | null {
     (typeof e.context === "string" && e.context) ||
     "";
 
+  const partOfSpeech = typeof e.partOfSpeech === "string" ? e.partOfSpeech : null;
+  const gender = typeof e.gender === "string" ? e.gender : null;
+  const fallbackExample = generateFallbackExample({
+    word: e.word,
+    lemma: typeof e.lemma === "string" ? e.lemma : null,
+    partOfSpeech,
+    gender,
+    translations,
+  });
+
   return {
     word: e.word,
     lemma: typeof e.lemma === "string" ? e.lemma : null,
     translations,
     primaryTranslation,
-    partOfSpeech: typeof e.partOfSpeech === "string" ? e.partOfSpeech : null,
-    gender: typeof e.gender === "string" ? e.gender : null,
+    partOfSpeech,
+    gender,
     cefr: typeof e.cefr === "string" ? e.cefr : null,
     frequencyRank: typeof e.frequencyRank === "number" ? e.frequencyRank : null,
     articleContextSentence,
-    exampleSentenceFr: typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr ? e.exampleSentenceFr : FALLBACK_EXAMPLE_FR,
-    exampleSentenceEn: typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn ? e.exampleSentenceEn : FALLBACK_EXAMPLE_EN,
+    exampleSentenceFr: typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr ? e.exampleSentenceFr : fallbackExample.fr,
+    exampleSentenceEn: typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn ? e.exampleSentenceEn : fallbackExample.en,
     // old field was `sourceId`; new field is `sourceTextTitle`.
     sourceTextTitle:
       (typeof e.sourceTextTitle === "string" && e.sourceTextTitle) ||

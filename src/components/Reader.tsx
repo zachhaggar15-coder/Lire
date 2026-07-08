@@ -6,12 +6,14 @@ import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordSta
 import { tokenizeParagraphsToSentences } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
+import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
+import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { getKnownWords, isKnown, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
+import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -118,6 +120,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     const { lookup, contextSentence, word } = activeWord;
     const missing = lookup.source === "missing";
     const firstExample = lookup.examples[0];
+    const fallbackExample = generateFallbackExample({
+      word,
+      lemma: lookup.lemma,
+      partOfSpeech: lookup.partOfSpeech,
+      gender: lookup.gender,
+      translations: lookup.translations,
+    });
     const entry: SavedWord = {
       word,
       lemma: lookup.lemma,
@@ -128,8 +137,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
       articleContextSentence: contextSentence,
-      exampleSentenceFr: firstExample?.fr ?? FALLBACK_EXAMPLE_FR,
-      exampleSentenceEn: firstExample?.en ?? FALLBACK_EXAMPLE_EN,
+      exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
+      exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
@@ -145,13 +154,21 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleMarkCompleted() {
+    const completedAt = new Date().toISOString();
     markCompleted(text.id);
     recordArchiveEntry({
       textId: text.id,
       title: text.title,
       sourceName: text.sourceName ?? null,
-      completedAt: new Date().toISOString(),
+      completedAt,
+      category: text.category,
+      cefr: difficulty?.cefr ?? text.difficulty,
+      minutes: text.minutes,
+      openedAt: getProgress(text.id).openedAt,
     });
+    // Feeds the automatically-learned interest profile behind the home
+    // page's recommendations — see src/lib/recommendation/interests.ts.
+    recordArticleCompleted(text.category);
     setStatus("completed");
   }
 

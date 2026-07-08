@@ -48,10 +48,41 @@ export function decodeHtmlEntities(text: string): string {
 
 export function stripHtml(html: string): string {
   return html
-    .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, " ")
+    .replace(/<(script|style|noscript|iframe)[^>]*>[\s\S]*?<\/\1>/gi, " ")
+    // Image captions are usually their own <figcaption>/<figure> block —
+    // drop the whole thing rather than leaving orphaned caption text
+    // sitting in the middle of the article body.
+    .replace(/<figcaption[^>]*>[\s\S]*?<\/figcaption>/gi, " ")
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>/gi, "\n\n")
+    .replace(/<\/div>/gi, "\n\n")
     .replace(/<[^>]+>/g, "");
+}
+
+/**
+ * Known trailing/standalone boilerplate phrases — newsletter prompts,
+ * cookie notices, WordPress's "the post X appeared first on Y" footer,
+ * French "cet article a été publié" footers, etc. Removed as whole lines
+ * rather than causing outright rejection, since they're usually appended
+ * to otherwise-good content, not the whole story.
+ */
+const BOILERPLATE_LINE_PATTERNS = [
+  /^the post .* appeared first on .*$/i,
+  /^cet article (a été publié|est apparu) (sur|d'abord sur) .*$/i,
+  /^abonnez[-\s]vous.*$/i,
+  /^subscribe to (our|the) newsletter.*$/i,
+  /^inscrivez[-\s]vous à (notre|la) newsletter.*$/i,
+  /^(photo|image|credit|crédit)\s*:.*$/i,
+  /^(cookies?|privacy policy|politique de confidentialit[ée]).*$/i,
+  /^(click here|lire la suite|read more|continue reading)\.?$/i,
+];
+
+/** Removes whole lines that are just known site chrome, keeping the rest of the text intact. */
+export function stripKnownBoilerplateLines(text: string): string {
+  return text
+    .split("\n")
+    .filter((line) => !BOILERPLATE_LINE_PATTERNS.some((re) => re.test(line.trim())))
+    .join("\n");
 }
 
 export function normalizeWhitespace(text: string): string {
@@ -63,9 +94,9 @@ export function normalizeWhitespace(text: string): string {
     .trim();
 }
 
-/** Full pipeline: strip tags, decode entities, collapse whitespace. */
+/** Full pipeline: strip tags, decode entities, drop known boilerplate lines, collapse whitespace. */
 export function cleanRssText(raw: string): string {
-  return normalizeWhitespace(decodeHtmlEntities(stripHtml(raw)));
+  return normalizeWhitespace(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw))));
 }
 
 export function isTextLongEnough(text: string, minWords = 12): boolean {

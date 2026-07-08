@@ -1,32 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import ArticleSection from "@/components/ArticleSection";
 import ReadingCard from "@/components/ReadingCard";
 import TodayCard from "@/components/TodayCard";
+import ContinueReadingBanner from "@/components/ContinueReadingBanner";
+import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
+import { getKnownWords } from "@/lib/knownWords";
+import {
+  buildScorableArticles,
+  buildScoringContext,
+  buildSections,
+  detectAndRecordSkippedArticles,
+  rankArticles,
+  type RecommendationSections,
+} from "@/lib/recommendation";
 
-type LoadState = "loading" | "success" | "empty" | "error";
+type LoadState = "loading" | "success" | "error";
+
+/** How many RSS candidates to pull in for the recommendation engine to choose from — much more than the 5 actually shown, so every section has real options. */
+const POOL_LIMIT = 50;
+/** Below this many real RSS candidates, hardcoded texts top up the pool. */
+const MIN_POOL_SIZE = 5;
 
 /** Only present in non-production responses — see /api/rss-texts/route.ts. */
 interface RssDebugInfo {
   feedsSucceeded: number;
   feedsFailed: number;
+  itemsRejected: number;
   candidatePoolSize: number;
   candidatePoolBuiltAt: string;
   selectedIds: string[];
   seed: string;
 }
 
-const DAILY_LIMIT = 5;
-
 export default function HomePage() {
-  const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
   const [state, setState] = useState<LoadState>("loading");
+  const [sections, setSections] = useState<RecommendationSections | null>(null);
+  const [usedFallback, setUsedFallback] = useState(false);
   const [debug, setDebug] = useState<RssDebugInfo | null>(null);
 
   useEffect(() => {
@@ -34,27 +52,48 @@ export default function HomePage() {
 
     async function load() {
       try {
-        const res = await fetch(`/api/rss-texts?limit=${DAILY_LIMIT}`);
+        const res = await fetch(`/api/rss-texts?limit=${POOL_LIMIT}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
-        const data: { texts: RssReadingText[]; debug?: RssDebugInfo } = await res.json();
+        const data: { texts: RssReadingText[]; fewerThanRequested?: boolean; debug?: RssDebugInfo } =
+          await res.json();
         if (cancelled) return;
 
-        const mapped = data.texts.map(rssReadingTextToReadingText);
-        if (mapped.length === 0) {
-          setState("empty");
-          return;
-        }
+        const rssTexts = data.texts.map(rssReadingTextToReadingText);
+        cacheRssTexts(rssTexts);
+        // Drop progress for RSS ids that have rotated out of the pool, so
+        // lire.progress.v1 doesn't grow forever.
+        pruneStaleRssProgress(rssTexts.map((t) => t.id));
+        // Automatically learns topic interests from what got shown but
+        // never opened yesterday — see src/lib/recommendation/interests.ts.
+        detectAndRecordSkippedArticles(rssTexts.map((t) => ({ id: t.id, category: t.category })));
 
-        cacheRssTexts(mapped);
-        // Drop progress for RSS ids that have rotated out of today's
-        // selection, so lire.progress.v1 doesn't grow forever.
-        pruneStaleRssProgress(mapped.map((t) => t.id));
-        setRssTexts(mapped);
+        const usingFallback = rssTexts.length < MIN_POOL_SIZE;
+        const pool: ReadingText[] = usingFallback
+          ? [...rssTexts, ...hardcodedTexts.slice(0, MIN_POOL_SIZE - rssTexts.length)]
+          : rssTexts;
+
+        const knownWords = new Set(getKnownWords());
+        const scorable = buildScorableArticles(pool, knownWords);
+        const context = buildScoringContext();
+        const ranked = rankArticles(scorable, context);
+
+        setSections(buildSections(ranked));
+        setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
         setState("success");
       } catch {
-        if (!cancelled) setState("error");
+        if (!cancelled) {
+          // Total failure (network error, etc.) — fall back to an
+          // all-hardcoded, unranked-but-still-sectioned pool so the page
+          // never shows nothing.
+          const knownWords = new Set(getKnownWords());
+          const scorable = buildScorableArticles(hardcodedTexts, knownWords);
+          const ranked = rankArticles(scorable, buildScoringContext());
+          setSections(buildSections(ranked));
+          setUsedFallback(true);
+          setState("success");
+        }
       }
     }
 
@@ -64,28 +103,18 @@ export default function HomePage() {
     };
   }, []);
 
-  const showingRss = state === "success";
-  // If RSS came back with fewer than 5 (a rough day for feeds), fill the
-  // remaining slots with hardcoded texts so the reader still sees a full
-  // set — never fewer than 5 when hardcoded texts are available.
-  const displayedTexts = !showingRss
-    ? hardcodedTexts
-    : rssTexts.length >= DAILY_LIMIT
-      ? rssTexts
-      : [...rssTexts, ...hardcodedTexts.slice(0, DAILY_LIMIT - rssTexts.length)];
-
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-          Lire
-        </h1>
+        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">Lire</h1>
         <p className="text-sm text-slate-500">
           Read short French texts. Tap words you don&apos;t know.
         </p>
       </header>
 
+      <ContinueReadingBanner />
       <TodayCard />
+      <ReadingGoalsCard />
 
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">
@@ -95,40 +124,93 @@ export default function HomePage() {
         </div>
       )}
 
-      {(state === "error" || state === "empty") && (
+      {state === "error" && (
         <p className="mb-4 rounded-xl bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
           Couldn&apos;t load today&apos;s articles — showing saved texts instead.
         </p>
       )}
 
-      {state !== "loading" && (
+      {state === "success" && usedFallback && (
+        <p className="mb-4 rounded-xl bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
+          Some RSS articles were skipped because they were too short or not in
+          French — showing saved texts to fill the rest.
+        </p>
+      )}
+
+      {state === "success" && sections && (
         <>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
-            Today&apos;s 5 readings
-          </h2>
-          <p className="mb-4 mt-0.5 text-xs text-slate-400">
-            Refreshes daily — the same 5 stay all day, picked from a much
-            bigger pool.
+          {sections.todaysRecommendation && (
+            <section className="mb-6">
+              <h2 className="text-sm font-bold uppercase tracking-wide text-slate-400">
+                Today&apos;s Recommendation
+              </h2>
+              <p className="mt-0.5 text-xs text-slate-400">
+                The single best match for you right now.
+              </p>
+              <div className="mt-3">
+                <ReadingCard
+                  text={sections.todaysRecommendation.text}
+                  difficulty={sections.todaysRecommendation.difficulty}
+                  starRating={sections.todaysRecommendation.starRating}
+                />
+              </div>
+            </section>
+          )}
+
+          <ArticleSection
+            title="Good For You"
+            subtitle="Right in your ideal challenge zone."
+            articles={sections.goodForYou}
+          />
+          <ArticleSection title="Quick Reads" subtitle="2-4 minutes." articles={sections.quickReads} />
+          <ArticleSection
+            title="Stretch Yourself"
+            subtitle="A bit harder than usual."
+            articles={sections.stretchYourself}
+          />
+          <ArticleSection
+            title="New Vocabulary"
+            subtitle="Likely to teach you several new words."
+            articles={sections.newVocabulary}
+          />
+          <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} />
+
+          {sections.saveForLater.length > 0 && (
+            <details className="mb-6 rounded-2xl border border-dashed border-slate-300 p-3">
+              <summary className="cursor-pointer text-sm font-semibold text-slate-600">
+                Save for later ({sections.saveForLater.length}) — above your level for today
+              </summary>
+              <div className="mt-3 space-y-4">
+                {sections.saveForLater.map((article) => (
+                  <ReadingCard
+                    key={article.text.id}
+                    text={article.text}
+                    difficulty={article.difficulty}
+                    starRating={article.starRating}
+                  />
+                ))}
+              </div>
+            </details>
+          )}
+
+          <p className="mb-2 text-center text-xs text-slate-400">
+            <Link href="/archive" className="underline underline-offset-2">
+              View reading history
+            </Link>
           </p>
 
-          <div className="space-y-4">
-            {displayedTexts.map((text) => (
-              <ReadingCard key={text.id} text={text} />
-            ))}
-          </div>
-
           {process.env.NODE_ENV !== "production" && debug && (
-            <details className="mt-6 rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
+            <details className="mt-2 rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
               <summary className="cursor-pointer font-semibold text-slate-600">
                 Debug: RSS selection (dev only)
               </summary>
               <ul className="mt-2 space-y-0.5">
                 <li>Feeds succeeded: {debug.feedsSucceeded}</li>
                 <li>Feeds failed: {debug.feedsFailed}</li>
+                <li>Items rejected (language/quality): {debug.itemsRejected}</li>
                 <li>Candidate pool size: {debug.candidatePoolSize}</li>
                 <li>Pool built at: {debug.candidatePoolBuiltAt}</li>
                 <li>Seed: {debug.seed}</li>
-                <li className="break-all">Selected ids: {debug.selectedIds.join(", ")}</li>
               </ul>
             </details>
           )}

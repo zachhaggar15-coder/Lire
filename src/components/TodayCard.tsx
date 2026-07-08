@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getSavedWords } from "@/lib/storage";
-import { getAllProgress, getLastOpenedTextId } from "@/lib/progress";
+import { getAllProgress } from "@/lib/progress";
 import { dateKey, getCurrentStreak } from "@/lib/habit";
 import { getReviewStats } from "@/lib/spacedRepetition";
 
@@ -12,8 +12,6 @@ interface TodayStats {
   wordsSavedToday: number;
   dueReviewsToday: number;
   streak: number;
-  hasOpenedButNotCompletedToday: boolean;
-  lastOpenedTextId: string | null;
 }
 
 function computeTodayStats(): TodayStats {
@@ -22,15 +20,9 @@ function computeTodayStats(): TodayStats {
   const wordsSavedToday = words.filter((w) => dateKey(new Date(w.savedAt)) === today).length;
 
   const progress = getAllProgress();
-  let articlesCompletedToday = 0;
-  let hasOpenedButNotCompletedToday = false;
-  for (const p of Object.values(progress)) {
-    if (p.completedAt && dateKey(new Date(p.completedAt)) === today) {
-      articlesCompletedToday++;
-    } else if (p.status === "in-progress" && p.openedAt && dateKey(new Date(p.openedAt)) === today) {
-      hasOpenedButNotCompletedToday = true;
-    }
-  }
+  const articlesCompletedToday = Object.values(progress).filter(
+    (p) => p.completedAt && dateKey(new Date(p.completedAt)) === today
+  ).length;
 
   const reviewStats = getReviewStats(words);
 
@@ -39,8 +31,6 @@ function computeTodayStats(): TodayStats {
     wordsSavedToday,
     dueReviewsToday: reviewStats.dueToday + reviewStats.newWords,
     streak: getCurrentStreak(),
-    hasOpenedButNotCompletedToday,
-    lastOpenedTextId: getLastOpenedTextId(),
   };
 }
 
@@ -61,12 +51,12 @@ export default function TodayCard() {
     return <div className="mb-5 h-32 animate-pulse rounded-2xl bg-slate-100" />;
   }
 
+  // "Continue reading" gets its own prominent banner above this card (see
+  // ContinueReadingBanner.tsx) rather than being repeated here too.
   let action: { label: string; href: string } | null = null;
   let hint: string | null = null;
 
-  if (stats.hasOpenedButNotCompletedToday && stats.articlesCompletedToday === 0 && stats.lastOpenedTextId) {
-    action = { label: "Continue reading", href: `/reader/${stats.lastOpenedTextId}` };
-  } else if (stats.dueReviewsToday > 0) {
+  if (stats.dueReviewsToday > 0) {
     action = { label: "Review due words", href: "/review" };
   } else if (stats.articlesCompletedToday === 0) {
     hint = "Today's reading is below ↓";

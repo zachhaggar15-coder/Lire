@@ -15,19 +15,28 @@ import type { Category } from "@/types";
 const FEED_REVALIDATE_SECONDS = 900;
 const FEED_TIMEOUT_MS = 8000;
 
-/** Up to this many usable items are pulled from each working feed into the candidate pool. */
-const MAX_PER_SOURCE = 3;
+/** Default cap on usable items pulled from each working feed — overridable per-source via RssSource.maxItems. */
+const DEFAULT_MAX_PER_SOURCE = 2;
 /** How many texts a plain (unfiltered) request gets by default. */
 const DEFAULT_LIMIT = 5;
 const MAX_LIMIT = 50;
 /** The whole point: don't re-fetch 100+ feeds on every request — see buildCandidatePool. */
 const CANDIDATE_POOL_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
 
+const isDev = process.env.NODE_ENV !== "production";
+
+/** Dev-only, never spams production logs — see "how to debug rejected feeds" in the README. */
+function logRejection(source: RssSource, itemTitle: string, reason: string): void {
+  if (!isDev) return;
+  console.log(`Rejected RSS item: ${source.name} / "${itemTitle}"\nReason: ${reason}`);
+}
+
 interface CandidatePool {
   builtAt: number;
   items: RssReadingText[];
   feedsSucceeded: number;
   feedsFailed: number;
+  itemsRejected: number;
 }
 
 // Process-lifetime in-memory cache. Resets on cold start in serverless
@@ -37,36 +46,53 @@ let candidatePoolCache: CandidatePool | null = null;
 let dailySelectionCache: { dateKey: string; items: RssReadingText[] } | null = null;
 
 /**
- * Fetches one source's feed and returns up to MAX_PER_SOURCE items that
- * pass the content-quality checks in rssToReadingText.ts. Any failure
- * (network, timeout, non-200, bad XML) resolves to `{ ok: false, items: [] }`
- * rather than throwing, so one broken feed never affects the others or the
- * route as a whole — every source goes through Promise.allSettled.
+ * Fetches one source's feed and returns up to its item cap of usable
+ * items — those that pass the French-language and content-quality checks
+ * in rssToReadingText.ts. Skips items that fail either check and tries the
+ * next one in the feed, so one bad item never costs the whole source its
+ * slot. Any fetch-level failure (network, timeout, non-200, bad XML)
+ * resolves to `{ ok: false, items: [] }` rather than throwing, so one
+ * broken feed never affects the others or the route as a whole — every
+ * source goes through Promise.allSettled.
  */
-async function fetchFromSource(source: RssSource): Promise<{ ok: boolean; items: RssReadingText[] }> {
+async function fetchFromSource(source: RssSource): Promise<{ ok: boolean; items: RssReadingText[]; rejected: number }> {
+  // This is a French reading app — English sources are skipped entirely
+  // unless explicitly opted into for testing (see RssSource.allowEnglishForTesting).
+  if (source.language === "en" && !source.allowEnglishForTesting) {
+    return { ok: true, items: [], rejected: 0 };
+  }
+
+  const maxItems = source.maxItems ?? DEFAULT_MAX_PER_SOURCE;
+
   try {
     const res = await fetch(source.feedUrl, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
       next: { revalidate: FEED_REVALIDATE_SECONDS },
       signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
     });
-    if (!res.ok) return { ok: false, items: [] };
+    if (!res.ok) return { ok: false, items: [], rejected: 0 };
 
     const xml = await res.text();
     const rssItems = parseRssFeed(xml);
 
     const items: RssReadingText[] = [];
+    let rejected = 0;
     for (const item of rssItems) {
-      if (items.length >= MAX_PER_SOURCE) break;
-      const text = await itemToRssReadingText(item, source);
-      if (text) items.push(text);
+      if (items.length >= maxItems) break;
+      const result = await itemToRssReadingText(item, source);
+      if (result.ok) {
+        items.push(result.text);
+      } else {
+        rejected++;
+        logRejection(source, item.title || "(no title)", result.rejection.reason);
+      }
     }
-    return { ok: true, items };
+    return { ok: true, items, rejected };
   } catch {
     // Network error, timeout, or parsing failure (covers malformed XML,
     // Atom/RSS/Blogger/Feedburner quirks parseRssFeed doesn't recognise,
     // etc.) — this single source is skipped, nothing else is affected.
-    return { ok: false, items: [] };
+    return { ok: false, items: [], rejected: 0 };
   }
 }
 
@@ -93,17 +119,19 @@ async function buildCandidatePool(): Promise<CandidatePool> {
 
   let feedsSucceeded = 0;
   let feedsFailed = 0;
+  let itemsRejected = 0;
   const all: RssReadingText[] = [];
   for (const result of settled) {
     if (result.status === "fulfilled" && result.value.ok) {
       feedsSucceeded++;
       all.push(...result.value.items);
+      itemsRejected += result.value.rejected;
     } else {
       feedsFailed++;
     }
   }
 
-  return { builtAt: Date.now(), items: dedupe(all), feedsSucceeded, feedsFailed };
+  return { builtAt: Date.now(), items: dedupe(all), feedsSucceeded, feedsFailed, itemsRejected };
 }
 
 async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
@@ -168,15 +196,17 @@ export async function GET(request: Request) {
   // is configured (see rssTextStore.ts). Never blocks or fails the response.
   await putPersistedRssTexts(selected.map(rssReadingTextToReadingText));
 
-  const isDev = process.env.NODE_ENV !== "production";
-
   return NextResponse.json({
     texts: selected,
     fetchedAt: new Date().toISOString(),
+    // Lets the home page show "fewer than 5" as an intentional quality
+    // decision rather than a bug — see UI fallback behaviour in the README.
+    fewerThanRequested: selected.length < limit,
     ...(isDev && {
       debug: {
         feedsSucceeded: pool.feedsSucceeded,
         feedsFailed: pool.feedsFailed,
+        itemsRejected: pool.itemsRejected,
         candidatePoolSize: pool.items.length,
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
         selectedIds: selected.map((t) => t.id),

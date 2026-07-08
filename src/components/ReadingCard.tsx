@@ -7,6 +7,7 @@ import { getProgress } from "@/lib/progress";
 import { formatDate } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
+import type { StarRating } from "@/lib/recommendation/types";
 
 const LABEL_STYLES: Record<DifficultyEstimate["label"], string> = {
   Easy: "bg-emerald-100 text-emerald-700",
@@ -35,21 +36,38 @@ const STATUS_LABELS: Record<TextStatus, string> = {
   completed: "Completed",
 };
 
-export default function ReadingCard({ text }: { text: ReadingText }) {
+interface ReadingCardProps {
+  text: ReadingText;
+  /**
+   * Precomputed by the recommendation engine (src/lib/recommendation/) when
+   * this card is rendered as part of a scored/ranked section — reuses that
+   * single computation instead of redoing it here. If omitted (e.g. a
+   * standalone usage with no recommendation context), the card computes its
+   * own difficulty estimate as before.
+   */
+  difficulty?: DifficultyEstimate | null;
+  starRating?: StarRating | null;
+}
+
+export default function ReadingCard({ text, difficulty: difficultyProp, starRating }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   // Starts null (matching SSR output) and fills in after mount — computing
   // this needs localStorage (known words), so doing it in the initial
   // render would cause a hydration mismatch. See "hydration gotcha" in the README.
-  const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
+  const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
+  const difficulty = difficultyProp !== undefined ? difficultyProp : computedDifficulty;
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
+    // Only compute it ourselves if the caller didn't already provide one.
+    if (difficultyProp !== undefined) return;
     // The estimator does French dictionary lookups — running it on an
     // English-language source (some RSS blogs are) would score every word
     // "unfamiliar" and show a meaningless "Hard" for plain English text.
     if (text.language !== "en") {
-      setDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
+      setComputedDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text.id, text.body, text.language]);
 
   return (
@@ -75,6 +93,14 @@ export default function ReadingCard({ text }: { text: ReadingText }) {
       </div>
       <h2 className="text-lg font-bold leading-snug text-slate-900">{text.title}</h2>
       <p className="mt-1 line-clamp-2 text-sm text-slate-500">{text.preview}</p>
+
+      {starRating && (
+        <p className="mt-1 text-xs font-semibold text-amber-500">
+          {"★".repeat(starRating.stars)}
+          {"☆".repeat(5 - starRating.stars)}
+          <span className="ml-1 font-medium text-slate-400">{starRating.label}</span>
+        </p>
+      )}
 
       {difficulty && (
         <p className="mt-1 text-xs text-slate-400">

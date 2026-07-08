@@ -5,13 +5,16 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. The core loop: read **today's 5
-readings** — deterministically selected once a day from a pool of 120+ RSS
-feeds (or the hardcoded fallback texts) — tap unknown words for an **instant,
-fully offline** dictionary lookup (474 curated + ~15,000 generated entries),
-save the ones worth remembering, and come back later to **review words that
-are actually due**, on a real spaced-repetition schedule. AI is there for
-when you explicitly want more (see "AI explanations" below), never
+feel like a language-learning Kindle. The home page runs a **deterministic
+recommendation engine** over a large pool of French-only, quality-filtered
+RSS content (120+ feeds; see "RSS language and content-quality filtering"
+below) and sections it into **Today's Recommendation, Good For You, Quick
+Reads, Stretch Yourself, New Vocabulary, and Latest News** (see "Recommendation
+engine" below) instead of a flat, random list. Tap unknown words for an
+**instant, fully offline** dictionary lookup (474 curated + ~15,000 generated
+entries), save the ones worth remembering, and come back later to **review
+words that are actually due**, on a real spaced-repetition schedule. AI is
+there for when you explicitly want more (see "AI explanations" below), never
 automatically. Reading state lives in **localStorage** — no account, no
 backend, works instantly.
 
@@ -77,21 +80,29 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
 rather than taking a nav slot — see "Daily habit loop" below.)
 
 1. **Read (home)** — `src/app/page.tsx`
-   Starts with a **Today card** (`src/components/TodayCard.tsx`) — see
-   "Daily habit loop" below — then fetches `GET /api/rss-texts?limit=5` and
-   shows a **"Today's 5 readings"** section — exactly 5 articles,
-   deterministically selected once per day from a much larger RSS source
-   pool (120+ feeds; see "RSS reading content" below). The same 5 stay all
-   day and only change the next day — a small "Refreshes daily" line makes
-   that explicit. Each card shows a title, an **estimated CEFR level and
+   Starts with a **Continue Reading banner** (if a text is mid-read),
+   **Today card** (`src/components/TodayCard.tsx`, see "Daily habit loop"
+   below), and **Goals card** (`src/components/ReadingGoalsCard.tsx`, see
+   "Reading goals" below), then fetches a large candidate pool (`GET
+   /api/rss-texts?limit=50`) and runs it through the **recommendation
+   engine** (`src/lib/recommendation/`, see "Recommendation engine" below) to
+   produce named sections: **Today's Recommendation**, **Good For You**,
+   **Quick Reads**, **Stretch Yourself**, **New Vocabulary**, and **Latest
+   News** — all reusing the same ranked pool, just filtered/re-sorted per
+   section. Articles far above the reader's comfortable level are collapsed
+   into a **Save for later** `<details>` instead of cluttering the main
+   sections. Each card shows a title, an **estimated CEFR level and
    learner-facing difficulty label** (see "Article difficulty scoring"
-   below) in place of a fixed level, category, estimated reading time, an
-   unknown-word estimate, **source name + published date**, and a
-   **reading-progress badge** (Unread / In progress / Completed). Shows a
-   loading skeleton while fetching. If fewer than 5 RSS texts come back,
-   hardcoded texts from `src/data/texts.ts` fill the remaining slots; if RSS
-   fails entirely, all 5 come from the hardcoded set, with a small notice
-   either way.
+   below), a **star rating** ("★★★★☆ Good challenge", see "Recommendation
+   engine" below), category, estimated reading time, an unknown-word
+   estimate, **source name + published date**, and a **reading-progress
+   badge** (Unread / In progress / Completed). Shows a loading skeleton
+   while fetching. If fewer than 5 RSS candidates come back, hardcoded texts
+   from `src/data/texts.ts` top up the pool before scoring; if RSS fails
+   entirely, the whole pool falls back to the hardcoded set, with a small
+   notice either way — the reader is never shown fewer good articles than
+   necessary, and never shown English or low-content articles just to fill
+   a quota (those are rejected earlier, in the RSS pipeline itself).
 
 2. **Reader** — `src/app/reader/[id]/page.tsx` + `src/components/Reader.tsx`
    Renders the chosen text with punctuation and paragraph spacing preserved,
@@ -254,6 +265,100 @@ unfamiliar" on plain English prose. `ReadingCard` and `Reader` both check
 just show the plain fallback (`text.difficulty`, unchanged) with no
 CEFR/label chip or unfamiliar-word line.
 
+### Recommendation engine
+
+The home page used to show a flat, randomly-shuffled list of RSS articles.
+`src/lib/recommendation/` replaces that with a deterministic, modular scoring
+system — the goal is a home page that feels like a personalised Kindle "for
+you" shelf, not a random RSS reader. Every function here is pure (same input,
+same output, no side effects beyond the explicit interest-learning writes
+described below), so the whole engine is easy to unit-test and re-tune without
+touching any React component.
+
+**Scoring** (`src/lib/recommendation/signals.ts` + `weights.ts` +
+`score.ts`) — each article gets seven independent 0-1 signal scores, combined
+into one weighted total (`SIGNAL_WEIGHTS` in `weights.ts`, easy to retune in
+one place):
+- **`freshnessScore`** — full marks under ~6h old, decaying to a floor by
+  about 5 days; undated (hardcoded) texts score neutral.
+- **`difficultyMatchScore`** — how close the article's CEFR level is to the
+  reader's own inferred level (`inferUserLevelNumeric`, from known-word
+  count).
+- **`unknownWordTargetScore`** — how close the article's
+  `DifficultyEstimate.unknownWordRatio` (`src/lib/difficulty.ts`) is to an
+  "ideal challenge" band. **Important calibration note**: the recommendation
+  spec's usual framing is "90-95% known / 5-10% unknown," which is a real
+  reading-comprehension heuristic — but it assumes a *token-frequency
+  weighted* coverage metric (common words like "le"/"de" counted every time
+  they appear). This app's `unknownWordRatio` is deliberately simpler: the
+  fraction of *unique* non-basic-CEFR words, which runs much higher for real
+  news prose (lots of one-off proper nouns and specific vocabulary) —
+  calibrated against real RSS content, typical French news articles land
+  around 45-70% on this scale. `IDEAL_UNKNOWN_MIN`/`MAX` (currently 0.3/0.5)
+  target that actual observed range, not the literal spec number, so the
+  band still means something on this app's own difficulty scale.
+- **`topicPreferenceScore`** — reuses the learned interest profile (see
+  below).
+- **`readingTimeScore`** — prefers a comfortable 1-4 minute read, tapering
+  gently for longer ones rather than excluding them outright.
+- **`contentQualityScore`** — directly reuses the RSS pipeline's own
+  good/usable/poor verdict (see "RSS language and content-quality filtering"
+  above) — poor-quality content should basically never be recommended, no
+  matter how well it scores on other signals.
+- **`varietyScore`** — a small penalty for topics read recently, so the
+  ranked pool doesn't feel like a single-topic feed.
+
+**Learning interests automatically, no onboarding** (`interests.ts`) —
+`getInterestProfile()` / `recordArticleCompleted(category)` /
+`recordArticleSkipped(category)` maintain a per-category score in
+localStorage, nudged by implicit signals only: finishing an article boosts
+its category, and `detectAndRecordSkippedArticles` (called once per home-page
+load) penalises categories that were shown yesterday but never opened. No
+explicit "pick your interests" step anywhere.
+
+**Star rating** (`getStarRating`) — the same `unknownWordRatio` band, bucketed
+into a learner-facing "★★★★★ Perfect for you" / "★★★★☆ Good challenge" /
+"★★★☆☆ Challenging" / "★★☆☆☆ Too difficult" badge shown on every
+`ReadingCard`. `SAVE_FOR_LATER_THRESHOLD` (0.7, matching `IDEAL_UNKNOWN_MAX`)
+is the cutoff above which an article moves to the collapsed "Save for later"
+section instead of a main one.
+
+**Sections** (`sections.ts`) — `buildSections(ranked)` takes the one ranked
+pool and derives every named section from it by filtering/re-sorting, never
+re-scoring: **Today's Recommendation** (the single top-ranked "active"
+article), **Good For You** (closest to the ideal difficulty band), **Quick
+Reads** (≤3 minutes), **Stretch Yourself** (harder than the ideal band, but
+still "active"), **New Vocabulary** (high unknown-word ratio *and* good
+dictionary coverage, so the new words are genuinely look-up-able), **Latest
+News** (freshest `news-style` articles), and **Save for later** (everything
+above `SAVE_FOR_LATER_THRESHOLD`).
+
+**Continue Reading banner** (`src/components/ContinueReadingBanner.tsx`) — a
+prominent banner above the Today card if a text is currently `in-progress`
+(via `getLastOpenedTextId`/`getProgress`), separate from (and more visible
+than) the Today card's own single next-action slot.
+
+**Where the logic lives**: `src/lib/recommendation/build.ts`
+(`buildScorableArticles` — turns `ReadingText[]` + known words into
+`ScorableArticle[]`), `context.ts` (`buildScoringContext` — gathers the
+interest profile, recent categories, and inferred user level once per home
+page load), `score.ts` (`scoreArticle`/`rankArticles`), and `types.ts` (every
+shared shape). None of this logic lives in a React component — `page.tsx`
+only calls `buildScorableArticles` → `buildScoringContext` → `rankArticles` →
+`buildSections` and renders the result.
+
+### Reading goals
+
+`src/lib/goals.ts` + `src/components/ReadingGoalsCard.tsx` — optional,
+self-set daily/weekly targets (minutes/day, articles/day, new words/week,
+flashcard reviews/day), each individually on/off (`null` = off). Progress is
+computed fresh from existing data (no new tracking store): minutes today from
+archive entries' `estimateTimeSpentMinutes`, articles today from
+`progress.ts`, new words this week from `storage.ts`, reviews today from
+`spacedRepetition.ts`. Shown as progress bars on the home page, with a tap-to-
+edit mode; if every goal is off, a single "Set a reading goal →" prompt shows
+instead.
+
 ### Daily habit loop
 
 A lightweight, localStorage-only (no Supabase yet) system to reinforce "read
@@ -272,14 +377,19 @@ something in French today":
   open but not finished, `Review due words` if anything's due, otherwise a
   quiet hint — nothing to click when there's nothing to do).
 - **`src/lib/archive.ts`** + **`src/app/archive/page.tsx`** — a "Reading
-  history" page (linked from the Today card) listing every completed
-  article: title, source, completion date, and how many words were saved
-  from it (joined against `SavedWord.sourceTextTitle` at display time).
+  history" page (linked from the Today card and the home page) listing every
+  completed article: title, source, CEFR at completion time, estimated
+  **time spent** (`estimateTimeSpentMinutes` — the gap between `openedAt` and
+  `completedAt`), completion status, and how many words were saved from it
+  (joined against `SavedWord.sourceTextTitle` at display time). **Searchable**
+  (by title or source) and **sortable** (date / time spent / words saved /
+  difficulty) via a small client-side filter+sort, no new storage needed.
   Deliberately its own store (`lire.archive.v1`), separate from
   `src/lib/progress.ts`: RSS progress entries get pruned once an article
   rotates out of the daily selection (`pruneStaleRssProgress`), but the
-  history should last, so completion is **snapshotted** (title + source) at
-  the moment `markCompleted` fires rather than looked up later.
+  history should last, so completion is **snapshotted** (title, source,
+  category, CEFR, minutes, openedAt) at the moment `markCompleted` fires
+  rather than looked up later.
 
 ### RSS reading content: a big pool, a calm daily selection
 
@@ -295,36 +405,105 @@ resilient backend pool with a calm, predictable daily selection up front.
    `rssSources.ts` concurrently (each with an 8s timeout), parse the XML
    (`src/lib/rss/parseRss.ts` — handles RSS 2.0 `<item>` blocks and falls
    back to Atom `<entry>` blocks, which covers Blogger and most Feedburner
-   feeds too), and pull up to **3 usable items per working feed** into one
+   feeds too), and pull up to **`maxItems` usable items per working feed**
+   (per-source config, default 2 — see "Per-source config" below) into one
    big list. A feed that times out, 404s, or returns unparseable XML is
    simply skipped (`Promise.allSettled` + a per-source try/catch) — it
-   never affects any other feed or breaks the route.
-2. **Clean and quality-filter each item** (`src/lib/rss/cleanContent.ts`):
-   strip HTML, decode entities, collapse whitespace, and reject anything
-   too short, mostly cookie/privacy/nav boilerplate
-   (`looksLikeBoilerplate`), or containing unresolved CMS template syntax
-   like `$content.TitleNoTags` or `{{ title }}` (`hasBrokenTemplateSyntax`)
-   — real-world feeds occasionally leak both.
+   never affects any other feed or breaks the route. If one item from a feed
+   is rejected (see step 2), the pipeline just moves to the next item from
+   that same feed rather than giving up on the source entirely.
+2. **Clean, language-check, and quality-check each item**
+   (`src/lib/rss/cleanContent.ts`, `src/lib/rss/language.ts`,
+   `src/lib/rss/contentQuality.ts`) — see "RSS language and content-quality
+   filtering" below for the full detail. In short: strip HTML/decode
+   entities/remove boilerplate, reject anything that isn't recognisably
+   French (title text can't rescue an English body), and reject anything
+   too short, too truncated, or otherwise low-quality to be worth reading.
 3. **Deduplicate** the pool by source URL and by title (case/whitespace
    -insensitive), so the same story picked up by two feeds only appears
    once.
 4. **Cache the pool** in memory for 12 hours (`CANDIDATE_POOL_TTL_MS`) —
    the expensive part (120+ concurrent HTTP fetches) only happens once per
    TTL window, not once per page load.
-5. **Deterministically select 5 for today.** A seeded shuffle
+5. **Deterministically select for today.** A seeded shuffle
    (`src/lib/rss/seededShuffle.ts`) keyed on today's date (`YYYY-MM-DD`,
    plus the active `language`/`category` filter, if any) reorders the
-   candidate pool and the top `limit` (default 5) are returned. Critically,
-   this **never uses `Math.random()`** — the same seed always produces the
-   same order, so repeated requests on the same day return the exact same 5
-   articles; the date rolling over is what changes the selection, not a
-   page refresh. The plain (no filters) daily-5 result is itself cached
-   until the calendar day changes, so it doesn't even need to re-shuffle on
-   every request.
+   candidate pool and the top `limit` are returned (the home page now
+   requests a large pool — `limit=50` — for the recommendation engine to
+   choose from, rather than a fixed 5; see "Recommendation engine" below).
+   Critically, this **never uses `Math.random()`** — the same seed always
+   produces the same order, so repeated requests on the same day return the
+   exact same candidates; the date rolling over is what changes the
+   selection, not a page refresh.
 
-**Query parameters** (structured for future UI controls, not required by
-today's UI):
-- `?limit=5` — how many texts to return (default 5, max 50).
+### RSS language and content-quality filtering
+
+Two problems showed up in raw RSS content: some feeds are **English-language**
+even though the app is for French reading, and many feeds — by design, to
+protect their own pageviews — publish only a short teaser (sometimes just a
+title-length snippet) in both `<description>` and `<content:encoded>`. Both
+are filtered out before an item ever becomes a candidate.
+
+- **`src/lib/rss/language.ts`** — `analyseLanguage(text)` scores French vs.
+  English signal using French/English stopword frequency, French elisions/
+  contractions (`l'`, `j'`, `qu'`, etc.), and accented characters — no ML
+  model, no external API, fully offline and synchronous. `
+  isAcceptableFrenchText(text)` rejects English-dominant text, text with a
+  higher English than French score, and (for very short, ambiguous text)
+  requires at least a minimum word count before giving the benefit of the
+  doubt — deliberately **not** requiring accented characters, since plenty of
+  genuine French sentences don't happen to use one. The RSS pipeline checks
+  the cleaned body **and** the title+body combined, so an English body can't
+  be rescued by a French-sounding title.
+- **`src/lib/rss/contentQuality.ts`** — `analyseContentQuality(text,
+  minWords)` rejects text that's too short (below a tunable, named
+  `DEFAULT_MIN_WORDS` constant — currently 60, recalibrated down from an
+  initial 120 after live-testing against real feeds like Numerama,
+  Ouest-France, and DNA, whose `content:encoded` fields are genuinely only
+  20-75-word teasers by design, not a bug), too few sentences, ending in a
+  truncation marker (`…`, `[...]`, "read more", "lire la suite", "the post …
+  appeared first on", etc.), or mostly boilerplate. `
+  isAcceptableReadingContent(text, minWords)` is the pass/fail gate the
+  pipeline calls.
+- **`src/lib/rss/cleanContent.ts`** strips `<script>`/`<style>`/`<noscript>`/
+  `<iframe>`/`<figcaption>`, decodes HTML entities, converts block-level tags
+  to paragraph breaks (so `</div>`/`</p>` don't just vanish and glue two
+  paragraphs together), and drops known boilerplate lines (cookie notices,
+  "subscribe to our newsletter," share prompts) line-by-line rather than
+  rejecting the whole item over one bad line.
+- **`src/lib/rss/rssToReadingText.ts`** wires it together:
+  `itemToRssReadingText` returns a discriminated union (`{ ok: true, text }`
+  or `{ ok: false, rejection: { reason } }`) so a rejection is an explicit,
+  typed outcome rather than a thrown exception or a silently-empty text. It
+  picks whichever of `description`/`content:encoded` is longer as the
+  candidate body, then runs quality-then-language checks against it (and
+  language checks again against title+body combined).
+
+**Per-source config** (`src/data/rssSources.ts`) — `RssSource` gained three
+optional fields:
+- `minWords?: number` — overrides `DEFAULT_MIN_WORDS` for one feed (e.g. a
+  feed known to publish longer teasers than average can raise its bar).
+- `maxItems?: number` — overrides the default 2-items-per-feed cap.
+- `allowEnglishForTesting?: boolean` — the only way an `"en"`-language source
+  is ever included; every English-language source in the default list is
+  `enabled: false` unless this is explicitly set, since the app is for
+  French reading.
+
+**Dev-only rejection logging** — in development, every rejected item logs a
+one-line reason (source name, title snippet, rejection reason) to the server
+console, e.g. `[rss] rejected "Le Monde" — "Some Title...": content quality:
+too short (42 words, need 60)`. Nothing is logged in production.
+
+**Testing** — `scripts/test-rss-filters.mjs` is a small, dependency-free
+Node script (run with `node scripts/test-rss-filters.mjs`) that imports
+`language.ts` and `contentQuality.ts` directly (Node's built-in TypeScript
+stripping — no test framework, no build step) and asserts against six
+fixture texts: clean French, clean English, mixed-language, too-short,
+truncated, and boilerplate-heavy. All assertions pass today.
+
+**Query parameters** (structured for future UI controls; the home page uses
+`?limit=50`, everything else defaults):
+- `?limit=50` — how many texts to return (default 5, max 50).
 - `?language=fr` — filter the candidate pool to one `RssSource.language`
   (`fr` / `en` / `mixed`) before selecting. Default: no filter.
 - `?category=culture` — filter to one `Category` before selecting. Default:
@@ -332,20 +511,24 @@ today's UI):
 - `?refresh=true` — bypass the in-memory pool cache and re-fetch every feed
   immediately. Since feeds are live, a forced refresh can change the
   candidate pool itself (new posts appear), so it isn't guaranteed to
-  reproduce the exact same 5 as a non-refreshed request the same day — the
-  "same 5 all day" guarantee applies to normal (non-refresh) requests, which
-  reuse the cached pool.
+  reproduce the exact same candidates as a non-refreshed request the same
+  day — the "same pool all day" guarantee applies to normal (non-refresh)
+  requests, which reuse the cached pool.
 
 **Failure handling** — required and tested against real feeds:
 - **Some feeds down:** never breaks the route. A real run against all 122
   sources typically sees 115+ succeed and a handful fail (dead domains,
   timeouts, feeds that redirect through bot protection) — the candidate
-  pool is still 300+ items either way.
+  pool is still substantial either way.
 - **All feeds down:** the route returns `{ texts: [] }`; the home page
   detects the empty result (or a fetch/network error) and falls back to the
-  5 hardcoded texts, with a small "Couldn't load today's articles" notice.
-- **Fewer than 5 valid RSS texts:** the home page fills the remaining slots
-  with hardcoded texts rather than showing fewer than 5.
+  fully hardcoded pool, with a small "Couldn't load today's articles" notice.
+- **Below `MIN_POOL_SIZE` (5) valid RSS candidates:** the home page tops up
+  the pool with hardcoded texts before scoring, with a small notice, rather
+  than ever handing the recommendation engine too few real options — or
+  showing English/low-quality articles just to hit a target count, which the
+  RSS pipeline itself already rules out (see "RSS language and
+  content-quality filtering" above).
 
 **In development only**, the response includes a `debug` object (feeds
 succeeded/failed, candidate pool size, when the pool was built, the
@@ -501,8 +684,21 @@ prose the word happened to appear in:
 - **`exampleSentenceFr` / `exampleSentenceEn`** — a short, natural,
   A1/B1-appropriate sentence, e.g. `"Je mange une pomme."` / `"I eat an
   apple."`. Sourced from the dictionary entry's first `examples[]` item; if
-  the entry has none, a fixed fallback is used (`"Je vois ce mot dans un
-  texte." / "I see this word in a text."`).
+  the entry has none (true for essentially all ~15,000 generated-dictionary
+  entries, which carry no `examples[]`), `src/lib/dictionary/exampleGenerator.ts`
+  builds a real, word-specific sentence by part of speech instead of a fixed
+  generic placeholder: `J'aime {verb}.` for verbs, `Je vois un/une {noun}.`
+  for nouns (guessing the article from real gender data when known, or a
+  common-feminine-ending heuristic like `-tion`/`-té` when it isn't), `C'est
+  très {adjective}.` for adjectives, and `On utilise « {word} » dans cette
+  phrase.` for everything else (pronouns, prepositions, conjunctions, etc.,
+  or a saved word with literally no dictionary data at all). The matching
+  English sentence reuses the same template with the dictionary's first
+  translation. Legacy saved words (from before this field existed, or from
+  the earliest plain-string save format) get the same treatment on
+  migration — `storage.ts` re-looks the word up in the dictionary so even a
+  years-old saved word gets a real, word-specific example instead of the old
+  one-size-fits-all fallback.
 - **`articleContextSentence`** — the actual sentence from the article the
   word was tapped in, kept for reference but shown secondarily (smaller
   text, labelled "Original article context") on the Words and Review pages.
@@ -685,7 +881,8 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/dictionary/types.ts` | `DictionaryEntry`, `DictionaryLookupResult` — the generic entry/result shapes |
 | `src/lib/dictionary/lookup.ts` | `lookupWord` / `lookupEnglishWord` — the offline lookup functions the app calls |
 | `src/lib/dictionary/lemmatize.ts` | `guessLemmas` — rule-based fallback lemmatiser for unlisted inflections |
-| `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` (live popup), `NOT_TRANSLATED_YET` (saved-word placeholder), fallback example sentence |
+| `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` (live popup), `NOT_TRANSLATED_YET` (saved-word placeholder), last-resort fallback example sentence |
+| `src/lib/dictionary/exampleGenerator.ts` | `generateFallbackExample` — part-of-speech template sentences used when a dictionary entry has no `examples[]` |
 | `src/data/dictionaries/fr-en.ts` | The curated French→English dictionary (474 entries) — add entries here |
 | `src/data/dictionaries/generated/fr-en-generated.ts` (+`.json`) | ~15,000 generated fallback entries — see NOTICE.md and `scripts/build-dictionary.mjs` |
 | `src/data/dictionaries/en-fr.ts` | The English→French dictionary backing `/lookup` |
@@ -694,8 +891,17 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/spacedRepetition.ts` | `computeNextSchedule`, `isDue`, `buildReviewQueue`, `getReviewStats` — the Review page's due-date system |
 | `src/lib/difficulty.ts` | `estimateDifficulty` — CEFR/label estimate for a text, optionally personalised by known words |
 | `src/lib/habit.ts` | `recordActivityToday`, `getCurrentStreak` — the daily activity log behind the Today card's streak |
-| `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive` — completed-article history for `/archive` |
+| `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive`, `estimateTimeSpentMinutes` — completed-article history for `/archive` |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getLastOpenedTextId` |
+| `src/lib/goals.ts` | Reading goals: `getGoals`, `saveGoals`, `getGoalsProgress`, `DEFAULT_GOALS` |
+| `src/lib/rss/language.ts` | `analyseLanguage`, `isAcceptableFrenchText` — offline French/English language detection |
+| `src/lib/rss/contentQuality.ts` | `analyseContentQuality`, `isAcceptableReadingContent`, `DEFAULT_MIN_WORDS` — content-quality gating |
+| `src/lib/recommendation/signals.ts` | Individual 0-1 scoring signals (freshness, difficulty match, unknown-word target, topic preference, reading time, content quality, variety), `getStarRating` |
+| `src/lib/recommendation/weights.ts` | `SIGNAL_WEIGHTS` — the one place to retune the scoring engine |
+| `src/lib/recommendation/score.ts` | `scoreArticle`, `rankArticles` |
+| `src/lib/recommendation/sections.ts` | `buildSections` — splits one ranked pool into the home page's named sections |
+| `src/lib/recommendation/interests.ts` | `getInterestProfile`, `recordArticleCompleted`, `recordArticleSkipped`, `detectAndRecordSkippedArticles` — automatic interest learning |
+| `src/lib/recommendation/build.ts`, `context.ts` | `buildScorableArticles`, `buildScoringContext` — glue between `ReadingText[]` and the scoring engine |
 | `src/lib/settings.ts` | App settings: `getSettings`, `saveSettings`, `DEFAULT_SETTINGS` |
 | `src/lib/format.ts` | Shared `formatDate` helper used by ReadingCard and the Words page |
 | `src/lib/ai/openai.ts` | `explainWord`, `explainSentence` — OpenAI calls, on-demand only |
@@ -765,6 +971,48 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fixed the generic fallback example sentence** — every dictionary entry
+  without its own `examples[]` (nearly all ~15,000 generated entries) used to
+  fall back to the same fixed, word-agnostic `"Je vois ce mot dans un texte."
+  / "I see this word in a text."`, regardless of what word was actually
+  tapped. `src/lib/dictionary/exampleGenerator.ts` replaces it with a
+  part-of-speech template generator (verb/noun/adjective/other, with a
+  gender-aware article for nouns) that always names the real word, wired
+  into both the live save flow (`Reader.tsx`) and `storage.ts`'s migration
+  path (including legacy plain-string saves, which get re-looked-up in the
+  dictionary first). See "Example sentences vs. article context" above.
+- **RSS language and content-quality filtering**: two new pure, offline
+  modules — `src/lib/rss/language.ts` (French/English stopword-based
+  detection) and `src/lib/rss/contentQuality.ts` (word/sentence-count and
+  truncation/boilerplate detection) — reject English-language and
+  too-short/low-quality RSS items before they ever become candidates. All
+  ~80 English-language sources in `rssSources.ts` were disabled by default
+  (opt back in per-source via `allowEnglishForTesting`); each source can also
+  tune `minWords`/`maxItems`. `cleanContent.ts` gained boilerplate-line
+  stripping and safer paragraph handling. `scripts/test-rss-filters.mjs`
+  covers both modules with six fixture cases. See "RSS language and
+  content-quality filtering" above.
+- **A deterministic recommendation engine replaces random RSS ordering** —
+  `src/lib/recommendation/` scores every candidate on seven independent
+  signals (freshness, difficulty match, unknown-word target, learned topic
+  preference, reading time, content quality, variety), combines them with
+  tunable weights, and sections the ranked pool into **Today's
+  Recommendation, Good For You, Quick Reads, Stretch Yourself, New
+  Vocabulary, and Latest News** — all reused from one ranked pool, no
+  duplicate scoring, no scoring logic in any React component. Topic
+  interests are learned automatically from completion/skip behavior, with no
+  onboarding step. See "Recommendation engine" above.
+- **Reading goals** (`src/lib/goals.ts` + `ReadingGoalsCard.tsx`) — optional
+  minutes/day, articles/day, new-words/week, and flashcards/day targets with
+  home-page progress bars, computed from existing data.
+- **Continue Reading banner** — a prominent home-page banner for a
+  mid-progress article, replacing the old "Continue reading" action that
+  lived inside the Today card.
+- **Reading History page rebuilt** — `/archive` now shows time spent, CEFR,
+  completion status, and word count per entry, with search and multi-key
+  sort (date/time/words/difficulty), still backed by the same
+  `lire.archive.v1` store (extended with `category`/`cefr`/`minutes`/
+  `openedAt`, all optional for backward compatibility).
 - **Dictionary coverage's biggest jump yet**: a new generated fallback
   dictionary (~15,000 entries from WikDict/Wiktionary data, CC BY-SA 4.0 —
   see `src/data/dictionaries/generated/NOTICE.md`) sits behind the curated
