@@ -1,14 +1,20 @@
 import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
+import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
 
 /**
  * Offline, instant word lookup. Never calls a network API — this is the
- * "Kindle-like" fast path: clean the word, check it as a lemma, then check
- * it against every entry's inflected forms, then fall back to a rule-based
- * lemma guess (see lemmatize.ts) for inflections no entry explicitly lists;
- * otherwise report it missing.
+ * "Kindle-like" fast path. Two dictionary layers, checked in order:
+ *   1. The hand-curated dictionary (fr-en.ts) — better examples, CEFR
+ *      levels, gender, and explicitly-listed conjugated forms.
+ *   2. The generated dictionary (generated/fr-en-generated.ts) — much
+ *      broader coverage from WikDict/Wiktionary data, no forms/examples/
+ *      CEFR, used only for words the curated dictionary doesn't have.
+ * Within each layer: exact lemma, then inflected forms. If neither layer's
+ * lemma/forms match, a rule-based lemma guess (lemmatize.ts) is tried
+ * against both layers; otherwise the word is reported missing.
  */
 
 const byLemma = new Map<string, DictionaryEntry>();
@@ -18,6 +24,16 @@ for (const entry of frEnDictionary) {
   byLemma.set(entry.lemma.toLowerCase(), entry);
   for (const form of entry.forms ?? []) {
     byForm.set(form.toLowerCase(), entry);
+  }
+}
+
+const generatedByLemma = new Map<string, DictionaryEntry>();
+const generatedByForm = new Map<string, DictionaryEntry>();
+
+for (const entry of frEnGeneratedDictionary) {
+  generatedByLemma.set(entry.lemma.toLowerCase(), entry);
+  for (const form of entry.forms ?? []) {
+    generatedByForm.set(form.toLowerCase(), entry);
   }
 }
 
@@ -61,10 +77,9 @@ function toResult(input: string, entry: DictionaryEntry | null): DictionaryLooku
 /**
  * Looks up a French word offline. Accepts either an already-cleaned word
  * or a raw one — cleaning here too keeps this usable as a standalone
- * module. Order: exact lemma match, then a match against any entry's
- * inflected/elided forms, then a rule-based lemma guess (see
- * lemmatize.ts) for inflections nothing explicitly lists; otherwise
- * "missing" (never falls back to AI).
+ * module. Order: curated lemma, curated forms, generated lemma, generated
+ * forms, then a rule-based lemma guess (lemmatize.ts) tried against both
+ * layers; otherwise "missing" (never falls back to AI).
  */
 export function lookupWord(rawWord: string): DictionaryLookupResult {
   const clean = rawWord.trim().toLowerCase();
@@ -76,8 +91,14 @@ export function lookupWord(rawWord: string): DictionaryLookupResult {
   const viaForm = byForm.get(clean);
   if (viaForm) return toResult(rawWord, viaForm);
 
+  const generatedExact = generatedByLemma.get(clean);
+  if (generatedExact) return toResult(rawWord, generatedExact);
+
+  const generatedViaForm = generatedByForm.get(clean);
+  if (generatedViaForm) return toResult(rawWord, generatedViaForm);
+
   for (const guess of guessLemmas(clean)) {
-    const viaGuess = byLemma.get(guess);
+    const viaGuess = byLemma.get(guess) ?? generatedByLemma.get(guess);
     if (viaGuess) return toResult(rawWord, viaGuess);
   }
 

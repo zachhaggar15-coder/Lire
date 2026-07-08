@@ -1,6 +1,8 @@
 import type { SavedWord, WordStatus } from "@/types";
 import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { markKnown } from "@/lib/knownWords";
+import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
+import { recordActivityToday } from "@/lib/habit";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -48,6 +50,7 @@ function normalize(entry: unknown): SavedWord | null {
       lastReviewedAt: null,
       status: "learning",
       missingFromDictionary: true,
+      ...defaultSpacedRepetitionFields(),
     };
   }
 
@@ -110,6 +113,12 @@ function normalize(entry: unknown): SavedWord | null {
     status: isValidStatus(e.status) ? e.status : "learning",
     missingFromDictionary:
       typeof e.missingFromDictionary === "boolean" ? e.missingFromDictionary : translations.length === 0,
+    ease: typeof e.ease === "number" ? e.ease : defaultSpacedRepetitionFields().ease,
+    nextReviewAt: typeof e.nextReviewAt === "string" ? e.nextReviewAt : null,
+    correctCount: typeof e.correctCount === "number" ? e.correctCount : 0,
+    incorrectCount: typeof e.incorrectCount === "number" ? e.incorrectCount : 0,
+    lastReviewResult:
+      e.lastReviewResult === "correct" || e.lastReviewResult === "incorrect" ? e.lastReviewResult : null,
   };
 }
 
@@ -157,24 +166,30 @@ export function saveWord(entry: SavedWord): SavedWord[] {
   if (words.some((w) => w.word === entry.word)) return words;
   const next = [entry, ...words];
   persist(next);
+  recordActivityToday();
   return next;
 }
 
 /**
- * Record a review for a word: bump its reviewCount and update
- * lastReviewedAt. Returns the updated list.
+ * Records the result of a review: bumps reviewCount/lastReviewedAt (as
+ * before) and updates the spaced-repetition schedule (ease, nextReviewAt,
+ * correctCount/incorrectCount, lastReviewResult) — see
+ * src/lib/spacedRepetition.ts for the actual scheduling logic. Returns the
+ * updated list.
  */
-export function recordReview(word: string): SavedWord[] {
-  const next = getSavedWords().map((w) =>
-    w.word === word
-      ? {
-          ...w,
-          reviewCount: w.reviewCount + 1,
-          lastReviewedAt: new Date().toISOString(),
-        }
-      : w
-  );
+export function recordReviewResult(word: string, result: ReviewResult): SavedWord[] {
+  const next = getSavedWords().map((w) => {
+    if (w.word !== word) return w;
+    const schedule = computeNextSchedule(w, result);
+    return {
+      ...w,
+      reviewCount: w.reviewCount + 1,
+      lastReviewedAt: new Date().toISOString(),
+      ...schedule,
+    };
+  });
   persist(next);
+  recordActivityToday();
   return next;
 }
 

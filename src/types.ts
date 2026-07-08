@@ -67,6 +67,21 @@ export interface SavedWord {
   status: WordStatus;
   /** True when the local dictionary had no entry for this word at save time. */
   missingFromDictionary?: boolean;
+  /**
+   * Spaced-repetition scheduling fields — see src/lib/spacedRepetition.ts.
+   * Optional so older saved words (pre-dating this feature) still type-check;
+   * src/lib/storage.ts fills in defaults for every word on read.
+   */
+  /** Ease multiplier applied to the base interval ladder. 1 = neutral. */
+  ease?: number;
+  /** ISO timestamp of when this card is next due, or null if due now (new/never scheduled). */
+  nextReviewAt?: string | null;
+  /** Consecutive correct answers in a row — resets to 0 on an incorrect answer. Drives the interval ladder. */
+  correctCount?: number;
+  /** Lifetime count of "Didn't know it" answers. */
+  incorrectCount?: number;
+  /** Result of the most recent review, or null if never reviewed. */
+  lastReviewResult?: "correct" | "incorrect" | null;
 }
 
 export type TextStatus = "unread" | "in-progress" | "completed";
@@ -88,5 +103,3 @@ export interface AppSettings {
   showKnownWordStyling: boolean;
   fontSize: FontSize;
 }
-
-export type ReviewFilter = "all" | "today" | "least-reviewed" | "current-text";

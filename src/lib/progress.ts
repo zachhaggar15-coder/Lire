@@ -1,5 +1,5 @@
 import type { TextProgress } from "@/types";
-import { getTextById } from "@/data/texts";
+import { recordActivityToday } from "@/lib/habit";
 
 /**
  * localStorage-backed reading progress: per-text status (unread /
@@ -75,19 +75,13 @@ export function markCompleted(textId: string): void {
     completedAt: new Date().toISOString(),
   };
   persist(all);
+  recordActivityToday();
 }
 
 /** The id of the most recently opened text, or null if none yet. */
 export function getLastOpenedTextId(): string | null {
   if (!hasStorage()) return null;
   return window.localStorage.getItem(LAST_OPENED_KEY);
-}
-
-/** The title of the most recently opened text, or null if none yet. */
-export function getCurrentTextTitle(): string | null {
-  const id = getLastOpenedTextId();
-  if (!id) return null;
-  return getTextById(id)?.title ?? null;
 }
 
 /**

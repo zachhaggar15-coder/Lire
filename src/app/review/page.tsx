@@ -2,89 +2,38 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import type { ReviewFilter, SavedWord } from "@/types";
-import { getSavedWords, recordReview, markWordAsKnown } from "@/lib/storage";
+import type { SavedWord } from "@/types";
+import { getSavedWords, recordReviewResult, markWordAsKnown } from "@/lib/storage";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { getCurrentTextTitle } from "@/lib/progress";
-
-const FILTERS: { value: ReviewFilter; label: string }[] = [
-  { value: "all", label: "All words" },
-  { value: "today", label: "Saved today" },
-  { value: "least-reviewed", label: "Least reviewed" },
-  { value: "current-text", label: "Current text" },
-];
-
-function isToday(iso: string): boolean {
-  const d = new Date(iso);
-  const now = new Date();
-  return d.toDateString() === now.toDateString();
-}
-
-function applyFilter(
-  words: SavedWord[],
-  filter: ReviewFilter,
-  currentTextTitle: string | null
-): SavedWord[] {
-  switch (filter) {
-    case "today":
-      return words.filter((w) => isToday(w.savedAt));
-    case "least-reviewed":
-      return [...words].sort(
-        (a, b) =>
-          a.reviewCount - b.reviewCount ||
-          new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime()
-      );
-    case "current-text":
-      return currentTextTitle
-        ? words.filter((w) => w.sourceTextTitle === currentTextTitle)
-        : [];
-    case "all":
-    default:
-      return words;
-  }
-}
+import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 
 export default function ReviewPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
   const [ready, setReady] = useState(false);
-  const [filter, setFilter] = useState<ReviewFilter>("all");
-  const [currentTextTitle, setCurrentTextTitle] = useState<string | null>(null);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [score, setScore] = useState({ knew: 0, missed: 0 });
 
   useEffect(() => {
     setWords(getSavedWords());
-    setCurrentTextTitle(getCurrentTextTitle());
     setReady(true);
   }, []);
 
-  // Known words are never reviewed — only active learning/unsure ones.
-  const reviewable = useMemo(
-    () => words.filter((w) => w.status === "learning" || w.status === "unsure"),
-    [words]
-  );
+  // Snapshotting the queue at mount (rather than recomputing on every
+  // word-state change) means answering a card doesn't reshuffle the deck
+  // out from under the reader mid-session.
+  const queue = useMemo(() => buildReviewQueue(words), [words]);
+  const stats = useMemo(() => getReviewStats(words), [words]);
 
-  const deck = useMemo(
-    () => applyFilter(reviewable, filter, currentTextTitle),
-    [reviewable, filter, currentTextTitle]
-  );
+  const current = queue[index];
+  const done = ready && queue.length > 0 && index >= queue.length;
+  const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
-  function selectFilter(next: ReviewFilter) {
-    setFilter(next);
-    setIndex(0);
-    setRevealed(false);
-    setScore({ knew: 0, missed: 0 });
-  }
-
-  const current = deck[index];
-  const done = ready && deck.length > 0 && index >= deck.length;
-
-  function answer(knew: boolean) {
-    if (current) recordReview(current.word);
+  function answer(result: "correct" | "incorrect") {
+    if (current) setWords(recordReviewResult(current.word, result));
     setScore((s) => ({
-      knew: s.knew + (knew ? 1 : 0),
-      missed: s.missed + (knew ? 0 : 1),
+      knew: s.knew + (result === "correct" ? 1 : 0),
+      missed: s.missed + (result === "correct" ? 0 : 1),
     }));
     setRevealed(false);
     setIndex((i) => i + 1);
@@ -92,41 +41,37 @@ export default function ReviewPage() {
 
   function handleMarkKnown() {
     if (!current) return;
-    markWordAsKnown(current.word);
-    // Re-reading drops this word from `reviewable`/`deck`, so the item now
-    // sitting at `index` is already the next card — no manual advance needed.
-    setWords(getSavedWords());
+    setWords(markWordAsKnown(current.word));
+    // markWordAsKnown drops this word from the (memoised) queue, so
+    // whatever now sits at `index` is already the next card.
     setRevealed(false);
   }
 
   function restart() {
-    // Re-read so reviewCount / lastReviewedAt reflect this session's updates.
     setWords(getSavedWords());
     setIndex(0);
     setRevealed(false);
     setScore({ knew: 0, missed: 0 });
   }
 
-  const filterBar = (
-    <div className="mb-5 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-      {FILTERS.map((f) => (
-        <button
-          key={f.value}
-          onClick={() => selectFilter(f.value)}
-          className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
-            filter === f.value
-              ? "bg-brand text-white"
-              : "bg-slate-100 text-slate-600"
-          }`}
-        >
-          {f.label}
-        </button>
+  const statsBar = (
+    <div className="mb-5 grid grid-cols-4 gap-2">
+      {[
+        { label: "Due today", value: stats.dueToday },
+        { label: "New", value: stats.newWords },
+        { label: "Not due yet", value: stats.notDueYet },
+        { label: "Total", value: stats.totalLearning },
+      ].map((s) => (
+        <div key={s.label} className="rounded-2xl border border-slate-200 bg-white p-2.5 text-center shadow-sm">
+          <p className="text-lg font-extrabold text-slate-900">{s.value}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">{s.label}</p>
+        </div>
       ))}
     </div>
   );
 
-  // No reviewable words at all yet.
-  if (ready && reviewable.length === 0) {
+  // No learning/unsure words saved at all.
+  if (ready && stats.totalLearning === 0) {
     return (
       <div className="px-4 pt-6">
         <h1 className="text-2xl font-extrabold text-slate-900">Review</h1>
@@ -146,36 +91,30 @@ export default function ReviewPage() {
     );
   }
 
-  // Reviewable words exist, but the current filter matches none of them.
-  if (ready && reviewable.length > 0 && deck.length === 0) {
+  // Words exist, but nothing is due right now.
+  if (ready && stats.totalLearning > 0 && queue.length === 0) {
     return (
       <div className="px-4 pt-6">
         <h1 className="mb-1 text-2xl font-extrabold text-slate-900">Review</h1>
-        {filterBar}
-        <div className="mt-12 text-center">
-          <p className="text-slate-500">
-            {filter === "current-text"
-              ? "No saved words from the text you're currently reading."
-              : "No words match this filter."}
+        {statsBar}
+        <div className="mt-8 text-center">
+          <p className="text-4xl">✅</p>
+          <p className="mt-2 text-slate-500">All caught up — nothing due right now.</p>
+          <p className="mt-1 text-xs text-slate-400">
+            {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
           </p>
-          <button
-            onClick={() => selectFilter("all")}
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
-          >
-            Show all words
-          </button>
         </div>
       </div>
     );
   }
 
-  // Finished this deck.
+  // Finished this session's queue.
   if (done) {
     return (
       <div className="px-4 pt-6">
         <h1 className="mb-1 text-2xl font-extrabold text-slate-900">Review</h1>
-        {filterBar}
-        <div className="mt-12 text-center">
+        {statsBar}
+        <div className="mt-8 text-center">
           <p className="text-4xl">🎉</p>
           <p className="mt-2 text-lg font-semibold text-slate-800">All done!</p>
           <p className="mt-1 text-sm text-slate-500">
@@ -185,25 +124,23 @@ export default function ReviewPage() {
             onClick={restart}
             className="mt-5 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
           >
-            Review again
+            Check for more
           </button>
         </div>
       </div>
     );
   }
 
-  const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
-
   return (
     <div className="flex min-h-[70vh] flex-col px-4 pt-6">
       <header className="mb-1 flex items-center justify-between">
         <h1 className="text-2xl font-extrabold text-slate-900">Review</h1>
         <span className="text-sm text-slate-400">
-          {ready ? `${index + 1} / ${deck.length}` : ""}
+          {ready ? `${index + 1} / ${queue.length}` : ""}
         </span>
       </header>
 
-      {filterBar}
+      {statsBar}
 
       {current && (
         <div className="flex flex-1 flex-col">
@@ -271,14 +208,14 @@ export default function ReviewPage() {
           {/* Answer buttons */}
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
-              onClick={() => answer(false)}
+              onClick={() => answer("incorrect")}
               disabled={!revealed}
               className="rounded-2xl bg-rose-100 py-4 text-sm font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
             >
               Didn&apos;t know it
             </button>
             <button
-              onClick={() => answer(true)}
+              onClick={() => answer("correct")}
               disabled={!revealed}
               className="rounded-2xl bg-emerald-100 py-4 text-sm font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
             >

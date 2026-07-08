@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ReadingCard from "@/components/ReadingCard";
+import TodayCard from "@/components/TodayCard";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
@@ -83,6 +84,8 @@ export default function HomePage() {
           Read short French texts. Tap words you don&apos;t know.
         </p>
       </header>
+
+      <TodayCard />
 
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">

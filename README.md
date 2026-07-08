@@ -5,11 +5,12 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. Open it on your phone, read **today's 5
+feel like a language-learning Kindle. The core loop: read **today's 5
 readings** — deterministically selected once a day from a pool of 120+ RSS
-feeds (or the hardcoded fallback texts) — and tap any word for an **instant,
-fully offline** dictionary lookup — translation, part of speech, gender,
-CEFR level, a simple example — with no network round-trip. AI is there for
+feeds (or the hardcoded fallback texts) — tap unknown words for an **instant,
+fully offline** dictionary lookup (474 curated + ~15,000 generated entries),
+save the ones worth remembering, and come back later to **review words that
+are actually due**, on a real spaced-repetition schedule. AI is there for
 when you explicitly want more (see "AI explanations" below), never
 automatically. Reading state lives in **localStorage** — no account, no
 backend, works instantly.
@@ -19,16 +20,24 @@ backend, works instantly.
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS**
 - **Local offline dictionary** (`src/lib/dictionary/`, `src/data/dictionaries/`)
-  — the primary, instant word-lookup path; no network call, no API key needed.
-  474 hand-curated entries plus a rule-based lemmatiser for unlisted
+  — the primary, instant word-lookup path; no network call, no API key
+  needed. 474 hand-curated entries (examples, CEFR levels, conjugated
+  forms) plus ~15,000 generated entries from WikDict/Wiktionary data for
+  much broader coverage, plus a rule-based lemmatiser for unlisted
   inflections.
+- **Spaced repetition** (`src/lib/spacedRepetition.ts`) — a simple due-date
+  ladder (1/3/7/14/30 days) driving the Review page's queue.
+- **Article difficulty estimation** (`src/lib/difficulty.ts`) — CEFR-ish
+  scoring from word count, sentence length, and dictionary/known-word
+  coverage, replacing a fixed "always B1" assumption for RSS texts.
 - **AI explanations** (`src/lib/ai/`) — on-demand only, via OpenAI. Never
   called automatically; see "AI explanations" below.
 - Server-side **RSS fetching** (`/api/rss-texts`) — no external RSS/XML
   package, just a small dependency-free parser. Builds a large candidate
   pool from 120+ feeds and deterministically returns 5 for the day.
-- **localStorage** for saved words, known words, reading progress, and
-  settings (Supabase planned for later)
+- **localStorage** for saved words, known words, reading progress, daily
+  activity/streak, completed-article history, and settings (Supabase
+  planned for later)
 - Deployable to **Vercel**
 
 ## Run it locally
@@ -64,19 +73,25 @@ npm start
 ## How the app works
 
 Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
+(**Reading history** is a fifth page, linked from the home page's Today card
+rather than taking a nav slot — see "Daily habit loop" below.)
 
 1. **Read (home)** — `src/app/page.tsx`
-   On load, fetches `GET /api/rss-texts?limit=5` and shows a **"Today's 5
-   readings"** section — exactly 5 articles, deterministically selected once
-   per day from a much larger RSS source pool (120+ feeds; see "RSS reading
-   content" below). The same 5 stay all day and only change the next day —
-   a small "Refreshes daily" line makes that explicit. Each card shows a
-   title, difficulty (fixed at B1 for RSS texts), category, estimated
-   reading time, **source name + published date**, and a **reading-progress
-   badge** (Unread / In progress / Completed). Shows a loading skeleton
-   while fetching. If fewer than 5 RSS texts come back, hardcoded texts from
-   `src/data/texts.ts` fill the remaining slots; if RSS fails entirely, all
-   5 come from the hardcoded set, with a small notice either way.
+   Starts with a **Today card** (`src/components/TodayCard.tsx`) — see
+   "Daily habit loop" below — then fetches `GET /api/rss-texts?limit=5` and
+   shows a **"Today's 5 readings"** section — exactly 5 articles,
+   deterministically selected once per day from a much larger RSS source
+   pool (120+ feeds; see "RSS reading content" below). The same 5 stay all
+   day and only change the next day — a small "Refreshes daily" line makes
+   that explicit. Each card shows a title, an **estimated CEFR level and
+   learner-facing difficulty label** (see "Article difficulty scoring"
+   below) in place of a fixed level, category, estimated reading time, an
+   unknown-word estimate, **source name + published date**, and a
+   **reading-progress badge** (Unread / In progress / Completed). Shows a
+   loading skeleton while fetching. If fewer than 5 RSS texts come back,
+   hardcoded texts from `src/data/texts.ts` fill the remaining slots; if RSS
+   fails entirely, all 5 come from the hardcoded set, with a small notice
+   either way.
 
 2. **Reader** — `src/app/reader/[id]/page.tsx` + `src/components/Reader.tsx`
    Renders the chosen text with punctuation and paragraph spacing preserved,
@@ -108,8 +123,14 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
      a small button that, when tapped, explains that full translation is
      intentionally disabled for now, in favor of reading French with word and
      sentence support rather than defaulting to English.
-   - Opening a text marks it **in progress**; a **Mark as completed** button at
-     the end of the article marks it done.
+   - A small italic summary line under the title/meta row: *"This text looks
+     like B1 (good level). Around 40% of words may be unfamiliar."* — the
+     same estimator as the home page cards, computed once the text is on
+     screen. See "Article difficulty scoring" below.
+   - Opening a text marks it **in progress**; a **Mark as completed** button
+     at the end of the article marks it done — which also records a snapshot
+     into the reading-history archive (see "Daily habit loop") and counts
+     toward today's activity/streak.
    - For RSS-sourced texts only: a discreet **"Original source"** link to the
      real article. Hardcoded texts don't have a source URL, so it doesn't
      render for them.
@@ -124,16 +145,19 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
    or promote it straight to **known** from here.
 
 4. **Review** — `src/app/review/page.tsx`
-   Flashcards for words with status **learning** or **unsure** only — known
-   words are never quizzed. The same four filters as before (All / Saved
-   today / Least reviewed / Current text) apply within that reviewable set.
-   Front: the French word (plus its lemma, if different). **Reveal meaning**
-   shows the primary translation, other translations, part of speech, gender,
-   the **learner example sentence** first, then the **original article
-   context** underneath in smaller text. Three buttons: **Knew it** /
-   **Didn't know it** (record a review) and **Mark as known** (promotes the
-   word to known and removes it from the queue on the spot, whether or not
-   you've revealed it first).
+   A real **spaced-repetition** queue (see "Spaced repetition" below), not a
+   simple filterable list. A stats bar shows **Due today** / **New** / **Not
+   due yet** / **Total** counts; the deck itself is every due-or-new
+   learning/unsure word (known words are never quizzed), sorted by priority
+   — overdue reviews before brand-new cards, most-overdue first, unsure
+   before learning, least-reviewed, then most recently saved. Front: the
+   French word (plus its lemma, if different). **Reveal meaning** shows the
+   primary translation, other translations, part of speech, gender, the
+   **learner example sentence** first, then the **original article context**
+   underneath in smaller text. Three buttons: **Knew it** / **Didn't know
+   it** (answers the card and reschedules it) and **Mark as known**
+   (promotes the word to known and removes it from the queue on the spot,
+   whether or not you've revealed it first).
 
 5. **Settings** — `src/app/settings/page.tsx`
    - **Saved word highlights** on/off — the amber/blue coloring for
@@ -144,6 +168,118 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
      lookup direction.
    - **Known words** — a count of everything you've marked known, with a
      **Clear** action to forget them all (they'll reappear for review).
+
+### Spaced repetition
+
+Review replaced a simple "cycle through every saved word" flow with a real
+due-date schedule — `src/lib/spacedRepetition.ts`. Deliberately not full
+SM-2 (no per-answer 0-5 quality rating): a fixed interval ladder driven by a
+consecutive-correct streak, nudged by a light `ease` multiplier. Keep it
+simple and robust was the goal, not academic completeness.
+
+**Schedule** (days until next due, based on consecutive correct answers in a
+row):
+
+| Streak | Base interval |
+| --- | --- |
+| 1st correct | +1 day |
+| 2nd correct | +3 days |
+| 3rd correct | +7 days |
+| 4th correct | +14 days |
+| 5th+ correct | +30 days |
+
+The actual interval is `round(base × ease)`. `ease` starts at 1, nudges
++0.15 per correct answer (capped at 2) and -0.2 per incorrect answer (floored
+at 0.6) — so a word you consistently get right drifts to longer intervals
+faster than the base ladder alone, and one you keep missing drifts shorter.
+An incorrect answer also resets the correct-streak to 0 and makes the card
+due again **immediately** (so it can resurface the same session).
+
+**New fields on `SavedWord`** (all optional, with safe migration defaults —
+see "Saved word format" below): `ease`, `nextReviewAt`, `correctCount`
+(the consecutive-streak counter), `incorrectCount` (lifetime), and
+`lastReviewResult`.
+
+**Queue and stats** (`buildReviewQueue` / `getReviewStats`):
+- A word is **due** if `nextReviewAt` is null (never scheduled) or in the
+  past. Known words are never due.
+- **New** = never reviewed (`reviewCount === 0`). **Due today** = reviewed
+  before and currently due. **Not due yet** = reviewed before, scheduled for
+  later. **Total** = every learning/unsure word, due or not.
+- The queue is every due-or-new word, sorted: overdue reviews before
+  brand-new cards (clear existing debt before adding more), most-overdue
+  first, unsure before learning, least-reviewed first, most-recently-saved
+  first. One sort pass, no per-card weighting beyond what the ladder and
+  this ordering already capture.
+
+### Article difficulty scoring
+
+RSS texts used to be hardcoded at a flat "B1." `src/lib/difficulty.ts`
+replaces that with a heuristic estimate — useful, not academically rigorous:
+
+1. Tokenize the body (`src/lib/words.ts`) for word count and average
+   sentence length.
+2. Look up every **unique** word (`lookupWord` — the same offline dictionary
+   the reader uses) and score it on a 1-6 CEFR-ish scale: the curated
+   dictionary's real CEFR level when it has one, a fixed "solidly
+   mid-frequency" estimate (3.5) for a generated-dictionary hit (which has
+   no CEFR data), or a fixed "rare/advanced" estimate (5.5) for a word not
+   in the dictionary at all.
+3. Average that across all unique words, then nudge it for sentence length
+   (longer average sentences push the score up, short ones pull it down
+   slightly).
+4. **Personalise once there's enough data**: with 5+ known words saved, the
+   score is pulled down further for however much of the text's normally
+   "tricky" vocabulary this specific reader already knows. Below that
+   threshold, the estimate is purely dictionary/sentence-length based —
+   this is the "graceful with zero known words" requirement: a brand-new
+   reader gets a real, useful estimate on day one instead of a broken 100%
+   "unfamiliar" reading.
+5. Round to the nearest whole level (clamped A1-C1 — C2 isn't offered, since
+   "this might be too advanced to bother estimating precisely" isn't a
+   useful signal) and map the same underlying score to a learner-facing
+   label: **Easy** / **Good level** / **Stretch** / **Hard**.
+
+Common A1/A2 function words (articles, basic pronouns, etc.) never count
+toward the "% of words may be unfamiliar" estimate, regardless of known-word
+state — otherwise a brand-new reader would see a meaningless ~90-100% on
+every single article.
+
+**English-language sources are excluded.** Some of the 120+ RSS feeds are
+English-language blogs about France (see "RSS reading content" below) —
+running French-dictionary lookups against English text would score
+literally every word "not found" and show a nonsensical "Hard, 95%
+unfamiliar" on plain English prose. `ReadingCard` and `Reader` both check
+`text.language !== "en"` before computing an estimate; English-sourced texts
+just show the plain fallback (`text.difficulty`, unchanged) with no
+CEFR/label chip or unfamiliar-word line.
+
+### Daily habit loop
+
+A lightweight, localStorage-only (no Supabase yet) system to reinforce "read
+something in French today":
+
+- **`src/lib/habit.ts`** — a minimal daily activity log
+  (`lire.activityDates.v1`): any of completing an article, saving a word, or
+  answering a review call `recordActivityToday()`, which appends today's
+  date if it isn't already recorded. `getCurrentStreak()` counts consecutive
+  days backward from today (or from yesterday, if today has no activity
+  *yet* — so the streak doesn't visually zero out the moment a new day
+  starts before the reader has done anything).
+- **`src/components/TodayCard.tsx`** — the home page's "Today" card: articles
+  completed today, words saved today, reviews due right now, the current
+  streak, and a single clear next action (`Continue reading` if a text is
+  open but not finished, `Review due words` if anything's due, otherwise a
+  quiet hint — nothing to click when there's nothing to do).
+- **`src/lib/archive.ts`** + **`src/app/archive/page.tsx`** — a "Reading
+  history" page (linked from the Today card) listing every completed
+  article: title, source, completion date, and how many words were saved
+  from it (joined against `SavedWord.sourceTextTitle` at display time).
+  Deliberately its own store (`lire.archive.v1`), separate from
+  `src/lib/progress.ts`: RSS progress entries get pruned once an article
+  rotates out of the daily selection (`pruneStaleRssProgress`), but the
+  history should last, so completion is **snapshotted** (title + source) at
+  the moment `markCompleted` fires rather than looked up later.
 
 ### RSS reading content: a big pool, a calm daily selection
 
@@ -271,30 +407,90 @@ dictionary can slot in later without touching any calling code:
   news vocabulary (gouvernement, président, économie, crise, société, etc.).
   Every entry added or edited in this pass carries a short, simple example
   sentence — see "Example sentences vs. article context" below.
+- `src/data/dictionaries/generated/fr-en-generated.ts` (+`.json`) — ~15,000
+  additional entries generated from real dictionary data (WikDict/
+  Wiktionary), used only as a fallback for words the curated dictionary
+  doesn't have. See "The generated dictionary" below for source, license,
+  and how to regenerate it.
 - `src/data/dictionaries/en-fr.ts` — a modest English→French starter set,
   used by the reverse lookup at `/lookup` via `lookupEnglishWord`.
 - `src/lib/dictionary/lookup.ts` — `lookupWord(word)`, the only function the
   reading flow calls (plus `lookupEnglishWord(word)` for the reverse
   direction). It builds `Map`s once at module load (lemma → entry, and every
-  inflected/elided form → entry) and never touches the network.
+  inflected/elided form → entry, for *each* dictionary layer) and never
+  touches the network.
 - `src/lib/dictionary/lemmatize.ts` — `guessLemmas(word)`, a rule-based
   suffix→replacement table (e.g. strip `-aient`/`-ions`/`-ez` and try `-er`/
   `-re` endings) used as a fallback when a word isn't an exact lemma or a
   listed form. Candidates are only ever used if they match a real dictionary
   lemma, so a wrong guess is harmless.
 
-**Lookup order**: clean the word, check it as an exact lemma, then check it
-against every entry's `forms` (conjugations, plurals, elided articles like
-`l'idée`/`jusqu'au`), then try each of `guessLemmas`'s candidate lemmas, and
-if nothing matches, return `{ source: "missing", translations: [], ... }` —
-**never** falling back to AI automatically.
+**Lookup order**: clean the word, then check, in order — (1) curated exact
+lemma, (2) curated inflected/elided forms (conjugations, plurals, elided
+articles like `l'idée`/`jusqu'au`), (3) generated exact lemma, (4) generated
+forms (rare — the generated dictionary mostly doesn't have these), (5) each
+of `guessLemmas`'s candidate lemmas against *both* layers. If nothing
+matches, return `{ source: "missing", translations: [], ... }` — **never**
+falling back to AI automatically.
 
-**Adding dictionary entries** — edit `src/data/dictionaries/fr-en.ts` and add
-an object matching `DictionaryEntry`. Only `lemma` and `translations` are
-required; everything else (`forms`, `gender`, `cefr`, `examples`, `notes`) is
-optional and improves what the word sheet shows — but a short `examples`
-entry is strongly encouraged (see below). No other file needs to change —
-`lookup.ts` re-indexes whatever is in the array.
+**Adding curated dictionary entries** — edit `src/data/dictionaries/fr-en.ts`
+and add an object matching `DictionaryEntry`. Only `lemma` and `translations`
+are required; everything else (`forms`, `gender`, `cefr`, `examples`,
+`notes`) is optional and improves what the word sheet shows — but a short
+`examples` entry is strongly encouraged (see below). No other file needs to
+change — `lookup.ts` re-indexes whatever is in the array. The curated
+dictionary always wins over the generated one for the same lemma, so there's
+no need to remove anything from the generated set when you add a word here
+by hand — the next `node scripts/build-dictionary.mjs` run will skip it
+automatically.
+
+### The generated dictionary
+
+The hand-curated dictionary alone (474 entries) wasn't broad enough for real
+RSS articles — the single biggest gap identified in this app. Rather than
+call an API for lookup (which would break "instant, fully offline"), the fix
+is a much bigger dictionary, generated once and committed as a static asset.
+
+**Source & license** — full details in
+`src/data/dictionaries/generated/NOTICE.md`, summarized here: data comes from
+[WikDict](https://www.wikdict.com)'s French→English SQLite export (itself
+built from [Wiktionary](https://www.wiktionary.org/) via
+[DBnary](http://kaiko.getalp.org/about-dbnary/)), licensed **CC BY-SA 4.0**.
+That license applies to the *data file* specifically, not to this
+repository's application code — see NOTICE.md for exactly what that means
+for attribution and redistribution.
+
+**Pipeline** (`scripts/build-dictionary.mjs`):
+1. Downloads `fr-en.sqlite3` (~22MB) into `.cache/` (gitignored) if it isn't
+   there already — uses Node's built-in `node:sqlite` module, no extra
+   dependency.
+2. Filters out proper nouns/surnames/first names (not useful reading
+   vocabulary), entries with leftover wiki-markup, and anything that isn't a
+   clean word or short phrase.
+3. Merges multiple senses of the same written form into one entry, capping
+   translations at 6 to avoid noisy walls of text in the UI.
+4. Skips any lemma already in the curated dictionary (that one always wins
+   the lookup anyway — no point shipping it twice).
+5. Ranks by WikDict's own per-entry "importance" score and keeps the top
+   ~15,000, writing them to `fr-en-generated.json` (JSON, not a `.ts` array
+   literal — keeps `tsc` fast and the diff reviewable at this size).
+
+**Why not lazy-load it in chunks?** The task explicitly allows a "split by
+first letter, lazy-load" compromise for a dictionary this size — but
+`Reader.tsx` calls `lookupWord` synchronously on every rendered word (for
+highlighting), not just on tap, so introducing async loading would ripple
+through that render path. Trimming to the ~15,000 highest-value entries
+(~330KB gzipped) keeps the whole thing eager and synchronous, matching the
+existing architecture, while still being a large real improvement over 474
+entries. Revisit chunked loading only if the dictionary grows much larger
+than this.
+
+**Regenerating**: `node scripts/build-dictionary.mjs` — safe to re-run any
+time (e.g. after expanding the curated dictionary, so newly-curated lemmas
+get excluded from the generated set too, or when WikDict publishes a fresher
+build). Like `scripts/generate-icons.mjs`, this script is **not** part of
+`npm run build` — its output is a committed, versioned asset, regenerated
+manually.
 
 ### Example sentences vs. article context
 
@@ -443,22 +639,38 @@ interface SavedWord {
   lastReviewedAt: string | null;
   status: WordStatus;
   missingFromDictionary?: boolean; // true if saved with no dictionary entry
+  // Spaced-repetition fields — see "Spaced repetition" above. Optional so
+  // older saved words still type-check; storage.ts fills in defaults on read.
+  ease?: number;                      // interval multiplier, 1 = neutral
+  nextReviewAt?: string | null;       // ISO timestamp; null = due now
+  correctCount?: number;              // consecutive-correct streak
+  incorrectCount?: number;            // lifetime "Didn't know it" count
+  lastReviewResult?: "correct" | "incorrect" | null;
 }
 ```
 
 `src/lib/storage.ts` transparently **migrates** older data on read — plain
 strings, the AI-era shape (a single `translation` string, no `status`), the
-previous shape (`contextSentence`, no example-sentence split), and the
-current shape are all normalised to the structure above and written back.
-Migrated words default to `status: "learning"`, and get the fallback example
-sentence if they predate that field.
+pre-example-split shape (`contextSentence`, no example-sentence split), the
+pre-spaced-repetition shape (missing the `ease`/`nextReviewAt`/etc. fields),
+and the current shape are all normalised to the structure above and written
+back. Migrated words default to `status: "learning"`, the fallback example
+sentence if they predate that field, and neutral spaced-repetition defaults
+(`ease: 1`, `nextReviewAt: null`, counts at 0) if they predate those —
+which also means an old saved word is treated as **due right now** the
+first time Review sees it post-migration, which is the correct behaviour
+(it's never been scheduled).
 
-### Reading progress & settings storage
+### Reading progress, habit, and archive storage
 
 - `src/lib/progress.ts` — per-text status (`unread` / `in-progress` /
   `completed`) under `lire.progress.v1`, plus the id of the most recently
-  opened text (`lire.progress.lastOpened`) used by the Review "Current text"
-  filter.
+  opened text (`lire.progress.lastOpened`) used by the Today card's
+  "Continue reading" action.
+- `src/lib/habit.ts` — the daily activity-date log under
+  `lire.activityDates.v1`, the basis for the Today card's streak.
+- `src/lib/archive.ts` — completed-article history (title/source/date
+  snapshot) under `lire.archive.v1`, shown on `/archive`.
 - `src/lib/settings.ts` — display preferences under `lire.settings.v1`
   (`showSavedHighlights`, `showKnownWordStyling`, `fontSize`).
 - `src/lib/knownWords.ts` — the known-words list under `lire.knownWords.v1`.
@@ -474,11 +686,16 @@ sentence if they predate that field.
 | `src/lib/dictionary/lookup.ts` | `lookupWord` / `lookupEnglishWord` — the offline lookup functions the app calls |
 | `src/lib/dictionary/lemmatize.ts` | `guessLemmas` — rule-based fallback lemmatiser for unlisted inflections |
 | `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` (live popup), `NOT_TRANSLATED_YET` (saved-word placeholder), fallback example sentence |
-| `src/data/dictionaries/fr-en.ts` | The active French→English dictionary (474 entries) — add entries here |
+| `src/data/dictionaries/fr-en.ts` | The curated French→English dictionary (474 entries) — add entries here |
+| `src/data/dictionaries/generated/fr-en-generated.ts` (+`.json`) | ~15,000 generated fallback entries — see NOTICE.md and `scripts/build-dictionary.mjs` |
 | `src/data/dictionaries/en-fr.ts` | The English→French dictionary backing `/lookup` |
 | `src/lib/knownWords.ts` | Known-words list: `getKnownWords`, `markKnown`, `isKnown`, `removeKnown`, `clearKnownWords` |
-| `src/lib/storage.ts` | Saved words: `getSavedWords`, `saveWord`, `markWordAsKnown`, `recordReview`, `deleteWord`, `clearWords`, migration |
-| `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getCurrentTextTitle` |
+| `src/lib/storage.ts` | Saved words: `getSavedWords`, `saveWord`, `markWordAsKnown`, `recordReviewResult`, `deleteWord`, `clearWords`, migration |
+| `src/lib/spacedRepetition.ts` | `computeNextSchedule`, `isDue`, `buildReviewQueue`, `getReviewStats` — the Review page's due-date system |
+| `src/lib/difficulty.ts` | `estimateDifficulty` — CEFR/label estimate for a text, optionally personalised by known words |
+| `src/lib/habit.ts` | `recordActivityToday`, `getCurrentStreak` — the daily activity log behind the Today card's streak |
+| `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive` — completed-article history for `/archive` |
+| `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getLastOpenedTextId` |
 | `src/lib/settings.ts` | App settings: `getSettings`, `saveSettings`, `DEFAULT_SETTINGS` |
 | `src/lib/format.ts` | Shared `formatDate` helper used by ReadingCard and the Words page |
 | `src/lib/ai/openai.ts` | `explainWord`, `explainSentence` — OpenAI calls, on-demand only |
@@ -495,8 +712,8 @@ sentence if they predate that field.
 | `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
 | `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — builds/caches the candidate pool, returns 5 deterministic daily texts by default |
 | `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
-| `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings`, `ReviewFilter` |
-| `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `Toast`, `ServiceWorker` |
+| `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings` |
+| `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `TodayCard`, `Toast`, `ServiceWorker` |
 
 ## PWA
 
@@ -548,6 +765,35 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Dictionary coverage's biggest jump yet**: a new generated fallback
+  dictionary (~15,000 entries from WikDict/Wiktionary data, CC BY-SA 4.0 —
+  see `src/data/dictionaries/generated/NOTICE.md`) sits behind the curated
+  474-entry dictionary in the lookup order. `scripts/build-dictionary.mjs`
+  downloads, filters, merges, and ranks the source data; only the generated
+  JSON output is committed (same pattern as `generate-icons.mjs`).
+- **Real spaced repetition** (`src/lib/spacedRepetition.ts`): a fixed
+  1/3/7/14/30-day interval ladder driven by a consecutive-correct streak,
+  nudged by a light `ease` multiplier — not full SM-2. `SavedWord` gained
+  `ease`, `nextReviewAt`, `correctCount`, `incorrectCount`,
+  `lastReviewResult` (all optional, safely migrated). The Review page now
+  shows real Due today/New/Not due yet/Total stats and a priority-sorted
+  queue instead of the old ad-hoc All/Saved today/Least reviewed/Current
+  text filters (which are gone — they don't make sense next to a due-date
+  queue).
+- **Article difficulty scoring** (`src/lib/difficulty.ts`) replaces RSS
+  texts' fixed "B1": word count, sentence length, and per-word dictionary/
+  known-word coverage produce an A1-C1 estimate plus a learner label (Easy/
+  Good level/Stretch/Hard), shown on home page cards and in the reader.
+  Degrades gracefully with zero known words saved, and is skipped entirely
+  for English-language RSS sources (French lookup against English text
+  would otherwise score everything "unfamiliar").
+- **Daily habit loop**: a new Today card on the home page (articles read
+  today, words saved today, due reviews, current streak, one clear next
+  action) backed by a lightweight activity-date log
+  (`src/lib/habit.ts`), plus a new `/archive` "Reading history" page
+  (`src/lib/archive.ts`) listing every completed article with its
+  completion date, source, and words saved — snapshotted at completion
+  time so it survives RSS progress entries being pruned later.
 - **RSS source pool grown from 10 feeds to 120+** (`src/data/rssSources.ts`)
   — French news outlets plus English-language expat/travel/culture blogs
   and general publications' France sections, each tagged with an inferred
@@ -697,16 +943,14 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What to build next
 
-- **Supabase** for auth + syncing saved/known words, progress, and settings
-  across devices.
-- **Spaced repetition** in Review — use `reviewCount` / `lastReviewedAt` to
-  schedule cards instead of a single linear pass per filter.
+- **Supabase** for auth + syncing saved/known words, progress, streak, and
+  settings across devices — everything is localStorage-only today, so a
+  new device or a cleared browser starts completely fresh.
 - **A real morphological analyzer** to replace the rule-based lemmatiser for
   irregular stem changes it can't guess (e.g. `acheter` → `achète`,
-  `vendre` → future-tense stem changes).
-- **A bigger/downloadable dictionary** beyond the current 474 hand-curated
-  entries — the architecture still supports swapping `fr-en.ts` for a much
-  larger generated or user-imported wordlist without touching lookup logic.
+  `vendre` → future-tense stem changes) — would also let the generated
+  dictionary's ~15,000 lemma-only entries (no `forms[]`) match more of their
+  own conjugated/plural forms.
 - **Let AI fill in missing dictionary entries** — when a saved word has
   `missingFromDictionary: true`, an "Ask AI" result could be offered to
   patch in a real `primaryTranslation` for future lookups, instead of only
@@ -721,4 +965,12 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   (see `src/data/rssSources.ts`); a few are inevitably dead, rate-limited,
   or mis-tagged (wrong language/category) and worth pruning or correcting
   as that becomes apparent from real usage/the dev debug panel.
+- **CEFR metadata for generated dictionary entries** — WikDict doesn't carry
+  CEFR levels, so `src/lib/difficulty.ts` treats every generated-dictionary
+  hit as a flat "mid-frequency" estimate regardless of how common the word
+  actually is; a real frequency list cross-referenced against the generated
+  set would sharpen the difficulty estimate meaningfully.
+- **Weekly/monthly stats on the archive page** — it's a flat chronological
+  list today; simple aggregates (articles per week, current vs. longest
+  streak) would fit naturally once there's more history to look back on.
 - Audio / text-to-speech for pronunciation.

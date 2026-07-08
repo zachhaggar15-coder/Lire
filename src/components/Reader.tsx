@@ -9,6 +9,9 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { FALLBACK_EXAMPLE_EN, FALLBACK_EXAMPLE_FR, NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { getKnownWords, isKnown, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
+import { recordArchiveEntry } from "@/lib/archive";
+import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
+import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -42,15 +45,20 @@ export default function Reader({ text }: { text: ReadingText }) {
   // below swaps in the real, localStorage-backed settings after mount.
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [status, setStatus] = useState<TextStatus>("unread");
+  const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load saved words + known words + settings + progress once on mount,
   // and record that this text has been opened.
   useEffect(() => {
+    const known = new Set(getKnownWords());
     setWordStatusMap(new Map(getSavedWords().map((w) => [w.word, w.status])));
-    setKnownSet(new Set(getKnownWords()));
+    setKnownSet(known);
     setSettings(getSettings());
+    // Skip for English-language sources — the estimator's French dictionary
+    // lookups would score plain English text as near-100% "unfamiliar."
+    if (text.language !== "en") setDifficulty(estimateDifficulty(text.body, known));
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
 
@@ -128,6 +136,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       lastReviewedAt: null,
       status: wordStatus,
       missingFromDictionary: missing,
+      ...defaultSpacedRepetitionFields(),
     };
     saveWord(entry);
     setWordStatusMap((prev) => new Map(prev).set(word, wordStatus));
@@ -137,6 +146,12 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleMarkCompleted() {
     markCompleted(text.id);
+    recordArchiveEntry({
+      textId: text.id,
+      title: text.title,
+      sourceName: text.sourceName ?? null,
+      completedAt: new Date().toISOString(),
+    });
     setStatus("completed");
   }
 
@@ -182,9 +197,15 @@ export default function Reader({ text }: { text: ReadingText }) {
         {text.title}
       </h1>
       <p className="mt-1 text-xs text-slate-400">
-        {text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
+        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
         a sentence for more
       </p>
+      {difficulty && (
+        <p className="mt-1 text-xs italic text-slate-400">
+          This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
+          {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
+        </p>
+      )}
 
       <article
         className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-slate-800`}
