@@ -79,6 +79,14 @@ export interface AppSettings {
   /** De-emphasise words already marked "known" while reading. */
   showKnownWordStyling: boolean;
   fontSize: FontSize;
+  /**
+   * Opt-in: lets the "Ask AI for nuance" / "Ask AI to explain" buttons
+   * actually call the AI provider layer (src/lib/ai/) instead of showing
+   * "AI explanations are not enabled yet." Off by default — AI is never
+   * used without this explicit opt-in, and even then only on request, not
+   * automatically while reading.
+   */
+  enableAiHelp: boolean;
 }
 
 export type ReviewFilter = "all" | "today" | "least-reviewed" | "current-text";

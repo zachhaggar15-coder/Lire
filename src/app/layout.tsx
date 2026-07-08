@@ -13,8 +13,13 @@ export const metadata: Metadata = {
     title: "Lire",
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    // iOS Safari's "Add to Home Screen" doesn't support SVG for this — needs a PNG.
+    apple: "/icon-192.png",
   },
 };
 

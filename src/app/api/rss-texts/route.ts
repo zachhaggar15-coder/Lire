@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { rssSources, type RssSource } from "@/data/rssSources";
 import { parseRssFeed } from "@/lib/rss/parseRss";
 import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
+import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
+import { putPersistedRssTexts } from "@/lib/rss/rssTextStore";
 
 // Re-fetch feeds at most every 15 minutes; serve the cached route response in between.
 export const revalidate = 900;
@@ -50,6 +52,11 @@ export async function GET() {
     .map((r) => r.value)
     .filter((t): t is RssReadingText => t !== null)
     .slice(0, MAX_TEXTS);
+
+  // Best-effort, optional persistence so a direct link to one of these
+  // articles survives a new tab/app restart — no-ops if no KV/Redis store
+  // is configured (see rssTextStore.ts). Never blocks or fails the response.
+  await putPersistedRssTexts(texts.map(rssReadingTextToReadingText));
 
   return NextResponse.json({ texts, fetchedAt: new Date().toISOString() });
 }

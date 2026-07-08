@@ -122,6 +122,11 @@ Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
      learning/unsure words.
    - **Show known word styling** on/off — the muted gray for known words.
    - **Font size** — small / medium / large.
+   - **Enable AI help** on/off (default off) — turns "Ask AI for nuance" and
+     "Ask AI to explain" into real requests against the AI provider layer;
+     see "AI is optional" below.
+   - **English → French lookup** — a link to `/lookup` for the reverse
+     lookup direction.
    - **Known words** — a count of everything you've marked known, with a
      **Clear** action to forget them all (they'll reappear for review).
 
@@ -203,24 +208,26 @@ dictionary can slot in later without touching any calling code:
   `examples?`, `notes?`) and `DictionaryLookupResult`, the fixed shape every
   lookup returns regardless of hit or miss.
 - `src/data/dictionaries/fr-en.ts` — the active French→English dictionary:
-  hand-curated, covering every function word plus all vocabulary in
-  `src/data/texts.ts`'s five hardcoded articles (~150 entries), so lookup is
-  reliable for the app's built-in reading texts and reasonably useful against
-  real RSS articles too.
-- `src/data/dictionaries/en-fr.ts` — a modest English→French starter set.
-  Not wired into any UI yet; it exists so a future "look up an English word"
-  or reverse-flashcard feature can reuse the exact same `DictionaryEntry`
-  shape and lookup logic with no new data model.
+  hand-curated, 438 entries covering every function word, all vocabulary in
+  `src/data/texts.ts`'s five hardcoded articles, numbers, calendar, family,
+  colors, ~60 conjugated verbs, and common everyday nouns/adjectives.
+- `src/data/dictionaries/en-fr.ts` — a modest English→French starter set,
+  used by the reverse lookup at `/lookup` via `lookupEnglishWord`.
 - `src/lib/dictionary/lookup.ts` — `lookupWord(word)`, the only function the
-  rest of the app calls. It builds two `Map`s once at module load (lemma →
-  entry, and every inflected/elided form → entry) and never touches the
-  network.
+  reading flow calls (plus `lookupEnglishWord(word)` for the reverse
+  direction). It builds `Map`s once at module load (lemma → entry, and every
+  inflected/elided form → entry) and never touches the network.
+- `src/lib/dictionary/lemmatize.ts` — `guessLemmas(word)`, a rule-based
+  suffix→replacement table (e.g. strip `-aient`/`-ions`/`-ez` and try `-er`/
+  `-re` endings) used as a fallback when a word isn't an exact lemma or a
+  listed form. Candidates are only ever used if they match a real dictionary
+  lemma, so a wrong guess is harmless.
 
-**Lookup order**, exactly as specified: clean the word, check it as an exact
-lemma, then check it against every entry's `forms` (conjugations, plurals,
-elided articles like `l'idée`/`jusqu'au`), and if neither matches, return
-`{ source: "missing", translations: [], ... }` — **never** falling back to
-AI automatically.
+**Lookup order**: clean the word, check it as an exact lemma, then check it
+against every entry's `forms` (conjugations, plurals, elided articles like
+`l'idée`/`jusqu'au`), then try each of `guessLemmas`'s candidate lemmas, and
+if nothing matches, return `{ source: "missing", translations: [], ... }` —
+**never** falling back to AI automatically.
 
 **Adding dictionary entries** — edit `src/data/dictionaries/fr-en.ts` and add
 an object matching `DictionaryEntry`. Only `lemma` and `translations` are
@@ -252,23 +259,25 @@ record on the Words page) **and** adds it to the known-words list, so
 reader highlighting and future lookups only need to check one source of
 truth (`isKnown`).
 
-### AI is optional (and not enabled yet)
+### AI is optional (off by default)
 
-The reading flow **never** calls AI automatically. Both the word sheet and
-the sentence sheet have an inert button — **"Ask AI for nuance"** and **"Ask
-AI to explain"** — that only ever shows "AI explanations are not enabled
-yet." No request is sent.
+The reading flow **never** calls AI automatically — only when a reader
+explicitly taps a button *and* has turned on **"Enable AI help"** in
+Settings (off by default). With the toggle off, both the word sheet's **"Ask
+AI for nuance"** and the sentence sheet's **"Ask AI to explain"** button show
+"AI explanations are not enabled yet." with zero network calls, exactly as
+before. With the toggle on, tapping either button calls
+`src/lib/ai/client/wordAnalysis.ts` / `sentenceExplanation.ts` →
+`/api/ai/word` / `/api/ai/sentence` and renders a loading state, then the
+result (or an error message on failure).
 
-That said, a full AI provider layer from an earlier iteration is still in
-the codebase, fully working, just currently unused by the UI:
+The underlying provider layer is unchanged from the earlier iteration:
 `src/lib/ai/types.ts` (provider interfaces), `src/lib/ai/providers/openai.ts`
 (an OpenAI implementation via plain `fetch`, no SDK), `src/lib/ai/cache.ts`
 (a localStorage `CacheStore`), and three route handlers under
-`src/app/api/ai/`. It's deliberately **kept, not deleted** — wiring the two
-placeholder buttons up to `src/lib/ai/client/wordAnalysis.ts` and
-`sentenceExplanation.ts` is the natural next step once AI-on-demand is
-wanted, and it means that work doesn't need to be redone. See "What to build
-next".
+`src/app/api/ai/`. Requires `OPENAI_API_KEY` in `.env.local` — without it,
+enabling the toggle just means the request fails and the sheet shows an
+error state instead of the "not enabled yet" placeholder.
 
 **Why AI is optional at all**: the goal here is a fast, uninterrupted reading
 flow — instant local lookup for the common case, with deeper (slower,
@@ -327,10 +336,11 @@ back. Migrated words default to `status: "learning"`.
 | `src/lib/words.ts` | `cleanWord`, `tokenize`, `tokenizeParagraphsToSentences`, `splitSentences` |
 | `src/lib/hash.ts` | Shared FNV-1a `hashString` (RSS ids, dormant AI cache keys) |
 | `src/lib/dictionary/types.ts` | `DictionaryEntry`, `DictionaryLookupResult` — the generic entry/result shapes |
-| `src/lib/dictionary/lookup.ts` | `lookupWord` — the only offline lookup function the app calls |
+| `src/lib/dictionary/lookup.ts` | `lookupWord` / `lookupEnglishWord` — the offline lookup functions the app calls |
+| `src/lib/dictionary/lemmatize.ts` | `guessLemmas` — rule-based fallback lemmatiser for unlisted inflections |
 | `src/lib/dictionary/constants.ts` | `NO_DICTIONARY_ENTRY` — shown when the dictionary has nothing for a word |
-| `src/data/dictionaries/fr-en.ts` | The active French→English dictionary — add entries here |
-| `src/data/dictionaries/en-fr.ts` | A modest English→French starter set (not wired into any UI yet) |
+| `src/data/dictionaries/fr-en.ts` | The active French→English dictionary (438 entries) — add entries here |
+| `src/data/dictionaries/en-fr.ts` | The English→French dictionary backing `/lookup` |
 | `src/lib/knownWords.ts` | Known-words list: `getKnownWords`, `markKnown`, `isKnown`, `removeKnown`, `clearKnownWords` |
 | `src/lib/storage.ts` | Saved words: `getSavedWords`, `saveWord`, `markWordAsKnown`, `recordReview`, `deleteWord`, `clearWords`, migration |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getCurrentTextTitle` |
@@ -343,17 +353,24 @@ back. Migrated words default to `status: "learning"`.
 | `src/lib/rss/rssToReadingText.ts` | Converts one RSS item into the API's `RssReadingText` shape (server-only) |
 | `src/lib/rss/adaptReadingText.ts` | Maps `RssReadingText` → the app's `ReadingText` (client-safe) |
 | `src/lib/rss/rssTextCache.ts` | `sessionStorage` cache so the reader can look up RSS texts by id |
+| `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
 | `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — fetches all enabled feeds, returns up to 5 texts |
+| `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
 | `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings`, `ReviewFilter` |
 | `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `Toast`, `ServiceWorker` |
 
 ## PWA
 
-- `public/manifest.json` — name, theme color, standalone display, icon.
-- `public/icon.svg` — placeholder app icon.
+- `public/manifest.json` — name, theme color, standalone display, and a full
+  icon set: `icon.svg`, `icon-192.png`, `icon-512.png`, and a maskable
+  `icon-maskable-512.png` (safe-zone padded per the maskable icon spec).
+- `scripts/generate-icons.mjs` — regenerates the PNGs from
+  `public/icon.svg` / `public/icon-maskable-source.svg` via `sharp`
+  (`node scripts/generate-icons.mjs`).
 - `public/sw.js` — minimal network-first service worker for offline/installability.
 - Apple web-app meta tags + viewport are set in `src/app/layout.tsx` for a good
-  Add-to-Home-Screen experience.
+  Add-to-Home-Screen experience (`apple-touch-icon` uses `icon-192.png`,
+  since iOS doesn't support SVG there).
 
 ## A hydration gotcha worth knowing
 
@@ -369,6 +386,44 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **"Ask AI" buttons are now real**, behind a new **"Enable AI help"** setting
+  (off by default). When enabled, tapping "Ask AI for nuance" or "Ask AI to
+  explain" calls the existing `src/lib/ai/client/*.ts` services and
+  `/api/ai/*` routes and renders a loading/ready/error state; when disabled,
+  the buttons still show the old "not enabled yet" placeholder with zero
+  network calls. See `WordSheet.tsx` / `SentenceSheet.tsx`.
+- **Dictionary expanded from ~150 to 438 entries** in
+  `src/data/dictionaries/fr-en.ts` — numbers, calendar, family, colors,
+  question words, ~60 regular and irregular verbs with multiple conjugated
+  forms, more adjectives, and everyday nouns (home, body, food, travel,
+  school).
+- **Rule-based lemmatisation** (`src/lib/dictionary/lemmatize.ts`) as a
+  fallback in `lookupWord`: when a word isn't an exact lemma or a listed
+  form, a suffix→replacement rule table guesses candidate lemmas (e.g.
+  `vendions` → `vendre`, `parlaient` → `parler`) and checks each against the
+  real dictionary. Wrong guesses are harmless — they just fail to match
+  anything.
+- **Reverse English→French lookup** — a new `/lookup` page
+  (`src/app/lookup/page.tsx`) and `lookupEnglishWord` (`src/lib/dictionary/lookup.ts`)
+  reuse `src/data/dictionaries/en-fr.ts`, linked from Settings.
+- **Stale RSS progress pruning** — `pruneStaleRssProgress` in
+  `src/lib/progress.ts` removes `lire.progress.v1` entries for RSS ids that
+  no longer appear in the current feed results and haven't been touched in 3
+  days, so the store doesn't grow unbounded.
+- **Background RSS refresh via Vercel Cron** (`vercel.json`) hits
+  `/api/rss-texts` on a schedule so the route's cache stays warm instead of
+  relying solely on on-demand revalidation.
+- **RSS texts persist past the session** — an optional Upstash Redis-backed
+  store (`src/lib/rss/rssTextStore.ts`) and `GET /api/rss-texts/[id]` let a
+  direct link to an RSS article resolve in a fresh tab, falling back to the
+  existing sessionStorage cache first. Entirely opt-in: with no Redis
+  credentials configured, everything behaves exactly as before.
+- **Category and difficulty filters** on the home page — filter chips for
+  category (All/News/Sport/Culture/Science/Everyday life) and CEFR
+  difficulty (All/A1/A2/B1/B2).
+- **Real PNG app icons** — 192×192, 512×512, and a 512×512 maskable variant
+  (`scripts/generate-icons.mjs`, via `sharp`), wired into
+  `public/manifest.json` and `layout.tsx`'s Apple touch icon.
 - **Offline-first local dictionary**, replacing AI as the default word-lookup
   path entirely: `src/lib/dictionary/` + `src/data/dictionaries/fr-en.ts`
   (~150 entries covering every hardcoded text) give instant, no-network
@@ -408,30 +463,14 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What to build next
 
-- **Wire the "Ask AI" buttons up for real**, behind a settings toggle (e.g.
-  "Enable AI help"), reusing the already-built, already-tested
-  `src/lib/ai/client/*.ts` services and `/api/ai/*` routes — no new backend
-  work needed, just connecting two buttons.
-- **A bigger/downloadable dictionary** — the architecture (`DictionaryEntry[]`
-  in, `lookupWord` out) already supports swapping `fr-en.ts` for a much
-  larger generated or user-imported wordlist without touching lookup logic.
-- **Lemmatisation for unlisted inflections** — today only forms explicitly
-  listed in an entry's `forms[]` resolve; a real morphological analyzer
-  would catch conjugations/plurals the dictionary doesn't enumerate.
-- **Reverse (English→French) lookup UI** — `src/data/dictionaries/en-fr.ts`
-  and the same `DictionaryEntry` shape already exist for this; only the UI
-  (and a small `lookupEnglishWord`) are missing.
-- Prune stale `lire.progress.v1` entries for RSS ids that no longer appear in
-  any feed, so the localStorage progress store doesn't grow unbounded.
 - **Supabase** for auth + syncing saved/known words, progress, and settings
   across devices.
 - **Spaced repetition** in Review — use `reviewCount` / `lastReviewedAt` to
   schedule cards instead of a single linear pass per filter.
-- A **background refresh** for `/api/rss-texts` (e.g. a cron/edge job) so the
-  home page reads from a warm cache instead of triggering the 15-minute
-  revalidation on demand.
-- **Persist RSS texts** past the session (e.g. a lightweight KV/database) so
-  direct links to RSS articles survive a new tab or app restart.
-- More categories and a difficulty filter on the home page.
-- Real **PNG icons** (192/512 + maskable) for the widest install support.
+- **A real morphological analyzer** to replace the rule-based lemmatiser for
+  irregular stem changes it can't guess (e.g. `acheter` → `achète`,
+  `vendre` → future-tense stem changes).
+- **A bigger/downloadable dictionary** beyond the current 438 hand-curated
+  entries — the architecture still supports swapping `fr-en.ts` for a much
+  larger generated or user-imported wordlist without touching lookup logic.
 - Audio / text-to-speech for pronunciation.

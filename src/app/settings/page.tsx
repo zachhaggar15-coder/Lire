@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import type { AppSettings, FontSize } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
@@ -88,6 +89,12 @@ export default function SettingsPage() {
           label="Show known word styling"
           description="De-emphasise words you've marked as known, so your eye goes to what's actually new."
         />
+        <Toggle
+          checked={settings.enableAiHelp}
+          onChange={(v) => update({ enableAiHelp: v })}
+          label="Enable AI help"
+          description="Turns “Ask AI for nuance” and “Ask AI to explain” into real requests. Off by default — AI is only ever used when you explicitly tap one of those buttons, never automatically."
+        />
 
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <p className="font-semibold text-slate-900">Font size</p>
@@ -128,6 +135,21 @@ export default function SettingsPage() {
             </button>
           )}
         </div>
+
+        <Link
+          href="/lookup"
+          className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-slate-900">English → French lookup</p>
+            <p className="mt-0.5 text-sm text-slate-500">
+              Look up an English word offline, the other direction.
+            </p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
       </div>
     </div>
   );

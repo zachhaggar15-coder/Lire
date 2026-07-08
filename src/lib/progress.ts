@@ -89,3 +89,37 @@ export function getCurrentTextTitle(): string | null {
   if (!id) return null;
   return getTextById(id)?.title ?? null;
 }
+
+/**
+ * RSS ids rotate as feeds refresh, so lire.progress.v1 would otherwise grow
+ * forever. Called from the home page after each successful RSS fetch with
+ * the ids currently being shown; removes RSS-prefixed progress entries that
+ * are both absent from that list AND old (their last-touched timestamp is
+ * more than a few days ago). The age check is deliberate: an article can
+ * briefly rotate out of the top 5 and back in, and we don't want to lose a
+ * reader's in-progress/completed status over that. Hardcoded text ids
+ * (never prefixed "rss-") are never touched.
+ */
+const RSS_ID_PREFIX = "rss-";
+const STALE_AFTER_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
+
+export function pruneStaleRssProgress(currentRssIds: string[]): void {
+  if (!hasStorage()) return;
+  const all = readAll();
+  const current = new Set(currentRssIds);
+  const now = Date.now();
+  let changed = false;
+
+  for (const [id, entry] of Object.entries(all)) {
+    if (!id.startsWith(RSS_ID_PREFIX) || current.has(id)) continue;
+
+    const lastTouched = entry.completedAt ?? entry.openedAt;
+    const age = lastTouched ? now - new Date(lastTouched).getTime() : Infinity;
+    if (age > STALE_AFTER_MS) {
+      delete all[id];
+      changed = true;
+    }
+  }
+
+  if (changed) persist(all);
+}

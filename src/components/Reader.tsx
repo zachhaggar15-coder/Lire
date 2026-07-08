@@ -249,12 +249,17 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       <WordSheet
         state={activeWord}
+        aiEnabled={settings.enableAiHelp}
         onClose={() => setActiveWord(null)}
         onKnow={handleKnow}
         onUnsure={() => saveActiveWord("unsure")}
         onSave={() => saveActiveWord("learning")}
       />
-      <SentenceSheet sentence={activeSentence} onClose={() => setActiveSentence(null)} />
+      <SentenceSheet
+        sentence={activeSentence}
+        aiEnabled={settings.enableAiHelp}
+        onClose={() => setActiveSentence(null)}
+      />
       <Toast message={toastMessage} />
     </div>
   );
