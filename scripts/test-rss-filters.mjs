@@ -5,7 +5,7 @@
 // (uses Node's built-in TypeScript stripping, no build step needed)
 import { analyseLanguage, isAcceptableFrenchText } from "../src/lib/rss/language.ts";
 import { analyseContentQuality, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
-import { looksLikeBoilerplate } from "../src/lib/rss/cleanContent.ts";
+import { looksLikeBoilerplate, looksLikePaywallOrBotWall } from "../src/lib/rss/cleanContent.ts";
 
 let passed = 0;
 let failed = 0;
@@ -72,6 +72,16 @@ notre newsletter pour ne rien manquer. Politique de confidentialité et
 gestion des cookies disponibles en bas de page.
 `.trim();
 
+const PAYWALL_TEXT = `
+Cet article est réservé aux abonnés. Abonnez-vous pour lire la suite et
+accéder à l'intégralité de nos contenus premium.
+`.trim();
+
+const BOTWALL_TEXT = `
+Just a moment... Please enable JavaScript and cookies to continue. Checking
+your browser before accessing this website.
+`.trim();
+
 console.log("--- Language detection ---");
 {
   const r = analyseLanguage(FRENCH_PARAGRAPH);
@@ -117,6 +127,14 @@ console.log("\n--- Content quality ---");
   console.log(`  Cookie/newsletter boilerplate -> looksLikeBoilerplate=${isBoilerplate}`);
   check("cookie/newsletter boilerplate is flagged", isBoilerplate, true);
   check("clean French article is not flagged as boilerplate", looksLikeBoilerplate(GOOD_FRENCH_ARTICLE), false);
+}
+{
+  const isPaywall = looksLikePaywallOrBotWall(PAYWALL_TEXT);
+  const isBotWall = looksLikePaywallOrBotWall(BOTWALL_TEXT);
+  console.log(`  Paywall prompt -> looksLikePaywallOrBotWall=${isPaywall}; bot-protection page -> ${isBotWall}`);
+  check("paywall prompt is flagged", isPaywall, true);
+  check("bot-protection challenge page is flagged", isBotWall, true);
+  check("clean French article is not flagged as a paywall/bot-wall", looksLikePaywallOrBotWall(GOOD_FRENCH_ARTICLE), false);
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

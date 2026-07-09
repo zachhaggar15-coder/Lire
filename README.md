@@ -538,6 +538,25 @@ linked article page when the feed's own text is short:
   back to the feed's own text exactly as before this existed. The scraped
   result is only used if it's both longer than the feed's teaser and still
   passes the same template-syntax/boilerplate checks as feed content.
+- **Paywalls and bot-protection pages are detected explicitly, not just
+  left to fail quietly** — `looksLikePaywallOrBotWall` (`cleanContent.ts`)
+  matches common paywall prompts (French and English — "réservé aux
+  abonnés," "subscribe to continue," etc.) and bot-protection/CAPTCHA
+  challenge pages (Cloudflare's "Just a moment...," Incapsula, generic
+  "verify you are human" copy). It's checked on the raw HTML (some challenge
+  pages have so little real markup that Readability can't extract anything
+  from them at all, which would otherwise look like "not an article" rather
+  than "blocked") and again on the cleaned, extracted text (in case a
+  paywall snippet is embedded inside an otherwise-real opening paragraph).
+  Either match — or an HTTP 403/429/503 response, the common bot-protection/
+  rate-limit status codes — means the teaser is used, same as any other
+  scrape failure. Once a hostname triggers this, it's remembered in an
+  in-memory set for the rest of the process's lifetime, so a known-blocked
+  site (`lemonde.fr`, `ouest-france.fr`, and several other major French
+  outlets are blocked like this in practice) doesn't cost a fresh 6s timeout
+  on every candidate-pool refresh — only the first attempt per cold start
+  pays that cost. Logged in development as `[rss] scraping blocked for
+  <hostname> ... — <reason>`, mirroring the route's existing rejection log.
 - **Known trade-off, accepted deliberately**: this reintroduces the
   per-site fragility and extra network hop that an earlier iteration of
   this README explicitly avoided, and full-text scraping may not sit well

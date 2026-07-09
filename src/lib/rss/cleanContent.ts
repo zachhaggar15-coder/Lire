@@ -138,6 +138,42 @@ export function looksLikeBoilerplate(text: string): boolean {
 }
 
 /**
+ * Phrases that show up on a paywall prompt or a bot-protection/CAPTCHA
+ * challenge page instead of real article content — used by
+ * scrapeArticle.ts to reject a scrape that "succeeded" (200 response, some
+ * extractable text) but didn't actually get the article. Either case means
+ * the same thing: fall back to the feed's own teaser, same as a network
+ * failure would.
+ */
+const PAYWALL_OR_BOTWALL_PATTERNS = [
+  // Paywalls (French)
+  /r[ée]serv[ée]s? aux abonn[ée]s/i,
+  /abonnez-vous pour (lire|continuer)/i,
+  /pour lire la suite,? abonnez-vous/i,
+  /cet article est r[ée]serv[ée]/i,
+  /contenu r[ée]serv[ée] aux abonn[ée]s/i,
+  // Paywalls (English)
+  /subscribe to (continue|read)/i,
+  /this (content|article) is for subscribers/i,
+  /to continue reading this article/i,
+  // Bot-protection / challenge pages (Cloudflare, Akamai, Incapsula, generic CAPTCHA)
+  /just a moment\.{3}/i,
+  /checking your browser (before accessing|to see)/i,
+  /verify you are (a )?human/i,
+  /enable javascript and cookies to continue/i,
+  /attention required[!.]?\s*\|\s*cloudflare/i,
+  /ddos protection by/i,
+  /request unsuccessful.{0,20}incapsula/i,
+  /access denied\b/i,
+  /pardon our interruption/i,
+];
+
+/** See PAYWALL_OR_BOTWALL_PATTERNS above. */
+export function looksLikePaywallOrBotWall(text: string): boolean {
+  return PAYWALL_OR_BOTWALL_PATTERNS.some((re) => re.test(text));
+}
+
+/**
  * Some feeds leak unresolved CMS template syntax into their title/body when
  * the site's template is broken (e.g. `$content.TitleNoTags`, `{{ title }}`,
  * `#set(...)`). That's malformed content, not real reading material.
