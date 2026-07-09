@@ -90,6 +90,11 @@ function assertWordExplanation(raw: unknown, fallbackWord: string, fallbackLemma
     simpleExampleEn: r.simpleExampleEn,
     grammarOrUsageNote: r.grammarOrUsageNote,
     commonMistake: typeof r.commonMistake === "string" && r.commonMistake ? r.commonMistake : null,
+    // Tolerant, not required in the shape check above: an older or
+    // slightly-off model response missing just this newer field shouldn't
+    // throw away an otherwise-good explanation — the sheet simply omits
+    // this section if it's blank.
+    whyThisWord: typeof r.whyThisWord === "string" ? r.whyThisWord : "",
   };
 }
 
@@ -149,7 +154,8 @@ const WORD_SCHEMA = `Respond with a single valid JSON object, no markdown, no co
   "simpleExampleFr": string,       // a new, short, simple French sentence using the word
   "simpleExampleEn": string,       // English translation of simpleExampleFr
   "grammarOrUsageNote": string,    // one short useful note (conjugation, gender, register, idiom) or "" if none
-  "commonMistake": string | null   // a common mistake learners make with this word, or null
+  "commonMistake": string | null,  // a common mistake learners make with this word, or null
+  "whyThisWord": string            // 1-2 short sentences: why the writer chose THIS word here specifically, not a more common synonym — register/tone (formal, journalistic, literary, colloquial), connotation, emphasis, or genre convention. If it's just an ordinary, unremarkable word choice with nothing notable to say, state that plainly instead of inventing a reason.
 }`;
 
 const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
@@ -173,6 +179,7 @@ One entry per article given, same id. blurbEn: exactly 2-3 short, plain English 
 export async function explainWord(req: WordExplanationRequest): Promise<WordExplanation> {
   const system = `You are a French tutor helping a ${req.level}. ${WORD_SCHEMA}`;
   const user = [
+    req.articleTitle ? `Article title (for genre/register context): ${req.articleTitle}` : null,
     `Word: ${req.word}`,
     req.lemma ? `Dictionary form (lemma): ${req.lemma}` : null,
     `Sentence from the article: ${req.articleSentence}`,

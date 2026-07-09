@@ -14,6 +14,8 @@ export interface WordExplanationRequest {
   simpleExampleSentence?: string | null;
   /** The sentence just before articleSentence, if available. */
   surroundingSentence?: string | null;
+  /** The article's title — genre/register context (news headline vs. blog vs. recipe) helps explain *why* this specific word was chosen. */
+  articleTitle?: string | null;
   /** e.g. "A2/B1 French learner". */
   level: string;
 }
@@ -28,6 +30,14 @@ export interface WordExplanation {
   simpleExampleEn: string;
   grammarOrUsageNote: string;
   commonMistake: string | null;
+  /**
+   * Why the article chose *this specific word* in *this specific spot* —
+   * register/tone, connotation, or a stylistic reason a French writer would
+   * pick it over a more common synonym (e.g. "exacerber" over "aggraver" for
+   * added drama in a news headline). Distinct from `meaningInContext`, which
+   * covers what the word means here, not why the author reached for it.
+   */
+  whyThisWord: string;
 }
 
 export interface SentenceExplanationRequest {

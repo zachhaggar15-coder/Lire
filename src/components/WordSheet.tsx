@@ -46,7 +46,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * "learning signal" the app now asks for instead of auto-saving every tap).
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsure, onSave }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -74,6 +74,7 @@ export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: 
       articleSentence: state.contextSentence,
       simpleExampleSentence: firstExample?.fr ?? null,
       surroundingSentence: state.surroundingSentence,
+      articleTitle,
       level: "A2/B1 French learner",
     });
     if (result.data) {
@@ -223,6 +224,12 @@ export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: 
                 <p className="mt-1 text-xs text-ink-muted">
                   <span className="font-semibold">Common mistake: </span>
                   {aiResult.commonMistake}
+                </p>
+              )}
+              {aiResult.whyThisWord && (
+                <p className="mt-2 text-xs text-ink-muted">
+                  <span className="font-semibold">Why this word here: </span>
+                  {aiResult.whyThisWord}
                 </p>
               )}
             </div>

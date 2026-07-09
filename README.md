@@ -938,10 +938,19 @@ of the reading flow.)
 
 **Word explanation** sends the word, its lemma (if the dictionary resolved
 one), the article sentence, the dictionary's simple example sentence (if
-any), the previous sentence, and a fixed learner level ("A2/B1 French
-learner"). Returns translation, part of speech, a context-specific meaning,
-a fresh simple example (French + English), a grammar/usage note, and an
-optional common-mistake warning.
+any), the previous sentence, the article title, and a fixed learner level
+("A2/B1 French learner"). Returns translation, part of speech, a
+context-specific meaning, a fresh simple example (French + English), a
+grammar/usage note, an optional common-mistake warning, and **why the
+article used this specific word here** — register/tone, connotation, or a
+stylistic reason a French writer would reach for it over a more common
+synonym (e.g. "exacerber" over "aggraver" for added drama in a headline),
+shown as "Why this word here" in the AI nuance panel. The article title is
+included in the request specifically to help the model reason about
+genre/register (a news headline reads differently from a recipe blog).
+Tolerant of an older/incomplete response: if a result is missing just this
+field, the rest of the explanation still renders — the section is simply
+omitted.
 
 **Sentence explanation** sends the sentence, the article title, and the
 previous/next sentence. Returns a natural English translation, a simplified
@@ -1136,6 +1145,13 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **"Ask AI for nuance" now explains *why* the article chose that specific
+  word** — a new "Why this word here" line covering register, tone,
+  connotation, or a stylistic reason a French writer would reach for it
+  over a more common synonym, distinct from the existing "what it means
+  here" explanation. The article title is now sent along with the request
+  specifically so the model can reason about genre (news headline vs. blog
+  vs. recipe). See "AI explanations" above.
 - **Every article card now shows a 2-3 sentence English "what is this
   about" blurb** above the French preview — generated in a background
   batch step during candidate-pool building (`src/lib/rss/articleBlurbs.ts`
