@@ -38,7 +38,12 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
 
   const quickReads = active.filter((a) => a.text.minutes <= QUICK_READ_MAX_MINUTES).slice(0, SECTION_SIZE);
 
-  const goodForYou = [...active]
+  // Excludes whatever's already Today's Recommendation — otherwise the top
+  // overall pick (which is usually also a strong difficulty-band match)
+  // shows up twice on the home page, once as the star pick and again as
+  // the first "Good For You" card.
+  const goodForYou = active
+    .filter((a) => a.text.id !== todaysRecommendation?.text.id)
     .sort((a, b) => b.score.unknownWordTarget - a.score.unknownWordTarget)
     .slice(0, SECTION_SIZE);
 

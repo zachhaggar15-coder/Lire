@@ -356,12 +356,14 @@ section instead of a main one.
 **Sections** (`sections.ts`) — `buildSections(ranked)` takes the one ranked
 pool and derives every named section from it by filtering/re-sorting, never
 re-scoring: **Today's Recommendation** (the single top-ranked "active"
-article), **Good For You** (closest to the ideal difficulty band), **Quick
-Reads** (≤3 minutes), **Stretch Yourself** (harder than the ideal band, but
-still "active"), **New Vocabulary** (high unknown-word ratio *and* good
-dictionary coverage, so the new words are genuinely look-up-able), **Latest
-News** (freshest `news-style` articles), and **Save for later** (everything
-above `SAVE_FOR_LATER_THRESHOLD`).
+article), **Good For You** (closest to the ideal difficulty band, excluding
+whatever's already Today's Recommendation — otherwise the overall top pick,
+which is usually also a strong difficulty-band match, would show up twice
+in a row), **Quick Reads** (≤3 minutes), **Stretch Yourself** (harder than
+the ideal band, but still "active"), **New Vocabulary** (high unknown-word
+ratio *and* good dictionary coverage, so the new words are genuinely
+look-up-able), **Latest News** (freshest `news-style` articles), and **Save
+for later** (everything above `SAVE_FOR_LATER_THRESHOLD`).
 
 **Continue Reading banner** (`src/components/ContinueReadingBanner.tsx`) — a
 prominent banner above the Today card if a text is currently `in-progress`
@@ -870,12 +872,50 @@ record on the Words page) **and** adds it to the known-words list, so
 reader highlighting and future lookups only need to check one source of
 truth (`isKnown`).
 
+### Article blurbs: what an article is about, before you tap in
+
+Every `ReadingCard` shows a 2-3 sentence **English** summary of what the
+article is actually about, above the French preview snippet — useful since
+the French preview alone doesn't help much before a reader's French is good
+enough to parse it. This is the one deliberate exception to "AI only runs
+on an explicit tap" (see "AI explanations" below): a blurb has to already
+exist by the time a card renders, so it's generated **once per
+candidate-pool build**, not per reader, not per page view.
+
+- **`src/lib/rss/articleBlurbs.ts`** — `attachEnglishBlurbs(items)` is
+  called once at the end of `buildCandidatePool()` (`/api/rss-texts/route.ts`),
+  after dedup, before the pool is cached. Splits the pool into chunks of 12
+  articles and fires one OpenAI call per chunk **concurrently**
+  (`Promise.allSettled`) — bounds total wall time to roughly one request's
+  worth regardless of pool size, and keeps the number of OpenAI calls per
+  refresh small (roughly `poolSize / 12`, not one per article).
+- **`summarizeArticlesForBlurbs`** (`src/lib/ai/openai.ts`) — one JSON-mode
+  batch call: title + a 500-character excerpt per article in, `{ id,
+  blurbEn }` per article out.
+- **Best-effort, never blocking**: no `OPENAI_API_KEY`, a timed-out or
+  malformed batch response, or any other failure just leaves `blurbEn: null`
+  for the affected articles (or all of them, if AI isn't configured at
+  all) — the pool is still returned and cards simply don't show a blurb
+  line. Never throws, never delays a response beyond the batch timeout.
+- **Hardcoded texts** (`src/data/texts.ts`) have hand-written `blurbEn`
+  values instead — no AI needed for 5 fixed texts.
+- **Why this is the one automatic AI usage in the app**: every other AI
+  feature (below) is strictly on-demand because it's part of the live
+  reading flow, where an automatic call would add latency and cost to the
+  single most frequent interaction in the app. Blurb generation isn't part
+  of that flow — it happens in the background, once per 12-hour pool
+  refresh (shared across every reader until the next refresh), the same
+  "batch job during pool building" pattern already used for full-article
+  scraping (see above), not a per-view or per-reader cost.
+
 ### AI explanations (on demand only)
 
-The reading flow **never** calls AI automatically — not on page load, not on
-a word tap, not on a sentence tap. AI only ever runs when a reader explicitly
-taps **"Ask AI for nuance"** (word sheet) or **"Ask AI to explain"** (sentence
-sheet).
+Everything below this point **never** calls AI automatically — not on page
+load, not on a word tap, not on a sentence tap. AI only ever runs when a
+reader explicitly taps **"Ask AI for nuance"** (word sheet) or **"Ask AI to
+explain"** (sentence sheet). (Article blurbs, above, are the one exception
+to "on demand," and are generated in a background batch step, not as part
+of the reading flow.)
 
 **Architecture**:
 - `src/lib/ai/openai.ts` — `explainWord(req)` / `explainSentence(req)`, plain
@@ -1027,7 +1067,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/recommendation/build.ts`, `context.ts` | `buildScorableArticles`, `buildScoringContext` — glue between `ReadingText[]` and the scoring engine |
 | `src/lib/settings.ts` | App settings: `getSettings`, `saveSettings`, `DEFAULT_SETTINGS` |
 | `src/lib/format.ts` | Shared `formatDate` helper used by ReadingCard and the Words page |
-| `src/lib/ai/openai.ts` | `explainWord`, `explainSentence` — OpenAI calls, on-demand only |
+| `src/lib/ai/openai.ts` | `explainWord`, `explainSentence` (on-demand), `summarizeArticlesForBlurbs` (background batch) — OpenAI calls |
 | `src/lib/ai/client.ts` | `getWordExplanation`, `getSentenceExplanation` — cache-first client wrappers |
 | `src/lib/ai/cache.ts` | localStorage `CacheStore` + stable cache-key helpers |
 | `src/app/api/ai/explain-word/route.ts`, `.../explain-sentence/route.ts` | The two AI-backed routes — see "AI explanations" |
@@ -1037,6 +1077,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/rss/seededShuffle.ts` | `seededShuffle`, `todayKey` — the deterministic date-seeded daily selection |
 | `src/lib/rss/rssToReadingText.ts` | Converts one RSS item into the API's `RssReadingText` shape (server-only) |
 | `src/lib/rss/scrapeArticle.ts` | `scrapeFullArticle` — Readability/jsdom-based full-article extraction, used when a feed's teaser is short (server-only) |
+| `src/lib/rss/articleBlurbs.ts` | `attachEnglishBlurbs` — batch AI summary generation for the home-page "what is this about" blurb (server-only) |
 | `src/lib/rss/adaptReadingText.ts` | Maps `RssReadingText` → the app's `ReadingText` (client-safe) |
 | `src/lib/rss/rssTextCache.ts` | `sessionStorage` cache so the reader can look up RSS texts by id |
 | `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
@@ -1095,6 +1136,19 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Every article card now shows a 2-3 sentence English "what is this
+  about" blurb** above the French preview — generated in a background
+  batch step during candidate-pool building (`src/lib/rss/articleBlurbs.ts`
+  + `summarizeArticlesForBlurbs` in `openai.ts`), not per reader/per view,
+  to keep AI cost and latency bounded regardless of how many readers open
+  the app. The one deliberate exception to this app's "AI only runs
+  on-demand" rule — see "Article blurbs" above for why that's still safe.
+  Hardcoded texts got hand-written blurbs instead of an AI call.
+- **"Good For You" no longer repeats Today's Recommendation** — the top
+  overall pick is now excluded from the "Good For You" candidates before
+  sorting, since it was often also the closest difficulty-band match and
+  would otherwise appear twice in a row on the home page
+  (`src/lib/recommendation/sections.ts`).
 - **Dictionary lookup misses were a recurring real complaint — the
   generated dictionary is now ~92,000 entries, up from 15,000**
   (`scripts/build-dictionary.mjs`'s `TARGET_SIZE`, effectively uncapped

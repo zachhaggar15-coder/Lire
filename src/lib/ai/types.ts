@@ -52,3 +52,22 @@ export interface SentenceExplanation {
   usefulVocabulary: UsefulVocabularyItem[];
   explanation: string;
 }
+
+/**
+ * One article to summarize in English — used for the home page's "what is
+ * this about" blurb, computed in a batch during RSS pool building (see
+ * src/lib/rss/articleBlurbs.ts), not on-demand per reader like the word/
+ * sentence explanations above.
+ */
+export interface ArticleBlurbInput {
+  id: string;
+  title: string;
+  /** A leading excerpt of the article body — enough for a summary, short enough to keep a batch request small. */
+  excerpt: string;
+}
+
+export interface ArticleBlurbResult {
+  id: string;
+  /** 2-3 short English sentences describing what the article is about. */
+  blurbEn: string;
+}

@@ -16,6 +16,14 @@ export interface ReadingText {
   minutes: number;
   /** Short preview shown on the home card. */
   preview: string;
+  /**
+   * A 2-3 sentence English summary of what the article is about, shown on
+   * the home-page card before a reader taps in. For RSS texts, generated in
+   * a batch during pool building (src/lib/rss/articleBlurbs.ts) and may be
+   * null if AI isn't configured or the batch call failed; for hardcoded
+   * texts, hand-written in src/data/texts.ts.
+   */
+  blurbEn?: string | null;
   /** Full body text. Paragraphs are separated by blank lines. */
   body: string;
   /** Below this line: present only for RSS-sourced texts (undefined for hardcoded ones). */

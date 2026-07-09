@@ -13,6 +13,7 @@ export function rssReadingTextToReadingText(rss: RssReadingText): ReadingText {
     difficulty: rss.difficulty,
     minutes: rss.readingTimeMinutes,
     preview: truncateAtSentence(rss.originalText, PREVIEW_LENGTH),
+    blurbEn: rss.blurbEn,
     body: rss.originalText,
     sourceName: rss.sourceName,
     sourceUrl: rss.sourceUrl,

@@ -1,4 +1,6 @@
 import type {
+  ArticleBlurbInput,
+  ArticleBlurbResult,
   SentenceExplanation,
   SentenceExplanationRequest,
   WordExplanation,
@@ -123,6 +125,20 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
   };
 }
 
+function assertArticleBlurbResults(raw: unknown): ArticleBlurbResult[] {
+  const r = raw as Record<string, unknown>;
+  if (!r || !Array.isArray(r.summaries)) {
+    throw new Error("OpenAI article-blurb response had an unexpected shape.");
+  }
+  return r.summaries
+    .filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
+    .map((s) => ({
+      id: typeof s.id === "string" ? s.id : "",
+      blurbEn: typeof s.blurbEn === "string" ? s.blurbEn.trim() : "",
+    }))
+    .filter((s) => s.id && s.blurbEn);
+}
+
 const WORD_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
 {
   "word": string,
@@ -145,6 +161,14 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
   "usefulVocabulary": [ { "word": string, "meaning": string } ],  // 1-5 useful words from the sentence
   "explanation": string              // 2-4 short sentences explaining the sentence for a learner
 }`;
+
+const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
+{
+  "summaries": [
+    { "id": string, "blurbEn": string }
+  ]
+}
+One entry per article given, same id. blurbEn: exactly 2-3 short, plain English sentences summarizing what the article is actually about (the real subject/events), for someone who doesn't read French yet and is deciding whether to open it. Neutral tone, no clickbait, no "this article discusses..." framing — just state what it's about.`;
 
 export async function explainWord(req: WordExplanationRequest): Promise<WordExplanation> {
   const system = `You are a French tutor helping a ${req.level}. ${WORD_SCHEMA}`;
@@ -173,4 +197,19 @@ export async function explainSentence(req: SentenceExplanationRequest): Promise<
     .join("\n");
   const raw = await callOpenAiJson(system, user);
   return assertSentenceExplanation(raw, req.sentence);
+}
+
+/**
+ * Summarizes a batch of articles in one call — used to generate the home
+ * page's "what is this about" English blurb during RSS pool building (see
+ * src/lib/rss/articleBlurbs.ts), not per reader on-demand like the two
+ * functions above. Batched (rather than one call per article) to keep the
+ * number of OpenAI requests per pool refresh small.
+ */
+export async function summarizeArticlesForBlurbs(items: ArticleBlurbInput[]): Promise<ArticleBlurbResult[]> {
+  if (items.length === 0) return [];
+  const system = `You summarize French news/blog articles in plain English for language learners who are deciding what to read. ${ARTICLE_BLURB_SCHEMA}`;
+  const user = items.map((it) => `id: ${it.id}\ntitle: ${it.title}\nexcerpt: ${it.excerpt}`).join("\n---\n");
+  const raw = await callOpenAiJson(system, user);
+  return assertArticleBlurbResults(raw);
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { rssSources, type RssSource } from "@/data/rssSources";
 import { parseRssFeed } from "@/lib/rss/parseRss";
 import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
+import { attachEnglishBlurbs } from "@/lib/rss/articleBlurbs";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { putPersistedRssTexts } from "@/lib/rss/rssTextStore";
 import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
@@ -141,7 +142,12 @@ async function buildCandidatePool(): Promise<CandidatePool> {
     }
   }
 
-  return { builtAt: Date.now(), items: dedupe(all), feedsSucceeded, feedsFailed, itemsRejected };
+  const items = dedupe(all);
+  // Best-effort, batched, concurrent — see articleBlurbs.ts. Never throws;
+  // a failure here just leaves blurbEn null on the affected items.
+  await attachEnglishBlurbs(items);
+
+  return { builtAt: Date.now(), items, feedsSucceeded, feedsFailed, itemsRejected };
 }
 
 async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {

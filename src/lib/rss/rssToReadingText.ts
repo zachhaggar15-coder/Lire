@@ -26,6 +26,15 @@ export interface RssReadingText {
   sourceName: string;
   sourceUrl: string;
   publishedAt: string;
+  /**
+   * A 2-3 sentence English summary of what the article is about, shown on
+   * the home-page card before a reader taps in — mutated in after the
+   * initial conversion, once per candidate-pool build, by
+   * src/lib/rss/articleBlurbs.ts. Null until (and unless) that step fills
+   * it in — AI isn't configured, the batch call failed, etc. are all fine;
+   * the card just doesn't show a blurb for that article.
+   */
+  blurbEn: string | null;
 }
 
 /** Why itemToRssReadingText rejected a candidate — used for dev-only logging in the RSS route, never shown to users. */
@@ -170,6 +179,7 @@ export async function itemToRssReadingText(
       sourceName: source.name,
       sourceUrl: item.link,
       publishedAt: parsePublishedAt(item.pubDate),
+      blurbEn: null,
     },
   };
 }

@@ -101,6 +101,9 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         <span className="ml-auto text-xs text-ink-muted">{text.minutes} min</span>
       </div>
       <h2 className="text-lg font-bold leading-snug text-ink">{text.title}</h2>
+      {text.blurbEn && (
+        <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>
+      )}
       <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
 
       {starRating && (

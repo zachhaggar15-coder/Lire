@@ -17,6 +17,8 @@ export const texts: ReadingText[] = [
     minutes: 3,
     preview:
       "Une grande ville française étudie la possibilité de rendre les transports gratuits pour tous les habitants.",
+    blurbEn:
+      "A French city is considering making public transport free for everyone, hoping to cut pollution and help low-income families. Residents are divided over the idea, mainly over who would end up paying for it, and a trial weekend-only free period is being tested first.",
     body: `Une grande ville française étudie la possibilité de rendre les transports en commun gratuits pour tous les habitants. Le maire explique que cette mesure pourrait réduire la pollution et aider les familles qui ont un budget limité. Selon lui, moins de voitures dans les rues signifie un air plus propre et moins de bruit.
 
 Le projet n'est pas nouveau. Plusieurs villes en Europe ont déjà testé la gratuité des transports, avec des résultats différents. Dans certaines villes, le nombre de passagers a beaucoup augmenté, ce qui a créé des bus et des trams très remplis aux heures de pointe. Dans d'autres villes, les résultats ont été plus modestes, mais les habitants ont apprécié de payer moins chaque mois.
@@ -41,6 +43,8 @@ D'autres villes françaises suivent ce projet avec beaucoup d'attention. Si l'es
     minutes: 3,
     preview:
       "L'équipe locale gagne le match dans les dernières secondes et le public explose de joie.",
+    blurbEn:
+      "The home team fell behind early but fought back to win in the very last minute of the match, with a nineteen-year-old striker scoring the winning goal. Fans celebrated late into the night, and the club now has a shot at a European competition spot next season.",
     body: `Hier soir, l'équipe locale a gagné un match extraordinaire dans les dernières secondes de la rencontre. Le stade était complet depuis le début de l'après-midi, et des milliers de supporters attendaient ce match depuis des semaines. L'ambiance était électrique dès l'entrée des joueurs sur le terrain.
 
 Le début du match a été difficile pour l'équipe locale. L'adversaire a marqué un but dès la dixième minute, et les supporters sont restés silencieux pendant un long moment. Les joueurs locaux semblaient nerveux et ont eu du mal à contrôler le ballon pendant la première moitié du match.
@@ -67,6 +71,8 @@ Pour le club, cette victoire est aussi importante sur le plan financier. Gagner 
     minutes: 4,
     preview:
       "Chaque printemps, les musées ouvrent leurs portes gratuitement pendant toute une nuit spéciale.",
+    blurbEn:
+      "Each spring, museums across the country stay open all night and let visitors in for free, with guided tours, concerts, and art workshops for kids. The event draws millions of visitors every year and is one of Europe's most popular cultural nights.",
     body: `Chaque printemps, de nombreux musées à travers le pays ouvrent leurs portes gratuitement pendant toute une nuit, dans le cadre d'un événement culturel très populaire appelé la Nuit des musées. Cette manifestation existe depuis plusieurs années et attire, à chaque édition, un public toujours plus nombreux et varié.
 
 L'idée derrière cet événement est simple : permettre à tous, quel que soit leur budget, de découvrir les collections des musées dans une ambiance différente de celle de la journée. La nuit, les salles d'exposition prennent une atmosphère particulière, presque mystérieuse, qui change complètement la façon dont les visiteurs perçoivent les œuvres d'art.
@@ -91,6 +97,8 @@ Pour les musées eux-mêmes, cette soirée représente aussi une occasion unique
     minutes: 4,
     preview:
       "Des chercheurs expliquent comment le sommeil aide le cerveau à mémoriser et à se réparer.",
+    blurbEn:
+      "Scientists explain how sleep works in stages, each with its own job: deep sleep repairs the body while REM sleep sorts and strengthens memories. Chronic lack of sleep is linked to poor concentration, mood swings, and higher long-term health risks, and experts recommend seven to nine hours a night on a regular schedule.",
     body: `Le sommeil n'est pas une simple pause dans notre journée, comme on pourrait le penser. Pendant la nuit, notre cerveau reste en réalité très actif et accomplit un travail essentiel pour notre santé physique et mentale. Les scientifiques étudient depuis des décennies les mécanismes complexes qui se déroulent pendant que nous dormons.
 
 Le sommeil se divise en plusieurs phases qui se répètent plusieurs fois pendant la nuit. La première phase est un sommeil léger, pendant lequel il est facile de se réveiller. Vient ensuite une phase de sommeil profond, essentielle pour la récupération physique du corps. Enfin, une phase appelée sommeil paradoxal correspond au moment où nous rêvons le plus intensément.
@@ -115,6 +123,8 @@ Adopter une routine régulière, en se couchant et en se levant à des heures si
     minutes: 3,
     preview:
       "Le dimanche matin, beaucoup de gens font leurs courses au marché de leur quartier.",
+    blurbEn:
+      "A simple, everyday look at a Sunday morning market: fruit, vegetable, bread, and cheese stalls, friendly vendors who know their regular customers, and families browsing together before stopping for a coffee afterward.",
     body: `Le dimanche matin, beaucoup de gens vont au marché du quartier. Le marché commence tôt, à huit heures, et il finit à treize heures. Il y a beaucoup de monde, surtout entre dix heures et midi.
 
 Sur le marché, il y a de nombreux stands. Un marchand vend des fruits : des pommes, des poires, des oranges et des bananes. Un autre marchand vend des légumes : des tomates, des carottes, des pommes de terre et des courgettes. Les légumes sont frais et ils viennent souvent de fermes proches de la ville.
