@@ -25,9 +25,10 @@ backend, works instantly.
 - **Local offline dictionary** (`src/lib/dictionary/`, `src/data/dictionaries/`)
   — the primary, instant word-lookup path; no network call, no API key
   needed. 474 hand-curated entries (examples, CEFR levels, conjugated
-  forms) plus ~15,000 generated entries from WikDict/Wiktionary data for
-  much broader coverage, plus a rule-based lemmatiser for unlisted
-  inflections.
+  forms) plus ~92,000 generated entries from WikDict/Wiktionary data
+  (essentially uncapped) for very broad coverage, plus a rule-based
+  lemmatiser for unlisted inflections, plus an on-demand AI backfill for
+  the rare remaining miss (see "The generated dictionary" below).
 - **Spaced repetition** (`src/lib/spacedRepetition.ts`) — a simple due-date
   ladder (1/3/7/14/30 days) driving the Review page's queue.
 - **Article difficulty estimation** (`src/lib/difficulty.ts`) — CEFR-ish
@@ -37,7 +38,9 @@ backend, works instantly.
   called automatically; see "AI explanations" below.
 - Server-side **RSS fetching** (`/api/rss-texts`) — no external RSS/XML
   package, just a small dependency-free parser. Builds a large candidate
-  pool from 120+ feeds and deterministically returns 5 for the day.
+  pool from 120+ feeds and, when a feed's own teaser is short, scrapes the
+  full article from the source page (`@mozilla/readability` + `jsdom`,
+  server-only) — see "Full-length articles" below.
 - **localStorage** for saved words, known words, reading progress, daily
   activity/streak, completed-article history, and settings (Supabase
   planned for later)
@@ -503,10 +506,52 @@ are filtered out before an item ever becomes a candidate.
   or `{ ok: false, rejection: { reason } }`) so a rejection is an explicit,
   typed outcome rather than a thrown exception or a silently-empty text. It
   picks whichever of `description`/`content:encoded` is longer as the
-  candidate body, then runs quality-then-language checks against it (and
-  language checks again against title+body combined).
+  candidate body, then — if that's still short (see "Full-length articles"
+  next) — tries to scrape the real article, then runs quality-then-language
+  checks against whichever body it ended up with (and language checks again
+  against title+body combined).
 
-**Per-source config** (`src/data/rssSources.ts`) — `RssSource` gained three
+### Full-length articles: scraping the source page as a fallback
+
+Many feeds only publish a short teaser in `description`/`content:encoded`
+by design (to protect their own pageviews) — the full article only exists
+on the source website. To turn those into substantial reading content
+rather than a one-paragraph stub, `itemToRssReadingText` now scrapes the
+linked article page when the feed's own text is short:
+
+- **`src/lib/rss/scrapeArticle.ts`** — `scrapeFullArticle(url)` fetches the
+  page (6s timeout) and runs it through
+  [`@mozilla/readability`](https://github.com/mozilla/readability) (the same
+  library behind Firefox's Reader View) over a `jsdom`-parsed DOM, then
+  cleans the extracted HTML through the same `cleanRssText` pipeline as
+  feed content, so output is consistent either way. Both packages are
+  server-only dependencies (`serverExternalPackages: ["jsdom"]` in
+  `next.config.mjs` keeps `jsdom` out of the client bundle entirely) — this
+  never touches the offline, client-side parts of the app.
+- **When it's attempted**: only when the feed-provided body is under
+  `FULL_ARTICLE_TARGET_WORDS` (250 words) — a feed that already publishes a
+  full article is left alone, no wasted request. Only attempted at all if
+  the source's `allowScraping` isn't explicitly `false`.
+- **Best-effort, never blocking**: any failure — network error, timeout,
+  paywall, bot protection, or Readability finding nothing extractable — is
+  swallowed and treated as "couldn't do better than the teaser," falling
+  back to the feed's own text exactly as before this existed. The scraped
+  result is only used if it's both longer than the feed's teaser and still
+  passes the same template-syntax/boilerplate checks as feed content.
+- **Known trade-off, accepted deliberately**: this reintroduces the
+  per-site fragility and extra network hop that an earlier iteration of
+  this README explicitly avoided, and full-text scraping may not sit well
+  with every commercial outlet's terms of service. It's scoped as tightly as
+  that trade-off allows: a fallback (not the primary path), gated behind a
+  real word-count shortfall, with a per-source `allowScraping: false`
+  escape hatch for any site that should be left alone entirely.
+- **Serverless timeout**: rebuilding the candidate pool can now take longer
+  (feed fetch + a scrape per short item), so the route declares `export
+  const maxDuration = 60;`. Only the request that actually rebuilds the pool
+  (a cache miss, or the cron in `vercel.json`) pays this — every other
+  request just reads the in-memory cache and returns quickly regardless.
+
+**Per-source config** (`src/data/rssSources.ts`) — `RssSource` gained four
 optional fields:
 - `minWords?: number` — overrides `DEFAULT_MIN_WORDS` for one feed (e.g. a
   feed known to publish longer teasers than average can raise its bar).
@@ -515,6 +560,9 @@ optional fields:
   is ever included; every English-language source in the default list is
   `enabled: false` unless this is explicitly set, since the app is for
   French reading.
+- `allowScraping?: boolean` — set to `false` for a source known to block or
+  dislike scraping, so the pipeline doesn't waste a request+timeout on it
+  every pool refresh. Defaults to `true`.
 
 **Dev-only rejection logging** — in development, every rejected item logs a
 one-line reason (source name, title snippet, rejection reason) to the server
@@ -657,9 +705,13 @@ automatically.
 ### The generated dictionary
 
 The hand-curated dictionary alone (474 entries) wasn't broad enough for real
-RSS articles — the single biggest gap identified in this app. Rather than
-call an API for lookup (which would break "instant, fully offline"), the fix
-is a much bigger dictionary, generated once and committed as a static asset.
+RSS articles — the single biggest gap identified in this app, and a
+recurring real complaint even after an earlier 15,000-entry generated layer
+was added. Rather than call an API for lookup (which would break "instant,
+fully offline"), the fix is a much bigger dictionary, generated once and
+committed as a static asset — now essentially **uncapped** (~92,000 entries,
+up from 15,000), covering effectively every clean word WikDict's fr-en
+export has after filtering.
 
 **Source & license** — full details in
 `src/data/dictionaries/generated/NOTICE.md`, summarized here: data comes from
@@ -682,18 +734,35 @@ for attribution and redistribution.
 4. Skips any lemma already in the curated dictionary (that one always wins
    the lookup anyway — no point shipping it twice).
 5. Ranks by WikDict's own per-entry "importance" score and keeps the top
-   ~15,000, writing them to `fr-en-generated.json` (JSON, not a `.ts` array
-   literal — keeps `tsc` fast and the diff reviewable at this size).
+   `TARGET_SIZE` (currently 200,000 — high enough to be a no-op cap against
+   the ~92,000 entries that actually survive filtering, effectively
+   "everything usable"), writing them to `fr-en-generated.json` (JSON, not a
+   `.ts` array literal — keeps `tsc` fast and the diff reviewable at this
+   size).
 
 **Why not lazy-load it in chunks?** The task explicitly allows a "split by
 first letter, lazy-load" compromise for a dictionary this size — but
 `Reader.tsx` calls `lookupWord` synchronously on every rendered word (for
 highlighting), not just on tap, so introducing async loading would ripple
-through that render path. Trimming to the ~15,000 highest-value entries
-(~330KB gzipped) keeps the whole thing eager and synchronous, matching the
-existing architecture, while still being a large real improvement over 474
-entries. Revisit chunked loading only if the dictionary grows much larger
-than this.
+through that render path. At ~92,000 entries the generated dictionary is now
+~1.8MB gzipped (up from ~330KB at 15,000 entries) — a real, one-time cost,
+but still a single synchronous load on a PWA that's meant to work
+instantly offline, and simpler than threading async loading through every
+render. Revisit chunked loading only if a future WikDict export grows this
+by another order of magnitude.
+
+**Still-missing words get an AI backfill, not just "not found."** However
+comprehensive the local dictionary gets, some genuinely rare or informal
+words won't be in it. Rather than leaving those as a dead end, tapping **"Ask
+AI for nuance"** on a missing word (see "Missing dictionary entries" below)
+now visibly resolves it: `WordSheet` shows the AI's translation in place of
+"Not in local dictionary yet" once it's back, and if the reader then taps
+**Save**/**Unsure**, `Reader.tsx`'s `saveActiveWord` uses that AI result
+(translation, part of speech, a fresh example sentence) to populate the
+`SavedWord` instead of the generic "Not translated yet" placeholder — the
+word is saved as resolved, not `missingFromDictionary`. This only ever
+happens on an explicit tap, consistent with "AI is on-demand only" (see
+below) — nothing is backfilled automatically.
 
 **Regenerating**: `node scripts/build-dictionary.mjs` — safe to re-run any
 time (e.g. after expanding the curated dictionary, so newly-curated lemmas
@@ -711,7 +780,7 @@ prose the word happened to appear in:
 - **`exampleSentenceFr` / `exampleSentenceEn`** — a short, natural,
   A1/B1-appropriate sentence, e.g. `"Je mange une pomme."` / `"I eat an
   apple."`. Sourced from the dictionary entry's first `examples[]` item; if
-  the entry has none (true for essentially all ~15,000 generated-dictionary
+  the entry has none (true for essentially all ~92,000 generated-dictionary
   entries, which carry no `examples[]`), `src/lib/dictionary/exampleGenerator.ts`
   builds a real, word-specific sentence by part of speech instead of a fixed
   generic placeholder: `J'aime {verb}.` for verbs, `Je vois un/une {noun}.`
@@ -737,18 +806,26 @@ example first and the article sentence underneath.
 
 ### Missing dictionary entries
 
-Not every word a reader taps — especially proper nouns, rare vocabulary, or
-inflections the lemmatiser can't guess — is in the local dictionary. The word
-sheet still lets you act on it:
+Not every word a reader taps — especially proper nouns, very rare
+vocabulary, or inflections the lemmatiser can't guess — is in the local
+dictionary, even at ~92,000 generated entries. The word sheet still lets you
+act on it:
 
 - Shows **"Not in local dictionary yet"** instead of a translation.
 - **"Ask AI for nuance"** still works (AI doesn't need a local entry to
-  explain a word — see "AI explanations" below).
-- **Save** / **Unsure** still work. The resulting `SavedWord` gets
-  `primaryTranslation: "Not translated yet"`, `missingFromDictionary: true`,
-  and the fallback example sentence — so it shows up under the Words page's
-  **"Missing entries"** filter, ready to be filled in by hand or explained
-  by AI later.
+  explain a word — see "AI explanations" below) — and now visibly
+  **backfills** the miss: once the AI result is back, its translation
+  replaces "Not in local dictionary yet" in the sheet, rather than only
+  appearing in the separate "AI nuance" panel underneath.
+- **Save** / **Unsure**: if an AI explanation was already fetched for this
+  word in this sheet, the resulting `SavedWord` uses it —
+  `primaryTranslation`/`translations` from `aiResult.translation`,
+  `exampleSentenceFr`/`En` from the AI's own example, and
+  `missingFromDictionary: false`, since it's now genuinely resolved. If AI
+  was never asked, the old behaviour is unchanged: `primaryTranslation: "Not
+  translated yet"`, `missingFromDictionary: true`, and the template-based
+  fallback example — so it still shows up under the Words page's **"Missing
+  entries"** filter, ready to be filled in by hand or explained by AI later.
 
 ### Known / unsure / learning word statuses
 
@@ -940,6 +1017,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/rss/cleanContent.ts` | HTML stripping, entity decoding, length/boilerplate/template-syntax checks |
 | `src/lib/rss/seededShuffle.ts` | `seededShuffle`, `todayKey` — the deterministic date-seeded daily selection |
 | `src/lib/rss/rssToReadingText.ts` | Converts one RSS item into the API's `RssReadingText` shape (server-only) |
+| `src/lib/rss/scrapeArticle.ts` | `scrapeFullArticle` — Readability/jsdom-based full-article extraction, used when a feed's teaser is short (server-only) |
 | `src/lib/rss/adaptReadingText.ts` | Maps `RssReadingText` → the app's `ReadingText` (client-safe) |
 | `src/lib/rss/rssTextCache.ts` | `sessionStorage` cache so the reader can look up RSS texts by id |
 | `src/lib/rss/rssTextStore.ts` | Optional Upstash Redis persistence so RSS texts survive a new tab/restart |
@@ -998,6 +1076,30 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Dictionary lookup misses were a recurring real complaint — the
+  generated dictionary is now ~92,000 entries, up from 15,000**
+  (`scripts/build-dictionary.mjs`'s `TARGET_SIZE`, effectively uncapped
+  against WikDict's filtered fr-en export). Still fully offline and eager
+  (no lazy-loading), just a bigger one-time synchronous load (~1.8MB
+  gzipped, up from ~330KB). On top of that, a still-missing word now gets a
+  **visible AI backfill**: tapping "Ask AI for nuance" on a dictionary miss
+  shows the AI's translation in place of "Not in local dictionary yet," and
+  saving afterward persists that AI translation/example onto the
+  `SavedWord` instead of the generic "Not translated yet" placeholder — see
+  "The generated dictionary" and "Missing dictionary entries" above.
+- **RSS articles are now substantially longer** — feeds that only publish a
+  short teaser (most of them, by design) now get scraped for their full
+  article text from the source page (`src/lib/rss/scrapeArticle.ts`, via
+  `@mozilla/readability` + `jsdom`, server-only) when the teaser falls short
+  of a 250-word bar. Best-effort and bounded: any scrape failure just falls
+  back to the teaser exactly as before. `MAX_BODY_LENGTH` (the article-body
+  cap) was raised from 1200 to 20,000 characters — a safety ceiling now,
+  not a routine truncation point — and the route declares `maxDuration =
+  60` to accommodate the added per-refresh latency. See "Full-length
+  articles" above, including the accepted terms-of-service trade-off.
+- **The 5 hardcoded fallback texts are now substantial** (400+ words each,
+  up from 52-65 words) — `src/data/texts.ts` was rewritten so the emergency
+  fallback pool never feels like a downgrade from real RSS content.
 - **Fixed the generic fallback example sentence** — every dictionary entry
   without its own `examples[]` (nearly all ~15,000 generated entries) used to
   fall back to the same fixed, word-agnostic `"Je vois ce mot dans un texte."

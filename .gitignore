@@ -13,3 +13,6 @@ tsconfig.tsbuildinfo
 # Downloaded dictionary source data (scripts/build-dictionary.mjs re-downloads
 # it if missing) — only the generated JSON output is committed.
 /.cache
+
+.vercel
+.env*

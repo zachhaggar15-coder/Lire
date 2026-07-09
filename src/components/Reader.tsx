@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
+import type { WordExplanation } from "@/lib/ai/types";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
@@ -115,10 +116,15 @@ export default function Reader({ text }: { text: ReadingText }) {
     showToast("Marked as known");
   }
 
-  function saveActiveWord(wordStatus: Exclude<WordStatus, "known">) {
+  function saveActiveWord(wordStatus: Exclude<WordStatus, "known">, aiBackfill: WordExplanation | null = null) {
     if (!activeWord) return;
     const { lookup, contextSentence, word } = activeWord;
     const missing = lookup.source === "missing";
+    // A dictionary miss that's already been looked up via "Ask AI for
+    // nuance" this session gets backfilled with the AI's translation and
+    // example instead of the generic "Not translated yet" placeholder — see
+    // WordSheet's onSave/onUnsure, which pass through whatever it fetched.
+    const backfilled = missing && !!aiBackfill;
     const firstExample = lookup.examples[0];
     const fallbackExample = generateFallbackExample({
       word,
@@ -130,21 +136,25 @@ export default function Reader({ text }: { text: ReadingText }) {
     const entry: SavedWord = {
       word,
       lemma: lookup.lemma,
-      translations: lookup.translations,
-      primaryTranslation: missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET,
-      partOfSpeech: lookup.partOfSpeech,
+      translations: backfilled ? [aiBackfill.translation] : lookup.translations,
+      primaryTranslation: backfilled
+        ? aiBackfill.translation
+        : missing
+          ? NOT_TRANSLATED_YET
+          : lookup.translations[0] ?? NOT_TRANSLATED_YET,
+      partOfSpeech: backfilled ? aiBackfill.partOfSpeech : lookup.partOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
       articleContextSentence: contextSentence,
-      exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
-      exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
+      exampleSentenceFr: backfilled ? aiBackfill.simpleExampleFr : firstExample?.fr ?? fallbackExample.fr,
+      exampleSentenceEn: backfilled ? aiBackfill.simpleExampleEn : firstExample?.en ?? fallbackExample.en,
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
       lastReviewedAt: null,
       status: wordStatus,
-      missingFromDictionary: missing,
+      missingFromDictionary: missing && !backfilled,
       ...defaultSpacedRepetitionFields(),
     };
     saveWord(entry);
@@ -317,8 +327,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         articleTitle={text.title}
         onClose={() => setActiveWord(null)}
         onKnow={handleKnow}
-        onUnsure={() => saveActiveWord("unsure")}
-        onSave={() => saveActiveWord("learning")}
+        onUnsure={(aiBackfill) => saveActiveWord("unsure", aiBackfill)}
+        onSave={(aiBackfill) => saveActiveWord("learning", aiBackfill)}
       />
       <SentenceSheet
         state={activeSentence}

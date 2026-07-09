@@ -48,10 +48,14 @@ Not the raw WikDict data — a filtered, trimmed, deduplicated subset:
   are excluded.
 - Multiple senses of the same written form are merged into one entry with
   a deduplicated, capped (max 6) translation list.
-- Only the **~15,000 highest-"importance"** entries are kept, and only for
-  words *not already in* the hand-curated `src/data/dictionaries/fr-en.ts`
-  (that dictionary always wins the lookup anyway — see `lookup.ts` — so
-  duplicating it here would just bloat the file for no benefit).
+- Essentially **all ~92,000** clean entries surviving the filters above are
+  kept (uncapped as of the last regeneration — see `TARGET_SIZE` in
+  `scripts/build-dictionary.mjs`, raised from an earlier 15,000-entry cap
+  after real lookup misses turned out to be a recurring complaint), and
+  only for words *not already in* the hand-curated
+  `src/data/dictionaries/fr-en.ts` (that dictionary always wins the lookup
+  anyway — see `lookup.ts` — so duplicating it here would just bloat the
+  file for no benefit).
 - Fields WikDict doesn't provide — CEFR level, gender, example sentences —
   are simply omitted (`undefined`), same as any other optional
   `DictionaryEntry` field. `frequencyRank` is set to `1000 + <rank index>`

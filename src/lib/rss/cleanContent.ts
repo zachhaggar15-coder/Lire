@@ -56,6 +56,7 @@ export function stripHtml(html: string): string {
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>/gi, "\n\n")
     .replace(/<\/div>/gi, "\n\n")
+    .replace(/<\/(li|h[1-6])>/gi, "\n")
     .replace(/<[^>]+>/g, "");
 }
 

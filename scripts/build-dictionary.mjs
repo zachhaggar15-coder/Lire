@@ -26,8 +26,15 @@ const curatedPath = path.join(rootDir, "src/data/dictionaries/fr-en.ts");
 const outDir = path.join(rootDir, "src/data/dictionaries/generated");
 const outPath = path.join(outDir, "fr-en-generated.json");
 
-/** How many highest-importance entries to keep — see NOTICE.md for the reasoning. */
-const TARGET_SIZE = 15000;
+/**
+ * How many highest-importance entries to keep — see NOTICE.md for the
+ * reasoning. Set high enough to include essentially every clean entry
+ * WikDict has after filtering (~92,500 as of the last regeneration) rather
+ * than an arbitrary cap, since dictionary-lookup misses were a recurring
+ * real-world complaint. `Infinity` would also work; a large finite number
+ * is used so a future WikDict export that's bigger still gets a sane bound.
+ */
+const TARGET_SIZE = 200_000;
 /** Long tails of translation senses get noisy in the UI — keep the first few. */
 const MAX_TRANSLATIONS = 6;
 

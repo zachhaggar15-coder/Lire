@@ -8,6 +8,16 @@ import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
 import type { Category } from "@/types";
 
 /**
+ * Rebuilding the candidate pool now sometimes scrapes full articles
+ * (scrapeArticle.ts) on top of the per-feed XML fetch, which can push a
+ * single feed's processing well past the platform's default serverless
+ * timeout. Only the request that actually rebuilds the pool (cache miss,
+ * or the cron in vercel.json) pays this cost — every other request just
+ * reads the in-memory cache and returns quickly regardless.
+ */
+export const maxDuration = 60;
+
+/**
  * How long each upstream feed fetch is cached via Next's Data Cache (not the
  * route itself — this route is intentionally dynamic, since it needs to
  * check the calendar day on every request).

@@ -9,7 +9,8 @@ import {
   truncateAtSentence,
 } from "@/lib/rss/cleanContent";
 import { isAcceptableFrenchText } from "@/lib/rss/language";
-import { analyseContentQuality, DEFAULT_MIN_WORDS, isAcceptableReadingContent } from "@/lib/rss/contentQuality";
+import { analyseContentQuality, countWords, DEFAULT_MIN_WORDS, isAcceptableReadingContent } from "@/lib/rss/contentQuality";
+import { scrapeFullArticle } from "@/lib/rss/scrapeArticle";
 import { hashString } from "@/lib/hash";
 
 /** The exact shape returned by GET /api/rss-texts. */
@@ -36,7 +37,22 @@ export type RssConversionResult =
   | { ok: true; text: RssReadingText }
   | { ok: false; rejection: RssRejection };
 
-const MAX_BODY_LENGTH = 1200;
+/**
+ * A safety ceiling, not a routine truncation point — raised from an earlier
+ * 1200 (~200 words) now that full articles are scraped from the source page
+ * when a feed only teases (see scrapeFullArticle below). Long-form articles
+ * can run several thousand words; this just guards against a pathological
+ * scrape (e.g. Readability grabbing an oversized related-content block).
+ */
+const MAX_BODY_LENGTH = 20_000;
+/**
+ * Below this word count, the feed's own teaser isn't "substantial reading
+ * content" — attempt to scrape the full article from the source page
+ * instead (falling back to the teaser if scraping fails or isn't longer).
+ * Well above DEFAULT_MIN_WORDS: that constant is the bare minimum to accept
+ * *something*, this is the bar for "don't even bother trying to do better."
+ */
+const FULL_ARTICLE_TARGET_WORDS = 250;
 
 function parsePublishedAt(pubDate: string | null): string {
   if (pubDate) {
@@ -66,9 +82,10 @@ function mapToKnownCategory(rawCategories: string[], fallback: Category): Catego
  *   - the cleaned body fails content-quality checks (too short, too few
  *     sentences, truncated, boilerplate) — checked on the body alone,
  *     never padded out by the title.
- * Prefers the feed's `description` as the reading body — it's normally a
- * short, self-contained summary, which suits a language-learning "short
- * text" better than a full `content:encoded` article dump.
+ * Starts from the longer of the feed's `description`/`content:encoded`; if
+ * that's still short of FULL_ARTICLE_TARGET_WORDS, attempts to scrape the
+ * full article from the source page (scrapeArticle.ts) and uses whichever
+ * is longer and still clean — see "Full-length articles" in the README.
  */
 export async function itemToRssReadingText(
   item: RssItem,
@@ -99,11 +116,30 @@ export async function itemToRssReadingText(
     return { ok: false, rejection: { reason: "body looks like nav/cookie/legal boilerplate" } };
   }
 
+  // The feed's own teaser often isn't "substantial reading content" (many
+  // outlets only publish a short summary, by design). When it falls short
+  // of the full-article bar, try scraping the real article from the source
+  // page — best-effort: any failure (network, timeout, paywall, no
+  // extractable content) just means falling back to the feed's teaser, same
+  // as before this existed. Only the longer, still-clean result is kept.
+  let finalBody = cleanedBody;
+  if (countWords(cleanedBody) < FULL_ARTICLE_TARGET_WORDS && (source.allowScraping ?? true)) {
+    const scraped = await scrapeFullArticle(item.link);
+    if (
+      scraped &&
+      countWords(scraped) > countWords(cleanedBody) &&
+      !hasBrokenTemplateSyntax(scraped) &&
+      !looksLikeBoilerplate(scraped)
+    ) {
+      finalBody = scraped;
+    }
+  }
+
   // Content-quality check uses the body alone — a short teaser doesn't
   // become real reading material just because the title is long.
   const minWords = source.minWords ?? DEFAULT_MIN_WORDS;
-  const quality = analyseContentQuality(cleanedBody, minWords);
-  if (!isAcceptableReadingContent(cleanedBody, minWords)) {
+  const quality = analyseContentQuality(finalBody, minWords);
+  if (!isAcceptableReadingContent(finalBody, minWords)) {
     return { ok: false, rejection: { reason: `content quality: ${quality.reason}` } };
   }
 
@@ -111,14 +147,14 @@ export async function itemToRssReadingText(
   // able to rescue an English body. Then again on title+body combined,
   // which gives short-but-genuinely-French bodies the benefit of their
   // (usually also French) title's extra signal.
-  if (!isAcceptableFrenchText(cleanedBody)) {
+  if (!isAcceptableFrenchText(finalBody)) {
     return { ok: false, rejection: { reason: "body is not recognisably French" } };
   }
-  if (!isAcceptableFrenchText(`${title}. ${cleanedBody}`)) {
+  if (!isAcceptableFrenchText(`${title}. ${finalBody}`)) {
     return { ok: false, rejection: { reason: "title+body combined is not recognisably French" } };
   }
 
-  const body = truncateAtSentence(cleanedBody, MAX_BODY_LENGTH);
+  const body = truncateAtSentence(finalBody, MAX_BODY_LENGTH);
   const originalText = `${title}.\n\n${body}`;
 
   return {

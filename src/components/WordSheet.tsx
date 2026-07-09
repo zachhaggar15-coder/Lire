@@ -24,8 +24,14 @@ interface WordSheetProps {
   articleTitle: string;
   onClose: () => void;
   onKnow: () => void;
-  onUnsure: () => void;
-  onSave: () => void;
+  /**
+   * Receives whatever AI explanation this sheet has already fetched (or
+   * null if none), so a missing-from-dictionary word saved right after an
+   * "Ask AI for nuance" lookup can be backfilled with a real translation
+   * instead of "Not translated yet" — see Reader.tsx's saveActiveWord.
+   */
+  onUnsure: (aiBackfill: WordExplanation | null) => void;
+  onSave: (aiBackfill: WordExplanation | null) => void;
 }
 
 const STATUS_LABEL: Record<WordStatus, string> = {
@@ -158,6 +164,11 @@ export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: 
                 </div>
               )}
             </>
+          ) : aiState === "ready" && aiResult ? (
+            // The dictionary had nothing, but "Ask AI for nuance" backfilled a
+            // real translation — show that in place of "not found" so it
+            // reads as resolved rather than contradicting the AI panel below.
+            <p className="text-lg text-ink">{aiResult.translation}</p>
           ) : (
             <p className="text-sm italic text-accent-pinktext">{NO_DICTIONARY_ENTRY}</p>
           )}
@@ -226,13 +237,13 @@ export default function WordSheet({ state, onClose, onKnow, onUnsure, onSave }: 
             I know this
           </button>
           <button
-            onClick={onUnsure}
+            onClick={() => onUnsure(aiState === "ready" ? aiResult : null)}
             className="rounded-2xl bg-amber-200 py-3 text-sm font-semibold text-amber-900 active:scale-95"
           >
             Unsure
           </button>
           <button
-            onClick={onSave}
+            onClick={() => onSave(aiState === "ready" ? aiResult : null)}
             className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
           >
             Save

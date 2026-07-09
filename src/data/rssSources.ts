@@ -34,6 +34,14 @@ export interface RssSource {
    * disabled" in the README.
    */
   allowEnglishForTesting?: boolean;
+  /**
+   * Opt-out for full-article scraping (see src/lib/rss/scrapeArticle.ts and
+   * "Full-length articles" in the README) — set to `false` for a source
+   * known to block scraping (paywall, bot protection) so the pipeline
+   * doesn't waste a request+timeout attempting it every refresh. Defaults
+   * to `true`; only attempted at all when the feed's own teaser is short.
+   */
+  allowScraping?: boolean;
 }
 
 /**
