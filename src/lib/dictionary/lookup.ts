@@ -3,6 +3,7 @@ import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
+import { getCustomDictionaryEntry } from "@/lib/dictionary/custom";
 
 /**
  * Offline, instant word lookup. Never calls a network API — this is the
@@ -97,8 +98,11 @@ export function lookupWord(rawWord: string): DictionaryLookupResult {
   const generatedViaForm = generatedByForm.get(clean);
   if (generatedViaForm) return toResult(rawWord, generatedViaForm);
 
+  const customExact = getCustomDictionaryEntry(clean);
+  if (customExact) return toResult(rawWord, customExact);
+
   for (const guess of guessLemmas(clean)) {
-    const viaGuess = byLemma.get(guess) ?? generatedByLemma.get(guess);
+    const viaGuess = byLemma.get(guess) ?? generatedByLemma.get(guess) ?? getCustomDictionaryEntry(guess);
     if (viaGuess) return toResult(rawWord, viaGuess);
   }
 

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node scripts/test-rss-filters.mjs && node scripts/test-learning-logic.mjs"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",

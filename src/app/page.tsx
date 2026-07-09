@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ArticleSection from "@/components/ArticleSection";
 import ReadingCard from "@/components/ReadingCard";
@@ -8,7 +8,7 @@ import TodayCard from "@/components/TodayCard";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { texts as hardcodedTexts } from "@/data/texts";
-import type { ReadingText } from "@/types";
+import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
@@ -24,6 +24,8 @@ import {
 } from "@/lib/recommendation";
 
 type LoadState = "loading" | "success" | "error";
+type CategoryFilter = "all" | Category;
+type DifficultyFilter = "all" | Difficulty;
 
 /** How many RSS candidates to pull in for the recommendation engine to choose from — much more than the 5 actually shown, so every section has real options. */
 const POOL_LIMIT = 50;
@@ -39,20 +41,57 @@ interface RssDebugInfo {
   candidatePoolBuiltAt: string;
   selectedIds: string[];
   seed: string;
+  sourceHealth?: Array<{
+    id: string;
+    name: string;
+    language: string;
+    ok: boolean;
+    skipped: boolean;
+    accepted: number;
+    rejected: number;
+    reason: string;
+  }>;
 }
+
+const CATEGORY_FILTERS: { value: CategoryFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "news-style", label: "News" },
+  { value: "sport", label: "Sport" },
+  { value: "culture", label: "Culture" },
+  { value: "science", label: "Science" },
+  { value: "everyday life", label: "Life" },
+];
+
+const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "A1", label: "A1" },
+  { value: "A2", label: "A2" },
+  { value: "B1", label: "B1" },
+  { value: "B2", label: "B2" },
+];
 
 export default function HomePage() {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
   const [usedFallback, setUsedFallback] = useState(false);
   const [debug, setDebug] = useState<RssDebugInfo | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
+  const [refreshKey, setRefreshKey] = useState(0);
+  const lastRefreshSent = useRef(0);
 
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
-        const res = await fetch(`/api/rss-texts?limit=${POOL_LIMIT}`);
+        setState("loading");
+        const params = new URLSearchParams({ limit: String(POOL_LIMIT) });
+        const forceRefresh = refreshKey > 0 && lastRefreshSent.current !== refreshKey;
+        if (categoryFilter !== "all") params.set("category", categoryFilter);
+        if (forceRefresh) params.set("refresh", "true");
+
+        const res = await fetch(`/api/rss-texts?${params.toString()}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
         const data: { texts: RssReadingText[]; fewerThanRequested?: boolean; debug?: RssDebugInfo } =
@@ -77,10 +116,16 @@ export default function HomePage() {
         const scorable = buildScorableArticles(pool, knownWords);
         const context = buildScoringContext();
         const ranked = rankArticles(scorable, context);
+        const filtered = ranked.filter((article) => {
+          if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
+          if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+          return true;
+        });
 
-        setSections(buildSections(ranked));
+        setSections(buildSections(filtered));
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
+        if (forceRefresh) lastRefreshSent.current = refreshKey;
         setState("success");
       } catch {
         if (!cancelled) {
@@ -89,7 +134,11 @@ export default function HomePage() {
           // never shows nothing.
           const knownWords = new Set(getKnownWords());
           const scorable = buildScorableArticles(hardcodedTexts, knownWords);
-          const ranked = rankArticles(scorable, buildScoringContext());
+          const ranked = rankArticles(scorable, buildScoringContext()).filter((article) => {
+            if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
+            if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+            return true;
+          });
           setSections(buildSections(ranked));
           setUsedFallback(true);
           setState("success");
@@ -101,7 +150,19 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [categoryFilter, difficultyFilter, refreshKey]);
+
+  const hasArticles =
+    !!sections &&
+    !!(
+      sections.todaysRecommendation ||
+      sections.goodForYou.length ||
+      sections.quickReads.length ||
+      sections.stretchYourself.length ||
+      sections.newVocabulary.length ||
+      sections.latestNews.length ||
+      sections.saveForLater.length
+    );
 
   return (
     <div className="px-4 pt-6">
@@ -115,6 +176,55 @@ export default function HomePage() {
       <ContinueReadingBanner />
       <TodayCard />
       <ReadingGoalsCard />
+
+      <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Tune today's shelf</h2>
+            <p className="mt-0.5 text-xs text-ink-muted">Filter articles or refresh the RSS pool.</p>
+          </div>
+          <button
+            onClick={() => setRefreshKey((key) => key + 1)}
+            className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white active:scale-95"
+          >
+            Refresh
+          </button>
+        </div>
+
+        <div className="mt-3">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Topic</p>
+          <div className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1">
+            {CATEGORY_FILTERS.map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setCategoryFilter(filter.value)}
+                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  categoryFilter === filter.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-2">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Level</p>
+          <div className="flex flex-wrap gap-1">
+            {DIFFICULTY_FILTERS.map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setDifficultyFilter(filter.value)}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  difficultyFilter === filter.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">
@@ -137,7 +247,7 @@ export default function HomePage() {
         </p>
       )}
 
-      {state === "success" && sections && (
+      {state === "success" && sections && hasArticles && (
         <>
           {sections.todaysRecommendation && (
             <section className="mb-6">
@@ -212,9 +322,38 @@ export default function HomePage() {
                 <li>Pool built at: {debug.candidatePoolBuiltAt}</li>
                 <li>Seed: {debug.seed}</li>
               </ul>
+              {debug.sourceHealth && (
+                <div className="mt-3 border-t border-ink-muted/20 pt-2">
+                  <p className="font-semibold text-ink-muted">
+                    Source health: {debug.sourceHealth.filter((s) => !s.skipped).length} attempted,{" "}
+                    {debug.sourceHealth.filter((s) => s.accepted > 0).length} yielded articles
+                  </p>
+                  <ul className="mt-2 space-y-1">
+                    {debug.sourceHealth
+                      .filter((source) => !source.skipped && (!source.ok || source.accepted === 0 || source.rejected > 0))
+                      .slice(0, 12)
+                      .map((source) => (
+                        <li key={source.id} className="rounded-xl bg-cream/60 px-2 py-1">
+                          <span className="font-semibold text-ink">{source.name}</span>
+                          {" - "}
+                          {source.accepted} accepted, {source.rejected} rejected
+                          {" - "}
+                          {source.reason}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
             </details>
           )}
         </>
+      )}
+
+      {state === "success" && sections && !hasArticles && (
+        <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+          <p className="text-sm font-semibold text-ink">No articles match those filters.</p>
+          <p className="mt-1 text-xs text-ink-muted">Try another topic or level.</p>
+        </div>
       )}
     </div>
   );

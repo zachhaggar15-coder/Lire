@@ -7,6 +7,7 @@ import type { WordExplanation } from "@/lib/ai/types";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { getKnownWords, isKnown, markKnown } from "@/lib/knownWords";
@@ -157,6 +158,19 @@ export default function Reader({ text }: { text: ReadingText }) {
       missingFromDictionary: missing && !backfilled,
       ...defaultSpacedRepetitionFields(),
     };
+    if (backfilled) {
+      saveCustomDictionaryEntry({
+        lemma: (aiBackfill.lemma ?? word).toLowerCase(),
+        forms: aiBackfill.lemma && aiBackfill.lemma.toLowerCase() !== word ? [word] : undefined,
+        translations: [aiBackfill.translation],
+        partOfSpeech: aiBackfill.partOfSpeech ?? undefined,
+        gender:
+          lookup.gender === "masculine" || lookup.gender === "feminine" || lookup.gender === "both"
+            ? lookup.gender
+            : undefined,
+        examples: [{ fr: aiBackfill.simpleExampleFr, en: aiBackfill.simpleExampleEn }],
+      });
+    }
     saveWord(entry);
     setWordStatusMap((prev) => new Map(prev).set(word, wordStatus));
     setActiveWord(null);

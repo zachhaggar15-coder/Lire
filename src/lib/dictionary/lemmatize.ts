@@ -18,6 +18,78 @@ interface Rule {
   replacement: string;
 }
 
+const IRREGULAR_LEMMAS: Record<string, string[]> = {
+  suis: ["être"],
+  es: ["être"],
+  est: ["être"],
+  sommes: ["être"],
+  êtes: ["être"],
+  sont: ["être"],
+  étais: ["être"],
+  était: ["être"],
+  étaient: ["être"],
+  sera: ["être"],
+  seront: ["être"],
+  serait: ["être"],
+  ai: ["avoir"],
+  as: ["avoir"],
+  a: ["avoir"],
+  avons: ["avoir"],
+  avez: ["avoir"],
+  ont: ["avoir"],
+  avais: ["avoir"],
+  avait: ["avoir"],
+  avaient: ["avoir"],
+  aura: ["avoir"],
+  auront: ["avoir"],
+  aurait: ["avoir"],
+  vais: ["aller"],
+  vas: ["aller"],
+  va: ["aller"],
+  allons: ["aller"],
+  allez: ["aller"],
+  vont: ["aller"],
+  irai: ["aller"],
+  ira: ["aller"],
+  iront: ["aller"],
+  fait: ["faire"],
+  fais: ["faire"],
+  faisons: ["faire"],
+  faites: ["faire"],
+  font: ["faire"],
+  fera: ["faire"],
+  feront: ["faire"],
+  peux: ["pouvoir"],
+  peut: ["pouvoir"],
+  pouvons: ["pouvoir"],
+  pouvez: ["pouvoir"],
+  peuvent: ["pouvoir"],
+  pouvait: ["pouvoir"],
+  veux: ["vouloir"],
+  veut: ["vouloir"],
+  voulons: ["vouloir"],
+  voulez: ["vouloir"],
+  veulent: ["vouloir"],
+  dois: ["devoir"],
+  doit: ["devoir"],
+  devons: ["devoir"],
+  devez: ["devoir"],
+  doivent: ["devoir"],
+  dit: ["dire"],
+  dis: ["dire"],
+  dites: ["dire"],
+  disent: ["dire"],
+  prend: ["prendre"],
+  prends: ["prendre"],
+  prenons: ["prendre"],
+  prenez: ["prendre"],
+  prennent: ["prendre"],
+  pris: ["prendre"],
+  mis: ["mettre"],
+  mise: ["mettre"],
+  mises: ["mettre"],
+};
+
 // Longer, more specific suffixes are tried before shorter generic ones —
 // enforced by sorting once below, so the order they're written in here only
 // matters as a tiebreaker between same-length suffixes.
@@ -73,6 +145,16 @@ const RULES: Rule[] = [
   { suffix: "issant", replacement: "ir" },
 
   // -ir verbs: present tense
+  { suffix: "iraient", replacement: "ir" },
+  { suffix: "irions", replacement: "ir" },
+  { suffix: "iriez", replacement: "ir" },
+  { suffix: "irais", replacement: "ir" },
+  { suffix: "irait", replacement: "ir" },
+  { suffix: "irons", replacement: "ir" },
+  { suffix: "iront", replacement: "ir" },
+  { suffix: "irai", replacement: "ir" },
+  { suffix: "iras", replacement: "ir" },
+  { suffix: "ira", replacement: "ir" },
   { suffix: "issons", replacement: "ir" },
   { suffix: "issez", replacement: "ir" },
   { suffix: "issent", replacement: "ir" },
@@ -81,12 +163,21 @@ const RULES: Rule[] = [
 
   // Plural / feminine agreement (nouns & adjectives)
   { suffix: "aux", replacement: "al" },
+  { suffix: "ales", replacement: "al" },
   { suffix: "euses", replacement: "eur" },
   { suffix: "euse", replacement: "eur" },
+  { suffix: "trices", replacement: "teur" },
+  { suffix: "trice", replacement: "teur" },
   { suffix: "ières", replacement: "ier" },
   { suffix: "ière", replacement: "ier" },
   { suffix: "ères", replacement: "er" },
   { suffix: "ère", replacement: "er" },
+  { suffix: "ives", replacement: "if" },
+  { suffix: "ive", replacement: "if" },
+  { suffix: "ches", replacement: "c" },
+  { suffix: "che", replacement: "c" },
+  { suffix: "ques", replacement: "c" },
+  { suffix: "que", replacement: "c" },
   { suffix: "es", replacement: "" },
   { suffix: "e", replacement: "" },
   { suffix: "s", replacement: "" },
@@ -110,17 +201,23 @@ export function guessLemmas(word: string): string[] {
   const candidates: string[] = [];
   const seen = new Set<string>();
 
+  function add(candidate: string) {
+    if (candidate === word || seen.has(candidate)) return;
+    seen.add(candidate);
+    candidates.push(candidate);
+  }
+
+  for (const irregular of IRREGULAR_LEMMAS[word] ?? []) {
+    add(irregular);
+  }
+
   for (const rule of SORTED_RULES) {
     if (!word.endsWith(rule.suffix)) continue;
 
     const stem = word.slice(0, word.length - rule.suffix.length);
     if (stem.length < MIN_STEM_LENGTH) continue;
 
-    const candidate = stem + rule.replacement;
-    if (candidate === word || seen.has(candidate)) continue;
-
-    seen.add(candidate);
-    candidates.push(candidate);
+    add(stem + rule.replacement);
   }
 
   return candidates;

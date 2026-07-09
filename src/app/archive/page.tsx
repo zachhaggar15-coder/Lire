@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
 import { formatDate } from "@/lib/format";
+import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
 
 type SortKey = "date" | "time" | "words" | "difficulty";
 
@@ -23,13 +24,26 @@ interface Row {
   minutesSpent: number | null;
 }
 
+interface ArchiveSummary {
+  weekArticles: number;
+  weekMinutes: number;
+  weekWords: number;
+  weekReviews: number;
+  currentStreak: number;
+  longestStreak: number;
+  topCategory: string | null;
+}
+
 export default function ArchivePage() {
   const [rows, setRows] = useState<Row[]>([]);
   const [ready, setReady] = useState(false);
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("date");
+  const [summary, setSummary] = useState<ArchiveSummary | null>(null);
 
   useEffect(() => {
+    const now = new Date();
+    const weekAgoMs = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     const entries = getArchive();
     const words = getSavedWords();
     const built = entries.map((entry) => ({
@@ -37,7 +51,26 @@ export default function ArchivePage() {
       wordsSaved: words.filter((w) => w.sourceTextTitle === entry.title).length,
       minutesSpent: estimateTimeSpentMinutes(entry),
     }));
+    const weekRows = built.filter(({ entry }) => new Date(entry.completedAt).getTime() >= weekAgoMs);
+    const categoryCounts = new Map<string, number>();
+    for (const { entry } of weekRows) {
+      if (!entry.category) continue;
+      categoryCounts.set(entry.category, (categoryCounts.get(entry.category) ?? 0) + 1);
+    }
+    const topCategory = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+
     setRows(built);
+    setSummary({
+      weekArticles: weekRows.length,
+      weekMinutes: Math.round(
+        weekRows.reduce((sum, row) => sum + (row.minutesSpent ?? row.entry.minutes ?? 0), 0)
+      ),
+      weekWords: words.filter((w) => new Date(w.savedAt).getTime() >= weekAgoMs).length,
+      weekReviews: words.filter((w) => w.lastReviewedAt && new Date(w.lastReviewedAt).getTime() >= weekAgoMs).length,
+      currentStreak: getCurrentStreak(now),
+      longestStreak: getLongestStreak(),
+      topCategory,
+    });
     setReady(true);
   }, []);
 
@@ -75,6 +108,32 @@ export default function ArchivePage() {
         <h1 className="text-2xl font-extrabold text-ink">Reading history</h1>
         <p className="text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
       </header>
+
+      {summary && (
+        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Last 7 days</h2>
+          <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+            {[
+              { label: "Articles", value: summary.weekArticles },
+              { label: "Minutes", value: summary.weekMinutes },
+              { label: "Words", value: summary.weekWords },
+              { label: "Reviews", value: summary.weekReviews },
+              { label: "Streak", value: summary.currentStreak },
+              { label: "Best", value: summary.longestStreak },
+            ].map((stat) => (
+              <div key={stat.label} className="rounded-2xl bg-cream p-2.5">
+                <p className="text-lg font-extrabold text-ink">{stat.value}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+          {summary.topCategory && (
+            <p className="mt-3 text-xs text-ink-muted">
+              Most-read topic this week: <span className="font-semibold text-ink">{summary.topCategory}</span>
+            </p>
+          )}
+        </section>
+      )}
 
       {ready && rows.length === 0 && (
         <div className="mt-16 text-center">

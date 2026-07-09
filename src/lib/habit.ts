@@ -63,3 +63,26 @@ export function getCurrentStreak(now: Date = new Date()): number {
   }
   return streak;
 }
+
+export function getLongestStreak(): number {
+  const sorted = [...new Set(getActivityDates())].sort();
+  let longest = 0;
+  let current = 0;
+  let previous: Date | null = null;
+
+  for (const key of sorted) {
+    const date = new Date(`${key}T00:00:00.000Z`);
+    if (!Number.isFinite(date.getTime())) continue;
+
+    if (!previous) {
+      current = 1;
+    } else {
+      const diffDays = Math.round((date.getTime() - previous.getTime()) / (24 * 60 * 60 * 1000));
+      current = diffDays === 1 ? current + 1 : 1;
+    }
+    longest = Math.max(longest, current);
+    previous = date;
+  }
+
+  return longest;
+}

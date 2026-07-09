@@ -48,6 +48,19 @@ interface CandidatePool {
   feedsSucceeded: number;
   feedsFailed: number;
   itemsRejected: number;
+  sourceHealth: SourceHealth[];
+}
+
+interface SourceHealth {
+  id: string;
+  name: string;
+  language: RssSource["language"];
+  category: Category;
+  ok: boolean;
+  skipped: boolean;
+  accepted: number;
+  rejected: number;
+  reason: string;
 }
 
 // Process-lifetime in-memory cache. Resets on cold start in serverless
@@ -66,11 +79,25 @@ let dailySelectionCache: { dateKey: string; items: RssReadingText[] } | null = n
  * broken feed never affects the others or the route as a whole — every
  * source goes through Promise.allSettled.
  */
-async function fetchFromSource(source: RssSource): Promise<{ ok: boolean; items: RssReadingText[]; rejected: number }> {
+async function fetchFromSource(
+  source: RssSource
+): Promise<{ ok: boolean; items: RssReadingText[]; rejected: number; health: SourceHealth }> {
+  const baseHealth = {
+    id: source.id,
+    name: source.name,
+    language: source.language,
+    category: source.category,
+  };
+
   // This is a French reading app — English sources are skipped entirely
   // unless explicitly opted into for testing (see RssSource.allowEnglishForTesting).
   if (source.language === "en" && !source.allowEnglishForTesting) {
-    return { ok: true, items: [], rejected: 0 };
+    return {
+      ok: true,
+      items: [],
+      rejected: 0,
+      health: { ...baseHealth, ok: true, skipped: true, accepted: 0, rejected: 0, reason: "English source disabled" },
+    };
   }
 
   const maxItems = source.maxItems ?? DEFAULT_MAX_PER_SOURCE;
@@ -81,7 +108,14 @@ async function fetchFromSource(source: RssSource): Promise<{ ok: boolean; items:
       next: { revalidate: FEED_REVALIDATE_SECONDS },
       signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
     });
-    if (!res.ok) return { ok: false, items: [], rejected: 0 };
+    if (!res.ok) {
+      return {
+        ok: false,
+        items: [],
+        rejected: 0,
+        health: { ...baseHealth, ok: false, skipped: false, accepted: 0, rejected: 0, reason: `HTTP ${res.status}` },
+      };
+    }
 
     const xml = await res.text();
     const rssItems = parseRssFeed(xml);
@@ -98,12 +132,29 @@ async function fetchFromSource(source: RssSource): Promise<{ ok: boolean; items:
         logRejection(source, item.title || "(no title)", result.rejection.reason);
       }
     }
-    return { ok: true, items, rejected };
+    return {
+      ok: true,
+      items,
+      rejected,
+      health: {
+        ...baseHealth,
+        ok: true,
+        skipped: false,
+        accepted: items.length,
+        rejected,
+        reason: items.length > 0 ? "Accepted candidates" : rejected > 0 ? "All candidates rejected" : "No feed items",
+      },
+    };
   } catch {
     // Network error, timeout, or parsing failure (covers malformed XML,
     // Atom/RSS/Blogger/Feedburner quirks parseRssFeed doesn't recognise,
     // etc.) — this single source is skipped, nothing else is affected.
-    return { ok: false, items: [], rejected: 0 };
+    return {
+      ok: false,
+      items: [],
+      rejected: 0,
+      health: { ...baseHealth, ok: false, skipped: false, accepted: 0, rejected: 0, reason: "Fetch, timeout, or parse failure" },
+    };
   }
 }
 
@@ -132,13 +183,16 @@ async function buildCandidatePool(): Promise<CandidatePool> {
   let feedsFailed = 0;
   let itemsRejected = 0;
   const all: RssReadingText[] = [];
+  const sourceHealth: SourceHealth[] = [];
   for (const result of settled) {
     if (result.status === "fulfilled" && result.value.ok) {
       feedsSucceeded++;
       all.push(...result.value.items);
       itemsRejected += result.value.rejected;
+      sourceHealth.push(result.value.health);
     } else {
       feedsFailed++;
+      if (result.status === "fulfilled") sourceHealth.push(result.value.health);
     }
   }
 
@@ -147,7 +201,7 @@ async function buildCandidatePool(): Promise<CandidatePool> {
   // a failure here just leaves blurbEn null on the affected items.
   await attachEnglishBlurbs(items);
 
-  return { builtAt: Date.now(), items, feedsSucceeded, feedsFailed, itemsRejected };
+  return { builtAt: Date.now(), items, feedsSucceeded, feedsFailed, itemsRejected, sourceHealth };
 }
 
 async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
@@ -226,6 +280,7 @@ export async function GET(request: Request) {
         candidatePoolSize: pool.items.length,
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
         selectedIds: selected.map((t) => t.id),
+        sourceHealth: pool.sourceHealth,
         seed: `${todayK}::${languageParam}::${categoryParam}`,
       },
     }),

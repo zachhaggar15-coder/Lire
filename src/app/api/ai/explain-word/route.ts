@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const { word, lemma, articleSentence, simpleExampleSentence, surroundingSentence, level } =
+  const { word, lemma, articleSentence, simpleExampleSentence, surroundingSentence, articleTitle, level } =
     (body ?? {}) as Record<string, unknown>;
 
   if (typeof word !== "string" || !word.trim() || typeof articleSentence !== "string" || !articleSentence.trim()) {
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       articleSentence,
       simpleExampleSentence: typeof simpleExampleSentence === "string" ? simpleExampleSentence : null,
       surroundingSentence: typeof surroundingSentence === "string" ? surroundingSentence : null,
+      articleTitle: typeof articleTitle === "string" ? articleTitle : null,
       level: typeof level === "string" && level ? level : "A2/B1 French learner",
     });
     return NextResponse.json(result);

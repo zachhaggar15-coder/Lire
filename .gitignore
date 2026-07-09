@@ -20,3 +20,6 @@ tsconfig.tsbuildinfo
 # Claude Code runtime state (session locks, local-only settings) — .claude/launch.json is the only intentionally-tracked file in this folder.
 .claude/*.lock
 .claude/settings.local.json
+
+# Local dev-server logs (e.g. port-collision output from `next dev`).
+.next-dev-*.log
