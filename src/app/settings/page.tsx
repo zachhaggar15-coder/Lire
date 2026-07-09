@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { AppSettings, FontSize } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
+import AccountCard from "@/components/AccountCard";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -77,6 +78,7 @@ export default function SettingsPage() {
       </header>
 
       <div className="space-y-3">
+        <AccountCard />
         <Toggle
           checked={settings.showSavedHighlights}
           onChange={(v) => update({ showSavedHighlights: v })}

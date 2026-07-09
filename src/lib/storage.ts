@@ -5,6 +5,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { markKnown } from "@/lib/knownWords";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -148,6 +149,9 @@ function normalize(entry: unknown): SavedWord | null {
 function persist(words: SavedWord[]): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(KEY, JSON.stringify(words));
+  // Best-effort, fire-and-forget — no-ops if sync isn't configured or no
+  // one's signed in. See src/lib/supabase/sync.ts.
+  void pushStore(KEY);
 }
 
 /**

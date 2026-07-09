@@ -143,6 +143,35 @@ function extractEntries(db) {
   return [...merged.values()];
 }
 
+/**
+ * WikDict doesn't carry real CEFR levels, but it does give us an
+ * "importance" ranking — and rank position is a well-established proxy for
+ * difficulty level (it's literally how real frequency-based CEFR wordlists,
+ * e.g. the "Français Fondamental," are built). Bucketing the generated
+ * dictionary's own rank order into CEFR bands is a much better estimate
+ * than treating all ~92,000 entries as one flat "mid-frequency" level (the
+ * previous behaviour — see difficulty.ts, which already prefers a real
+ * `cefr` on the entry over its GENERATED_HIT_NUMERIC placeholder, so this
+ * is the only change needed to fix that).
+ *
+ * Thresholds are on the generated set's own index (0 = most common word
+ * *not* already in the curated dictionary), not absolute frequency rank —
+ * the curated dictionary's ~470 hand-picked entries already occupy the
+ * true top of the frequency curve, so index 0 here effectively starts
+ * around "the 500th most common French word."
+ */
+const CEFR_BUCKETS = [
+  { maxIndex: 500, cefr: "A2" },
+  { maxIndex: 2500, cefr: "B1" },
+  { maxIndex: 7000, cefr: "B2" },
+  { maxIndex: 15000, cefr: "C1" },
+  { maxIndex: Infinity, cefr: "C2" },
+];
+
+function cefrForIndex(i) {
+  return CEFR_BUCKETS.find((b) => i < b.maxIndex).cefr;
+}
+
 async function main() {
   await ensureDownloaded();
 
@@ -166,6 +195,7 @@ async function main() {
     translations: translations.slice(0, MAX_TRANSLATIONS),
     ...(partOfSpeech ? { partOfSpeech } : {}),
     frequencyRank: 1000 + i, // curated entries occupy the low ranks (1-~60); this keeps generated entries clearly "less common" by comparison
+    cefr: cefrForIndex(i), // see CEFR_BUCKETS above — a rank-based estimate, not real CEFR data
   }));
 
   mkdirSync(outDir, { recursive: true });

@@ -6,6 +6,8 @@
  * the Review page's "Mark as known"), which adds it here too.
  */
 
+import { pushStore } from "@/lib/supabase/sync";
+
 const KEY = "lire.knownWords.v1";
 
 function hasStorage(): boolean {
@@ -31,6 +33,7 @@ export function getKnownWords(): string[] {
 function persist(words: string[]): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(KEY, JSON.stringify(words));
+  void pushStore(KEY);
 }
 
 export function isKnown(wordOrLemma: string): boolean {

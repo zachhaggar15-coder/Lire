@@ -1,12 +1,14 @@
 import { getSavedWords } from "@/lib/storage";
 import { getArchive, estimateTimeSpentMinutes } from "@/lib/archive";
 import { dateKey } from "@/lib/habit";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
- * Simple, localStorage-only reading goals — no Supabase, no accounts. Each
- * goal is optional (null = "not set"); progress is always computed fresh
- * from existing data sources (saved words, archive, review results) rather
- * than tracked separately, so there's nothing extra to keep in sync.
+ * Simple reading goals. Each goal is optional (null = "not set"); progress
+ * is always computed fresh from existing data sources (saved words,
+ * archive, review results) rather than tracked separately, so there's
+ * nothing extra to keep in sync beyond the goal targets themselves (see
+ * "Cross-device sync" in the README).
  */
 export interface ReadingGoals {
   minutesPerDay: number | null;
@@ -42,7 +44,10 @@ export function getGoals(): ReadingGoals {
 
 export function saveGoals(patch: Partial<ReadingGoals>): ReadingGoals {
   const next = { ...getGoals(), ...patch };
-  if (hasStorage()) window.localStorage.setItem(KEY, JSON.stringify(next));
+  if (hasStorage()) {
+    window.localStorage.setItem(KEY, JSON.stringify(next));
+    void pushStore(KEY);
+  }
   return next;
 }
 

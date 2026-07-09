@@ -1,4 +1,5 @@
 import type { AppSettings } from "@/types";
+import { pushStore } from "@/lib/supabase/sync";
 
 /** localStorage-backed app settings (display preferences only). */
 
@@ -28,6 +29,9 @@ export function getSettings(): AppSettings {
 
 export function saveSettings(patch: Partial<AppSettings>): AppSettings {
   const next = { ...getSettings(), ...patch };
-  if (hasStorage()) window.localStorage.setItem(KEY, JSON.stringify(next));
+  if (hasStorage()) {
+    window.localStorage.setItem(KEY, JSON.stringify(next));
+    void pushStore(KEY);
+  }
   return next;
 }

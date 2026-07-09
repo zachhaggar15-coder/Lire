@@ -1,4 +1,5 @@
 import type { Category } from "@/types";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
  * A history of completed articles, snapshotted at completion time. Kept
@@ -56,6 +57,7 @@ export function getArchive(): ArchiveEntry[] {
 function persist(entries: ArchiveEntry[]): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
+  void pushStore(KEY);
 }
 
 /** Records (or updates, if completed again) one text's completion. Newest-first on read via getArchive().reverse() by callers. */

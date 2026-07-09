@@ -42,8 +42,9 @@ backend, works instantly.
   full article from the source page (`@mozilla/readability` + `jsdom`,
   server-only) — see "Full-length articles" below.
 - **localStorage** for saved words, known words, reading progress, daily
-  activity/streak, completed-article history, and settings (Supabase
-  planned for later)
+  activity/streak, completed-article history, and settings — with
+  **optional cross-device sync** via Supabase (magic-link auth, `Settings
+  → Sync across devices`) once configured; see "Cross-device sync" below.
 - Deployable to **Vercel**
 
 ## Visual design system
@@ -102,6 +103,49 @@ npm start
 > The service worker (offline support / installability) only registers in a
 > production build, so use `npm run build && npm start` to test **Add to Home
 > Screen**.
+
+## Testing and linting
+
+```bash
+npm test   # 55 checks across 3 scripts, no test framework
+npm run lint
+```
+
+**`npm test`** runs three small, dependency-free Node scripts (Node's
+built-in TypeScript stripping — no Jest/Vitest, no build step):
+- `scripts/test-rss-filters.mjs` — language detection, content-quality
+  gating, boilerplate/paywall/bot-wall detection (14 checks).
+- `scripts/test-learning-logic.mjs` — lemma-guessing and spaced-repetition
+  scheduling (13 checks).
+- `scripts/test-core-logic.mjs` — recommendation-engine scoring signals,
+  article difficulty estimation, and the full dictionary lookup chain
+  (curated → generated → custom → lemma-guess → missing), 28 checks. Run
+  with `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
+  specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
+
+**Why a loader for that third script**: `signals.ts`, `difficulty.ts`, and
+`lookup.ts` all use this project's `@/` path alias internally (a
+TypeScript/Next.js-only feature Node doesn't understand natively), and
+`lookup.ts` also does a plain `import x from "./y.json"` that Node's own
+ESM loader refuses without an import-attribute Next's bundler doesn't
+require. `scripts/alias-loader.mjs` is a small Node module-resolution hook
+that handles both, registered via `scripts/register-alias-loader.mjs` and
+`node --import`. This only affects the test runner — no app source needed
+to change to make this work.
+
+**`npm run lint`** runs ESLint 9 via a native flat config
+(`eslint.config.mjs`) — `next lint` no longer exists as of Next 16, and
+`eslint-config-next`'s legacy shareable configs crash under the standard
+`FlatCompat` bridge with this project's plugin versions (a circular-JSON
+error inside `@eslint/eslintrc`'s own validator, triggered by newer
+plugins' self-referencing flat-compat shims — not specific to this
+codebase). The config instead uses each plugin's own native flat export
+(`typescript-eslint`, `@next/eslint-plugin-next`,
+`eslint-plugin-react-hooks`) directly. One rule is deliberately turned off:
+`react-hooks/set-state-in-effect`, which flags this app's standard,
+documented SSR-hydration pattern (see "A hydration gotcha worth knowing"
+below) as an error — that pattern is intentional here, not a bug the rule
+should catch.
 
 ## How the app works
 
@@ -1064,6 +1108,10 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/difficulty.ts` | `estimateDifficulty` — CEFR/label estimate for a text, optionally personalised by known words |
 | `src/lib/habit.ts` | `recordActivityToday`, `getCurrentStreak` — the daily activity log behind the Today card's streak |
 | `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive`, `estimateTimeSpentMinutes` — completed-article history for `/archive` |
+| `src/lib/supabase/client.ts` | `getSupabaseClient`, `isSupabaseConfigured` — optional, no-ops if unset |
+| `src/lib/supabase/auth.ts` | `sendMagicLink`, `signOut`, `getCurrentUser`, `onAuthStateChange` |
+| `src/lib/supabase/sync.ts` | `pushStore`, `pullAndMergeAllStores` — the actual cross-device sync logic |
+| `src/components/AccountCard.tsx`, `AuthSync.tsx` | Settings sign-in/out UI, and the app-wide pull-on-sign-in listener |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getLastOpenedTextId` |
 | `src/lib/goals.ts` | Reading goals: `getGoals`, `saveGoals`, `getGoalsProgress`, `DEFAULT_GOALS` |
 | `src/lib/rss/language.ts` | `analyseLanguage`, `isAcceptableFrenchText` — offline French/English language detection |
@@ -1094,6 +1142,119 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
 | `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings` |
 | `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `TodayCard`, `Toast`, `ServiceWorker` |
+
+## Cross-device sync (Supabase)
+
+Everything in this app is localStorage-only by default — saved words, known
+words, settings, goals, and reading history all live in one browser and
+don't follow you to a new phone or a cleared cache. Cross-device sync is an
+**entirely optional** add-on: without it configured, the app behaves
+exactly as it always has, and Settings simply doesn't show a "Sync across
+devices" card at all.
+
+### Exact setup steps
+
+1. **Create a Supabase project.** Go to [supabase.com](https://supabase.com),
+   sign in (or create a free account), and click **New project**. Pick any
+   name/region/password (the database password isn't needed anywhere in
+   this app — it's only for direct Postgres connections, which this
+   integration doesn't use). Wait for it to finish provisioning (~2
+   minutes).
+2. **Run the schema.** In the project dashboard, open the **SQL Editor**
+   (left sidebar) → **New query**, paste the entire contents of
+   [`supabase/schema.sql`](supabase/schema.sql) from this repo, and click
+   **Run**. This creates one table (`user_data`) with row-level security so
+   each signed-in user can only ever read/write their own rows.
+3. **Enable email sign-in.** In the dashboard, go to **Authentication** →
+   **Sign In / Providers**, and confirm **Email** is enabled (it is by
+   default on a new project — nothing to change unless you'd previously
+   disabled it). The app uses passwordless "magic link" sign-in, so no
+   further provider setup (Google, GitHub, etc.) is needed.
+4. **Set the Site URL and Redirect URLs.** Still in **Authentication** →
+   **URL Configuration**: set **Site URL** to your production URL (e.g.
+   `https://liree.vercel.app`), and add both your production URL and
+   `http://localhost:3000` under **Redirect URLs**. This is what lets the
+   magic-link email correctly redirect back to whichever environment
+   (local dev or production) the sign-in was requested from.
+5. **Copy your project's API keys.** In the dashboard, go to **Settings** →
+   **API**. Copy the **Project URL** and the **anon / public** key (*not*
+   the `service_role` key — that one must never be exposed to a browser,
+   and this app never needs it).
+6. **Add them to your environment.**
+   - Locally: copy `.env.local.example` to `.env.local` if you haven't
+     already, and fill in:
+     ```
+     NEXT_PUBLIC_SUPABASE_URL=<your project URL>
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=<your anon key>
+     ```
+   - On Vercel: **Project Settings** → **Environment Variables**, add both
+     of the same two variables (for Production *and* Preview, if you want
+     sync to work on preview deployments too), then redeploy.
+7. **Restart the dev server** (or redeploy on Vercel) so the new
+   environment variables are picked up. Open **Settings** in the app — a
+   new **"Sync across devices"** card should now appear.
+8. **Try it**: enter your email, tap **Send link**, open the email, tap the
+   link. You'll land back in the app signed in, and everything already
+   saved locally gets pushed up automatically. Repeat on a second
+   device/browser with the same email to pull it back down.
+
+### How it works
+
+- **`src/lib/supabase/client.ts`** — `getSupabaseClient()` /
+  `isSupabaseConfigured()`. Returns `null` if the two env vars above aren't
+  set; every other module in this feature checks that and no-ops silently,
+  same posture as the optional Upstash Redis and OpenAI integrations.
+- **`src/lib/supabase/auth.ts`** — `sendMagicLink(email)`, `signOut()`,
+  `getCurrentUser()`, `onAuthStateChange(callback)`. Passwordless email
+  link only — chosen because there's no existing account system to
+  migrate and no appetite for password-reset flows, and a link is the
+  lowest-friction option for what's fundamentally a "get my words back on
+  a new phone" feature, not a full user-account system.
+- **`src/lib/supabase/sync.ts`** — the actual sync logic. `pushStore(key)`
+  uploads one store's current localStorage value (tagged with the
+  signed-in user's id) whenever it changes; `pullAndMergeAllStores()` pulls
+  every synced store down, **merges** it with whatever's already local
+  (never silently drops data that exists on only one side — see the
+  merge-by-id logic in `mergeStoreValue`), writes the merged result back to
+  localStorage, then pushes it back up so both sides end up in sync. Called
+  once, right after a successful sign-in (see `AuthSync.tsx` below).
+- **What's synced**: `lire.savedWords.v1`, `lire.knownWords.v1`,
+  `lire.settings.v1`, `lire.goals.v1`, `lire.archive.v1`, and
+  `lire.activityDates.v1` (the streak log) — the stores explicitly named in
+  this project's original sync goal ("auth + syncing saved/known words,
+  progress, streak, and settings"). Per-RSS-article reading *progress*
+  (`lire.progress.v1`) is deliberately **not** synced — RSS ids rotate out
+  of the daily pool and get pruned locally anyway (see
+  `pruneStaleRssProgress`), so there's little value in syncing something
+  this ephemeral.
+- **Where the actual push calls live**: each synced store's own `persist()`
+  function (in `storage.ts`, `knownWords.ts`, `settings.ts`, `goals.ts`,
+  `archive.ts`, `habit.ts`) calls `void pushStore(KEY)` right after writing
+  to localStorage. This means every existing call site — `saveWord`,
+  `markKnown`, `saveSettings`, `saveGoals`, `recordArchiveEntry`,
+  `recordActivityToday`, etc. — automatically syncs with zero changes to
+  any component; the sync hook lives at the one shared write point each
+  store already had.
+- **`src/components/AccountCard.tsx`** — the Settings-page sign-in/out UI.
+  Renders nothing if Supabase isn't configured.
+- **`src/components/AuthSync.tsx`** — mounted once, app-wide, in
+  `layout.tsx`. Subscribes to Supabase auth state changes and calls
+  `pullAndMergeAllStores()` on sign-in, regardless of which page the reader
+  lands on after tapping the magic-link email (the link's redirect target
+  is just the site's origin, not a specific page).
+- **Merge semantics, spelled out**: list-shaped stores (saved words,
+  archive, known words, activity dates) are merged by union — an entry
+  that exists on only one device is always kept. For an entry that exists
+  on *both* devices with the same id (e.g. the same saved word), the
+  version being pulled down currently wins over the local one — a
+  deliberate v1 simplification (no field-by-field timestamp comparison),
+  not a guarantee of perfect conflict resolution. Object-shaped stores
+  (settings, goals) are shallow-merged the same way. In practice this means
+  signing in on a second device never silently deletes anything from
+  either side, but a genuinely conflicting edit (the same word's status
+  changed differently on two devices before ever syncing) resolves in an
+  simple, predictable, "the pulled-down side wins" way rather than a
+  smarter merge.
 
 ## PWA
 
@@ -1145,6 +1306,35 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Optional cross-device sync via Supabase** — magic-link email auth plus
+  a synced `user_data` table for saved words, known words, settings,
+  goals, and reading history. Entirely opt-in (see "Cross-device sync"
+  above for exact setup steps); without it configured, the app is
+  unchanged. `src/lib/supabase/` (client, auth, sync), `AccountCard.tsx` /
+  `AuthSync.tsx`, and `supabase/schema.sql`.
+- **Generated-dictionary entries now carry a real (frequency-estimated)
+  CEFR level** instead of one flat "mid-frequency" placeholder —
+  `scripts/build-dictionary.mjs` buckets each of the ~92,000 entries by its
+  own rank position (a well-established frequency-based CEFR proxy).
+  `difficulty.ts` already preferred a real `cefr` over the placeholder, so
+  this was the only change needed; verified live, average article
+  `unknownWordRatio` dropped from 45-72% to ~13-34%, and the
+  recommendation engine's existing thresholds turned out to already
+  produce sensible, non-empty sections against the corrected distribution
+  — no retuning needed.
+- **A real test suite**: `npm test` now runs 55 checks across three
+  scripts, adding `scripts/test-core-logic.mjs` (recommendation signals,
+  difficulty estimation, the full dictionary lookup chain including the
+  custom layer) to the existing RSS-filter and lemma/spaced-repetition
+  checks. See "Testing and linting" above, including the small Node
+  loader (`scripts/alias-loader.mjs`) needed to run modules that use the
+  app's `@/` path alias outside of Next's own bundler.
+- **`npm run lint` actually works now** — it silently didn't before (no
+  ESLint config existed despite the script). Now a native ESLint 9 flat
+  config (`eslint.config.mjs`), since `next lint` no longer exists as of
+  Next 16 and the standard `FlatCompat`-bridged `eslint-config-next` setup
+  crashes with this project's plugin versions. See "Testing and linting"
+  above for why, and for the one rule deliberately turned off.
 - **"Ask AI for nuance" now explains *why* the article chose that specific
   word** — a new "Why this word here" line covering register, tone,
   connotation, or a stylistic reason a French writer would reach for it
@@ -1431,12 +1621,4 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   (see `src/data/rssSources.ts`); a few are inevitably dead, rate-limited,
   or mis-tagged (wrong language/category) and worth pruning or correcting
   as that becomes apparent from real usage/the dev debug panel.
-- **CEFR metadata for generated dictionary entries** — WikDict doesn't carry
-  CEFR levels, so `src/lib/difficulty.ts` treats every generated-dictionary
-  hit as a flat "mid-frequency" estimate regardless of how common the word
-  actually is; a real frequency list cross-referenced against the generated
-  set would sharpen the difficulty estimate meaningfully.
-- **Weekly/monthly stats on the archive page** — it's a flat chronological
-  list today; simple aggregates (articles per week, current vs. longest
-  streak) would fit naturally once there's more history to look back on.
 - Audio / text-to-speech for pronunciation.

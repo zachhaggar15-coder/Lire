@@ -7,6 +7,8 @@
  * answering a review), then count consecutive days backward from today.
  */
 
+import { pushStore } from "@/lib/supabase/sync";
+
 const KEY = "lire.activityDates.v1";
 /** Keep this bounded — a streak only ever needs to look back a bit further than the longest realistic streak. */
 const MAX_STORED_DATES = 400;
@@ -34,6 +36,7 @@ export function getActivityDates(): string[] {
 function persist(dates: string[]): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(KEY, JSON.stringify(dates.slice(-MAX_STORED_DATES)));
+  void pushStore(KEY);
 }
 
 /** Call this from any "meaningful action" (save a word, complete an article, answer a review). Idempotent per day. */

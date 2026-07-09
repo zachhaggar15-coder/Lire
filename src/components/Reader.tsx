@@ -10,7 +10,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
-import { getKnownWords, isKnown, markKnown } from "@/lib/knownWords";
+import { getKnownWords, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
@@ -69,6 +69,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
     };
+    // text.body/text.language can't change independently of text.id in this
+    // app (a different article is always a whole new `text` object), so
+    // re-running only on id change is intentional, not a missing dependency.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text.id]);
 
   function showToast(message: string) {

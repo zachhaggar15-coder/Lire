@@ -56,11 +56,21 @@ Not the raw WikDict data — a filtered, trimmed, deduplicated subset:
   `src/data/dictionaries/fr-en.ts` (that dictionary always wins the lookup
   anyway — see `lookup.ts` — so duplicating it here would just bloat the
   file for no benefit).
-- Fields WikDict doesn't provide — CEFR level, gender, example sentences —
-  are simply omitted (`undefined`), same as any other optional
-  `DictionaryEntry` field. `frequencyRank` is set to `1000 + <rank index>`
-  so generated entries always sort as "less common" than the curated
-  dictionary's hand-assigned ranks (which are in the 1-60 range).
+- Fields WikDict doesn't provide directly — gender, example sentences — are
+  simply omitted (`undefined`), same as any other optional `DictionaryEntry`
+  field. `frequencyRank` is set to `1000 + <rank index>` so generated
+  entries always sort as "less common" than the curated dictionary's
+  hand-assigned ranks (which are in the 1-60 range).
+- `cefr` **is** populated, despite WikDict not carrying real CEFR data —
+  it's estimated from the entry's own rank position within the generated
+  set (`CEFR_BUCKETS` in `scripts/build-dictionary.mjs`): index < 500 → A2,
+  < 2500 → B1, < 7000 → B2, < 15000 → C1, everything else → C2. This is a
+  frequency-based proxy, not real CEFR classification, but it's the same
+  approach real frequency-based CEFR wordlists use, and it's what
+  `src/lib/difficulty.ts` actually uses per word when scoring article
+  difficulty — before this, every generated-dictionary hit was scored
+  identically regardless of whether it was a common or a wildly obscure
+  word.
 
 ## How to regenerate
 

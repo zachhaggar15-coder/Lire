@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
+import AuthSync from "@/components/AuthSync";
 
 export const metadata: Metadata = {
   title: "Lire — French Reader",
@@ -46,6 +47,7 @@ export default function RootLayout({
           <BottomNav />
         </div>
         <ServiceWorker />
+        <AuthSync />
       </body>
     </html>
   );

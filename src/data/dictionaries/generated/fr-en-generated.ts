@@ -15,5 +15,14 @@ import generatedData from "./fr-en-generated.json";
  * first (better examples, CEFR levels, gender, conjugated forms), and only
  * falls back to this generated set for words the curated dictionary
  * doesn't have.
+ *
+ * Every entry also carries a `cefr` estimate derived from its rank position
+ * (see `CEFR_BUCKETS` in scripts/build-dictionary.mjs) — not real CEFR data
+ * (WikDict doesn't have any), but a frequency-based proxy, the same
+ * approach real frequency-based CEFR wordlists use. This is what
+ * src/lib/difficulty.ts's article-difficulty estimate actually uses per
+ * word; before this, every generated-dictionary hit was scored as one flat
+ * "mid-frequency" placeholder regardless of how common the word actually
+ * was.
  */
 export const frEnGeneratedDictionary: DictionaryEntry[] = generatedData as DictionaryEntry[];
