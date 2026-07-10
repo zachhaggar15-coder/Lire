@@ -32,7 +32,9 @@ import {
 } from "../src/lib/recommendation/signals.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
+import { translateParagraphsWithDictionary } from "../src/lib/dictionary/articleTranslation.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
+import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
 import {
   getHiddenSources,
@@ -249,6 +251,15 @@ console.log("\n--- Fixed-phrase lookup context (à travers / de travers / en tra
     withContext.lemma === withoutContext.lemma && withContext.translations.join() === withoutContext.translations.join(),
     JSON.stringify({ withoutContext, withContext })
   );
+}
+
+console.log("\n--- Dictionary article translation ---");
+{
+  const paragraphs = tokenizeParagraphsToSentences("Le chat mange une pomme.\n\nElle lit un livre.");
+  const translated = translateParagraphsWithDictionary(paragraphs);
+  check("dictionary translation preserves paragraph count", translated.length === 2, JSON.stringify(translated));
+  check("dictionary translation uses local English glosses", translated[0].toLowerCase().includes("cat"), translated[0]);
+  check("dictionary translation keeps punctuation", translated[0].endsWith("."), translated[0]);
 }
 
 console.log("\n--- Short snippets content-quality tier ---");

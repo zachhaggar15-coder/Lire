@@ -99,27 +99,40 @@ function lookupExact(key: string): DictionaryEntry | null {
  * forms, then a rule-based lemma guess (lemmatize.ts) tried against both
  * layers; otherwise "missing" (never falls back to AI).
  *
- * When `context` is given, a two-word fixed-expression check runs first
- * ("<previous> <word>" then "<word> <next>"). Many common French phrases
- * (à travers, de travers, tout à coup, quand même, ...) are built from a
- * word whose *standalone* meaning is different — sometimes much rarer or
- * outright misleading — than its meaning inside the phrase (e.g. tapping
- * "travers" inside "à travers" would otherwise resolve to the rare
- * standalone noun sense "ribs" instead of "through/across"). This only
- * ever changes the result when the adjacent-word pair is itself a real
- * dictionary entry, so it's a no-op for the vast majority of word pairs
- * that aren't a known phrase — same safety property as guessLemmas.
+ * When `context` is given, a fixed-expression check runs first: the
+ * three-word combination ("<previous> <word> <next>") if both neighbours
+ * are known, then each two-word combination ("<previous> <word>", "<word>
+ * <next>") — longest/most-specific match first, same principle as
+ * lemmatize.ts's suffix ordering. Many common French phrases (à travers,
+ * de travers, tout à coup, quand même, se rendre compte, tenir compte de,
+ * ...) are built from a word whose *standalone* meaning is different —
+ * sometimes much rarer or outright misleading — than its meaning inside
+ * the phrase (e.g. tapping "travers" inside "à travers" would otherwise
+ * resolve to the rare standalone noun sense "ribs" instead of
+ * "through/across"; tapping "rend" inside "se rend compte" would otherwise
+ * resolve to "rendre" = "to give back" instead of "se rendre compte" = "to
+ * realize"). This only ever changes the result when the word combination
+ * is itself a real dictionary entry, so it's a no-op for the vast majority
+ * of word combinations that aren't a known phrase — same safety property
+ * as guessLemmas.
  */
 export function lookupWord(rawWord: string, context?: LookupContext): DictionaryLookupResult {
   const clean = rawWord.trim().toLowerCase();
   if (!clean) return toResult(rawWord, null);
 
-  if (context?.previousWord) {
-    const phrase = lookupExact(`${context.previousWord.trim().toLowerCase()} ${clean}`);
+  const prev = context?.previousWord?.trim().toLowerCase();
+  const next = context?.nextWord?.trim().toLowerCase();
+
+  if (prev && next) {
+    const threeWord = lookupExact(`${prev} ${clean} ${next}`);
+    if (threeWord) return toResult(rawWord, threeWord);
+  }
+  if (prev) {
+    const phrase = lookupExact(`${prev} ${clean}`);
     if (phrase) return toResult(rawWord, phrase);
   }
-  if (context?.nextWord) {
-    const phrase = lookupExact(`${clean} ${context.nextWord.trim().toLowerCase()}`);
+  if (next) {
+    const phrase = lookupExact(`${clean} ${next}`);
     if (phrase) return toResult(rawWord, phrase);
   }
 
