@@ -4,7 +4,11 @@ import { parseRssFeed } from "@/lib/rss/parseRss";
 import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
 import { attachEnglishBlurbs } from "@/lib/rss/articleBlurbs";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
-import { putPersistedRssTexts } from "@/lib/rss/rssTextStore";
+import {
+  getPersistedCandidatePool,
+  putPersistedCandidatePool,
+  putPersistedRssTexts,
+} from "@/lib/rss/rssTextStore";
 import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
 import type { Category } from "@/types";
 
@@ -44,6 +48,8 @@ function logRejection(source: RssSource, itemTitle: string, reason: string): voi
 
 interface CandidatePool {
   builtAt: number;
+  /** Calendar day (todayKey()) the pool was built for — see getCandidatePool. */
+  dateKey: string;
   items: RssReadingText[];
   feedsSucceeded: number;
   feedsFailed: number;
@@ -201,14 +207,43 @@ async function buildCandidatePool(): Promise<CandidatePool> {
   // a failure here just leaves blurbEn null on the affected items.
   await attachEnglishBlurbs(items);
 
-  return { builtAt: Date.now(), items, feedsSucceeded, feedsFailed, itemsRejected, sourceHealth };
+  return { builtAt: Date.now(), dateKey: todayKey(), items, feedsSucceeded, feedsFailed, itemsRejected, sourceHealth };
 }
 
+/**
+ * Resolves the candidate pool for "right now," rebuilding it when needed.
+ *
+ * Two staleness checks, not one: the original 12h TTL alone isn't enough on
+ * serverless — each cold-started instance has its own empty in-memory cache
+ * (see candidatePoolCache below), so whether a given request sees a stale
+ * pool used to depend entirely on how long its particular instance happened
+ * to stay warm, with no guarantee any instance ever rebuilt across a
+ * calendar-day boundary. Explicitly comparing dateKey against todayKey()
+ * guarantees a rebuild the first time any instance sees a new day, which is
+ * what "the articles update daily" actually requires.
+ *
+ * Before rebuilding from scratch, this also checks the shared Redis-backed
+ * pool (rssTextStore.ts) keyed by the same dateKey — so the *first* instance
+ * to hit a new day pays the real fetch cost, and every other instance
+ * (including other cold starts) picks up that same pool instead of each
+ * independently re-fetching 100+ feeds. No-ops back to today's original
+ * per-instance behaviour if Redis isn't configured.
+ */
 async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
+  const todayK = todayKey();
   const isStale =
-    !candidatePoolCache || Date.now() - candidatePoolCache.builtAt > CANDIDATE_POOL_TTL_MS;
+    !candidatePoolCache ||
+    candidatePoolCache.dateKey !== todayK ||
+    Date.now() - candidatePoolCache.builtAt > CANDIDATE_POOL_TTL_MS;
+
   if (forceRefresh || isStale) {
-    candidatePoolCache = await buildCandidatePool();
+    const shared = forceRefresh ? null : await getPersistedCandidatePool<CandidatePool>(todayK);
+    if (shared && shared.dateKey === todayK) {
+      candidatePoolCache = shared;
+    } else {
+      candidatePoolCache = await buildCandidatePool();
+      await putPersistedCandidatePool(todayK, candidatePoolCache);
+    }
   }
   const pool = candidatePoolCache;
   if (!pool) throw new Error("unreachable: candidate pool was just built");

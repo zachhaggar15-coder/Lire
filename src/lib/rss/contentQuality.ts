@@ -23,6 +23,20 @@
  */
 export const DEFAULT_MIN_WORDS = 60;
 
+/**
+ * A separate, much lower floor for the "Short Snippets" section — for items
+ * that don't clear DEFAULT_MIN_WORDS but are still real, clean, multi-
+ * sentence French (not a truncated teaser or boilerplate). Previously these
+ * were rejected outright by the main pipeline and lost entirely; now they're
+ * captured as short-but-legitimate reading material for readers who
+ * specifically want a quicker text — see isAcceptableAsShortSnippet and its
+ * use in rssToReadingText.ts. Deliberately still well above a single
+ * headline-length fragment (roughly 3-4 short sentences), and every other
+ * quality check (truncation, boilerplate, sentence count/shape, language)
+ * still applies at this tier.
+ */
+export const SHORT_SNIPPET_MIN_WORDS = 20;
+
 /** Minimum number of real sentences — one giant run-on "sentence" is a red flag, not real prose. Kept low since DEFAULT_MIN_WORDS is itself modest (see that constant's comment). */
 const MIN_SENTENCES = 2;
 
@@ -119,5 +133,14 @@ export function analyseContentQuality(text: string, minWords: number = DEFAULT_M
 }
 
 export function isAcceptableReadingContent(text: string, minWords: number = DEFAULT_MIN_WORDS): boolean {
+  return analyseContentQuality(text, minWords).quality !== "poor";
+}
+
+/**
+ * Whether text that failed the main DEFAULT_MIN_WORDS bar is still worth
+ * keeping as a short snippet — same shape checks (sentence count, average
+ * sentence length, truncation, boilerplate), just a much lower word floor.
+ */
+export function isAcceptableAsShortSnippet(text: string, minWords: number = SHORT_SNIPPET_MIN_WORDS): boolean {
   return analyseContentQuality(text, minWords).quality !== "poor";
 }

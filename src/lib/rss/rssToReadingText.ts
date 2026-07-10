@@ -9,7 +9,13 @@ import {
   truncateAtSentence,
 } from "@/lib/rss/cleanContent";
 import { isAcceptableFrenchText } from "@/lib/rss/language";
-import { analyseContentQuality, countWords, DEFAULT_MIN_WORDS, isAcceptableReadingContent } from "@/lib/rss/contentQuality";
+import {
+  analyseContentQuality,
+  countWords,
+  DEFAULT_MIN_WORDS,
+  isAcceptableAsShortSnippet,
+  isAcceptableReadingContent,
+} from "@/lib/rss/contentQuality";
 import { scrapeFullArticle } from "@/lib/rss/scrapeArticle";
 import { hashString } from "@/lib/hash";
 
@@ -35,6 +41,13 @@ export interface RssReadingText {
    * the card just doesn't show a blurb for that article.
    */
   blurbEn: string | null;
+  /**
+   * True when this item fell short of DEFAULT_MIN_WORDS but still cleared
+   * the much lower SHORT_SNIPPET_MIN_WORDS bar (contentQuality.ts) — routed
+   * into the home page's "Short Snippets" section instead of the normal
+   * recommendation sections, rather than being discarded outright.
+   */
+  isShortSnippet: boolean;
 }
 
 /** Why itemToRssReadingText rejected a candidate — used for dev-only logging in the RSS route, never shown to users. */
@@ -148,8 +161,16 @@ export async function itemToRssReadingText(
   // become real reading material just because the title is long.
   const minWords = source.minWords ?? DEFAULT_MIN_WORDS;
   const quality = analyseContentQuality(finalBody, minWords);
+  let isShortSnippet = false;
   if (!isAcceptableReadingContent(finalBody, minWords)) {
-    return { ok: false, rejection: { reason: `content quality: ${quality.reason}` } };
+    // Only a "too short" rejection gets a second chance at the lower
+    // snippet bar — content rejected for being truncated, boilerplate, or
+    // shaped like a broken list is just as unsuitable at 20 words as at 60.
+    if (quality.isTooShort && isAcceptableAsShortSnippet(finalBody)) {
+      isShortSnippet = true;
+    } else {
+      return { ok: false, rejection: { reason: `content quality: ${quality.reason}` } };
+    }
   }
 
   // Language check on the body alone first — a French title must never be
@@ -180,6 +201,7 @@ export async function itemToRssReadingText(
       sourceUrl: item.link,
       publishedAt: parsePublishedAt(item.pubDate),
       blurbEn: null,
+      isShortSnippet,
     },
   };
 }

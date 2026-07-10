@@ -180,6 +180,7 @@ export default function HomePage() {
       sections.stretchYourself.length ||
       sections.newVocabulary.length ||
       sections.latestNews.length ||
+      sections.shortSnippets.length ||
       sections.saveForLater.length ||
       savedLaterArticles.length
     );
@@ -318,6 +319,11 @@ export default function HomePage() {
             articles={sections.newVocabulary}
           />
           <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} />
+          <ArticleSection
+            title="Short Snippets"
+            subtitle="Quick, shorter texts — great for a few spare minutes."
+            articles={sections.shortSnippets}
+          />
           <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} />
 
           {sections.saveForLater.length > 0 && (

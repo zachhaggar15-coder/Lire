@@ -35,6 +35,8 @@ export interface ReadingText {
   publishedAt?: string;
   /** The source feed's declared language, if known (RSS-sourced texts only). */
   language?: "fr" | "en" | "mixed";
+  /** True for RSS items too short for the normal quality bar but kept as short-form reading practice — see the "Short Snippets" section. */
+  isShortSnippet?: boolean;
 }
 
 export type WordStatus = "learning" | "unsure" | "known";

@@ -17,6 +17,7 @@ import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
+import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import Toast from "@/components/Toast";
@@ -51,6 +52,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
+  const [canUseSpeech, setCanUseSpeech] = useState(false);
+  const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load saved words + known words + settings + progress once on mount,
@@ -65,15 +68,30 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (text.language !== "en") setDifficulty(estimateDifficulty(text.body, known));
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
+    setCanUseSpeech(canSpeak());
 
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
+      // Never let audio keep playing after navigating away from the article.
+      stopSpeaking();
+      setIsSpeakingArticle(false);
     };
     // text.body/text.language can't change independently of text.id in this
     // app (a different article is always a whole new `text` object), so
     // re-running only on id change is intentional, not a missing dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text.id]);
+
+  function handleToggleListenToArticle() {
+    if (isSpeakingArticle) {
+      stopSpeaking();
+      setIsSpeakingArticle(false);
+      return;
+    }
+    const paragraphTexts = [text.title, ...paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" "))];
+    const started = speakFrenchParagraphs(paragraphTexts, "normal", () => setIsSpeakingArticle(false));
+    if (started) setIsSpeakingArticle(true);
+  }
 
   function showToast(message: string) {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
@@ -255,6 +273,35 @@ export default function Reader({ text }: { text: ReadingText }) {
           This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
           {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
         </p>
+      )}
+
+      {canUseSpeech && (
+        <button
+          type="button"
+          onClick={handleToggleListenToArticle}
+          className={`mt-3 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
+            isSpeakingArticle ? "bg-brand text-white" : "bg-cream-card text-ink shadow-sm"
+          }`}
+        >
+          {isSpeakingArticle ? (
+            <>
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="6" y="5" width="4" height="14" rx="1" />
+                <rect x="14" y="5" width="4" height="14" rx="1" />
+              </svg>
+              Stop listening
+            </>
+          ) : (
+            <>
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 5 6 9H3v6h3l5 4z" />
+                <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+              </svg>
+              Listen to article
+            </>
+          )}
+        </button>
       )}
 
       <article

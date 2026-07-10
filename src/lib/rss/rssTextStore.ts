@@ -60,3 +60,47 @@ export async function getPersistedRssText(id: string): Promise<ReadingText | nul
     return null;
   }
 }
+
+const CANDIDATE_POOL_KEY_PREFIX = "lire:candidatePool:";
+/**
+ * Slightly more than a full day, so a pool built late in the day (close to
+ * the UTC rollover) is still there for the first few hours of the next one
+ * while it gets rebuilt.
+ */
+const CANDIDATE_POOL_TTL_SECONDS = 60 * 60 * 30;
+
+/**
+ * Shares the built RSS candidate pool across every serverless instance, keyed
+ * by calendar day (see todayKey() in seededShuffle.ts). Without this, each
+ * cold-started instance has its own empty in-memory cache (see
+ * candidatePoolCache in api/rss-texts/route.ts) and would rebuild
+ * independently — meaning different instances (and therefore different
+ * requests) could serve different-looking "today" selections, and there's
+ * no guarantee any of them ever notices the calendar day has changed. A
+ * shared, date-keyed store fixes both: every instance converges on the same
+ * pool for the day, and a new day always misses (forcing exactly one real
+ * rebuild, wherever the next request happens to land) rather than serving
+ * stale content indefinitely. No-ops (returns null / does nothing) if no
+ * Redis credentials are configured — behaviour then matches the old
+ * in-memory-only cache, just without the cross-instance sharing.
+ */
+export async function getPersistedCandidatePool<T>(dateKey: string): Promise<T | null> {
+  const redis = getClient();
+  if (!redis) return null;
+  try {
+    const value = await redis.get<T>(CANDIDATE_POOL_KEY_PREFIX + dateKey);
+    return value ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function putPersistedCandidatePool(dateKey: string, pool: unknown): Promise<void> {
+  const redis = getClient();
+  if (!redis) return;
+  try {
+    await redis.set(CANDIDATE_POOL_KEY_PREFIX + dateKey, pool, { ex: CANDIDATE_POOL_TTL_SECONDS });
+  } catch {
+    // Best-effort only — the in-memory cache in route.ts still works without this.
+  }
+}

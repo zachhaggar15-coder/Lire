@@ -14,6 +14,11 @@ globalThis.window = {
     setItem: (k, v) => store.set(k, String(v)),
     removeItem: (k) => store.delete(k),
   },
+  // preferences.ts, onboarding.ts, and interests.ts all fire a
+  // window.dispatchEvent(...) after writing — a real DOM isn't needed to
+  // exercise the read/write logic these tests care about, just something
+  // that doesn't throw. Event/CustomEvent are real globals in modern Node.
+  dispatchEvent: () => true,
 };
 
 import {
@@ -28,6 +33,23 @@ import {
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
+import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
+import {
+  getHiddenSources,
+  getSavedLaterIds,
+  hideSource,
+  isSavedForLater,
+  isSourceHidden,
+  removeFromSavedLater,
+  saveForLater,
+} from "../src/lib/recommendation/preferences.ts";
+import {
+  getOnboardingLevelNumeric,
+  getOnboardingState,
+  saveOnboarding,
+  skipOnboarding,
+} from "../src/lib/onboarding.ts";
+import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 
 let passed = 0;
 let failed = 0;
@@ -144,6 +166,177 @@ console.log("\n--- Dictionary lookup chain ---");
 {
   const result = lookupWord("s'appelle");
   check("an elided pronominal form resolves after the apostrophe", result.lemma === "appeler", JSON.stringify(result));
+}
+{
+  // e -> è stem change (acheter family) — "achète" doesn't round-trip
+  // through the plain suffix table, since the real infinitive's stem
+  // spelling ("achet") differs from the conjugated stem ("achèt").
+  const result = lookupWord("achète");
+  check("an e/è stem-changing verb resolves via the spelling-variant guess", result.lemma === "acheter", JSON.stringify(result));
+}
+{
+  // é -> è stem change (préférer family).
+  const result = lookupWord("préfère");
+  check("an é/è stem-changing verb resolves via the spelling-variant guess", result.lemma === "préférer", JSON.stringify(result));
+}
+{
+  // Doubled-consonant stem change (appeler/jeter family).
+  const result = lookupWord("appelle");
+  check("a doubled-consonant stem-changing verb resolves via the spelling-variant guess", result.lemma === "appeler", JSON.stringify(result));
+}
+{
+  const result = lookupWord("jette");
+  check("jeter's doubled-t stem resolves via the spelling-variant guess", result.lemma === "jeter", JSON.stringify(result));
+}
+{
+  // y/i alternation (payer/envoyer family).
+  const result = lookupWord("paie");
+  check("a y/i stem-changing verb resolves via the spelling-variant guess", result.lemma === "payer", JSON.stringify(result));
+}
+{
+  // ç/c restoration (commencer family) — imperfect form.
+  const result = lookupWord("commençait");
+  check("a ç-spelling verb's imperfect resolves via the spelling-variant guess", result.lemma === "commencer", JSON.stringify(result));
+}
+{
+  // Compound of an irregular base verb via prefix-stripping (venir family).
+  const result = lookupWord("revient");
+  check("a prefixed irregular-verb compound resolves via stripKnownPrefix", result.lemma === "revenir", JSON.stringify(result));
+}
+{
+  const result = lookupWord("deviendra");
+  check("another venir compound (devenir) resolves via stripKnownPrefix", result.lemma === "devenir", JSON.stringify(result));
+}
+{
+  const result = lookupWord("retiendra");
+  check("a tenir compound (retenir) resolves via stripKnownPrefix", result.lemma === "retenir", JSON.stringify(result));
+}
+{
+  // A newly-added base irregular verb, unrelated to any compound.
+  const result = lookupWord("connaissait");
+  check("connaître's imperfect resolves via the expanded irregular table", result.lemma === "connaître", JSON.stringify(result));
+}
+
+console.log("\n--- Short snippets content-quality tier ---");
+{
+  const clean =
+    "Le marché a rouvert ce matin après plusieurs semaines de travaux. Les habitants du quartier sont revenus nombreux faire leurs courses habituelles. Les commerçants se disent très satisfaits de cette reprise et tout semblait enfin calme dans les allées.";
+  check(
+    "a short but clean multi-sentence text fails the main quality bar",
+    !isAcceptableReadingContent(clean),
+    `wordCount ~${clean.split(/\s+/).length}`
+  );
+  check("but passes the lower short-snippet bar", isAcceptableAsShortSnippet(clean));
+}
+{
+  const tooShort = "Un mot. Deux mots.";
+  check("a genuinely tiny fragment still fails the short-snippet bar", !isAcceptableAsShortSnippet(tooShort));
+}
+{
+  const truncated = "Le marché a rouvert ce matin après plusieurs semaines de travaux et de fermeture...";
+  check(
+    "a truncated teaser still fails the short-snippet bar even if short-word-count-wise it would pass",
+    !isAcceptableAsShortSnippet(truncated)
+  );
+}
+
+console.log("\n--- Recommendation preferences (hide source / save for later) ---");
+{
+  check("a source starts out not hidden", !isSourceHidden("Le Testeur"));
+  hideSource("Le Testeur");
+  check("hideSource marks it hidden", isSourceHidden("Le Testeur"));
+  check("getHiddenSources includes it", getHiddenSources().includes("Le Testeur"));
+}
+{
+  check("an article starts out not saved for later", !isSavedForLater("test-article-1"));
+  saveForLater("test-article-1");
+  check("saveForLater marks it saved", isSavedForLater("test-article-1"));
+  check("getSavedLaterIds includes it", getSavedLaterIds().includes("test-article-1"));
+  removeFromSavedLater("test-article-1");
+  check("removeFromSavedLater unmarks it", !isSavedForLater("test-article-1"));
+}
+
+console.log("\n--- Onboarding ---");
+{
+  check("onboarding numeric level is null before completion (this test's store is fresh for this key)", getOnboardingLevelNumeric() === null);
+  const state = saveOnboarding("B1", ["culture", "science"]);
+  check("saveOnboarding marks it completed", state.completed === true);
+  const stored = getOnboardingState();
+  check(
+    "getOnboardingState round-trips the chosen level and topics",
+    stored?.level === "B1" && !!stored?.topics.includes("culture") && !!stored?.topics.includes("science"),
+    JSON.stringify(stored)
+  );
+  check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);
+}
+{
+  const state = skipOnboarding();
+  check("skipOnboarding still marks completed (so the prompt never nags again)", state.completed === true);
+  check("skipOnboarding defaults to A2", state.level === "A2");
+}
+
+console.log("\n--- Supabase sync merge logic ---");
+{
+  check("itemTimestamp reads the latest of several timestamp-ish fields", itemTimestamp({ savedAt: "2020-01-01", lastReviewedAt: "2024-06-01" }) > itemTimestamp({ savedAt: "2020-01-01" }));
+  check("itemTimestamp is 0 for a value with no timestamp fields", itemTimestamp({ word: "chat" }) === 0);
+  check("itemTimestamp is 0 for non-objects", itemTimestamp("just a string") === 0 && itemTimestamp(null) === 0);
+}
+{
+  const config = { key: "lire.knownWords.v1", kind: "list-of-strings" };
+  const merged = mergeStoreValue(config, ["chat", "chien"], ["chien", "oiseau"]);
+  check(
+    "list-of-strings merge is a deduped union of local and remote",
+    merged.length === 3 && ["chat", "chien", "oiseau"].every((w) => merged.includes(w)),
+    JSON.stringify(merged)
+  );
+}
+{
+  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
+  const local = [{ word: "chat", savedAt: "2024-01-01T00:00:00Z", reviewCount: 1 }];
+  const remote = [{ word: "chat", savedAt: "2024-06-01T00:00:00Z", reviewCount: 5 }];
+  const merged = mergeStoreValue(config, local, remote);
+  check(
+    "list-by-id merge keeps whichever side has the newer timestamp for a shared id",
+    merged.length === 1 && merged[0].reviewCount === 5,
+    JSON.stringify(merged)
+  );
+}
+{
+  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
+  const local = [{ word: "chat", savedAt: "2024-06-01T00:00:00Z", reviewCount: 9 }];
+  const remote = [{ word: "chat", savedAt: "2024-01-01T00:00:00Z", reviewCount: 1 }];
+  const merged = mergeStoreValue(config, local, remote);
+  check(
+    "list-by-id merge keeps the local side when it's the newer one",
+    merged.length === 1 && merged[0].reviewCount === 9,
+    JSON.stringify(merged)
+  );
+}
+{
+  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
+  const local = [{ word: "chat" }];
+  const remote = [{ word: "chien" }];
+  const merged = mergeStoreValue(config, local, remote);
+  check(
+    "list-by-id merge keeps distinct ids from both sides",
+    merged.length === 2,
+    JSON.stringify(merged)
+  );
+}
+{
+  const config = { key: "lire.progress.v1", kind: "record" };
+  const local = { "id-1": { status: "completed", completedAt: "2024-06-01T00:00:00Z" } };
+  const remote = { "id-1": { status: "in-progress", completedAt: "2024-01-01T00:00:00Z" }, "id-2": { status: "unread" } };
+  const merged = mergeStoreValue(config, local, remote);
+  check(
+    "record merge keeps the newer entry per key and adds remote-only keys",
+    merged["id-1"].status === "completed" && merged["id-2"].status === "unread",
+    JSON.stringify(merged)
+  );
+}
+{
+  check("mergeStoreValue returns local as-is when remote is null", mergeStoreValue({ key: "k", kind: "object" }, { a: 1 }, null).a === 1);
+  check("mergeStoreValue returns remote as-is when local is null", mergeStoreValue({ key: "k", kind: "object" }, null, { a: 1 }).a === 1);
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

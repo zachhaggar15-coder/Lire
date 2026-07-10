@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 55 checks across 3 scripts, no test framework
+npm test   # 95 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -118,9 +118,14 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
 - `scripts/test-learning-logic.mjs` — lemma-guessing and spaced-repetition
   scheduling (13 checks).
 - `scripts/test-core-logic.mjs` — recommendation-engine scoring signals,
-  article difficulty estimation, and the full dictionary lookup chain
-  (curated → generated → custom → lemma-guess → missing), 28 checks. Run
-  with `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
+  article difficulty estimation, the full dictionary lookup chain (curated →
+  generated → custom → lemma-guess → missing, including the expanded
+  morphological analyser's irregular-verb, spelling-variant, and
+  compound-prefix guesses), the short-snippet content-quality tier,
+  recommendation preferences (hide source / save for later), onboarding, and
+  the Supabase sync module's pure merge logic (`mergeStoreValue`/
+  `itemTimestamp`) — 68 checks. Run with
+  `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
 **Why a loader for that third script**: `signals.ts`, `difficulty.ts`, and
@@ -382,13 +387,18 @@ one place):
 - **`varietyScore`** — a small penalty for topics read recently, so the
   ranked pool doesn't feel like a single-topic feed.
 
-**Learning interests automatically, no onboarding** (`interests.ts`) —
+**Learning interests implicitly** (`interests.ts`) —
 `getInterestProfile()` / `recordArticleCompleted(category)` /
 `recordArticleSkipped(category)` maintain a per-category score in
-localStorage, nudged by implicit signals only: finishing an article boosts
+localStorage, nudged by implicit signals: finishing an article boosts
 its category, and `detectAndRecordSkippedArticles` (called once per home-page
-load) penalises categories that were shown yesterday but never opened. No
-explicit "pick your interests" step anywhere.
+load) penalises categories that were shown yesterday but never opened. This
+is nudged further by two *explicit* signals layered on top: a first-run
+onboarding screen (`src/lib/onboarding.ts` + `FirstRunOnboarding.tsx`) that
+asks for a starting CEFR level and a few topics, and per-article "More/less
+like this" buttons (`src/lib/recommendation/preferences.ts`, wired into
+`ReadingCard.tsx`) — both call the same `nudgeTopicPreference` used by the
+implicit signals above.
 
 **Star rating** (`getStarRating`) — the same `unknownWordRatio` band, bucketed
 into a learner-facing "★★★★★ Perfect for you" / "★★★★☆ Good challenge" /
@@ -1312,6 +1322,47 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fixed the daily rotation not actually rotating** — the candidate-pool
+  cache (`src/app/api/rss-texts/route.ts`) is now day-aware (rebuilds the
+  first time any serverless instance sees a new calendar day, not just
+  after a 12h TTL) and shares the built pool across instances via the
+  optional Redis store (`getPersistedCandidatePool`/`putPersistedCandidatePool`
+  in `rssTextStore.ts`) — previously, each cold-started serverless instance
+  had its own empty in-memory cache with no cross-instance coordination, so
+  "today's" selection could differ by instance and never reliably
+  advanced with the calendar.
+- **No article repeats across home-page sections anymore** —
+  `buildSections` (`src/lib/recommendation/sections.ts`) now claims
+  articles into sections in a fixed priority order (Today's Recommendation,
+  then Good For You, Quick Reads, Stretch Yourself, New Vocabulary, Latest
+  News), excluding whatever a higher-priority section already took.
+- **A new "Short Snippets" section** — RSS items too short for the normal
+  `DEFAULT_MIN_WORDS` bar (60 words) but still clean, real, multi-sentence
+  French are now tagged `isShortSnippet` and kept for quick reading practice
+  instead of being discarded outright (`SHORT_SNIPPET_MIN_WORDS = 20` in
+  `src/lib/rss/contentQuality.ts`, wired through `rssToReadingText.ts`).
+  They're excluded from every other section's scoring pool and shown in
+  their own home-page section instead.
+- **"Listen to the whole article"** — `Reader.tsx` now has a play/stop
+  toggle that reads the full article aloud paragraph-by-paragraph via
+  `speakFrenchParagraphs` (`src/lib/speech.ts`), avoiding the browser's
+  silent truncation of very long single utterances; previously TTS only
+  covered individual tapped words/sentences.
+- **A broader morphological analyser** (`src/lib/dictionary/lemmatize.ts`)
+  — many more irregular verbs (venir/tenir, voir/savoir/connaître,
+  écrire/lire/boire/croire, courir/mourir/vivre/rire/suivre,
+  valoir/falloir/pleuvoir/plaire/naître/craindre), a compound-verb prefix
+  mechanism (`stripKnownPrefix`) so e.g. "revient"/"deviendra" resolve via
+  the same base-verb table as "vient"/"viendra", and spelling-variant
+  handling for the three classic French stem-changing -er verb families
+  (e/é↔è: acheter/préférer; doubled consonant: appeler/jeter; y/i:
+  payer/envoyer; ç/c: commencer).
+- **RSS source pruning from real health data** — a 2026-07-10 run against
+  `/api/rss-texts?health=true&refresh=true` found 9 sources producing
+  nothing: 5 tagged fr/mixed but actually all-English (language field
+  corrected and disabled), 2 with dead feed URLs, and 2 genuinely-French
+  headline-only feeds whose full-article scrape can't recover real content
+  either. See `scripts/diag-rss-source.mjs` for the per-source triage tool.
 - **Optional cross-device sync via Supabase** — magic-link email auth plus
   a synced `lire_user_data` table for saved words, known words, settings,
   goals, and reading history. Entirely opt-in (see "Cross-device sync"
@@ -1605,26 +1656,30 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What to build next
 
-- **Supabase** for auth + syncing saved/known words, progress, streak, and
-  settings across devices — everything is localStorage-only today, so a
-  new device or a cleared browser starts completely fresh.
-- **A real morphological analyzer** to replace the rule-based lemmatiser for
-  irregular stem changes it can't guess (e.g. `acheter` → `achète`,
-  `vendre` → future-tense stem changes) — would also let the generated
-  dictionary's ~15,000 lemma-only entries (no `forms[]`) match more of their
-  own conjugated/plural forms.
-- **Let AI fill in missing dictionary entries** — when a saved word has
-  `missingFromDictionary: true`, an "Ask AI" result could be offered to
-  patch in a real `primaryTranslation` for future lookups, instead of only
-  ever showing "Not translated yet."
-- **UI controls for the `/api/rss-texts` query params** — a language or
-  category picker on the home page that reuses the already-supported
-  `?language=`/`?category=` filters, and perhaps a manual "shuffle" action
-  that calls `?refresh=true` for someone who wants a different pick before
-  the day rolls over.
-- **Verify the newly-added feeds over time** — 122 sources were added in
-  one pass from a provided list and named/categorized/tagged by inference
-  (see `src/data/rssSources.ts`); a few are inevitably dead, rate-limited,
-  or mis-tagged (wrong language/category) and worth pruning or correcting
-  as that becomes apparent from real usage/the dev debug panel.
-- Audio / text-to-speech for pronunciation.
+- **Ongoing RSS source maintenance** — feeds die, get rate-limited, or
+  quietly switch to headline-only teasers over time. `scripts/diag-rss-source.mjs`
+  (fetch one source's feed and print the pipeline's real accept/reject
+  reason per item) plus `/sources` (or `?health=true`) is the workflow for
+  triaging new problem sources as they show up; a 2026-07-10 pass already
+  disabled 9 (5 mislabeled-language, 2 dead URLs, 2 headline-only feeds
+  whose scrape can't recover real content) — see `src/data/rssSources.ts`.
+- **Rank Short Snippets instead of taking pool order** — `buildSections`
+  currently just takes the first N short-snippet-tagged articles in
+  whatever order `rankArticles` produced (which scores them on the normal
+  signals even though `contentQualityScore` inherently penalises anything
+  below `DEFAULT_MIN_WORDS`); a dedicated scoring pass (freshness + topic
+  preference only, ignoring content-quality/length signals that don't apply
+  to intentionally-short text) would surface better picks.
+- **Multiple TTS voices/rates** — "Listen to article" and the word/sentence
+  audio buttons all use whatever `fr-FR` voice the browser defaults to at a
+  couple of fixed rates; a voice picker (`speechSynthesis.getVoices()`) and
+  a scrubbable rate slider would help learners who want a specific
+  cadence.
+- **Durable candidate-pool sharing needs Redis configured to fully kick
+  in** — the daily-rotation fix (`rssTextStore.ts`'s
+  `getPersistedCandidatePool`/`putPersistedCandidatePool`) shares the
+  built pool across serverless instances *if* Upstash/KV credentials are
+  set; without them it silently falls back to the old per-instance
+  in-memory-only cache (still correct, just less consistent across cold
+  starts) — worth confirming those env vars are actually set in the Vercel
+  project.

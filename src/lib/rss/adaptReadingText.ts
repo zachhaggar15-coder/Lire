@@ -19,5 +19,6 @@ export function rssReadingTextToReadingText(rss: RssReadingText): ReadingText {
     sourceUrl: rss.sourceUrl,
     publishedAt: rss.publishedAt,
     language: rss.language,
+    isShortSnippet: rss.isShortSnippet,
   };
 }

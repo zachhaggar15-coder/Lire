@@ -68,9 +68,17 @@ export const rssSources: RssSource[] = [
   { id: "tech-n-play", name: "Tech N Play", category: "science", feedUrl: "https://technplay.com/feed/", language: "en", enabled: false },
   { id: "rosbif-blog", name: "Rosbif Blog", category: "everyday life", feedUrl: "https://rosbifblog.com/feed/", language: "en", enabled: false },
   { id: "sig-territoires", name: "SIG Territoires", category: "science", feedUrl: "https://www.sigterritoires.fr/index.php/feed/", language: "fr", enabled: true },
-  { id: "cas-d-interet", name: "Cas d'Intérêt", category: "news-style", feedUrl: "https://casdinteret.com/feed/", language: "fr", enabled: true },
+  // Mislabeled fr — verified via /api/rss-texts?health=true on 2026-07-10:
+  // every sampled item's title/body is actually English (French-history
+  // blog written in English), so every item was correctly rejected by the
+  // language check. Corrected the language field and disabled, matching
+  // every other genuinely-English source in this list.
+  { id: "cas-d-interet", name: "Cas d'Intérêt", category: "news-style", feedUrl: "https://casdinteret.com/feed/", language: "en", enabled: false },
   { id: "hip-paris", name: "HiP Paris", category: "everyday life", feedUrl: "https://hipparis.com/feed/", language: "en", enabled: false },
-  { id: "judic-astille", name: "Judic Astille", category: "everyday life", feedUrl: "https://judicastille.com/feed/", language: "mixed", enabled: true },
+  // Mislabeled mixed — verified 2026-07-10: 50/50 sampled items were
+  // English (personal blog written entirely in English despite the
+  // French-sounding name).
+  { id: "judic-astille", name: "Judic Astille", category: "everyday life", feedUrl: "https://judicastille.com/feed/", language: "en", enabled: false },
   { id: "french-a-la-carte", name: "French à la Carte", category: "culture", feedUrl: "https://frenchalacarteblog.com/feed/", language: "en", enabled: false },
   { id: "the-provence-post", name: "The Provence Post", category: "everyday life", feedUrl: "https://theprovencepost.blogspot.com/feeds/posts/default", language: "en", enabled: false },
   { id: "a-taste-of-france", name: "A Taste of France", category: "culture", feedUrl: "https://www.a-taste-of-france.com/france.xml", language: "en", enabled: false },
@@ -88,7 +96,8 @@ export const rssSources: RssSource[] = [
   { id: "secrets-of-paris", name: "Secrets of Paris", category: "everyday life", feedUrl: "https://secretsofparis.com/feed/", language: "en", enabled: false },
   { id: "french-country-cottage", name: "French Country Cottage", category: "everyday life", feedUrl: "https://www.frenchcountrycottage.net/feed/", language: "en", enabled: false },
   { id: "snippets-of-paris", name: "Snippets of Paris", category: "everyday life", feedUrl: "https://snippetsofparis.com/feed/", language: "en", enabled: false },
-  { id: "cnz", name: "CNZ", category: "news-style", feedUrl: "https://cnz.to/feed/rdf", language: "mixed", enabled: true },
+  // Mislabeled mixed — verified 2026-07-10: an English-language recipe blog, 10/10 sampled items rejected as English.
+  { id: "cnz", name: "CNZ", category: "news-style", feedUrl: "https://cnz.to/feed/rdf", language: "en", enabled: false },
   { id: "france-travel-tips", name: "France Travel Tips", category: "everyday life", feedUrl: "https://www.francetraveltips.com/feed/", language: "en", enabled: false },
   { id: "vine-and-the-olive", name: "Vine and the Olive", category: "culture", feedUrl: "https://feeds.feedburner.com/VineAndTheOlive", language: "en", enabled: false },
   { id: "fabulously-french", name: "Fabulously French", category: "culture", feedUrl: "https://fabulouslyfrench.blogspot.com/feeds/posts/default", language: "en", enabled: false },
@@ -99,7 +108,8 @@ export const rssSources: RssSource[] = [
   { id: "une-armoire-pour-deux", name: "Une Armoire Pour Deux", category: "culture", feedUrl: "https://www.unearmoirepourdeux.fr/feed/", language: "fr", enabled: true },
   { id: "the-long-weekend", name: "The Long Weekend", category: "everyday life", feedUrl: "https://www.lelongweekend.com/feed/", language: "en", enabled: false },
   { id: "keith-van-sickle", name: "Keith Van Sickle", category: "everyday life", feedUrl: "https://keithvansickle.com/feed/", language: "en", enabled: false },
-  { id: "crash-magazine", name: "Crash Magazine", category: "culture", feedUrl: "https://www.crash.fr/feed/", language: "fr", enabled: true },
+  // Mislabeled fr — verified 2026-07-10: this fashion/art magazine's RSS content is entirely English, 10/10 sampled items rejected.
+  { id: "crash-magazine", name: "Crash Magazine", category: "culture", feedUrl: "https://www.crash.fr/feed/", language: "en", enabled: false },
   { id: "aussie-in-france", name: "Aussie in France", category: "everyday life", feedUrl: "https://www.aussieinfrance.com/feed/", language: "en", enabled: false },
   { id: "french-affaires", name: "French Affaires", category: "everyday life", feedUrl: "https://frenchaffaires.com/feed/", language: "en", enabled: false },
   { id: "albert-learning-blog", name: "Albert Learning Blog", category: "culture", feedUrl: "https://blog.albert-learning.com/feed/", language: "mixed", enabled: true },
@@ -108,13 +118,19 @@ export const rssSources: RssSource[] = [
   { id: "french-today", name: "French Today", category: "culture", feedUrl: "https://www.frenchtoday.com/blog/feed/", language: "en", enabled: false },
   { id: "fluentu-french", name: "FluentU French", category: "culture", feedUrl: "https://www.fluentu.com/blog/french/feed/", language: "en", enabled: false },
   { id: "arianne-g-voyance", name: "Arianne G Voyance", category: "everyday life", feedUrl: "https://www.arianne-g-voyance.fr/feed/", language: "fr", enabled: true },
-  { id: "haute-vue", name: "Haute Vue", category: "culture", feedUrl: "https://www.haute-vue.com/blog-feed.xml", language: "fr", enabled: true },
-  { id: "chez-loulou", name: "Chez Loulou", category: "everyday life", feedUrl: "https://feeds.feedburner.com/blogspot/chezloulou", language: "fr", enabled: true },
-  { id: "prete-moi-paris", name: "Prête-moi Paris", category: "everyday life", feedUrl: "https://pretemoiparis.com/feed/", language: "fr", enabled: true },
+  // Mislabeled fr — verified 2026-07-10: English-language Riviera lifestyle blog, all sampled items rejected.
+  { id: "haute-vue", name: "Haute Vue", category: "culture", feedUrl: "https://www.haute-vue.com/blog-feed.xml", language: "en", enabled: false },
+  // Verified 2026-07-10: feed URL now 404s (Feedburner has been sunsetting old redirects for years).
+  { id: "chez-loulou", name: "Chez Loulou", category: "everyday life", feedUrl: "https://feeds.feedburner.com/blogspot/chezloulou", language: "fr", enabled: false },
+  // Verified 2026-07-10: fetch/timeout/parse failure — unreachable.
+  { id: "prete-moi-paris", name: "Prête-moi Paris", category: "everyday life", feedUrl: "https://pretemoiparis.com/feed/", language: "fr", enabled: false },
   { id: "chut-mon-secret", name: "Chut Mon Secret", category: "everyday life", feedUrl: "https://www.chutmonsecret.com/feed/", language: "fr", enabled: true },
   { id: "the-french-life", name: "The French Life", category: "everyday life", feedUrl: "https://www.thefrenchlife.org/feed/", language: "en", enabled: false },
   { id: "sew-french-embroidery", name: "Sew French Embroidery", category: "culture", feedUrl: "https://sewfrenchembroidery.blogspot.com/feeds/posts/default?alt=rss", language: "en", enabled: false },
-  { id: "la-revue-de-kenza", name: "La Revue de Kenza", category: "culture", feedUrl: "https://larevuedekenza.fr/feed/", language: "fr", enabled: true },
+  // Verified 2026-07-10: genuinely French, but a headline-only feed (0-word
+  // teasers) whose scrape doesn't recover real content either — 3/3 sampled
+  // items unrecoverable. Very low volume (3-item feed) besides.
+  { id: "la-revue-de-kenza", name: "La Revue de Kenza", category: "culture", feedUrl: "https://larevuedekenza.fr/feed/", language: "fr", enabled: false },
   { id: "french-girl-cuisine", name: "French Girl Cuisine", category: "culture", feedUrl: "https://frenchgirlcuisine.com/fr/feed/", language: "fr", enabled: true },
   { id: "a-french-american-life", name: "A French American Life", category: "everyday life", feedUrl: "https://afrenchamericanlife.com/feed/", language: "en", enabled: false },
   { id: "francais-immersion", name: "Français Immersion", category: "culture", feedUrl: "https://www.francaisimmersion.com/feed/", language: "fr", enabled: true },
@@ -144,7 +160,12 @@ export const rssSources: RssSource[] = [
   { id: "la-depeche-du-midi", name: "La Dépêche du Midi", category: "news-style", feedUrl: "https://www.ladepeche.fr/rss.xml", language: "fr", enabled: true },
   { id: "20-minutes", name: "20 Minutes", category: "news-style", feedUrl: "https://www.20minutes.fr/feeds/rss-une.xml", language: "fr", enabled: true },
   { id: "french-daily-news", name: "French Daily News", category: "news-style", feedUrl: "https://frenchdailynews.com/feed/", language: "en", enabled: false },
-  { id: "yahoo-news-france", name: "Yahoo News France", category: "news-style", feedUrl: "https://fr.news.yahoo.com/rss", language: "fr", enabled: true },
+  // Verified 2026-07-10: genuinely French, but the feed publishes
+  // headline-only items (empty description/content:encoded — 0 words before
+  // any quality check even runs), and scraping the Yahoo article page for
+  // the full text doesn't recover real content either (Yahoo's EU consent
+  // wall blocks it) — every item is unrecoverable, not just unlucky.
+  { id: "yahoo-news-france", name: "Yahoo News France", category: "news-style", feedUrl: "https://fr.news.yahoo.com/rss", language: "fr", enabled: false },
   { id: "trip-usa-france", name: "Trip USA France", category: "everyday life", feedUrl: "https://tripusafrance.com/feed/", language: "en", enabled: false },
   { id: "infomigrants-english", name: "InfoMigrants English", category: "news-style", feedUrl: "https://www.infomigrants.net/en/rss/all.xml", language: "en", enabled: false },
   { id: "pv-magazine-france", name: "PV Magazine France", category: "science", feedUrl: "https://www.pv-magazine.com/region/france/feed/", language: "en", enabled: false },

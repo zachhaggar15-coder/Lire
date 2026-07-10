@@ -19,7 +19,10 @@ interface Rule {
 }
 
 const IRREGULAR_LEMMAS: Record<string, string[]> = {
-  suis: ["être"],
+  // "suis" is ambiguous between être ("je suis" = I am) and suivre ("je
+  // suis" = I follow) — merged with suivre's entry further down, both
+  // candidates are produced and the caller's dictionary check picks
+  // whichever is real for the word actually being looked up.
   es: ["être"],
   est: ["être"],
   sommes: ["être"],
@@ -88,7 +91,293 @@ const IRREGULAR_LEMMAS: Record<string, string[]> = {
   mis: ["mettre"],
   mise: ["mettre"],
   mises: ["mettre"],
+
+  // venir / tenir — highly irregular, and extremely common as compounds
+  // (revenir, devenir, retenir, obtenir, ...); see stripKnownPrefix below for
+  // how those compounds reuse this same table.
+  viens: ["venir"],
+  vient: ["venir"],
+  venons: ["venir"],
+  venez: ["venir"],
+  viennent: ["venir"],
+  venais: ["venir"],
+  venait: ["venir"],
+  venaient: ["venir"],
+  viendra: ["venir"],
+  viendras: ["venir"],
+  viendrai: ["venir"],
+  viendrons: ["venir"],
+  viendront: ["venir"],
+  viendrait: ["venir"],
+  vint: ["venir"],
+  venu: ["venir"],
+  venue: ["venir"],
+  venus: ["venir"],
+  venues: ["venir"],
+  tiens: ["tenir"],
+  tient: ["tenir"],
+  tenons: ["tenir"],
+  tenez: ["tenir"],
+  tiennent: ["tenir"],
+  tenais: ["tenir"],
+  tenait: ["tenir"],
+  tiendra: ["tenir"],
+  tiendrai: ["tenir"],
+  tiendrait: ["tenir"],
+  tint: ["tenir"],
+  tenu: ["tenir"],
+  tenue: ["tenir"],
+  tenus: ["tenir"],
+  tenues: ["tenir"],
+
+  // voir / savoir / connaître
+  vois: ["voir"],
+  voit: ["voir"],
+  voyons: ["voir"],
+  voyez: ["voir"],
+  voient: ["voir"],
+  voyais: ["voir"],
+  voyait: ["voir"],
+  verra: ["voir"],
+  verrai: ["voir"],
+  verrait: ["voir"],
+  vit: ["voir", "vivre"],
+  vu: ["voir"],
+  vue: ["voir"],
+  vus: ["voir"],
+  vues: ["voir"],
+  sais: ["savoir"],
+  sait: ["savoir"],
+  savons: ["savoir"],
+  savez: ["savoir"],
+  savent: ["savoir"],
+  savais: ["savoir"],
+  savait: ["savoir"],
+  saura: ["savoir"],
+  saurai: ["savoir"],
+  saurait: ["savoir"],
+  sachant: ["savoir"],
+  su: ["savoir"],
+  sue: ["savoir"],
+  sus: ["savoir"],
+  sues: ["savoir"],
+  connais: ["connaître"],
+  connait: ["connaître"],
+  "connaît": ["connaître"],
+  connaissons: ["connaître"],
+  connaissez: ["connaître"],
+  connaissent: ["connaître"],
+  connaissais: ["connaître"],
+  connaissait: ["connaître"],
+  "connaîtra": ["connaître"],
+  "connaîtrait": ["connaître"],
+  connut: ["connaître"],
+  connu: ["connaître"],
+  connue: ["connaître"],
+  connus: ["connaître"],
+  connues: ["connaître"],
+
+  // écrire / lire / boire / croire — everyday irregular -re verbs
+  "écris": ["écrire"],
+  "écrit": ["écrire"],
+  "écrivons": ["écrire"],
+  "écrivez": ["écrire"],
+  "écrivent": ["écrire"],
+  "écrivais": ["écrire"],
+  "écrivait": ["écrire"],
+  "écrira": ["écrire"],
+  "écrirait": ["écrire"],
+  lis: ["lire"],
+  lit: ["lire"],
+  lisons: ["lire"],
+  lisez: ["lire"],
+  lisent: ["lire"],
+  lisais: ["lire"],
+  lisait: ["lire"],
+  lirait: ["lire"],
+  lut: ["lire"],
+  lu: ["lire"],
+  lue: ["lire"],
+  lus: ["lire"],
+  lues: ["lire"],
+  bois: ["boire"],
+  boit: ["boire"],
+  buvons: ["boire"],
+  buvez: ["boire"],
+  boivent: ["boire"],
+  buvais: ["boire"],
+  buvait: ["boire"],
+  boira: ["boire"],
+  boirait: ["boire"],
+  but: ["boire"],
+  bu: ["boire"],
+  bue: ["boire"],
+  bus: ["boire"],
+  bues: ["boire"],
+  crois: ["croire"],
+  croit: ["croire"],
+  croyons: ["croire"],
+  croyez: ["croire"],
+  croient: ["croire"],
+  croyais: ["croire"],
+  croyait: ["croire"],
+  croira: ["croire"],
+  croirait: ["croire"],
+  crut: ["croire"],
+  cru: ["croire"],
+  crue: ["croire"],
+  crus: ["croire"],
+  crues: ["croire"],
+
+  // courir / mourir / vivre / rire / suivre
+  cours: ["courir"],
+  court: ["courir"],
+  courons: ["courir"],
+  courez: ["courir"],
+  courent: ["courir"],
+  courais: ["courir"],
+  courait: ["courir"],
+  courra: ["courir"],
+  courrait: ["courir"],
+  courut: ["courir"],
+  couru: ["courir"],
+  meurs: ["mourir"],
+  meurt: ["mourir"],
+  mourons: ["mourir"],
+  mourez: ["mourir"],
+  meurent: ["mourir"],
+  mourais: ["mourir"],
+  mourait: ["mourir"],
+  mourra: ["mourir"],
+  mourrait: ["mourir"],
+  mourut: ["mourir"],
+  mort: ["mourir"],
+  morte: ["mourir"],
+  morts: ["mourir"],
+  mortes: ["mourir"],
+  vis: ["vivre"],
+  vivons: ["vivre"],
+  vivez: ["vivre"],
+  vivent: ["vivre"],
+  vivais: ["vivre"],
+  vivait: ["vivre"],
+  vivra: ["vivre"],
+  vivrait: ["vivre"],
+  "vécut": ["vivre"],
+  "vécu": ["vivre"],
+  "vécue": ["vivre"],
+  "vécus": ["vivre"],
+  "vécues": ["vivre"],
+  ris: ["rire"],
+  rions: ["rire"],
+  riez: ["rire"],
+  rient: ["rire"],
+  riais: ["rire"],
+  riait: ["rire"],
+  rira: ["rire"],
+  rirait: ["rire"],
+  ri: ["rire"],
+  suis: ["être", "suivre"],
+  suit: ["suivre"],
+  suivons: ["suivre"],
+  suivez: ["suivre"],
+  suivent: ["suivre"],
+  suivais: ["suivre"],
+  suivait: ["suivre"],
+  suivra: ["suivre"],
+  suivrait: ["suivre"],
+  suivit: ["suivre"],
+  suivi: ["suivre"],
+
+  // valoir / falloir / pleuvoir / plaire / naître / craindre — less
+  // frequent but still common enough in news prose to be worth catching.
+  vaux: ["valoir"],
+  vaut: ["valoir"],
+  valons: ["valoir"],
+  valez: ["valoir"],
+  valent: ["valoir"],
+  valais: ["valoir"],
+  valait: ["valoir"],
+  vaudra: ["valoir"],
+  vaudrait: ["valoir"],
+  valut: ["valoir"],
+  valu: ["valoir"],
+  faut: ["falloir"],
+  fallait: ["falloir"],
+  faudra: ["falloir"],
+  faudrait: ["falloir"],
+  fallu: ["falloir"],
+  pleut: ["pleuvoir"],
+  pleuvait: ["pleuvoir"],
+  pleuvra: ["pleuvoir"],
+  plu: ["pleuvoir", "plaire"],
+  plais: ["plaire"],
+  plait: ["plaire"],
+  "plaît": ["plaire"],
+  plaisons: ["plaire"],
+  plaisez: ["plaire"],
+  plaisent: ["plaire"],
+  plaisais: ["plaire"],
+  plaisait: ["plaire"],
+  plaira: ["plaire"],
+  plairait: ["plaire"],
+  nais: ["naître"],
+  "naît": ["naître"],
+  naissons: ["naître"],
+  naissez: ["naître"],
+  naissent: ["naître"],
+  naissais: ["naître"],
+  naissait: ["naître"],
+  "naîtra": ["naître"],
+  naquit: ["naître"],
+  "né": ["naître"],
+  "née": ["naître"],
+  "nés": ["naître"],
+  "nées": ["naître"],
+  crains: ["craindre"],
+  craint: ["craindre"],
+  craignons: ["craindre"],
+  craignez: ["craindre"],
+  craignent: ["craindre"],
+  craignais: ["craindre"],
+  craignait: ["craindre"],
+  craindra: ["craindre"],
+  craignit: ["craindre"],
 };
+
+/**
+ * Common prefixes that turn a base irregular verb into a compound one
+ * (revenir, devenir, retenir, obtenir, apprendre, comprendre, permettre,
+ * promettre, ...) — these compounds inflect exactly like their base verb,
+ * but IRREGULAR_LEMMAS above is keyed by exact whole-word forms, so
+ * "revient" would otherwise never match "vient". Stripping a known prefix
+ * and re-checking the remainder against the same table catches this whole
+ * family without having to enumerate every compound by hand. Longest
+ * prefixes first, so e.g. "entre" is tried before "en" would be (not
+ * currently listed, but keeps the ordering principle consistent).
+ */
+const COMPOUND_PREFIXES = [
+  "entre", "contre", "appar", "trans", "inter",
+  "sous", "sur", "pré", "pro", "com", "con", "per", "main", "re", "ré", "dé", "de",
+];
+
+/**
+ * If `word` starts with a known compound prefix and the remainder is itself
+ * a recognised irregular form, returns the prefixed lemma guesses (e.g.
+ * "revient" -> ["revenir"], from prefix "re" + remainder "vient" ->
+ * ["venir"]). Returns an empty array otherwise — never throws, never
+ * guesses without a real IRREGULAR_LEMMAS hit on the remainder.
+ */
+function stripKnownPrefix(word: string): string[] {
+  const results: string[] = [];
+  for (const prefix of COMPOUND_PREFIXES) {
+    if (!word.startsWith(prefix) || word.length <= prefix.length + 1) continue;
+    const remainder = word.slice(prefix.length);
+    const bases = IRREGULAR_LEMMAS[remainder];
+    if (bases) results.push(...bases.map((base) => prefix + base));
+  }
+  return results;
+}
 
 // Longer, more specific suffixes are tried before shorter generic ones —
 // enforced by sorting once below, so the order they're written in here only
@@ -216,6 +505,58 @@ const SORTED_RULES = [...RULES].sort((a, b) => b.suffix.length - a.suffix.length
 const MIN_STEM_LENGTH = 2;
 
 /**
+ * Extra stem spellings to also try before re-adding the "er" ending, for the
+ * three classic French stem-changing/spelling-change -er verb families —
+ * none of which round-trip through the plain suffix table above, since the
+ * conjugated stem's spelling genuinely differs from the infinitive's:
+ *
+ *   - e/é -> è (acheter -> achète, préférer -> préfère): the stem's last
+ *     vowel is è in the conjugated form but e or é in the infinitive — try
+ *     both, since which one is real depends on the specific verb.
+ *   - doubled consonant (appeler -> appelle, jeter -> jette): try
+ *     de-doubling the stem's final consonant.
+ *   - y/i (payer -> paie, envoyer -> envoie): try restoring a final i (after
+ *     a vowel) to y.
+ *   - ç/c (commencer -> commença): try restoring a final ç to plain c —
+ *     only relevant before "a"/"o"-initial endings, but harmless before any.
+ *
+ * Only ever used for the "er" replacement rules (these are -er verb
+ * phenomena specifically), and only ever *adds* extra candidates — the
+ * plain stem is still tried as-is by the caller.
+ */
+function stemSpellingVariants(stem: string): string[] {
+  const variants: string[] = [];
+  const last = stem.length - 1;
+  if (last < 1) return variants;
+
+  // e/é -> è: the changing vowel sits one before the stem's final consonant
+  // (lever -> lève: stem "lèv"; acheter -> achète: stem "achèt"; préférer ->
+  // préfère: stem "préfèr") — it's never the stem's very last character,
+  // since these verbs' endings always keep a trailing consonant.
+  if (stem[last - 1] === "è") {
+    const before = stem.slice(0, last - 1);
+    const after = stem.slice(last);
+    variants.push(before + "e" + after, before + "é" + after);
+  }
+
+  // Doubled consonant -> single (appeler -> appelle: stem "appell"; jeter ->
+  // jette: stem "jett") — here the doubling *is* the stem's last character.
+  if (stem[last] === stem[last - 1] && /[bcdfglmnprst]/.test(stem[last])) {
+    variants.push(stem.slice(0, last));
+  }
+
+  if (stem[last] === "i" && /[aeou]/.test(stem[last - 1])) {
+    variants.push(stem.slice(0, last) + "y");
+  }
+
+  if (stem[last] === "ç") {
+    variants.push(stem.slice(0, last) + "c");
+  }
+
+  return variants;
+}
+
+/**
  * Returns candidate lemma guesses for a word, longest/most-specific suffix
  * match first, with exact duplicates removed. Doesn't check them against
  * any dictionary — that's the caller's job (see lookupWord).
@@ -238,6 +579,13 @@ export function guessLemmas(word: string): string[] {
       if (stem.length < MIN_STEM_LENGTH) continue;
 
       add(stem + rule.replacement);
+
+      if (rule.replacement === "er") {
+        for (const variantStem of stemSpellingVariants(stem)) {
+          if (variantStem.length < MIN_STEM_LENGTH) continue;
+          add(variantStem + "er");
+        }
+      }
     }
   }
 
@@ -249,6 +597,7 @@ export function guessLemmas(word: string): string[] {
 
   for (const form of forms) {
     for (const irregular of IRREGULAR_LEMMAS[form] ?? []) add(irregular);
+    for (const compound of stripKnownPrefix(form)) add(compound);
     add(form);
     addRuleGuesses(form);
   }

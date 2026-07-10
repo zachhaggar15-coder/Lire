@@ -108,7 +108,8 @@ export function subscribeToSyncStatus(callback: (status: SyncStatus) => void): (
   return () => window.removeEventListener(SYNC_EVENT, handler);
 }
 
-function itemTimestamp(item: unknown): number {
+/** Exported for direct unit testing (scripts/test-core-logic.mjs) — pure, so no Supabase client is needed to test it. */
+export function itemTimestamp(item: unknown): number {
   if (!item || typeof item !== "object") return 0;
   const r = item as Record<string, unknown>;
   const candidates = [r.lastReviewedAt, r.completedAt, r.openedAt, r.savedAt, r.updatedAt, r.publishedAt];
@@ -121,7 +122,8 @@ function itemTimestamp(item: unknown): number {
   );
 }
 
-function mergeStoreValue(config: SyncedStoreConfig, local: unknown, remote: unknown): unknown {
+/** Exported for direct unit testing (scripts/test-core-logic.mjs) — pure, so no Supabase client is needed to test it. */
+export function mergeStoreValue(config: SyncedStoreConfig, local: unknown, remote: unknown): unknown {
   if (remote == null) return local;
   if (local == null) return remote;
 
