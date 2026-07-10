@@ -330,6 +330,23 @@ console.log("\n--- Idiom/phrase dictionary batch ---");
   check("bare 'coup' keeps its own standalone translation", bareCoup.translations.includes("blow"), JSON.stringify(bareCoup));
 }
 
+console.log("\n--- Expanded news and civic vocabulary ---");
+{
+  const cases = [
+    ["cependant", {}, "cependant"],
+    ["prévoit", {}, "prévoir"],
+    ["réforme", {}, "réforme"],
+    ["hausse", {}, "hausse"],
+    ["raison", { previousWord: "en", nextWord: "de" }, "en raison de"],
+    ["objectif", {}, "objectif"],
+    ["incendie", {}, "incendie"],
+  ];
+  for (const [word, ctx, expectedLemma] of cases) {
+    const result = lookupWord(word, ctx);
+    check(`expanded dictionary resolves '${word}' to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
+  }
+}
+
 console.log("\n--- Dictionary article translation ---");
 {
   const paragraphs = tokenizeParagraphsToSentences("Le chat mange une pomme.\n\nElle lit un livre.");
