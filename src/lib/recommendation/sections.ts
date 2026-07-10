@@ -110,7 +110,17 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
     SECTION_SIZE
   );
 
-  const shortSnippets = shortSnippetPool.slice(0, SHORT_SNIPPET_SECTION_SIZE);
+  // Short snippets get their own ranking rather than reusing rankArticles'
+  // order: that order is driven by scoreArticle's full weighted formula,
+  // which includes contentQualityScore and unknownWordTargetScore — both of
+  // which inherently penalise short text (a 30-word snippet can never hit
+  // "good" content quality, no matter how good a match it is otherwise).
+  // Freshness and topic preference are the two signals that still mean the
+  // same thing for a snippet as for a full article, so those are the ones
+  // that decide which snippets surface first.
+  const shortSnippets = [...shortSnippetPool]
+    .sort((a, b) => (b.score.freshness + b.score.topicPreference) - (a.score.freshness + a.score.topicPreference))
+    .slice(0, SHORT_SNIPPET_SECTION_SIZE);
 
   return {
     todaysRecommendation,

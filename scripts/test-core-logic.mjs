@@ -330,6 +330,15 @@ console.log("\n--- Idiom/phrase dictionary batch ---");
   const bareCoup = lookupWord("coup");
   check("bare 'coup' keeps its own standalone translation", bareCoup.translations.includes("blow"), JSON.stringify(bareCoup));
 }
+{
+  // Found via scripts/lint-dictionary.mjs's triage pass — same shape of bug
+  // as "travers": the generated dictionary's one WikDict sense was too
+  // narrow/literal for how the word is actually used.
+  const issu = lookupWord("issu");
+  check("'issu' resolves to its common 'descended from' sense, not just 'issued'", issu.translations.includes("descended from"), JSON.stringify(issu));
+  const muni = lookupWord("munie");
+  check("'muni' (as 'munie') resolves to 'equipped with'", muni.lemma === "muni" && muni.translations.includes("equipped with"), JSON.stringify(muni));
+}
 
 console.log("\n--- Expanded news and civic vocabulary ---");
 {

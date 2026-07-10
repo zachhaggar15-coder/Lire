@@ -389,7 +389,9 @@ export default function Reader({ text }: { text: ReadingText }) {
         <section className="mt-7 rounded-3xl bg-cream-card p-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">English Translation</h2>
           <p className="mt-0.5 text-xs text-ink-muted">
-            Dictionary-based guide generated locally. It avoids AI/API usage, so phrasing may be literal.
+            Word-for-word from the local dictionary, not a fluent translation — no AI/network call, so it's
+            instant and free, but sentence structure follows the French original and can read awkwardly.
+            Tap a word directly for its accurate, in-context meaning.
           </p>
           <div className="mt-4 space-y-4 text-base leading-7 text-ink">
             {englishParagraphs.map((paragraph, index) => (

@@ -9,6 +9,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   showSavedHighlights: true,
   showKnownWordStyling: true,
   fontSize: "medium",
+  speechRate: 1,
+  speechVoiceURI: null,
 };
 
 function hasStorage(): boolean {

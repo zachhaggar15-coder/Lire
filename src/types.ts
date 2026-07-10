@@ -112,4 +112,12 @@ export interface AppSettings {
   /** De-emphasise words already marked "known" while reading. */
   showKnownWordStyling: boolean;
   fontSize: FontSize;
+  /**
+   * Overall text-to-speech speed multiplier, applied on top of the
+   * "slow"/"normal" base rates every pronounce button already picks
+   * between — 1 = unchanged, <1 slower, >1 faster. See src/lib/speech.ts.
+   */
+  speechRate: number;
+  /** The browser SpeechSynthesisVoice.voiceURI to prefer for French playback, or null for the browser's own default French voice. */
+  speechVoiceURI: string | null;
 }

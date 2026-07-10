@@ -850,4 +850,10 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "gare", forms: ["gares"], translations: ["station", "train station"], partOfSpeech: "noun", gender: "feminine", cefr: "A1", examples: [{ fr: "La gare ouvre tôt.", en: "The station opens early." }] },
   { lemma: "bateau", forms: ["bateaux"], translations: ["boat", "ship"], partOfSpeech: "noun", gender: "masculine", cefr: "A1", examples: [{ fr: "Le bateau arrive au port.", en: "The boat arrives at the port." }] },
   { lemma: "quartier", forms: ["quartiers"], translations: ["neighborhood", "district"], partOfSpeech: "noun", gender: "masculine", cefr: "A2", examples: [{ fr: "Le quartier devient plus calme.", en: "The neighborhood is becoming calmer." }] },
+
+  // --- Found by scripts/lint-dictionary.mjs — the generated dictionary's
+  // one WikDict sense for these was too narrow/literal for how the word is
+  // actually used, the same shape of problem "travers" (-> "ribs") had.
+  { lemma: "issu", forms: ["issue", "issus", "issues"], translations: ["descended from", "stemming from", "resulting from"], partOfSpeech: "adjective", cefr: "B2", notes: "Almost always \"issu de\" — describes where someone/something comes from or results from. The generated dictionary's only sense for this word was the much rarer \"issued\".", examples: [{ fr: "Un rapport issu d'une étude récente.", en: "A report stemming from a recent study." }] },
+  { lemma: "muni", forms: ["munie", "munis", "munies"], translations: ["equipped with", "provided with"], partOfSpeech: "adjective", cefr: "B1", notes: "Almost always \"muni de\" — equipped or provided with something.", examples: [{ fr: "Il faut être muni d'un passeport.", en: "You need to be equipped with a passport." }] },
 ];

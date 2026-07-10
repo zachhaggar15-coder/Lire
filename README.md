@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 140 checks across 3 scripts, no test framework
+npm test   # 156 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -124,7 +124,7 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
   compound-prefix guesses), the short-snippet content-quality tier,
   recommendation preferences (hide source / save for later), onboarding, and
   the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 113 checks. Run with
+  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 129 checks. Run with
   `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
@@ -1322,6 +1322,47 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **A proactive dictionary linter** (`scripts/lint-dictionary.mjs`) — finds
+  more "travers"-style bugs (a word whose only WikDict sense is narrow or
+  misleading relative to how it's actually used) before a reader reports
+  them, instead of one-at-a-time. Re-queries the same WikDict source data
+  `build-dictionary.mjs` uses for single-sense, importance<0.01 entries,
+  filtered to plausible everyday vocabulary (lowercase, 4-10 letters, not
+  already curated, not a proper noun, not self-referential/abbreviation-
+  looking) and sorted shortest-first, since everyday words skew short.
+  Running it found ~7,600 candidates out of ~92,000 generated entries — a
+  spot-check of the first couple hundred confirmed most really are
+  correctly-translated rare/technical/foreign-loanword entries (plant and
+  animal species, ethnic groups, legal/religious terms), which is the
+  honest, expected outcome for a triage tool, not an auto-fixer — but it
+  did surface two real fixes, now curated: "issu" (→ "descended
+  from"/"stemming from," not just "issued") and "muni" (→ "equipped
+  with"/"provided with"). See the tool's own header comment for the exact
+  heuristics and their reasoning.
+- **Short Snippets now ranked by freshness + topic preference only**
+  (`src/lib/recommendation/sections.ts`) — previously it reused
+  `rankArticles`' full-score order, which includes `contentQualityScore`
+  and `unknownWordTargetScore`, both of which structurally penalise short
+  text regardless of how good a match it actually is.
+- **A voice + speed picker for text-to-speech** — Settings now has a
+  "Reading aloud" card (`SpeechSettingsCard.tsx`) listing every `fr-*`
+  voice the browser has loaded (handling the async `voiceschanged` event
+  most browsers need before `getVoices()` returns anything) plus a
+  0.7x-1.3x speed slider, both persisted in `AppSettings`
+  (`speechRate`/`speechVoiceURI`) and applied by every pronounce button and
+  "Listen to article" via `src/lib/speech.ts` — previously every voice/rate
+  was hardcoded to two fixed values and the browser's own default voice.
+- **Clarified the dictionary-substitution translation's real limitation** —
+  the "Show English" toggle in `Reader.tsx` now explains concretely that
+  it's word-for-word from the local dictionary (not a fluent AI
+  translation), so sentence structure follows the French original and can
+  read awkwardly, and points back to tap-to-translate for accurate
+  in-context meaning.
+- **Confirmed the Supabase cross-device sync table is live and correctly
+  secured** — queried `lire_user_data` directly with the anon key; it
+  returns an empty result set (not a missing-table error) for an
+  unauthenticated request, confirming both that the table exists and that
+  row-level security is doing its job. No code changes needed.
 - **Drastically expanded the curated dictionary with idioms and fixed
   phrases** — 114 new entries in `src/data/dictionaries/fr-en.ts`, targeting
   exactly the class of "strange translation" the "travers" bug (below)
@@ -1698,18 +1739,11 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   triaging new problem sources as they show up; a 2026-07-10 pass already
   disabled 9 (5 mislabeled-language, 2 dead URLs, 2 headline-only feeds
   whose scrape can't recover real content) — see `src/data/rssSources.ts`.
-- **Rank Short Snippets instead of taking pool order** — `buildSections`
-  currently just takes the first N short-snippet-tagged articles in
-  whatever order `rankArticles` produced (which scores them on the normal
-  signals even though `contentQualityScore` inherently penalises anything
-  below `DEFAULT_MIN_WORDS`); a dedicated scoring pass (freshness + topic
-  preference only, ignoring content-quality/length signals that don't apply
-  to intentionally-short text) would surface better picks.
-- **Multiple TTS voices/rates** — "Listen to article" and the word/sentence
-  audio buttons all use whatever `fr-FR` voice the browser defaults to at a
-  couple of fixed rates; a voice picker (`speechSynthesis.getVoices()`) and
-  a scrubbable rate slider would help learners who want a specific
-  cadence.
+- **Run `scripts/lint-dictionary.mjs` again periodically** — it only got a
+  partial manual review this round (a spot-check of the first couple
+  hundred of ~7,600 candidates, which turned up "issu" and "muni"); there's
+  a long tail left unreviewed, and re-running it after future WikDict
+  regenerations could turn up new ones.
 - **Durable candidate-pool sharing needs Redis configured to fully kick
   in** — the daily-rotation fix (`rssTextStore.ts`'s
   `getPersistedCandidatePool`/`putPersistedCandidatePool`) shares the

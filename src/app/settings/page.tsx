@@ -7,6 +7,7 @@ import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import AccountCard from "@/components/AccountCard";
+import SpeechSettingsCard from "@/components/SpeechSettingsCard";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -100,6 +101,8 @@ export default function SettingsPage() {
           label="Show known word styling"
           description="De-emphasise words you've marked as known, so your eye goes to what's actually new."
         />
+        <SpeechSettingsCard settings={settings} onChange={update} />
+
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <p className="font-semibold text-ink">AI explanations</p>
           <p className="mt-0.5 text-sm text-ink-muted">

@@ -1,15 +1,44 @@
+import { getSettings } from "@/lib/settings";
+
 export type SpeechRate = "slow" | "normal";
+
+const BASE_RATES: Record<SpeechRate, number> = { slow: 0.72, normal: 0.95 };
 
 export function canSpeak(): boolean {
   return typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+}
+
+/** Every French (fr-*) voice the browser currently has loaded. May be empty on the very first call — see getFrenchVoices' caller-side voiceschanged note. */
+export function getFrenchVoices(): SpeechSynthesisVoice[] {
+  if (!canSpeak()) return [];
+  return window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("fr"));
+}
+
+/** The reader's preferred French voice (by saved voiceURI), falling back to the browser's first available French voice, or null to let the browser pick entirely on its own. */
+function getPreferredVoice(): SpeechSynthesisVoice | null {
+  const voices = getFrenchVoices();
+  if (voices.length === 0) return null;
+  const preferredURI = getSettings().speechVoiceURI;
+  return (preferredURI && voices.find((v) => v.voiceURI === preferredURI)) || voices[0];
+}
+
+/** Applies the reader's overall speed preference (settings.speechRate) on top of a "slow"/"normal" base rate, so the two stay distinguishable at any preferred speed. */
+function effectiveRate(rate: SpeechRate): number {
+  return BASE_RATES[rate] * getSettings().speechRate;
+}
+
+function configureUtterance(utterance: SpeechSynthesisUtterance, rate: SpeechRate): void {
+  utterance.lang = "fr-FR";
+  utterance.rate = effectiveRate(rate);
+  const voice = getPreferredVoice();
+  if (voice) utterance.voice = voice;
 }
 
 export function speakFrench(text: string, rate: SpeechRate = "normal"): boolean {
   if (!canSpeak() || !text.trim()) return false;
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text.trim());
-  utterance.lang = "fr-FR";
-  utterance.rate = rate === "slow" ? 0.72 : 0.95;
+  configureUtterance(utterance, rate);
   window.speechSynthesis.speak(utterance);
   return true;
 }
@@ -33,8 +62,7 @@ export function speakFrenchParagraphs(paragraphs: string[], rate: SpeechRate = "
 
   clean.forEach((paragraph, index) => {
     const utterance = new SpeechSynthesisUtterance(paragraph);
-    utterance.lang = "fr-FR";
-    utterance.rate = rate === "slow" ? 0.72 : 0.95;
+    configureUtterance(utterance, rate);
     if (index === clean.length - 1 && onEnd) {
       utterance.onend = onEnd;
       utterance.onerror = onEnd;
