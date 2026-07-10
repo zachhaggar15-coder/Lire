@@ -38,6 +38,16 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "dans", translations: ["in", "inside"], partOfSpeech: "preposition", frequencyRank: 14, cefr: "A1" },
   { lemma: "pour", translations: ["for", "in order to"], partOfSpeech: "preposition", frequencyRank: 13, cefr: "A1" },
   { lemma: "par", translations: ["by", "through", "per"], partOfSpeech: "preposition", frequencyRank: 16, cefr: "A2" },
+  // "travers" alone is a genuinely rare noun (its one WikDict sense is the
+  // butchery cut "ribs" — see NOTICE.md/build-dictionary.mjs); the word is
+  // overwhelmingly encountered as part of these fixed phrases instead, which
+  // the generated dictionary already gets right individually. Curating all
+  // four here means a bare tap on "travers" gets a sensible answer even
+  // without phrase context, and the phrases themselves get better metadata.
+  { lemma: "à travers", translations: ["through", "across"], partOfSpeech: "preposition", frequencyRank: 41, cefr: "A2" },
+  { lemma: "de travers", translations: ["askew", "the wrong way", "crookedly"], partOfSpeech: "adverb", frequencyRank: 300, cefr: "B1" },
+  { lemma: "en travers", translations: ["across", "crosswise"], partOfSpeech: "adverb", frequencyRank: 800, cefr: "B1" },
+  { lemma: "travers", translations: ["flaw", "failing", "quirk"], partOfSpeech: "noun", gender: "masculine", frequencyRank: 900, cefr: "B2", notes: "Almost always seen inside \"à travers\" (through/across), \"de travers\" (askew), or \"en travers\" (crosswise) — standalone, it means a personal flaw or quirk (\"avoir ses travers\"). Also a butchery cut (\"travers de porc\" = pork ribs), which is the only sense some dictionaries give it." },
   { lemma: "avec", translations: ["with"], partOfSpeech: "preposition", frequencyRank: 17, cefr: "A1" },
   { lemma: "après", translations: ["after"], partOfSpeech: "preposition / adverb", frequencyRank: 40, cefr: "A2" },
   { lemma: "entre", translations: ["between"], partOfSpeech: "preposition", frequencyRank: 42, cefr: "A2" },

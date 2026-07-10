@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 95 checks across 3 scripts, no test framework
+npm test   # 100 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -124,7 +124,7 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
   compound-prefix guesses), the short-snippet content-quality tier,
   recommendation preferences (hide source / save for later), onboarding, and
   the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`) — 68 checks. Run with
+  `itemTimestamp`), and fixed-phrase lookup context — 73 checks. Run with
   `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
@@ -1322,6 +1322,20 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fixed a class of wrong translations for words that are really part of a
+  fixed phrase** — reported case: tapping "travers" translated it as "ribs,"
+  when it almost always appears inside "à travers" (through/across), "de
+  travers" (askew), or "en travers" (crosswise). Root cause: WikDict's own
+  source data genuinely has only one sense for the bare noun "travers" (a
+  butchery cut), and the word-tap flow only ever looked up the single
+  tapped word, never checking whether it was part of an adjacent known
+  phrase the dictionary already had correct entries for. Fixed on two
+  levels — `lookupWord` (`src/lib/dictionary/lookup.ts`) now accepts
+  optional `{ previousWord, nextWord }` context and checks the two-word
+  combination first (a no-op for the vast majority of word pairs that
+  aren't a known phrase), and `Reader.tsx`'s word-tap handler now passes
+  the tapped word's actual sentence neighbours. "travers" itself also got a
+  proper curated entry (flaw/failing/quirk) as a sane standalone fallback.
 - **Fixed the daily rotation not actually rotating** — the candidate-pool
   cache (`src/app/api/rss-texts/route.ts`) is now day-aware (rebuilds the
   first time any serverless instance sees a new calendar day, not just

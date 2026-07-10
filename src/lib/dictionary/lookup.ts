@@ -75,16 +75,53 @@ function toResult(input: string, entry: DictionaryEntry | null): DictionaryLooku
   };
 }
 
+/** The immediately adjacent words in the sentence a tapped word came from — see the phrase-detection note on lookupWord below. */
+export interface LookupContext {
+  previousWord?: string | null;
+  nextWord?: string | null;
+}
+
+function lookupExact(key: string): DictionaryEntry | null {
+  return (
+    byLemma.get(key) ??
+    byForm.get(key) ??
+    generatedByLemma.get(key) ??
+    generatedByForm.get(key) ??
+    getCustomDictionaryEntry(key) ??
+    null
+  );
+}
+
 /**
  * Looks up a French word offline. Accepts either an already-cleaned word
  * or a raw one — cleaning here too keeps this usable as a standalone
  * module. Order: curated lemma, curated forms, generated lemma, generated
  * forms, then a rule-based lemma guess (lemmatize.ts) tried against both
  * layers; otherwise "missing" (never falls back to AI).
+ *
+ * When `context` is given, a two-word fixed-expression check runs first
+ * ("<previous> <word>" then "<word> <next>"). Many common French phrases
+ * (à travers, de travers, tout à coup, quand même, ...) are built from a
+ * word whose *standalone* meaning is different — sometimes much rarer or
+ * outright misleading — than its meaning inside the phrase (e.g. tapping
+ * "travers" inside "à travers" would otherwise resolve to the rare
+ * standalone noun sense "ribs" instead of "through/across"). This only
+ * ever changes the result when the adjacent-word pair is itself a real
+ * dictionary entry, so it's a no-op for the vast majority of word pairs
+ * that aren't a known phrase — same safety property as guessLemmas.
  */
-export function lookupWord(rawWord: string): DictionaryLookupResult {
+export function lookupWord(rawWord: string, context?: LookupContext): DictionaryLookupResult {
   const clean = rawWord.trim().toLowerCase();
   if (!clean) return toResult(rawWord, null);
+
+  if (context?.previousWord) {
+    const phrase = lookupExact(`${context.previousWord.trim().toLowerCase()} ${clean}`);
+    if (phrase) return toResult(rawWord, phrase);
+  }
+  if (context?.nextWord) {
+    const phrase = lookupExact(`${clean} ${context.nextWord.trim().toLowerCase()}`);
+    if (phrase) return toResult(rawWord, phrase);
+  }
 
   const exact = byLemma.get(clean);
   if (exact) return toResult(rawWord, exact);

@@ -217,6 +217,40 @@ console.log("\n--- Dictionary lookup chain ---");
   check("connaître's imperfect resolves via the expanded irregular table", result.lemma === "connaître", JSON.stringify(result));
 }
 
+console.log("\n--- Fixed-phrase lookup context (à travers / de travers / en travers) ---");
+{
+  // Root cause of a real reported bug: "travers" tapped alone used to
+  // resolve to WikDict's one narrow standalone sense ("ribs" — a butchery
+  // cut), since that's genuinely the only entry the source data has for
+  // the bare noun. Curated now, but still worth locking in the sensible
+  // standalone meaning as a regression test.
+  const bare = lookupWord("travers");
+  check("a bare 'travers' (no context) no longer resolves to the butchery sense", !bare.translations.includes("ribs"), JSON.stringify(bare));
+}
+{
+  const result = lookupWord("travers", { previousWord: "à" });
+  check("'travers' preceded by 'à' resolves to the phrase à travers (through/across)", result.lemma === "à travers" && result.translations.includes("through"), JSON.stringify(result));
+}
+{
+  const result = lookupWord("travers", { previousWord: "de" });
+  check("'travers' preceded by 'de' resolves to the phrase de travers (askew)", result.lemma === "de travers", JSON.stringify(result));
+}
+{
+  const result = lookupWord("travers", { previousWord: "en" });
+  check("'travers' preceded by 'en' resolves to the phrase en travers (crosswise)", result.lemma === "en travers", JSON.stringify(result));
+}
+{
+  // "donc chat zut" isn't a phrase in any dictionary layer, so this should
+  // fall straight through to the plain single-word lookup unaffected.
+  const withoutContext = lookupWord("chat");
+  const withContext = lookupWord("chat", { previousWord: "donc", nextWord: "zut" });
+  check(
+    "an ordinary word with no matching adjacent phrase is unaffected by context",
+    withContext.lemma === withoutContext.lemma && withContext.translations.join() === withoutContext.translations.join(),
+    JSON.stringify({ withoutContext, withContext })
+  );
+}
+
 console.log("\n--- Short snippets content-quality tier ---");
 {
   const clean =

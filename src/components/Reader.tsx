@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import type { WordExplanation } from "@/lib/ai/types";
-import { tokenizeParagraphsToSentences } from "@/lib/words";
+import { tokenizeParagraphsToSentences, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
@@ -99,10 +99,30 @@ export default function Reader({ text }: { text: ReadingText }) {
     toastTimeout.current = setTimeout(() => setToastMessage(null), 1400);
   }
 
-  function handleWordTap(sentenceText: string, clean: string) {
+  /** Nearest preceding/following *word* tokens around `index` — skips punctuation/whitespace tokens, so "à travers" is found even with a space token in between. */
+  function adjacentWords(tokens: Token[], index: number): { previousWord: string | null; nextWord: string | null } {
+    let previousWord: string | null = null;
+    for (let i = index - 1; i >= 0; i--) {
+      if (tokens[i].isWord) {
+        previousWord = tokens[i].clean;
+        break;
+      }
+    }
+    let nextWord: string | null = null;
+    for (let i = index + 1; i < tokens.length; i++) {
+      if (tokens[i].isWord) {
+        nextWord = tokens[i].clean;
+        break;
+      }
+    }
+    return { previousWord, nextWord };
+  }
+
+  function handleWordTap(sentenceText: string, tokens: Token[], index: number) {
+    const clean = tokens[index]?.clean;
     if (!clean) return;
 
-    const lookup = lookupWord(clean);
+    const lookup = lookupWord(clean, adjacentWords(tokens, index));
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
@@ -321,7 +341,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                         key={ti}
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleWordTap(sg.text, tok.clean);
+                          handleWordTap(sg.text, sg.tokens, ti);
                         }}
                         className={wordClassName(tok.clean)}
                       >
