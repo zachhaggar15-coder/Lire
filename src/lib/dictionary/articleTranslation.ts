@@ -17,7 +17,7 @@ function translationForToken(tokens: Token[], index: number): string {
 
   const previousWord = findAdjacentWord(tokens, index, -1);
   const nextWord = findAdjacentWord(tokens, index, 1);
-  const lookup = lookupWord(token.clean, { previousWord, nextWord });
+  const lookup = lookupWord(token.text, { previousWord, nextWord });
   const translation = lookup.translations[0];
 
   return translation ? matchCase(token.text, translation) : token.text;

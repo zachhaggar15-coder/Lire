@@ -125,7 +125,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     const clean = tokens[index]?.clean;
     if (!clean) return;
 
-    const lookup = lookupWord(clean, adjacentWords(tokens, index));
+    const lookup = lookupWord(tokens[index].text, adjacentWords(tokens, index));
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
@@ -241,9 +241,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus("completed");
   }
 
-  function wordClassName(clean: string): string {
+  function wordClassName(token: Token): string {
     const base = "cursor-pointer rounded px-0.5 py-0.5 transition-colors";
-    const entry = lookupWord(clean);
+    const clean = token.clean;
+    const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
 
@@ -368,7 +369,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                           e.stopPropagation();
                           handleWordTap(sg.text, sg.tokens, ti);
                         }}
-                        className={wordClassName(tok.clean)}
+                        className={wordClassName(tok)}
                       >
                         {tok.text}
                       </span>

@@ -1,5 +1,6 @@
 import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
+import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
 import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
@@ -20,11 +21,24 @@ import { getCustomDictionaryEntry } from "@/lib/dictionary/custom";
 
 const byLemma = new Map<string, DictionaryEntry>();
 const byForm = new Map<string, DictionaryEntry>();
+const properByLemma = new Map<string, DictionaryEntry>();
+const properByForm = new Map<string, DictionaryEntry>();
 
 for (const entry of frEnDictionary) {
   byLemma.set(entry.lemma.toLowerCase(), entry);
   for (const form of entry.forms ?? []) {
     byForm.set(form.toLowerCase(), entry);
+  }
+}
+
+for (const entry of properNounDictionary) {
+  const lemmaKey = entry.lemma.toLowerCase();
+  properByLemma.set(lemmaKey, entry);
+  if (!byLemma.has(lemmaKey)) byLemma.set(lemmaKey, entry);
+  for (const form of entry.forms ?? []) {
+    const formKey = form.toLowerCase();
+    properByForm.set(formKey, entry);
+    if (!byForm.has(formKey)) byForm.set(formKey, entry);
   }
 }
 
@@ -92,6 +106,24 @@ function lookupExact(key: string): DictionaryEntry | null {
   );
 }
 
+function looksLikeProperNoun(rawWord: string): boolean {
+  const trimmed = rawWord.trim();
+  if (!trimmed || trimmed.includes(" ")) return false;
+  const first = trimmed.match(/\p{L}/u)?.[0];
+  return !!first && first === first.toUpperCase() && first !== first.toLowerCase();
+}
+
+function fallbackProperNoun(rawWord: string): DictionaryEntry | null {
+  const clean = rawWord.trim();
+  if (!looksLikeProperNoun(clean)) return null;
+  return {
+    lemma: clean,
+    translations: [clean],
+    partOfSpeech: "proper noun",
+    notes: "Capitalized unknown word: treated as a likely proper name/place rather than a missing dictionary word.",
+  };
+}
+
 /**
  * Looks up a French word offline. Accepts either an already-cleaned word
  * or a raw one — cleaning here too keeps this usable as a standalone
@@ -142,6 +174,11 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   const viaForm = byForm.get(clean);
   if (viaForm) return toResult(rawWord, viaForm);
 
+  if (looksLikeProperNoun(rawWord)) {
+    const proper = properByLemma.get(clean) ?? properByForm.get(clean);
+    if (proper) return toResult(rawWord, proper);
+  }
+
   const generatedExact = generatedByLemma.get(clean);
   if (generatedExact) return toResult(rawWord, generatedExact);
 
@@ -161,7 +198,7 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
     if (viaGuess) return toResult(rawWord, viaGuess);
   }
 
-  return toResult(rawWord, null);
+  return toResult(rawWord, fallbackProperNoun(rawWord));
 }
 
 /**

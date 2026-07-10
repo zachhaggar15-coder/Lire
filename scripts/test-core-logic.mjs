@@ -34,6 +34,7 @@ import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { translateParagraphsWithDictionary } from "../src/lib/dictionary/articleTranslation.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
+import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
 import {
@@ -345,6 +346,31 @@ console.log("\n--- Expanded news and civic vocabulary ---");
     const result = lookupWord(word, ctx);
     check(`expanded dictionary resolves '${word}' to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
   }
+}
+
+console.log("\n--- Proper names and places ---");
+{
+  const cases = [
+    ["Paris", {}, "Paris", "proper noun (place)"],
+    ["Macron", {}, "Emmanuel Macron", "proper noun (person)"],
+    ["Monde", { previousWord: "le" }, "Le Monde", "proper noun (media)"],
+    ["européenne", { previousWord: "union" }, "Union européenne", "proper noun (institution)"],
+    ["Zach", {}, "Zach", "proper noun"],
+  ];
+  for (const [word, ctx, expectedLemma, expectedPart] of cases) {
+    const result = lookupWord(word, ctx);
+    check(
+      `proper-name lookup resolves '${word}' to ${expectedLemma}`,
+      result.lemma === expectedLemma && result.partOfSpeech === expectedPart,
+      JSON.stringify(result)
+    );
+  }
+  const ordinary = lookupWord("français");
+  check("proper-noun list does not override ordinary dictionary words", ordinary.partOfSpeech === "adjective", JSON.stringify(ordinary));
+  const properNames = new Map();
+  for (const entry of properNounDictionary) properNames.set(entry.lemma.toLowerCase(), (properNames.get(entry.lemma.toLowerCase()) ?? 0) + 1);
+  const duplicates = [...properNames.entries()].filter(([, count]) => count > 1);
+  check("proper-noun dictionary has no duplicate lemmas", duplicates.length === 0, JSON.stringify(duplicates));
 }
 
 console.log("\n--- Dictionary article translation ---");
