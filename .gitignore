@@ -23,3 +23,4 @@ tsconfig.tsbuildinfo
 
 # Local dev-server logs (e.g. port-collision output from `next dev`).
 .next-dev-*.log
+dev-server-*.log
