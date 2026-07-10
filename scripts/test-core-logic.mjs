@@ -253,6 +253,83 @@ console.log("\n--- Fixed-phrase lookup context (à travers / de travers / en tra
   );
 }
 
+console.log("\n--- Idiom/phrase dictionary batch ---");
+{
+  // Reflexive verbs whose meaning genuinely diverges from the plain verb —
+  // the same class of bug as the "travers" fix, just for a whole family of
+  // very common pronominal verbs.
+  const cases = [
+    ["s'agit", {}, "s'agir"],
+    ["rend", { previousWord: "se", nextWord: "compte" }, "se rendre compte"],
+    ["rend", { previousWord: "se" }, "se rendre"],
+    ["passe", { previousWord: "se" }, "se passer"],
+    ["passe", { previousWord: "se", nextWord: "de" }, "se passer de"],
+    ["trouve", { previousWord: "se" }, "se trouver"],
+    ["demande", { previousWord: "se" }, "se demander"],
+    ["sens", { previousWord: "me" }, "se sentir"],
+    ["trompe", { previousWord: "se" }, "se tromper"],
+    ["souviens", { previousWord: "me" }, "se souvenir"],
+    // "s'aperçoit"/"s'occupe"/"s'ennuient" tokenize as one apostrophe-joined
+    // token (like "s'agit" above), so these resolve directly via a forms
+    // match with no adjacent-word context needed at all.
+    ["s'aperçoit", {}, "s'apercevoir"],
+    ["s'occupe", {}, "s'occuper"],
+    ["s'ennuient", {}, "s'ennuyer"],
+    ["moque", { previousWord: "se" }, "se moquer"],
+    ["débrouille", { previousWord: "se" }, "se débrouiller"],
+    ["déroule", { previousWord: "se" }, "se dérouler"],
+  ];
+  for (const [word, ctx, expectedLemma] of cases) {
+    const result = lookupWord(word, ctx);
+    check(`'${word}' with context ${JSON.stringify(ctx)} resolves to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
+  }
+}
+{
+  // avoir/faire/être idioms — the base verb is basic, but the whole phrase
+  // means something a literal, word-by-word reading would never guess.
+  const cases = [
+    ["lieu", { previousWord: "a" }, "avoir lieu"],
+    ["l'air", { previousWord: "a" }, "avoir l'air"],
+    ["besoin", { previousWord: "ai", nextWord: "de" }, "avoir besoin de"],
+    ["beau", { previousWord: "a" }, "avoir beau"],
+    ["mal", { previousWord: "du", nextWord: "à" }, "avoir du mal à"],
+    ["marre", { previousWord: "ai", nextWord: "de" }, "en avoir marre"],
+    ["semblant", { previousWord: "fait", nextWord: "de" }, "faire semblant de"],
+    ["mieux", { previousWord: "son" }, "faire de son mieux"],
+    ["train", { previousWord: "en", nextWord: "de" }, "être en train de"],
+    ["mesure", { previousWord: "en", nextWord: "de" }, "être en mesure de"],
+    ["y", { previousWord: "il", nextWord: "a" }, "il y a"],
+    ["vaut", { previousWord: "il", nextWord: "mieux" }, "il vaut mieux"],
+  ];
+  for (const [word, ctx, expectedLemma] of cases) {
+    const result = lookupWord(word, ctx);
+    check(`'${word}' with context ${JSON.stringify(ctx)} resolves to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
+  }
+}
+{
+  // Common connector/adverb phrases and the "coup" family, including the
+  // 3-word-beats-2-word disambiguation between "à coup sûr" and "tout à coup".
+  const cases = [
+    ["vient", { nextWord: "de" }, "venir de"],
+    ["coup", { previousWord: "du" }, "du coup"],
+    ["coup", { previousWord: "à" }, "tout à coup"],
+    ["coup", { previousWord: "à", nextWord: "sûr" }, "à coup sûr"],
+    ["coup", {}, "coup"],
+    ["place", { previousWord: "en" }, "mettre en place"],
+    ["œuvre", { previousWord: "en" }, "mettre en œuvre"],
+    ["compte", { previousWord: "tient", nextWord: "de" }, "tenir compte de"],
+  ];
+  for (const [word, ctx, expectedLemma] of cases) {
+    const result = lookupWord(word, ctx);
+    check(`'${word}' with context ${JSON.stringify(ctx)} resolves to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
+  }
+  // "coup" alone (no phrase context) must not be swallowed by any of the
+  // "coup de ..." idioms it's curated alongside — it should show its own
+  // real, correct standalone sense.
+  const bareCoup = lookupWord("coup");
+  check("bare 'coup' keeps its own standalone translation", bareCoup.translations.includes("blow"), JSON.stringify(bareCoup));
+}
+
 console.log("\n--- Dictionary article translation ---");
 {
   const paragraphs = tokenizeParagraphsToSentences("Le chat mange une pomme.\n\nElle lit un livre.");

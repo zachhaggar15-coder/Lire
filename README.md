@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 100 checks across 3 scripts, no test framework
+npm test   # 140 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -124,7 +124,7 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
   compound-prefix guesses), the short-snippet content-quality tier,
   recommendation preferences (hide source / save for later), onboarding, and
   the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`), and fixed-phrase lookup context — 73 checks. Run with
+  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 113 checks. Run with
   `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
@@ -1322,6 +1322,27 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Drastically expanded the curated dictionary with idioms and fixed
+  phrases** — 114 new entries in `src/data/dictionaries/fr-en.ts`, targeting
+  exactly the class of "strange translation" the "travers" bug (below)
+  surfaced: (1) ~25 reflexive/pronominal verbs whose meaning genuinely
+  diverges from the plain verb (s'agir ≠ agir, se demander ≠ demander, se
+  rendre compte ≠ se rendre, se tromper ≠ tromper, ...); (2) ~30 avoir/
+  faire/être idioms (avoir lieu, avoir beau, en avoir marre, faire
+  semblant, être en train de, il y a, ...); (3) ~40 common adverbial/
+  connector phrases (tout à coup, du coup, quand même, n'importe quoi,
+  à peu près, ...); (4) mettre/prendre/tenir/venir idioms (venir de,
+  tenir compte de, tenir à, laisser tomber, ...) and the "coup de ..."
+  noun-phrase family. `lookupWord`'s adjacent-word phrase check (added for
+  the "travers" fix) was extended to also try a three-word window
+  (previous+word+next), needed for idioms like "se rendre compte" and
+  "tenir compte de" where the tapped word sits in the middle. Every
+  multi-word form was checked against a real reachability question — *which
+  word would a reader actually tap, and does a matching form exist keyed
+  off that word's real neighbours* — not just written as data and assumed
+  to work; a few (e.g. "être sur le point de", "de plus en plus") share
+  common short substrings with unrelated phrases and were deliberately left
+  without extra reachability forms rather than risk mismatching those.
 - **Fixed a class of wrong translations for words that are really part of a
   fixed phrase** — reported case: tapping "travers" translated it as "ribs,"
   when it almost always appears inside "à travers" (through/across), "de
