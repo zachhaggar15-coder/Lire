@@ -1,4 +1,5 @@
 import type { DictionaryEntry } from "@/lib/dictionary/types";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
  * Browser-only custom dictionary entries. These are created from explicit AI
@@ -75,5 +76,6 @@ export function saveCustomDictionaryEntry(entry: DictionaryEntry): DictionaryEnt
   const existing = getCustomDictionaryEntries().filter((item) => item.lemma !== normalised.lemma);
   const next = [normalised, ...existing].slice(0, MAX_ENTRIES);
   window.localStorage.setItem(KEY, JSON.stringify(next));
+  void pushStore(KEY);
   return next;
 }

@@ -4,6 +4,7 @@ import { getInterestProfile } from "@/lib/recommendation/interests";
 import { inferUserLevelNumeric } from "@/lib/recommendation/signals";
 import { getKnownWords } from "@/lib/knownWords";
 import { getArchive } from "@/lib/archive";
+import { getOnboardingLevelNumeric } from "@/lib/onboarding";
 
 /** How far back "recently read" looks for the variety signal. */
 const RECENT_DAYS = 7;
@@ -11,7 +12,7 @@ const RECENT_DAYS = 7;
 /** Gathers all the localStorage-backed state the scoring engine needs into one context object — the only place score.ts's callers need to know where that state lives. */
 export function buildScoringContext(now: Date = new Date()): ScoringContext {
   const interestProfile = getInterestProfile();
-  const userLevelNumeric = inferUserLevelNumeric(getKnownWords().length);
+  const userLevelNumeric = getOnboardingLevelNumeric() ?? inferUserLevelNumeric(getKnownWords().length);
 
   const cutoffMs = now.getTime() - RECENT_DAYS * 24 * 60 * 60 * 1000;
   const recentCategories: Category[] = getArchive()

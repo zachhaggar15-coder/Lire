@@ -1,0 +1,114 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { Category, Difficulty } from "@/types";
+import { getOnboardingState, saveOnboarding, skipOnboarding } from "@/lib/onboarding";
+
+const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2"];
+
+const TOPICS: { value: Category; label: string }[] = [
+  { value: "news-style", label: "News" },
+  { value: "sport", label: "Sport" },
+  { value: "culture", label: "Culture" },
+  { value: "science", label: "Science" },
+  { value: "everyday life", label: "Life" },
+];
+
+interface FirstRunOnboardingProps {
+  onComplete?: () => void;
+}
+
+export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingProps) {
+  const [visible, setVisible] = useState(false);
+  const [level, setLevel] = useState<Difficulty>("A2");
+  const [topics, setTopics] = useState<Category[]>(["news-style", "science"]);
+
+  useEffect(() => {
+    const state = getOnboardingState();
+    setVisible(!state?.completed);
+    if (state?.level) setLevel(state.level);
+    if (state?.topics?.length) setTopics(state.topics);
+  }, []);
+
+  if (!visible) return null;
+
+  function toggleTopic(topic: Category) {
+    setTopics((current) =>
+      current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]
+    );
+  }
+
+  function finish() {
+    saveOnboarding(level, topics);
+    setVisible(false);
+    onComplete?.();
+  }
+
+  function skip() {
+    skipOnboarding();
+    setVisible(false);
+    onComplete?.();
+  }
+
+  return (
+    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Start Point</h2>
+          <p className="mt-0.5 text-sm font-semibold text-ink">Pick a level and a few topics.</p>
+        </div>
+        <button
+          type="button"
+          onClick={skip}
+          className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-95"
+        >
+          Skip
+        </button>
+      </div>
+
+      <div className="mt-4">
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Level</p>
+        <div className="grid grid-cols-4 gap-2">
+          {LEVELS.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setLevel(option)}
+              className={`rounded-xl py-2 text-sm font-semibold ${
+                level === option ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Topics</p>
+        <div className="flex flex-wrap gap-2">
+          {TOPICS.map((topic) => (
+            <button
+              key={topic.value}
+              type="button"
+              onClick={() => toggleTopic(topic.value)}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                topics.includes(topic.value) ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+              }`}
+            >
+              {topic.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={finish}
+        className="mt-4 w-full rounded-full bg-brand py-2.5 text-sm font-semibold text-white active:scale-95"
+      >
+        Save start point
+      </button>
+    </section>
+  );
+}

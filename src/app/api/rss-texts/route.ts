@@ -231,6 +231,7 @@ export async function GET(request: Request) {
   const languageParam = url.searchParams.get("language") ?? "all";
   const categoryParam = url.searchParams.get("category") ?? "all";
   const refresh = url.searchParams.get("refresh") === "true";
+  const includeHealth = url.searchParams.get("health") === "true";
 
   const pool = await getCandidatePool(refresh);
   const todayK = todayKey();
@@ -272,6 +273,16 @@ export async function GET(request: Request) {
     // Lets the home page show "fewer than 5" as an intentional quality
     // decision rather than a bug — see UI fallback behaviour in the README.
     fewerThanRequested: selected.length < limit,
+    ...(includeHealth && {
+      sourceHealth: pool.sourceHealth,
+      sourceSummary: {
+        feedsSucceeded: pool.feedsSucceeded,
+        feedsFailed: pool.feedsFailed,
+        itemsRejected: pool.itemsRejected,
+        candidatePoolSize: pool.items.length,
+        candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
+      },
+    }),
     ...(isDev && {
       debug: {
         feedsSucceeded: pool.feedsSucceeded,

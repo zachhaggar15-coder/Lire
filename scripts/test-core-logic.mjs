@@ -133,6 +133,18 @@ console.log("\n--- Dictionary lookup chain ---");
   const result = lookupWord("mangerait");
   check("an unlisted conditional form resolves via lemma-guessing", result.source === "local", JSON.stringify(result));
 }
+{
+  const result = lookupWord("vendrait");
+  check("an unlisted -dre conditional resolves via lemma-guessing", result.lemma === "vendre", JSON.stringify(result));
+}
+{
+  const result = lookupWord("lira");
+  check("an unlisted -re future resolves via lemma-guessing", result.lemma === "lire", JSON.stringify(result));
+}
+{
+  const result = lookupWord("s'appelle");
+  check("an elided pronominal form resolves after the apostrophe", result.lemma === "appeler", JSON.stringify(result));
+}
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exitCode = failed > 0 ? 1 : 0;

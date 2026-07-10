@@ -2,6 +2,7 @@ import type { Category } from "@/types";
 import type { InterestProfile } from "@/lib/recommendation/types";
 import { getProgress } from "@/lib/progress";
 import { dateKey } from "@/lib/habit";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
  * Automatically-learned topic interest profile — no onboarding, no explicit
@@ -56,20 +57,23 @@ export function getInterestProfile(): InterestProfile {
 function persist(profile: InterestProfile): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  void pushStore(PROFILE_KEY);
+}
+
+export function nudgeTopicPreference(category: Category, amount: number): void {
+  const profile = getInterestProfile();
+  profile[category] = clamp(profile[category] + amount);
+  persist(profile);
 }
 
 /** Call when a reader marks an article completed — see Reader.tsx's handleMarkCompleted. */
 export function recordArticleCompleted(category: Category): void {
-  const profile = getInterestProfile();
-  profile[category] = clamp(profile[category] + COMPLETE_BOOST);
-  persist(profile);
+  nudgeTopicPreference(category, COMPLETE_BOOST);
 }
 
 /** Call when an article was shown but never opened before rotating out — see detectAndRecordSkippedArticles below. */
 export function recordArticleSkipped(category: Category): void {
-  const profile = getInterestProfile();
-  profile[category] = clamp(profile[category] - SKIP_PENALTY);
-  persist(profile);
+  nudgeTopicPreference(category, -SKIP_PENALTY);
 }
 
 /** Maps a stored -1..1 interest score to a 0..1 preference score for the ranking engine. */

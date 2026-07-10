@@ -14,6 +14,7 @@ import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
+import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import {
   buildScorableArticles,
   buildScoringContext,
@@ -21,7 +22,13 @@ import {
   detectAndRecordSkippedArticles,
   rankArticles,
   type RecommendationSections,
+  type ScoredArticle,
 } from "@/lib/recommendation";
+import {
+  getHiddenSources,
+  getSavedLaterIds,
+  subscribeToRecommendationPreferences,
+} from "@/lib/recommendation/preferences";
 
 type LoadState = "loading" | "success" | "error";
 type CategoryFilter = "all" | Category;
@@ -78,7 +85,11 @@ export default function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [refreshKey, setRefreshKey] = useState(0);
+  const [prefVersion, setPrefVersion] = useState(0);
+  const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const lastRefreshSent = useRef(0);
+
+  useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -107,15 +118,18 @@ export default function HomePage() {
         // never opened yesterday — see src/lib/recommendation/interests.ts.
         detectAndRecordSkippedArticles(rssTexts.map((t) => ({ id: t.id, category: t.category })));
 
+        const hiddenSources = new Set(getHiddenSources());
         const usingFallback = rssTexts.length < MIN_POOL_SIZE;
-        const pool: ReadingText[] = usingFallback
+        const pool: ReadingText[] = (usingFallback
           ? [...rssTexts, ...hardcodedTexts.slice(0, MIN_POOL_SIZE - rssTexts.length)]
-          : rssTexts;
+          : rssTexts
+        ).filter((text) => !text.sourceName || !hiddenSources.has(text.sourceName));
 
         const knownWords = new Set(getKnownWords());
         const scorable = buildScorableArticles(pool, knownWords);
         const context = buildScoringContext();
         const ranked = rankArticles(scorable, context);
+        const savedIds = new Set(getSavedLaterIds());
         const filtered = ranked.filter((article) => {
           if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
           if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
@@ -123,6 +137,7 @@ export default function HomePage() {
         });
 
         setSections(buildSections(filtered));
+        setSavedLaterArticles(ranked.filter((article) => savedIds.has(article.text.id)));
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
         if (forceRefresh) lastRefreshSent.current = refreshKey;
@@ -133,13 +148,17 @@ export default function HomePage() {
           // all-hardcoded, unranked-but-still-sectioned pool so the page
           // never shows nothing.
           const knownWords = new Set(getKnownWords());
-          const scorable = buildScorableArticles(hardcodedTexts, knownWords);
+          const scorable = buildScorableArticles(
+            hardcodedTexts.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
+            knownWords
+          );
           const ranked = rankArticles(scorable, buildScoringContext()).filter((article) => {
             if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
             if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
             return true;
           });
           setSections(buildSections(ranked));
+          setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
           setUsedFallback(true);
           setState("success");
         }
@@ -150,7 +169,7 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, [categoryFilter, difficultyFilter, refreshKey]);
+  }, [categoryFilter, difficultyFilter, refreshKey, prefVersion]);
 
   const hasArticles =
     !!sections &&
@@ -161,8 +180,14 @@ export default function HomePage() {
       sections.stretchYourself.length ||
       sections.newVocabulary.length ||
       sections.latestNews.length ||
-      sections.saveForLater.length
+      sections.saveForLater.length ||
+      savedLaterArticles.length
     );
+
+  function resetFilters() {
+    setCategoryFilter("all");
+    setDifficultyFilter("all");
+  }
 
   return (
     <div className="px-4 pt-6">
@@ -176,6 +201,7 @@ export default function HomePage() {
       <ContinueReadingBanner />
       <TodayCard />
       <ReadingGoalsCard />
+      <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
 
       <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
         <div className="flex items-center justify-between gap-3">
@@ -189,6 +215,14 @@ export default function HomePage() {
           >
             Refresh
           </button>
+          {(categoryFilter !== "all" || difficultyFilter !== "all") && (
+            <button
+              onClick={resetFilters}
+              className="shrink-0 rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted active:scale-95"
+            >
+              Reset
+            </button>
+          )}
         </div>
 
         <div className="mt-3">
@@ -284,6 +318,7 @@ export default function HomePage() {
             articles={sections.newVocabulary}
           />
           <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} />
+          <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} />
 
           {sections.saveForLater.length > 0 && (
             <details className="mb-6 rounded-3xl border border-dashed border-cream-dark p-3">
@@ -353,6 +388,13 @@ export default function HomePage() {
         <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
           <p className="text-sm font-semibold text-ink">No articles match those filters.</p>
           <p className="mt-1 text-xs text-ink-muted">Try another topic or level.</p>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95"
+          >
+            Reset filters
+          </button>
         </div>
       )}
     </div>

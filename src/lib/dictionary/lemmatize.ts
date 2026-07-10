@@ -161,6 +161,29 @@ const RULES: Rule[] = [
   { suffix: "is", replacement: "ir" },
   { suffix: "it", replacement: "ir" },
 
+  // -re and -dre verbs: future / conditional. Both variants are useful:
+  // "lira" -> "lire", while "vendra" -> "vendre".
+  { suffix: "draient", replacement: "dre" },
+  { suffix: "drions", replacement: "dre" },
+  { suffix: "driez", replacement: "dre" },
+  { suffix: "drais", replacement: "dre" },
+  { suffix: "drait", replacement: "dre" },
+  { suffix: "drons", replacement: "dre" },
+  { suffix: "dront", replacement: "dre" },
+  { suffix: "drai", replacement: "dre" },
+  { suffix: "dras", replacement: "dre" },
+  { suffix: "dra", replacement: "dre" },
+  { suffix: "raient", replacement: "re" },
+  { suffix: "rions", replacement: "re" },
+  { suffix: "riez", replacement: "re" },
+  { suffix: "rais", replacement: "re" },
+  { suffix: "rait", replacement: "re" },
+  { suffix: "rons", replacement: "re" },
+  { suffix: "ront", replacement: "re" },
+  { suffix: "rai", replacement: "re" },
+  { suffix: "ras", replacement: "re" },
+  { suffix: "ra", replacement: "re" },
+
   // Plural / feminine agreement (nouns & adjectives)
   { suffix: "aux", replacement: "al" },
   { suffix: "ales", replacement: "al" },
@@ -207,17 +230,27 @@ export function guessLemmas(word: string): string[] {
     candidates.push(candidate);
   }
 
-  for (const irregular of IRREGULAR_LEMMAS[word] ?? []) {
-    add(irregular);
+  function addRuleGuesses(target: string) {
+    for (const rule of SORTED_RULES) {
+      if (!target.endsWith(rule.suffix)) continue;
+
+      const stem = target.slice(0, target.length - rule.suffix.length);
+      if (stem.length < MIN_STEM_LENGTH) continue;
+
+      add(stem + rule.replacement);
+    }
   }
 
-  for (const rule of SORTED_RULES) {
-    if (!word.endsWith(rule.suffix)) continue;
+  const forms = [word];
+  const apostropheIndex = Math.max(word.lastIndexOf("'"), word.lastIndexOf("\u2019"));
+  if (apostropheIndex >= 0 && apostropheIndex < word.length - 1) {
+    forms.push(word.slice(apostropheIndex + 1));
+  }
 
-    const stem = word.slice(0, word.length - rule.suffix.length);
-    if (stem.length < MIN_STEM_LENGTH) continue;
-
-    add(stem + rule.replacement);
+  for (const form of forms) {
+    for (const irregular of IRREGULAR_LEMMAS[form] ?? []) add(irregular);
+    add(form);
+    addRuleGuesses(form);
   }
 
   return candidates;

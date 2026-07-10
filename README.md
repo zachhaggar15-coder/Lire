@@ -1154,17 +1154,23 @@ devices" card at all.
 
 ### Exact setup steps
 
-1. **Create a Supabase project.** Go to [supabase.com](https://supabase.com),
-   sign in (or create a free account), and click **New project**. Pick any
-   name/region/password (the database password isn't needed anywhere in
-   this app — it's only for direct Postgres connections, which this
-   integration doesn't use). Wait for it to finish provisioning (~2
-   minutes).
+1. **Create a Supabase project (or reuse an existing one).** Go to
+   [supabase.com](https://supabase.com), sign in (or create a free
+   account), and click **New project**. Pick any name/region/password (the
+   database password isn't needed anywhere in this app — it's only for
+   direct Postgres connections, which this integration doesn't use). Wait
+   for it to finish provisioning (~2 minutes). The free tier caps active
+   projects **per Organization** (not per account) at 2 — if you've hit
+   that, either spin up a new Organization (resets the quota) or just reuse
+   an existing project: this app only adds one small, clearly-namespaced
+   table (`lire_user_data`, see below), so it coexists fine alongside an
+   unrelated app's tables in the same project.
 2. **Run the schema.** In the project dashboard, open the **SQL Editor**
    (left sidebar) → **New query**, paste the entire contents of
    [`supabase/schema.sql`](supabase/schema.sql) from this repo, and click
-   **Run**. This creates one table (`user_data`) with row-level security so
-   each signed-in user can only ever read/write their own rows.
+   **Run**. This creates one table (`lire_user_data` — prefixed so it reads
+   unambiguously if this project is shared with other apps) with row-level
+   security so each signed-in user can only ever read/write their own rows.
 3. **Enable email sign-in.** In the dashboard, go to **Authentication** →
    **Sign In / Providers**, and confirm **Email** is enabled (it is by
    default on a new project — nothing to change unless you'd previously
@@ -1307,7 +1313,7 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 ## What changed in this iteration
 
 - **Optional cross-device sync via Supabase** — magic-link email auth plus
-  a synced `user_data` table for saved words, known words, settings,
+  a synced `lire_user_data` table for saved words, known words, settings,
   goals, and reading history. Entirely opt-in (see "Cross-device sync"
   above for exact setup steps); without it configured, the app is
   unchanged. `src/lib/supabase/` (client, auth, sync), `AccountCard.tsx` /

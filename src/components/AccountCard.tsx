@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { getCurrentUser, onAuthStateChange, sendMagicLink, signOut } from "@/lib/supabase/auth";
+import { getSyncStatus, subscribeToSyncStatus, syncNow, type SyncStatus } from "@/lib/supabase/sync";
 
 type SendState = "idle" | "sending" | "sent" | "error";
 
@@ -18,12 +19,18 @@ export default function AccountCard() {
   const [userEmail, setUserEmail] = useState<string | null | undefined>(undefined);
   const [sendState, setSendState] = useState<SendState>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>({ phase: "idle", lastSuccessAt: null, error: null });
 
   useEffect(() => {
     setConfigured(isSupabaseConfigured());
     getCurrentUser().then((user) => setUserEmail(user?.email ?? null));
     const unsubscribe = onAuthStateChange((user) => setUserEmail(user?.email ?? null));
-    return unsubscribe;
+    const unsubscribeSync = subscribeToSyncStatus(setSyncStatus);
+    setSyncStatus(getSyncStatus());
+    return () => {
+      unsubscribe();
+      unsubscribeSync();
+    };
   }, []);
 
   if (!configured || userEmail === undefined) return null;
@@ -46,6 +53,17 @@ export default function AccountCard() {
     setEmail("");
   }
 
+  async function handleSyncNow() {
+    setSyncStatus((s) => ({ ...s, phase: "syncing", error: null }));
+    await syncNow();
+  }
+
+  const lastSyncLabel = syncStatus.lastSuccessAt
+    ? new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(
+        new Date(syncStatus.lastSuccessAt)
+      )
+    : null;
+
   return (
     <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
       <p className="font-semibold text-ink">Sync across devices</p>
@@ -53,12 +71,29 @@ export default function AccountCard() {
       {userEmail ? (
         <>
           <p className="mt-0.5 text-sm text-ink-muted">Signed in as {userEmail}.</p>
-          <button
-            onClick={handleSignOut}
-            className="mt-3 rounded-full bg-cream-dark px-3 py-1.5 text-sm font-semibold text-ink-muted active:scale-95"
-          >
-            Sign out
-          </button>
+          <p className="mt-1 text-xs text-ink-muted">
+            {syncStatus.phase === "syncing"
+              ? "Syncing..."
+              : lastSyncLabel
+                ? `Last synced ${lastSyncLabel}`
+                : "Waiting for first sync."}
+          </p>
+          {syncStatus.error && <p className="mt-1 text-xs text-rose-600">{syncStatus.error}</p>}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={handleSyncNow}
+              disabled={syncStatus.phase === "syncing"}
+              className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+            >
+              {syncStatus.phase === "syncing" ? "Syncing..." : "Sync now"}
+            </button>
+            <button
+              onClick={handleSignOut}
+              className="rounded-full bg-cream-dark px-3 py-1.5 text-sm font-semibold text-ink-muted active:scale-95"
+            >
+              Sign out
+            </button>
+          </div>
         </>
       ) : (
         <>

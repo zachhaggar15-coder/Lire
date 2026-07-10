@@ -1,5 +1,6 @@
 import type { TextProgress } from "@/types";
 import { recordActivityToday } from "@/lib/habit";
+import { pushStore } from "@/lib/supabase/sync";
 
 /**
  * localStorage-backed reading progress: per-text status (unread /
@@ -35,6 +36,7 @@ function readAll(): Record<string, TextProgress> {
 function persist(all: Record<string, TextProgress>): void {
   if (!hasStorage()) return;
   window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(all));
+  void pushStore(PROGRESS_KEY);
 }
 
 export function getAllProgress(): Record<string, TextProgress> {
@@ -62,6 +64,7 @@ export function markOpened(textId: string): void {
 
   persist(all);
   window.localStorage.setItem(LAST_OPENED_KEY, textId);
+  void pushStore(LAST_OPENED_KEY);
 }
 
 /** Mark a text as completed. */

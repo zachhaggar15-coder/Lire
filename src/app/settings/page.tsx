@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { AppSettings, FontSize } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
+import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import AccountCard from "@/components/AccountCard";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
@@ -52,10 +53,12 @@ function Toggle({
 export default function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [knownCount, setKnownCount] = useState(0);
+  const [offlineCount, setOfflineCount] = useState(0);
 
   useEffect(() => {
     setSettings(getSettings());
     setKnownCount(getKnownWords().length);
+    setOfflineCount(getOfflineRssTextCount());
   }, []);
 
   function update(patch: Partial<AppSettings>) {
@@ -68,6 +71,12 @@ export default function SettingsPage() {
       clearKnownWords();
       setKnownCount(0);
     }
+  }
+
+  function handleClearOffline() {
+    if (offlineCount === 0) return;
+    clearOfflineRssTexts();
+    setOfflineCount(0);
   }
 
   return (
@@ -143,6 +152,24 @@ export default function SettingsPage() {
           )}
         </div>
 
+        <div className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">Offline articles</p>
+            <p className="mt-0.5 text-sm text-ink-muted">
+              {offlineCount} {offlineCount === 1 ? "article" : "articles"} cached on this device.
+            </p>
+          </div>
+          {offlineCount > 0 && (
+            <button
+              type="button"
+              onClick={handleClearOffline}
+              className="shrink-0 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
         <Link
           href="/lookup"
           className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
@@ -152,6 +179,19 @@ export default function SettingsPage() {
             <p className="mt-0.5 text-sm text-ink-muted">
               Look up an English word offline, the other direction.
             </p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/sources"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">RSS sources</p>
+            <p className="mt-0.5 text-sm text-ink-muted">Check which feeds are producing French articles.</p>
           </div>
           <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />

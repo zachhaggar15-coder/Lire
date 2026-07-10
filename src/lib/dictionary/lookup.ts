@@ -102,7 +102,12 @@ export function lookupWord(rawWord: string): DictionaryLookupResult {
   if (customExact) return toResult(rawWord, customExact);
 
   for (const guess of guessLemmas(clean)) {
-    const viaGuess = byLemma.get(guess) ?? generatedByLemma.get(guess) ?? getCustomDictionaryEntry(guess);
+    const viaGuess =
+      byLemma.get(guess) ??
+      byForm.get(guess) ??
+      generatedByLemma.get(guess) ??
+      generatedByForm.get(guess) ??
+      getCustomDictionaryEntry(guess);
     if (viaGuess) return toResult(rawWord, viaGuess);
   }
 

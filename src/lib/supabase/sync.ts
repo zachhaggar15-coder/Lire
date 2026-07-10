@@ -1,42 +1,48 @@
 import { getSupabaseClient } from "@/lib/supabase/client";
 
 /**
- * Cross-device sync for the app's localStorage stores. Deliberately a thin
- * "sync the raw localStorage value" layer, not a rewrite of every store
- * module into a Supabase-backed data layer: each store still owns its own
- * reads/writes exactly as before (see storage.ts, knownWords.ts, etc.) —
- * this just mirrors the same JSON blob to a `user_data` table (see the SQL
- * in "Cross-device sync" in the README) under the signed-in user's id,
- * keyed by the same string each store already uses as its localStorage
- * key. That keeps every existing module's logic untouched; sync is opt-in
- * plumbing bolted on at each store's write points.
- *
- * Every function here is best-effort and silently no-ops if Supabase isn't
- * configured or no one is signed in — sync is a pure enhancement, never a
- * requirement for the app to work.
+ * Cross-device sync for the app's localStorage stores. This deliberately
+ * mirrors the app's existing stores instead of replacing them: every feature
+ * still works instantly offline, while signed-in readers get best-effort
+ * backup/restore across devices.
  */
 
-type StoreKind = "list-by-id" | "list-of-strings" | "object";
+type StoreKind = "list-by-id" | "list-of-strings" | "object" | "record";
 
 interface SyncedStoreConfig {
   key: string;
   kind: StoreKind;
-  /** For "list-by-id" stores only: the field that uniquely identifies one entry, used to merge two devices' arrays without duplicating or dropping entries. */
   idField?: string;
 }
 
-/**
- * Every store synced, and how to merge two copies of it. New stores can be
- * added here without touching the merge logic below.
- */
 const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" },
   { key: "lire.knownWords.v1", kind: "list-of-strings" },
   { key: "lire.archive.v1", kind: "list-by-id", idField: "textId" },
+  { key: "lire.progress.v1", kind: "record" },
+  { key: "lire.progress.lastOpened", kind: "object" },
+  { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },
+  { key: "lire.interestProfile.v1", kind: "object" },
+  { key: "lire.recommendation.hiddenSources.v1", kind: "list-of-strings" },
+  { key: "lire.recommendation.savedLater.v1", kind: "list-of-strings" },
+  { key: "lire.onboarding.v1", kind: "object" },
+  { key: "lire.rssTexts.offline", kind: "list-by-id", idField: "id" },
   { key: "lire.activityDates.v1", kind: "list-of-strings" },
   { key: "lire.settings.v1", kind: "object" },
   { key: "lire.goals.v1", kind: "object" },
 ];
+
+const LAST_SYNC_AT_KEY = "lire.sync.lastSuccessAt";
+const LAST_SYNC_ERROR_KEY = "lire.sync.lastError";
+const SYNC_EVENT = "lire-sync-status";
+
+export type SyncPhase = "idle" | "syncing" | "success" | "error";
+
+export interface SyncStatus {
+  phase: SyncPhase;
+  lastSuccessAt: string | null;
+  error: string | null;
+}
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -46,7 +52,12 @@ function readLocal(key: string): unknown {
   if (!hasStorage()) return null;
   try {
     const raw = window.localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return raw;
+    }
   } catch {
     return null;
   }
@@ -54,17 +65,62 @@ function readLocal(key: string): unknown {
 
 function writeLocal(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
+  window.localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
 }
 
-/**
- * Merges a local and a remote copy of one store — never silently drops an
- * entry that exists on only one side. For list-by-id stores, an entry
- * present on both sides is resolved in the remote's favour (simple "last
- * synced device wins" semantics, not a field-by-field merge); this is a
- * deliberate v1 simplification, not a guarantee of perfect conflict
- * resolution.
- */
+export function getSyncStatus(): SyncStatus {
+  if (!hasStorage()) return { phase: "idle", lastSuccessAt: null, error: null };
+  const error = window.localStorage.getItem(LAST_SYNC_ERROR_KEY);
+  return {
+    phase: error ? "error" : "idle",
+    lastSuccessAt: window.localStorage.getItem(LAST_SYNC_AT_KEY),
+    error,
+  };
+}
+
+function notify(status: SyncStatus): void {
+  if (!hasStorage()) return;
+  window.dispatchEvent(new CustomEvent<SyncStatus>(SYNC_EVENT, { detail: status }));
+}
+
+function setSyncing(): void {
+  notify({ ...getSyncStatus(), phase: "syncing", error: null });
+}
+
+function setSyncSuccess(): void {
+  if (!hasStorage()) return;
+  const now = new Date().toISOString();
+  window.localStorage.setItem(LAST_SYNC_AT_KEY, now);
+  window.localStorage.removeItem(LAST_SYNC_ERROR_KEY);
+  notify({ phase: "success", lastSuccessAt: now, error: null });
+}
+
+function setSyncError(error: string): void {
+  if (!hasStorage()) return;
+  window.localStorage.setItem(LAST_SYNC_ERROR_KEY, error);
+  notify({ phase: "error", lastSuccessAt: getSyncStatus().lastSuccessAt, error });
+}
+
+export function subscribeToSyncStatus(callback: (status: SyncStatus) => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  const handler = (event: Event) => callback((event as CustomEvent<SyncStatus>).detail);
+  window.addEventListener(SYNC_EVENT, handler);
+  return () => window.removeEventListener(SYNC_EVENT, handler);
+}
+
+function itemTimestamp(item: unknown): number {
+  if (!item || typeof item !== "object") return 0;
+  const r = item as Record<string, unknown>;
+  const candidates = [r.lastReviewedAt, r.completedAt, r.openedAt, r.savedAt, r.updatedAt, r.publishedAt];
+  return Math.max(
+    0,
+    ...candidates
+      .filter((v): v is string => typeof v === "string" && !!v)
+      .map((v) => new Date(v).getTime())
+      .filter(Number.isFinite)
+  );
+}
+
 function mergeStoreValue(config: SyncedStoreConfig, local: unknown, remote: unknown): unknown {
   if (remote == null) return local;
   if (local == null) return remote;
@@ -86,61 +142,67 @@ function mergeStoreValue(config: SyncedStoreConfig, local: unknown, remote: unkn
     }
     for (const item of remoteArr) {
       if (item && typeof item === "object" && config.idField in item) {
-        byId.set((item as Record<string, unknown>)[config.idField], item);
+        const id = (item as Record<string, unknown>)[config.idField];
+        const current = byId.get(id);
+        byId.set(id, itemTimestamp(item) >= itemTimestamp(current) ? item : current);
       }
     }
     return [...byId.values()];
   }
 
-  // "object" stores (settings, goals): shallow-merge, remote's fields win —
-  // signing in is treated as "restore my preferences," but any field this
-  // device has that the remote copy predates isn't dropped.
+  if (config.kind === "record") {
+    const out = { ...(local && typeof local === "object" ? local : {}) } as Record<string, unknown>;
+    if (remote && typeof remote === "object") {
+      for (const [key, value] of Object.entries(remote)) {
+        const current = out[key];
+        out[key] = itemTimestamp(value) >= itemTimestamp(current) ? value : current;
+      }
+    }
+    return out;
+  }
+
   if (typeof local === "object" && typeof remote === "object") {
     return { ...(local as object), ...(remote as object) };
   }
   return remote;
 }
 
-/** Pushes one store's current localStorage value up, tagged with the signed-in user's id. No-ops silently if not configured/signed in. */
-export async function pushStore(key: string): Promise<void> {
+export async function pushStore(key: string): Promise<boolean> {
   const client = getSupabaseClient();
-  if (!client) return;
+  if (!client) return false;
   try {
     const {
       data: { user },
     } = await client.auth.getUser();
-    if (!user) return;
+    if (!user) return false;
+
     const value = readLocal(key);
-    if (value === null) return;
-    await client.from("user_data").upsert(
+    if (value === null) return false;
+    const { error } = await client.from("lire_user_data").upsert(
       { user_id: user.id, store_key: key, data: value, updated_at: new Date().toISOString() },
       { onConflict: "user_id,store_key" }
     );
+    if (error) throw error;
+    setSyncSuccess();
+    return true;
   } catch {
-    // Best-effort — a failed push just means this device's latest change
-    // hasn't reached the server yet; nothing local is lost, and the next
-    // successful push (or the next app load) carries the current value.
+    setSyncError("Sync failed. Local changes are still saved on this device.");
+    return false;
   }
 }
 
-/**
- * Pulls every synced store from Supabase, merges each with whatever's
- * already in localStorage (see mergeStoreValue), writes the merged result
- * back to localStorage, and pushes it back up too — so both this device
- * and the server end up holding the same, fully-merged data. Call once
- * right after a successful sign-in.
- */
-export async function pullAndMergeAllStores(): Promise<void> {
+export async function pullAndMergeAllStores(): Promise<boolean> {
   const client = getSupabaseClient();
-  if (!client) return;
+  if (!client) return false;
+  setSyncing();
   try {
     const {
       data: { user },
     } = await client.auth.getUser();
-    if (!user) return;
+    if (!user) return false;
 
-    const { data: rows, error } = await client.from("user_data").select("store_key, data").eq("user_id", user.id);
-    if (error || !rows) return;
+    const { data: rows, error } = await client.from("lire_user_data").select("store_key, data").eq("user_id", user.id);
+    if (error || !rows) throw error ?? new Error("No sync rows returned.");
 
     const remoteByKey = new Map(rows.map((row) => [row.store_key, row.data]));
 
@@ -151,12 +213,15 @@ export async function pullAndMergeAllStores(): Promise<void> {
       if (merged != null) writeLocal(config.key, merged);
     }
 
-    // Push the merged results back so the server has the full picture too
-    // (otherwise anything only the local device had would stay
-    // server-side-stale until its next individual write triggers a push).
     await Promise.allSettled(SYNCED_STORES.map((config) => pushStore(config.key)));
+    setSyncSuccess();
+    return true;
   } catch {
-    // Best-effort — if this fails, the device keeps working from whatever
-    // was already in localStorage; the next successful sign-in retries.
+    setSyncError("Sync failed. Check your connection and try again.");
+    return false;
   }
+}
+
+export async function syncNow(): Promise<boolean> {
+  return pullAndMergeAllStores();
 }

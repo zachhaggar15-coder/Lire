@@ -6,6 +6,7 @@ import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
 import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
 import { getWordExplanation } from "@/lib/ai/client";
+import PronounceButton from "@/components/PronounceButton";
 
 export interface ActiveWordState {
   word: string;
@@ -133,6 +134,12 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
                 )}
               </div>
             )}
+            {state?.word && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                <PronounceButton text={state.word} label={`Play ${state.word}`} />
+                <PronounceButton text={state.word} label={`Play ${state.word} slowly`} rate="slow" />
+              </div>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -162,6 +169,9 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
                   </p>
                   <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
                   <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
+                  <div className="mt-2">
+                    <PronounceButton text={firstExample.fr} label="Play example sentence" className="bg-white" />
+                  </div>
                 </div>
               )}
             </>
@@ -216,6 +226,9 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
               <div className="mt-2 rounded-xl bg-cream p-2">
                 <p className="text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
                 <p className="text-xs text-ink-muted">{aiResult.simpleExampleEn}</p>
+                <div className="mt-2">
+                  <PronounceButton text={aiResult.simpleExampleFr} label="Play AI example sentence" className="bg-white" />
+                </div>
               </div>
               {aiResult.grammarOrUsageNote && (
                 <p className="mt-2 text-xs text-ink-muted">{aiResult.grammarOrUsageNote}</p>
