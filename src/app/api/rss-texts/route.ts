@@ -260,7 +260,28 @@ function isKnownCategory(value: string): value is Category {
   return ["news-style", "sport", "culture", "science", "everyday life"].includes(value);
 }
 
+/**
+ * Wraps the whole handler so an unexpected error anywhere in the pipeline
+ * (a bad feed, a broken dependency, anything not already handled per-source
+ * in fetchFromSource/buildCandidatePool) degrades to an empty-but-valid
+ * response instead of a hard 500. This matters a lot more than it would for
+ * a typical route: a 500 here means the home page's client-side catch falls
+ * back to the same handful of static hardcoded texts on *every* load until
+ * someone notices and redeploys a fix — exactly what happened when a static
+ * jsdom import (see scrapeArticle.ts) started throwing at module-load time
+ * in production and took this whole route down with it, silently, for
+ * every request, with no daily variety at all in the meantime.
+ */
 export async function GET(request: Request) {
+  try {
+    return await handleGet(request);
+  } catch (err) {
+    if (isDev) console.error("GET /api/rss-texts failed unexpectedly:", err);
+    return NextResponse.json({ texts: [], fetchedAt: new Date().toISOString(), fewerThanRequested: true });
+  }
+}
+
+async function handleGet(request: Request) {
   const url = new URL(request.url);
   const limit = parseLimit(url.searchParams.get("limit"));
   const languageParam = url.searchParams.get("language") ?? "all";

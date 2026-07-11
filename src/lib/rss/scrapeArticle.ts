@@ -1,5 +1,3 @@
-import { JSDOM } from "jsdom";
-import { Readability } from "@mozilla/readability";
 import { cleanRssText, looksLikePaywallOrBotWall } from "@/lib/rss/cleanContent";
 
 /**
@@ -11,6 +9,19 @@ import { cleanRssText, looksLikePaywallOrBotWall } from "@/lib/rss/cleanContent"
  * network hop and CPU-bound parsing per attempt, and is expected to fail
  * outright on paywalled or bot-protected sites — both are fine, since the
  * caller just keeps the feed-provided teaser when this returns null.
+ *
+ * jsdom/@mozilla/readability are loaded via a *dynamic* import inside the
+ * try/catch below rather than a static top-level one deliberately: jsdom is
+ * marked `serverExternalPackages` (next.config.mjs) so Next doesn't bundle
+ * it, loading the real Node module at runtime instead — and if a
+ * deployment's function bundle is ever missing one of its files (this
+ * happened in production: every /api/rss-texts request failing instantly,
+ * every day showing the same static fallback texts, because a *static*
+ * import here threw at module-load time and took the whole route down with
+ * it), a dynamic import's failure is just another rejected promise this
+ * function's own try/catch already handles — the pipeline falls back to
+ * the feed's teaser exactly as if scraping had failed for any other reason,
+ * instead of crashing the entire request.
  */
 
 const SCRAPE_TIMEOUT_MS = 6000;
@@ -72,6 +83,7 @@ export async function scrapeFullArticle(url: string): Promise<string | null> {
       return null;
     }
 
+    const [{ JSDOM }, { Readability }] = await Promise.all([import("jsdom"), import("@mozilla/readability")]);
     const dom = new JSDOM(html, { url });
     const article = new Readability(dom.window.document).parse();
     if (!article?.content) return null;
