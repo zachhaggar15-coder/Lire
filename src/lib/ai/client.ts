@@ -1,10 +1,12 @@
 import type {
+  ArticleTranslationRequest,
+  ArticleTranslationResult,
   SentenceExplanation,
   SentenceExplanationRequest,
   WordExplanation,
   WordExplanationRequest,
 } from "@/lib/ai/types";
-import { cacheStore, sentenceCacheKey, wordCacheKey } from "@/lib/ai/cache";
+import { articleTranslationCacheKey, cacheStore, sentenceCacheKey, wordCacheKey } from "@/lib/ai/cache";
 
 export type AiResult<T> = { data: T; error?: undefined } | { data?: undefined; error: string };
 
@@ -63,5 +65,38 @@ export async function getSentenceExplanation(
     return { data: body as SentenceExplanation };
   } catch {
     return { error: GENERIC_ERROR };
+  }
+}
+
+const TRANSLATION_GENERIC_ERROR = "Couldn't get a fluent translation. Please try again.";
+
+/**
+ * Calls POST /api/ai/translate-article, cache-first (keyed on article id +
+ * paragraph text, see articleTranslationCacheKey). Same on-demand-only
+ * contract as the two functions above — only ever called from Reader.tsx's
+ * "Show English" toggle, never automatically.
+ */
+export async function getArticleTranslation(
+  articleId: string,
+  req: ArticleTranslationRequest
+): Promise<AiResult<ArticleTranslationResult>> {
+  const key = articleTranslationCacheKey(articleId, req.paragraphs);
+  const cached = cacheStore.get<ArticleTranslationResult>(key);
+  if (cached) return { data: cached };
+
+  try {
+    const res = await fetch("/api/ai/translate-article", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req),
+    });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) {
+      return { error: (body && typeof body.error === "string" && body.error) || TRANSLATION_GENERIC_ERROR };
+    }
+    cacheStore.set(key, body as ArticleTranslationResult);
+    return { data: body as ArticleTranslationResult };
+  } catch {
+    return { error: TRANSLATION_GENERIC_ERROR };
   }
 }

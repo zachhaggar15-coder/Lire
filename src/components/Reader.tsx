@@ -8,6 +8,7 @@ import { tokenizeParagraphsToSentences, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { translateParagraphsWithDictionary } from "@/lib/dictionary/articleTranslation";
+import { getArticleTranslation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
@@ -29,9 +30,16 @@ const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   large: "text-[1.35rem]",
 };
 
+type TranslationState = "idle" | "loading" | "ready" | "error";
+
 export default function Reader({ text }: { text: ReadingText }) {
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
-  const englishParagraphs = useMemo(() => translateParagraphsWithDictionary(paragraphs), [paragraphs]);
+  /** Instant, free, offline word-for-word fallback — shown immediately while the fluent AI translation loads, and again if AI isn't configured or the call fails. */
+  const literalParagraphs = useMemo(() => translateParagraphsWithDictionary(paragraphs), [paragraphs]);
+  const paragraphTexts = useMemo(
+    () => paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" ")),
+    [paragraphs]
+  );
   // Flat, ordered list of every sentence in the article, so a tapped word or
   // sentence can look up its immediate neighbours for AI context.
   const flatSentences = useMemo(() => paragraphs.flatMap((p) => p.map((s) => s.text)), [paragraphs]);
@@ -55,6 +63,9 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
+  const [translationState, setTranslationState] = useState<TranslationState>("idle");
+  const [fluentParagraphs, setFluentParagraphs] = useState<string[] | null>(null);
+  const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -72,6 +83,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
     setCanUseSpeech(canSpeak());
+    // A different article needs its own fluent translation — getArticleTranslation
+    // is cache-first per article, so re-toggling back on for an already-translated
+    // article is instant again; only a genuinely new article re-fetches.
+    setShowEnglishTranslation(false);
+    setTranslationState("idle");
+    setFluentParagraphs(null);
+    setTranslationError(null);
 
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
@@ -91,9 +109,31 @@ export default function Reader({ text }: { text: ReadingText }) {
       setIsSpeakingArticle(false);
       return;
     }
-    const paragraphTexts = [text.title, ...paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" "))];
-    const started = speakFrenchParagraphs(paragraphTexts, "normal", () => setIsSpeakingArticle(false));
+    const started = speakFrenchParagraphs([text.title, ...paragraphTexts], "normal", () => setIsSpeakingArticle(false));
     if (started) setIsSpeakingArticle(true);
+  }
+
+  async function handleFetchFluentTranslation() {
+    setTranslationState("loading");
+    setTranslationError(null);
+    const result = await getArticleTranslation(text.id, {
+      paragraphs: paragraphTexts,
+      articleTitle: text.title,
+      level: "A2/B1 French learner",
+    });
+    if (result.data) {
+      setFluentParagraphs(result.data.paragraphs);
+      setTranslationState("ready");
+    } else {
+      setTranslationError(result.error);
+      setTranslationState("error");
+    }
+  }
+
+  function handleToggleEnglishTranslation() {
+    const next = !showEnglishTranslation;
+    setShowEnglishTranslation(next);
+    if (next && translationState === "idle") void handleFetchFluentTranslation();
   }
 
   function showToast(message: string) {
@@ -330,7 +370,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         )}
         <button
           type="button"
-          onClick={() => setShowEnglishTranslation((visible) => !visible)}
+          onClick={handleToggleEnglishTranslation}
           className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-sm active:scale-95"
           aria-pressed={showEnglishTranslation}
         >
@@ -350,56 +390,62 @@ export default function Reader({ text }: { text: ReadingText }) {
         </button>
       </div>
 
+      {showEnglishTranslation && (
+        <p className="mt-2 text-[11px] text-ink-muted">
+          {translationState === "loading" && "Translating fluently…"}
+          {translationState === "ready" && "Fluent AI translation, shown under each paragraph."}
+          {translationState === "error" && (
+            <>
+              {translationError} Showing the instant offline (word-for-word) version instead.{" "}
+              <button type="button" onClick={handleFetchFluentTranslation} className="underline">
+                Try fluent translation again
+              </button>
+            </>
+          )}
+        </p>
+      )}
+
       <article
         className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
       >
         {paragraphs.map((sentences, pi) => (
-          <p key={pi}>
-            {sentences.map((sg, si) => (
-              <Fragment key={si}>
-                <span
-                  onClick={() => handleSentenceTap(sg.text)}
-                  className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
-                >
-                  {sg.tokens.map((tok, ti) =>
-                    tok.isWord ? (
-                      <span
-                        key={ti}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleWordTap(sg.text, sg.tokens, ti);
-                        }}
-                        className={wordClassName(tok)}
-                      >
-                        {tok.text}
-                      </span>
-                    ) : (
-                      <span key={ti}>{tok.text}</span>
-                    )
-                  )}
-                </span>
-                {si < sentences.length - 1 && " "}
-              </Fragment>
-            ))}
-          </p>
+          <div key={pi}>
+            <p>
+              {sentences.map((sg, si) => (
+                <Fragment key={si}>
+                  <span
+                    onClick={() => handleSentenceTap(sg.text)}
+                    className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
+                  >
+                    {sg.tokens.map((tok, ti) =>
+                      tok.isWord ? (
+                        <span
+                          key={ti}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleWordTap(sg.text, sg.tokens, ti);
+                          }}
+                          className={wordClassName(tok)}
+                        >
+                          {tok.text}
+                        </span>
+                      ) : (
+                        <span key={ti}>{tok.text}</span>
+                      )
+                    )}
+                  </span>
+                  {si < sentences.length - 1 && " "}
+                </Fragment>
+              ))}
+            </p>
+            {showEnglishTranslation && (
+              <p className="mt-1.5 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
+                {translationState === "ready" && fluentParagraphs ? fluentParagraphs[pi] : literalParagraphs[pi]}
+              </p>
+            )}
+          </div>
         ))}
       </article>
-
-      {showEnglishTranslation && (
-        <section className="mt-7 rounded-3xl bg-cream-card p-4 shadow-sm">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">English Translation</h2>
-          <p className="mt-0.5 text-xs text-ink-muted">
-            Word-for-word from the local dictionary, not a fluent translation — no AI/network call, so it's
-            instant and free, but sentence structure follows the French original and can read awkwardly.
-            Tap a word directly for its accurate, in-context meaning.
-          </p>
-          <div className="mt-4 space-y-4 text-base leading-7 text-ink">
-            {englishParagraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Reading progress */}
       <div className="mt-8 mb-4 flex justify-center">
@@ -426,12 +472,14 @@ export default function Reader({ text }: { text: ReadingText }) {
             onClick={() => setShowTranslateLaterNote((v) => !v)}
             className="text-xs font-semibold text-ink-muted underline underline-offset-2"
           >
-            About dictionary translation
+            About the English translation
           </button>
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The English toggle uses the offline dictionary instead of AI, so it is free to run and useful as a reading aid,
-              but it will be more literal than a human translation.
+              The English toggle asks an AI tutor for a fluent, natural translation of each paragraph, shown
+              right under it — that takes a moment and needs AI configured on the server. Until it's ready
+              (or if AI isn't available), an instant offline word-for-word version from the local dictionary
+              is shown instead, so there's never nothing to read.
             </p>
           )}
         </div>

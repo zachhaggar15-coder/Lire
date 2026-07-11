@@ -1322,6 +1322,24 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fluent, AI-translated paragraphs shown inline under each French
+  paragraph** — the "Show English" toggle in `Reader.tsx` now calls a new
+  on-demand AI service (`translateArticleParagraphs` in `openai.ts`, via
+  `POST /api/ai/translate-article`) for a natural, idiomatic translation of
+  the whole article in one batched request, instead of reusing the offline
+  dictionary's word-for-word substitution. Same "AI only runs when
+  explicitly asked for" rule as the word/sentence explanations: nothing is
+  translated until the reader taps the toggle, and the result is cached
+  client-side (keyed on article id + paragraph text) so re-toggling or
+  reopening the same article never re-calls the API. Display is
+  interlinear now, not a single block at the end — each paragraph's
+  translation renders directly beneath it (indented, italic, muted),
+  matching how the request actually asked for it ("shown between the
+  lines"). The instant, free, offline dictionary substitution
+  (`translateParagraphsWithDictionary`) didn't go away — it's now the
+  progressive-enhancement fallback, shown immediately while the fluent
+  version loads and again if AI isn't configured or the call fails, so
+  there's never a moment with nothing to read.
 - **A proactive dictionary linter** (`scripts/lint-dictionary.mjs`) — finds
   more "travers"-style bugs (a word whose only WikDict sense is narrow or
   misleading relative to how it's actually used) before a reader reports

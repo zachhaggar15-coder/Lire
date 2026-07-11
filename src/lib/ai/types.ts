@@ -64,6 +64,28 @@ export interface SentenceExplanation {
 }
 
 /**
+ * A whole article's paragraphs, translated fluently and idiomatically (not
+ * word-for-word) — on-demand, only when a reader toggles "Show English" in
+ * Reader.tsx, same "AI only runs when explicitly asked for" rule as the
+ * word/sentence explanations above. Distinct from the instant, free,
+ * offline `translateParagraphsWithDictionary` (articleTranslation.ts),
+ * which stays as the fallback shown immediately while this loads, and if
+ * AI isn't configured or the call fails.
+ */
+export interface ArticleTranslationRequest {
+  /** Paragraph texts, in order — the response must return exactly this many translations, same order, so the reader can zip them back into the article layout for an interlinear (paragraph-by-paragraph) view. */
+  paragraphs: string[];
+  articleTitle?: string | null;
+  /** e.g. "A2/B1 French learner". */
+  level: string;
+}
+
+export interface ArticleTranslationResult {
+  /** One fluent English translation per input paragraph, same order. */
+  paragraphs: string[];
+}
+
+/**
  * One article to summarize in English — used for the home page's "what is
  * this about" blurb, computed in a batch during RSS pool building (see
  * src/lib/rss/articleBlurbs.ts), not on-demand per reader like the word/

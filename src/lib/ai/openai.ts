@@ -1,6 +1,8 @@
 import type {
   ArticleBlurbInput,
   ArticleBlurbResult,
+  ArticleTranslationRequest,
+  ArticleTranslationResult,
   SentenceExplanation,
   SentenceExplanationRequest,
   WordExplanation,
@@ -9,6 +11,8 @@ import type {
 
 const DEFAULT_MODEL = "gpt-4o-mini";
 const REQUEST_TIMEOUT_MS = 20000;
+/** A full-article translation sends much more text than a single word/sentence explanation and can take longer to generate — same timeout budget as one round-trip, just more generous. */
+const ARTICLE_TRANSLATION_TIMEOUT_MS = 45000;
 
 /** Thrown when OPENAI_API_KEY isn't set — callers show a friendly "not configured" message instead of a generic error. */
 export class AiNotConfiguredError extends Error {}
@@ -25,7 +29,7 @@ function isStringArray(v: unknown): v is string[] {
  * Calls OpenAI's Chat Completions API in JSON mode and returns the parsed
  * object. Plain fetch, no SDK — this is a single simple HTTP call.
  */
-async function callOpenAiJson(systemPrompt: string, userPrompt: string): Promise<unknown> {
+async function callOpenAiJson(systemPrompt: string, userPrompt: string, timeoutMs: number = REQUEST_TIMEOUT_MS): Promise<unknown> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new AiNotConfiguredError("OPENAI_API_KEY is not set.");
@@ -47,7 +51,7 @@ async function callOpenAiJson(systemPrompt: string, userPrompt: string): Promise
       response_format: { type: "json_object" },
       temperature: 0.3,
     }),
-    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    signal: AbortSignal.timeout(timeoutMs),
   });
 
   if (!res.ok) {
@@ -130,6 +134,14 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
   };
 }
 
+function assertArticleTranslation(raw: unknown, expectedCount: number, fallback: string[]): ArticleTranslationResult {
+  const r = raw as Record<string, unknown>;
+  if (!r || !isStringArray(r.paragraphs) || r.paragraphs.length !== expectedCount) {
+    throw new Error("OpenAI article-translation response had an unexpected shape.");
+  }
+  return { paragraphs: r.paragraphs.map((p, i) => (p.trim() ? p.trim() : fallback[i] ?? "")) };
+}
+
 function assertArticleBlurbResults(raw: unknown): ArticleBlurbResult[] {
   const r = raw as Record<string, unknown>;
   if (!r || !Array.isArray(r.summaries)) {
@@ -168,6 +180,11 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
   "explanation": string              // 2-4 short sentences explaining the sentence for a learner
 }`;
 
+const ARTICLE_TRANSLATION_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
+{
+  "paragraphs": string[]   // one fluent English translation per input paragraph, in the same order — the array length must exactly match the number of input paragraphs
+}`;
+
 const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
 {
   "summaries": [
@@ -204,6 +221,27 @@ export async function explainSentence(req: SentenceExplanationRequest): Promise<
     .join("\n");
   const raw = await callOpenAiJson(system, user);
   return assertSentenceExplanation(raw, req.sentence);
+}
+
+/**
+ * Translates a whole article's paragraphs fluently and idiomatically in one
+ * call, for Reader.tsx's "Show English" toggle. Deliberately *not* word-for-
+ * word — that instant, free, offline behaviour is
+ * `translateParagraphsWithDictionary` (articleTranslation.ts), which this
+ * complements rather than replaces: it's the immediate fallback shown while
+ * this loads, and again if AI isn't configured or this call fails.
+ */
+export async function translateArticleParagraphs(req: ArticleTranslationRequest): Promise<ArticleTranslationResult> {
+  const system = `You are translating a French article into natural, fluent, idiomatic English for a ${req.level} — not a literal word-for-word rendering, but not a loose paraphrase either: preserve the actual meaning and tone precisely, just express it the way a fluent English speaker naturally would. ${ARTICLE_TRANSLATION_SCHEMA}`;
+  const user = [
+    req.articleTitle ? `Article title: ${req.articleTitle}` : null,
+    `Translate each of the following ${req.paragraphs.length} paragraphs, in order:`,
+    ...req.paragraphs.map((p, i) => `[${i + 1}] ${p}`),
+  ]
+    .filter(Boolean)
+    .join("\n");
+  const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
+  return assertArticleTranslation(raw, req.paragraphs.length, req.paragraphs);
 }
 
 /**
