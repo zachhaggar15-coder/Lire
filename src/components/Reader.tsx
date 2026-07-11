@@ -124,7 +124,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     setWordStatusMap(new Map(savedWords.map((w) => [w.word, w.status])));
     setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && word.status !== "known").length);
     setKnownSet(known);
-    setSettings(getSettings());
+    const loadedSettings = getSettings();
+    setSettings(loadedSettings);
     // Skip for English-language sources — the estimator's French dictionary
     // lookups would score plain English text as near-100% "unfamiliar."
     if (text.language !== "en") setDifficulty(estimateDifficulty(text.body, known));
@@ -138,6 +139,19 @@ export default function Reader({ text }: { text: ReadingText }) {
     setTranslationState("idle");
     setFluentSentences(null);
     setTranslationError(null);
+
+    // Pre-warm the fluent translation in the background as soon as the
+    // article opens, rather than waiting for the reader to tap "Show
+    // English" — so it's already sitting in cache by the time they check
+    // it. This doesn't reveal the translation UI (showEnglishTranslation
+    // stays false); it just fills fluentSentences ahead of time. Opt-in via
+    // the same aiTranslationEnabled setting the toggle itself respects — a
+    // reader who's turned AI translation off shouldn't pay for an API call
+    // on every article they merely open, only ones they explicitly ask to
+    // see translated.
+    if (loadedSettings.aiTranslationEnabled) {
+      void handleFetchFluentTranslation();
+    }
 
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
@@ -588,10 +602,12 @@ export default function Reader({ text }: { text: ReadingText }) {
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
               The English toggle asks an AI tutor for a fluent, natural translation of each sentence, shown
-              right under it — that takes a moment, uses your OpenAI quota, and needs AI configured on the
-              server. Until it's ready (or if AI isn't available or turned off in Settings), an instant,
-              free offline word-for-word version from the local dictionary is shown instead, so there's
-              never nothing to read.
+              right under it. Unless "Fluent AI translation" is off in Settings, this starts loading in the
+              background as soon as you open the article — usually ready by the time you tap the toggle,
+              rather than making you wait. It still uses your OpenAI quota either way, once per article
+              (cached after that). Until it's ready (or if AI isn't available or turned off in Settings),
+              an instant, free offline word-for-word version from the local dictionary is shown instead, so
+              there's never nothing to read.
             </p>
           )}
         </div>

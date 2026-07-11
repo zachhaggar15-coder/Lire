@@ -119,7 +119,7 @@ export default function SettingsPage() {
           checked={settings.aiTranslationEnabled}
           onChange={(v) => update({ aiTranslationEnabled: v })}
           label="Fluent AI translation"
-          description="Each new article you translate with the reader's English toggle calls OpenAI once (cached after that, so re-reading is free) — this uses your configured API key's quota. Turn off to always use the free, instant, offline word-for-word translation instead."
+          description="Starts translating each new article in the background as soon as you open it (so the English toggle is ready instantly instead of making you wait), calling OpenAI once per article — cached after that, so re-reading is free. Turn off to skip this entirely and always use the free, instant, offline word-for-word translation instead."
         />
 
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">

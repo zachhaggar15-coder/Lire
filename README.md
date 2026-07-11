@@ -1322,6 +1322,33 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Fixed a production bug that silently killed daily article variety
+  entirely** — every `/api/rss-texts` request was crashing with a 500
+  (confirmed via `vercel logs --expand`: `ERR_REQUIRE_ESM` deep in jsdom's
+  own dependency chain, thrown at module-evaluation time by
+  `scrapeArticle.ts`'s *static* `import { JSDOM } from "jsdom"`, since
+  jsdom is marked `serverExternalPackages` and something in how the
+  deployed function loaded it hit a CJS/ESM interop issue). Since the
+  crash happened before any request handling even started, every load hit
+  the home page's client-side catch block and fell back to the same
+  handful of static hardcoded texts — no daily rotation at all, regardless
+  of how correct the seeded-shuffle/day-aware caching logic underneath it
+  was, because that code never got a chance to run. Fixed by loading
+  jsdom/`@mozilla/readability` via a dynamic `import()` inside
+  `scrapeFullArticle`'s existing try/catch instead of a static top-level
+  one, so a load failure is just another caught rejection (falls back to
+  the feed's teaser) instead of taking the whole route down. Also added a
+  top-level try/catch around the route's `GET` handler as a safety net —
+  this class of bug is unusually costly here specifically, since a crash
+  silently kills daily variety until someone notices rather than failing
+  loudly.
+- **Fluent translation now pre-warms in the background** — `Reader.tsx`
+  kicks off the AI translation as soon as an article opens (gated by the
+  same `aiTranslationEnabled` setting the "Show English" toggle already
+  respects), instead of waiting for the reader to tap the toggle. It
+  doesn't reveal the translation UI early — it just has `fluentSentences`
+  ready by the time they check it, so there's no wait at all for the
+  common case of opening an article and toggling English shortly after.
 - **Progressive, chunked fluent translation** — toggling "Show English" no
   longer sends the whole article as one AI request and waits for all of
   it. `Reader.tsx` now splits the article into small paragraph-sized
@@ -1819,11 +1846,15 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   whose scrape can't recover real content) — see `src/data/rssSources.ts`.
 - **Keep working through `scripts/lint-dictionary.mjs`'s candidate list** —
   after the false-positive cross-check fix, it's down to ~5,600 candidates
-  (from ~7,600); two review passes covering adjectives, part of the noun
-  list, and part of the verb list found 9 real fixes so far beyond the
-  original "travers" bug report ("issu", "muni", "imposé", "voilà",
-  "voûté", "vêtu", "déverser", "rapprocher", "acheminer"). The noun
-  category alone is ~4,000 entries and still mostly unreviewed.
+  (from ~7,600). Three review passes so far (covering all ~1,300-1,800
+  adjectives, ~700 nouns, and all ~260-400 verbs at various points, as the
+  list shrank between passes) found 9 real fixes total beyond the original
+  "travers" bug report ("issu", "muni", "imposé", "voilà", "voûté", "vêtu",
+  "déverser", "rapprocher", "acheminer") — the third pass specifically
+  found none, which is itself a normal, expected outcome for a triage list
+  like this (most flagged words really are correctly-translated rare
+  terms). The noun category is ~4,000 entries and still mostly
+  unreviewed — that's probably the best place to keep looking.
 - **Durable candidate-pool sharing needs Redis configured to fully kick
   in** — the daily-rotation fix (`rssTextStore.ts`'s
   `getPersistedCandidatePool`/`putPersistedCandidatePool`) shares the
