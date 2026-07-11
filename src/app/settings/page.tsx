@@ -115,6 +115,13 @@ export default function SettingsPage() {
           </p>
         </div>
 
+        <Toggle
+          checked={settings.aiTranslationEnabled}
+          onChange={(v) => update({ aiTranslationEnabled: v })}
+          label="Fluent AI translation"
+          description="Each new article you translate with the reader's English toggle calls OpenAI once (cached after that, so re-reading is free) — this uses your configured API key's quota. Turn off to always use the free, instant, offline word-for-word translation instead."
+        />
+
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <p className="font-semibold text-ink">Font size</p>
           <p className="mt-0.5 text-sm text-ink-muted">

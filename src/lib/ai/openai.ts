@@ -136,10 +136,10 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
 
 function assertArticleTranslation(raw: unknown, expectedCount: number, fallback: string[]): ArticleTranslationResult {
   const r = raw as Record<string, unknown>;
-  if (!r || !isStringArray(r.paragraphs) || r.paragraphs.length !== expectedCount) {
+  if (!r || !isStringArray(r.sentences) || r.sentences.length !== expectedCount) {
     throw new Error("OpenAI article-translation response had an unexpected shape.");
   }
-  return { paragraphs: r.paragraphs.map((p, i) => (p.trim() ? p.trim() : fallback[i] ?? "")) };
+  return { sentences: r.sentences.map((s, i) => (s.trim() ? s.trim() : fallback[i] ?? "")) };
 }
 
 function assertArticleBlurbResults(raw: unknown): ArticleBlurbResult[] {
@@ -182,7 +182,7 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
 
 const ARTICLE_TRANSLATION_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
 {
-  "paragraphs": string[]   // one fluent English translation per input paragraph, in the same order — the array length must exactly match the number of input paragraphs
+  "sentences": string[]   // one fluent English translation per numbered input sentence, in the same order — the array length must exactly match the number of numbered sentences given
 }`;
 
 const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
@@ -224,24 +224,39 @@ export async function explainSentence(req: SentenceExplanationRequest): Promise<
 }
 
 /**
- * Translates a whole article's paragraphs fluently and idiomatically in one
+ * Translates a whole article's sentences fluently and idiomatically in one
  * call, for Reader.tsx's "Show English" toggle. Deliberately *not* word-for-
  * word — that instant, free, offline behaviour is
- * `translateParagraphsWithDictionary` (articleTranslation.ts), which this
+ * `translateSentenceWithDictionary` (articleTranslation.ts), which this
  * complements rather than replaces: it's the immediate fallback shown while
  * this loads, and again if AI isn't configured or this call fails.
+ *
+ * Sentence-, not paragraph-, granularity, so a reader can line each French
+ * sentence up against its own English line directly underneath it. The
+ * prompt still shows the model the full article with real paragraph breaks
+ * (via `paragraphBreakBeforeIndex`) for context — pronouns, tone, and
+ * ambiguous phrasing often depend on neighbouring sentences — but the
+ * response stays a flat, sentence-indexed array so the reader-side
+ * rendering doesn't need to re-derive paragraph structure from the model's
+ * output.
  */
-export async function translateArticleParagraphs(req: ArticleTranslationRequest): Promise<ArticleTranslationResult> {
-  const system = `You are translating a French article into natural, fluent, idiomatic English for a ${req.level} — not a literal word-for-word rendering, but not a loose paraphrase either: preserve the actual meaning and tone precisely, just express it the way a fluent English speaker naturally would. ${ARTICLE_TRANSLATION_SCHEMA}`;
+export async function translateArticleSentences(req: ArticleTranslationRequest): Promise<ArticleTranslationResult> {
+  const system = `You are translating a French article into natural, fluent, idiomatic English for a ${req.level} — not a literal word-for-word rendering, but not a loose paraphrase either: preserve the actual meaning and tone precisely, just express it the way a fluent English speaker naturally would. Use the full article (including sentences other than the one you're currently translating) to resolve pronouns, tone, and ambiguous phrasing correctly. ${ARTICLE_TRANSLATION_SCHEMA}`;
+  const breakSet = new Set(req.paragraphBreakBeforeIndex);
+  const articleForContext = req.sentences
+    .map((s, i) => (breakSet.has(i) && i > 0 ? `\n${s}` : s))
+    .join(" ");
   const user = [
     req.articleTitle ? `Article title: ${req.articleTitle}` : null,
-    `Translate each of the following ${req.paragraphs.length} paragraphs, in order:`,
-    ...req.paragraphs.map((p, i) => `[${i + 1}] ${p}`),
+    `Full article, for context (paragraph breaks shown as blank lines):`,
+    articleForContext,
+    `Now translate each of the following ${req.sentences.length} sentences individually, in order:`,
+    ...req.sentences.map((s, i) => `[${i + 1}] ${s}`),
   ]
     .filter(Boolean)
     .join("\n");
   const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
-  return assertArticleTranslation(raw, req.paragraphs.length, req.paragraphs);
+  return assertArticleTranslation(raw, req.sentences.length, req.sentences);
 }
 
 /**

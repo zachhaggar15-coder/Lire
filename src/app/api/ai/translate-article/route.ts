@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
-import { AiNotConfiguredError, translateArticleParagraphs } from "@/lib/ai/openai";
+import { AiNotConfiguredError, translateArticleSentences } from "@/lib/ai/openai";
 
 /** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI. */
 export const maxDuration = 60;
 
 const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable fluent translation.";
-/** A generous cap — a genuinely huge paragraph count would mean something upstream (tokenizeParagraphsToSentences) already misbehaved. */
-const MAX_PARAGRAPHS = 60;
+/** A generous cap — a genuinely huge sentence count would mean something upstream (tokenizeParagraphsToSentences) already misbehaved. */
+const MAX_SENTENCES = 200;
+
+function isNumberArray(v: unknown): v is number[] {
+  return Array.isArray(v) && v.every((x) => typeof x === "number" && Number.isInteger(x));
+}
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -16,18 +20,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const { paragraphs, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
+  const { sentences, paragraphBreakBeforeIndex, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
 
-  if (!Array.isArray(paragraphs) || paragraphs.length === 0 || !paragraphs.every((p) => typeof p === "string" && p.trim())) {
-    return NextResponse.json({ error: "'paragraphs' must be a non-empty array of non-empty strings." }, { status: 400 });
+  if (!Array.isArray(sentences) || sentences.length === 0 || !sentences.every((s) => typeof s === "string" && s.trim())) {
+    return NextResponse.json({ error: "'sentences' must be a non-empty array of non-empty strings." }, { status: 400 });
   }
-  if (paragraphs.length > MAX_PARAGRAPHS) {
-    return NextResponse.json({ error: `Too many paragraphs (max ${MAX_PARAGRAPHS}).` }, { status: 400 });
+  if (sentences.length > MAX_SENTENCES) {
+    return NextResponse.json({ error: `Too many sentences (max ${MAX_SENTENCES}).` }, { status: 400 });
+  }
+  if (!isNumberArray(paragraphBreakBeforeIndex)) {
+    return NextResponse.json({ error: "'paragraphBreakBeforeIndex' must be an array of integers." }, { status: 400 });
   }
 
   try {
-    const result = await translateArticleParagraphs({
-      paragraphs: paragraphs as string[],
+    const result = await translateArticleSentences({
+      sentences: sentences as string[],
+      paragraphBreakBeforeIndex,
       articleTitle: typeof articleTitle === "string" && articleTitle ? articleTitle : null,
       level: typeof level === "string" && level ? level : "A2/B1 French learner",
     });

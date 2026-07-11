@@ -64,25 +64,32 @@ export interface SentenceExplanation {
 }
 
 /**
- * A whole article's paragraphs, translated fluently and idiomatically (not
+ * A whole article's sentences, translated fluently and idiomatically (not
  * word-for-word) — on-demand, only when a reader toggles "Show English" in
  * Reader.tsx, same "AI only runs when explicitly asked for" rule as the
  * word/sentence explanations above. Distinct from the instant, free,
- * offline `translateParagraphsWithDictionary` (articleTranslation.ts),
- * which stays as the fallback shown immediately while this loads, and if
- * AI isn't configured or the call fails.
+ * offline `translateSentenceWithDictionary` (articleTranslation.ts), which
+ * stays as the fallback shown immediately while this loads, and if AI
+ * isn't configured or the call fails.
+ *
+ * Sentence-, not paragraph-, granularity: a reader lines each French
+ * sentence up against its own English line directly underneath (true
+ * "between the lines"), which a coarser per-paragraph translation can't
+ * support when a paragraph runs more than one sentence.
  */
 export interface ArticleTranslationRequest {
-  /** Paragraph texts, in order — the response must return exactly this many translations, same order, so the reader can zip them back into the article layout for an interlinear (paragraph-by-paragraph) view. */
-  paragraphs: string[];
+  /** Every sentence in the article, in reading order — the response must return exactly this many translations, same order. Paragraph boundaries are conveyed separately via `paragraphBreakBeforeIndex` so the model still has full-article context, but the output stays flat and 1:1 with this array. */
+  sentences: string[];
+  /** Indices into `sentences` where a new paragraph starts (always includes 0) — lets the translation prompt show real paragraph structure without the response needing to track it. */
+  paragraphBreakBeforeIndex: number[];
   articleTitle?: string | null;
   /** e.g. "A2/B1 French learner". */
   level: string;
 }
 
 export interface ArticleTranslationResult {
-  /** One fluent English translation per input paragraph, same order. */
-  paragraphs: string[];
+  /** One fluent English translation per input sentence, same order. */
+  sentences: string[];
 }
 
 /**

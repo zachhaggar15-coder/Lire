@@ -120,4 +120,12 @@ export interface AppSettings {
   speechRate: number;
   /** The browser SpeechSynthesisVoice.voiceURI to prefer for French playback, or null for the browser's own default French voice. */
   speechVoiceURI: string | null;
+  /**
+   * Whether Reader.tsx's "Show English" toggle is allowed to call the AI
+   * fluent-translation service. On by default; turning it off means every
+   * article always uses the free, instant, offline dictionary
+   * word-for-word translation instead — no OpenAI usage/cost at all from
+   * this feature. See "About the English translation" in Reader.tsx.
+   */
+  aiTranslationEnabled: boolean;
 }

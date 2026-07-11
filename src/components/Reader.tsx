@@ -4,10 +4,10 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import type { WordExplanation } from "@/lib/ai/types";
-import { tokenizeParagraphsToSentences, type Token } from "@/lib/words";
+import { tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { translateParagraphsWithDictionary } from "@/lib/dictionary/articleTranslation";
+import { translateSentenceWithDictionary } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
@@ -34,8 +34,11 @@ type TranslationState = "idle" | "loading" | "ready" | "error";
 
 export default function Reader({ text }: { text: ReadingText }) {
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
-  /** Instant, free, offline word-for-word fallback — shown immediately while the fluent AI translation loads, and again if AI isn't configured or the call fails. */
-  const literalParagraphs = useMemo(() => translateParagraphsWithDictionary(paragraphs), [paragraphs]);
+  /** Instant, free, offline word-for-word fallback, one per sentence — shown immediately while the fluent AI translation loads, and again if AI isn't configured or the call fails. */
+  const literalSentences = useMemo(
+    () => paragraphs.flatMap((sentences) => sentences.map(translateSentenceWithDictionary)),
+    [paragraphs]
+  );
   const paragraphTexts = useMemo(
     () => paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" ")),
     [paragraphs]
@@ -43,6 +46,16 @@ export default function Reader({ text }: { text: ReadingText }) {
   // Flat, ordered list of every sentence in the article, so a tapped word or
   // sentence can look up its immediate neighbours for AI context.
   const flatSentences = useMemo(() => paragraphs.flatMap((p) => p.map((s) => s.text)), [paragraphs]);
+  /** Index into the flat sentence arrays above where each paragraph starts — lets the render loop (which walks paragraphs, then sentences within each) find the right flat-array slot, and lets the AI request convey real paragraph breaks without the response needing to track them. */
+  const paragraphBreakBeforeIndex = useMemo(() => {
+    const offsets: number[] = [];
+    let running = 0;
+    for (const sentences of paragraphs) {
+      offsets.push(running);
+      running += sentences.length;
+    }
+    return offsets;
+  }, [paragraphs]);
 
   function neighbours(sentenceText: string): { previous: string | null; next: string | null } {
     const i = flatSentences.indexOf(sentenceText);
@@ -64,7 +77,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
-  const [fluentParagraphs, setFluentParagraphs] = useState<string[] | null>(null);
+  const [fluentSentences, setFluentSentences] = useState<string[] | null>(null);
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
@@ -88,7 +101,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     // article is instant again; only a genuinely new article re-fetches.
     setShowEnglishTranslation(false);
     setTranslationState("idle");
-    setFluentParagraphs(null);
+    setFluentSentences(null);
     setTranslationError(null);
 
     return () => {
@@ -117,12 +130,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     setTranslationState("loading");
     setTranslationError(null);
     const result = await getArticleTranslation(text.id, {
-      paragraphs: paragraphTexts,
+      sentences: flatSentences,
+      paragraphBreakBeforeIndex,
       articleTitle: text.title,
       level: "A2/B1 French learner",
     });
     if (result.data) {
-      setFluentParagraphs(result.data.paragraphs);
+      setFluentSentences(result.data.sentences);
       setTranslationState("ready");
     } else {
       setTranslationError(result.error);
@@ -133,7 +147,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleToggleEnglishTranslation() {
     const next = !showEnglishTranslation;
     setShowEnglishTranslation(next);
-    if (next && translationState === "idle") void handleFetchFluentTranslation();
+    if (next && translationState === "idle" && settings.aiTranslationEnabled) void handleFetchFluentTranslation();
   }
 
   function showToast(message: string) {
@@ -305,6 +319,34 @@ export default function Reader({ text }: { text: ReadingText }) {
     return `${base} active:bg-brand/10`;
   }
 
+  /** The clickable, word-tappable French sentence — shared between the normal flowing-paragraph layout and the per-sentence interlinear layout below, so the tap targets don't have to be defined twice. */
+  function renderSentenceSpan(sg: SentenceGroup, key: number) {
+    return (
+      <span
+        key={key}
+        onClick={() => handleSentenceTap(sg.text)}
+        className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
+      >
+        {sg.tokens.map((tok, ti) =>
+          tok.isWord ? (
+            <span
+              key={ti}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleWordTap(sg.text, sg.tokens, ti);
+              }}
+              className={wordClassName(tok)}
+            >
+              {tok.text}
+            </span>
+          ) : (
+            <span key={ti}>{tok.text}</span>
+          )
+        )}
+      </span>
+    );
+  }
+
   return (
     <div className="px-4 pt-4">
       {/* Header with back button */}
@@ -392,9 +434,15 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       {showEnglishTranslation && (
         <p className="mt-2 text-[11px] text-ink-muted">
-          {translationState === "loading" && "Translating fluently…"}
-          {translationState === "ready" && "Fluent AI translation, shown under each paragraph."}
-          {translationState === "error" && (
+          {!settings.aiTranslationEnabled && (
+            <>
+              Fluent AI translation is turned off in Settings — showing the free, instant offline
+              (word-for-word) version instead.
+            </>
+          )}
+          {settings.aiTranslationEnabled && translationState === "loading" && "Translating fluently…"}
+          {settings.aiTranslationEnabled && translationState === "ready" && "Fluent AI translation, shown under each sentence."}
+          {settings.aiTranslationEnabled && translationState === "error" && (
             <>
               {translationError} Showing the instant offline (word-for-word) version instead.{" "}
               <button type="button" onClick={handleFetchFluentTranslation} className="underline">
@@ -408,43 +456,38 @@ export default function Reader({ text }: { text: ReadingText }) {
       <article
         className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
       >
-        {paragraphs.map((sentences, pi) => (
-          <div key={pi}>
-            <p>
+        {paragraphs.map((sentences, pi) =>
+          showEnglishTranslation ? (
+            // Interlinear layout: each sentence gets its own line, with its
+            // translation directly underneath — true "between the lines,"
+            // which a flowing multi-sentence paragraph can't support (there'd
+            // be nowhere to put a translation for the 2nd+ sentence without
+            // it reading as belonging to the wrong one).
+            <div key={pi} className="space-y-3">
+              {sentences.map((sg, si) => {
+                const flatIndex = paragraphBreakBeforeIndex[pi] + si;
+                return (
+                  <div key={si}>
+                    <p>{renderSentenceSpan(sg, si)}</p>
+                    <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
+                      {translationState === "ready" && fluentSentences ? fluentSentences[flatIndex] : literalSentences[flatIndex]}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            // Normal reading layout: sentences flow together into one paragraph.
+            <p key={pi}>
               {sentences.map((sg, si) => (
                 <Fragment key={si}>
-                  <span
-                    onClick={() => handleSentenceTap(sg.text)}
-                    className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
-                  >
-                    {sg.tokens.map((tok, ti) =>
-                      tok.isWord ? (
-                        <span
-                          key={ti}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleWordTap(sg.text, sg.tokens, ti);
-                          }}
-                          className={wordClassName(tok)}
-                        >
-                          {tok.text}
-                        </span>
-                      ) : (
-                        <span key={ti}>{tok.text}</span>
-                      )
-                    )}
-                  </span>
+                  {renderSentenceSpan(sg, si)}
                   {si < sentences.length - 1 && " "}
                 </Fragment>
               ))}
             </p>
-            {showEnglishTranslation && (
-              <p className="mt-1.5 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
-                {translationState === "ready" && fluentParagraphs ? fluentParagraphs[pi] : literalParagraphs[pi]}
-              </p>
-            )}
-          </div>
-        ))}
+          )
+        )}
       </article>
 
       {/* Reading progress */}
@@ -476,10 +519,11 @@ export default function Reader({ text }: { text: ReadingText }) {
           </button>
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The English toggle asks an AI tutor for a fluent, natural translation of each paragraph, shown
-              right under it — that takes a moment and needs AI configured on the server. Until it's ready
-              (or if AI isn't available), an instant offline word-for-word version from the local dictionary
-              is shown instead, so there's never nothing to read.
+              The English toggle asks an AI tutor for a fluent, natural translation of each sentence, shown
+              right under it — that takes a moment, uses your OpenAI quota, and needs AI configured on the
+              server. Until it's ready (or if AI isn't available or turned off in Settings), an instant,
+              free offline word-for-word version from the local dictionary is shown instead, so there's
+              never nothing to read.
             </p>
           )}
         </div>

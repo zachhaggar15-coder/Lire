@@ -72,7 +72,7 @@ const TRANSLATION_GENERIC_ERROR = "Couldn't get a fluent translation. Please try
 
 /**
  * Calls POST /api/ai/translate-article, cache-first (keyed on article id +
- * paragraph text, see articleTranslationCacheKey). Same on-demand-only
+ * sentence text, see articleTranslationCacheKey). Same on-demand-only
  * contract as the two functions above — only ever called from Reader.tsx's
  * "Show English" toggle, never automatically.
  */
@@ -80,7 +80,7 @@ export async function getArticleTranslation(
   articleId: string,
   req: ArticleTranslationRequest
 ): Promise<AiResult<ArticleTranslationResult>> {
-  const key = articleTranslationCacheKey(articleId, req.paragraphs);
+  const key = articleTranslationCacheKey(articleId, req.sentences);
   const cached = cacheStore.get<ArticleTranslationResult>(key);
   if (cached) return { data: cached };
 

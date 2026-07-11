@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 156 checks across 3 scripts, no test framework
+npm test   # 159 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -124,7 +124,7 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
   compound-prefix guesses), the short-snippet content-quality tier,
   recommendation preferences (hide source / save for later), onboarding, and
   the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 129 checks. Run with
+  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 132 checks. Run with
   `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
@@ -1322,6 +1322,36 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **True sentence-level interlinear translation** — the AI translation
+  request/response (`ArticleTranslationRequest`/`Result` in `ai/types.ts`,
+  `translateArticleSentences` in `openai.ts`) is now sentence-, not
+  paragraph-, granular: every sentence gets its own English line directly
+  underneath it, instead of one English block per (possibly multi-sentence)
+  paragraph. The prompt still gives the model the full article with real
+  paragraph breaks for context (pronouns, tone, ambiguous phrasing often
+  depend on neighbouring sentences), via a `paragraphBreakBeforeIndex`
+  array, but the response stays a flat, sentence-indexed list. `Reader.tsx`
+  switches its whole rendering strategy when the toggle is on: normal
+  reading is still one flowing paragraph per `<p>`, but the interlinear
+  view breaks each paragraph into one block per sentence so there's
+  somewhere for each sentence's own translation to go.
+- **A translation cost-awareness setting** — a new "Fluent AI translation"
+  toggle in Settings (`aiTranslationEnabled` in `AppSettings`, on by
+  default) lets a reader opt out of AI translation entirely; when off,
+  the "Show English" toggle always uses the free, instant, offline
+  dictionary version and never calls OpenAI, with the description
+  explaining *why* upfront (each new article translated calls the API
+  once, using the configured key's quota — cached after that, so re-
+  reading is free either way).
+- **Three more curated dictionary fixes from a deeper linter pass** —
+  "imposé" (mostly means "imposed," the generated dictionary only had the
+  narrower "taxed"), "voilà" (an extremely common A1 word the generated
+  dictionary had ranked as C2/near-rarest, with only "here is" as a
+  translation), and "voûté" (commonly describes a stooped/hunched posture,
+  not just architecture — the generated dictionary only had
+  "vaulted"/"arched"). Found by reviewing more of `scripts/lint-dictionary.mjs`'s
+  candidate list, focused on the adjective category since that's where the
+  first two real fixes ("issu", "muni") came from.
 - **Fluent, AI-translated paragraphs shown inline under each French
   paragraph** — the "Show English" toggle in `Reader.tsx` now calls a new
   on-demand AI service (`translateArticleParagraphs` in `openai.ts`, via

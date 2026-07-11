@@ -338,6 +338,12 @@ console.log("\n--- Idiom/phrase dictionary batch ---");
   check("'issu' resolves to its common 'descended from' sense, not just 'issued'", issu.translations.includes("descended from"), JSON.stringify(issu));
   const muni = lookupWord("munie");
   check("'muni' (as 'munie') resolves to 'equipped with'", muni.lemma === "muni" && muni.translations.includes("equipped with"), JSON.stringify(muni));
+  const imposees = lookupWord("imposées");
+  check("'imposé' (as 'imposées') resolves to 'imposed', not just 'taxed'", imposees.lemma === "imposé" && imposees.translations.includes("imposed"), JSON.stringify(imposees));
+  const voila = lookupWord("voilà");
+  check("'voilà' is A1, not the generated dictionary's C2", voila.cefr === "A1", JSON.stringify(voila));
+  const voute = lookupWord("voûté");
+  check("'voûté' includes the common 'stooped' sense, not just 'vaulted'", voute.translations.includes("stooped"), JSON.stringify(voute));
 }
 
 console.log("\n--- Expanded news and civic vocabulary ---");
