@@ -344,6 +344,14 @@ console.log("\n--- Idiom/phrase dictionary batch ---");
   check("'voilà' is A1, not the generated dictionary's C2", voila.cefr === "A1", JSON.stringify(voila));
   const voute = lookupWord("voûté");
   check("'voûté' includes the common 'stooped' sense, not just 'vaulted'", voute.translations.includes("stooped"), JSON.stringify(voute));
+  const vetu = lookupWord("vêtu");
+  check("'vêtu' resolves to 'dressed', not the accent-stripped non-word 'vetu'", vetu.translations.includes("dressed"), JSON.stringify(vetu));
+  const deverse = lookupWord("déverse");
+  check("'déverser' (as 'déverse') resolves to 'to pour', not the mismatched 'anglais'", deverse.lemma === "déverser" && deverse.translations.includes("to pour"), JSON.stringify(deverse));
+  const rapproche = lookupWord("rapproché");
+  check("'rapprocher' (as 'rapproché') resolves to 'to bring closer', not the rare 'reapproach'", rapproche.lemma === "rapprocher" && rapproche.translations.includes("to bring closer"), JSON.stringify(rapproche));
+  const achemine = lookupWord("achemine");
+  check("'acheminer' (as 'achemine') resolves to 'to convey'/'to route'", achemine.lemma === "acheminer" && achemine.translations.includes("to convey"), JSON.stringify(achemine));
 }
 
 console.log("\n--- Expanded news and civic vocabulary ---");

@@ -30,7 +30,9 @@ const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   large: "text-[1.35rem]",
 };
 
-type TranslationState = "idle" | "loading" | "ready" | "error";
+type TranslationState = "idle" | "loading" | "ready";
+/** How many paragraphs go in each translation request — small enough that the first chunk (typically what's on screen when the toggle is tapped) comes back in a couple of seconds instead of waiting for the whole article, large enough that each request still has some real context to work with. */
+const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 
 export default function Reader({ text }: { text: ReadingText }) {
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
@@ -46,7 +48,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   // Flat, ordered list of every sentence in the article, so a tapped word or
   // sentence can look up its immediate neighbours for AI context.
   const flatSentences = useMemo(() => paragraphs.flatMap((p) => p.map((s) => s.text)), [paragraphs]);
-  /** Index into the flat sentence arrays above where each paragraph starts — lets the render loop (which walks paragraphs, then sentences within each) find the right flat-array slot, and lets the AI request convey real paragraph breaks without the response needing to track them. */
+  /** Index into the flat sentence arrays above where each paragraph starts — lets the render loop (which walks paragraphs, then sentences within each) find the right flat-array slot, and lets each chunk's AI request convey real (local) paragraph breaks without the response needing to track them. */
   const paragraphBreakBeforeIndex = useMemo(() => {
     const offsets: number[] = [];
     let running = 0;
@@ -56,6 +58,31 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     return offsets;
   }, [paragraphs]);
+  /**
+   * Paragraphs grouped into small translation chunks, each carrying its own
+   * flat sentence list, local paragraph-break offsets (for that chunk's own
+   * request), and where it starts in the article's overall flat sentence
+   * array (for merging the response back into place). Translated
+   * sequentially, top to bottom — see handleFetchFluentTranslation — so the
+   * start of the article (almost always what's on screen when a reader taps
+   * the toggle) shows a fluent translation well before the rest of a long
+   * article finishes.
+   */
+  const translationChunks = useMemo(() => {
+    const chunks: { sentences: string[]; paragraphBreakBeforeIndex: number[]; globalStartIndex: number }[] = [];
+    for (let i = 0; i < paragraphs.length; i += PARAGRAPHS_PER_TRANSLATION_CHUNK) {
+      const chunkParagraphs = paragraphs.slice(i, i + PARAGRAPHS_PER_TRANSLATION_CHUNK);
+      const sentences = chunkParagraphs.flatMap((sentences) => sentences.map((sg) => sg.text));
+      const localBreaks: number[] = [];
+      let running = 0;
+      for (const sentences of chunkParagraphs) {
+        localBreaks.push(running);
+        running += sentences.length;
+      }
+      chunks.push({ sentences, paragraphBreakBeforeIndex: localBreaks, globalStartIndex: paragraphBreakBeforeIndex[i] });
+    }
+    return chunks;
+  }, [paragraphs, paragraphBreakBeforeIndex]);
 
   function neighbours(sentenceText: string): { previous: string | null; next: string | null } {
     const i = flatSentences.indexOf(sentenceText);
@@ -77,7 +104,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
-  const [fluentSentences, setFluentSentences] = useState<string[] | null>(null);
+  /** null = translation hasn't started; otherwise one slot per flat sentence, filled in progressively chunk-by-chunk (still-null slots render literalSentences as the fallback). */
+  const [fluentSentences, setFluentSentences] = useState<(string | null)[] | null>(null);
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
@@ -126,22 +154,43 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (started) setIsSpeakingArticle(true);
   }
 
+  /**
+   * Fetches each translation chunk in turn (not all at once) — every
+   * resolved chunk is merged into `fluentSentences` immediately, so the
+   * start of the article upgrades from the literal fallback to a fluent
+   * translation while later chunks are still in flight, instead of the
+   * reader waiting for the entire article before seeing anything fluent.
+   * A chunk that fails just leaves its slots on the literal fallback
+   * (recorded in `translationError` for a soft, non-blocking retry link)
+   * rather than aborting the remaining chunks.
+   */
   async function handleFetchFluentTranslation() {
     setTranslationState("loading");
     setTranslationError(null);
-    const result = await getArticleTranslation(text.id, {
-      sentences: flatSentences,
-      paragraphBreakBeforeIndex,
-      articleTitle: text.title,
-      level: "A2/B1 French learner",
-    });
-    if (result.data) {
-      setFluentSentences(result.data.sentences);
-      setTranslationState("ready");
-    } else {
-      setTranslationError(result.error);
-      setTranslationState("error");
+    setFluentSentences(new Array<string | null>(flatSentences.length).fill(null));
+
+    let lastError: string | null = null;
+    for (const chunk of translationChunks) {
+      const result = await getArticleTranslation(text.id, {
+        sentences: chunk.sentences,
+        paragraphBreakBeforeIndex: chunk.paragraphBreakBeforeIndex,
+        articleTitle: text.title,
+        level: "A2/B1 French learner",
+      });
+      if (result.data) {
+        setFluentSentences((prev) => {
+          const next = prev ? [...prev] : new Array<string | null>(flatSentences.length).fill(null);
+          result.data.sentences.forEach((s, i) => {
+            next[chunk.globalStartIndex + i] = s;
+          });
+          return next;
+        });
+      } else {
+        lastError = result.error;
+      }
     }
+    setTranslationError(lastError);
+    setTranslationState("ready");
   }
 
   function handleToggleEnglishTranslation() {
@@ -440,13 +489,14 @@ export default function Reader({ text }: { text: ReadingText }) {
               (word-for-word) version instead.
             </>
           )}
-          {settings.aiTranslationEnabled && translationState === "loading" && "Translating fluently…"}
-          {settings.aiTranslationEnabled && translationState === "ready" && "Fluent AI translation, shown under each sentence."}
-          {settings.aiTranslationEnabled && translationState === "error" && (
+          {settings.aiTranslationEnabled && translationState === "loading" && "Translating fluently, starting from the top…"}
+          {settings.aiTranslationEnabled && translationState === "ready" && !translationError && "Fluent AI translation, shown under each sentence."}
+          {settings.aiTranslationEnabled && translationState === "ready" && translationError && (
             <>
-              {translationError} Showing the instant offline (word-for-word) version instead.{" "}
+              Some parts couldn't be translated fluently ({translationError}) — showing the offline
+              (word-for-word) version for those.{" "}
               <button type="button" onClick={handleFetchFluentTranslation} className="underline">
-                Try fluent translation again
+                Try again
               </button>
             </>
           )}
@@ -470,7 +520,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   <div key={si}>
                     <p>{renderSentenceSpan(sg, si)}</p>
                     <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
-                      {translationState === "ready" && fluentSentences ? fluentSentences[flatIndex] : literalSentences[flatIndex]}
+                      {fluentSentences?.[flatIndex] ?? literalSentences[flatIndex]}
                     </p>
                   </div>
                 );

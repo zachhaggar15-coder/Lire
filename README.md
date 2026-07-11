@@ -107,7 +107,7 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 159 checks across 3 scripts, no test framework
+npm test   # 163 checks across 3 scripts, no test framework
 npm run lint
 ```
 
@@ -124,7 +124,7 @@ built-in TypeScript stripping — no Jest/Vitest, no build step):
   compound-prefix guesses), the short-snippet content-quality tier,
   recommendation preferences (hide source / save for later), onboarding, and
   the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 132 checks. Run with
+  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 136 checks. Run with
   `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
   specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
 
@@ -1322,6 +1322,36 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
 
 ## What changed in this iteration
 
+- **Progressive, chunked fluent translation** — toggling "Show English" no
+  longer sends the whole article as one AI request and waits for all of
+  it. `Reader.tsx` now splits the article into small paragraph-sized
+  chunks (`PARAGRAPHS_PER_TRANSLATION_CHUNK = 2`) and fetches them
+  sequentially, top to bottom, merging each chunk's result into
+  `fluentSentences` as soon as it resolves — so the start of the article
+  (almost always what's on screen when the toggle is tapped) shows a
+  fluent translation in a couple of seconds, while the rest fills in
+  progressively instead of blocking on the entire article. A chunk that
+  fails leaves its sentences on the literal fallback rather than aborting
+  the rest, with a soft, non-blocking retry note. Verified end-to-end
+  against real OpenAI calls — each chunk resolves and merges into the
+  right position independently.
+- **The dictionary linter now cross-checks the real shipped dictionary**
+  (`scripts/lint-dictionary.mjs`) — it previously grouped WikDict rows by
+  (word, part-of-speech), which flagged some words (e.g. "depuis") as
+  single-sense/narrow even though `build-dictionary.mjs`'s own merge
+  (which ignores part-of-speech) had already combined that word's other
+  senses into a perfectly good shipped entry. The linter now skips any
+  candidate whose actual shipped entry already has more than one
+  translation, removing ~2,000 false positives from the report (7,629 →
+  5,633 candidates). A further review pass with the improved linter found
+  four more real fixes: "vêtu" (the generated dictionary's only
+  "translation" was "vetu" — the same word with its accent stripped, not
+  an actual English word), "déverser" (shipped with the single word
+  "anglais" — mismatched source data, not a real sense), "rapprocher"
+  (shipped only with the rare English word "reapproach" instead of the
+  common "to bring closer"), and "acheminer" (shipped only with the odd
+  phrase "set out on the path to" instead of "to convey"/"to route"/"to
+  head towards").
 - **True sentence-level interlinear translation** — the AI translation
   request/response (`ArticleTranslationRequest`/`Result` in `ai/types.ts`,
   `translateArticleSentences` in `openai.ts`) is now sentence-, not
@@ -1787,11 +1817,13 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   triaging new problem sources as they show up; a 2026-07-10 pass already
   disabled 9 (5 mislabeled-language, 2 dead URLs, 2 headline-only feeds
   whose scrape can't recover real content) — see `src/data/rssSources.ts`.
-- **Run `scripts/lint-dictionary.mjs` again periodically** — it only got a
-  partial manual review this round (a spot-check of the first couple
-  hundred of ~7,600 candidates, which turned up "issu" and "muni"); there's
-  a long tail left unreviewed, and re-running it after future WikDict
-  regenerations could turn up new ones.
+- **Keep working through `scripts/lint-dictionary.mjs`'s candidate list** —
+  after the false-positive cross-check fix, it's down to ~5,600 candidates
+  (from ~7,600); two review passes covering adjectives, part of the noun
+  list, and part of the verb list found 9 real fixes so far beyond the
+  original "travers" bug report ("issu", "muni", "imposé", "voilà",
+  "voûté", "vêtu", "déverser", "rapprocher", "acheminer"). The noun
+  category alone is ~4,000 entries and still mostly unreviewed.
 - **Durable candidate-pool sharing needs Redis configured to fully kick
   in** — the daily-rotation fix (`rssTextStore.ts`'s
   `getPersistedCandidatePool`/`putPersistedCandidatePool`) shares the
