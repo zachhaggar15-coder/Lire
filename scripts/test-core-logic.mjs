@@ -28,23 +28,32 @@ import {
   getStarRating,
   inferUserLevelNumeric,
   readingTimeScore,
+  sourcePreferenceScore,
   unknownWordTargetScore,
 } from "../src/lib/recommendation/signals.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
-import { translateParagraphsWithDictionary } from "../src/lib/dictionary/articleTranslation.ts";
+import {
+  cacheDictionarySentenceTranslations,
+  translateParagraphsWithDictionary,
+  translateSentencesWithDictionaryCache,
+} from "../src/lib/dictionary/articleTranslation.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
 import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
 import {
   getHiddenSources,
+  getPreferredSources,
   getSavedLaterIds,
   hideSource,
   isSavedForLater,
+  isSourcePreferred,
   isSourceHidden,
+  preferSource,
   removeFromSavedLater,
   saveForLater,
+  unpreferSource,
 } from "../src/lib/recommendation/preferences.ts";
 import {
   getOnboardingLevelNumeric,
@@ -52,6 +61,7 @@ import {
   saveOnboarding,
   skipOnboarding,
 } from "../src/lib/onboarding.ts";
+import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 
 let passed = 0;
@@ -93,6 +103,10 @@ console.log("--- Recommendation signals ---");
   check("a very long read tapers down but never below the floor", long >= 0.3 && long < 1, `got ${long}`);
 }
 {
+  const context = { interestProfile: {}, recentCategories: [], preferredSources: ["Le Test"], userLevelNumeric: 2 };
+  check("preferred sources score higher than neutral sources", sourcePreferenceScore("Le Test", context) > sourcePreferenceScore("Other", context));
+}
+{
   check("good content quality scores 1", contentQualityScore("good") === 1);
   check("poor content quality scores lowest", contentQualityScore("poor") < contentQualityScore("usable"));
 }
@@ -123,6 +137,10 @@ console.log("\n--- Difficulty estimation ---");
   // occurrence should count as unknown regardless of known-words state.
   const gibberish = estimateDifficulty("Zzznonexistentwordzzz zzzanotherfakewordzzz zzzthirdfakewordzzz.");
   check("text made entirely of unknown words has a high unknown ratio", gibberish.unknownWordRatio > 0.5, gibberish.unknownWordRatio);
+}
+{
+  const withNames = estimateDifficulty("Paris et Emmanuel Macron parlent à Londres. Le chat mange une pomme.");
+  check("proper nouns do not inflate unknown-word difficulty", withNames.unknownWordRatio < 0.35, JSON.stringify(withNames));
 }
 
 console.log("\n--- Dictionary lookup chain ---");
@@ -403,6 +421,12 @@ console.log("\n--- Dictionary article translation ---");
   check("dictionary translation preserves paragraph count", translated.length === 2, JSON.stringify(translated));
   check("dictionary translation uses local English glosses", translated[0].toLowerCase().includes("cat"), translated[0]);
   check("dictionary translation keeps punctuation", translated[0].endsWith("."), translated[0]);
+  const phraseParagraphs = tokenizeParagraphsToSentences("Le rapport prend en compte les données. La ville agit à partir de lundi.");
+  const phraseSentences = translateSentencesWithDictionaryCache("phrase-test", "phrase-body", phraseParagraphs);
+  check("dictionary translation handles multi-word phrases as one unit", phraseSentences[0].includes("take into account"), phraseSentences[0]);
+  cacheDictionarySentenceTranslations("phrase-test", "phrase-body", phraseSentences);
+  const cachedSentences = translateSentencesWithDictionaryCache("phrase-test", "phrase-body", phraseParagraphs);
+  check("dictionary article translation cache round-trips sentence translations", cachedSentences.join("|") === phraseSentences.join("|"));
 }
 
 console.log("\n--- Short snippets content-quality tier ---");
@@ -436,6 +460,14 @@ console.log("\n--- Recommendation preferences (hide source / save for later) ---
   check("getHiddenSources includes it", getHiddenSources().includes("Le Testeur"));
 }
 {
+  check("a source starts out not preferred", !isSourcePreferred("Le Préféré"));
+  preferSource("Le Préféré");
+  check("preferSource marks it preferred", isSourcePreferred("Le Préféré"));
+  check("getPreferredSources includes it", getPreferredSources().includes("Le Préféré"));
+  unpreferSource("Le Préféré");
+  check("unpreferSource removes it", !isSourcePreferred("Le Préféré"));
+}
+{
   check("an article starts out not saved for later", !isSavedForLater("test-article-1"));
   saveForLater("test-article-1");
   check("saveForLater marks it saved", isSavedForLater("test-article-1"));
@@ -447,7 +479,7 @@ console.log("\n--- Recommendation preferences (hide source / save for later) ---
 console.log("\n--- Onboarding ---");
 {
   check("onboarding numeric level is null before completion (this test's store is fresh for this key)", getOnboardingLevelNumeric() === null);
-  const state = saveOnboarding("B1", ["culture", "science"]);
+  const state = saveOnboarding("B1", ["culture", "science"], "serious");
   check("saveOnboarding marks it completed", state.completed === true);
   const stored = getOnboardingState();
   check(
@@ -455,6 +487,8 @@ console.log("\n--- Onboarding ---");
     stored?.level === "B1" && !!stored?.topics.includes("culture") && !!stored?.topics.includes("science"),
     JSON.stringify(stored)
   );
+  check("getOnboardingState round-trips the chosen goal preset", stored?.goalPreset === "serious", JSON.stringify(stored));
+  check("onboarding goal preset seeds reading goals", getGoals().minutesPerDay === 20 && getGoals().articlesPerDay === 2, JSON.stringify(getGoals()));
   check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);
 }
 {

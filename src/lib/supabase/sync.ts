@@ -24,6 +24,7 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },
   { key: "lire.interestProfile.v1", kind: "object" },
   { key: "lire.recommendation.hiddenSources.v1", kind: "list-of-strings" },
+  { key: "lire.recommendation.preferredSources.v1", kind: "list-of-strings" },
   { key: "lire.recommendation.savedLater.v1", kind: "list-of-strings" },
   { key: "lire.onboarding.v1", kind: "object" },
   { key: "lire.rssTexts.offline", kind: "list-by-id", idField: "id" },

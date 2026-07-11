@@ -7,14 +7,17 @@ import { getProgress } from "@/lib/progress";
 import { formatDate } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
-import type { StarRating } from "@/lib/recommendation/types";
+import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
 import {
   hideSource,
   isSavedForLater,
+  isSourcePreferred,
   isSourceHidden,
+  preferSource,
   recordArticlePreference,
   removeFromSavedLater,
   saveForLater,
+  unpreferSource,
 } from "@/lib/recommendation/preferences";
 
 const LABEL_STYLES: Record<DifficultyEstimate["label"], string> = {
@@ -56,18 +59,40 @@ interface ReadingCardProps {
   text: ReadingText;
   difficulty?: DifficultyEstimate | null;
   starRating?: StarRating | null;
+  score?: ScoreBreakdown | null;
 }
 
-export default function ReadingCard({ text, difficulty: difficultyProp, starRating }: ReadingCardProps) {
+function recommendationReasons(
+  text: ReadingText,
+  difficulty: DifficultyEstimate | null | undefined,
+  starRating: StarRating | null | undefined,
+  score: ScoreBreakdown | null | undefined
+): string[] {
+  const reasons: string[] = [];
+  if (score?.sourcePreference === 1) reasons.push("Preferred source");
+  if ((score?.difficultyMatch ?? 0) >= 0.9) reasons.push("Close to your level");
+  if ((score?.freshness ?? 0) >= 0.85) reasons.push("Fresh article");
+  if ((score?.topicPreference ?? 0) >= 0.7) reasons.push("Matches your topics");
+  if ((score?.unknownWordTarget ?? 0) >= 0.9) reasons.push("Good new-word range");
+  if (text.minutes <= 3) reasons.push("Quick read");
+  if (difficulty && difficulty.dictionaryCoverage >= 0.85) reasons.push("Strong dictionary coverage");
+  if (starRating?.stars === 5) reasons.push("Best fit today");
+  return [...new Set(reasons)].slice(0, 3);
+}
+
+export default function ReadingCard({ text, difficulty: difficultyProp, starRating, score }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
   const [hidden, setHidden] = useState(false);
   const [savedLater, setSavedLater] = useState(false);
+  const [preferred, setPreferred] = useState(false);
   const difficulty = difficultyProp !== undefined ? difficultyProp : computedDifficulty;
+  const reasons = recommendationReasons(text, difficulty, starRating, score);
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
     setHidden(isSourceHidden(text.sourceName));
+    setPreferred(isSourcePreferred(text.sourceName));
     setSavedLater(isSavedForLater(text.id));
     if (difficultyProp !== undefined) return;
     if (text.language !== "en") {
@@ -91,6 +116,17 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     if (!text.sourceName) return;
     hideSource(text.sourceName);
     setHidden(true);
+  }
+
+  function handlePreferSource() {
+    if (!text.sourceName) return;
+    if (preferred) {
+      unpreferSource(text.sourceName);
+      setPreferred(false);
+      return;
+    }
+    preferSource(text.sourceName);
+    setPreferred(true);
   }
 
   return (
@@ -131,6 +167,12 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           </p>
         )}
 
+        {reasons.length > 0 && (
+          <p className="mt-1 text-xs text-ink-muted">
+            Why: {reasons.join(" · ")}
+          </p>
+        )}
+
         {text.sourceName && (
           <p className="mt-1.5 text-xs text-ink-muted">
             {text.sourceName}
@@ -167,13 +209,24 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           {savedLater ? "Saved" : "Save"}
         </button>
         {text.sourceName && (
-          <button
-            type="button"
-            onClick={handleHideSource}
-            className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 active:scale-95"
-          >
-            Hide source
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={handlePreferSource}
+              className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
+                preferred ? "bg-brand text-white" : "bg-amber-100 text-amber-700"
+              }`}
+            >
+              {preferred ? "Preferred source" : "Prefer source"}
+            </button>
+            <button
+              type="button"
+              onClick={handleHideSource}
+              className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 active:scale-95"
+            >
+              Hide source
+            </button>
+          </>
         )}
       </div>
     </article>

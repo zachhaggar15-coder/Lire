@@ -3,6 +3,7 @@ import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { pushStore } from "@/lib/supabase/sync";
 
 const HIDDEN_SOURCES_KEY = "lire.recommendation.hiddenSources.v1";
+const PREFERRED_SOURCES_KEY = "lire.recommendation.preferredSources.v1";
 const SAVED_LATER_KEY = "lire.recommendation.savedLater.v1";
 const PREF_EVENT = "lire-recommendation-preferences";
 
@@ -48,6 +49,25 @@ export function isSourceHidden(sourceName?: string): boolean {
 
 export function hideSource(sourceName: string): void {
   writeStringList(HIDDEN_SOURCES_KEY, [...getHiddenSources(), sourceName]);
+}
+
+export function getPreferredSources(): string[] {
+  return readStringList(PREFERRED_SOURCES_KEY);
+}
+
+export function isSourcePreferred(sourceName?: string): boolean {
+  return !!sourceName && getPreferredSources().includes(sourceName);
+}
+
+export function preferSource(sourceName: string): void {
+  writeStringList(PREFERRED_SOURCES_KEY, [...getPreferredSources(), sourceName]);
+}
+
+export function unpreferSource(sourceName: string): void {
+  writeStringList(
+    PREFERRED_SOURCES_KEY,
+    getPreferredSources().filter((savedSource) => savedSource !== sourceName)
+  );
 }
 
 export function getSavedLaterIds(): string[] {

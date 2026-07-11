@@ -297,6 +297,7 @@ export default function HomePage() {
                   text={sections.todaysRecommendation.text}
                   difficulty={sections.todaysRecommendation.difficulty}
                   starRating={sections.todaysRecommendation.starRating}
+                  score={sections.todaysRecommendation.score}
                 />
               </div>
             </section>
@@ -338,6 +339,7 @@ export default function HomePage() {
                     text={article.text}
                     difficulty={article.difficulty}
                     starRating={article.starRating}
+                    score={article.score}
                   />
                 ))}
               </div>

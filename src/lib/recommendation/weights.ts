@@ -8,9 +8,10 @@
  */
 export const SIGNAL_WEIGHTS = {
   freshness: 0.15,
-  difficultyMatch: 0.2,
-  topicPreference: 0.2,
-  unknownWordTarget: 0.2,
+  difficultyMatch: 0.18,
+  topicPreference: 0.17,
+  sourcePreference: 0.08,
+  unknownWordTarget: 0.17,
   readingTime: 0.1,
   contentQuality: 0.1,
   variety: 0.05,

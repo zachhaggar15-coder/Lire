@@ -1,6 +1,7 @@
 import type { Category, Difficulty } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { pushStore } from "@/lib/supabase/sync";
+import { saveGoals, type ReadingGoals } from "@/lib/goals";
 
 export const ONBOARDING_KEY = "lire.onboarding.v1";
 
@@ -8,10 +9,18 @@ export interface OnboardingState {
   completed: boolean;
   level: Difficulty;
   topics: Category[];
+  goalPreset?: OnboardingGoal;
   updatedAt: string;
 }
 
 const DEFAULT_LEVEL: Difficulty = "A2";
+export type OnboardingGoal = "light" | "steady" | "serious";
+
+const GOAL_PRESETS: Record<OnboardingGoal, Partial<ReadingGoals>> = {
+  light: { minutesPerDay: 5, articlesPerDay: 1, newWordsPerWeek: 5, flashcardsPerDay: 10 },
+  steady: { minutesPerDay: 10, articlesPerDay: 1, newWordsPerWeek: 15, flashcardsPerDay: 20 },
+  serious: { minutesPerDay: 20, articlesPerDay: 2, newWordsPerWeek: 30, flashcardsPerDay: 35 },
+};
 
 const LEVEL_NUMERIC: Record<Difficulty, number> = {
   A1: 1,
@@ -34,6 +43,10 @@ export function getOnboardingState(): OnboardingState | null {
       completed: parsed.completed === true,
       level: parsed.level ?? DEFAULT_LEVEL,
       topics: Array.isArray(parsed.topics) ? parsed.topics : [],
+      goalPreset:
+        parsed.goalPreset === "light" || parsed.goalPreset === "steady" || parsed.goalPreset === "serious"
+          ? parsed.goalPreset
+          : undefined,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
     };
   } catch {
@@ -46,11 +59,12 @@ export function getOnboardingLevelNumeric(): number | null {
   return state?.completed ? LEVEL_NUMERIC[state.level] ?? null : null;
 }
 
-export function saveOnboarding(level: Difficulty, topics: Category[]): OnboardingState {
+export function saveOnboarding(level: Difficulty, topics: Category[], goalPreset?: OnboardingGoal): OnboardingState {
   const next: OnboardingState = {
     completed: true,
     level,
     topics,
+    goalPreset,
     updatedAt: new Date().toISOString(),
   };
 
@@ -62,6 +76,8 @@ export function saveOnboarding(level: Difficulty, topics: Category[]): Onboardin
   for (const topic of topics) {
     nudgeTopicPreference(topic, 0.35);
   }
+
+  if (goalPreset) saveGoals(GOAL_PRESETS[goalPreset]);
 
   return next;
 }

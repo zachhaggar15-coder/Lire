@@ -7,7 +7,7 @@ import type { WordExplanation } from "@/lib/ai/types";
 import { tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { translateSentenceWithDictionary } from "@/lib/dictionary/articleTranslation";
+import { cacheDictionarySentenceTranslations, translateSentencesWithDictionaryCache } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
@@ -38,8 +38,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
   /** Instant, free, offline word-for-word fallback, one per sentence — shown immediately while the fluent AI translation loads, and again if AI isn't configured or the call fails. */
   const literalSentences = useMemo(
-    () => paragraphs.flatMap((sentences) => sentences.map(translateSentenceWithDictionary)),
-    [paragraphs]
+    () => translateSentencesWithDictionaryCache(text.id, text.body, paragraphs),
+    [paragraphs, text.body, text.id]
   );
   const paragraphTexts = useMemo(
     () => paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" ")),
@@ -101,6 +101,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [status, setStatus] = useState<TextStatus>("unread");
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
+  const [articleSavedWordCount, setArticleSavedWordCount] = useState(0);
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -111,11 +112,17 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    cacheDictionarySentenceTranslations(text.id, text.body, literalSentences);
+  }, [literalSentences, text.body, text.id]);
+
   // Load saved words + known words + settings + progress once on mount,
   // and record that this text has been opened.
   useEffect(() => {
     const known = new Set(getKnownWords());
-    setWordStatusMap(new Map(getSavedWords().map((w) => [w.word, w.status])));
+    const savedWords = getSavedWords();
+    setWordStatusMap(new Map(savedWords.map((w) => [w.word, w.status])));
+    setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && word.status !== "known").length);
     setKnownSet(known);
     setSettings(getSettings());
     // Skip for English-language sources — the estimator's French dictionary
@@ -321,6 +328,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     saveWord(entry);
     setWordStatusMap((prev) => new Map(prev).set(word, wordStatus));
+    setArticleSavedWordCount(getSavedWords().filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     setActiveWord(null);
     showToast(wordStatus === "learning" ? "Saved — Learning" : "Saved — Unsure");
   }
@@ -543,12 +551,22 @@ export default function Reader({ text }: { text: ReadingText }) {
       {/* Reading progress */}
       <div className="mt-8 mb-4 flex justify-center">
         {status === "completed" ? (
-          <span className="flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 6L9 17l-5-5" />
-            </svg>
-            Completed
-          </span>
+          <div className="space-y-2 text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+              Completed
+            </span>
+            {articleSavedWordCount > 0 && (
+              <Link
+                href={`/review?article=${encodeURIComponent(text.title)}`}
+                className="block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
+              >
+                Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
+              </Link>
+            )}
+          </div>
         ) : (
           <button
             onClick={handleMarkCompleted}

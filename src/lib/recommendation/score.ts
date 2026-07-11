@@ -5,6 +5,7 @@ import {
   freshnessScore,
   getStarRating,
   readingTimeScore,
+  sourcePreferenceScore,
   topicPreferenceScore,
   unknownWordTargetScore,
   varietyScore,
@@ -18,6 +19,7 @@ export function scoreArticle(article: ScorableArticle, context: ScoringContext):
   const freshness = freshnessScore(article.text.publishedAt, now);
   const difficultyMatch = difficultyMatchScore(article.difficulty.cefr, context.userLevelNumeric);
   const topicPreference = topicPreferenceScore(article.text.category, context);
+  const sourcePreference = sourcePreferenceScore(article.text.sourceName, context);
   const unknownWordTarget = unknownWordTargetScore(article.difficulty.unknownWordRatio);
   const readingTime = readingTimeScore(article.text.minutes);
   const contentQuality = contentQualityScore(article.contentQuality.quality);
@@ -27,12 +29,13 @@ export function scoreArticle(article: ScorableArticle, context: ScoringContext):
     freshness * SIGNAL_WEIGHTS.freshness +
     difficultyMatch * SIGNAL_WEIGHTS.difficultyMatch +
     topicPreference * SIGNAL_WEIGHTS.topicPreference +
+    sourcePreference * SIGNAL_WEIGHTS.sourcePreference +
     unknownWordTarget * SIGNAL_WEIGHTS.unknownWordTarget +
     readingTime * SIGNAL_WEIGHTS.readingTime +
     contentQuality * SIGNAL_WEIGHTS.contentQuality +
     variety * SIGNAL_WEIGHTS.variety;
 
-  return { freshness, difficultyMatch, topicPreference, unknownWordTarget, readingTime, contentQuality, variety, total };
+  return { freshness, difficultyMatch, topicPreference, sourcePreference, unknownWordTarget, readingTime, contentQuality, variety, total };
 }
 
 /** Scores and ranks a pool of articles, highest total score first. */

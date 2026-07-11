@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
-import { getOnboardingState, saveOnboarding, skipOnboarding } from "@/lib/onboarding";
+import { getOnboardingState, saveOnboarding, skipOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 
 const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2"];
 
@@ -14,6 +14,12 @@ const TOPICS: { value: Category; label: string }[] = [
   { value: "everyday life", label: "Life" },
 ];
 
+const GOALS: { value: OnboardingGoal; label: string; detail: string }[] = [
+  { value: "light", label: "Light", detail: "5 min" },
+  { value: "steady", label: "Steady", detail: "10 min" },
+  { value: "serious", label: "Serious", detail: "20 min" },
+];
+
 interface FirstRunOnboardingProps {
   onComplete?: () => void;
 }
@@ -22,12 +28,14 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
   const [visible, setVisible] = useState(false);
   const [level, setLevel] = useState<Difficulty>("A2");
   const [topics, setTopics] = useState<Category[]>(["news-style", "science"]);
+  const [goal, setGoal] = useState<OnboardingGoal>("steady");
 
   useEffect(() => {
     const state = getOnboardingState();
     setVisible(!state?.completed);
     if (state?.level) setLevel(state.level);
     if (state?.topics?.length) setTopics(state.topics);
+    if (state?.goalPreset) setGoal(state.goalPreset);
   }, []);
 
   if (!visible) return null;
@@ -39,7 +47,7 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
   }
 
   function finish() {
-    saveOnboarding(level, topics);
+    saveOnboarding(level, topics, goal);
     setVisible(false);
     onComplete?.();
   }
@@ -97,6 +105,25 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
               }`}
             >
               {topic.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
+        <div className="grid grid-cols-3 gap-2">
+          {GOALS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setGoal(option.value)}
+              className={`rounded-xl px-2 py-2 text-center ${
+                goal === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+              }`}
+            >
+              <span className="block text-sm font-semibold">{option.label}</span>
+              <span className="block text-[11px]">{option.detail}</span>
             </button>
           ))}
         </div>

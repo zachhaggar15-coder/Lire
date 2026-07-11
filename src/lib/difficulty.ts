@@ -1,5 +1,6 @@
 import { tokenize } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 
 /**
  * A simple, heuristic difficulty estimator — not academically rigorous CEFR
@@ -42,6 +43,10 @@ function isBasicWord(cefr: string | null): boolean {
   return cefr === "A1" || cefr === "A2";
 }
 
+function isProperNoun(result: DictionaryLookupResult): boolean {
+  return result.partOfSpeech?.startsWith("proper noun") ?? false;
+}
+
 /** Minimum saved known words before personalising unknownWordRatio — below this, known-words data is too sparse to be a useful signal. */
 const MIN_KNOWN_WORDS_FOR_PERSONALIZATION = 5;
 
@@ -58,17 +63,24 @@ export function estimateDifficulty(body: string, knownWords: Set<string> = new S
   const sentenceCount = Math.max(1, (body.match(/[.!?…]+(?:\s|$)/g) ?? []).length);
   const avgSentenceLength = wordCount / sentenceCount;
 
-  const uniqueWords = [...new Set(tokens.map((t) => t.clean))];
-  const uniqueCount = Math.max(1, uniqueWords.length);
+  const uniqueWords = new Map<string, string>();
+  for (const token of tokens) {
+    const existing = uniqueWords.get(token.clean);
+    if (!existing || token.text !== token.text.toLowerCase()) uniqueWords.set(token.clean, token.text);
+  }
   const personalize = knownWords.size >= MIN_KNOWN_WORDS_FOR_PERSONALIZATION;
 
   let foundCount = 0;
+  let lexicalCount = 0;
   let cefrScoreSum = 0;
   let baselineUnfamiliarCount = 0;
   let personalUnfamiliarCount = 0;
 
-  for (const word of uniqueWords) {
-    const result = lookupWord(word);
+  for (const [word, lookupText] of uniqueWords) {
+    const result = lookupWord(lookupText);
+    if (isProperNoun(result)) continue;
+
+    lexicalCount++;
     const basic = isBasicWord(result.cefr);
 
     let numeric: number;
@@ -86,6 +98,7 @@ export function estimateDifficulty(body: string, knownWords: Set<string> = new S
     }
   }
 
+  const uniqueCount = Math.max(1, lexicalCount);
   const dictionaryCoverage = foundCount / uniqueCount;
 
   let score = cefrScoreSum / uniqueCount;

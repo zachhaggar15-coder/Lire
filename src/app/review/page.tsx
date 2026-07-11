@@ -13,9 +13,14 @@ export default function ReviewPage() {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [score, setScore] = useState({ knew: 0, missed: 0 });
+  const [articleFilter, setArticleFilter] = useState<string | null>(null);
 
   useEffect(() => {
-    setWords(getSavedWords());
+    const params = new URLSearchParams(window.location.search);
+    const article = params.get("article");
+    const savedWords = getSavedWords();
+    setArticleFilter(article);
+    setWords(article ? savedWords.filter((word) => word.sourceTextTitle === article) : savedWords);
     setReady(true);
   }, []);
 
@@ -29,8 +34,12 @@ export default function ReviewPage() {
   const done = ready && queue.length > 0 && index >= queue.length;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
+  function visibleWords(allWords: SavedWord[]): SavedWord[] {
+    return articleFilter ? allWords.filter((word) => word.sourceTextTitle === articleFilter) : allWords;
+  }
+
   function answer(result: "correct" | "incorrect") {
-    if (current) setWords(recordReviewResult(current.word, result));
+    if (current) setWords(visibleWords(recordReviewResult(current.word, result)));
     setScore((s) => ({
       knew: s.knew + (result === "correct" ? 1 : 0),
       missed: s.missed + (result === "correct" ? 0 : 1),
@@ -41,14 +50,14 @@ export default function ReviewPage() {
 
   function handleMarkKnown() {
     if (!current) return;
-    setWords(markWordAsKnown(current.word));
+    setWords(visibleWords(markWordAsKnown(current.word)));
     // markWordAsKnown drops this word from the (memoised) queue, so
     // whatever now sits at `index` is already the next card.
     setRevealed(false);
   }
 
   function restart() {
-    setWords(getSavedWords());
+    setWords(visibleWords(getSavedWords()));
     setIndex(0);
     setRevealed(false);
     setScore({ knew: 0, missed: 0 });
@@ -76,9 +85,11 @@ export default function ReviewPage() {
       <div className="px-4 pt-6">
         <h1 className="text-2xl font-extrabold text-ink">Review</h1>
         <div className="mt-16 text-center">
-          <p className="text-ink-muted">Nothing to review yet.</p>
+          <p className="text-ink-muted">{articleFilter ? "No saved words from this article yet." : "Nothing to review yet."}</p>
           <p className="mt-1 text-xs text-ink-muted">
-            Words you save as Learning or Unsure while reading show up here.
+            {articleFilter
+              ? "Save words as Learning or Unsure while reading, then come back here."
+              : "Words you save as Learning or Unsure while reading show up here."}
           </p>
           <Link
             href="/"
@@ -134,7 +145,10 @@ export default function ReviewPage() {
   return (
     <div className="flex min-h-[70vh] flex-col px-4 pt-6">
       <header className="mb-1 flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold text-ink">Review</h1>
+        <div>
+          <h1 className="text-2xl font-extrabold text-ink">Review</h1>
+          {articleFilter && <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">From: {articleFilter}</p>}
+        </div>
         <span className="text-sm text-ink-muted">
           {ready ? `card ${index + 1} of ${queue.length} due` : ""}
         </span>

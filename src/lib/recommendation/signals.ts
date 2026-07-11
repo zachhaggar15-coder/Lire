@@ -58,6 +58,12 @@ export function topicPreferenceScore(category: Category, context: ScoringContext
   return getTopicPreferenceScore(category, context.interestProfile);
 }
 
+/** Gives a clear but modest lift to sources the reader explicitly prefers. */
+export function sourcePreferenceScore(sourceName: string | undefined, context: ScoringContext): number {
+  if (!sourceName) return 0.5;
+  return context.preferredSources.includes(sourceName) ? 1 : 0.5;
+}
+
 /** Prefers a comfortable 1-4 minute read; very long reads taper off gently rather than being excluded outright. */
 export function readingTimeScore(minutes: number): number {
   if (minutes <= 0) return 0.5;

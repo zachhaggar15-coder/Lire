@@ -22,6 +22,7 @@ export default function ArticleSection({ title, subtitle, articles }: ArticleSec
             text={article.text}
             difficulty={article.difficulty}
             starRating={article.starRating}
+            score={article.score}
           />
         ))}
       </div>
