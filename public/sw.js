@@ -1,6 +1,6 @@
 // Minimal service worker: network-first for navigation, cache fallback.
 // Enough to make the app installable and resilient offline for v1.
-const CACHE = "lire-v1";
+const CACHE = "lire-v2";
 const CORE = ["/", "/words", "/review", "/manifest.json", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
