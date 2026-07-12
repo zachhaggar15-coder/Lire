@@ -51,6 +51,13 @@ export function hideSource(sourceName: string): void {
   writeStringList(HIDDEN_SOURCES_KEY, [...getHiddenSources(), sourceName]);
 }
 
+export function unhideSource(sourceName: string): void {
+  writeStringList(
+    HIDDEN_SOURCES_KEY,
+    getHiddenSources().filter((savedSource) => savedSource !== sourceName)
+  );
+}
+
 export function getPreferredSources(): string[] {
   return readStringList(PREFERRED_SOURCES_KEY);
 }

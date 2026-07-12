@@ -35,9 +35,13 @@ import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import {
   cacheDictionarySentenceTranslations,
+  findPhraseTranslationMatch,
   translateParagraphsWithDictionary,
   translateSentencesWithDictionaryCache,
 } from "../src/lib/dictionary/articleTranslation.ts";
+import { recordDictionaryFeedback, getDictionaryFeedback } from "../src/lib/dictionary/feedback.ts";
+import { getSavedPhrases, markPhraseKnown, savePhrase } from "../src/lib/phrases.ts";
+import { getArticleFeedbackForText, saveArticleFeedback } from "../src/lib/articleFeedback.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
 import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
 import { buildKnownWordBootstrapList, knownWordEstimateForLevel } from "../src/lib/knownWordBootstrap.ts";
@@ -55,6 +59,7 @@ import {
   preferSource,
   removeFromSavedLater,
   saveForLater,
+  unhideSource,
   unpreferSource,
 } from "../src/lib/recommendation/preferences.ts";
 import {
@@ -426,6 +431,11 @@ console.log("\n--- Dictionary article translation ---");
   const phraseParagraphs = tokenizeParagraphsToSentences("Le rapport prend en compte les données. La ville agit à partir de lundi.");
   const phraseSentences = translateSentencesWithDictionaryCache("phrase-test", "phrase-body", phraseParagraphs);
   check("dictionary translation handles multi-word phrases as one unit", phraseSentences[0].includes("take into account"), phraseSentences[0]);
+  const literalSentences = translateSentencesWithDictionaryCache("literal-phrase-test", "phrase-body", phraseParagraphs, "literal");
+  check("literal dictionary translation does not collapse phrases", !literalSentences[0].includes("take into account"), literalSentences[0]);
+  const phraseStart = phraseParagraphs[0][0].tokens.findIndex((token) => token.clean === "prend");
+  const phraseMatch = findPhraseTranslationMatch(phraseParagraphs[0][0].tokens, phraseStart);
+  check("phrase tap detection returns the full phrase", phraseMatch?.lemma === "prendre en compte", JSON.stringify(phraseMatch));
   const longPhraseParagraphs = tokenizeParagraphsToSentences("Au fur et à mesure que le débat avance, les prix sont en hausse.");
   const longPhraseSentences = translateSentencesWithDictionaryCache("long-phrase-test", "long-phrase-body", longPhraseParagraphs);
   check("dictionary translation recognises phrases longer than five words", longPhraseSentences[0].includes("Gradually"), longPhraseSentences[0]);
@@ -470,6 +480,8 @@ console.log("\n--- Recommendation preferences (hide source / save for later) ---
   hideSource("Le Testeur");
   check("hideSource marks it hidden", isSourceHidden("Le Testeur"));
   check("getHiddenSources includes it", getHiddenSources().includes("Le Testeur"));
+  unhideSource("Le Testeur");
+  check("unhideSource removes it", !isSourceHidden("Le Testeur"));
 }
 {
   check("a source starts out not preferred", !isSourcePreferred("Le Préféré"));
@@ -512,6 +524,48 @@ console.log("\n--- Onboarding ---");
   check("skipOnboarding still marks completed (so the prompt never nags again)", state.completed === true);
   check("skipOnboarding defaults to A2", state.level === "A2");
   check("skipOnboarding does not seed a guessed known-word list", state.seededKnownWords === 0, JSON.stringify(state));
+}
+
+console.log("\n--- Phrase bank and dictionary feedback ---");
+{
+  savePhrase({
+    phrase: "prendre en compte",
+    lemma: "prendre en compte",
+    translation: "to take into account",
+    partOfSpeech: "verb phrase",
+    contextSentence: "Il faut prendre en compte les donnees.",
+    sourceTextTitle: "Test article",
+  });
+  check("savePhrase stores a phrase", getSavedPhrases().some((phrase) => phrase.phrase === "prendre en compte"));
+  markPhraseKnown("prendre en compte");
+  check("markPhraseKnown updates phrase status", getSavedPhrases().find((phrase) => phrase.phrase === "prendre en compte")?.status === "known");
+}
+{
+  recordDictionaryFeedback({
+    type: "correction",
+    input: "actuel",
+    lemma: "actuel",
+    previousTranslation: "actual",
+    suggestedTranslation: "current",
+    articleTitle: "Test article",
+    contextSentence: "Le sujet actuel est important.",
+  });
+  check("dictionary feedback records corrections", getDictionaryFeedback().some((entry) => entry.input === "actuel" && entry.suggestedTranslation === "current"));
+}
+
+console.log("\n--- Article difficulty feedback ---");
+{
+  const text = {
+    id: "feedback-test",
+    title: "Feedback test",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Test",
+    body: "Le chat lit.",
+  };
+  saveArticleFeedback(text, "good", "A2");
+  check("article feedback round-trips by text id", getArticleFeedbackForText("feedback-test")?.feedback === "good");
 }
 
 console.log("\n--- Supabase sync merge logic ---");

@@ -6,6 +6,8 @@ import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
 import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
 import { getWordExplanation } from "@/lib/ai/client";
+import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
+import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import PronounceButton from "@/components/PronounceButton";
 
 export interface ActiveWordState {
@@ -51,6 +53,8 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [correction, setCorrection] = useState("");
+  const [correctionSaved, setCorrectionSaved] = useState(false);
   const open = state !== null;
   const lookup = state?.lookup;
   const found = lookup?.source === "local";
@@ -63,7 +67,35 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
     setAiState("idle");
     setAiResult(null);
     setAiError(null);
+    setCorrection("");
+    setCorrectionSaved(false);
   }, [state?.word, state?.contextSentence]);
+
+  function handleSaveCorrection() {
+    if (!state || !lookup || !correction.trim()) return;
+    const lemma = (lookup.lemma ?? state.word).toLowerCase();
+    saveCustomDictionaryEntry({
+      lemma,
+      forms: lemma !== state.word ? [state.word] : undefined,
+      translations: [correction.trim()],
+      partOfSpeech: lookup.partOfSpeech ?? undefined,
+      gender:
+        lookup.gender === "masculine" || lookup.gender === "feminine" || lookup.gender === "both"
+          ? lookup.gender
+          : undefined,
+      examples: [{ fr: state.contextSentence, en: correction.trim() }],
+    });
+    recordDictionaryFeedback({
+      type: found ? "correction" : "missing",
+      input: state.word,
+      lemma: lookup.lemma,
+      previousTranslation: lookup.translations[0] ?? null,
+      suggestedTranslation: correction.trim(),
+      articleTitle,
+      contextSentence: state.contextSentence,
+    });
+    setCorrectionSaved(true);
+  }
 
   async function handleAskAi() {
     if (!state) return;
@@ -193,6 +225,38 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
             <p className="mt-1 text-sm italic text-ink">“{state.contextSentence}”</p>
           </div>
         )}
+
+        <div className="mt-4 rounded-2xl bg-white/60 p-3">
+          <label className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext" htmlFor="word-correction">
+            Improve dictionary
+          </label>
+          <div className="mt-2 flex gap-2">
+            <input
+              id="word-correction"
+              type="text"
+              value={correction}
+              onChange={(event) => {
+                setCorrection(event.target.value);
+                setCorrectionSaved(false);
+              }}
+              placeholder="Better English meaning"
+              className="min-w-0 flex-1 rounded-xl bg-white px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+            />
+            <button
+              type="button"
+              onClick={handleSaveCorrection}
+              disabled={!correction.trim()}
+              className="shrink-0 rounded-xl bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
+            >
+              Save
+            </button>
+          </div>
+          {correctionSaved && (
+            <p className="mt-1 text-xs font-semibold text-brand">
+              Saved as a local dictionary correction.
+            </p>
+          )}
+        </div>
 
         <div className="mt-4">
           {aiState === "idle" && (

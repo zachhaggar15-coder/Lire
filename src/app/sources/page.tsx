@@ -1,6 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  getHiddenSources,
+  getPreferredSources,
+  hideSource,
+  preferSource,
+  unhideSource,
+  unpreferSource,
+} from "@/lib/recommendation/preferences";
 
 type LoadState = "loading" | "success" | "error";
 
@@ -32,8 +40,16 @@ export default function SourcesPage() {
   const [sources, setSources] = useState<SourceHealth[]>([]);
   const [summary, setSummary] = useState<SourceHealthResponse["sourceSummary"]>(undefined);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [hiddenSources, setHiddenSources] = useState<string[]>([]);
+  const [preferredSources, setPreferredSources] = useState<string[]>([]);
+
+  const refreshPreferences = useCallback(() => {
+    setHiddenSources(getHiddenSources());
+    setPreferredSources(getPreferredSources());
+  }, []);
 
   useEffect(() => {
+    refreshPreferences();
     let cancelled = false;
     async function load() {
       try {
@@ -55,14 +71,30 @@ export default function SourcesPage() {
     return () => {
       cancelled = true;
     };
-  }, [refreshKey]);
+  }, [refreshKey, refreshPreferences]);
 
   const attempted = useMemo(() => sources.filter((source) => !source.skipped), [sources]);
   const yielded = useMemo(() => attempted.filter((source) => source.accepted > 0), [attempted]);
-  const problemSources = useMemo(
-    () => attempted.filter((source) => !source.ok || source.accepted === 0 || source.rejected > 0),
-    [attempted]
-  );
+
+  function handleHideSource(sourceName: string) {
+    hideSource(sourceName);
+    refreshPreferences();
+  }
+
+  function handlePreferSource(sourceName: string) {
+    preferSource(sourceName);
+    refreshPreferences();
+  }
+
+  function handleUnhideSource(sourceName: string) {
+    unhideSource(sourceName);
+    refreshPreferences();
+  }
+
+  function handleUnpreferSource(sourceName: string) {
+    unpreferSource(sourceName);
+    refreshPreferences();
+  }
 
   return (
     <div className="px-4 pt-6">
@@ -90,6 +122,23 @@ export default function SourcesPage() {
 
       {state === "success" && (
         <>
+          <section className="mb-5 space-y-3">
+            <SourceControlList
+              title="Preferred sources"
+              empty="No preferred sources yet."
+              sources={preferredSources}
+              actionLabel="Remove"
+              onAction={handleUnpreferSource}
+            />
+            <SourceControlList
+              title="Hidden sources"
+              empty="No hidden sources."
+              sources={hiddenSources}
+              actionLabel="Unhide"
+              onAction={handleUnhideSource}
+            />
+          </section>
+
           <section className="mb-5 grid grid-cols-3 gap-2">
             <Metric label="Attempted" value={attempted.length} />
             <Metric label="Yielded" value={yielded.length} />
@@ -103,7 +152,7 @@ export default function SourcesPage() {
           )}
 
           <section className="space-y-3">
-            {problemSources.map((source) => (
+            {attempted.map((source) => (
               <article key={source.id} className="rounded-3xl bg-cream-card p-4 shadow-sm">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -127,10 +176,69 @@ export default function SourcesPage() {
                 <p className="mt-3 text-sm text-ink-muted">
                   {source.accepted} accepted, {source.rejected} rejected. {source.reason}
                 </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handlePreferSource(source.name)}
+                    disabled={preferredSources.includes(source.name)}
+                    className="rounded-full bg-brand-light px-3 py-1.5 text-xs font-semibold text-brand disabled:opacity-50"
+                  >
+                    {preferredSources.includes(source.name) ? "Preferred" : "Prefer"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleHideSource(source.name)}
+                    disabled={hiddenSources.includes(source.name)}
+                    className="rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-700 disabled:opacity-50"
+                  >
+                    {hiddenSources.includes(source.name) ? "Hidden" : "Hide"}
+                  </button>
+                </div>
               </article>
             ))}
           </section>
         </>
+      )}
+    </div>
+  );
+}
+
+function SourceControlList({
+  title,
+  empty,
+  sources,
+  actionLabel,
+  onAction,
+}: {
+  title: string;
+  empty: string;
+  sources: string[];
+  actionLabel: string;
+  onAction: (sourceName: string) => void;
+}) {
+  return (
+    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">{sources.length}</span>
+      </div>
+      {sources.length === 0 ? (
+        <p className="mt-2 text-sm text-ink-muted">{empty}</p>
+      ) : (
+        <ul className="mt-3 space-y-2">
+          {sources.map((source) => (
+            <li key={source} className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2">
+              <span className="min-w-0 truncate text-sm font-semibold text-ink">{source}</span>
+              <button
+                type="button"
+                onClick={() => onAction(source)}
+                className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-95"
+              >
+                {actionLabel}
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

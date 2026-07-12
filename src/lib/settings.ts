@@ -11,6 +11,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   fontSize: "medium",
   speechRate: 1,
   speechVoiceURI: null,
+  translationMode: "natural",
   aiTranslationEnabled: true,
 };
 

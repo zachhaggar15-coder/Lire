@@ -1,13 +1,18 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import type { WordExplanation } from "@/lib/ai/types";
 import { tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { cacheDictionarySentenceTranslations, translateSentencesWithDictionaryCache } from "@/lib/dictionary/articleTranslation";
+import {
+  cacheDictionarySentenceTranslations,
+  findPhraseTranslationMatch,
+  translateSentencesWithDictionaryCache,
+  type DictionaryArticleTranslationMode,
+} from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
@@ -20,8 +25,10 @@ import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
+import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
+import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
 import Toast from "@/components/Toast";
 
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
@@ -36,10 +43,12 @@ const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 
 export default function Reader({ text }: { text: ReadingText }) {
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
-  /** Instant, free, offline word-for-word fallback, one per sentence — shown immediately while the fluent AI translation loads, and again if AI isn't configured or the call fails. */
-  const literalSentences = useMemo(
-    () => translateSentencesWithDictionaryCache(text.id, text.body, paragraphs),
-    [paragraphs, text.body, text.id]
+  /** Instant, free, offline fallback, one per sentence. Defaults to phrase-aware, with literal still available from Settings. */
+  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const offlineTranslationMode: DictionaryArticleTranslationMode = settings.translationMode === "literal" ? "literal" : "phrase-aware";
+  const offlineSentences = useMemo(
+    () => translateSentencesWithDictionaryCache(text.id, text.body, paragraphs, offlineTranslationMode),
+    [offlineTranslationMode, paragraphs, text.body, text.id]
   );
   const paragraphTexts = useMemo(
     () => paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" ")),
@@ -94,18 +103,16 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
   const [activeWord, setActiveWord] = useState<ActiveWordState | null>(null);
   const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
+  const [activePhrase, setActivePhrase] = useState<ActivePhraseState | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  // Start with the neutral defaults (matching SSR output) so the first
-  // client render can't mismatch the server-rendered markup; the effect
-  // below swaps in the real, localStorage-backed settings after mount.
-  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [status, setStatus] = useState<TextStatus>("unread");
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [articleSavedWordCount, setArticleSavedWordCount] = useState(0);
+  const [articleFeedback, setArticleFeedback] = useState<ArticleDifficultyFeedback | null>(null);
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
-  /** null = translation hasn't started; otherwise one slot per flat sentence, filled in progressively chunk-by-chunk (still-null slots render literalSentences as the fallback). */
+  /** null = translation hasn't started; otherwise one slot per flat sentence, filled in progressively chunk-by-chunk (still-null slots render the offline fallback). */
   const [fluentSentences, setFluentSentences] = useState<(string | null)[] | null>(null);
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
@@ -113,8 +120,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    cacheDictionarySentenceTranslations(text.id, text.body, literalSentences);
-  }, [literalSentences, text.body, text.id]);
+    cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
+  }, [offlineSentences, offlineTranslationMode, text.body, text.id]);
 
   // Load saved words + known words + settings + progress once on mount,
   // and record that this text has been opened.
@@ -131,6 +138,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (text.language !== "en") setDifficulty(estimateDifficulty(text.body, known));
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
+    setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
     setCanUseSpeech(canSpeak());
     // A different article needs its own fluent translation — getArticleTranslation
     // is cache-first per article, so re-toggling back on for an already-translated
@@ -149,7 +157,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     // reader who's turned AI translation off shouldn't pay for an API call
     // on every article they merely open, only ones they explicitly ask to
     // see translated.
-    if (loadedSettings.aiTranslationEnabled) {
+    if (loadedSettings.translationMode === "natural" && loadedSettings.aiTranslationEnabled) {
       void handleFetchFluentTranslation();
     }
 
@@ -217,7 +225,17 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleToggleEnglishTranslation() {
     const next = !showEnglishTranslation;
     setShowEnglishTranslation(next);
-    if (next && translationState === "idle" && settings.aiTranslationEnabled) void handleFetchFluentTranslation();
+    if (next && translationState === "idle" && shouldUseFluentTranslation()) void handleFetchFluentTranslation();
+  }
+
+  function shouldUseFluentTranslation(): boolean {
+    return settings.translationMode === "natural" && settings.aiTranslationEnabled;
+  }
+
+  function translationModeLabel(): string {
+    if (settings.translationMode === "literal") return "Literal";
+    if (settings.translationMode === "phrase-aware") return "Phrase-aware";
+    return settings.aiTranslationEnabled ? "Natural" : "Phrase-aware";
   }
 
   function showToast(message: string) {
@@ -256,6 +274,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     const { previous } = neighbours(sentenceText);
 
     setActiveSentence(null);
+    setActivePhrase(null);
     setActiveWord({
       word: clean,
       contextSentence: sentenceText,
@@ -268,7 +287,14 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleSentenceTap(sentenceText: string) {
     const { previous, next } = neighbours(sentenceText);
     setActiveWord(null);
+    setActivePhrase(null);
     setActiveSentence({ sentence: sentenceText, previousSentence: previous, nextSentence: next });
+  }
+
+  function handlePhraseTap(sentenceText: string, phrase: ActivePhraseState) {
+    setActiveWord(null);
+    setActiveSentence(null);
+    setActivePhrase({ ...phrase, contextSentence: sentenceText });
   }
 
   function handleKnow() {
@@ -366,6 +392,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus("completed");
   }
 
+  function handleArticleFeedback(feedback: ArticleDifficultyFeedback) {
+    saveArticleFeedback(text, feedback, difficulty?.cefr ?? text.difficulty);
+    setArticleFeedback(feedback);
+    showToast(feedback === "good" ? "Saved as a good match" : feedback === "hard" ? "Saved as too hard" : "Saved as too easy");
+  }
+
   function wordClassName(token: Token): string {
     const base = "cursor-pointer rounded px-0.5 py-0.5 transition-colors";
     const clean = token.clean;
@@ -391,29 +423,64 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   /** The clickable, word-tappable French sentence — shared between the normal flowing-paragraph layout and the per-sentence interlinear layout below, so the tap targets don't have to be defined twice. */
+  function phraseClassName(): string {
+    return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
+  }
+
   function renderSentenceSpan(sg: SentenceGroup, key: number) {
+    const renderedTokens: ReactNode[] = [];
+    for (let ti = 0; ti < sg.tokens.length; ti++) {
+      const tok = sg.tokens[ti];
+      const phrase = tok.isWord ? findPhraseTranslationMatch(sg.tokens, ti) : null;
+      if (phrase) {
+        const phraseText = sg.tokens.slice(ti, phrase.endIndex + 1).map((token) => token.text).join("");
+        renderedTokens.push(
+          <span
+            key={ti}
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePhraseTap(sg.text, {
+                phrase: phraseText.toLowerCase(),
+                lemma: phrase.lemma,
+                translation: phrase.translation,
+                partOfSpeech: phrase.partOfSpeech,
+                contextSentence: sg.text,
+              });
+            }}
+            className={phraseClassName()}
+          >
+            {phraseText}
+          </span>
+        );
+        ti = phrase.endIndex;
+        continue;
+      }
+
+      renderedTokens.push(
+        tok.isWord ? (
+          <span
+            key={ti}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleWordTap(sg.text, sg.tokens, ti);
+            }}
+            className={wordClassName(tok)}
+          >
+            {tok.text}
+          </span>
+        ) : (
+          <span key={ti}>{tok.text}</span>
+        )
+      );
+    }
+
     return (
       <span
         key={key}
         onClick={() => handleSentenceTap(sg.text)}
         className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
       >
-        {sg.tokens.map((tok, ti) =>
-          tok.isWord ? (
-            <span
-              key={ti}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleWordTap(sg.text, sg.tokens, ti);
-              }}
-              className={wordClassName(tok)}
-            >
-              {tok.text}
-            </span>
-          ) : (
-            <span key={ti}>{tok.text}</span>
-          )
-        )}
+        {renderedTokens}
       </span>
     );
   }
@@ -499,24 +566,22 @@ export default function Reader({ text }: { text: ReadingText }) {
               }`}
             />
           </span>
-          English
+          English ({translationModeLabel()})
         </button>
       </div>
 
       {showEnglishTranslation && (
         <p className="mt-2 text-[11px] text-ink-muted">
-          {!settings.aiTranslationEnabled && (
+          {!shouldUseFluentTranslation() && (
             <>
-              Fluent AI translation is turned off in Settings — showing the free, instant offline
-              (word-for-word) version instead.
+              Showing the free, instant offline {settings.translationMode === "literal" ? "literal" : "phrase-aware"} translation.
             </>
           )}
-          {settings.aiTranslationEnabled && translationState === "loading" && "Translating fluently, starting from the top…"}
-          {settings.aiTranslationEnabled && translationState === "ready" && !translationError && "Fluent AI translation, shown under each sentence."}
-          {settings.aiTranslationEnabled && translationState === "ready" && translationError && (
+          {shouldUseFluentTranslation() && translationState === "loading" && "Translating naturally, starting from the top..."}
+          {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, shown under each sentence."}
+          {shouldUseFluentTranslation() && translationState === "ready" && translationError && (
             <>
-              Some parts couldn't be translated fluently ({translationError}) — showing the offline
-              (word-for-word) version for those.{" "}
+              Some parts could not be translated naturally ({translationError}), so those lines use the offline phrase-aware version.{" "}
               <button type="button" onClick={handleFetchFluentTranslation} className="underline">
                 Try again
               </button>
@@ -542,7 +607,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   <div key={si}>
                     <p>{renderSentenceSpan(sg, si)}</p>
                     <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
-                      {fluentSentences?.[flatIndex] ?? literalSentences[flatIndex]}
+                      {fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex]}
                     </p>
                   </div>
                 );
@@ -572,6 +637,29 @@ export default function Reader({ text }: { text: ReadingText }) {
               </svg>
               Completed
             </span>
+            <div className="rounded-3xl bg-cream-card p-3 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">How did this level feel?</p>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {(
+                  [
+                    { value: "too-easy", label: "Too easy" },
+                    { value: "good", label: "Good" },
+                    { value: "hard", label: "Hard" },
+                  ] as const
+                ).map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleArticleFeedback(option.value)}
+                    className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                      articleFeedback === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             {articleSavedWordCount > 0 && (
               <Link
                 href={`/review?article=${encodeURIComponent(text.title)}`}
@@ -637,6 +725,13 @@ export default function Reader({ text }: { text: ReadingText }) {
         state={activeSentence}
         articleTitle={text.title}
         onClose={() => setActiveSentence(null)}
+      />
+      <PhraseSheet
+        state={activePhrase}
+        articleTitle={text.title}
+        onClose={() => setActivePhrase(null)}
+        onSaved={() => showToast("Saved phrase")}
+        onKnown={() => showToast("Marked phrase as known")}
       />
       <Toast message={toastMessage} />
     </div>

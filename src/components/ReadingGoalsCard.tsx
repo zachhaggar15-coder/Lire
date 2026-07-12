@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_GOALS, getGoals, getGoalsProgress, saveGoals, type ReadingGoals } from "@/lib/goals";
+import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
 
 interface GoalRow {
   key: keyof ReadingGoals;
@@ -14,11 +15,13 @@ interface GoalRow {
 export default function ReadingGoalsCard() {
   const [goals, setGoals] = useState<ReadingGoals>(DEFAULT_GOALS);
   const [progress, setProgress] = useState<ReturnType<typeof getGoalsProgress> | null>(null);
+  const [streak, setStreak] = useState({ current: 0, longest: 0 });
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     setGoals(getGoals());
     setProgress(getGoalsProgress());
+    setStreak({ current: getCurrentStreak(), longest: getLongestStreak() });
   }, []);
 
   function updateGoal(key: keyof ReadingGoals, value: number | null) {
@@ -60,6 +63,16 @@ export default function ReadingGoalsCard() {
 
       {!editing && (
         <div className="mt-3 space-y-2.5">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="rounded-2xl bg-cream px-3 py-2">
+              <p className="text-lg font-extrabold text-ink">{streak.current}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Day streak</p>
+            </div>
+            <div className="rounded-2xl bg-cream px-3 py-2">
+              <p className="text-lg font-extrabold text-ink">{streak.longest}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Best streak</p>
+            </div>
+          </div>
           {rows.map((row) => {
             const target = goals[row.key] ?? 0;
             const pct = target > 0 ? Math.min(100, Math.round((row.progress / target) * 100)) : 0;

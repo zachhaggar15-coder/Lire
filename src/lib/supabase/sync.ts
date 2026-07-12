@@ -31,6 +31,9 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.activityDates.v1", kind: "list-of-strings" },
   { key: "lire.settings.v1", kind: "object" },
   { key: "lire.goals.v1", kind: "object" },
+  { key: "lire.savedPhrases.v1", kind: "list-by-id", idField: "phrase" },
+  { key: "lire.dictionaryFeedback.v1", kind: "list-by-id", idField: "id" },
+  { key: "lire.articleFeedback.v1", kind: "list-by-id", idField: "textId" },
 ];
 
 const LAST_SYNC_AT_KEY = "lire.sync.lastSuccessAt";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { AppSettings, FontSize } from "@/types";
+import type { AppSettings, FontSize, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
@@ -13,6 +13,12 @@ const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
   { value: "medium", label: "Medium" },
   { value: "large", label: "Large" },
+];
+
+const TRANSLATION_MODE_OPTIONS: { value: TranslationMode; label: string; description: string }[] = [
+  { value: "natural", label: "Natural", description: "AI when enabled, phrase-aware offline fallback." },
+  { value: "phrase-aware", label: "Phrase-aware", description: "Offline, uses local phrases and idioms." },
+  { value: "literal", label: "Literal", description: "Offline word-by-word dictionary glosses." },
 ];
 
 function Toggle({
@@ -123,6 +129,30 @@ export default function SettingsPage() {
         />
 
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <p className="font-semibold text-ink">English translation style</p>
+          <p className="mt-0.5 text-sm text-ink-muted">
+            Natural is the default. Use phrase-aware for free offline idiom handling, or literal when you want a word-by-word gloss.
+          </p>
+          <div className="mt-3 space-y-2">
+            {TRANSLATION_MODE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => update({ translationMode: opt.value })}
+                className={`w-full rounded-2xl px-3 py-2.5 text-left transition-colors ${
+                  settings.translationMode === opt.value ? "bg-brand text-white" : "bg-cream-dark text-ink"
+                }`}
+              >
+                <span className="block text-sm font-semibold">{opt.label}</span>
+                <span className={`block text-xs ${settings.translationMode === opt.value ? "text-white/80" : "text-ink-muted"}`}>
+                  {opt.description}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <p className="font-semibold text-ink">Font size</p>
           <p className="mt-0.5 text-sm text-ink-muted">
             Adjust the reading text size.
@@ -188,6 +218,36 @@ export default function SettingsPage() {
             <p className="font-semibold text-ink">English → French lookup</p>
             <p className="mt-0.5 text-sm text-ink-muted">
               Look up an English word offline, the other direction.
+            </p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/phrases"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">Phrase bank</p>
+            <p className="mt-0.5 text-sm text-ink-muted">
+              Review saved idioms and multi-word expressions.
+            </p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/dictionary"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">Dictionary quality</p>
+            <p className="mt-0.5 text-sm text-ink-muted">
+              See missing entries, saved corrections, and phrase coverage.
             </p>
           </div>
           <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">

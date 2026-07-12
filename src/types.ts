@@ -105,6 +105,7 @@ export interface TextProgress {
 }
 
 export type FontSize = "small" | "medium" | "large";
+export type TranslationMode = "natural" | "phrase-aware" | "literal";
 
 export interface AppSettings {
   /** Visually highlight saved (learning/unsure) words while reading. */
@@ -120,6 +121,13 @@ export interface AppSettings {
   speechRate: number;
   /** The browser SpeechSynthesisVoice.voiceURI to prefer for French playback, or null for the browser's own default French voice. */
   speechVoiceURI: string | null;
+  /**
+   * Controls the full-article English shown under French text. "natural"
+   * uses the fluent AI translation when enabled and falls back to the
+   * phrase-aware local dictionary; "phrase-aware" and "literal" are fully
+   * offline dictionary modes.
+   */
+  translationMode: TranslationMode;
   /**
    * Whether Reader.tsx's "Show English" toggle is allowed to call the AI
    * fluent-translation service. On by default; turning it off means every
