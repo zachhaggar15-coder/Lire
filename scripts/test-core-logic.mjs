@@ -40,6 +40,8 @@ import {
 } from "../src/lib/dictionary/articleTranslation.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
 import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
+import { buildKnownWordBootstrapList, knownWordEstimateForLevel } from "../src/lib/knownWordBootstrap.ts";
+import { clearKnownWords, getKnownWords } from "../src/lib/knownWords.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
 import {
@@ -424,6 +426,16 @@ console.log("\n--- Dictionary article translation ---");
   const phraseParagraphs = tokenizeParagraphsToSentences("Le rapport prend en compte les données. La ville agit à partir de lundi.");
   const phraseSentences = translateSentencesWithDictionaryCache("phrase-test", "phrase-body", phraseParagraphs);
   check("dictionary translation handles multi-word phrases as one unit", phraseSentences[0].includes("take into account"), phraseSentences[0]);
+  const longPhraseParagraphs = tokenizeParagraphsToSentences("Au fur et à mesure que le débat avance, les prix sont en hausse.");
+  const longPhraseSentences = translateSentencesWithDictionaryCache("long-phrase-test", "long-phrase-body", longPhraseParagraphs);
+  check("dictionary translation recognises phrases longer than five words", longPhraseSentences[0].includes("Gradually"), longPhraseSentences[0]);
+  check("dictionary translation recognises news adjective phrases", longPhraseSentences[0].includes("rising"), longPhraseSentences[0]);
+  const punctuationPhrase = translateSentencesWithDictionaryCache(
+    "punctuation-phrase-test",
+    "punctuation-phrase-body",
+    tokenizeParagraphsToSentences("Au, fur et à mesure que le débat avance.")
+  );
+  check("phrase recognition does not jump across punctuation", !punctuationPhrase[0].includes("Gradually"), punctuationPhrase[0]);
   cacheDictionarySentenceTranslations("phrase-test", "phrase-body", phraseSentences);
   const cachedSentences = translateSentencesWithDictionaryCache("phrase-test", "phrase-body", phraseParagraphs);
   check("dictionary article translation cache round-trips sentence translations", cachedSentences.join("|") === phraseSentences.join("|"));
@@ -479,6 +491,8 @@ console.log("\n--- Recommendation preferences (hide source / save for later) ---
 console.log("\n--- Onboarding ---");
 {
   check("onboarding numeric level is null before completion (this test's store is fresh for this key)", getOnboardingLevelNumeric() === null);
+  clearKnownWords();
+  check("known-word bootstrap list reaches the A2 estimate", buildKnownWordBootstrapList("A2").length === knownWordEstimateForLevel("A2"));
   const state = saveOnboarding("B1", ["culture", "science"], "serious");
   check("saveOnboarding marks it completed", state.completed === true);
   const stored = getOnboardingState();
@@ -488,6 +502,8 @@ console.log("\n--- Onboarding ---");
     JSON.stringify(stored)
   );
   check("getOnboardingState round-trips the chosen goal preset", stored?.goalPreset === "serious", JSON.stringify(stored));
+  check("getOnboardingState stores the estimated known-word count", stored?.estimatedKnownWords === knownWordEstimateForLevel("B1"), JSON.stringify(stored));
+  check("saveOnboarding seeds known words from the selected level", getKnownWords().length >= knownWordEstimateForLevel("B1"), `known=${getKnownWords().length}`);
   check("onboarding goal preset seeds reading goals", getGoals().minutesPerDay === 20 && getGoals().articlesPerDay === 2, JSON.stringify(getGoals()));
   check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);
 }
@@ -495,6 +511,7 @@ console.log("\n--- Onboarding ---");
   const state = skipOnboarding();
   check("skipOnboarding still marks completed (so the prompt never nags again)", state.completed === true);
   check("skipOnboarding defaults to A2", state.level === "A2");
+  check("skipOnboarding does not seed a guessed known-word list", state.seededKnownWords === 0, JSON.stringify(state));
 }
 
 console.log("\n--- Supabase sync merge logic ---");

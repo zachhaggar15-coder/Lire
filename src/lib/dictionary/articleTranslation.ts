@@ -3,7 +3,7 @@ import { hashString } from "@/lib/hash";
 import type { SentenceGroup, Token } from "@/lib/words";
 
 const DICTIONARY_TRANSLATION_CACHE_PREFIX = "lire.dictionaryArticleTranslation.v1.";
-const MAX_PHRASE_WORDS = 5;
+const MAX_PHRASE_WORDS = 7;
 
 function isCapitalized(text: string): boolean {
   const first = text.match(/\p{L}/u)?.[0];
@@ -31,7 +31,11 @@ function findPhraseTranslation(tokens: Token[], startIndex: number): { endIndex:
   const words: { index: number; clean: string }[] = [];
   for (let i = startIndex; i < tokens.length && words.length < MAX_PHRASE_WORDS; i++) {
     const token = tokens[i];
-    if (token.isWord) words.push({ index: i, clean: token.clean });
+    if (token.isWord) {
+      words.push({ index: i, clean: token.clean });
+      continue;
+    }
+    if (words.length > 0 && token.text.trim() !== "") break;
   }
 
   for (let length = words.length; length >= 2; length--) {

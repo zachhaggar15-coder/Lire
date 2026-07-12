@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, skipOnboarding, type OnboardingGoal } from "@/lib/onboarding";
+import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 
 const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2"];
 
@@ -82,14 +83,18 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
               key={option}
               type="button"
               onClick={() => setLevel(option)}
-              className={`rounded-xl py-2 text-sm font-semibold ${
+              className={`rounded-xl px-1 py-2 text-center ${
                 level === option ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
               }`}
             >
-              {option}
+              <span className="block text-sm font-semibold">{option}</span>
+              <span className="block text-[10px]">~{knownWordEstimateForLevel(option).toLocaleString()} words</span>
             </button>
           ))}
         </div>
+        <p className="mt-1 text-[11px] text-ink-muted">
+          Used to estimate your known words so recommendations are not too easy at the start.
+        </p>
       </div>
 
       <div className="mt-3">

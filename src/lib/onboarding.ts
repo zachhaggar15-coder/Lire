@@ -2,6 +2,7 @@ import type { Category, Difficulty } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { pushStore } from "@/lib/supabase/sync";
 import { saveGoals, type ReadingGoals } from "@/lib/goals";
+import { knownWordEstimateForLevel, seedKnownWordsForLevel } from "@/lib/knownWordBootstrap";
 
 export const ONBOARDING_KEY = "lire.onboarding.v1";
 
@@ -10,6 +11,8 @@ export interface OnboardingState {
   level: Difficulty;
   topics: Category[];
   goalPreset?: OnboardingGoal;
+  estimatedKnownWords: number;
+  seededKnownWords: number;
   updatedAt: string;
 }
 
@@ -47,6 +50,11 @@ export function getOnboardingState(): OnboardingState | null {
         parsed.goalPreset === "light" || parsed.goalPreset === "steady" || parsed.goalPreset === "serious"
           ? parsed.goalPreset
           : undefined,
+      estimatedKnownWords:
+        typeof parsed.estimatedKnownWords === "number"
+          ? parsed.estimatedKnownWords
+          : knownWordEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
+      seededKnownWords: typeof parsed.seededKnownWords === "number" ? parsed.seededKnownWords : 0,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
     };
   } catch {
@@ -59,12 +67,26 @@ export function getOnboardingLevelNumeric(): number | null {
   return state?.completed ? LEVEL_NUMERIC[state.level] ?? null : null;
 }
 
-export function saveOnboarding(level: Difficulty, topics: Category[], goalPreset?: OnboardingGoal): OnboardingState {
+export function saveOnboarding(
+  level: Difficulty,
+  topics: Category[],
+  goalPreset?: OnboardingGoal,
+  options: { seedKnownWords?: boolean } = {}
+): OnboardingState {
+  const shouldSeedKnownWords = options.seedKnownWords ?? true;
+  const seed = shouldSeedKnownWords
+    ? seedKnownWordsForLevel(level)
+    : {
+        estimatedKnownWords: knownWordEstimateForLevel(level),
+        seededWords: 0,
+      };
   const next: OnboardingState = {
     completed: true,
     level,
     topics,
     goalPreset,
+    estimatedKnownWords: seed.estimatedKnownWords,
+    seededKnownWords: seed.seededWords,
     updatedAt: new Date().toISOString(),
   };
 
@@ -83,5 +105,5 @@ export function saveOnboarding(level: Difficulty, topics: Category[], goalPreset
 }
 
 export function skipOnboarding(): OnboardingState {
-  return saveOnboarding(DEFAULT_LEVEL, []);
+  return saveOnboarding(DEFAULT_LEVEL, [], undefined, { seedKnownWords: false });
 }

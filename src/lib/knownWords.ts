@@ -51,6 +51,18 @@ export function markKnown(wordOrLemma: string): string[] {
   return next;
 }
 
+export function markKnownBatch(wordsOrLemmas: string[]): string[] {
+  const existing = getKnownWords();
+  const next = new Set(existing);
+  for (const word of wordsOrLemmas) {
+    const key = clean(word);
+    if (key) next.add(key);
+  }
+  const out = [...next];
+  if (out.length !== existing.length) persist(out);
+  return out;
+}
+
 export function removeKnown(wordOrLemma: string): string[] {
   const key = clean(wordOrLemma);
   const next = getKnownWords().filter((w) => w !== key);
