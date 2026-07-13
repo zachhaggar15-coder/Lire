@@ -39,6 +39,24 @@ const POOL_LIMIT = 50;
 /** Below this many real RSS candidates, hardcoded texts top up the pool. */
 const MIN_POOL_SIZE = 5;
 
+/** Always present — see /api/rss-texts/route.ts. Cheap enough to send every load, unlike the verbose debug/health payloads below. */
+interface FeedHealth {
+  feedsSucceeded: number;
+  feedsFailed: number;
+}
+
+/** Below this many attempted feeds, a bad ratio is just noise (too small a sample to mean anything). */
+const MIN_FEEDS_FOR_HEALTH_CHECK = 10;
+/** Above this failure fraction, tell the reader why variety might look thin today instead of leaving it unexplained. */
+const DEGRADED_FEED_FAILURE_RATIO = 0.3;
+
+function isFeedHealthDegraded(health: FeedHealth | null): boolean {
+  if (!health) return false;
+  const total = health.feedsSucceeded + health.feedsFailed;
+  if (total < MIN_FEEDS_FOR_HEALTH_CHECK) return false;
+  return health.feedsFailed / total > DEGRADED_FEED_FAILURE_RATIO;
+}
+
 /** Only present in non-production responses — see /api/rss-texts/route.ts. */
 interface RssDebugInfo {
   feedsSucceeded: number;
@@ -82,6 +100,7 @@ export default function HomePage() {
   const [sections, setSections] = useState<RecommendationSections | null>(null);
   const [usedFallback, setUsedFallback] = useState(false);
   const [debug, setDebug] = useState<RssDebugInfo | null>(null);
+  const [feedHealth, setFeedHealth] = useState<FeedHealth | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [refreshKey, setRefreshKey] = useState(0);
@@ -105,8 +124,12 @@ export default function HomePage() {
         const res = await fetch(`/api/rss-texts?${params.toString()}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
-        const data: { texts: RssReadingText[]; fewerThanRequested?: boolean; debug?: RssDebugInfo } =
-          await res.json();
+        const data: {
+          texts: RssReadingText[];
+          fewerThanRequested?: boolean;
+          debug?: RssDebugInfo;
+          feedHealth?: FeedHealth;
+        } = await res.json();
         if (cancelled) return;
 
         const rssTexts = data.texts.map(rssReadingTextToReadingText);
@@ -140,6 +163,7 @@ export default function HomePage() {
         setSavedLaterArticles(ranked.filter((article) => savedIds.has(article.text.id)));
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
+        setFeedHealth(data.feedHealth ?? null);
         if (forceRefresh) lastRefreshSent.current = refreshKey;
         setState("success");
       } catch {
@@ -160,6 +184,7 @@ export default function HomePage() {
           setSections(buildSections(ranked));
           setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
           setUsedFallback(true);
+          setFeedHealth(null);
           setState("success");
         }
       }
@@ -204,12 +229,25 @@ export default function HomePage() {
       <ReadingGoalsCard />
       <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
 
-      <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
-        <div className="flex items-center justify-between gap-3">
+      <details
+        className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"
+        open={categoryFilter !== "all" || difficultyFilter !== "all"}
+      >
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Tune today's shelf</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">Filter articles or refresh the RSS pool.</p>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Filters</h2>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              {categoryFilter === "all" && difficultyFilter === "all"
+                ? "Topic, level, or refresh the RSS pool."
+                : `${[categoryFilter !== "all" ? categoryFilter : null, difficultyFilter !== "all" ? difficultyFilter : null].filter(Boolean).join(" · ")} active`}
+            </p>
           </div>
+          <svg className="h-4 w-4 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+
+        <div className="mt-3 flex items-center gap-2">
           <button
             onClick={() => setRefreshKey((key) => key + 1)}
             className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white active:scale-95"
@@ -259,7 +297,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </details>
 
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">
@@ -279,6 +317,15 @@ export default function HomePage() {
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
           Some RSS articles were skipped because they were too short or not in
           French — showing saved texts to fill the rest.
+        </p>
+      )}
+
+      {state === "success" && isFeedHealthDegraded(feedHealth) && (
+        <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
+          Several news sources are unreachable right now, so today's picks may be thinner than usual.{" "}
+          <Link href="/sources" className="underline underline-offset-2">
+            Check source status
+          </Link>
         </p>
       )}
 

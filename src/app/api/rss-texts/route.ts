@@ -329,6 +329,12 @@ async function handleGet(request: Request) {
     // Lets the home page show "fewer than 5" as an intentional quality
     // decision rather than a bug — see UI fallback behaviour in the README.
     fewerThanRequested: selected.length < limit,
+    // Always included (unlike the verbose per-source sourceHealth array
+    // below) — just two counts, cheap enough to send on every load, and
+    // enough for the home page to notice "a lot of feeds are down today"
+    // and say so, instead of a reader just seeing thinner variety with no
+    // explanation. See the degraded-sources banner in page.tsx.
+    feedHealth: { feedsSucceeded: pool.feedsSucceeded, feedsFailed: pool.feedsFailed },
     ...(includeHealth && {
       sourceHealth: pool.sourceHealth,
       sourceSummary: {

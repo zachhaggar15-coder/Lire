@@ -510,7 +510,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       </h1>
       <p className="mt-1 text-xs text-ink-muted">
         {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
-        a sentence for more
+        a sentence to explain it
       </p>
       {difficulty && (
         <p className="mt-1 text-xs italic text-ink-muted">
@@ -566,7 +566,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               }`}
             />
           </span>
-          English ({translationModeLabel()})
+          Translate ({translationModeLabel()})
         </button>
       </div>
 
@@ -685,17 +685,19 @@ export default function Reader({ text }: { text: ReadingText }) {
             onClick={() => setShowTranslateLaterNote((v) => !v)}
             className="text-xs font-semibold text-ink-muted underline underline-offset-2"
           >
-            About the English translation
+            About Translate vs. tap-to-explain
           </button>
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The English toggle asks an AI tutor for a fluent, natural translation of each sentence, shown
-              right under it. Unless "Fluent AI translation" is off in Settings, this starts loading in the
-              background as soon as you open the article — usually ready by the time you tap the toggle,
-              rather than making you wait. It still uses your OpenAI quota either way, once per article
-              (cached after that). Until it's ready (or if AI isn't available or turned off in Settings),
-              an instant, free offline word-for-word version from the local dictionary is shown instead, so
-              there's never nothing to read.
+              The Translate toggle asks an AI tutor for a fluent, natural translation of each sentence, shown
+              right under it — for reading the whole article in English alongside the French. Unless "Fluent AI
+              translation" is off in Settings, this starts loading in the background as soon as you open the
+              article — usually ready by the time you tap the toggle, rather than making you wait. It still
+              uses your OpenAI quota either way, once per article (cached after that). Until it's ready (or if
+              AI isn't available or turned off in Settings), an instant, free offline word-for-word version from
+              the local dictionary is shown instead, so there's never nothing to read. Tapping a single sentence
+              is different: it opens "Ask AI to explain," a deeper one-sentence breakdown with grammar notes and
+              vocabulary — reach for that when one line is confusing rather than the whole article.
             </p>
           )}
         </div>

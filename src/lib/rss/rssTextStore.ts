@@ -18,7 +18,7 @@ import type { ReadingText } from "@/types";
  *   - UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN (Upstash-native naming)
  */
 
-const TTL_SECONDS = 60 * 60 * 48; // 48 hours — matches how long a shared link is likely to matter
+const TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days — long enough that a link shared today doesn't quietly die by the weekend
 const KEY_PREFIX = "lire:rssText:";
 
 function getCredentials(): { url: string; token: string } | null {
@@ -49,12 +49,22 @@ export async function putPersistedRssTexts(texts: ReadingText[]): Promise<void> 
   }
 }
 
-/** Fetches one previously-persisted RSS text by id. Returns null if unconfigured, expired, or not found. */
+/**
+ * Fetches one previously-persisted RSS text by id. Returns null if
+ * unconfigured, expired, or not found.
+ *
+ * Sliding expiration: a successful read refreshes the TTL back to the full
+ * window, so an article link that keeps getting opened (shared in a group
+ * chat, revisited over days) stays alive indefinitely, while one nobody
+ * looks at still ages out. Fire-and-forget — a failed refresh just means
+ * the existing TTL keeps counting down, never breaks the read itself.
+ */
 export async function getPersistedRssText(id: string): Promise<ReadingText | null> {
   const redis = getClient();
   if (!redis) return null;
   try {
     const value = await redis.get<ReadingText>(KEY_PREFIX + id);
+    if (value) redis.expire(KEY_PREFIX + id, TTL_SECONDS).catch(() => {});
     return value ?? null;
   } catch {
     return null;
