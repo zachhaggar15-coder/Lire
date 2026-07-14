@@ -424,10 +424,7 @@ export default function HomePage() {
 
       {state === "success" && isFeedHealthDegraded(feedHealth) && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Several news sources are unreachable right now, so today's picks may be thinner than usual.{" "}
-          <Link href="/sources" className="underline underline-offset-2">
-            Check source status
-          </Link>
+          Several live-news feeds are unreachable right now, so today's picks may be thinner than usual.
         </p>
       )}
 
@@ -556,7 +553,7 @@ export default function HomePage() {
 
           <p className="mb-2 text-center text-xs text-ink-muted">
             <Link href="/archive" className="underline underline-offset-2">
-              View reading history
+              View articles read
             </Link>
           </p>
 
@@ -630,18 +627,14 @@ function HomeDashboard({
   const levelTitle = `${selectedLevel} reading bank`;
 
   const links = [
-    { href: "#daily-reading", label: "Bank", icon: "book", meta: selectedLevel },
-    { href: "#live-news", label: "News", icon: "news", meta: "2 live" },
+    { href: "#daily-reading", label: "Articles", icon: "book", meta: selectedLevel },
+    { href: "#live-news", label: "Live News", icon: "news", meta: "2 live" },
     { href: "/review", label: "Review", icon: "cards", meta: dueMissions > 0 ? `${dueMissions} tasks` : "Due" },
-    { href: "/words", label: "Words", icon: "bookmark", meta: "Saved" },
     { href: "/grammar", label: "Grammar", icon: "grammar", meta: "Verbs" },
+    { href: "/words", label: "Words", icon: "bookmark", meta: "Saved" },
+    { href: "/settings", label: "Change Level", icon: "level", meta: selectedLevel },
     { href: "/progress", label: "Progress", icon: "chart", meta: `${totalXp.toLocaleString()} XP` },
-    { href: "/archive", label: "Archive", icon: "archive", meta: "History" },
-    { href: "/phrases", label: "Phrases", icon: "phrase", meta: "Chunks" },
-    { href: "/dictionary", label: "Dictionary", icon: "dictionary", meta: "Quality" },
-    { href: "/lookup", label: "Lookup", icon: "search", meta: "EN-FR" },
-    { href: "/sources", label: "Sources", icon: "source", meta: "RSS" },
-    { href: "/settings", label: "Settings", icon: "settings", meta: "Level" },
+    { href: "/archive", label: "Articles Read", icon: "archive", meta: "History" },
   ];
 
   return (
@@ -702,19 +695,12 @@ function DashboardIcon({ kind, className }: { kind: string; className?: string }
       </svg>
     );
   }
-  if (kind === "settings") {
+  if (kind === "level") {
     return (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-        <circle cx="12" cy="12" r="3" />
-        <path d="M4 12h2m12 0h2M12 4v2m0 12v2M6.6 6.6 8 8m8 8 1.4 1.4M17.4 6.6 16 8m-8 8-1.4 1.4" />
-      </svg>
-    );
-  }
-  if (kind === "search") {
-    return (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-        <circle cx="11" cy="11" r="7" />
-        <path d="m20 20-4-4" />
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z" />
+        <path d="M9 13h6" />
+        <path d="M12 10v6" />
       </svg>
     );
   }
@@ -734,7 +720,7 @@ function DashboardIcon({ kind, className }: { kind: string; className?: string }
       </svg>
     );
   }
-  if (kind === "grammar" || kind === "dictionary" || kind === "phrase" || kind === "book") {
+  if (kind === "grammar" || kind === "book") {
     return (
       <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
         <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4z" />

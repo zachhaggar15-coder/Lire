@@ -114,11 +114,11 @@ export default function ArchivePage() {
   return (
     <div className="px-4 pt-6">
       <Link href="/" className="text-sm font-semibold text-brand">
-        ← Today
+        Back to home
       </Link>
 
       <header className="mb-4 mt-2">
-        <h1 className="text-2xl font-extrabold text-ink">Reading history</h1>
+        <h1 className="text-2xl font-extrabold text-ink">Articles read</h1>
         <p className="text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
       </header>
 
