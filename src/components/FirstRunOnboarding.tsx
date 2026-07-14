@@ -5,7 +5,7 @@ import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, skipOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 
-const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2"];
+const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const TOPICS: { value: Category; label: string }[] = [
   { value: "news-style", label: "News" },
@@ -77,7 +77,7 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
 
       <div className="mt-4">
         <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Level</p>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
           {LEVELS.map((option) => (
             <button
               key={option}

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { AppSettings, FontSize, TranslationMode } from "@/types";
+import type { AppSettings, Difficulty, FontSize, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
+import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import AccountCard from "@/components/AccountCard";
@@ -14,6 +15,8 @@ const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "medium", label: "Medium" },
   { value: "large", label: "Large" },
 ];
+
+const LEVEL_OPTIONS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const TRANSLATION_MODE_OPTIONS: { value: TranslationMode; label: string; description: string }[] = [
   { value: "natural", label: "Natural", description: "AI when enabled, phrase-aware offline fallback." },
@@ -59,17 +62,24 @@ function Toggle({
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
   const [knownCount, setKnownCount] = useState(0);
   const [offlineCount, setOfflineCount] = useState(0);
 
   useEffect(() => {
     setSettings(getSettings());
+    setSelectedLevel(getSelectedReadingLevel());
     setKnownCount(getKnownWords().length);
     setOfflineCount(getOfflineRssTextCount());
   }, []);
 
   function update(patch: Partial<AppSettings>) {
     setSettings(saveSettings(patch));
+  }
+
+  function changeLevel(level: Difficulty) {
+    updateSelectedReadingLevel(level);
+    setSelectedLevel(level);
   }
 
   function handleClearKnown() {
@@ -95,6 +105,26 @@ export default function SettingsPage() {
 
       <div className="space-y-3">
         <AccountCard />
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <p className="font-semibold text-ink">Reading level</p>
+          <p className="mt-0.5 text-sm text-ink-muted">
+            Controls the daily bank. Changing it never removes XP or reading history.
+          </p>
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+            {LEVEL_OPTIONS.map((level) => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => changeLevel(level)}
+                className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
+                  selectedLevel === level ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+        </div>
         <Toggle
           checked={settings.showSavedHighlights}
           onChange={(v) => update({ showSavedHighlights: v })}

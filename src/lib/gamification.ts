@@ -9,6 +9,7 @@ export type XpEventType =
   | "article_completed"
   | "comprehension_completed"
   | "mission_completed"
+  | "word_saved"
   | "word_review_success"
   | "vocabulary_mastered"
   | "achievement_unlocked"
@@ -188,7 +189,8 @@ const PASSPORT_KEY = "lire.gamification.passport.v1";
 const MASTERY_KEY = "lire.gamification.mastery.v1";
 
 export const XP_RULES = {
-  articleCompleted: 30,
+  articleCompleted: 20,
+  wordSaved: 1,
   comprehensionMax: 30,
   missionMin: 20,
   missionMax: 50,
@@ -209,17 +211,15 @@ const CATEGORY_LABELS: Record<Category, string> = {
 };
 
 const LEVEL_TITLES = [
-  "French Starter",
-  "Careful Reader",
-  "Phrase Finder",
-  "News Navigator",
-  "French Explorer",
-  "Context Builder",
-  "Nuance Reader",
-  "Independent Reader",
-  "Advanced Analyst",
-  "Fluent Pathfinder",
+  "A1 Starter",
+  "A2 Reader",
+  "B1 Bridge",
+  "B2 Explorer",
+  "C1 Analyst",
+  "C2 Independent",
 ];
+
+const CEFR_LEVEL_THRESHOLDS = [500, 2500, 5000, 7500, 10000];
 
 const ACHIEVEMENTS = [
   { id: "first-article", title: "First Article", description: "Complete your first French article.", icon: "I", requirement: 1, xp: 25 },
@@ -303,13 +303,13 @@ function totalXp(events = getXpEvents()): number {
 }
 
 export function xpNeededForLevel(level: number): number {
-  return Math.round(180 + Math.pow(level, 1.38) * 95);
+  return CEFR_LEVEL_THRESHOLDS[Math.max(0, Math.min(CEFR_LEVEL_THRESHOLDS.length - 1, level - 1))] ?? 0;
 }
 
 export function levelFromXp(xp: number): ReaderLevel {
   let level = 1;
   let remaining = xp;
-  while (remaining >= xpNeededForLevel(level)) {
+  while (level <= CEFR_LEVEL_THRESHOLDS.length && remaining >= xpNeededForLevel(level)) {
     remaining -= xpNeededForLevel(level);
     level++;
   }
@@ -320,7 +320,7 @@ export function levelFromXp(xp: number): ReaderLevel {
     .reduce((sum, event) => sum + event.xp, 0);
   return {
     level,
-    title: LEVEL_TITLES[Math.min(LEVEL_TITLES.length - 1, Math.floor((level - 1) / 2))],
+    title: LEVEL_TITLES[Math.min(LEVEL_TITLES.length - 1, level - 1)],
     totalXp: xp,
     currentLevelXp: remaining,
     nextLevelXp,
@@ -393,9 +393,9 @@ export function calculateArticleScore(input: {
 }
 
 function articleCompletionXp(wordsRead: number, score: number): number {
-  const lengthBonus = Math.min(25, Math.floor(wordsRead / 150) * 5);
-  const scoreBonus = score >= 90 ? 20 : score >= 75 ? 12 : score >= 60 ? 6 : 0;
-  return XP_RULES.articleCompleted + lengthBonus + scoreBonus;
+  void wordsRead;
+  void score;
+  return XP_RULES.articleCompleted;
 }
 
 function countWords(text: string): number {
@@ -522,6 +522,16 @@ export function recordReviewSuccessXp(word: string): number {
     idempotencyKey: `word_review:${today}:${word}:${todayReviewXp}`,
   });
   return awarded.awarded ? xp : 0;
+}
+
+export function recordWordSavedXp(word: string): number {
+  const result = addXpEvent({
+    type: "word_saved",
+    relatedId: word,
+    xp: XP_RULES.wordSaved,
+    idempotencyKey: `word_saved:${word}`,
+  });
+  return result.awarded ? XP_RULES.wordSaved : 0;
 }
 
 export function recordSecondPassXp(articleId: string): number {
@@ -766,7 +776,7 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
 export function buildPersonalBests(completions = getArticleCompletions()): PersonalBest[] {
   const longest = [...completions].sort((a, b) => b.wordsRead - a.wordsRead)[0];
   const bestScore = [...completions].sort((a, b) => b.score - a.score)[0];
-  const strongestLevel = [...completions].sort((a, b) => ["A1", "A2", "B1", "B2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2"].indexOf(a.difficulty))[0];
+  const strongestLevel = [...completions].sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
   const fewestTranslations = [...completions].filter((item) => item.challengeCompleted).sort((a, b) => a.translationsUsed - b.translationsUsed)[0];
   const dayWords = new Map<string, number>();
   for (const completion of completions) {

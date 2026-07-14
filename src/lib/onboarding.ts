@@ -30,6 +30,8 @@ const LEVEL_NUMERIC: Record<Difficulty, number> = {
   A2: 2,
   B1: 3,
   B2: 4,
+  C1: 5,
+  C2: 6,
 };
 
 function hasStorage(): boolean {
@@ -67,6 +69,10 @@ export function getOnboardingLevelNumeric(): number | null {
   return state?.completed ? LEVEL_NUMERIC[state.level] ?? null : null;
 }
 
+export function getSelectedReadingLevel(): Difficulty {
+  return getOnboardingState()?.level ?? DEFAULT_LEVEL;
+}
+
 export function saveOnboarding(
   level: Difficulty,
   topics: Category[],
@@ -100,6 +106,26 @@ export function saveOnboarding(
   }
 
   if (goalPreset) saveGoals(GOAL_PRESETS[goalPreset]);
+
+  return next;
+}
+
+export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
+  const current = getOnboardingState();
+  const next: OnboardingState = {
+    completed: true,
+    level,
+    topics: current?.topics ?? [],
+    goalPreset: current?.goalPreset,
+    estimatedKnownWords: knownWordEstimateForLevel(level),
+    seededKnownWords: current?.seededKnownWords ?? 0,
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (hasStorage()) {
+    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
+    void pushStore(ONBOARDING_KEY);
+  }
 
   return next;
 }

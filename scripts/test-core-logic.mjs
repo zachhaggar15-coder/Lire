@@ -32,6 +32,8 @@ import {
   unknownWordTargetScore,
 } from "../src/lib/recommendation/signals.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
+import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
+import { getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import {
   cacheDictionarySentenceTranslations,
@@ -76,6 +78,7 @@ import {
   getOnboardingState,
   saveOnboarding,
   skipOnboarding,
+  updateSelectedReadingLevel,
 } from "../src/lib/onboarding.ts";
 import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
@@ -111,6 +114,7 @@ import {
   recordGamifiedArticleCompletion,
   recordReviewSuccessXp,
   recordSecondPassXp,
+  recordWordSavedXp,
   translationBudgetForMode,
   xpNeededForLevel,
 } from "../src/lib/gamification.ts";
@@ -209,6 +213,19 @@ console.log("\n--- Difficulty estimation ---");
 {
   const withNames = estimateDifficulty("Paris et Emmanuel Macron parlent à Londres. Le chat mange une pomme.");
   check("proper nouns do not inflate unknown-word difficulty", withNames.unknownWordRatio < 0.35, JSON.stringify(withNames));
+}
+
+console.log("\n--- Public-domain reading bank ---");
+{
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  check("public-domain bank has at least 700 excerpts", publicDomainTexts.length >= 700, `${publicDomainTexts.length}`);
+  check("public-domain bank covers A1 through C2", levels.every((level) => publicDomainTexts.some((text) => text.difficulty === level)));
+  check("public-domain excerpts keep Project Gutenberg source URLs", publicDomainTexts.every((text) => text.sourceUrl?.startsWith("https://www.gutenberg.org/ebooks/")));
+  check("public-domain ids are unique", new Set(publicDomainTexts.map((text) => text.id)).size === publicDomainTexts.length);
+  const dailyB1 = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
+  const dailyB1Repeat = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
+  check("daily bank returns eight stable level-matched picks", dailyB1.length === 8 && dailyB1.map((text) => text.id).join(",") === dailyB1Repeat.map((text) => text.id).join(","));
+  check("daily bank favours the selected CEFR level first", dailyB1.every((text) => ["B1", "A2", "B2", "A1", "C1"].includes(text.difficulty)));
 }
 
 console.log("\n--- Dictionary lookup chain ---");
@@ -721,6 +738,10 @@ console.log("\n--- Onboarding ---");
   check("saveOnboarding seeds known words from the selected level", getKnownWords().length >= knownWordEstimateForLevel("B1"), `known=${getKnownWords().length}`);
   check("onboarding goal preset seeds reading goals", getGoals().minutesPerDay === 20 && getGoals().articlesPerDay === 2, JSON.stringify(getGoals()));
   check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);
+  const knownBeforeLevelChange = getKnownWords().length;
+  const changed = updateSelectedReadingLevel("C2");
+  check("selected level can move to C2", changed.level === "C2" && getOnboardingLevelNumeric() === 6);
+  check("changing selected level does not clear known words", getKnownWords().length === knownBeforeLevelChange);
 }
 {
   const state = skipOnboarding();
@@ -817,8 +838,9 @@ console.log("\n--- Gamification engine ---");
     createdAt: "2026-07-14T09:01:00.000Z",
   });
   check("XP events are idempotent by idempotency key", first.awarded && !duplicate.awarded && getXpEvents().length === 1);
-  check("level requirements increase progressively", xpNeededForLevel(5) > xpNeededForLevel(1));
-  check("levelFromXp advances beyond level 1 after enough XP", levelFromXp(xpNeededForLevel(1) + 5).level === 2);
+  check("CEFR XP thresholds follow the product ladder", xpNeededForLevel(1) === 500 && xpNeededForLevel(2) === 2500 && xpNeededForLevel(5) === 10000);
+  check("levelFromXp advances through CEFR bands cumulatively", levelFromXp(500).level === 2 && levelFromXp(3000).level === 3 && levelFromXp(8000).level === 4);
+  check("saving a new word awards 1 XP once", recordWordSavedXp("pourtant") === 1 && recordWordSavedXp("pourtant") === 0);
 }
 {
   const easyBudget = translationBudgetForMode("relaxed", 500, 0.05);

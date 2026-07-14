@@ -5,6 +5,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { markKnown } from "@/lib/knownWords";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
+import { recordWordSavedXp } from "@/lib/gamification";
 import { pushStore } from "@/lib/supabase/sync";
 
 /**
@@ -195,6 +196,7 @@ export function saveWord(entry: SavedWord): SavedWord[] {
   if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) return words;
   const next = [entry, ...words];
   persist(next);
+  recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
   return next;
 }

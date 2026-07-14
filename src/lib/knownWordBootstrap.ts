@@ -9,10 +9,12 @@ export const LEVEL_KNOWN_WORD_ESTIMATES: Record<Difficulty, number> = {
   A2: 1000,
   B1: 2000,
   B2: 3500,
+  C1: 5500,
+  C2: 8000,
 };
 
 const CEFR_NUMERIC: Record<string, number> = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 };
-const LEVEL_NUMERIC: Record<Difficulty, number> = { A1: 1, A2: 2, B1: 3, B2: 4 };
+const LEVEL_NUMERIC: Record<Difficulty, number> = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 };
 
 function isSeedableLemma(lemma: string): boolean {
   return !!lemma && !lemma.includes(" ") && !lemma.includes("'") && !lemma.includes("’") && !lemma.includes("-");

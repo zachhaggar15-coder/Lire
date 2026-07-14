@@ -8,7 +8,7 @@ import type { DictionaryLookupResult } from "@/lib/dictionary/types";
  * today." Replaces the old fixed "B1 for every RSS text" assumption.
  */
 
-export type EstimatedCefr = "A1" | "A2" | "B1" | "B2" | "C1";
+export type EstimatedCefr = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 export type LearnerLabel = "Easy" | "Good level" | "Stretch" | "Hard";
 
 export interface DifficultyEstimate {
@@ -36,7 +36,7 @@ const GENERATED_HIT_NUMERIC = 3.5;
 /** A word with no dictionary entry at all reads as rare/advanced vocabulary. */
 const MISSING_NUMERIC = 5.5;
 
-const CEFR_BY_ROUNDED_SCORE: EstimatedCefr[] = ["A1", "A2", "B1", "B2", "C1"];
+const CEFR_BY_ROUNDED_SCORE: EstimatedCefr[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 /** A1/A2 curated words (articles, common pronouns/verbs, etc.) never count as "might be unfamiliar," regardless of known-words state. */
 function isBasicWord(cefr: string | null): boolean {
@@ -114,7 +114,7 @@ export function estimateDifficulty(body: string, knownWords: Set<string> = new S
     score -= (baselineUnknownRatio - personalUnknownRatio) * 1.5;
   }
 
-  const roundedIndex = Math.max(1, Math.min(5, Math.round(score))) - 1;
+  const roundedIndex = Math.max(1, Math.min(6, Math.round(score))) - 1;
   const cefr = CEFR_BY_ROUNDED_SCORE[roundedIndex];
 
   let label: LearnerLabel;

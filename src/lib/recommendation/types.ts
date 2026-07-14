@@ -41,7 +41,7 @@ export interface ScoringContext {
   recentCategories: Category[];
   /** Source names explicitly preferred by the reader. */
   preferredSources: string[];
-  /** A rough 1 (A1) .. 5 (C1) estimate of the reader's own level, inferred from known-word count. */
+  /** A rough 1 (A1) .. 6 (C2) estimate of the reader's own level, inferred from known-word count. */
   userLevelNumeric: number;
   now?: Date;
 }

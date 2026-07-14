@@ -1,4 +1,5 @@
 import type { ReadingText } from "@/types";
+import { publicDomainTexts } from "@/data/publicDomainTexts";
 
 /**
  * Hardcoded sample French reading texts — the emergency fallback pool used
@@ -8,7 +9,7 @@ import type { ReadingText } from "@/types";
  * content" bar the RSS pipeline now enforces, so this fallback never feels
  * like a downgrade. Paragraphs within `body` are separated by a blank line.
  */
-export const texts: ReadingText[] = [
+const coreTexts: ReadingText[] = [
   {
     id: "metro-gratuit",
     title: "Le métro bientôt gratuit ?",
@@ -144,6 +145,8 @@ Après les courses, beaucoup de personnes s'arrêtent dans un café près du mar
 Le marché du dimanche est un vrai moment de vie pour les habitants du quartier. Beaucoup de gens s'y retrouvent chaque semaine, discutent un peu et profitent de cette ambiance conviviale avant de rentrer chez eux pour préparer le déjeuner.`,
   },
 ];
+
+export const texts: ReadingText[] = [...coreTexts, ...publicDomainTexts];
 
 export function getTextById(id: string): ReadingText | undefined {
   return texts.find((t) => t.id === id);

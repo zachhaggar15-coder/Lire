@@ -25,6 +25,12 @@ import {
 } from "@/lib/readingAnalytics";
 import { TodaysMissionsPanel, XPProgressBar } from "@/components/GamificationCards";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
+import {
+  DAILY_BANK_ARTICLE_LIMIT,
+  DAILY_RSS_ARTICLE_LIMIT,
+  getDailyBankTexts,
+} from "@/lib/publicDomainBank";
 import {
   buildScorableArticles,
   buildScoringContext,
@@ -46,9 +52,7 @@ type DifficultyFilter = "all" | Difficulty;
 type LanguageFilter = "all" | NonNullable<ReadingText["language"]>;
 
 /** How many RSS candidates to pull in for the recommendation engine to choose from — much more than the 5 actually shown, so every section has real options. */
-const POOL_LIMIT = 50;
-/** Below this many real RSS candidates, hardcoded texts top up the pool. */
-const MIN_POOL_SIZE = 5;
+const RSS_POOL_LIMIT = DAILY_RSS_ARTICLE_LIMIT;
 
 /** Always present — see /api/rss-texts/route.ts. Cheap enough to send every load, unlike the verbose debug/health payloads below. */
 interface FeedHealth {
@@ -104,6 +108,8 @@ const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
   { value: "A2", label: "A2" },
   { value: "B1", label: "B1" },
   { value: "B2", label: "B2" },
+  { value: "C1", label: "C1" },
+  { value: "C2", label: "C2" },
 ];
 
 const LANGUAGE_FILTERS: { value: LanguageFilter; label: string }[] = [
@@ -126,6 +132,7 @@ export default function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
+  const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
   const [refreshKey, setRefreshKey] = useState(0);
   const [prefVersion, setPrefVersion] = useState(0);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
@@ -138,12 +145,16 @@ export default function HomePage() {
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
   useEffect(() => {
+    setSelectedLevel(getSelectedReadingLevel());
+  }, [prefVersion]);
+
+  useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
         setState("loading");
-        const params = new URLSearchParams({ limit: String(POOL_LIMIT) });
+        const params = new URLSearchParams({ limit: String(RSS_POOL_LIMIT) });
         const forceRefresh = refreshKey > 0 && lastRefreshSent.current !== refreshKey;
         if (categoryFilter !== "all") params.set("category", categoryFilter);
         if (languageFilter !== "all") params.set("language", languageFilter);
@@ -161,6 +172,12 @@ export default function HomePage() {
         if (cancelled) return;
 
         const rssTexts = data.texts.map(rssReadingTextToReadingText);
+        const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
+        const bankTexts = getDailyBankTexts({
+          level: bankLevel,
+          category: categoryFilter,
+          limit: DAILY_BANK_ARTICLE_LIMIT,
+        });
         cacheRssTexts(rssTexts);
         // Drop progress for RSS ids that have rotated out of the pool, so
         // lire.progress.v1 doesn't grow forever.
@@ -170,11 +187,10 @@ export default function HomePage() {
         detectAndRecordSkippedArticles(rssTexts.map((t) => ({ id: t.id, category: t.category })));
 
         const hiddenSources = new Set(getHiddenSources());
-        const usingFallback = rssTexts.length < MIN_POOL_SIZE;
-        const pool: ReadingText[] = (usingFallback
-          ? [...rssTexts, ...hardcodedTexts.slice(0, MIN_POOL_SIZE - rssTexts.length)]
-          : rssTexts
-        ).filter((text) => !text.sourceName || !hiddenSources.has(text.sourceName));
+        const usingFallback = rssTexts.length < DAILY_RSS_ARTICLE_LIMIT;
+        const pool: ReadingText[] = [...bankTexts, ...rssTexts].filter(
+          (text) => !text.sourceName || !hiddenSources.has(text.sourceName)
+        );
 
         const knownWords = new Set(getKnownWords());
         const savedWords = getSavedWords();
@@ -191,14 +207,14 @@ export default function HomePage() {
         const savedIds = new Set(getSavedLaterIds());
         const filtered = ranked.filter((article) => {
           if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
-          if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+          if (difficultyFilter !== "all" && article.text.difficulty !== difficultyFilter) return false;
           if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
           return true;
         });
 
         setSections(buildSections(filtered));
         setSavedLaterArticles(ranked.filter((article) => savedIds.has(article.text.id)));
-        setTodayWords(buildTodayNewsWords(pool));
+        setTodayWords(buildTodayNewsWords(rssTexts));
         setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
@@ -214,19 +230,26 @@ export default function HomePage() {
           const savedWords = getSavedWords();
           const wordTaps = getAllWordTaps();
           setProgressSnapshot(buildProgressSnapshot(savedWords));
+          const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
+          const bankTexts = getDailyBankTexts({
+            level: bankLevel,
+            category: categoryFilter,
+            limit: DAILY_BANK_ARTICLE_LIMIT,
+          });
+          const fallbackPool = bankTexts.length > 0 ? bankTexts : hardcodedTexts;
           const scorable = buildScorableArticles(
-            hardcodedTexts.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
+            fallbackPool.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
             knownWords
           );
           const ranked = rankArticles(scorable, buildScoringContext()).filter((article) => {
             if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
-            if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+            if (difficultyFilter !== "all" && article.text.difficulty !== difficultyFilter) return false;
             if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
             return true;
           });
           setSections(buildSections(ranked));
           setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
-          setTodayWords(buildTodayNewsWords(ranked.map((article) => article.text)));
+          setTodayWords([]);
           setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
           setUsedFallback(true);
           setFeedHealth(null);
@@ -239,11 +262,13 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, [categoryFilter, difficultyFilter, languageFilter, refreshKey, prefVersion]);
+  }, [categoryFilter, difficultyFilter, languageFilter, refreshKey, prefVersion, selectedLevel]);
 
   const hasArticles =
     !!sections &&
     !!(
+      sections.dailyBank.length ||
+      sections.liveNews.length ||
       sections.todaysRecommendation ||
       sections.goodForYou.length ||
       sections.quickReads.length ||
@@ -416,8 +441,7 @@ export default function HomePage() {
 
       {state === "success" && usedFallback && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Some RSS articles were skipped because they were too short or not in
-          French — showing saved texts to fill the rest.
+          The reading bank is ready, but fewer than two live RSS articles matched today&apos;s filters.
         </p>
       )}
 
@@ -450,6 +474,17 @@ export default function HomePage() {
               </div>
             </section>
           )}
+
+          <ArticleSection
+            title="Today's Bank"
+            subtitle={`8 public-domain readings matched to ${difficultyFilter === "all" ? selectedLevel : difficultyFilter}.`}
+            articles={sections.dailyBank}
+          />
+          <ArticleSection
+            title="Live News"
+            subtitle="Two RSS articles from today's live source pool."
+            articles={sections.liveNews}
+          />
 
           <ArticleSection
             title="Good For You"

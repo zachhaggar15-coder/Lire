@@ -301,7 +301,7 @@ const CATEGORY_LABELS: Record<Category, string> = {
   "everyday life": "Life",
 };
 
-const CEFR_BY_SCORE = ["A1", "A2", "A2+", "B1", "B1+", "B2"];
+const CEFR_BY_SCORE = ["A1", "A2", "A2+", "B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"];
 
 export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: string[]): CategoryProficiency[] {
   const categories: Category[] = ["sport", "science", "culture", "news-style", "everyday life"];
@@ -309,7 +309,7 @@ export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: st
     const entries = archive.filter((entry) => entry.category === category);
     const recent = entries.slice(-5);
     const avgCefr =
-      recent.reduce((sum, entry) => sum + ({ A1: 1, A2: 2, B1: 3, B2: 4 }[entry.cefr ?? ""] ?? 2), 0) /
+      recent.reduce((sum, entry) => sum + ({ A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 }[entry.cefr ?? ""] ?? 2), 0) /
       Math.max(1, recent.length);
     const completionBonus = Math.min(1.5, entries.length / 4);
     const knownBonus = Math.min(1, knownWords.length / 300);

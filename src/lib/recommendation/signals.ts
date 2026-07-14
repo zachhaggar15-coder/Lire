@@ -90,7 +90,8 @@ export function inferUserLevelNumeric(knownWordCount: number): number {
   if (knownWordCount < 60) return 2;
   if (knownWordCount < 150) return 3;
   if (knownWordCount < 300) return 4;
-  return 5;
+  if (knownWordCount < 600) return 5;
+  return 6;
 }
 
 /**

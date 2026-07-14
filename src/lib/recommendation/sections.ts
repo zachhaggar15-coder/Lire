@@ -2,6 +2,10 @@ import type { ScoredArticle } from "@/lib/recommendation/types";
 import { SAVE_FOR_LATER_THRESHOLD } from "@/lib/recommendation/signals";
 
 export interface RecommendationSections {
+  /** The level-matched public-domain bank picks for today's stable daily reading set. */
+  dailyBank: ScoredArticle[];
+  /** The small live RSS/news slice for today's changing world-facing reading. */
+  liveNews: ScoredArticle[];
   /** The single best-scoring article right now, or null if everything is save-for-later material. */
   todaysRecommendation: ScoredArticle | null;
   /** Short (<=3 min) reads from the ranked pool. */
@@ -27,6 +31,10 @@ const QUICK_READ_MAX_MINUTES = 3;
 const MIN_DICTIONARY_COVERAGE_FOR_VOCAB = 0.7;
 /** Short Snippets gets a bigger allowance than the other sections — it's the whole point of the section, not a side dish. */
 const SHORT_SNIPPET_SECTION_SIZE = 8;
+
+function isPublicDomainBankArticle(article: ScoredArticle): boolean {
+  return article.text.id.startsWith("pd-");
+}
 
 /**
  * Claims articles into a section in priority order, skipping any id another
@@ -71,6 +79,20 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
   const active = withoutSnippets.filter((a) => a.difficulty.unknownWordRatio <= SAVE_FOR_LATER_THRESHOLD);
 
   const usedIds = new Set<string>();
+
+  const dailyBank = take(
+    withoutSnippets.filter(isPublicDomainBankArticle),
+    usedIds,
+    8
+  );
+
+  const liveNews = take(
+    [...active]
+      .filter((a) => !isPublicDomainBankArticle(a))
+      .sort((a, b) => new Date(b.text.publishedAt ?? 0).getTime() - new Date(a.text.publishedAt ?? 0).getTime()),
+    usedIds,
+    2
+  );
 
   const todaysRecommendation = take(active, usedIds, 1)[0] ?? null;
 
@@ -123,6 +145,8 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
     .slice(0, SHORT_SNIPPET_SECTION_SIZE);
 
   return {
+    dailyBank,
+    liveNews,
     todaysRecommendation,
     quickReads,
     goodForYou,
@@ -130,6 +154,6 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
     newVocabulary,
     latestNews,
     shortSnippets,
-    saveForLater,
+    saveForLater: saveForLater.filter((article) => !usedIds.has(article.text.id)),
   };
 }
