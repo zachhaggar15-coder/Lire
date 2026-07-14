@@ -3,8 +3,9 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
+import { texts as hardcodedTexts } from "@/data/texts";
 import type { WordExplanation } from "@/lib/ai/types";
-import { tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
+import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import {
@@ -26,6 +27,15 @@ import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
+import { findPronounReference } from "@/lib/pronounReferences";
+import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
+import {
+  buildGistQuestion,
+  buildToneQuestions,
+  findRelatedArticles,
+  type MultipleChoiceQuestion,
+  type ToneQuestion,
+} from "@/lib/comprehension";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -109,6 +119,11 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [articleSavedWordCount, setArticleSavedWordCount] = useState(0);
   const [articleFeedback, setArticleFeedback] = useState<ArticleDifficultyFeedback | null>(null);
+  const [articlePool, setArticlePool] = useState<ReadingText[]>([]);
+  const [relatedArticles, setRelatedArticles] = useState<ReadingText[]>([]);
+  const [gistAnswer, setGistAnswer] = useState<number | null>(null);
+  const [toneAnswers, setToneAnswers] = useState<Record<string, number>>({});
+  const [summaryDraft, setSummaryDraft] = useState("");
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -118,6 +133,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gistQuestion = useMemo(() => buildGistQuestion(text, articlePool), [articlePool, text]);
+  const toneQuestions = useMemo(() => buildToneQuestions(text), [text]);
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
@@ -139,6 +156,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
     setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
+    const candidates = dedupeArticles([...getCachedRssTexts(), ...getOfflineRssTexts(), ...hardcodedTexts]);
+    setArticlePool(candidates);
+    setRelatedArticles(findRelatedArticles(text, candidates));
+    setGistAnswer(null);
+    setToneAnswers({});
+    setSummaryDraft("");
     setCanUseSpeech(canSpeak());
     // A different article needs its own fluent translation — getArticleTranslation
     // is cache-first per article, so re-toggling back on for an already-translated
@@ -272,6 +295,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
     const { previous } = neighbours(sentenceText);
+    const pronounReference = findPronounReference(
+      clean,
+      tokens,
+      index,
+      previous ? tokenize(previous) : null
+    );
 
     setActiveSentence(null);
     setActivePhrase(null);
@@ -281,6 +310,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       surroundingSentence: previous,
       lookup,
       existingStatus,
+      pronounReference,
     });
   }
 
@@ -422,6 +452,29 @@ export default function Reader({ text }: { text: ReadingText }) {
     return `${base} active:bg-brand/10`;
   }
 
+  function handleToneAnswer(question: ToneQuestion, answerIndex: number) {
+    setToneAnswers((prev) => ({ ...prev, [question.id]: answerIndex }));
+  }
+
+  function isHighlightedReference(tokens: Token[], tokenIndex: number): boolean {
+    const reference = activeWord?.pronounReference;
+    if (!reference || !tokens[tokenIndex]?.isWord) return false;
+    const referenceWords = tokenize(reference.antecedentText).filter((t) => t.isWord).map((t) => t.clean);
+    if (referenceWords.length === 0) return false;
+
+    const wordPositions = tokens
+      .map((token, index) => ({ token, index }))
+      .filter((item) => item.token.isWord);
+
+    for (let start = 0; start <= wordPositions.length - referenceWords.length; start++) {
+      const window = wordPositions.slice(start, start + referenceWords.length);
+      if (window.every((item, offset) => item.token.clean === referenceWords[offset])) {
+        return window.some((item) => item.index === tokenIndex);
+      }
+    }
+    return false;
+  }
+
   /** The clickable, word-tappable French sentence — shared between the normal flowing-paragraph layout and the per-sentence interlinear layout below, so the tap targets don't have to be defined twice. */
   function phraseClassName(): string {
     return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
@@ -464,7 +517,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               e.stopPropagation();
               handleWordTap(sg.text, sg.tokens, ti);
             }}
-            className={wordClassName(tok)}
+            className={`${wordClassName(tok)} ${isHighlightedReference(sg.tokens, ti) ? "bg-emerald-200/80 ring-2 ring-emerald-400" : ""}`}
           >
             {tok.text}
           </span>
@@ -627,6 +680,63 @@ export default function Reader({ text }: { text: ReadingText }) {
         )}
       </article>
 
+      <section className="mt-8 space-y-4">
+        {relatedArticles.length > 0 && (
+          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Same event, different voices</h2>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              Read another publication on the same story to meet the core vocabulary again in a new register.
+            </p>
+            <div className="mt-3 space-y-2">
+              {relatedArticles.map((article) => (
+                <Link
+                  key={article.id}
+                  href={`/reader/${article.id}`}
+                  className="block rounded-2xl bg-cream px-3 py-2 active:scale-[0.99]"
+                >
+                  <p className="text-sm font-semibold text-ink">{article.title}</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">
+                    {article.sourceName ?? "Saved text"} {article.publishedAt ? `- ${new Date(article.publishedAt).toLocaleDateString()}` : ""}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <ComprehensionQuestion
+          question={gistQuestion}
+          selected={gistAnswer}
+          onSelect={setGistAnswer}
+        />
+
+        <section className="space-y-3">
+          <h2 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h2>
+          {toneQuestions.map((question) => (
+            <ComprehensionQuestion
+              key={question.id}
+              question={question}
+              selected={toneAnswers[question.id] ?? null}
+              onSelect={(answer) => handleToneAnswer(question, answer)}
+            />
+          ))}
+        </section>
+
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
+          <textarea
+            value={summaryDraft}
+            onChange={(event) => setSummaryDraft(event.target.value)}
+            rows={4}
+            placeholder="Write the article's main point in English or French."
+            className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+          />
+          <p className="mt-2 text-xs text-ink-muted">
+            Aim for one sentence about what happened and one sentence about why it matters.
+          </p>
+        </div>
+      </section>
+
       {/* Reading progress */}
       <div className="mt-8 mb-4 flex justify-center">
         {status === "completed" ? (
@@ -736,6 +846,57 @@ export default function Reader({ text }: { text: ReadingText }) {
         onKnown={() => showToast("Marked phrase as known")}
       />
       <Toast message={toastMessage} />
+    </div>
+  );
+}
+
+function dedupeArticles(articles: ReadingText[]): ReadingText[] {
+  const byId = new Map<string, ReadingText>();
+  for (const article of articles) byId.set(article.id, article);
+  return [...byId.values()];
+}
+
+function ComprehensionQuestion({
+  question,
+  selected,
+  onSelect,
+}: {
+  question: MultipleChoiceQuestion;
+  selected: number | null;
+  onSelect: (answerIndex: number) => void;
+}) {
+  const answered = selected !== null;
+  const correct = answered && selected === question.answerIndex;
+  return (
+    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <p className="text-sm font-bold text-ink">{question.prompt}</p>
+      <div className="mt-3 space-y-2">
+        {question.choices.map((choice, index) => {
+          const isSelected = selected === index;
+          const isAnswer = answered && index === question.answerIndex;
+          return (
+            <button
+              key={`${question.id}-${index}-${choice}`}
+              type="button"
+              onClick={() => onSelect(index)}
+              className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium active:scale-[0.99] ${
+                isAnswer
+                  ? "bg-emerald-100 text-emerald-800"
+                  : isSelected
+                    ? "bg-rose-100 text-rose-800"
+                    : "bg-cream text-ink"
+              }`}
+            >
+              {choice}
+            </button>
+          );
+        })}
+      </div>
+      {answered && (
+        <p className={`mt-2 text-xs font-semibold ${correct ? "text-emerald-700" : "text-rose-700"}`}>
+          {correct ? "Correct." : "Not quite."} {question.explanation}
+        </p>
+      )}
     </div>
   );
 }

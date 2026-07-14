@@ -42,6 +42,9 @@ import {
 import { recordDictionaryFeedback, getDictionaryFeedback } from "../src/lib/dictionary/feedback.ts";
 import { getSavedPhrases, markPhraseKnown, savePhrase } from "../src/lib/phrases.ts";
 import { getArticleFeedbackForText, saveArticleFeedback } from "../src/lib/articleFeedback.ts";
+import { buildGistQuestion, buildToneQuestions, findRelatedArticles } from "../src/lib/comprehension.ts";
+import { findPronounReference } from "../src/lib/pronounReferences.ts";
+import { getWordFamily } from "../src/lib/dictionary/wordFamily.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
 import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
 import { buildKnownWordBootstrapList, knownWordEstimateForLevel } from "../src/lib/knownWordBootstrap.ts";
@@ -472,6 +475,52 @@ console.log("\n--- Short snippets content-quality tier ---");
     "a truncated teaser still fails the short-snippet bar even if short-word-count-wise it would pass",
     !isAcceptableAsShortSnippet(truncated)
   );
+}
+
+console.log("\n--- Comprehension helpers ---");
+{
+  const current = {
+    id: "a",
+    title: "Le métro gratuit divise la ville",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "La ville teste la gratuité des transports.",
+    blurbEn: "A city is testing free public transport while residents debate the cost.",
+    body: "La ville teste la gratuité des transports. Certains habitants sont prudents.",
+    sourceName: "Source A",
+  };
+  const related = {
+    ...current,
+    id: "b",
+    title: "Transports gratuits: le débat continue",
+    sourceName: "Source B",
+    preview: "Les transports gratuits font débat.",
+    blurbEn: "Another publication reports on the same free public transport debate.",
+  };
+  const unrelated = {
+    ...current,
+    id: "c",
+    title: "Une victoire de football",
+    category: "sport",
+    sourceName: "Source C",
+    preview: "Une équipe gagne un match.",
+    blurbEn: "A football team wins a match in the final minute.",
+  };
+  check("related-article helper finds a same-event article from another source", findRelatedArticles(current, [related, unrelated])[0]?.id === "b");
+  const gistQuestion = buildGistQuestion(current, [related, unrelated]);
+  check("gist question puts the real gist first as the answer", gistQuestion.answerIndex === 0 && gistQuestion.choices[0].includes("free public transport"));
+  const toneQuestions = buildToneQuestions(current);
+  check("tone helper creates stance/tone/confidence questions", toneQuestions.length === 3 && toneQuestions.every((q) => q.choices.length >= 3));
+}
+{
+  const sentence = tokenizeParagraphsToSentences("Le maire présente le projet qui divise la ville. Il promet un vote public.")[0];
+  const reference = findPronounReference("qui", sentence[0].tokens, sentence[0].tokens.findIndex((token) => token.clean === "qui"), null);
+  check("pronoun reference helper links relative pronouns back to a noun phrase", reference?.antecedentText.toLowerCase().includes("projet"));
+}
+{
+  const family = getWordFamily("décider");
+  check("word-family helper includes the décider family", family.noun.includes("décision") && family.adjective.includes("décisif"));
 }
 
 console.log("\n--- Recommendation preferences (hide source / save for later) ---");

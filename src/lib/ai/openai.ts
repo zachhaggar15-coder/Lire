@@ -4,6 +4,7 @@ import type {
   ArticleTranslationRequest,
   ArticleTranslationResult,
   SentenceExplanation,
+  SentenceStructure,
   SentenceExplanationRequest,
   WordExplanation,
   WordExplanationRequest,
@@ -109,11 +110,33 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
     !isNonEmptyString(r.naturalEnglishTranslation) ||
     typeof r.simplifiedFrench !== "string" ||
     typeof r.explanation !== "string" ||
+    !r.structure ||
+    typeof r.structure !== "object" ||
     !isStringArray(r.grammarNotes) ||
     !Array.isArray(r.usefulVocabulary)
   ) {
     throw new Error("OpenAI sentence explanation response had an unexpected shape.");
   }
+  const rawStructure = r.structure as Record<string, unknown>;
+  const pronounReferences = Array.isArray(rawStructure.pronounReferences)
+    ? rawStructure.pronounReferences
+        .filter((v): v is Record<string, unknown> => !!v && typeof v === "object")
+        .map((v) => ({
+          pronoun: typeof v.pronoun === "string" ? v.pronoun : "",
+          refersTo: typeof v.refersTo === "string" ? v.refersTo : "",
+          explanation: typeof v.explanation === "string" ? v.explanation : "",
+        }))
+        .filter((v) => v.pronoun && v.refersTo)
+    : [];
+  const structure: SentenceStructure = {
+    subject: typeof rawStructure.subject === "string" ? rawStructure.subject : "",
+    mainVerb: typeof rawStructure.mainVerb === "string" ? rawStructure.mainVerb : "",
+    object: typeof rawStructure.object === "string" && rawStructure.object ? rawStructure.object : null,
+    subordinateClauses: isStringArray(rawStructure.subordinateClauses) ? rawStructure.subordinateClauses : [],
+    pronounReferences,
+    tense: typeof rawStructure.tense === "string" ? rawStructure.tense : "",
+    literalTranslation: typeof rawStructure.literalTranslation === "string" ? rawStructure.literalTranslation : "",
+  };
   const usefulVocabulary = r.usefulVocabulary
     .filter(
       (v): v is Record<string, unknown> => !!v && typeof v === "object"
@@ -128,9 +151,20 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
     originalSentence: isNonEmptyString(r.originalSentence) ? r.originalSentence : fallbackSentence,
     naturalEnglishTranslation: r.naturalEnglishTranslation,
     simplifiedFrench: r.simplifiedFrench,
+    structure,
     grammarNotes: r.grammarNotes,
     usefulVocabulary,
     explanation: r.explanation,
+    tone: {
+      label:
+        r.tone && typeof r.tone === "object" && typeof (r.tone as Record<string, unknown>).label === "string"
+          ? ((r.tone as Record<string, unknown>).label as string)
+          : "neutral",
+      explanation:
+        r.tone && typeof r.tone === "object" && typeof (r.tone as Record<string, unknown>).explanation === "string"
+          ? ((r.tone as Record<string, unknown>).explanation as string)
+          : "",
+    },
   };
 }
 
@@ -175,9 +209,21 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
   "originalSentence": string,
   "naturalEnglishTranslation": string,
   "simplifiedFrench": string,        // the same idea reworded as a simpler French sentence
+  "structure": {
+    "subject": string,               // grammatical subject, or "" if implied/unclear
+    "mainVerb": string,              // main conjugated verb or verbal phrase
+    "object": string | null,         // direct/indirect object, or null
+    "subordinateClauses": string[],  // subordinate or relative clauses, if any
+    "pronounReferences": [
+      { "pronoun": string, "refersTo": string, "explanation": string }
+    ],
+    "tense": string,                 // e.g. present, passé composé, imperfect, conditional
+    "literalTranslation": string     // deliberately literal English to expose the structure
+  },
   "grammarNotes": string[],          // 1-3 short grammar/usage notes
   "usefulVocabulary": [ { "word": string, "meaning": string } ],  // 1-5 useful words from the sentence
-  "explanation": string              // 2-4 short sentences explaining the sentence for a learner
+  "explanation": string,             // 2-4 short sentences explaining the sentence for a learner
+  "tone": { "label": string, "explanation": string } // tone/register: neutral, critical, amused, alarmist, sarcastic, confident, cautious, etc.
 }`;
 
 const ARTICLE_TRANSLATION_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
@@ -210,7 +256,7 @@ export async function explainWord(req: WordExplanationRequest): Promise<WordExpl
 }
 
 export async function explainSentence(req: SentenceExplanationRequest): Promise<SentenceExplanation> {
-  const system = `You are a French tutor helping a ${req.level}. ${SENTENCE_SCHEMA}`;
+  const system = `You are a French tutor helping a ${req.level}. Decompose the sentence explicitly so the learner can track reference, clauses, tense, and tone instead of mistaking every problem for missing vocabulary. ${SENTENCE_SCHEMA}`;
   const user = [
     req.articleTitle ? `Article title: ${req.articleTitle}` : null,
     req.previousSentence ? `Previous sentence (context only): ${req.previousSentence}` : null,

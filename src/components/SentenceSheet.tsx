@@ -141,6 +141,52 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
                 </div>
               </div>
 
+              <div className="mt-3 rounded-2xl bg-brand-light p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand">
+                  Sentence structure
+                </p>
+                <dl className="mt-2 space-y-1 text-sm text-ink">
+                  <StructureRow label="Subject" value={aiResult.structure.subject} />
+                  <StructureRow label="Main verb" value={aiResult.structure.mainVerb} />
+                  <StructureRow label="Object" value={aiResult.structure.object ?? ""} />
+                  <StructureRow label="Tense" value={aiResult.structure.tense} />
+                  <StructureRow label="Literal" value={aiResult.structure.literalTranslation} />
+                </dl>
+                {aiResult.structure.subordinateClauses.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Subordinate clauses</p>
+                    <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-ink">
+                      {aiResult.structure.subordinateClauses.map((clause) => (
+                        <li key={clause}>{clause}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {aiResult.structure.pronounReferences.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Pronoun references</p>
+                    <ul className="mt-1 space-y-1 text-sm text-ink">
+                      {aiResult.structure.pronounReferences.map((reference) => (
+                        <li key={`${reference.pronoun}-${reference.refersTo}`}>
+                          <span className="font-semibold">{reference.pronoun}</span> = {reference.refersTo}
+                          {reference.explanation && <span className="text-ink-muted"> - {reference.explanation}</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-3 rounded-2xl bg-cream p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  Tone
+                </p>
+                <p className="mt-1 text-sm font-semibold text-ink">{aiResult.tone.label}</p>
+                {aiResult.tone.explanation && (
+                  <p className="mt-1 text-sm text-ink-muted">{aiResult.tone.explanation}</p>
+                )}
+              </div>
+
               {aiResult.explanation && (
                 <div className="mt-3 rounded-2xl bg-brand-light p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-brand">
@@ -182,5 +228,15 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
         </div>
       </div>
     </>
+  );
+}
+
+function StructureRow({ label, value }: { label: string; value: string }) {
+  if (!value) return null;
+  return (
+    <div className="grid grid-cols-[6.5rem_1fr] gap-2">
+      <dt className="text-xs font-semibold uppercase tracking-wide text-brand">{label}</dt>
+      <dd>{value}</dd>
+    </div>
   );
 }

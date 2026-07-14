@@ -54,13 +54,34 @@ export interface UsefulVocabularyItem {
   meaning: string;
 }
 
+export interface PronounReferenceExplanation {
+  pronoun: string;
+  refersTo: string;
+  explanation: string;
+}
+
+export interface SentenceStructure {
+  subject: string;
+  mainVerb: string;
+  object: string | null;
+  subordinateClauses: string[];
+  pronounReferences: PronounReferenceExplanation[];
+  tense: string;
+  literalTranslation: string;
+}
+
 export interface SentenceExplanation {
   originalSentence: string;
   naturalEnglishTranslation: string;
   simplifiedFrench: string;
+  structure: SentenceStructure;
   grammarNotes: string[];
   usefulVocabulary: UsefulVocabularyItem[];
   explanation: string;
+  tone: {
+    label: string;
+    explanation: string;
+  };
 }
 
 /**

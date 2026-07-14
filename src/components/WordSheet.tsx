@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
+import type { PronounReference } from "@/lib/pronounReferences";
 import { NO_DICTIONARY_ENTRY } from "@/lib/dictionary/constants";
 import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
+import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import PronounceButton from "@/components/PronounceButton";
 
 export interface ActiveWordState {
@@ -18,6 +20,7 @@ export interface ActiveWordState {
   lookup: DictionaryLookupResult;
   /** The word's current saved/known status, or null if it's untouched. */
   existingStatus: WordStatus | null;
+  pronounReference: PronounReference | null;
 }
 
 type AiState = "idle" | "loading" | "ready" | "error";
@@ -60,6 +63,18 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
   const found = lookup?.source === "local";
   const [primary, ...rest] = lookup?.translations ?? [];
   const firstExample = lookup?.examples[0];
+  const wordFamily = state ? getWordFamily(state.lookup.lemma ?? state.word) : null;
+  const hasWordFamily =
+    !!wordFamily &&
+    [
+      wordFamily.noun,
+      wordFamily.verb,
+      wordFamily.adjective,
+      wordFamily.adverb,
+      wordFamily.commonCollocations,
+      wordFamily.opposites,
+      wordFamily.relatedExpressions,
+    ].some((values) => values.length > 0);
 
   // Reset the AI panel whenever a different word/sentence is shown, so a
   // stale result from the previous word can't leak into this one.
@@ -226,6 +241,34 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
           </div>
         )}
 
+        {state?.pronounReference && (
+          <div className="mt-4 rounded-2xl bg-brand-light p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">
+              Reference tracking
+            </p>
+            <p className="mt-1 text-sm text-ink">
+              <span className="font-semibold">{state.pronounReference.pronoun}</span> points back to{" "}
+              <span className="rounded bg-white/70 px-1 font-semibold">{state.pronounReference.antecedentText}</span>.
+            </p>
+            <p className="mt-1 text-xs text-ink-muted">{state.pronounReference.note}</p>
+          </div>
+        )}
+
+        {wordFamily && hasWordFamily && (
+          <div className="mt-4 rounded-2xl bg-white/60 p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
+              Word family
+            </p>
+            <WordFamilyRow label="Noun" values={wordFamily.noun} />
+            <WordFamilyRow label="Verb" values={wordFamily.verb} />
+            <WordFamilyRow label="Adjective" values={wordFamily.adjective} />
+            <WordFamilyRow label="Adverb" values={wordFamily.adverb} />
+            <WordFamilyRow label="Collocations" values={wordFamily.commonCollocations} />
+            <WordFamilyRow label="Opposites" values={wordFamily.opposites} />
+            <WordFamilyRow label="Expressions" values={wordFamily.relatedExpressions} />
+          </div>
+        )}
+
         <div className="mt-4 rounded-2xl bg-white/60 p-3">
           <label className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext" htmlFor="word-correction">
             Improve dictionary
@@ -335,5 +378,15 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
         </div>
       </div>
     </>
+  );
+}
+
+function WordFamilyRow({ label, values }: { label: string; values: string[] }) {
+  if (values.length === 0) return null;
+  return (
+    <div className="mt-2">
+      <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
+      <p className="mt-0.5 text-sm text-ink">{values.join(" -> ")}</p>
+    </div>
   );
 }

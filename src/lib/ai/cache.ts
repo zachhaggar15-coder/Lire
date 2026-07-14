@@ -46,7 +46,7 @@ export function wordCacheKey(word: string, articleSentence: string): string {
 }
 
 export function sentenceCacheKey(sentence: string): string {
-  return `sentence:${hashString(sentence)}`;
+  return `sentence:v2:${hashString(sentence)}`;
 }
 
 /** Keyed on the article id plus its actual sentence text, so a since-edited/re-scraped article (same id, different body) doesn't serve a stale cached translation. */
