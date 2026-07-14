@@ -1,5 +1,6 @@
 import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
+import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
 import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
@@ -25,6 +26,18 @@ const properByLemma = new Map<string, DictionaryEntry>();
 const properByForm = new Map<string, DictionaryEntry>();
 
 for (const entry of frEnDictionary) {
+  byLemma.set(entry.lemma.toLowerCase(), entry);
+  for (const form of entry.forms ?? []) {
+    byForm.set(form.toLowerCase(), entry);
+  }
+}
+
+// News/common-reading overrides intentionally win over the older curated
+// starter entries and the broad generated WikDict layer. This fixes cases
+// where a generated first gloss is technically valid but wrong for articles
+// ("escalade" -> escalation before rock climbing, "frappes" -> strikes
+// before the verb "to hit").
+for (const entry of newsSenseDictionary) {
   byLemma.set(entry.lemma.toLowerCase(), entry);
   for (const form of entry.forms ?? []) {
     byForm.set(form.toLowerCase(), entry);
@@ -196,6 +209,13 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
       generatedByForm.get(guess) ??
       getCustomDictionaryEntry(guess);
     if (viaGuess) return toResult(rawWord, viaGuess);
+  }
+
+  const apostropheIndex = Math.max(rawWord.lastIndexOf("'"), rawWord.lastIndexOf("\u2019"));
+  if (apostropheIndex >= 0 && apostropheIndex < rawWord.length - 1) {
+    const elidedTail = rawWord.slice(apostropheIndex + 1);
+    const elidedProper = fallbackProperNoun(elidedTail);
+    if (elidedProper) return toResult(rawWord, elidedProper);
   }
 
   return toResult(rawWord, fallbackProperNoun(rawWord));

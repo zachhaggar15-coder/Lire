@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "audit:dictionary": "node --import ./scripts/register-alias-loader.mjs scripts/audit-dictionary-coverage.mjs",
     "test": "node scripts/test-rss-filters.mjs && node scripts/test-learning-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs"
   },
   "dependencies": {

@@ -519,6 +519,26 @@ console.log("\n--- Expanded news and civic vocabulary ---");
     const result = lookupWord(word, ctx);
     check(`expanded dictionary resolves '${word}' to ${expectedLemma}`, result.lemma === expectedLemma, JSON.stringify(result));
   }
+
+  const newsSenseCases = [
+    ["escalade", {}, "escalade", "escalation"],
+    ["frappes", {}, "frappe", "strike"],
+    ["grève", {}, "grève", "strike"],
+    ["députés", {}, "député", "member of parliament"],
+    ["échéance", {}, "échéance", "deadline"],
+    ["recul", {}, "recul", "decline"],
+    ["essor", {}, "essor", "growth"],
+    ["pouvoir", { nextWord: "d'achat" }, "pouvoir d'achat", "purchasing power"],
+    ["mise", { nextWord: "en œuvre" }, "mettre en œuvre", "to implement"],
+  ];
+  for (const [word, ctx, expectedLemma, expectedFirstTranslation] of newsSenseCases) {
+    const result = lookupWord(word, ctx);
+    check(
+      `news sense dictionary resolves '${word}' as ${expectedLemma} -> ${expectedFirstTranslation}`,
+      result.lemma === expectedLemma && result.translations[0] === expectedFirstTranslation,
+      JSON.stringify(result)
+    );
+  }
 }
 
 console.log("\n--- Proper names and places ---");
