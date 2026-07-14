@@ -10,6 +10,8 @@ import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
+import { lookupWord } from "@/lib/dictionary/lookup";
+import type { InferenceChallenge } from "@/lib/inference";
 import PronounceButton from "@/components/PronounceButton";
 
 export interface ActiveWordState {
@@ -30,6 +32,8 @@ interface WordSheetProps {
   articleTitle: string;
   onClose: () => void;
   onKnow: () => void;
+  inferenceChallenge?: InferenceChallenge | null;
+  onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
 }
 
 const STATUS_LABEL: Record<WordStatus, string> = {
@@ -43,12 +47,15 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word that the reader has just auto-saved.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const [correction, setCorrection] = useState("");
   const [correctionSaved, setCorrectionSaved] = useState(false);
+  const [definitionRevealed, setDefinitionRevealed] = useState(true);
+  const [sentenceTranslationRevealed, setSentenceTranslationRevealed] = useState(false);
+  const [inferenceAnswer, setInferenceAnswer] = useState<number | null>(null);
   const open = state !== null;
   const lookup = state?.lookup;
   const found = lookup?.source === "local";
@@ -75,7 +82,10 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow }: Word
     setAiError(null);
     setCorrection("");
     setCorrectionSaved(false);
-  }, [state?.word, state?.contextSentence]);
+    setDefinitionRevealed(!inferenceChallenge);
+    setSentenceTranslationRevealed(false);
+    setInferenceAnswer(null);
+  }, [state?.word, state?.contextSentence, inferenceChallenge]);
 
   function handleSaveCorrection() {
     if (!state || !lookup || !correction.trim()) return;
@@ -193,8 +203,73 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow }: Word
           </p>
         )}
 
+        {inferenceChallenge && (
+          <div className="mt-4 rounded-2xl bg-white/70 p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Can you infer it first?</p>
+            <p className="mt-1 text-sm text-ink-muted">Try the context before leaning on the direct definition.</p>
+            <div className="mt-3 space-y-2">
+              {inferenceChallenge.choices.map((choice, index) => {
+                const answered = inferenceAnswer !== null;
+                const correct = index === inferenceChallenge.answerIndex;
+                const selected = inferenceAnswer === index;
+                return (
+                  <button
+                    key={`${inferenceChallenge.word}-${choice}`}
+                    type="button"
+                    onClick={() => {
+                      setInferenceAnswer(index);
+                      setDefinitionRevealed(true);
+                      onInferenceAnswer?.(inferenceChallenge.word, inferenceChallenge.lemma, correct);
+                    }}
+                    className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold ${
+                      answered && correct
+                        ? "bg-emerald-100 text-emerald-800"
+                        : answered && selected
+                          ? "bg-rose-100 text-rose-800"
+                          : "bg-cream text-ink"
+                    }`}
+                  >
+                    {choice}
+                  </button>
+                );
+              })}
+            </div>
+            {inferenceChallenge.frenchSynonym && (
+              <p className="mt-2 text-xs text-ink-muted">
+                French synonym: <span className="font-semibold">{inferenceChallenge.frenchSynonym}</span>
+              </p>
+            )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setSentenceTranslationRevealed((value) => !value)}
+                className="rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-95"
+              >
+                Reveal sentence translation
+              </button>
+              <button
+                type="button"
+                onClick={() => setDefinitionRevealed(true)}
+                className="rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-95"
+              >
+                Reveal direct definition
+              </button>
+            </div>
+            {sentenceTranslationRevealed && (
+              <p className="mt-2 rounded-xl bg-cream px-3 py-2 text-sm text-ink">{inferenceChallenge.sentenceTranslation}</p>
+            )}
+            {inferenceAnswer !== null && (
+              <p className={`mt-2 text-xs font-semibold ${inferenceAnswer === inferenceChallenge.answerIndex ? "text-emerald-700" : "text-rose-700"}`}>
+                {inferenceAnswer === inferenceChallenge.answerIndex ? "Inferred correctly." : "Good attempt. You checked the context first."}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="mt-3 space-y-3">
-          {found ? (
+          {!definitionRevealed ? (
+            <p className="text-sm italic text-accent-pinktext">Definition hidden until you try or reveal it.</p>
+          ) : found ? (
             <>
               <p className="text-lg text-ink">{primary}</p>
               {rest.length > 0 && (
@@ -371,7 +446,22 @@ function WordFamilyRow({ label, values }: { label: string; values: string[] }) {
   return (
     <div className="mt-2">
       <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
-      <p className="mt-0.5 text-sm text-ink">{values.join(" -> ")}</p>
+      <div className="mt-0.5 space-y-0.5 text-sm text-ink">
+        {values.map((value) => {
+          const lookup = getWordFamilyMeaning(value);
+          return (
+            <p key={value}>
+              <span className="font-semibold">{value}</span>
+              {lookup && <span className="text-ink-muted"> - {lookup}</span>}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
+}
+
+function getWordFamilyMeaning(value: string): string | null {
+  const lookup = lookupWord(value);
+  return lookup.translations[0] ?? null;
 }

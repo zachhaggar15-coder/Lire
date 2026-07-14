@@ -151,6 +151,11 @@ function assertSentenceExplanation(raw: unknown, fallbackSentence: string): Sent
     originalSentence: isNonEmptyString(r.originalSentence) ? r.originalSentence : fallbackSentence,
     naturalEnglishTranslation: r.naturalEnglishTranslation,
     simplifiedFrench: r.simplifiedFrench,
+    naturalMeaning: typeof r.naturalMeaning === "string" ? r.naturalMeaning : r.naturalEnglishTranslation,
+    literalStructure: typeof r.literalStructure === "string" ? r.literalStructure : structure.literalTranslation,
+    mainExpression: typeof r.mainExpression === "string" ? r.mainExpression : "",
+    relevantGrammar: isStringArray(r.relevantGrammar) ? r.relevantGrammar : [],
+    whyLiteralTranslationSoundsWrong: typeof r.whyLiteralTranslationSoundsWrong === "string" ? r.whyLiteralTranslationSoundsWrong : "",
     structure,
     grammarNotes: r.grammarNotes,
     usefulVocabulary,
@@ -208,7 +213,10 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
 {
   "originalSentence": string,
   "naturalEnglishTranslation": string,
+  "naturalMeaning": string,          // the natural meaning in plain English
   "simplifiedFrench": string,        // the same idea reworded as a simpler French sentence
+  "literalStructure": string,        // compact literal structure, not polished English
+  "mainExpression": string,          // main idiom/expression if relevant, e.g. "se rendre compte de = to realise", otherwise ""
   "structure": {
     "subject": string,               // grammatical subject, or "" if implied/unclear
     "mainVerb": string,              // main conjugated verb or verbal phrase
@@ -220,6 +228,8 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
     "tense": string,                 // e.g. present, passé composé, imperfect, conditional
     "literalTranslation": string     // deliberately literal English to expose the structure
   },
+  "relevantGrammar": string[],        // 1-4 specific grammar points that unlock this sentence
+  "whyLiteralTranslationSoundsWrong": string, // one short explanation of why word-for-word English fails here, or "" if literal is fine
   "grammarNotes": string[],          // 1-3 short grammar/usage notes
   "usefulVocabulary": [ { "word": string, "meaning": string } ],  // 1-5 useful words from the sentence
   "explanation": string,             // 2-4 short sentences explaining the sentence for a learner

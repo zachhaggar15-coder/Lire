@@ -47,6 +47,8 @@ import {
   clearComprehensionQuestionCache,
   getOrCreateComprehensionQuestionBundle,
 } from "../src/lib/comprehensionCache.ts";
+import { buildInferenceChallenge } from "../src/lib/inference.ts";
+import { rankLearningCandidates } from "../src/lib/learningCandidates.ts";
 import { findPronounReference } from "../src/lib/pronounReferences.ts";
 import { getWordFamily } from "../src/lib/dictionary/wordFamily.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
@@ -77,6 +79,8 @@ import {
 } from "../src/lib/onboarding.ts";
 import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
+import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
+import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 
 let passed = 0;
 let failed = 0;
@@ -517,6 +521,8 @@ console.log("\n--- Comprehension helpers ---");
   check("gist question does not show a generic explanation", !gistQuestion.explanation);
   const toneQuestions = buildToneQuestions(current);
   check("tone helper creates stance/tone/confidence questions", toneQuestions.length === 3 && toneQuestions.every((q) => q.choices.length >= 3));
+  const inference = buildInferenceChallenge("prudents", lookupWord("prudents"), "Certains habitants sont prudents.", "Some residents are cautious.");
+  check("inference challenge offers three choices", !!inference && inference.choices.length === 3);
   const cautiousText = {
     ...current,
     id: "cautious",
@@ -541,6 +547,8 @@ console.log("\n--- Comprehension helpers ---");
     "comprehension question cache reuses the article bundle",
     cachedSecond.gistQuestion.choices.join("|") === cachedFirst.gistQuestion.choices.join("|")
   );
+  const candidates = rankLearningCandidates(current, new Set(), [], [{ word: "prudents", lemma: "prudent", count: 2 }], 3);
+  check("learning candidates include repeatedly tapped useful words", candidates.some((candidate) => candidate.lemma === "prudent"));
 }
 {
   const sentence = tokenizeParagraphsToSentences("Le maire présente le projet qui divise la ville. Il promet un vote public.")[0];
@@ -629,6 +637,34 @@ console.log("\n--- Phrase bank and dictionary feedback ---");
     contextSentence: "Le sujet actuel est important.",
   });
   check("dictionary feedback records corrections", getDictionaryFeedback().some((entry) => entry.input === "actuel" && entry.suggestedTranslation === "current"));
+}
+
+console.log("\n--- Lemma-aware saved words ---");
+{
+  clearWords();
+  const prendreLookup = lookupWord("prendre");
+  const base = {
+    word: "prendre",
+    lemma: prendreLookup.lemma,
+    translations: prendreLookup.translations,
+    primaryTranslation: prendreLookup.translations[0],
+    partOfSpeech: prendreLookup.partOfSpeech,
+    gender: prendreLookup.gender,
+    cefr: prendreLookup.cefr,
+    frequencyRank: prendreLookup.frequencyRank,
+    articleContextSentence: "Il faut prendre une decision.",
+    exampleSentenceFr: "Je dois prendre le train.",
+    exampleSentenceEn: "I have to take the train.",
+    sourceTextTitle: "Test",
+    savedAt: new Date().toISOString(),
+    reviewCount: 0,
+    lastReviewedAt: null,
+    status: "learning",
+    ...defaultSpacedRepetitionFields(),
+  };
+  saveWord(base);
+  saveWord({ ...base, word: "prend", articleContextSentence: "Il prend le train." });
+  check("saved words dedupe inflected forms by lemma", getSavedWords().filter((word) => word.lemma === "prendre").length === 1);
 }
 
 console.log("\n--- Article difficulty feedback ---");

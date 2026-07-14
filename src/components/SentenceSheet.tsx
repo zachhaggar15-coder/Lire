@@ -21,9 +21,9 @@ interface SentenceSheetProps {
 }
 
 /**
- * Bottom sheet shown on a sentence tap. There is no automatic translation or
- * explanation here — the app only calls AI when a reader explicitly taps
- * "Ask AI to explain."
+ * Bottom sheet shown on a sentence hold/tap. There is no automatic translation
+ * or explanation here — the app only calls AI when a reader explicitly taps
+ * "Explain sentence."
  */
 export default function SentenceSheet({ state, articleTitle, onClose }: SentenceSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
@@ -103,7 +103,7 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
               onClick={handleAskAi}
               className="rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
             >
-              Ask AI to explain
+              Explain sentence
             </button>
           )}
           {aiState === "loading" && (
@@ -126,10 +126,26 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
             <>
               <div className="mt-2 rounded-2xl bg-cream p-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                  English
+                  Natural meaning
                 </p>
-                <p className="mt-1 text-sm text-ink">{aiResult.naturalEnglishTranslation}</p>
+                <p className="mt-1 text-sm text-ink">{aiResult.naturalMeaning ?? aiResult.naturalEnglishTranslation}</p>
               </div>
+
+              <div className="mt-3 rounded-2xl bg-cream p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  Literal structure
+                </p>
+                <p className="mt-1 text-sm text-ink">{aiResult.literalStructure ?? aiResult.structure.literalTranslation}</p>
+              </div>
+
+              {aiResult.mainExpression && (
+                <div className="mt-3 rounded-2xl bg-cream p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                    Main expression
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-ink">{aiResult.mainExpression}</p>
+                </div>
+              )}
 
               <div className="mt-3 rounded-2xl bg-cream p-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
@@ -196,16 +212,25 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
                 </div>
               )}
 
-              {aiResult.grammarNotes.length > 0 && (
+              {[...(aiResult.relevantGrammar ?? []), ...aiResult.grammarNotes].filter(Boolean).length > 0 && (
                 <div className="mt-3 rounded-2xl bg-cream p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                    Grammar notes
+                    Relevant grammar
                   </p>
                   <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-ink-muted">
-                    {aiResult.grammarNotes.map((note, i) => (
+                    {[...(aiResult.relevantGrammar ?? []), ...aiResult.grammarNotes].filter(Boolean).map((note, i) => (
                       <li key={i}>{note}</li>
                     ))}
                   </ul>
+                </div>
+              )}
+
+              {aiResult.whyLiteralTranslationSoundsWrong && (
+                <div className="mt-3 rounded-2xl bg-accent-pink p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
+                    Why literal English sounds wrong
+                  </p>
+                  <p className="mt-1 text-sm text-ink">{aiResult.whyLiteralTranslationSoundsWrong}</p>
                 </div>
               )}
 

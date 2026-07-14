@@ -179,7 +179,9 @@ export function getSavedWords(): SavedWord[] {
 }
 
 export function isWordSaved(word: string): boolean {
-  return getSavedWords().some((w) => w.word === word);
+  const lookup = lookupWord(word);
+  const lemma = lookup.lemma?.toLowerCase();
+  return getSavedWords().some((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
 }
 
 /**
@@ -189,7 +191,8 @@ export function isWordSaved(word: string): boolean {
  */
 export function saveWord(entry: SavedWord): SavedWord[] {
   const words = getSavedWords();
-  if (words.some((w) => w.word === entry.word)) return words;
+  const entryLemma = entry.lemma?.toLowerCase();
+  if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) return words;
   const next = [entry, ...words];
   persist(next);
   recordActivityToday();
@@ -227,8 +230,10 @@ export function recordReviewResult(word: string, result: ReviewResult): SavedWor
  */
 export function markWordAsKnown(word: string): SavedWord[] {
   const words = getSavedWords();
-  const target = words.find((w) => w.word === word);
-  const next = words.map((w) => (w.word === word ? { ...w, status: "known" as const } : w));
+  const lookup = lookupWord(word);
+  const lemma = lookup.lemma?.toLowerCase();
+  const target = words.find((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
+  const next = words.map((w) => (w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma) ? { ...w, status: "known" as const } : w));
   persist(next);
   markKnown(word);
   if (target?.lemma) markKnown(target.lemma);
@@ -236,7 +241,9 @@ export function markWordAsKnown(word: string): SavedWord[] {
 }
 
 export function deleteWord(word: string): SavedWord[] {
-  const next = getSavedWords().filter((w) => w.word !== word);
+  const lookup = lookupWord(word);
+  const lemma = lookup.lemma?.toLowerCase();
+  const next = getSavedWords().filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
   persist(next);
   return next;
 }

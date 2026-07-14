@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
 import { getSavedWords, recordReviewResult, markWordAsKnown } from "@/lib/storage";
+import { getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 
@@ -14,13 +15,24 @@ export default function ReviewPage() {
   const [revealed, setRevealed] = useState(false);
   const [score, setScore] = useState({ knew: 0, missed: 0 });
   const [articleFilter, setArticleFilter] = useState<string | null>(null);
+  const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
+  const [reviewMode, setReviewMode] = useState<"words" | "phrases">("words");
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const article = params.get("article");
     const savedWords = getSavedWords();
+    const savedPhrases = getSavedPhrases();
+    const visibleSavedWords = article ? savedWords.filter((word) => word.sourceTextTitle === article) : savedWords;
+    const visibleSavedPhrases = article ? savedPhrases.filter((phrase) => phrase.sourceTextTitle === article) : savedPhrases;
     setArticleFilter(article);
-    setWords(article ? savedWords.filter((word) => word.sourceTextTitle === article) : savedWords);
+    setWords(visibleSavedWords);
+    setPhrases(visibleSavedPhrases);
+    if (visibleSavedWords.length === 0 && visibleSavedPhrases.length > 0) {
+      setReviewMode("phrases");
+    }
     setReady(true);
   }, []);
 
@@ -29,9 +41,11 @@ export default function ReviewPage() {
   // out from under the reader mid-session.
   const queue = useMemo(() => buildReviewQueue(words), [words]);
   const stats = useMemo(() => getReviewStats(words), [words]);
+  const phraseQueue = useMemo(() => phrases.filter((phrase) => phrase.status !== "known"), [phrases]);
 
   const current = queue[index];
-  const done = ready && queue.length > 0 && index >= queue.length;
+  const currentPhrase = phraseQueue[phraseIndex];
+  const done = reviewMode === "words" && ready && queue.length > 0 && index >= queue.length;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
   function visibleWords(allWords: SavedWord[]): SavedWord[] {
@@ -58,9 +72,37 @@ export default function ReviewPage() {
 
   function restart() {
     setWords(visibleWords(getSavedWords()));
+    setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
     setIndex(0);
     setRevealed(false);
+    setPhraseIndex(0);
+    setPhraseAnswer(null);
     setScore({ knew: 0, missed: 0 });
+  }
+
+  function phraseOptions(phrase: SavedPhrase): string[] {
+    return [phrase.phrase, ...phrases.filter((candidate) => candidate.phrase !== phrase.phrase).map((candidate) => candidate.phrase), "avoir lieu", "faire face à"]
+      .filter((value, index, arr) => arr.indexOf(value) === index)
+      .slice(0, 3);
+  }
+
+  function cloze(sentence: string, phrase: string): string {
+    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return sentence.replace(new RegExp(escaped, "i"), "___");
+  }
+
+  function answerPhrase(option: string) {
+    setPhraseAnswer(option);
+  }
+
+  function nextPhrase() {
+    const gotIt = !!currentPhrase && phraseAnswer === currentPhrase.phrase;
+    if (gotIt && currentPhrase) {
+      markPhraseKnown(currentPhrase.phrase);
+      setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
+    }
+    setPhraseAnswer(null);
+    if (!gotIt) setPhraseIndex((value) => value + 1);
   }
 
   const statsBar = (
@@ -80,7 +122,7 @@ export default function ReviewPage() {
   );
 
   // No learning/unsure words saved at all.
-  if (ready && stats.totalLearning === 0) {
+  if (ready && stats.totalLearning === 0 && phraseQueue.length === 0) {
     return (
       <div className="px-4 pt-6">
         <h1 className="text-2xl font-extrabold text-ink">Review</h1>
@@ -103,7 +145,7 @@ export default function ReviewPage() {
   }
 
   // Words exist, but nothing is due right now.
-  if (ready && stats.totalLearning > 0 && queue.length === 0) {
+  if (ready && stats.totalLearning > 0 && queue.length === 0 && reviewMode === "words" && phraseQueue.length === 0) {
     return (
       <div className="px-4 pt-6">
         <h1 className="mb-1 text-2xl font-extrabold text-ink">Review</h1>
@@ -156,7 +198,22 @@ export default function ReviewPage() {
 
       {statsBar}
 
-      {current && (
+      {phrases.length > 0 && (
+        <PhraseModeSwitch mode={reviewMode} onChange={setReviewMode} phraseCount={phraseQueue.length} />
+      )}
+
+      {reviewMode === "phrases" && (
+        <PhraseReviewCard
+          phrase={currentPhrase}
+          options={currentPhrase ? phraseOptions(currentPhrase) : []}
+          selected={phraseAnswer}
+          onSelect={answerPhrase}
+          onNext={nextPhrase}
+          cloze={currentPhrase ? cloze(currentPhrase.contextSentence, currentPhrase.phrase) : ""}
+        />
+      )}
+
+      {reviewMode === "words" && current && (
         <div className="flex flex-1 flex-col">
           {/* Flashcard */}
           <div className="flex flex-1 flex-col items-center justify-center rounded-3xl bg-cream-card p-8 text-center shadow-sm">
@@ -244,6 +301,119 @@ export default function ReviewPage() {
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+function PhraseModeSwitch({
+  mode,
+  onChange,
+  phraseCount,
+}: {
+  mode: "words" | "phrases";
+  onChange: (mode: "words" | "phrases") => void;
+  phraseCount: number;
+}) {
+  return (
+    <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-card p-1 shadow-sm">
+      <button
+        type="button"
+        onClick={() => onChange("words")}
+        className={`rounded-xl py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-white" : "text-ink-muted"}`}
+      >
+        Words
+      </button>
+      <button
+        type="button"
+        onClick={() => onChange("phrases")}
+        className={`rounded-xl py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-white" : "text-ink-muted"}`}
+      >
+        Phrases {phraseCount > 0 ? `(${phraseCount})` : ""}
+      </button>
+    </div>
+  );
+}
+
+function PhraseReviewCard({
+  phrase,
+  options,
+  selected,
+  onSelect,
+  onNext,
+  cloze,
+}: {
+  phrase: SavedPhrase | undefined;
+  options: string[];
+  selected: string | null;
+  onSelect: (option: string) => void;
+  onNext: () => void;
+  cloze: string;
+}) {
+  if (!phrase) {
+    return (
+      <div className="mt-8 rounded-3xl bg-cream-card p-6 text-center shadow-sm">
+        <p className="text-sm font-semibold text-ink">No phrase cards due.</p>
+        <p className="mt-1 text-xs text-ink-muted">Saved phrases you are still learning will appear here.</p>
+      </div>
+    );
+  }
+
+  const answered = selected !== null;
+  const correct = selected === phrase.phrase;
+  return (
+    <div className="flex flex-1 flex-col">
+      <div className="rounded-3xl bg-cream-card p-5 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Phrase in context</p>
+        <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{cloze}</p>
+        <div className="mt-4 space-y-2">
+          {options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onSelect(option)}
+              className={`w-full rounded-2xl px-3 py-3 text-left text-sm font-semibold ${
+                answered && option === phrase.phrase
+                  ? "bg-emerald-100 text-emerald-800"
+                  : answered && option === selected
+                    ? "bg-rose-100 text-rose-800"
+                    : "bg-cream text-ink"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        {answered && (
+          <div className="mt-4 space-y-3 border-t border-cream-dark pt-4">
+            <p className={`text-sm font-semibold ${correct ? "text-emerald-700" : "text-rose-700"}`}>
+              {correct ? "Correct." : "Not quite."} {phrase.phrase} = {phrase.translation}
+            </p>
+            <div className="rounded-2xl bg-cream p-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
+              <p className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
+            </div>
+            <div className="rounded-2xl bg-cream p-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Natural translation</p>
+              <p className="mt-1 text-sm text-ink">{phrase.translation}</p>
+            </div>
+            <div className="rounded-2xl bg-cream p-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">New example</p>
+              <p className="mt-1 text-sm italic text-ink">On peut {phrase.phrase} cette idée dans un autre article.</p>
+              <p className="mt-0.5 text-sm text-ink-muted">You can use this phrase with the same idea in another article.</p>
+            </div>
+            <p className="text-xs text-ink-muted">
+              Register: <span className="font-semibold">{phrase.partOfSpeech?.includes("formal") ? "formal" : "neutral"}</span>
+            </p>
+            <button
+              type="button"
+              onClick={onNext}
+              className="w-full rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
+            >
+              Next phrase
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

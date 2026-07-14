@@ -74,6 +74,11 @@ export interface SentenceExplanation {
   originalSentence: string;
   naturalEnglishTranslation: string;
   simplifiedFrench: string;
+  naturalMeaning?: string;
+  literalStructure?: string;
+  mainExpression?: string;
+  relevantGrammar?: string[];
+  whyLiteralTranslationSoundsWrong?: string;
   structure: SentenceStructure;
   grammarNotes: string[];
   usefulVocabulary: UsefulVocabularyItem[];

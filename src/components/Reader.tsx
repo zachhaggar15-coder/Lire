@@ -27,6 +27,9 @@ import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
+import { buildInferenceChallenge, shouldOfferInference } from "@/lib/inference";
+import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, type WordTapRecord } from "@/lib/learningCandidates";
+import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
 import {
   findRelatedArticles,
   type MultipleChoiceQuestion,
@@ -111,6 +114,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   const [wordStatusMap, setWordStatusMap] = useState<Map<string, WordStatus>>(new Map());
+  const [savedWordsSnapshot, setSavedWordsSnapshot] = useState<SavedWord[]>([]);
   const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
   const [activeWord, setActiveWord] = useState<ActiveWordState | null>(null);
   const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
@@ -120,6 +124,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [articleSavedWordCount, setArticleSavedWordCount] = useState(0);
   const [articleFeedback, setArticleFeedback] = useState<ArticleDifficultyFeedback | null>(null);
+  const [articleTapRecords, setArticleTapRecords] = useState<WordTapRecord[]>([]);
   const [articlePool, setArticlePool] = useState<ReadingText[]>([]);
   const [relatedArticles, setRelatedArticles] = useState<ReadingText[]>([]);
   const [gistAnswer, setGistAnswer] = useState<number | null>(null);
@@ -134,11 +139,28 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sentenceHoldTriggered = useRef(false);
   const [comprehensionQuestions, setComprehensionQuestions] = useState<ComprehensionQuestionBundle>(() =>
     buildComprehensionQuestionBundle(text, [])
   );
   const gistQuestion = comprehensionQuestions.gistQuestion;
   const toneQuestions = comprehensionQuestions.toneQuestions;
+  const inferenceWords = useMemo(() => selectInferenceWords(text, knownSet, 2), [knownSet, text]);
+  const learningCandidates = useMemo(
+    () => rankLearningCandidates(text, knownSet, savedWordsSnapshot, articleTapRecords, 6),
+    [articleTapRecords, knownSet, savedWordsSnapshot, text]
+  );
+  const activeInference = useMemo(() => {
+    if (!activeWord || !shouldOfferInference(activeWord.word, inferenceWords)) return null;
+    if (getInferenceResult(text.id, activeWord.word)) return null;
+    const sentenceIndex = flatSentences.indexOf(activeWord.contextSentence);
+    const sentenceTranslation =
+      sentenceIndex === -1
+        ? activeWord.contextSentence
+        : fluentSentences?.[sentenceIndex] ?? offlineSentences[sentenceIndex] ?? activeWord.contextSentence;
+    return buildInferenceChallenge(activeWord.word, activeWord.lookup, activeWord.contextSentence, sentenceTranslation);
+  }, [activeWord, flatSentences, fluentSentences, inferenceWords, offlineSentences, text.id]);
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
@@ -154,6 +176,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     const known = new Set(getKnownWords());
     const savedWords = getSavedWords();
     setWordStatusMap(new Map(savedWords.map((w) => [w.word, w.status])));
+    setSavedWordsSnapshot(savedWords);
     setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && word.status !== "known").length);
     setKnownSet(known);
     const loadedSettings = getSettings();
@@ -164,6 +187,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     markOpened(text.id);
     setStatus(getProgress(text.id).status);
     setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
+    setArticleTapRecords(getWordTapsForArticle(text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
     const candidates = dedupeArticles([...getCachedRssTexts(), ...getOfflineRssTexts(), ...hardcodedTexts]);
     setArticlePool(candidates);
     setRelatedArticles(findRelatedArticles(text, candidates));
@@ -194,6 +218,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
+      if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
       // Never let audio keep playing after navigating away from the article.
       stopSpeaking();
       setIsSpeakingArticle(false);
@@ -309,11 +334,14 @@ export default function Reader({ text }: { text: ReadingText }) {
       index,
       previous ? tokenize(previous) : null
     );
+    const updatedTaps = recordWordTap(text.id, clean, lookup.lemma);
+    setArticleTapRecords(updatedTaps.filter((tap) => tap.articleId === text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
 
     if (!known && !existingStatus) {
       const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning"));
       existingStatus = "learning";
       setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
+      setSavedWordsSnapshot(nextWords);
       setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     }
 
@@ -348,6 +376,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     markKnown(activeWord.word);
     if (lemma) markKnown(lemma);
     const nextWords = deleteWord(activeWord.word);
+    setSavedWordsSnapshot(nextWords);
     setKnownSet((prev) => {
       const next = new Set(prev);
       next.add(activeWord.word);
@@ -362,6 +391,19 @@ export default function Reader({ text }: { text: ReadingText }) {
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     setActiveWord(null);
     showToast("Removed from saved words");
+  }
+
+  function startSentenceHold(sentenceText: string) {
+    sentenceHoldTriggered.current = false;
+    if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
+    sentenceHoldTimeout.current = setTimeout(() => {
+      sentenceHoldTriggered.current = true;
+      handleSentenceTap(sentenceText);
+    }, 550);
+  }
+
+  function cancelSentenceHold() {
+    if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
   }
 
   function buildSavedWord(
@@ -451,6 +493,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     return `${base} active:bg-brand/10`;
   }
 
+  function handleInferenceAnswer(word: string, lemma: string | null, correct: boolean) {
+    recordInferenceResult(text.id, word, lemma, correct);
+    showToast(correct ? "Inferred correctly" : "Context attempt saved");
+  }
+
+  function handleSaveCandidate(candidate: LearningCandidate) {
+    const lookup = lookupWord(candidate.word);
+    const nextWords = saveWord(buildSavedWord(candidate.word, lookup, candidate.contextSentence, "learning"));
+    setSavedWordsSnapshot(nextWords);
+    setWordStatusMap((prev) => new Map(prev).set(candidate.word, "learning"));
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    showToast("Saved learning candidate");
+  }
+
   function handleToneAnswer(question: ToneQuestion, answerIndex: number) {
     setToneAnswers((prev) => ({ ...prev, [question.id]: answerIndex }));
   }
@@ -529,7 +585,21 @@ export default function Reader({ text }: { text: ReadingText }) {
     return (
       <span
         key={key}
-        onClick={() => handleSentenceTap(sg.text)}
+        onPointerDown={() => startSentenceHold(sg.text)}
+        onPointerUp={cancelSentenceHold}
+        onPointerCancel={cancelSentenceHold}
+        onPointerLeave={cancelSentenceHold}
+        onContextMenu={(event) => {
+          event.preventDefault();
+          handleSentenceTap(sg.text);
+        }}
+        onClick={() => {
+          if (sentenceHoldTriggered.current) {
+            sentenceHoldTriggered.current = false;
+            return;
+          }
+          handleSentenceTap(sg.text);
+        }}
         className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
       >
         {renderedTokens}
@@ -562,7 +632,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       </h1>
       <p className="mt-1 text-xs text-ink-muted">
         {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
-        a sentence to explain it
+        or hold a sentence to explain it
       </p>
       {difficulty && (
         <p className="mt-1 text-xs italic text-ink-muted">
@@ -698,6 +768,10 @@ export default function Reader({ text }: { text: ReadingText }) {
           ))}
         </section>
 
+        {learningCandidates.length > 0 && (
+          <LearningCandidatesSection candidates={learningCandidates} onSave={handleSaveCandidate} />
+        )}
+
         {relatedArticles.length > 0 && (
           <RelatedArticles articles={relatedArticles} />
         )}
@@ -786,7 +860,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               uses your OpenAI quota either way, once per article (cached after that). Until it's ready (or if
               AI isn't available or turned off in Settings), an instant, free offline word-for-word version from
               the local dictionary is shown instead, so there's never nothing to read. Tapping a single sentence
-              is different: it opens "Ask AI to explain," a deeper one-sentence breakdown with grammar notes and
+              is different: it opens "Explain sentence," a deeper structured breakdown with grammar notes and
               vocabulary — reach for that when one line is confusing rather than the whole article.
             </p>
           )}
@@ -810,6 +884,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         articleTitle={text.title}
         onClose={() => setActiveWord(null)}
         onKnow={handleKnow}
+        inferenceChallenge={activeInference}
+        onInferenceAnswer={handleInferenceAnswer}
       />
       <SentenceSheet
         state={activeSentence}
@@ -859,6 +935,50 @@ function RelatedArticles({ articles }: { articles: ReadingText[] }) {
               <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-muted">{article.blurbEn}</p>
             )}
           </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function LearningCandidatesSection({
+  candidates,
+  onSave,
+}: {
+  candidates: LearningCandidate[];
+  onSave: (candidate: LearningCandidate) => void;
+}) {
+  return (
+    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
+      <p className="mt-0.5 text-xs text-ink-muted">
+        Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
+      </p>
+      <div className="mt-3 space-y-2">
+        {candidates.map((candidate) => (
+          <div key={candidate.lemma} className="rounded-2xl bg-cream px-3 py-2">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-ink">
+                  {candidate.lemma}
+                  {candidate.word !== candidate.lemma && <span className="font-medium text-ink-muted"> from {candidate.word}</span>}
+                </p>
+                <p className="mt-0.5 text-xs text-ink-muted">{candidate.translation}</p>
+                <p className="mt-1 text-[11px] font-semibold text-brand">{candidate.reason}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => onSave(candidate)}
+                disabled={candidate.alreadySaved}
+                className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
+              >
+                {candidate.alreadySaved ? "Saved" : "Save"}
+              </button>
+            </div>
+            {candidate.phrase && (
+              <p className="mt-1 text-[11px] text-ink-muted">Appears in phrase: {candidate.phrase}</p>
+            )}
+          </div>
         ))}
       </div>
     </section>
