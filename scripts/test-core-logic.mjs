@@ -118,12 +118,14 @@ import {
   VERB_REFERENCES,
   buildGrammarDashboard,
   clearGrammarStores,
+  currentUnlockedLesson,
   getGrammarPracticeEvents,
   getGrammarProgress,
   getVerbLesson,
   getVerbLessons,
   isGrammarAnswerCorrect,
   markGrammarLessonComplete,
+  practiceSetForLesson,
   questionsForLesson,
   recordGrammarAnswer,
   referenceForVerb,
@@ -957,7 +959,7 @@ console.log("\n--- Grammar conjugation section ---");
 {
   clearGrammarStores();
   check("verb lessons provide a complete first grammar path", getVerbLessons().length >= 8);
-  check("all verb lessons have practice questions", getVerbLessons().every((lesson) => questionsForLesson(lesson.id).length >= 2));
+  check("all verb lessons have five-question practice sets", getVerbLessons().every((lesson) => practiceSetForLesson(lesson.id).length === 5));
   check("tense labels are learner-friendly", tenseLabel("passe-compose") === "Passe compose" && tenseLabel("futur-simple") === "Future simple");
 }
 {
@@ -971,14 +973,17 @@ console.log("\n--- Grammar conjugation section ---");
   const third = recordGrammarAnswer("present-er", "present-er-1", false);
   check("grammar progress tracks attempts and correct answers", third.attempts === 3 && third.correct === 2, JSON.stringify(third));
   check("grammar mastery increases after correct practice", first.mastery > 0 && second.mastery >= first.mastery, `${first.mastery}/${second.mastery}`);
+  check("grammar lessons do not auto-complete before the five-question finish", third.completed === false);
   check("grammar practice events are stored", getGrammarPracticeEvents().length === 3);
 }
 {
+  markGrammarLessonComplete("present-er");
   const completed = markGrammarLessonComplete("present-core-irregulars");
   const dashboard = buildGrammarDashboard(getGrammarProgress(), getGrammarPracticeEvents());
   check("grammar lessons can be marked complete", completed.completed && completed.mastery >= 70);
   check("grammar dashboard reports completed lessons", dashboard.completedLessons >= 1);
   check("grammar dashboard recommends a next lesson", !!dashboard.nextLesson?.id);
+  check("current unlocked lesson skips completed lessons", currentUnlockedLesson(getGrammarProgress()).id === "present-ir-re");
 }
 {
   const etre = referenceForVerb("etre");

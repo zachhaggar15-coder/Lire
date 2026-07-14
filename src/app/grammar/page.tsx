@@ -4,14 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import {
   VERB_REFERENCES,
   buildGrammarDashboard,
+  currentUnlockedLesson,
   getGrammarPracticeEvents,
   getGrammarProgress,
   getLessonProgress,
-  getVerbLesson,
   getVerbLessons,
   isGrammarAnswerCorrect,
   markGrammarLessonComplete,
-  questionsForLesson,
+  practiceSetForLesson,
   recordGrammarAnswer,
   referenceForVerb,
   tenseLabel,
@@ -23,13 +23,12 @@ import {
   type VerbTense,
 } from "@/lib/grammar";
 
-type Tab = "learn" | "practice" | "reference" | "progress";
+type Tab = "learn" | "practice" | "reference";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "learn", label: "Learn" },
   { id: "practice", label: "Practice" },
   { id: "reference", label: "Reference" },
-  { id: "progress", label: "Progress" },
 ];
 
 const TENSES: VerbTense[] = ["present", "passe-compose", "imparfait", "futur-simple", "conditionnel"];
@@ -37,7 +36,6 @@ const TENSES: VerbTense[] = ["present", "passe-compose", "imparfait", "futur-sim
 export default function GrammarPage() {
   const lessons = getVerbLessons();
   const [tab, setTab] = useState<Tab>("learn");
-  const [selectedLessonId, setSelectedLessonId] = useState(lessons[0].id);
   const [progress, setProgress] = useState<GrammarProgressRecord[]>([]);
   const [dashboard, setDashboard] = useState<GrammarDashboard>(() => buildGrammarDashboard([], []));
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -47,11 +45,12 @@ export default function GrammarPage() {
   const [referenceVerb, setReferenceVerb] = useState(VERB_REFERENCES[0].infinitive);
   const [referenceTense, setReferenceTense] = useState<VerbTense>("present");
 
-  const selectedLesson = getVerbLesson(selectedLessonId);
-  const selectedProgress = progress.find((record) => record.lessonId === selectedLessonId) ?? getLessonProgress(selectedLessonId);
-  const questions = questionsForLesson(selectedLessonId);
+  const currentLesson = currentUnlockedLesson(progress);
+  const currentProgress = progress.find((record) => record.lessonId === currentLesson.id) ?? getLessonProgress(currentLesson.id);
+  const questions = practiceSetForLesson(currentLesson.id);
   const currentQuestion = questions[questionIndex] ?? questions[0];
   const reference = referenceForVerb(referenceVerb) ?? VERB_REFERENCES[0];
+  const currentLessonNumber = lessons.findIndex((lesson) => lesson.id === currentLesson.id) + 1;
 
   function refresh() {
     const nextProgress = getGrammarProgress();
@@ -68,30 +67,33 @@ export default function GrammarPage() {
     setSelectedAnswer(null);
     setSessionCorrect(0);
     setSessionAnswered(0);
-  }, [selectedLessonId]);
+  }, [currentLesson.id]);
 
   const pathProgress = useMemo(
     () => Math.round((dashboard.completedLessons / Math.max(1, dashboard.totalLessons)) * 100),
     [dashboard.completedLessons, dashboard.totalLessons]
   );
 
-  function openPractice(lessonId: string) {
-    setSelectedLessonId(lessonId);
+  function openPractice() {
     setTab("practice");
-  }
-
-  function completeLesson(lessonId: string) {
-    markGrammarLessonComplete(lessonId);
-    refresh();
   }
 
   function answerQuestion(question: GrammarPracticeQuestion, answer: string) {
     if (selectedAnswer !== null) return;
     const correct = isGrammarAnswerCorrect(question, answer);
+    const isFinalQuestion = questionIndex >= questions.length - 1;
     setSelectedAnswer(answer);
     setSessionAnswered((value) => value + 1);
     setSessionCorrect((value) => value + (correct ? 1 : 0));
     recordGrammarAnswer(question.lessonId, question.id, correct);
+    if (isFinalQuestion) {
+      markGrammarLessonComplete(question.lessonId);
+      setTab("learn");
+      setQuestionIndex(0);
+      setSelectedAnswer(null);
+      setSessionCorrect(0);
+      setSessionAnswered(0);
+    }
     refresh();
   }
 
@@ -106,19 +108,19 @@ export default function GrammarPage() {
         <p className="text-xs font-bold uppercase tracking-wide text-brand">Grammar</p>
         <h1 className="mt-1 text-2xl font-extrabold text-ink">Verb conjugation</h1>
         <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-          A standalone grammar track for recognising French verb forms in real reading.
+          One lesson at a time. Finish the current step to unlock the next.
         </p>
       </header>
 
-      <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Conjugation path</p>
-            <p className="mt-1 text-xl font-extrabold text-ink">{dashboard.completedLessons}/{dashboard.totalLessons} lessons complete</p>
-            <p className="mt-1 text-xs text-ink-muted">Next: {dashboard.nextLesson.shortTitle}</p>
+            <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber}</p>
+            <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
           </div>
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-brand text-lg font-extrabold text-white">
-            {dashboard.averageMastery}%
+            {currentProgress.mastery}%
           </div>
         </div>
         <ProgressBar value={pathProgress} label="Path progress" />
@@ -141,31 +143,16 @@ export default function GrammarPage() {
 
       {tab === "learn" && (
         <div className="space-y-4">
-          <LessonDetail lesson={selectedLesson} progress={selectedProgress} onPractice={() => openPractice(selectedLesson.id)} onComplete={() => completeLesson(selectedLesson.id)} />
-          <section>
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Verb path</h2>
-            <div className="space-y-3">
-              {lessons.map((lesson, index) => (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  index={index}
-                  selected={lesson.id === selectedLessonId}
-                  progress={progress.find((record) => record.lessonId === lesson.id) ?? getLessonProgress(lesson.id)}
-                  onSelect={() => setSelectedLessonId(lesson.id)}
-                  onPractice={() => openPractice(lesson.id)}
-                />
-              ))}
-            </div>
-          </section>
+          <LessonDetail lesson={currentLesson} lessonNumber={currentLessonNumber} progress={currentProgress} onPractice={openPractice} />
+          <LockedNextCard completedLessons={dashboard.completedLessons} totalLessons={dashboard.totalLessons} />
         </div>
       )}
 
       {tab === "practice" && (
         <div className="space-y-4">
-          <LessonPicker lessons={lessons} selectedLessonId={selectedLessonId} progress={progress} onSelect={setSelectedLessonId} />
+          <PracticeIntro lesson={currentLesson} />
           <PracticeCard
-            lesson={selectedLesson}
+            lesson={currentLesson}
             question={currentQuestion}
             selectedAnswer={selectedAnswer}
             sessionCorrect={sessionCorrect}
@@ -186,10 +173,6 @@ export default function GrammarPage() {
           onVerbChange={setReferenceVerb}
           onTenseChange={setReferenceTense}
         />
-      )}
-
-      {tab === "progress" && (
-        <ProgressPanel dashboard={dashboard} lessons={lessons} progress={progress} />
       )}
     </div>
   );
@@ -212,29 +195,29 @@ function ProgressBar({ value, label }: { value: number; label: string }) {
 
 function LessonDetail({
   lesson,
+  lessonNumber,
   progress,
   onPractice,
-  onComplete,
 }: {
   lesson: VerbLesson;
+  lessonNumber: number;
   progress: GrammarProgressRecord;
   onPractice: () => void;
-  onComplete: () => void;
 }) {
   return (
     <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wide text-brand">{lesson.level} - {tenseLabel(lesson.tense)}</p>
+          <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber} - {lesson.level}</p>
           <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">{lesson.title}</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-muted">{lesson.purpose}</p>
         </div>
-        <span className="shrink-0 rounded-full bg-cream px-2.5 py-1 text-xs font-bold text-ink-muted">{lesson.group}</span>
+        <span className="shrink-0 rounded-full bg-cream px-2.5 py-1 text-xs font-bold text-ink-muted">{tenseLabel(lesson.tense)}</span>
       </div>
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
-        <p className="text-sm leading-relaxed text-ink">{lesson.explanation}</p>
-        <p className="mt-2 text-xs font-semibold text-brand">{lesson.pattern}</p>
+        <p className="text-sm font-semibold leading-relaxed text-ink">{lesson.pattern}</p>
+        <p className="mt-2 text-xs leading-relaxed text-ink-muted">{lesson.explanation}</p>
       </div>
 
       <div className="mt-4">
@@ -248,18 +231,15 @@ function LessonDetail({
         </div>
       </div>
 
-      <div className="mt-4 space-y-2">
-        {lesson.examples.map((example) => (
-          <div key={example.french} className="rounded-2xl bg-cream px-3 py-2">
-            <p className="text-sm font-semibold text-ink">{example.french}</p>
-            <p className="mt-0.5 text-xs text-ink-muted">{example.english}</p>
-            <p className="mt-1 text-[11px] font-semibold text-brand">{example.note}</p>
-          </div>
-        ))}
+      <div className="mt-4 rounded-2xl bg-cream px-3 py-2">
+        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Example</p>
+        <p className="mt-1 text-sm font-semibold text-ink">{lesson.examples[0].french}</p>
+        <p className="mt-0.5 text-xs text-ink-muted">{lesson.examples[0].english}</p>
+        <p className="mt-1 text-[11px] font-semibold text-brand">{lesson.examples[0].note}</p>
       </div>
 
       <div className="mt-4 rounded-2xl bg-amber-100/70 px-3 py-2">
-        <p className="text-xs font-bold text-ink">Common trap</p>
+        <p className="text-xs font-bold text-ink">Watch for</p>
         <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{lesson.commonMistake}</p>
       </div>
 
@@ -267,87 +247,35 @@ function LessonDetail({
 
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
-          Practise
-        </button>
-        <button type="button" onClick={onComplete} className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95">
-          Mark learnt
+          Start 5-question quiz
         </button>
       </div>
     </section>
   );
 }
 
-function LessonCard({
-  lesson,
-  index,
-  selected,
-  progress,
-  onSelect,
-  onPractice,
-}: {
-  lesson: VerbLesson;
-  index: number;
-  selected: boolean;
-  progress: GrammarProgressRecord;
-  onSelect: () => void;
-  onPractice: () => void;
-}) {
+function LockedNextCard({ completedLessons, totalLessons }: { completedLessons: number; totalLessons: number }) {
+  const allDone = completedLessons >= totalLessons;
   return (
-    <article className={`rounded-3xl border p-4 shadow-sm ${selected ? "border-brand/30 bg-brand-light" : "border-transparent bg-cream-card"}`}>
-      <button type="button" onClick={onSelect} className="w-full text-left active:scale-[0.99]">
-        <div className="flex items-start gap-3">
-          <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-sm font-extrabold ${progress.completed ? "bg-brand text-white" : "bg-cream-dark text-ink"}`}>
-            {progress.completed ? "OK" : index + 1}
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h3 className="text-sm font-bold text-ink">{lesson.shortTitle}</h3>
-                <p className="mt-0.5 text-xs text-ink-muted">{lesson.purpose}</p>
-              </div>
-              <span className="shrink-0 rounded-full bg-cream px-2 py-0.5 text-[11px] font-bold text-ink-muted">{lesson.level}</span>
-            </div>
-            <ProgressBar value={progress.mastery} label={`${progress.correct}/${progress.attempts} correct`} />
-          </div>
-        </div>
-      </button>
-      <button type="button" onClick={onPractice} className="mt-3 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-brand active:scale-95">
-        Practice this
-      </button>
+    <article className="rounded-3xl border border-dashed border-cream-dark bg-cream/60 p-4">
+      <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">{allDone ? "Path complete" : "Next lesson locked"}</p>
+      <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+        {allDone
+          ? "You have finished the current verb-conjugation path."
+          : "Finish this lesson to reveal the next one. The rest of the path stays hidden so this section stays simple."}
+      </p>
     </article>
   );
 }
 
-function LessonPicker({
-  lessons,
-  selectedLessonId,
-  progress,
-  onSelect,
-}: {
-  lessons: VerbLesson[];
-  selectedLessonId: string;
-  progress: GrammarProgressRecord[];
-  onSelect: (lessonId: string) => void;
-}) {
+function PracticeIntro({ lesson }: { lesson: VerbLesson }) {
   return (
-    <section className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-      {lessons.map((lesson) => {
-        const record = progress.find((item) => item.lessonId === lesson.id) ?? getLessonProgress(lesson.id);
-        return (
-          <button
-            key={lesson.id}
-            type="button"
-            onClick={() => onSelect(lesson.id)}
-            className={`w-40 shrink-0 rounded-3xl p-3 text-left shadow-sm active:scale-[0.99] ${
-              selectedLessonId === lesson.id ? "bg-brand text-white" : "bg-cream-card text-ink"
-            }`}
-          >
-            <p className="text-xs font-bold opacity-80">{lesson.level}</p>
-            <p className="mt-1 text-sm font-extrabold leading-tight">{lesson.shortTitle}</p>
-            <p className="mt-2 text-xs opacity-80">{record.mastery}% mastery</p>
-          </button>
-        );
-      })}
+    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Before the quiz</p>
+      <h2 className="mt-1 text-lg font-extrabold text-ink">{lesson.shortTitle}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{lesson.explanation}</p>
+      <p className="mt-3 rounded-2xl bg-cream px-3 py-2 text-sm font-semibold text-ink">{lesson.pattern}</p>
+      <p className="mt-2 text-xs text-ink-muted">Answer 5 questions. When the set is finished, the next lesson opens automatically.</p>
     </section>
   );
 }
@@ -492,76 +420,5 @@ function ReferencePanel({
         </div>
       </section>
     </div>
-  );
-}
-
-function ProgressPanel({
-  dashboard,
-  lessons,
-  progress,
-}: {
-  dashboard: GrammarDashboard;
-  lessons: VerbLesson[];
-  progress: GrammarProgressRecord[];
-}) {
-  return (
-    <div className="space-y-4">
-      <section className="grid grid-cols-2 gap-3">
-        <MetricCard label="Completed" value={`${dashboard.completedLessons}/${dashboard.totalLessons}`} />
-        <MetricCard label="Average mastery" value={`${dashboard.averageMastery}%`} />
-        <MetricCard label="Strongest" value={dashboard.strongestLesson?.shortTitle ?? "No practice yet"} />
-        <MetricCard label="Focus next" value={dashboard.weakestLesson?.shortTitle ?? dashboard.nextLesson.shortTitle} />
-      </section>
-
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Lesson mastery</h2>
-        <div className="mt-3 space-y-3">
-          {lessons.map((lesson) => {
-            const record = progress.find((item) => item.lessonId === lesson.id) ?? getLessonProgress(lesson.id);
-            return (
-              <div key={lesson.id} className="rounded-2xl bg-cream px-3 py-3">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-bold text-ink">{lesson.shortTitle}</p>
-                    <p className="text-xs text-ink-muted">{record.correct}/{record.attempts} correct</p>
-                  </div>
-                  <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${record.completed ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
-                    {record.completed ? "Learnt" : `${record.mastery}%`}
-                  </span>
-                </div>
-                <ProgressBar value={record.mastery} label="Mastery" />
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Recent practice</h2>
-        {dashboard.recentEvents.length > 0 ? (
-          <div className="mt-3 space-y-2">
-            {dashboard.recentEvents.map((event) => (
-              <div key={event.id} className="flex items-center justify-between rounded-2xl bg-cream px-3 py-2">
-                <p className="text-xs font-semibold text-ink">{getVerbLesson(event.lessonId).shortTitle}</p>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${event.correct ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}`}>
-                  {event.correct ? "Correct" : "Missed"}
-                </span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-sm text-ink-muted">No practice attempts yet.</p>
-        )}
-      </section>
-    </div>
-  );
-}
-
-function MetricCard({ label, value }: { label: string; value: string }) {
-  return (
-    <article className="rounded-3xl bg-cream-card p-4 shadow-sm">
-      <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">{label}</p>
-      <p className="mt-1 text-lg font-extrabold leading-tight text-ink">{value}</p>
-    </article>
   );
 }
