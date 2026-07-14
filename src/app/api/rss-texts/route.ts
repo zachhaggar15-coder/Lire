@@ -260,6 +260,10 @@ function isKnownCategory(value: string): value is Category {
   return ["news-style", "sport", "culture", "science", "everyday life"].includes(value);
 }
 
+function isKnownLanguage(value: string): value is RssSource["language"] {
+  return value === "fr" || value === "en" || value === "mixed";
+}
+
 /**
  * Wraps the whole handler so an unexpected error anywhere in the pipeline
  * (a bad feed, a broken dependency, anything not already handled per-source
@@ -284,7 +288,8 @@ export async function GET(request: Request) {
 async function handleGet(request: Request) {
   const url = new URL(request.url);
   const limit = parseLimit(url.searchParams.get("limit"));
-  const languageParam = url.searchParams.get("language") ?? "all";
+  const rawLanguageParam = url.searchParams.get("language") ?? "all";
+  const languageParam: RssSource["language"] | "all" = isKnownLanguage(rawLanguageParam) ? rawLanguageParam : "all";
   const categoryParam = url.searchParams.get("category") ?? "all";
   const refresh = url.searchParams.get("refresh") === "true";
   const includeHealth = url.searchParams.get("health") === "true";

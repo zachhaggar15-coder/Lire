@@ -4,9 +4,8 @@ import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "
 import Link from "next/link";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { texts as hardcodedTexts } from "@/data/texts";
-import type { WordExplanation } from "@/lib/ai/types";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
-import { getSavedWords, saveWord } from "@/lib/storage";
+import { deleteWord, getSavedWords, saveWord } from "@/lib/storage";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import {
   cacheDictionarySentenceTranslations,
@@ -15,7 +14,6 @@ import {
   type DictionaryArticleTranslationMode,
 } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
-import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { getKnownWords, markKnown } from "@/lib/knownWords";
@@ -293,7 +291,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     const lookup = lookupWord(tokens[index].text, adjacentWords(tokens, index));
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
-    const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
+    let existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
     const { previous } = neighbours(sentenceText);
     const pronounReference = findPronounReference(
       clean,
@@ -301,6 +299,13 @@ export default function Reader({ text }: { text: ReadingText }) {
       index,
       previous ? tokenize(previous) : null
     );
+
+    if (!known && !existingStatus) {
+      const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning"));
+      existingStatus = "learning";
+      setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
+      setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    }
 
     setActiveSentence(null);
     setActivePhrase(null);
@@ -332,25 +337,30 @@ export default function Reader({ text }: { text: ReadingText }) {
     const lemma = activeWord.lookup.lemma;
     markKnown(activeWord.word);
     if (lemma) markKnown(lemma);
+    const nextWords = deleteWord(activeWord.word);
     setKnownSet((prev) => {
       const next = new Set(prev);
       next.add(activeWord.word);
       if (lemma) next.add(lemma.toLowerCase());
       return next;
     });
+    setWordStatusMap((prev) => {
+      const next = new Map(prev);
+      next.delete(activeWord.word);
+      return next;
+    });
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     setActiveWord(null);
-    showToast("Marked as known");
+    showToast("Removed from saved words");
   }
 
-  function saveActiveWord(wordStatus: Exclude<WordStatus, "known">, aiBackfill: WordExplanation | null = null) {
-    if (!activeWord) return;
-    const { lookup, contextSentence, word } = activeWord;
+  function buildSavedWord(
+    word: string,
+    lookup: ActiveWordState["lookup"],
+    contextSentence: string,
+    wordStatus: Exclude<WordStatus, "known">
+  ): SavedWord {
     const missing = lookup.source === "missing";
-    // A dictionary miss that's already been looked up via "Ask AI for
-    // nuance" this session gets backfilled with the AI's translation and
-    // example instead of the generic "Not translated yet" placeholder — see
-    // WordSheet's onSave/onUnsure, which pass through whatever it fetched.
-    const backfilled = missing && !!aiBackfill;
     const firstExample = lookup.examples[0];
     const fallbackExample = generateFallbackExample({
       word,
@@ -362,45 +372,24 @@ export default function Reader({ text }: { text: ReadingText }) {
     const entry: SavedWord = {
       word,
       lemma: lookup.lemma,
-      translations: backfilled ? [aiBackfill.translation] : lookup.translations,
-      primaryTranslation: backfilled
-        ? aiBackfill.translation
-        : missing
-          ? NOT_TRANSLATED_YET
-          : lookup.translations[0] ?? NOT_TRANSLATED_YET,
-      partOfSpeech: backfilled ? aiBackfill.partOfSpeech : lookup.partOfSpeech,
+      translations: lookup.translations,
+      primaryTranslation: missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET,
+      partOfSpeech: lookup.partOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
       articleContextSentence: contextSentence,
-      exampleSentenceFr: backfilled ? aiBackfill.simpleExampleFr : firstExample?.fr ?? fallbackExample.fr,
-      exampleSentenceEn: backfilled ? aiBackfill.simpleExampleEn : firstExample?.en ?? fallbackExample.en,
+      exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
+      exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
       lastReviewedAt: null,
       status: wordStatus,
-      missingFromDictionary: missing && !backfilled,
+      missingFromDictionary: missing,
       ...defaultSpacedRepetitionFields(),
     };
-    if (backfilled) {
-      saveCustomDictionaryEntry({
-        lemma: (aiBackfill.lemma ?? word).toLowerCase(),
-        forms: aiBackfill.lemma && aiBackfill.lemma.toLowerCase() !== word ? [word] : undefined,
-        translations: [aiBackfill.translation],
-        partOfSpeech: aiBackfill.partOfSpeech ?? undefined,
-        gender:
-          lookup.gender === "masculine" || lookup.gender === "feminine" || lookup.gender === "both"
-            ? lookup.gender
-            : undefined,
-        examples: [{ fr: aiBackfill.simpleExampleFr, en: aiBackfill.simpleExampleEn }],
-      });
-    }
-    saveWord(entry);
-    setWordStatusMap((prev) => new Map(prev).set(word, wordStatus));
-    setArticleSavedWordCount(getSavedWords().filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-    setActiveWord(null);
-    showToast(wordStatus === "learning" ? "Saved — Learning" : "Saved — Unsure");
+    return entry;
   }
 
   function handleMarkCompleted() {
@@ -830,8 +819,6 @@ export default function Reader({ text }: { text: ReadingText }) {
         articleTitle={text.title}
         onClose={() => setActiveWord(null)}
         onKnow={handleKnow}
-        onUnsure={(aiBackfill) => saveActiveWord("unsure", aiBackfill)}
-        onSave={(aiBackfill) => saveActiveWord("learning", aiBackfill)}
       />
       <SentenceSheet
         state={activeSentence}

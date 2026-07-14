@@ -30,14 +30,6 @@ interface WordSheetProps {
   articleTitle: string;
   onClose: () => void;
   onKnow: () => void;
-  /**
-   * Receives whatever AI explanation this sheet has already fetched (or
-   * null if none), so a missing-from-dictionary word saved right after an
-   * "Ask AI for nuance" lookup can be backfilled with a real translation
-   * instead of "Not translated yet" — see Reader.tsx's saveActiveWord.
-   */
-  onUnsure: (aiBackfill: WordExplanation | null) => void;
-  onSave: (aiBackfill: WordExplanation | null) => void;
 }
 
 const STATUS_LABEL: Record<WordStatus, string> = {
@@ -48,11 +40,10 @@ const STATUS_LABEL: Record<WordStatus, string> = {
 
 /**
  * Bottom sheet shown on every word tap: an instant, fully-offline
- * dictionary lookup, plus three explicit actions (this is the whole
- * "learning signal" the app now asks for instead of auto-saving every tap).
+ * dictionary lookup for the word that the reader has just auto-saved.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsure, onSave }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -356,7 +347,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
           )}
         </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-2">
+        <div className="mt-5 grid grid-cols-2 gap-2">
           <button
             onClick={onKnow}
             className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
@@ -364,16 +355,10 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onUnsu
             I know this
           </button>
           <button
-            onClick={() => onUnsure(aiState === "ready" ? aiResult : null)}
-            className="rounded-2xl bg-amber-200 py-3 text-sm font-semibold text-amber-900 active:scale-95"
-          >
-            Unsure
-          </button>
-          <button
-            onClick={() => onSave(aiState === "ready" ? aiResult : null)}
+            onClick={onClose}
             className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
           >
-            Save
+            Keep saved
           </button>
         </div>
       </div>

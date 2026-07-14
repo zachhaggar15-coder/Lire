@@ -33,6 +33,7 @@ import {
 type LoadState = "loading" | "success" | "error";
 type CategoryFilter = "all" | Category;
 type DifficultyFilter = "all" | Difficulty;
+type LanguageFilter = "all" | NonNullable<ReadingText["language"]>;
 
 /** How many RSS candidates to pull in for the recommendation engine to choose from — much more than the 5 actually shown, so every section has real options. */
 const POOL_LIMIT = 50;
@@ -95,6 +96,17 @@ const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
   { value: "B2", label: "B2" },
 ];
 
+const LANGUAGE_FILTERS: { value: LanguageFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "fr", label: "French" },
+  { value: "mixed", label: "Mixed" },
+  { value: "en", label: "English" },
+];
+
+function articleLanguage(text: ReadingText): NonNullable<ReadingText["language"]> {
+  return text.language ?? "fr";
+}
+
 export default function HomePage() {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
@@ -103,6 +115,7 @@ export default function HomePage() {
   const [feedHealth, setFeedHealth] = useState<FeedHealth | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
+  const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
   const [refreshKey, setRefreshKey] = useState(0);
   const [prefVersion, setPrefVersion] = useState(0);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
@@ -119,6 +132,7 @@ export default function HomePage() {
         const params = new URLSearchParams({ limit: String(POOL_LIMIT) });
         const forceRefresh = refreshKey > 0 && lastRefreshSent.current !== refreshKey;
         if (categoryFilter !== "all") params.set("category", categoryFilter);
+        if (languageFilter !== "all") params.set("language", languageFilter);
         if (forceRefresh) params.set("refresh", "true");
 
         const res = await fetch(`/api/rss-texts?${params.toString()}`);
@@ -156,6 +170,7 @@ export default function HomePage() {
         const filtered = ranked.filter((article) => {
           if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
           if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+          if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
           return true;
         });
 
@@ -179,6 +194,7 @@ export default function HomePage() {
           const ranked = rankArticles(scorable, buildScoringContext()).filter((article) => {
             if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
             if (difficultyFilter !== "all" && article.difficulty.cefr !== difficultyFilter) return false;
+            if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
             return true;
           });
           setSections(buildSections(ranked));
@@ -194,7 +210,7 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, [categoryFilter, difficultyFilter, refreshKey, prefVersion]);
+  }, [categoryFilter, difficultyFilter, languageFilter, refreshKey, prefVersion]);
 
   const hasArticles =
     !!sections &&
@@ -213,7 +229,14 @@ export default function HomePage() {
   function resetFilters() {
     setCategoryFilter("all");
     setDifficultyFilter("all");
+    setLanguageFilter("all");
   }
+
+  const activeFilterLabels = [
+    categoryFilter !== "all" ? categoryFilter : null,
+    difficultyFilter !== "all" ? difficultyFilter : null,
+    languageFilter !== "all" ? LANGUAGE_FILTERS.find((filter) => filter.value === languageFilter)?.label ?? languageFilter : null,
+  ].filter(Boolean);
 
   return (
     <div className="px-4 pt-6">
@@ -231,15 +254,15 @@ export default function HomePage() {
 
       <details
         className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"
-        open={categoryFilter !== "all" || difficultyFilter !== "all"}
+        open={categoryFilter !== "all" || difficultyFilter !== "all" || languageFilter !== "all"}
       >
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Filters</h2>
             <p className="mt-0.5 text-xs text-ink-muted">
-              {categoryFilter === "all" && difficultyFilter === "all"
-                ? "Topic, level, or refresh the RSS pool."
-                : `${[categoryFilter !== "all" ? categoryFilter : null, difficultyFilter !== "all" ? difficultyFilter : null].filter(Boolean).join(" · ")} active`}
+              {activeFilterLabels.length === 0
+                ? "Topic, level, language, or refresh the RSS pool."
+                : `${activeFilterLabels.join(" · ")} active`}
             </p>
           </div>
           <svg className="h-4 w-4 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -254,7 +277,7 @@ export default function HomePage() {
           >
             Refresh
           </button>
-          {(categoryFilter !== "all" || difficultyFilter !== "all") && (
+          {(categoryFilter !== "all" || difficultyFilter !== "all" || languageFilter !== "all") && (
             <button
               onClick={resetFilters}
               className="shrink-0 rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted active:scale-95"
@@ -290,6 +313,23 @@ export default function HomePage() {
                 onClick={() => setDifficultyFilter(filter.value)}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                   difficultyFilter === filter.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-2">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Language</p>
+          <div className="flex flex-wrap gap-1">
+            {LANGUAGE_FILTERS.map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setLanguageFilter(filter.value)}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  languageFilter === filter.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 {filter.label}
@@ -442,7 +482,7 @@ export default function HomePage() {
       {state === "success" && sections && !hasArticles && (
         <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
           <p className="text-sm font-semibold text-ink">No articles match those filters.</p>
-          <p className="mt-1 text-xs text-ink-muted">Try another topic or level.</p>
+          <p className="mt-1 text-xs text-ink-muted">Try another topic, level, or language.</p>
           <button
             type="button"
             onClick={resetFilters}

@@ -183,8 +183,7 @@ export function isWordSaved(word: string): boolean {
 }
 
 /**
- * Save a word with status "learning" or "unsure" (see the reader's
- * three-action word sheet). No-ops if the word is already saved — the
+ * Save a word with status "learning" or "unsure". No-ops if the word is already saved — the
  * original saved context and status are kept, even if tapped again in a
  * new sentence later.
  */
