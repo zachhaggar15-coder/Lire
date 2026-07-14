@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ArticleSection from "@/components/ArticleSection";
 import ReadingCard from "@/components/ReadingCard";
-import TodayCard from "@/components/TodayCard";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
-import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
@@ -294,11 +292,17 @@ export default function HomePage() {
 
   return (
     <div className="px-4 pt-6">
-      <header className="mb-5">
-        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
-        <p className="text-sm text-ink-muted">
-          Read short French texts. Tap words you don&apos;t know.
-        </p>
+      <header className="mb-4 flex items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
+          <p className="text-sm text-ink-muted">Dashboard</p>
+        </div>
+        <Link
+          href="/settings"
+          className="rounded-full bg-cream-card px-3 py-2 text-xs font-bold text-ink-muted shadow-sm active:scale-95"
+        >
+          {selectedLevel}
+        </Link>
       </header>
 
       {rewardNotice && (
@@ -307,36 +311,9 @@ export default function HomePage() {
         </div>
       )}
 
-      {progressSnapshot && (
-        <Link href="/progress" className="mb-4 block rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Current reading level</p>
-              <p className="mt-0.5 text-lg font-extrabold text-ink">
-                Level {progressSnapshot.level.level} - {progressSnapshot.level.title}
-              </p>
-            </div>
-            <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">
-              {progressSnapshot.level.totalXp.toLocaleString()} XP
-            </span>
-          </div>
-          <XPProgressBar value={progressSnapshot.level.progress} label="Progress to next level" className="mt-3" />
-        </Link>
-      )}
-
+      <HomeDashboard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} />
       <ContinueReadingBanner />
-      <TodayCard />
-      <ReadingGoalsCard />
       <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
-      {progressSnapshot && (
-        <TodaysMissionsPanel missions={progressSnapshot.missions} compact />
-      )}
-      {state === "success" && todayWords.length > 0 && (
-        <TodayNewsWordsSection words={todayWords} />
-      )}
-      {state === "success" && contextualReviewArticles.length > 0 && (
-        <ContextualReviewSection articles={contextualReviewArticles} />
-      )}
 
       <details
         className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"
@@ -476,39 +453,66 @@ export default function HomePage() {
           )}
 
           <ArticleSection
+            id="daily-reading"
             title="Today's Bank"
             subtitle={`8 public-domain readings matched to ${difficultyFilter === "all" ? selectedLevel : difficultyFilter}.`}
             articles={sections.dailyBank}
+            variant="rail"
           />
           <ArticleSection
+            id="live-news"
             title="Live News"
             subtitle="Two RSS articles from today's live source pool."
             articles={sections.liveNews}
+            variant="compact"
           />
 
+          <details className="mb-6 rounded-2xl border border-cream-dark px-3 py-3">
+            <summary className="cursor-pointer list-none">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">More Picks</h2>
+                  <p className="mt-0.5 text-xs text-ink-muted">Extra recommendations, snippets, and saved items.</p>
+                </div>
+                <span className="rounded-full bg-cream-dark px-3 py-1 text-xs font-bold text-ink-muted">
+                  Open
+                </span>
+              </div>
+            </summary>
+            <div className="mt-4">
           <ArticleSection
             title="Good For You"
             subtitle="Right in your ideal challenge zone."
             articles={sections.goodForYou}
+            variant="compact"
+            limit={3}
           />
-          <ArticleSection title="Quick Reads" subtitle="2-4 minutes." articles={sections.quickReads} />
+          <ArticleSection title="Quick Reads" subtitle="2-4 minutes." articles={sections.quickReads} variant="compact" limit={3} />
           <ArticleSection
             title="Stretch Yourself"
             subtitle="A bit harder than usual."
             articles={sections.stretchYourself}
+            variant="compact"
+            limit={3}
           />
           <ArticleSection
             title="New Vocabulary"
             subtitle="Likely to teach you several new words."
             articles={sections.newVocabulary}
+            variant="compact"
+            limit={3}
           />
-          <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} />
+          <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" limit={3} />
           <ArticleSection
             title="Short Snippets"
             subtitle="Quick, shorter texts — great for a few spare minutes."
             articles={sections.shortSnippets}
+            variant="compact"
+            limit={4}
           />
-          <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} />
+          <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} variant="compact" />
+            </div>
+          </details>
 
           {sections.saveForLater.length > 0 && (
             <details className="mb-6 rounded-3xl border border-dashed border-cream-dark p-3">
@@ -525,6 +529,27 @@ export default function HomePage() {
                     score={article.score}
                   />
                 ))}
+              </div>
+            </details>
+          )}
+
+          {(progressSnapshot || todayWords.length > 0 || contextualReviewArticles.length > 0) && (
+            <details className="mb-6 rounded-2xl border border-cream-dark px-3 py-3">
+              <summary className="cursor-pointer list-none">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Learning Signals</h2>
+                    <p className="mt-0.5 text-xs text-ink-muted">Missions, shared news words, and review-through-reading.</p>
+                  </div>
+                  <span className="rounded-full bg-cream-dark px-3 py-1 text-xs font-bold text-ink-muted">
+                    Open
+                  </span>
+                </div>
+              </summary>
+              <div className="mt-4">
+                {progressSnapshot && <TodaysMissionsPanel missions={progressSnapshot.missions} compact />}
+                {todayWords.length > 0 && <TodayNewsWordsSection words={todayWords} />}
+                {contextualReviewArticles.length > 0 && <ContextualReviewSection articles={contextualReviewArticles} />}
               </div>
             </details>
           )}
@@ -589,6 +614,142 @@ export default function HomePage() {
         </div>
       )}
     </div>
+  );
+}
+
+function HomeDashboard({
+  progressSnapshot,
+  selectedLevel,
+}: {
+  progressSnapshot: ProgressSnapshot | null;
+  selectedLevel: Difficulty;
+}) {
+  const dueMissions = progressSnapshot?.missions.filter((mission) => !mission.completed).length ?? 0;
+  const totalXp = progressSnapshot?.level.totalXp ?? 0;
+  const progress = progressSnapshot?.level.progress ?? 0;
+  const levelTitle = `${selectedLevel} reading bank`;
+
+  const links = [
+    { href: "#daily-reading", label: "Bank", icon: "book", meta: selectedLevel },
+    { href: "#live-news", label: "News", icon: "news", meta: "2 live" },
+    { href: "/review", label: "Review", icon: "cards", meta: dueMissions > 0 ? `${dueMissions} tasks` : "Due" },
+    { href: "/words", label: "Words", icon: "bookmark", meta: "Saved" },
+    { href: "/grammar", label: "Grammar", icon: "grammar", meta: "Verbs" },
+    { href: "/progress", label: "Progress", icon: "chart", meta: `${totalXp.toLocaleString()} XP` },
+    { href: "/archive", label: "Archive", icon: "archive", meta: "History" },
+    { href: "/phrases", label: "Phrases", icon: "phrase", meta: "Chunks" },
+    { href: "/dictionary", label: "Dictionary", icon: "dictionary", meta: "Quality" },
+    { href: "/lookup", label: "Lookup", icon: "search", meta: "EN-FR" },
+    { href: "/sources", label: "Sources", icon: "source", meta: "RSS" },
+    { href: "/settings", label: "Settings", icon: "settings", meta: "Level" },
+  ];
+
+  return (
+    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading level</p>
+          <h2 className="mt-0.5 truncate text-lg font-extrabold text-ink">{levelTitle}</h2>
+        </div>
+        <Link
+          href="/settings"
+          className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand active:scale-95"
+        >
+          {selectedLevel}
+        </Link>
+      </div>
+
+      <XPProgressBar value={progress} label={`${totalXp.toLocaleString()} XP`} className="mt-3" />
+
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {links.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="min-h-[72px] rounded-2xl bg-cream px-2.5 py-2.5 active:scale-95"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <DashboardIcon kind={item.icon} className="h-5 w-5 text-brand" />
+              <span className="truncate rounded-full bg-cream-dark px-1.5 py-0.5 text-[10px] font-bold text-ink-muted">
+                {item.meta}
+              </span>
+            </div>
+            <span className="mt-2 block truncate text-sm font-bold text-ink">{item.label}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DashboardIcon({ kind, className }: { kind: string; className?: string }) {
+  if (kind === "chart") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+        <path d="M4 19V5" />
+        <path d="M8 19v-6" />
+        <path d="M12 19V9" />
+        <path d="M16 19v-9" />
+        <path d="M20 19V4" />
+      </svg>
+    );
+  }
+  if (kind === "cards") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <rect x="3" y="6" width="14" height="12" rx="2" />
+        <path d="M8 3h9a2 2 0 0 1 2 2v11" />
+      </svg>
+    );
+  }
+  if (kind === "settings") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <circle cx="12" cy="12" r="3" />
+        <path d="M4 12h2m12 0h2M12 4v2m0 12v2M6.6 6.6 8 8m8 8 1.4 1.4M17.4 6.6 16 8m-8 8-1.4 1.4" />
+      </svg>
+    );
+  }
+  if (kind === "search") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-4-4" />
+      </svg>
+    );
+  }
+  if (kind === "archive") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <path d="M4 7h16" />
+        <rect x="5" y="7" width="14" height="13" rx="2" />
+        <path d="M9 11h6" />
+      </svg>
+    );
+  }
+  if (kind === "bookmark") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+      </svg>
+    );
+  }
+  if (kind === "grammar" || kind === "dictionary" || kind === "phrase" || kind === "book") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4z" />
+        <path d="M9 8h5" />
+        <path d="M9 12h6" />
+        <path d="M9 16h4" />
+      </svg>
+    );
+  }
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M4 6h16" />
+      <path d="M4 12h16" />
+      <path d="M4 18h10" />
+    </svg>
   );
 }
 
