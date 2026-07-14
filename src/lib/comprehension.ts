@@ -5,7 +5,7 @@ export interface MultipleChoiceQuestion {
   prompt: string;
   choices: string[];
   answerIndex: number;
-  explanation: string;
+  explanation?: string;
 }
 
 export interface ToneQuestion extends MultipleChoiceQuestion {
@@ -37,13 +37,28 @@ const STOPWORDS = new Set([
   "with",
 ]);
 
-function cleanWords(text: string): string[] {
+const SIGNALS = {
+  alarmist: ["alerte", "catastrophe", "crise", "danger", "grave", "menace", "panique", "urgence"],
+  amused: ["amusant", "amuse", "drole", "humour", "sourire"],
+  critical: ["accuse", "conteste", "critique", "denonce", "difficile", "inquiet", "inquiete", "probleme", "risque"],
+  supportive: ["aide", "aider", "ameliore", "ameliorer", "apprecie", "encourage", "reussite", "salue", "succes"],
+  cautious: ["devrait", "essai", "estime", "etudie", "eventuel", "possible", "pourrait", "prudence", "selon", "semble"],
+  confident: ["affirme", "assure", "certain", "confirme", "demontre", "prouve", "sans doute"],
+} as const;
+
+function normalise(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .match(/[\p{L}\p{N}]+/gu)
-    ?.filter((word) => word.length > 2 && !STOPWORDS.has(word)) ?? [];
+    .replace(/\p{Diacritic}/gu, "");
+}
+
+function cleanWords(text: string): string[] {
+  return (
+    normalise(text)
+      .match(/[\p{L}\p{N}]+/gu)
+      ?.filter((word) => word.length > 2 && !STOPWORDS.has(word)) ?? []
+  );
 }
 
 function keywordSet(text: ReadingText): Set<string> {
@@ -111,25 +126,77 @@ export function buildGistQuestion(current: ReadingText, candidates: ReadingText[
     prompt: "What is the general gist of the article?",
     choices,
     answerIndex: 0,
-    explanation: "The correct answer matches the article title, preview, and opening summary.",
   };
 }
 
-function containsAny(text: string, words: string[]): boolean {
-  const clean = text.toLowerCase();
-  return words.some((word) => clean.includes(word));
+function matchSignals(text: string, words: readonly string[]): string[] {
+  const clean = normalise(text);
+  return words.filter((word) => clean.includes(normalise(word)));
+}
+
+function evidenceList(words: string[]): string {
+  const picked = words.slice(0, 3);
+  if (picked.length === 0) return "";
+  if (picked.length === 1) return picked[0];
+  if (picked.length === 2) return `${picked[0]} and ${picked[1]}`;
+  return `${picked[0]}, ${picked[1]}, and ${picked[2]}`;
+}
+
+function strongest(matches: Record<string, string[]>, orderedLabels: string[]): { label: string; words: string[] } {
+  let best = orderedLabels[0];
+  for (const label of orderedLabels) {
+    if ((matches[label]?.length ?? 0) > (matches[best]?.length ?? 0)) best = label;
+  }
+  return { label: best, words: matches[best] ?? [] };
 }
 
 export function buildToneQuestions(text: ReadingText): ToneQuestion[] {
   const sample = `${text.title} ${text.preview} ${text.body.slice(0, 1200)}`;
-  const alarmist = containsAny(sample, ["crise", "grave", "urgence", "danger", "alerte", "menace"]);
-  const critical = containsAny(sample, ["critique", "conteste", "inquiet", "difficile", "problème", "risque"]);
-  const supportive = containsAny(sample, ["succès", "excellent", "aider", "améliorer", "encourager", "apprécie"]);
-  const cautious = containsAny(sample, ["pourrait", "selon", "peut-être", "prud", "étudie", "essai"]);
+  const matches = {
+    alarmist: matchSignals(sample, SIGNALS.alarmist),
+    amused: matchSignals(sample, SIGNALS.amused),
+    critical: matchSignals(sample, SIGNALS.critical),
+    supportive: matchSignals(sample, SIGNALS.supportive),
+    cautious: matchSignals(sample, SIGNALS.cautious),
+    confident: matchSignals(sample, SIGNALS.confident),
+  };
 
-  const toneAnswer = alarmist ? 3 : critical ? 2 : supportive ? 1 : 0;
-  const stanceAnswer = supportive && !critical ? 1 : critical ? 0 : 2;
-  const confidenceAnswer = cautious ? 1 : 0;
+  const tone = strongest(matches, ["alarmist", "critical", "amused"]);
+  const toneAnswer = tone.words.length === 0 ? 0 : tone.label === "amused" ? 1 : tone.label === "critical" ? 2 : 3;
+  const toneExplanation =
+    tone.words.length === 0
+      ? "The article mostly reports facts without enough loaded language to make the tone amused, critical, or alarmist."
+      : tone.label === "alarmist"
+        ? `Words like ${evidenceList(tone.words)} make the article sound alarmist.`
+        : tone.label === "critical"
+          ? `Words like ${evidenceList(tone.words)} make the article sound critical.`
+          : `Words like ${evidenceList(tone.words)} make the article sound amused.`;
+
+  const stanceAnswer =
+    matches.critical.length > matches.supportive.length
+      ? 0
+      : matches.supportive.length > matches.critical.length
+        ? 1
+        : 2;
+  const stanceExplanation =
+    stanceAnswer === 0
+      ? `Critical markers such as ${evidenceList(matches.critical)} make the author sound sceptical.`
+      : stanceAnswer === 1
+        ? `Positive markers such as ${evidenceList(matches.supportive)} make the author sound supportive.`
+        : "The article does not show a strong sceptical or supportive stance; it mainly reports the situation.";
+
+  const confidenceAnswer =
+    matches.cautious.length > matches.confident.length
+      ? 1
+      : matches.confident.length > matches.cautious.length
+        ? 0
+        : 2;
+  const confidenceExplanation =
+    confidenceAnswer === 1
+      ? `Words like ${evidenceList(matches.cautious)} signal caution rather than certainty.`
+      : confidenceAnswer === 0
+        ? `Words like ${evidenceList(matches.confident)} signal confidence rather than caution.`
+        : "There are not enough clear confidence or caution markers in the article excerpt to choose one strongly.";
 
   return [
     {
@@ -138,7 +205,7 @@ export function buildToneQuestions(text: ReadingText): ToneQuestion[] {
       prompt: "What tone does the article mostly use?",
       choices: ["Neutral", "Amused", "Critical", "Alarmist"],
       answerIndex: toneAnswer,
-      explanation: "Look for loaded words, cautious modal verbs, and whether the article reports or argues.",
+      explanation: toneExplanation,
     },
     {
       id: `stance-${text.id}`,
@@ -146,15 +213,15 @@ export function buildToneQuestions(text: ReadingText): ToneQuestion[] {
       prompt: "Does the author sound sceptical or supportive?",
       choices: ["Sceptical", "Supportive", "Mostly neutral"],
       answerIndex: stanceAnswer,
-      explanation: "A news-style article often stays neutral even when it quotes people with strong opinions.",
+      explanation: stanceExplanation,
     },
     {
       id: `confidence-${text.id}`,
       kind: "confidence",
       prompt: "Does the article sound certain or cautious?",
-      choices: ["Confident", "Cautious", "Sarcastic"],
+      choices: ["Confident", "Cautious", "Not enough evidence"],
       answerIndex: confidenceAnswer,
-      explanation: "Words like pourrait, selon, essai, and étudié usually signal caution rather than certainty.",
+      explanation: confidenceExplanation,
     },
   ];
 }

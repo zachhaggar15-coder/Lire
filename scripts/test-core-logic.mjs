@@ -43,6 +43,10 @@ import { recordDictionaryFeedback, getDictionaryFeedback } from "../src/lib/dict
 import { getSavedPhrases, markPhraseKnown, savePhrase } from "../src/lib/phrases.ts";
 import { getArticleFeedbackForText, saveArticleFeedback } from "../src/lib/articleFeedback.ts";
 import { buildGistQuestion, buildToneQuestions, findRelatedArticles } from "../src/lib/comprehension.ts";
+import {
+  clearComprehensionQuestionCache,
+  getOrCreateComprehensionQuestionBundle,
+} from "../src/lib/comprehensionCache.ts";
 import { findPronounReference } from "../src/lib/pronounReferences.ts";
 import { getWordFamily } from "../src/lib/dictionary/wordFamily.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
@@ -510,8 +514,33 @@ console.log("\n--- Comprehension helpers ---");
   check("related-article helper finds a same-event article from another source", findRelatedArticles(current, [related, unrelated])[0]?.id === "b");
   const gistQuestion = buildGistQuestion(current, [related, unrelated]);
   check("gist question puts the real gist first as the answer", gistQuestion.answerIndex === 0 && gistQuestion.choices[0].includes("free public transport"));
+  check("gist question does not show a generic explanation", !gistQuestion.explanation);
   const toneQuestions = buildToneQuestions(current);
   check("tone helper creates stance/tone/confidence questions", toneQuestions.length === 3 && toneQuestions.every((q) => q.choices.length >= 3));
+  const cautiousText = {
+    ...current,
+    id: "cautious",
+    title: "Une etude pourrait changer le projet",
+    preview: "Selon les chercheurs, un essai prudent reste possible.",
+    body: "Selon les chercheurs, le projet pourrait encore changer. Un essai est etudie avant toute decision.",
+  };
+  const confidenceQuestion = buildToneQuestions(cautiousText).find((q) => q.kind === "confidence");
+  check(
+    "confidence question marks cautious evidence as cautious",
+    confidenceQuestion?.choices[confidenceQuestion.answerIndex] === "Cautious",
+    `got ${confidenceQuestion?.choices[confidenceQuestion.answerIndex]}`
+  );
+  check(
+    "confidence explanation matches the cautious answer",
+    !!confidenceQuestion?.explanation?.toLowerCase().includes("caution")
+  );
+  clearComprehensionQuestionCache();
+  const cachedFirst = getOrCreateComprehensionQuestionBundle(current, [related]);
+  const cachedSecond = getOrCreateComprehensionQuestionBundle(current, [unrelated]);
+  check(
+    "comprehension question cache reuses the article bundle",
+    cachedSecond.gistQuestion.choices.join("|") === cachedFirst.gistQuestion.choices.join("|")
+  );
 }
 {
   const sentence = tokenizeParagraphsToSentences("Le maire présente le projet qui divise la ville. Il promet un vote public.")[0];

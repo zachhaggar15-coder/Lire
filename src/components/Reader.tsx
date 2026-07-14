@@ -28,12 +28,15 @@ import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyF
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import {
-  buildGistQuestion,
-  buildToneQuestions,
   findRelatedArticles,
   type MultipleChoiceQuestion,
   type ToneQuestion,
 } from "@/lib/comprehension";
+import {
+  buildComprehensionQuestionBundle,
+  getOrCreateComprehensionQuestionBundle,
+  type ComprehensionQuestionBundle,
+} from "@/lib/comprehensionCache";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -131,12 +134,19 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const gistQuestion = useMemo(() => buildGistQuestion(text, articlePool), [articlePool, text]);
-  const toneQuestions = useMemo(() => buildToneQuestions(text), [text]);
+  const [comprehensionQuestions, setComprehensionQuestions] = useState<ComprehensionQuestionBundle>(() =>
+    buildComprehensionQuestionBundle(text, [])
+  );
+  const gistQuestion = comprehensionQuestions.gistQuestion;
+  const toneQuestions = comprehensionQuestions.toneQuestions;
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
   }, [offlineSentences, offlineTranslationMode, text.body, text.id]);
+
+  useEffect(() => {
+    setComprehensionQuestions(getOrCreateComprehensionQuestionBundle(text, articlePool));
+  }, [articlePool, text]);
 
   // Load saved words + known words + settings + progress once on mount,
   // and record that this text has been opened.
@@ -670,29 +680,6 @@ export default function Reader({ text }: { text: ReadingText }) {
       </article>
 
       <section className="mt-8 space-y-4">
-        {relatedArticles.length > 0 && (
-          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Same event, different voices</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">
-              Read another publication on the same story to meet the core vocabulary again in a new register.
-            </p>
-            <div className="mt-3 space-y-2">
-              {relatedArticles.map((article) => (
-                <Link
-                  key={article.id}
-                  href={`/reader/${article.id}`}
-                  className="block rounded-2xl bg-cream px-3 py-2 active:scale-[0.99]"
-                >
-                  <p className="text-sm font-semibold text-ink">{article.title}</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">
-                    {article.sourceName ?? "Saved text"} {article.publishedAt ? `- ${new Date(article.publishedAt).toLocaleDateString()}` : ""}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         <ComprehensionQuestion
           question={gistQuestion}
           selected={gistAnswer}
@@ -710,6 +697,10 @@ export default function Reader({ text }: { text: ReadingText }) {
             />
           ))}
         </section>
+
+        {relatedArticles.length > 0 && (
+          <RelatedArticles articles={relatedArticles} />
+        )}
 
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
@@ -843,6 +834,37 @@ function dedupeArticles(articles: ReadingText[]): ReadingText[] {
   return [...byId.values()];
 }
 
+function RelatedArticles({ articles }: { articles: ReadingText[] }) {
+  return (
+    <section className="border-t border-cream-dark pt-4">
+      <div className="px-1">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Related Articles</h2>
+        <p className="mt-0.5 text-xs text-ink-muted">
+          Same story area, different source. Use these after the quiz to meet repeated vocabulary in a new register.
+        </p>
+      </div>
+      <div className="mt-3 divide-y divide-cream-dark rounded-2xl border border-cream-dark bg-cream/60">
+        {articles.map((article) => (
+          <Link
+            key={article.id}
+            href={`/reader/${article.id}`}
+            className="block px-3 py-3 active:bg-cream-dark/60"
+          >
+            <p className="text-sm font-semibold leading-snug text-ink">{article.title}</p>
+            <p className="mt-1 text-xs text-ink-muted">
+              {article.sourceName ?? "Saved text"}
+              {article.publishedAt ? ` - ${new Date(article.publishedAt).toLocaleDateString()}` : ""}
+            </p>
+            {article.blurbEn && (
+              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-muted">{article.blurbEn}</p>
+            )}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ComprehensionQuestion({
   question,
   selected,
@@ -879,7 +901,7 @@ function ComprehensionQuestion({
           );
         })}
       </div>
-      {answered && (
+      {answered && question.explanation && (
         <p className={`mt-2 text-xs font-semibold ${correct ? "text-emerald-700" : "text-rose-700"}`}>
           {correct ? "Correct." : "Not quite."} {question.explanation}
         </p>
