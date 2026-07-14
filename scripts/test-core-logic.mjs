@@ -31,6 +31,7 @@ import {
   sourcePreferenceScore,
   unknownWordTargetScore,
 } from "../src/lib/recommendation/signals.ts";
+import { buildSections } from "../src/lib/recommendation/sections.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
@@ -192,6 +193,52 @@ console.log("--- Recommendation signals ---");
   check("a well-matched ratio gets 5 stars", perfect.stars === 5, JSON.stringify(perfect));
   check("a very high ratio gets the fewest stars", hard.stars === 2, JSON.stringify(hard));
   check("star count only ever runs 2-5", perfect.stars <= 5 && hard.stars >= 2);
+}
+{
+  const makeArticle = (id, publishedAt, unknownWordRatio) => ({
+    text: {
+      id,
+      title: id,
+      category: "news-style",
+      difficulty: "B1",
+      minutes: 4,
+      preview: "Preview",
+      body: "Un court article de test avec assez de mots pour exister.",
+      sourceName: id.startsWith("pd-") ? "Project Gutenberg" : "Live Feed",
+      sourceUrl: id.startsWith("pd-") ? "https://www.gutenberg.org/ebooks/1" : "https://example.com/live",
+      publishedAt,
+      language: "fr",
+    },
+    difficulty: {
+      cefr: "B1",
+      label: "Hard",
+      unknownWordRatio,
+      dictionaryCoverage: 0.9,
+      totalWords: 12,
+      unknownWords: Math.round(unknownWordRatio * 12),
+      knownWords: 12 - Math.round(unknownWordRatio * 12),
+      sampleUnknownWords: [],
+    },
+    contentQuality: { label: "good", wordCount: 12, sentenceCount: 1, reason: "test" },
+    score: {
+      freshness: 1,
+      difficultyMatch: 0,
+      topicPreference: 0,
+      sourcePreference: 0,
+      unknownWordTarget: 0,
+      readingTime: 1,
+      contentQuality: 1,
+      variety: 1,
+      total: 0.5,
+    },
+    starRating: { stars: 2, label: "Hard" },
+  });
+  const sections = buildSections([
+    makeArticle("pd-bank-1", "2026-07-12T12:00:00Z", 0.1),
+    makeArticle("rss-hard-live-1", "2026-07-14T12:00:00Z", 0.95),
+  ]);
+  check("live news still shows hard RSS articles", sections.liveNews.some((article) => article.text.id === "rss-hard-live-1"));
+  check("live news claims hard RSS articles before save-for-later", !sections.saveForLater.some((article) => article.text.id === "rss-hard-live-1"));
 }
 
 console.log("\n--- Difficulty estimation ---");

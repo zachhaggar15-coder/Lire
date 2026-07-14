@@ -404,9 +404,14 @@ export default function HomePage() {
 
       {state === "loading" && (
         <div className="space-y-4" aria-label="Loading articles">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="h-32 animate-pulse rounded-3xl bg-cream-dark" />
-          ))}
+          <section id="daily-reading" className="scroll-mt-4">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Today&apos;s Bank</h2>
+            <div className="mt-3 h-32 animate-pulse rounded-3xl bg-cream-dark" />
+          </section>
+          <section id="live-news" className="scroll-mt-4">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Live News</h2>
+            <div className="mt-3 h-32 animate-pulse rounded-3xl bg-cream-dark" />
+          </section>
         </div>
       )}
 

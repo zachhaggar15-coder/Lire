@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ReadingCard from "@/components/ReadingCard";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
@@ -62,8 +61,8 @@ export default function ArticleSection({
 function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: boolean }) {
   const { text } = article;
   return (
-    <Link
-      href={`/reader/${text.id}`}
+    <a
+      href={`/reader/${encodeURIComponent(text.id)}`}
       className={`block rounded-2xl border border-cream-dark bg-cream-card p-3 shadow-sm active:scale-[0.99] ${
         rail ? "w-64 shrink-0" : ""
       }`}
@@ -80,6 +79,6 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
       <h3 className="line-clamp-2 text-sm font-bold leading-snug text-ink">{text.title}</h3>
       <p className="mt-1 line-clamp-2 text-xs text-ink-muted">{text.preview}</p>
       {text.sourceName && <p className="mt-2 truncate text-[11px] font-semibold text-ink-muted">{text.sourceName}</p>}
-    </Link>
+    </a>
   );
 }

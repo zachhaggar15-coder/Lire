@@ -87,7 +87,7 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
   );
 
   const liveNews = take(
-    [...active]
+    [...withoutSnippets]
       .filter((a) => !isPublicDomainBankArticle(a))
       .sort((a, b) => new Date(b.text.publishedAt ?? 0).getTime() - new Date(a.text.publishedAt ?? 0).getTime()),
     usedIds,
