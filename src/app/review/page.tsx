@@ -7,6 +7,8 @@ import { getSavedWords, recordReviewResult, markWordAsKnown } from "@/lib/storag
 import { getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
+import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
+import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 
 export default function ReviewPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
@@ -42,6 +44,10 @@ export default function ReviewPage() {
   const queue = useMemo(() => buildReviewQueue(words), [words]);
   const stats = useMemo(() => getReviewStats(words), [words]);
   const phraseQueue = useMemo(() => phrases.filter((phrase) => phrase.status !== "known"), [phrases]);
+  const vocabularyStates = useMemo(
+    () => classifyVocabularyStates(words, getAllWordTaps(), getAllInferenceResults()),
+    [words]
+  );
 
   const current = queue[index];
   const currentPhrase = phraseQueue[phraseIndex];
@@ -198,6 +204,10 @@ export default function ReviewPage() {
 
       {statsBar}
 
+      {vocabularyStates.length > 0 && (
+        <VocabularyStateSummary items={vocabularyStates} />
+      )}
+
       {phrases.length > 0 && (
         <PhraseModeSwitch mode={reviewMode} onChange={setReviewMode} phraseCount={phraseQueue.length} />
       )}
@@ -302,6 +312,51 @@ export default function ReviewPage() {
         </div>
       )}
     </div>
+  );
+}
+
+const STATE_LABELS: Record<VocabularyDecayState, string> = {
+  stable: "Stable",
+  emerging: "Emerging",
+  fragile: "Fragile",
+  forgotten: "Forgotten",
+};
+
+const STATE_STYLES: Record<VocabularyDecayState, string> = {
+  stable: "bg-emerald-100 text-emerald-700",
+  emerging: "bg-sky-100 text-sky-700",
+  fragile: "bg-amber-100 text-amber-700",
+  forgotten: "bg-rose-100 text-rose-700",
+};
+
+function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
+  const counts = items.reduce<Record<VocabularyDecayState, number>>(
+    (acc, item) => ({ ...acc, [item.state]: acc[item.state] + 1 }),
+    { stable: 0, emerging: 0, fragile: 0, forgotten: 0 }
+  );
+  const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
+  return (
+    <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Vocabulary health</h2>
+      <div className="mt-3 grid grid-cols-4 gap-2 text-center">
+        {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
+          <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
+            <p className="text-lg font-extrabold">{counts[state]}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wide">{STATE_LABELS[state]}</p>
+          </div>
+        ))}
+      </div>
+      {focus.length > 0 && (
+        <div className="mt-3 space-y-1">
+          <p className="text-xs font-semibold text-ink-muted">Best isolated-review candidates</p>
+          {focus.map((item) => (
+            <p key={item.word.word} className="text-xs text-ink-muted">
+              <span className="font-semibold text-ink">{item.word.lemma ?? item.word.word}</span> - {item.reason}
+            </p>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 

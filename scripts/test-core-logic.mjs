@@ -81,6 +81,14 @@ import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
+import {
+  buildCategoryProficiency,
+  buildContextualReviewArticles,
+  buildHeadlineComparison,
+  buildTodayNewsWords,
+  buildWeeklyReadingReport,
+  classifyVocabularyStates,
+} from "../src/lib/readingAnalytics.ts";
 
 let passed = 0;
 let failed = 0;
@@ -558,6 +566,73 @@ console.log("\n--- Comprehension helpers ---");
 {
   const family = getWordFamily("décider");
   check("word-family helper includes the décider family", family.noun.includes("décision") && family.adjective.includes("décisif"));
+}
+
+console.log("\n--- Reading analytics ---");
+{
+  const today = new Date().toISOString();
+  const a = {
+    id: "news-a",
+    title: "Selon la mairie, une hausse reste possible",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Selon la mairie, le projet pourrait changer.",
+    body: "Selon la mairie, une hausse reste possible. Pourtant, le conseil attend un rapport.",
+    sourceName: "Source A",
+    publishedAt: today,
+  };
+  const b = {
+    ...a,
+    id: "news-b",
+    title: "Une hausse critique le projet",
+    body: "Selon les chercheurs, la hausse divise les habitants. Pourtant, le vote continue.",
+    sourceName: "Source B",
+  };
+  const wordsAcrossNews = buildTodayNewsWords([a, b]);
+  check("today news words count lemmas across sources", wordsAcrossNews.some((word) => word.lemma === "selon" && word.articleCount === 2));
+  const comparison = buildHeadlineComparison(a, [b]);
+  check("headline comparison builds a same-event comparison", !!comparison && comparison.left.id === "news-a" && comparison.right.id === "news-b");
+
+  const saved = {
+    word: "selon",
+    lemma: "selon",
+    translations: ["according to"],
+    primaryTranslation: "according to",
+    partOfSpeech: "preposition",
+    gender: null,
+    cefr: "A2",
+    frequencyRank: 300,
+    articleContextSentence: "Selon la mairie, une hausse reste possible.",
+    exampleSentenceFr: "Selon le journal, il pleut.",
+    exampleSentenceEn: "According to the newspaper, it is raining.",
+    sourceTextTitle: "Test",
+    savedAt: today,
+    reviewCount: 0,
+    lastReviewedAt: null,
+    status: "learning",
+    ...defaultSpacedRepetitionFields(),
+  };
+  const states = classifyVocabularyStates(
+    [{ ...saved, status: "known" }],
+    [{ articleId: "news-a", word: "selon", lemma: "selon", count: 2, updatedAt: today }],
+    []
+  );
+  check("vocabulary state detects behavioural forgetting", states[0]?.state === "forgotten");
+  const contextual = buildContextualReviewArticles([a, b], [saved], [], 2);
+  check("contextual review recommends articles containing due vocabulary", contextual.length > 0 && contextual[0].dueWords[0].word === "selon");
+  const report = buildWeeklyReadingReport(
+    [{ textId: "news-a", title: a.title, sourceName: "Source A", completedAt: today, category: "news-style", cefr: "A2", minutes: 3, wordCount: 120 }],
+    [{ ...saved, status: "known", correctCount: 3, lastReviewedAt: today }],
+    ["selon", "hausse"],
+    [{ id: "budget-a", articleId: "news-a", articleTitle: a.title, allowance: 8, used: 5, metTarget: true, completedAt: today }]
+  );
+  check("weekly report includes reading and budget metrics", report.articlesCompleted === 1 && report.translationBudgetMet === 1);
+  const proficiency = buildCategoryProficiency(
+    [{ textId: "news-a", title: a.title, sourceName: "Source A", completedAt: today, category: "news-style", cefr: "A2", minutes: 3, wordCount: 120 }],
+    ["selon", "hausse"]
+  );
+  check("category proficiency includes general news", proficiency.some((item) => item.category === "news-style" && item.articles === 1));
 }
 
 console.log("\n--- Recommendation preferences (hide source / save for later) ---");

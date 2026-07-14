@@ -22,6 +22,8 @@ export interface ArchiveEntry {
   cefr?: string | null;
   /** Estimated reading time in minutes. */
   minutes?: number | null;
+  /** Count of French word tokens at completion time, used for weekly reports. */
+  wordCount?: number | null;
   /** ISO timestamp of when the text was first opened — combined with completedAt to estimate time spent. */
   openedAt?: string | null;
 }

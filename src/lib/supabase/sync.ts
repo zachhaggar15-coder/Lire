@@ -37,6 +37,8 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.comprehensionQuestions.v1", kind: "list-by-id", idField: "textId" },
   { key: "lire.wordTapStats.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.inferredWords.v1", kind: "list-by-id", idField: "id" },
+  { key: "lire.translationBudget.v1", kind: "list-by-id", idField: "id" },
+  { key: "lire.secondPass.v1", kind: "list-by-id", idField: "id" },
 ];
 
 const LAST_SYNC_AT_KEY = "lire.sync.lastSuccessAt";

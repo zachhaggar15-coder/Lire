@@ -30,6 +30,8 @@ import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { buildInferenceChallenge, shouldOfferInference } from "@/lib/inference";
 import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, type WordTapRecord } from "@/lib/learningCandidates";
 import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
+import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
+import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
 import {
   findRelatedArticles,
   type MultipleChoiceQuestion,
@@ -132,6 +134,9 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [summaryDraft, setSummaryDraft] = useState("");
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
+  const [translationUses, setTranslationUses] = useState(0);
+  const [rereadMode, setRereadMode] = useState(false);
+  const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
   /** null = translation hasn't started; otherwise one slot per flat sentence, filled in progressively chunk-by-chunk (still-null slots render the offline fallback). */
   const [fluentSentences, setFluentSentences] = useState<(string | null)[] | null>(null);
@@ -161,6 +166,11 @@ export default function Reader({ text }: { text: ReadingText }) {
         : fluentSentences?.[sentenceIndex] ?? offlineSentences[sentenceIndex] ?? activeWord.contextSentence;
     return buildInferenceChallenge(activeWord.word, activeWord.lookup, activeWord.contextSentence, sentenceTranslation);
   }, [activeWord, flatSentences, fluentSentences, inferenceWords, offlineSentences, text.id]);
+  const translationAllowance = useMemo(
+    () => suggestedTranslationAllowance(difficulty?.unknownWordRatio),
+    [difficulty?.unknownWordRatio]
+  );
+  const headlineComparison = useMemo(() => buildHeadlineComparison(text, articlePool), [articlePool, text]);
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
@@ -199,6 +209,9 @@ export default function Reader({ text }: { text: ReadingText }) {
     // is cache-first per article, so re-toggling back on for an already-translated
     // article is instant again; only a genuinely new article re-fetches.
     setShowEnglishTranslation(false);
+    setTranslationUses(0);
+    setRereadMode(false);
+    setSecondPassStartedAt(null);
     setTranslationState("idle");
     setFluentSentences(null);
     setTranslationError(null);
@@ -279,8 +292,10 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleToggleEnglishTranslation() {
+    if (rereadMode) return;
     const next = !showEnglishTranslation;
     setShowEnglishTranslation(next);
+    if (next) setTranslationUses((count) => Math.max(count, translationAllowance + 1));
     if (next && translationState === "idle" && shouldUseFluentTranslation()) void handleFetchFluentTranslation();
   }
 
@@ -320,10 +335,12 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleWordTap(sentenceText: string, tokens: Token[], index: number) {
+    if (rereadMode) return;
     const clean = tokens[index]?.clean;
     if (!clean) return;
 
     const lookup = lookupWord(tokens[index].text, adjacentWords(tokens, index));
+    const protectedProperNoun = isProperNounWord(tokens[index].text);
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     let existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
@@ -336,8 +353,9 @@ export default function Reader({ text }: { text: ReadingText }) {
     );
     const updatedTaps = recordWordTap(text.id, clean, lookup.lemma);
     setArticleTapRecords(updatedTaps.filter((tap) => tap.articleId === text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
+    setTranslationUses((count) => count + 1);
 
-    if (!known && !existingStatus) {
+    if (!known && !existingStatus && !protectedProperNoun) {
       const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning"));
       existingStatus = "learning";
       setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
@@ -358,6 +376,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleSentenceTap(sentenceText: string) {
+    if (rereadMode) return;
     const { previous, next } = neighbours(sentenceText);
     setActiveWord(null);
     setActivePhrase(null);
@@ -365,6 +384,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handlePhraseTap(sentenceText: string, phrase: ActivePhraseState) {
+    if (rereadMode) return;
     setActiveWord(null);
     setActiveSentence(null);
     setActivePhrase({ ...phrase, contextSentence: sentenceText });
@@ -447,6 +467,14 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleMarkCompleted() {
     const completedAt = new Date().toISOString();
     markCompleted(text.id);
+    recordTranslationBudgetResult({
+      articleId: text.id,
+      articleTitle: text.title,
+      allowance: translationAllowance,
+      used: translationUses,
+      metTarget: translationUses <= translationAllowance,
+      completedAt,
+    });
     recordArchiveEntry({
       textId: text.id,
       title: text.title,
@@ -455,12 +483,36 @@ export default function Reader({ text }: { text: ReadingText }) {
       category: text.category,
       cefr: difficulty?.cefr ?? text.difficulty,
       minutes: text.minutes,
+      wordCount: countFrenchWords(text),
       openedAt: getProgress(text.id).openedAt,
     });
     // Feeds the automatically-learned interest profile behind the home
     // page's recommendations — see src/lib/recommendation/interests.ts.
     recordArticleCompleted(text.category);
     setStatus("completed");
+  }
+
+  function handleStartSecondPass() {
+    const startedAt = new Date().toISOString();
+    setShowEnglishTranslation(false);
+    setActiveWord(null);
+    setActiveSentence(null);
+    setActivePhrase(null);
+    setRereadMode(true);
+    setSecondPassStartedAt(startedAt);
+    showToast("Second pass started");
+  }
+
+  function handleFinishSecondPass() {
+    recordSecondPass({
+      articleId: text.id,
+      articleTitle: text.title,
+      startedAt: secondPassStartedAt ?? new Date().toISOString(),
+      completedAt: new Date().toISOString(),
+    });
+    setRereadMode(false);
+    setSecondPassStartedAt(null);
+    showToast("Second pass saved");
   }
 
   function handleArticleFeedback(feedback: ArticleDifficultyFeedback) {
@@ -471,6 +523,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function wordClassName(token: Token): string {
     const base = "cursor-pointer rounded px-0.5 py-0.5 transition-colors";
+    if (rereadMode) return "rounded px-0.5 py-0.5";
     const clean = token.clean;
     const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
@@ -532,6 +585,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   /** The clickable, word-tappable French sentence — shared between the normal flowing-paragraph layout and the per-sentence interlinear layout below, so the tap targets don't have to be defined twice. */
   function phraseClassName(): string {
+    if (rereadMode) return "rounded px-0.5 py-0.5";
     return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
   }
 
@@ -547,6 +601,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             key={ti}
             onClick={(e) => {
               e.stopPropagation();
+              if (rereadMode) return;
               handlePhraseTap(sg.text, {
                 phrase: phraseText.toLowerCase(),
                 lemma: phrase.lemma,
@@ -570,9 +625,10 @@ export default function Reader({ text }: { text: ReadingText }) {
             key={ti}
             onClick={(e) => {
               e.stopPropagation();
+              if (rereadMode) return;
               handleWordTap(sg.text, sg.tokens, ti);
             }}
-            className={`${wordClassName(tok)} ${isHighlightedReference(sg.tokens, ti) ? "bg-emerald-200/80 ring-2 ring-emerald-400" : ""}`}
+            className={`${wordClassName(tok)} ${!rereadMode && isHighlightedReference(sg.tokens, ti) ? "bg-emerald-200/80 ring-2 ring-emerald-400" : ""}`}
           >
             {tok.text}
           </span>
@@ -585,22 +641,26 @@ export default function Reader({ text }: { text: ReadingText }) {
     return (
       <span
         key={key}
-        onPointerDown={() => startSentenceHold(sg.text)}
+        onPointerDown={() => {
+          if (!rereadMode) startSentenceHold(sg.text);
+        }}
         onPointerUp={cancelSentenceHold}
         onPointerCancel={cancelSentenceHold}
         onPointerLeave={cancelSentenceHold}
         onContextMenu={(event) => {
           event.preventDefault();
+          if (rereadMode) return;
           handleSentenceTap(sg.text);
         }}
         onClick={() => {
+          if (rereadMode) return;
           if (sentenceHoldTriggered.current) {
             sentenceHoldTriggered.current = false;
             return;
           }
           handleSentenceTap(sg.text);
         }}
-        className="cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"
+        className={rereadMode ? "rounded" : "cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"}
       >
         {renderedTokens}
       </span>
@@ -673,7 +733,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         <button
           type="button"
           onClick={handleToggleEnglishTranslation}
-          className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-sm active:scale-95"
+          disabled={rereadMode}
+          className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-sm active:scale-95 disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -691,6 +752,17 @@ export default function Reader({ text }: { text: ReadingText }) {
           Translate ({translationModeLabel()})
         </button>
       </div>
+
+      <div className={`mt-3 rounded-2xl px-3 py-2 text-xs font-semibold ${translationUses <= translationAllowance ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+        Translation budget: {translationUses}/{translationAllowance} used
+        {translationUses > translationAllowance ? " - try the next article with fewer lookups" : " - aim to infer before tapping"}
+      </div>
+
+      {rereadMode && (
+        <div className="mt-3 rounded-2xl bg-brand-light px-3 py-2 text-xs font-semibold text-brand">
+          Second pass: English, highlights, and dictionary prompts are hidden.
+        </div>
+      )}
 
       {showEnglishTranslation && (
         <p className="mt-2 text-[11px] text-ink-muted">
@@ -776,6 +848,10 @@ export default function Reader({ text }: { text: ReadingText }) {
           <RelatedArticles articles={relatedArticles} />
         )}
 
+        {headlineComparison && (
+          <HeadlineComparisonCard comparison={headlineComparison} />
+        )}
+
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
           <textarea
@@ -831,6 +907,23 @@ export default function Reader({ text }: { text: ReadingText }) {
               >
                 Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
               </Link>
+            )}
+            {rereadMode ? (
+              <button
+                type="button"
+                onClick={handleFinishSecondPass}
+                className="block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
+              >
+                Finish second pass
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleStartSecondPass}
+                className="block rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
+              >
+                Read again without English
+              </button>
             )}
           </div>
         ) : (
@@ -937,6 +1030,53 @@ function RelatedArticles({ articles }: { articles: ReadingText[] }) {
           </Link>
         ))}
       </div>
+    </section>
+  );
+}
+
+function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison }) {
+  const [revealed, setRevealed] = useState(false);
+  const neutral = comparison.neutralChoice === "left" ? comparison.left : comparison.right;
+  const dramatic = comparison.dramaticChoice === "left" ? comparison.left : comparison.right;
+  return (
+    <section className="rounded-3xl border border-cream-dark bg-cream-card p-4 shadow-sm">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Compare the headlines</h2>
+      <div className="mt-3 grid gap-2">
+        {[comparison.left, comparison.right].map((article) => (
+          <Link key={article.id} href={`/reader/${article.id}`} className="rounded-2xl bg-cream px-3 py-2 active:bg-cream-dark/60">
+            <p className="text-sm font-bold leading-snug text-ink">{article.title}</p>
+            <p className="mt-0.5 text-xs text-ink-muted">{article.sourceName ?? "Saved text"}</p>
+          </Link>
+        ))}
+      </div>
+      <div className="mt-3 space-y-1.5 text-xs text-ink-muted">
+        <p>Which sounds more neutral?</p>
+        <p>Which is more dramatic?</p>
+        <p>Which verb suggests criticism?</p>
+        <p>How does the framing differ?</p>
+      </div>
+      {revealed ? (
+        <div className="mt-3 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
+          <p>
+            More neutral: <span className="font-semibold text-ink">{neutral.sourceName ?? neutral.title}</span>
+          </p>
+          <p>
+            More dramatic: <span className="font-semibold text-ink">{dramatic.sourceName ?? dramatic.title}</span>
+          </p>
+          <p>
+            Critical verb: <span className="font-semibold text-ink">{comparison.criticalVerb ?? "none obvious"}</span>
+          </p>
+          <p className="mt-1">{comparison.framing}</p>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setRevealed(true)}
+          className="mt-3 rounded-full bg-cream-dark px-4 py-2 text-xs font-semibold text-ink active:scale-95"
+        >
+          Reveal framing notes
+        </button>
+      )}
     </section>
   );
 }

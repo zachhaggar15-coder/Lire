@@ -59,6 +59,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
   const open = state !== null;
   const lookup = state?.lookup;
   const found = lookup?.source === "local";
+  const isProperNoun = (lookup?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
   const [primary, ...rest] = lookup?.translations ?? [];
   const firstExample = lookup?.examples[0];
   const wordFamily = state ? getWordFamily(state.lookup.lemma ?? state.word) : null;
@@ -201,6 +202,15 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
           <p className="mt-2 text-xs font-semibold text-brand">
             {STATUS_LABEL[state.existingStatus]}
           </p>
+        )}
+
+        {isProperNoun && (
+          <div className="mt-3 rounded-2xl bg-white/70 p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Proper noun protected</p>
+            <p className="mt-1 text-sm text-ink-muted">
+              This looks like a person, place, organisation, or acronym, so Liree does not add it to your vocabulary cards unless it has wider language value.
+            </p>
+          </div>
         )}
 
         {inferenceChallenge && (

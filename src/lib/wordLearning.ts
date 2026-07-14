@@ -77,6 +77,10 @@ export function getWordTapsForArticle(articleId: string): StoredWordTap[] {
   return readArray(TAP_KEY, isStoredWordTap).filter((tap) => tap.articleId === articleId);
 }
 
+export function getAllWordTaps(): StoredWordTap[] {
+  return readArray(TAP_KEY, isStoredWordTap);
+}
+
 export function recordInferenceResult(articleId: string, word: string, lemma: string | null, correct: boolean): StoredInference[] {
   const now = new Date().toISOString();
   const key = recordId(articleId, word);
@@ -92,6 +96,10 @@ export function recordInferenceResult(articleId: string, word: string, lemma: st
 
 export function getInferenceResult(articleId: string, word: string): StoredInference | null {
   return readArray(INFERENCE_KEY, isStoredInference).find((entry) => entry.articleId === articleId && entry.word === word) ?? null;
+}
+
+export function getAllInferenceResults(): StoredInference[] {
+  return readArray(INFERENCE_KEY, isStoredInference);
 }
 
 export function clearWordLearningStores(): void {

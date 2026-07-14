@@ -32,6 +32,7 @@ function frequencyScore(rank: number | null): number {
 
 function isUsefulPartOfSpeech(partOfSpeech: string | null): boolean {
   const pos = partOfSpeech?.toLowerCase() ?? "";
+  if (pos.includes("proper noun")) return false;
   return pos.includes("verb") || pos.includes("noun") || pos.includes("adjective") || pos.includes("adverb") || pos.includes("conjunction");
 }
 

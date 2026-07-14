@@ -6,6 +6,14 @@ import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/a
 import { getSavedWords } from "@/lib/storage";
 import { formatDate } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
+import { getKnownWords } from "@/lib/knownWords";
+import { getTranslationBudgetRecords } from "@/lib/readingInsights";
+import {
+  buildCategoryProficiency,
+  buildWeeklyReadingReport,
+  type CategoryProficiency,
+  type WeeklyReadingReport,
+} from "@/lib/readingAnalytics";
 
 type SortKey = "date" | "time" | "words" | "difficulty";
 
@@ -40,12 +48,15 @@ export default function ArchivePage() {
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [summary, setSummary] = useState<ArchiveSummary | null>(null);
+  const [weeklyReport, setWeeklyReport] = useState<WeeklyReadingReport | null>(null);
+  const [categoryProficiency, setCategoryProficiency] = useState<CategoryProficiency[]>([]);
 
   useEffect(() => {
     const now = new Date();
     const weekAgoMs = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     const entries = getArchive();
     const words = getSavedWords();
+    const knownWords = getKnownWords();
     const built = entries.map((entry) => ({
       entry,
       wordsSaved: words.filter((w) => w.sourceTextTitle === entry.title).length,
@@ -71,6 +82,8 @@ export default function ArchivePage() {
       longestStreak: getLongestStreak(),
       topCategory,
     });
+    setWeeklyReport(buildWeeklyReadingReport(entries, words, knownWords, getTranslationBudgetRecords(), now));
+    setCategoryProficiency(buildCategoryProficiency(entries, knownWords));
     setReady(true);
   }, []);
 
@@ -132,6 +145,45 @@ export default function ArchivePage() {
               Most-read topic this week: <span className="font-semibold text-ink">{summary.topCategory}</span>
             </p>
           )}
+        </section>
+      )}
+
+      {weeklyReport && (
+        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">This week</h2>
+          <div className="mt-3 space-y-2 text-sm text-ink">
+            <p>{weeklyReport.articlesCompleted} articles completed</p>
+            <p>{weeklyReport.frenchWordsRead.toLocaleString()} French words read</p>
+            <p>
+              Vocabulary coverage increased from {weeklyReport.coverageStart}% to {weeklyReport.coverageEnd}%
+            </p>
+            <p>{weeklyReport.movedToStable} words moved to stable</p>
+            <p>Most difficult area: {weeklyReport.mostDifficultArea}</p>
+            <p>Strongest topic: {weeklyReport.strongestTopic ?? "not enough data yet"}</p>
+            <p>Next focus: {weeklyReport.nextFocus}</p>
+            {weeklyReport.translationBudgetTotal > 0 && (
+              <p>
+                Translation budget met on {weeklyReport.translationBudgetMet}/{weeklyReport.translationBudgetTotal} completed articles
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {categoryProficiency.length > 0 && (
+        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Topic proficiency</h2>
+          <div className="mt-3 space-y-2">
+            {categoryProficiency.map((item) => (
+              <div key={item.category} className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2">
+                <div>
+                  <p className="text-sm font-semibold text-ink">{item.label}</p>
+                  <p className="text-xs text-ink-muted">{item.articles} completed - {item.coverage}% coverage</p>
+                </div>
+                <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{item.cefr}</span>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 

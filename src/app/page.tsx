@@ -14,6 +14,14 @@ import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
+import { getSavedWords } from "@/lib/storage";
+import { getAllWordTaps } from "@/lib/wordLearning";
+import {
+  buildContextualReviewArticles,
+  buildTodayNewsWords,
+  type ContextualReviewArticle,
+  type TodayNewsWord,
+} from "@/lib/readingAnalytics";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import {
   buildScorableArticles,
@@ -119,6 +127,8 @@ export default function HomePage() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [prefVersion, setPrefVersion] = useState(0);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
+  const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
+  const [contextualReviewArticles, setContextualReviewArticles] = useState<ContextualReviewArticle[]>([]);
   const lastRefreshSent = useRef(0);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
@@ -163,6 +173,8 @@ export default function HomePage() {
         ).filter((text) => !text.sourceName || !hiddenSources.has(text.sourceName));
 
         const knownWords = new Set(getKnownWords());
+        const savedWords = getSavedWords();
+        const wordTaps = getAllWordTaps();
         const scorable = buildScorableArticles(pool, knownWords);
         const context = buildScoringContext();
         const ranked = rankArticles(scorable, context);
@@ -176,6 +188,8 @@ export default function HomePage() {
 
         setSections(buildSections(filtered));
         setSavedLaterArticles(ranked.filter((article) => savedIds.has(article.text.id)));
+        setTodayWords(buildTodayNewsWords(pool));
+        setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
         setFeedHealth(data.feedHealth ?? null);
@@ -187,6 +201,8 @@ export default function HomePage() {
           // all-hardcoded, unranked-but-still-sectioned pool so the page
           // never shows nothing.
           const knownWords = new Set(getKnownWords());
+          const savedWords = getSavedWords();
+          const wordTaps = getAllWordTaps();
           const scorable = buildScorableArticles(
             hardcodedTexts.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
             knownWords
@@ -199,6 +215,8 @@ export default function HomePage() {
           });
           setSections(buildSections(ranked));
           setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
+          setTodayWords(buildTodayNewsWords(ranked.map((article) => article.text)));
+          setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
           setUsedFallback(true);
           setFeedHealth(null);
           setState("success");
@@ -251,6 +269,12 @@ export default function HomePage() {
       <TodayCard />
       <ReadingGoalsCard />
       <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
+      {state === "success" && todayWords.length > 0 && (
+        <TodayNewsWordsSection words={todayWords} />
+      )}
+      {state === "success" && contextualReviewArticles.length > 0 && (
+        <ContextualReviewSection articles={contextualReviewArticles} />
+      )}
 
       <details
         className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"
@@ -493,5 +517,67 @@ export default function HomePage() {
         </div>
       )}
     </div>
+  );
+}
+
+function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
+  return (
+    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words appearing across today&apos;s news</h2>
+      <p className="mt-0.5 text-xs text-ink-muted">Open examples from different sources before choosing an article.</p>
+      <div className="mt-3 space-y-2">
+        {words.map((word) => (
+          <details key={word.lemma} className="rounded-2xl bg-cream px-3 py-2">
+            <summary className="cursor-pointer list-none">
+              <span className="text-sm font-bold text-ink">{word.lemma}</span>
+              <span className="ml-2 text-xs text-ink-muted">
+                {word.translation} - {word.articleCount} {word.articleCount === 1 ? "article" : "articles"}
+              </span>
+            </summary>
+            <div className="mt-2 space-y-2 border-t border-cream-dark pt-2">
+              {word.examples.map((example) => (
+                <Link
+                  key={`${word.lemma}-${example.articleId}`}
+                  href={`/reader/${example.articleId}`}
+                  className="block rounded-xl bg-cream-card px-3 py-2 active:bg-cream-dark/60"
+                >
+                  <p className="text-xs font-semibold text-ink">{example.title}</p>
+                  <p className="mt-0.5 text-[11px] text-ink-muted">{example.sourceName ?? "Saved text"}</p>
+                  <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">{example.sentence}</p>
+                </Link>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ContextualReviewSection({ articles }: { articles: ContextualReviewArticle[] }) {
+  return (
+    <section className="mb-6">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Review through reading</h2>
+      <p className="mt-0.5 text-xs text-ink-muted">Articles containing vocabulary due for review.</p>
+      <div className="mt-3 space-y-3">
+        {articles.map(({ article, dueWords, fragileCount, emergingCount }) => (
+          <Link
+            key={article.id}
+            href={`/reader/${article.id}`}
+            className="block rounded-3xl border border-cream-dark bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+          >
+            <p className="text-sm font-bold leading-snug text-ink">{article.title}</p>
+            <p className="mt-1 text-xs text-ink-muted">
+              Contains {dueWords.length} due {dueWords.length === 1 ? "word" : "words"}
+              {fragileCount > 0 ? ` - ${fragileCount} fragile` : ""}
+              {emergingCount > 0 ? ` - ${emergingCount} emerging` : ""}
+            </p>
+            <p className="mt-2 text-xs font-semibold text-brand">
+              {dueWords.slice(0, 5).map((word) => word.lemma ?? word.word).join(" - ")}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
