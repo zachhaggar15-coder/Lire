@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const items = [
   { href: "/", label: "Read", icon: BookIcon },
+  { href: "/progress", label: "Progress", icon: ProgressIcon },
   { href: "/words", label: "Words", icon: BookmarkIcon },
   { href: "/review", label: "Review", icon: CardsIcon },
   { href: "/settings", label: "Settings", icon: SettingsIcon },
@@ -54,6 +55,18 @@ function BookmarkIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+    </svg>
+  );
+}
+
+function ProgressIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19V5" />
+      <path d="M8 19v-6" />
+      <path d="M12 19V9" />
+      <path d="M16 19v-9" />
+      <path d="M20 19V4" />
     </svg>
   );
 }

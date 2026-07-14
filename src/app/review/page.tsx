@@ -9,6 +9,7 @@ import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
+import { recordReviewSuccessXp } from "@/lib/gamification";
 
 export default function ReviewPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
@@ -21,6 +22,7 @@ export default function ReviewPage() {
   const [reviewMode, setReviewMode] = useState<"words" | "phrases">("words");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
+  const [xpNotice, setXpNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -59,7 +61,16 @@ export default function ReviewPage() {
   }
 
   function answer(result: "correct" | "incorrect") {
-    if (current) setWords(visibleWords(recordReviewResult(current.word, result)));
+    if (current) {
+      setWords(visibleWords(recordReviewResult(current.word, result)));
+      if (result === "correct") {
+        const xp = recordReviewSuccessXp(current.word);
+        if (xp > 0) {
+          setXpNotice(`+${xp} XP`);
+          window.setTimeout(() => setXpNotice(null), 1600);
+        }
+      }
+    }
     setScore((s) => ({
       knew: s.knew + (result === "correct" ? 1 : 0),
       missed: s.missed + (result === "correct" ? 0 : 1),
@@ -201,6 +212,12 @@ export default function ReviewPage() {
           {ready ? `card ${index + 1} of ${queue.length} due` : ""}
         </span>
       </header>
+
+      {xpNotice && (
+        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand shadow-sm">
+          {xpNotice}
+        </div>
+      )}
 
       {statsBar}
 

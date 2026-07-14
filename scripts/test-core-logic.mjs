@@ -89,6 +89,31 @@ import {
   buildWeeklyReadingReport,
   classifyVocabularyStates,
 } from "../src/lib/readingAnalytics.ts";
+import {
+  addXpEvent,
+  awardCompletedMissions,
+  buildAchievements,
+  buildCollections,
+  buildMastery,
+  buildPersonalBests,
+  buildProgressSnapshot,
+  buildTopicProgress,
+  calculateArticleScore,
+  clearGamificationStores,
+  currentStreak,
+  getArticleCompletions,
+  getDailyMissions,
+  getMissionStatuses,
+  getXpEvents,
+  levelFromXp,
+  longestStreak,
+  quickChallengeForArticle,
+  recordGamifiedArticleCompletion,
+  recordReviewSuccessXp,
+  recordSecondPassXp,
+  translationBudgetForMode,
+  xpNeededForLevel,
+} from "../src/lib/gamification.ts";
 
 let passed = 0;
 let failed = 0;
@@ -755,6 +780,162 @@ console.log("\n--- Article difficulty feedback ---");
   };
   saveArticleFeedback(text, "good", "A2");
   check("article feedback round-trips by text id", getArticleFeedbackForText("feedback-test")?.feedback === "good");
+}
+
+console.log("\n--- Gamification engine ---");
+{
+  clearGamificationStores();
+  const first = addXpEvent({
+    type: "article_completed",
+    relatedId: "xp-test",
+    xp: 30,
+    idempotencyKey: "xp-test-once",
+    createdAt: "2026-07-14T09:00:00.000Z",
+  });
+  const duplicate = addXpEvent({
+    type: "article_completed",
+    relatedId: "xp-test",
+    xp: 30,
+    idempotencyKey: "xp-test-once",
+    createdAt: "2026-07-14T09:01:00.000Z",
+  });
+  check("XP events are idempotent by idempotency key", first.awarded && !duplicate.awarded && getXpEvents().length === 1);
+  check("level requirements increase progressively", xpNeededForLevel(5) > xpNeededForLevel(1));
+  check("levelFromXp advances beyond level 1 after enough XP", levelFromXp(xpNeededForLevel(1) + 5).level === 2);
+}
+{
+  const easyBudget = translationBudgetForMode("relaxed", 500, 0.05);
+  const strictBudget = translationBudgetForMode("ambitious", 500, 0.05);
+  const noneBudget = translationBudgetForMode("none", 500, 0.05);
+  check("translation budgets tighten by challenge mode", easyBudget > strictBudget && noneBudget === null, `${easyBudget}/${strictBudget}/${noneBudget}`);
+  const metBudget = calculateArticleScore({
+    comprehensionCorrect: 3,
+    comprehensionTotal: 3,
+    inferenceCorrect: 1,
+    inferenceAttempts: 1,
+    translationsUsed: 3,
+    translationBudget: 5,
+    summaryCompleted: true,
+  });
+  const missedBudget = calculateArticleScore({
+    comprehensionCorrect: 3,
+    comprehensionTotal: 3,
+    inferenceCorrect: 1,
+    inferenceAttempts: 1,
+    translationsUsed: 12,
+    translationBudget: 5,
+    summaryCompleted: true,
+  });
+  check("article score rewards staying inside the translation budget", metBudget.total > missedBudget.total, `${metBudget.total}/${missedBudget.total}`);
+}
+{
+  clearGamificationStores();
+  const article = {
+    id: "gamified-article",
+    title: "Un test de lecture",
+    sourceName: "Liree Test",
+    category: "science",
+    difficulty: "B1",
+    minutes: 4,
+    preview: "Une etude simple",
+    body: "Selon une etude, les lecteurs comprennent mieux quand ils lisent avec attention. Pourtant, ils traduisent parfois trop vite.",
+  };
+  const completion = recordGamifiedArticleCompletion({
+    text: article,
+    difficulty: "B1",
+    openedAt: "2026-07-14T09:00:00.000Z",
+    completedAt: "2026-07-14T09:05:00.000Z",
+    wordsRead: 120,
+    translationsUsed: 2,
+    fullTranslationUsed: false,
+    savedWords: 2,
+    phrasesSaved: 1,
+    comprehensionCorrect: 3,
+    comprehensionTotal: 3,
+    inferenceCorrect: 1,
+    inferenceAttempts: 1,
+    summaryCompleted: true,
+    challengeMode: "balanced",
+    challengeBudget: 4,
+  });
+  const repeat = recordGamifiedArticleCompletion({
+    text: article,
+    difficulty: "B1",
+    openedAt: "2026-07-14T09:00:00.000Z",
+    completedAt: "2026-07-14T09:06:00.000Z",
+    wordsRead: 120,
+    translationsUsed: 2,
+    fullTranslationUsed: false,
+    savedWords: 2,
+    phrasesSaved: 1,
+    comprehensionCorrect: 3,
+    comprehensionTotal: 3,
+    inferenceCorrect: 1,
+    inferenceAttempts: 1,
+    summaryCompleted: true,
+    challengeMode: "balanced",
+    challengeBudget: 4,
+  });
+  check("article completion stores one completion per article", getArticleCompletions().length === 1);
+  check("duplicate article completions do not re-award completion XP", completion.xpEarned > 0 && repeat.xpEarned === 0, `${completion.xpEarned}/${repeat.xpEarned}`);
+  check("topic progress reflects completed article categories", buildTopicProgress().find((topic) => topic.category === "science")?.articlesCompleted === 1);
+  check("personal bests include a highest article score record", buildPersonalBests().some((best) => best.id === "best-score" && best.value !== "No record yet"));
+  check("quick challenge uses the article category label", quickChallengeForArticle(article).answer === "Science");
+  const secondPassXp = recordSecondPassXp(article.id);
+  check("second pass XP is awarded once", secondPassXp === 15 && recordSecondPassXp(article.id) === 0);
+}
+{
+  const missionsToday = getDailyMissions("2026-07-14");
+  const missionsTomorrow = getDailyMissions("2026-07-15");
+  check("daily missions expose up to three goals", missionsToday.length > 0 && missionsToday.length <= 3);
+  check("daily missions reset by date", missionsToday.map((m) => m.id).join(",") !== missionsTomorrow.map((m) => m.id).join(","));
+  const missionStatuses = getMissionStatuses("2026-07-14", []);
+  const missionAward = awardCompletedMissions("2026-07-14", []);
+  check("mission statuses carry progress and reward state", missionStatuses.every((mission) => typeof mission.progress === "number" && typeof mission.rewarded === "boolean"));
+  check("awardCompletedMissions is safe when nothing is complete", missionAward.awardedXp >= 0);
+}
+{
+  const days = new Set(["2026-07-12", "2026-07-13", "2026-07-14"]);
+  check("currentStreak counts consecutive activity backwards from today", currentStreak(days, "2026-07-14") === 3);
+  check("longestStreak finds the longest run", longestStreak(new Set(["2026-07-10", "2026-07-12", "2026-07-13"])) === 2);
+}
+{
+  const saved = [
+    {
+      word: "decider",
+      lemma: "decider",
+      translations: ["to decide"],
+      primaryTranslation: "to decide",
+      partOfSpeech: "verb",
+      articleContextSentence: "Il faut decider vite.",
+      exampleSentenceFr: "Je dois decider.",
+      exampleSentenceEn: "I must decide.",
+      sourceTextTitle: "Un test de lecture",
+      savedAt: "2026-07-14T09:00:00.000Z",
+      reviewCount: 4,
+      lastReviewedAt: "2026-07-14T09:10:00.000Z",
+      status: "known",
+      correctCount: 4,
+      incorrectCount: 0,
+      lastReviewResult: "correct",
+      ease: 2.5,
+      nextReviewAt: null,
+    },
+  ];
+  const mastery = buildMastery(saved, [
+    { id: "tap-1", articleId: "a1", word: "decider", lemma: "decider", count: 2, updatedAt: "2026-07-14T09:00:00.000Z" },
+    { id: "tap-2", articleId: "a2", word: "decider", lemma: "decider", count: 1, updatedAt: "2026-07-14T09:01:00.000Z" },
+    { id: "tap-3", articleId: "a3", word: "decider", lemma: "decider", count: 1, updatedAt: "2026-07-14T09:02:00.000Z" },
+  ], [
+    { id: "inf-1", articleId: "a2", word: "decider", lemma: "decider", correct: true, answeredAt: "2026-07-14T09:00:00.000Z" },
+    { id: "inf-2", articleId: "a3", word: "decider", lemma: "decider", correct: true, answeredAt: "2026-07-14T09:00:00.000Z" },
+    { id: "inf-3", articleId: "a4", word: "decider", lemma: "decider", correct: true, answeredAt: "2026-07-14T09:00:00.000Z" },
+  ]);
+  check("mastery connects review success and repeated contexts", mastery[0].stageIndex >= 3, JSON.stringify(mastery[0]));
+  check("collections include common verbs", buildCollections(saved, mastery).some((collection) => collection.id === "verbs" && collection.discovered === 1));
+  check("achievement progress can be built from words and completions", buildAchievements(saved, mastery).length > 0);
+  check("progress snapshot includes XP level and collections", buildProgressSnapshot(saved).collections.length > 0 && buildProgressSnapshot(saved).level.level >= 1);
+  check("review success XP is capped but awarded", recordReviewSuccessXp("decider") > 0);
 }
 
 console.log("\n--- Supabase sync merge logic ---");

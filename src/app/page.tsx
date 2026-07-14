@@ -16,12 +16,14 @@ import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
 import { getSavedWords } from "@/lib/storage";
 import { getAllWordTaps } from "@/lib/wordLearning";
+import { awardCompletedMissions, buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
 import {
   buildContextualReviewArticles,
   buildTodayNewsWords,
   type ContextualReviewArticle,
   type TodayNewsWord,
 } from "@/lib/readingAnalytics";
+import { TodaysMissionsPanel, XPProgressBar } from "@/components/GamificationCards";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import {
   buildScorableArticles,
@@ -129,6 +131,8 @@ export default function HomePage() {
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
   const [contextualReviewArticles, setContextualReviewArticles] = useState<ContextualReviewArticle[]>([]);
+  const [progressSnapshot, setProgressSnapshot] = useState<ProgressSnapshot | null>(null);
+  const [rewardNotice, setRewardNotice] = useState<string | null>(null);
   const lastRefreshSent = useRef(0);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
@@ -175,6 +179,12 @@ export default function HomePage() {
         const knownWords = new Set(getKnownWords());
         const savedWords = getSavedWords();
         const wordTaps = getAllWordTaps();
+        const missionRewards = awardCompletedMissions(undefined, savedWords);
+        if (missionRewards.awardedXp > 0) {
+          setRewardNotice(`+${missionRewards.awardedXp} XP from missions`);
+          window.setTimeout(() => setRewardNotice(null), 2200);
+        }
+        setProgressSnapshot(buildProgressSnapshot(savedWords));
         const scorable = buildScorableArticles(pool, knownWords);
         const context = buildScoringContext();
         const ranked = rankArticles(scorable, context);
@@ -203,6 +213,7 @@ export default function HomePage() {
           const knownWords = new Set(getKnownWords());
           const savedWords = getSavedWords();
           const wordTaps = getAllWordTaps();
+          setProgressSnapshot(buildProgressSnapshot(savedWords));
           const scorable = buildScorableArticles(
             hardcodedTexts.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
             knownWords
@@ -265,10 +276,36 @@ export default function HomePage() {
         </p>
       </header>
 
+      {rewardNotice && (
+        <div className="mb-4 rounded-2xl bg-brand-light px-3 py-2 text-sm font-semibold text-brand shadow-sm">
+          {rewardNotice}
+        </div>
+      )}
+
+      {progressSnapshot && (
+        <Link href="/progress" className="mb-4 block rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Current reading level</p>
+              <p className="mt-0.5 text-lg font-extrabold text-ink">
+                Level {progressSnapshot.level.level} - {progressSnapshot.level.title}
+              </p>
+            </div>
+            <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">
+              {progressSnapshot.level.totalXp.toLocaleString()} XP
+            </span>
+          </div>
+          <XPProgressBar value={progressSnapshot.level.progress} label="Progress to next level" className="mt-3" />
+        </Link>
+      )}
+
       <ContinueReadingBanner />
       <TodayCard />
       <ReadingGoalsCard />
       <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
+      {progressSnapshot && (
+        <TodaysMissionsPanel missions={progressSnapshot.missions} compact />
+      )}
       {state === "success" && todayWords.length > 0 && (
         <TodayNewsWordsSection words={todayWords} />
       )}

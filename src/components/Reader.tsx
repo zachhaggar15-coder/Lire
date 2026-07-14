@@ -6,6 +6,7 @@ import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordSta
 import { texts as hardcodedTexts } from "@/data/texts";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { deleteWord, getSavedWords, saveWord } from "@/lib/storage";
+import { getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import {
   cacheDictionarySentenceTranslations,
@@ -33,6 +34,15 @@ import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recor
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
 import {
+  quickChallengeForArticle,
+  recordGamifiedArticleCompletion,
+  recordSecondPassXp,
+  readingWordsFromText,
+  translationBudgetForMode,
+  type ArticleCompletionRecord,
+  type TranslationChallengeMode,
+} from "@/lib/gamification";
+import {
   findRelatedArticles,
   type MultipleChoiceQuestion,
   type ToneQuestion,
@@ -46,6 +56,7 @@ import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
 import Toast from "@/components/Toast";
+import { CompletionSummary } from "@/components/GamificationCards";
 
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   small: "text-base",
@@ -135,6 +146,10 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationUses, setTranslationUses] = useState(0);
+  const [challengeMode, setChallengeMode] = useState<TranslationChallengeMode>("none");
+  const [quickChallengeAnswer, setQuickChallengeAnswer] = useState<string | null>(null);
+  const [inferenceStats, setInferenceStats] = useState({ attempted: 0, correct: 0 });
+  const [completionResult, setCompletionResult] = useState<ArticleCompletionRecord | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -170,6 +185,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     () => suggestedTranslationAllowance(difficulty?.unknownWordRatio),
     [difficulty?.unknownWordRatio]
   );
+  const articleWordCount = useMemo(() => readingWordsFromText(text), [text]);
+  const challengeBudget = useMemo(
+    () => translationBudgetForMode(challengeMode, articleWordCount, difficulty?.unknownWordRatio),
+    [articleWordCount, challengeMode, difficulty?.unknownWordRatio]
+  );
+  const displayTranslationBudget = challengeBudget ?? translationAllowance;
+  const quickChallenge = useMemo(() => quickChallengeForArticle(text), [text]);
   const headlineComparison = useMemo(() => buildHeadlineComparison(text, articlePool), [articlePool, text]);
 
   useEffect(() => {
@@ -210,6 +232,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     // article is instant again; only a genuinely new article re-fetches.
     setShowEnglishTranslation(false);
     setTranslationUses(0);
+    setChallengeMode("none");
+    setQuickChallengeAnswer(null);
+    setInferenceStats({ attempted: 0, correct: 0 });
+    setCompletionResult(null);
     setRereadMode(false);
     setSecondPassStartedAt(null);
     setTranslationState("idle");
@@ -295,7 +321,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (rereadMode) return;
     const next = !showEnglishTranslation;
     setShowEnglishTranslation(next);
-    if (next) setTranslationUses((count) => Math.max(count, translationAllowance + 1));
+    if (next) setTranslationUses((count) => Math.max(count, displayTranslationBudget + 1));
     if (next && translationState === "idle" && shouldUseFluentTranslation()) void handleFetchFluentTranslation();
   }
 
@@ -466,13 +492,19 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleMarkCompleted() {
     const completedAt = new Date().toISOString();
+    const comprehensionItems = [
+      gistAnswer === null ? null : gistAnswer === gistQuestion.answerIndex,
+      ...toneQuestions.map((question) => (toneAnswers[question.id] == null ? null : toneAnswers[question.id] === question.answerIndex)),
+    ].filter((value): value is boolean => value !== null);
+    const comprehensionCorrect = comprehensionItems.filter(Boolean).length;
+    const phraseCount = getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === text.title).length;
     markCompleted(text.id);
     recordTranslationBudgetResult({
       articleId: text.id,
       articleTitle: text.title,
-      allowance: translationAllowance,
+      allowance: displayTranslationBudget,
       used: translationUses,
-      metTarget: translationUses <= translationAllowance,
+      metTarget: translationUses <= displayTranslationBudget,
       completedAt,
     });
     recordArchiveEntry({
@@ -489,6 +521,26 @@ export default function Reader({ text }: { text: ReadingText }) {
     // Feeds the automatically-learned interest profile behind the home
     // page's recommendations — see src/lib/recommendation/interests.ts.
     recordArticleCompleted(text.category);
+    const result = recordGamifiedArticleCompletion({
+      text,
+      difficulty: difficulty?.cefr ?? text.difficulty,
+      openedAt: getProgress(text.id).openedAt,
+      completedAt,
+      wordsRead: countFrenchWords(text),
+      translationsUsed: translationUses,
+      fullTranslationUsed: showEnglishTranslation,
+      savedWords: articleSavedWordCount,
+      phrasesSaved: phraseCount,
+      comprehensionCorrect,
+      comprehensionTotal: comprehensionItems.length,
+      inferenceCorrect: inferenceStats.correct,
+      inferenceAttempts: inferenceStats.attempted,
+      summaryCompleted: summaryDraft.trim().length >= 20,
+      challengeMode,
+      challengeBudget,
+    });
+    setCompletionResult(result);
+    if (result.xpEarned > 0) showToast(`+${result.xpEarned} XP`);
     setStatus("completed");
   }
 
@@ -510,9 +562,10 @@ export default function Reader({ text }: { text: ReadingText }) {
       startedAt: secondPassStartedAt ?? new Date().toISOString(),
       completedAt: new Date().toISOString(),
     });
+    const xp = recordSecondPassXp(text.id);
     setRereadMode(false);
     setSecondPassStartedAt(null);
-    showToast("Second pass saved");
+    showToast(xp > 0 ? `Second pass saved (+${xp} XP)` : "Second pass saved");
   }
 
   function handleArticleFeedback(feedback: ArticleDifficultyFeedback) {
@@ -548,6 +601,10 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleInferenceAnswer(word: string, lemma: string | null, correct: boolean) {
     recordInferenceResult(text.id, word, lemma, correct);
+    setInferenceStats((stats) => ({
+      attempted: stats.attempted + 1,
+      correct: stats.correct + (correct ? 1 : 0),
+    }));
     showToast(correct ? "Inferred correctly" : "Context attempt saved");
   }
 
@@ -753,9 +810,71 @@ export default function Reader({ text }: { text: ReadingText }) {
         </button>
       </div>
 
-      <div className={`mt-3 rounded-2xl px-3 py-2 text-xs font-semibold ${translationUses <= translationAllowance ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
-        Translation budget: {translationUses}/{translationAllowance} used
-        {translationUses > translationAllowance ? " - try the next article with fewer lookups" : " - aim to infer before tapping"}
+      <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Translation challenge</h2>
+            <p className="mt-0.5 text-xs text-ink-muted">Optional. Pick a target if you want to practise reading through uncertainty.</p>
+          </div>
+          <span className="shrink-0 rounded-full bg-cream px-2 py-1 text-xs font-bold text-brand">
+            {displayTranslationBudget} max
+          </span>
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {(
+            [
+              ["none", "No challenge"],
+              ["relaxed", "Relaxed"],
+              ["balanced", "Balanced"],
+              ["ambitious", "Ambitious"],
+            ] as const
+          ).map(([mode, label]) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setChallengeMode(mode)}
+              disabled={status === "completed"}
+              className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 disabled:opacity-60 ${
+                challengeMode === mode ? "bg-brand text-white" : "bg-cream text-ink-muted"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
+        <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h2>
+        <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {quickChallenge.choices.map((choice) => {
+            const answered = quickChallengeAnswer !== null;
+            const correct = choice === quickChallenge.answer;
+            const selected = quickChallengeAnswer === choice;
+            return (
+              <button
+                key={choice}
+                type="button"
+                onClick={() => setQuickChallengeAnswer(choice)}
+                className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                  answered && correct
+                    ? "bg-emerald-100 text-emerald-800"
+                    : selected
+                      ? "bg-rose-100 text-rose-800"
+                      : "bg-cream text-ink-muted"
+                }`}
+              >
+                {choice}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <div className={`mt-3 rounded-2xl px-3 py-2 text-xs font-semibold ${translationUses <= displayTranslationBudget ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+        Translation budget: {translationUses}/{displayTranslationBudget} used
+        {challengeMode === "none" ? " - optional target based on this article" : translationUses > displayTranslationBudget ? " - challenge missed, keep reading" : " - challenge on track"}
       </div>
 
       {rereadMode && (
@@ -870,13 +989,21 @@ export default function Reader({ text }: { text: ReadingText }) {
       {/* Reading progress */}
       <div className="mt-8 mb-4 flex justify-center">
         {status === "completed" ? (
-          <div className="space-y-2 text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 6L9 17l-5-5" />
-              </svg>
-              Completed
-            </span>
+          <div className="w-full space-y-3 text-center">
+            {completionResult ? (
+              <CompletionSummary
+                completion={completionResult}
+                onSecondPass={handleStartSecondPass}
+                reviewHref={articleSavedWordCount > 0 ? `/review?article=${encodeURIComponent(text.title)}` : null}
+              />
+            ) : (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                Completed
+              </span>
+            )}
             <div className="rounded-3xl bg-cream-card p-3 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">How did this level feel?</p>
               <div className="mt-2 grid grid-cols-3 gap-2">
@@ -900,7 +1027,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 ))}
               </div>
             </div>
-            {articleSavedWordCount > 0 && (
+            {!completionResult && articleSavedWordCount > 0 && (
               <Link
                 href={`/review?article=${encodeURIComponent(text.title)}`}
                 className="block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
@@ -916,7 +1043,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               >
                 Finish second pass
               </button>
-            ) : (
+            ) : !completionResult ? (
               <button
                 type="button"
                 onClick={handleStartSecondPass}
@@ -924,7 +1051,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               >
                 Read again without English
               </button>
-            )}
+            ) : null}
           </div>
         ) : (
           <button
