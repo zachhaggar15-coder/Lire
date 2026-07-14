@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const items = [
   { href: "/", label: "Read", icon: BookIcon },
+  { href: "/grammar", label: "Grammar", icon: GrammarIcon },
   { href: "/progress", label: "Progress", icon: ProgressIcon },
   { href: "/words", label: "Words", icon: BookmarkIcon },
   { href: "/review", label: "Review", icon: CardsIcon },
@@ -67,6 +68,17 @@ function ProgressIcon({ className }: { className?: string }) {
       <path d="M12 19V9" />
       <path d="M16 19v-9" />
       <path d="M20 19V4" />
+    </svg>
+  );
+}
+
+function GrammarIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4z" />
+      <path d="M9 8h5" />
+      <path d="M9 12h6" />
+      <path d="M9 16h4" />
     </svg>
   );
 }

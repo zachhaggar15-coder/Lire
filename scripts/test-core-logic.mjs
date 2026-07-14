@@ -114,6 +114,21 @@ import {
   translationBudgetForMode,
   xpNeededForLevel,
 } from "../src/lib/gamification.ts";
+import {
+  VERB_REFERENCES,
+  buildGrammarDashboard,
+  clearGrammarStores,
+  getGrammarPracticeEvents,
+  getGrammarProgress,
+  getVerbLesson,
+  getVerbLessons,
+  isGrammarAnswerCorrect,
+  markGrammarLessonComplete,
+  questionsForLesson,
+  recordGrammarAnswer,
+  referenceForVerb,
+  tenseLabel,
+} from "../src/lib/grammar.ts";
 
 let passed = 0;
 let failed = 0;
@@ -936,6 +951,42 @@ console.log("\n--- Gamification engine ---");
   check("achievement progress can be built from words and completions", buildAchievements(saved, mastery).length > 0);
   check("progress snapshot includes XP level and collections", buildProgressSnapshot(saved).collections.length > 0 && buildProgressSnapshot(saved).level.level >= 1);
   check("review success XP is capped but awarded", recordReviewSuccessXp("decider") > 0);
+}
+
+console.log("\n--- Grammar conjugation section ---");
+{
+  clearGrammarStores();
+  check("verb lessons provide a complete first grammar path", getVerbLessons().length >= 8);
+  check("all verb lessons have practice questions", getVerbLessons().every((lesson) => questionsForLesson(lesson.id).length >= 2));
+  check("tense labels are learner-friendly", tenseLabel("passe-compose") === "Passe compose" && tenseLabel("futur-simple") === "Future simple");
+}
+{
+  const question = questionsForLesson("passe-compose")[0];
+  check("grammar answers compare accent-insensitively", isGrammarAnswerCorrect({ ...question, answer: "été" }, "ete"));
+  check("wrong grammar answers are rejected", !isGrammarAnswerCorrect(question, "est"));
+}
+{
+  const first = recordGrammarAnswer("present-er", "present-er-1", true);
+  const second = recordGrammarAnswer("present-er", "present-er-2", true);
+  const third = recordGrammarAnswer("present-er", "present-er-1", false);
+  check("grammar progress tracks attempts and correct answers", third.attempts === 3 && third.correct === 2, JSON.stringify(third));
+  check("grammar mastery increases after correct practice", first.mastery > 0 && second.mastery >= first.mastery, `${first.mastery}/${second.mastery}`);
+  check("grammar practice events are stored", getGrammarPracticeEvents().length === 3);
+}
+{
+  const completed = markGrammarLessonComplete("present-core-irregulars");
+  const dashboard = buildGrammarDashboard(getGrammarProgress(), getGrammarPracticeEvents());
+  check("grammar lessons can be marked complete", completed.completed && completed.mastery >= 70);
+  check("grammar dashboard reports completed lessons", dashboard.completedLessons >= 1);
+  check("grammar dashboard recommends a next lesson", !!dashboard.nextLesson?.id);
+}
+{
+  const etre = referenceForVerb("etre");
+  const accented = referenceForVerb("être");
+  check("verb reference resolves common verbs", etre?.forms.present.includes("je suis"));
+  check("verb reference lookup tolerates accents", accented?.infinitive === "etre");
+  check("reference set includes several core verbs", VERB_REFERENCES.length >= 6);
+  check("lesson lookup falls back safely", getVerbLesson("missing-lesson").id === getVerbLessons()[0].id);
 }
 
 console.log("\n--- Supabase sync merge logic ---");

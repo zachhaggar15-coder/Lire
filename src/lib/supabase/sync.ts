@@ -44,6 +44,8 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.gamification.achievements.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.gamification.passport.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.gamification.mastery.v1", kind: "list-by-id", idField: "word" },
+  { key: "lire.grammar.progress.v1", kind: "list-by-id", idField: "id" },
+  { key: "lire.grammar.practiceEvents.v1", kind: "list-by-id", idField: "id" },
 ];
 
 const LAST_SYNC_AT_KEY = "lire.sync.lastSuccessAt";
