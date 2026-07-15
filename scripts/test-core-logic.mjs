@@ -721,10 +721,21 @@ console.log("\n--- Comprehension helpers ---");
   const reference = findPronounReference("qui", sentence[0].tokens, sentence[0].tokens.findIndex((token) => token.clean === "qui"), null);
   check("pronoun reference helper links relative pronouns back to a noun phrase", reference?.antecedentText.toLowerCase().includes("projet"));
 }
-{
-  const family = getWordFamily("décider");
-  check("word-family helper includes the décider family", family.noun.includes("décision") && family.adjective.includes("décisif"));
-}
+  {
+    const family = getWordFamily("décider");
+    check(
+      "word-family helper includes the décider family",
+      family.noun.includes("décision") && family.verb.includes("décider") && family.adjective.includes("décisif")
+    );
+  }
+  {
+    const family = getWordFamily("hausse");
+    check(
+      "word-family helper includes news vocabulary families",
+      family.verb.includes("augmenter") && family.opposites.includes("baisse") && family.commonCollocations.includes("hausse des prix"),
+      JSON.stringify(family)
+    );
+  }
 
 console.log("\n--- Reading analytics ---");
 {

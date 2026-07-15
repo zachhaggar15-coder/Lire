@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
@@ -56,6 +56,10 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
   const [definitionRevealed, setDefinitionRevealed] = useState(true);
   const [sentenceTranslationRevealed, setSentenceTranslationRevealed] = useState(false);
   const [inferenceAnswer, setInferenceAnswer] = useState<number | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const dragStartY = useRef<number | null>(null);
+  const dragOffsetRef = useRef(0);
+  const activePointerId = useRef<number | null>(null);
   const open = state !== null;
   const lookup = state?.lookup;
   const found = lookup?.source === "local";
@@ -86,7 +90,36 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
     setDefinitionRevealed(!inferenceChallenge);
     setSentenceTranslationRevealed(false);
     setInferenceAnswer(null);
+    setDragOffset(0);
+    dragOffsetRef.current = 0;
   }, [state?.word, state?.contextSentence, inferenceChallenge]);
+
+  function handleDragStart(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    dragStartY.current = event.clientY;
+    activePointerId.current = event.pointerId;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function handleDragMove(event: PointerEvent<HTMLElement>) {
+    if (activePointerId.current !== event.pointerId || dragStartY.current === null) return;
+    const nextOffset = Math.max(0, event.clientY - dragStartY.current);
+    dragOffsetRef.current = nextOffset;
+    setDragOffset(nextOffset);
+  }
+
+  function handleDragEnd(event: PointerEvent<HTMLElement>) {
+    if (activePointerId.current !== event.pointerId) return;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    const shouldDismiss = dragOffsetRef.current > 95;
+    dragStartY.current = null;
+    activePointerId.current = null;
+    dragOffsetRef.current = 0;
+    setDragOffset(0);
+    if (shouldDismiss) onClose();
+  }
 
   function handleSaveCorrection() {
     if (!state || !lookup || !correction.trim()) return;
@@ -151,12 +184,26 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
       <div
         role="dialog"
         aria-hidden={!open}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-accent-pink p-5 shadow-2xl transition-transform duration-200 ${
+        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-accent-pink p-5 shadow-2xl transition-transform ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
-        style={{ paddingBottom: "calc(1.25rem + var(--safe-bottom))" }}
+        style={{
+          paddingBottom: "calc(1.25rem + var(--safe-bottom))",
+          transform: open ? `translateY(${dragOffset}px)` : undefined,
+          transitionDuration: dragOffset > 0 ? "0ms" : "200ms",
+        }}
       >
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-white/50" />
+        <button
+          type="button"
+          aria-label="Swipe down to close"
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
+          className="mx-auto mb-3 flex h-7 w-24 touch-none items-center justify-center rounded-full active:cursor-grabbing"
+        >
+          <span className="h-1.5 w-10 rounded-full bg-white/60" />
+        </button>
 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -332,9 +379,21 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
 
         {wordFamily && hasWordFamily && (
           <div className="mt-4 rounded-2xl bg-white/60 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
-              Word family
-            </p>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
+                  Word family
+                </p>
+                <p className="mt-0.5 text-xs text-ink-muted">
+                  Related forms that help you recognise the same idea in different sentences.
+                </p>
+              </div>
+              {lookup?.lemma && (
+                <span className="shrink-0 rounded-full bg-brand-light px-2 py-1 text-[11px] font-semibold text-brand">
+                  {lookup.lemma}
+                </span>
+              )}
+            </div>
             <WordFamilyRow label="Noun" values={wordFamily.noun} />
             <WordFamilyRow label="Verb" values={wordFamily.verb} />
             <WordFamilyRow label="Adjective" values={wordFamily.adjective} />
@@ -454,16 +513,16 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
 function WordFamilyRow({ label, values }: { label: string; values: string[] }) {
   if (values.length === 0) return null;
   return (
-    <div className="mt-2">
+    <div className="mt-3">
       <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
-      <div className="mt-0.5 space-y-0.5 text-sm text-ink">
+      <div className="mt-1 grid gap-1.5">
         {values.map((value) => {
           const lookup = getWordFamilyMeaning(value);
           return (
-            <p key={value}>
+            <div key={value} className="rounded-xl bg-white/60 px-3 py-2 text-sm text-ink">
               <span className="font-semibold">{value}</span>
               {lookup && <span className="text-ink-muted"> - {lookup}</span>}
-            </p>
+            </div>
           );
         })}
       </div>
