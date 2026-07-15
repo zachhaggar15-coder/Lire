@@ -37,7 +37,9 @@ import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import {
+  buildComposedPhraseTranslationMatch,
   cacheDictionarySentenceTranslations,
+  findContainingPhraseTranslationMatch,
   findPhraseTranslationMatch,
   translateParagraphsWithDictionary,
   translateSentencesWithDictionaryCache,
@@ -405,6 +407,36 @@ console.log("\n--- Fixed-phrase lookup context (à travers / de travers / en tra
 }
 
 console.log("\n--- Idiom/phrase dictionary batch ---");
+{
+  const sentence = tokenizeParagraphsToSentences("Le gouvernement veut mettre fin à la crise sur fond de tensions.")[0][0];
+  const mettreIndex = sentence.tokens.findIndex((token) => token.clean === "fin");
+  const match = findContainingPhraseTranslationMatch(sentence.tokens, mettreIndex);
+  check(
+    "long-press phrase lookup finds the whole local phrase around a held middle word",
+    match?.lemma === "mettre fin à" && match.translation === "to put an end to",
+    JSON.stringify(match)
+  );
+}
+{
+  const sentence = tokenizeParagraphsToSentences("Le débat continue sur fond de tensions sociales.")[0][0];
+  const heldIndex = sentence.tokens.findIndex((token) => token.clean === "fond");
+  const match = findContainingPhraseTranslationMatch(sentence.tokens, heldIndex);
+  check(
+    "long-press phrase lookup resolves news framing phrases from the middle token",
+    match?.lemma === "sur fond de" && match.translation === "against a backdrop of",
+    JSON.stringify(match)
+  );
+}
+{
+  const sentence = tokenizeParagraphsToSentences("La petite ville reste calme.")[0][0];
+  const heldIndex = sentence.tokens.findIndex((token) => token.clean === "ville");
+  const match = buildComposedPhraseTranslationMatch(sentence.tokens, heldIndex);
+  check(
+    "long-press phrase lookup has an offline composed fallback before AI",
+    match?.source === "composed" && match.translation.includes("small") && match.translation.includes("city"),
+    JSON.stringify(match)
+  );
+}
 {
   // Reflexive verbs whose meaning genuinely diverges from the plain verb —
   // the same class of bug as the "travers" fix, just for a whole family of

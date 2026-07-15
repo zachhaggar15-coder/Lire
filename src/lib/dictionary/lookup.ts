@@ -1,6 +1,7 @@
 import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
+import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
 import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
@@ -38,6 +39,16 @@ for (const entry of frEnDictionary) {
 // ("escalade" -> escalation before rock climbing, "frappes" -> strikes
 // before the verb "to hit").
 for (const entry of newsSenseDictionary) {
+  byLemma.set(entry.lemma.toLowerCase(), entry);
+  for (const form of entry.forms ?? []) {
+    byForm.set(form.toLowerCase(), entry);
+  }
+}
+
+// Phrase-bank entries are intentionally high priority: if a reader long-presses
+// "mettre fin à" or "sur fond de", the phrase meaning should win before any
+// generated literal word sense can produce a plausible-but-wrong gloss.
+for (const entry of phraseBankDictionary) {
   byLemma.set(entry.lemma.toLowerCase(), entry);
   for (const form of entry.forms ?? []) {
     byForm.set(form.toLowerCase(), entry);

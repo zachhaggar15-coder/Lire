@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { WordExplanation } from "@/lib/ai/types";
+import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { isPhraseSaved, markPhraseKnown, savePhrase } from "@/lib/phrases";
@@ -11,6 +13,7 @@ export interface ActivePhraseState {
   translation: string;
   partOfSpeech: string | null;
   contextSentence: string;
+  source?: "phrasebank" | "composed";
 }
 
 interface PhraseSheetProps {
@@ -25,12 +28,18 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
   const [correction, setCorrection] = useState("");
   const [saved, setSaved] = useState(false);
   const [savedKnown, setSavedKnown] = useState(false);
+  const [aiState, setAiState] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
 
   useEffect(() => {
     setCorrection("");
     setSaved(state ? isPhraseSaved(state.phrase) : false);
     setSavedKnown(false);
+    setAiState("idle");
+    setAiResult(null);
+    setAiError(null);
   }, [state?.phrase, state]);
 
   function handleSavePhrase() {
@@ -76,6 +85,28 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
     handleSavePhrase();
   }
 
+  async function handleAskAi() {
+    if (!state) return;
+    setAiState("loading");
+    setAiError(null);
+    const result = await getWordExplanation({
+      word: state.phrase,
+      lemma: state.lemma,
+      articleSentence: state.contextSentence,
+      simpleExampleSentence: null,
+      surroundingSentence: null,
+      articleTitle,
+      level: "A2/B1 French learner",
+    });
+    if (result.data) {
+      setAiResult(result.data);
+      setAiState("ready");
+      return;
+    }
+    setAiError(result.error);
+    setAiState("error");
+  }
+
   return (
     <>
       <div
@@ -118,6 +149,13 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
             {state.partOfSpeech}
           </span>
         )}
+        {state?.source && (
+          <p className="mt-2 text-xs text-ink-muted">
+            {state.source === "phrasebank"
+              ? "Matched from the offline phrasebank."
+              : "Composed offline from nearby words. Use AI only if this still feels unclear."}
+          </p>
+        )}
 
         {state?.contextSentence && (
           <div className="mt-4 rounded-2xl bg-white/70 p-3">
@@ -146,6 +184,33 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
           >
             Save correction
           </button>
+        </div>
+
+        <div className="mt-4 rounded-2xl bg-white/70 p-3">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Last-resort nuance</p>
+              <p className="mt-1 text-sm text-ink-muted">Use this only if the offline phrase meaning is not enough.</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleAskAi}
+              disabled={!state || aiState === "loading"}
+              className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
+            >
+              {aiState === "loading" ? "Asking..." : "Ask AI"}
+            </button>
+          </div>
+          {aiState === "ready" && aiResult && (
+            <div className="mt-3 space-y-2 text-sm text-ink">
+              <p className="font-semibold">{aiResult.translation}</p>
+              <p>{aiResult.meaningInContext}</p>
+              {aiResult.grammarOrUsageNote && <p className="text-ink-muted">{aiResult.grammarOrUsageNote}</p>}
+            </div>
+          )}
+          {aiState === "error" && aiError && (
+            <p className="mt-3 text-sm font-semibold text-rose-700">{aiError}</p>
+          )}
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-2">

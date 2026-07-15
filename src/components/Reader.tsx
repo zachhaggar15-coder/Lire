@@ -10,6 +10,8 @@ import { getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import {
   cacheDictionarySentenceTranslations,
+  buildComposedPhraseTranslationMatch,
+  findContainingPhraseTranslationMatch,
   findPhraseTranslationMatch,
   translateSentencesWithDictionaryCache,
   type DictionaryArticleTranslationMode,
@@ -161,6 +163,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTriggered = useRef(false);
+  const phraseHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const phraseHoldTriggered = useRef(false);
   const [comprehensionQuestions, setComprehensionQuestions] = useState<ComprehensionQuestionBundle>(() =>
     buildComprehensionQuestionBundle(text, [])
   );
@@ -258,6 +262,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
       if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
+      if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
       // Never let audio keep playing after navigating away from the article.
       stopSpeaking();
       setIsSpeakingArticle(false);
@@ -416,6 +421,23 @@ export default function Reader({ text }: { text: ReadingText }) {
     setActivePhrase({ ...phrase, contextSentence: sentenceText });
   }
 
+  function handlePhraseHold(sentenceText: string, tokens: Token[], tokenIndex: number) {
+    if (rereadMode) return;
+    const phrase = findContainingPhraseTranslationMatch(tokens, tokenIndex) ?? buildComposedPhraseTranslationMatch(tokens, tokenIndex);
+    if (!phrase) {
+      showToast("No phrase found here");
+      return;
+    }
+    handlePhraseTap(sentenceText, {
+      phrase: phrase.phrase,
+      lemma: phrase.lemma,
+      translation: phrase.translation,
+      partOfSpeech: phrase.partOfSpeech,
+      contextSentence: sentenceText,
+      source: phrase.source,
+    });
+  }
+
   function handleKnow() {
     if (!activeWord) return;
     const lemma = activeWord.lookup.lemma;
@@ -450,6 +472,19 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function cancelSentenceHold() {
     if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
+  }
+
+  function startPhraseHold(sentenceText: string, tokens: Token[], tokenIndex: number) {
+    phraseHoldTriggered.current = false;
+    if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
+    phraseHoldTimeout.current = setTimeout(() => {
+      phraseHoldTriggered.current = true;
+      handlePhraseHold(sentenceText, tokens, tokenIndex);
+    }, 450);
+  }
+
+  function cancelPhraseHold() {
+    if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
   }
 
   function buildSavedWord(
@@ -656,15 +691,42 @@ export default function Reader({ text }: { text: ReadingText }) {
         renderedTokens.push(
           <span
             key={ti}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
+            }}
+            onPointerUp={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onPointerCancel={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onPointerLeave={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onContextMenu={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (rereadMode) return;
+              handlePhraseHold(sg.text, sg.tokens, ti);
+            }}
             onClick={(e) => {
               e.stopPropagation();
               if (rereadMode) return;
+              if (phraseHoldTriggered.current) {
+                phraseHoldTriggered.current = false;
+                return;
+              }
               handlePhraseTap(sg.text, {
                 phrase: phraseText.toLowerCase(),
                 lemma: phrase.lemma,
                 translation: phrase.translation,
                 partOfSpeech: phrase.partOfSpeech,
                 contextSentence: sg.text,
+                source: phrase.source,
               });
             }}
             className={phraseClassName()}
@@ -680,9 +742,35 @@ export default function Reader({ text }: { text: ReadingText }) {
         tok.isWord ? (
           <span
             key={ti}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
+            }}
+            onPointerUp={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onPointerCancel={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onPointerLeave={(event) => {
+              event.stopPropagation();
+              cancelPhraseHold();
+            }}
+            onContextMenu={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (rereadMode) return;
+              handlePhraseHold(sg.text, sg.tokens, ti);
+            }}
             onClick={(e) => {
               e.stopPropagation();
               if (rereadMode) return;
+              if (phraseHoldTriggered.current) {
+                phraseHoldTriggered.current = false;
+                return;
+              }
               handleWordTap(sg.text, sg.tokens, ti);
             }}
             className={`${wordClassName(tok)} ${!rereadMode && isHighlightedReference(sg.tokens, ti) ? "bg-emerald-200/80 ring-2 ring-emerald-400" : ""}`}
@@ -748,8 +836,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         {text.title}
       </h1>
       <p className="mt-1 text-xs text-ink-muted">
-        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, tap
-        or hold a sentence to explain it
+        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning,
+        hold a word for the phrase, or hold a sentence to explain it
       </p>
       {difficulty && (
         <p className="mt-1 text-xs italic text-ink-muted">

@@ -3,7 +3,8 @@ import { hashString } from "@/lib/hash";
 import type { SentenceGroup, Token } from "@/lib/words";
 
 const DICTIONARY_TRANSLATION_CACHE_PREFIX = "lire.dictionaryArticleTranslation.v1.";
-const MAX_PHRASE_WORDS = 7;
+const MAX_PHRASE_WORDS = 9;
+const COMPOSED_PHRASE_RADIUS = 2;
 
 export type DictionaryArticleTranslationMode = "phrase-aware" | "literal";
 
@@ -14,6 +15,7 @@ export interface PhraseTranslationMatch {
   lemma: string;
   translation: string;
   partOfSpeech: string | null;
+  source: "phrasebank" | "composed";
 }
 
 function isCapitalized(text: string): boolean {
@@ -65,11 +67,127 @@ export function findPhraseTranslationMatch(tokens: Token[], startIndex: number):
         lemma: lookup.lemma,
         translation,
         partOfSpeech: lookup.partOfSpeech,
+        source: "phrasebank",
       };
     }
   }
 
   return null;
+}
+
+function wordPositions(tokens: Token[]): { index: number; clean: string }[] {
+  return tokens.map((token, index) => ({ token, index })).filter((item) => item.token.isWord).map((item) => ({
+    index: item.index,
+    clean: item.token.clean,
+  }));
+}
+
+function phraseTextFromWindow(tokens: Token[], startIndex: number, endIndex: number): string {
+  return tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("");
+}
+
+function isPhraseLookup(lookup: ReturnType<typeof lookupWord>, phrase: string): boolean {
+  if (lookup.source === "missing" || !lookup.translations[0]) return false;
+  const part = (lookup.partOfSpeech ?? "").toLowerCase();
+  return (
+    !!lookup.lemma?.includes(" ") ||
+    part.includes("phrase") ||
+    part.includes("connector") ||
+    part.includes("conjunction") ||
+    part.includes("idiom") ||
+    phrase.includes(" ")
+  );
+}
+
+function translateTokenWindow(tokens: Token[], startIndex: number, endIndex: number): string {
+  let translated = "";
+  for (let i = startIndex; i <= endIndex; i++) {
+    const token = tokens[i];
+    if (!token.isWord) {
+      translated += token.text;
+      continue;
+    }
+    translated += translationForToken(tokens, i, "phrase-aware");
+  }
+  return translated.trim().replace(/\s+/g, " ");
+}
+
+/**
+ * Finds the best known local phrase containing a held word. This is the
+ * long-press counterpart to findPhraseTranslationMatch: instead of only
+ * checking phrases that begin at the current token, it searches every
+ * contiguous word window around the held token and prefers the longest real
+ * local phrase. That makes holding the middle of "prendre en compte" or
+ * "sur fond de" behave like holding the phrase itself.
+ */
+export function findContainingPhraseTranslationMatch(tokens: Token[], tokenIndex: number): PhraseTranslationMatch | null {
+  if (!tokens[tokenIndex]?.isWord) return null;
+
+  const words = wordPositions(tokens);
+  const heldWordOrdinal = words.findIndex((word) => word.index === tokenIndex);
+  if (heldWordOrdinal === -1) return null;
+
+  let best: PhraseTranslationMatch | null = null;
+  for (let startOrdinal = Math.max(0, heldWordOrdinal - MAX_PHRASE_WORDS + 1); startOrdinal <= heldWordOrdinal; startOrdinal++) {
+    const maxEndOrdinal = Math.min(words.length - 1, startOrdinal + MAX_PHRASE_WORDS - 1);
+    for (let endOrdinal = maxEndOrdinal; endOrdinal >= Math.max(heldWordOrdinal, startOrdinal + 1); endOrdinal--) {
+      const cleanPhrase = words.slice(startOrdinal, endOrdinal + 1).map((word) => word.clean).join(" ");
+      const lookup = lookupWord(cleanPhrase);
+      if (!isPhraseLookup(lookup, cleanPhrase)) continue;
+
+      const startIndex = words[startOrdinal].index;
+      const endIndex = words[endOrdinal].index;
+      const match: PhraseTranslationMatch = {
+        startIndex,
+        endIndex,
+        phrase: phraseTextFromWindow(tokens, startIndex, endIndex).toLowerCase(),
+        lemma: lookup.lemma ?? cleanPhrase,
+        translation: lookup.translations[0],
+        partOfSpeech: lookup.partOfSpeech,
+        source: "phrasebank",
+      };
+      if (!best || endOrdinal - startOrdinal > wordOrdinalLength(best, words)) best = match;
+    }
+  }
+
+  return best;
+}
+
+function wordOrdinalLength(match: PhraseTranslationMatch, words: { index: number; clean: string }[]): number {
+  const start = words.findIndex((word) => word.index === match.startIndex);
+  const end = words.findIndex((word) => word.index === match.endIndex);
+  return start === -1 || end === -1 ? 0 : end - start;
+}
+
+/**
+ * Last offline fallback for long-press phrase lookup. If no exact phrase-bank
+ * entry exists, select a short local word window around the held word and
+ * translate it with the phrase-aware dictionary. This does not pretend to be a
+ * fluent idiom translation; PhraseSheet labels it as an offline composition
+ * and offers AI only as an explicit final resort.
+ */
+export function buildComposedPhraseTranslationMatch(tokens: Token[], tokenIndex: number): PhraseTranslationMatch | null {
+  if (!tokens[tokenIndex]?.isWord) return null;
+  const words = wordPositions(tokens);
+  const heldWordOrdinal = words.findIndex((word) => word.index === tokenIndex);
+  if (heldWordOrdinal === -1 || words.length < 2) return null;
+
+  const startOrdinal = Math.max(0, heldWordOrdinal - COMPOSED_PHRASE_RADIUS);
+  const endOrdinal = Math.min(words.length - 1, heldWordOrdinal + COMPOSED_PHRASE_RADIUS);
+  if (startOrdinal === endOrdinal) return null;
+
+  const startIndex = words[startOrdinal].index;
+  const endIndex = words[endOrdinal].index;
+  const phrase = phraseTextFromWindow(tokens, startIndex, endIndex).toLowerCase();
+  return {
+    startIndex,
+    endIndex,
+    phrase,
+    lemma: phrase,
+    translation: translateTokenWindow(tokens, startIndex, endIndex),
+    partOfSpeech: "offline phrase composition",
+    source: "composed",
+  };
 }
 
 function findAdjacentWord(tokens: Token[], index: number, direction: -1 | 1): string | null {
