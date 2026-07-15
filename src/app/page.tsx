@@ -13,10 +13,13 @@ import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
 import { getSavedWords } from "@/lib/storage";
+import { getCustomTexts } from "@/lib/customTexts";
+import { getReviewStats } from "@/lib/spacedRepetition";
 import { getAllWordTaps } from "@/lib/wordLearning";
 import { awardCompletedMissions, buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
 import {
   buildContextualReviewArticles,
+  estimateArticleCoverage,
   buildTodayNewsWords,
   type ContextualReviewArticle,
   type TodayNewsWord,
@@ -134,9 +137,16 @@ export default function HomePage() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [prefVersion, setPrefVersion] = useState(0);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
+  const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
   const [contextualReviewArticles, setContextualReviewArticles] = useState<ContextualReviewArticle[]>([]);
   const [progressSnapshot, setProgressSnapshot] = useState<ProgressSnapshot | null>(null);
+  const [dashboardStats, setDashboardStats] = useState({
+    knownWords: 0,
+    savedWords: 0,
+    dueReviews: 0,
+    nextCoverage: null as number | null,
+  });
   const [rewardNotice, setRewardNotice] = useState<string | null>(null);
   const lastRefreshSent = useRef(0);
 
@@ -186,7 +196,8 @@ export default function HomePage() {
 
         const hiddenSources = new Set(getHiddenSources());
         const usingFallback = rssTexts.length < DAILY_RSS_ARTICLE_LIMIT;
-        const pool: ReadingText[] = [...bankTexts, ...rssTexts].filter(
+        const importedTexts = getCustomTexts();
+        const pool: ReadingText[] = [...importedTexts, ...bankTexts, ...rssTexts].filter(
           (text) => !text.sourceName || !hiddenSources.has(text.sourceName)
         );
 
@@ -203,6 +214,7 @@ export default function HomePage() {
         const context = buildScoringContext();
         const ranked = rankArticles(scorable, context);
         const savedIds = new Set(getSavedLaterIds());
+        const importedIds = new Set(importedTexts.map((article) => article.id));
         const filtered = ranked.filter((article) => {
           if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
           if (difficultyFilter !== "all" && article.text.difficulty !== difficultyFilter) return false;
@@ -210,10 +222,18 @@ export default function HomePage() {
           return true;
         });
 
-        setSections(buildSections(filtered));
+        const nonCustomFiltered = filtered.filter((article) => !importedIds.has(article.text.id));
+        setSections(buildSections(nonCustomFiltered));
+        setCustomArticles(filtered.filter((article) => importedIds.has(article.text.id)).slice(0, 4));
         setSavedLaterArticles(ranked.filter((article) => savedIds.has(article.text.id)));
         setTodayWords(buildTodayNewsWords(rssTexts));
         setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
+        setDashboardStats({
+          knownWords: knownWords.size,
+          savedWords: savedWords.filter((word) => word.status !== "known").length,
+          dueReviews: getReviewStats(savedWords).dueToday + getReviewStats(savedWords).newWords,
+          nextCoverage: filtered[0] ? estimateArticleCoverage(filtered[0].text, knownWords) : null,
+        });
         setUsedFallback(usingFallback);
         setDebug(data.debug ?? null);
         setFeedHealth(data.feedHealth ?? null);
@@ -227,6 +247,7 @@ export default function HomePage() {
           const knownWords = new Set(getKnownWords());
           const savedWords = getSavedWords();
           const wordTaps = getAllWordTaps();
+          const importedTexts = getCustomTexts();
           setProgressSnapshot(buildProgressSnapshot(savedWords));
           const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
           const bankTexts = getDailyBankTexts({
@@ -234,21 +255,29 @@ export default function HomePage() {
             category: categoryFilter,
             limit: DAILY_BANK_ARTICLE_LIMIT,
           });
-          const fallbackPool = bankTexts.length > 0 ? bankTexts : hardcodedTexts;
+          const fallbackPool = [...importedTexts, ...(bankTexts.length > 0 ? bankTexts : hardcodedTexts)];
           const scorable = buildScorableArticles(
             fallbackPool.filter((text) => !text.sourceName || !getHiddenSources().includes(text.sourceName)),
             knownWords
           );
+          const importedIds = new Set(importedTexts.map((article) => article.id));
           const ranked = rankArticles(scorable, buildScoringContext()).filter((article) => {
             if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
             if (difficultyFilter !== "all" && article.text.difficulty !== difficultyFilter) return false;
             if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
             return true;
           });
-          setSections(buildSections(ranked));
+          setSections(buildSections(ranked.filter((article) => !importedIds.has(article.text.id))));
+          setCustomArticles(ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 4));
           setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
           setTodayWords([]);
           setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, wordTaps));
+          setDashboardStats({
+            knownWords: knownWords.size,
+            savedWords: savedWords.filter((word) => word.status !== "known").length,
+            dueReviews: getReviewStats(savedWords).dueToday + getReviewStats(savedWords).newWords,
+            nextCoverage: ranked[0] ? estimateArticleCoverage(ranked[0].text, knownWords) : null,
+          });
           setUsedFallback(true);
           setFeedHealth(null);
           setState("success");
@@ -275,6 +304,7 @@ export default function HomePage() {
       sections.latestNews.length ||
       sections.shortSnippets.length ||
       sections.saveForLater.length ||
+      customArticles.length ||
       savedLaterArticles.length
     );
 
@@ -311,7 +341,7 @@ export default function HomePage() {
         </div>
       )}
 
-      <HomeDashboard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} />
+      <HomeDashboard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={dashboardStats} />
       <ContinueReadingBanner />
       <FirstRunOnboarding onComplete={() => setPrefVersion((version) => version + 1)} />
 
@@ -468,6 +498,29 @@ export default function HomePage() {
             articles={sections.liveNews}
             variant="compact"
           />
+          {customArticles.length > 0 && (
+            <ArticleSection
+              title="Imported Texts"
+              subtitle="Your saved French texts, ready for the full Liree reader."
+              articles={customArticles}
+              variant="compact"
+            />
+          )}
+
+          <section className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Bring Your Own Text</h2>
+                <p className="mt-0.5 text-xs text-ink-muted">Paste French from elsewhere and read it with lookup, audio, review, and XP.</p>
+              </div>
+              <Link
+                href="/import"
+                className="shrink-0 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95"
+              >
+                Import
+              </Link>
+            </div>
+          </section>
 
           <details className="mb-6 rounded-2xl border border-cream-dark px-3 py-3">
             <summary className="cursor-pointer list-none">
@@ -622,9 +675,16 @@ export default function HomePage() {
 function HomeDashboard({
   progressSnapshot,
   selectedLevel,
+  stats,
 }: {
   progressSnapshot: ProgressSnapshot | null;
   selectedLevel: Difficulty;
+  stats: {
+    knownWords: number;
+    savedWords: number;
+    dueReviews: number;
+    nextCoverage: number | null;
+  };
 }) {
   const dueMissions = progressSnapshot?.missions.filter((mission) => !mission.completed).length ?? 0;
   const totalXp = progressSnapshot?.level.totalXp ?? 0;
@@ -658,6 +718,34 @@ function HomeDashboard({
       </div>
 
       <XPProgressBar value={progress} label={`${totalXp.toLocaleString()} XP`} className="mt-3" />
+
+      <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s plan</p>
+            <p className="mt-1 text-sm font-semibold text-ink">
+              Read one article, keep translations low, then review the words due now.
+            </p>
+          </div>
+          <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">
+            {stats.nextCoverage === null ? "New" : `${stats.nextCoverage}% known`}
+          </span>
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-xl bg-cream-card px-2 py-2">
+            <p className="text-base font-extrabold text-ink">{stats.knownWords.toLocaleString()}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Known</p>
+          </div>
+          <div className="rounded-xl bg-cream-card px-2 py-2">
+            <p className="text-base font-extrabold text-ink">{stats.savedWords.toLocaleString()}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Learning</p>
+          </div>
+          <div className="rounded-xl bg-cream-card px-2 py-2">
+            <p className="text-base font-extrabold text-ink">{stats.dueReviews.toLocaleString()}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Due</p>
+          </div>
+        </div>
+      </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2">
         {links.map((item) => (

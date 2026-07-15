@@ -2,13 +2,16 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { texts as hardcodedTexts } from "@/data/texts";
 import type { SavedWord } from "@/types";
 import { getSavedWords, recordReviewResult, markWordAsKnown } from "@/lib/storage";
 import { getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
+import { getCustomTexts } from "@/lib/customTexts";
+import { getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
-import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
+import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
 
 export default function ReviewPage() {
@@ -23,6 +26,7 @@ export default function ReviewPage() {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
+  const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -34,6 +38,14 @@ export default function ReviewPage() {
     setArticleFilter(article);
     setWords(visibleSavedWords);
     setPhrases(visibleSavedPhrases);
+    setContextualArticles(
+      buildContextualReviewArticles(
+        [...getCustomTexts(), ...getOfflineRssTexts(), ...hardcodedTexts],
+        visibleSavedWords,
+        getAllWordTaps(),
+        3
+      )
+    );
     if (visibleSavedWords.length === 0 && visibleSavedPhrases.length > 0) {
       setReviewMode("phrases");
     }
@@ -225,6 +237,10 @@ export default function ReviewPage() {
         <VocabularyStateSummary items={vocabularyStates} />
       )}
 
+      {contextualArticles.length > 0 && (
+        <ContextualArticleReview items={contextualArticles} />
+      )}
+
       {phrases.length > 0 && (
         <PhraseModeSwitch mode={reviewMode} onChange={setReviewMode} phraseCount={phraseQueue.length} />
       )}
@@ -373,6 +389,40 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }) {
+  return (
+    <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Review in context</h2>
+          <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
+        </div>
+        <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">
+          More
+        </Link>
+      </div>
+      <div className="mt-3 space-y-2">
+        {items.map(({ article, dueWords, fragileCount }) => (
+          <Link
+            key={article.id}
+            href={`/reader/${article.id}`}
+            className="block rounded-2xl bg-cream px-3 py-2 active:bg-cream-dark/60"
+          >
+            <p className="line-clamp-1 text-sm font-bold text-ink">{article.title}</p>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              {dueWords.length} due {dueWords.length === 1 ? "word" : "words"}
+              {fragileCount > 0 ? ` - ${fragileCount} fragile` : ""}
+            </p>
+            <p className="mt-1 line-clamp-1 text-xs font-semibold text-brand">
+              {dueWords.slice(0, 4).map((word) => word.lemma ?? word.word).join(" - ")}
+            </p>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }

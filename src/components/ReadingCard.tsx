@@ -80,6 +80,13 @@ function recommendationReasons(
   return [...new Set(reasons)].slice(0, 3);
 }
 
+function sourceTrustLabel(text: ReadingText): string {
+  if (text.id.startsWith("custom-")) return "Imported by you";
+  if (text.id.startsWith("pd-")) return "Public-domain bank";
+  if (text.sourceName) return "Live RSS source";
+  return "Built-in practice text";
+}
+
 export default function ReadingCard({ text, difficulty: difficultyProp, starRating, score }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
@@ -166,6 +173,11 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             ~{Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar
           </p>
         )}
+
+        <p className="mt-1 text-xs text-ink-muted">
+          Trust: {sourceTrustLabel(text)}
+          {difficulty ? ` · ${Math.round(difficulty.dictionaryCoverage * 100)}% local dictionary coverage` : ""}
+        </p>
 
         {reasons.length > 0 && (
           <p className="mt-1 text-xs text-ink-muted">

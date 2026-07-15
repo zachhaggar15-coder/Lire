@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getLastOpenedTextId, getProgress } from "@/lib/progress";
+import { getCustomTextById } from "@/lib/customTexts";
 import { getCachedRssTextById } from "@/lib/rss/rssTextCache";
 import { getTextById } from "@/data/texts";
 
@@ -18,7 +19,7 @@ export default function ContinueReadingBanner() {
   useEffect(() => {
     const id = getLastOpenedTextId();
     if (!id || getProgress(id).status !== "in-progress") return;
-    const text = getCachedRssTextById(id) ?? getTextById(id);
+    const text = getCustomTextById(id) ?? getCachedRssTextById(id) ?? getTextById(id);
     if (text) setInfo({ id, title: text.title });
   }, []);
 

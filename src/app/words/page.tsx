@@ -251,11 +251,49 @@ export default function WordsPage() {
 
       {tab === "phrases" && phrases.length > 0 && (
         <div className="space-y-5">
+          <PhraseMasterySummary phrases={phrases} />
           <PhraseList title="Learning" phrases={learningPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
           <PhraseList title="Known" phrases={knownPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
         </div>
       )}
     </div>
+  );
+}
+
+function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
+  const known = phrases.filter((phrase) => phrase.status === "known").length;
+  const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
+  const progress = phrases.length === 0 ? 0 : Math.round((known / phrases.length) * 100);
+  return (
+    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Phrase mastery</h2>
+          <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the whole chunk feels automatic.</p>
+        </div>
+        <span className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{progress}%</span>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+        <div className="rounded-2xl bg-cream px-2 py-2">
+          <p className="text-lg font-extrabold text-ink">{phrases.length}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Saved</p>
+        </div>
+        <div className="rounded-2xl bg-cream px-2 py-2">
+          <p className="text-lg font-extrabold text-ink">{known}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Known</p>
+        </div>
+        <div className="rounded-2xl bg-cream px-2 py-2">
+          <p className="text-lg font-extrabold text-ink">{contexts}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Contexts</p>
+        </div>
+      </div>
+      <Link
+        href="/review"
+        className="mt-3 block rounded-full bg-cream-dark px-4 py-2 text-center text-sm font-semibold text-ink active:scale-95"
+      >
+        Review phrases
+      </Link>
+    </section>
   );
 }
 

@@ -36,6 +36,14 @@ interface WordSheetProps {
   onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
 }
 
+function trustLabel(lookup: DictionaryLookupResult | undefined): string {
+  if (!lookup || lookup.source === "missing") return "No local match yet";
+  if ((lookup.partOfSpeech ?? "").toLowerCase().includes("proper noun")) return "Proper-noun protection";
+  if (lookup.lemma?.includes(" ")) return "Offline phrase bank";
+  if (lookup.cefr || lookup.examples.length > 0) return "Curated local dictionary";
+  return "Generated local dictionary";
+}
+
 const STATUS_LABEL: Record<WordStatus, string> = {
   learning: "Saved — Learning",
   unsure: "Saved — Unsure",
@@ -228,6 +236,9 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
                     {lookup.cefr}
                   </span>
                 )}
+                <span className="rounded-full bg-white/60 px-2 py-0.5 text-xs font-semibold text-accent-pinktext">
+                  {trustLabel(lookup)}
+                </span>
               </div>
             )}
             {state?.word && (

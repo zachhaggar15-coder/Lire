@@ -283,6 +283,16 @@ export function CompletionSummary({
           <p className="mt-0.5 text-xs text-ink-muted">{completion.personalBests.join(" - ")}</p>
         </div>
       )}
+      <div className="mt-3 rounded-2xl bg-cream px-3 py-2">
+        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Recommended next</p>
+        <p className="mt-0.5 text-sm font-semibold text-ink">
+          {completion.savedWords > 0
+            ? "Review this article's saved words while the context is still fresh."
+            : completion.fullTranslationUsed
+              ? "Reread once without English to consolidate the sentence structure."
+              : "Read another article in the same level to reinforce the vocabulary."}
+        </p>
+      </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <Link href="/" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
           Read another

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { ReadingText } from "@/types";
+import { getCustomTextById } from "@/lib/customTexts";
 import { getCachedRssTextById } from "@/lib/rss/rssTextCache";
 import Reader from "@/components/Reader";
 
@@ -26,6 +27,13 @@ export default function ReaderPageClient({ id, initialText }: ReaderPageClientPr
 
   useEffect(() => {
     if (initialText) return;
+
+    const custom = getCustomTextById(id);
+    if (custom) {
+      setText(custom);
+      setChecked(true);
+      return;
+    }
 
     const cached = getCachedRssTextById(id);
     if (cached) {

@@ -26,7 +26,8 @@ import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
-import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
+import { getCustomTexts } from "@/lib/customTexts";
+import { canSpeak, speakFrench, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
@@ -160,6 +161,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
+  const [activeAudioSentence, setActiveAudioSentence] = useState<number | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTriggered = useRef(false);
@@ -224,7 +226,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus(getProgress(text.id).status);
     setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
     setArticleTapRecords(getWordTapsForArticle(text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
-    const candidates = dedupeArticles([...getCachedRssTexts(), ...getOfflineRssTexts(), ...hardcodedTexts]);
+    const candidates = dedupeArticles([...getCustomTexts(), ...getCachedRssTexts(), ...getOfflineRssTexts(), ...hardcodedTexts]);
     setArticlePool(candidates);
     setRelatedArticles(findRelatedArticles(text, candidates));
     setGistAnswer(null);
@@ -328,6 +330,17 @@ export default function Reader({ text }: { text: ReadingText }) {
     setShowEnglishTranslation(next);
     if (next) setTranslationUses((count) => Math.max(count, displayTranslationBudget + 1));
     if (next && translationState === "idle" && shouldUseFluentTranslation()) void handleFetchFluentTranslation();
+  }
+
+  function handlePlaySentence(sentence: string, flatIndex: number) {
+    if (!canUseSpeech) return;
+    const started = speakFrench(sentence, "normal");
+    if (!started) return;
+    setActiveAudioSentence(flatIndex);
+    const words = sentence.trim().split(/\s+/).filter(Boolean).length;
+    window.setTimeout(() => {
+      setActiveAudioSentence((current) => (current === flatIndex ? null : current));
+    }, Math.max(1800, Math.min(9000, words * 360)));
   }
 
   function shouldUseFluentTranslation(): boolean {
@@ -681,6 +694,30 @@ export default function Reader({ text }: { text: ReadingText }) {
     return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
   }
 
+  function sentenceAudioButton(sentence: string, flatIndex: number): ReactNode {
+    if (!canUseSpeech) return null;
+    const active = activeAudioSentence === flatIndex;
+    return (
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          handlePlaySentence(sentence, flatIndex);
+        }}
+        aria-label="Play this sentence"
+        className={`mr-1 inline-flex h-6 w-6 translate-y-0.5 items-center justify-center rounded-full text-[10px] font-bold active:scale-95 ${
+          active ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+        }`}
+      >
+        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 5 6 9H3v6h3l5 4z" />
+          <path d="M15 9.5a4 4 0 0 1 0 5" />
+          <path d="M18 7a8 8 0 0 1 0 10" />
+        </svg>
+      </button>
+    );
+  }
+
   function renderSentenceSpan(sg: SentenceGroup, key: number) {
     const renderedTokens: ReactNode[] = [];
     for (let ti = 0; ti < sg.tokens.length; ti++) {
@@ -1005,9 +1042,12 @@ export default function Reader({ text }: { text: ReadingText }) {
               {sentences.map((sg, si) => {
                 const flatIndex = paragraphBreakBeforeIndex[pi] + si;
                 return (
-                  <div key={si}>
-                    <p>{renderSentenceSpan(sg, si)}</p>
-                    <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
+                  <div key={si} className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-start md:gap-4">
+                    <p>
+                      {sentenceAudioButton(sg.text, flatIndex)}
+                      {renderSentenceSpan(sg, si)}
+                    </p>
+                    <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted md:mt-0">
                       {fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex]}
                     </p>
                   </div>
@@ -1017,12 +1057,16 @@ export default function Reader({ text }: { text: ReadingText }) {
           ) : (
             // Normal reading layout: sentences flow together into one paragraph.
             <p key={pi}>
-              {sentences.map((sg, si) => (
+              {sentences.map((sg, si) => {
+                const flatIndex = paragraphBreakBeforeIndex[pi] + si;
+                return (
                 <Fragment key={si}>
+                  {sentenceAudioButton(sg.text, flatIndex)}
                   {renderSentenceSpan(sg, si)}
                   {si < sentences.length - 1 && " "}
                 </Fragment>
-              ))}
+                );
+              })}
             </p>
           )
         )}
