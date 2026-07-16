@@ -6,7 +6,7 @@ interface ArticleSectionProps {
   title: string;
   subtitle?: string;
   articles: ScoredArticle[];
-  variant?: "cards" | "rail" | "compact";
+  variant?: "cards" | "rail" | "compact" | "grid";
   limit?: number;
 }
 
@@ -48,7 +48,15 @@ export default function ArticleSection({
           ))}
         </div>
       ) : (
-        <div className={variant === "rail" ? "-mx-4 mt-3 flex gap-3 overflow-x-auto px-4 pb-1" : "mt-3 grid gap-2"}>
+        <div
+          className={
+            variant === "rail"
+              ? "-mx-4 mt-3 flex gap-3 overflow-x-auto px-4 pb-1"
+              : variant === "grid"
+                ? "mt-3 grid grid-cols-[repeat(auto-fit,minmax(min(100%,14rem),1fr))] gap-2"
+                : "mt-3 grid gap-2"
+          }
+        >
           {visibleArticles.map((article) => (
             <CompactArticleCard key={article.text.id} article={article} rail={variant === "rail"} />
           ))}
@@ -63,21 +71,23 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
   return (
     <a
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className={`block rounded-2xl border border-cream-dark bg-cream-card p-3 shadow-sm active:scale-[0.99] ${
+      className={`block min-w-0 rounded-2xl border border-cream-dark bg-cream-card p-3 shadow-sm active:scale-[0.99] ${
         rail ? "w-64 shrink-0" : ""
       }`}
     >
-      <div className="mb-2 flex items-center gap-2">
+      <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <span className="rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-bold text-brand">
           {text.difficulty}
         </span>
         <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold capitalize text-ink-muted">
           {text.category}
         </span>
-        <span className="ml-auto text-[11px] font-semibold text-ink-muted">{text.minutes} min</span>
+        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
+          {text.minutes} min
+        </span>
       </div>
-      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-ink">{text.title}</h3>
-      <p className="mt-1 line-clamp-2 text-xs text-ink-muted">{text.preview}</p>
+      <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
+      <p className="mt-1 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
       {text.sourceName && <p className="mt-2 truncate text-[11px] font-semibold text-ink-muted">{text.sourceName}</p>}
     </a>
   );

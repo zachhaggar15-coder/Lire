@@ -24,6 +24,38 @@ function isValidStatus(v: unknown): v is WordStatus {
   return v === "learning" || v === "unsure" || v === "known";
 }
 
+function isPlaceholderTranslation(value: string): boolean {
+  return value === NOT_TRANSLATED_YET || value === "Translation unavailable";
+}
+
+function dictionaryBackfill(word: string) {
+  const lookup = lookupWord(word);
+  const fallbackExample = generateFallbackExample({
+    word,
+    lemma: lookup.lemma,
+    partOfSpeech: lookup.partOfSpeech,
+    gender: lookup.gender,
+    translations: lookup.translations,
+  });
+  const firstExample = lookup.examples[0];
+
+  if (lookup.source !== "local" || lookup.translations.length === 0) {
+    return {
+      found: false,
+      lookup,
+      exampleSentenceFr: fallbackExample.fr,
+      exampleSentenceEn: fallbackExample.en,
+    };
+  }
+
+  return {
+    found: true,
+    lookup,
+    exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
+    exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
+  };
+}
+
 /**
  * Normalise a raw stored entry into the current SavedWord shape. Handles:
  *   1. a plain string (earliest format — pre-dates any translation data)
@@ -39,32 +71,26 @@ function normalize(entry: unknown): SavedWord | null {
     // Legacy plain-string saves carry no dictionary data at all — re-look it
     // up so the generated fallback example can still be word-specific
     // (real part of speech/gender/translation) rather than fully generic.
-    const lookup = lookupWord(word);
-    const fallbackExample = generateFallbackExample({
-      word,
-      lemma: lookup.lemma,
-      partOfSpeech: lookup.partOfSpeech,
-      gender: lookup.gender,
-      translations: lookup.translations,
-    });
+    const backfill = dictionaryBackfill(word);
+    const lookup = backfill.lookup;
     return {
       word,
-      lemma: null,
-      translations: [],
-      primaryTranslation: NOT_TRANSLATED_YET,
-      partOfSpeech: null,
-      gender: null,
-      cefr: null,
-      frequencyRank: null,
+      lemma: backfill.found ? lookup.lemma : null,
+      translations: backfill.found ? lookup.translations : [],
+      primaryTranslation: backfill.found ? lookup.translations[0] : NOT_TRANSLATED_YET,
+      partOfSpeech: backfill.found ? lookup.partOfSpeech : null,
+      gender: backfill.found ? lookup.gender : null,
+      cefr: backfill.found ? lookup.cefr : null,
+      frequencyRank: backfill.found ? lookup.frequencyRank : null,
       articleContextSentence: "",
-      exampleSentenceFr: fallbackExample.fr,
-      exampleSentenceEn: fallbackExample.en,
+      exampleSentenceFr: backfill.exampleSentenceFr,
+      exampleSentenceEn: backfill.exampleSentenceEn,
       sourceTextTitle: "",
       savedAt: new Date().toISOString(),
       reviewCount: 0,
       lastReviewedAt: null,
       status: "learning",
-      missingFromDictionary: true,
+      missingFromDictionary: !backfill.found,
       ...defaultSpacedRepetitionFields(),
     };
   }
@@ -107,26 +133,49 @@ function normalize(entry: unknown): SavedWord | null {
 
   const partOfSpeech = typeof e.partOfSpeech === "string" ? e.partOfSpeech : null;
   const gender = typeof e.gender === "string" ? e.gender : null;
+  const missingFromDictionary =
+    typeof e.missingFromDictionary === "boolean" ? e.missingFromDictionary : translations.length === 0;
+  const shouldBackfill =
+    missingFromDictionary ||
+    translations.length === 0 ||
+    isPlaceholderTranslation(primaryTranslation);
+  const backfill = shouldBackfill ? dictionaryBackfill(e.word) : null;
+  const resolvedLookup = backfill?.found ? backfill.lookup : null;
+  const resolvedTranslations = resolvedLookup?.translations ?? translations;
+  const resolvedPartOfSpeech = resolvedLookup?.partOfSpeech ?? partOfSpeech;
+  const resolvedGender = resolvedLookup?.gender ?? gender;
   const fallbackExample = generateFallbackExample({
     word: e.word,
-    lemma: typeof e.lemma === "string" ? e.lemma : null,
-    partOfSpeech,
-    gender,
-    translations,
+    lemma: resolvedLookup?.lemma ?? (typeof e.lemma === "string" ? e.lemma : null),
+    partOfSpeech: resolvedPartOfSpeech,
+    gender: resolvedGender,
+    translations: resolvedTranslations,
   });
+  const resolvedExampleFr =
+    backfill?.found
+      ? backfill.exampleSentenceFr
+      : typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr
+        ? e.exampleSentenceFr
+        : fallbackExample.fr;
+  const resolvedExampleEn =
+    backfill?.found
+      ? backfill.exampleSentenceEn
+      : typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn
+        ? e.exampleSentenceEn
+        : fallbackExample.en;
 
   return {
     word: e.word,
-    lemma: typeof e.lemma === "string" ? e.lemma : null,
-    translations,
-    primaryTranslation,
-    partOfSpeech,
-    gender,
-    cefr: typeof e.cefr === "string" ? e.cefr : null,
-    frequencyRank: typeof e.frequencyRank === "number" ? e.frequencyRank : null,
+    lemma: resolvedLookup?.lemma ?? (typeof e.lemma === "string" ? e.lemma : null),
+    translations: resolvedTranslations,
+    primaryTranslation: resolvedLookup?.translations[0] ?? primaryTranslation,
+    partOfSpeech: resolvedPartOfSpeech,
+    gender: resolvedGender,
+    cefr: resolvedLookup?.cefr ?? (typeof e.cefr === "string" ? e.cefr : null),
+    frequencyRank: resolvedLookup?.frequencyRank ?? (typeof e.frequencyRank === "number" ? e.frequencyRank : null),
     articleContextSentence,
-    exampleSentenceFr: typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr ? e.exampleSentenceFr : fallbackExample.fr,
-    exampleSentenceEn: typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn ? e.exampleSentenceEn : fallbackExample.en,
+    exampleSentenceFr: resolvedExampleFr,
+    exampleSentenceEn: resolvedExampleEn,
     // old field was `sourceId`; new field is `sourceTextTitle`.
     sourceTextTitle:
       (typeof e.sourceTextTitle === "string" && e.sourceTextTitle) ||
@@ -136,8 +185,7 @@ function normalize(entry: unknown): SavedWord | null {
     reviewCount: typeof e.reviewCount === "number" ? e.reviewCount : 0,
     lastReviewedAt: typeof e.lastReviewedAt === "string" ? e.lastReviewedAt : null,
     status: isValidStatus(e.status) ? e.status : "learning",
-    missingFromDictionary:
-      typeof e.missingFromDictionary === "boolean" ? e.missingFromDictionary : translations.length === 0,
+    missingFromDictionary: resolvedLookup ? false : missingFromDictionary,
     ease: typeof e.ease === "number" ? e.ease : defaultSpacedRepetitionFields().ease,
     nextReviewAt: typeof e.nextReviewAt === "string" ? e.nextReviewAt : null,
     correctCount: typeof e.correctCount === "number" ? e.correctCount : 0,

@@ -5,6 +5,7 @@ import Link from "next/link";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import { XPProgressBar } from "@/components/GamificationCards";
+import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 import type { Difficulty } from "@/types";
 import { buildProgressSnapshot, awardCompletedMissions, type ProgressSnapshot } from "@/lib/gamification";
 import { getKnownWords } from "@/lib/knownWords";
@@ -68,6 +69,7 @@ export default function HomePage() {
 
       <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
       <ContinueReadingBanner />
+      <ShortSnippetsBlock />
       <FirstRunOnboarding onComplete={() => refreshDashboard()} />
     </div>
   );
@@ -91,8 +93,8 @@ function DashboardCard({
   const progress = progressSnapshot?.level.progress ?? 0;
 
   const links = [
-    { href: "/articles", label: "Articles", icon: "book", meta: selectedLevel },
-    { href: "/live-news", label: "Live News", icon: "news", meta: "RSS" },
+    { href: "/articles", label: "Articles", icon: "book", meta: "Daily" },
+    { href: "/live-news", label: "News", icon: "news", meta: "Live" },
     { href: "/review", label: "Review", icon: "cards", meta: dueMissions > 0 ? `${dueMissions} tasks` : "Due" },
     { href: "/grammar", label: "Grammar", icon: "grammar", meta: "Verbs" },
     { href: "/words", label: "Words", icon: "bookmark", meta: "Saved" },

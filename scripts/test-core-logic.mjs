@@ -36,6 +36,7 @@ import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
+import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
 import {
   buildComposedPhraseTranslationMatch,
   cacheDictionarySentenceTranslations,
@@ -286,6 +287,29 @@ console.log("\n--- Dictionary lookup chain ---");
   const result = lookupWord("zzzznotarealfrenchwordzzzz");
   check("a nonsense word is reported missing", result.source === "missing");
   check("a missing word has no translations", result.translations.length === 0);
+}
+{
+  const cases = [
+    ["eût", "avoir"],
+    ["fût", "être"],
+    ["soyez", "être"],
+    ["fussiez", "être"],
+    ["eussiez", "avoir"],
+    ["aurions", "avoir"],
+    ["ayons", "avoir"],
+    ["dût", "devoir"],
+    ["fît", "faire"],
+    ["sût", "savoir"],
+    ["connût", "connaître"],
+  ];
+  for (const [word, lemma] of cases) {
+    const result = lookupWord(word);
+    check(
+      `literary/core verb form '${word}' resolves to ${lemma}`,
+      result.source === "local" && result.lemma === lemma && result.translations.length > 0,
+      JSON.stringify(result)
+    );
+  }
 }
 {
   // Round-trips through the same custom.ts flow Reader.tsx uses when an AI
@@ -913,6 +937,55 @@ console.log("\n--- Lemma-aware saved words ---");
   saveWord(base);
   saveWord({ ...base, word: "prend", articleContextSentence: "Il prend le train." });
   check("saved words dedupe inflected forms by lemma", getSavedWords().filter((word) => word.lemma === "prendre").length === 1);
+}
+{
+  window.localStorage.setItem("lire.savedWords.v1", JSON.stringify(["eût"]));
+  const [legacy] = getSavedWords();
+  check(
+    "legacy string saved words are backfilled from the current dictionary",
+    legacy?.lemma === "avoir" &&
+      legacy.primaryTranslation === "to have" &&
+      legacy.translations.includes("to have") &&
+      legacy.missingFromDictionary === false,
+    JSON.stringify(legacy)
+  );
+}
+{
+  window.localStorage.setItem(
+    "lire.savedWords.v1",
+    JSON.stringify([
+      {
+        word: "eût",
+        lemma: null,
+        translations: [],
+        primaryTranslation: NOT_TRANSLATED_YET,
+        partOfSpeech: null,
+        gender: null,
+        cefr: null,
+        frequencyRank: null,
+        articleContextSentence:
+          "Cependant, comme si la traversée des champs de glace eût été praticable, les préparatifs du départ se continuaient activement à la factorerie.",
+        exampleSentenceFr: "On utilise « eût » dans cette phrase.",
+        exampleSentenceEn: 'We use "eût" in this sentence.',
+        sourceTextTitle: "Test article",
+        savedAt: "2026-07-16T00:00:00.000Z",
+        reviewCount: 0,
+        lastReviewedAt: null,
+        status: "learning",
+        missingFromDictionary: true,
+      },
+    ])
+  );
+  const [rehydrated] = getSavedWords();
+  check(
+    "placeholder saved words are rehydrated when the dictionary now has the word",
+    rehydrated?.lemma === "avoir" &&
+      rehydrated.primaryTranslation === "to have" &&
+      rehydrated.missingFromDictionary === false &&
+      rehydrated.articleContextSentence.includes("eût été praticable"),
+    JSON.stringify(rehydrated)
+  );
+  clearWords();
 }
 
 console.log("\n--- Article difficulty feedback ---");

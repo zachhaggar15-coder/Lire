@@ -67,7 +67,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   // --- Core verbs ---
   {
     lemma: "être",
-    forms: ["suis", "es", "est", "sommes", "êtes", "sont", "étais", "était", "étions", "étiez", "étaient", "serai", "sera", "serons", "seront", "été", "n'est", "c'est"],
+    forms: ["suis", "es", "est", "sommes", "êtes", "sont", "sois", "soit", "soyons", "soyez", "soient", "étais", "était", "étions", "étiez", "étaient", "serai", "sera", "serons", "seront", "serais", "serait", "serions", "seriez", "seraient", "fus", "fut", "fût", "fûmes", "fûtes", "furent", "fusse", "fusses", "fussions", "fussiez", "fussent", "été", "étant", "n'est", "c'est"],
     translations: ["to be"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 1,
@@ -76,7 +76,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "avoir",
-    forms: ["ai", "as", "a", "avons", "avez", "ont", "avais", "avait", "avions", "aviez", "avaient", "aurai", "aura", "auront", "eu", "n'ont"],
+    forms: ["ai", "as", "a", "avons", "avez", "ont", "aie", "aies", "ait", "ayons", "ayez", "aient", "avais", "avait", "avions", "aviez", "avaient", "aurai", "auras", "aura", "aurons", "aurez", "auront", "aurais", "aurait", "aurions", "auriez", "auraient", "eus", "eut", "eût", "eûmes", "eûtes", "eurent", "eusse", "eusses", "eussions", "eussiez", "eussent", "eu", "ayant", "n'ont"],
     translations: ["to have"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 2,
@@ -86,7 +86,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "aller",
-    forms: ["vais", "vas", "va", "allons", "allez", "vont", "allais", "allait", "irai", "ira", "allé"],
+    forms: ["vais", "vas", "va", "allons", "allez", "vont", "aille", "ailles", "aillent", "allais", "allait", "allions", "alliez", "allaient", "irai", "iras", "ira", "irons", "irez", "iront", "irais", "irait", "irions", "iriez", "iraient", "allai", "allas", "alla", "allâmes", "allâtes", "allèrent", "allé"],
     translations: ["to go"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 6,
@@ -95,7 +95,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "pouvoir",
-    forms: ["peux", "peut", "pouvons", "pouvez", "peuvent", "pouvait", "pourrai", "pourra", "pu"],
+    forms: ["peux", "peut", "pouvons", "pouvez", "peuvent", "puisse", "puisses", "puissions", "puissiez", "puissent", "pouvais", "pouvait", "pouvions", "pouviez", "pouvaient", "pourrai", "pourras", "pourra", "pourrons", "pourrez", "pourront", "pourrais", "pourrait", "pourrions", "pourriez", "pourraient", "pus", "put", "pût", "pûmes", "pûtes", "purent", "pu"],
     translations: ["to be able to", "can"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 9,
@@ -104,7 +104,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "vouloir",
-    forms: ["veux", "veut", "voulons", "voulez", "veulent", "voulait", "voudrai", "voudra", "voulu"],
+    forms: ["veux", "veut", "voulons", "voulez", "veulent", "veuille", "veuilles", "veuillent", "voulais", "voulait", "voulions", "vouliez", "voulaient", "voudrai", "voudras", "voudra", "voudrons", "voudrez", "voudront", "voudrais", "voudrait", "voudrions", "voudriez", "voudraient", "voulus", "voulut", "voulût", "voulûmes", "voulûtes", "voulurent", "voulusse", "voulusses", "voulussions", "voulussiez", "voulussent", "voulu"],
     translations: ["to want"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 11,
@@ -113,7 +113,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "devoir",
-    forms: ["dois", "doit", "devons", "devez", "doivent", "devait", "devrai", "devra", "dû"],
+    forms: ["dois", "doit", "devons", "devez", "doivent", "doive", "doives", "devions", "deviez", "devais", "devait", "devaient", "devrai", "devras", "devra", "devrons", "devrez", "devront", "devrais", "devrait", "devrions", "devriez", "devraient", "dus", "dut", "dût", "dûmes", "dûtes", "durent", "dû"],
     translations: ["to have to", "must"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 10,
@@ -122,7 +122,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "faire",
-    forms: ["fais", "fait", "faisons", "faites", "font", "faisait", "ferai", "fera", "feront"],
+    forms: ["fais", "fait", "faisons", "faites", "font", "fasse", "fasses", "fassions", "fassiez", "fassent", "faisais", "faisait", "faisions", "faisiez", "faisaient", "ferai", "feras", "fera", "ferons", "ferez", "feront", "ferais", "ferait", "ferions", "feriez", "feraient", "fis", "fit", "fît", "fîmes", "fîtes", "firent"],
     translations: ["to do", "to make"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 7,
@@ -439,10 +439,10 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "descendre", forms: ["descends", "descend", "descendons", "descendez", "descendent", "descendu"], translations: ["to go down", "to get off"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
 
   // --- Common irregular verbs ---
-  { lemma: "voir", forms: ["vois", "voit", "voyons", "voyez", "voient", "vu"], translations: ["to see"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
-  { lemma: "savoir", forms: ["sais", "sait", "savons", "savez", "savent", "su"], translations: ["to know (a fact)"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
-  { lemma: "connaître", forms: ["connais", "connaît", "connaissons", "connaissez", "connaissent", "connu"], translations: ["to know (a person/place)"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
-  { lemma: "venir", forms: ["viens", "vient", "venons", "venez", "viennent", "venu"], translations: ["to come"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
+  { lemma: "voir", forms: ["vois", "voit", "voyons", "voyez", "voient", "voie", "voies", "voyions", "voyiez", "voient", "voyais", "voyait", "voyions", "voyiez", "voyaient", "verrai", "verras", "verra", "verrons", "verrez", "verront", "verrais", "verrait", "verrions", "verriez", "verraient", "vis", "vit", "vît", "vîmes", "vîtes", "virent", "vu"], translations: ["to see"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
+  { lemma: "savoir", forms: ["sais", "sait", "savons", "savez", "savent", "sache", "saches", "sachions", "sachiez", "sachent", "savais", "savait", "savions", "saviez", "savaient", "saurai", "sauras", "saura", "saurons", "saurez", "sauront", "saurais", "saurait", "saurions", "sauriez", "sauraient", "sus", "sut", "sût", "sûmes", "sûtes", "surent", "susse", "susses", "sussions", "sussiez", "sussent", "su"], translations: ["to know (a fact)"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
+  { lemma: "connaître", forms: ["connais", "connaît", "connaissons", "connaissez", "connaissent", "connaisse", "connaisses", "connaissions", "connaissiez", "connaissent", "connaissais", "connaissait", "connaissions", "connaissiez", "connaissaient", "connaîtrai", "connaîtras", "connaîtra", "connaîtrons", "connaîtrez", "connaîtront", "connaîtrais", "connaîtrait", "connaîtrions", "connaîtriez", "connaîtraient", "connus", "connut", "connût", "connûmes", "connûtes", "connurent", "connusse", "connusses", "connussions", "connussiez", "connussent", "connu"], translations: ["to know (a person/place)"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
+  { lemma: "venir", forms: ["viens", "vient", "venons", "venez", "viennent", "vienne", "viennes", "venions", "veniez", "viennent", "venais", "venait", "venions", "veniez", "venaient", "viendrai", "viendras", "viendra", "viendrons", "viendrez", "viendront", "viendrais", "viendrait", "viendrions", "viendriez", "viendraient", "vins", "vint", "vînt", "vînmes", "vîntes", "vinrent", "venu"], translations: ["to come"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "boire", forms: ["bois", "boit", "buvons", "buvez", "boivent", "bu"], translations: ["to drink"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "lire", forms: ["lis", "lit", "lisons", "lisez", "lisent", "lu"], translations: ["to read"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "écrire", forms: ["écris", "écrit", "écrivons", "écrivez", "écrivent"], translations: ["to write"], partOfSpeech: "verb (infinitive)", cefr: "A1" },

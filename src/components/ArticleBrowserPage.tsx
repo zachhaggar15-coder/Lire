@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ArticleSection from "@/components/ArticleSection";
 import { texts as hardcodedTexts } from "@/data/texts";
@@ -45,6 +45,7 @@ const CATEGORY_FILTERS: { value: CategoryFilter; label: string }[] = [
   { value: "science", label: "Science" },
   { value: "everyday life", label: "Life" },
 ];
+const ARTICLE_CATEGORY_FILTERS = CATEGORY_FILTERS.filter((item) => item.value !== "news-style");
 
 const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
   { value: "all", label: "All" },
@@ -67,21 +68,27 @@ function articleLanguage(text: ReadingText): NonNullable<ReadingText["language"]
   return text.language ?? "fr";
 }
 
+function defaultCategoryForMode(mode: Mode): CategoryFilter {
+  return mode === "live" ? "news-style" : "all";
+}
+
+function isEligibleArticleModeText(text: ReadingText): boolean {
+  return text.category !== "news-style";
+}
+
 export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>(() => defaultCategoryForMode(mode));
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
-  const [refreshKey, setRefreshKey] = useState(0);
   const [prefVersion, setPrefVersion] = useState(0);
   const [usedFallback, setUsedFallback] = useState(false);
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
   const [contextualReviewArticles, setContextualReviewArticles] = useState<ContextualReviewArticle[]>([]);
-  const lastRefreshSent = useRef(0);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
@@ -94,12 +101,17 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
     async function load() {
       setState("loading");
+
+      if (mode === "articles") {
+        buildAndSetSections([], false);
+        return;
+      }
+
       try {
         const params = new URLSearchParams({ limit: String(DAILY_RSS_ARTICLE_LIMIT) });
-        const forceRefresh = refreshKey > 0 && lastRefreshSent.current !== refreshKey;
         if (categoryFilter !== "all") params.set("category", categoryFilter);
         if (languageFilter !== "all") params.set("language", languageFilter);
-        if (forceRefresh) params.set("refresh", "true");
+        params.set("snippets", "exclude");
 
         const res = await fetch(`/api/rss-texts?${params.toString()}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
@@ -111,7 +123,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         pruneStaleRssProgress(rssTexts.map((text) => text.id));
         detectAndRecordSkippedArticles(rssTexts.map((text) => ({ id: text.id, category: text.category })));
         buildAndSetSections(rssTexts, rssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
-        if (forceRefresh) lastRefreshSent.current = refreshKey;
       } catch {
         if (!cancelled) buildAndSetSections([], true);
       }
@@ -122,15 +133,14 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const bankTexts = getDailyBankTexts({
         level: bankLevel,
         category: categoryFilter,
-        limit: DAILY_BANK_ARTICLE_LIMIT,
-      });
+        limit: mode === "articles" ? DAILY_BANK_ARTICLE_LIMIT * 3 : DAILY_BANK_ARTICLE_LIMIT,
+      }).filter((text) => mode !== "articles" || isEligibleArticleModeText(text)).slice(0, DAILY_BANK_ARTICLE_LIMIT);
       const importedTexts = getCustomTexts();
-      const sourcePool = rssTexts.length > 0 ? rssTexts : hardcodedTexts;
       const hiddenSources = new Set(getHiddenSources());
       const knownWords = new Set(getKnownWords());
       const savedWords = getSavedWords();
-      const pool = [...importedTexts, ...bankTexts, ...sourcePool].filter(
-        (text) => !text.sourceName || !hiddenSources.has(text.sourceName)
+      const pool = (mode === "articles" ? [...importedTexts, ...bankTexts, ...hardcodedTexts] : rssTexts).filter(
+        (text) => (!text.sourceName || !hiddenSources.has(text.sourceName)) && (mode !== "articles" || isEligibleArticleModeText(text))
       );
       const importedIds = new Set(importedTexts.map((text) => text.id));
       const ranked = rankArticles(buildScorableArticles(pool, knownWords), buildScoringContext()).filter((article) => {
@@ -140,11 +150,15 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         return true;
       });
 
-      setSections(buildSections(ranked.filter((article) => !importedIds.has(article.text.id))));
-      setCustomArticles(ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8));
-      setSavedLaterArticles(ranked.filter((article) => getSavedLaterIds().includes(article.text.id)));
-      setTodayWords(buildTodayNewsWords(rssTexts));
-      setContextualReviewArticles(buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, getAllWordTaps()));
+      setSections(buildSections(ranked.filter((article) => mode === "live" || !importedIds.has(article.text.id))));
+      setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
+      setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
+      setTodayWords(mode === "live" ? buildTodayNewsWords(rssTexts) : []);
+      setContextualReviewArticles(
+        mode === "articles"
+          ? buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, getAllWordTaps())
+          : []
+      );
       setUsedFallback(fallback);
       setState("success");
     }
@@ -153,10 +167,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     return () => {
       cancelled = true;
     };
-  }, [categoryFilter, difficultyFilter, languageFilter, refreshKey, prefVersion, selectedLevel]);
+  }, [categoryFilter, difficultyFilter, languageFilter, mode, prefVersion, selectedLevel]);
 
   function resetFilters() {
-    setCategoryFilter("all");
+    setCategoryFilter(defaultCategoryForMode(mode));
     setDifficultyFilter("all");
     setLanguageFilter("all");
   }
@@ -178,17 +192,11 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
             <h1 className="text-2xl font-extrabold text-ink">{title}</h1>
             <p className="text-sm text-ink-muted">{subtitle}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => setRefreshKey((key) => key + 1)}
-            className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95"
-          >
-            Refresh
-          </button>
         </div>
       </header>
 
       <FilterPanel
+        categoryItems={mode === "articles" ? ARTICLE_CATEGORY_FILTERS : CATEGORY_FILTERS}
         categoryFilter={categoryFilter}
         difficultyFilter={difficultyFilter}
         languageFilter={languageFilter}
@@ -207,7 +215,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
       {state === "success" && usedFallback && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Live RSS is thin right now, so Liree is filling the page from saved and bank texts.
+          Live RSS is unavailable or thin right now, so this page is only showing matching live items.
         </p>
       )}
 
@@ -230,6 +238,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 }
 
 function FilterPanel({
+  categoryItems,
   categoryFilter,
   difficultyFilter,
   languageFilter,
@@ -238,6 +247,7 @@ function FilterPanel({
   onLanguage,
   onReset,
 }: {
+  categoryItems: { value: CategoryFilter; label: string }[];
   categoryFilter: CategoryFilter;
   difficultyFilter: DifficultyFilter;
   languageFilter: LanguageFilter;
@@ -256,7 +266,7 @@ function FilterPanel({
           Reset
         </button>
       </div>
-      <FilterRow title="Topic" items={CATEGORY_FILTERS} value={categoryFilter} onChange={onCategory} />
+      <FilterRow title="Topic" items={categoryItems} value={categoryFilter} onChange={onCategory} />
       <FilterRow title="Level" items={DIFFICULTY_FILTERS} value={difficultyFilter} onChange={onDifficulty} />
       <FilterRow title="Language" items={LANGUAGE_FILTERS} value={languageFilter} onChange={onLanguage} />
     </details>
@@ -313,7 +323,7 @@ function ArticleContent({
   const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
   return (
     <>
-      <ArticleSection title="Today's Bank" subtitle={`8 public-domain readings matched to ${level}.`} articles={sections.dailyBank} variant="rail" />
+      <ArticleSection title="Daily Articles" subtitle={`All ${sections.dailyBank.length} public-domain readings matched to ${level}.`} articles={sections.dailyBank} variant="grid" />
       {customArticles.length > 0 && (
         <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
       )}
@@ -332,7 +342,6 @@ function ArticleContent({
       <ArticleSection title="Quick Reads" subtitle="2-4 minutes." articles={sections.quickReads} variant="compact" />
       <ArticleSection title="Stretch Yourself" subtitle="A bit harder than usual." articles={sections.stretchYourself} variant="compact" />
       <ArticleSection title="New Vocabulary" subtitle="Likely to teach several new words." articles={sections.newVocabulary} variant="compact" />
-      <ArticleSection title="Short Snippets" subtitle="Quick, shorter texts." articles={sections.shortSnippets} variant="compact" />
       <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} variant="compact" />
       {contextualReviewArticles.length > 0 && <ContextualReviewSection articles={contextualReviewArticles} />}
     </>
@@ -340,6 +349,17 @@ function ArticleContent({
 }
 
 function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSections; todayWords: TodayNewsWord[] }) {
+  const hasLiveContent = sections.liveNews.length > 0 || sections.latestNews.length > 0 || todayWords.length > 0;
+
+  if (!hasLiveContent) {
+    return (
+      <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+        <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
+        <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <ArticleSection title="Live News" subtitle="Two RSS articles from today's live source pool." articles={sections.liveNews} variant="cards" />

@@ -264,6 +264,10 @@ function isKnownLanguage(value: string): value is RssSource["language"] {
   return value === "fr" || value === "en" || value === "mixed";
 }
 
+function isKnownSnippetFilter(value: string): value is "all" | "only" | "exclude" {
+  return value === "all" || value === "only" || value === "exclude";
+}
+
 /**
  * Wraps the whole handler so an unexpected error anywhere in the pipeline
  * (a bad feed, a broken dependency, anything not already handled per-source
@@ -291,6 +295,8 @@ async function handleGet(request: Request) {
   const rawLanguageParam = url.searchParams.get("language") ?? "all";
   const languageParam: RssSource["language"] | "all" = isKnownLanguage(rawLanguageParam) ? rawLanguageParam : "all";
   const categoryParam = url.searchParams.get("category") ?? "all";
+  const rawSnippetParam = url.searchParams.get("snippets") ?? "all";
+  const snippetParam = isKnownSnippetFilter(rawSnippetParam) ? rawSnippetParam : "all";
   const refresh = url.searchParams.get("refresh") === "true";
   const includeHealth = url.searchParams.get("health") === "true";
 
@@ -298,7 +304,7 @@ async function handleGet(request: Request) {
   const todayK = todayKey();
 
   const isPlainDefaultQuery =
-    limit === DEFAULT_LIMIT && languageParam === "all" && categoryParam === "all";
+    limit === DEFAULT_LIMIT && languageParam === "all" && categoryParam === "all" && snippetParam === "all";
 
   let selected: RssReadingText[];
 
@@ -311,6 +317,11 @@ async function handleGet(request: Request) {
     }
     if (categoryParam !== "all" && isKnownCategory(categoryParam)) {
       candidates = candidates.filter((t) => t.category === categoryParam);
+    }
+    if (snippetParam === "only") {
+      candidates = candidates.filter((t) => t.isShortSnippet);
+    } else if (snippetParam === "exclude") {
+      candidates = candidates.filter((t) => !t.isShortSnippet);
     }
     // Deterministic per (day, language, category) — same inputs always
     // shuffle to the same order, so the selection is stable all day and

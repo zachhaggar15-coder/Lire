@@ -2,8 +2,8 @@
   "framework": "nextjs",
   "crons": [
     {
-      "path": "/api/rss-texts",
-      "schedule": "0 0 * * *"
+      "path": "/api/cron/rss-refresh",
+      "schedule": "0 7,19 * * *"
     }
   ]
 }
