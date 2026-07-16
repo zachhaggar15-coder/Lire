@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { SavedWord } from "@/types";
@@ -13,6 +13,8 @@ import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
+import { trackEvent } from "@/lib/analytics/client";
+import { updateValidationState } from "@/lib/validation/state";
 
 export default function ReviewPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
@@ -27,6 +29,9 @@ export default function ReviewPage() {
   const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
   const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
+  const reviewSessionStarted = useRef(false);
+  const reviewSessionCompleted = useRef(false);
+  const phraseScore = useRef({ correct: 0, total: 0 });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -68,14 +73,55 @@ export default function ReviewPage() {
   const done = reviewMode === "words" && ready && queue.length > 0 && index >= queue.length;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
+  useEffect(() => {
+    if (!ready || reviewSessionStarted.current) return;
+    const cardCount = reviewMode === "words" ? queue.length : phraseQueue.length;
+    if (cardCount <= 0) return;
+    reviewSessionStarted.current = true;
+    trackEvent("review_session_started", {
+      mode: reviewMode,
+      cardCount,
+      articleFiltered: !!articleFilter,
+    });
+  }, [articleFilter, phraseQueue.length, queue.length, ready, reviewMode]);
+
   function visibleWords(allWords: SavedWord[]): SavedWord[] {
     return articleFilter ? allWords.filter((word) => word.sourceTextTitle === articleFilter) : allWords;
   }
 
+  function completeReviewSession(mode: "words" | "phrases", totalCards: number, correctCards: number) {
+    if (reviewSessionCompleted.current || totalCards <= 0) return;
+    reviewSessionCompleted.current = true;
+    const completedAt = new Date().toISOString();
+    updateValidationState((state) => ({
+      ...state,
+      firstReviewCompletedAt: state.firstReviewCompletedAt ?? completedAt,
+      totalReviewsCompleted: state.totalReviewsCompleted + 1,
+    }));
+    trackEvent("review_session_completed", {
+      mode,
+      totalCards,
+      correctCards,
+      articleFiltered: !!articleFilter,
+    });
+  }
+
   function answer(result: "correct" | "incorrect") {
+    const correct = result === "correct";
+    const nextScore = {
+      knew: score.knew + (correct ? 1 : 0),
+      missed: score.missed + (correct ? 0 : 1),
+    };
     if (current) {
       setWords(visibleWords(recordReviewResult(current.word, result)));
-      if (result === "correct") {
+      trackEvent("review_answer_submitted", {
+        mode: "words",
+        correct,
+        cardIndex: index + 1,
+        totalCards: queue.length,
+        articleFiltered: !!articleFilter,
+      });
+      if (correct) {
         const xp = recordReviewSuccessXp(current.word);
         if (xp > 0) {
           setXpNotice(`+${xp} XP`);
@@ -83,16 +129,23 @@ export default function ReviewPage() {
         }
       }
     }
-    setScore((s) => ({
-      knew: s.knew + (result === "correct" ? 1 : 0),
-      missed: s.missed + (result === "correct" ? 0 : 1),
-    }));
+    setScore(nextScore);
     setRevealed(false);
+    if (index + 1 >= queue.length) completeReviewSession("words", queue.length, nextScore.knew);
     setIndex((i) => i + 1);
   }
 
   function handleMarkKnown() {
     if (!current) return;
+    trackEvent("review_answer_submitted", {
+      mode: "words",
+      correct: true,
+      markedKnown: true,
+      cardIndex: index + 1,
+      totalCards: queue.length,
+      articleFiltered: !!articleFilter,
+    });
+    if (queue.length <= 1) completeReviewSession("words", queue.length, score.knew + 1);
     setWords(visibleWords(markWordAsKnown(current.word)));
     // markWordAsKnown drops this word from the (memoised) queue, so
     // whatever now sits at `index` is already the next card.
@@ -107,6 +160,9 @@ export default function ReviewPage() {
     setPhraseIndex(0);
     setPhraseAnswer(null);
     setScore({ knew: 0, missed: 0 });
+    phraseScore.current = { correct: 0, total: 0 };
+    reviewSessionStarted.current = false;
+    reviewSessionCompleted.current = false;
   }
 
   function phraseOptions(phrase: SavedPhrase): string[] {
@@ -121,6 +177,19 @@ export default function ReviewPage() {
   }
 
   function answerPhrase(option: string) {
+    if (!currentPhrase || phraseAnswer !== null) return;
+    const correct = option === currentPhrase.phrase;
+    phraseScore.current = {
+      correct: phraseScore.current.correct + (correct ? 1 : 0),
+      total: phraseScore.current.total + 1,
+    };
+    trackEvent("review_answer_submitted", {
+      mode: "phrases",
+      correct,
+      cardIndex: phraseIndex + 1,
+      totalCards: phraseQueue.length,
+      articleFiltered: !!articleFilter,
+    });
     setPhraseAnswer(option);
   }
 
@@ -131,6 +200,10 @@ export default function ReviewPage() {
       setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
     }
     setPhraseAnswer(null);
+    const remainingAfter = gotIt ? phraseQueue.length - 1 : phraseQueue.length - (phraseIndex + 1);
+    if (remainingAfter <= 0) {
+      completeReviewSession("phrases", phraseScore.current.total, phraseScore.current.correct);
+    }
     if (!gotIt) setPhraseIndex((value) => value + 1);
   }
 

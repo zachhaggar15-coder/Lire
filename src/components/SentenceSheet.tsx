@@ -18,6 +18,7 @@ interface SentenceSheetProps {
   state: ActiveSentenceState | null;
   articleTitle: string;
   onClose: () => void;
+  onAiRequested?: () => void;
 }
 
 /**
@@ -25,7 +26,7 @@ interface SentenceSheetProps {
  * or explanation here — the app only calls AI when a reader explicitly taps
  * "Explain sentence."
  */
-export default function SentenceSheet({ state, articleTitle, onClose }: SentenceSheetProps) {
+export default function SentenceSheet({ state, articleTitle, onClose, onAiRequested }: SentenceSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<SentenceExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -40,6 +41,7 @@ export default function SentenceSheet({ state, articleTitle, onClose }: Sentence
 
   async function handleAskAi() {
     if (!state) return;
+    onAiRequested?.();
     setAiState("loading");
     setAiError(null);
     const result = await getSentenceExplanation({

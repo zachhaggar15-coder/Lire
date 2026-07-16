@@ -22,9 +22,10 @@ interface PhraseSheetProps {
   onClose: () => void;
   onSaved: () => void;
   onKnown: () => void;
+  onAiRequested?: () => void;
 }
 
-export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onKnown }: PhraseSheetProps) {
+export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onKnown, onAiRequested }: PhraseSheetProps) {
   const [correction, setCorrection] = useState("");
   const [saved, setSaved] = useState(false);
   const [savedKnown, setSavedKnown] = useState(false);
@@ -87,6 +88,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
 
   async function handleAskAi() {
     if (!state) return;
+    onAiRequested?.();
     setAiState("loading");
     setAiError(null);
     const result = await getWordExplanation({

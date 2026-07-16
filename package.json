@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "audit:dictionary": "node --import ./scripts/register-alias-loader.mjs scripts/audit-dictionary-coverage.mjs",
-    "test": "node scripts/test-rss-filters.mjs && node scripts/test-learning-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs"
+    "test": "node scripts/test-rss-filters.mjs && node scripts/test-learning-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-validation-logic.mjs"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",

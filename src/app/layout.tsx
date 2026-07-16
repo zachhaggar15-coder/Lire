@@ -3,11 +3,15 @@ import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import AuthSync from "@/components/AuthSync";
+import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 
 export const metadata: Metadata = {
   title: "Lire — French Reader",
   description: "Read short French texts, tap words you don't know, review them later.",
   manifest: "/manifest.json",
+  verification: {
+    google: "u197HJazPk2IJD1yT_A3U5j8NaQeee81Qzsy0L-4E_E",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -48,6 +52,7 @@ export default function RootLayout({
         </div>
         <ServiceWorker />
         <AuthSync />
+        <AppLifecycleTracker />
       </body>
     </html>
   );

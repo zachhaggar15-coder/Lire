@@ -9,6 +9,10 @@ import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import AccountCard from "@/components/AccountCard";
 import SpeechSettingsCard from "@/components/SpeechSettingsCard";
+import BetaNotice from "@/components/BetaNotice";
+import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { FeedbackButton } from "@/components/FeedbackModal";
+import PwaInstallCard from "@/components/PwaInstallCard";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -104,7 +108,18 @@ export default function SettingsPage() {
       </header>
 
       <div className="space-y-3">
+        <BetaNotice />
         <AccountCard />
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-semibold text-ink">Get Lire on Android</p>
+              <p className="mt-0.5 text-sm text-ink-muted">Beta testing is not open yet, but you can join the interest list.</p>
+            </div>
+            <AndroidBetaButton source="settings" label="Join" />
+          </div>
+        </div>
+        <PwaInstallCard />
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <p className="font-semibold text-ink">Reading level</p>
           <p className="mt-0.5 text-sm text-ink-muted">
@@ -297,6 +312,42 @@ export default function SettingsPage() {
             <path d="M9 18l6-6-6-6" />
           </svg>
         </Link>
+
+        <Link
+          href="/changelog"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">What&apos;s new</p>
+            <p className="mt-0.5 text-sm text-ink-muted">See recent visible changes to Lire.</p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/privacy"
+          className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+        >
+          <div className="min-w-0">
+            <p className="font-semibold text-ink">Privacy</p>
+            <p className="mt-0.5 text-sm text-ink-muted">Local-first storage, analytics, beta emails, and AI use.</p>
+          </div>
+          <svg className="h-5 w-5 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="font-semibold text-ink">Feedback</p>
+              <p className="mt-0.5 text-sm text-ink-muted">Report a dictionary, article, translation, or technical issue.</p>
+            </div>
+            <FeedbackButton feature="settings" label="Open" />
+          </div>
+        </div>
       </div>
     </div>
   );

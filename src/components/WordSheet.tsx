@@ -34,6 +34,7 @@ interface WordSheetProps {
   onKnow: () => void;
   inferenceChallenge?: InferenceChallenge | null;
   onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
+  onAiRequested?: () => void;
 }
 
 function trustLabel(lookup: DictionaryLookupResult | undefined): string {
@@ -55,7 +56,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word that the reader has just auto-saved.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer, onAiRequested }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -157,6 +158,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
 
   async function handleAskAi() {
     if (!state) return;
+    onAiRequested?.();
     setAiState("loading");
     setAiError(null);
     const result = await getWordExplanation({

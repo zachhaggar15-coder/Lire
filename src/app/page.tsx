@@ -6,12 +6,15 @@ import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import { XPProgressBar } from "@/components/GamificationCards";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
+import BetaNotice from "@/components/BetaNotice";
+import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import type { Difficulty } from "@/types";
 import { buildProgressSnapshot, awardCompletedMissions, type ProgressSnapshot } from "@/lib/gamification";
 import { getKnownWords } from "@/lib/knownWords";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { getReviewStats } from "@/lib/spacedRepetition";
 import { getSavedWords } from "@/lib/storage";
+import { getValidationState } from "@/lib/validation/state";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 
 export default function HomePage() {
@@ -23,6 +26,7 @@ export default function HomePage() {
     savedWords: 0,
     dueReviews: 0,
   });
+  const [showFirstVisitMessage, setShowFirstVisitMessage] = useState(false);
 
   function refreshDashboard(showRewards = false) {
     const savedWords = getSavedWords();
@@ -35,6 +39,8 @@ export default function HomePage() {
       savedWords: savedWords.filter((word) => word.status !== "known").length,
       dueReviews: reviewStats.dueToday + reviewStats.newWords,
     });
+    const validation = getValidationState();
+    setShowFirstVisitMessage(!validation.firstArticleOpenedAt && validation.meaningfulSessionCount === 0);
     if (showRewards && rewards.awardedXp > 0) {
       setRewardNotice(`+${rewards.awardedXp} XP from missions`);
       window.setTimeout(() => setRewardNotice(null), 2200);
@@ -67,11 +73,36 @@ export default function HomePage() {
         </div>
       )}
 
+      {showFirstVisitMessage && <FirstVisitValueCard />}
       <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
       <ContinueReadingBanner />
+      <div className="mb-5">
+        <BetaNotice />
+      </div>
       <ShortSnippetsBlock />
       <FirstRunOnboarding onComplete={() => refreshDashboard()} />
     </div>
+  );
+}
+
+function FirstVisitValueCard() {
+  return (
+    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Learn French by reading something interesting</p>
+      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Read real French with help right where you need it.</h2>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        Lire is for A2-B2 learners who want reading practice beyond repetitive drills: tap unfamiliar words, understand phrases and sentences, save useful vocabulary, then review it later.
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          Start reading
+        </Link>
+        <Link href="/live-news" className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95">
+          Explore live news
+        </Link>
+        <AndroidBetaButton source="dashboard" label="Join Android beta" className="rounded-full bg-brand-light px-4 py-2 text-sm font-semibold text-brand active:scale-95" />
+      </div>
+    </section>
   );
 }
 

@@ -27,6 +27,7 @@ import {
   getSavedLaterIds,
   subscribeToRecommendationPreferences,
 } from "@/lib/recommendation/preferences";
+import { trackEvent } from "@/lib/analytics/client";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success";
@@ -87,6 +88,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
+
+  useEffect(() => {
+    trackEvent("content_section_opened", { section: mode });
+  }, [mode]);
 
   useEffect(() => {
     setSelectedLevel(getSelectedReadingLevel());

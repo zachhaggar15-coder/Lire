@@ -8,6 +8,7 @@ import { formatDate } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
+import { trackEvent, trackOnce } from "@/lib/analytics/client";
 import {
   hideSource,
   isSavedForLater,
@@ -107,6 +108,16 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     }
   }, [difficultyProp, text.body, text.id, text.language, text.sourceName]);
 
+  useEffect(() => {
+    trackOnce(`reading-card-viewed:${text.id}`, "reading_card_viewed", {
+      articleId: text.id,
+      articleSourceType: sourceTrustLabel(text),
+      articleCategory: text.category,
+      articleDifficulty: difficulty?.cefr ?? text.difficulty,
+      estimatedReadingTime: text.minutes,
+    });
+  }, [difficulty?.cefr, text]);
+
   if (hidden) return null;
 
   function handleSaveLater() {
@@ -138,7 +149,19 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
 
   return (
     <article className={`rounded-3xl border-l-4 bg-cream-card p-4 shadow-sm ${CATEGORY_ACCENT[text.category]}`}>
-      <Link href={`/reader/${text.id}`} className="block transition active:scale-[0.99]">
+      <Link
+        href={`/reader/${text.id}`}
+        onClick={() =>
+          trackEvent("reading_card_selected", {
+            articleId: text.id,
+            articleSourceType: sourceTrustLabel(text),
+            articleCategory: text.category,
+            articleDifficulty: difficulty?.cefr ?? text.difficulty,
+            estimatedReadingTime: text.minutes,
+          })
+        }
+        className="block transition active:scale-[0.99]"
+      >
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span
             className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${CATEGORY_STYLES[text.category]}`}

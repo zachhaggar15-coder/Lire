@@ -16,6 +16,8 @@ import {
   TopicProgressCard,
 } from "@/components/GamificationCards";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
+import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { FeedbackButton } from "@/components/FeedbackModal";
 
 type Tab = "overview" | "missions" | "vocabulary" | "achievements" | "passport";
 
@@ -100,6 +102,15 @@ export default function ProgressPage() {
       {tab === "overview" && (
         <div className="space-y-5">
           <CurrentLevelCard level={snapshot.level} />
+          <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Android beta</h2>
+                <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when beta opens?</p>
+              </div>
+              <AndroidBetaButton source="progress" label="Join" />
+            </div>
+          </section>
 
           <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
@@ -218,6 +229,10 @@ export default function ProgressPage() {
           </div>
         </section>
       )}
+
+      <div className="mt-5">
+        <FeedbackButton feature="progress" label="Give progress feedback" />
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, skipOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
+import { trackEvent } from "@/lib/analytics/client";
 
 const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -33,7 +34,9 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
 
   useEffect(() => {
     const state = getOnboardingState();
-    setVisible(!state?.completed);
+    const shouldShow = !state?.completed;
+    setVisible(shouldShow);
+    if (shouldShow) trackEvent("onboarding_started", {});
     if (state?.level) setLevel(state.level);
     if (state?.topics?.length) setTopics(state.topics);
     if (state?.goalPreset) setGoal(state.goalPreset);
@@ -49,12 +52,19 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
 
   function finish() {
     saveOnboarding(level, topics, goal);
+    trackEvent("onboarding_completed", {
+      level,
+      topicCount: topics.length,
+      goal,
+      skipped: false,
+    });
     setVisible(false);
     onComplete?.();
   }
 
   function skip() {
     skipOnboarding();
+    trackEvent("onboarding_completed", { skipped: true });
     setVisible(false);
     onComplete?.();
   }

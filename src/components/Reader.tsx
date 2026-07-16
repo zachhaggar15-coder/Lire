@@ -36,6 +36,10 @@ import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, t
 import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
+import { trackEvent } from "@/lib/analytics/client";
+import { createActiveTimeTracker, type ActiveTimeTracker } from "@/lib/analytics/session";
+import { applyReadingSessionToState, isMeaningfulReadingSession } from "@/lib/validation/definitions";
+import { getValidationState, saveValidationState, updateValidationState } from "@/lib/validation/state";
 import {
   quickChallengeForArticle,
   recordGamifiedArticleCompletion,
@@ -60,6 +64,9 @@ import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSh
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
 import Toast from "@/components/Toast";
 import { CompletionSummary } from "@/components/GamificationCards";
+import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
+import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { FeedbackButton } from "@/components/FeedbackModal";
 
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   small: "text-base",
@@ -167,6 +174,21 @@ export default function Reader({ text }: { text: ReadingText }) {
   const sentenceHoldTriggered = useRef(false);
   const phraseHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const phraseHoldTriggered = useRef(false);
+  const readingStartedAt = useRef<string>(new Date().toISOString());
+  const activeTimeTracker = useRef<ActiveTimeTracker | null>(null);
+  const maxProgressPercent = useRef(0);
+  const progressMilestones = useRef<Set<number>>(new Set());
+  const completedRef = useRef(false);
+  const finalizedSessionRef = useRef(false);
+  const learningActionCount = useRef(0);
+  const wordLookupCount = useRef(0);
+  const wordsSavedThisSession = useRef(0);
+  const phraseInteractionCount = useRef(0);
+  const sentenceInteractionCount = useRef(0);
+  const aiUsedThisSession = useRef(false);
+  const speechUsedThisSession = useRef(false);
+  const comprehensionStarted = useRef(false);
+  const comprehensionCompleted = useRef(false);
   const [comprehensionQuestions, setComprehensionQuestions] = useState<ComprehensionQuestionBundle>(() =>
     buildComprehensionQuestionBundle(text, [])
   );
@@ -203,6 +225,77 @@ export default function Reader({ text }: { text: ReadingText }) {
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
   }, [offlineSentences, offlineTranslationMode, text.body, text.id]);
+
+  useEffect(() => {
+    const startedAt = new Date().toISOString();
+    readingStartedAt.current = startedAt;
+    activeTimeTracker.current = createActiveTimeTracker();
+    maxProgressPercent.current = 0;
+    progressMilestones.current = new Set();
+    completedRef.current = false;
+    finalizedSessionRef.current = false;
+    learningActionCount.current = 0;
+    wordLookupCount.current = 0;
+    wordsSavedThisSession.current = 0;
+    phraseInteractionCount.current = 0;
+    sentenceInteractionCount.current = 0;
+    aiUsedThisSession.current = false;
+    speechUsedThisSession.current = false;
+    comprehensionStarted.current = false;
+    comprehensionCompleted.current = false;
+
+    updateValidationState((state) => ({
+      ...state,
+      firstArticleOpenedAt: state.firstArticleOpenedAt ?? startedAt,
+    }));
+    trackEvent("article_opened", {
+      articleId: text.id,
+      articleCategory: text.category,
+      articleDifficulty: text.difficulty,
+      estimatedReadingTime: text.minutes,
+      articleSourceType: text.sourceName ? "rss" : text.id.startsWith("pd-") ? "public_domain" : text.id.startsWith("custom-") ? "custom" : "built_in",
+    });
+    trackEvent("reading_session_started", { articleId: text.id });
+
+    function markInteraction() {
+      activeTimeTracker.current?.markInteraction();
+    }
+    function handleVisibility() {
+      activeTimeTracker.current?.markVisible(document.visibilityState === "visible");
+    }
+    function handleScroll() {
+      markInteraction();
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const percent = Math.max(0, Math.min(100, Math.round((window.scrollY / maxScroll) * 100)));
+      maxProgressPercent.current = Math.max(maxProgressPercent.current, percent);
+      for (const milestone of [25, 50, 75]) {
+        if (percent >= milestone && !progressMilestones.current.has(milestone)) {
+          progressMilestones.current.add(milestone);
+          trackEvent(`reading_progress_${milestone}` as "reading_progress_25" | "reading_progress_50" | "reading_progress_75", {
+            articleId: text.id,
+            percentageRead: milestone,
+          });
+        }
+      }
+    }
+
+    window.addEventListener("pointerdown", markInteraction, { passive: true });
+    window.addEventListener("keydown", markInteraction);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("pointerdown", markInteraction);
+      window.removeEventListener("keydown", markInteraction);
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (!completedRef.current) finalizeReadingSession(false);
+    };
+    // This effect intentionally represents one reader session per article id.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text.id]);
 
   useEffect(() => {
     setComprehensionQuestions(getOrCreateComprehensionQuestionBundle(text, articlePool));
@@ -281,7 +374,12 @@ export default function Reader({ text }: { text: ReadingText }) {
       return;
     }
     const started = speakFrenchParagraphs([text.title, ...paragraphTexts], "normal", () => setIsSpeakingArticle(false));
-    if (started) setIsSpeakingArticle(true);
+    if (started) {
+      setIsSpeakingArticle(true);
+      speechUsedThisSession.current = true;
+      recordLearningAction();
+      trackEvent("speech_playback_used", { articleId: text.id, scope: "article" });
+    }
   }
 
   /**
@@ -336,6 +434,9 @@ export default function Reader({ text }: { text: ReadingText }) {
     const started = speakFrench(sentence, "normal");
     if (!started) return;
     setActiveAudioSentence(flatIndex);
+    speechUsedThisSession.current = true;
+    recordLearningAction();
+    trackEvent("speech_playback_used", { articleId: text.id, scope: "sentence" });
     const words = sentence.trim().split(/\s+/).filter(Boolean).length;
     window.setTimeout(() => {
       setActiveAudioSentence((current) => (current === flatIndex ? null : current));
@@ -356,6 +457,102 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
     setToastMessage(message);
     toastTimeout.current = setTimeout(() => setToastMessage(null), 1400);
+  }
+
+  function recordLearningAction() {
+    activeTimeTracker.current?.markInteraction();
+    learningActionCount.current += 1;
+  }
+
+  function rememberWordSaved(source: "tap_lookup" | "candidate") {
+    const savedAt = new Date().toISOString();
+    wordsSavedThisSession.current += 1;
+    updateValidationState((state) => ({
+      ...state,
+      firstWordSavedAt: state.firstWordSavedAt ?? savedAt,
+      totalWordsSaved: state.totalWordsSaved + 1,
+    }));
+    trackEvent("word_saved", { articleId: text.id, source });
+  }
+
+  function markAiSupportUsed(kind: "word" | "sentence" | "phrase") {
+    aiUsedThisSession.current = true;
+    recordLearningAction();
+    trackEvent(kind === "sentence" ? "ai_sentence_explanation_requested" : "ai_word_explanation_requested", {
+      articleId: text.id,
+      surface: kind,
+    });
+  }
+
+  function recordComprehensionInteraction() {
+    if (!comprehensionStarted.current) {
+      comprehensionStarted.current = true;
+      trackEvent("comprehension_started", { articleId: text.id });
+    }
+    recordLearningAction();
+  }
+
+  function maybeMarkComprehensionCompleted(nextGistAnswer: number | null, nextToneAnswers: Record<string, number>) {
+    if (comprehensionCompleted.current) return;
+    const completed = nextGistAnswer !== null && toneQuestions.every((question) => nextToneAnswers[question.id] !== undefined);
+    if (!completed) return;
+    comprehensionCompleted.current = true;
+    trackEvent("comprehension_completed", {
+      articleId: text.id,
+      questionCount: toneQuestions.length + 1,
+    });
+  }
+
+  function finalizeReadingSession(completed: boolean, completedAt = new Date().toISOString()) {
+    if (finalizedSessionRef.current) return;
+    finalizedSessionRef.current = true;
+    const activeMs = activeTimeTracker.current?.activeMs() ?? 0;
+    const durationMs = Math.max(0, new Date(completedAt).getTime() - new Date(readingStartedAt.current).getTime());
+    const signals = {
+      activeMs,
+      maxProgressPercent: maxProgressPercent.current,
+      completed,
+      learningActions: learningActionCount.current,
+    };
+    const meaningful = isMeaningfulReadingSession(signals);
+
+    if (!completed && !meaningful) {
+      trackEvent("reading_session_abandoned", {
+        articleId: text.id,
+        activeMs,
+        durationMs,
+        maxProgressPercent: maxProgressPercent.current,
+        learningActions: learningActionCount.current,
+      });
+      return;
+    }
+
+    const result = applyReadingSessionToState({
+      state: getValidationState(),
+      completedAt,
+      signals,
+    });
+    saveValidationState(result.state);
+
+    if (result.meaningful) {
+      trackEvent("meaningful_reading_session_completed", {
+        articleId: text.id,
+        activeMs,
+        durationMs,
+        maxProgressPercent: maxProgressPercent.current,
+        learningActions: learningActionCount.current,
+        wordLookups: wordLookupCount.current,
+        wordsSaved: wordsSavedThisSession.current,
+        phraseInteractions: phraseInteractionCount.current,
+        sentenceInteractions: sentenceInteractionCount.current,
+        aiUsed: aiUsedThisSession.current,
+        speechUsed: speechUsedThisSession.current,
+      });
+    }
+    if (result.state.meaningfulSessionCount === 3) trackEvent("third_reading_session_completed", {});
+    if (result.activatedNow) trackEvent("user_activated", {});
+    if (result.strongNow) trackEvent("user_strongly_activated", {});
+    if (result.habitNow) trackEvent("habit_forming_usage_reached", {});
   }
 
   /** Nearest preceding/following *word* tokens around `index` — skips punctuation/whitespace tokens, so "à travers" is found even with a space token in between. */
@@ -397,6 +594,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     const updatedTaps = recordWordTap(text.id, clean, lookup.lemma);
     setArticleTapRecords(updatedTaps.filter((tap) => tap.articleId === text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
     setTranslationUses((count) => count + 1);
+    recordLearningAction();
+    wordLookupCount.current += 1;
+    trackEvent("word_lookup_opened", {
+      articleId: text.id,
+      knownBeforeTap: known,
+      dictionarySource: lookup.source,
+    });
 
     if (!known && !existingStatus && !protectedProperNoun) {
       const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning"));
@@ -404,6 +608,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
       setSavedWordsSnapshot(nextWords);
       setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+      rememberWordSaved("tap_lookup");
     }
 
     setActiveSentence(null);
@@ -421,6 +626,9 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleSentenceTap(sentenceText: string) {
     if (rereadMode) return;
     const { previous, next } = neighbours(sentenceText);
+    recordLearningAction();
+    sentenceInteractionCount.current += 1;
+    trackEvent("sentence_support_opened", { articleId: text.id });
     setActiveWord(null);
     setActivePhrase(null);
     setActiveSentence({ sentence: sentenceText, previousSentence: previous, nextSentence: next });
@@ -428,6 +636,9 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handlePhraseTap(sentenceText: string, phrase: ActivePhraseState) {
     if (rereadMode) return;
+    recordLearningAction();
+    phraseInteractionCount.current += 1;
+    trackEvent("phrase_support_opened", { articleId: text.id, source: phrase.source ?? "unknown" });
     setActiveWord(null);
     setActiveSentence(null);
     setActivePhrase({ ...phrase, contextSentence: sentenceText });
@@ -453,6 +664,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleKnow() {
     if (!activeWord) return;
     const lemma = activeWord.lookup.lemma;
+    recordLearningAction();
+    trackEvent("word_marked_known", { articleId: text.id });
     markKnown(activeWord.word);
     if (lemma) markKnown(lemma);
     const nextWords = deleteWord(activeWord.word);
@@ -539,6 +752,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleMarkCompleted() {
     const completedAt = new Date().toISOString();
+    const wasAlreadyCompleted = status === "completed";
     const comprehensionItems = [
       gistAnswer === null ? null : gistAnswer === gistQuestion.answerIndex,
       ...toneQuestions.map((question) => (toneAnswers[question.id] == null ? null : toneAnswers[question.id] === question.answerIndex)),
@@ -568,6 +782,29 @@ export default function Reader({ text }: { text: ReadingText }) {
     // Feeds the automatically-learned interest profile behind the home
     // page's recommendations — see src/lib/recommendation/interests.ts.
     recordArticleCompleted(text.category);
+    if (!wasAlreadyCompleted) {
+      updateValidationState((state) => ({
+        ...state,
+        completedArticleCount: state.completedArticleCount + 1,
+        firstArticleCompletedAt: state.firstArticleCompletedAt ?? completedAt,
+      }));
+    }
+    completedRef.current = true;
+    trackEvent("article_completed", {
+      articleId: text.id,
+      activeMs: activeTimeTracker.current?.activeMs() ?? 0,
+      maxProgressPercent: maxProgressPercent.current,
+      wordLookups: wordLookupCount.current,
+      wordsSaved: wordsSavedThisSession.current,
+      phraseInteractions: phraseInteractionCount.current,
+      sentenceInteractions: sentenceInteractionCount.current,
+      learningActions: learningActionCount.current,
+      aiUsed: aiUsedThisSession.current,
+      speechUsed: speechUsedThisSession.current,
+      comprehensionCorrect,
+      comprehensionTotal: comprehensionItems.length,
+    });
+    finalizeReadingSession(true, completedAt);
     const result = recordGamifiedArticleCompletion({
       text,
       difficulty: difficulty?.cefr ?? text.difficulty,
@@ -593,6 +830,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleStartSecondPass() {
     const startedAt = new Date().toISOString();
+    trackEvent("reread_started", { articleId: text.id });
     setShowEnglishTranslation(false);
     setActiveWord(null);
     setActiveSentence(null);
@@ -647,6 +885,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleInferenceAnswer(word: string, lemma: string | null, correct: boolean) {
+    recordLearningAction();
     recordInferenceResult(text.id, word, lemma, correct);
     setInferenceStats((stats) => ({
       attempted: stats.attempted + 1,
@@ -658,6 +897,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleSaveCandidate(candidate: LearningCandidate) {
     const lookup = lookupWord(candidate.word);
     const nextWords = saveWord(buildSavedWord(candidate.word, lookup, candidate.contextSentence, "learning"));
+    recordLearningAction();
+    rememberWordSaved("candidate");
     setSavedWordsSnapshot(nextWords);
     setWordStatusMap((prev) => new Map(prev).set(candidate.word, "learning"));
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
@@ -665,7 +906,18 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleToneAnswer(question: ToneQuestion, answerIndex: number) {
-    setToneAnswers((prev) => ({ ...prev, [question.id]: answerIndex }));
+    recordComprehensionInteraction();
+    setToneAnswers((prev) => {
+      const next = { ...prev, [question.id]: answerIndex };
+      maybeMarkComprehensionCompleted(gistAnswer, next);
+      return next;
+    });
+  }
+
+  function handleGistAnswer(answerIndex: number) {
+    recordComprehensionInteraction();
+    setGistAnswer(answerIndex);
+    maybeMarkComprehensionCompleted(answerIndex, toneAnswers);
   }
 
   function isHighlightedReference(tokens: Token[], tokenIndex: number): boolean {
@@ -1075,7 +1327,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         <ComprehensionQuestion
           question={gistQuestion}
           selected={gistAnswer}
-          onSelect={setGistAnswer}
+          onSelect={handleGistAnswer}
         />
 
         <section className="space-y-3">
@@ -1183,6 +1435,13 @@ export default function Reader({ text }: { text: ReadingText }) {
                 Read again without English
               </button>
             ) : null}
+            {!rereadMode && <PostSessionResearchPrompt articleId={text.id} />}
+            {!rereadMode && (
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95" />
+                <FeedbackButton feature="reader_completion" articleId={text.id} label="Give reader feedback" />
+              </div>
+            )}
           </div>
         ) : (
           <button
@@ -1237,18 +1496,27 @@ export default function Reader({ text }: { text: ReadingText }) {
         onKnow={handleKnow}
         inferenceChallenge={activeInference}
         onInferenceAnswer={handleInferenceAnswer}
+        onAiRequested={() => markAiSupportUsed("word")}
       />
       <SentenceSheet
         state={activeSentence}
         articleTitle={text.title}
         onClose={() => setActiveSentence(null)}
+        onAiRequested={() => markAiSupportUsed("sentence")}
       />
       <PhraseSheet
         state={activePhrase}
         articleTitle={text.title}
         onClose={() => setActivePhrase(null)}
-        onSaved={() => showToast("Saved phrase")}
-        onKnown={() => showToast("Marked phrase as known")}
+        onSaved={() => {
+          recordLearningAction();
+          showToast("Saved phrase");
+        }}
+        onKnown={() => {
+          recordLearningAction();
+          showToast("Marked phrase as known");
+        }}
+        onAiRequested={() => markAiSupportUsed("phrase")}
       />
       <Toast message={toastMessage} />
     </div>

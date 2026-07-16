@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   VERB_REFERENCES,
   buildGrammarDashboard,
@@ -22,6 +22,8 @@ import {
   type VerbReference,
   type VerbTense,
 } from "@/lib/grammar";
+import { trackEvent } from "@/lib/analytics/client";
+import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
 
@@ -44,6 +46,7 @@ export default function GrammarPage() {
   const [sessionAnswered, setSessionAnswered] = useState(0);
   const [referenceVerb, setReferenceVerb] = useState(VERB_REFERENCES[0].infinitive);
   const [referenceTense, setReferenceTense] = useState<VerbTense>("present");
+  const grammarSessionCompleted = useRef(false);
 
   const currentLesson = currentUnlockedLesson(progress);
   const currentProgress = progress.find((record) => record.lessonId === currentLesson.id) ?? getLessonProgress(currentLesson.id);
@@ -75,6 +78,12 @@ export default function GrammarPage() {
   );
 
   function openPractice() {
+    grammarSessionCompleted.current = false;
+    trackEvent("grammar_session_started", {
+      lessonId: currentLesson.id,
+      lessonLevel: currentLesson.level,
+      questionCount: questions.length,
+    });
     setTab("practice");
   }
 
@@ -82,12 +91,28 @@ export default function GrammarPage() {
     if (selectedAnswer !== null) return;
     const correct = isGrammarAnswerCorrect(question, answer);
     const isFinalQuestion = questionIndex >= questions.length - 1;
+    const nextAnswered = sessionAnswered + 1;
+    const nextCorrect = sessionCorrect + (correct ? 1 : 0);
     setSelectedAnswer(answer);
     setSessionAnswered((value) => value + 1);
     setSessionCorrect((value) => value + (correct ? 1 : 0));
     recordGrammarAnswer(question.lessonId, question.id, correct);
     if (isFinalQuestion) {
       markGrammarLessonComplete(question.lessonId);
+      if (!grammarSessionCompleted.current) {
+        grammarSessionCompleted.current = true;
+        const completedAt = new Date().toISOString();
+        updateValidationState((state) => ({
+          ...state,
+          totalGrammarSessions: state.totalGrammarSessions + 1,
+        }));
+        trackEvent("grammar_session_completed", {
+          lessonId: question.lessonId,
+          correctAnswers: nextCorrect,
+          totalQuestions: nextAnswered,
+          completedAt,
+        });
+      }
       setTab("learn");
       setQuestionIndex(0);
       setSelectedAnswer(null);
