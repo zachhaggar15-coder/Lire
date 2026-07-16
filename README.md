@@ -5,17 +5,15 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. The home page runs a **deterministic
-recommendation engine** over a large pool of French-only, quality-filtered
-RSS content (120+ feeds; see "RSS language and content-quality filtering"
-below) and sections it into **Today's Recommendation, Good For You, Quick
-Reads, Stretch Yourself, New Vocabulary, and Latest News** (see "Recommendation
-engine" below) instead of a flat, random list. Tap unknown words for an
+feel like a language-learning Kindle. The home page is a dashboard: Articles
+opens the stable daily reading bank, News opens the live French-only,
+quality-filtered RSS pool (120+ feeds; see "RSS language and content-quality
+filtering" below), and short snippets stay in their own dashboard block. Tap unknown words for an
 **instant, fully offline** dictionary lookup (474 curated + ~15,000 generated
 entries), save the ones worth remembering, and come back later to **review
-words that are actually due**, on a real spaced-repetition schedule. AI is
-there for when you explicitly want more (see "AI explanations" below), never
-automatically. Reading state lives in **localStorage** — no account, no
+words that are actually due**, on a real spaced-repetition schedule. AI word
+and sentence explanations run only when requested; fluent article translation
+can prewarm when enabled so the Translate toggle is ready. Reading state lives in **localStorage** — no account, no
 backend, works instantly.
 
 ## Tech stack
@@ -155,20 +153,16 @@ should catch.
 ## How the app works
 
 Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
-(**Reading history** is a fifth page, linked from the home page's Today card
-rather than taking a nav slot — see "Daily habit loop" below.)
+Reading history is available from the dashboard's **Articles Read** block.
 
 1. **Read (home)** — `src/app/page.tsx`
-   Starts with a **Continue Reading banner** (if a text is mid-read),
-   **Today card** (`src/components/TodayCard.tsx`, see "Daily habit loop"
-   below), and **Goals card** (`src/components/ReadingGoalsCard.tsx`, see
-   "Reading goals" below), then fetches a large candidate pool (`GET
-   /api/rss-texts?limit=50`) and runs it through the **recommendation
-   engine** (`src/lib/recommendation/`, see "Recommendation engine" below) to
-   produce named sections: **Today's Recommendation**, **Good For You**,
-   **Quick Reads**, **Stretch Yourself**, **New Vocabulary**, and **Latest
-   News** — all reusing the same ranked pool, just filtered/re-sorted per
-   section. Articles far above the reader's comfortable level are collapsed
+   Starts with the dashboard card, **Continue Reading banner** (if a text is
+   mid-read), **Short Snippets** (`src/components/ShortSnippetsBlock.tsx`),
+   and first-run onboarding. Full article discovery now lives behind the
+   dashboard's Articles and News blocks. Articles shows the stable daily bank;
+   News runs live RSS through the **recommendation engine**
+   (`src/lib/recommendation/`, see "Recommendation engine" below) for the
+   live news sections. Articles far above the reader's comfortable level are collapsed
    into a **Save for later** `<details>` instead of cluttering the main
    sections. Each card shows a title, an **estimated CEFR level and
    learner-facing difficulty label** (see "Article difficulty scoring"
@@ -404,20 +398,15 @@ implicit signals above.
 into a learner-facing "★★★★★ Perfect for you" / "★★★★☆ Good challenge" /
 "★★★☆☆ Challenging" / "★★☆☆☆ Too difficult" badge shown on every
 `ReadingCard`. `SAVE_FOR_LATER_THRESHOLD` (0.7, matching `IDEAL_UNKNOWN_MAX`)
-is the cutoff above which an article moves to the collapsed "Save for later"
-section instead of a main one.
+is the cutoff used to keep overly hard items out of the secondary Latest News
+list; explicit "Save" / "Saved For Later" is a reader preference instead.
 
 **Sections** (`sections.ts`) — `buildSections(ranked)` takes the one ranked
-pool and derives every named section from it by filtering/re-sorting, never
-re-scoring: **Today's Recommendation** (the single top-ranked "active"
-article), **Good For You** (closest to the ideal difficulty band, excluding
-whatever's already Today's Recommendation — otherwise the overall top pick,
-which is usually also a strong difficulty-band match, would show up twice
-in a row), **Quick Reads** (≤3 minutes), **Stretch Yourself** (harder than
-the ideal band, but still "active"), **New Vocabulary** (high unknown-word
-ratio *and* good dictionary coverage, so the new words are genuinely
-look-up-able), **Latest News** (freshest `news-style` articles), and **Save
-for later** (everything above `SAVE_FOR_LATER_THRESHOLD`).
+pool and derives only the sections active pages render: **Daily Articles**
+(stable public-domain bank picks), **Live News** (the lead RSS cards), and
+**Latest News** (freshest active `news-style` items not already claimed by
+Live News). Short snippets are fetched separately by the dashboard block, not
+by this section builder.
 
 **Continue Reading banner** (`src/components/ContinueReadingBanner.tsx`) — a
 prominent banner above the Today card if a text is currently `in-progress`
@@ -429,9 +418,9 @@ than) the Today card's own single next-action slot.
 `ScorableArticle[]`), `context.ts` (`buildScoringContext` — gathers the
 interest profile, recent categories, and inferred user level once per home
 page load), `score.ts` (`scoreArticle`/`rankArticles`), and `types.ts` (every
-shared shape). None of this logic lives in a React component — `page.tsx`
-only calls `buildScorableArticles` → `buildScoringContext` → `rankArticles` →
-`buildSections` and renders the result.
+shared shape). None of this logic lives in a React component — the article
+browser calls `buildScorableArticles` → `buildScoringContext` → `rankArticles`
+→ `buildSections` and renders the result.
 
 ### Reading goals
 
@@ -441,9 +430,9 @@ flashcard reviews/day), each individually on/off (`null` = off). Progress is
 computed fresh from existing data (no new tracking store): minutes today from
 archive entries' `estimateTimeSpentMinutes`, articles today from
 `progress.ts`, new words this week from `storage.ts`, reviews today from
-`spacedRepetition.ts`. Shown as progress bars on the home page, with a tap-to-
-edit mode; if every goal is off, a single "Set a reading goal →" prompt shows
-instead.
+`spacedRepetition.ts`. Shown as progress bars on Progress -> Missions, with a
+tap-to-edit mode; if every goal is off, a single "Set a reading goal ->"
+prompt shows instead.
 
 ### Daily habit loop
 
@@ -457,13 +446,8 @@ something in French today":
   days backward from today (or from yesterday, if today has no activity
   *yet* — so the streak doesn't visually zero out the moment a new day
   starts before the reader has done anything).
-- **`src/components/TodayCard.tsx`** — the home page's "Today" card: articles
-  completed today, words saved today, reviews due right now, the current
-  streak, and a single clear next action (`Continue reading` if a text is
-  open but not finished, `Review due words` if anything's due, otherwise a
-  quiet hint — nothing to click when there's nothing to do).
 - **`src/lib/archive.ts`** + **`src/app/archive/page.tsx`** — a "Reading
-  history" page (linked from the Today card and the home page) listing every
+  history" page (linked from the dashboard) listing every
   completed article: title, source, CEFR at completion time, estimated
   **time spent** (`estimateTimeSpentMinutes` — the gap between `openedAt` and
   `completedAt`), completion status, and how many words were saved from it
@@ -962,14 +946,13 @@ candidate-pool build**, not per reader, not per page view.
   "batch job during pool building" pattern already used for full-article
   scraping (see above), not a per-view or per-reader cost.
 
-### AI explanations (on demand only)
+### AI word and sentence explanations (on demand only)
 
-Everything below this point **never** calls AI automatically — not on page
-load, not on a word tap, not on a sentence tap. AI only ever runs when a
-reader explicitly taps **"Ask AI for nuance"** (word sheet) or **"Ask AI to
-explain"** (sentence sheet). (Article blurbs, above, are the one exception
-to "on demand," and are generated in a background batch step, not as part
-of the reading flow.)
+Word and sentence explanations never call AI automatically — not on page load,
+not on a word tap, not on a sentence tap. They only run when a reader
+explicitly taps **"Ask AI for nuance"** (word sheet) or **"Ask AI to explain"**
+(sentence sheet). Article blurbs and fluent article-translation prewarming are
+separate AI features with their own bounded/background behavior.
 
 **Architecture**:
 - `src/lib/ai/openai.ts` — `explainWord(req)` / `explainSentence(req)`, plain
@@ -1012,8 +995,8 @@ French rewording, 1–3 grammar notes, a short list of useful vocabulary
 (word + meaning), and a 2–4 sentence explanation.
 
 **Cost control**:
-- AI is never triggered by rendering a page or opening a sheet — only by
-  tapping the AI button itself.
+- Word/sentence explanation AI is never triggered by rendering a page or
+  opening a sheet — only by tapping the AI button itself.
 - The button shows a loading state and is effectively single-shot per tap
   (no debounce needed — there's nothing to debounce since it only fires on
   click).
@@ -1028,12 +1011,12 @@ response, rate limit) shows a generic *"Couldn't get an AI answer"* message,
 also with "Try again." Local dictionary lookup, saving, and reviewing all
 keep working regardless of whether AI is configured or reachable.
 
-**Why AI is on-demand only**: the goal here is a fast, uninterrupted reading
-flow — instant local lookup for the common case, with deeper (slower,
-costlier, network-dependent) AI help available only when a reader explicitly
-asks for it. Calling AI on every tap would add latency to the most frequent
-interaction in the app and turn a lightweight reading habit into something
-that depends on an API key and an internet connection.
+**Why explanation AI is on-demand only**: the goal here is a fast,
+uninterrupted reading flow — instant local lookup for the common case, with
+deeper (slower, costlier, network-dependent) word/sentence help available only
+when a reader explicitly asks for it. Calling AI on every tap would add latency
+to the most frequent interaction in the app and turn a lightweight reading
+habit into something that depends on an API key and an internet connection.
 
 ### Saved word format
 
@@ -1129,7 +1112,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/recommendation/signals.ts` | Individual 0-1 scoring signals (freshness, difficulty match, unknown-word target, topic preference, reading time, content quality, variety), `getStarRating` |
 | `src/lib/recommendation/weights.ts` | `SIGNAL_WEIGHTS` — the one place to retune the scoring engine |
 | `src/lib/recommendation/score.ts` | `scoreArticle`, `rankArticles` |
-| `src/lib/recommendation/sections.ts` | `buildSections` — splits one ranked pool into the home page's named sections |
+| `src/lib/recommendation/sections.ts` | `buildSections` — splits one ranked pool into Daily Articles, Live News, and Latest News |
 | `src/lib/recommendation/interests.ts` | `getInterestProfile`, `recordArticleCompleted`, `recordArticleSkipped`, `detectAndRecordSkippedArticles` — automatic interest learning |
 | `src/lib/recommendation/build.ts`, `context.ts` | `buildScorableArticles`, `buildScoringContext` — glue between `ReadingText[]` and the scoring engine |
 | `src/lib/settings.ts` | App settings: `getSettings`, `saveSettings`, `DEFAULT_SETTINGS` |
@@ -1151,7 +1134,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/app/api/rss-texts/route.ts` | `GET /api/rss-texts` — builds/caches the candidate pool, returns 5 deterministic daily texts by default |
 | `src/app/api/rss-texts/[id]/route.ts` | `GET /api/rss-texts/[id]` — fallback lookup for one persisted RSS text |
 | `src/types.ts` | Shared types: `ReadingText`, `SavedWord`, `WordStatus`, `TextProgress`, `AppSettings` |
-| `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `TodayCard`, `Toast`, `ServiceWorker` |
+| `src/components/*` | `BottomNav`, `ReadingCard`, `Reader`, `WordSheet`, `SentenceSheet`, `Toast`, `ServiceWorker` |
 
 ## Cross-device sync (Supabase)
 
@@ -1413,12 +1396,12 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   paragraph** — the "Show English" toggle in `Reader.tsx` now calls a new
   on-demand AI service (`translateArticleParagraphs` in `openai.ts`, via
   `POST /api/ai/translate-article`) for a natural, idiomatic translation of
-  the whole article in one batched request, instead of reusing the offline
-  dictionary's word-for-word substitution. Same "AI only runs when
-  explicitly asked for" rule as the word/sentence explanations: nothing is
-  translated until the reader taps the toggle, and the result is cached
-  client-side (keyed on article id + paragraph text) so re-toggling or
-  reopening the same article never re-calls the API. Display is
+  the whole article, instead of reusing the offline dictionary's word-for-word
+  substitution. Reader prewarms this in the background when Natural translation
+  and Fluent AI translation are enabled, then the Translate toggle reveals the
+  cached result. The result is cached client-side (keyed on article id +
+  sentence text) so re-toggling or reopening the same article never re-calls
+  the API. Display is
   interlinear now, not a single block at the end — each paragraph's
   translation renders directly beneath it (indented, italic, muted),
   matching how the request actually asked for it ("shown between the
@@ -1512,11 +1495,10 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   had its own empty in-memory cache with no cross-instance coordination, so
   "today's" selection could differ by instance and never reliably
   advanced with the calendar.
-- **No article repeats across home-page sections anymore** —
+- **No article repeats across news sections anymore** —
   `buildSections` (`src/lib/recommendation/sections.ts`) now claims
-  articles into sections in a fixed priority order (Today's Recommendation,
-  then Good For You, Quick Reads, Stretch Yourself, New Vocabulary, Latest
-  News), excluding whatever a higher-priority section already took.
+  lead RSS cards before filling Latest News, excluding whatever Live News
+  already took.
 - **A new "Short Snippets" section** — RSS items too short for the normal
   `DEFAULT_MIN_WORDS` bar (60 words) but still clean, real, multi-sentence
   French are now tagged `isShortSnippet` and kept for quick reading practice
@@ -1588,10 +1570,8 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   the app. The one deliberate exception to this app's "AI only runs
   on-demand" rule — see "Article blurbs" above for why that's still safe.
   Hardcoded texts got hand-written blurbs instead of an AI call.
-- **"Good For You" no longer repeats Today's Recommendation** — the top
-  overall pick is now excluded from the "Good For You" candidates before
-  sorting, since it was often also the closest difficulty-band match and
-  would otherwise appear twice in a row on the home page
+- **The old home-page recommendation buckets were simplified** — Articles now
+  shows the stable daily bank, while News owns the RSS lead/latest sections
   (`src/lib/recommendation/sections.ts`).
 - **Dictionary lookup misses were a recurring real complaint — the
   generated dictionary is now ~92,000 entries, up from 15,000**
@@ -1642,10 +1622,9 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   `src/lib/recommendation/` scores every candidate on seven independent
   signals (freshness, difficulty match, unknown-word target, learned topic
   preference, reading time, content quality, variety), combines them with
-  tunable weights, and sections the ranked pool into **Today's
-  Recommendation, Good For You, Quick Reads, Stretch Yourself, New
-  Vocabulary, and Latest News** — all reused from one ranked pool, no
-  duplicate scoring, no scoring logic in any React component. Topic
+  tunable weights, and sections the ranked pool into the active Articles/News
+  surfaces — all reused from one ranked pool, no duplicate scoring, no scoring
+  logic in any React component. Topic
   interests are learned automatically from completion/skip behavior, with no
   onboarding step. See "Recommendation engine" above.
 - **Reading goals** (`src/lib/goals.ts` + `ReadingGoalsCard.tsx`) — optional
@@ -1786,7 +1765,9 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   days, so the store doesn't grow unbounded.
 - **Background RSS refresh via Vercel Cron** (`vercel.json`) hits
   `/api/rss-texts` on a schedule so the route's cache stays warm instead of
-  relying solely on on-demand revalidation.
+  relying solely on on-demand revalidation. The cron endpoint fails closed
+  unless `CRON_SECRET` is configured and sent as `Authorization: Bearer ...`;
+  add that secret in Vercel and `.env.local`/`.env.local.example`.
 - **RSS texts persist past the session** — an optional Upstash Redis-backed
   store (`src/lib/rss/rssTextStore.ts`) and `GET /api/rss-texts/[id]` let a
   direct link to an RSS article resolve in a fresh tab, falling back to the

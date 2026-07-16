@@ -254,9 +254,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     // it. This doesn't reveal the translation UI (showEnglishTranslation
     // stays false); it just fills fluentSentences ahead of time. Opt-in via
     // the same aiTranslationEnabled setting the toggle itself respects — a
-    // reader who's turned AI translation off shouldn't pay for an API call
-    // on every article they merely open, only ones they explicitly ask to
-    // see translated.
+    // reader who's turned AI translation off should use the free offline
+    // translation path and avoid OpenAI calls from both prewarm and toggle.
     if (loadedSettings.translationMode === "natural" && loadedSettings.aiTranslationEnabled) {
       void handleFetchFluentTranslation();
     }

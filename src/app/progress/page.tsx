@@ -15,6 +15,7 @@ import {
   TodaysMissionsPanel,
   TopicProgressCard,
 } from "@/components/GamificationCards";
+import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 
 type Tab = "overview" | "missions" | "vocabulary" | "achievements" | "passport";
 
@@ -153,6 +154,7 @@ export default function ProgressPage() {
 
       {tab === "missions" && (
         <div className="space-y-5">
+          <ReadingGoalsCard />
           <TodaysMissionsPanel missions={snapshot.missions} />
           <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Streaks</h2>

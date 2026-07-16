@@ -3,17 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ArticleSection from "@/components/ArticleSection";
-import { texts as hardcodedTexts } from "@/data/texts";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
-import { getSavedWords } from "@/lib/storage";
 import { getCustomTexts } from "@/lib/customTexts";
-import { getAllWordTaps } from "@/lib/wordLearning";
-import { buildContextualReviewArticles, buildTodayNewsWords, type ContextualReviewArticle, type TodayNewsWord } from "@/lib/readingAnalytics";
+import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT, getDailyBankTexts } from "@/lib/publicDomainBank";
 import {
@@ -88,7 +85,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
-  const [contextualReviewArticles, setContextualReviewArticles] = useState<ContextualReviewArticle[]>([]);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
@@ -138,8 +134,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const importedTexts = getCustomTexts();
       const hiddenSources = new Set(getHiddenSources());
       const knownWords = new Set(getKnownWords());
-      const savedWords = getSavedWords();
-      const pool = (mode === "articles" ? [...importedTexts, ...bankTexts, ...hardcodedTexts] : rssTexts).filter(
+      const pool = (mode === "articles" ? [...importedTexts, ...bankTexts] : rssTexts).filter(
         (text) => (!text.sourceName || !hiddenSources.has(text.sourceName)) && (mode !== "articles" || isEligibleArticleModeText(text))
       );
       const importedIds = new Set(importedTexts.map((text) => text.id));
@@ -154,11 +149,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
       setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
       setTodayWords(mode === "live" ? buildTodayNewsWords(rssTexts) : []);
-      setContextualReviewArticles(
-        mode === "articles"
-          ? buildContextualReviewArticles(ranked.map((article) => article.text), savedWords, getAllWordTaps())
-          : []
-      );
       setUsedFallback(fallback);
       setState("success");
     }
@@ -229,7 +219,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
             difficultyFilter={difficultyFilter}
             customArticles={customArticles}
             savedLaterArticles={savedLaterArticles}
-            contextualReviewArticles={contextualReviewArticles}
           />
         )
       )}
@@ -311,14 +300,12 @@ function ArticleContent({
   difficultyFilter,
   customArticles,
   savedLaterArticles,
-  contextualReviewArticles,
 }: {
   sections: RecommendationSections;
   selectedLevel: Difficulty;
   difficultyFilter: DifficultyFilter;
   customArticles: ScoredArticle[];
   savedLaterArticles: ScoredArticle[];
-  contextualReviewArticles: ContextualReviewArticle[];
 }) {
   const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
   return (
@@ -338,12 +325,7 @@ function ArticleContent({
           </Link>
         </div>
       </section>
-      <ArticleSection title="Good For You" subtitle="Right in your ideal challenge zone." articles={sections.goodForYou} variant="compact" />
-      <ArticleSection title="Quick Reads" subtitle="2-4 minutes." articles={sections.quickReads} variant="compact" />
-      <ArticleSection title="Stretch Yourself" subtitle="A bit harder than usual." articles={sections.stretchYourself} variant="compact" />
-      <ArticleSection title="New Vocabulary" subtitle="Likely to teach several new words." articles={sections.newVocabulary} variant="compact" />
       <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} variant="compact" />
-      {contextualReviewArticles.length > 0 && <ContextualReviewSection articles={contextualReviewArticles} />}
     </>
   );
 }
@@ -393,29 +375,6 @@ function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
               ))}
             </div>
           </details>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ContextualReviewSection({ articles }: { articles: ContextualReviewArticle[] }) {
-  return (
-    <section className="mb-6">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Review through reading</h2>
-      <p className="mt-0.5 text-xs text-ink-muted">Articles containing vocabulary due for review.</p>
-      <div className="mt-3 space-y-3">
-        {articles.map(({ article, dueWords, fragileCount }) => (
-          <Link key={article.id} href={`/reader/${article.id}`} className="block rounded-3xl border border-cream-dark bg-cream-card p-4 shadow-sm active:scale-[0.99]">
-            <p className="text-sm font-bold leading-snug text-ink">{article.title}</p>
-            <p className="mt-1 text-xs text-ink-muted">
-              Contains {dueWords.length} due {dueWords.length === 1 ? "word" : "words"}
-              {fragileCount > 0 ? ` - ${fragileCount} fragile` : ""}
-            </p>
-            <p className="mt-2 text-xs font-semibold text-brand">
-              {dueWords.slice(0, 5).map((word) => word.lemma ?? word.word).join(" - ")}
-            </p>
-          </Link>
         ))}
       </div>
     </section>

@@ -72,9 +72,10 @@ const TRANSLATION_GENERIC_ERROR = "Couldn't get a fluent translation. Please try
 
 /**
  * Calls POST /api/ai/translate-article, cache-first (keyed on article id +
- * sentence text, see articleTranslationCacheKey). Same on-demand-only
- * contract as the two functions above — only ever called from Reader.tsx's
- * "Show English" toggle, never automatically.
+ * sentence text, see articleTranslationCacheKey). Reader.tsx uses this for
+ * background prewarming when fluent AI translation is enabled, and as a
+ * cache-first fetch if the reader toggles Translate before the prewarm
+ * finishes.
  */
 export async function getArticleTranslation(
   articleId: string,

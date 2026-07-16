@@ -12,7 +12,7 @@ interface ContinueReadingInfo {
   title: string;
 }
 
-/** A prominent banner at the top of the home page for an article left half-finished — separate from (and more visible than) TodayCard's single next-action slot. */
+/** A prominent banner at the top of the home page for an article left half-finished. */
 export default function ContinueReadingBanner() {
   const [info, setInfo] = useState<ContinueReadingInfo | null>(null);
 

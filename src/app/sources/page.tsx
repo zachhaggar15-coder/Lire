@@ -39,7 +39,6 @@ export default function SourcesPage() {
   const [state, setState] = useState<LoadState>("loading");
   const [sources, setSources] = useState<SourceHealth[]>([]);
   const [summary, setSummary] = useState<SourceHealthResponse["sourceSummary"]>(undefined);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [hiddenSources, setHiddenSources] = useState<string[]>([]);
   const [preferredSources, setPreferredSources] = useState<string[]>([]);
 
@@ -55,7 +54,6 @@ export default function SourcesPage() {
       try {
         setState("loading");
         const params = new URLSearchParams({ limit: "1", health: "true" });
-        if (refreshKey > 0) params.set("refresh", "true");
         const res = await fetch(`/api/rss-texts?${params.toString()}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data: SourceHealthResponse = await res.json();
@@ -71,7 +69,7 @@ export default function SourcesPage() {
     return () => {
       cancelled = true;
     };
-  }, [refreshKey, refreshPreferences]);
+  }, [refreshPreferences]);
 
   const attempted = useMemo(() => sources.filter((source) => !source.skipped), [sources]);
   const yielded = useMemo(() => attempted.filter((source) => source.accepted > 0), [attempted]);
@@ -98,18 +96,11 @@ export default function SourcesPage() {
 
   return (
     <div className="px-4 pt-6">
-      <header className="mb-5 flex items-start justify-between gap-3">
+      <header className="mb-5">
         <div>
           <h1 className="text-2xl font-extrabold text-ink">Sources</h1>
-          <p className="text-sm text-ink-muted">RSS feed status for the current article pool.</p>
+          <p className="text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by the 7am/7pm cron.</p>
         </div>
-        <button
-          type="button"
-          onClick={() => setRefreshKey((key) => key + 1)}
-          className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white active:scale-95"
-        >
-          Refresh
-        </button>
       </header>
 
       {state === "loading" && <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />}

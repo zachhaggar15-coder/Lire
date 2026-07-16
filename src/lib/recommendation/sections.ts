@@ -6,44 +6,18 @@ export interface RecommendationSections {
   dailyBank: ScoredArticle[];
   /** The small live RSS/news slice for today's changing world-facing reading. */
   liveNews: ScoredArticle[];
-  /** The single best-scoring article right now, or null if everything is save-for-later material. */
-  todaysRecommendation: ScoredArticle | null;
-  /** Short (<=3 min) reads from the ranked pool. */
-  quickReads: ScoredArticle[];
-  /** Articles closest to the ideal 90-95% known / 5-10% unknown band. */
-  goodForYou: ScoredArticle[];
-  /** A bit harder than "Good for you," but not into save-for-later territory. */
-  stretchYourself: ScoredArticle[];
-  /** Articles with a meaningfully high new-word ratio *and* good dictionary coverage — likely to teach several real, look-up-able words. */
-  newVocabulary: ScoredArticle[];
-  /** The newest news-style articles, freshest first. */
+  /** The newest news-style articles, freshest first, excluding already-claimed live lead cards. */
   latestNews: ScoredArticle[];
-  /** Deliberately short (below the normal content-quality bar) texts — quick, low-commitment reading practice. Never overlaps the other sections, since normal sections exclude short snippets entirely. */
-  shortSnippets: ScoredArticle[];
-  /** Far above the reader's level — surfaced separately rather than recommended for today. */
-  saveForLater: ScoredArticle[];
 }
 
-const SECTION_SIZE = 4;
-/** An article only counts as "quick" up to this many minutes. */
-const QUICK_READ_MAX_MINUTES = 3;
-/** New-vocabulary candidates need at least this much of their text resolvable in the dictionary, so the "new words" are genuinely look-up-able rather than junk/foreign text. */
-const MIN_DICTIONARY_COVERAGE_FOR_VOCAB = 0.7;
-/** Short Snippets gets a bigger allowance than the other sections — it's the whole point of the section, not a side dish. */
-const SHORT_SNIPPET_SECTION_SIZE = 8;
+const DAILY_BANK_SECTION_SIZE = 8;
+const LIVE_NEWS_SECTION_SIZE = 2;
+const LATEST_NEWS_SECTION_SIZE = 4;
 
 function isPublicDomainBankArticle(article: ScoredArticle): boolean {
   return article.text.id.startsWith("pd-");
 }
 
-/**
- * Claims articles into a section in priority order, skipping any id another
- * (earlier) section already claimed — see buildSections. This is what
- * guarantees an article never appears twice across the home page: once
- * picked for "Today's Recommendation," it's no longer eligible for "Good
- * For You," "Quick Reads," etc., even though each section is filtered from
- * the same underlying ranked pool.
- */
 function take(list: ScoredArticle[], usedIds: Set<string>, limit: number): ScoredArticle[] {
   const picked: ScoredArticle[] = [];
   for (const article of list) {
@@ -55,105 +29,37 @@ function take(list: ScoredArticle[], usedIds: Set<string>, limit: number): Score
   return picked;
 }
 
+function newestFirst(a: ScoredArticle, b: ScoredArticle): number {
+  return new Date(b.text.publishedAt ?? 0).getTime() - new Date(a.text.publishedAt ?? 0).getTime();
+}
+
 /**
- * Splits one ranked pool into the home page's named sections — every
- * section reuses the same underlying scored/ranked list (just filtered and
- * re-sorted for that section's specific angle), per the recommendation
- * spec. Pure and deterministic: same input, same output.
- *
- * Sections are populated in a fixed priority order (Today's Recommendation
- * first, then Good For You, Quick Reads, Stretch Yourself, New Vocabulary,
- * Latest News) and every section after the first excludes any article a
- * higher-priority section already claimed, so the same article is never
- * shown twice on the home page.
+ * Splits one ranked pool into the sections active pages still render. Short
+ * snippets are deliberately excluded here because the dashboard fetches them
+ * through its dedicated snippets-only block.
  */
 export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
-  // Short snippets are a different kind of content entirely (deliberately
-  // below the normal length bar) — kept out of every other section's pool
-  // so a 30-word snippet never gets recommended as "Good For You" material,
-  // and given their own section instead.
-  const shortSnippetPool = ranked.filter((a) => a.text.isShortSnippet);
-  const withoutSnippets = ranked.filter((a) => !a.text.isShortSnippet);
-
-  const saveForLater = withoutSnippets.filter((a) => a.difficulty.unknownWordRatio > SAVE_FOR_LATER_THRESHOLD);
-  const active = withoutSnippets.filter((a) => a.difficulty.unknownWordRatio <= SAVE_FOR_LATER_THRESHOLD);
-
+  const withoutSnippets = ranked.filter((article) => !article.text.isShortSnippet);
+  const active = withoutSnippets.filter((article) => article.difficulty.unknownWordRatio <= SAVE_FOR_LATER_THRESHOLD);
   const usedIds = new Set<string>();
 
   const dailyBank = take(
     withoutSnippets.filter(isPublicDomainBankArticle),
     usedIds,
-    8
+    DAILY_BANK_SECTION_SIZE
   );
 
   const liveNews = take(
-    [...withoutSnippets]
-      .filter((a) => !isPublicDomainBankArticle(a))
-      .sort((a, b) => new Date(b.text.publishedAt ?? 0).getTime() - new Date(a.text.publishedAt ?? 0).getTime()),
+    [...withoutSnippets].filter((article) => !isPublicDomainBankArticle(article)).sort(newestFirst),
     usedIds,
-    2
-  );
-
-  const todaysRecommendation = take(active, usedIds, 1)[0] ?? null;
-
-  const goodForYou = take(
-    [...active].sort((a, b) => b.score.unknownWordTarget - a.score.unknownWordTarget),
-    usedIds,
-    SECTION_SIZE
-  );
-
-  const quickReads = take(
-    active.filter((a) => a.text.minutes <= QUICK_READ_MAX_MINUTES),
-    usedIds,
-    SECTION_SIZE
-  );
-
-  const stretchYourself = take(
-    [...active]
-      .filter((a) => a.score.unknownWordTarget < 1)
-      .sort((a, b) => b.difficulty.unknownWordRatio - a.difficulty.unknownWordRatio),
-    usedIds,
-    SECTION_SIZE
-  );
-
-  const newVocabulary = take(
-    [...active]
-      .filter((a) => a.difficulty.dictionaryCoverage >= MIN_DICTIONARY_COVERAGE_FOR_VOCAB)
-      .sort((a, b) => b.difficulty.unknownWordRatio - a.difficulty.unknownWordRatio),
-    usedIds,
-    SECTION_SIZE
+    LIVE_NEWS_SECTION_SIZE
   );
 
   const latestNews = take(
-    [...active]
-      .filter((a) => a.text.category === "news-style")
-      .sort((a, b) => new Date(b.text.publishedAt ?? 0).getTime() - new Date(a.text.publishedAt ?? 0).getTime()),
+    [...active].filter((article) => article.text.category === "news-style").sort(newestFirst),
     usedIds,
-    SECTION_SIZE
+    LATEST_NEWS_SECTION_SIZE
   );
 
-  // Short snippets get their own ranking rather than reusing rankArticles'
-  // order: that order is driven by scoreArticle's full weighted formula,
-  // which includes contentQualityScore and unknownWordTargetScore — both of
-  // which inherently penalise short text (a 30-word snippet can never hit
-  // "good" content quality, no matter how good a match it is otherwise).
-  // Freshness and topic preference are the two signals that still mean the
-  // same thing for a snippet as for a full article, so those are the ones
-  // that decide which snippets surface first.
-  const shortSnippets = [...shortSnippetPool]
-    .sort((a, b) => (b.score.freshness + b.score.topicPreference) - (a.score.freshness + a.score.topicPreference))
-    .slice(0, SHORT_SNIPPET_SECTION_SIZE);
-
-  return {
-    dailyBank,
-    liveNews,
-    todaysRecommendation,
-    quickReads,
-    goodForYou,
-    stretchYourself,
-    newVocabulary,
-    latestNews,
-    shortSnippets,
-    saveForLater: saveForLater.filter((article) => !usedIds.has(article.text.id)),
-  };
+  return { dailyBank, liveNews, latestNews };
 }

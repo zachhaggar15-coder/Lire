@@ -1,10 +1,9 @@
 import type { DictionaryEntry } from "@/lib/dictionary/types";
 
 /**
- * Local English → French dictionary. Not wired into any UI yet — this
- * exists for architectural symmetry with fr-en.ts, so a future "look up an
- * English word" feature (or reverse flashcards) can reuse the exact same
- * `DictionaryEntry` shape and lookup logic without a new data model.
+ * Local English → French dictionary for the `/lookup` page. It keeps
+ * architectural symmetry with fr-en.ts so reverse flashcards can reuse the
+ * exact same `DictionaryEntry` shape and lookup logic later.
  * A modest hand-curated starter set; expand as needed.
  */
 export const enFrDictionary: DictionaryEntry[] = [

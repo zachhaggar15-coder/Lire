@@ -11,7 +11,7 @@ interface GoalRow {
   progress: number;
 }
 
-/** Home page card showing progress toward the reader's (optional, self-set) daily/weekly goals. Every value is derived fresh from existing data — see src/lib/goals.ts. */
+/** Card showing progress toward optional, self-set daily/weekly goals. Every value is derived fresh from existing data — see src/lib/goals.ts. */
 export default function ReadingGoalsCard() {
   const [goals, setGoals] = useState<ReadingGoals>(DEFAULT_GOALS);
   const [progress, setProgress] = useState<ReturnType<typeof getGoalsProgress> | null>(null);

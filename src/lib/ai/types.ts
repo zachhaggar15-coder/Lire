@@ -1,8 +1,8 @@
 /**
- * Types for the on-demand AI explanation layer. AI is never called
- * automatically — only when a reader explicitly taps "Ask AI for nuance" or
- * "Ask AI to explain" (see WordSheet.tsx / SentenceSheet.tsx). Both routes
- * use OpenAI today; see src/lib/ai/openai.ts.
+ * Types for the AI help layer. Word and sentence explanations are explicit
+ * button actions only; fluent article translation may be prewarmed by
+ * Reader.tsx when the user has enabled it, and RSS blurbs are generated in a
+ * server-side batch during pool refresh.
  */
 
 export interface WordExplanationRequest {
@@ -91,12 +91,12 @@ export interface SentenceExplanation {
 
 /**
  * A whole article's sentences, translated fluently and idiomatically (not
- * word-for-word) — on-demand, only when a reader toggles "Show English" in
- * Reader.tsx, same "AI only runs when explicitly asked for" rule as the
- * word/sentence explanations above. Distinct from the instant, free,
- * offline `translateSentenceWithDictionary` (articleTranslation.ts), which
- * stays as the fallback shown immediately while this loads, and if AI
- * isn't configured or the call fails.
+ * word-for-word). Reader.tsx can prewarm this in the background when Natural
+ * translation and AI translation are enabled, then reveal it only when the
+ * reader toggles Translate. Distinct from the instant, free, offline
+ * `translateSentenceWithDictionary` (articleTranslation.ts), which stays as
+ * the fallback shown immediately while this loads, and if AI isn't configured
+ * or the call fails.
  *
  * Sentence-, not paragraph-, granularity: a reader lines each French
  * sentence up against its own English line directly underneath (true

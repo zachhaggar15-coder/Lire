@@ -32,9 +32,12 @@ import {
   unknownWordTargetScore,
 } from "../src/lib/recommendation/signals.ts";
 import { buildSections } from "../src/lib/recommendation/sections.ts";
+import { buildScorableArticles } from "../src/lib/recommendation/build.ts";
+import { buildScoringContext } from "../src/lib/recommendation/context.ts";
+import { rankArticles } from "../src/lib/recommendation/score.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
-import { getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
+import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
 import {
@@ -241,7 +244,7 @@ console.log("--- Recommendation signals ---");
     makeArticle("rss-hard-live-1", "2026-07-14T12:00:00Z", 0.95),
   ]);
   check("live news still shows hard RSS articles", sections.liveNews.some((article) => article.text.id === "rss-hard-live-1"));
-  check("live news claims hard RSS articles before save-for-later", !sections.saveForLater.some((article) => article.text.id === "rss-hard-live-1"));
+  check("live news lead cards do not duplicate into latest news", !sections.latestNews.some((article) => article.text.id === "rss-hard-live-1"));
 }
 
 console.log("\n--- Difficulty estimation ---");
@@ -276,6 +279,24 @@ console.log("\n--- Public-domain reading bank ---");
   const dailyB1Repeat = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
   check("daily bank returns eight stable level-matched picks", dailyB1.length === 8 && dailyB1.map((text) => text.id).join(",") === dailyB1Repeat.map((text) => text.id).join(","));
   check("daily bank favours the selected CEFR level first", dailyB1.every((text) => ["B1", "A2", "B2", "A1", "C1"].includes(text.difficulty)));
+  const articleTabDaily = getDailyBankTexts({
+    level: "A2",
+    category: "all",
+    limit: DAILY_BANK_ARTICLE_LIMIT * 3,
+    date: new Date("2026-07-16T12:00:00Z"),
+  })
+    .filter((text) => text.category !== "news-style")
+    .slice(0, DAILY_BANK_ARTICLE_LIMIT);
+  const articleTabSections = buildSections(
+    rankArticles(buildScorableArticles(articleTabDaily, new Set()), buildScoringContext(new Date("2026-07-16T12:00:00Z")))
+  );
+  const expectedDailyIds = new Set(articleTabDaily.map((text) => text.id));
+  check(
+    "article tab daily section stays within the selected daily bank",
+    articleTabSections.dailyBank.length === articleTabDaily.length &&
+      articleTabSections.dailyBank.every((article) => expectedDailyIds.has(article.text.id)),
+    articleTabSections.dailyBank.map((article) => article.text.id).join(",")
+  );
 }
 
 console.log("\n--- Dictionary lookup chain ---");
