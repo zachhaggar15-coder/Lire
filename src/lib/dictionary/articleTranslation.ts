@@ -150,7 +150,6 @@ function isPhraseLookup(lookup: ReturnType<typeof lookupWord>): boolean {
     !!lookup.lemma?.includes(" ") ||
     part.includes("phrase") ||
     part.includes("connector") ||
-    part.includes("conjunction") ||
     part.includes("idiom")
   );
 }

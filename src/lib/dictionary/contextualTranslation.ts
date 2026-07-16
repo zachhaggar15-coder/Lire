@@ -388,11 +388,18 @@ function wordAt(tokens: Token[], index: number, direction: -1 | 1): string | nul
 }
 
 function wordWindow(tokens: Token[], index: number, radius: number): string[] {
-  const words: string[] = [];
-  for (let i = Math.max(0, index - radius); i <= Math.min(tokens.length - 1, index + radius); i++) {
-    if (tokens[i].isWord) words.push(normaliseForMatch(tokens[i].clean));
+  const left: string[] = [];
+  for (let i = index - 1; i >= 0 && left.length < radius; i--) {
+    if (tokens[i].isWord) left.unshift(normaliseForMatch(tokens[i].clean));
   }
-  return words;
+
+  const center = tokens[index]?.isWord ? [normaliseForMatch(tokens[index].clean)] : [];
+  const right: string[] = [];
+  for (let i = index + 1; i < tokens.length && right.length < radius; i++) {
+    if (tokens[i].isWord) right.push(normaliseForMatch(tokens[i].clean));
+  }
+
+  return [...left, ...center, ...right];
 }
 
 function inferGrammar(
@@ -632,6 +639,1329 @@ function selectSpecialForm(
   return null;
 }
 
+interface ContextSenseRuleContext {
+  selectedKey: string;
+  lemmaKey: string;
+  sentenceKey: string;
+  words: string[];
+  previous: string | null;
+  next: string | null;
+  hasNegationCue: boolean;
+  has: (needles: string[]) => boolean;
+  around: (needles: string[]) => boolean;
+}
+
+interface ContextSenseRule {
+  keys?: string[];
+  lemmas?: string[];
+  when?: (context: ContextSenseRuleContext) => boolean;
+  sense: SenseSelection;
+}
+
+const HUMAN_OBJECT_WORDS = [
+  "autorites",
+  "habitants",
+  "parents",
+  "public",
+  "lecteurs",
+  "clients",
+  "salariés",
+  "salaries",
+  "eleves",
+  "enfants",
+  "patients",
+  "police",
+  "secours",
+];
+
+const MONEY_WORDS = ["euro", "euros", "dollar", "dollars", "livre", "livres", "argent", "somme", "budget", "prix", "cout", "coût", "revenu", "salaire"];
+const TRANSPORT_WORDS = ["bus", "autocar", "gare", "route", "transport", "train", "voiture", "camion", "chauffeur", "passagers"];
+const POLITICAL_WORDS = ["gouvernement", "ministre", "parlement", "depute", "député", "election", "élection", "parti", "vote", "loi", "senat", "sénat", "politique"];
+const LEGAL_WORDS = ["justice", "tribunal", "plainte", "enquete", "enquête", "juge", "police", "condamne", "condamné", "proces", "procès", "loi"];
+const WORK_WORDS = ["emploi", "poste", "travail", "entreprise", "salarie", "salarié", "salaries", "salariés", "contrat", "carriere", "carrière", "candidat", "recrutement"];
+const SCHOOL_WORDS = ["ecole", "école", "classe", "professeur", "universite", "université", "cours", "eleves", "élèves", "etudiants", "étudiants"];
+const WEATHER_WORDS = ["pluie", "neige", "soleil", "meteo", "météo", "vent", "orage", "temperature", "température", "nuage"];
+
+const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
+  {
+    keys: ["actuellement"],
+    sense: {
+      translation: "currently / at present",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["now"],
+      explanation: "Actuellement is a false-friend trap: it means currently or at present, not actually.",
+    },
+  },
+  {
+    keys: ["eventuel", "eventuelle", "eventuels", "eventuelles"],
+    lemmas: ["eventuel"],
+    sense: {
+      translation: "possible / potential",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["possible future"],
+      explanation: "Eventuel means possible or potential, not eventual in the English sense of inevitable later outcome.",
+    },
+  },
+  {
+    keys: ["effectivement"],
+    sense: {
+      translation: "indeed / actually",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["in fact"],
+      explanation: "Effectivement usually confirms something: indeed or actually, not effectively in the practical-method sense.",
+    },
+  },
+  {
+    keys: ["finalement"],
+    sense: {
+      translation: "in the end / after all",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["ultimately"],
+      explanation: "Finalement normally means in the end or after all; it is often not the same as finally in a sequence of steps.",
+    },
+  },
+  {
+    keys: ["deception", "deceptions"],
+    lemmas: ["deception"],
+    sense: {
+      translation: "disappointment",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["letdown"],
+      explanation: "Deception is a false friend: French deception means disappointment, not deceit.",
+    },
+  },
+  {
+    keys: ["decoit", "decoivent", "decevra", "decevront", "decu", "decue", "decus", "decues"],
+    lemmas: ["decevoir"],
+    sense: {
+      translation: "disappoint",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["let down"],
+      explanation: "Decevoir means to disappoint or let someone down, not to deceive.",
+    },
+  },
+  {
+    keys: ["location", "locations"],
+    lemmas: ["location"],
+    sense: {
+      translation: "rental / hire",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["letting"],
+      explanation: "Location is usually a rental or hire arrangement. The place where something is located is an emplacement or lieu.",
+    },
+  },
+  {
+    keys: ["preservatif", "preservatifs"],
+    lemmas: ["preservatif"],
+    sense: {
+      translation: "condom",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["contraceptive"],
+      explanation: "Preservatif is a false friend: it means condom, not a food preservative.",
+    },
+  },
+  {
+    keys: ["avertissement", "avertissements"],
+    lemmas: ["avertissement"],
+    sense: {
+      translation: "warning",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["notice"],
+      explanation: "Avertissement means a warning. Advertisement is publicite.",
+    },
+  },
+  {
+    keys: ["publicite", "publicites"],
+    lemmas: ["publicite"],
+    sense: {
+      translation: "advertising / advert",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["ad"],
+      explanation: "Publicite usually means advertising or an advert, not publicity in the reputation sense.",
+    },
+  },
+  {
+    keys: ["sympathique", "sympa", "sympathiques"],
+    lemmas: ["sympathique"],
+    sense: {
+      translation: "nice / friendly",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["pleasant"],
+      explanation: "Sympathique or sympa usually means nice or friendly, not sympathetic in the emotional-support sense.",
+    },
+  },
+  {
+    lemmas: ["assumer"],
+    sense: {
+      translation: "take responsibility for / accept",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["own up to", "shoulder"],
+      explanation: "Assumer usually means to take on, accept, or take responsibility for something, not to suppose.",
+    },
+  },
+  {
+    lemmas: ["blesser"],
+    sense: {
+      translation: "injure / hurt",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["wound"],
+      explanation: "Blesser means to injure, wound, or hurt someone.",
+    },
+  },
+  {
+    keys: ["injure", "injures"],
+    lemmas: ["injure"],
+    sense: {
+      translation: "insult / abusive remark",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["abuse"],
+      explanation: "In French, injure is normally an insult or abusive remark. Physical injury is blessure.",
+    },
+  },
+  {
+    keys: ["agenda", "agendas"],
+    lemmas: ["agenda"],
+    sense: {
+      translation: "diary / schedule",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["planner"],
+      explanation: "Agenda often means a diary, planner, or schedule. The hidden-motive sense is usually ordre du jour or intentions.",
+    },
+  },
+  {
+    keys: ["lecture", "lectures"],
+    lemmas: ["lecture"],
+    sense: {
+      translation: "reading",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["interpretation"],
+      explanation: "Lecture normally means reading. An academic lecture is more often un cours or une conference.",
+    },
+  },
+  {
+    keys: ["delai", "delais"],
+    lemmas: ["delai"],
+    sense: {
+      translation: "deadline / time limit / period",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["delay"],
+      explanation: "Delai usually means the time allowed, a deadline, or a waiting period. Delay in the sense of lateness is retard.",
+    },
+  },
+  {
+    keys: ["retard", "retards"],
+    lemmas: ["retard"],
+    sense: {
+      translation: "delay / lateness",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["being late"],
+      explanation: "Retard is the ordinary French noun for delay or lateness.",
+    },
+  },
+  {
+    keys: ["stage", "stages"],
+    lemmas: ["stage"],
+    sense: {
+      translation: "internship / training course",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["work placement"],
+      explanation: "Stage is a common learner trap: in French it usually means an internship, placement, or training course, not a theatre stage.",
+    },
+  },
+  {
+    keys: ["car"],
+    when: (context) => context.around(TRANSPORT_WORDS),
+    sense: {
+      translation: "coach / bus",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["because"],
+      explanation: "Transport context makes car mean a coach or bus.",
+    },
+  },
+  {
+    keys: ["car"],
+    sense: {
+      translation: "because",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["coach / bus"],
+      explanation: "Outside transport context, car is usually the formal conjunction because.",
+    },
+  },
+  {
+    lemmas: ["demander"],
+    when: (context) =>
+      !["demande", "demandes"].includes(context.selectedKey) ||
+      !["la", "une", "sa", "cette", "leur", "les", "des"].includes(context.previous ?? ""),
+    sense: {
+      translation: "ask / request",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["ask for"],
+      explanation: "Demander means to ask or request. Demand in the stronger English sense is usually exiger.",
+    },
+  },
+  {
+    keys: ["demande", "demandes"],
+    lemmas: ["demande"],
+    when: (context) => context.has(["offre et demande", "la demande augmente", "demande baisse", "forte demande", "demande du marche", "demande du marché"]),
+    sense: {
+      translation: "demand",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["request", "application"],
+      explanation: "Economic context makes demande mean market demand.",
+    },
+  },
+  {
+    keys: ["demande", "demandes"],
+    lemmas: ["demande"],
+    sense: {
+      translation: "request / application",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["demand"],
+      explanation: "Outside economics, demande is usually a request or application rather than a forceful demand.",
+    },
+  },
+  {
+    keys: ["avis"],
+    when: (context) => context.has(["avis de", "avis favorable", "avis defavorable", "avis défavorable", "son avis", "mon avis", "a mon avis", "à mon avis"]),
+    sense: {
+      translation: "opinion / notice",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["view"],
+      explanation: "Avis is an opinion, notice, or formal view. Personal advice is conseil.",
+    },
+  },
+  {
+    keys: ["chance", "chances"],
+    lemmas: ["chance"],
+    when: (context) => context.has(["bonne chance", "malchance", "par chance"]),
+    sense: {
+      translation: "luck",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["opportunity"],
+      explanation: "In expressions such as bonne chance or par chance, chance means luck.",
+    },
+  },
+  {
+    keys: ["chance", "chances"],
+    lemmas: ["chance"],
+    when: (context) => context.has(["chance de", "chances de", "donner sa chance"]),
+    sense: {
+      translation: "chance / opportunity",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["luck"],
+      explanation: "With de plus an infinitive/noun, chance can mean an opportunity or probability.",
+    },
+  },
+  {
+    keys: ["coin", "coins"],
+    lemmas: ["coin"],
+    when: (context) => context.around(MONEY_WORDS),
+    sense: {
+      translation: "coin",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["corner"],
+      explanation: "Money context can make coin the literal coin sense.",
+    },
+  },
+  {
+    keys: ["coin", "coins"],
+    lemmas: ["coin"],
+    sense: {
+      translation: "corner / area",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["coin"],
+      explanation: "In everyday French, coin usually means a corner, nook, or local area.",
+    },
+  },
+  {
+    keys: ["monnaie", "monnaies"],
+    lemmas: ["monnaie"],
+    sense: {
+      translation: "change / currency / coins",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["money"],
+      explanation: "Monnaie covers small change, coins, or a currency depending on context.",
+    },
+  },
+  {
+    keys: ["temps"],
+    lemmas: ["temps"],
+    when: (context) => context.around(WEATHER_WORDS),
+    sense: {
+      translation: "weather",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["time"],
+      explanation: "Weather context makes temps mean weather, as in il fait beau temps.",
+    },
+  },
+  {
+    keys: ["temps"],
+    lemmas: ["temps"],
+    sense: {
+      translation: "time",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["weather"],
+      explanation: "Without weather cues, temps usually means time.",
+    },
+  },
+  {
+    keys: ["histoire", "histoires"],
+    lemmas: ["histoire"],
+    when: (context) => context.has(["raconte", "roman", "personnage", "conte", "mensonge"]),
+    sense: {
+      translation: "story",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["history"],
+      explanation: "Narrative context makes histoire mean a story.",
+    },
+  },
+  {
+    keys: ["histoire", "histoires"],
+    lemmas: ["histoire"],
+    sense: {
+      translation: "history / story",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["story"],
+      explanation: "Histoire can mean history or story; without a strong cue, both readings remain possible.",
+    },
+  },
+  {
+    keys: ["milieu", "milieux"],
+    lemmas: ["milieu"],
+    when: (context) => context.has(["au milieu", "en plein milieu"]),
+    sense: {
+      translation: "middle",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["environment", "sector"],
+      explanation: "Au milieu means in the middle.",
+    },
+  },
+  {
+    keys: ["milieu", "milieux"],
+    lemmas: ["milieu"],
+    when: (context) => context.has(["milieu naturel", "milieu marin", "environnement"]),
+    sense: {
+      translation: "environment / habitat",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["middle", "sector"],
+      explanation: "Environmental context makes milieu mean environment or habitat.",
+    },
+  },
+  {
+    keys: ["milieu", "milieux"],
+    lemmas: ["milieu"],
+    when: (context) => context.has(["milieu politique", "milieu economique", "milieu économique", "milieu artistique"]),
+    sense: {
+      translation: "circle / sector",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["middle", "environment"],
+      explanation: "Social or professional context makes milieu mean a circle, sector, or community.",
+    },
+  },
+  {
+    keys: ["moyen", "moyens", "moyenne", "moyennes"],
+    lemmas: ["moyen"],
+    when: (context) => context.has(["moyen de", "moyens de", "par tous les moyens"]),
+    sense: {
+      translation: "means / way",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["average"],
+      explanation: "Moyen de means a means or way of doing something.",
+    },
+  },
+  {
+    keys: ["moyen", "moyens", "moyenne", "moyennes"],
+    lemmas: ["moyen"],
+    when: (context) => context.has(["age moyen", "âge moyen", "prix moyen", "niveau moyen", "taille moyenne"]),
+    sense: {
+      translation: "average",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["means", "medium"],
+      explanation: "With measurements, moyen/moyenne means average.",
+    },
+  },
+  {
+    keys: ["reste", "restes"],
+    lemmas: ["reste", "rester"],
+    when: (context) => context.has(["il reste", "reste a", "reste à", "reste encore"]),
+    sense: {
+      translation: "remains / is left",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["rest"],
+      explanation: "Il reste or reste a/à usually means something remains or is still left to do.",
+    },
+  },
+  {
+    keys: ["reste", "restes"],
+    lemmas: ["reste"],
+    when: (context) => context.has(["le reste", "du reste", "reste de"]),
+    sense: {
+      translation: "rest / remainder",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["remains"],
+      explanation: "Le reste or reste de means the rest or remainder.",
+    },
+  },
+  {
+    keys: ["juste", "justes"],
+    lemmas: ["juste"],
+    when: (context) => context.has(["pas juste", "decision juste", "décision juste", "prix juste"]),
+    sense: {
+      translation: "fair / just",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["only", "exactly"],
+      explanation: "Fairness context makes juste mean fair or just.",
+    },
+  },
+  {
+    keys: ["juste"],
+    lemmas: ["juste"],
+    when: (context) => context.has(["juste avant", "juste apres", "juste après", "juste a cote", "juste à côté"]),
+    sense: {
+      translation: "right / just",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["fair", "only"],
+      explanation: "Before time or place expressions, juste often means right or just, as in right before.",
+    },
+  },
+  {
+    keys: ["droit", "droits", "droite"],
+    lemmas: ["droit"],
+    when: (context) => context.has(["droits de", "droit de", "droit a", "droit à", "droits humains", "droits de l'homme"]),
+    sense: {
+      translation: "right / legal entitlement",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["law", "straight"],
+      explanation: "In rights language, droit means a right or legal entitlement.",
+    },
+  },
+  {
+    keys: ["droit", "droits"],
+    lemmas: ["droit"],
+    when: (context) => context.around(LEGAL_WORDS),
+    sense: {
+      translation: "law / legal right",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["straight", "right-hand"],
+      explanation: "Legal context makes droit mean law or legal right.",
+    },
+  },
+  {
+    keys: ["droite"],
+    when: (context) => /\ba droite\b|\bmain droite\b/.test(context.sentenceKey),
+    sense: {
+      translation: "right / right-hand side",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["political right"],
+      explanation: "Spatial context makes droite mean the right side.",
+    },
+  },
+  {
+    keys: ["droite"],
+    when: (context) => context.previous === "la" || context.around(POLITICAL_WORDS),
+    sense: {
+      translation: "the right / right wing",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["right-hand side"],
+      explanation: "Political context makes la droite mean the right or right wing.",
+    },
+  },
+  {
+    lemmas: ["comprendre"],
+    when: (context) => context.has(["y compris"]),
+    sense: {
+      translation: "including",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["understand"],
+      explanation: "Y compris is the fixed expression including.",
+    },
+  },
+  {
+    lemmas: ["comprendre"],
+    when: (context) => context.has(["comprend plusieurs", "comprend des", "comprend notamment", "comprend trois", "comprend deux"]),
+    sense: {
+      translation: "include / comprise",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["understand"],
+      explanation: "With lists or components, comprendre can mean include or comprise.",
+    },
+  },
+  {
+    keys: ["porte", "portent", "portait", "portaient"],
+    lemmas: ["porter"],
+    when: (context) => context.has(["porte sur", "portent sur"]),
+    sense: {
+      translation: "concern / be about",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["wear", "carry"],
+      explanation: "Porter sur means to concern or be about a topic.",
+    },
+  },
+  {
+    keys: ["porte", "portent", "portait", "portaient", "porte", "portee"],
+    lemmas: ["porter"],
+    when: (context) => context.has(["robe", "manteau", "chemise", "vetement", "vêtement", "masque"]),
+    sense: {
+      translation: "wear",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["carry"],
+      explanation: "Clothing context makes porter mean to wear.",
+    },
+  },
+  {
+    keys: ["porte", "portent", "portait", "portaient", "porte", "portee"],
+    lemmas: ["porter"],
+    when: (context) => context.has(["sac", "valise", "enfant", "charge", "colis"]),
+    sense: {
+      translation: "carry",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["wear"],
+      explanation: "Object or load context makes porter mean to carry.",
+    },
+  },
+  {
+    keys: ["pose", "posent", "posait", "posaient", "pose", "posee"],
+    lemmas: ["poser"],
+    when: (context) => context.has(["question", "probleme", "problème"]),
+    sense: {
+      translation: "ask / raise",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["put down", "pose"],
+      explanation: "Poser une question means to ask a question; poser un probleme means to raise or pose a problem.",
+    },
+  },
+  {
+    keys: ["pose", "posent", "posait", "posaient", "pose", "posee"],
+    lemmas: ["poser"],
+    when: (context) => context.has(["table", "sol", "bureau", "main"]),
+    sense: {
+      translation: "put down / place",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["ask"],
+      explanation: "Physical-object context makes poser mean to put down or place.",
+    },
+  },
+  {
+    lemmas: ["conduire"],
+    when: (context) => context.has(["conduit a", "conduit à", "mene a", "mène à"]),
+    sense: {
+      translation: "lead to",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["drive"],
+      explanation: "Conduire a/à means to lead to a result.",
+    },
+  },
+  {
+    lemmas: ["conduire"],
+    when: (context) => context.around(TRANSPORT_WORDS),
+    sense: {
+      translation: "drive",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["lead"],
+      explanation: "Vehicle context makes conduire mean to drive.",
+    },
+  },
+  {
+    lemmas: ["arriver"],
+    when: (context) => context.has(["arrive a", "arrive à", "arrivent a", "arrivent à"]),
+    sense: {
+      translation: "manage to / succeed in",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["arrive", "happen"],
+      explanation: "Arriver a/à plus an infinitive means to manage to do something.",
+    },
+  },
+  {
+    lemmas: ["arriver"],
+    when: (context) => context.has(["ce qui arrive", "cela arrive", "il arrive que", "arrive souvent", "arrive parfois"]),
+    sense: {
+      translation: "happen / occur",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["arrive"],
+      explanation: "Event context makes arriver mean to happen or occur.",
+    },
+  },
+  {
+    lemmas: ["tomber"],
+    when: (context) => context.has(["tomber malade", "tombe malade", "tombe enceinte"]),
+    sense: {
+      translation: "become",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["fall"],
+      explanation: "Tomber malade/enceinte means to become ill/pregnant.",
+    },
+  },
+  {
+    lemmas: ["tomber"],
+    when: (context) => context.has(["tomber sur", "tombe sur"]),
+    sense: {
+      translation: "come across / run into",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["fall"],
+      explanation: "Tomber sur means to come across or run into something/someone.",
+    },
+  },
+  {
+    keys: ["compte", "comptes", "comptent", "comptait", "comptaient"],
+    lemmas: ["compter"],
+    when: (context) => context.has(["compter sur", "compte sur", "comptent sur"]),
+    sense: {
+      translation: "count on / rely on",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["count"],
+      explanation: "Compter sur means to count on or rely on someone.",
+    },
+  },
+  {
+    keys: ["compte", "comptes", "comptent", "comptait", "comptaient"],
+    lemmas: ["compter"],
+    when: (context) => context.has(["compte faire", "compte bien", "comptent faire"]),
+    sense: {
+      translation: "intend / plan",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["count"],
+      explanation: "Compter plus an infinitive often means to intend or plan to do something.",
+    },
+  },
+  {
+    lemmas: ["gagner"],
+    when: (context) => context.around(MONEY_WORDS),
+    sense: {
+      translation: "earn",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["win", "gain"],
+      explanation: "Money context makes gagner mean to earn.",
+    },
+  },
+  {
+    lemmas: ["gagner"],
+    when: (context) => context.has(["match", "election", "élection", "course", "victoire", "championnat"]),
+    sense: {
+      translation: "win",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["earn", "gain"],
+      explanation: "Sport or election context makes gagner mean to win.",
+    },
+  },
+  {
+    lemmas: ["sortir"],
+    when: (context) => context.has(["livre", "film", "album", "rapport", "version"]),
+    sense: {
+      translation: "come out / be released",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["go out", "leave"],
+      explanation: "Publication or media context makes sortir mean to come out or be released.",
+    },
+  },
+  {
+    lemmas: ["sortir"],
+    when: (context) => context.has(["de la maison", "du batiment", "du bâtiment", "sortir avec", "sort le soir"]),
+    sense: {
+      translation: "go out / leave",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["release"],
+      explanation: "Movement or social context keeps sortir in the go out/leave sense.",
+    },
+  },
+  {
+    lemmas: ["rentrer"],
+    when: (context) => context.has(["chez lui", "chez elle", "a la maison", "à la maison", "rentre chez"]),
+    sense: {
+      translation: "go back / come home",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["enter", "fit"],
+      explanation: "Home context makes rentrer mean to go back or come home.",
+    },
+  },
+  {
+    lemmas: ["rentrer"],
+    when: (context) => context.has(["rentre dans", "rentrent dans"]),
+    sense: {
+      translation: "fit into / enter",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["come home"],
+      explanation: "Rentrer dans can mean to fit into or enter something.",
+    },
+  },
+  {
+    keys: ["releve", "releves", "relevent", "relevait", "relevaient"],
+    lemmas: ["relever"],
+    when: (context) => context.has(["releve de", "relève de", "relevent de", "relèvent de"]),
+    sense: {
+      translation: "come under / be a matter of",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["raise", "point out"],
+      explanation: "Relever de means to come under, fall within, or be a matter of something.",
+    },
+  },
+  {
+    keys: ["releve", "releves", "relevent", "relevait", "relevaient"],
+    lemmas: ["relever"],
+    when: (context) => context.has(["relever le defi", "relever le défi", "releve le defi", "relève le défi"]),
+    sense: {
+      translation: "take up / meet",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["raise"],
+      explanation: "Relever le defi means to take up or meet a challenge.",
+    },
+  },
+  {
+    lemmas: ["retenir"],
+    when: (context) => context.has(["retenir que", "retenu que", "nom", "information"]),
+    sense: {
+      translation: "remember / note",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["hold back", "select"],
+      explanation: "Information context makes retenir mean to remember, note, or keep in mind.",
+    },
+  },
+  {
+    lemmas: ["retenir"],
+    when: (context) => context.has(["candidat", "option", "solution", "retenu pour"]),
+    sense: {
+      translation: "select / keep",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["remember", "detain"],
+      explanation: "Selection context makes retenir mean to select or keep.",
+    },
+  },
+  {
+    lemmas: ["disposer"],
+    when: (context) => context.has(["dispose de", "disposent de", "disposer de"]),
+    sense: {
+      translation: "have / have at one's disposal",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["arrange"],
+      explanation: "Disposer de means to have or have at one's disposal.",
+    },
+  },
+  {
+    lemmas: ["convenir"],
+    when: (context) => context.around(HUMAN_OBJECT_WORDS) || context.has(["convient a", "convient à"]),
+    sense: {
+      translation: "suit / be suitable for",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["agree"],
+      explanation: "Convenir a/à someone means to suit them or be suitable.",
+    },
+  },
+  {
+    keys: ["rapport", "rapports"],
+    lemmas: ["rapport"],
+    when: (context) => context.has(["rapport publie", "rapport publié", "rapport annuel", "selon le rapport", "rapport de"]),
+    sense: {
+      translation: "report",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["relationship", "ratio"],
+      explanation: "Publication context makes rapport mean a report.",
+    },
+  },
+  {
+    keys: ["rapport", "rapports"],
+    lemmas: ["rapport"],
+    when: (context) => context.has(["rapport entre", "rapports entre", "en rapport avec"]),
+    sense: {
+      translation: "relationship / connection",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["report"],
+      explanation: "Relational context makes rapport mean a relationship or connection.",
+    },
+  },
+  {
+    keys: ["plan", "plans"],
+    lemmas: ["plan"],
+    when: (context) => context.has(["plan de relance", "plan d'action", "plan climat", "plan de paix", "plan annonce"]),
+    sense: {
+      translation: "plan / programme",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["map", "level"],
+      explanation: "Policy context makes plan mean a plan or programme.",
+    },
+  },
+  {
+    keys: ["plan", "plans"],
+    lemmas: ["plan"],
+    when: (context) => context.has(["sur le plan", "au premier plan", "second plan"]),
+    sense: {
+      translation: "level / plane / foreground",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["plan", "map"],
+      explanation: "In expressions such as sur le plan or premier plan, plan means level, plane, or foreground.",
+    },
+  },
+  {
+    keys: ["affaire", "affaires"],
+    lemmas: ["affaire"],
+    when: (context) => context.around(LEGAL_WORDS),
+    sense: {
+      translation: "case / affair",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["business", "matter"],
+      explanation: "Legal or investigative context makes affaire mean a case or affair.",
+    },
+  },
+  {
+    keys: ["affaire", "affaires"],
+    lemmas: ["affaire"],
+    when: (context) => context.has(["chiffre d'affaires", "homme d'affaires", "femme d'affaires", "monde des affaires"]),
+    sense: {
+      translation: "business",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["case", "matter"],
+      explanation: "Business expressions make affaires mean business.",
+    },
+  },
+  {
+    keys: ["piece", "pieces"],
+    lemmas: ["piece"],
+    when: (context) => context.has(["piece d'identite", "pièce d'identité", "piece jointe", "pièce jointe", "dossier"]),
+    sense: {
+      translation: "document / attachment",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["room", "piece"],
+      explanation: "Administrative context makes piece mean a document, item of evidence, or attachment.",
+    },
+  },
+  {
+    keys: ["piece", "pieces"],
+    lemmas: ["piece"],
+    when: (context) => context.has(["appartement", "maison", "chambre", "cuisine", "salon"]),
+    sense: {
+      translation: "room",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["piece", "document"],
+      explanation: "Housing context makes piece mean a room.",
+    },
+  },
+  {
+    keys: ["bureau", "bureaux"],
+    lemmas: ["bureau"],
+    when: (context) => context.has(["au bureau", "bureau de vote", "ministere", "ministère", "administration", "entreprise"]),
+    sense: {
+      translation: "office",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["desk"],
+      explanation: "Work, voting, or administration context makes bureau mean office.",
+    },
+  },
+  {
+    keys: ["bureau", "bureaux"],
+    lemmas: ["bureau"],
+    when: (context) => context.has(["sur le bureau", "chaise", "tiroir"]),
+    sense: {
+      translation: "desk",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["office"],
+      explanation: "Furniture context makes bureau mean desk.",
+    },
+  },
+  {
+    keys: ["course", "courses"],
+    lemmas: ["course"],
+    when: (context) => context.has(["faire les courses", "fait les courses", "supermarche", "supermarché", "magasin"]),
+    sense: {
+      translation: "shopping / groceries",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["race", "course"],
+      explanation: "Faire les courses means to do the shopping or buy groceries.",
+    },
+  },
+  {
+    keys: ["course", "courses"],
+    lemmas: ["course"],
+    when: (context) => context.has(["arrivee", "arrivée", "coureurs", "marathon", "cycliste"]),
+    sense: {
+      translation: "race",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["shopping"],
+      explanation: "Sport context makes course mean a race.",
+    },
+  },
+  {
+    keys: ["poste", "postes"],
+    lemmas: ["poste"],
+    when: (context) => context.around(WORK_WORDS),
+    sense: {
+      translation: "job / position",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["post office", "station"],
+      explanation: "Work context makes poste mean a job or position.",
+    },
+  },
+  {
+    keys: ["poste", "postes"],
+    lemmas: ["poste"],
+    when: (context) => context.has(["poste de police", "bureau de poste", "la poste"]),
+    sense: {
+      translation: "station / post office",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["job"],
+      explanation: "Institutional expressions make poste mean station or post office.",
+    },
+  },
+  {
+    keys: ["essence"],
+    lemmas: ["essence"],
+    when: (context) => context.has(["station-service", "voiture", "prix de l'essence", "litre", "carburant"]),
+    sense: {
+      translation: "petrol / gasoline",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["essence", "nature"],
+      explanation: "Vehicle or fuel-price context makes essence mean petrol or gasoline.",
+    },
+  },
+  {
+    keys: ["solde", "soldes"],
+    lemmas: ["solde"],
+    when: (context) => context.has(["compte bancaire", "banque", "solde du compte"]),
+    sense: {
+      translation: "balance",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["sales"],
+      explanation: "Banking context makes solde mean account balance.",
+    },
+  },
+  {
+    keys: ["solde", "soldes"],
+    lemmas: ["solde"],
+    when: (context) => context.has(["magasin", "prix", "hiver", "ete", "été", "soldes"]),
+    sense: {
+      translation: "sale / discounted goods",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["balance"],
+      explanation: "Retail context makes soldes mean sales or discounted goods.",
+    },
+  },
+  {
+    keys: ["bande", "bandes"],
+    lemmas: ["bande"],
+    when: (context) => context.has(["bande dessinee", "bande dessinée", "bd"]),
+    sense: {
+      translation: "comic strip / comic book",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["band", "group"],
+      explanation: "Bande dessinee is the standard term for a comic strip or comic book.",
+    },
+  },
+  {
+    keys: ["bande", "bandes"],
+    lemmas: ["bande"],
+    when: (context) => context.has(["bande de jeunes", "bande armee", "bande armée", "groupe"]),
+    sense: {
+      translation: "group / gang",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["strip", "band"],
+      explanation: "People context makes bande mean a group or gang.",
+    },
+  },
+  {
+    keys: ["chaine", "chaines"],
+    lemmas: ["chaine"],
+    when: (context) => context.has(["chaine de television", "chaîne de télévision", "chaine info", "chaîne info", "journal televise", "journal télévisé"]),
+    sense: {
+      translation: "TV channel",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["chain"],
+      explanation: "Media context makes chaine mean a TV channel.",
+    },
+  },
+  {
+    keys: ["journal", "journaux"],
+    lemmas: ["journal"],
+    when: (context) => context.has(["journal televise", "journal télévisé"]),
+    sense: {
+      translation: "news bulletin",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["newspaper", "diary"],
+      explanation: "Journal televise means a TV news bulletin.",
+    },
+  },
+  {
+    keys: ["journal", "journaux"],
+    lemmas: ["journal"],
+    when: (context) => context.has(["quotidien", "article", "redaction", "rédaction", "journal publie", "journal publié"]),
+    sense: {
+      translation: "newspaper / paper",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["diary", "news bulletin"],
+      explanation: "Press context makes journal mean newspaper or paper.",
+    },
+  },
+  {
+    keys: ["numero", "numeros"],
+    lemmas: ["numero"],
+    when: (context) => context.has(["numero de telephone", "numéro de téléphone", "numero d'urgence", "numéro d'urgence"]),
+    sense: {
+      translation: "number",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["issue"],
+      explanation: "Telephone or administrative context makes numero mean number.",
+    },
+  },
+  {
+    keys: ["numero", "numeros"],
+    lemmas: ["numero"],
+    when: (context) => context.has(["dernier numero", "dernier numéro", "numero du magazine", "numéro du magazine"]),
+    sense: {
+      translation: "issue",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["number"],
+      explanation: "Magazine or periodical context makes numero mean an issue.",
+    },
+  },
+  {
+    keys: ["formation", "formations"],
+    lemmas: ["formation"],
+    when: (context) => context.around(SCHOOL_WORDS) || context.around(WORK_WORDS),
+    sense: {
+      translation: "training / education",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["formation", "group"],
+      explanation: "School or work context makes formation mean training or education.",
+    },
+  },
+  {
+    keys: ["formation", "formations"],
+    lemmas: ["formation"],
+    when: (context) => context.around(POLITICAL_WORDS),
+    sense: {
+      translation: "party / grouping",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["training"],
+      explanation: "Political context can make formation mean a party, grouping, or formation.",
+    },
+  },
+  {
+    keys: ["manifestation", "manifestations"],
+    lemmas: ["manifestation"],
+    when: (context) => context.has(["police", "rue", "manifestants", "cortège", "cortege", "greve", "grève"]),
+    sense: {
+      translation: "demonstration / protest",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["event", "manifestation"],
+      explanation: "Street or policing context makes manifestation mean a demonstration or protest.",
+    },
+  },
+  {
+    keys: ["manifestation", "manifestations"],
+    lemmas: ["manifestation"],
+    when: (context) => context.has(["culturelle", "sportive", "festival", "evenement", "événement"]),
+    sense: {
+      translation: "event",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["protest"],
+      explanation: "Cultural or sport context makes manifestation mean an event.",
+    },
+  },
+  {
+    keys: ["frais", "fraiche", "fraîche", "fraiches", "fraîches"],
+    lemmas: ["frais"],
+    when: (context) => context.around(MONEY_WORDS) || context.has(["frais de", "sans frais"]),
+    sense: {
+      translation: "fees / costs",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["fresh", "cool"],
+      explanation: "Money context makes frais mean fees or costs.",
+    },
+  },
+  {
+    keys: ["frais", "fraiche", "fraîche", "fraiches", "fraîches"],
+    lemmas: ["frais"],
+    when: (context) => context.has(["produit frais", "legumes frais", "légumes frais", "air frais"]),
+    sense: {
+      translation: "fresh / cool",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["fees"],
+      explanation: "Food or air context keeps frais in the fresh or cool sense.",
+    },
+  },
+  {
+    keys: ["projet", "projets"],
+    lemmas: ["projet"],
+    when: (context) => context.has(["projet de loi", "projets de loi"]),
+    sense: {
+      translation: "bill / draft law",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["project", "plan"],
+      explanation: "Projet de loi means a bill or draft law, not a generic project.",
+    },
+  },
+  {
+    keys: ["exercice", "exercices"],
+    lemmas: ["exercice"],
+    when: (context) => context.has(["exercice budgetaire", "exercice budgétaire", "exercice fiscal", "cloture de l'exercice", "clôture de l'exercice"]),
+    sense: {
+      translation: "financial year / fiscal year",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["exercise"],
+      explanation: "Budget/accounting context makes exercice mean a fiscal or financial year.",
+    },
+  },
+  {
+    keys: ["critique", "critiques"],
+    lemmas: ["critique"],
+    when: (context) => context.has(["situation critique", "etat critique", "état critique", "phase critique"]),
+    sense: {
+      translation: "critical / serious",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["criticism", "review"],
+      explanation: "Risk or severity context makes critique mean critical or serious.",
+    },
+  },
+  {
+    keys: ["critique", "critiques"],
+    lemmas: ["critique"],
+    when: (context) => context.has(["critique du film", "critique litteraire", "critique littéraire", "journal"]),
+    sense: {
+      translation: "review / critic",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["critical", "criticism"],
+      explanation: "Arts or media context makes critique mean a review or critic.",
+    },
+  },
+  {
+    keys: ["grave", "graves"],
+    lemmas: ["grave"],
+    when: (context) => context.has(["accident", "crise", "maladie", "probleme", "problème", "faute", "menace"]),
+    sense: {
+      translation: "serious / severe",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["low-pitched"],
+      explanation: "Problem, illness, or risk context makes grave mean serious or severe.",
+    },
+  },
+  {
+    keys: ["sensible", "sensibles"],
+    lemmas: ["sensible"],
+    when: (context) => context.has(["donnees sensibles", "données sensibles", "sujet sensible", "information sensible", "zone sensible"]),
+    sense: {
+      translation: "sensitive",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["noticeable"],
+      explanation: "Data, topic, or security context makes sensible mean sensitive.",
+    },
+  },
+];
+
+function selectDeclarativeContextSense(context: ContextSenseRuleContext): SenseSelection | null {
+  for (const rule of CONTEXT_SENSE_RULES) {
+    const keyMatch = (rule.keys ?? []).some((key) => normaliseForMatch(key) === context.selectedKey);
+    const lemmaMatch = (rule.lemmas ?? []).some((lemma) => normaliseForMatch(lemma) === context.lemmaKey);
+    if ((keyMatch || lemmaMatch) && (!rule.when || rule.when(context))) return rule.sense;
+  }
+  return null;
+}
+
 function selectContextSense(
   clean: string,
   lookup: DictionaryLookupResult,
@@ -648,6 +1978,18 @@ function selectContextSense(
   const previous = wordAt(tokens, tokenIndex, -1);
   const next = wordAt(tokens, tokenIndex, 1);
   const hasNegationCue = /\bne\b|n'/.test(sentenceKey);
+  const declarativeSense = selectDeclarativeContextSense({
+    selectedKey,
+    lemmaKey,
+    sentenceKey,
+    words,
+    previous,
+    next,
+    hasNegationCue,
+    has,
+    around,
+  });
+  if (declarativeSense) return declarativeSense;
 
   if (selectedKey === "actuel" || lemmaKey === "actuel") {
     return {

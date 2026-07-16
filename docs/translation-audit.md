@@ -13,6 +13,9 @@ Audited the French translation path from article text through tokenization, loca
 - Contextual cache keys are now available for word-level contextual meanings and include selected text, normalized sentence, expanded phrase, and lemma so repeated words in different sentences do not collide.
 - Second pass: phrase recognition now tolerates safe accentless imported text, elided auxiliaries like `j'ai`, and article/preposition contractions like `aux` hiding a phrase ending in `à`.
 - Second pass: contextual sense selection now covers more common traps including `manquer`, `voler`, `louer`, `assister à`, `apprendre`, `défendre`, `prévenir`, `propre`, `ancien`, `plus`, `personne`, `encore`, `toujours`, `sensible`, `librairie`, `occasion`, `devoir`, and `réaliser`.
+- Third pass: the nearby-context window now counts actual words instead of raw tokens, so spaces and punctuation no longer shrink the useful context around a selected word.
+- Third pass: containing-phrase lookup no longer accepts a bare one-word conjunction as proof that a larger selected window is a valid phrase, preventing false matches in text such as `les soldes d'été`.
+- Third pass: contextual sense selection now has a declarative rule layer for broader false-friend and polysemy coverage without burying every new case in bespoke control flow.
 
 ## New Behavior
 
@@ -21,6 +24,8 @@ Audited the French translation path from article text through tokenization, loca
 - Phrase-aware behavior is shared with word taps, so tapping inside expressions such as `se rend compte`, `mettre fin à`, or `en avoir marre` shows the expression meaning first.
 - Local rules handle apostrophes, contractions, hyphenated inversion, imperative pronoun attachment, compound tenses, imperfect/future/conditional/subjunctive/imperative forms, adjective agreement, pronouns, false friends, polysemy, negation, proper nouns, headlines, and malformed residual HTML.
 - The phrase bank now auto-generates safe apostrophe/accent/hyphen variants for phrase forms, and phrase lookup tries limited normalized candidates while still requiring phrase-like dictionary metadata before accepting a match.
+- Phrase coverage is substantially broader across connectors, chronology, legal/news wording, support-verb constructions, reflexive verbs, quantity phrases, question markers, and common prepositional expressions.
+- Context rules now rescue frequent forms that the base dictionary may classify as nouns before verb context is considered, such as `porte`, `pose`, `compte`, and `relève`.
 
 ## Validation Coverage
 
@@ -36,6 +41,8 @@ Added `scripts/test-contextual-translation.mjs` and wired it into `npm test`. Th
 - Negation, proper nouns, headline fragments, missing fallback, residual HTML, and context-sensitive cache keys.
 - Second-pass phrase coverage: `avoir envie de`, `avoir besoin de` after `j'ai`, `mettre l'accent sur`, `rendre hommage à`, `garde à vue`, and single-token `c'est-à-dire`.
 - Second-pass contextual coverage: missing accents in imported text, `aux`/`du` contractions inside phrase matching, and the added false-friend/polysemy rules listed above.
+- Third-pass phrase coverage includes examples such as `entrer en vigueur`, `mettre en évidence`, `il s'agit de`, `porter atteinte à`, `prendre des mesures`, `être au courant de`, `est-ce que`, `qu'est-ce que`, `compte tenu de`, and `à l'égard de`.
+- Third-pass contextual coverage includes `actuellement`, `éventuel`, `déception`, `location`, `préservatif`, `stage`, `car`, `demande`, `avis`, `chance`, `temps`, `milieu`, `moyen`, `droit`, `porter`, `poser`, `conduire`, `arriver`, `tomber`, `compter`, `gagner`, `relever`, `rapport`, `pièce`, `bureau`, `poste`, `essence`, `solde`, `formation`, `manifestation`, `frais`, `exercice`, `critique`, and `données sensibles`.
 
 ## Manual Validation Notes
 

@@ -60,6 +60,16 @@ function hasText(result, expected) {
   return normalise(result.contextualTranslation).includes(normalise(expected));
 }
 
+function hasAnyText(result, expectedValues) {
+  return expectedValues.some((expected) => hasText(result, expected));
+}
+
+function checkContext(label, sentenceText, needle, expectedValues, extra = () => true) {
+  const result = contextual(sentenceText, needle);
+  const expected = Array.isArray(expectedValues) ? expectedValues : [expectedValues];
+  check(label, hasAnyText(result, expected) && extra(result), JSON.stringify(result));
+}
+
 console.log("--- Contextual translation pipeline ---");
 
 {
@@ -337,6 +347,116 @@ console.log("--- Contextual translation pipeline ---");
   const result = contextual("Elle réalise que le problème est grave.", "réalise");
   check("réaliser que means realize", hasText(result, "realize"), JSON.stringify(result));
 }
+
+checkContext("phrase coverage catches entrer en vigueur", "La loi entre en vigueur demain.", "vigueur", "come into force", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches mettre en évidence", "Le rapport met en évidence des risques.", "évidence", "highlight", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches il s'agit de", "Il s'agit de comprendre la mesure.", "s'agit", "about", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches porter atteinte à", "Cette décision porte atteinte à la liberté.", "atteinte", ["undermine", "infringe"], (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches prendre des mesures", "Le gouvernement prend des mesures.", "mesures", "take measures", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches être au courant de", "Elle est au courant de la nouvelle.", "courant", "know about", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches est-ce que", "Est-ce que tu viens demain ?", "est-ce", "question marker", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches qu'est-ce que", "Qu'est-ce que tu lis ?", "qu'est", "what", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches compte tenu de", "Compte tenu de la pluie, le match est reporté.", "Compte", "given", (result) => result.source === "phrasebank");
+checkContext("phrase coverage catches à l'égard de", "Le ton change à l'égard des syndicats.", "égard", ["with regard", "towards"], (result) => result.source === "phrasebank");
+
+checkContext("actuellement means currently, not actually", "Actuellement, le service est fermé.", "Actuellement", "currently");
+checkContext("éventuel means possible or potential", "Une éventuelle réforme sera étudiée.", "éventuelle", "possible");
+checkContext("effectivement confirms as indeed", "Effectivement, les chiffres augmentent.", "Effectivement", "indeed");
+checkContext("finalement means in the end", "Finalement, le maire renonce.", "Finalement", "in the end");
+checkContext("déception means disappointment", "Sa déception est visible.", "déception", "disappointment");
+checkContext("décevoir means disappoint", "Cette décision déçoit les habitants.", "déçoit", "disappoint");
+checkContext("location means rental", "La location de l'appartement coûte cher.", "location", "rental");
+checkContext("préservatif means condom", "Le préservatif est gratuit.", "préservatif", "condom");
+checkContext("avertissement means warning", "Un avertissement apparaît sur l'écran.", "avertissement", "warning");
+checkContext("publicité means advertising", "Cette publicité vise les jeunes.", "publicité", "advertising");
+checkContext("sympa means nice or friendly", "Le serveur est sympa.", "sympa", "nice");
+checkContext("assumer means take responsibility", "Elle assume ses responsabilités.", "assume", "take responsibility");
+checkContext("blesser means injure or hurt", "L'accident blesse trois personnes.", "blesse", "injure");
+checkContext("injure means insult in French", "Il répond par une injure.", "injure", "insult");
+checkContext("agenda means diary or schedule", "La réunion est notée dans son agenda.", "agenda", "diary");
+checkContext("lecture means reading", "La lecture de ce rapport prend du temps.", "lecture", "reading");
+checkContext("délai means deadline or period", "Le délai expire vendredi.", "délai", "deadline");
+checkContext("retard means delay or lateness", "Le train a vingt minutes de retard.", "retard", "delay");
+checkContext("stage means internship or training", "Son stage commence demain.", "stage", "internship");
+
+checkContext("car in transport context means coach or bus", "Le car arrive à la gare.", "car", "bus");
+checkContext("car outside transport context means because", "Il rentre, car il pleut.", "car", "because");
+checkContext("demande in market context means demand", "La demande augmente sur le marché.", "demande", "demand");
+checkContext("demande de visa means request or application", "Sa demande de visa est acceptée.", "demande", "request");
+checkContext("demander as a verb means ask", "Il demande une réponse.", "demande", "ask");
+checkContext("avis means opinion or notice, not advice", "À mon avis, le choix est clair.", "avis", "opinion");
+checkContext("bonne chance uses the luck sense", "Bonne chance pour l'examen.", "chance", "luck");
+checkContext("chance de gagner can mean opportunity", "Il a une chance de gagner.", "chance", "opportunity");
+checkContext("coin usually means corner or area", "Il habite dans un coin calme.", "coin", "corner");
+checkContext("monnaie covers change or currency", "Elle cherche de la monnaie.", "monnaie", "change");
+checkContext("temps in weather context means weather", "La météo annonce du mauvais temps.", "temps", "weather");
+checkContext("temps without weather cues means time", "Il faut du temps.", "temps", "time");
+checkContext("histoire in narrative context means story", "Elle raconte une histoire drôle.", "histoire", "story");
+checkContext("milieu in au milieu means middle", "Au milieu de la pièce, une table attend.", "milieu", "middle");
+checkContext("milieu naturel means environment or habitat", "Ce milieu naturel reste fragile.", "milieu", ["environment", "habitat"]);
+checkContext("moyen de means means or way", "C'est un moyen de transport utile.", "moyen", "means");
+checkContext("prix moyen means average price", "Le prix moyen augmente.", "moyen", "average");
+checkContext("il reste means remains or is left", "Il reste trois jours.", "reste", "remains");
+checkContext("le reste means remainder", "Le reste du texte est clair.", "reste", "remainder");
+checkContext("juste in fairness context means fair", "Ce n'est pas juste.", "juste", "fair");
+checkContext("juste avant means right before", "Il arrive juste avant midi.", "juste", "right");
+checkContext("droit de vote means right or suffrage", "Le droit de vote est protégé.", "droit", ["right", "suffrage"]);
+checkContext("droite in politics means right wing", "La droite critique le budget.", "droite", "right wing");
+
+checkContext("y compris means including", "Y compris les enfants, vingt personnes viennent.", "compris", "including");
+checkContext("comprendre with components means include", "Cette mesure comprend trois volets.", "comprend", "include");
+checkContext("porter sur means concern", "Cette loi porte sur le logement.", "porte", "concern");
+checkContext("porter with clothing means wear", "Elle porte un manteau.", "porte", "wear");
+checkContext("porter with a load means carry", "Il porte une valise.", "porte", "carry");
+checkContext("poser une question means ask", "Le journaliste pose une question.", "pose", "ask");
+checkContext("poser an object means put down or place", "Elle pose le livre sur la table.", "pose", "put down");
+checkContext("conduire à means lead to", "Cette décision conduit à une crise.", "conduit", "lead to");
+checkContext("conduire with vehicle context means drive", "Elle conduit une voiture.", "conduit", "drive");
+checkContext("arriver à plus infinitive means manage to", "Il arrive à finir le travail.", "arrive", "manage");
+checkContext("arriver in event context means happen", "Cela arrive souvent.", "arrive", "happen");
+checkContext("tomber malade means become ill", "Elle tombe malade.", "tombe", "become");
+checkContext("tomber sur means come across", "Je tombe sur un article intéressant.", "tombe", "come across");
+checkContext("compter sur means rely on", "Il compte sur toi.", "compte", "rely");
+checkContext("compter faire means intend", "Elle compte faire appel.", "compte", "intend");
+checkContext("gagner money means earn", "Elle gagne deux mille euros.", "gagne", "earn");
+checkContext("gagner election means win", "Le parti gagne l'élection.", "gagne", "win");
+checkContext("sortir in media context means be released", "Le film sort vendredi.", "sort", "released");
+checkContext("rentrer chez soi means come home", "Il rentre chez lui.", "rentre", "home");
+checkContext("relever de means come under", "Cette compétence relève de la région.", "relève", "come under");
+checkContext("retenir que means remember or note", "Il faut retenir que la règle change.", "retenir", "remember");
+checkContext("disposer de means have at one's disposal", "La ville dispose de moyens limités.", "dispose", "have");
+checkContext("convenir à means suit", "Cette date convient aux parents.", "convient", "suit");
+
+checkContext("rapport publié means report", "Le rapport publié mardi critique la réforme.", "rapport", "report");
+checkContext("rapport entre means relationship", "Le rapport entre les deux faits est flou.", "rapport", "relationship");
+checkContext("projet de loi means bill", "Le projet de loi sera débattu.", "projet", "bill");
+checkContext("pièce d'identité means document", "Une pièce d'identité est nécessaire.", "pièce", "document");
+checkContext("pièce in housing means room", "Un appartement de deux pièces coûte cher.", "pièces", "room");
+checkContext("bureau at work means office", "Il travaille au bureau.", "bureau", "office");
+checkContext("bureau furniture means desk", "Le livre est sur le bureau.", "bureau", "desk");
+checkContext("faire les courses means shopping", "Elle fait les courses au supermarché.", "courses", "shopping");
+checkContext("course in sport means race", "La course du marathon commence.", "course", "race");
+checkContext("poste in work context means job", "Il cherche un poste dans l'entreprise.", "poste", "job");
+checkContext("bureau de poste means post office", "Le bureau de poste ferme tôt.", "poste", "post office");
+checkContext("essence in fuel context means petrol", "Le prix de l'essence augmente.", "essence", "petrol");
+checkContext("solde bancaire means balance", "Le solde du compte est positif.", "solde", "balance");
+checkContext("soldes in retail means sales", "Les soldes d'été commencent demain.", "soldes", "sale");
+checkContext("bande dessinée means comic", "Cette bande dessinée plaît aux enfants.", "bande", "comic");
+checkContext("bande de jeunes means group or gang", "Une bande de jeunes arrive.", "bande", "group");
+checkContext("chaîne info means TV channel", "La chaîne info diffuse le débat.", "chaîne", "channel");
+checkContext("journal télévisé means news bulletin", "Le journal télévisé commence.", "journal", "news bulletin");
+checkContext("journal in press context means newspaper", "Le journal publie une enquête.", "journal", "newspaper");
+checkContext("numéro de téléphone means number", "Son numéro de téléphone change.", "numéro", "number");
+checkContext("numéro du magazine means issue", "Le dernier numéro du magazine est sorti.", "numéro", "issue");
+checkContext("formation at work means training", "La formation des salariés commence.", "formation", "training");
+checkContext("formation in politics can mean party or grouping", "Cette formation politique soutient le texte.", "formation", "party");
+checkContext("manifestation in street context means protest", "La manifestation rassemble des manifestants.", "manifestation", "protest");
+checkContext("manifestation culturelle means event", "Cette manifestation culturelle attire du public.", "manifestation", "event");
+checkContext("frais de dossier means fees", "Les frais de dossier augmentent.", "frais", "fees");
+checkContext("air frais keeps fresh or cool sense", "L'air frais entre par la fenêtre.", "frais", "fresh");
+checkContext("exercice budgétaire means fiscal year", "L'exercice budgétaire se termine.", "exercice", "fiscal year");
+checkContext("critique in severity context means critical", "La situation critique inquiète.", "critique", "critical");
+checkContext("données sensibles means sensitive", "Des données sensibles ont été publiées.", "sensibles", "sensitive");
 
 {
   const result = contextual("Il ne veut pas partir.", "veut");
