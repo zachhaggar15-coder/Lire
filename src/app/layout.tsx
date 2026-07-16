@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   description: "Read short French texts, tap words you don't know, review them later.",
   manifest: "/manifest.json",
   verification: {
-    google: "u197HJazPk2IJD1yT_A3U5j8NaQeee81Qzsy0L-4E_E",
+    google: [
+      "u197HJazPk2IJD1yT_A3U5j8NaQeee81Qzsy0L-4E_E",
+      "W_cXUFCxm-jIs-_khC6W-3zDO7EmXez-1_OzLdDa63c",
+    ],
   },
   appleWebApp: {
     capable: true,
