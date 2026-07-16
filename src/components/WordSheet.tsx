@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
+import type { ContextualTranslationGrammar, ContextualTranslationResult } from "@/lib/dictionary/contextualTranslation";
 import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
 import type { PronounReference } from "@/lib/pronounReferences";
@@ -20,6 +21,7 @@ export interface ActiveWordState {
   /** The sentence just before contextSentence, if any — extra context for the AI explanation. */
   surroundingSentence: string | null;
   lookup: DictionaryLookupResult;
+  contextualTranslation: ContextualTranslationResult;
   /** The word's current saved/known status, or null if it's untouched. */
   existingStatus: WordStatus | null;
   pronounReference: PronounReference | null;
@@ -43,6 +45,45 @@ function trustLabel(lookup: DictionaryLookupResult | undefined): string {
   if (lookup.lemma?.includes(" ")) return "Offline phrase bank";
   if (lookup.cefr || lookup.examples.length > 0) return "Curated local dictionary";
   return "Generated local dictionary";
+}
+
+function contextSourceLabel(source: ContextualTranslationResult["source"]): string {
+  switch (source) {
+    case "phrasebank":
+      return "Phrase match";
+    case "context-rule":
+      return "Sentence context";
+    case "proper-noun":
+      return "Name protected";
+    case "contraction":
+      return "Contraction";
+    case "pronoun":
+      return "Pronoun";
+    case "grammar":
+      return "Grammar-aware";
+    case "missing":
+      return "Needs help";
+    case "dictionary":
+    default:
+      return "Dictionary fallback";
+  }
+}
+
+function confidenceLabel(confidence: ContextualTranslationResult["confidence"]): string {
+  if (confidence === "high") return "High confidence";
+  if (confidence === "medium") return "Medium confidence";
+  return "Low confidence";
+}
+
+function grammarLabels(grammar: ContextualTranslationGrammar | null | undefined): string[] {
+  if (!grammar) return [];
+  const labels: string[] = [];
+  if (grammar.tense || grammar.mood) labels.push([grammar.tense, grammar.mood].filter(Boolean).join(" "));
+  if (grammar.person || grammar.number) labels.push([grammar.person, grammar.number].filter(Boolean).join(" "));
+  if (grammar.gender) labels.push(grammar.number ? `${grammar.gender} ${grammar.number}` : grammar.gender);
+  if (grammar.form) labels.push(grammar.form);
+  if (grammar.negated) labels.push("negated");
+  return [...new Set(labels.filter(Boolean))];
 }
 
 const STATUS_LABEL: Record<WordStatus, string> = {
@@ -71,6 +112,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
   const activePointerId = useRef<number | null>(null);
   const open = state !== null;
   const lookup = state?.lookup;
+  const contextual = state?.contextualTranslation;
   const found = lookup?.source === "local";
   const isProperNoun = (lookup?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
   const [primary, ...rest] = lookup?.translations ?? [];
@@ -339,32 +381,78 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
         <div className="mt-3 space-y-3">
           {!definitionRevealed ? (
             <p className="text-sm italic text-accent-pinktext">Definition hidden until you try or reveal it.</p>
-          ) : found ? (
+          ) : (
             <>
-              <p className="text-lg text-ink">{primary}</p>
-              {rest.length > 0 && (
-                <p className="text-sm text-accent-pinktext">Also: {rest.join(", ")}</p>
-              )}
-              {firstExample && (
-                <div className="rounded-2xl bg-white/60 p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
-                    Example
-                  </p>
-                  <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
-                  <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
-                  <div className="mt-2">
-                    <PronounceButton text={firstExample.fr} label="Play example sentence" className="bg-white" />
+              {contextual && (
+                <div className="rounded-2xl bg-white/75 p-3">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Meaning here</p>
+                    <span className="rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-semibold text-brand">
+                      {contextSourceLabel(contextual.source)}
+                    </span>
+                    <span className="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-accent-pinktext">
+                      {confidenceLabel(contextual.confidence)}
+                    </span>
                   </div>
+                  <p className="mt-1 text-lg font-bold text-ink">{contextual.contextualTranslation}</p>
+                  {contextual.expandedPhrase && (
+                    <p className="mt-1 text-xs text-ink-muted">
+                      Part of: <span className="font-semibold text-ink">{contextual.expandedPhrase}</span>
+                    </p>
+                  )}
+                  {grammarLabels(contextual.grammar).length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {grammarLabels(contextual.grammar).map((label) => (
+                        <span key={label} className="rounded-full bg-cream px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
+                          {label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {contextual.literalTranslation && (
+                    <p className="mt-2 text-xs text-ink-muted">
+                      Standalone dictionary: <span className="font-semibold">{contextual.literalTranslation}</span>
+                    </p>
+                  )}
+                  {contextual.alternativeMeanings.length > 0 && (
+                    <p className="mt-1 text-xs text-ink-muted">Other dictionary senses: {contextual.alternativeMeanings.join(", ")}</p>
+                  )}
+                  <p className="mt-2 text-xs leading-relaxed text-ink-muted">{contextual.explanation}</p>
+                  {contextual.grammar?.note && <p className="mt-1 text-xs text-ink-muted">{contextual.grammar.note}</p>}
                 </div>
               )}
+
+              {found ? (
+                <div className="rounded-2xl bg-white/60 p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
+                    Base dictionary
+                  </p>
+                  {primary && <p className="mt-1 text-base font-semibold text-ink">{primary}</p>}
+                  {rest.length > 0 && (
+                    <p className="text-sm text-accent-pinktext">Also: {rest.join(", ")}</p>
+                  )}
+                  {firstExample && (
+                    <div className="mt-3 rounded-xl bg-white/60 p-3">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
+                        Example
+                      </p>
+                      <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
+                      <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
+                      <div className="mt-2">
+                        <PronounceButton text={firstExample.fr} label="Play example sentence" className="bg-white" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : aiState === "ready" && aiResult ? (
+                // The dictionary had nothing, but "Ask AI for nuance" backfilled a
+                // real translation — show that in place of "not found" so it
+                // reads as resolved rather than contradicting the AI panel below.
+                <p className="text-lg text-ink">{aiResult.translation}</p>
+              ) : (
+                <p className="text-sm italic text-accent-pinktext">{NO_DICTIONARY_ENTRY}</p>
+              )}
             </>
-          ) : aiState === "ready" && aiResult ? (
-            // The dictionary had nothing, but "Ask AI for nuance" backfilled a
-            // real translation — show that in place of "not found" so it
-            // reads as resolved rather than contradicting the AI panel below.
-            <p className="text-lg text-ink">{aiResult.translation}</p>
-          ) : (
-            <p className="text-sm italic text-accent-pinktext">{NO_DICTIONARY_ENTRY}</p>
           )}
         </div>
 

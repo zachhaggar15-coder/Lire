@@ -86,16 +86,16 @@ function phraseTextFromWindow(tokens: Token[], startIndex: number, endIndex: num
   return tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("");
 }
 
-function isPhraseLookup(lookup: ReturnType<typeof lookupWord>, phrase: string): boolean {
+function isPhraseLookup(lookup: ReturnType<typeof lookupWord>, _phrase: string): boolean {
   if (lookup.source === "missing" || !lookup.translations[0]) return false;
   const part = (lookup.partOfSpeech ?? "").toLowerCase();
+  if (part.includes("proper noun")) return false;
   return (
     !!lookup.lemma?.includes(" ") ||
     part.includes("phrase") ||
     part.includes("connector") ||
     part.includes("conjunction") ||
-    part.includes("idiom") ||
-    phrase.includes(" ")
+    part.includes("idiom")
   );
 }
 

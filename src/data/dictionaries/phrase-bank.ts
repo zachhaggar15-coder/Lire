@@ -158,6 +158,7 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("à coup sûr", ["for sure", "certainly"], "adverb phrase", "B1"),
   phrase("en quelque sorte", ["in a way", "so to speak"], "adverb phrase", "B2"),
   phrase("en général", ["generally", "in general"], "adverb phrase", "A2"),
+  phrase("d'accord", ["okay", "agreed", "in agreement"], "fixed expression", "A1"),
   phrase("la plupart de", ["most of"], "quantity phrase", "A2"),
   phrase("plus de", ["more than"], "quantity phrase", "A1"),
   phrase("moins de", ["less than", "fewer than"], "quantity phrase", "A1"),

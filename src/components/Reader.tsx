@@ -18,6 +18,7 @@ import {
 } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
+import { buildContextualTranslation } from "@/lib/dictionary/contextualTranslation";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { getKnownWords, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
@@ -608,7 +609,15 @@ export default function Reader({ text }: { text: ReadingText }) {
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     let existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
-    const { previous } = neighbours(sentenceText);
+    const { previous, next } = neighbours(sentenceText);
+    const contextualTranslation = buildContextualTranslation({
+      tokens,
+      tokenIndex: index,
+      contextSentence: sentenceText,
+      previousSentence: previous,
+      nextSentence: next,
+      lookup,
+    });
     const pronounReference = findPronounReference(
       clean,
       tokens,
@@ -642,6 +651,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       contextSentence: sentenceText,
       surroundingSentence: previous,
       lookup,
+      contextualTranslation,
       existingStatus,
       pronounReference,
     });
