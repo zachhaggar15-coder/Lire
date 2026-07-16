@@ -53,6 +53,7 @@ const TRUNCATION_MARKERS = [
   /\bcontinue reading\b\s*$/i,
   /\blire la suite\b\s*$/i,
   /\bthe post .* appeared first on\b/i,
+  /\b(?:apparu|paru|publi[ée]e?) en premier sur\b/i,
 ];
 
 export type ContentQuality = "good" | "usable" | "poor";

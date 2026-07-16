@@ -1,3 +1,5 @@
+import { isStandaloneSourceFooterLine, stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
+
 /**
  * Utilities for turning raw RSS field text into clean, readable French —
  * stripping markup, decoding entities, and normalising whitespace. Kept
@@ -82,7 +84,10 @@ const BOILERPLATE_LINE_PATTERNS = [
 export function stripKnownBoilerplateLines(text: string): string {
   return text
     .split("\n")
-    .filter((line) => !BOILERPLATE_LINE_PATTERNS.some((re) => re.test(line.trim())))
+    .filter((line) => {
+      const trimmed = line.trim();
+      return !trimmed || (!isStandaloneSourceFooterLine(trimmed) && !BOILERPLATE_LINE_PATTERNS.some((re) => re.test(trimmed)));
+    })
     .join("\n");
 }
 
@@ -97,7 +102,7 @@ export function normalizeWhitespace(text: string): string {
 
 /** Full pipeline: strip tags, decode entities, drop known boilerplate lines, collapse whitespace. */
 export function cleanRssText(raw: string): string {
-  return normalizeWhitespace(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw))));
+  return normalizeWhitespace(stripSourceBoilerplate(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw)))));
 }
 
 export function isTextLongEnough(text: string, minWords = 12): boolean {

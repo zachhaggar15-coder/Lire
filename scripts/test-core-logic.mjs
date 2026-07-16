@@ -1028,6 +1028,37 @@ console.log("\n--- Lemma-aware saved words ---");
   );
   clearWords();
 }
+{
+  window.localStorage.setItem(
+    "lire.savedWords.v1",
+    JSON.stringify([
+      {
+        word: "chutmonsecret",
+        lemma: null,
+        translations: [],
+        primaryTranslation: NOT_TRANSLATED_YET,
+        partOfSpeech: null,
+        gender: null,
+        cefr: null,
+        frequencyRank: null,
+        articleContextSentence: "est apparu en premier sur chutmonsecret.",
+        exampleSentenceFr: "On utilise chutmonsecret dans cette phrase.",
+        exampleSentenceEn: 'We use "chutmonsecret" in this sentence.',
+        sourceTextTitle: "Test article",
+        savedAt: "2026-07-16T00:00:00.000Z",
+        reviewCount: 0,
+        lastReviewedAt: null,
+        status: "learning",
+        missingFromDictionary: true,
+      },
+    ])
+  );
+  check(
+    "source-footer missing words are removed from saved words",
+    !getSavedWords().some((word) => word.word === "chutmonsecret")
+  );
+  clearWords();
+}
 
 console.log("\n--- Article difficulty feedback ---");
 {

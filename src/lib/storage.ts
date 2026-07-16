@@ -7,6 +7,7 @@ import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult }
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
 import { pushStore } from "@/lib/supabase/sync";
+import { isSourceFooterText } from "@/lib/rss/sourceNoise";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -163,6 +164,11 @@ function normalize(entry: unknown): SavedWord | null {
       : typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn
         ? e.exampleSentenceEn
         : fallbackExample.en;
+  const resolvedMissingFromDictionary = resolvedLookup ? false : missingFromDictionary;
+
+  if (resolvedMissingFromDictionary && resolvedTranslations.length === 0 && isSourceFooterText(articleContextSentence)) {
+    return null;
+  }
 
   return {
     word: e.word,
@@ -185,7 +191,7 @@ function normalize(entry: unknown): SavedWord | null {
     reviewCount: typeof e.reviewCount === "number" ? e.reviewCount : 0,
     lastReviewedAt: typeof e.lastReviewedAt === "string" ? e.lastReviewedAt : null,
     status: isValidStatus(e.status) ? e.status : "learning",
-    missingFromDictionary: resolvedLookup ? false : missingFromDictionary,
+    missingFromDictionary: resolvedMissingFromDictionary,
     ease: typeof e.ease === "number" ? e.ease : defaultSpacedRepetitionFields().ease,
     nextReviewAt: typeof e.nextReviewAt === "string" ? e.nextReviewAt : null,
     correctCount: typeof e.correctCount === "number" ? e.correctCount : 0,

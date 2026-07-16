@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import type { ReadingText } from "@/types";
+import { cleanReadingTextSourceNoise } from "@/lib/rss/sourceNoise";
 
 /**
  * Optional server-side persistence for RSS texts, so a direct link to an
@@ -42,7 +43,7 @@ export async function putPersistedRssTexts(texts: ReadingText[]): Promise<void> 
   if (!redis) return;
   try {
     await Promise.all(
-      texts.map((text) => redis.set(KEY_PREFIX + text.id, text, { ex: TTL_SECONDS }))
+      texts.map((text) => redis.set(KEY_PREFIX + text.id, cleanReadingTextSourceNoise(text), { ex: TTL_SECONDS }))
     );
   } catch {
     // Redis unreachable/misconfigured — persistence is a nice-to-have, not fatal.
@@ -64,8 +65,14 @@ export async function getPersistedRssText(id: string): Promise<ReadingText | nul
   if (!redis) return null;
   try {
     const value = await redis.get<ReadingText>(KEY_PREFIX + id);
-    if (value) redis.expire(KEY_PREFIX + id, TTL_SECONDS).catch(() => {});
-    return value ?? null;
+    if (!value) return null;
+    const sanitized = cleanReadingTextSourceNoise(value);
+    if (sanitized === value) {
+      redis.expire(KEY_PREFIX + id, TTL_SECONDS).catch(() => {});
+    } else {
+      redis.set(KEY_PREFIX + id, sanitized, { ex: TTL_SECONDS }).catch(() => {});
+    }
+    return sanitized;
   } catch {
     return null;
   }

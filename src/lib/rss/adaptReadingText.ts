@@ -1,20 +1,22 @@
 import type { ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
-import { truncateAtSentence } from "@/lib/rss/cleanContent";
+import { estimateReadingMinutes, truncateAtSentence } from "@/lib/rss/cleanContent";
+import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
 
 const PREVIEW_LENGTH = 160;
 
 /** Maps the API's RssReadingText DTO onto the app's canonical ReadingText shape. */
 export function rssReadingTextToReadingText(rss: RssReadingText): ReadingText {
+  const body = stripSourceBoilerplate(rss.originalText);
   return {
     id: rss.id,
     title: rss.title,
     category: rss.category,
     difficulty: rss.difficulty,
-    minutes: rss.readingTimeMinutes,
-    preview: truncateAtSentence(rss.originalText, PREVIEW_LENGTH),
+    minutes: body === rss.originalText ? rss.readingTimeMinutes : estimateReadingMinutes(body),
+    preview: truncateAtSentence(body, PREVIEW_LENGTH),
     blurbEn: rss.blurbEn,
-    body: rss.originalText,
+    body,
     sourceName: rss.sourceName,
     sourceUrl: rss.sourceUrl,
     publishedAt: rss.publishedAt,

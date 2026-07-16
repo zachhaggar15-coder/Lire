@@ -1,5 +1,7 @@
 import type { ReadingText } from "@/types";
 import { pushStore } from "@/lib/supabase/sync";
+import { estimateReadingMinutes, truncateAtSentence } from "@/lib/rss/cleanContent";
+import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
 
 /**
  * Fast session cache plus a bounded localStorage offline cache for RSS
@@ -11,6 +13,7 @@ import { pushStore } from "@/lib/supabase/sync";
 const KEY = "lire.rssTexts.session";
 const OFFLINE_KEY = "lire.rssTexts.offline";
 const MAX_OFFLINE_TEXTS = 80;
+const PREVIEW_LENGTH = 160;
 
 function hasSessionStorage(): boolean {
   return typeof window !== "undefined" && !!window.sessionStorage;
@@ -31,10 +34,26 @@ function readOfflineTexts(): ReadingText[] {
   }
 }
 
+function sanitizeRssText(text: ReadingText): ReadingText {
+  const body = stripSourceBoilerplate(text.body);
+  if (body === text.body) return text;
+  return {
+    ...text,
+    body,
+    preview: truncateAtSentence(body, PREVIEW_LENGTH),
+    minutes: estimateReadingMinutes(`${text.title}\n\n${body}`),
+  };
+}
+
+function sanitizeRssTexts(texts: ReadingText[]): ReadingText[] {
+  return texts.map(sanitizeRssText);
+}
+
 function writeOfflineTexts(texts: ReadingText[]): void {
   if (!hasLocalStorage()) return;
+  const sanitized = sanitizeRssTexts(texts);
   try {
-    window.localStorage.setItem(OFFLINE_KEY, JSON.stringify(texts.slice(0, MAX_OFFLINE_TEXTS)));
+    window.localStorage.setItem(OFFLINE_KEY, JSON.stringify(sanitized.slice(0, MAX_OFFLINE_TEXTS)));
     void pushStore(OFFLINE_KEY);
   } catch {
     // Offline caching is best-effort only.
@@ -42,14 +61,15 @@ function writeOfflineTexts(texts: ReadingText[]): void {
 }
 
 export function cacheRssTexts(texts: ReadingText[]): void {
+  const sanitized = sanitizeRssTexts(texts);
   if (hasSessionStorage()) {
     try {
-      window.sessionStorage.setItem(KEY, JSON.stringify(texts));
+      window.sessionStorage.setItem(KEY, JSON.stringify(sanitized));
     } catch {
       // Storage full or unavailable; the reader can still use offline/server fallback.
     }
   }
-  cacheOfflineTexts(texts);
+  cacheOfflineTexts(sanitized);
 }
 
 export function getCachedRssTexts(): ReadingText[] {
@@ -58,7 +78,11 @@ export function getCachedRssTexts(): ReadingText[] {
     const raw = window.sessionStorage.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    const sanitized = sanitizeRssTexts(parsed);
+    const nextRaw = JSON.stringify(sanitized);
+    if (nextRaw !== raw) window.sessionStorage.setItem(KEY, nextRaw);
+    return sanitized;
   } catch {
     return [];
   }
@@ -69,18 +93,21 @@ export function getCachedRssTextById(id: string): ReadingText | undefined {
 }
 
 export function cacheOfflineTexts(texts: ReadingText[]): void {
-  const existing = readOfflineTexts();
+  const existing = sanitizeRssTexts(readOfflineTexts());
   const byId = new Map<string, ReadingText>();
-  for (const text of [...texts, ...existing]) byId.set(text.id, text);
+  for (const text of [...sanitizeRssTexts(texts), ...existing]) byId.set(text.id, text);
   writeOfflineTexts([...byId.values()]);
 }
 
 export function getOfflineRssTexts(): ReadingText[] {
-  return readOfflineTexts();
+  const raw = readOfflineTexts();
+  const sanitized = sanitizeRssTexts(raw);
+  if (JSON.stringify(sanitized) !== JSON.stringify(raw)) writeOfflineTexts(sanitized);
+  return sanitized;
 }
 
 export function getOfflineRssTextById(id: string): ReadingText | undefined {
-  return readOfflineTexts().find((text) => text.id === id);
+  return getOfflineRssTexts().find((text) => text.id === id);
 }
 
 export function getOfflineRssTextCount(): number {

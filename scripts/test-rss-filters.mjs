@@ -1,11 +1,12 @@
 // Ad-hoc test runner for the RSS language/content-quality helpers — the
 // project doesn't have a test framework set up, so this is a small,
 // Node-runnable script instead of a real test file. Run with:
-//   node scripts/test-rss-filters.mjs
+//   node --import ./scripts/register-alias-loader.mjs scripts/test-rss-filters.mjs
 // (uses Node's built-in TypeScript stripping, no build step needed)
 import { analyseLanguage, isAcceptableFrenchText } from "../src/lib/rss/language.ts";
 import { analyseContentQuality, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
-import { looksLikeBoilerplate, looksLikePaywallOrBotWall } from "../src/lib/rss/cleanContent.ts";
+import { cleanRssText, looksLikeBoilerplate, looksLikePaywallOrBotWall } from "../src/lib/rss/cleanContent.ts";
+import { isLikelySourceBoilerplateToken, stripSourceBoilerplate } from "../src/lib/rss/sourceNoise.ts";
 
 let passed = 0;
 let failed = 0;
@@ -82,6 +83,11 @@ Just a moment... Please enable JavaScript and cookies to continue. Checking
 your browser before accessing this website.
 `.trim();
 
+const CHUT_SOURCE_FOOTER = `
+Une jeune pousse a ete observee dans le jardin. Les habitants racontent que
+la floraison est rare. est apparu en premier sur chutmonsecret.
+`.trim();
+
 console.log("--- Language detection ---");
 {
   const r = analyseLanguage(FRENCH_PARAGRAPH);
@@ -135,6 +141,34 @@ console.log("\n--- Content quality ---");
   check("paywall prompt is flagged", isPaywall, true);
   check("bot-protection challenge page is flagged", isBotWall, true);
   check("clean French article is not flagged as a paywall/bot-wall", looksLikePaywallOrBotWall(GOOD_FRENCH_ARTICLE), false);
+}
+{
+  const cleaned = stripSourceBoilerplate(CHUT_SOURCE_FOOTER);
+  check("French source footer removes the source token", cleaned.includes("chutmonsecret"), false);
+  check("French source footer keeps the real preceding text", cleaned.includes("floraison est rare"), true);
+  check("RSS cleaner removes inline French source footer", cleanRssText(CHUT_SOURCE_FOOTER).includes("chutmonsecret"), false);
+}
+{
+  check(
+    "source footer domain token is treated as source boilerplate",
+    isLikelySourceBoilerplateToken({
+      word: "chutmonsecret",
+      contextSentence: "est apparu en premier sur chutmonsecret.",
+      sourceName: "Chut Mon Secret",
+      sourceUrl: "https://www.chutmonsecret.com/article",
+    }),
+    true
+  );
+  check(
+    "ordinary source-name words are not blocked outside footer context",
+    isLikelySourceBoilerplateToken({
+      word: "secret",
+      contextSentence: "Le secret reste local.",
+      sourceName: "Chut Mon Secret",
+      sourceUrl: "https://www.chutmonsecret.com/article",
+    }),
+    false
+  );
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

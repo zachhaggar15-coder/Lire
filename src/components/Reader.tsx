@@ -31,6 +31,7 @@ import { canSpeak, speakFrench, speakFrenchParagraphs, stopSpeaking } from "@/li
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
+import { isLikelySourceBoilerplateToken } from "@/lib/rss/sourceNoise";
 import { buildInferenceChallenge, shouldOfferInference } from "@/lib/inference";
 import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, type WordTapRecord } from "@/lib/learningCandidates";
 import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
@@ -579,8 +580,23 @@ export default function Reader({ text }: { text: ReadingText }) {
     const clean = tokens[index]?.clean;
     if (!clean) return;
 
-    const lookup = lookupWord(tokens[index].text, adjacentWords(tokens, index));
+    const adjacent = adjacentWords(tokens, index);
+    const lookup = lookupWord(tokens[index].text, adjacent);
     const protectedProperNoun = isProperNounWord(tokens[index].text);
+    const sourceBoilerplateToken =
+      lookup.source === "missing" &&
+      isLikelySourceBoilerplateToken({
+        word: clean,
+        contextSentence: sentenceText,
+        sourceName: text.sourceName,
+        sourceUrl: text.sourceUrl,
+      });
+    if (sourceBoilerplateToken) {
+      setActiveSentence(null);
+      setActivePhrase(null);
+      setActiveWord(null);
+      return;
+    }
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
     let existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
