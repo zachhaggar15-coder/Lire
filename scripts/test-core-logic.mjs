@@ -312,6 +312,26 @@ console.log("\n--- Dictionary lookup chain ---");
   }
 }
 {
+  const cases = [
+    ["accoudé", "accouder"],
+    ["affaibli", "affaiblir"],
+    ["atteignit", "atteindre"],
+    ["buvaient", "boire"],
+    ["découvrant", "découvrir"],
+    ["gisaient", "gésir"],
+    ["représentât", "représenter"],
+    ["suivirent", "suivre"],
+  ];
+  for (const [word, lemma] of cases) {
+    const result = lookupWord(word);
+    check(
+      `public-domain coverage form '${word}' resolves to ${lemma}`,
+      result.source === "local" && result.lemma === lemma && result.translations.length > 0,
+      JSON.stringify(result)
+    );
+  }
+}
+{
   // Round-trips through the same custom.ts flow Reader.tsx uses when an AI
   // backfill is saved — a fabricated word that isn't in any real
   // dictionary layer, so a hit here can only have come from the custom one.

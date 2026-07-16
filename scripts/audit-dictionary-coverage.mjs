@@ -3,6 +3,7 @@ import { lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { tokenize } from "../src/lib/words.ts";
 
 const DEFAULT_LIMIT = 80;
+const MIN_COVERAGE = 0.99;
 const MIN_WORD_LENGTH = 3;
 const COMMON_FALSE_POSITIVES = new Set([
   "http",
@@ -78,8 +79,8 @@ function main() {
     }
   }
 
-  if (coverage < 0.985) {
-    console.log("\nCoverage is below 98.5%; add high-value ordinary words to news-senses.ts or fr-en.ts.");
+  if (coverage < MIN_COVERAGE) {
+    console.log("\nCoverage is below 99%; add high-value ordinary words to news-senses.ts or fr-en.ts.");
     process.exitCode = 1;
   }
 }

@@ -687,13 +687,17 @@ const RULES: Rule[] = [
   { suffix: "irait", replacement: "ir" },
   { suffix: "irons", replacement: "ir" },
   { suffix: "iront", replacement: "ir" },
+  { suffix: "irent", replacement: "ir" },
   { suffix: "irai", replacement: "ir" },
   { suffix: "iras", replacement: "ir" },
   { suffix: "ira", replacement: "ir" },
   { suffix: "issons", replacement: "ir" },
   { suffix: "issez", replacement: "ir" },
   { suffix: "issent", replacement: "ir" },
+  { suffix: "ies", replacement: "ir" },
+  { suffix: "ie", replacement: "ir" },
   { suffix: "is", replacement: "ir" },
+  { suffix: "i", replacement: "ir" },
   { suffix: "it", replacement: "ir" },
 
   // -re and -dre verbs: future / conditional. Both variants are useful:
