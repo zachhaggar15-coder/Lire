@@ -1,5 +1,29 @@
 import type { Cefr, DictionaryEntry } from "@/lib/dictionary/types";
 
+function stripDiacritics(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE")
+    .replace(/æ/g, "ae")
+    .replace(/Æ/g, "AE");
+}
+
+function expandPhraseForms(lemma: string, forms: string[]): string[] {
+  const expanded = new Set(forms);
+  for (const value of [lemma, ...forms]) {
+    const straightApostrophe = value.replace(/[’‘]/g, "'");
+    const unaccented = stripDiacritics(straightApostrophe);
+    const dehyphenated = straightApostrophe.replace(/-/g, " ");
+    const unaccentedDehyphenated = stripDiacritics(dehyphenated);
+    for (const variant of [straightApostrophe, unaccented, dehyphenated, unaccentedDehyphenated]) {
+      if (variant && variant !== lemma) expanded.add(variant);
+    }
+  }
+  return [...expanded];
+}
+
 function phrase(
   lemma: string,
   translations: string[],
@@ -11,7 +35,7 @@ function phrase(
 ): DictionaryEntry {
   return {
     lemma,
-    forms,
+    forms: expandPhraseForms(lemma, forms),
     translations,
     partOfSpeech,
     cefr,
@@ -52,6 +76,17 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("du moins", ["at least"], "adverb phrase", "B1"),
   phrase("tout de même", ["all the same", "nevertheless"], "adverb phrase", "B1"),
   phrase("quand même", ["still", "all the same", "even so"], "adverb phrase", "A2"),
+  phrase("d'une part", ["on the one hand"], "connector", "B1"),
+  phrase("d'autre part", ["on the other hand"], "connector", "B1"),
+  phrase("par conséquent", ["therefore", "as a result"], "connector", "B1"),
+  phrase("à cet égard", ["in this respect", "in that regard"], "connector", "B2", ["a cet egard"]),
+  phrase("au contraire", ["on the contrary"], "connector", "A2"),
+  phrase("à l'inverse", ["conversely", "by contrast"], "connector", "B2"),
+  phrase("en tout cas", ["in any case", "anyway"], "connector", "A2"),
+  phrase("de toute façon", ["anyway", "in any case"], "connector", "A2"),
+  phrase("quoi qu'il en soit", ["in any case", "whatever the case may be"], "connector", "B2"),
+  phrase("ainsi que", ["as well as"], "conjunction phrase", "A2"),
+  phrase("tandis que", ["whereas", "while"], "conjunction phrase", "B1"),
 
   // Time, sequencing, and article chronology
   phrase("depuis lors", ["since then"], "adverb phrase", "B1"),
@@ -74,6 +109,16 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("à long terme", ["in the long term"], "adverb phrase", "B1"),
   phrase("à l'heure actuelle", ["at present", "currently"], "adverb phrase", "B2"),
   phrase("en fin de compte", ["in the end", "ultimately"], "adverb phrase", "B1"),
+  phrase("tout de suite", ["right away", "immediately"], "adverb phrase", "A1"),
+  phrase("tout à l'heure", ["earlier", "later today"], "adverb phrase", "A2"),
+  phrase("de temps en temps", ["from time to time", "occasionally"], "adverb phrase", "A2"),
+  phrase("au bout de", ["after", "at the end of"], "preposition phrase", "B1"),
+  phrase("au moment où", ["at the moment when", "when"], "conjunction phrase", "B1"),
+  phrase("dès que", ["as soon as"], "conjunction phrase", "A2"),
+  phrase("tant que", ["as long as", "while"], "conjunction phrase", "B1"),
+  phrase("depuis que", ["since", "ever since"], "conjunction phrase", "B1"),
+  phrase("avant de", ["before doing"], "preposition phrase", "A2"),
+  phrase("après avoir", ["after having"], "preposition phrase", "B1"),
 
   // News framing and attribution
   phrase("selon les autorités", ["according to the authorities"], "attribution phrase", "B1"),
@@ -105,6 +150,14 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("sous forme de", ["in the form of"], "preposition phrase", "B1"),
   phrase("en vue de", ["with a view to", "in preparation for"], "preposition phrase", "B2"),
   phrase("au niveau de", ["at the level of", "in terms of"], "preposition phrase", "B1"),
+  phrase("être à l'origine de", ["to be behind", "to be the source of"], "verb phrase", "B2", ["est à l'origine de", "sont à l'origine de", "était à l'origine de"]),
+  phrase("être en cause", ["to be at issue", "to be involved"], "verb phrase", "B2", ["est en cause", "sont en cause"]),
+  phrase("faire appel", ["to appeal"], "verb phrase", "B2", ["fait appel", "font appel", "a fait appel"]),
+  phrase("faire appel à", ["to call on", "to use", "to appeal to"], "verb phrase", "B1", ["fait appel à", "font appel à", "a fait appel à"]),
+  phrase("porter plainte", ["to file a complaint"], "verb phrase", "B2", ["porte plainte", "portent plainte", "a porté plainte"]),
+  phrase("garde à vue", ["police custody"], "noun phrase", "B2", ["gardes à vue"]),
+  phrase("mise en examen", ["formal investigation", "indictment"], "noun phrase", "C1", ["mises en examen", "mis en examen"]),
+  phrase("sous le coup de", ["subject to", "facing"], "preposition phrase", "C1"),
 
   // High-value verb phrases and support-verb constructions
   phrase("il y a", ["there is", "there are", "ago"], "fixed phrase", "A1"),
@@ -120,6 +173,14 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("avoir beau", ["no matter how much", "despite trying to"], "verb phrase", "B2", ["a beau", "ont beau", "avait beau"]),
   phrase("avoir recours à", ["to resort to", "to make use of"], "verb phrase", "B2", ["a recours à", "ont recours à"]),
   phrase("avoir affaire à", ["to be dealing with", "to be up against"], "verb phrase", "B2", ["a affaire à", "ont affaire à"]),
+  phrase("avoir envie de", ["to want to", "to feel like"], "verb phrase", "A1", ["ai envie de", "as envie de", "a envie de", "ont envie de", "j'ai envie de"]),
+  phrase("avoir peur de", ["to be afraid of", "to be scared of"], "verb phrase", "A1", ["ai peur de", "as peur de", "a peur de", "ont peur de", "j'ai peur de"]),
+  phrase("avoir raison", ["to be right"], "verb phrase", "A1", ["ai raison", "as raison", "a raison", "ont raison", "j'ai raison"]),
+  phrase("avoir tort", ["to be wrong"], "verb phrase", "A1", ["ai tort", "as tort", "a tort", "ont tort", "j'ai tort"]),
+  phrase("avoir accès à", ["to have access to"], "verb phrase", "B1", ["a accès à", "ont accès à", "avait accès à"]),
+  phrase("avoir droit à", ["to be entitled to", "to get"], "verb phrase", "B1", ["a droit à", "ont droit à", "avait droit à"]),
+  phrase("avoir pour but de", ["to aim to", "to have the goal of"], "verb phrase", "B2", ["a pour but de", "ont pour but de"]),
+  phrase("avoir pour objectif de", ["to aim to", "to have the objective of"], "verb phrase", "B2", ["a pour objectif de", "ont pour objectif de"]),
   phrase("tenir compte de", ["to take into account"], "verb phrase", "B1", ["tient compte de", "tiennent compte de", "tenu compte de"]),
   phrase("prendre en compte", ["to take into account", "to consider"], "verb phrase", "B1", ["prend en compte", "prennent en compte", "pris en compte", "prise en compte"]),
   phrase("rendre compte de", ["to report on", "to give an account of"], "verb phrase", "B2", ["rend compte de", "rendent compte de", "rendu compte de"]),
@@ -128,6 +189,10 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("faire face à", ["to face", "to deal with"], "verb phrase", "B1", ["fait face à", "font face à", "faire face"]),
   phrase("faire l'objet de", ["to be the subject of", "to be subject to"], "verb phrase", "B2", ["fait l'objet de", "font l'objet de"]),
   phrase("faire partie de", ["to be part of"], "verb phrase", "A2", ["fait partie de", "font partie de"]),
+  phrase("faire part de", ["to inform about", "to share"], "verb phrase", "B2", ["fait part de", "font part de", "a fait part de"]),
+  phrase("faire suite à", ["to follow", "to be in response to"], "verb phrase", "B2", ["fait suite à", "font suite à", "a fait suite à"]),
+  phrase("faire attention à", ["to pay attention to", "to watch out for"], "verb phrase", "A2", ["fais attention à", "fait attention à", "font attention à"]),
+  phrase("faire confiance à", ["to trust"], "verb phrase", "A2", ["fais confiance à", "fait confiance à", "font confiance à"]),
   phrase("mettre fin à", ["to put an end to"], "verb phrase", "B1", ["met fin à", "mettent fin à", "a mis fin à"]),
   phrase("mettre à jour", ["to update"], "verb phrase", "B1", ["met à jour", "mettent à jour", "mis à jour"]),
   phrase("mettre en place", ["to set up", "to establish", "to implement"], "verb phrase", "B1", ["met en place", "mettent en place", "mise en place"]),
@@ -138,9 +203,29 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("ouvrir la voie à", ["to pave the way for"], "verb phrase", "B2", ["ouvre la voie à", "ouvrent la voie à", "a ouvert la voie à"]),
   phrase("donner lieu à", ["to give rise to", "to lead to"], "verb phrase", "B2", ["donne lieu à", "donnent lieu à", "a donné lieu à"]),
   phrase("donner suite à", ["to follow up on"], "verb phrase", "B2", ["donne suite à", "donnent suite à", "a donné suite à"]),
+  phrase("mettre l'accent sur", ["to emphasize", "to put the focus on"], "verb phrase", "B2", ["met l'accent sur", "mettent l'accent sur", "a mis l'accent sur"]),
+  phrase("mettre à disposition", ["to make available"], "verb phrase", "B2", ["met à disposition", "mettent à disposition", "mis à disposition"]),
+  phrase("mettre au point", ["to develop", "to fine-tune"], "verb phrase", "B2", ["met au point", "mettent au point", "mis au point"]),
+  phrase("mettre en service", ["to put into service", "to commission"], "verb phrase", "B2", ["met en service", "mettent en service", "mis en service"]),
   phrase("prendre part à", ["to take part in"], "verb phrase", "B1", ["prend part à", "prennent part à", "a pris part à"]),
   phrase("prendre la parole", ["to speak", "to take the floor"], "verb phrase", "B1", ["prend la parole", "prennent la parole", "a pris la parole"]),
   phrase("prendre le relais", ["to take over", "to take up the baton"], "verb phrase", "B2", ["prend le relais", "prennent le relais"]),
+  phrase("prendre soin de", ["to take care of"], "verb phrase", "A2", ["prend soin de", "prennent soin de", "a pris soin de"]),
+  phrase("prendre en charge", ["to take care of", "to cover", "to handle"], "verb phrase", "B1", ["prend en charge", "prennent en charge", "pris en charge", "prise en charge"]),
+  phrase("prendre conscience de", ["to become aware of"], "verb phrase", "B2", ["prend conscience de", "prennent conscience de", "a pris conscience de"]),
+  phrase("prendre rendez-vous", ["to make an appointment"], "verb phrase", "A2", ["prend rendez-vous", "prennent rendez-vous", "a pris rendez-vous"]),
+  phrase("rendre visite à", ["to visit"], "verb phrase", "A2", ["rend visite à", "rendent visite à", "a rendu visite à"]),
+  phrase("rendre hommage à", ["to pay tribute to"], "verb phrase", "B2", ["rend hommage à", "rendent hommage à", "a rendu hommage à"]),
+  phrase("se rendre à", ["to go to"], "verb phrase", "B1", ["se rend à", "se rendent à", "s'est rendu à"]),
+  phrase("s'en prendre à", ["to attack", "to take it out on"], "verb phrase", "B2", ["s'en prend à", "s'en prennent à", "s'en est pris à"]),
+  phrase("se mettre à", ["to start doing"], "verb phrase", "A2", ["se met à", "se mettent à", "s'est mis à"]),
+  phrase("se servir de", ["to use"], "verb phrase", "A2", ["se sert de", "se servent de", "s'est servi de"]),
+  phrase("parvenir à", ["to manage to", "to succeed in"], "verb phrase", "B2", ["parvient à", "parviennent à", "est parvenu à"]),
+  phrase("chercher à", ["to try to", "to seek to"], "verb phrase", "B1", ["cherche à", "cherchent à", "a cherché à"]),
+  phrase("consister à", ["to consist in", "to involve"], "verb phrase", "B2", ["consiste à", "consistent à"]),
+  phrase("permettre de", ["to allow", "to make it possible to"], "verb phrase", "B1", ["permet de", "permettent de", "a permis de"]),
+  phrase("participer à", ["to take part in", "to participate in"], "verb phrase", "A2", ["participe à", "participent à", "a participé à"]),
+  phrase("assister à", ["to attend", "to witness"], "verb phrase", "B1", ["assiste à", "assistent à", "a assisté à"]),
   phrase("faire le point", ["to take stock", "to give an update"], "verb phrase", "B2", ["fait le point", "font le point"]),
   phrase("faire marche arrière", ["to backtrack", "to reverse course"], "verb phrase", "B2", ["fait marche arrière", "font marche arrière"]),
   phrase("faire défaut", ["to be lacking", "to fail"], "verb phrase", "B2", ["fait défaut", "font défaut"]),
@@ -159,6 +244,16 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("en quelque sorte", ["in a way", "so to speak"], "adverb phrase", "B2"),
   phrase("en général", ["generally", "in general"], "adverb phrase", "A2"),
   phrase("d'accord", ["okay", "agreed", "in agreement"], "fixed expression", "A1"),
+  phrase("pas du tout", ["not at all"], "adverb phrase", "A1"),
+  phrase("bien sûr", ["of course"], "adverb phrase", "A1"),
+  phrase("bien entendu", ["of course", "naturally"], "adverb phrase", "B1"),
+  phrase("sans doute", ["probably", "no doubt"], "adverb phrase", "B1"),
+  phrase("peut-être", ["maybe", "perhaps"], "adverb", "A2"),
+  phrase("en fait", ["in fact", "actually"], "adverb phrase", "A2"),
+  phrase("n'importe quoi", ["anything", "nonsense"], "indefinite expression", "A2"),
+  phrase("n'importe qui", ["anyone"], "indefinite expression", "A2"),
+  phrase("n'importe où", ["anywhere"], "indefinite expression", "A2"),
+  phrase("n'importe quand", ["anytime"], "indefinite expression", "A2"),
   phrase("la plupart de", ["most of"], "quantity phrase", "A2"),
   phrase("plus de", ["more than"], "quantity phrase", "A1"),
   phrase("moins de", ["less than", "fewer than"], "quantity phrase", "A1"),

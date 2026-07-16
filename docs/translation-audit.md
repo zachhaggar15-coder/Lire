@@ -11,6 +11,8 @@ Audited the French translation path from article text through tokenization, loca
 - The containing-phrase matcher accepted any multi-word window if lookup guessed a lemma, which could make a full clause like `a-t-il compris la question` look like a phrase. It now only accepts true phrase-like dictionary entries.
 - `d'accord` resolved through the bare noun `accord`; it is now in the phrase bank and has contextual handling as `okay / agreed`.
 - Contextual cache keys are now available for word-level contextual meanings and include selected text, normalized sentence, expanded phrase, and lemma so repeated words in different sentences do not collide.
+- Second pass: phrase recognition now tolerates safe accentless imported text, elided auxiliaries like `j'ai`, and article/preposition contractions like `aux` hiding a phrase ending in `à`.
+- Second pass: contextual sense selection now covers more common traps including `manquer`, `voler`, `louer`, `assister à`, `apprendre`, `défendre`, `prévenir`, `propre`, `ancien`, `plus`, `personne`, `encore`, `toujours`, `sensible`, `librairie`, `occasion`, `devoir`, and `réaliser`.
 
 ## New Behavior
 
@@ -18,6 +20,7 @@ Audited the French translation path from article text through tokenization, loca
 - `WordSheet` now prioritizes a "Meaning here" card above "Base dictionary". It shows confidence/source, expanded phrase, grammar chips, standalone dictionary meaning, alternatives, and a short explanation.
 - Phrase-aware behavior is shared with word taps, so tapping inside expressions such as `se rend compte`, `mettre fin à`, or `en avoir marre` shows the expression meaning first.
 - Local rules handle apostrophes, contractions, hyphenated inversion, imperative pronoun attachment, compound tenses, imperfect/future/conditional/subjunctive/imperative forms, adjective agreement, pronouns, false friends, polysemy, negation, proper nouns, headlines, and malformed residual HTML.
+- The phrase bank now auto-generates safe apostrophe/accent/hyphen variants for phrase forms, and phrase lookup tries limited normalized candidates while still requiring phrase-like dictionary metadata before accepting a match.
 
 ## Validation Coverage
 
@@ -31,6 +34,8 @@ Added `scripts/test-contextual-translation.mjs` and wired it into `npm test`. Th
 - Pronouns: `y`, `en`, `le`, `lui`, `leur`.
 - Polysemy and false friends: `actuel`, `recette`, `parti`, `cours`, `tour`, `entendre`, `servir`, `attendre`.
 - Negation, proper nouns, headline fragments, missing fallback, residual HTML, and context-sensitive cache keys.
+- Second-pass phrase coverage: `avoir envie de`, `avoir besoin de` after `j'ai`, `mettre l'accent sur`, `rendre hommage à`, `garde à vue`, and single-token `c'est-à-dire`.
+- Second-pass contextual coverage: missing accents in imported text, `aux`/`du` contractions inside phrase matching, and the added false-friend/polysemy rules listed above.
 
 ## Manual Validation Notes
 

@@ -56,15 +56,18 @@ export function findPhraseTranslationMatch(tokens: Token[], startIndex: number):
   }
 
   for (let length = words.length; length >= 2; length--) {
-    const phrase = words.slice(0, length).map((word) => word.clean).join(" ");
-    const lookup = lookupWord(phrase);
+    const phraseWords = words.slice(0, length).map((word) => word.clean);
+    const phrase = phraseWords.join(" ");
+    const match = lookupPhrase(phraseWords);
+    if (!match) continue;
+    const lookup = match.lookup;
     const translation = lookup.translations[0];
-    if (lookup.source !== "missing" && lookup.lemma?.includes(" ") && translation) {
+    if (translation) {
       return {
         startIndex,
         endIndex: words[length - 1].index,
         phrase,
-        lemma: lookup.lemma,
+        lemma: lookup.lemma ?? match.key,
         translation,
         partOfSpeech: lookup.partOfSpeech,
         source: "phrasebank",
@@ -86,7 +89,60 @@ function phraseTextFromWindow(tokens: Token[], startIndex: number, endIndex: num
   return tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("");
 }
 
-function isPhraseLookup(lookup: ReturnType<typeof lookupWord>, _phrase: string): boolean {
+function stripDiacritics(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE")
+    .replace(/æ/g, "ae")
+    .replace(/Æ/g, "AE");
+}
+
+function uniqueValues(values: string[]): string[] {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function lookupKeysForWord(clean: string): string[] {
+  const straight = clean.replace(/[’‘]/g, "'");
+  const variants = [straight, stripDiacritics(straight)];
+  if (straight === "au" || straight === "aux") variants.push("à", "a");
+  if (straight === "du" || straight === "des") variants.push("de");
+  const apostropheIndex = straight.indexOf("'");
+  if (apostropheIndex > 0 && apostropheIndex < straight.length - 1) {
+    const head = straight.slice(0, apostropheIndex);
+    const tail = straight.slice(apostropheIndex + 1);
+    if (["j", "m", "t", "s", "n", "c", "d", "l", "qu"].includes(head)) {
+      variants.push(tail, stripDiacritics(tail));
+    }
+  }
+  return uniqueValues(variants);
+}
+
+function phraseLookupKeys(words: string[]): string[] {
+  let phrases = [""];
+  for (const word of words) {
+    const variants = lookupKeysForWord(word);
+    const next: string[] = [];
+    for (const phrase of phrases) {
+      for (const variant of variants) {
+        next.push(phrase ? `${phrase} ${variant}` : variant);
+      }
+    }
+    phrases = uniqueValues(next).slice(0, 80);
+  }
+  return phrases;
+}
+
+function lookupPhrase(words: string[]): { key: string; lookup: ReturnType<typeof lookupWord> } | null {
+  for (const key of phraseLookupKeys(words)) {
+    const lookup = lookupWord(key);
+    if (isPhraseLookup(lookup)) return { key, lookup };
+  }
+  return null;
+}
+
+function isPhraseLookup(lookup: ReturnType<typeof lookupWord>): boolean {
   if (lookup.source === "missing" || !lookup.translations[0]) return false;
   const part = (lookup.partOfSpeech ?? "").toLowerCase();
   if (part.includes("proper noun")) return false;
@@ -131,9 +187,11 @@ export function findContainingPhraseTranslationMatch(tokens: Token[], tokenIndex
   for (let startOrdinal = Math.max(0, heldWordOrdinal - MAX_PHRASE_WORDS + 1); startOrdinal <= heldWordOrdinal; startOrdinal++) {
     const maxEndOrdinal = Math.min(words.length - 1, startOrdinal + MAX_PHRASE_WORDS - 1);
     for (let endOrdinal = maxEndOrdinal; endOrdinal >= Math.max(heldWordOrdinal, startOrdinal + 1); endOrdinal--) {
-      const cleanPhrase = words.slice(startOrdinal, endOrdinal + 1).map((word) => word.clean).join(" ");
-      const lookup = lookupWord(cleanPhrase);
-      if (!isPhraseLookup(lookup, cleanPhrase)) continue;
+      const phraseWords = words.slice(startOrdinal, endOrdinal + 1).map((word) => word.clean);
+      const cleanPhrase = phraseWords.join(" ");
+      const phraseLookup = lookupPhrase(phraseWords);
+      if (!phraseLookup) continue;
+      const lookup = phraseLookup.lookup;
 
       const startIndex = words[startOrdinal].index;
       const endIndex = words[endOrdinal].index;

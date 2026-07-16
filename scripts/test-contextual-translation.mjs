@@ -90,7 +90,7 @@ console.log("--- Contextual translation pipeline ---");
 }
 {
   const result = contextual("D'accord, on commence.", "d'accord");
-  check("d'accord resolves as an everyday fixed expression", hasText(result, "okay") && result.source === "contraction", JSON.stringify(result));
+  check("d'accord resolves as an everyday fixed expression", hasText(result, "okay") && ["contraction", "phrasebank"].includes(result.source), JSON.stringify(result));
 }
 
 {
@@ -111,8 +111,36 @@ console.log("--- Contextual translation pipeline ---");
   check("tapping the middle of mettre fin à returns the phrase meaning", result.expandedPhrase?.includes("met fin") && hasText(result, "put an end"), JSON.stringify(result));
 }
 {
+  const result = contextual("Il met fin a la crise.", "fin");
+  check("accentless imported text still matches mettre fin à", result.expandedPhrase?.includes("met fin") && hasText(result, "put an end"), JSON.stringify(result));
+}
+{
   const result = contextual("Il en a marre de la pluie.", "marre");
   check("informal idiom en avoir marre resolves as fed up", result.expandedPhrase?.includes("a marre") && hasText(result, "fed up"), JSON.stringify(result));
+}
+{
+  const result = contextual("J'ai besoin de temps.", "besoin");
+  check("elided j'ai still matches avoir besoin de", result.expandedPhrase?.includes("besoin de") && hasText(result, "need"), JSON.stringify(result));
+}
+{
+  const result = contextual("J'ai envie de partir.", "envie");
+  check("new phrase coverage catches avoir envie de", result.expandedPhrase?.includes("envie de") && hasText(result, "want"), JSON.stringify(result));
+}
+{
+  const result = contextual("Le gouvernement met l'accent sur la prévention.", "accent");
+  check("new phrase coverage catches mettre l'accent sur", result.expandedPhrase?.includes("accent") && hasText(result, "emphasize"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle rend hommage aux victimes.", "hommage");
+  check("new phrase coverage catches rendre hommage à", result.expandedPhrase?.includes("hommage") && hasText(result, "tribute"), JSON.stringify(result));
+}
+{
+  const result = contextual("La police place le suspect en garde à vue.", "garde");
+  check("new legal phrase coverage catches garde à vue", result.expandedPhrase?.includes("garde") && hasText(result, "police custody"), JSON.stringify(result));
+}
+{
+  const result = contextual("Autrement dit, c'est-à-dire que la mesure change.", "c'est-à-dire");
+  check("single-token fixed expressions are treated as phrase-like", result.source === "phrasebank" && hasText(result, "that is to say"), JSON.stringify(result));
 }
 
 {
@@ -200,6 +228,114 @@ console.log("--- Contextual translation pipeline ---");
 {
   const result = contextual("Il attend le bus depuis dix minutes.", "attend");
   check("attendre with bus/time context means wait for", hasText(result, "wait"), JSON.stringify(result));
+}
+{
+  const result = contextual("Tu me manques.", "manques");
+  check("manquer with an object pronoun means miss / be missed by", hasText(result, "miss"), JSON.stringify(result));
+}
+{
+  const result = contextual("La ville manque de logements.", "manque");
+  check("manquer de means lack / be short of", hasText(result, "lack"), JSON.stringify(result));
+}
+{
+  const result = contextual("L'oiseau vole dans le ciel.", "vole");
+  check("voler in air context means fly", hasText(result, "fly"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il vole un vélo.", "vole");
+  check("voler in property/crime context means steal", hasText(result, "steal"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle loue un appartement.", "loue");
+  check("louer with housing means rent", hasText(result, "rent"), JSON.stringify(result));
+}
+{
+  const result = contextual("Le journal loue son courage.", "loue");
+  check("louer with merit context means praise", hasText(result, "praise"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle assiste à la réunion.", "assiste");
+  check("assister à means attend, not assist", hasText(result, "attend"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle lui apprend le français.", "apprend");
+  check("apprendre with an indirect object can mean teach", hasText(result, "teach"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il apprend le français.", "apprend");
+  check("apprendre without an indirect object means learn", hasText(result, "learn"), JSON.stringify(result));
+}
+{
+  const result = contextual("La loi défend de fumer.", "défend");
+  check("défendre de means forbid", hasText(result, "forbid"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il défend son ami.", "défend");
+  check("défendre without de keeps the defend sense", hasText(result, "defend"), JSON.stringify(result));
+}
+{
+  const result = contextual("Les autorités préviennent les habitants.", "préviennent");
+  check("prévenir people means warn or notify", hasText(result, "warn"), JSON.stringify(result));
+}
+{
+  const result = contextual("Ce plan prévient les risques.", "prévient");
+  check("prévenir risks means prevent", hasText(result, "prevent"), JSON.stringify(result));
+}
+{
+  const result = contextual("Ses propres mots sont clairs.", "propres");
+  check("propre after a possessive means own", hasText(result, "own"), JSON.stringify(result));
+}
+{
+  const result = contextual("La chambre est propre.", "propre");
+  check("propre in cleaning context means clean", hasText(result, "clean"), JSON.stringify(result));
+}
+{
+  const result = contextual("L'ancien ministre répond.", "ancien");
+  check("ancien before a role means former", hasText(result, "former"), JSON.stringify(result));
+}
+{
+  const result = contextual("Un château ancien domine la ville.", "ancien");
+  check("ancien with historical things means old or ancient", hasText(result, "old"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il ne travaille plus.", "plus");
+  check("plus with negation means no longer", hasText(result, "no longer"), JSON.stringify(result));
+}
+{
+  const result = contextual("Personne ne répond.", "Personne");
+  check("personne with negation means nobody", hasText(result, "nobody"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il n'est toujours pas prêt.", "toujours");
+  check("toujours pas means still not", hasText(result, "still not"), JSON.stringify(result));
+}
+{
+  const result = contextual("Ce n'est pas encore fini.", "encore");
+  check("pas encore means not yet", hasText(result, "not yet"), JSON.stringify(result));
+}
+{
+  const result = contextual("Une hausse sensible des prix inquiète.", "sensible");
+  check("sensible with changes means noticeable or significant", hasText(result, "noticeable"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il va à la librairie.", "librairie");
+  check("librairie is protected from the English library false friend", hasText(result, "bookshop"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle achète une voiture d'occasion.", "occasion");
+  check("d'occasion means used or second-hand", hasText(result, "used"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il doit dix euros.", "doit");
+  check("devoir with money can mean owe", hasText(result, "owe"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle réalise un film.", "réalise");
+  check("réaliser with film/project context means make or carry out", hasText(result, "make") || hasText(result, "carry out"), JSON.stringify(result));
+}
+{
+  const result = contextual("Elle réalise que le problème est grave.", "réalise");
+  check("réaliser que means realize", hasText(result, "realize"), JSON.stringify(result));
 }
 
 {

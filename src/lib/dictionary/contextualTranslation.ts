@@ -248,22 +248,41 @@ export function buildContextualTranslation(input: BuildContextualTranslationInpu
     };
   }
 
-  const special = selectSpecialForm(clean, fallbackLookup, input.tokens, input.tokenIndex);
-  const contextSense = special ?? selectContextSense(clean, fallbackLookup, input.tokens, input.tokenIndex, surroundingContext);
-  if (contextSense) {
+  if (isPhraseLikeLookup(fallbackLookup) && baseTranslation) {
+    return {
+      selectedText,
+      expandedPhrase: selectedText,
+      contextualTranslation: baseTranslation,
+      baseTranslation,
+      literalTranslation: null,
+      lemma: fallbackLookup.lemma,
+      partOfSpeech: fallbackLookup.partOfSpeech,
+      grammar: mergeGrammar(grammar, { form: fallbackLookup.partOfSpeech ?? "fixed expression" }),
+      alternativeMeanings: withoutPrimary(fallbackLookup.translations, baseTranslation),
+      confidence: "high",
+      source: "phrasebank",
+      explanation: "This tapped form is a fixed expression, so the expression meaning is more useful than splitting it into smaller pieces.",
+      cacheKey: contextualTranslationCacheKey(cacheBase),
+    };
+  }
+
+  const contextSense = selectContextSense(clean, fallbackLookup, input.tokens, input.tokenIndex, surroundingContext);
+  const special = contextSense ? null : selectSpecialForm(clean, fallbackLookup, input.tokens, input.tokenIndex);
+  const selectedSense = contextSense ?? special;
+  if (selectedSense) {
     return {
       selectedText,
       expandedPhrase: special?.source === "contraction" ? selectedText : null,
-      contextualTranslation: contextSense.translation,
+      contextualTranslation: selectedSense.translation,
       baseTranslation,
-      literalTranslation: baseTranslation && baseTranslation !== contextSense.translation ? baseTranslation : null,
+      literalTranslation: baseTranslation && baseTranslation !== selectedSense.translation ? baseTranslation : null,
       lemma: fallbackLookup.lemma ?? clean,
       partOfSpeech: fallbackLookup.partOfSpeech,
       grammar,
-      alternativeMeanings: contextSense.alternativeMeanings ?? withoutPrimary(fallbackLookup.translations, contextSense.translation),
-      confidence: contextSense.confidence,
-      source: contextSense.source,
-      explanation: contextSense.explanation,
+      alternativeMeanings: selectedSense.alternativeMeanings ?? withoutPrimary(fallbackLookup.translations, selectedSense.translation),
+      confidence: selectedSense.confidence,
+      source: selectedSense.source,
+      explanation: selectedSense.explanation,
       cacheKey: contextualTranslationCacheKey(cacheBase),
     };
   }
@@ -626,6 +645,9 @@ function selectContextSense(
   const words = wordWindow(tokens, tokenIndex, 4);
   const has = (needles: string[]) => needles.some((needle) => sentenceKey.includes(normaliseForMatch(needle)));
   const around = (needles: string[]) => needles.some((needle) => words.includes(normaliseForMatch(needle)));
+  const previous = wordAt(tokens, tokenIndex, -1);
+  const next = wordAt(tokens, tokenIndex, 1);
+  const hasNegationCue = /\bne\b|n'/.test(sentenceKey);
 
   if (selectedKey === "actuel" || lemmaKey === "actuel") {
     return {
@@ -635,6 +657,119 @@ function selectContextSense(
       alternativeMeanings: ["present", "up-to-date"],
       explanation: "Actuel is a false-friend trap: in normal French it means current or present, not actual in the English sense of real.",
     };
+  }
+
+  if (selectedKey === "eventuellement" || lemmaKey === "eventuellement") {
+    return {
+      translation: "possibly / if needed",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["potentially"],
+      explanation: "Éventuellement is a false friend: it means possibly or if needed, not eventually.",
+    };
+  }
+
+  if (selectedKey === "librairie" || lemmaKey === "librairie") {
+    return {
+      translation: "bookshop / bookstore",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["bookseller"],
+      explanation: "Librairie is normally a bookshop or bookstore. The English library is bibliothèque.",
+    };
+  }
+
+  if (selectedKey === "plus" || lemmaKey === "plus") {
+    if (hasNegationCue || has(["pas plus", "non plus"])) {
+      return {
+        translation: "no longer / not anymore",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["more"],
+        explanation: "With ne or another negative cue, plus usually means no longer or not anymore rather than more.",
+      };
+    }
+    if (has(["de plus en plus", "plus de", "plus que"])) {
+      return {
+        translation: "more",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["no longer"],
+        explanation: "Without negation, plus normally keeps the positive sense more.",
+      };
+    }
+  }
+
+  if (selectedKey === "personne" || lemmaKey === "personne") {
+    if (hasNegationCue || has(["personne ne"])) {
+      return {
+        translation: "nobody / no one",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["person"],
+        explanation: "In a negative construction, personne means nobody or no one, not a person.",
+      };
+    }
+    return {
+      translation: "person",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["nobody / no one"],
+      explanation: "Without a negative cue, personne is the ordinary noun person.",
+    };
+  }
+
+  if (selectedKey === "jamais" || lemmaKey === "jamais") {
+    return {
+      translation: hasNegationCue ? "never" : "ever / never",
+      source: "context-rule",
+      confidence: hasNegationCue ? "high" : "medium",
+      explanation: hasNegationCue
+        ? "With ne, jamais means never."
+        : "Without ne, jamais often means ever, though some fixed expressions still read as never.",
+    };
+  }
+
+  if (selectedKey === "encore" || lemmaKey === "encore") {
+    if (has(["pas encore"])) {
+      return {
+        translation: "not yet",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["again", "still"],
+        explanation: "Pas encore is the fixed negative expression not yet.",
+      };
+    }
+    if (has(["encore une fois"])) {
+      return {
+        translation: "again",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["still"],
+        explanation: "Encore une fois means once again.",
+      };
+    }
+  }
+
+  if (selectedKey === "toujours" || lemmaKey === "toujours") {
+    if (has(["toujours pas"])) {
+      return {
+        translation: "still not",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["always"],
+        explanation: "Toujours pas means still not.",
+      };
+    }
+    if (has(["pas toujours"])) {
+      return {
+        translation: "not always",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["still", "always"],
+        explanation: "Pas toujours means not always.",
+      };
+    }
   }
 
   if (selectedKey === "parti" || lemmaKey === "partir") {
@@ -654,6 +789,299 @@ function selectContextSense(
         confidence: "medium",
         alternativeMeanings: ["political party"],
         explanation: "Here parti is read as the past participle of partir: left or departed.",
+      };
+    }
+  }
+
+  if (selectedKey.startsWith("manqu") || lemmaKey === "manquer" || lemmaKey === "manque") {
+    if (has(["manque de", "manquent de", "manques de", "faute de"])) {
+      return {
+        translation: "lack / be short of",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["miss"],
+        explanation: "Manquer de means to lack or be short of something.",
+      };
+    }
+    if (around(["me", "te", "lui", "nous", "vous", "leur"])) {
+      return {
+        translation: "miss / be missed by",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["lack"],
+        explanation: "With an object pronoun, manquer uses French's reverse structure: tu me manques means I miss you.",
+      };
+    }
+  }
+
+  if (lemmaKey === "passer") {
+    if (has(["passer du temps", "passe du temps", "passent du temps"])) {
+      return {
+        translation: "spend time",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["pass", "happen"],
+        explanation: "Passer du temps means to spend time.",
+      };
+    }
+    if (has(["passer par", "passe par", "passent par"])) {
+      return {
+        translation: "go through / pass by",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["spend", "happen"],
+        explanation: "Passer par means to go through, pass by, or use a route.",
+      };
+    }
+    if (has(["passer a", "passe a", "passent a"])) {
+      return {
+        translation: "move on to / switch to",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["pass", "spend"],
+        explanation: "Passer à often means to move on to the next thing.",
+      };
+    }
+  }
+
+  if (selectedKey.startsWith("vol") || lemmaKey === "voler") {
+    if (has(["oiseau", "avion", "aile", "ciel", "pilote"])) {
+      return {
+        translation: "fly",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["steal"],
+        explanation: "Air/animal context makes voler mean to fly.",
+      };
+    }
+    if (has(["argent", "bijou", "velo", "voiture", "magasin", "portefeuille", "police"])) {
+      return {
+        translation: "steal / rob",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["fly"],
+        explanation: "Crime/property context makes voler mean to steal or rob.",
+      };
+    }
+  }
+
+  if (selectedKey.startsWith("lou") || lemmaKey === "louer") {
+    if (has(["appartement", "maison", "voiture", "chambre", "loyer", "bail"])) {
+      return {
+        translation: "rent / rent out",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["praise"],
+        explanation: "Housing, cars, or payment context makes louer mean to rent or rent out.",
+      };
+    }
+    if (has(["merite", "qualite", "courage", "efforts", "louanges"])) {
+      return {
+        translation: "praise",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["rent"],
+        explanation: "Praise/merit context makes louer mean to praise.",
+      };
+    }
+  }
+
+  if (lemmaKey === "assister") {
+    if (next === "a" || has(["assister a", "assiste a", "assistent a"])) {
+      return {
+        translation: "attend / witness",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["assist", "help"],
+        explanation: "Assister à means to attend or witness, not to assist.",
+      };
+    }
+    if (has(["aide", "secours", "assistance"])) {
+      return {
+        translation: "assist / help",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["attend"],
+        explanation: "Help/assistance context keeps the assist meaning.",
+      };
+    }
+  }
+
+  if (lemmaKey === "apprendre") {
+    if (around(["lui", "leur"]) || has(["aux enfants", "a ses eleves", "a son fils", "a sa fille"])) {
+      return {
+        translation: "teach",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["learn"],
+        explanation: "With an indirect object, apprendre can mean to teach someone something.",
+      };
+    }
+    return {
+      translation: "learn",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["teach"],
+      explanation: "Without an indirect object, apprendre usually means to learn.",
+    };
+  }
+
+  if (lemmaKey === "defendre") {
+    if (has(["defend de", "defendu de", "interdit de"])) {
+      return {
+        translation: "forbid",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["defend"],
+        explanation: "Défendre de means to forbid someone from doing something.",
+      };
+    }
+    return {
+      translation: "defend",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["forbid"],
+      explanation: "Without de introducing a prohibited action, défendre usually means to defend.",
+    };
+  }
+
+  if (lemmaKey === "prevenir") {
+    if (has(["risque", "accident", "maladie", "incendie", "crise"])) {
+      return {
+        translation: "prevent",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["warn", "notify"],
+        explanation: "With risks, accidents, or crises, prévenir usually means to prevent.",
+      };
+    }
+    if (has(["secours", "police", "autorites", "parents", "habitants", "public"])) {
+      return {
+        translation: "warn / notify",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["prevent"],
+        explanation: "With people or authorities as the object, prévenir means to warn or notify.",
+      };
+    }
+  }
+
+  if (selectedKey === "propre" || lemmaKey === "propre") {
+    if (["mon", "ma", "mes", "ton", "ta", "tes", "son", "sa", "ses", "notre", "nos", "votre", "vos", "leur", "leurs"].includes(previous ?? "")) {
+      return {
+        translation: "own",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["clean"],
+        explanation: "After a possessive, propre usually means own: ses propres mots = his/her own words.",
+      };
+    }
+    if (has(["linge", "chambre", "maison", "sale", "nettoyer"])) {
+      return {
+        translation: "clean",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["own"],
+        explanation: "Cleaning or hygiene context makes propre mean clean.",
+      };
+    }
+  }
+
+  if (selectedKey.startsWith("ancien") || lemmaKey === "ancien") {
+    if (["ministre", "president", "presidente", "maire", "directeur", "dirigeant", "responsable"].includes(next ?? "")) {
+      return {
+        translation: "former",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["old"],
+        explanation: "Before a role or title, ancien usually means former.",
+      };
+    }
+    if (has(["chateau ancien", "batiment ancien", "ville ancienne", "langue ancienne"])) {
+      return {
+        translation: "old / ancient",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["former"],
+        explanation: "With buildings, places, or historical things, ancien keeps the old/ancient sense.",
+      };
+    }
+  }
+
+  if (selectedKey === "sensible" || lemmaKey === "sensible") {
+    if (has(["hausse", "baisse", "amelioration", "recul", "difference", "effet"])) {
+      return {
+        translation: "noticeable / significant",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["sensitive"],
+        explanation: "With changes or effects, sensible often means noticeable or significant.",
+      };
+    }
+  }
+
+  if (selectedKey === "occasion" || lemmaKey === "occasion") {
+    if (has(["voiture d'occasion", "vehicule d'occasion", "objet d'occasion"])) {
+      return {
+        translation: "used / second-hand",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["opportunity"],
+        explanation: "D'occasion after a product means used or second-hand.",
+      };
+    }
+    if (has(["a l'occasion", "occasion de", "bonne occasion"])) {
+      return {
+        translation: "opportunity / occasion",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["used / second-hand"],
+        explanation: "Event or chance context makes occasion mean opportunity or occasion.",
+      };
+    }
+  }
+
+  if (selectedKey === "issue" || lemmaKey === "issu") {
+    if (has(["issue du match", "issue de la crise", "issue du vote", "issue du scrutin"])) {
+      return {
+        translation: "outcome / result",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["stemming from"],
+        explanation: "As a noun in event context, issue means outcome or result.",
+      };
+    }
+  }
+
+  if (lemmaKey === "devoir") {
+    if (has(["euros", "dollars", "livres", "somme", "argent"])) {
+      return {
+        translation: "owe",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["must", "have to"],
+        explanation: "With money or a sum, devoir can mean to owe.",
+      };
+    }
+  }
+
+  if (lemmaKey === "realiser") {
+    if (has(["realise que", "realiser que"])) {
+      return {
+        translation: "realize",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["carry out", "make"],
+        explanation: "Réaliser que means to realize that something is true.",
+      };
+    }
+    if (has(["projet", "film", "travaux", "objectif", "enquete"])) {
+      return {
+        translation: "carry out / make",
+        source: "context-rule",
+        confidence: "medium",
+        alternativeMeanings: ["realize"],
+        explanation: "With projects, films, work, or goals, réaliser often means to carry out, make, or achieve.",
       };
     }
   }
@@ -859,6 +1287,18 @@ function isVerbLookup(lookup: DictionaryLookupResult): boolean {
 
 function isProperNounLookup(lookup: DictionaryLookupResult): boolean {
   return (lookup.partOfSpeech ?? "").toLowerCase().includes("proper noun");
+}
+
+function isPhraseLikeLookup(lookup: DictionaryLookupResult): boolean {
+  if (lookup.source === "missing" || isProperNounLookup(lookup)) return false;
+  const partOfSpeech = (lookup.partOfSpeech ?? "").toLowerCase();
+  return (
+    !!lookup.lemma?.includes(" ") ||
+    partOfSpeech.includes("phrase") ||
+    partOfSpeech.includes("connector") ||
+    partOfSpeech.includes("idiom") ||
+    partOfSpeech.includes("expression")
+  );
 }
 
 function looksLikePastParticiple(clean: string): boolean {
