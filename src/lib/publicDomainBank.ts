@@ -1,6 +1,7 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { publicDomainTexts } from "@/data/publicDomainTexts";
 import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
+import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
 export const DAILY_BANK_ARTICLE_LIMIT = 8;
 export const DAILY_RSS_ARTICLE_LIMIT = 2;
@@ -47,5 +48,6 @@ export function getDailyBankTexts({
       const levelDistance = allowedLevels.indexOf(a.difficulty) - allowedLevels.indexOf(b.difficulty);
       return levelDistance !== 0 ? levelDistance : 0;
     })
-    .slice(0, limit);
+    .slice(0, limit)
+    .map(stripMetadataOnlyBlurb);
 }

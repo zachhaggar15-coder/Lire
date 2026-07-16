@@ -20,8 +20,9 @@ export interface ReadingText {
    * A 2-3 sentence English summary of what the article is about, shown on
    * the home-page card before a reader taps in. For RSS texts, generated in
    * a batch during pool building (src/lib/rss/articleBlurbs.ts) and may be
-   * null if AI isn't configured or the batch call failed; for hardcoded
-   * texts, hand-written in src/data/texts.ts.
+   * null if AI isn't configured or the batch call failed. Hardcoded texts can
+   * provide hand-written blurbs; imported and public-domain texts can leave it
+   * null so the UI and quizzes fall back to the real passage preview.
    */
   blurbEn?: string | null;
   /** Full body text. Paragraphs are separated by blank lines. */

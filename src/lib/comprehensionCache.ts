@@ -8,7 +8,7 @@ import {
 import { pushStore } from "@/lib/supabase/sync";
 
 const KEY = "lire.comprehensionQuestions.v1";
-const CACHE_VERSION = 1;
+const CACHE_VERSION = 2;
 
 export interface ComprehensionQuestionBundle {
   gistQuestion: MultipleChoiceQuestion;

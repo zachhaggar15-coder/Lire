@@ -1,4 +1,5 @@
 import type { ReadingText } from "@/types";
+import { gistTextForReadingText, isMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
 export interface MultipleChoiceQuestion {
   id: string;
@@ -62,7 +63,8 @@ function cleanWords(text: string): string[] {
 }
 
 function keywordSet(text: ReadingText): Set<string> {
-  return new Set(cleanWords(`${text.title} ${text.preview} ${text.blurbEn ?? ""}`).slice(0, 18));
+  const blurb = text.blurbEn && !isMetadataOnlyBlurb(text.blurbEn) ? text.blurbEn : "";
+  return new Set(cleanWords(`${text.title} ${text.preview} ${blurb} ${text.body.slice(0, 400)}`).slice(0, 18));
 }
 
 function overlapScore(a: ReadingText, b: ReadingText): number {
@@ -98,8 +100,7 @@ export function findRelatedArticles(current: ReadingText, candidates: ReadingTex
 }
 
 function gist(text: ReadingText): string {
-  if (text.blurbEn) return text.blurbEn.split(/(?<=[.!?])\s+/)[0];
-  return text.preview;
+  return gistTextForReadingText(text);
 }
 
 function distractorFor(text: ReadingText, fallback: string): string {

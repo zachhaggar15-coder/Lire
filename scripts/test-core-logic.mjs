@@ -297,6 +297,16 @@ console.log("\n--- Public-domain reading bank ---");
       articleTabSections.dailyBank.every((article) => expectedDailyIds.has(article.text.id)),
     articleTabSections.dailyBank.map((article) => article.text.id).join(",")
   );
+  const dailyBankSample = getDailyBankTexts({
+    level: "A2",
+    limit: 1,
+    date: new Date("2026-07-16T12:00:00Z"),
+  })[0];
+  check(
+    "daily bank strips metadata-only public-domain blurbs",
+    !dailyBankSample.blurbEn || !/word reading practice|public-domain french excerpt/i.test(dailyBankSample.blurbEn),
+    dailyBankSample.blurbEn ?? ""
+  );
 }
 
 console.log("\n--- Dictionary lookup chain ---");
@@ -750,6 +760,28 @@ console.log("\n--- Comprehension helpers ---");
   const gistQuestion = buildGistQuestion(current, [related, unrelated]);
   check("gist question puts the real gist first as the answer", gistQuestion.answerIndex === 0 && gistQuestion.choices[0].includes("free public transport"));
   check("gist question does not show a generic explanation", !gistQuestion.explanation);
+  const metadataCurrent = {
+    ...current,
+    id: "pd-meta-a",
+    title: "Voyage au centre de la terre: extrait 1",
+    preview: "Le professeur entre dans la salle et explique son projet aux eleves.",
+    blurbEn: "An exact public-domain French excerpt from Voyage au centre de la terre by Jules Verne, selected as 235-word reading practice.",
+    body: "Le professeur entre dans la salle et explique son projet aux eleves. Ils ecoutent avec attention avant de poser des questions.",
+  };
+  const metadataDistractor = {
+    ...related,
+    id: "pd-meta-b",
+    preview: "Une famille attend le train pendant une longue matinee.",
+    blurbEn: "An exact public-domain French excerpt from Madame Bovary by Gustave Flaubert, selected as 233-word reading practice.",
+    body: "Une famille attend le train pendant une longue matinee. Le quai reste calme sous la pluie.",
+  };
+  const metadataGistQuestion = buildGistQuestion(metadataCurrent, [metadataDistractor, unrelated]);
+  check(
+    "gist question ignores public-domain word-count metadata",
+    metadataGistQuestion.choices.every((choice) => !/\b\d+[\s-]word\b|reading practice|public-domain french excerpt/i.test(choice)) &&
+      metadataGistQuestion.choices[0].includes("professeur"),
+    metadataGistQuestion.choices.join(" | ")
+  );
   const toneQuestions = buildToneQuestions(current);
   check("tone helper creates stance/tone/confidence questions", toneQuestions.length === 3 && toneQuestions.every((q) => q.choices.length >= 3));
   const inference = buildInferenceChallenge("prudents", lookupWord("prudents"), "Certains habitants sont prudents.", "Some residents are cautious.");

@@ -217,10 +217,6 @@ function previewFor(body) {
   return firstSentence.length > 180 ? `${firstSentence.slice(0, 177).trim()}...` : firstSentence;
 }
 
-function blurbFor(candidate) {
-  return `An exact public-domain French excerpt from ${candidate.source.title} by ${candidate.source.author}, selected as ${candidate.wordCount}-word reading practice.`;
-}
-
 function minutesFor(words) {
   return Math.max(1, Math.min(8, Math.round(words / 130)));
 }
@@ -233,7 +229,7 @@ function toReadingText(candidate, level, sequence) {
     difficulty: level,
     minutes: minutesFor(candidate.wordCount),
     preview: previewFor(candidate.body),
-    blurbEn: blurbFor(candidate),
+    blurbEn: null,
     body: candidate.body,
     sourceName: `Public domain source: ${candidate.source.title} (${candidate.source.author})`,
     sourceUrl: gutenbergUrl(candidate.source.id),

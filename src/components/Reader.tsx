@@ -80,6 +80,8 @@ type TranslationState = "idle" | "loading" | "ready";
 const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 
 export default function Reader({ text }: { text: ReadingText }) {
+  const isImportedText = text.id.startsWith("custom-");
+  const showInterpretationChecks = !isImportedText;
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
   /** Instant, free, offline fallback, one per sentence. Defaults to phrase-aware, with literal still available from Settings. */
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -221,7 +223,10 @@ export default function Reader({ text }: { text: ReadingText }) {
   );
   const displayTranslationBudget = challengeBudget ?? translationAllowance;
   const quickChallenge = useMemo(() => quickChallengeForArticle(text), [text]);
-  const headlineComparison = useMemo(() => buildHeadlineComparison(text, articlePool), [articlePool, text]);
+  const headlineComparison = useMemo(
+    () => (showInterpretationChecks ? buildHeadlineComparison(text, articlePool) : null),
+    [articlePool, showInterpretationChecks, text]
+  );
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
@@ -299,8 +304,9 @@ export default function Reader({ text }: { text: ReadingText }) {
   }, [text.id]);
 
   useEffect(() => {
+    if (!showInterpretationChecks) return;
     setComprehensionQuestions(getOrCreateComprehensionQuestionBundle(text, articlePool));
-  }, [articlePool, text]);
+  }, [articlePool, showInterpretationChecks, text]);
 
   // Load saved words + known words + settings + progress once on mount,
   // and record that this text has been opened.
@@ -486,6 +492,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function recordComprehensionInteraction() {
+    if (!showInterpretationChecks) return;
     if (!comprehensionStarted.current) {
       comprehensionStarted.current = true;
       trackEvent("comprehension_started", { articleId: text.id });
@@ -494,6 +501,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function maybeMarkComprehensionCompleted(nextGistAnswer: number | null, nextToneAnswers: Record<string, number>) {
+    if (!showInterpretationChecks) return;
     if (comprehensionCompleted.current) return;
     const completed = nextGistAnswer !== null && toneQuestions.every((question) => nextToneAnswers[question.id] !== undefined);
     if (!completed) return;
@@ -769,10 +777,12 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleMarkCompleted() {
     const completedAt = new Date().toISOString();
     const wasAlreadyCompleted = status === "completed";
-    const comprehensionItems = [
-      gistAnswer === null ? null : gistAnswer === gistQuestion.answerIndex,
-      ...toneQuestions.map((question) => (toneAnswers[question.id] == null ? null : toneAnswers[question.id] === question.answerIndex)),
-    ].filter((value): value is boolean => value !== null);
+    const comprehensionItems = showInterpretationChecks
+      ? [
+          gistAnswer === null ? null : gistAnswer === gistQuestion.answerIndex,
+          ...toneQuestions.map((question) => (toneAnswers[question.id] == null ? null : toneAnswers[question.id] === question.answerIndex)),
+        ].filter((value): value is boolean => value !== null)
+      : [];
     const comprehensionCorrect = comprehensionItems.filter(Boolean).length;
     const phraseCount = getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === text.title).length;
     markCompleted(text.id);
@@ -835,7 +845,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       comprehensionTotal: comprehensionItems.length,
       inferenceCorrect: inferenceStats.correct,
       inferenceAttempts: inferenceStats.attempted,
-      summaryCompleted: summaryDraft.trim().length >= 20,
+      summaryCompleted: showInterpretationChecks && summaryDraft.trim().length >= 20,
       challengeMode,
       challengeBudget,
     });
@@ -1236,33 +1246,35 @@ export default function Reader({ text }: { text: ReadingText }) {
         </div>
       </section>
 
-      <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
-        <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h2>
-        <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {quickChallenge.choices.map((choice) => {
-            const answered = quickChallengeAnswer !== null;
-            const correct = choice === quickChallenge.answer;
-            const selected = quickChallengeAnswer === choice;
-            return (
-              <button
-                key={choice}
-                type="button"
-                onClick={() => setQuickChallengeAnswer(choice)}
-                className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-                  answered && correct
-                    ? "bg-emerald-100 text-emerald-800"
-                    : selected
-                      ? "bg-rose-100 text-rose-800"
-                      : "bg-cream text-ink-muted"
-                }`}
-              >
-                {choice}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      {showInterpretationChecks && (
+        <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
+          <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h2>
+          <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {quickChallenge.choices.map((choice) => {
+              const answered = quickChallengeAnswer !== null;
+              const correct = choice === quickChallenge.answer;
+              const selected = quickChallengeAnswer === choice;
+              return (
+                <button
+                  key={choice}
+                  type="button"
+                  onClick={() => setQuickChallengeAnswer(choice)}
+                  className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                    answered && correct
+                      ? "bg-emerald-100 text-emerald-800"
+                      : selected
+                        ? "bg-rose-100 text-rose-800"
+                        : "bg-cream text-ink-muted"
+                  }`}
+                >
+                  {choice}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <div className={`mt-3 rounded-2xl px-3 py-2 text-xs font-semibold ${translationUses <= displayTranslationBudget ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
         Translation budget: {translationUses}/{displayTranslationBudget} used
@@ -1340,49 +1352,55 @@ export default function Reader({ text }: { text: ReadingText }) {
       </article>
 
       <section className="mt-8 space-y-4">
-        <ComprehensionQuestion
-          question={gistQuestion}
-          selected={gistAnswer}
-          onSelect={handleGistAnswer}
-        />
-
-        <section className="space-y-3">
-          <h2 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h2>
-          {toneQuestions.map((question) => (
+        {showInterpretationChecks && (
+          <>
             <ComprehensionQuestion
-              key={question.id}
-              question={question}
-              selected={toneAnswers[question.id] ?? null}
-              onSelect={(answer) => handleToneAnswer(question, answer)}
+              question={gistQuestion}
+              selected={gistAnswer}
+              onSelect={handleGistAnswer}
             />
-          ))}
-        </section>
+
+            <section className="space-y-3">
+              <h2 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h2>
+              {toneQuestions.map((question) => (
+                <ComprehensionQuestion
+                  key={question.id}
+                  question={question}
+                  selected={toneAnswers[question.id] ?? null}
+                  onSelect={(answer) => handleToneAnswer(question, answer)}
+                />
+              ))}
+            </section>
+          </>
+        )}
 
         {learningCandidates.length > 0 && (
           <LearningCandidatesSection candidates={learningCandidates} onSave={handleSaveCandidate} />
         )}
 
-        {relatedArticles.length > 0 && (
+        {showInterpretationChecks && relatedArticles.length > 0 && (
           <RelatedArticles articles={relatedArticles} />
         )}
 
-        {headlineComparison && (
+        {showInterpretationChecks && headlineComparison && (
           <HeadlineComparisonCard comparison={headlineComparison} />
         )}
 
-        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
-          <textarea
-            value={summaryDraft}
-            onChange={(event) => setSummaryDraft(event.target.value)}
-            rows={4}
-            placeholder="Write the article's main point in English or French."
-            className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
-          />
-          <p className="mt-2 text-xs text-ink-muted">
-            Aim for one sentence about what happened and one sentence about why it matters.
-          </p>
-        </div>
+        {showInterpretationChecks && (
+          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
+            <textarea
+              value={summaryDraft}
+              onChange={(event) => setSummaryDraft(event.target.value)}
+              rows={4}
+              placeholder="Write the article's main point in English or French."
+              className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+            />
+            <p className="mt-2 text-xs text-ink-muted">
+              Aim for one sentence about what happened and one sentence about why it matters.
+            </p>
+          </div>
+        )}
       </section>
 
       {/* Reading progress */}

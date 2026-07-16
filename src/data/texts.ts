@@ -1,5 +1,6 @@
 import type { ReadingText } from "@/types";
 import { publicDomainTexts } from "@/data/publicDomainTexts";
+import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
 /**
  * Hardcoded sample French reading texts — the emergency fallback pool used
@@ -146,7 +147,7 @@ Le marché du dimanche est un vrai moment de vie pour les habitants du quartier.
   },
 ];
 
-export const texts: ReadingText[] = [...coreTexts, ...publicDomainTexts];
+export const texts: ReadingText[] = [...coreTexts, ...publicDomainTexts.map(stripMetadataOnlyBlurb)];
 
 export function getTextById(id: string): ReadingText | undefined {
   return texts.find((t) => t.id === id);

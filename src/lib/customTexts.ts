@@ -1,5 +1,6 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { hashString } from "@/lib/hash";
+import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 import { pushStore } from "@/lib/supabase/sync";
 
 const KEY = "lire.customTexts.v1";
@@ -21,7 +22,7 @@ function read(): ReadingText[] {
   try {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
-    return Array.isArray(parsed) ? parsed.filter(isReadingText) : [];
+    return Array.isArray(parsed) ? parsed.filter(isReadingText).map(stripMetadataOnlyBlurb) : [];
   } catch {
     return [];
   }
@@ -74,7 +75,7 @@ export function saveCustomText(input: CustomTextInput): ReadingText {
     difficulty: input.difficulty,
     minutes: minutesFor(body),
     preview: previewFor(body),
-    blurbEn: "Imported by you for close reading with Liree's dictionary, review, audio, and completion tools.",
+    blurbEn: null,
     body,
     sourceName: "Imported text",
     publishedAt: createdAt,

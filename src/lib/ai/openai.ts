@@ -247,7 +247,7 @@ const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdo
     { "id": string, "blurbEn": string }
   ]
 }
-One entry per article given, same id. blurbEn: exactly 2-3 short, plain English sentences summarizing what the article is actually about (the real subject/events), for someone who doesn't read French yet and is deciding whether to open it. Neutral tone, no clickbait, no "this article discusses..." framing — just state what it's about.`;
+One entry per article given, same id. blurbEn: exactly 2-3 short, plain English sentences summarizing what the article is actually about (the real subject/events), for someone who doesn't read French yet and is deciding whether to open it. Neutral tone, no clickbait, no "this article discusses..." framing, and do not mention excerpt length, word count, reading level, or app metadata — just state what it's about.`;
 
 export async function explainWord(req: WordExplanationRequest): Promise<WordExplanation> {
   const system = `You are a French tutor helping a ${req.level}. ${WORD_SCHEMA}`;
