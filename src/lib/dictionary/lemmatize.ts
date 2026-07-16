@@ -656,6 +656,19 @@ const RULES: Rule[] = [
   { suffix: "ait", replacement: "er" },
   { suffix: "ait", replacement: "re" },
   { suffix: "ant", replacement: "er" },
+  // Present participles used adjectivally in feminine/plural form
+  // (grelottantes -> grelotter, scintillants -> scintiller).
+  { suffix: "antes", replacement: "er" },
+  { suffix: "ante", replacement: "er" },
+  { suffix: "ants", replacement: "er" },
+
+  // Literary/public-domain imperfect subjunctive forms for -er verbs.
+  { suffix: "assent", replacement: "er" },
+  { suffix: "assions", replacement: "er" },
+  { suffix: "assiez", replacement: "er" },
+  { suffix: "asses", replacement: "er" },
+  { suffix: "asse", replacement: "er" },
+  { suffix: "ât", replacement: "er" },
   { suffix: "ées", replacement: "er" },
   { suffix: "és", replacement: "er" },
   { suffix: "ée", replacement: "er" },
@@ -666,8 +679,10 @@ const RULES: Rule[] = [
   { suffix: "ons", replacement: "re" },
   { suffix: "ez", replacement: "er" },
   { suffix: "ez", replacement: "re" },
+  { suffix: "ez", replacement: "ir" },
   { suffix: "ent", replacement: "er" },
   { suffix: "ent", replacement: "re" },
+  { suffix: "ent", replacement: "ir" },
   { suffix: "es", replacement: "er" },
   { suffix: "e", replacement: "er" },
 
@@ -699,6 +714,23 @@ const RULES: Rule[] = [
   { suffix: "is", replacement: "ir" },
   { suffix: "i", replacement: "ir" },
   { suffix: "it", replacement: "ir" },
+  // Some irregular -ir verbs still use an -ir infinitive without the
+  // regular -iss- stem in imperfect/present forms (partait -> partir).
+  { suffix: "aient", replacement: "ir" },
+  { suffix: "ions", replacement: "ir" },
+  { suffix: "iez", replacement: "ir" },
+  { suffix: "ais", replacement: "ir" },
+  { suffix: "ait", replacement: "ir" },
+  { suffix: "ons", replacement: "ir" },
+
+  // Simple-past/literary forms for -re verbs (attendis -> attendre,
+  // confondirent -> confondre) plus imperfect-subjunctive spellings.
+  { suffix: "irent", replacement: "re" },
+  { suffix: "îmes", replacement: "re" },
+  { suffix: "îtes", replacement: "re" },
+  { suffix: "ît", replacement: "re" },
+  { suffix: "is", replacement: "re" },
+  { suffix: "it", replacement: "re" },
 
   // -re and -dre verbs: future / conditional. Both variants are useful:
   // "lira" -> "lire", while "vendra" -> "vendre".
@@ -740,6 +772,8 @@ const RULES: Rule[] = [
   { suffix: "ère", replacement: "er" },
   { suffix: "ives", replacement: "if" },
   { suffix: "ive", replacement: "if" },
+  { suffix: "uës", replacement: "u" },
+  { suffix: "uë", replacement: "u" },
   { suffix: "ches", replacement: "c" },
   { suffix: "che", replacement: "c" },
   { suffix: "ques", replacement: "c" },

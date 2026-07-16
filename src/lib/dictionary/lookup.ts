@@ -3,6 +3,7 @@ import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
+import { articleCoverageDictionary } from "@/data/dictionaries/article-coverage";
 import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
@@ -68,11 +69,20 @@ for (const entry of properNounDictionary) {
 
 const generatedByLemma = new Map<string, DictionaryEntry>();
 const generatedByForm = new Map<string, DictionaryEntry>();
+const articleCoverageByLemma = new Map<string, DictionaryEntry>();
+const articleCoverageByForm = new Map<string, DictionaryEntry>();
 
 for (const entry of frEnGeneratedDictionary) {
   generatedByLemma.set(entry.lemma.toLowerCase(), entry);
   for (const form of entry.forms ?? []) {
     generatedByForm.set(form.toLowerCase(), entry);
+  }
+}
+
+for (const entry of articleCoverageDictionary) {
+  articleCoverageByLemma.set(entry.lemma.toLowerCase(), entry);
+  for (const form of entry.forms ?? []) {
+    articleCoverageByForm.set(form.toLowerCase(), entry);
   }
 }
 
@@ -126,6 +136,8 @@ function lookupExact(key: string): DictionaryEntry | null {
     generatedByLemma.get(key) ??
     generatedByForm.get(key) ??
     getCustomDictionaryEntry(key) ??
+    articleCoverageByLemma.get(key) ??
+    articleCoverageByForm.get(key) ??
     null
   );
 }
@@ -211,6 +223,9 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
 
   const customExact = getCustomDictionaryEntry(clean);
   if (customExact) return toResult(rawWord, customExact);
+
+  const articleCoverageExact = articleCoverageByLemma.get(clean) ?? articleCoverageByForm.get(clean);
+  if (articleCoverageExact) return toResult(rawWord, articleCoverageExact);
 
   for (const guess of guessLemmas(clean)) {
     const viaGuess =
