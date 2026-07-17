@@ -25,6 +25,7 @@ export default function ReviewPage() {
   const [articleFilter, setArticleFilter] = useState<string | null>(null);
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [reviewMode, setReviewMode] = useState<"words" | "phrases">("words");
+  const [reviewStarted, setReviewStarted] = useState(false);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
@@ -34,6 +35,8 @@ export default function ReviewPage() {
   const reviewSessionCompleted = useRef(false);
   const phraseScore = useRef({ correct: 0, total: 0 });
   const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reviewCardRef = useRef<HTMLDivElement | null>(null);
+  const shouldScrollToReviewCard = useRef(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -65,6 +68,12 @@ export default function ReviewPage() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!reviewStarted || !shouldScrollToReviewCard.current) return;
+    shouldScrollToReviewCard.current = false;
+    reviewCardRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [reviewStarted]);
+
   // Snapshotting the queue at mount (rather than recomputing on every
   // word-state change) means answering a card doesn't reshuffle the deck
   // out from under the reader mid-session.
@@ -83,6 +92,7 @@ export default function ReviewPage() {
 
   useEffect(() => {
     if (!ready || reviewSessionStarted.current) return;
+    if (reviewMode === "words" && !reviewStarted) return;
     const cardCount = reviewMode === "words" ? queue.length : phraseQueue.length;
     if (cardCount <= 0) return;
     reviewSessionStarted.current = true;
@@ -91,7 +101,7 @@ export default function ReviewPage() {
       cardCount,
       articleFiltered: !!articleFilter,
     });
-  }, [articleFilter, phraseQueue.length, queue.length, ready, reviewMode]);
+  }, [articleFilter, phraseQueue.length, queue.length, ready, reviewMode, reviewStarted]);
 
   function visibleWords(allWords: SavedWord[]): SavedWord[] {
     return articleFilter ? allWords.filter((word) => word.sourceTextTitle === articleFilter) : allWords;
@@ -112,6 +122,12 @@ export default function ReviewPage() {
       correctCards,
       articleFiltered: !!articleFilter,
     });
+  }
+
+  function startWordReview() {
+    if (!current) return;
+    shouldScrollToReviewCard.current = true;
+    setReviewStarted(true);
   }
 
   function answer(result: "correct" | "incorrect") {
@@ -182,6 +198,7 @@ export default function ReviewPage() {
     setRevealed(false);
     setPhraseIndex(0);
     setPhraseAnswer(null);
+    setReviewStarted(false);
     setScore({ knew: 0, missed: 0 });
     setCardFeedback(null);
     phraseScore.current = { correct: 0, total: 0 };
@@ -246,6 +263,17 @@ export default function ReviewPage() {
       ))}
     </div>
   );
+
+  const shouldShowWordStart = reviewMode === "words" && !!current && !reviewStarted;
+  const shouldShowWordReview = reviewMode === "words" && !!current && reviewStarted;
+  const reviewProgressLabel =
+    !ready
+      ? ""
+      : reviewMode === "phrases"
+        ? `${phraseQueue.length} ${phraseQueue.length === 1 ? "phrase" : "phrases"}`
+        : reviewStarted
+          ? `card ${index + 1} of ${queue.length} due`
+          : `${queue.length} ${queue.length === 1 ? "card" : "cards"} due`;
 
   // No learning/unsure words saved at all.
   if (ready && stats.totalLearning === 0 && phraseQueue.length === 0) {
@@ -318,7 +346,7 @@ export default function ReviewPage() {
           {articleFilter && <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">From: {articleFilter}</p>}
         </div>
         <span className="text-sm text-ink-muted">
-          {ready ? `card ${index + 1} of ${queue.length} due` : ""}
+          {reviewProgressLabel}
         </span>
       </header>
 
@@ -334,8 +362,8 @@ export default function ReviewPage() {
         <VocabularyStateSummary items={vocabularyStates} />
       )}
 
-      {contextualArticles.length > 0 && (
-        <ContextualArticleReview items={contextualArticles} />
+      {shouldShowWordStart && (
+        <StartReviewButton onStart={startWordReview} />
       )}
 
       {phrases.length > 0 && (
@@ -353,11 +381,13 @@ export default function ReviewPage() {
         />
       )}
 
-      {reviewMode === "words" && current && (
-        <div className="flex flex-1 flex-col">
+      {shouldShowWordReview && current && (
+        <div ref={reviewCardRef} className="flex flex-1 flex-col">
           {/* Flashcard */}
           <div
-            className={`flex flex-1 flex-col items-center justify-center rounded-3xl bg-cream-card p-8 text-center shadow-sm ${
+            className={`flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-3xl bg-cream-card p-5 text-center shadow-sm ${
+              revealed ? "justify-start" : "justify-center"
+            } ${
               cardFeedback === "correct" || cardFeedback === "known"
                 ? "reward-card-lock-in bg-emerald-50"
                 : cardFeedback === "incorrect"
@@ -425,31 +455,57 @@ export default function ReviewPage() {
           </div>
 
           {/* Answer buttons */}
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <button
-              onClick={() => answer("incorrect")}
-              disabled={!revealed || cardFeedback !== null}
-              className="rounded-2xl bg-rose-100 py-4 text-sm font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
-            >
-              Didn&apos;t know it
-            </button>
-            <button
-              onClick={() => answer("correct")}
-              disabled={!revealed || cardFeedback !== null}
-              className="rounded-2xl bg-emerald-100 py-4 text-sm font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
-            >
-              Knew it
-            </button>
-          </div>
-          <button
-            onClick={handleMarkKnown}
-            disabled={cardFeedback !== null}
-            className="mt-2 rounded-2xl bg-cream-dark py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+          <div className="h-32" aria-hidden="true" />
+          <div
+            className="fixed inset-x-0 z-30 mx-auto max-w-md px-4"
+            style={{ bottom: "calc(5.25rem + var(--safe-bottom))" }}
           >
-            Mark as known
-          </button>
+            <div className="rounded-3xl bg-cream/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => answer("incorrect")}
+                  disabled={!revealed || cardFeedback !== null}
+                  className="rounded-2xl bg-rose-100 py-3 text-sm font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
+                >
+                  Didn&apos;t know it
+                </button>
+                <button
+                  onClick={() => answer("correct")}
+                  disabled={!revealed || cardFeedback !== null}
+                  className="rounded-2xl bg-emerald-100 py-3 text-sm font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
+                >
+                  Knew it
+                </button>
+              </div>
+              <button
+                onClick={handleMarkKnown}
+                disabled={cardFeedback !== null}
+                className="mt-2 w-full rounded-2xl bg-cream-dark py-2.5 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+              >
+                Mark as known
+              </button>
+            </div>
+          </div>
         </div>
       )}
+
+      {contextualArticles.length > 0 && (
+        <ContextualArticleReview items={contextualArticles} />
+      )}
+    </div>
+  );
+}
+
+function StartReviewButton({ onStart }: { onStart: () => void }) {
+  return (
+    <div className="mb-4">
+      <button
+        type="button"
+        onClick={onStart}
+        className="w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-sm active:scale-95"
+      >
+        Start Review
+      </button>
     </div>
   );
 }
