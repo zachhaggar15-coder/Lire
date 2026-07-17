@@ -204,12 +204,11 @@ function chooseByLevel(candidates, level, needed, usedBodies, usedRangesBySource
   return out;
 }
 
-function titleFor(candidate, sequence) {
-  const shortTitle = candidate.source.title
+function titleFor(candidate) {
+  return candidate.source.title
     .replace(/\s*\([^)]*\)/g, "")
     .replace(/, Tome [IVX]+/i, "")
     .trim();
-  return `${shortTitle}: extrait ${sequence}`;
 }
 
 function previewFor(body) {
@@ -224,7 +223,7 @@ function minutesFor(words) {
 function toReadingText(candidate, level, sequence) {
   return {
     id: `pd-${level.toLowerCase()}-${String(sequence).padStart(3, "0")}`,
-    title: titleFor(candidate, sequence),
+    title: titleFor(candidate),
     category: candidate.source.category ?? CATEGORY_ROTATION[sequence % CATEGORY_ROTATION.length],
     difficulty: level,
     minutes: minutesFor(candidate.wordCount),

@@ -6,6 +6,7 @@ const METADATA_BLURB_PATTERNS = [
   /\bimported by you\b/i,
   /\bclose reading with liree'?s\b/i,
 ];
+const GENERATED_EXCERPT_TITLE_SUFFIX = /:\s*extrait\s+\d+\s*$/i;
 
 function collapseWhitespace(text: string): string {
   return text.replace(/\s+/g, " ").trim();
@@ -44,8 +45,10 @@ export function isMetadataOnlyBlurb(blurb: string | null | undefined): boolean {
 }
 
 export function stripMetadataOnlyBlurb<T extends ReadingText>(text: T): T {
-  if (!isMetadataOnlyBlurb(text.blurbEn)) return text;
-  return { ...text, blurbEn: null };
+  const title = text.id.startsWith("pd-") ? text.title.replace(GENERATED_EXCERPT_TITLE_SUFFIX, "").trim() : text.title;
+  const blurbEn = isMetadataOnlyBlurb(text.blurbEn) ? null : text.blurbEn;
+  if (title === text.title && blurbEn === text.blurbEn) return text;
+  return { ...text, title, blurbEn };
 }
 
 export function contentSnippetForReadingText(text: ReadingText, maxLength = 120): string {

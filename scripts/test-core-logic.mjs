@@ -36,6 +36,7 @@ import { buildScorableArticles } from "../src/lib/recommendation/build.ts";
 import { buildScoringContext } from "../src/lib/recommendation/context.ts";
 import { rankArticles } from "../src/lib/recommendation/score.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
+import { texts as readingTexts } from "../src/data/texts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
 import { lookupWord } from "../src/lib/dictionary/lookup.ts";
@@ -277,8 +278,14 @@ console.log("\n--- Public-domain reading bank ---");
   check("public-domain ids are unique", new Set(publicDomainTexts.map((text) => text.id)).size === publicDomainTexts.length);
   const dailyB1 = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
   const dailyB1Repeat = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
+  const generatedExcerptSuffix = /:\s*extrait\s+\d+$/i;
   check("daily bank returns eight stable level-matched picks", dailyB1.length === 8 && dailyB1.map((text) => text.id).join(",") === dailyB1Repeat.map((text) => text.id).join(","));
   check("daily bank favours the selected CEFR level first", dailyB1.every((text) => ["B1", "A2", "B2", "A1", "C1"].includes(text.difficulty)));
+  check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
+  check(
+    "exported public-domain articles strip generated extrait numbers from titles",
+    readingTexts.filter((text) => text.id.startsWith("pd-")).every((text) => !generatedExcerptSuffix.test(text.title))
+  );
   const articleTabDaily = getDailyBankTexts({
     level: "A2",
     category: "all",
