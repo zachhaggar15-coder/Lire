@@ -38,7 +38,7 @@ export function XPProgressBar({
         aria-valuenow={percent}
       >
         <div
-          className="h-full rounded-full bg-brand transition-[width] duration-700 motion-reduce:transition-none"
+          className="reward-progress-fill h-full rounded-full bg-brand transition-[width] duration-700 motion-reduce:transition-none"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -46,7 +46,31 @@ export function XPProgressBar({
   );
 }
 
+export function StreakEmber({
+  days,
+  label = "Reading streak",
+  detail,
+}: {
+  days: number;
+  label?: string;
+  detail?: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="reward-ember h-10 w-10 shrink-0 rounded-full bg-amber-100" aria-hidden="true" />
+      <div>
+        <p className="text-lg font-extrabold leading-none text-ink">{days}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+        {detail && <p className="mt-0.5 text-xs text-ink-muted">{detail}</p>}
+      </div>
+    </div>
+  );
+}
+
 export function CurrentLevelCard({ level }: { level: ReaderLevel }) {
+  const cefrSteps = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const currentStep = Math.max(0, Math.min(cefrSteps.length - 1, level.level - 1));
+
   return (
     <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
       <div className="flex items-start gap-4">
@@ -62,6 +86,22 @@ export function CurrentLevelCard({ level }: { level: ReaderLevel }) {
             {level.currentLevelXp.toLocaleString()} / {level.nextLevelXp.toLocaleString()} XP
           </p>
           <XPProgressBar value={level.progress} label="XP to next level" className="mt-3" />
+          <div className="mt-3 grid grid-cols-6 gap-1" aria-label="CEFR progress">
+            {cefrSteps.map((step, index) => (
+              <div key={step} className="text-center">
+                <div
+                  className={`h-1.5 rounded-full ${
+                    index < currentStep
+                      ? "bg-brand"
+                      : index === currentStep
+                        ? "reward-progress-fill bg-brand"
+                        : "bg-cream-dark"
+                  }`}
+                />
+                <p className={`mt-1 text-[10px] font-bold ${index <= currentStep ? "text-brand" : "text-ink-muted"}`}>{step}</p>
+              </div>
+            ))}
+          </div>
           <p className="mt-2 text-xs font-semibold text-brand">+{level.recentXp} XP in the last 7 days</p>
         </div>
       </div>
@@ -247,25 +287,53 @@ export function CompletionSummary({
   onSecondPass: () => void;
   reviewHref: string | null;
 }) {
+  const stats = [
+    ["Words read", completion.wordsRead],
+    ["Reading time", `${completion.readingMinutes ?? "-"} min`],
+    ["Translations", completion.translationsUsed],
+    ["Saved words", completion.savedWords],
+    ["Phrases", completion.phrasesSaved],
+    ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
+  ];
+
   return (
-    <section className="rounded-3xl bg-cream-card p-4 text-left shadow-sm">
+    <section className="reward-completion-reveal rounded-3xl bg-cream-card p-4 text-left shadow-sm">
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Article complete</p>
-          <h2 className="mt-1 text-xl font-extrabold text-ink">+{completion.xpEarned} XP</h2>
+        <div className="flex min-w-0 items-start gap-3">
+          <div className="relative h-14 w-14 shrink-0">
+            <svg className="h-14 w-14 -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
+              <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3" className="text-cream-dark" />
+              <circle
+                cx="18"
+                cy="18"
+                r="15.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                pathLength={100}
+                strokeDasharray="100"
+                className="reward-completion-ring text-brand"
+              />
+            </svg>
+            <span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold uppercase tracking-wide text-brand">
+              Read
+            </span>
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Article complete</p>
+            <h2 className="mt-1 text-xl font-extrabold text-ink">+{completion.xpEarned} XP</h2>
+          </div>
         </div>
         <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{completion.score}/100</span>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-2">
-        {[
-          ["Words read", completion.wordsRead],
-          ["Reading time", `${completion.readingMinutes ?? "-"} min`],
-          ["Translations", completion.translationsUsed],
-          ["Saved words", completion.savedWords],
-          ["Phrases", completion.phrasesSaved],
-          ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
-        ].map(([label, value]) => (
-          <div key={label} className="rounded-2xl bg-cream p-2.5">
+        {stats.map(([label, value], index) => (
+          <div
+            key={label}
+            className="reward-stat-reveal rounded-2xl bg-cream p-2.5"
+            style={{ animationDelay: `${120 + index * 55}ms` }}
+          >
             <p className="text-base font-extrabold text-ink">{value}</p>
             <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
           </div>

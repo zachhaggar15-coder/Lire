@@ -143,6 +143,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [wordStatusMap, setWordStatusMap] = useState<Map<string, WordStatus>>(new Map());
   const [savedWordsSnapshot, setSavedWordsSnapshot] = useState<SavedWord[]>([]);
   const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
+  const [recentSavedWords, setRecentSavedWords] = useState<Set<string>>(new Set());
+  const [recentKnownWords, setRecentKnownWords] = useState<Set<string>>(new Set());
   const [activeWord, setActiveWord] = useState<ActiveWordState | null>(null);
   const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
   const [activePhrase, setActivePhrase] = useState<ActivePhraseState | null>(null);
@@ -174,6 +176,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const [activeAudioSentence, setActiveAudioSentence] = useState<number | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rewardTimeouts = useRef<number[]>([]);
   const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTriggered = useRef(false);
   const phraseHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -363,6 +366,8 @@ export default function Reader({ text }: { text: ReadingText }) {
 
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
+      rewardTimeouts.current.forEach((timeout) => clearTimeout(timeout));
+      rewardTimeouts.current = [];
       if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
       if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
       // Never let audio keep playing after navigating away from the article.
@@ -481,6 +486,25 @@ export default function Reader({ text }: { text: ReadingText }) {
       totalWordsSaved: state.totalWordsSaved + 1,
     }));
     trackEvent("word_saved", { articleId: text.id, source });
+  }
+
+  function pulseRewardWords(kind: "saved" | "known", values: Array<string | null | undefined>) {
+    const keys = values.map((value) => value?.toLowerCase()).filter((value): value is string => !!value);
+    if (keys.length === 0) return;
+    const setter = kind === "saved" ? setRecentSavedWords : setRecentKnownWords;
+    setter((prev) => {
+      const next = new Set(prev);
+      keys.forEach((key) => next.add(key));
+      return next;
+    });
+    const timeout = window.setTimeout(() => {
+      setter((prev) => {
+        const next = new Set(prev);
+        keys.forEach((key) => next.delete(key));
+        return next;
+      });
+    }, kind === "saved" ? 1500 : 1700);
+    rewardTimeouts.current.push(timeout);
   }
 
   function markAiSupportUsed(kind: "word" | "sentence" | "phrase") {
@@ -642,6 +666,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       setSavedWordsSnapshot(nextWords);
       setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
       rememberWordSaved("tap_lookup");
+      pulseRewardWords("saved", [clean, lookup.lemma]);
     }
 
     setActiveSentence(null);
@@ -716,8 +741,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       return next;
     });
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    pulseRewardWords("known", [activeWord.word, lemma]);
     setActiveWord(null);
-    showToast("Removed from saved words");
+    showToast("Marked as known");
   }
 
   function startSentenceHold(sentenceText: string) {
@@ -902,9 +928,19 @@ export default function Reader({ text }: { text: ReadingText }) {
     const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
+    const recentlyKnown = recentKnownWords.has(clean) || (!!lemma && recentKnownWords.has(lemma));
+    const recentlySaved = recentSavedWords.has(clean) || (!!lemma && recentSavedWords.has(lemma));
 
     if (known && settings.showKnownWordStyling) {
-      return `${base} text-ink-muted`;
+      return `${base} text-ink-muted ${recentlyKnown ? "reward-word-mastered" : ""}`;
+    }
+
+    if (recentlyKnown) {
+      return `${base} reward-word-mastered`;
+    }
+
+    if (recentlySaved) {
+      return `${base} bg-amber-100/80 text-ink reward-word-save`;
     }
 
     if (settings.showSavedHighlights) {
@@ -938,6 +974,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setSavedWordsSnapshot(nextWords);
     setWordStatusMap((prev) => new Map(prev).set(candidate.word, "learning"));
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    pulseRewardWords("saved", [candidate.word, candidate.lemma]);
     showToast("Saved learning candidate");
   }
 
@@ -1658,6 +1695,23 @@ function LearningCandidatesSection({
   candidates: LearningCandidate[];
   onSave: (candidate: LearningCandidate) => void;
 }) {
+  const [justSavedLemma, setJustSavedLemma] = useState<string | null>(null);
+  const savedTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (savedTimeout.current) clearTimeout(savedTimeout.current);
+    };
+  }, []);
+
+  function handleSave(candidate: LearningCandidate) {
+    if (candidate.alreadySaved) return;
+    setJustSavedLemma(candidate.lemma);
+    if (savedTimeout.current) clearTimeout(savedTimeout.current);
+    savedTimeout.current = setTimeout(() => setJustSavedLemma(null), 1200);
+    onSave(candidate);
+  }
+
   return (
     <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
@@ -1665,8 +1719,10 @@ function LearningCandidatesSection({
         Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
       </p>
       <div className="mt-3 space-y-2">
-        {candidates.map((candidate) => (
-          <div key={candidate.lemma} className="rounded-2xl bg-cream px-3 py-2">
+        {candidates.map((candidate) => {
+          const justSaved = justSavedLemma === candidate.lemma;
+          return (
+          <div key={candidate.lemma} className={`rounded-2xl bg-cream px-3 py-2 ${justSaved ? "reward-card-lock-in bg-brand-light/80" : ""}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-sm font-bold text-ink">
@@ -1678,18 +1734,19 @@ function LearningCandidatesSection({
               </div>
               <button
                 type="button"
-                onClick={() => onSave(candidate)}
-                disabled={candidate.alreadySaved}
+                onClick={() => handleSave(candidate)}
+                disabled={candidate.alreadySaved || justSaved}
                 className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
               >
-                {candidate.alreadySaved ? "Saved" : "Save"}
+                {candidate.alreadySaved || justSaved ? "Saved" : "Save"}
               </button>
             </div>
             {candidate.phrase && (
               <p className="mt-1 text-[11px] text-ink-muted">Appears in phrase: {candidate.phrase}</p>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

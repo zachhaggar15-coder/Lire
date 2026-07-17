@@ -12,6 +12,7 @@ import {
   MasteryIndicator,
   PassportStampCard,
   PersonalBestCard,
+  StreakEmber,
   TodaysMissionsPanel,
   TopicProgressCard,
 } from "@/components/GamificationCards";
@@ -124,8 +125,14 @@ export default function ProgressPage() {
                 ["Reading streak", `${snapshot.currentStreak} days`],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl bg-cream p-3">
-                  <p className="text-lg font-extrabold text-ink">{value}</p>
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+                  {label === "Reading streak" ? (
+                    <StreakEmber days={snapshot.currentStreak} label="Reading streak" />
+                  ) : (
+                    <>
+                      <p className="text-lg font-extrabold text-ink">{value}</p>
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
@@ -169,7 +176,9 @@ export default function ProgressPage() {
           <TodaysMissionsPanel missions={snapshot.missions} />
           <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Streaks</h2>
-            <p className="mt-2 text-2xl font-extrabold text-ink">{snapshot.currentStreak} days</p>
+            <div className="mt-3 rounded-2xl bg-cream px-3 py-3">
+              <StreakEmber days={snapshot.currentStreak} label="Current streak" detail={`${snapshot.currentStreak} ${snapshot.currentStreak === 1 ? "day" : "days"} of meaningful activity`} />
+            </div>
             <p className="mt-1 text-sm text-ink-muted">Longest streak: {snapshot.longestStreak} days. Activity counts when you complete an article, review meaningfully, or finish a mission.</p>
             <p className="mt-3 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
               Next milestone: {snapshot.currentStreak < 3 ? "3-day streak" : snapshot.currentStreak < 7 ? "7-day streak" : "keep the week alive calmly"}.

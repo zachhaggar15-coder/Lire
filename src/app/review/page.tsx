@@ -28,10 +28,12 @@ export default function ReviewPage() {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseAnswer, setPhraseAnswer] = useState<string | null>(null);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
+  const [cardFeedback, setCardFeedback] = useState<"correct" | "incorrect" | "known" | null>(null);
   const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
   const phraseScore = useRef({ correct: 0, total: 0 });
+  const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -55,6 +57,12 @@ export default function ReviewPage() {
       setReviewMode("phrases");
     }
     setReady(true);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
+    };
   }, []);
 
   // Snapshotting the queue at mount (rather than recomputing on every
@@ -107,36 +115,42 @@ export default function ReviewPage() {
   }
 
   function answer(result: "correct" | "incorrect") {
+    if (!current || cardFeedback) return;
     const correct = result === "correct";
     const nextScore = {
       knew: score.knew + (correct ? 1 : 0),
       missed: score.missed + (correct ? 0 : 1),
     };
-    if (current) {
-      setWords(visibleWords(recordReviewResult(current.word, result)));
-      trackEvent("review_answer_submitted", {
-        mode: "words",
-        correct,
-        cardIndex: index + 1,
-        totalCards: queue.length,
-        articleFiltered: !!articleFilter,
-      });
-      if (correct) {
-        const xp = recordReviewSuccessXp(current.word);
-        if (xp > 0) {
-          setXpNotice(`+${xp} XP`);
-          window.setTimeout(() => setXpNotice(null), 1600);
-        }
+    setCardFeedback(correct ? "correct" : "incorrect");
+    trackEvent("review_answer_submitted", {
+      mode: "words",
+      correct,
+      cardIndex: index + 1,
+      totalCards: queue.length,
+      articleFiltered: !!articleFilter,
+    });
+    if (correct) {
+      const xp = recordReviewSuccessXp(current.word);
+      if (xp > 0) {
+        setXpNotice(`+${xp} XP`);
+        window.setTimeout(() => setXpNotice(null), 1600);
       }
     }
-    setScore(nextScore);
-    setRevealed(false);
-    if (index + 1 >= queue.length) completeReviewSession("words", queue.length, nextScore.knew);
-    setIndex((i) => i + 1);
+    if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
+    cardFeedbackTimeout.current = setTimeout(() => {
+      setWords(visibleWords(recordReviewResult(current.word, result)));
+      setScore(nextScore);
+      setRevealed(false);
+      if (index + 1 >= queue.length) completeReviewSession("words", queue.length, nextScore.knew);
+      setIndex((i) => i + 1);
+      setCardFeedback(null);
+      cardFeedbackTimeout.current = null;
+    }, 420);
   }
 
   function handleMarkKnown() {
-    if (!current) return;
+    if (!current || cardFeedback) return;
+    setCardFeedback("known");
     trackEvent("review_answer_submitted", {
       mode: "words",
       correct: true,
@@ -145,14 +159,23 @@ export default function ReviewPage() {
       totalCards: queue.length,
       articleFiltered: !!articleFilter,
     });
-    if (queue.length <= 1) completeReviewSession("words", queue.length, score.knew + 1);
-    setWords(visibleWords(markWordAsKnown(current.word)));
-    // markWordAsKnown drops this word from the (memoised) queue, so
-    // whatever now sits at `index` is already the next card.
-    setRevealed(false);
+    if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
+    cardFeedbackTimeout.current = setTimeout(() => {
+      if (queue.length <= 1) completeReviewSession("words", queue.length, score.knew + 1);
+      setWords(visibleWords(markWordAsKnown(current.word)));
+      // markWordAsKnown drops this word from the (memoised) queue, so
+      // whatever now sits at `index` is already the next card.
+      setRevealed(false);
+      setCardFeedback(null);
+      cardFeedbackTimeout.current = null;
+    }, 420);
   }
 
   function restart() {
+    if (cardFeedbackTimeout.current) {
+      clearTimeout(cardFeedbackTimeout.current);
+      cardFeedbackTimeout.current = null;
+    }
     setWords(visibleWords(getSavedWords()));
     setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
     setIndex(0);
@@ -160,6 +183,7 @@ export default function ReviewPage() {
     setPhraseIndex(0);
     setPhraseAnswer(null);
     setScore({ knew: 0, missed: 0 });
+    setCardFeedback(null);
     phraseScore.current = { correct: 0, total: 0 };
     reviewSessionStarted.current = false;
     reviewSessionCompleted.current = false;
@@ -332,7 +356,15 @@ export default function ReviewPage() {
       {reviewMode === "words" && current && (
         <div className="flex flex-1 flex-col">
           {/* Flashcard */}
-          <div className="flex flex-1 flex-col items-center justify-center rounded-3xl bg-cream-card p-8 text-center shadow-sm">
+          <div
+            className={`flex flex-1 flex-col items-center justify-center rounded-3xl bg-cream-card p-8 text-center shadow-sm ${
+              cardFeedback === "correct" || cardFeedback === "known"
+                ? "reward-card-lock-in bg-emerald-50"
+                : cardFeedback === "incorrect"
+                  ? "reward-card-still-learning ring-2 ring-amber-200"
+                  : ""
+            }`}
+          >
             <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
               French
             </p>
@@ -396,14 +428,14 @@ export default function ReviewPage() {
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
               onClick={() => answer("incorrect")}
-              disabled={!revealed}
+              disabled={!revealed || cardFeedback !== null}
               className="rounded-2xl bg-rose-100 py-4 text-sm font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
             >
               Didn&apos;t know it
             </button>
             <button
               onClick={() => answer("correct")}
-              disabled={!revealed}
+              disabled={!revealed || cardFeedback !== null}
               className="rounded-2xl bg-emerald-100 py-4 text-sm font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
             >
               Knew it
@@ -411,7 +443,8 @@ export default function ReviewPage() {
           </div>
           <button
             onClick={handleMarkKnown}
-            className="mt-2 rounded-2xl bg-cream-dark py-3 text-sm font-semibold text-ink-muted active:scale-95"
+            disabled={cardFeedback !== null}
+            className="mt-2 rounded-2xl bg-cream-dark py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
           >
             Mark as known
           </button>
