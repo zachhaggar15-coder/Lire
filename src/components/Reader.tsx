@@ -28,7 +28,7 @@ import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import { getCustomTexts } from "@/lib/customTexts";
-import { canSpeak, speakFrench, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
+import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
@@ -174,7 +174,9 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
-  const [activeAudioSentence, setActiveAudioSentence] = useState<number | null>(null);
+  const [activeAudioParagraph, setActiveAudioParagraph] = useState<number | null>(null);
+  const [scrollProgressPercent, setScrollProgressPercent] = useState(0);
+  const articleRef = useRef<HTMLElement | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rewardTimeouts = useRef<number[]>([]);
   const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -242,6 +244,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     activeTimeTracker.current = createActiveTimeTracker();
     maxProgressPercent.current = 0;
     progressMilestones.current = new Set();
+    setScrollProgressPercent(0);
     completedRef.current = false;
     finalizedSessionRef.current = false;
     learningActionCount.current = 0;
@@ -273,11 +276,22 @@ export default function Reader({ text }: { text: ReadingText }) {
     function handleVisibility() {
       activeTimeTracker.current?.markVisible(document.visibilityState === "visible");
     }
-    function handleScroll() {
-      markInteraction();
+    function articleScrollPercent(): number {
+      const article = articleRef.current;
+      if (article) {
+        const articleTop = article.getBoundingClientRect().top + window.scrollY;
+        const articleHeight = Math.max(1, article.scrollHeight);
+        const readLine = window.scrollY + window.innerHeight * 0.75;
+        return Math.max(0, Math.min(100, Math.round(((readLine - articleTop) / articleHeight) * 100)));
+      }
       const doc = document.documentElement;
       const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-      const percent = Math.max(0, Math.min(100, Math.round((window.scrollY / maxScroll) * 100)));
+      return Math.max(0, Math.min(100, Math.round((window.scrollY / maxScroll) * 100)));
+    }
+    function updateScrollProgress(markAsInteraction: boolean) {
+      if (markAsInteraction) markInteraction();
+      const percent = articleScrollPercent();
+      setScrollProgressPercent(percent);
       maxProgressPercent.current = Math.max(maxProgressPercent.current, percent);
       for (const milestone of [25, 50, 75]) {
         if (percent >= milestone && !progressMilestones.current.has(milestone)) {
@@ -289,17 +303,25 @@ export default function Reader({ text }: { text: ReadingText }) {
         }
       }
     }
+    function handleScroll() {
+      updateScrollProgress(true);
+    }
+    function handleResize() {
+      updateScrollProgress(false);
+    }
 
     window.addEventListener("pointerdown", markInteraction, { passive: true });
     window.addEventListener("keydown", markInteraction);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
     document.addEventListener("visibilitychange", handleVisibility);
-    handleScroll();
+    handleResize();
 
     return () => {
       window.removeEventListener("pointerdown", markInteraction);
       window.removeEventListener("keydown", markInteraction);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       document.removeEventListener("visibilitychange", handleVisibility);
       if (!completedRef.current) finalizeReadingSession(false);
     };
@@ -351,6 +373,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setTranslationState("idle");
     setFluentSentences(null);
     setTranslationError(null);
+    setActiveAudioParagraph(null);
 
     // Pre-warm the fluent translation in the background as soon as the
     // article opens, rather than waiting for the reader to tap "Show
@@ -373,6 +396,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       // Never let audio keep playing after navigating away from the article.
       stopSpeaking();
       setIsSpeakingArticle(false);
+      setActiveAudioParagraph(null);
     };
     // text.body/text.language can't change independently of text.id in this
     // app (a different article is always a whole new `text` object), so
@@ -384,11 +408,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (isSpeakingArticle) {
       stopSpeaking();
       setIsSpeakingArticle(false);
+      setActiveAudioParagraph(null);
       return;
     }
-    const started = speakFrenchParagraphs([text.title, ...paragraphTexts], "normal", () => setIsSpeakingArticle(false));
+    const started = speakFrenchParagraphs([text.title, ...paragraphTexts], "normal", () => {
+      setIsSpeakingArticle(false);
+      setActiveAudioParagraph(null);
+    });
     if (started) {
       setIsSpeakingArticle(true);
+      setActiveAudioParagraph(null);
       speechUsedThisSession.current = true;
       recordLearningAction();
       trackEvent("speech_playback_used", { articleId: text.id, scope: "article" });
@@ -442,18 +471,23 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (next && translationState === "idle" && shouldUseFluentTranslation()) void handleFetchFluentTranslation();
   }
 
-  function handlePlaySentence(sentence: string, flatIndex: number) {
+  function handlePlayParagraph(paragraph: string, paragraphIndex: number) {
     if (!canUseSpeech) return;
-    const started = speakFrench(sentence, "normal");
+    if (activeAudioParagraph === paragraphIndex) {
+      stopSpeaking();
+      setActiveAudioParagraph(null);
+      setIsSpeakingArticle(false);
+      return;
+    }
+    const started = speakFrenchParagraphs([paragraph], "normal", () => {
+      setActiveAudioParagraph((current) => (current === paragraphIndex ? null : current));
+    });
     if (!started) return;
-    setActiveAudioSentence(flatIndex);
+    setIsSpeakingArticle(false);
+    setActiveAudioParagraph(paragraphIndex);
     speechUsedThisSession.current = true;
     recordLearningAction();
-    trackEvent("speech_playback_used", { articleId: text.id, scope: "sentence" });
-    const words = sentence.trim().split(/\s+/).filter(Boolean).length;
-    window.setTimeout(() => {
-      setActiveAudioSentence((current) => (current === flatIndex ? null : current));
-    }, Math.max(1800, Math.min(9000, words * 360)));
+    trackEvent("speech_playback_used", { articleId: text.id, scope: "paragraph" });
   }
 
   function shouldUseFluentTranslation(): boolean {
@@ -1012,24 +1046,24 @@ export default function Reader({ text }: { text: ReadingText }) {
     return false;
   }
 
-  /** The clickable, word-tappable French sentence — shared between the normal flowing-paragraph layout and the per-sentence interlinear layout below, so the tap targets don't have to be defined twice. */
+  /** The clickable, word-tappable French sentence used inside each paragraph, so tap targets stay consistent in normal and translated reading. */
   function phraseClassName(): string {
     if (rereadMode) return "rounded px-0.5 py-0.5";
     return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
   }
 
-  function sentenceAudioButton(sentence: string, flatIndex: number): ReactNode {
+  function paragraphAudioButton(paragraph: string, paragraphIndex: number): ReactNode {
     if (!canUseSpeech) return null;
-    const active = activeAudioSentence === flatIndex;
+    const active = activeAudioParagraph === paragraphIndex;
     return (
       <button
         type="button"
         onClick={(event) => {
           event.stopPropagation();
-          handlePlaySentence(sentence, flatIndex);
+          handlePlayParagraph(paragraph, paragraphIndex);
         }}
-        aria-label="Play this sentence"
-        className={`mr-1 inline-flex h-6 w-6 translate-y-0.5 items-center justify-center rounded-full text-[10px] font-bold active:scale-95 ${
+        aria-label={active ? "Stop this paragraph" : `Play paragraph ${paragraphIndex + 1}`}
+        className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold active:scale-95 ${
           active ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
         }`}
       >
@@ -1175,6 +1209,10 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   return (
     <div className="px-4 pt-4">
+      <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-[11px] font-bold tabular-nums text-brand shadow-sm ring-1 ring-cream-dark/70 backdrop-blur">
+        {scrollProgressPercent}% read
+      </div>
+
       {/* Header with back button */}
       <div className="mb-4 flex items-center gap-2">
         <Link
@@ -1259,40 +1297,6 @@ export default function Reader({ text }: { text: ReadingText }) {
         </button>
       </div>
 
-      <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Translation challenge</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">Optional. Pick a target if you want to practise reading through uncertainty.</p>
-          </div>
-          <span className="shrink-0 rounded-full bg-cream px-2 py-1 text-xs font-bold text-brand">
-            {displayTranslationBudget} max
-          </span>
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {(
-            [
-              ["none", "No challenge"],
-              ["relaxed", "Relaxed"],
-              ["balanced", "Balanced"],
-              ["ambitious", "Ambitious"],
-            ] as const
-          ).map(([mode, label]) => (
-            <button
-              key={mode}
-              type="button"
-              onClick={() => setChallengeMode(mode)}
-              disabled={status === "completed"}
-              className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 disabled:opacity-60 ${
-                challengeMode === mode ? "bg-brand text-white" : "bg-cream text-ink-muted"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </section>
-
       {showInterpretationChecks && (
         <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
           <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h2>
@@ -1323,11 +1327,6 @@ export default function Reader({ text }: { text: ReadingText }) {
         </section>
       )}
 
-      <div className={`mt-3 rounded-2xl px-3 py-2 text-xs font-semibold ${translationUses <= displayTranslationBudget ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
-        Translation budget: {translationUses}/{displayTranslationBudget} used
-        {challengeMode === "none" ? " - optional target based on this article" : translationUses > displayTranslationBudget ? " - challenge missed, keep reading" : " - challenge on track"}
-      </div>
-
       {rereadMode && (
         <div className="mt-3 rounded-2xl bg-brand-light px-3 py-2 text-xs font-semibold text-brand">
           Second pass: English, highlights, and dictionary prompts are hidden.
@@ -1342,7 +1341,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             </>
           )}
           {shouldUseFluentTranslation() && translationState === "loading" && "Translating naturally, starting from the top..."}
-          {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, shown under each sentence."}
+          {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, shown under each paragraph."}
           {shouldUseFluentTranslation() && translationState === "ready" && translationError && (
             <>
               Some parts could not be translated naturally ({translationError}), so those lines use the offline phrase-aware version.{" "}
@@ -1355,45 +1354,48 @@ export default function Reader({ text }: { text: ReadingText }) {
       )}
 
       <article
+        ref={articleRef}
         className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
       >
         {paragraphs.map((sentences, pi) =>
           showEnglishTranslation ? (
-            // Interlinear layout: each sentence gets its own line, with its
-            // translation directly underneath — true "between the lines,"
-            // which a flowing multi-sentence paragraph can't support (there'd
-            // be nowhere to put a translation for the 2nd+ sentence without
-            // it reading as belonging to the wrong one).
-            <div key={pi} className="space-y-3">
-              {sentences.map((sg, si) => {
-                const flatIndex = paragraphBreakBeforeIndex[pi] + si;
-                return (
-                  <div key={si} className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-start md:gap-4">
-                    <p>
-                      {sentenceAudioButton(sg.text, flatIndex)}
+            // Keep translated mode paragraph-first; the English paragraph sits
+            // underneath the French rather than breaking up every sentence.
+            <div key={pi} className="flex items-start gap-2">
+              {paragraphAudioButton(paragraphTexts[pi] ?? sentences.map((sg) => sg.text).join(" "), pi)}
+              <div className="min-w-0 flex-1 space-y-2">
+                <p>
+                  {sentences.map((sg, si) => (
+                    <Fragment key={si}>
                       {renderSentenceSpan(sg, si)}
-                    </p>
-                    <p className="mt-1 border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted md:mt-0">
-                      {fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex]}
-                    </p>
-                  </div>
-                );
-              })}
+                      {si < sentences.length - 1 && " "}
+                    </Fragment>
+                  ))}
+                </p>
+                <p className="border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
+                  {sentences
+                    .map((_, si) => {
+                      const flatIndex = paragraphBreakBeforeIndex[pi] + si;
+                      return fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex];
+                    })
+                    .filter(Boolean)
+                    .join(" ")}
+                </p>
+              </div>
             </div>
           ) : (
             // Normal reading layout: sentences flow together into one paragraph.
-            <p key={pi}>
-              {sentences.map((sg, si) => {
-                const flatIndex = paragraphBreakBeforeIndex[pi] + si;
-                return (
-                <Fragment key={si}>
-                  {sentenceAudioButton(sg.text, flatIndex)}
-                  {renderSentenceSpan(sg, si)}
-                  {si < sentences.length - 1 && " "}
-                </Fragment>
-                );
-              })}
-            </p>
+            <div key={pi} className="flex items-start gap-2">
+              {paragraphAudioButton(paragraphTexts[pi] ?? sentences.map((sg) => sg.text).join(" "), pi)}
+              <p className="min-w-0 flex-1">
+                {sentences.map((sg, si) => (
+                  <Fragment key={si}>
+                    {renderSentenceSpan(sg, si)}
+                    {si < sentences.length - 1 && " "}
+                  </Fragment>
+                ))}
+              </p>
+            </div>
           )
         )}
       </article>
@@ -1544,8 +1546,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           </button>
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The Translate toggle asks an AI tutor for a fluent, natural translation of each sentence, shown
-              right under it — for reading the whole article in English alongside the French. Unless "Fluent AI
+              The Translate toggle asks an AI tutor for a fluent, natural translation grouped by paragraph, shown
+              below the French — for reading the whole article in English alongside the French. Unless "Fluent AI
               translation" is off in Settings, this starts loading in the background as soon as you open the
               article — usually ready by the time you tap the toggle, rather than making you wait. It still
               uses your OpenAI quota either way, once per article (cached after that). Until it's ready (or if

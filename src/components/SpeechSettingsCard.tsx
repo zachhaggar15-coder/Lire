@@ -13,7 +13,7 @@ interface SpeechSettingsCardProps {
 
 /**
  * Voice + speed controls for every "Listen"/pronounce button in the app
- * (Reader's "Listen to article," and the word/sentence audio buttons) — all
+ * (Reader's article/paragraph listening and word pronounce buttons) — all
  * read the same settings.speechRate/speechVoiceURI via speech.ts, so this
  * card is the one place to tune them rather than per-button controls.
  */
