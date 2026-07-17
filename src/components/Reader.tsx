@@ -17,9 +17,15 @@ import {
   type DictionaryArticleTranslationMode,
 } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
+import type { ArticleTranslationAlignmentSegment } from "@/lib/ai/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildContextualTranslation } from "@/lib/dictionary/contextualTranslation";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
+import {
+  buildInterlinearTranslationChunks,
+  findNaturalTranslationForToken,
+  type ResolvedTranslationAlignment,
+} from "@/lib/translationAlignment";
 import { getKnownWords, markKnown } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
@@ -171,6 +177,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
   /** null = translation hasn't started; otherwise one slot per flat sentence, filled in progressively chunk-by-chunk (still-null slots render the offline fallback). */
   const [fluentSentences, setFluentSentences] = useState<(string | null)[] | null>(null);
+  /** Same shape as fluentSentences, but each slot contains natural French→English word/phrase alignment hints for interlinear rendering and word taps. */
+  const [fluentAlignments, setFluentAlignments] = useState<(ArticleTranslationAlignmentSegment[] | null)[] | null>(null);
   const [translationError, setTranslationError] = useState<string | null>(null);
   const [canUseSpeech, setCanUseSpeech] = useState(false);
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
@@ -372,6 +380,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setSecondPassStartedAt(null);
     setTranslationState("idle");
     setFluentSentences(null);
+    setFluentAlignments(null);
     setTranslationError(null);
     setActiveAudioParagraph(null);
 
@@ -438,6 +447,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setTranslationState("loading");
     setTranslationError(null);
     setFluentSentences(new Array<string | null>(flatSentences.length).fill(null));
+    setFluentAlignments(new Array<ArticleTranslationAlignmentSegment[] | null>(flatSentences.length).fill(null));
 
     let lastError: string | null = null;
     for (const chunk of translationChunks) {
@@ -452,6 +462,13 @@ export default function Reader({ text }: { text: ReadingText }) {
           const next = prev ? [...prev] : new Array<string | null>(flatSentences.length).fill(null);
           result.data.sentences.forEach((s, i) => {
             next[chunk.globalStartIndex + i] = s;
+          });
+          return next;
+        });
+        setFluentAlignments((prev) => {
+          const next = prev ? [...prev] : new Array<ArticleTranslationAlignmentSegment[] | null>(flatSentences.length).fill(null);
+          result.data.alignments?.forEach((segments, i) => {
+            next[chunk.globalStartIndex + i] = segments;
           });
           return next;
         });
@@ -642,6 +659,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     return { previousWord, nextWord };
   }
 
+  function naturalTranslationForWordTap(sentenceText: string, tokens: Token[], index: number): ResolvedTranslationAlignment | null {
+    const sentenceIndex = flatSentences.indexOf(sentenceText);
+    if (sentenceIndex === -1) return null;
+    return findNaturalTranslationForToken(tokens, index, fluentAlignments?.[sentenceIndex]);
+  }
+
   function handleWordTap(sentenceText: string, tokens: Token[], index: number) {
     if (rereadMode) return;
     const clean = tokens[index]?.clean;
@@ -676,6 +699,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       nextSentence: next,
       lookup,
     });
+    const naturalTranslation = naturalTranslationForWordTap(sentenceText, tokens, index);
     const pronounReference = findPronounReference(
       clean,
       tokens,
@@ -694,7 +718,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     });
 
     if (!known && !existingStatus && !protectedProperNoun) {
-      const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning"));
+      const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning", naturalTranslation?.english ?? null));
       existingStatus = "learning";
       setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
       setSavedWordsSnapshot(nextWords);
@@ -711,6 +735,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       surroundingSentence: previous,
       lookup,
       contextualTranslation,
+      naturalTranslation,
       existingStatus,
       pronounReference,
     });
@@ -810,22 +835,27 @@ export default function Reader({ text }: { text: ReadingText }) {
     word: string,
     lookup: ActiveWordState["lookup"],
     contextSentence: string,
-    wordStatus: Exclude<WordStatus, "known">
+    wordStatus: Exclude<WordStatus, "known">,
+    naturalTranslation: string | null = null
   ): SavedWord {
     const missing = lookup.source === "missing";
     const firstExample = lookup.examples[0];
+    const translations = [
+      ...(naturalTranslation?.trim() ? [naturalTranslation.trim()] : []),
+      ...lookup.translations,
+    ].filter((translation, index, values) => translation && values.indexOf(translation) === index);
     const fallbackExample = generateFallbackExample({
       word,
       lemma: lookup.lemma,
       partOfSpeech: lookup.partOfSpeech,
       gender: lookup.gender,
-      translations: lookup.translations,
+      translations,
     });
     const entry: SavedWord = {
       word,
       lemma: lookup.lemma,
-      translations: lookup.translations,
-      primaryTranslation: missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET,
+      translations,
+      primaryTranslation: translations[0] ?? (missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET),
       partOfSpeech: lookup.partOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
@@ -1076,16 +1106,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     );
   }
 
-  function renderSentenceSpan(sg: SentenceGroup, key: number) {
+  function renderTokenNodes(sg: SentenceGroup, startIndex = 0, endIndex = sg.tokens.length - 1): ReactNode[] {
     const renderedTokens: ReactNode[] = [];
-    for (let ti = 0; ti < sg.tokens.length; ti++) {
+    for (let ti = startIndex; ti <= endIndex; ti++) {
       const tok = sg.tokens[ti];
       const phrase = tok.isWord ? findPhraseTranslationMatch(sg.tokens, ti) : null;
-      if (phrase) {
+      if (phrase && phrase.endIndex <= endIndex) {
         const phraseText = sg.tokens.slice(ti, phrase.endIndex + 1).map((token) => token.text).join("");
         renderedTokens.push(
           <span
-            key={ti}
+            key={`${startIndex}-${ti}`}
             onPointerDown={(event) => {
               event.stopPropagation();
               if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
@@ -1136,7 +1166,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       renderedTokens.push(
         tok.isWord ? (
           <span
-            key={ti}
+            key={`${startIndex}-${ti}`}
             onPointerDown={(event) => {
               event.stopPropagation();
               if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
@@ -1173,11 +1203,15 @@ export default function Reader({ text }: { text: ReadingText }) {
             {tok.text}
           </span>
         ) : (
-          <span key={ti}>{tok.text}</span>
+          <span key={`${startIndex}-${ti}`}>{tok.text}</span>
         )
       );
     }
 
+    return renderedTokens;
+  }
+
+  function renderSentenceFrame(sg: SentenceGroup, key: number | string, children: ReactNode, className?: string) {
     return (
       <span
         key={key}
@@ -1200,10 +1234,54 @@ export default function Reader({ text }: { text: ReadingText }) {
           }
           handleSentenceTap(sg.text);
         }}
-        className={rereadMode ? "rounded" : "cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60"}
+        className={className ?? (rereadMode ? "rounded" : "cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60")}
       >
-        {renderedTokens}
+        {children}
       </span>
+    );
+  }
+
+  function renderSentenceSpan(sg: SentenceGroup, key: number) {
+    return renderSentenceFrame(sg, key, renderTokenNodes(sg));
+  }
+
+  function renderInterlinearSentence(sg: SentenceGroup, key: number, flatIndex: number) {
+    const sentenceTranslation = fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex] ?? null;
+    const chunks = buildInterlinearTranslationChunks(sg.tokens, fluentAlignments?.[flatIndex], sentenceTranslation);
+
+    return renderSentenceFrame(
+      sg,
+      key,
+      <span className="inline align-baseline">
+        {chunks.map((chunk, chunkIndex) => {
+          const tokenNodes = renderTokenNodes(sg, chunk.startIndex, chunk.endIndex);
+          if (!chunk.english) return <span key={chunkIndex}>{tokenNodes}</span>;
+
+          const sentenceFallback = chunk.source === "sentence";
+          return (
+            <span
+              key={chunkIndex}
+              className={
+                sentenceFallback
+                  ? "my-1 inline-flex w-full max-w-full flex-col items-start align-top leading-tight"
+                  : "mx-[0.04em] inline-flex max-w-[9rem] flex-col items-center align-baseline leading-tight"
+              }
+            >
+              <span className="leading-[1.35]">{tokenNodes}</span>
+              <span
+                className={
+                  sentenceFallback
+                    ? "border-l-2 border-cream-dark pl-3 text-[0.75em] italic leading-snug text-ink-muted"
+                    : "text-center text-[0.58em] italic leading-tight text-ink-muted"
+                }
+              >
+                {chunk.english}
+              </span>
+            </span>
+          );
+        })}
+      </span>,
+      rereadMode ? "rounded" : "cursor-pointer rounded transition-colors active:bg-sky-100/60"
     );
   }
 
@@ -1341,7 +1419,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             </>
           )}
           {shouldUseFluentTranslation() && translationState === "loading" && "Translating naturally, starting from the top..."}
-          {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, shown under each paragraph."}
+          {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, aligned between the French lines."}
           {shouldUseFluentTranslation() && translationState === "ready" && translationError && (
             <>
               Some parts could not be translated naturally ({translationError}), so those lines use the offline phrase-aware version.{" "}
@@ -1359,29 +1437,19 @@ export default function Reader({ text }: { text: ReadingText }) {
       >
         {paragraphs.map((sentences, pi) =>
           showEnglishTranslation ? (
-            // Keep translated mode paragraph-first; the English paragraph sits
-            // underneath the French rather than breaking up every sentence.
+            // Translated mode stays paragraph-first, but each French sentence
+            // now renders as interlinear word/phrase chunks so English appears
+            // as close as possible to the corresponding French.
             <div key={pi} className="flex items-start gap-2">
               {paragraphAudioButton(paragraphTexts[pi] ?? sentences.map((sg) => sg.text).join(" "), pi)}
-              <div className="min-w-0 flex-1 space-y-2">
-                <p>
+              <p className="min-w-0 flex-1 leading-[2.25]">
                   {sentences.map((sg, si) => (
                     <Fragment key={si}>
-                      {renderSentenceSpan(sg, si)}
+                      {renderInterlinearSentence(sg, si, paragraphBreakBeforeIndex[pi] + si)}
                       {si < sentences.length - 1 && " "}
                     </Fragment>
                   ))}
-                </p>
-                <p className="border-l-2 border-cream-dark pl-3 text-[0.9em] italic leading-relaxed text-ink-muted">
-                  {sentences
-                    .map((_, si) => {
-                      const flatIndex = paragraphBreakBeforeIndex[pi] + si;
-                      return fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex];
-                    })
-                    .filter(Boolean)
-                    .join(" ")}
-                </p>
-              </div>
+              </p>
             </div>
           ) : (
             // Normal reading layout: sentences flow together into one paragraph.
@@ -1546,8 +1614,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           </button>
           {showTranslateLaterNote && (
             <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The Translate toggle asks an AI tutor for a fluent, natural translation grouped by paragraph, shown
-              below the French — for reading the whole article in English alongside the French. Unless "Fluent AI
+              The Translate toggle asks an AI tutor for a fluent, natural translation with word and phrase alignments,
+              shown between the French lines. Unless "Fluent AI
               translation" is off in Settings, this starts loading in the background as soon as you open the
               article — usually ready by the time you tap the toggle, rather than making you wait. It still
               uses your OpenAI quota either way, once per article (cached after that). Until it's ready (or if

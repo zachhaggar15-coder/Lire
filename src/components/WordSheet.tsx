@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import type { ContextualTranslationGrammar, ContextualTranslationResult } from "@/lib/dictionary/contextualTranslation";
+import type { ResolvedTranslationAlignment } from "@/lib/translationAlignment";
 import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
 import type { PronounReference } from "@/lib/pronounReferences";
@@ -22,6 +23,8 @@ export interface ActiveWordState {
   surroundingSentence: string | null;
   lookup: DictionaryLookupResult;
   contextualTranslation: ContextualTranslationResult;
+  /** Natural AI article-translation phrase that contains this tapped word, when the article translation is available. */
+  naturalTranslation: ResolvedTranslationAlignment | null;
   /** The word's current saved/known status, or null if it's untouched. */
   existingStatus: WordStatus | null;
   pronounReference: PronounReference | null;
@@ -383,6 +386,21 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
             <p className="text-sm italic text-accent-pinktext">Definition hidden until you try or reveal it.</p>
           ) : (
             <>
+              {state?.naturalTranslation && (
+                <div className="rounded-2xl bg-brand-light/80 p-3">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">From natural translation</p>
+                    <span className="rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-semibold text-brand">
+                      AI aligned
+                    </span>
+                  </div>
+                  <p className="mt-1 text-lg font-bold text-ink">{state.naturalTranslation.english}</p>
+                  <p className="mt-1 text-xs text-ink-muted">
+                    Aligned with <span className="font-semibold text-ink">{state.naturalTranslation.french}</span> in the fluent sentence translation.
+                  </p>
+                </div>
+              )}
+
               {contextual && (
                 <div className="rounded-2xl bg-white/75 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">

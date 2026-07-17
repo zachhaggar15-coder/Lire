@@ -116,6 +116,20 @@ export interface ArticleTranslationRequest {
 export interface ArticleTranslationResult {
   /** One fluent English translation per input sentence, same order. */
   sentences: string[];
+  /**
+   * Optional word/phrase-level alignment for each sentence. Each inner array
+   * contains French chunks copied from that source sentence and the closest
+   * natural English phrase from `sentences[index]`. Older cached translation
+   * results may not have this field, so readers must degrade gracefully.
+   */
+  alignments?: ArticleTranslationAlignmentSegment[][];
+}
+
+export interface ArticleTranslationAlignmentSegment {
+  /** A word or short phrase copied from the French input sentence. */
+  french: string;
+  /** The closest corresponding phrase from the natural English translation. */
+  english: string;
 }
 
 /**

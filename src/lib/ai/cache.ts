@@ -51,5 +51,5 @@ export function sentenceCacheKey(sentence: string): string {
 
 /** Keyed on the article id plus its actual sentence text, so a since-edited/re-scraped article (same id, different body) doesn't serve a stale cached translation. */
 export function articleTranslationCacheKey(articleId: string, sentences: string[]): string {
-  return `articleTranslation:${hashString(`${articleId}::${sentences.join("\n")}`)}`;
+  return `articleTranslation:v2:${hashString(`${articleId}::${sentences.join("\n")}`)}`;
 }

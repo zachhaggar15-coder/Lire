@@ -1,6 +1,7 @@
 import type {
   ArticleBlurbInput,
   ArticleBlurbResult,
+  ArticleTranslationAlignmentSegment,
   ArticleTranslationRequest,
   ArticleTranslationResult,
   SentenceExplanation,
@@ -178,7 +179,25 @@ function assertArticleTranslation(raw: unknown, expectedCount: number, fallback:
   if (!r || !isStringArray(r.sentences) || r.sentences.length !== expectedCount) {
     throw new Error("OpenAI article-translation response had an unexpected shape.");
   }
-  return { sentences: r.sentences.map((s, i) => (s.trim() ? s.trim() : fallback[i] ?? "")) };
+  const sentences = r.sentences.map((s, i) => (s.trim() ? s.trim() : fallback[i] ?? ""));
+  return { sentences, alignments: normaliseArticleAlignments(r.alignments, expectedCount) };
+}
+
+function normaliseArticleAlignments(raw: unknown, expectedCount: number): ArticleTranslationAlignmentSegment[][] {
+  if (!Array.isArray(raw) || raw.length !== expectedCount) {
+    return Array.from({ length: expectedCount }, () => []);
+  }
+
+  return raw.map((sentenceAlignments) => {
+    if (!Array.isArray(sentenceAlignments)) return [];
+    return sentenceAlignments
+      .filter((item): item is Record<string, unknown> => !!item && typeof item === "object")
+      .map((item) => ({
+        french: typeof item.french === "string" ? item.french.trim() : "",
+        english: typeof item.english === "string" ? item.english.trim() : "",
+      }))
+      .filter((item) => item.french && item.english);
+  });
 }
 
 function assertArticleBlurbResults(raw: unknown): ArticleBlurbResult[] {
@@ -238,7 +257,15 @@ const SENTENCE_SCHEMA = `Respond with a single valid JSON object, no markdown, n
 
 const ARTICLE_TRANSLATION_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
 {
-  "sentences": string[]   // one fluent English translation per numbered input sentence, in the same order — the array length must exactly match the number of numbered sentences given
+  "sentences": string[],       // one fluent English translation per numbered input sentence, in the same order — the array length must exactly match the number of numbered sentences given
+  "alignments": [
+    [
+      {
+        "french": string,      // exact French word or short phrase copied from that input sentence
+        "english": string      // closest corresponding word or short phrase from the natural English sentence
+      }
+    ]
+  ]                            // one inner alignment array per input sentence, same order and same outer length as "sentences"
 }`;
 
 const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
@@ -297,7 +324,7 @@ export async function explainSentence(req: SentenceExplanationRequest): Promise<
  * output.
  */
 export async function translateArticleSentences(req: ArticleTranslationRequest): Promise<ArticleTranslationResult> {
-  const system = `You are translating a French article into natural, fluent, idiomatic English for a ${req.level} — not a literal word-for-word rendering, but not a loose paraphrase either: preserve the actual meaning and tone precisely, just express it the way a fluent English speaker naturally would. Use the full article (including sentences other than the one you're currently translating) to resolve pronouns, tone, and ambiguous phrasing correctly. ${ARTICLE_TRANSLATION_SCHEMA}`;
+  const system = `You are translating a French article into natural, fluent, idiomatic English for a ${req.level} — not a literal word-for-word rendering, but not a loose paraphrase either: preserve the actual meaning and tone precisely, just express it the way a fluent English speaker naturally would. Use the full article (including sentences other than the one you're currently translating) to resolve pronouns, tone, and ambiguous phrasing correctly. Also produce word/short-phrase alignments so a language learner can tap a French word and see the natural English phrase that carried that meaning. For idioms or multi-word expressions, align the whole French phrase to the whole natural English phrase rather than forcing one-word glosses. ${ARTICLE_TRANSLATION_SCHEMA}`;
   const breakSet = new Set(req.paragraphBreakBeforeIndex);
   const articleForContext = req.sentences
     .map((s, i) => (breakSet.has(i) && i > 0 ? `\n${s}` : s))
@@ -308,6 +335,7 @@ export async function translateArticleSentences(req: ArticleTranslationRequest):
     articleForContext,
     `Now translate each of the following ${req.sentences.length} sentences individually, in order:`,
     ...req.sentences.map((s, i) => `[${i + 1}] ${s}`),
+    `For each sentence's alignments, cover important content words and useful phrases. Keep function words only when they matter for the meaning. The "french" value must be copied from the French sentence, not lemmatised.`,
   ]
     .filter(Boolean)
     .join("\n");
