@@ -969,12 +969,18 @@ export default function Reader({ text }: { text: ReadingText }) {
       ...(naturalTranslation?.trim() ? [naturalTranslation.trim()] : []),
       ...lookup.translations,
     ].filter((translation, index, values) => translation && values.indexOf(translation) === index);
+    // Deliberately the dictionary's own glosses rather than `translations`,
+    // which leads with the article-specific natural translation. The fallback
+    // example slots a gloss into a generic frame ("C'est très X." / "It's very
+    // X."), so a context-fitted phrase produces nonsense — "mouillé" aligned
+    // as "was anchored" rendered "It's very was anchored." The dictionary
+    // entry is the one that matches the frame's part of speech.
     const fallbackExample = generateFallbackExample({
       word,
       lemma: lookup.lemma,
       partOfSpeech: lookup.partOfSpeech,
       gender: lookup.gender,
-      translations,
+      translations: lookup.translations.length > 0 ? lookup.translations : translations,
     });
     const entry: SavedWord = {
       word,
