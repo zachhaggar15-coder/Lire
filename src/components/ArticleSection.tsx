@@ -5,6 +5,7 @@ import type { ScoredArticle } from "@/lib/recommendation/types";
 function compactSourceLabel(article: ScoredArticle): string | null {
   const { text } = article;
   if (text.id.startsWith("custom-")) return "Imported text";
+  if (text.id.startsWith("starter-")) return "Written for beginners";
   if (text.id.startsWith("pd-")) return "Classic story";
   return text.sourceName ?? null;
 }

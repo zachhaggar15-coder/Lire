@@ -1,5 +1,6 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { publicDomainTexts } from "@/data/publicDomainTexts";
+import { starterTexts } from "@/data/starterTexts";
 import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
@@ -10,6 +11,11 @@ const CEFR_ORDER: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export function isPublicDomainBankText(text: ReadingText): boolean {
   return text.id.startsWith("pd-");
+}
+
+/** Original beginner texts written for the app — see data/starterTexts.ts. */
+export function isStarterText(text: ReadingText): boolean {
+  return text.id.startsWith("starter-");
 }
 
 export function adjacentLevels(level: Difficulty): Difficulty[] {
@@ -37,7 +43,7 @@ export function getDailyBankTexts({
 }): ReadingText[] {
   const allowedLevels = adjacentLevels(level);
   const categoryKey = category ?? "all";
-  const candidates = publicDomainTexts.filter((text) => {
+  const candidates = [...starterTexts, ...publicDomainTexts].filter((text) => {
     if (!allowedLevels.includes(text.difficulty)) return false;
     if (categoryKey !== "all" && text.category !== categoryKey) return false;
     return true;
@@ -45,8 +51,14 @@ export function getDailyBankTexts({
 
   return seededShuffle(candidates, `${todayKey(date)}::bank::${level}::${categoryKey}`)
     .sort((a, b) => {
-      const levelDistance = allowedLevels.indexOf(a.difficulty) - allowedLevels.indexOf(b.difficulty);
-      return levelDistance !== 0 ? levelDistance : 0;
+      // Purpose-written beginner texts come first at every level. The
+      // public-domain bank is 19th-century literature, so even its "A1"
+      // excerpts are far above a real A1 reader; those stay available (and
+      // are the only option higher up), but they shouldn't be what someone
+      // meets on their first day.
+      const starterFirst = Number(isStarterText(b)) - Number(isStarterText(a));
+      if (starterFirst !== 0) return starterFirst;
+      return allowedLevels.indexOf(a.difficulty) - allowedLevels.indexOf(b.difficulty);
     })
     .slice(0, limit)
     .map(stripMetadataOnlyBlurb);

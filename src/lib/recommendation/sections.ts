@@ -14,8 +14,16 @@ const DAILY_BANK_SECTION_SIZE = 8;
 const LIVE_NEWS_SECTION_SIZE = 2;
 const LATEST_NEWS_SECTION_SIZE = 4;
 
-function isPublicDomainBankArticle(article: ScoredArticle): boolean {
-  return article.text.id.startsWith("pd-");
+/**
+ * Everything that comes from the offline reading bank rather than a live
+ * feed: the public-domain excerpts (pd-) and the beginner texts written for
+ * the app (starter-, see data/starterTexts.ts). Both belong in the "daily
+ * reading" section; only RSS items are live news. Matching on "pd-" alone
+ * quietly routed every starter text into the live-news bucket, which left
+ * the Articles tab's daily section empty.
+ */
+function isReadingBankArticle(article: ScoredArticle): boolean {
+  return article.text.id.startsWith("pd-") || article.text.id.startsWith("starter-");
 }
 
 function take(list: ScoredArticle[], usedIds: Set<string>, limit: number): ScoredArticle[] {
@@ -44,13 +52,13 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
   const usedIds = new Set<string>();
 
   const dailyBank = take(
-    withoutSnippets.filter(isPublicDomainBankArticle),
+    withoutSnippets.filter(isReadingBankArticle),
     usedIds,
     DAILY_BANK_SECTION_SIZE
   );
 
   const liveNews = take(
-    [...withoutSnippets].filter((article) => !isPublicDomainBankArticle(article)).sort(newestFirst),
+    [...withoutSnippets].filter((article) => !isReadingBankArticle(article)).sort(newestFirst),
     usedIds,
     LIVE_NEWS_SECTION_SIZE
   );

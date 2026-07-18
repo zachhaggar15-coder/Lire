@@ -176,7 +176,13 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             {formatCategory(text.category)}
           </span>
           <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
-            {difficulty?.cefr ?? text.difficulty}
+            {/* The stored level is the one source of truth for the CEFR code:
+                it's what the level filter, the reading bank and the section
+                headings ("A1 readings") all key off. The estimate below powers
+                the personalised label and unfamiliar-word figure instead —
+                showing a second, different CEFR code here meant a text listed
+                as A1 opened as A2. */}
+            {text.difficulty}
           </span>
           {difficulty && (
             <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${LABEL_STYLES[difficulty.label]}`}>

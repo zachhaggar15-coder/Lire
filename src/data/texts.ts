@@ -1,5 +1,6 @@
 import type { ReadingText } from "@/types";
 import { publicDomainTexts } from "@/data/publicDomainTexts";
+import { starterTexts } from "@/data/starterTexts";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
 /**
@@ -147,7 +148,11 @@ Le marché du dimanche est un vrai moment de vie pour les habitants du quartier.
   },
 ];
 
-export const texts: ReadingText[] = [...coreTexts, ...publicDomainTexts.map(stripMetadataOnlyBlurb)];
+export const texts: ReadingText[] = [
+  ...starterTexts,
+  ...coreTexts,
+  ...publicDomainTexts.map(stripMetadataOnlyBlurb),
+];
 
 export function getTextById(id: string): ReadingText | undefined {
   return texts.find((t) => t.id === id);

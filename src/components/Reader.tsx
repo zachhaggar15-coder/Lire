@@ -1450,8 +1450,11 @@ export default function Reader({ text }: { text: ReadingText }) {
       <h1 className="text-2xl font-extrabold leading-tight text-ink">
         {text.title}
       </h1>
+      {/* The stored level, matching the card that led here — see the note in
+          ReadingCard. The estimate only ever speaks in the "Reading help"
+          note below, where it describes the fit rather than renaming it. */}
       <p className="mt-1 text-xs text-ink-muted">
-        {difficulty?.cefr ?? text.difficulty} - {text.minutes} min
+        {text.difficulty} - {text.minutes} min
       </p>
       <details className="mt-2 text-xs text-ink-muted">
         <summary className="cursor-pointer font-semibold underline underline-offset-2">Reading help</summary>
@@ -1461,8 +1464,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         </p>
         {difficulty && (
           <p className="mt-1">
-            This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
-            {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
+            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
+            {Math.round(difficulty.unknownWordRatio * 100)}% of the words may be new.
           </p>
         )}
       </details>
