@@ -86,6 +86,13 @@ const NEWS_WORD_STOP_LEMMAS = new Set([
   "pour",
   "contre",
   "cette",
+  "an",
+  "annee",
+  "année",
+  "entree",
+  "entrée",
+  "nom",
+  "pas",
 ]);
 
 function normalise(text: string): string {

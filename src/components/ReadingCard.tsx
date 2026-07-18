@@ -88,6 +88,13 @@ function sourceTrustLabel(text: ReadingText): string {
   return "Built-in practice text";
 }
 
+function learnerSourceLabel(text: ReadingText): string {
+  if (text.id.startsWith("custom-")) return "Imported text";
+  if (text.id.startsWith("pd-")) return "Classic story";
+  if (text.sourceName) return text.sourceName;
+  return "Practice text";
+}
+
 export default function ReadingCard({ text, difficulty: difficultyProp, starRating, score }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
@@ -182,6 +189,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         <h2 className="text-lg font-bold leading-snug text-ink">{text.title}</h2>
         {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
         <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
+        <p className="mt-2 text-xs font-semibold text-ink-muted">{learnerSourceLabel(text)}</p>
 
         {starRating && (
           <p className="mt-1 text-xs font-semibold text-brand">
@@ -191,49 +199,35 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           </p>
         )}
 
-        {difficulty && (
+        {difficulty && Math.round(difficulty.unknownWordRatio * 100) >= 8 && (
           <p className="mt-1 text-xs text-ink-muted">
             ~{Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar
           </p>
         )}
 
-        <p className="mt-1 text-xs text-ink-muted">
-          Trust: {sourceTrustLabel(text)}
-          {difficulty ? ` · ${Math.round(difficulty.dictionaryCoverage * 100)}% local dictionary coverage` : ""}
+      </Link>
+
+      <details className="mt-2 text-xs text-ink-muted">
+        <summary className="cursor-pointer font-semibold underline underline-offset-2">
+          Article details
+        </summary>
+        <p className="mt-1">
+          {sourceTrustLabel(text)}
+          {difficulty ? ` - ${Math.round(difficulty.dictionaryCoverage * 100)}% dictionary coverage` : ""}
         </p>
-
-        {reasons.length > 0 && (
-          <p className="mt-1 text-xs text-ink-muted">
-            Why: {reasons.join(" · ")}
-          </p>
-        )}
-
+        {reasons.length > 0 && <p className="mt-1">Why: {reasons.join(" - ")}</p>}
         {text.sourceName && (
-          <p className="mt-1.5 text-xs text-ink-muted">
+          <p className="mt-1">
             {text.sourceName}
             {text.publishedAt && <> {"\u00b7"} {formatDate(text.publishedAt)}</>}
           </p>
         )}
-      </Link>
+      </details>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[status]}`}>
           {STATUS_LABELS[status]}
         </span>
-        <button
-          type="button"
-          onClick={() => recordArticlePreference(text, "more")}
-          className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
-        >
-          More like this
-        </button>
-        <button
-          type="button"
-          onClick={() => recordArticlePreference(text, "less")}
-          className="rounded-full bg-cream-dark px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-95"
-        >
-          Less like this
-        </button>
         <button
           type="button"
           onClick={handleSaveLater}
@@ -243,27 +237,49 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         >
           {savedLater ? "Saved" : "Save"}
         </button>
-        {text.sourceName && (
-          <>
-            <button
-              type="button"
-              onClick={handlePreferSource}
-              className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
-                preferred ? "bg-brand text-white" : "bg-amber-100 text-amber-700"
-              }`}
-            >
-              {preferred ? "Preferred source" : "Prefer source"}
-            </button>
-            <button
-              type="button"
-              onClick={handleHideSource}
-              className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 active:scale-95"
-            >
-              Hide source
-            </button>
-          </>
-        )}
       </div>
+
+      <details className="mt-2">
+        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+          Tune recommendations
+        </summary>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => recordArticlePreference(text, "more")}
+            className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
+          >
+            More like this
+          </button>
+          <button
+            type="button"
+            onClick={() => recordArticlePreference(text, "less")}
+            className="rounded-full bg-cream-dark px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-95"
+          >
+            Less like this
+          </button>
+          {text.sourceName && (
+            <>
+              <button
+                type="button"
+                onClick={handlePreferSource}
+                className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
+                  preferred ? "bg-brand text-white" : "bg-amber-100 text-amber-700"
+                }`}
+              >
+                {preferred ? "Preferred source" : "Prefer source"}
+              </button>
+              <button
+                type="button"
+                onClick={handleHideSource}
+                className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 active:scale-95"
+              >
+                Hide source
+              </button>
+            </>
+          )}
+        </div>
+      </details>
     </article>
   );
 }

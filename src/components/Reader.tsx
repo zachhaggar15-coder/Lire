@@ -1451,16 +1451,21 @@ export default function Reader({ text }: { text: ReadingText }) {
         {text.title}
       </h1>
       <p className="mt-1 text-xs text-ink-muted">
-        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, hold
-        it for the phrase it belongs to. Need the whole sentence? Tap a word, then &ldquo;Explain the
-        whole sentence&rdquo;.
+        {difficulty?.cefr ?? text.difficulty} - {text.minutes} min
       </p>
-      {difficulty && (
-        <p className="mt-1 text-xs italic text-ink-muted">
-          This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
-          {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
+      <details className="mt-2 text-xs text-ink-muted">
+        <summary className="cursor-pointer font-semibold underline underline-offset-2">Reading help</summary>
+        <p className="mt-1">
+          Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
+          &ldquo;Explain the whole sentence&rdquo;.
         </p>
-      )}
+        {difficulty && (
+          <p className="mt-1">
+            This text looks like {difficulty.cefr} ({difficulty.label.toLowerCase()}). Around{" "}
+            {Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar.
+          </p>
+        )}
+      </details>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         {canUseSpeech && (
@@ -1510,7 +1515,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               }`}
             />
           </span>
-          Translate ({translationModeLabel()})
+          {showEnglishTranslation ? "Hide English" : "English help"}
         </button>
       </div>
 
@@ -1524,14 +1529,14 @@ export default function Reader({ text }: { text: ReadingText }) {
         <p className="mt-2 text-[11px] text-ink-muted">
           {!shouldUseFluentTranslation() && (
             <>
-              Showing the free, instant offline {settings.translationMode === "literal" ? "literal" : "phrase-aware"} translation.
+              Showing rough offline English help ({translationModeLabel().toLowerCase()}).
             </>
           )}
-          {shouldUseFluentTranslation() && translationState === "loading" && "Translating naturally, starting from the top..."}
+          {shouldUseFluentTranslation() && translationState === "loading" && "Natural English is loading. Until it is ready, the lines below use rough phrase-by-phrase help."}
           {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, aligned between the French lines."}
           {shouldUseFluentTranslation() && translationState === "ready" && translationError && (
             <>
-              Some parts could not be translated naturally ({translationError}), so those lines use the offline phrase-aware version.{" "}
+              Some lines use rough offline help because natural English did not finish ({translationError}).{" "}
               <button type="button" onClick={handleFetchFluentTranslation} className="underline">
                 Try again
               </button>
@@ -1700,38 +1705,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 Completed
               </span>
             )}
-            <div className="rounded-3xl bg-cream-card p-3 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">How did this level feel?</p>
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {(
-                  [
-                    { value: "too-easy", label: "Too easy" },
-                    { value: "good", label: "Good" },
-                    { value: "hard", label: "Hard" },
-                  ] as const
-                ).map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handleArticleFeedback(option.value)}
-                    className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-                      articleFeedback === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            {!completionResult && articleSavedWordCount > 0 && (
-              <Link
-                href={`/review?article=${encodeURIComponent(text.title)}`}
-                className="block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
-              >
-                Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
-              </Link>
-            )}
-            {rereadMode ? (
+            {rereadMode && (
               <button
                 type="button"
                 onClick={handleFinishSecondPass}
@@ -1739,21 +1713,60 @@ export default function Reader({ text }: { text: ReadingText }) {
               >
                 Finish second pass
               </button>
-            ) : !completionResult ? (
-              <button
-                type="button"
-                onClick={handleStartSecondPass}
-                className="block rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
-              >
-                Read again without English
-              </button>
-            ) : null}
-            {!rereadMode && <PostSessionResearchPrompt articleId={text.id} />}
+            )}
             {!rereadMode && (
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95" />
-                <FeedbackButton feature="reader_completion" articleId={text.id} label="Give reader feedback" />
-              </div>
+              <details className="rounded-3xl bg-cream-card p-3 text-left shadow-sm">
+                <summary className="cursor-pointer text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
+                  More options
+                </summary>
+                <div className="mt-3 rounded-2xl bg-cream p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">How did this level feel?</p>
+                  <div className="mt-2 grid grid-cols-3 gap-2">
+                    {(
+                      [
+                        { value: "too-easy", label: "Too easy" },
+                        { value: "good", label: "Good" },
+                        { value: "hard", label: "Hard" },
+                      ] as const
+                    ).map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => handleArticleFeedback(option.value)}
+                        className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                          articleFeedback === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                {!completionResult && articleSavedWordCount > 0 && (
+                  <Link
+                    href={`/review?article=${encodeURIComponent(text.title)}`}
+                    className="mt-3 block rounded-full bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white active:scale-95"
+                  >
+                    Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
+                  </Link>
+                )}
+                {!completionResult && (
+                  <button
+                    type="button"
+                    onClick={handleStartSecondPass}
+                    className="mt-3 block w-full rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
+                  >
+                    Read again without English
+                  </button>
+                )}
+                <div className="mt-3">
+                  <PostSessionResearchPrompt articleId={text.id} />
+                </div>
+                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95" />
+                  <FeedbackButton feature="reader_completion" articleId={text.id} label="Give reader feedback" />
+                </div>
+              </details>
             )}
           </div>
         ) : (
@@ -1767,8 +1780,15 @@ export default function Reader({ text }: { text: ReadingText }) {
       </div>
 
       {/* "What to read next" belongs after finishing, not among the exercises. */}
-      {showInterpretationChecks && !rereadMode && relatedArticles.length > 0 && (
-        <RelatedArticles articles={relatedArticles} />
+      {showInterpretationChecks && status === "completed" && !rereadMode && relatedArticles.length > 0 && (
+        <details className="mb-5">
+          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+            More articles
+          </summary>
+          <div className="mt-3">
+            <RelatedArticles articles={relatedArticles} />
+          </div>
+        </details>
       )}
 
       <div className="mb-6 space-y-2 text-center">

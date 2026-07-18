@@ -64,6 +64,15 @@ function Toggle({
   );
 }
 
+function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <div>
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
+    </div>
+  );
+}
+
 export default function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
@@ -107,7 +116,9 @@ export default function SettingsPage() {
         <p className="text-sm text-ink-muted">Tune how reading looks and feels.</p>
       </header>
 
-      <div className="space-y-3">
+      <div className="space-y-5">
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Account" subtitle="Install options, beta access, and sync status." />
         <BetaNotice />
         <AccountCard />
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
@@ -120,6 +131,10 @@ export default function SettingsPage() {
           </div>
         </div>
         <PwaInstallCard />
+        </section>
+
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Reading" subtitle="Level, text size, and word highlighting." />
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <p className="font-semibold text-ink">Reading level</p>
           <p className="mt-0.5 text-sm text-ink-muted">
@@ -152,6 +167,31 @@ export default function SettingsPage() {
           label="Show known word styling"
           description="De-emphasise words you've marked as known, so your eye goes to what's actually new."
         />
+        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <p className="font-semibold text-ink">Font size</p>
+          <p className="mt-0.5 text-sm text-ink-muted">
+            Adjust the reading text size.
+          </p>
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {FONT_SIZE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => update({ fontSize: opt.value })}
+                className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
+                  settings.fontSize === opt.value
+                    ? "bg-brand text-white"
+                    : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        </section>
+
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Translation and audio" subtitle="Speech playback, sentence help, and English support." />
         <SpeechSettingsCard settings={settings} onChange={update} />
 
         <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
@@ -197,27 +237,13 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
-          <p className="font-semibold text-ink">Font size</p>
-          <p className="mt-0.5 text-sm text-ink-muted">
-            Adjust the reading text size.
-          </p>
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            {FONT_SIZE_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => update({ fontSize: opt.value })}
-                className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
-                  settings.fontSize === opt.value
-                    ? "bg-brand text-white"
-                    : "bg-cream-dark text-ink-muted"
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        </section>
+
+        <details className="space-y-3">
+          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+            Advanced and support
+          </summary>
+          <div className="mt-3 space-y-3">
 
         <div className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm">
           <div className="min-w-0">
@@ -348,6 +374,8 @@ export default function SettingsPage() {
             <FeedbackButton feature="settings" label="Open" />
           </div>
         </div>
+          </div>
+        </details>
       </div>
     </div>
   );

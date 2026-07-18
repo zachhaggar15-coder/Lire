@@ -8,6 +8,7 @@ import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
+import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
 import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
@@ -78,6 +79,11 @@ function isEligibleArticleModeText(text: ReadingText): boolean {
   return text.category !== "news-style";
 }
 
+function shouldGateLiveNews(level: Difficulty, completedArticleCount: number, showAnyway: boolean): boolean {
+  if (showAnyway) return false;
+  return (level === "A1" || level === "A2") && completedArticleCount < 3;
+}
+
 export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
@@ -94,8 +100,11 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
+  const [completedArticleCount, setCompletedArticleCount] = useState(0);
+  const [showLiveNewsAnyway, setShowLiveNewsAnyway] = useState(false);
   /** Article difficulty is computed from dictionary lookups, so rescore once full coverage loads. */
   const dictionaryRevision = useGeneratedDictionary();
+  const liveNewsGated = mode === "live" && shouldGateLiveNews(selectedLevel, completedArticleCount, showLiveNewsAnyway);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
@@ -105,6 +114,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
   useEffect(() => {
     setSelectedLevel(getSelectedReadingLevel());
+    setCompletedArticleCount(getArchive().length);
   }, [prefVersion]);
 
   useEffect(() => {
@@ -121,6 +131,12 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setState("loading");
       setSections(null);
       setTodayWords([]);
+
+      if (mode === "live" && liveNewsGated) {
+        setRssTexts([]);
+        setState("success");
+        return;
+      }
 
       if (mode === "articles") {
         setRssTexts([]);
@@ -175,7 +191,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       if (slowTimer) clearTimeout(slowTimer);
       if (timeoutTimer) clearTimeout(timeoutTimer);
     };
-  }, [categoryFilter, languageFilter, mode, reloadKey]);
+  }, [categoryFilter, languageFilter, liveNewsGated, mode, reloadKey]);
 
   useEffect(() => {
     if (state === "loading" || state === "error") return;
@@ -221,8 +237,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const title = mode === "live" ? "Live News" : "Articles";
   const subtitle =
     mode === "live"
-      ? "Fresh RSS articles plus repeated words appearing across today's news."
-      : "Daily bank articles, imported texts, and personalised recommendations.";
+      ? "Current French articles for when you want a stretch."
+      : "Start with short French readings chosen for practice.";
 
   return (
     <div className="px-4 pt-6">
@@ -238,33 +254,37 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         </div>
       </header>
 
-      <FilterPanel
-        categoryItems={mode === "articles" ? ARTICLE_CATEGORY_FILTERS : CATEGORY_FILTERS}
-        categoryFilter={categoryFilter}
-        difficultyFilter={difficultyFilter}
-        languageFilter={languageFilter}
-        onCategory={setCategoryFilter}
-        onDifficulty={setDifficultyFilter}
-        onLanguage={setLanguageFilter}
-        onReset={resetFilters}
-      />
+      {liveNewsGated ? (
+        <BeginnerNewsGate onContinue={() => setShowLiveNewsAnyway(true)} />
+      ) : (
+        <FilterPanel
+          categoryItems={mode === "articles" ? ARTICLE_CATEGORY_FILTERS : CATEGORY_FILTERS}
+          categoryFilter={categoryFilter}
+          difficultyFilter={difficultyFilter}
+          languageFilter={languageFilter}
+          onCategory={setCategoryFilter}
+          onDifficulty={setDifficultyFilter}
+          onLanguage={setLanguageFilter}
+          onReset={resetFilters}
+        />
+      )}
 
-      {state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
+      {!liveNewsGated && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
 
-      {state === "error" && (
+      {!liveNewsGated && state === "error" && (
         <LoadErrorCard
           message={loadError ?? "Articles are unavailable right now."}
           onRetry={() => setReloadKey((key) => key + 1)}
         />
       )}
 
-      {state === "success" && usedFallback && (
+      {!liveNewsGated && state === "success" && usedFallback && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
           Live RSS returned fewer articles than usual for these filters.
         </p>
       )}
 
-      {state === "success" && sections && (
+      {!liveNewsGated && state === "success" && sections && (
         mode === "live" ? (
           <LiveNewsContent sections={sections} todayWords={todayWords} />
         ) : (
@@ -309,6 +329,30 @@ function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => v
         Retry
       </button>
     </div>
+  );
+}
+
+function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
+  return (
+    <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Stretch area</p>
+      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Live news is harder than the starter articles.</h2>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        Start with a few short readings first, then come back when tapping words feels comfortable.
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          Start with articles
+        </Link>
+        <button
+          type="button"
+          onClick={onContinue}
+          className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+        >
+          Show news anyway
+        </button>
+      </div>
+    </section>
   );
 }
 
@@ -396,7 +440,7 @@ function ArticleContent({
   const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
   return (
     <>
-      <ArticleSection title="Daily Articles" subtitle={`All ${sections.dailyBank.length} public-domain readings matched to ${level}.`} articles={sections.dailyBank} variant="grid" />
+      <ArticleSection title="Start Here" subtitle={`${level} readings for a short practice session.`} articles={sections.dailyBank} variant="grid" />
       {customArticles.length > 0 && (
         <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
       )}
@@ -404,14 +448,14 @@ function ArticleContent({
         <div className="flex items-center justify-between gap-3">
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Bring Your Own Text</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">Paste French from elsewhere and read it with Liree.</p>
+            <p className="mt-0.5 text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
           </div>
           <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
             Import
           </Link>
         </div>
       </section>
-      <ArticleSection title="Saved For Later" subtitle="Articles you marked for another session." articles={savedLaterArticles} variant="compact" />
+      <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
     </>
   );
 }
@@ -430,8 +474,8 @@ function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSec
 
   return (
     <>
-      <ArticleSection title="Live News" subtitle="Two RSS articles from today's live source pool." articles={sections.liveNews} variant="cards" />
-      <ArticleSection title="Latest News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" />
+      <ArticleSection title="Current News" subtitle="Pick one article and use word taps generously." articles={sections.liveNews} variant="cards" />
+      <ArticleSection title="More News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" />
       {todayWords.length > 0 && <TodayNewsWordsSection words={todayWords} />}
     </>
   );

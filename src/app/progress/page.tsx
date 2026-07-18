@@ -59,6 +59,12 @@ export default function ProgressPage() {
     () => snapshot?.completions.filter((item) => weekStart !== null && new Date(item.completedAt).getTime() >= weekStart).length ?? 0,
     [snapshot, weekStart]
   );
+  const hasActivity =
+    snapshot !== null &&
+    (snapshot.completions.length > 0 ||
+      snapshot.weeklyWords > 0 ||
+      snapshot.weeklyReviewed > 0 ||
+      snapshot.level.totalXp > 0);
 
   if (!snapshot) {
     return (
@@ -85,6 +91,10 @@ export default function ProgressPage() {
         </div>
       )}
 
+      {!hasActivity ? (
+        <FirstStepsProgressCard />
+      ) : (
+        <>
       <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
         {TABS.map((item) => (
           <button
@@ -159,6 +169,7 @@ export default function ProgressPage() {
             </div>
           </section>
 
+          {snapshot.personalBests.length > 0 && (
           <section>
             <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Personal bests</h2>
             <div className="grid grid-cols-2 gap-3">
@@ -167,6 +178,7 @@ export default function ProgressPage() {
               ))}
             </div>
           </section>
+          )}
         </div>
       )}
 
@@ -242,6 +254,34 @@ export default function ProgressPage() {
       <div className="mt-5">
         <FeedbackButton feature="progress" label="Give progress feedback" />
       </div>
+        </>
+      )}
     </div>
+  );
+}
+
+function FirstStepsProgressCard() {
+  const steps = [
+    "Read one short article",
+    "Save one useful word",
+    "Review your first card",
+  ];
+
+  return (
+    <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">First steps</p>
+      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Your progress will start after one reading session.</h2>
+      <div className="mt-4 space-y-2">
+        {steps.map((step, index) => (
+          <div key={step} className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-2">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cream-dark text-xs font-bold text-ink-muted">{index + 1}</span>
+            <p className="text-sm font-semibold text-ink">{step}</p>
+          </div>
+        ))}
+      </div>
+      <Link href="/articles" className="mt-4 block rounded-full bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white active:scale-95">
+        Start reading
+      </Link>
+    </section>
   );
 }

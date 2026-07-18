@@ -2,6 +2,13 @@ import ReadingCard from "@/components/ReadingCard";
 import { formatCategory } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
+function compactSourceLabel(article: ScoredArticle): string | null {
+  const { text } = article;
+  if (text.id.startsWith("custom-")) return "Imported text";
+  if (text.id.startsWith("pd-")) return "Classic story";
+  return text.sourceName ?? null;
+}
+
 interface ArticleSectionProps {
   id?: string;
   title: string;
@@ -69,6 +76,7 @@ export default function ArticleSection({
 
 function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: boolean }) {
   const { text } = article;
+  const sourceLabel = compactSourceLabel(article);
   return (
     <a
       href={`/reader/${encodeURIComponent(text.id)}`}
@@ -89,7 +97,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
       </div>
       <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
       <p className="mt-1 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
-      {text.sourceName && <p className="mt-2 truncate text-[11px] font-semibold text-ink-muted">{text.sourceName}</p>}
+      {sourceLabel && <p className="mt-2 truncate text-[11px] font-semibold text-ink-muted">{sourceLabel}</p>}
     </a>
   );
 }

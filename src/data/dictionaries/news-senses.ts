@@ -30,6 +30,7 @@ export const newsSenseDictionary: DictionaryEntry[] = [
   { lemma: "clef", forms: ["clefs"], translations: ["key"], partOfSpeech: "noun", gender: "feminine", cefr: "A1" },
   { lemma: "épais", forms: ["épaisse", "épais", "épaisses"], translations: ["thick", "dense"], partOfSpeech: "adjective", cefr: "A2" },
   { lemma: "frais", forms: ["fraîche", "fraîches", "fraîcheur"], translations: ["fresh", "cool"], partOfSpeech: "adjective / noun", cefr: "A2" },
+  { lemma: "brave", forms: ["braves"], translations: ["good", "kind", "dear", "brave"], partOfSpeech: "adjective", cefr: "A2", notes: "In addresses such as mes braves gens, usually means good, dear, or kind rather than the verb braver." },
   { lemma: "granit", translations: ["granite"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
   { lemma: "partout", translations: ["everywhere"], partOfSpeech: "adverb", cefr: "A2" },
   { lemma: "bonnement", translations: ["simply", "plainly"], partOfSpeech: "adverb", cefr: "B2" },

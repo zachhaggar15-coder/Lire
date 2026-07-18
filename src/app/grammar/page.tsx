@@ -175,7 +175,6 @@ export default function GrammarPage() {
 
       {tab === "practice" && (
         <div className="space-y-4">
-          <PracticeIntro lesson={currentLesson} />
           <PracticeCard
             lesson={currentLesson}
             question={currentQuestion}
@@ -290,18 +289,6 @@ function LockedNextCard({ completedLessons, totalLessons }: { completedLessons: 
           : "Finish this lesson to reveal the next one. The rest of the path stays hidden so this section stays simple."}
       </p>
     </article>
-  );
-}
-
-function PracticeIntro({ lesson }: { lesson: VerbLesson }) {
-  return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Before the quiz</p>
-      <h2 className="mt-1 text-lg font-extrabold text-ink">{lesson.shortTitle}</h2>
-      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{lesson.explanation}</p>
-      <p className="mt-3 rounded-2xl bg-cream px-3 py-2 text-sm font-semibold text-ink">{lesson.pattern}</p>
-      <p className="mt-2 text-xs text-ink-muted">Answer 5 questions. When the set is finished, the next lesson opens automatically.</p>
-    </section>
   );
 }
 

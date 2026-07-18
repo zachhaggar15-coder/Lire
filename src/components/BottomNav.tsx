@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getOnboardingState } from "@/lib/onboarding";
+import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 
 /**
  * Reading is the point of the app, so the two places you actually find
@@ -20,7 +23,24 @@ const items = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    function syncOnboardingState() {
+      setOnboardingComplete(getOnboardingState()?.completed === true);
+    }
+
+    syncOnboardingState();
+    const unsubscribe = subscribeToRecommendationPreferences(syncOnboardingState);
+    window.addEventListener("storage", syncOnboardingState);
+    return () => {
+      unsubscribe();
+      window.removeEventListener("storage", syncOnboardingState);
+    };
+  }, []);
+
   if (pathname.startsWith("/admin")) return null;
+  if (onboardingComplete !== true) return null;
 
   return (
     <nav

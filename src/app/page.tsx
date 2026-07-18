@@ -11,7 +11,7 @@ import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import type { Difficulty } from "@/types";
 import { buildProgressSnapshot, awardCompletedMissions, type ProgressSnapshot } from "@/lib/gamification";
 import { getKnownWords } from "@/lib/knownWords";
-import { getSelectedReadingLevel } from "@/lib/onboarding";
+import { getOnboardingState, getSelectedReadingLevel } from "@/lib/onboarding";
 import { getReviewStats } from "@/lib/spacedRepetition";
 import { getSavedWords } from "@/lib/storage";
 import { getValidationState } from "@/lib/validation/state";
@@ -27,11 +27,14 @@ export default function HomePage() {
     dueReviews: 0,
   });
   const [showFirstVisitMessage, setShowFirstVisitMessage] = useState(false);
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
 
   function refreshDashboard(showRewards = false) {
+    const onboarding = getOnboardingState();
     const savedWords = getSavedWords();
     const reviewStats = getReviewStats(savedWords);
     const rewards = awardCompletedMissions(undefined, savedWords);
+    setOnboardingComplete(onboarding?.completed === true);
     setSelectedLevel(getSelectedReadingLevel());
     setProgressSnapshot(buildProgressSnapshot(savedWords));
     setStats({
@@ -51,6 +54,33 @@ export default function HomePage() {
     refreshDashboard(true);
     return subscribeToRecommendationPreferences(() => refreshDashboard());
   }, []);
+
+  if (onboardingComplete === null) {
+    return (
+      <div className="px-4 pt-6">
+        <div className="h-10 w-24 animate-pulse rounded-2xl bg-cream-dark" />
+        <div className="mt-5 h-72 animate-pulse rounded-3xl bg-cream-dark" />
+      </div>
+    );
+  }
+
+  if (!onboardingComplete) {
+    return (
+      <div className="min-h-[100dvh] px-4 pt-6">
+        <header className="mb-5">
+          <h1 className="text-3xl font-extrabold tracking-tight text-ink">Lire</h1>
+          <p className="mt-1 text-sm text-ink-muted">Set your starting point, then read one short French text.</p>
+        </header>
+        <FirstRunOnboarding
+          variant="focus"
+          onComplete={() => {
+            refreshDashboard(true);
+            window.location.assign("/articles");
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 pt-6">
@@ -73,14 +103,6 @@ export default function HomePage() {
         </div>
       )}
 
-      {/*
-        Setup comes first. It used to render last — below the value card, the
-        dashboard tiles, the beta notice and six news snippets, about 2.4
-        screens down — so the one step that decides level, topics and goals
-        was something most people would never scroll to, while the header
-        already showed "A2" as though they'd chosen it.
-      */}
-      <FirstRunOnboarding onComplete={() => refreshDashboard()} />
       {showFirstVisitMessage && <FirstVisitValueCard />}
       <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
       <ContinueReadingBanner />

@@ -497,7 +497,7 @@ export default function ReviewPage() {
         </div>
       )}
 
-      {contextualArticles.length > 0 && (
+      {!shouldShowWordReview && contextualArticles.length > 0 && (
         <ContextualArticleReview items={contextualArticles} />
       )}
     </div>

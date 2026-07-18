@@ -295,89 +295,69 @@ export function CompletionSummary({
     ["Phrases", completion.phrasesSaved],
     ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
   ];
+  const nextHref = reviewHref ?? "/";
+  const nextLabel = reviewHref ? "Review saved words" : "Read another";
+  const nextCopy =
+    completion.savedWords > 0
+      ? "Review the words you chose while the article is still fresh."
+      : completion.fullTranslationUsed
+        ? "Try a second pass without English when you are ready."
+        : "Keep the streak going with one more short reading.";
 
   return (
-    <section className="reward-completion-reveal rounded-3xl bg-cream-card p-4 text-left shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 items-start gap-3">
-          <div className="relative h-14 w-14 shrink-0">
-            <svg className="h-14 w-14 -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
-              <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3" className="text-cream-dark" />
-              <circle
-                cx="18"
-                cy="18"
-                r="15.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                pathLength={100}
-                strokeDasharray="100"
-                className="reward-completion-ring text-brand"
-              />
-            </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold uppercase tracking-wide text-brand">
-              Read
-            </span>
-          </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Article complete</p>
-            <h2 className="mt-1 text-xl font-extrabold text-ink">+{completion.xpEarned} XP</h2>
-          </div>
+    <section className="reward-completion-reveal rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-light">
+        <svg className="h-9 w-9 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+      </div>
+      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-ink-muted">Article complete</p>
+      <h2 className="mt-1 text-2xl font-extrabold text-ink">+{completion.xpEarned} XP</h2>
+      <p className="mx-auto mt-2 max-w-xs text-sm text-ink-muted">{nextCopy}</p>
+
+      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95">
+        {nextLabel}
+      </Link>
+
+      <details className="mt-3 text-left">
+        <summary className="cursor-pointer text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
+          Session details
+        </summary>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          {stats.map(([label, value], index) => (
+            <div
+              key={label}
+              className="reward-stat-reveal rounded-2xl bg-cream p-2.5"
+              style={{ animationDelay: `${120 + index * 55}ms` }}
+            >
+              <p className="text-base font-extrabold text-ink">{value}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+            </div>
+          ))}
         </div>
-        <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{completion.score}/100</span>
-      </div>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        {stats.map(([label, value], index) => (
-          <div
-            key={label}
-            className="reward-stat-reveal rounded-2xl bg-cream p-2.5"
-            style={{ animationDelay: `${120 + index * 55}ms` }}
-          >
-            <p className="text-base font-extrabold text-ink">{value}</p>
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
-          </div>
-        ))}
-      </div>
-      {completion.challengeBudget !== null && (
         <p className="mt-3 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
-          {completion.challengeMode} challenge: {completion.translationsUsed}/{completion.challengeBudget} translations used.{" "}
-          <span className="font-semibold text-ink">{completion.challengeCompleted ? "Bonus earned." : "Bonus skipped."}</span>
+          Session score: <span className="font-semibold text-ink">{completion.score}/100</span>
         </p>
-      )}
-      {completion.personalBests.length > 0 && (
-        <div className="mt-3 rounded-2xl bg-brand-light px-3 py-2">
-          <p className="text-xs font-bold text-brand">Personal best</p>
-          <p className="mt-0.5 text-xs text-ink-muted">{completion.personalBests.join(" - ")}</p>
-        </div>
-      )}
-      <div className="mt-3 rounded-2xl bg-cream px-3 py-2">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Recommended next</p>
-        <p className="mt-0.5 text-sm font-semibold text-ink">
-          {completion.savedWords > 0
-            ? "Review this article's saved words while the context is still fresh."
-            : completion.fullTranslationUsed
-              ? "Reread once without English to consolidate the sentence structure."
-              : "Read another article in the same level to reinforce the vocabulary."}
-        </p>
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
-          Read another
-        </Link>
-        {reviewHref && (
-          <Link href={reviewHref} className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95">
-            Review words
-          </Link>
+        {completion.challengeBudget !== null && (
+          <p className="mt-2 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
+            {completion.challengeMode} challenge: {completion.translationsUsed}/{completion.challengeBudget} translations used.{" "}
+            <span className="font-semibold text-ink">{completion.challengeCompleted ? "Bonus earned." : "Bonus skipped."}</span>
+          </p>
+        )}
+        {completion.personalBests.length > 0 && (
+          <div className="mt-2 rounded-2xl bg-brand-light px-3 py-2">
+            <p className="text-xs font-bold text-brand">Personal best</p>
+            <p className="mt-0.5 text-xs text-ink-muted">{completion.personalBests.join(" - ")}</p>
+          </div>
         )}
         <button
           type="button"
           onClick={onSecondPass}
-          className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+          className="mt-3 w-full rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
         >
           Reread without English
         </button>
-      </div>
+      </details>
     </section>
   );
 }

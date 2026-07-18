@@ -111,6 +111,9 @@ export default function ImportPage() {
           placeholder="Paste at least a short paragraph of French here."
           className="mt-2 w-full resize-none rounded-2xl bg-cream px-3 py-3 text-sm leading-relaxed text-ink outline-none focus:ring-2 focus:ring-brand/30"
         />
+        <p className="mt-1 text-xs text-ink-muted">
+          A complete paragraph works best because word meanings depend on context.
+        </p>
 
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-xs font-semibold text-ink-muted">{wordCount} words</p>
