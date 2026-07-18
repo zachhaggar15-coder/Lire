@@ -326,17 +326,75 @@ export function translateSentencesWithDictionaryCache(
   return sentences;
 }
 
+/**
+ * How many article translations to keep cached. Each entry is one whole
+ * article's worth of sentences, so this grew without bound before — one new
+ * key per article per mode, never evicted. That quietly consumed the origin's
+ * entire localStorage quota as someone read, which then made *unrelated*
+ * writes start throwing (saving a vocabulary word, most importantly). Keeping
+ * a bounded working set fixes the cause rather than only guarding the symptom.
+ */
+const MAX_CACHED_ARTICLE_TRANSLATIONS = 30;
+
+/** Cache keys, oldest `updatedAt` first. Entries with no readable timestamp sort oldest so they're evicted first. */
+function cacheKeysOldestFirst(): string[] {
+  const entries: { key: string; updatedAt: number }[] = [];
+  for (let i = 0; i < window.localStorage.length; i++) {
+    const key = window.localStorage.key(i);
+    if (!key?.startsWith(DICTIONARY_TRANSLATION_CACHE_PREFIX)) continue;
+    let updatedAt = 0;
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem(key) ?? "null");
+      const parsedTime = parsed && typeof parsed === "object" ? Date.parse(parsed.updatedAt) : NaN;
+      if (Number.isFinite(parsedTime)) updatedAt = parsedTime;
+    } catch {
+      // Unparseable entry — treat as oldest so it gets cleared out first.
+    }
+    entries.push({ key, updatedAt });
+  }
+  return entries.sort((a, b) => a.updatedAt - b.updatedAt).map((entry) => entry.key);
+}
+
+/** Drops the oldest cached translations until at most `keep` remain. */
+function evictOldestTranslations(keep: number): void {
+  const keys = cacheKeysOldestFirst();
+  for (const key of keys.slice(0, Math.max(0, keys.length - keep))) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch {
+      // Nothing useful to do; keep trying the rest.
+    }
+  }
+}
+
 export function cacheDictionarySentenceTranslations(
   articleId: string,
   body: string,
   sentences: string[],
   mode: DictionaryArticleTranslationMode = "phrase-aware"
 ): void {
-  if (hasStorage()) {
+  if (!hasStorage()) return;
+  const key = dictionaryTranslationCacheKey(articleId, body, mode);
+  const payload = JSON.stringify({ sentences, updatedAt: new Date().toISOString() });
+
+  try {
+    window.localStorage.setItem(key, payload);
+  } catch {
+    // Likely quota. Clear this cache down hard and retry once — a cached
+    // translation is a nice-to-have, so it should yield space rather than
+    // hold onto it at the expense of the user's saved words.
     try {
-      window.localStorage.setItem(dictionaryTranslationCacheKey(articleId, body, mode), JSON.stringify({ sentences, updatedAt: new Date().toISOString() }));
+      evictOldestTranslations(Math.floor(MAX_CACHED_ARTICLE_TRANSLATIONS / 3));
+      window.localStorage.setItem(key, payload);
     } catch {
-      // Storage full or unavailable: deterministic translation still works.
+      // Storage genuinely unavailable: deterministic translation still works.
+      return;
     }
+  }
+
+  try {
+    evictOldestTranslations(MAX_CACHED_ARTICLE_TRANSLATIONS);
+  } catch {
+    // Eviction is maintenance, never worth failing the write that succeeded.
   }
 }

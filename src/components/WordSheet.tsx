@@ -40,6 +40,15 @@ interface WordSheetProps {
   inferenceChallenge?: InferenceChallenge | null;
   onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
   onAiRequested?: () => void;
+  /**
+   * Opens the full explanation for the sentence this word came from. Lives
+   * here because the long-press gesture that used to be the only route to it
+   * was effectively unreachable — every word swallows the press to show its
+   * phrase, so the sentence handler only fired if you happened to press
+   * exactly on a space. Tapping a confusing word is the natural moment to ask
+   * about its sentence anyway.
+   */
+  onExplainSentence?: (sentence: string) => void;
 }
 
 function trustLabel(lookup: DictionaryLookupResult | undefined): string {
@@ -100,7 +109,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word that the reader has just auto-saved.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer, onAiRequested }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -610,7 +619,16 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
           )}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-2">
+        {onExplainSentence && state && (
+          <button
+            onClick={() => onExplainSentence(state.contextSentence)}
+            className="mt-5 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
+          >
+            Explain the whole sentence
+          </button>
+        )}
+
+        <div className="mt-3 grid grid-cols-2 gap-2">
           <button
             onClick={onKnow}
             className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"

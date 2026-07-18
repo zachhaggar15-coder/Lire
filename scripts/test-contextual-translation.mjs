@@ -1,6 +1,11 @@
 import { buildContextualTranslation, contextualTranslationCacheKey, normaliseContextText } from "../src/lib/dictionary/contextualTranslation.ts";
-import { lookupWord } from "../src/lib/dictionary/lookup.ts";
+import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
+
+// The broad generated dictionary is fetched on demand rather than bundled
+// (see src/data/dictionaries/generated/fr-en-generated.ts). Contextual
+// translation resolves lemmas through it, so load it before asserting.
+await ensureGeneratedDictionary();
 
 let passed = 0;
 let failed = 0;

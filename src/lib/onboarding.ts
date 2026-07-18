@@ -73,6 +73,27 @@ export function getSelectedReadingLevel(): Difficulty {
   return getOnboardingState()?.level ?? DEFAULT_LEVEL;
 }
 
+/** Writes back just the seeded-word count once background seeding finishes. */
+function recordSeededKnownWords(seededWords: number): void {
+  if (!hasStorage()) return;
+  const current = getOnboardingState();
+  if (!current) return;
+  try {
+    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, seededKnownWords: seededWords }));
+    void pushStore(ONBOARDING_KEY);
+  } catch {
+    // The seeded count is informational; known words themselves are already saved.
+  }
+}
+
+/**
+ * Stays synchronous even though known-word seeding is now async (the broad
+ * dictionary it needs is fetched on demand rather than bundled — see
+ * data/dictionaries/generated/fr-en-generated.ts). Onboarding finishes
+ * immediately and the seeding lands in the background a moment later, which
+ * is also the better interaction: "Save start point" shouldn't sit there
+ * waiting on a multi-megabyte download before letting anyone read.
+ */
 export function saveOnboarding(
   level: Difficulty,
   topics: Category[],
@@ -80,25 +101,27 @@ export function saveOnboarding(
   options: { seedKnownWords?: boolean } = {}
 ): OnboardingState {
   const shouldSeedKnownWords = options.seedKnownWords ?? true;
-  const seed = shouldSeedKnownWords
-    ? seedKnownWordsForLevel(level)
-    : {
-        estimatedKnownWords: knownWordEstimateForLevel(level),
-        seededWords: 0,
-      };
   const next: OnboardingState = {
     completed: true,
     level,
     topics,
     goalPreset,
-    estimatedKnownWords: seed.estimatedKnownWords,
-    seededKnownWords: seed.seededWords,
+    estimatedKnownWords: knownWordEstimateForLevel(level),
+    seededKnownWords: 0,
     updatedAt: new Date().toISOString(),
   };
 
   if (hasStorage()) {
     window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
     void pushStore(ONBOARDING_KEY);
+  }
+
+  if (shouldSeedKnownWords) {
+    void seedKnownWordsForLevel(level)
+      .then((seed) => recordSeededKnownWords(seed.seededWords))
+      .catch(() => {
+        // Seeding is an optimisation for recommendations, not a hard requirement.
+      });
   }
 
   for (const topic of topics) {

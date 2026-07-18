@@ -35,8 +35,10 @@ export const viewport: Viewport = {
   themeColor: "#F4EEE0",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Zoom is deliberately left enabled. This is a reading app for language
+  // learners, so pinch-zooming a tricky line is a normal thing to want, and
+  // locking scale fails WCAG 1.4.4. The font-size setting complements zoom,
+  // it doesn't replace it.
   viewportFit: "cover",
 };
 

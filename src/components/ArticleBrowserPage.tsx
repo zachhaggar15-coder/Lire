@@ -28,6 +28,7 @@ import {
   subscribeToRecommendationPreferences,
 } from "@/lib/recommendation/preferences";
 import { trackEvent } from "@/lib/analytics/client";
+import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success";
@@ -86,6 +87,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
+  /** Article difficulty is computed from dictionary lookups, so rescore once full coverage loads. */
+  const dictionaryRevision = useGeneratedDictionary();
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
@@ -162,7 +165,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     return () => {
       cancelled = true;
     };
-  }, [categoryFilter, difficultyFilter, languageFilter, mode, prefVersion, selectedLevel]);
+  }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, selectedLevel]);
 
   function resetFilters() {
     setCategoryFilter(defaultCategoryForMode(mode));

@@ -2,12 +2,13 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
-import { texts as hardcodedTexts } from "@/data/texts";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { deleteWord, getSavedWords, saveWord } from "@/lib/storage";
 import { getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import {
   cacheDictionarySentenceTranslations,
   buildComposedPhraseTranslationMatch,
@@ -36,6 +37,7 @@ import { DEFAULT_SETTINGS, getSettings } from "@/lib/settings";
 import { getCustomTexts } from "@/lib/customTexts";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
+import { getArticleSummary, saveArticleSummary } from "@/lib/articleSummaries";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { isLikelySourceBoilerplateToken } from "@/lib/rss/sourceNoise";
@@ -87,15 +89,27 @@ type TranslationState = "idle" | "loading" | "ready";
 const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 
 export default function Reader({ text }: { text: ReadingText }) {
+  const router = useRouter();
   const isImportedText = text.id.startsWith("custom-");
   const showInterpretationChecks = !isImportedText;
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
   /** Instant, free, offline fallback, one per sentence. Defaults to phrase-aware, with literal still available from Settings. */
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  /**
+   * Changes once the broad generated dictionary has loaded (it's fetched on
+   * demand now rather than bundled into every page). Anything derived from
+   * dictionary lookups — the difficulty estimate, the offline sentence
+   * translations — is keyed on this so it recomputes with full coverage
+   * instead of being stuck with whatever the curated layer alone produced.
+   */
+  const dictionaryRevision = useGeneratedDictionary();
   const offlineTranslationMode: DictionaryArticleTranslationMode = settings.translationMode === "literal" ? "literal" : "phrase-aware";
   const offlineSentences = useMemo(
     () => translateSentencesWithDictionaryCache(text.id, text.body, paragraphs, offlineTranslationMode),
-    [offlineTranslationMode, paragraphs, text.body, text.id]
+    // dictionaryRevision: recompute once the broad dictionary finishes loading,
+    // so the offline translation isn't left with curated-only coverage.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [offlineTranslationMode, paragraphs, text.body, text.id, dictionaryRevision]
   );
   const paragraphTexts = useMemo(
     () => paragraphs.map((sentences) => sentences.map((sg) => sg.text).join(" ")),
@@ -139,6 +153,22 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     return chunks;
   }, [paragraphs, paragraphBreakBeforeIndex]);
+
+  /**
+   * Returns to wherever the reader came from — the Articles or Live News list
+   * they were browsing, most often — instead of always dumping them on the
+   * dashboard and making them navigate back down. Falls back to the dashboard
+   * for a cold entry (shared link, refresh) where there's no in-app history.
+   */
+  function handleBack() {
+    const cameFromApp =
+      typeof window !== "undefined" && window.history.length > 1 && document.referrer.startsWith(window.location.origin);
+    if (cameFromApp) {
+      router.back();
+      return;
+    }
+    router.push("/");
+  }
 
   function neighbours(sentenceText: string): { previous: string | null; next: string | null } {
     const i = flatSentences.indexOf(sentenceText);
@@ -191,6 +221,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const sentenceHoldTriggered = useRef(false);
   const phraseHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const phraseHoldTriggered = useRef(false);
+  /** Latest summary text plus the article it belongs to, for the debounced/flush writes below. */
+  const latestSummary = useRef<{ articleId: string; draft: string }>({ articleId: text.id, draft: "" });
   const readingStartedAt = useRef<string>(new Date().toISOString());
   const activeTimeTracker = useRef<ActiveTimeTracker | null>(null);
   const maxProgressPercent = useRef(0);
@@ -242,9 +274,42 @@ export default function Reader({ text }: { text: ReadingText }) {
     [articlePool, showInterpretationChecks, text]
   );
 
+  /**
+   * The first difficulty estimate may have run against curated-only coverage,
+   * which overstates how many words are unfamiliar. Redo it once the broad
+   * dictionary lands.
+   */
+  useEffect(() => {
+    if (dictionaryRevision === 0 || text.language === "en") return;
+    setDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
+  }, [dictionaryRevision, text.body, text.language]);
+
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
   }, [offlineSentences, offlineTranslationMode, text.body, text.id]);
+
+  /**
+   * Persist the summary shortly after typing stops. Debounced so a long
+   * summary doesn't re-serialise the whole stored list on every keystroke.
+   */
+  useEffect(() => {
+    latestSummary.current = { articleId: text.id, draft: summaryDraft };
+    const handle = setTimeout(() => saveArticleSummary(text.id, summaryDraft), 600);
+    return () => clearTimeout(handle);
+  }, [summaryDraft, text.id]);
+
+  /**
+   * Flush on close/article change, so the last keystrokes inside the debounce
+   * window survive navigating away. Guarded on article id so a pending draft
+   * is never written against the wrong article.
+   */
+  useEffect(() => {
+    const articleId = text.id;
+    return () => {
+      if (latestSummary.current.articleId !== articleId) return;
+      saveArticleSummary(articleId, latestSummary.current.draft);
+    };
+  }, [text.id]);
 
   useEffect(() => {
     const startedAt = new Date().toISOString();
@@ -360,12 +425,23 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus(getProgress(text.id).status);
     setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
     setArticleTapRecords(getWordTapsForArticle(text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
-    const candidates = dedupeArticles([...getCustomTexts(), ...getCachedRssTexts(), ...getOfflineRssTexts(), ...hardcodedTexts]);
-    setArticlePool(candidates);
-    setRelatedArticles(findRelatedArticles(text, candidates));
+    // Start with what's already local (imported + RSS), so related articles
+    // and the headline comparison can render immediately. The bundled text
+    // library is ~1.3 MB and is only needed to widen that pool, so it's
+    // fetched separately rather than loaded before the article can be read.
+    const localCandidates = dedupeArticles([...getCustomTexts(), ...getCachedRssTexts(), ...getOfflineRssTexts()]);
+    setArticlePool(localCandidates);
+    setRelatedArticles(findRelatedArticles(text, localCandidates));
+    void import("@/data/texts").then(({ texts: builtInTexts }) => {
+      const widened = dedupeArticles([...localCandidates, ...builtInTexts]);
+      setArticlePool(widened);
+      setRelatedArticles(findRelatedArticles(text, widened));
+    });
     setGistAnswer(null);
     setToneAnswers({});
-    setSummaryDraft("");
+    // Restore any summary written for this article on an earlier visit, so a
+    // second pass builds on the first rather than starting from a blank box.
+    setSummaryDraft(getArticleSummary(text.id));
     setCanUseSpeech(canSpeak());
     // A different article needs its own fluent translation — getArticleTranslation
     // is cache-first per article, so re-toggling back on for an already-translated
@@ -718,13 +794,19 @@ export default function Reader({ text }: { text: ReadingText }) {
     });
 
     if (!known && !existingStatus && !protectedProperNoun) {
-      const nextWords = saveWord(buildSavedWord(clean, lookup, sentenceText, "learning", naturalTranslation?.english ?? null));
-      existingStatus = "learning";
-      setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
-      setSavedWordsSnapshot(nextWords);
-      setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-      rememberWordSaved("tap_lookup");
-      pulseRewardWords("saved", [clean, lookup.lemma]);
+      const { words: nextWords, persisted } = saveWord(
+        buildSavedWord(clean, lookup, sentenceText, "learning", naturalTranslation?.english ?? null)
+      );
+      if (persisted) {
+        existingStatus = "learning";
+        setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
+        setSavedWordsSnapshot(nextWords);
+        setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+        rememberWordSaved("tap_lookup");
+        pulseRewardWords("saved", [clean, lookup.lemma]);
+      } else {
+        showToast("Couldn't save — device storage is full");
+      }
     }
 
     setActiveSentence(null);
@@ -1032,7 +1114,13 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleSaveCandidate(candidate: LearningCandidate) {
     const lookup = lookupWord(candidate.word);
-    const nextWords = saveWord(buildSavedWord(candidate.word, lookup, candidate.contextSentence, "learning"));
+    const { words: nextWords, persisted } = saveWord(
+      buildSavedWord(candidate.word, lookup, candidate.contextSentence, "learning")
+    );
+    if (!persisted) {
+      showToast("Couldn't save — device storage is full");
+      return;
+    }
     recordLearningAction();
     rememberWordSaved("candidate");
     setSavedWordsSnapshot(nextWords);
@@ -1226,15 +1314,13 @@ export default function Reader({ text }: { text: ReadingText }) {
           if (rereadMode) return;
           handleSentenceTap(sg.text);
         }}
-        onClick={() => {
-          if (rereadMode) return;
-          if (sentenceHoldTriggered.current) {
-            sentenceHoldTriggered.current = false;
-            return;
-          }
-          handleSentenceTap(sg.text);
-        }}
-        className={className ?? (rereadMode ? "rounded" : "cursor-pointer rounded underline decoration-dotted decoration-cream-dark underline-offset-4 transition-colors active:bg-sky-100/60")}
+        // Deliberately no plain onClick. Words stop propagation, so the only
+        // clicks that reached here were ones landing on the spaces and
+        // punctuation between words — i.e. mis-taps — which then opened the
+        // sentence explainer unexpectedly. Holding still works, and the
+        // reliable route is the "Explain the whole sentence" action in the
+        // word sheet.
+        className={className ?? (rereadMode ? "rounded" : "rounded transition-colors")}
       >
         {children}
       </span>
@@ -1293,15 +1379,16 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       {/* Header with back button */}
       <div className="mb-4 flex items-center gap-2">
-        <Link
-          href="/"
+        <button
+          type="button"
+          onClick={handleBack}
           className="-ml-2 flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-brand active:scale-95"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
           Back
-        </Link>
+        </button>
       </div>
 
       {(difficulty?.cefr ?? text.difficulty) && (
@@ -1313,8 +1400,9 @@ export default function Reader({ text }: { text: ReadingText }) {
         {text.title}
       </h1>
       <p className="mt-1 text-xs text-ink-muted">
-        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning,
-        hold a word for the phrase, or hold a sentence to explain it
+        {difficulty?.cefr ?? text.difficulty} · {text.minutes} min · tap a word for its meaning, hold
+        it for the phrase it belongs to. Need the whole sentence? Tap a word, then &ldquo;Explain the
+        whole sentence&rdquo;.
       </p>
       {difficulty && (
         <p className="mt-1 text-xs italic text-ink-muted">
@@ -1374,36 +1462,6 @@ export default function Reader({ text }: { text: ReadingText }) {
           Translate ({translationModeLabel()})
         </button>
       </div>
-
-      {showInterpretationChecks && (
-        <section className="mt-3 rounded-3xl bg-cream-card p-3 shadow-sm">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h2>
-          <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {quickChallenge.choices.map((choice) => {
-              const answered = quickChallengeAnswer !== null;
-              const correct = choice === quickChallenge.answer;
-              const selected = quickChallengeAnswer === choice;
-              return (
-                <button
-                  key={choice}
-                  type="button"
-                  onClick={() => setQuickChallengeAnswer(choice)}
-                  className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-                    answered && correct
-                      ? "bg-emerald-100 text-emerald-800"
-                      : selected
-                        ? "bg-rose-100 text-rose-800"
-                        : "bg-cream text-ink-muted"
-                  }`}
-                >
-                  {choice}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      )}
 
       {rereadMode && (
         <div className="mt-3 rounded-2xl bg-brand-light px-3 py-2 text-xs font-semibold text-brand">
@@ -1468,57 +1526,106 @@ export default function Reader({ text }: { text: ReadingText }) {
         )}
       </article>
 
-      <section className="mt-8 space-y-4">
-        {showInterpretationChecks && (
-          <>
-            <ComprehensionQuestion
-              question={gistQuestion}
-              selected={gistAnswer}
-              onSelect={handleGistAnswer}
-            />
+      {/*
+        Everything below the text is practice, not reading. It used to be ~15
+        stacked cards the reader had to scroll past whether or not they wanted
+        any of it, which buried the two things they usually do want after
+        finishing: mark it read, and review the words they saved. It's now one
+        opt-in block, closed by default, so finishing an article stays a short
+        path and the exercises are there for whoever wants them.
+      */}
+      {!rereadMode && (
+        <details className="mt-8 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Practice this article</h2>
+              <p className="mt-0.5 text-xs text-ink-muted">
+                Comprehension checks, words worth learning, and a summary box.
+              </p>
+            </div>
+            <svg className="h-4 w-4 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </summary>
 
-            <section className="space-y-3">
-              <h2 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h2>
-              {toneQuestions.map((question) => (
+          <div className="mt-4 space-y-4">
+            {showInterpretationChecks && (
+              <>
+                <section className="rounded-2xl bg-cream p-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h3>
+                  <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {quickChallenge.choices.map((choice) => {
+                      const answered = quickChallengeAnswer !== null;
+                      const correct = choice === quickChallenge.answer;
+                      const selected = quickChallengeAnswer === choice;
+                      return (
+                        <button
+                          key={choice}
+                          type="button"
+                          onClick={() => setQuickChallengeAnswer(choice)}
+                          className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                            answered && correct
+                              ? "bg-emerald-100 text-emerald-800"
+                              : selected
+                                ? "bg-rose-100 text-rose-800"
+                                : "bg-cream-card text-ink-muted"
+                          }`}
+                        >
+                          {choice}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+
                 <ComprehensionQuestion
-                  key={question.id}
-                  question={question}
-                  selected={toneAnswers[question.id] ?? null}
-                  onSelect={(answer) => handleToneAnswer(question, answer)}
+                  question={gistQuestion}
+                  selected={gistAnswer}
+                  onSelect={handleGistAnswer}
                 />
-              ))}
-            </section>
-          </>
-        )}
 
-        {learningCandidates.length > 0 && (
-          <LearningCandidatesSection candidates={learningCandidates} onSave={handleSaveCandidate} />
-        )}
+                <section className="space-y-3">
+                  <h3 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h3>
+                  {toneQuestions.map((question) => (
+                    <ComprehensionQuestion
+                      key={question.id}
+                      question={question}
+                      selected={toneAnswers[question.id] ?? null}
+                      onSelect={(answer) => handleToneAnswer(question, answer)}
+                    />
+                  ))}
+                </section>
+              </>
+            )}
 
-        {showInterpretationChecks && relatedArticles.length > 0 && (
-          <RelatedArticles articles={relatedArticles} />
-        )}
+            {learningCandidates.length > 0 && (
+              <LearningCandidatesSection candidates={learningCandidates} onSave={handleSaveCandidate} />
+            )}
 
-        {showInterpretationChecks && headlineComparison && (
-          <HeadlineComparisonCard comparison={headlineComparison} />
-        )}
+            {showInterpretationChecks && headlineComparison && (
+              <HeadlineComparisonCard comparison={headlineComparison} />
+            )}
 
-        {showInterpretationChecks && (
-          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h2>
-            <textarea
-              value={summaryDraft}
-              onChange={(event) => setSummaryDraft(event.target.value)}
-              rows={4}
-              placeholder="Write the article's main point in English or French."
-              className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
-            />
-            <p className="mt-2 text-xs text-ink-muted">
-              Aim for one sentence about what happened and one sentence about why it matters.
-            </p>
+            {showInterpretationChecks && (
+              <div className="rounded-2xl bg-cream p-3">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h3>
+                <textarea
+                  value={summaryDraft}
+                  onChange={(event) => setSummaryDraft(event.target.value)}
+                  rows={4}
+                  placeholder="Write the article's main point in English or French."
+                  className="mt-3 w-full resize-none rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+                />
+                <p className="mt-2 text-xs text-ink-muted">
+                  Aim for one sentence about what happened and one sentence about why it matters.
+                  {summaryDraft.trim() ? " Saved on this device — it'll be here next time you open the article." : ""}
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </section>
+        </details>
+      )}
 
       {/* Reading progress */}
       <div className="mt-8 mb-4 flex justify-center">
@@ -1604,6 +1711,11 @@ export default function Reader({ text }: { text: ReadingText }) {
         )}
       </div>
 
+      {/* "What to read next" belongs after finishing, not among the exercises. */}
+      {showInterpretationChecks && !rereadMode && relatedArticles.length > 0 && (
+        <RelatedArticles articles={relatedArticles} />
+      )}
+
       <div className="mb-6 space-y-2 text-center">
         <div>
           <button
@@ -1648,6 +1760,10 @@ export default function Reader({ text }: { text: ReadingText }) {
         inferenceChallenge={activeInference}
         onInferenceAnswer={handleInferenceAnswer}
         onAiRequested={() => markAiSupportUsed("word")}
+        onExplainSentence={(sentence) => {
+          setActiveWord(null);
+          handleSentenceTap(sentence);
+        }}
       />
       <SentenceSheet
         state={activeSentence}

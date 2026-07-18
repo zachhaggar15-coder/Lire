@@ -1,7 +1,7 @@
 import type { Difficulty } from "@/types";
 import type { DictionaryEntry } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
-import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
+import { loadGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { markKnownBatch } from "@/lib/knownWords";
 
 export const LEVEL_KNOWN_WORD_ESTIMATES: Record<Difficulty, number> = {
@@ -35,7 +35,12 @@ export function knownWordEstimateForLevel(level: Difficulty): number {
   return LEVEL_KNOWN_WORD_ESTIMATES[level];
 }
 
-export function buildKnownWordBootstrapList(level: Difficulty): string[] {
+/**
+ * Async because the broad generated dictionary is no longer bundled — it's
+ * fetched on demand so it stays out of every page's JavaScript. See the note
+ * in data/dictionaries/generated/fr-en-generated.ts.
+ */
+export async function buildKnownWordBootstrapList(level: Difficulty): Promise<string[]> {
   const target = knownWordEstimateForLevel(level);
   const levelNumber = LEVEL_NUMERIC[level];
   const seen = new Set<string>();
@@ -46,7 +51,20 @@ export function buildKnownWordBootstrapList(level: Difficulty): string[] {
     if (entryLevel && entryLevel <= levelNumber) addEntry(out, seen, entry);
   }
 
-  const generated = [...frEnGeneratedDictionary]
+  // The curated list alone rarely reaches the target, but if it does there's
+  // no reason to pull down the large generated chunk at all.
+  if (out.length >= target) return out.slice(0, target);
+
+  let generatedEntries: DictionaryEntry[] = [];
+  try {
+    generatedEntries = await loadGeneratedDictionary();
+  } catch {
+    // Offline during onboarding: seed what the curated dictionary gives us
+    // rather than failing the whole "save start point" action.
+    return out.slice(0, target);
+  }
+
+  const generated = [...generatedEntries]
     .filter((entry) => typeof entry.frequencyRank === "number")
     .sort((a, b) => (a.frequencyRank ?? Number.MAX_SAFE_INTEGER) - (b.frequencyRank ?? Number.MAX_SAFE_INTEGER));
 
@@ -58,8 +76,10 @@ export function buildKnownWordBootstrapList(level: Difficulty): string[] {
   return out.slice(0, target);
 }
 
-export function seedKnownWordsForLevel(level: Difficulty): { estimatedKnownWords: number; seededWords: number; totalKnownWords: number } {
-  const words = buildKnownWordBootstrapList(level);
+export async function seedKnownWordsForLevel(
+  level: Difficulty
+): Promise<{ estimatedKnownWords: number; seededWords: number; totalKnownWords: number }> {
+  const words = await buildKnownWordBootstrapList(level);
   const next = markKnownBatch(words);
   return {
     estimatedKnownWords: knownWordEstimateForLevel(level),

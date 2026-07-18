@@ -39,7 +39,7 @@ import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { texts as readingTexts } from "../src/data/texts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
-import { lookupWord } from "../src/lib/dictionary/lookup.ts";
+import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
 import {
   buildComposedPhraseTranslationMatch,
@@ -143,6 +143,13 @@ import {
   referenceForVerb,
   tenseLabel,
 } from "../src/lib/grammar.ts";
+
+// The broad generated dictionary is no longer bundled — it's fetched on
+// demand so it stays out of every page's JavaScript (see
+// src/data/dictionaries/generated/fr-en-generated.ts). These tests exercise
+// the full curated -> generated -> lemma-guess chain, so load it up front;
+// otherwise every generated-layer assertion below sees an empty layer.
+await ensureGeneratedDictionary();
 
 let passed = 0;
 let failed = 0;
@@ -938,7 +945,9 @@ console.log("\n--- Onboarding ---");
 {
   check("onboarding numeric level is null before completion (this test's store is fresh for this key)", getOnboardingLevelNumeric() === null);
   clearKnownWords();
-  check("known-word bootstrap list reaches the A2 estimate", buildKnownWordBootstrapList("A2").length === knownWordEstimateForLevel("A2"));
+  // Bootstrap seeding is async now: it needs the generated dictionary, which
+  // is fetched on demand rather than bundled (see fr-en-generated.ts).
+  check("known-word bootstrap list reaches the A2 estimate", (await buildKnownWordBootstrapList("A2")).length === knownWordEstimateForLevel("A2"));
   const state = saveOnboarding("B1", ["culture", "science"], "serious");
   check("saveOnboarding marks it completed", state.completed === true);
   const stored = getOnboardingState();
@@ -949,6 +958,14 @@ console.log("\n--- Onboarding ---");
   );
   check("getOnboardingState round-trips the chosen goal preset", stored?.goalPreset === "serious", JSON.stringify(stored));
   check("getOnboardingState stores the estimated known-word count", stored?.estimatedKnownWords === knownWordEstimateForLevel("B1"), JSON.stringify(stored));
+  // saveOnboarding deliberately returns immediately and seeds in the
+  // background, so onboarding isn't blocked on the dictionary download. Wait
+  // for the seeding it kicked off (bounded, so a genuine regression still
+  // fails rather than hanging) instead of re-seeding here — the point of this
+  // check is that saveOnboarding causes it.
+  for (let i = 0; i < 50 && getKnownWords().length < knownWordEstimateForLevel("B1"); i++) {
+    await new Promise((resolve) => setTimeout(resolve, 20));
+  }
   check("saveOnboarding seeds known words from the selected level", getKnownWords().length >= knownWordEstimateForLevel("B1"), `known=${getKnownWords().length}`);
   check("onboarding goal preset seeds reading goals", getGoals().minutesPerDay === 20 && getGoals().articlesPerDay === 2, JSON.stringify(getGoals()));
   check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);

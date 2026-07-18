@@ -5,7 +5,6 @@ import Link from "next/link";
 import { getLastOpenedTextId, getProgress } from "@/lib/progress";
 import { getCustomTextById } from "@/lib/customTexts";
 import { getCachedRssTextById } from "@/lib/rss/rssTextCache";
-import { getTextById } from "@/data/texts";
 
 interface ContinueReadingInfo {
   id: string;
@@ -17,10 +16,29 @@ export default function ContinueReadingBanner() {
   const [info, setInfo] = useState<ContinueReadingInfo | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     const id = getLastOpenedTextId();
     if (!id || getProgress(id).status !== "in-progress") return;
-    const text = getCustomTextById(id) ?? getCachedRssTextById(id) ?? getTextById(id);
-    if (text) setInfo({ id, title: text.title });
+
+    // Imported and RSS texts come from local storage, so they resolve without
+    // touching the built-in library at all. Only fall back to the bundled
+    // texts (~1.3 MB) when neither has it, and load them dynamically — a
+    // static import here pulled that whole library into the home page's
+    // JavaScript just to render one title.
+    const local = getCustomTextById(id) ?? getCachedRssTextById(id);
+    if (local) {
+      setInfo({ id, title: local.title });
+      return;
+    }
+
+    void import("@/data/texts").then(({ getTextById }) => {
+      const text = getTextById(id);
+      if (!cancelled && text) setInfo({ id, title: text.title });
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (!info) return null;

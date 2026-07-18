@@ -201,12 +201,28 @@ function normalize(entry: unknown): SavedWord | null {
   };
 }
 
-function persist(words: SavedWord[]): void {
-  if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(words));
+/**
+ * Saved words are the most valuable thing this app holds, so a write here must
+ * never throw into a tap handler. It used to: an unguarded setItem meant that
+ * once the origin's localStorage filled up (historically from the unbounded
+ * per-article translation cache — see articleTranslation.ts), the very act of
+ * saving a word raised QuotaExceededError, the word was silently lost, and the
+ * XP/activity bookkeeping after it never ran.
+ *
+ * Returns whether the write landed so callers can tell the user when it didn't,
+ * rather than showing a success toast for a word that wasn't stored.
+ */
+function persist(words: SavedWord[]): boolean {
+  if (!hasStorage()) return false;
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(words));
+  } catch {
+    return false;
+  }
   // Best-effort, fire-and-forget — no-ops if sync isn't configured or no
   // one's signed in. See src/lib/supabase/sync.ts.
   void pushStore(KEY);
+  return true;
 }
 
 /**
@@ -244,15 +260,24 @@ export function isWordSaved(word: string): boolean {
  * original saved context and status are kept, even if tapped again in a
  * new sentence later.
  */
-export function saveWord(entry: SavedWord): SavedWord[] {
+export interface SaveWordResult {
+  words: SavedWord[];
+  /** False when the write was rejected (quota) — the caller should say so rather than confirm a save that didn't happen. */
+  persisted: boolean;
+}
+
+export function saveWord(entry: SavedWord): SaveWordResult {
   const words = getSavedWords();
   const entryLemma = entry.lemma?.toLowerCase();
-  if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) return words;
+  if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) {
+    return { words, persisted: true };
+  }
   const next = [entry, ...words];
-  persist(next);
+  if (!persist(next)) return { words, persisted: false };
+  // Only credit progress for a word that actually made it to storage.
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
-  return next;
+  return { words: next, persisted: true };
 }
 
 /**

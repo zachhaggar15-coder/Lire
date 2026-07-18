@@ -4,7 +4,7 @@ import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
 import { articleCoverageDictionary } from "@/data/dictionaries/article-coverage";
-import { frEnGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
+import { loadGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
 import { getCustomDictionaryEntry } from "@/lib/dictionary/custom";
@@ -72,11 +72,53 @@ const generatedByForm = new Map<string, DictionaryEntry>();
 const articleCoverageByLemma = new Map<string, DictionaryEntry>();
 const articleCoverageByForm = new Map<string, DictionaryEntry>();
 
-for (const entry of frEnGeneratedDictionary) {
-  generatedByLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    generatedByForm.set(form.toLowerCase(), entry);
+/**
+ * The generated layer is loaded on demand rather than bundled — see the note
+ * in data/dictionaries/generated/fr-en-generated.ts. Until it resolves these
+ * maps are empty and lookups fall back to the curated dictionary, which
+ * covers the common vocabulary a reader hits first; the broad layer fills in
+ * a moment later.
+ */
+let generatedReady: Promise<void> | null = null;
+
+export function isGeneratedDictionaryReady(): boolean {
+  return generatedByLemma.size > 0;
+}
+
+/** Loads and indexes the broad generated dictionary. Idempotent and safe to call from anywhere. */
+export function ensureGeneratedDictionary(): Promise<void> {
+  if (!generatedReady) {
+    generatedReady = loadGeneratedDictionary()
+      .then((entries) => {
+        for (const entry of entries) {
+          generatedByLemma.set(entry.lemma.toLowerCase(), entry);
+          for (const form of entry.forms ?? []) {
+            generatedByForm.set(form.toLowerCase(), entry);
+          }
+        }
+      })
+      .catch(() => {
+        // Offline or chunk fetch failed: curated lookups keep working, and a
+        // later call can retry rather than being stuck on a rejected promise.
+        generatedReady = null;
+      });
   }
+  return generatedReady;
+}
+
+/**
+ * Safety net so no screen is left permanently on curated-only coverage.
+ *
+ * Screens that care about full coverage call ensureGeneratedDictionary()
+ * explicitly (via useGeneratedDictionary) so they can re-render when it
+ * lands. But lookupWord is called from plenty of incidental places, and a
+ * miss there is the strongest possible signal that the broad layer is worth
+ * fetching — so a miss also kicks the load off in the background. The current
+ * call still returns the curated answer; subsequent ones get full coverage.
+ */
+function warmGeneratedDictionaryInBackground(): void {
+  if (generatedReady || typeof window === "undefined") return;
+  void ensureGeneratedDictionary();
 }
 
 for (const entry of articleCoverageDictionary) {
@@ -214,6 +256,10 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
     const proper = properByLemma.get(clean) ?? properByForm.get(clean);
     if (proper) return toResult(rawWord, proper);
   }
+
+  // Past the curated layer: whatever this word is, the broad layer is the one
+  // that would answer it, so make sure it's on its way in.
+  warmGeneratedDictionaryInBackground();
 
   const generatedExact = generatedByLemma.get(clean);
   if (generatedExact) return toResult(rawWord, generatedExact);
