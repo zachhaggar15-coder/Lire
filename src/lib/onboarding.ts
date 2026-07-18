@@ -17,7 +17,7 @@ export interface OnboardingState {
   updatedAt: string;
 }
 
-const DEFAULT_LEVEL: Difficulty = "A2";
+const DEFAULT_LEVEL: Difficulty = "A1";
 export type OnboardingGoal = "light" | "steady" | "serious";
 
 const GOAL_PRESETS: Record<OnboardingGoal, Partial<ReadingGoals>> = {
@@ -158,5 +158,5 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
 }
 
 export function skipOnboarding(): OnboardingState {
-  return saveOnboarding(DEFAULT_LEVEL, [], undefined, { seedKnownWords: false });
+  return saveOnboarding("A2", [], undefined, { seedKnownWords: false });
 }

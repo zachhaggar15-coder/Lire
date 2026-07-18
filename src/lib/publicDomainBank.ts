@@ -48,8 +48,11 @@ export function getDailyBankTexts({
     if (categoryKey !== "all" && text.category !== categoryKey) return false;
     return true;
   });
+  const starterCandidates = candidates.filter(isStarterText);
+  const beginnerStarterOnly = (level === "A1" || level === "A2") && starterCandidates.length > 0;
+  const pool = beginnerStarterOnly ? starterCandidates : candidates;
 
-  return seededShuffle(candidates, `${todayKey(date)}::bank::${level}::${categoryKey}`)
+  return seededShuffle(pool, `${todayKey(date)}::bank::${level}::${categoryKey}`)
     .sort((a, b) => {
       // Purpose-written beginner texts come first at every level. The
       // public-domain bank is 19th-century literature, so even its "A1"
@@ -58,7 +61,8 @@ export function getDailyBankTexts({
       // meets on their first day.
       const starterFirst = Number(isStarterText(b)) - Number(isStarterText(a));
       if (starterFirst !== 0) return starterFirst;
-      return allowedLevels.indexOf(a.difficulty) - allowedLevels.indexOf(b.difficulty);
+      return Math.abs(CEFR_ORDER.indexOf(a.difficulty) - CEFR_ORDER.indexOf(level)) -
+        Math.abs(CEFR_ORDER.indexOf(b.difficulty) - CEFR_ORDER.indexOf(level));
     })
     .slice(0, limit)
     .map(stripMetadataOnlyBlurb);

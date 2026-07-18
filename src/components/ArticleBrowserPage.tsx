@@ -11,9 +11,10 @@ import { pruneStaleRssProgress } from "@/lib/progress";
 import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
+import { formatCategory } from "@/lib/format";
 import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
-import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT, getDailyBankTexts } from "@/lib/publicDomainBank";
+import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT, getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import {
   buildScorableArticles,
   buildScoringContext,
@@ -256,9 +257,9 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
       {liveNewsGated ? (
         <BeginnerNewsGate onContinue={() => setShowLiveNewsAnyway(true)} />
-      ) : (
+      ) : mode === "live" ? (
         <FilterPanel
-          categoryItems={mode === "articles" ? ARTICLE_CATEGORY_FILTERS : CATEGORY_FILTERS}
+          categoryItems={CATEGORY_FILTERS}
           categoryFilter={categoryFilter}
           difficultyFilter={difficultyFilter}
           languageFilter={languageFilter}
@@ -267,7 +268,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           onLanguage={setLanguageFilter}
           onReset={resetFilters}
         />
-      )}
+      ) : null}
 
       {!liveNewsGated && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
 
@@ -296,6 +297,19 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
             savedLaterArticles={savedLaterArticles}
           />
         )
+      )}
+
+      {!liveNewsGated && mode === "articles" && (
+        <FilterPanel
+          categoryItems={ARTICLE_CATEGORY_FILTERS}
+          categoryFilter={categoryFilter}
+          difficultyFilter={difficultyFilter}
+          languageFilter={languageFilter}
+          onCategory={setCategoryFilter}
+          onDifficulty={setDifficultyFilter}
+          onLanguage={setLanguageFilter}
+          onReset={resetFilters}
+        />
       )}
     </div>
   );
@@ -438,25 +452,72 @@ function ArticleContent({
   savedLaterArticles: ScoredArticle[];
 }) {
   const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
+  const orderedArticles = [...sections.dailyBank].sort((a, b) => {
+    const starterFirst = Number(isStarterText(b.text)) - Number(isStarterText(a.text));
+    if (starterFirst !== 0) return starterFirst;
+    return Number(a.text.difficulty !== level) - Number(b.text.difficulty !== level);
+  });
+  const [featured, ...rest] = orderedArticles;
+  const upNext = rest.slice(0, 2);
+  const morePractice = rest.slice(2);
+
   return (
     <>
-      <ArticleSection title="Start Here" subtitle={`${level} readings for a short practice session.`} articles={sections.dailyBank} variant="grid" />
+      {featured && <FeaturedLessonCard article={featured} lessonNumber={1} level={level} />}
+      <ArticleSection title="Up Next" subtitle="Two more short lessons when you want to continue." articles={upNext} variant="compact" />
+      {morePractice.length > 0 && (
+        <details className="mb-6">
+          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+            More practice
+          </summary>
+          <div className="mt-3">
+            <ArticleSection title={`${level} practice bank`} articles={morePractice} variant="compact" />
+          </div>
+        </details>
+      )}
       {customArticles.length > 0 && (
         <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
       )}
-      <section className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Bring Your Own Text</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
-          </div>
+      <details className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
+          Import your own text
+        </summary>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
           <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
             Import
           </Link>
         </div>
-      </section>
+      </details>
       <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
     </>
+  );
+}
+
+function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredArticle; lessonNumber: number; level: Difficulty }) {
+  const { text } = article;
+  return (
+    <section className="mb-5 rounded-3xl bg-cream-card p-5 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber}</p>
+      <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">{text.title}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        {text.blurbEn ?? text.preview}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{text.difficulty}</span>
+        <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold capitalize text-ink-muted">{formatCategory(text.category)}</span>
+        <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">{text.minutes} min</span>
+        {text.difficulty !== level && (
+          <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">near your level</span>
+        )}
+      </div>
+      <Link
+        href={`/reader/${encodeURIComponent(text.id)}`}
+        className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
+      >
+        Start lesson
+      </Link>
+    </section>
   );
 }
 

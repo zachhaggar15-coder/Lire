@@ -98,7 +98,10 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
       </div>
       <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
       <p className="mt-1 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
-      {sourceLabel && <p className="mt-2 truncate text-[11px] font-semibold text-ink-muted">{sourceLabel}</p>}
+      <div className="mt-2 flex items-center justify-between gap-2">
+        {sourceLabel && <p className="truncate text-[11px] font-semibold text-ink-muted">{sourceLabel}</p>}
+        <span className="shrink-0 text-xs font-bold text-brand">Start</span>
+      </div>
     </a>
   );
 }

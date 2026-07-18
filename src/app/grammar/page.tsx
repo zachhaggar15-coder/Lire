@@ -37,7 +37,7 @@ const TENSES: VerbTense[] = ["present", "passe-compose", "imparfait", "futur-sim
 
 export default function GrammarPage() {
   const lessons = getVerbLessons();
-  const [tab, setTab] = useState<Tab>("learn");
+  const [tab, setTab] = useState<Tab>("practice");
   const [progress, setProgress] = useState<GrammarProgressRecord[]>([]);
   const [dashboard, setDashboard] = useState<GrammarDashboard>(() => buildGrammarDashboard([], []));
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -133,10 +133,11 @@ export default function GrammarPage() {
         <p className="text-xs font-bold uppercase tracking-wide text-brand">Grammar</p>
         <h1 className="mt-1 text-2xl font-extrabold text-ink">Verb conjugation</h1>
         <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-          One lesson at a time. Finish the current step to unlock the next.
+          Practise one verb pattern at a time.
         </p>
       </header>
 
+      {tab !== "practice" && (
       <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -150,6 +151,7 @@ export default function GrammarPage() {
         </div>
         <ProgressBar value={pathProgress} label="Path progress" />
       </section>
+      )}
 
       <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
         {TABS.map((item) => (
@@ -323,7 +325,7 @@ function PracticeCard({
           <h2 className="mt-1 text-xl font-extrabold text-ink">Question {questionIndex + 1}/{totalQuestions}</h2>
         </div>
         <span className="rounded-full bg-cream px-3 py-1 text-xs font-bold text-ink-muted">
-          {sessionCorrect}/{sessionAnswered}
+          {sessionAnswered === 0 ? "0 correct" : `${sessionCorrect} correct`}
         </span>
       </div>
 

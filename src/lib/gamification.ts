@@ -872,7 +872,7 @@ export function quickChallengeForArticle(text: ReadingText): { prompt: string; c
   const choices = ["News", "Sport", "Culture", "Science", "Life"];
   const answer = CATEGORY_LABELS[text.category];
   return {
-    prompt: "What topic does this headline suggest?",
+    prompt: "What topic did this reading mostly belong to?",
     choices,
     answer,
   };

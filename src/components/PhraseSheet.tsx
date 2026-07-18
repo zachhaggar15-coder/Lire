@@ -166,55 +166,6 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
           </div>
         )}
 
-        <div className="mt-4 rounded-2xl bg-white/70 p-3">
-          <label className="text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="phrase-correction">
-            Better translation
-          </label>
-          <input
-            id="phrase-correction"
-            type="text"
-            value={correction}
-            onChange={(event) => setCorrection(event.target.value)}
-            placeholder="Type a clearer English phrase"
-            className="mt-2 w-full rounded-xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
-          />
-          <button
-            type="button"
-            onClick={handleSaveCorrection}
-            disabled={!correction.trim()}
-            className="mt-2 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
-          >
-            Save correction
-          </button>
-        </div>
-
-        <div className="mt-4 rounded-2xl bg-white/70 p-3">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Last-resort nuance</p>
-              <p className="mt-1 text-sm text-ink-muted">Use this only if the offline phrase meaning is not enough.</p>
-            </div>
-            <button
-              type="button"
-              onClick={handleAskAi}
-              disabled={!state || aiState === "loading"}
-              className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
-            >
-              {aiState === "loading" ? "Asking..." : "Ask AI"}
-            </button>
-          </div>
-          {aiState === "ready" && aiResult && (
-            <div className="mt-3 space-y-2 text-sm text-ink">
-              <p className="font-semibold">{aiResult.translation}</p>
-              <p>{aiResult.meaningInContext}</p>
-              {aiResult.grammarOrUsageNote && <p className="text-ink-muted">{aiResult.grammarOrUsageNote}</p>}
-            </div>
-          )}
-          {aiState === "error" && aiError && (
-            <p className="mt-3 text-sm font-semibold text-rose-700">{aiError}</p>
-          )}
-        </div>
-
         <div className="mt-5 grid grid-cols-2 gap-2">
           <button
             onClick={handleSavePhrase}
@@ -229,6 +180,62 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
             {savedKnown ? "Known" : "I know this"}
           </button>
         </div>
+
+        <details className="mt-4 rounded-2xl bg-white/70 p-3">
+          <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-ink-muted">
+            More details
+          </summary>
+          <div className="mt-3 space-y-3">
+            <div className="rounded-2xl bg-white/70 p-3">
+              <label className="text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="phrase-correction">
+                Better translation
+              </label>
+              <input
+                id="phrase-correction"
+                type="text"
+                value={correction}
+                onChange={(event) => setCorrection(event.target.value)}
+                placeholder="Type a clearer English phrase"
+                className="mt-2 w-full rounded-xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+              />
+              <button
+                type="button"
+                onClick={handleSaveCorrection}
+                disabled={!correction.trim()}
+                className="mt-2 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
+              >
+                Save correction
+              </button>
+            </div>
+
+            <div className="rounded-2xl bg-white/70 p-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Last-resort nuance</p>
+                  <p className="mt-1 text-sm text-ink-muted">Use this only if the offline phrase meaning is not enough.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAskAi}
+                  disabled={!state || aiState === "loading"}
+                  className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
+                >
+                  {aiState === "loading" ? "Asking..." : "Ask AI"}
+                </button>
+              </div>
+              {aiState === "ready" && aiResult && (
+                <div className="mt-3 space-y-2 text-sm text-ink">
+                  <p className="font-semibold">{aiResult.translation}</p>
+                  <p>{aiResult.meaningInContext}</p>
+                  {aiResult.grammarOrUsageNote && <p className="text-ink-muted">{aiResult.grammarOrUsageNote}</p>}
+                </div>
+              )}
+              {aiState === "error" && aiError && (
+                <p className="mt-3 text-sm font-semibold text-rose-700">{aiError}</p>
+              )}
+            </div>
+          </div>
+        </details>
       </div>
     </>
   );

@@ -1,59 +1,72 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import { XPProgressBar } from "@/components/GamificationCards";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 import BetaNotice from "@/components/BetaNotice";
-import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import type { Difficulty } from "@/types";
-import { buildProgressSnapshot, awardCompletedMissions, type ProgressSnapshot } from "@/lib/gamification";
+import { buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
 import { getKnownWords } from "@/lib/knownWords";
 import { getOnboardingState, getSelectedReadingLevel } from "@/lib/onboarding";
 import { getReviewStats } from "@/lib/spacedRepetition";
 import { getSavedWords } from "@/lib/storage";
+import { getSavedPhrases } from "@/lib/phrases";
 import { getValidationState } from "@/lib/validation/state";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
+import { getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
+import { getProgress } from "@/lib/progress";
 
 export default function HomePage() {
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
   const [progressSnapshot, setProgressSnapshot] = useState<ProgressSnapshot | null>(null);
-  const [rewardNotice, setRewardNotice] = useState<string | null>(null);
   const [stats, setStats] = useState({
     knownWords: 0,
     savedWords: 0,
+    savedPhrases: 0,
     dueReviews: 0,
   });
-  const [showFirstVisitMessage, setShowFirstVisitMessage] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
+  const [completedArticleCount, setCompletedArticleCount] = useState(0);
+  const [nextLesson, setNextLesson] = useState<{ href: string; title: string; detail: string } | null>(null);
 
-  function refreshDashboard(showRewards = false) {
+  const nextStarterLesson = useCallback((level: Difficulty) => {
+    const bank = getDailyBankTexts({ level, category: "all", limit: 20 }).filter(isStarterText);
+    const text = bank.find((item) => getProgress(item.id).status !== "completed") ?? bank[0];
+    if (!text) return null;
+    return {
+      href: `/reader/${encodeURIComponent(text.id)}`,
+      title: text.title,
+      detail: `${text.difficulty} - ${text.minutes} min`,
+    };
+  }, []);
+
+  const refreshDashboard = useCallback(() => {
     const onboarding = getOnboardingState();
     const savedWords = getSavedWords();
+    const savedPhrases = getSavedPhrases();
     const reviewStats = getReviewStats(savedWords);
-    const rewards = awardCompletedMissions(undefined, savedWords);
+    const validation = getValidationState();
+    const level = getSelectedReadingLevel();
     setOnboardingComplete(onboarding?.completed === true);
-    setSelectedLevel(getSelectedReadingLevel());
+    setSelectedLevel(level);
     setProgressSnapshot(buildProgressSnapshot(savedWords));
+    setCompletedArticleCount(validation.completedArticleCount);
+    setNextLesson(nextStarterLesson(level));
     setStats({
       knownWords: getKnownWords().length,
       savedWords: savedWords.filter((word) => word.status !== "known").length,
+      savedPhrases: savedPhrases.filter((phrase) => phrase.status !== "known").length,
       dueReviews: reviewStats.dueToday + reviewStats.newWords,
     });
-    const validation = getValidationState();
-    setShowFirstVisitMessage(!validation.firstArticleOpenedAt && validation.meaningfulSessionCount === 0);
-    if (showRewards && rewards.awardedXp > 0) {
-      setRewardNotice(`+${rewards.awardedXp} XP from missions`);
-      window.setTimeout(() => setRewardNotice(null), 2200);
-    }
-  }
+  }, [nextStarterLesson]);
 
   useEffect(() => {
-    refreshDashboard(true);
+    refreshDashboard();
     return subscribeToRecommendationPreferences(() => refreshDashboard());
-  }, []);
+  }, [refreshDashboard]);
 
   if (onboardingComplete === null) {
     return (
@@ -74,7 +87,7 @@ export default function HomePage() {
         <FirstRunOnboarding
           variant="focus"
           onComplete={() => {
-            refreshDashboard(true);
+            refreshDashboard();
             window.location.assign("/articles");
           }}
         />
@@ -97,41 +110,100 @@ export default function HomePage() {
         </Link>
       </header>
 
-      {rewardNotice && (
-        <div className="mb-4 rounded-2xl bg-brand-light px-3 py-2 text-sm font-semibold text-brand shadow-sm">
-          {rewardNotice}
-        </div>
+      {completedArticleCount < 3 ? (
+        <BeginnerHome
+          completedArticleCount={completedArticleCount}
+          nextLesson={nextLesson}
+          selectedLevel={selectedLevel}
+          dueReviews={stats.dueReviews}
+          savedLearningItems={stats.savedWords + stats.savedPhrases}
+          savedPhrases={stats.savedPhrases}
+        />
+      ) : (
+        <>
+          <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
+          <ContinueReadingBanner />
+          <div className="mb-5">
+            <BetaNotice />
+          </div>
+          <ShortSnippetsBlock />
+        </>
       )}
-
-      {showFirstVisitMessage && <FirstVisitValueCard />}
-      <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
-      <ContinueReadingBanner />
-      <div className="mb-5">
-        <BetaNotice />
-      </div>
-      <ShortSnippetsBlock />
     </div>
   );
 }
 
-function FirstVisitValueCard() {
+function BeginnerHome({
+  completedArticleCount,
+  nextLesson,
+  selectedLevel,
+  dueReviews,
+  savedLearningItems,
+  savedPhrases,
+}: {
+  completedArticleCount: number;
+  nextLesson: { href: string; title: string; detail: string } | null;
+  selectedLevel: Difficulty;
+  dueReviews: number;
+  savedLearningItems: number;
+  savedPhrases: number;
+}) {
+  const step = Math.min(3, completedArticleCount + 1);
   return (
-    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Learn French by reading something interesting</p>
-      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Read real French with help right where you need it.</h2>
-      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-        Lire is for A2-B2 learners who want reading practice beyond repetitive drills: tap unfamiliar words, understand phrases and sentences, save useful vocabulary, then review it later.
-      </p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
-          Start reading
+    <div className="space-y-4">
+      <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
+        <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {step} of 3</p>
+        <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">
+          Start with one short French reading.
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+          Tap words when you need help. Save only the words you want to practise later.
+        </p>
+        <Link
+          href={nextLesson?.href ?? "/articles"}
+          className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
+        >
+          {completedArticleCount === 0 ? "Start first reading" : "Continue reading"}
         </Link>
-        <Link href="/live-news" className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95">
-          Explore live news
+        {nextLesson && (
+          <p className="mt-3 text-center text-xs text-ink-muted">
+            {nextLesson.title} - {nextLesson.detail}
+          </p>
+        )}
+      </section>
+
+      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Your first loop</p>
+        <div className="mt-3 grid gap-2">
+          <BeginnerStep done={completedArticleCount > 0} label="Read one beginner text" />
+          <BeginnerStep done={savedLearningItems > 0} label="Save one word or phrase" />
+          <BeginnerStep done={completedArticleCount > 1} label="Try one more reading" />
+        </div>
+      </section>
+
+      <div className="grid grid-cols-2 gap-2">
+        <Link href="/articles" className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-sm active:scale-95">
+          More readings
         </Link>
-        <AndroidBetaButton source="dashboard" label="Join Android beta" className="rounded-full bg-brand-light px-4 py-2 text-sm font-semibold text-brand active:scale-95" />
+        <Link
+          href={dueReviews > 0 ? "/review" : savedPhrases > 0 ? "/phrases" : "/settings"}
+          className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-sm active:scale-95"
+        >
+          {dueReviews > 0 ? "Review words" : savedPhrases > 0 ? "Review phrases" : `${selectedLevel} level`}
+        </Link>
       </div>
-    </section>
+    </div>
+  );
+}
+
+function BeginnerStep({ done, label }: { done: boolean; label: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-2">
+      <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${done ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
+        {done ? "OK" : ""}
+      </span>
+      <p className="text-sm font-semibold text-ink">{label}</p>
+    </div>
   );
 }
 

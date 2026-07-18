@@ -295,8 +295,8 @@ export function CompletionSummary({
     ["Phrases", completion.phrasesSaved],
     ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
   ];
-  const nextHref = reviewHref ?? "/";
-  const nextLabel = reviewHref ? "Review saved words" : "Read another";
+  const nextHref = reviewHref ?? "/articles";
+  const nextLabel = reviewHref ? "Review saved words" : "Next reading";
   const nextCopy =
     completion.savedWords > 0
       ? "Review the words you chose while the article is still fresh."

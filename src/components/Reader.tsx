@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
@@ -52,6 +52,7 @@ import { trackEvent } from "@/lib/analytics/client";
 import { createActiveTimeTracker, type ActiveTimeTracker } from "@/lib/analytics/session";
 import { applyReadingSessionToState, isMeaningfulReadingSession } from "@/lib/validation/definitions";
 import { getValidationState, saveValidationState, updateValidationState } from "@/lib/validation/state";
+import { isStarterText } from "@/lib/publicDomainBank";
 import {
   quickChallengeForArticle,
   recordGamifiedArticleCompletion,
@@ -93,7 +94,8 @@ const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 export default function Reader({ text }: { text: ReadingText }) {
   const router = useRouter();
   const isImportedText = text.id.startsWith("custom-");
-  const showInterpretationChecks = !isImportedText;
+  const isStarterLesson = isStarterText(text);
+  const showInterpretationChecks = !isImportedText && !isStarterLesson;
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
   /** Instant, free, offline fallback, one per sentence. Defaults to phrase-aware, with literal still available from Settings. */
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -253,6 +255,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     [articleTapRecords, knownSet, savedWordsSnapshot, text]
   );
   const activeInference = useMemo(() => {
+    if (isStarterLesson) return null;
     if (!activeWord || !shouldOfferInference(activeWord.word, inferenceWords)) return null;
     if (getInferenceResult(text.id, activeWord.word)) return null;
     const sentenceIndex = flatSentences.indexOf(activeWord.contextSentence);
@@ -261,7 +264,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         ? activeWord.contextSentence
         : fluentSentences?.[sentenceIndex] ?? offlineSentences[sentenceIndex] ?? activeWord.contextSentence;
     return buildInferenceChallenge(activeWord.word, activeWord.lookup, activeWord.contextSentence, sentenceTranslation);
-  }, [activeWord, flatSentences, fluentSentences, inferenceWords, offlineSentences, text.id]);
+  }, [activeWord, flatSentences, fluentSentences, inferenceWords, isStarterLesson, offlineSentences, text.id]);
   const translationAllowance = useMemo(
     () => suggestedTranslationAllowance(difficulty?.unknownWordRatio),
     [difficulty?.unknownWordRatio]
@@ -453,11 +456,11 @@ export default function Reader({ text }: { text: ReadingText }) {
     // fetched separately rather than loaded before the article can be read.
     const localCandidates = dedupeArticles([...getCustomTexts(), ...getCachedRssTexts(), ...getOfflineRssTexts()]);
     setArticlePool(localCandidates);
-    setRelatedArticles(findRelatedArticles(text, localCandidates));
+    setRelatedArticles(buildRelatedArticles(text, localCandidates));
     void import("@/data/texts").then(({ texts: builtInTexts }) => {
       const widened = dedupeArticles([...localCandidates, ...builtInTexts]);
       setArticlePool(widened);
-      setRelatedArticles(findRelatedArticles(text, widened));
+      setRelatedArticles(buildRelatedArticles(text, widened));
     });
     setGistAnswer(null);
     setToneAnswers({});
@@ -613,6 +616,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (settings.translationMode === "literal") return "Literal";
     if (settings.translationMode === "phrase-aware") return "Phrase-aware";
     return settings.aiTranslationEnabled ? "Natural" : "Phrase-aware";
+  }
+
+  function sentenceTranslationForDisplay(flatIndex: number): string | null {
+    if (shouldUseFluentTranslation() && translationState === "loading") {
+      return fluentSentences?.[flatIndex] ?? null;
+    }
+    return fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex] ?? null;
   }
 
   function showToast(message: string) {
@@ -992,8 +1002,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
       articleContextSentence: contextSentence,
-      exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
-      exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
+      exampleSentenceFr: firstExample?.fr ?? contextSentence,
+      exampleSentenceEn: firstExample?.en ?? (naturalTranslation ?? translations[0] ?? fallbackExample.en),
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
@@ -1253,6 +1263,22 @@ export default function Reader({ text }: { text: ReadingText }) {
         renderedTokens.push(
           <span
             key={`${startIndex}-${ti}`}
+            role={rereadMode ? undefined : "button"}
+            tabIndex={rereadMode ? undefined : 0}
+            onKeyDown={(event: KeyboardEvent<HTMLSpanElement>) => {
+              if (rereadMode) return;
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              event.stopPropagation();
+              handlePhraseTap(sg.text, {
+                phrase: phraseText.toLowerCase(),
+                lemma: phrase.lemma,
+                translation: phrase.translation,
+                partOfSpeech: phrase.partOfSpeech,
+                contextSentence: sg.text,
+                source: phrase.source,
+              });
+            }}
             onPointerDown={(event) => {
               event.stopPropagation();
               if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
@@ -1304,6 +1330,15 @@ export default function Reader({ text }: { text: ReadingText }) {
         tok.isWord ? (
           <span
             key={`${startIndex}-${ti}`}
+            role={rereadMode ? undefined : "button"}
+            tabIndex={rereadMode ? undefined : 0}
+            onKeyDown={(event: KeyboardEvent<HTMLSpanElement>) => {
+              if (rereadMode) return;
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              event.stopPropagation();
+              handleWordTap(sg.text, sg.tokens, ti);
+            }}
             onPointerDown={(event) => {
               event.stopPropagation();
               if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
@@ -1381,7 +1416,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function renderInterlinearSentence(sg: SentenceGroup, key: number, flatIndex: number) {
-    const sentenceTranslation = fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex] ?? null;
+    const sentenceTranslation = sentenceTranslationForDisplay(flatIndex);
     const chunks = buildInterlinearTranslationChunks(sg.tokens, fluentAlignments?.[flatIndex], sentenceTranslation);
 
     return renderSentenceFrame(
@@ -1535,7 +1570,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               Showing rough offline English help ({translationModeLabel().toLowerCase()}).
             </>
           )}
-          {shouldUseFluentTranslation() && translationState === "loading" && "Natural English is loading. Until it is ready, the lines below use rough phrase-by-phrase help."}
+          {shouldUseFluentTranslation() && translationState === "loading" && "Natural English is loading. English lines will appear as soon as they are ready."}
           {shouldUseFluentTranslation() && translationState === "ready" && !translationError && "Natural English translation, aligned between the French lines."}
           {shouldUseFluentTranslation() && translationState === "ready" && translationError && (
             <>
@@ -1593,7 +1628,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         opt-in block, closed by default, so finishing an article stays a short
         path and the exercises are there for whoever wants them.
       */}
-      {!rereadMode && (
+      {!rereadMode && !isStarterLesson && (
         <details className="mt-8 rounded-3xl bg-cream-card p-4 shadow-sm">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
             <div>
@@ -1783,7 +1818,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       </div>
 
       {/* "What to read next" belongs after finishing, not among the exercises. */}
-      {showInterpretationChecks && status === "completed" && !rereadMode && relatedArticles.length > 0 && (
+      {status === "completed" && !rereadMode && relatedArticles.length > 0 && (
         <details className="mb-5">
           <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
             More articles
@@ -1879,6 +1914,26 @@ function dedupeArticles(articles: ReadingText[]): ReadingText[] {
   const byId = new Map<string, ReadingText>();
   for (const article of articles) byId.set(article.id, article);
   return [...byId.values()];
+}
+
+function buildRelatedArticles(current: ReadingText, candidates: ReadingText[], limit = 3): ReadingText[] {
+  if (!isStarterText(current)) return findRelatedArticles(current, candidates, limit);
+
+  const starterCandidates = candidates.filter(isStarterText);
+  const related = findRelatedArticles(current, starterCandidates, limit);
+  if (related.length >= limit) return related;
+
+  const fallback = starterCandidates
+    .filter((candidate) => candidate.id !== current.id && !related.some((article) => article.id === candidate.id))
+    .sort((a, b) => {
+      const categoryMatch = Number(b.category === current.category) - Number(a.category === current.category);
+      if (categoryMatch !== 0) return categoryMatch;
+      const difficultyMatch = Number(b.difficulty === current.difficulty) - Number(a.difficulty === current.difficulty);
+      if (difficultyMatch !== 0) return difficultyMatch;
+      return a.title.localeCompare(b.title);
+    });
+
+  return [...related, ...fallback].slice(0, limit);
 }
 
 function RelatedArticles({ articles }: { articles: ReadingText[] }) {

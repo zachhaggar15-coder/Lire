@@ -59,6 +59,9 @@ export default function ReviewPage() {
     if (visibleSavedWords.length === 0 && visibleSavedPhrases.length > 0) {
       setReviewMode("phrases");
     }
+    if (buildReviewQueue(visibleSavedWords).length > 0) {
+      setReviewStarted(true);
+    }
     setReady(true);
   }, []);
 
@@ -435,7 +438,7 @@ export default function ReviewPage() {
                   </p>
                 )}
 
-                {current.exampleSentenceFr && (
+                {shouldShowReviewExample(current) && (
                   <div className="mt-4 rounded-2xl bg-cream p-3 text-left">
                     <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
                       Example
@@ -502,6 +505,15 @@ export default function ReviewPage() {
       )}
     </div>
   );
+}
+
+function shouldShowReviewExample(word: SavedWord): boolean {
+  if (!word.exampleSentenceFr || !word.exampleSentenceEn) return false;
+  if (word.exampleSentenceFr === word.articleContextSentence) return false;
+  if (/^C'est très\s+(mon|ma|mes|ton|ta|tes|son|sa|ses|notre|nos|votre|vos|leur|leurs)\.?$/i.test(word.exampleSentenceFr)) {
+    return false;
+  }
+  return true;
 }
 
 function StartReviewButton({ onStart }: { onStart: () => void }) {

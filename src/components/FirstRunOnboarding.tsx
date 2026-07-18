@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
-import { getOnboardingState, saveOnboarding, skipOnboarding, type OnboardingGoal } from "@/lib/onboarding";
+import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 import { trackEvent } from "@/lib/analytics/client";
 
@@ -36,7 +36,7 @@ interface FirstRunOnboardingProps {
 
 export default function FirstRunOnboarding({ onComplete, variant = "embedded" }: FirstRunOnboardingProps) {
   const [visible, setVisible] = useState(false);
-  const [level, setLevel] = useState<Difficulty>("A2");
+  const [level, setLevel] = useState<Difficulty>("A1");
   // Deliberately empty. Pre-ticking News and Science looked like a suggestion
   // but behaved like a selection: tapping "Science" to choose it actually
   // toggled it *off*, and anyone who picked nothing silently got News.
@@ -61,10 +61,10 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
     );
   }
 
-  function finish() {
-    saveOnboarding(level, topics, goal);
+  function finish(nextLevel = level) {
+    saveOnboarding(nextLevel, topics, goal);
     trackEvent("onboarding_completed", {
-      level,
+      level: nextLevel,
       topicCount: topics.length,
       goal,
       skipped: false,
@@ -73,38 +73,27 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
     onComplete?.();
   }
 
-  function skip() {
-    skipOnboarding();
-    trackEvent("onboarding_completed", { skipped: true });
-    setVisible(false);
-    onComplete?.();
-  }
-
   return (
     <section className={`${variant === "focus" ? "rounded-3xl bg-cream-card p-5 shadow-sm" : "mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"}`}>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-brand">First filter</h2>
-          <p className="mt-1 text-lg font-extrabold leading-tight text-ink">What French should Lire start with?</p>
-          <p className="mt-1 text-sm text-ink-muted">You can change this after your first article.</p>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-brand">Start here</h2>
+          <p className="mt-1 text-lg font-extrabold leading-tight text-ink">How much French do you know?</p>
+          <p className="mt-1 text-sm text-ink-muted">Pick the closest answer. Lire will open your first short reading next.</p>
         </div>
-        <button
-          type="button"
-          onClick={skip}
-          className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-95"
-        >
-          Use defaults
-        </button>
       </div>
 
       <div className="mt-4">
-        <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Starting point</p>
         <div className="grid gap-2">
           {STARTING_POINTS.map((option) => (
             <button
               key={option.value}
               type="button"
-              onClick={() => setLevel(option.value)}
+              onClick={() => {
+                setLevel(option.value);
+                finish(option.value);
+              }}
+              aria-pressed={level === option.value}
               className={`rounded-2xl px-3 py-3 text-left active:scale-[0.99] ${
                 level === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink"
               }`}
@@ -130,7 +119,11 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
               <button
                 key={option}
                 type="button"
-                onClick={() => setLevel(option)}
+                onClick={() => {
+                  setLevel(option);
+                  finish(option);
+                }}
+                aria-pressed={level === option}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                   level === option ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
                 }`}
@@ -142,52 +135,65 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
         </details>
       </div>
 
-      <div className="mt-3">
-        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Topics, optional</p>
-        <div className="flex flex-wrap gap-2">
-          {TOPICS.map((topic) => (
-            <button
-              key={topic.value}
-              type="button"
-              onClick={() => toggleTopic(topic.value)}
-              className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                topics.includes(topic.value) ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
-              }`}
-            >
-              {topic.label}
-            </button>
-          ))}
-        </div>
-        <p className="mt-1 text-[11px] text-ink-muted">
-          Pick any you want. Leaving this blank keeps all topics in rotation.
-        </p>
-      </div>
+      <details className="mt-4 rounded-2xl bg-cream px-3 py-2">
+        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+          Optional: topics and daily goal
+        </summary>
 
-      <div className="mt-3">
-        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
-        <div className="grid grid-cols-3 gap-2">
-          {GOALS.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => setGoal(option.value)}
-              className={`rounded-xl px-2 py-2 text-center ${
-                goal === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
-              }`}
-            >
-              <span className="block text-sm font-semibold">{option.label}</span>
-              <span className="block text-[11px]">{option.detail}</span>
-            </button>
-          ))}
+        <div className="mt-3">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Topics</p>
+          <div className="flex flex-wrap gap-2">
+            {TOPICS.map((topic) => (
+              <button
+                key={topic.value}
+                type="button"
+                onClick={() => toggleTopic(topic.value)}
+                aria-pressed={topics.includes(topic.value)}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  topics.includes(topic.value) ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                {topic.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+
+        <div className="mt-3">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
+          <div className="grid grid-cols-3 gap-2">
+            {GOALS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setGoal(option.value)}
+                aria-pressed={goal === option.value}
+                className={`rounded-xl px-2 py-2 text-center ${
+                  goal === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                }`}
+              >
+                <span className="block text-sm font-semibold">{option.label}</span>
+                <span className="block text-[11px]">{option.detail}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => finish()}
+          className="mt-3 w-full rounded-full bg-brand py-2.5 text-sm font-semibold text-white active:scale-95"
+        >
+          Start with these choices
+        </button>
+      </details>
 
       <button
         type="button"
-        onClick={finish}
-        className="mt-4 w-full rounded-full bg-brand py-2.5 text-sm font-semibold text-white active:scale-95"
+        onClick={() => finish("A1")}
+        className="mt-3 w-full rounded-full bg-cream-dark py-2.5 text-sm font-semibold text-ink-muted active:scale-95"
       >
-        Start reading
+        Start with A1
       </button>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
-import type { ContextualTranslationGrammar, ContextualTranslationResult } from "@/lib/dictionary/contextualTranslation";
+import type { ContextualTranslationResult } from "@/lib/dictionary/contextualTranslation";
 import type { ResolvedTranslationAlignment } from "@/lib/translationAlignment";
 import type { WordExplanation } from "@/lib/ai/types";
 import type { WordStatus } from "@/types";
@@ -92,17 +92,6 @@ function confidenceLabel(confidence: ContextualTranslationResult["confidence"]):
   if (confidence === "high") return "High confidence";
   if (confidence === "medium") return "Medium confidence";
   return "Low confidence";
-}
-
-function grammarLabels(grammar: ContextualTranslationGrammar | null | undefined): string[] {
-  if (!grammar) return [];
-  const labels: string[] = [];
-  if (grammar.tense || grammar.mood) labels.push([grammar.tense, grammar.mood].filter(Boolean).join(" "));
-  if (grammar.person || grammar.number) labels.push([grammar.person, grammar.number].filter(Boolean).join(" "));
-  if (grammar.gender) labels.push(grammar.number ? `${grammar.gender} ${grammar.number}` : grammar.gender);
-  if (grammar.form) labels.push(grammar.form);
-  if (grammar.negated) labels.push("negated");
-  return [...new Set(labels.filter(Boolean))];
 }
 
 const STATUS_LABEL: Record<WordStatus, string> = {
@@ -329,7 +318,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           <div className="mt-3 rounded-2xl bg-white/70 p-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Proper noun protected</p>
             <p className="mt-1 text-sm text-ink-muted">
-              This looks like a person, place, organisation, or acronym, so Liree does not add it to your vocabulary cards unless it has wider language value.
+              This looks like a person, place, organisation, or acronym, so Lire does not add it to your vocabulary cards unless it has wider language value.
             </p>
           </div>
         )}
@@ -434,25 +423,6 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
                       Part of: <span className="font-semibold text-ink">{contextual.expandedPhrase}</span>
                     </p>
                   )}
-                  {grammarLabels(contextual.grammar).length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {grammarLabels(contextual.grammar).map((label) => (
-                        <span key={label} className="rounded-full bg-cream px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
-                          {label}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  {contextual.literalTranslation && (
-                    <p className="mt-2 text-xs text-ink-muted">
-                      Standalone dictionary: <span className="font-semibold">{contextual.literalTranslation}</span>
-                    </p>
-                  )}
-                  {contextual.alternativeMeanings.length > 0 && (
-                    <p className="mt-1 text-xs text-ink-muted">Other dictionary senses: {contextual.alternativeMeanings.join(", ")}</p>
-                  )}
-                  <p className="mt-2 text-xs leading-relaxed text-ink-muted">{contextual.explanation}</p>
-                  {contextual.grammar?.note && <p className="mt-1 text-xs text-ink-muted">{contextual.grammar.note}</p>}
                 </div>
               )}
 
@@ -490,8 +460,49 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           )}
         </div>
 
+        {isProperNoun ? (
+          <div className="mt-3">
+            <button
+              onClick={onClose}
+              className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              onClick={onKnow}
+              className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
+            >
+              I know this
+            </button>
+            {state?.existingStatus ? (
+              <button
+                onClick={onClose}
+                className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+              >
+                Keep saved
+              </button>
+            ) : (
+              <button
+                onClick={onSave}
+                className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+              >
+                Save to review
+              </button>
+            )}
+          </div>
+        )}
+
+        <details className="mt-4 rounded-2xl bg-white/60 p-3">
+          <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
+            More details
+          </summary>
+          <div className="mt-3 space-y-3">
+
         {state?.contextSentence && (
-          <div className="mt-4 rounded-2xl bg-white/60 p-3">
+          <div className="rounded-2xl bg-white/60 p-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
               Original article context
             </p>
@@ -500,7 +511,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         )}
 
         {state?.pronounReference && (
-          <div className="mt-4 rounded-2xl bg-brand-light p-3">
+          <div className="rounded-2xl bg-brand-light p-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">
               Reference tracking
             </p>
@@ -513,7 +524,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         )}
 
         {wordFamily && hasWordFamily && (
-          <details className="mt-4 rounded-2xl bg-white/60 p-3">
+          <details className="rounded-2xl bg-white/60 p-3">
             <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
               Word family
             </summary>
@@ -539,7 +550,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           </details>
         )}
 
-        <details className="mt-4 rounded-2xl bg-white/60 p-3">
+        <details className="rounded-2xl bg-white/60 p-3">
           <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
             Improve dictionary
           </summary>
@@ -571,7 +582,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           )}
         </details>
 
-        <details className="mt-4">
+        <details>
           <summary className="cursor-pointer text-xs font-semibold text-accent-pinktext underline underline-offset-2">
             More help
           </summary>
@@ -634,35 +645,13 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         {onExplainSentence && state && (
           <button
             onClick={() => onExplainSentence(state.contextSentence)}
-            className="mt-5 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
+            className="w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
           >
             Explain the whole sentence
           </button>
         )}
-
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <button
-            onClick={onKnow}
-            className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
-          >
-            I know this
-          </button>
-          {state?.existingStatus ? (
-            <button
-              onClick={onClose}
-              className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-            >
-              Keep saved
-            </button>
-          ) : (
-            <button
-              onClick={onSave}
-              className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-            >
-              Save to review
-            </button>
-          )}
-        </div>
+          </div>
+        </details>
       </div>
     </>
   );
