@@ -118,12 +118,30 @@ function difficultyScore(text) {
   return avgSentence * 0.72 + longWordRatio * 52 + punctuationComplexity * 2.2 + quoteComplexity;
 }
 
+/**
+ * Tidies spacing *within* paragraphs while keeping the paragraph breaks
+ * between them.
+ *
+ * This used to run `\s+ -> " "` across the joined excerpt, which flattened
+ * every paragraph break the picker had carefully preserved. In dialogue-heavy
+ * novels — most of the bank — each speaker's line is its own paragraph, so
+ * collapsing them produced one run-on wall of text: "--C'est que... j'ai mon
+ * gendre. --Votre gendre?... --Comment! vous ne savez pas?..." That reads as
+ * disconnected fragments rather than an exchange, which is exactly the
+ * context a learner needs to infer meaning from.
+ */
 function normalizeExcerpt(excerpt) {
   return excerpt
-    .replace(/\s+([,.;:!?»])/g, "$1")
-    .replace(/([«])\s+/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
+    .split(/\n{2,}/)
+    .map((paragraph) =>
+      paragraph
+        .replace(/\s+([,.;:!?»])/g, "$1")
+        .replace(/([«])\s+/g, "$1")
+        .replace(/\s+/g, " ")
+        .trim()
+    )
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 function makeCandidate(source, paragraphs, start, level) {
@@ -211,9 +229,22 @@ function titleFor(candidate) {
     .trim();
 }
 
+/**
+ * First sentence that actually says something.
+ *
+ * Taking sentence #1 unconditionally meant dialogue-opening excerpts were
+ * listed as "--Oh!", "--Ah!" or "--Serviteur!" on the articles page, which
+ * tells a reader nothing about what they're picking.
+ */
 function previewFor(body) {
-  const firstSentence = body.split(/(?<=[.!?…])\s+/)[0] ?? body;
-  return firstSentence.length > 180 ? `${firstSentence.slice(0, 177).trim()}...` : firstSentence;
+  const sentences = body
+    .replace(/\n+/g, " ")
+    .split(/(?<=[.!?…])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+  const substantial = sentences.find((sentence) => countWords(sentence) >= 6);
+  const chosen = substantial ?? sentences[0] ?? body;
+  return chosen.length > 180 ? `${chosen.slice(0, 177).trim()}...` : chosen;
 }
 
 function minutesFor(words) {

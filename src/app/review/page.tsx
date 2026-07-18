@@ -272,8 +272,11 @@ export default function ReviewPage() {
       : reviewMode === "phrases"
         ? `${phraseQueue.length} ${phraseQueue.length === 1 ? "phrase" : "phrases"}`
         : reviewStarted
-          ? `card ${index + 1} of ${queue.length} due`
-          : `${queue.length} ${queue.length === 1 ? "card" : "cards"} due`;
+          ? `card ${index + 1} of ${queue.length}`
+          // Not "due": the queue also includes never-reviewed new words, so
+          // saying "3 cards due" directly above a "Due today: 0" tile read as
+          // a contradiction.
+          : `${queue.length} ${queue.length === 1 ? "card" : "cards"} to review`;
 
   // No learning/unsure words saved at all.
   if (ready && stats.totalLearning === 0 && phraseQueue.length === 0) {
@@ -356,9 +359,14 @@ export default function ReviewPage() {
         </div>
       )}
 
-      {statsBar}
+      {/*
+        Once a review is under way the card is the whole job — eight stat
+        tiles above it just pushed it down the screen and had to be scrolled
+        past on every answer. They're back as soon as the session ends.
+      */}
+      {!shouldShowWordReview && statsBar}
 
-      {vocabularyStates.length > 0 && (
+      {!shouldShowWordReview && vocabularyStates.length > 0 && (
         <VocabularyStateSummary items={vocabularyStates} />
       )}
 

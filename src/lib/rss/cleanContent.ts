@@ -78,6 +78,14 @@ const BOILERPLATE_LINE_PATTERNS = [
   /^(photo|image|credit|crédit)\s*:.*$/i,
   /^(cookies?|privacy policy|politique de confidentialit[ée]).*$/i,
   /^(click here|lire la suite|read more|continue reading)\.?$/i,
+  /^pour afficher ce contenu\b.*\bcookies?\b.*$/i,
+  /^une extension de votre navigateur semble bloquer\b.*$/i,
+  /^il est n[ée]cessaire d'autoriser les cookies\b.*$/i,
+  /^(?:publi[ée]|mis(?:e)?\s+à\s+jour)\s+le\s*:.*$/i,
+  /^temps de lecture\s*:.*$/i,
+  /^par\s*:.*$/i,
+  /^mots[-\s]cl[ée]s associ[ée]s?.*$/i,
+  /^\d{1,2}:\d{2}$/,
 ];
 
 /** Removes whole lines that are just known site chrome, keeping the rest of the text intact. */

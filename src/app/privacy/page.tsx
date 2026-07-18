@@ -31,7 +31,7 @@ export default function PrivacyPage() {
         </section>
         <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink">AI</h2>
-          <p className="mt-2">AI requests are made only when you use relevant AI functionality, such as asking for word nuance, sentence explanation, or fluent translation.</p>
+          <p className="mt-2">AI requests are made only for AI features: asking for word nuance, sentence explanation, or fluent translation. When fluent translation is enabled, Lire may preload one cached translation after you open an article so the English toggle is ready.</p>
         </section>
         <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink">No sale of data</h2>

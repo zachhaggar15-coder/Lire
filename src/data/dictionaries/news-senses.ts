@@ -237,6 +237,7 @@ export const newsSenseDictionary: DictionaryEntry[] = [
   { lemma: "vœu", forms: ["voeu", "vœux", "voeux"], translations: ["wish", "vow"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
 
   // Sport, culture, live reporting
+  { lemma: "coupe", forms: ["coupes"], translations: ["cup", "tournament", "competition"], partOfSpeech: "noun", gender: "feminine", cefr: "A2", notes: "In sports news, usually a cup/tournament before the haircut sense." },
   { lemma: "demi-finale", forms: ["demi-finales"], translations: ["semi-final"], partOfSpeech: "noun", gender: "feminine", cefr: "B1" },
   { lemma: "quart de finale", forms: ["quarts de finale"], translations: ["quarter-final"], partOfSpeech: "noun phrase", cefr: "B1" },
   { lemma: "prolongation", forms: ["prolongations"], translations: ["extra time", "overtime", "extension"], partOfSpeech: "noun", gender: "feminine", cefr: "B1" },

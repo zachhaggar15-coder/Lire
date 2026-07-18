@@ -1,5 +1,6 @@
 import type { Category, Difficulty } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
+import { notifyRecommendationPreferencesChanged } from "@/lib/recommendation/preferences";
 import { pushStore } from "@/lib/supabase/sync";
 import { saveGoals, type ReadingGoals } from "@/lib/goals";
 import { knownWordEstimateForLevel, seedKnownWordsForLevel } from "@/lib/knownWordBootstrap";
@@ -84,6 +85,9 @@ function recordSeededKnownWords(seededWords: number): void {
   } catch {
     // The seeded count is informational; known words themselves are already saved.
   }
+  // The dashboard rendered its counts before this finished, so it's still
+  // showing "0 known". Nudge subscribed screens to re-read.
+  notifyRecommendationPreferencesChanged();
 }
 
 /**

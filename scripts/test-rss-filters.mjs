@@ -73,6 +73,17 @@ notre newsletter pour ne rien manquer. Politique de confidentialité et
 gestion des cookies disponibles en bas de page.
 `.trim();
 
+const MEDIA_METADATA_TEXT = `
+Pour afficher ce contenu YouTube, il est nécessaire d'autoriser les cookies de mesure d'audience et de publicité.
+Une extension de votre navigateur semble bloquer le chargement du lecteur vidéo.
+24:34
+Publié le : 18/07/2026
+Temps de lecture : 3 min
+Par : France 24
+Mots-clés associés
+Le gouvernement a présenté une nouvelle mesure ce matin. Les députés doivent examiner le texte dans les prochains jours.
+`.trim();
+
 const PAYWALL_TEXT = `
 Cet article est réservé aux abonnés. Abonnez-vous pour lire la suite et
 accéder à l'intégralité de nos contenus premium.
@@ -133,6 +144,14 @@ console.log("\n--- Content quality ---");
   console.log(`  Cookie/newsletter boilerplate -> looksLikeBoilerplate=${isBoilerplate}`);
   check("cookie/newsletter boilerplate is flagged", isBoilerplate, true);
   check("clean French article is not flagged as boilerplate", looksLikeBoilerplate(GOOD_FRENCH_ARTICLE), false);
+}
+{
+  const cleaned = cleanRssText(MEDIA_METADATA_TEXT);
+  check("RSS cleaner removes media-cookie line", cleaned.includes("Pour afficher ce contenu"), false);
+  check("RSS cleaner removes browser-extension line", cleaned.includes("extension de votre navigateur"), false);
+  check("RSS cleaner removes standalone video duration", cleaned.includes("24:34"), false);
+  check("RSS cleaner removes article metadata labels", cleaned.includes("Temps de lecture"), false);
+  check("RSS cleaner keeps real article prose after media metadata", cleaned.includes("Le gouvernement a présenté"), true);
 }
 {
   const isPaywall = looksLikePaywallOrBotWall(PAYWALL_TEXT);

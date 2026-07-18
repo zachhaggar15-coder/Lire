@@ -1,4 +1,5 @@
 import ReadingCard from "@/components/ReadingCard";
+import { formatCategory } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
 interface ArticleSectionProps {
@@ -80,7 +81,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
           {text.difficulty}
         </span>
         <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold capitalize text-ink-muted">
-          {text.category}
+          {formatCategory(text.category)}
         </span>
         <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
           {text.minutes} min

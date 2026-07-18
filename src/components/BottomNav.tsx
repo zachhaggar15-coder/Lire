@@ -20,6 +20,7 @@ const items = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <nav

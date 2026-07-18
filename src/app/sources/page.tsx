@@ -9,8 +9,12 @@ import {
   unhideSource,
   unpreferSource,
 } from "@/lib/recommendation/preferences";
+import { formatCategory } from "@/lib/format";
 
 type LoadState = "loading" | "success" | "error";
+
+const SOURCE_HEALTH_SLOW_MS = 7000;
+const SOURCE_HEALTH_TIMEOUT_MS = 30000;
 
 interface SourceHealth {
   id: string;
@@ -41,6 +45,8 @@ export default function SourcesPage() {
   const [summary, setSummary] = useState<SourceHealthResponse["sourceSummary"]>(undefined);
   const [hiddenSources, setHiddenSources] = useState<string[]>([]);
   const [preferredSources, setPreferredSources] = useState<string[]>([]);
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
 
   const refreshPreferences = useCallback(() => {
     setHiddenSources(getHiddenSources());
@@ -50,11 +56,19 @@ export default function SourcesPage() {
   useEffect(() => {
     refreshPreferences();
     let cancelled = false;
+    const controller = new AbortController();
+    let slowTimer: ReturnType<typeof setTimeout> | null = null;
+    let timeoutTimer: ReturnType<typeof setTimeout> | null = null;
     async function load() {
       try {
         setState("loading");
+        setIsSlowLoading(false);
+        slowTimer = setTimeout(() => {
+          if (!cancelled) setIsSlowLoading(true);
+        }, SOURCE_HEALTH_SLOW_MS);
+        timeoutTimer = setTimeout(() => controller.abort(), SOURCE_HEALTH_TIMEOUT_MS);
         const params = new URLSearchParams({ limit: "1", health: "true" });
-        const res = await fetch(`/api/rss-texts?${params.toString()}`);
+        const res = await fetch(`/api/rss-texts?${params.toString()}`, { signal: controller.signal });
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data: SourceHealthResponse = await res.json();
         if (cancelled) return;
@@ -63,13 +77,20 @@ export default function SourcesPage() {
         setState("success");
       } catch {
         if (!cancelled) setState("error");
+      } finally {
+        if (slowTimer) clearTimeout(slowTimer);
+        if (timeoutTimer) clearTimeout(timeoutTimer);
+        if (!cancelled) setIsSlowLoading(false);
       }
     }
     load();
     return () => {
       cancelled = true;
+      controller.abort();
+      if (slowTimer) clearTimeout(slowTimer);
+      if (timeoutTimer) clearTimeout(timeoutTimer);
     };
-  }, [refreshPreferences]);
+  }, [refreshPreferences, reloadKey]);
 
   const attempted = useMemo(() => sources.filter((source) => !source.skipped), [sources]);
   const yielded = useMemo(() => attempted.filter((source) => source.accepted > 0), [attempted]);
@@ -103,12 +124,30 @@ export default function SourcesPage() {
         </div>
       </header>
 
-      {state === "loading" && <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />}
+      {state === "loading" && (
+        <div className="space-y-3">
+          <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
+          {isSlowLoading && (
+            <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">
+              <p className="text-sm font-semibold text-ink">Still checking source health.</p>
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <p className="text-xs text-ink-muted">The RSS pool can take a moment to warm.</p>
+                <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted">
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {state === "error" && (
-        <p className="rounded-2xl bg-accent-pink px-3 py-2 text-sm font-medium text-accent-pinktext">
-          Source health is unavailable right now.
-        </p>
+        <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+          <p className="text-sm font-bold text-ink">Source health is unavailable right now.</p>
+          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+            Retry
+          </button>
+        </div>
       )}
 
       {state === "success" && (
@@ -149,7 +188,7 @@ export default function SourcesPage() {
                   <div className="min-w-0">
                     <h2 className="font-semibold text-ink">{source.name}</h2>
                     <p className="mt-0.5 text-xs capitalize text-ink-muted">
-                      {source.language} / {source.category}
+                      {source.language} / {formatCategory(source.category)}
                     </p>
                   </div>
                   <span

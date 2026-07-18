@@ -43,6 +43,28 @@ function isBasicWord(cefr: string | null): boolean {
   return cefr === "A1" || cefr === "A2";
 }
 
+/**
+ * At or above this CEFR level, a word counts as "might be unfamiliar" for a
+ * reader we know nothing about yet.
+ *
+ * This used to be "missing from the dictionary, or found with no CEFR at
+ * all," which quietly stopped meaning anything: the generated dictionary now
+ * covers ~92k words and gives *every* entry a frequency-derived CEFR, so
+ * essentially nothing satisfied either condition. The public-domain bank is
+ * additionally curated for full dictionary coverage, so every one of those
+ * texts reported "0% of words may be unfamiliar" and "A2 / Easy" — to a
+ * brand-new reader, on Madame Bovary. Judging by how advanced the word is
+ * restores a signal that actually varies with the text.
+ */
+const UNFAMILIAR_CEFR_THRESHOLD = 4; // B2 and above
+
+/** Whether a word is advanced enough to plausibly trip up a reader with no known-words history. */
+function isBaselineUnfamiliar(result: DictionaryLookupResult): boolean {
+  if (result.source === "missing") return true;
+  if (!result.cefr) return true;
+  return (CEFR_NUMERIC[result.cefr] ?? 0) >= UNFAMILIAR_CEFR_THRESHOLD;
+}
+
 function isProperNoun(result: DictionaryLookupResult): boolean {
   return result.partOfSpeech?.startsWith("proper noun") ?? false;
 }
@@ -93,7 +115,7 @@ export function estimateDifficulty(body: string, knownWords: Set<string> = new S
     cefrScoreSum += numeric;
 
     if (!basic) {
-      if (result.source === "missing" || !result.cefr) baselineUnfamiliarCount++;
+      if (isBaselineUnfamiliar(result)) baselineUnfamiliarCount++;
       if (personalize && !knownWords.has(word)) personalUnfamiliarCount++;
     }
   }

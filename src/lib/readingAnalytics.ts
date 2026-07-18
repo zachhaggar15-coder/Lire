@@ -2,6 +2,7 @@ import type { Category, ReadingText, SavedWord } from "@/types";
 import type { ArchiveEntry } from "@/lib/archive";
 import { estimateDifficulty } from "@/lib/difficulty";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import { formatCategory } from "@/lib/format";
 import { isDue } from "@/lib/spacedRepetition";
 import type { StoredInference, StoredWordTap } from "@/lib/wordLearning";
 import type { TranslationBudgetRecord } from "@/lib/readingInsights";
@@ -52,9 +53,9 @@ export interface WeeklyReadingReport {
   coverageStart: number;
   coverageEnd: number;
   movedToStable: number;
-  mostDifficultArea: string;
+  mostDifficultArea: string | null;
   strongestTopic: string | null;
-  nextFocus: string;
+  nextFocus: string | null;
   translationBudgetMet: number;
   translationBudgetTotal: number;
 }
@@ -72,6 +73,20 @@ const PRONOUNS = new Set(["il", "elle", "ils", "elles", "ce", "cela", "dont", "q
 const DRAMATIC_WORDS = ["alerte", "crise", "choc", "menace", "urgence", "explose", "bouleverse", "colere"];
 const NEUTRAL_WORDS = ["annonce", "presente", "explique", "selon", "indique", "publie", "rapport", "resultat"];
 const CRITICAL_VERBS = ["accuse", "critique", "denonce", "conteste", "attaque", "alerte", "reproche"];
+const NEWS_WORD_FUNCTION_PARTS = ["article", "preposition", "pronoun", "determiner", "possessive", "demonstrative"];
+const NEWS_WORD_STOP_LEMMAS = new Set([
+  "avoir",
+  "etre",
+  "faire",
+  "devoir",
+  "aller",
+  "venir",
+  "avec",
+  "dans",
+  "pour",
+  "contre",
+  "cette",
+]);
 
 function normalise(text: string): string {
   return text
@@ -82,6 +97,16 @@ function normalise(text: string): string {
 
 function isProperNounLookup(partOfSpeech: string | null): boolean {
   return (partOfSpeech ?? "").toLowerCase().includes("proper noun");
+}
+
+function isUsefulTodayNewsWord(lemma: string, partOfSpeech: string | null, frequencyRank: number | null): boolean {
+  const cleanLemma = normalise(lemma);
+  if (NEWS_WORD_STOP_LEMMAS.has(cleanLemma)) return false;
+  if (CONNECTIVES.has(cleanLemma)) return true;
+  const part = (partOfSpeech ?? "").toLowerCase();
+  if (NEWS_WORD_FUNCTION_PARTS.some((blocked) => part.includes(blocked))) return false;
+  if (part.includes("conjunction") && !CONNECTIVES.has(cleanLemma)) return false;
+  return frequencyRank != null && frequencyRank <= 5000;
 }
 
 export function isProperNounWord(word: string): boolean {
@@ -115,7 +140,7 @@ export function buildTodayNewsWords(articles: ReadingText[], limit = 6): TodayNe
         if (lookup.source !== "local" || !lookup.lemma || lookup.translations.length === 0) continue;
         if (isProperNounLookup(lookup.partOfSpeech)) continue;
         const lemma = lookup.lemma.toLowerCase();
-        if (!CONNECTIVES.has(normalise(lemma)) && (lookup.frequencyRank == null || lookup.frequencyRank > 5000)) continue;
+        if (!isUsefulTodayNewsWord(lemma, lookup.partOfSpeech, lookup.frequencyRank)) continue;
         const entry = byLemma.get(lemma) ?? { translation: lookup.translations[0], articleIds: new Set<string>(), examples: [] };
         entry.articleIds.add(article.id);
         if (!seenInArticle.has(lemma) && entry.examples.length < 4) {
@@ -264,16 +289,22 @@ export function buildWeeklyReadingReport(
     if (entry.category) categoryCounts.set(entry.category, (categoryCounts.get(entry.category) ?? 0) + 1);
   }
   const strongestTopic = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
-  const difficultArea = weekWords.some((word) => PRONOUNS.has(normalise(word.lemma ?? word.word)))
-    ? "object pronouns"
-    : weekWords.some((word) => CONNECTIVES.has(normalise(word.lemma ?? word.word)))
+  const difficultArea =
+    weekWords.length === 0
+      ? null
+      : weekWords.some((word) => PRONOUNS.has(normalise(word.lemma ?? word.word)))
+        ? "object pronouns"
+        : weekWords.some((word) => CONNECTIVES.has(normalise(word.lemma ?? word.word)))
+          ? "connective expressions"
+          : "new article vocabulary";
+  const nextFocus =
+    states.some((item) => item.state === "fragile" && CONNECTIVES.has(normalise(item.word.lemma ?? item.word.word)))
       ? "connective expressions"
-      : "sentence structure";
-  const nextFocus = states.some((item) => item.state === "fragile" && CONNECTIVES.has(normalise(item.word.lemma ?? item.word.word)))
-    ? "connective expressions"
-    : states.some((item) => item.state === "fragile" && PRONOUNS.has(normalise(item.word.lemma ?? item.word.word)))
-      ? "pronoun references"
-      : "headline verbs";
+      : states.some((item) => item.state === "fragile" && PRONOUNS.has(normalise(item.word.lemma ?? item.word.word)))
+        ? "pronoun references"
+        : weekEntries.length > 0 || weekWords.length > 0
+          ? "one short article with five deliberate lookups"
+          : null;
   const stableThisWeek = states.filter((item) => item.state === "stable" && item.word.lastReviewedAt && new Date(item.word.lastReviewedAt).getTime() >= start).length;
   const currentCoverage = coveragePercent(knownWords.length, words.filter((word) => word.status !== "known").length);
   const startCoverage = Math.max(0, currentCoverage - Math.min(8, stableThisWeek + Math.floor(weekWords.length / 8)));
@@ -286,27 +317,20 @@ export function buildWeeklyReadingReport(
     coverageEnd: currentCoverage,
     movedToStable: stableThisWeek,
     mostDifficultArea: difficultArea,
-    strongestTopic,
+    strongestTopic: strongestTopic ? formatCategory(strongestTopic) : null,
     nextFocus,
     translationBudgetMet: weekBudgets.filter((record) => record.metTarget).length,
     translationBudgetTotal: weekBudgets.length,
   };
 }
 
-const CATEGORY_LABELS: Record<Category, string> = {
-  "news-style": "General news",
-  sport: "Sport",
-  culture: "Culture",
-  science: "Science",
-  "everyday life": "Life",
-};
-
 const CEFR_BY_SCORE = ["A1", "A2", "A2+", "B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"];
 
 export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: string[]): CategoryProficiency[] {
   const categories: Category[] = ["sport", "science", "culture", "news-style", "everyday life"];
-  return categories.map((category) => {
+  return categories.flatMap((category) => {
     const entries = archive.filter((entry) => entry.category === category);
+    if (entries.length === 0) return [];
     const recent = entries.slice(-5);
     const avgCefr =
       recent.reduce((sum, entry) => sum + ({ A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 }[entry.cefr ?? ""] ?? 2), 0) /
@@ -314,13 +338,13 @@ export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: st
     const completionBonus = Math.min(1.5, entries.length / 4);
     const knownBonus = Math.min(1, knownWords.length / 300);
     const score = Math.max(0, Math.min(CEFR_BY_SCORE.length - 1, Math.round(avgCefr + completionBonus + knownBonus) - 1));
-    return {
+    return [{
       category,
-      label: CATEGORY_LABELS[category],
+      label: formatCategory(category),
       cefr: CEFR_BY_SCORE[score],
       articles: entries.length,
       coverage: Math.min(98, Math.round(72 + entries.length * 3 + knownWords.length / 25)),
-    };
+    }];
   });
 }
 

@@ -25,6 +25,7 @@ import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import {
   buildInterlinearTranslationChunks,
   findNaturalTranslationForToken,
+  isWordScopedAlignment,
   type ResolvedTranslationAlignment,
 } from "@/lib/translationAlignment";
 import { getKnownWords, markKnown } from "@/lib/knownWords";
@@ -46,6 +47,7 @@ import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, t
 import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
+import { formatCategory } from "@/lib/format";
 import { trackEvent } from "@/lib/analytics/client";
 import { createActiveTimeTracker, type ActiveTimeTracker } from "@/lib/analytics/session";
 import { applyReadingSessionToState, isMeaningfulReadingSession } from "@/lib/validation/definitions";
@@ -214,6 +216,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [isSpeakingArticle, setIsSpeakingArticle] = useState(false);
   const [activeAudioParagraph, setActiveAudioParagraph] = useState<number | null>(null);
   const [scrollProgressPercent, setScrollProgressPercent] = useState(0);
+  /** False when the whole article already fits on screen — a scroll percentage would be noise. */
+  const [showProgressBadge, setShowProgressBadge] = useState(false);
   const articleRef = useRef<HTMLElement | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rewardTimeouts = useRef<number[]>([]);
@@ -349,13 +353,26 @@ export default function Reader({ text }: { text: ReadingText }) {
     function handleVisibility() {
       activeTimeTracker.current?.markVisible(document.visibilityState === "visible");
     }
+    /**
+     * Progress through the article, as a fraction of the scrolling needed to
+     * bring its last line into view.
+     *
+     * The previous version measured a "read line" 75% down the viewport
+     * against the top of the article, which reported a large number before
+     * the reader had moved at all — a short article opened at "72% read".
+     * Measuring actual scrolled distance instead starts every article at 0%
+     * and reaches 100% exactly when the end is on screen.
+     */
     function articleScrollPercent(): number {
       const article = articleRef.current;
       if (article) {
         const articleTop = article.getBoundingClientRect().top + window.scrollY;
-        const articleHeight = Math.max(1, article.scrollHeight);
-        const readLine = window.scrollY + window.innerHeight * 0.75;
-        return Math.max(0, Math.min(100, Math.round(((readLine - articleTop) / articleHeight) * 100)));
+        const articleBottom = articleTop + Math.max(1, article.scrollHeight);
+        const scrollNeeded = articleBottom - window.innerHeight;
+        // The whole article already fits on screen: there's no scrolling to
+        // measure, so treat it as fully in view rather than inventing a number.
+        if (scrollNeeded <= 0) return 100;
+        return Math.max(0, Math.min(100, Math.round((window.scrollY / scrollNeeded) * 100)));
       }
       const doc = document.documentElement;
       const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
@@ -363,6 +380,11 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     function updateScrollProgress(markAsInteraction: boolean) {
       if (markAsInteraction) markInteraction();
+      const article = articleRef.current;
+      // A "% read" badge only says anything when there's something to scroll.
+      setShowProgressBadge(
+        !article || article.getBoundingClientRect().top + window.scrollY + article.scrollHeight - window.innerHeight > 0
+      );
       const percent = articleScrollPercent();
       setScrollProgressPercent(percent);
       maxProgressPercent.current = Math.max(maxProgressPercent.current, percent);
@@ -748,7 +770,6 @@ export default function Reader({ text }: { text: ReadingText }) {
 
     const adjacent = adjacentWords(tokens, index);
     const lookup = lookupWord(tokens[index].text, adjacent);
-    const protectedProperNoun = isProperNounWord(tokens[index].text);
     const sourceBoilerplateToken =
       lookup.source === "missing" &&
       isLikelySourceBoilerplateToken({
@@ -765,7 +786,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     const lemma = lookup.lemma?.toLowerCase();
     const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
-    let existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
+    const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
     const { previous, next } = neighbours(sentenceText);
     const contextualTranslation = buildContextualTranslation({
       tokens,
@@ -793,22 +814,6 @@ export default function Reader({ text }: { text: ReadingText }) {
       dictionarySource: lookup.source,
     });
 
-    if (!known && !existingStatus && !protectedProperNoun) {
-      const { words: nextWords, persisted } = saveWord(
-        buildSavedWord(clean, lookup, sentenceText, "learning", naturalTranslation?.english ?? null)
-      );
-      if (persisted) {
-        existingStatus = "learning";
-        setWordStatusMap((prev) => new Map(prev).set(clean, "learning"));
-        setSavedWordsSnapshot(nextWords);
-        setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-        rememberWordSaved("tap_lookup");
-        pulseRewardWords("saved", [clean, lookup.lemma]);
-      } else {
-        showToast("Couldn't save — device storage is full");
-      }
-    }
-
     setActiveSentence(null);
     setActivePhrase(null);
     setActiveWord({
@@ -821,6 +826,44 @@ export default function Reader({ text }: { text: ReadingText }) {
       existingStatus,
       pronounReference,
     });
+  }
+
+  /**
+   * Adds the currently-open word to the review deck. Deliberately separate
+   * from handleWordTap: a tap is a lookup, not a commitment to study the
+   * word. Auto-saving on every tap meant a reader who was merely curious
+   * ended up with a review queue full of words they never chose.
+   */
+  function handleSaveActiveWord() {
+    if (!activeWord || activeWord.existingStatus) return;
+    // Names and places aren't vocabulary worth reviewing. This guard used to
+    // sit on the auto-save in handleWordTap; it belongs wherever the save is.
+    if (isProperNounWord(activeWord.word)) {
+      showToast("Names aren't added to review");
+      return;
+    }
+    // Only a tight, word-scoped alignment can stand in as this word's
+    // meaning. A clause-sized span is fine to read alongside the French, but
+    // saving it would make the flashcard say "mouillé = Was a ship moored in
+    // some inland port" — see isWordScopedAlignment.
+    const naturalTranslation = isWordScopedAlignment(activeWord.naturalTranslation)
+      ? activeWord.naturalTranslation!.english
+      : null;
+    const { words: nextWords, persisted } = saveWord(
+      buildSavedWord(activeWord.word, activeWord.lookup, activeWord.contextSentence, "learning", naturalTranslation)
+    );
+    if (!persisted) {
+      showToast("Couldn't save — device storage is full");
+      return;
+    }
+    recordLearningAction();
+    setWordStatusMap((prev) => new Map(prev).set(activeWord.word, "learning"));
+    setSavedWordsSnapshot(nextWords);
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    rememberWordSaved("tap_lookup");
+    pulseRewardWords("saved", [activeWord.word, activeWord.lookup.lemma]);
+    setActiveWord((prev) => (prev ? { ...prev, existingStatus: "learning" } : prev));
+    showToast("Saved to review");
   }
 
   function handleSentenceTap(sentenceText: string) {
@@ -961,7 +1004,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     const wasAlreadyCompleted = status === "completed";
     const comprehensionItems = showInterpretationChecks
       ? [
-          gistAnswer === null ? null : gistAnswer === gistQuestion.answerIndex,
+          gistAnswer === null || !gistQuestion ? null : gistAnswer === gistQuestion.answerIndex,
           ...toneQuestions.map((question) => (toneAnswers[question.id] == null ? null : toneAnswers[question.id] === question.answerIndex)),
         ].filter((value): value is boolean => value !== null)
       : [];
@@ -1373,9 +1416,11 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   return (
     <div className="px-4 pt-4">
-      <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-[11px] font-bold tabular-nums text-brand shadow-sm ring-1 ring-cream-dark/70 backdrop-blur">
-        {scrollProgressPercent}% read
-      </div>
+      {showProgressBadge && (
+        <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-[11px] font-bold tabular-nums text-brand shadow-sm ring-1 ring-cream-dark/70 backdrop-blur">
+          {scrollProgressPercent}% read
+        </div>
+      )}
 
       {/* Header with back button */}
       <div className="mb-4 flex items-center gap-2">
@@ -1393,7 +1438,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       {(difficulty?.cefr ?? text.difficulty) && (
         <span className="mb-2 inline-block rounded-full bg-brand-light px-2.5 py-0.5 text-xs font-semibold text-brand capitalize">
-          {text.category}
+          {formatCategory(text.category)}
         </span>
       )}
       <h1 className="text-2xl font-extrabold leading-tight text-ink">
@@ -1579,12 +1624,15 @@ export default function Reader({ text }: { text: ReadingText }) {
                   </div>
                 </section>
 
-                <ComprehensionQuestion
-                  question={gistQuestion}
-                  selected={gistAnswer}
-                  onSelect={handleGistAnswer}
-                />
+                {gistQuestion && (
+                  <ComprehensionQuestion
+                    question={gistQuestion}
+                    selected={gistAnswer}
+                    onSelect={handleGistAnswer}
+                  />
+                )}
 
+                {toneQuestions.length > 0 && (
                 <section className="space-y-3">
                   <h3 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h3>
                   {toneQuestions.map((question) => (
@@ -1596,6 +1644,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                     />
                   ))}
                 </section>
+                )}
               </>
             )}
 
@@ -1752,39 +1801,46 @@ export default function Reader({ text }: { text: ReadingText }) {
         )}
       </div>
 
-      <WordSheet
-        state={activeWord}
-        articleTitle={text.title}
-        onClose={() => setActiveWord(null)}
-        onKnow={handleKnow}
-        inferenceChallenge={activeInference}
-        onInferenceAnswer={handleInferenceAnswer}
-        onAiRequested={() => markAiSupportUsed("word")}
-        onExplainSentence={(sentence) => {
-          setActiveWord(null);
-          handleSentenceTap(sentence);
-        }}
-      />
-      <SentenceSheet
-        state={activeSentence}
-        articleTitle={text.title}
-        onClose={() => setActiveSentence(null)}
-        onAiRequested={() => markAiSupportUsed("sentence")}
-      />
-      <PhraseSheet
-        state={activePhrase}
-        articleTitle={text.title}
-        onClose={() => setActivePhrase(null)}
-        onSaved={() => {
-          recordLearningAction();
-          showToast("Saved phrase");
-        }}
-        onKnown={() => {
-          recordLearningAction();
-          showToast("Marked phrase as known");
-        }}
-        onAiRequested={() => markAiSupportUsed("phrase")}
-      />
+      {activeWord && (
+        <WordSheet
+          state={activeWord}
+          articleTitle={text.title}
+          onClose={() => setActiveWord(null)}
+          onKnow={handleKnow}
+          onSave={handleSaveActiveWord}
+          inferenceChallenge={activeInference}
+          onInferenceAnswer={handleInferenceAnswer}
+          onAiRequested={() => markAiSupportUsed("word")}
+          onExplainSentence={(sentence) => {
+            setActiveWord(null);
+            handleSentenceTap(sentence);
+          }}
+        />
+      )}
+      {activeSentence && (
+        <SentenceSheet
+          state={activeSentence}
+          articleTitle={text.title}
+          onClose={() => setActiveSentence(null)}
+          onAiRequested={() => markAiSupportUsed("sentence")}
+        />
+      )}
+      {activePhrase && (
+        <PhraseSheet
+          state={activePhrase}
+          articleTitle={text.title}
+          onClose={() => setActivePhrase(null)}
+          onSaved={() => {
+            recordLearningAction();
+            showToast("Saved phrase");
+          }}
+          onKnown={() => {
+            recordLearningAction();
+            showToast("Marked phrase as known");
+          }}
+          onAiRequested={() => markAiSupportUsed("phrase")}
+        />
+      )}
       <Toast message={toastMessage} />
     </div>
   );
@@ -1800,9 +1856,9 @@ function RelatedArticles({ articles }: { articles: ReadingText[] }) {
   return (
     <section className="border-t border-cream-dark pt-4">
       <div className="px-1">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Related Articles</h2>
+        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Read next</h2>
         <p className="mt-0.5 text-xs text-ink-muted">
-          Same story area, different source. Use these after the quiz to meet repeated vocabulary in a new register.
+          More from today&apos;s reading list — a chance to meet some of the same vocabulary again.
         </p>
       </div>
       <div className="mt-3 divide-y divide-cream-dark rounded-2xl border border-cream-dark bg-cream/60">

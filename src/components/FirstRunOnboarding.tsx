@@ -29,7 +29,10 @@ interface FirstRunOnboardingProps {
 export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingProps) {
   const [visible, setVisible] = useState(false);
   const [level, setLevel] = useState<Difficulty>("A2");
-  const [topics, setTopics] = useState<Category[]>(["news-style", "science"]);
+  // Deliberately empty. Pre-ticking News and Science looked like a suggestion
+  // but behaved like a selection: tapping "Science" to choose it actually
+  // toggled it *off*, and anyone who picked nothing silently got News.
+  const [topics, setTopics] = useState<Category[]>([]);
   const [goal, setGoal] = useState<OnboardingGoal>("steady");
 
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
     <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">First Filter</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Set up your reading</h2>
           <p className="mt-0.5 text-sm font-semibold text-ink">Pick a level and a few topics.</p>
         </div>
         <button
@@ -149,7 +152,7 @@ export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingPro
         onClick={finish}
         className="mt-4 w-full rounded-full bg-brand py-2.5 text-sm font-semibold text-white active:scale-95"
       >
-        Save filter
+        Start reading
       </button>
     </section>
   );

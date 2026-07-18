@@ -818,11 +818,13 @@ console.log("\n--- Comprehension helpers ---");
     !!confidenceQuestion?.explanation?.toLowerCase().includes("caution")
   );
   clearComprehensionQuestionCache();
-  const cachedFirst = getOrCreateComprehensionQuestionBundle(current, [related]);
+  const cachedFirst = getOrCreateComprehensionQuestionBundle(current, [related, unrelated]);
   const cachedSecond = getOrCreateComprehensionQuestionBundle(current, [unrelated]);
   check(
     "comprehension question cache reuses the article bundle",
-    cachedSecond.gistQuestion.choices.join("|") === cachedFirst.gistQuestion.choices.join("|")
+    !!cachedSecond.gistQuestion &&
+      !!cachedFirst.gistQuestion &&
+      cachedSecond.gistQuestion.choices.join("|") === cachedFirst.gistQuestion.choices.join("|")
   );
   const candidates = rankLearningCandidates(current, new Set(), [], [{ word: "prudents", lemma: "prudent", count: 2 }], 3);
   check("learning candidates include repeatedly tapped useful words", candidates.some((candidate) => candidate.lemma === "prudent"));
@@ -913,6 +915,9 @@ console.log("\n--- Reading analytics ---");
     ["selon", "hausse"]
   );
   check("category proficiency includes general news", proficiency.some((item) => item.category === "news-style" && item.articles === 1));
+  const emptyReport = buildWeeklyReadingReport([], [], []);
+  check("empty weekly report avoids invented guidance", emptyReport.mostDifficultArea === null && emptyReport.nextFocus === null && emptyReport.strongestTopic === null);
+  check("empty category proficiency is hidden", buildCategoryProficiency([], []).length === 0);
 }
 
 console.log("\n--- Recommendation preferences (hide source / save for later) ---");

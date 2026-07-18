@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Category, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
-import { formatDate } from "@/lib/format";
+import { formatCategory, formatDate } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
@@ -166,7 +166,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           <span
             className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${CATEGORY_STYLES[text.category]}`}
           >
-            {text.category}
+            {formatCategory(text.category)}
           </span>
           <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
             {difficulty?.cefr ?? text.difficulty}

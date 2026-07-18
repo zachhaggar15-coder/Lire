@@ -31,10 +31,13 @@ import { trackEvent } from "@/lib/analytics/client";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 
 type Mode = "articles" | "live";
-type LoadState = "loading" | "success";
+type LoadState = "loading" | "success" | "error";
 type CategoryFilter = "all" | Category;
 type DifficultyFilter = "all" | Difficulty;
 type LanguageFilter = "all" | NonNullable<ReadingText["language"]>;
+
+const LIVE_NEWS_SLOW_MS = 7000;
+const LIVE_NEWS_TIMEOUT_MS = 30000;
 
 const CATEGORY_FILTERS: { value: CategoryFilter; label: string }[] = [
   { value: "all", label: "All" },
@@ -84,6 +87,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
   const [prefVersion, setPrefVersion] = useState(0);
   const [usedFallback, setUsedFallback] = useState(false);
+  const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
@@ -102,35 +109,76 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
+    let slowTimer: ReturnType<typeof setTimeout> | null = null;
+    let timeoutTimer: ReturnType<typeof setTimeout> | null = null;
 
     async function load() {
+      setLoadError(null);
+      setIsSlowLoading(false);
+      setUsedFallback(false);
+
       setState("loading");
+      setSections(null);
+      setTodayWords([]);
 
       if (mode === "articles") {
-        buildAndSetSections([], false);
+        setRssTexts([]);
+        setState("success");
         return;
       }
 
       try {
+        slowTimer = setTimeout(() => {
+          if (!cancelled) setIsSlowLoading(true);
+        }, LIVE_NEWS_SLOW_MS);
+        timeoutTimer = setTimeout(() => controller.abort(), LIVE_NEWS_TIMEOUT_MS);
         const params = new URLSearchParams({ limit: String(DAILY_RSS_ARTICLE_LIMIT) });
         if (categoryFilter !== "all") params.set("category", categoryFilter);
         if (languageFilter !== "all") params.set("language", languageFilter);
         params.set("snippets", "exclude");
 
-        const res = await fetch(`/api/rss-texts?${params.toString()}`);
+        const res = await fetch(`/api/rss-texts?${params.toString()}`, { signal: controller.signal });
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data: { texts: RssReadingText[] } = await res.json();
         if (cancelled) return;
 
-        const rssTexts = data.texts.map(rssReadingTextToReadingText);
-        cacheRssTexts(rssTexts);
-        pruneStaleRssProgress(rssTexts.map((text) => text.id));
-        detectAndRecordSkippedArticles(rssTexts.map((text) => ({ id: text.id, category: text.category })));
-        buildAndSetSections(rssTexts, rssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
-      } catch {
-        if (!cancelled) buildAndSetSections([], true);
+        const nextRssTexts = data.texts.map(rssReadingTextToReadingText);
+        cacheRssTexts(nextRssTexts);
+        pruneStaleRssProgress(nextRssTexts.map((text) => text.id));
+        detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
+        setRssTexts(nextRssTexts);
+        setUsedFallback(nextRssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
+        setState("success");
+      } catch (error) {
+        if (!cancelled) {
+          const timedOut = error instanceof DOMException && error.name === "AbortError";
+          setRssTexts([]);
+          setLoadError(
+            timedOut
+              ? "Live RSS is taking too long to answer. Try again, or switch filters."
+              : "Live RSS is unavailable right now. Try again in a moment."
+          );
+          setState("error");
+        }
+      } finally {
+        if (slowTimer) clearTimeout(slowTimer);
+        if (timeoutTimer) clearTimeout(timeoutTimer);
+        if (!cancelled) setIsSlowLoading(false);
       }
     }
+
+    load();
+    return () => {
+      cancelled = true;
+      controller.abort();
+      if (slowTimer) clearTimeout(slowTimer);
+      if (timeoutTimer) clearTimeout(timeoutTimer);
+    };
+  }, [categoryFilter, languageFilter, mode, reloadKey]);
+
+  useEffect(() => {
+    if (state === "loading" || state === "error") return;
 
     function buildAndSetSections(rssTexts: ReadingText[], fallback: boolean) {
       const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
@@ -161,11 +209,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setState("success");
     }
 
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, selectedLevel]);
+    buildAndSetSections(rssTexts, mode === "live" && rssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
+  }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, rssTexts, selectedLevel, state]);
 
   function resetFilters() {
     setCategoryFilter(defaultCategoryForMode(mode));
@@ -204,16 +249,18 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         onReset={resetFilters}
       />
 
-      {state === "loading" && (
-        <div className="space-y-3">
-          <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
-          <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
-        </div>
+      {state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
+
+      {state === "error" && (
+        <LoadErrorCard
+          message={loadError ?? "Articles are unavailable right now."}
+          onRetry={() => setReloadKey((key) => key + 1)}
+        />
       )}
 
       {state === "success" && usedFallback && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Live RSS is unavailable or thin right now, so this page is only showing matching live items.
+          Live RSS returned fewer articles than usual for these filters.
         </p>
       )}
 
@@ -230,6 +277,37 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           />
         )
       )}
+    </div>
+  );
+}
+
+function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => void }) {
+  return (
+    <div className="space-y-3">
+      <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
+      <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
+      {slow && (
+        <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">
+          <p className="text-sm font-semibold text-ink">Still fetching fresh articles.</p>
+          <div className="mt-2 flex items-center justify-between gap-3">
+            <p className="text-xs text-ink-muted">RSS sources can be slow during a refresh.</p>
+            <button type="button" onClick={onRetry} className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted">
+              Retry
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => void }) {
+  return (
+    <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+      <p className="text-sm font-bold text-ink">{message}</p>
+      <button type="button" onClick={onRetry} className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+        Retry
+      </button>
     </div>
   );
 }
@@ -367,10 +445,13 @@ function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
       <div className="mt-3 space-y-2">
         {words.map((word) => (
           <details key={word.lemma} className="rounded-2xl bg-cream px-3 py-2">
-            <summary className="cursor-pointer list-none">
+            <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1">
               <span className="text-sm font-bold text-ink">{word.lemma}</span>
-              <span className="ml-2 text-xs text-ink-muted">
-                {word.translation} - {word.articleCount} {word.articleCount === 1 ? "article" : "articles"}
+              <span className="rounded-full bg-cream-card px-2 py-0.5 text-xs font-semibold text-ink-muted">
+                {word.translation}
+              </span>
+              <span className="text-xs text-ink-muted">
+                {word.articleCount} {word.articleCount === 1 ? "article" : "articles"}
               </span>
             </summary>
             <div className="mt-2 space-y-2 border-t border-cream-dark pt-2">

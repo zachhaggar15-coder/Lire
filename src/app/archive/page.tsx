@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
-import { formatDate } from "@/lib/format";
+import { formatCategory, formatDate } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
 import { getKnownWords } from "@/lib/knownWords";
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
@@ -76,11 +76,14 @@ export default function ArchivePage() {
       weekMinutes: Math.round(
         weekRows.reduce((sum, row) => sum + (row.minutesSpent ?? row.entry.minutes ?? 0), 0)
       ),
-      weekWords: words.filter((w) => new Date(w.savedAt).getTime() >= weekAgoMs).length,
+      weekWords: weekRows.reduce(
+        (sum, row) => sum + (typeof row.entry.wordCount === "number" ? row.entry.wordCount : Math.max(120, (row.entry.minutes ?? 2) * 170)),
+        0
+      ),
       weekReviews: words.filter((w) => w.lastReviewedAt && new Date(w.lastReviewedAt).getTime() >= weekAgoMs).length,
       currentStreak: getCurrentStreak(now),
       longestStreak: getLongestStreak(),
-      topCategory,
+      topCategory: topCategory ? formatCategory(topCategory) : null,
     });
     setWeeklyReport(buildWeeklyReadingReport(entries, words, knownWords, getTranslationBudgetRecords(), now));
     setCategoryProficiency(buildCategoryProficiency(entries, knownWords));
@@ -158,9 +161,9 @@ export default function ArchivePage() {
               Vocabulary coverage increased from {weeklyReport.coverageStart}% to {weeklyReport.coverageEnd}%
             </p>
             <p>{weeklyReport.movedToStable} words moved to stable</p>
-            <p>Most difficult area: {weeklyReport.mostDifficultArea}</p>
+            <p>Most difficult area: {weeklyReport.mostDifficultArea ?? "not enough data yet"}</p>
             <p>Strongest topic: {weeklyReport.strongestTopic ?? "not enough data yet"}</p>
-            <p>Next focus: {weeklyReport.nextFocus}</p>
+            <p>Next focus: {weeklyReport.nextFocus ?? "complete one article to unlock a useful suggestion"}</p>
             {weeklyReport.translationBudgetTotal > 0 && (
               <p>
                 Translation budget met on {weeklyReport.translationBudgetMet}/{weeklyReport.translationBudgetTotal} completed articles

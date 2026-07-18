@@ -9,13 +9,24 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
 
+function manualInstallHint(userAgent: string): string {
+  const ua = userAgent.toLowerCase();
+  if (/iphone|ipad|ipod/.test(ua)) return "In Safari, use Share, then Add to Home Screen.";
+  if (ua.includes("android") && ua.includes("chrome")) return "In Chrome, open the menu and choose Install app or Add to Home screen.";
+  if (ua.includes("edg/")) return "In Edge, use the app/install icon in the address bar or Apps in the menu.";
+  if (ua.includes("chrome")) return "In Chrome, use the install icon in the address bar or Install app in the menu.";
+  return "Use your browser's install or Add to Home Screen option when it appears.";
+}
+
 export default function PwaInstallCard({ compact = false }: { compact?: boolean }) {
   const [promptEvent, setPromptEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [installHint, setInstallHint] = useState("Use your browser's install or Add to Home Screen option when it appears.");
 
   useEffect(() => {
     setInstalled(isStandalonePwa());
+    setInstallHint(manualInstallHint(window.navigator.userAgent));
     function handleBeforeInstallPrompt(event: Event) {
       event.preventDefault();
       setPromptEvent(event as BeforeInstallPromptEvent);
@@ -61,7 +72,7 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
       </div>
       {!promptEvent && (
         <p className="mt-2 text-xs text-ink-muted">
-          Use your browser menu and choose Add to Home Screen when available.
+          {installHint}
         </p>
       )}
       <button

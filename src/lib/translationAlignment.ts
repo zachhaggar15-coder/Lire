@@ -6,6 +6,27 @@ export interface ResolvedTranslationAlignment {
   endIndex: number;
   french: string;
   english: string;
+  /** How many French words this segment spans — lets callers reject clause-sized spans. See isWordScopedAlignment. */
+  frenchWordCount: number;
+}
+
+/**
+ * Widest span still usable as a *word's* meaning.
+ *
+ * The model aligns at whatever granularity fits the sentence, so a segment
+ * containing a tapped word can be anything from that one word up to a whole
+ * clause. Showing a clause next to the French is fine for interlinear
+ * reading, but adopting it as the word's translation is not: saving "mouillé"
+ * with the meaning "Was a ship moored in some inland port" corrupts the
+ * flashcard and the generated example sentence ("It's very Was a ship moored
+ * in some inland port."). Anything wider than a short phrase is display-only.
+ */
+export const MAX_WORD_SCOPED_ALIGNMENT_WORDS = 3;
+
+/** True when an alignment is tight enough to stand in as a single word's meaning. */
+export function isWordScopedAlignment(alignment: ResolvedTranslationAlignment | null | undefined): boolean {
+  if (!alignment) return false;
+  return alignment.frenchWordCount <= MAX_WORD_SCOPED_ALIGNMENT_WORDS;
 }
 
 export interface InterlinearTranslationChunk {
@@ -101,6 +122,7 @@ export function resolveTranslationAlignments(
       endIndex,
       french: tokenText(tokens, startIndex, endIndex).trim() || french,
       english,
+      frenchWordCount: words.length,
     });
     searchOrdinal = matchOrdinal + words.length;
   }

@@ -15,6 +15,16 @@ function notify(): void {
   if (typeof window !== "undefined") window.dispatchEvent(new Event(PREF_EVENT));
 }
 
+/**
+ * Lets code outside this module tell subscribed screens that something they
+ * derive from local storage has changed — used by the background known-word
+ * seeding after onboarding, which finishes well after the dashboard has
+ * already rendered its (then still zero) counts.
+ */
+export function notifyRecommendationPreferencesChanged(): void {
+  notify();
+}
+
 function readStringList(key: string): string[] {
   if (!hasStorage()) return [];
   try {

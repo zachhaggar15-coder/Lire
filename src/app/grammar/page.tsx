@@ -248,8 +248,8 @@ function LessonDetail({
       <div className="mt-4">
         <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Forms to notice</p>
         <div className="mt-2 flex flex-wrap gap-2">
-          {lesson.endings.map((ending) => (
-            <span key={ending} className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
+          {lesson.endings.map((ending, index) => (
+            <span key={`${ending}-${index}`} className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
               {ending}
             </span>
           ))}

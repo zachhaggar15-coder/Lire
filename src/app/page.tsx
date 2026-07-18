@@ -73,6 +73,14 @@ export default function HomePage() {
         </div>
       )}
 
+      {/*
+        Setup comes first. It used to render last — below the value card, the
+        dashboard tiles, the beta notice and six news snippets, about 2.4
+        screens down — so the one step that decides level, topics and goals
+        was something most people would never scroll to, while the header
+        already showed "A2" as though they'd chosen it.
+      */}
+      <FirstRunOnboarding onComplete={() => refreshDashboard()} />
       {showFirstVisitMessage && <FirstVisitValueCard />}
       <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
       <ContinueReadingBanner />
@@ -80,7 +88,6 @@ export default function HomePage() {
         <BetaNotice />
       </div>
       <ShortSnippetsBlock />
-      <FirstRunOnboarding onComplete={() => refreshDashboard()} />
     </div>
   );
 }

@@ -37,6 +37,13 @@ interface WordSheetProps {
   articleTitle: string;
   onClose: () => void;
   onKnow: () => void;
+  /**
+   * Adds the word to the review deck. Saving is an explicit choice rather
+   * than a side effect of tapping: a tap usually means "what's this?", and
+   * auto-saving every curiosity filled the review queue with words the
+   * reader never chose to study.
+   */
+  onSave?: () => void;
   inferenceChallenge?: InferenceChallenge | null;
   onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
   onAiRequested?: () => void;
@@ -109,7 +116,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word that the reader has just auto-saved.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -635,12 +642,21 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, infere
           >
             I know this
           </button>
-          <button
-            onClick={onClose}
-            className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-          >
-            Keep saved
-          </button>
+          {state?.existingStatus ? (
+            <button
+              onClick={onClose}
+              className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+            >
+              Keep saved
+            </button>
+          ) : (
+            <button
+              onClick={onSave}
+              className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+            >
+              Save to review
+            </button>
+          )}
         </div>
       </div>
     </>

@@ -108,6 +108,20 @@ function distractorFor(text: ReadingText, fallback: string): string {
   return summary.length > 120 ? `${summary.slice(0, 117).trim()}...` : summary || fallback;
 }
 
+/**
+ * A gist question only works if every option is an English summary the reader
+ * can actually weigh up. Texts without an English blurb (the public-domain
+ * bank, imported texts) fall back to raw French sentences, which turned the
+ * question into "pick which of these four French fragments is the gist" —
+ * with the article's own opening line as one of the options. Better to ask
+ * nothing than to ask that.
+ */
+export function canBuildGistQuestion(current: ReadingText, candidates: ReadingText[]): boolean {
+  const usable = (text: ReadingText) => !!text.blurbEn?.trim() && !isMetadataOnlyBlurb(text.blurbEn);
+  if (!usable(current)) return false;
+  return candidates.filter((candidate) => candidate.id !== current.id && usable(candidate)).length >= 2;
+}
+
 export function buildGistQuestion(current: ReadingText, candidates: ReadingText[]): MultipleChoiceQuestion {
   const correct = distractorFor(current, current.preview);
   const distractors = candidates

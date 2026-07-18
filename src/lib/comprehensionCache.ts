@@ -2,6 +2,7 @@ import type { ReadingText } from "@/types";
 import {
   buildGistQuestion,
   buildToneQuestions,
+  canBuildGistQuestion,
   type MultipleChoiceQuestion,
   type ToneQuestion,
 } from "@/lib/comprehension";
@@ -9,9 +10,11 @@ import { pushStore } from "@/lib/supabase/sync";
 
 const KEY = "lire.comprehensionQuestions.v1";
 const CACHE_VERSION = 2;
+let memoryCache: CachedComprehensionQuestionBundle[] = [];
 
 export interface ComprehensionQuestionBundle {
-  gistQuestion: MultipleChoiceQuestion;
+  /** Null when the text has no English blurb to build honest options from — see canBuildGistQuestion. */
+  gistQuestion: MultipleChoiceQuestion | null;
   toneQuestions: ToneQuestion[];
 }
 
@@ -29,7 +32,7 @@ function hasStorage(): boolean {
 }
 
 function readCache(): CachedComprehensionQuestionBundle[] {
-  if (!hasStorage()) return [];
+  if (!hasStorage()) return memoryCache;
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return [];
@@ -65,14 +68,17 @@ function isCachedBundle(value: unknown): value is CachedComprehensionQuestionBun
     typeof bundle.textId === "string" &&
     typeof bundle.signature === "string" &&
     bundle.version === CACHE_VERSION &&
-    isQuestion(bundle.gistQuestion) &&
+    (bundle.gistQuestion === null || isQuestion(bundle.gistQuestion)) &&
     Array.isArray(bundle.toneQuestions) &&
     bundle.toneQuestions.every(isToneQuestion)
   );
 }
 
 function persist(cache: CachedComprehensionQuestionBundle[]): void {
-  if (!hasStorage()) return;
+  if (!hasStorage()) {
+    memoryCache = cache;
+    return;
+  }
   window.localStorage.setItem(KEY, JSON.stringify(cache));
   void pushStore(KEY);
 }
@@ -91,8 +97,12 @@ export function buildComprehensionQuestionBundle(
   candidates: ReadingText[]
 ): ComprehensionQuestionBundle {
   return {
-    gistQuestion: buildGistQuestion(text, candidates),
-    toneQuestions: buildToneQuestions(text),
+    gistQuestion: canBuildGistQuestion(text, candidates) ? buildGistQuestion(text, candidates) : null,
+    // Tone questions ask about journalistic framing ("sceptical or
+    // supportive?", "alarmist?"). They're meaningful on news, and nonsense on
+    // a Jules Verne excerpt, so they stay with the category they were written
+    // for.
+    toneQuestions: text.category === "news-style" ? buildToneQuestions(text) : [],
   };
 }
 

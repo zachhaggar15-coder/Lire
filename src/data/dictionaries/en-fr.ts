@@ -14,6 +14,7 @@ export const enFrDictionary: DictionaryEntry[] = [
   { lemma: "to go", forms: ["goes", "went"], translations: ["aller"], partOfSpeech: "verb", cefr: "A1" },
   { lemma: "to do", forms: ["does", "did", "to make"], translations: ["faire"], partOfSpeech: "verb", cefr: "A1" },
   { lemma: "city", forms: ["town"], translations: ["ville"], partOfSpeech: "noun", cefr: "A1" },
+  { lemma: "house", forms: ["home", "houses", "homes"], translations: ["maison", "chez-soi"], partOfSpeech: "noun", cefr: "A1", examples: [{ fr: "La maison est grande.", en: "The house is big." }] },
   { lemma: "team", translations: ["équipe"], partOfSpeech: "noun", cefr: "A1" },
   { lemma: "night", translations: ["nuit"], partOfSpeech: "noun", cefr: "A1" },
   { lemma: "sleep", translations: ["sommeil"], partOfSpeech: "noun", cefr: "A2" },
