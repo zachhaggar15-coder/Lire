@@ -18,6 +18,9 @@ import { getValidationState } from "@/lib/validation/state";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 import { getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import { getProgress } from "@/lib/progress";
+import { tokenizeParagraphsToSentences } from "@/lib/words";
+
+type NextLesson = { href: string; title: string; detail: string; sentenceCount: number; level: Difficulty };
 
 export default function HomePage() {
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
@@ -30,7 +33,7 @@ export default function HomePage() {
   });
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [completedArticleCount, setCompletedArticleCount] = useState(0);
-  const [nextLesson, setNextLesson] = useState<{ href: string; title: string; detail: string } | null>(null);
+  const [nextLesson, setNextLesson] = useState<NextLesson | null>(null);
 
   const nextStarterLesson = useCallback((level: Difficulty) => {
     const bank = getDailyBankTexts({ level, category: "all", limit: 20 }).filter(isStarterText);
@@ -40,6 +43,8 @@ export default function HomePage() {
       href: `/reader/${encodeURIComponent(text.id)}`,
       title: text.title,
       detail: `${text.difficulty} - ${text.minutes} min`,
+      sentenceCount: tokenizeParagraphsToSentences(text.body).flat().length,
+      level: text.difficulty,
     };
   }, []);
 
@@ -100,7 +105,7 @@ export default function HomePage() {
       <header className="mb-4 flex items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
-          <p className="text-sm text-ink-muted">Dashboard</p>
+          <p className="text-sm text-ink-muted">Today</p>
         </div>
         <Link
           href="/settings"
@@ -142,48 +147,52 @@ function BeginnerHome({
   savedPhrases,
 }: {
   completedArticleCount: number;
-  nextLesson: { href: string; title: string; detail: string } | null;
+  nextLesson: NextLesson | null;
   selectedLevel: Difficulty;
   dueReviews: number;
   savedLearningItems: number;
   savedPhrases: number;
 }) {
   const step = Math.min(3, completedArticleCount + 1);
+  const sentenceGoal = nextLesson?.sentenceCount ?? 6;
   return (
     <div className="space-y-4">
       <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {step} of 3</p>
+        <p className="text-xs font-bold uppercase tracking-wide text-brand">Today</p>
         <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">
-          Start with one short French reading.
+          Read {sentenceGoal} simple French {sentenceGoal === 1 ? "sentence" : "sentences"}.
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          Tap words when you need help. Save only the words you want to practise later.
+          Lesson {step}: {nextLesson?.title ?? "your next short reading"}
         </p>
+        <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
+          <TrustNote label={`Written for ${nextLesson?.level ?? selectedLevel} learners`} />
+          <TrustNote label="Your saved words stay on this device" />
+          <TrustNote label="AI help is optional" />
+        </div>
         <Link
           href={nextLesson?.href ?? "/articles"}
           className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
         >
-          {completedArticleCount === 0 ? "Start first reading" : "Continue reading"}
+          {completedArticleCount === 0 ? "Start" : "Continue"}
         </Link>
-        {nextLesson && (
-          <p className="mt-3 text-center text-xs text-ink-muted">
-            {nextLesson.title} - {nextLesson.detail}
-          </p>
-        )}
+        <Link href="/settings" className="mt-3 block text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
+          Change level
+        </Link>
       </section>
 
       <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Your first loop</p>
+        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
         <div className="mt-3 grid gap-2">
-          <BeginnerStep done={completedArticleCount > 0} label="Read one beginner text" />
+          <BeginnerStep done={completedArticleCount > 0} label="Finish one lesson" />
           <BeginnerStep done={savedLearningItems > 0} label="Save one word or phrase" />
-          <BeginnerStep done={completedArticleCount > 1} label="Try one more reading" />
+          <BeginnerStep done={completedArticleCount > 1} label="Start the next lesson" />
         </div>
       </section>
 
       <div className="grid grid-cols-2 gap-2">
         <Link href="/articles" className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-sm active:scale-95">
-          More readings
+          Lessons
         </Link>
         <Link
           href={dueReviews > 0 ? "/review" : savedPhrases > 0 ? "/phrases" : "/settings"}
@@ -192,6 +201,17 @@ function BeginnerHome({
           {dueReviews > 0 ? "Review words" : savedPhrases > 0 ? "Review phrases" : `${selectedLevel} level`}
         </Link>
       </div>
+    </div>
+  );
+}
+
+function TrustNote({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 rounded-2xl bg-cream px-3 py-2">
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-light text-[11px] font-bold text-brand">
+        OK
+      </span>
+      <span>{label}</span>
     </div>
   );
 }
@@ -225,14 +245,14 @@ function DashboardCard({
   const progress = progressSnapshot?.level.progress ?? 0;
 
   const links = [
-    { href: "/articles", label: "Articles", icon: "book", meta: "Daily" },
-    { href: "/live-news", label: "News", icon: "news", meta: "Live" },
+    { href: "/articles", label: "Lessons", icon: "book", meta: "Path" },
+    { href: "/live-news", label: "News", icon: "news", meta: "Stretch" },
     { href: "/review", label: "Review", icon: "cards", meta: dueMissions > 0 ? `${dueMissions} tasks` : "Due" },
     { href: "/grammar", label: "Grammar", icon: "grammar", meta: "Verbs" },
     { href: "/words", label: "Words", icon: "bookmark", meta: "Saved" },
     { href: "/settings", label: "Change Level", icon: "level", meta: selectedLevel },
     { href: "/progress", label: "Progress", icon: "chart", meta: `${totalXp.toLocaleString()} XP` },
-    { href: "/archive", label: "Articles Read", icon: "archive", meta: "History" },
+    { href: "/archive", label: "Lessons Read", icon: "archive", meta: "History" },
   ];
 
   return (
@@ -255,7 +275,7 @@ function DashboardCard({
       <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
         <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s plan</p>
         <p className="mt-1 text-sm font-semibold text-ink">
-          Pick an article, keep translations low, then review anything due.
+          Start a lesson, save what matters, then review anything due.
         </p>
         <div className="mt-3 grid grid-cols-3 gap-2 text-center">
           <Metric label="Known" value={stats.knownWords} />

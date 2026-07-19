@@ -7,7 +7,7 @@ import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
-import { pruneStaleRssProgress } from "@/lib/progress";
+import { getProgress, pruneStaleRssProgress } from "@/lib/progress";
 import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
@@ -235,17 +235,17 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     setLanguageFilter("all");
   }
 
-  const title = mode === "live" ? "Live News" : "Articles";
+  const title = mode === "live" ? "Live News" : "Lessons";
   const subtitle =
     mode === "live"
       ? "Current French articles for when you want a stretch."
-      : "Start with short French readings chosen for practice.";
+      : "Follow a short, level-matched path.";
 
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
         <Link href="/" className="text-sm font-semibold text-brand">
-          Back to dashboard
+          Back to Today
         </Link>
         <div className="mt-2 flex items-end justify-between gap-3">
           <div>
@@ -259,6 +259,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         <BeginnerNewsGate onContinue={() => setShowLiveNewsAnyway(true)} />
       ) : mode === "live" ? (
         <FilterPanel
+          summaryLabel="Filters"
           categoryItems={CATEGORY_FILTERS}
           categoryFilter={categoryFilter}
           difficultyFilter={difficultyFilter}
@@ -274,7 +275,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
       {!liveNewsGated && state === "error" && (
         <LoadErrorCard
-          message={loadError ?? "Articles are unavailable right now."}
+          message={loadError ?? (mode === "live" ? "News is unavailable right now." : "Lessons are unavailable right now.")}
           onRetry={() => setReloadKey((key) => key + 1)}
         />
       )}
@@ -301,6 +302,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
       {!liveNewsGated && mode === "articles" && (
         <FilterPanel
+          summaryLabel="Browse more"
           categoryItems={ARTICLE_CATEGORY_FILTERS}
           categoryFilter={categoryFilter}
           difficultyFilter={difficultyFilter}
@@ -356,7 +358,7 @@ function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <Link href="/articles" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
-          Start with articles
+          Start with lessons
         </Link>
         <button
           type="button"
@@ -371,6 +373,7 @@ function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
 }
 
 function FilterPanel({
+  summaryLabel,
   categoryItems,
   categoryFilter,
   difficultyFilter,
@@ -380,6 +383,7 @@ function FilterPanel({
   onLanguage,
   onReset,
 }: {
+  summaryLabel: string;
   categoryItems: { value: CategoryFilter; label: string }[];
   categoryFilter: CategoryFilter;
   difficultyFilter: DifficultyFilter;
@@ -392,8 +396,11 @@ function FilterPanel({
   return (
     <details className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
       <summary className="cursor-pointer list-none text-sm font-bold uppercase tracking-wide text-ink-muted">
-        Filters
+        {summaryLabel}
       </summary>
+      <p className="mt-2 text-xs text-ink-muted">
+        {summaryLabel === "Browse more" ? "Find another topic, level, or imported text." : "Adjust the live-news list."}
+      </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button type="button" onClick={onReset} className="rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted">
           Reset
@@ -458,17 +465,29 @@ function ArticleContent({
     return Number(a.text.difficulty !== level) - Number(b.text.difficulty !== level);
   });
   const [featured, ...rest] = orderedArticles;
-  const upNext = rest.slice(0, 2);
-  const morePractice = rest.slice(2);
+  const pathLessons = rest.slice(0, 5);
+  const morePractice = rest.slice(5);
 
   return (
     <>
       {featured && <FeaturedLessonCard article={featured} lessonNumber={1} level={level} />}
-      <ArticleSection title="Up Next" subtitle="Two more short lessons when you want to continue." articles={upNext} variant="compact" />
+      {pathLessons.length > 0 && (
+        <section className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="px-1">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Lesson path</h2>
+            <p className="mt-0.5 text-xs text-ink-muted">A few short readings, one after another.</p>
+          </div>
+          <div className="mt-3 space-y-2">
+            {pathLessons.map((article, index) => (
+              <LessonPathItem key={article.text.id} article={article} lessonNumber={index + 2} />
+            ))}
+          </div>
+        </section>
+      )}
       {morePractice.length > 0 && (
         <details className="mb-6">
           <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
-            More practice
+            Practice bank
           </summary>
           <div className="mt-3">
             <ArticleSection title={`${level} practice bank`} articles={morePractice} variant="compact" />
@@ -496,6 +515,8 @@ function ArticleContent({
 
 function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredArticle; lessonNumber: number; level: Difficulty }) {
   const { text } = article;
+  const progress = getProgress(text.id).status;
+  const action = progress === "completed" ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
   return (
     <section className="mb-5 rounded-3xl bg-cream-card p-5 shadow-sm">
       <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber}</p>
@@ -507,6 +528,9 @@ function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredA
         <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{text.difficulty}</span>
         <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold capitalize text-ink-muted">{formatCategory(text.category)}</span>
         <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">{text.minutes} min</span>
+        {isStarterText(text) && (
+          <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">Written for beginners</span>
+        )}
         {text.difficulty !== level && (
           <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">near your level</span>
         )}
@@ -515,9 +539,34 @@ function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredA
         href={`/reader/${encodeURIComponent(text.id)}`}
         className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
       >
-        Start lesson
+        {action}
       </Link>
     </section>
+  );
+}
+
+function LessonPathItem({ article, lessonNumber }: { article: ScoredArticle; lessonNumber: number }) {
+  const { text } = article;
+  const progress = getProgress(text.id).status;
+  const completed = progress === "completed";
+  const action = completed ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
+
+  return (
+    <Link
+      href={`/reader/${encodeURIComponent(text.id)}`}
+      className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-3 active:scale-[0.99]"
+    >
+      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-extrabold ${completed ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
+        {completed ? "OK" : lessonNumber}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-bold text-ink">{text.title}</span>
+        <span className="mt-0.5 block truncate text-xs text-ink-muted">
+          {text.difficulty} - {text.minutes} min - {isStarterText(text) ? "Written for beginners" : "Reading practice"}
+        </span>
+      </span>
+      <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{action}</span>
+    </Link>
   );
 }
 

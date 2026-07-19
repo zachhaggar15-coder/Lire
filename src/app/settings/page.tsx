@@ -140,8 +140,12 @@ export default function SettingsPage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <h1 className="text-2xl font-extrabold text-ink">Settings</h1>
-        <p className="text-sm text-ink-muted">Tune how reading looks and feels.</p>
+        <h1 className="text-2xl font-extrabold text-ink">Profile</h1>
+        <p className="text-sm text-ink-muted">Level, reading help, saved words, and privacy.</p>
+        <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
+          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">Your lesson progress is stored locally on this device.</p>
+          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">AI help is optional and clearly labelled when used.</p>
+        </div>
       </header>
 
       <div className="space-y-5">

@@ -6,19 +6,16 @@ import { usePathname } from "next/navigation";
 import { getOnboardingState } from "@/lib/onboarding";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 
-/**
- * Reading is the point of the app, so the two places you actually find
- * something to read are in the tab bar rather than only behind a dashboard
- * tile. Words sits here too because saved vocabulary is checked far more
- * often than Settings, which is a rare destination and stays reachable from
- * the dashboard and the level chip in the header.
- */
 const items = [
-  { href: "/", label: "Home", icon: HomeIcon },
-  { href: "/articles", label: "Articles", icon: BookIcon },
-  { href: "/live-news", label: "News", icon: NewsIcon },
-  { href: "/review", label: "Review", icon: CardsIcon },
-  { href: "/words", label: "Words", icon: BookmarkIcon },
+  { href: "/", label: "Today", icon: HomeIcon, activePaths: ["/"] },
+  { href: "/articles", label: "Lessons", icon: BookIcon, activePaths: ["/articles"] },
+  { href: "/review", label: "Review", icon: CardsIcon, activePaths: ["/review"] },
+  {
+    href: "/settings",
+    label: "Profile",
+    icon: ProfileIcon,
+    activePaths: ["/settings", "/progress", "/words", "/phrases", "/dictionary", "/sources", "/privacy", "/changelog"],
+  },
 ];
 
 export default function BottomNav() {
@@ -48,9 +45,9 @@ export default function BottomNav() {
       style={{ paddingBottom: "var(--safe-bottom)" }}
     >
       <ul className="flex">
-        {items.map(({ href, label, icon: Icon }) => {
+        {items.map(({ href, label, icon: Icon, activePaths }) => {
           const active =
-            href === "/" ? pathname === "/" : pathname.startsWith(href);
+            href === "/" ? pathname === "/" : activePaths.some((path) => pathname.startsWith(path));
           return (
             <li key={href} className="flex-1">
               <Link
@@ -99,21 +96,11 @@ function BookIcon({ className }: { className?: string }) {
   );
 }
 
-function NewsIcon({ className }: { className?: string }) {
+function ProfileIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 5h13v14H6a2 2 0 0 1-2-2z" />
-      <path d="M17 8h3v9a2 2 0 0 1-3 1.7" />
-      <path d="M7 9h7" />
-      <path d="M7 13h7" />
-    </svg>
-  );
-}
-
-function BookmarkIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
     </svg>
   );
 }

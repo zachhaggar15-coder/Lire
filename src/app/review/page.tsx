@@ -331,7 +331,7 @@ export default function ReviewPage() {
           <p className="text-4xl">🎉</p>
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
-            Knew it: {score.knew} · Didn&apos;t know: {score.missed}
+            Good: {score.knew} · Again: {score.missed}
           </p>
           <button
             onClick={restart}
@@ -460,7 +460,7 @@ export default function ReviewPage() {
                 onClick={() => setRevealed(true)}
                 className="mt-6 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Reveal meaning
+                Show meaning
               </button>
             )}
           </div>
@@ -478,23 +478,28 @@ export default function ReviewPage() {
                   disabled={!revealed || cardFeedback !== null}
                   className="rounded-2xl bg-rose-100 py-3 text-sm font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
                 >
-                  Didn&apos;t know it
+                  Again
                 </button>
                 <button
                   onClick={() => answer("correct")}
                   disabled={!revealed || cardFeedback !== null}
                   className="rounded-2xl bg-emerald-100 py-3 text-sm font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
                 >
-                  Knew it
+                  Good
                 </button>
               </div>
-              <button
-                onClick={handleMarkKnown}
-                disabled={cardFeedback !== null}
-                className="mt-2 w-full rounded-2xl bg-cream-dark py-2.5 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
-              >
-                Mark as known
-              </button>
+              <details className="mt-2 text-center">
+                <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+                  More
+                </summary>
+                <button
+                  onClick={handleMarkKnown}
+                  disabled={cardFeedback !== null}
+                  className="mt-2 w-full rounded-2xl bg-cream-dark py-2.5 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+                >
+                  I know this already
+                </button>
+              </details>
             </div>
           </div>
         </div>

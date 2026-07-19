@@ -282,11 +282,15 @@ export function CompletionSummary({
   completion,
   onSecondPass,
   reviewHref,
+  isLesson = false,
 }: {
   completion: ArticleCompletionRecord;
   onSecondPass: () => void;
   reviewHref: string | null;
+  isLesson?: boolean;
 }) {
+  const savedItems = completion.savedWords + completion.phrasesSaved;
+  const completedThing = isLesson ? "lesson" : "reading";
   const stats = [
     ["Words read", completion.wordsRead],
     ["Reading time", `${completion.readingMinutes ?? "-"} min`],
@@ -296,13 +300,15 @@ export function CompletionSummary({
     ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
   ];
   const nextHref = reviewHref ?? "/articles";
-  const nextLabel = reviewHref ? "Review saved words" : "Next reading";
+  const nextLabel = reviewHref ? (savedItems === 1 ? "Review saved item" : "Review saved items") : isLesson ? "Next lesson" : "Next reading";
   const nextCopy =
-    completion.savedWords > 0
-      ? "Review the words you chose while the article is still fresh."
+    savedItems > 0
+      ? `You saved ${savedItems} ${savedItems === 1 ? "item" : "items"} from this ${completedThing}. Review while it is still fresh.`
       : completion.fullTranslationUsed
         ? "Try a second pass without English when you are ready."
-        : "Keep the streak going with one more short reading.";
+        : isLesson
+          ? "Ready for the next short lesson."
+          : "Keep the streak going with one more short reading.";
 
   return (
     <section className="reward-completion-reveal rounded-3xl bg-cream-card p-5 text-center shadow-sm">
@@ -311,8 +317,11 @@ export function CompletionSummary({
           <path d="M20 6 9 17l-5-5" />
         </svg>
       </div>
-      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-ink-muted">Article complete</p>
-      <h2 className="mt-1 text-2xl font-extrabold text-ink">+{completion.xpEarned} XP</h2>
+      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+        {isLesson ? "Lesson complete" : "Reading complete"}
+      </p>
+      <h2 className="mt-1 text-2xl font-extrabold text-ink">Nice work</h2>
+      <p className="mt-1 text-sm font-bold text-brand">+{completion.xpEarned} XP</p>
       <p className="mx-auto mt-2 max-w-xs text-sm text-ink-muted">{nextCopy}</p>
 
       <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95">

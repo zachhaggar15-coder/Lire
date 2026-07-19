@@ -37,6 +37,14 @@ export interface DictionaryLookupResult {
   lemma: string | null;
   translations: string[];
   partOfSpeech: string | null;
+  /**
+   * True when the entry was reached by a rule-based lemma guess, so the stored
+   * part of speech describes the lemma and may not describe the word actually
+   * tapped — "murmura" (a verb form) strips to the noun "murmure". The value
+   * is still useful to grammar heuristics, but shouldn't be shown to a reader
+   * as fact. See withUncertainPartOfSpeech in dictionary/lookup.ts.
+   */
+  partOfSpeechUncertain?: boolean;
   gender: string | null;
   frequencyRank: number | null;
   cefr: string | null;

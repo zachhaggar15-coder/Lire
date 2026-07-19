@@ -190,6 +190,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [activePhrase, setActivePhrase] = useState<ActivePhraseState | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [status, setStatus] = useState<TextStatus>("unread");
+  const [lessonStep, setLessonStep] = useState(0);
   const [difficulty, setDifficulty] = useState<DifficultyEstimate | null>(null);
   const [articleSavedWordCount, setArticleSavedWordCount] = useState(0);
   const [articleFeedback, setArticleFeedback] = useState<ArticleDifficultyFeedback | null>(null);
@@ -280,6 +281,18 @@ export default function Reader({ text }: { text: ReadingText }) {
     () => (showInterpretationChecks ? buildHeadlineComparison(text, articlePool) : null),
     [articlePool, showInterpretationChecks, text]
   );
+  const isChunkedStarterLesson = isStarterLesson && !rereadMode && status !== "completed";
+  const visibleParagraphEntries = useMemo(
+    () =>
+      isChunkedStarterLesson
+        ? [{ sentences: paragraphs[Math.min(lessonStep, Math.max(0, paragraphs.length - 1))] ?? [], paragraphIndex: Math.min(lessonStep, Math.max(0, paragraphs.length - 1)) }]
+        : paragraphs.map((sentences, paragraphIndex) => ({ sentences, paragraphIndex })),
+    [isChunkedStarterLesson, lessonStep, paragraphs]
+  );
+  const lessonStepCount = Math.max(1, paragraphs.length);
+  const currentLessonStep = Math.min(lessonStep + 1, lessonStepCount);
+  const isLastLessonStep = currentLessonStep >= lessonStepCount;
+  const lessonProgress = isChunkedStarterLesson ? Math.round((currentLessonStep / lessonStepCount) * 100) : 100;
 
   /**
    * The first difficulty estimate may have run against curated-only coverage,
@@ -450,6 +463,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus(getProgress(text.id).status);
     setArticleFeedback(getArticleFeedbackForText(text.id)?.feedback ?? null);
     setArticleTapRecords(getWordTapsForArticle(text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
+    setLessonStep(0);
     // Start with what's already local (imported + RSS), so related articles
     // and the headline comparison can render immediately. The bundled text
     // library is ~1.3 MB and is only needed to widen that pool, so it's
@@ -873,7 +887,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     rememberWordSaved("tap_lookup");
     pulseRewardWords("saved", [activeWord.word, activeWord.lookup.lemma]);
     setActiveWord((prev) => (prev ? { ...prev, existingStatus: "learning" } : prev));
-    showToast("Saved to review");
+    showToast("Saved");
   }
 
   function handleSentenceTap(sentenceText: string) {
@@ -985,10 +999,14 @@ export default function Reader({ text }: { text: ReadingText }) {
     // X."), so a context-fitted phrase produces nonsense — "mouillé" aligned
     // as "was anchored" rendered "It's very was anchored." The dictionary
     // entry is the one that matches the frame's part of speech.
+    // A guessed lemma may belong to a different word class than the form the
+    // reader tapped, so don't let it pick the example frame or get stored as
+    // this word's part of speech.
+    const reliablePartOfSpeech = lookup.partOfSpeechUncertain ? null : lookup.partOfSpeech;
     const fallbackExample = generateFallbackExample({
       word,
       lemma: lookup.lemma,
-      partOfSpeech: lookup.partOfSpeech,
+      partOfSpeech: reliablePartOfSpeech,
       gender: lookup.gender,
       translations: lookup.translations.length > 0 ? lookup.translations : translations,
     });
@@ -997,7 +1015,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       lemma: lookup.lemma,
       translations,
       primaryTranslation: translations[0] ?? (missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET),
-      partOfSpeech: lookup.partOfSpeech,
+      partOfSpeech: reliablePartOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
@@ -1093,6 +1111,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     setCompletionResult(result);
     if (result.xpEarned > 0) showToast(`+${result.xpEarned} XP`);
     setStatus("completed");
+  }
+
+  function handleContinueLesson() {
+    setLessonStep((step) => Math.min(step + 1, Math.max(0, paragraphs.length - 1)));
+    setActiveWord(null);
+    setActiveSentence(null);
+    setActivePhrase(null);
+    requestAnimationFrame(() => {
+      articleRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
   }
 
   function handleStartSecondPass() {
@@ -1583,21 +1611,36 @@ export default function Reader({ text }: { text: ReadingText }) {
         </p>
       )}
 
+      {isChunkedStarterLesson && (
+        <section className="mt-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson step {currentLessonStep} of {lessonStepCount}</p>
+              <p className="mt-0.5 text-sm font-semibold text-ink">Read this short part, then continue.</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{lessonProgress}%</span>
+          </div>
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-cream-dark">
+            <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${lessonProgress}%` }} />
+          </div>
+        </section>
+      )}
+
       <article
         ref={articleRef}
         className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
       >
-        {paragraphs.map((sentences, pi) =>
+        {visibleParagraphEntries.map(({ sentences, paragraphIndex }) =>
           showEnglishTranslation ? (
             // Translated mode stays paragraph-first, but each French sentence
             // now renders as interlinear word/phrase chunks so English appears
             // as close as possible to the corresponding French.
-            <div key={pi} className="flex items-start gap-2">
-              {paragraphAudioButton(paragraphTexts[pi] ?? sentences.map((sg) => sg.text).join(" "), pi)}
+            <div key={paragraphIndex} className="flex items-start gap-2">
+              {paragraphAudioButton(paragraphTexts[paragraphIndex] ?? sentences.map((sg) => sg.text).join(" "), paragraphIndex)}
               <p className="min-w-0 flex-1 leading-[2.25]">
                   {sentences.map((sg, si) => (
                     <Fragment key={si}>
-                      {renderInterlinearSentence(sg, si, paragraphBreakBeforeIndex[pi] + si)}
+                      {renderInterlinearSentence(sg, si, paragraphBreakBeforeIndex[paragraphIndex] + si)}
                       {si < sentences.length - 1 && " "}
                     </Fragment>
                   ))}
@@ -1605,8 +1648,8 @@ export default function Reader({ text }: { text: ReadingText }) {
             </div>
           ) : (
             // Normal reading layout: sentences flow together into one paragraph.
-            <div key={pi} className="flex items-start gap-2">
-              {paragraphAudioButton(paragraphTexts[pi] ?? sentences.map((sg) => sg.text).join(" "), pi)}
+            <div key={paragraphIndex} className="flex items-start gap-2">
+              {paragraphAudioButton(paragraphTexts[paragraphIndex] ?? sentences.map((sg) => sg.text).join(" "), paragraphIndex)}
               <p className="min-w-0 flex-1">
                 {sentences.map((sg, si) => (
                   <Fragment key={si}>
@@ -1733,7 +1776,12 @@ export default function Reader({ text }: { text: ReadingText }) {
               <CompletionSummary
                 completion={completionResult}
                 onSecondPass={handleStartSecondPass}
-                reviewHref={articleSavedWordCount > 0 ? `/review?article=${encodeURIComponent(text.title)}` : null}
+                reviewHref={
+                  articleSavedWordCount > 0 || completionResult.phrasesSaved > 0
+                    ? `/review?article=${encodeURIComponent(text.title)}`
+                    : null
+                }
+                isLesson={isStarterLesson}
               />
             ) : (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
@@ -1752,7 +1800,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 Finish second pass
               </button>
             )}
-            {!rereadMode && (
+            {!rereadMode && !isStarterLesson && (
               <details className="rounded-3xl bg-cream-card p-3 text-left shadow-sm">
                 <summary className="cursor-pointer text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
                   More options
@@ -1807,12 +1855,19 @@ export default function Reader({ text }: { text: ReadingText }) {
               </details>
             )}
           </div>
+        ) : isChunkedStarterLesson && !isLastLessonStep ? (
+          <button
+            onClick={handleContinueLesson}
+            className="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
+          >
+            Continue
+          </button>
         ) : (
           <button
             onClick={handleMarkCompleted}
             className="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
           >
-            Mark as completed
+            {isStarterLesson ? "Finish lesson" : "Finish reading"}
           </button>
         )}
       </div>
@@ -1821,7 +1876,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       {status === "completed" && !rereadMode && relatedArticles.length > 0 && (
         <details className="mb-5">
           <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
-            More articles
+            {isStarterLesson ? "More lessons" : "More articles"}
           </summary>
           <div className="mt-3">
             <RelatedArticles articles={relatedArticles} />

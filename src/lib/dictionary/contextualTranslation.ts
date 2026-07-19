@@ -387,6 +387,17 @@ function wordAt(tokens: Token[], index: number, direction: -1 | 1): string | nul
   return null;
 }
 
+/** The nth word before `index`, skipping punctuation. n = 1 is the immediately preceding word. */
+function nthWordBefore(tokens: Token[], index: number, n: number): string | null {
+  let remaining = n;
+  for (let i = index - 1; i >= 0; i--) {
+    if (!tokens[i].isWord) continue;
+    remaining--;
+    if (remaining === 0) return normaliseForMatch(tokens[i].clean);
+  }
+  return null;
+}
+
 function wordWindow(tokens: Token[], index: number, radius: number): string[] {
   const left: string[] = [];
   for (let i = index - 1; i >= 0 && left.length < radius; i--) {
@@ -434,7 +445,22 @@ function inferGrammar(
     grammar = inferRegularVerbGrammar(clean, tokenIndex, tokens);
   }
 
-  if (previous && ["me", "m'", "te", "t'", "se", "s'", "nous", "vous"].includes(previous) && isVerbLookup(lookup)) {
+  // "me/te/se" before a verb can only be an object clitic, so they mark a
+  // pronominal verb. "nous" and "vous" cannot: they are far more often the
+  // subject — "vous croyez" is "you believe", not a reflexive — and they only
+  // read as reflexive when doubled, as in "vous vous levez". Treating them as
+  // reflexive unconditionally told readers that ordinary second-person verbs
+  // carried a reflexive pronoun, which is simply wrong.
+  const unambiguousReflexive = ["me", "m'", "te", "t'", "se", "s'"];
+  const ambiguousReflexive = ["nous", "vous"];
+  const beforePrevious = nthWordBefore(tokens, tokenIndex, 2);
+  const isReflexive =
+    !!previous &&
+    isVerbLookup(lookup) &&
+    (unambiguousReflexive.includes(previous) ||
+      (ambiguousReflexive.includes(previous) && previous === beforePrevious));
+
+  if (isReflexive) {
     grammar = mergeGrammar(grammar, {
       form: grammar?.form ? `${grammar.form}, reflexive/pronominal` : "reflexive/pronominal verb",
       note: "The preceding reflexive pronoun changes how the verb is read.",

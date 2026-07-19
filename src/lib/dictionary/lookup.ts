@@ -1,6 +1,7 @@
 import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
+import { coreSenseDictionary } from "@/data/dictionaries/core-senses";
 import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
 import { articleCoverageDictionary } from "@/data/dictionaries/article-coverage";
@@ -46,6 +47,17 @@ for (const entry of newsSenseDictionary) {
   }
 }
 
+// Core high-frequency vocabulary. These are single words a reader meets in
+// almost every sentence and which previously had no curated entry at all, so
+// they resolved through the generated layer's arbitrary sense order — "sur"
+// came back as "sour", "moi" as "ego", "ne" as "NE". See core-senses.ts.
+for (const entry of coreSenseDictionary) {
+  byLemma.set(entry.lemma.toLowerCase(), entry);
+  for (const form of entry.forms ?? []) {
+    byForm.set(form.toLowerCase(), entry);
+  }
+}
+
 // Phrase-bank entries are intentionally high priority: if a reader long-presses
 // "mettre fin à" or "sur fond de", the phrase meaning should win before any
 // generated literal word sense can produce a plausible-but-wrong gloss.
@@ -56,14 +68,21 @@ for (const entry of phraseBankDictionary) {
   }
 }
 
+// Proper nouns stay in their own maps and only claim a general-lookup slot
+// when no ordinary word already owns it — as a lemma *or* as an inflected
+// form. Checking the lemma alone wasn't enough: "Claire" is a common first
+// name, but "claire" is also the feminine of the adjective "clair", and since
+// byLemma is consulted before byForm the name won, so a reader tapping
+// "une pièce claire" was told the word meant "Claire". A capitalised
+// occurrence still resolves to the name through properByLemma below.
 for (const entry of properNounDictionary) {
   const lemmaKey = entry.lemma.toLowerCase();
   properByLemma.set(lemmaKey, entry);
-  if (!byLemma.has(lemmaKey)) byLemma.set(lemmaKey, entry);
+  if (!byLemma.has(lemmaKey) && !byForm.has(lemmaKey)) byLemma.set(lemmaKey, entry);
   for (const form of entry.forms ?? []) {
     const formKey = form.toLowerCase();
     properByForm.set(formKey, entry);
-    if (!byForm.has(formKey)) byForm.set(formKey, entry);
+    if (!byForm.has(formKey) && !byLemma.has(formKey)) byForm.set(formKey, entry);
   }
 }
 
@@ -85,12 +104,60 @@ export function isGeneratedDictionaryReady(): boolean {
   return generatedByLemma.size > 0;
 }
 
+/**
+ * A gloss that is a bare abbreviation or code rather than a word: "NE", "SSE",
+ * "RC", "DINK", "CoQ".
+ *
+ * WikDict mixes these in with ordinary senses and the export preserved no
+ * domain tags, so they sort like any other translation. 1,592 generated
+ * entries lead with one, and they cluster on common words — "est" showed as
+ * "SSE" (a compass bearing), "glace" as "ICE", "non" as "NOT". Since the
+ * reader only sees the first gloss, an abbreviation there is simply a wrong
+ * answer.
+ */
+function isBareAbbreviation(translation: string): boolean {
+  const trimmed = translation.trim();
+  if (trimmed.length === 0 || trimmed.length > 5) return false;
+  if (!/[A-Z]/.test(trimmed)) return false;
+  // No lowercase letters at all, e.g. "SSE" or "N.E." — "CoQ" and "PhD" keep
+  // a capital lead, so require the whole token to be caps/punctuation/digits.
+  return /^[A-Z0-9.\-/]+$/.test(trimmed);
+}
+
+/**
+ * The spelled-out form of an acronym, which WikDict stores as an ordinary
+ * sense: "case" -> "double income, no kids" (DINK).
+ *
+ * Only the comma is used as the signal. Length is not: plenty of correct
+ * glosses are long, and a word-count rule demoted real ones — "au milieu de"
+ * lost "in the middle of" to "amid", which is a worse answer for a learner.
+ */
+function isAcronymExpansion(translation: string): boolean {
+  return translation.includes(",");
+}
+
+/**
+ * Moves abbreviations and acronym expansions to the back of the list instead
+ * of dropping them. A reader on a technical text may genuinely want "CoQ", and
+ * nothing is lost by keeping it — it just stops being the headline answer.
+ * Falls back to the original order if every sense looks like one of these, so
+ * a word can never end up with no translation at all.
+ */
+function preferPlainGlosses(translations: string[]): string[] {
+  const noisy = (t: string) => isBareAbbreviation(t) || isAcronymExpansion(t);
+  const plain = translations.filter((t) => !noisy(t));
+  if (plain.length === 0) return translations;
+  return [...plain, ...translations.filter(noisy)];
+}
+
 /** Loads and indexes the broad generated dictionary. Idempotent and safe to call from anywhere. */
 export function ensureGeneratedDictionary(): Promise<void> {
   if (!generatedReady) {
     generatedReady = loadGeneratedDictionary()
       .then((entries) => {
-        for (const entry of entries) {
+        for (const raw of entries) {
+          // Reorder once here, at index time, rather than on every lookup.
+          const entry: DictionaryEntry = { ...raw, translations: preferPlainGlosses(raw.translations) };
           generatedByLemma.set(entry.lemma.toLowerCase(), entry);
           for (const form of entry.forms ?? []) {
             generatedByForm.set(form.toLowerCase(), entry);
@@ -136,6 +203,25 @@ for (const entry of enFrDictionary) {
   for (const form of entry.forms ?? []) {
     enByForm.set(form.toLowerCase(), entry);
   }
+}
+
+/**
+ * Drops the part of speech when the entry was reached by a rule-based lemma
+ * guess rather than an exact lemma or a form the entry actually lists.
+ *
+ * The stored part of speech describes the *lemma*, and a guess can cross word
+ * classes: "murmura" (a verb form) strips to the noun "murmure", so the reader
+ * was told a verb was a noun; "lève" reached "lever", whose generated entry is
+ * tagged noun. Beyond misleading the reader, that label feeds the example
+ * generator, which then builds its sentence around the wrong word class.
+ *
+ * The translations are still worth showing — a guess usually lands on the
+ * right family — so the part of speech is kept for grammar heuristics that
+ * need it (reflexive detection, for one) and merely flagged, leaving the UI
+ * to decide not to state it as fact.
+ */
+function withUncertainPartOfSpeech(result: DictionaryLookupResult): DictionaryLookupResult {
+  return { ...result, partOfSpeechUncertain: true };
 }
 
 function toResult(input: string, entry: DictionaryEntry | null): DictionaryLookupResult {
@@ -280,7 +366,14 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
       generatedByLemma.get(guess) ??
       generatedByForm.get(guess) ??
       getCustomDictionaryEntry(guess);
-    if (viaGuess) return toResult(rawWord, viaGuess);
+    if (viaGuess) {
+      // An exact hit on the guessed lemma is safe; anything else crossed a
+      // form boundary we inferred, so the stored part of speech may not
+      // describe the word the reader actually tapped.
+      const exactLemmaHit = viaGuess.lemma.toLowerCase() === guess;
+      const result = toResult(rawWord, viaGuess);
+      return exactLemmaHit && guess === clean ? result : withUncertainPartOfSpeech(result);
+    }
   }
 
   const apostropheIndex = Math.max(rawWord.lastIndexOf("'"), rawWord.lastIndexOf("\u2019"));

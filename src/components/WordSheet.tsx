@@ -102,7 +102,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
 
 /**
  * Bottom sheet shown on every word tap: an instant, fully-offline
- * dictionary lookup for the word that the reader has just auto-saved.
+ * dictionary lookup for the word the reader is curious about.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
 export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
@@ -273,7 +273,10 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
             )}
             {found && (
               <div className="sr-only">
-                {lookup?.partOfSpeech && (
+                {/* Not shown when the entry came from a lemma guess: the
+                    stored part of speech describes the lemma, which can be a
+                    different word class from the form the reader tapped. */}
+                {lookup?.partOfSpeech && !lookup.partOfSpeechUncertain && (
                   <span className="rounded-full bg-white/60 px-2 py-0.5 text-xs font-semibold text-accent-pinktext">
                     {lookup.partOfSpeech}
                   </span>
@@ -394,8 +397,8 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               {state?.naturalTranslation && (
                 <div className="rounded-2xl bg-brand-light/80 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">From natural translation</p>
-                    <span className="rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-semibold text-brand">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Meaning</p>
+                    <span className="hidden rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-semibold text-brand">
                       AI aligned
                     </span>
                   </div>
@@ -429,7 +432,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               {found ? (
                 <details className="rounded-2xl bg-white/60 p-3">
                   <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
-                    Base dictionary
+                    More meanings
                   </summary>
                   {primary && <p className="mt-1 text-base font-semibold text-ink">{primary}</p>}
                   {rest.length > 0 && (
@@ -460,6 +463,14 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           )}
         </div>
 
+        {definitionRevealed && firstExample && !isProperNoun && (
+          <div className="mt-3 rounded-2xl bg-white/70 p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Example</p>
+            <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
+            <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
+          </div>
+        )}
+
         {isProperNoun ? (
           <div className="mt-3">
             <button
@@ -475,21 +486,21 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               onClick={onKnow}
               className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
             >
-              I know this
+              Got it
             </button>
             {state?.existingStatus ? (
               <button
                 onClick={onClose}
                 className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Keep saved
+                Saved
               </button>
             ) : (
               <button
                 onClick={onSave}
                 className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Save to review
+                Save
               </button>
             )}
           </div>
