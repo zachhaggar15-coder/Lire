@@ -93,7 +93,8 @@ export default function HomePage() {
           variant="focus"
           onComplete={() => {
             refreshDashboard();
-            window.location.assign("/articles");
+            const lesson = nextStarterLesson(getSelectedReadingLevel());
+            window.location.assign(lesson?.href ?? "/articles");
           }}
         />
       </div>

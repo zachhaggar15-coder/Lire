@@ -403,16 +403,13 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
                     </span>
                   </div>
                   <p className="mt-1 text-lg font-bold text-ink">{state.naturalTranslation.english}</p>
-                  <p className="mt-1 text-xs text-ink-muted">
-                    Aligned with <span className="font-semibold text-ink">{state.naturalTranslation.french}</span> in the fluent sentence translation.
-                  </p>
                 </div>
               )}
 
               {contextual && (
                 <div className="rounded-2xl bg-white/75 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Meaning here</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
                     <span className="hidden rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-semibold text-brand">
                       {contextSourceLabel(contextual.source)}
                     </span>
