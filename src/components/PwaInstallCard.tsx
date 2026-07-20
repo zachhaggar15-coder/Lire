@@ -57,7 +57,7 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
     <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Install Lire</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Install Lire</p>
           <p className="mt-1 text-sm text-ink-muted">
             Add Lire to your home screen for quicker reading sessions and offline access.
           </p>

@@ -99,7 +99,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
   if (prompt === "android") {
     return (
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Help shape Lire</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Help shape Lire</h2>
         <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when it opens?</p>
         <div className="mt-3 flex flex-wrap gap-2">
           <AndroidBetaButton source="post_session_prompt" label="Join Android beta" />
@@ -127,7 +127,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
 
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">How was this session?</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">How was this session?</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {["Useful", "Too easy", "Too difficult", "Confusing"].map((option) => (
           <button key={option} type="button" onClick={() => submit("session_reaction", option)} className="rounded-full bg-cream px-3 py-2 text-xs font-semibold text-ink">
@@ -156,7 +156,7 @@ function PromptCard({
 }) {
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {options.map((option) => (
           <button key={option} type="button" onClick={() => onSelect(option)} className="rounded-full bg-cream px-3 py-2 text-xs font-semibold text-ink">

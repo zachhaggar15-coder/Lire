@@ -155,7 +155,7 @@ export function TodaysMissionsPanel({
     <section className={compact ? "mb-5" : ""}>
       <div className="mb-2 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Today&apos;s Missions</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s Missions</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Small goals that reinforce useful reading habits.</p>
         </div>
         {compact && (

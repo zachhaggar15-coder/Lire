@@ -396,7 +396,7 @@ function FilterPanel({
 }) {
   return (
     <details className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-      <summary className="cursor-pointer list-none text-sm font-bold uppercase tracking-wide text-ink-muted">
+      <summary className="cursor-pointer list-none text-sm font-semibold uppercase tracking-wide text-ink-muted">
         {summaryLabel}
       </summary>
       <p className="mt-2 text-xs text-ink-muted">
@@ -475,7 +475,7 @@ function ArticleContent({
       {pathLessons.length > 0 && (
         <section className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
           <div className="px-1">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Lesson path</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Lesson path</h2>
             <p className="mt-0.5 text-xs text-ink-muted">A few short readings, one after another.</p>
           </div>
           <div className="mt-3 space-y-2">
@@ -487,7 +487,7 @@ function ArticleContent({
       )}
       {morePractice.length > 0 && (
         <details className="mb-6">
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
             Practice bank
           </summary>
           <div className="mt-3">
@@ -499,7 +499,7 @@ function ArticleContent({
         <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
       )}
       <details className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
-        <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
+        <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
           Import your own text
         </summary>
         <div className="mt-3 flex items-center justify-between gap-3">
@@ -604,7 +604,7 @@ function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSec
 function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
   return (
     <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words appearing across today&apos;s news</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words appearing across today&apos;s news</h2>
       <p className="mt-0.5 text-xs text-ink-muted">Open examples from different sources before choosing an article.</p>
       <div className="mt-3 space-y-2">
         {words.map((word) => (

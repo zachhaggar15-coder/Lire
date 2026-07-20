@@ -68,7 +68,7 @@ function PhraseList({
 
   return (
     <section>
-      <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <ul className="space-y-3">
         {phrases.map((phrase) => (
           <li key={phrase.phrase} className="rounded-card bg-cream-card p-4 shadow-card">

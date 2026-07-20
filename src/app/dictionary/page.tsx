@@ -61,7 +61,7 @@ export default function DictionaryQualityPage() {
 
       {feedback.length > 0 && (
         <section className="mb-6">
-          <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Saved corrections</h2>
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Saved corrections</h2>
           <ul className="space-y-3">
             {feedback.map((entry) => (
               <li key={entry.id} className="rounded-card bg-cream-card p-4 shadow-card">
@@ -102,7 +102,7 @@ export default function DictionaryQualityPage() {
 
       {missingWords.length > 0 && (
         <section>
-          <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Still missing</h2>
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Still missing</h2>
           <ul className="space-y-3">
             {missingWords.slice(0, 25).map((word) => (
               <li key={word.word} className="rounded-card bg-cream-card p-4 shadow-card">

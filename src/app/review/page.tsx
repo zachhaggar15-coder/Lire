@@ -557,7 +557,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
     <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Vocabulary health</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Vocabulary health</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -585,7 +585,7 @@ function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }
     <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Review in context</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Review in context</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
         </div>
         <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">

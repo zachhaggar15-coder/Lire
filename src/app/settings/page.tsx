@@ -69,7 +69,7 @@ function Toggle({
 function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div>
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
     </div>
   );
@@ -215,7 +215,7 @@ export default function SettingsPage() {
           </div>
 
           <details className="rounded-card bg-cream-card p-4 shadow-card">
-            <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
+            <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
               Display and audio
             </summary>
             <div className="mt-3 space-y-3">
@@ -237,7 +237,7 @@ export default function SettingsPage() {
         </section>
 
         <details className="rounded-card bg-cream-card p-4 shadow-card">
-          <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
+          <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
             Account and app
           </summary>
           <div className="mt-3 space-y-3">
@@ -257,7 +257,7 @@ export default function SettingsPage() {
         </details>
 
         <details>
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
             Advanced and support
           </summary>
           <div className="mt-3 space-y-3">

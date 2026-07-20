@@ -141,7 +141,7 @@ export default function GrammarPage() {
       <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Conjugation path</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Conjugation path</p>
             <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber}</p>
             <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
           </div>
@@ -247,7 +247,7 @@ function LessonDetail({
       </div>
 
       <div className="mt-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Forms to notice</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Forms to notice</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {lesson.endings.map((ending, index) => (
             <span key={`${ending}-${index}`} className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
@@ -258,7 +258,7 @@ function LessonDetail({
       </div>
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-2">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Example</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Example</p>
         <p className="mt-1 text-sm font-semibold text-ink">{lesson.examples[0].french}</p>
         <p className="mt-0.5 text-xs text-ink-muted">{lesson.examples[0].english}</p>
         <p className="mt-1 text-xs font-semibold text-brand">{lesson.examples[0].note}</p>
@@ -284,7 +284,7 @@ function LockedNextCard({ completedLessons, totalLessons }: { completedLessons: 
   const allDone = completedLessons >= totalLessons;
   return (
     <article className="rounded-card border border-dashed border-cream-dark bg-cream/60 p-4">
-      <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">{allDone ? "Path complete" : "Next lesson locked"}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{allDone ? "Path complete" : "Next lesson locked"}</p>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
         {allDone
           ? "You have finished the current verb-conjugation path."
@@ -386,7 +386,7 @@ function ReferencePanel({
   return (
     <div className="space-y-4">
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Conjugation reference</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Conjugation reference</h2>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <label className="block">
             <span className="text-xs font-semibold text-ink-muted">Verb</span>

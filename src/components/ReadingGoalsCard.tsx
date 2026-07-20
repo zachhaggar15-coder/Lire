@@ -53,7 +53,7 @@ export default function ReadingGoalsCard() {
   return (
     <div className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Goals</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Goals</h2>
         <button
           onClick={() => setEditing((v) => !v)}
           className="text-xs font-semibold text-brand underline underline-offset-2"

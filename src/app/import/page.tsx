@@ -52,7 +52,7 @@ export default function ImportPage() {
       </header>
 
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <label className="text-xs font-bold uppercase tracking-wide text-ink-muted" htmlFor="custom-title">
+        <label className="text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="custom-title">
           Title
         </label>
         <input
@@ -65,7 +65,7 @@ export default function ImportPage() {
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Topic</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Topic</p>
             <div className="flex flex-wrap gap-1.5">
               {CATEGORIES.map((item) => (
                 <button
@@ -82,7 +82,7 @@ export default function ImportPage() {
             </div>
           </div>
           <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Level</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Level</p>
             <div className="flex flex-wrap gap-1.5">
               {LEVELS.map((level) => (
                 <button
@@ -100,7 +100,7 @@ export default function ImportPage() {
           </div>
         </div>
 
-        <label className="mt-4 block text-xs font-bold uppercase tracking-wide text-ink-muted" htmlFor="custom-body">
+        <label className="mt-4 block text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="custom-body">
           French text
         </label>
         <textarea
@@ -130,7 +130,7 @@ export default function ImportPage() {
 
       {texts.length > 0 && (
         <section className="mt-6">
-          <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Imported Articles</h2>
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">Imported Articles</h2>
           <div className="space-y-3">
             {texts.map((text) => (
               <article key={text.id} className="rounded-card bg-cream-card p-4 shadow-card">

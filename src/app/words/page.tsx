@@ -268,7 +268,7 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
     <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Phrase mastery</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Phrase mastery</h2>
           <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the whole chunk feels automatic.</p>
         </div>
         <span className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{progress}%</span>
@@ -312,7 +312,7 @@ function PhraseList({
 
   return (
     <section>
-      <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <ul className="space-y-3">
         {phrases.map((phrase) => (
           <li key={phrase.phrase} className="rounded-card bg-cream-card p-4 shadow-card">

@@ -249,7 +249,7 @@ function SourceControlList({
   return (
     <div className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
         <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">{sources.length}</span>
       </div>
       {sources.length === 0 ? (

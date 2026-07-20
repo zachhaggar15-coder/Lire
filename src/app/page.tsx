@@ -202,7 +202,7 @@ function BeginnerHome({
       </section>
 
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
         <div className="mt-3 grid gap-2">
           <BeginnerStep done={completedArticleCount > 0} label="Finish one lesson" />
           <BeginnerStep done={savedLearningItems > 0} label="Save one word or phrase" />
@@ -293,7 +293,7 @@ function DashboardCard({
       <XPProgressBar value={progress} label={`${totalXp.toLocaleString()} XP`} className="mt-3" />
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s plan</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s plan</p>
         <p className="mt-1 text-sm font-semibold text-ink">
           Start a lesson, save what matters, then review anything due.
         </p>

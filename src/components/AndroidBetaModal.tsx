@@ -140,7 +140,7 @@ export default function AndroidBetaModal({
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3">
           <label className="block">
-            <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">Email</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Email</span>
             <input
               type="email"
               required
@@ -153,7 +153,7 @@ export default function AndroidBetaModal({
 
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
-              <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">French level</span>
+              <span className="text-xs font-semibold uppercase tracking-wide text-ink-muted">French level</span>
               <select
                 value={frenchLevel}
                 onChange={(event) => setFrenchLevel(event.target.value)}
@@ -168,7 +168,7 @@ export default function AndroidBetaModal({
               </select>
             </label>
             <label className="block">
-              <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">Use Android?</span>
+              <span className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Use Android?</span>
               <select
                 value={usesAndroid}
                 onChange={(event) => setUsesAndroid(event.target.value as "yes" | "no" | "")}

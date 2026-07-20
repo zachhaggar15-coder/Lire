@@ -35,7 +35,7 @@ export default function ArticleSection({
     <section id={id} className="mb-6 scroll-mt-4">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
           {subtitle && <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>}
         </div>
         {limit && articles.length > limit && (

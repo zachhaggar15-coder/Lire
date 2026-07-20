@@ -116,7 +116,7 @@ export default function ProgressPage() {
           <section className="rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Android beta</h2>
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
                 <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when beta opens?</p>
               </div>
               <AndroidBetaButton source="progress" label="Join" />
@@ -124,7 +124,7 @@ export default function ProgressPage() {
           </section>
 
           <section className="rounded-card bg-cream-card p-4 shadow-card">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {[
                 ["Articles", weeklyArticles],
@@ -161,7 +161,7 @@ export default function ProgressPage() {
           </section>
 
           <section>
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Topic progression</h2>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">Topic progression</h2>
             <div className="space-y-3">
               {snapshot.topicProgress.map((topic) => (
                 <TopicProgressCard key={topic.category} topic={topic} />
@@ -171,7 +171,7 @@ export default function ProgressPage() {
 
           {snapshot.personalBests.length > 0 && (
           <section>
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Personal bests</h2>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">Personal bests</h2>
             <div className="grid grid-cols-2 gap-3">
               {snapshot.personalBests.map((best) => (
                 <PersonalBestCard key={best.id} best={best} />
@@ -187,7 +187,7 @@ export default function ProgressPage() {
           <ReadingGoalsCard />
           <TodaysMissionsPanel missions={snapshot.missions} />
           <section className="rounded-card bg-cream-card p-4 shadow-card">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Streaks</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Streaks</h2>
             <div className="mt-3 rounded-2xl bg-cream px-3 py-3">
               <StreakEmber days={snapshot.currentStreak} label="Current streak" detail={`${snapshot.currentStreak} ${snapshot.currentStreak === 1 ? "day" : "days"} of meaningful activity`} />
             </div>
@@ -202,7 +202,7 @@ export default function ProgressPage() {
       {tab === "vocabulary" && (
         <div className="space-y-5">
           <section>
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Vocabulary collections</h2>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">Vocabulary collections</h2>
             <div className="space-y-3">
               {snapshot.collections.map((collection) => (
                 <CollectionCard key={collection.id} collection={collection} />
@@ -210,7 +210,7 @@ export default function ProgressPage() {
             </div>
           </section>
           <section>
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Mastery progression</h2>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">Mastery progression</h2>
             <div className="space-y-3">
               {snapshot.mastery.slice(0, 20).map((item) => (
                 <article key={item.word.word} className="rounded-card bg-cream-card p-4 shadow-card">
@@ -240,7 +240,7 @@ export default function ProgressPage() {
       {tab === "passport" && (
         <section>
           <div className="mb-3 rounded-card bg-cream-card p-4 shadow-card">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Reading Passport</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Reading Passport</h2>
             <p className="mt-1 text-sm text-ink-muted">A quiet record of topics, levels, sources and independence milestones you have explored.</p>
           </div>
           <div className="grid grid-cols-2 gap-3">

@@ -1675,7 +1675,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         <details className="mt-8 rounded-card bg-cream-card p-4 shadow-card">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
             <div>
-              <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Practice this article</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Practice this article</h2>
               <p className="mt-0.5 text-xs text-ink-muted">
                 Comprehension checks, words worth learning, and a summary box.
               </p>
@@ -1689,7 +1689,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             {showInterpretationChecks && (
               <>
                 <section className="rounded-2xl bg-cream p-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Quick challenge</h3>
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Quick challenge</h3>
                   <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {quickChallenge.choices.map((choice) => {
@@ -1726,7 +1726,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
                 {toneQuestions.length > 0 && (
                 <section className="space-y-3">
-                  <h3 className="px-1 text-sm font-bold uppercase tracking-wide text-ink-muted">Tone check</h3>
+                  <h3 className="px-1 text-sm font-semibold uppercase tracking-wide text-ink-muted">Tone check</h3>
                   {toneQuestions.map((question) => (
                     <ComprehensionQuestion
                       key={question.id}
@@ -1750,7 +1750,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
             {showInterpretationChecks && (
               <div className="rounded-2xl bg-cream p-3">
-                <h3 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Summarise it</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Summarise it</h3>
                 <textarea
                   value={summaryDraft}
                   onChange={(event) => setSummaryDraft(event.target.value)}
@@ -1875,7 +1875,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       {/* "What to read next" belongs after finishing, not among the exercises. */}
       {status === "completed" && !rereadMode && relatedArticles.length > 0 && (
         <details className="mb-5">
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
             {isStarterLesson ? "More lessons" : "More articles"}
           </summary>
           <div className="mt-3">
@@ -1995,7 +1995,7 @@ function RelatedArticles({ articles }: { articles: ReadingText[] }) {
   return (
     <section className="border-t border-cream-dark pt-4">
       <div className="px-1">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Read next</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Read next</h2>
         <p className="mt-0.5 text-xs text-ink-muted">
           More from today&apos;s reading list — a chance to meet some of the same vocabulary again.
         </p>
@@ -2028,7 +2028,7 @@ function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison
   const dramatic = comparison.dramaticChoice === "left" ? comparison.left : comparison.right;
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Compare the headlines</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Compare the headlines</h2>
       <div className="mt-3 grid gap-2">
         {[comparison.left, comparison.right].map((article) => (
           <Link key={article.id} href={`/reader/${article.id}`} className="rounded-2xl bg-cream px-3 py-2 active:bg-cream-dark/60">
@@ -2095,7 +2095,7 @@ function LearningCandidatesSection({
 
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
       <p className="mt-0.5 text-xs text-ink-muted">
         Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
       </p>

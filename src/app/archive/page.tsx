@@ -127,7 +127,7 @@ export default function ArchivePage() {
 
       {summary && (
         <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Last 7 days</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Last 7 days</h2>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center">
             {[
               { label: "Articles", value: summary.weekArticles },
@@ -153,7 +153,7 @@ export default function ArchivePage() {
 
       {weeklyReport && (
         <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">This week</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">This week</h2>
           <div className="mt-3 space-y-2 text-sm text-ink">
             <p>{weeklyReport.articlesCompleted} articles completed</p>
             <p>{weeklyReport.frenchWordsRead.toLocaleString()} French words read</p>
@@ -175,7 +175,7 @@ export default function ArchivePage() {
 
       {categoryProficiency.length > 0 && (
         <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Topic proficiency</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Topic proficiency</h2>
           <div className="mt-3 space-y-2">
             {categoryProficiency.map((item) => (
               <div key={item.category} className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2">

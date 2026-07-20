@@ -51,7 +51,7 @@ export default function ShortSnippetsBlock() {
     <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Short Snippets</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Short Snippets</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Tiny reads from today&apos;s feeds.</p>
         </div>
         <span className="shrink-0 rounded-full bg-cream-dark px-2.5 py-1 text-xs font-bold text-ink-muted">

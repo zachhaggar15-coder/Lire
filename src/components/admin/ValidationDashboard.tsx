@@ -189,7 +189,7 @@ export default function ValidationDashboard() {
       {report && (
         <div className="space-y-6">
           <section>
-            <h2 className="mb-2 text-sm font-bold uppercase tracking-wide text-ink-muted">Overview</h2>
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-muted">Overview</h2>
             <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
               {Object.entries(report.overview).map(([key, value]) => (
                 <Metric key={key} label={label(key)} value={numberLabel(value)} />
@@ -198,7 +198,7 @@ export default function ValidationDashboard() {
           </section>
 
           <section className="rounded-2xl bg-cream-card p-4 shadow-card">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Validation targets</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Validation targets</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-sm">
                 <thead className="text-xs uppercase tracking-wide text-ink-muted">
@@ -250,7 +250,7 @@ export default function ValidationDashboard() {
           </section>
 
           <section className="rounded-2xl bg-cream-card p-4 shadow-card">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Acquisition</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Acquisition</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
                 <thead className="text-xs uppercase tracking-wide text-ink-muted">
@@ -325,7 +325,7 @@ export default function ValidationDashboard() {
               <Distribution title="Research prompts" values={researchResponses} />
               {recentComments.length > 0 && (
                 <div className="mt-4 space-y-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wide text-ink-muted">Recent comments</h3>
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Recent comments</h3>
                   {recentComments.slice(0, 5).map((item, index) => {
                     const row = item as Record<string, unknown>;
                     return (
@@ -364,7 +364,7 @@ function Metric({ label, value, compact = false }: { label: string; value: strin
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="rounded-2xl bg-cream-card p-4 shadow-card">
-      <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       {children}
     </section>
   );
@@ -375,7 +375,7 @@ function Distribution({ title, values }: { title: string; values: Record<string,
   if (entries.length === 0) return null;
   return (
     <div className="mt-4">
-      <h3 className="text-xs font-bold uppercase tracking-wide text-ink-muted">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h3>
       <div className="mt-2 flex flex-wrap gap-2">
         {entries.map(([key, value]) => (
           <span key={key} className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-ink">
