@@ -19,6 +19,18 @@ body {
   overscroll-behavior-y: none;
 }
 
+/*
+ * Headings use the brand face; body copy stays on the system stack. Applied
+ * here rather than per-component so every screen picks it up without 40 files
+ * needing a font-display class, and so the reading surface is untouched.
+ */
+h1,
+h2,
+h3 {
+  font-family: theme("fontFamily.display");
+  letter-spacing: -0.01em;
+}
+
 /* Disable text selection on tappable words so reading feels like an app. */
 .no-select {
   -webkit-user-select: none;

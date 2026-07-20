@@ -18,9 +18,18 @@ import { getValidationState } from "@/lib/validation/state";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 import { getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import { getProgress } from "@/lib/progress";
+import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
 
-type NextLesson = { href: string; title: string; detail: string; sentenceCount: number; level: Difficulty };
+type NextLesson = {
+  id: string;
+  category: string;
+  href: string;
+  title: string;
+  detail: string;
+  sentenceCount: number;
+  level: Difficulty;
+};
 
 export default function HomePage() {
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
@@ -40,6 +49,8 @@ export default function HomePage() {
     const text = bank.find((item) => getProgress(item.id).status !== "completed") ?? bank[0];
     if (!text) return null;
     return {
+      id: text.id,
+      category: text.category,
       href: `/reader/${encodeURIComponent(text.id)}`,
       title: text.title,
       detail: `${text.difficulty} - ${text.minutes} min`,
@@ -77,7 +88,7 @@ export default function HomePage() {
     return (
       <div className="px-4 pt-6">
         <div className="h-10 w-24 animate-pulse rounded-2xl bg-cream-dark" />
-        <div className="mt-5 h-72 animate-pulse rounded-3xl bg-cream-dark" />
+        <div className="mt-5 h-72 animate-pulse rounded-card bg-cream-dark" />
       </div>
     );
   }
@@ -110,7 +121,7 @@ export default function HomePage() {
         </div>
         <Link
           href="/settings"
-          className="rounded-full bg-cream-card px-3 py-2 text-xs font-bold text-ink-muted shadow-sm active:scale-95"
+          className="rounded-full bg-cream-card px-3 py-2 text-xs font-bold text-ink-muted shadow-card active:scale-95"
         >
           {selectedLevel}
         </Link>
@@ -158,11 +169,19 @@ function BeginnerHome({
   const sentenceGoal = nextLesson?.sentenceCount ?? 6;
   return (
     <div className="space-y-4">
-      <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand">Today</p>
-        <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">
-          Read {sentenceGoal} simple French {sentenceGoal === 1 ? "sentence" : "sentences"}.
-        </h2>
+      {/* The primary card carries the scene for the lesson it launches, so
+          the main screen has a focal point instead of opening on a wall of
+          text — and you can see what today's reading is before tapping. */}
+      <section className="rounded-card bg-cream-card p-5 shadow-raised">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wide text-brand">Today</p>
+            <h2 className="mt-1 text-lg font-extrabold leading-tight text-ink">
+              Read {sentenceGoal} simple French {sentenceGoal === 1 ? "sentence" : "sentences"}.
+            </h2>
+          </div>
+          <LessonScene name={sceneFor(nextLesson?.id ?? "", nextLesson?.category)} size={72} />
+        </div>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">
           Lesson {step}: {nextLesson?.title ?? "your next short reading"}
         </p>
@@ -173,7 +192,7 @@ function BeginnerHome({
         </div>
         <Link
           href={nextLesson?.href ?? "/articles"}
-          className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
+          className="mt-5 block rounded-full bg-brand px-5 py-3 shadow-raised text-center text-sm font-bold text-white active:scale-95"
         >
           {completedArticleCount === 0 ? "Start" : "Continue"}
         </Link>
@@ -182,7 +201,7 @@ function BeginnerHome({
         </Link>
       </section>
 
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
         <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
         <div className="mt-3 grid gap-2">
           <BeginnerStep done={completedArticleCount > 0} label="Finish one lesson" />
@@ -192,12 +211,12 @@ function BeginnerHome({
       </section>
 
       <div className="grid grid-cols-2 gap-2">
-        <Link href="/articles" className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-sm active:scale-95">
+        <Link href="/articles" className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-card active:scale-95">
           Lessons
         </Link>
         <Link
           href={dueReviews > 0 ? "/review" : savedPhrases > 0 ? "/phrases" : "/settings"}
-          className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-sm active:scale-95"
+          className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-card active:scale-95"
         >
           {dueReviews > 0 ? "Review words" : savedPhrases > 0 ? "Review phrases" : `${selectedLevel} level`}
         </Link>
@@ -209,7 +228,7 @@ function BeginnerHome({
 function TrustNote({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2 rounded-2xl bg-cream px-3 py-2">
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-light text-[11px] font-bold text-brand">
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-light text-xs font-bold text-brand">
         OK
       </span>
       <span>{label}</span>
@@ -257,7 +276,7 @@ function DashboardCard({
   ];
 
   return (
-    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading level</p>
@@ -290,7 +309,7 @@ function DashboardCard({
           <Link key={item.href} href={item.href} className="min-h-[72px] rounded-2xl bg-cream px-2.5 py-2.5 active:scale-95">
             <div className="flex items-center justify-between gap-2">
               <DashboardIcon kind={item.icon} className="h-5 w-5 text-brand" />
-              <span className="truncate rounded-full bg-cream-dark px-1.5 py-0.5 text-[10px] font-bold text-ink-muted">
+              <span className="truncate rounded-full bg-cream-dark px-1.5 py-0.5 text-xs font-bold text-ink-muted">
                 {item.meta}
               </span>
             </div>
@@ -306,7 +325,7 @@ function Metric({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-xl bg-cream-card px-2 py-2">
       <p className="text-base font-extrabold text-ink">{value.toLocaleString()}</p>
-      <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
     </div>
   );
 }

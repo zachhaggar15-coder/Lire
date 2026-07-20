@@ -138,7 +138,7 @@ export default function ValidationDashboard() {
         )}
       </header>
 
-      <form onSubmit={load} className="mb-5 grid gap-3 rounded-2xl bg-cream-card p-4 shadow-sm md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_auto] md:items-end">
+      <form onSubmit={load} className="mb-5 grid gap-3 rounded-2xl bg-cream-card p-4 shadow-card md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_auto] md:items-end">
         <label className="block">
           <span className="text-xs font-semibold text-ink-muted">Token</span>
           <input
@@ -173,7 +173,7 @@ export default function ValidationDashboard() {
             ))}
           </select>
         </label>
-        <button type="submit" disabled={state === "loading"} className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95 disabled:opacity-50">
+        <button type="submit" disabled={state === "loading"} className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50">
           {state === "loading" ? "Loading" : "Load"}
         </button>
       </form>
@@ -181,7 +181,7 @@ export default function ValidationDashboard() {
       {error && <p className="mb-5 rounded-2xl bg-rose-100 px-4 py-3 text-sm font-semibold text-rose-700">{error}</p>}
 
       {!report && state !== "loading" && (
-        <section className="rounded-2xl bg-cream-card p-5 text-sm text-ink-muted shadow-sm">
+        <section className="rounded-2xl bg-cream-card p-5 text-sm text-ink-muted shadow-card">
           Enter the token from `VALIDATION_ADMIN_TOKEN` to load the current validation report.
         </section>
       )}
@@ -197,7 +197,7 @@ export default function ValidationDashboard() {
             </div>
           </section>
 
-          <section className="rounded-2xl bg-cream-card p-4 shadow-sm">
+          <section className="rounded-2xl bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Validation targets</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-sm">
@@ -249,7 +249,7 @@ export default function ValidationDashboard() {
             </Panel>
           </section>
 
-          <section className="rounded-2xl bg-cream-card p-4 shadow-sm">
+          <section className="rounded-2xl bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Acquisition</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
@@ -354,16 +354,16 @@ export default function ValidationDashboard() {
 
 function Metric({ label, value, compact = false }: { label: string; value: string; compact?: boolean }) {
   return (
-    <div className={`rounded-2xl bg-cream-card shadow-sm ${compact ? "p-3" : "p-4"}`}>
+    <div className={`rounded-2xl bg-cream-card shadow-card ${compact ? "p-3" : "p-4"}`}>
       <p className={`${compact ? "text-lg" : "text-2xl"} font-extrabold text-ink`}>{value}</p>
-      <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
     </div>
   );
 }
 
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="rounded-2xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-2xl bg-cream-card p-4 shadow-card">
       <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
       {children}
     </section>

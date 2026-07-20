@@ -69,8 +69,8 @@ export default function ProgressPage() {
   if (!snapshot) {
     return (
       <div className="px-4 pt-6">
-        <div className="h-32 animate-pulse rounded-3xl bg-cream-dark" />
-        <div className="mt-4 h-48 animate-pulse rounded-3xl bg-cream-dark" />
+        <div className="h-32 animate-pulse rounded-card bg-cream-dark" />
+        <div className="mt-4 h-48 animate-pulse rounded-card bg-cream-dark" />
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function ProgressPage() {
       </header>
 
       {rewardNotice && (
-        <div className="mb-4 rounded-2xl bg-brand-light px-3 py-2 text-sm font-semibold text-brand shadow-sm">
+        <div className="mb-4 rounded-2xl bg-brand-light px-3 py-2 text-sm font-semibold text-brand shadow-card">
           {rewardNotice}
         </div>
       )}
@@ -102,7 +102,7 @@ export default function ProgressPage() {
             type="button"
             onClick={() => setTab(item.id)}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-sm"
+              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
             {item.label}
@@ -113,7 +113,7 @@ export default function ProgressPage() {
       {tab === "overview" && (
         <div className="space-y-5">
           <CurrentLevelCard level={snapshot.level} />
-          <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <section className="rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Android beta</h2>
@@ -123,7 +123,7 @@ export default function ProgressPage() {
             </div>
           </section>
 
-          <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <section className="rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {[
@@ -140,7 +140,7 @@ export default function ProgressPage() {
                   ) : (
                     <>
                       <p className="text-lg font-extrabold text-ink">{value}</p>
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
                     </>
                   )}
                 </div>
@@ -186,7 +186,7 @@ export default function ProgressPage() {
         <div className="space-y-5">
           <ReadingGoalsCard />
           <TodaysMissionsPanel missions={snapshot.missions} />
-          <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <section className="rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Streaks</h2>
             <div className="mt-3 rounded-2xl bg-cream px-3 py-3">
               <StreakEmber days={snapshot.currentStreak} label="Current streak" detail={`${snapshot.currentStreak} ${snapshot.currentStreak === 1 ? "day" : "days"} of meaningful activity`} />
@@ -213,7 +213,7 @@ export default function ProgressPage() {
             <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Mastery progression</h2>
             <div className="space-y-3">
               {snapshot.mastery.slice(0, 20).map((item) => (
-                <article key={item.word.word} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+                <article key={item.word.word} className="rounded-card bg-cream-card p-4 shadow-card">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-bold text-ink">{item.word.lemma ?? item.word.word}</p>
@@ -239,7 +239,7 @@ export default function ProgressPage() {
 
       {tab === "passport" && (
         <section>
-          <div className="mb-3 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="mb-3 rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Reading Passport</h2>
             <p className="mt-1 text-sm text-ink-muted">A quiet record of topics, levels, sources and independence milestones you have explored.</p>
           </div>
@@ -268,7 +268,7 @@ function FirstStepsProgressCard() {
   ];
 
   return (
-    <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
+    <section className="rounded-card bg-cream-card p-5 shadow-card">
       <p className="text-xs font-bold uppercase tracking-wide text-brand">First steps</p>
       <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Your progress will start after one reading session.</h2>
       <div className="mt-4 space-y-2">
@@ -279,7 +279,7 @@ function FirstStepsProgressCard() {
           </div>
         ))}
       </div>
-      <Link href="/articles" className="mt-4 block rounded-full bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white active:scale-95">
+      <Link href="/articles" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95">
         Start reading
       </Link>
     </section>

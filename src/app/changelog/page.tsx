@@ -20,7 +20,7 @@ export default function ChangelogPage() {
 
       <div className="space-y-3">
         {changelogEntries.map((entry) => (
-          <article key={`${entry.date}-${entry.title}`} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <article key={`${entry.date}-${entry.title}`} className="rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold text-ink-muted">{new Date(`${entry.date}T12:00:00`).toLocaleDateString()}</p>

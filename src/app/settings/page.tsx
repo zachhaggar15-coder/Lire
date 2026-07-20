@@ -43,7 +43,7 @@ function Toggle({
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 text-left shadow-sm active:scale-[0.99]"
+      className="flex w-full items-center justify-between gap-4 rounded-card bg-cream-card p-4 text-left shadow-card active:scale-[0.99]"
       aria-pressed={checked}
     >
       <div className="min-w-0">
@@ -79,7 +79,7 @@ function SettingsLink({ href, title, description }: { href: string; title: strin
   return (
     <Link
       href={href}
-      className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm active:scale-[0.99]"
+      className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card active:scale-[0.99]"
     >
       <div className="min-w-0">
         <p className="font-semibold text-ink">{title}</p>
@@ -143,8 +143,8 @@ export default function SettingsPage() {
         <h1 className="text-2xl font-extrabold text-ink">Profile</h1>
         <p className="text-sm text-ink-muted">Level, reading help, saved words, and privacy.</p>
         <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
-          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">Your lesson progress is stored locally on this device.</p>
-          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">AI help is optional and clearly labelled when used.</p>
+          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">Your lesson progress is stored locally on this device.</p>
+          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">AI help is optional and clearly labelled when used.</p>
         </div>
       </header>
 
@@ -152,7 +152,7 @@ export default function SettingsPage() {
         <section className="space-y-3">
           <SettingsSectionTitle title="Reading" subtitle="Level, text size, and English help." />
 
-          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="rounded-card bg-cream-card p-4 shadow-card">
             <p className="font-semibold text-ink">Reading level</p>
             <p className="mt-0.5 text-sm text-ink-muted">Choose the starter bank that feels closest right now.</p>
             <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -172,7 +172,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="rounded-card bg-cream-card p-4 shadow-card">
             <p className="font-semibold text-ink">Font size</p>
             <div className="mt-3 grid grid-cols-3 gap-2">
               {FONT_SIZE_OPTIONS.map((opt) => (
@@ -191,7 +191,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="rounded-card bg-cream-card p-4 shadow-card">
             <p className="font-semibold text-ink">English help</p>
             <p className="mt-0.5 text-sm text-ink-muted">Natural is best for beginners. Literal is for word-by-word checking.</p>
             <div className="mt-3 space-y-2">
@@ -214,7 +214,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <details className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <details className="rounded-card bg-cream-card p-4 shadow-card">
             <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
               Display and audio
             </summary>
@@ -236,14 +236,14 @@ export default function SettingsPage() {
           </details>
         </section>
 
-        <details className="rounded-3xl bg-cream-card p-4 shadow-sm">
+        <details className="rounded-card bg-cream-card p-4 shadow-card">
           <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
             Account and app
           </summary>
           <div className="mt-3 space-y-3">
             <BetaNotice />
             <AccountCard />
-            <div className="rounded-3xl bg-cream p-4">
+            <div className="rounded-card bg-cream p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-ink">Get Lire on Android</p>
@@ -257,7 +257,7 @@ export default function SettingsPage() {
         </details>
 
         <details>
-          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
             Advanced and support
           </summary>
           <div className="mt-3 space-y-3">
@@ -268,12 +268,12 @@ export default function SettingsPage() {
               description="Load one cached natural translation when you open a reading."
             />
 
-            <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="rounded-card bg-cream-card p-4 shadow-card">
               <p className="font-semibold text-ink">AI explanations</p>
               <p className="mt-0.5 text-sm text-ink-muted">Word and sentence AI help runs only when you ask for it.</p>
             </div>
 
-            <div className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card">
               <div className="min-w-0">
                 <p className="font-semibold text-ink">Known words</p>
                 <p className="mt-0.5 text-sm text-ink-muted">
@@ -291,7 +291,7 @@ export default function SettingsPage() {
               )}
             </div>
 
-            <div className="flex items-center justify-between gap-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card">
               <div className="min-w-0">
                 <p className="font-semibold text-ink">Offline articles</p>
                 <p className="mt-0.5 text-sm text-ink-muted">
@@ -316,7 +316,7 @@ export default function SettingsPage() {
             <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Lire." />
             <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
 
-            <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+            <div className="rounded-card bg-cream-card p-4 shadow-card">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="font-semibold text-ink">Feedback</p>

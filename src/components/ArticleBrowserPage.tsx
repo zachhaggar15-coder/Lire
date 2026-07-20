@@ -30,6 +30,7 @@ import {
   subscribeToRecommendationPreferences,
 } from "@/lib/recommendation/preferences";
 import { trackEvent } from "@/lib/analytics/client";
+import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 
 type Mode = "articles" | "live";
@@ -320,10 +321,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => void }) {
   return (
     <div className="space-y-3">
-      <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
-      <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
+      <div className="h-28 animate-pulse rounded-card bg-cream-dark" />
+      <div className="h-28 animate-pulse rounded-card bg-cream-dark" />
       {slow && (
-        <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">
+        <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">
           <p className="text-sm font-semibold text-ink">Still fetching fresh articles.</p>
           <div className="mt-2 flex items-center justify-between gap-3">
             <p className="text-xs text-ink-muted">RSS sources can be slow during a refresh.</p>
@@ -339,9 +340,9 @@ function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => 
 
 function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+    <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
       <p className="text-sm font-bold text-ink">{message}</p>
-      <button type="button" onClick={onRetry} className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+      <button type="button" onClick={onRetry} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
         Retry
       </button>
     </div>
@@ -350,14 +351,14 @@ function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => v
 
 function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
   return (
-    <section className="rounded-3xl bg-cream-card p-5 shadow-sm">
+    <section className="rounded-card bg-cream-card p-5 shadow-card">
       <p className="text-xs font-bold uppercase tracking-wide text-brand">Stretch area</p>
       <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Live news is harder than the starter articles.</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">
         Start with a few short readings first, then come back when tapping words feels comfortable.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
           Start with lessons
         </Link>
         <button
@@ -394,7 +395,7 @@ function FilterPanel({
   onReset: () => void;
 }) {
   return (
-    <details className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <details className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <summary className="cursor-pointer list-none text-sm font-bold uppercase tracking-wide text-ink-muted">
         {summaryLabel}
       </summary>
@@ -426,7 +427,7 @@ function FilterRow<T extends string>({
 }) {
   return (
     <div className="mt-3">
-      <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">{title}</p>
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</p>
       <div className="flex flex-wrap gap-1">
         {items.map((item) => (
           <button
@@ -472,7 +473,7 @@ function ArticleContent({
     <>
       {featured && <FeaturedLessonCard article={featured} lessonNumber={1} level={level} />}
       {pathLessons.length > 0 && (
-        <section className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <section className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
           <div className="px-1">
             <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Lesson path</h2>
             <p className="mt-0.5 text-xs text-ink-muted">A few short readings, one after another.</p>
@@ -486,7 +487,7 @@ function ArticleContent({
       )}
       {morePractice.length > 0 && (
         <details className="mb-6">
-          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
             Practice bank
           </summary>
           <div className="mt-3">
@@ -497,13 +498,13 @@ function ArticleContent({
       {customArticles.length > 0 && (
         <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
       )}
-      <details className="mb-6 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <details className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
         <summary className="cursor-pointer text-sm font-bold uppercase tracking-wide text-ink-muted">
           Import your own text
         </summary>
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
-          <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
             Import
           </Link>
         </div>
@@ -518,7 +519,7 @@ function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredA
   const progress = getProgress(text.id).status;
   const action = progress === "completed" ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
   return (
-    <section className="mb-5 rounded-3xl bg-cream-card p-5 shadow-sm">
+    <section className="mb-5 rounded-card bg-cream-card p-5 shadow-card">
       <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber}</p>
       <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">{text.title}</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">
@@ -537,7 +538,7 @@ function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredA
       </div>
       <Link
         href={`/reader/${encodeURIComponent(text.id)}`}
-        className="mt-5 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white active:scale-95"
+        className="mt-5 block rounded-full bg-brand px-5 py-3 shadow-raised text-center text-sm font-bold text-white active:scale-95"
       >
         {action}
       </Link>
@@ -556,8 +557,17 @@ function LessonPathItem({ article, lessonNumber }: { article: ScoredArticle; les
       href={`/reader/${encodeURIComponent(text.id)}`}
       className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-3 active:scale-[0.99]"
     >
-      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-extrabold ${completed ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
-        {completed ? "OK" : lessonNumber}
+      {/* Scene first, then the step number as a small badge over it: the list
+          is scannable by picture, while the numbered path stays legible. */}
+      <span className="relative shrink-0">
+        <LessonScene name={sceneFor(text.id, text.category)} size={44} />
+        <span
+          className={`absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs font-extrabold ring-2 ring-cream ${
+            completed ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+          }`}
+        >
+          {completed ? "✓" : lessonNumber}
+        </span>
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-bold text-ink">{text.title}</span>
@@ -575,7 +585,7 @@ function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSec
 
   if (!hasLiveContent) {
     return (
-      <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+      <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
         <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
         <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
       </div>
@@ -593,7 +603,7 @@ function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSec
 
 function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
   return (
-    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words appearing across today&apos;s news</h2>
       <p className="mt-0.5 text-xs text-ink-muted">Open examples from different sources before choosing an article.</p>
       <div className="mt-3 space-y-2">
@@ -612,7 +622,7 @@ function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
               {word.examples.map((example) => (
                 <Link key={`${word.lemma}-${example.articleId}`} href={`/reader/${example.articleId}`} className="block rounded-xl bg-cream-card px-3 py-2 active:bg-cream-dark/60">
                   <p className="text-xs font-semibold text-ink">{example.title}</p>
-                  <p className="mt-0.5 text-[11px] text-ink-muted">{example.sourceName ?? "Saved text"}</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">{example.sourceName ?? "Saved text"}</p>
                   <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">{example.sentence}</p>
                 </Link>
               ))}

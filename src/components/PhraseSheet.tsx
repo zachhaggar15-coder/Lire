@@ -161,7 +161,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
 
         {state?.contextSentence && (
           <div className="mt-4 rounded-2xl bg-white/70 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Article context</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Article context</p>
             <p className="mt-1 text-sm italic text-ink">"{state.contextSentence}"</p>
           </div>
         )}
@@ -202,7 +202,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
                 type="button"
                 onClick={handleSaveCorrection}
                 disabled={!correction.trim()}
-                className="mt-2 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
+                className="mt-2 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-40"
               >
                 Save correction
               </button>
@@ -218,7 +218,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
                   type="button"
                   onClick={handleAskAi}
                   disabled={!state || aiState === "loading"}
-                  className="shrink-0 rounded-full bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
+                  className="shrink-0 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-50"
                 >
                   {aiState === "loading" ? "Asking..." : "Ask AI"}
                 </button>

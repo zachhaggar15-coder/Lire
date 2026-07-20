@@ -90,7 +90,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
 
   if (submitted) {
     return (
-      <div className="rounded-3xl bg-brand-light p-4 text-sm font-semibold text-brand shadow-sm">
+      <div className="rounded-card bg-brand-light p-4 text-sm font-semibold text-brand shadow-card">
         Thanks. That helps shape Lire.
       </div>
     );
@@ -98,7 +98,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
 
   if (prompt === "android") {
     return (
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
         <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Help shape Lire</h2>
         <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when it opens?</p>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -126,7 +126,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
   }
 
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">How was this session?</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {["Useful", "Too easy", "Too difficult", "Confusing"].map((option) => (
@@ -155,7 +155,7 @@ function PromptCard({
   onDismiss: () => void;
 }) {
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {options.map((option) => (

@@ -65,7 +65,7 @@ export default function AccountCard() {
     : null;
 
   return (
-    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="rounded-card bg-cream-card p-4 shadow-card">
       <p className="font-semibold text-ink">Sync across devices</p>
 
       {userEmail ? (
@@ -83,7 +83,7 @@ export default function AccountCard() {
             <button
               onClick={handleSyncNow}
               disabled={syncStatus.phase === "syncing"}
-              className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+              className="rounded-full bg-brand px-3 py-1.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
             >
               {syncStatus.phase === "syncing" ? "Syncing..." : "Sync now"}
             </button>

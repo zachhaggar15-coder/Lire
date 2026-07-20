@@ -43,7 +43,7 @@ export default function ReadingGoalsCard() {
     return (
       <button
         onClick={() => setEditing(true)}
-        className="mb-5 w-full rounded-3xl border border-dashed border-cream-dark bg-cream-card p-4 text-left text-sm text-ink-muted shadow-sm"
+        className="mb-5 w-full rounded-card border border-dashed border-cream-dark bg-cream-card p-4 text-left text-sm text-ink-muted shadow-card"
       >
         Set a reading goal →
       </button>
@@ -51,7 +51,7 @@ export default function ReadingGoalsCard() {
   }
 
   return (
-    <div className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Goals</h2>
         <button
@@ -70,7 +70,7 @@ export default function ReadingGoalsCard() {
             </div>
             <div className="rounded-2xl bg-cream px-3 py-2">
               <p className="text-lg font-extrabold text-ink">{streak.longest}</p>
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Best streak</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Best streak</p>
             </div>
           </div>
           {rows.map((row) => {

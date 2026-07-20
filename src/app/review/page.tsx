@@ -259,9 +259,9 @@ export default function ReviewPage() {
         { label: "Not due yet", value: stats.notDueYet },
         { label: "Total", value: stats.totalLearning },
       ].map((s) => (
-        <div key={s.label} className="rounded-2xl bg-cream-card p-2.5 text-center shadow-sm">
+        <div key={s.label} className="rounded-2xl bg-cream-card p-2.5 text-center shadow-card">
           <p className="text-lg font-extrabold text-ink">{s.value}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{s.label}</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{s.label}</p>
         </div>
       ))}
     </div>
@@ -295,7 +295,7 @@ export default function ReviewPage() {
           </p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Start reading
           </Link>
@@ -335,7 +335,7 @@ export default function ReviewPage() {
           </p>
           <button
             onClick={restart}
-            className="mt-5 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
+            className="mt-5 rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Check for more
           </button>
@@ -357,7 +357,7 @@ export default function ReviewPage() {
       </header>
 
       {xpNotice && (
-        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand shadow-sm">
+        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand shadow-card">
           {xpNotice}
         </div>
       )}
@@ -396,7 +396,7 @@ export default function ReviewPage() {
         <div ref={reviewCardRef} className="flex flex-1 flex-col">
           {/* Flashcard */}
           <div
-            className={`flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-3xl bg-cream-card p-5 text-center shadow-sm ${
+            className={`flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-card bg-cream-card p-5 text-center shadow-card ${
               revealed ? "justify-start" : "justify-center"
             } ${
               cardFeedback === "correct" || cardFeedback === "known"
@@ -440,7 +440,7 @@ export default function ReviewPage() {
 
                 {shouldShowReviewExample(current) && (
                   <div className="mt-4 rounded-2xl bg-cream p-3 text-left">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                       Example
                     </p>
                     <p className="mt-1 text-sm italic text-ink">{current.exampleSentenceFr}</p>
@@ -458,7 +458,7 @@ export default function ReviewPage() {
             ) : (
               <button
                 onClick={() => setRevealed(true)}
-                className="mt-6 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
+                className="mt-6 rounded-full bg-brand px-5 py-3 shadow-raised text-sm font-semibold text-white active:scale-95"
               >
                 Show meaning
               </button>
@@ -471,7 +471,7 @@ export default function ReviewPage() {
             className="fixed inset-x-0 z-30 mx-auto max-w-md px-4"
             style={{ bottom: "calc(5.25rem + var(--safe-bottom))" }}
           >
-            <div className="rounded-3xl bg-cream/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
+            <div className="rounded-card bg-cream/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => answer("incorrect")}
@@ -527,7 +527,7 @@ function StartReviewButton({ onStart }: { onStart: () => void }) {
       <button
         type="button"
         onClick={onStart}
-        className="w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-sm active:scale-95"
+        className="w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-card active:scale-95"
       >
         Start Review
       </button>
@@ -556,13 +556,13 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   );
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
-    <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Vocabulary health</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
             <p className="text-lg font-extrabold">{counts[state]}</p>
-            <p className="text-[10px] font-semibold uppercase tracking-wide">{STATE_LABELS[state]}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide">{STATE_LABELS[state]}</p>
           </div>
         ))}
       </div>
@@ -582,7 +582,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
 
 function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }) {
   return (
-    <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Review in context</h2>
@@ -624,7 +624,7 @@ function PhraseModeSwitch({
   phraseCount: number;
 }) {
   return (
-    <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-card p-1 shadow-sm">
+    <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-card p-1 shadow-card">
       <button
         type="button"
         onClick={() => onChange("words")}
@@ -660,7 +660,7 @@ function PhraseReviewCard({
 }) {
   if (!phrase) {
     return (
-      <div className="mt-8 rounded-3xl bg-cream-card p-6 text-center shadow-sm">
+      <div className="mt-8 rounded-card bg-cream-card p-6 text-center shadow-card">
         <p className="text-sm font-semibold text-ink">No phrase cards due.</p>
         <p className="mt-1 text-xs text-ink-muted">Saved phrases you are still learning will appear here.</p>
       </div>
@@ -671,7 +671,7 @@ function PhraseReviewCard({
   const correct = selected === phrase.phrase;
   return (
     <div className="flex flex-1 flex-col">
-      <div className="rounded-3xl bg-cream-card p-5 shadow-sm">
+      <div className="rounded-card bg-cream-card p-5 shadow-card">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Phrase in context</p>
         <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{cloze}</p>
         <div className="mt-4 space-y-2">
@@ -698,15 +698,15 @@ function PhraseReviewCard({
               {correct ? "Correct." : "Not quite."} {phrase.phrase} = {phrase.translation}
             </p>
             <div className="rounded-2xl bg-cream p-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
               <p className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
             </div>
             <div className="rounded-2xl bg-cream p-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Natural translation</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Natural translation</p>
               <p className="mt-1 text-sm text-ink">{phrase.translation}</p>
             </div>
             <div className="rounded-2xl bg-cream p-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">New example</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">New example</p>
               <p className="mt-1 text-sm italic text-ink">On peut {phrase.phrase} cette idée dans un autre article.</p>
               <p className="mt-0.5 text-sm text-ink-muted">You can use this phrase with the same idea in another article.</p>
             </div>
@@ -716,7 +716,7 @@ function PhraseReviewCard({
             <button
               type="button"
               onClick={onNext}
-              className="w-full rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
+              className="w-full rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
             >
               Next phrase
             </button>

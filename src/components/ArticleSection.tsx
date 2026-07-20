@@ -1,4 +1,5 @@
 import ReadingCard from "@/components/ReadingCard";
+import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { formatCategory } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
@@ -81,25 +82,32 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
   return (
     <a
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className={`block min-w-0 rounded-2xl border border-cream-dark bg-cream-card p-3 shadow-sm active:scale-[0.99] ${
+      className={`block min-w-0 rounded-card border border-cream-dark bg-cream-card p-3 shadow-card transition-shadow active:scale-[0.99] active:shadow-raised ${
         rail ? "w-64 shrink-0" : ""
       }`}
     >
-      <div className="mb-2 flex flex-wrap items-center gap-1.5">
-        <span className="rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-bold text-brand">
-          {text.difficulty}
-        </span>
-        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold capitalize text-ink-muted">
-          {formatCategory(text.category)}
-        </span>
-        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
-          {text.minutes} min
-        </span>
+      {/* The scene gives the list something to scan by: at a glance you can
+          tell the market lesson from the train one without reading titles. */}
+      <div className="flex min-w-0 items-start gap-3">
+        <LessonScene name={sceneFor(text.id, text.category)} size={52} />
+        <div className="min-w-0 flex-1">
+          <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
+            <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
+              {text.difficulty}
+            </span>
+            <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold capitalize text-ink-muted">
+              {formatCategory(text.category)}
+            </span>
+            <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
+              {text.minutes} min
+            </span>
+          </div>
+          <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
+        </div>
       </div>
-      <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
-      <p className="mt-1 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
+      <p className="mt-2 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
       <div className="mt-2 flex items-center justify-between gap-2">
-        {sourceLabel && <p className="truncate text-[11px] font-semibold text-ink-muted">{sourceLabel}</p>}
+        {sourceLabel && <p className="truncate text-xs font-semibold text-ink-muted">{sourceLabel}</p>}
         <span className="shrink-0 text-xs font-bold text-brand">Start</span>
       </div>
     </a>

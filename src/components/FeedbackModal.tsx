@@ -166,7 +166,7 @@ export default function FeedbackModal({
         <button
           type="submit"
           disabled={state === "submitting"}
-          className="mt-3 w-full rounded-full bg-brand px-4 py-3 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
         >
           {state === "submitting" ? "Sending..." : "Submit feedback"}
         </button>

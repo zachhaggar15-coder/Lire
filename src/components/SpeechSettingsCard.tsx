@@ -39,7 +39,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
   if (!available) return null;
 
   return (
-    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="font-semibold text-ink">Reading aloud</p>
@@ -48,7 +48,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
         <button
           type="button"
           onClick={() => speakFrench(PREVIEW_TEXT)}
-          className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold text-white active:scale-95"
+          className="shrink-0 rounded-full bg-brand px-3 py-1.5 shadow-raised text-xs font-semibold text-white active:scale-95"
         >
           Preview
         </button>
@@ -56,7 +56,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
 
       {voices.length > 0 && (
         <div className="mt-3">
-          <label className="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Voice</label>
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">Voice</label>
           <select
             value={settings.speechVoiceURI ?? ""}
             onChange={(e) => onChange({ speechVoiceURI: e.target.value || null })}
@@ -73,7 +73,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
       )}
 
       <div className="mt-3">
-        <label className="mb-1 flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
+        <label className="mb-1 flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-ink-muted">
           <span>Speed</span>
           <span>{settings.speechRate.toFixed(2)}x</span>
         </label>
@@ -87,7 +87,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
           className="w-full accent-brand"
           aria-label="Speech speed"
         />
-        <div className="mt-0.5 flex justify-between text-[11px] text-ink-muted">
+        <div className="mt-0.5 flex justify-between text-xs text-ink-muted">
           <span>Slower</span>
           <span>Faster</span>
         </div>

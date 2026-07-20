@@ -172,7 +172,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
                 </dl>
                 {aiResult.structure.subordinateClauses.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Subordinate clauses</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-brand">Subordinate clauses</p>
                     <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-ink">
                       {aiResult.structure.subordinateClauses.map((clause) => (
                         <li key={clause}>{clause}</li>
@@ -182,7 +182,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
                 )}
                 {aiResult.structure.pronounReferences.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Pronoun references</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-brand">Pronoun references</p>
                     <ul className="mt-1 space-y-1 text-sm text-ink">
                       {aiResult.structure.pronounReferences.map((reference) => (
                         <li key={`${reference.pronoun}-${reference.refersTo}`}>

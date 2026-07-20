@@ -51,7 +51,7 @@ export default function ImportPage() {
         <p className="text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
       </header>
 
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
         <label className="text-xs font-bold uppercase tracking-wide text-ink-muted" htmlFor="custom-title">
           Title
         </label>
@@ -121,7 +121,7 @@ export default function ImportPage() {
             type="button"
             onClick={handleSave}
             disabled={!canSave}
-            className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95 disabled:bg-cream-dark disabled:text-ink-muted"
+            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:bg-cream-dark disabled:text-ink-muted"
           >
             Save and read
           </button>
@@ -133,7 +133,7 @@ export default function ImportPage() {
           <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Imported Articles</h2>
           <div className="space-y-3">
             {texts.map((text) => (
-              <article key={text.id} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+              <article key={text.id} className="rounded-card bg-cream-card p-4 shadow-card">
                 <div className="flex items-start justify-between gap-3">
                   <Link href={`/reader/${text.id}`} className="min-w-0 flex-1 active:opacity-80">
                     <p className="font-bold leading-snug text-ink">{text.title}</p>

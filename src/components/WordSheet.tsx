@@ -287,7 +287,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
                   </span>
                 )}
                 {lookup?.cefr && (
-                  <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white">
+                  <span className="rounded-full bg-brand px-2 py-0.5 shadow-raised text-xs font-semibold text-white">
                     {lookup.cefr}
                   </span>
                 )}
@@ -319,7 +319,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {isProperNoun && (
           <div className="mt-3 rounded-2xl bg-white/70 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Proper noun protected</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Proper noun protected</p>
             <p className="mt-1 text-sm text-ink-muted">
               This looks like a person, place, organisation, or acronym, so Lire does not add it to your vocabulary cards unless it has wider language value.
             </p>
@@ -328,7 +328,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {inferenceChallenge && (
           <div className="mt-4 rounded-2xl bg-white/70 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Can you infer it first?</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Can you infer it first?</p>
             <p className="mt-1 text-sm text-ink-muted">Try the context before leaning on the direct definition.</p>
             <div className="mt-3 space-y-2">
               {inferenceChallenge.choices.map((choice, index) => {
@@ -397,8 +397,8 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               {state?.naturalTranslation && (
                 <div className="rounded-2xl bg-brand-light/80 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Meaning</p>
-                    <span className="hidden rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-semibold text-brand">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning</p>
+                    <span className="hidden rounded-full bg-white/70 px-2 py-0.5 text-xs font-semibold text-brand">
                       AI aligned
                     </span>
                   </div>
@@ -409,11 +409,11 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               {contextual && (
                 <div className="rounded-2xl bg-white/75 p-3">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
-                    <span className="hidden rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-semibold text-brand">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
+                    <span className="hidden rounded-full bg-brand-light px-2 py-0.5 text-xs font-semibold text-brand">
                       {contextSourceLabel(contextual.source)}
                     </span>
-                    <span className="hidden rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-accent-pinktext">
+                    <span className="hidden rounded-full bg-white px-2 py-0.5 text-xs font-semibold text-accent-pinktext">
                       {confidenceLabel(contextual.confidence)}
                     </span>
                   </div>
@@ -462,7 +462,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {definitionRevealed && firstExample && !isProperNoun && (
           <div className="mt-3 rounded-2xl bg-white/70 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">Example</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Example</p>
             <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
             <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
           </div>
@@ -511,7 +511,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {state?.contextSentence && (
           <div className="rounded-2xl bg-white/60 p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
               Original article context
             </p>
             <p className="mt-1 text-sm italic text-ink">“{state.contextSentence}”</p>
@@ -520,7 +520,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {state?.pronounReference && (
           <div className="rounded-2xl bg-brand-light p-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">
+            <p className="text-xs font-semibold uppercase tracking-wide text-brand">
               Reference tracking
             </p>
             <p className="mt-1 text-sm text-ink">
@@ -533,7 +533,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
 
         {wordFamily && hasWordFamily && (
           <details className="rounded-2xl bg-white/60 p-3">
-            <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
+            <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
               Word family
             </summary>
             <div className="mt-2 flex items-start justify-between gap-3">
@@ -543,7 +543,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
                 </p>
               </div>
               {lookup?.lemma && (
-                <span className="shrink-0 rounded-full bg-brand-light px-2 py-1 text-[11px] font-semibold text-brand">
+                <span className="shrink-0 rounded-full bg-brand-light px-2 py-1 text-xs font-semibold text-brand">
                   {lookup.lemma}
                 </span>
               )}
@@ -559,7 +559,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         )}
 
         <details className="rounded-2xl bg-white/60 p-3">
-          <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">
+          <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
             Improve dictionary
           </summary>
           <div className="mt-2 flex gap-2">
@@ -669,7 +669,7 @@ function WordFamilyRow({ label, values }: { label: string; values: string[] }) {
   if (values.length === 0) return null;
   return (
     <div className="mt-3">
-      <p className="text-[11px] font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
       <div className="mt-1 grid gap-1.5">
         {values.map((value) => {
           const lookup = getWordFamilyMeaning(value);

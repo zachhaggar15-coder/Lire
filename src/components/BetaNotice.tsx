@@ -6,7 +6,7 @@ import { VALIDATION_FEATURES } from "@/lib/validation/config";
 export default function BetaNotice() {
   if (!VALIDATION_FEATURES.betaBannerEnabled) return null;
   return (
-    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">Active beta</p>

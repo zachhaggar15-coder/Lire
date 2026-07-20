@@ -126,7 +126,7 @@ export default function ArchivePage() {
       </header>
 
       {summary && (
-        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Last 7 days</h2>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center">
             {[
@@ -139,7 +139,7 @@ export default function ArchivePage() {
             ].map((stat) => (
               <div key={stat.label} className="rounded-2xl bg-cream p-2.5">
                 <p className="text-lg font-extrabold text-ink">{stat.value}</p>
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">{stat.label}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -152,7 +152,7 @@ export default function ArchivePage() {
       )}
 
       {weeklyReport && (
-        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">This week</h2>
           <div className="mt-3 space-y-2 text-sm text-ink">
             <p>{weeklyReport.articlesCompleted} articles completed</p>
@@ -174,7 +174,7 @@ export default function ArchivePage() {
       )}
 
       {categoryProficiency.length > 0 && (
-        <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Topic proficiency</h2>
           <div className="mt-3 space-y-2">
             {categoryProficiency.map((item) => (
@@ -195,7 +195,7 @@ export default function ArchivePage() {
           <p className="text-ink-muted">No completed articles yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Start reading
           </Link>
@@ -210,7 +210,7 @@ export default function ArchivePage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by title or source…"
-              className="w-full rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink shadow-sm"
+              className="w-full rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink shadow-card"
             />
             <div className="flex flex-wrap gap-1.5">
               {SORT_OPTIONS.map((opt) => (
@@ -232,7 +232,7 @@ export default function ArchivePage() {
           ) : (
             <ul className="space-y-3">
               {visible.map(({ entry, wordsSaved, minutesSpent }) => (
-                <li key={entry.textId} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+                <li key={entry.textId} className="rounded-card bg-cream-card p-4 shadow-card">
                   <p className="font-bold leading-snug text-ink">{entry.title}</p>
                   <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-muted">
                     {entry.sourceName && (

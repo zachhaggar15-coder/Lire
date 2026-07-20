@@ -138,14 +138,14 @@ export default function GrammarPage() {
       </header>
 
       {tab !== "practice" && (
-      <section className="mb-4 rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Conjugation path</p>
             <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber}</p>
             <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
           </div>
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-brand text-lg font-extrabold text-white">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-lg font-extrabold text-white">
             {currentProgress.mastery}%
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function GrammarPage() {
             type="button"
             onClick={() => setTab(item.id)}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-sm"
+              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
             {item.label}
@@ -231,7 +231,7 @@ function LessonDetail({
   onPractice: () => void;
 }) {
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber} - {lesson.level}</p>
@@ -261,7 +261,7 @@ function LessonDetail({
         <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Example</p>
         <p className="mt-1 text-sm font-semibold text-ink">{lesson.examples[0].french}</p>
         <p className="mt-0.5 text-xs text-ink-muted">{lesson.examples[0].english}</p>
-        <p className="mt-1 text-[11px] font-semibold text-brand">{lesson.examples[0].note}</p>
+        <p className="mt-1 text-xs font-semibold text-brand">{lesson.examples[0].note}</p>
       </div>
 
       <div className="mt-4 rounded-2xl bg-amber-100/70 px-3 py-2">
@@ -272,7 +272,7 @@ function LessonDetail({
       <ProgressBar value={progress.mastery} label="Mastery" />
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
           Start 5-question quiz
         </button>
       </div>
@@ -283,7 +283,7 @@ function LessonDetail({
 function LockedNextCard({ completedLessons, totalLessons }: { completedLessons: number; totalLessons: number }) {
   const allDone = completedLessons >= totalLessons;
   return (
-    <article className="rounded-3xl border border-dashed border-cream-dark bg-cream/60 p-4">
+    <article className="rounded-card border border-dashed border-cream-dark bg-cream/60 p-4">
       <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">{allDone ? "Path complete" : "Next lesson locked"}</p>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
         {allDone
@@ -318,7 +318,7 @@ function PracticeCard({
   const answered = selectedAnswer !== null;
   const selectedCorrect = selectedAnswer ? isGrammarAnswerCorrect(question, selectedAnswer) : false;
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">{lesson.shortTitle}</p>
@@ -361,7 +361,7 @@ function PracticeCard({
             {selectedCorrect ? "Correct" : "Not quite"}
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">{question.explanation}</p>
-          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
             Next question
           </button>
         </div>
@@ -385,7 +385,7 @@ function ReferencePanel({
 }) {
   return (
     <div className="space-y-4">
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
         <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Conjugation reference</h2>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <label className="block">
@@ -411,7 +411,7 @@ function ReferencePanel({
         </div>
       </section>
 
-      <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">{reference.group}</p>

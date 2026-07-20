@@ -43,9 +43,9 @@ export default function DictionaryQualityPage() {
 
       <section className="mb-5 grid grid-cols-3 gap-2">
         {stats.map((stat) => (
-          <div key={stat.label} className="rounded-2xl bg-cream-card p-3 text-center shadow-sm">
+          <div key={stat.label} className="rounded-2xl bg-cream-card p-3 text-center shadow-card">
             <p className="text-lg font-extrabold text-ink">{stat.value}</p>
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">{stat.label}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{stat.label}</p>
           </div>
         ))}
       </section>
@@ -53,7 +53,7 @@ export default function DictionaryQualityPage() {
       {ready && feedback.length === 0 && missingWords.length === 0 && (
         <div className="mt-12 text-center">
           <p className="text-ink-muted">No dictionary issues recorded yet.</p>
-          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95">
+          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
             Start reading
           </Link>
         </div>
@@ -64,12 +64,12 @@ export default function DictionaryQualityPage() {
           <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Saved corrections</h2>
           <ul className="space-y-3">
             {feedback.map((entry) => (
-              <li key={entry.id} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+              <li key={entry.id} className="rounded-card bg-cream-card p-4 shadow-card">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-baseline gap-2">
                       <p className="text-lg font-bold text-ink">{entry.input}</p>
-                      <span className="rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-semibold text-brand">{entry.type}</span>
+                      <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs font-semibold text-brand">{entry.type}</span>
                     </div>
                     <p className="text-sm text-ink-muted">{entry.suggestedTranslation}</p>
                     {entry.previousTranslation && (
@@ -78,7 +78,7 @@ export default function DictionaryQualityPage() {
                     {entry.contextSentence && (
                       <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">"{entry.contextSentence}"</p>
                     )}
-                    <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-ink-muted">
+                    <div className="mt-2 flex flex-wrap gap-2 text-xs text-ink-muted">
                       {entry.articleTitle && <span className="rounded-full bg-cream-dark px-2 py-0.5">{entry.articleTitle}</span>}
                       <span>{formatDate(entry.createdAt)}</span>
                     </div>
@@ -105,11 +105,11 @@ export default function DictionaryQualityPage() {
           <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Still missing</h2>
           <ul className="space-y-3">
             {missingWords.slice(0, 25).map((word) => (
-              <li key={word.word} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+              <li key={word.word} className="rounded-card bg-cream-card p-4 shadow-card">
                 <p className="text-lg font-bold text-ink">{word.word}</p>
                 <p className="text-sm text-ink-muted">{word.articleContextSentence || "Saved without article context."}</p>
                 {word.sourceTextTitle && (
-                  <span className="mt-2 inline-flex rounded-full bg-cream-dark px-2 py-0.5 text-[11px] text-ink-muted">{word.sourceTextTitle}</span>
+                  <span className="mt-2 inline-flex rounded-full bg-cream-dark px-2 py-0.5 text-xs text-ink-muted">{word.sourceTextTitle}</span>
                 )}
               </li>
             ))}

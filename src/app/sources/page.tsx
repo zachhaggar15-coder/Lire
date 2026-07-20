@@ -126,9 +126,9 @@ export default function SourcesPage() {
 
       {state === "loading" && (
         <div className="space-y-3">
-          <div className="h-28 animate-pulse rounded-3xl bg-cream-dark" />
+          <div className="h-28 animate-pulse rounded-card bg-cream-dark" />
           {isSlowLoading && (
-            <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-sm">
+            <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">
               <p className="text-sm font-semibold text-ink">Still checking source health.</p>
               <div className="mt-2 flex items-center justify-between gap-3">
                 <p className="text-xs text-ink-muted">The RSS pool can take a moment to warm.</p>
@@ -142,9 +142,9 @@ export default function SourcesPage() {
       )}
 
       {state === "error" && (
-        <div className="rounded-3xl bg-cream-card p-5 text-center shadow-sm">
+        <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
           <p className="text-sm font-bold text-ink">Source health is unavailable right now.</p>
-          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
             Retry
           </button>
         </div>
@@ -183,7 +183,7 @@ export default function SourcesPage() {
 
           <section className="space-y-3">
             {attempted.map((source) => (
-              <article key={source.id} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+              <article key={source.id} className="rounded-card bg-cream-card p-4 shadow-card">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <h2 className="font-semibold text-ink">{source.name}</h2>
@@ -247,7 +247,7 @@ function SourceControlList({
   onAction: (sourceName: string) => void;
 }) {
   return (
-    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
         <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">{sources.length}</span>
@@ -276,9 +276,9 @@ function SourceControlList({
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-2xl bg-cream-card p-3 text-center shadow-sm">
+    <div className="rounded-2xl bg-cream-card p-3 text-center shadow-card">
       <p className="text-lg font-extrabold text-ink">{value}</p>
-      <p className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{label}</p>
     </div>
   );
 }

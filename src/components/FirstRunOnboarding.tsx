@@ -74,7 +74,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
   }
 
   return (
-    <section className={`${variant === "focus" ? "rounded-3xl bg-cream-card p-5 shadow-sm" : "mb-5 rounded-3xl bg-cream-card p-4 shadow-sm"}`}>
+    <section className={`${variant === "focus" ? "rounded-card bg-cream-card p-5 shadow-card" : "mb-5 rounded-card bg-cream-card p-4 shadow-card"}`}>
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wide text-brand">Start here</h2>
@@ -100,7 +100,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
             >
               <span className="flex items-center justify-between gap-3">
                 <span className="text-sm font-bold">{option.label}</span>
-                <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${level === option.value ? "bg-white/20 text-white" : "bg-cream-card text-ink-muted"}`}>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-white/20 text-white" : "bg-cream-card text-ink-muted"}`}>
                   {option.value}
                 </span>
               </span>
@@ -141,7 +141,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
         </summary>
 
         <div className="mt-3">
-          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Topics</p>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Topics</p>
           <div className="flex flex-wrap gap-2">
             {TOPICS.map((topic) => (
               <button
@@ -160,7 +160,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
         </div>
 
         <div className="mt-3">
-          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
           <div className="grid grid-cols-3 gap-2">
             {GOALS.map((option) => (
               <button
@@ -173,7 +173,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                 }`}
               >
                 <span className="block text-sm font-semibold">{option.label}</span>
-                <span className="block text-[11px]">{option.detail}</span>
+                <span className="block text-xs">{option.detail}</span>
               </button>
             ))}
           </div>

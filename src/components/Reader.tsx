@@ -1268,7 +1268,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           handlePlayParagraph(paragraph, paragraphIndex);
         }}
         aria-label={active ? "Stop this paragraph" : `Play paragraph ${paragraphIndex + 1}`}
-        className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold active:scale-95 ${
+        className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold active:scale-95 ${
           active ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
         }`}
       >
@@ -1486,7 +1486,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   return (
     <div className="px-4 pt-4">
       {showProgressBadge && (
-        <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-[11px] font-bold tabular-nums text-brand shadow-sm ring-1 ring-cream-dark/70 backdrop-blur">
+        <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-xs font-bold tabular-nums text-brand shadow-card ring-1 ring-cream-dark/70 backdrop-blur">
           {scrollProgressPercent}% read
         </div>
       )}
@@ -1539,7 +1539,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             type="button"
             onClick={handleToggleListenToArticle}
             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
-              isSpeakingArticle ? "bg-brand text-white" : "bg-cream-card text-ink shadow-sm"
+              isSpeakingArticle ? "bg-brand text-white" : "bg-cream-card text-ink shadow-card"
             }`}
           >
             {isSpeakingArticle ? (
@@ -1566,7 +1566,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-sm active:scale-95 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-card active:scale-95 disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -1592,7 +1592,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       )}
 
       {showEnglishTranslation && (
-        <p className="mt-2 text-[11px] text-ink-muted">
+        <p className="mt-2 text-xs text-ink-muted">
           {!shouldUseFluentTranslation() && (
             <>
               Showing rough offline English help ({translationModeLabel().toLowerCase()}).
@@ -1612,7 +1612,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       )}
 
       {isChunkedStarterLesson && (
-        <section className="mt-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <section className="mt-5 rounded-card bg-cream-card p-4 shadow-card">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson step {currentLessonStep} of {lessonStepCount}</p>
@@ -1672,7 +1672,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         path and the exercises are there for whoever wants them.
       */}
       {!rereadMode && !isStarterLesson && (
-        <details className="mt-8 rounded-3xl bg-cream-card p-4 shadow-sm">
+        <details className="mt-8 rounded-card bg-cream-card p-4 shadow-card">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Practice this article</h2>
@@ -1795,13 +1795,13 @@ export default function Reader({ text }: { text: ReadingText }) {
               <button
                 type="button"
                 onClick={handleFinishSecondPass}
-                className="block rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95"
+                className="block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
               >
                 Finish second pass
               </button>
             )}
             {!rereadMode && !isStarterLesson && (
-              <details className="rounded-3xl bg-cream-card p-3 text-left shadow-sm">
+              <details className="rounded-card bg-cream-card p-3 text-left shadow-card">
                 <summary className="cursor-pointer text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
                   More options
                 </summary>
@@ -1831,7 +1831,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 {!completionResult && articleSavedWordCount > 0 && (
                   <Link
                     href={`/review?article=${encodeURIComponent(text.title)}`}
-                    className="mt-3 block rounded-full bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white active:scale-95"
+                    className="mt-3 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95"
                   >
                     Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
                   </Link>
@@ -1849,7 +1849,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   <PostSessionResearchPrompt articleId={text.id} />
                 </div>
                 <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white active:scale-95" />
+                  <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95" />
                   <FeedbackButton feature="reader_completion" articleId={text.id} label="Give reader feedback" />
                 </div>
               </details>
@@ -1858,14 +1858,14 @@ export default function Reader({ text }: { text: ReadingText }) {
         ) : isChunkedStarterLesson && !isLastLessonStep ? (
           <button
             onClick={handleContinueLesson}
-            className="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
+            className="rounded-full bg-brand px-5 py-3 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Continue
           </button>
         ) : (
           <button
             onClick={handleMarkCompleted}
-            className="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-95"
+            className="rounded-full bg-brand px-5 py-3 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             {isStarterLesson ? "Finish lesson" : "Finish reading"}
           </button>
@@ -1875,7 +1875,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       {/* "What to read next" belongs after finishing, not among the exercises. */}
       {status === "completed" && !rereadMode && relatedArticles.length > 0 && (
         <details className="mb-5">
-          <summary className="cursor-pointer rounded-3xl bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-sm">
+          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-bold uppercase tracking-wide text-ink-muted shadow-card">
             {isStarterLesson ? "More lessons" : "More articles"}
           </summary>
           <div className="mt-3">
@@ -2027,7 +2027,7 @@ function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison
   const neutral = comparison.neutralChoice === "left" ? comparison.left : comparison.right;
   const dramatic = comparison.dramaticChoice === "left" ? comparison.left : comparison.right;
   return (
-    <section className="rounded-3xl border border-cream-dark bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Compare the headlines</h2>
       <div className="mt-3 grid gap-2">
         {[comparison.left, comparison.right].map((article) => (
@@ -2094,7 +2094,7 @@ function LearningCandidatesSection({
   }
 
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
       <p className="mt-0.5 text-xs text-ink-muted">
         Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
@@ -2111,19 +2111,19 @@ function LearningCandidatesSection({
                   {candidate.word !== candidate.lemma && <span className="font-medium text-ink-muted"> from {candidate.word}</span>}
                 </p>
                 <p className="mt-0.5 text-xs text-ink-muted">{candidate.translation}</p>
-                <p className="mt-1 text-[11px] font-semibold text-brand">{candidate.reason}</p>
+                <p className="mt-1 text-xs font-semibold text-brand">{candidate.reason}</p>
               </div>
               <button
                 type="button"
                 onClick={() => handleSave(candidate)}
                 disabled={candidate.alreadySaved || justSaved}
-                className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
+                className="shrink-0 rounded-full bg-brand px-3 py-1.5 shadow-raised text-xs font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
               >
                 {candidate.alreadySaved || justSaved ? "Saved" : "Save"}
               </button>
             </div>
             {candidate.phrase && (
-              <p className="mt-1 text-[11px] text-ink-muted">Appears in phrase: {candidate.phrase}</p>
+              <p className="mt-1 text-xs text-ink-muted">Appears in phrase: {candidate.phrase}</p>
             )}
           </div>
           );
@@ -2145,7 +2145,7 @@ function ComprehensionQuestion({
   const answered = selected !== null;
   const correct = answered && selected === question.answerIndex;
   return (
-    <div className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <div className="rounded-card bg-cream-card p-4 shadow-card">
       <p className="text-sm font-bold text-ink">{question.prompt}</p>
       <div className="mt-3 space-y-2">
         {question.choices.map((choice, index) => {

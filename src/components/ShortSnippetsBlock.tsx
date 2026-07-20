@@ -42,13 +42,13 @@ export default function ShortSnippetsBlock() {
   }, []);
 
   if (snippets === null) {
-    return <div className="mb-5 h-28 animate-pulse rounded-3xl bg-cream-dark" />;
+    return <div className="mb-5 h-28 animate-pulse rounded-card bg-cream-dark" />;
   }
 
   if (snippets.length === 0) return null;
 
   return (
-    <section className="mb-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-end justify-between gap-3">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Short Snippets</h2>
@@ -68,12 +68,12 @@ export default function ShortSnippetsBlock() {
           >
             <div className="flex items-start justify-between gap-2">
               <h3 className="line-clamp-2 text-sm font-bold leading-snug text-ink">{text.title}</h3>
-              <span className="shrink-0 rounded-full bg-brand-light px-2 py-0.5 text-[11px] font-bold text-brand">
+              <span className="shrink-0 rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
                 {text.minutes} min
               </span>
             </div>
             <p className="mt-1 line-clamp-2 text-xs text-ink-muted">{text.preview}</p>
-            {text.sourceName && <p className="mt-1 truncate text-[11px] font-semibold text-ink-muted">{text.sourceName}</p>}
+            {text.sourceName && <p className="mt-1 truncate text-xs font-semibold text-ink-muted">{text.sourceName}</p>}
           </Link>
         ))}
       </div>

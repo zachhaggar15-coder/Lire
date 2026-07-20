@@ -36,7 +36,7 @@ export default function LookupPage() {
             if (e.key === "Enter") runSearch();
           }}
           placeholder="e.g. house, big, to think"
-          className="min-w-0 flex-1 rounded-2xl bg-cream-card px-4 py-3 text-base text-ink shadow-sm"
+          className="min-w-0 flex-1 rounded-2xl bg-cream-card px-4 py-3 text-base text-ink shadow-card"
         />
         <button
           onClick={runSearch}
@@ -48,7 +48,7 @@ export default function LookupPage() {
 
       {result &&
         (result.source === "local" ? (
-          <div className="mt-5 rounded-3xl bg-cream-card p-4 shadow-sm">
+          <div className="mt-5 rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-xl font-bold text-ink">{result.input}</h2>
             {(result.partOfSpeech || result.cefr) && (
               <span className="mt-1 inline-block rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">

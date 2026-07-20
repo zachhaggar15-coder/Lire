@@ -13,7 +13,7 @@ const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 export function AndroidBetaButton({
   source,
   label = "Join Android beta",
-  className = "rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95",
+  className = "rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95",
 }: {
   source: AndroidBetaSource;
   label?: string;
@@ -215,11 +215,11 @@ export default function AndroidBetaModal({
           <button
             type="submit"
             disabled={state === "submitting" || !email.trim()}
-            className="w-full rounded-full bg-brand px-4 py-3 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+            className="w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
           >
             {state === "submitting" ? "Joining..." : state === "success" ? "Update beta details" : "Join beta list"}
           </button>
-          <p className="text-[11px] leading-relaxed text-ink-muted">
+          <p className="text-xs leading-relaxed text-ink-muted">
             We only use this email for Lire Android beta and launch communication. No Android app is downloadable yet.
           </p>
         </form>

@@ -1,9 +1,29 @@
 import type { Metadata, Viewport } from "next";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import AuthSync from "@/components/AuthSync";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
+
+/**
+ * Headings only. The app was entirely system-ui, so it rendered as Segoe UI on
+ * Windows and SF on iOS — competent but anonymous, and indistinguishable from
+ * default OS chrome. Nunito is rounded and warm enough to match the paper
+ * palette, and carries the accents French needs (latin-ext).
+ *
+ * next/font self-hosts the file at build time, so there's no request to Google
+ * at runtime — which also keeps it working offline in the PWA and avoids a
+ * third-party origin in the CSP. Body text deliberately stays on the system
+ * stack: it renders with zero latency, and the reading surface was already
+ * well-tuned at 17px/1.8.
+ */
+const display = Nunito({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Lire — French Reader",
@@ -48,10 +68,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={display.variable}>
       <body>
         {/* App is capped to a phone-like width and centered on desktop. */}
-        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream shadow-sm">
+        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream shadow-card">
           <main className="flex-1 pb-24">{children}</main>
           <BottomNav />
         </div>

@@ -104,7 +104,7 @@ export default function WordsPage() {
             type="button"
             onClick={() => setTab(item.id)}
             className={`rounded-xl px-3 py-2 text-sm font-bold active:scale-95 ${
-              tab === item.id ? "bg-cream-card text-brand shadow-sm" : "text-ink-muted"
+              tab === item.id ? "bg-cream-card text-brand shadow-card" : "text-ink-muted"
             }`}
           >
             {item.label}
@@ -117,7 +117,7 @@ export default function WordsPage() {
           <p className="text-ink-muted">No saved words yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Start reading
           </Link>
@@ -150,7 +150,7 @@ export default function WordsPage() {
             {filtered.map((w, i) => (
               <li
                 key={w.word}
-                className={`rounded-3xl border-l-4 bg-cream-card p-4 shadow-sm ${WORD_ACCENTS[i % WORD_ACCENTS.length]}`}
+                className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${WORD_ACCENTS[i % WORD_ACCENTS.length]}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
@@ -160,13 +160,13 @@ export default function WordsPage() {
                         <span className="text-xs text-ink-muted">({w.lemma})</span>
                       )}
                       {w.partOfSpeech && (
-                        <span className="text-[11px] font-medium text-ink-muted">
+                        <span className="text-xs font-medium text-ink-muted">
                           {w.partOfSpeech}
                           {w.gender && ` · ${w.gender}`}
                         </span>
                       )}
                       {w.cefr && (
-                        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-[11px] font-semibold text-ink-muted">
+                        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
                           {w.cefr}
                         </span>
                       )}
@@ -194,13 +194,13 @@ export default function WordsPage() {
                       </p>
                     )}
                     {w.articleContextSentence && (
-                      <p className="mt-1 line-clamp-2 text-[11px] text-ink-muted">
+                      <p className="mt-1 line-clamp-2 text-xs text-ink-muted">
                         <span className="font-semibold uppercase tracking-wide">Original article context: </span>
                         “{w.articleContextSentence}”
                       </p>
                     )}
 
-                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-ink-muted">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-muted">
                       {w.sourceTextTitle && (
                         <span className="rounded-full bg-cream-dark px-2 py-0.5 font-medium text-ink-muted">
                           {w.sourceTextTitle}
@@ -224,7 +224,7 @@ export default function WordsPage() {
                     {w.status !== "known" && (
                       <button
                         onClick={() => handleMarkKnown(w.word)}
-                        className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 active:scale-95"
+                        className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
                       >
                         Mark known
                       </button>
@@ -242,7 +242,7 @@ export default function WordsPage() {
           <p className="text-ink-muted">No saved phrases yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white active:scale-95"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
           >
             Start reading
           </Link>
@@ -265,7 +265,7 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
   const progress = phrases.length === 0 ? 0 : Math.round((known / phrases.length) * 100);
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink-muted">Phrase mastery</h2>
@@ -276,15 +276,15 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
       <div className="mt-3 grid grid-cols-3 gap-2 text-center">
         <div className="rounded-2xl bg-cream px-2 py-2">
           <p className="text-lg font-extrabold text-ink">{phrases.length}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Saved</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Saved</p>
         </div>
         <div className="rounded-2xl bg-cream px-2 py-2">
           <p className="text-lg font-extrabold text-ink">{known}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Known</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Known</p>
         </div>
         <div className="rounded-2xl bg-cream px-2 py-2">
           <p className="text-lg font-extrabold text-ink">{contexts}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Contexts</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Contexts</p>
         </div>
       </div>
       <Link
@@ -315,7 +315,7 @@ function PhraseList({
       <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">{title}</h2>
       <ul className="space-y-3">
         {phrases.map((phrase) => (
-          <li key={phrase.phrase} className="rounded-3xl bg-cream-card p-4 shadow-sm">
+          <li key={phrase.phrase} className="rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-lg font-bold text-ink">{phrase.phrase}</p>
@@ -323,7 +323,7 @@ function PhraseList({
                 {phrase.contextSentence && (
                   <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">"{phrase.contextSentence}"</p>
                 )}
-                <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-ink-muted">
+                <div className="mt-2 flex flex-wrap gap-2 text-xs text-ink-muted">
                   {phrase.sourceTextTitle && <span className="rounded-full bg-cream-dark px-2 py-0.5">{phrase.sourceTextTitle}</span>}
                   <span>Saved {formatDate(phrase.savedAt)}</span>
                 </div>
@@ -343,7 +343,7 @@ function PhraseList({
                   <button
                     type="button"
                     onClick={() => onKnown(phrase.phrase)}
-                    className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 active:scale-95"
+                    className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
                   >
                     Mark known
                   </button>

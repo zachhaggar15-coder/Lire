@@ -54,7 +54,7 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
   }
 
   return (
-    <section className="rounded-3xl bg-cream-card p-4 shadow-sm">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-ink-muted">Install Lire</p>
@@ -63,7 +63,7 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
           </p>
         </div>
         {promptEvent ? (
-          <button type="button" onClick={install} className="shrink-0 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95">
+          <button type="button" onClick={install} className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
             Install
           </button>
         ) : (

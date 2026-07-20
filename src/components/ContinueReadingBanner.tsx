@@ -46,7 +46,7 @@ export default function ContinueReadingBanner() {
   return (
     <Link
       href={`/reader/${info.id}`}
-      className="mb-5 flex items-center justify-between gap-3 rounded-3xl bg-brand px-5 py-4 text-white shadow-sm active:scale-[0.99]"
+      className="mb-5 flex items-center justify-between gap-3 rounded-card bg-brand px-5 py-4 text-white shadow-card active:scale-[0.99]"
     >
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wide text-white/70">Continue reading</p>

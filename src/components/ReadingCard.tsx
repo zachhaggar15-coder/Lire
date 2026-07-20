@@ -155,7 +155,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
   }
 
   return (
-    <article className={`rounded-3xl border-l-4 bg-cream-card p-4 shadow-sm ${CATEGORY_ACCENT[text.category]}`}>
+    <article className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${CATEGORY_ACCENT[text.category]}`}>
       <Link
         href={`/reader/${text.id}`}
         onClick={() =>
