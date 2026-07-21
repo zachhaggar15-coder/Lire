@@ -641,9 +641,14 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function sentenceTranslationForDisplay(flatIndex: number): string | null {
-    if (shouldUseFluentTranslation() && translationState === "loading") {
-      return fluentSentences?.[flatIndex] ?? null;
-    }
+    // Every French line always gets an English line directly beneath it. The
+    // fluent AI translation streams in chunk by chunk, top to bottom; until a
+    // given line's chunk resolves, we show the instant offline dictionary
+    // translation, and each line upgrades to the fluent version in place as it
+    // arrives. Without this fallback during loading, lower paragraphs briefly
+    // showed French with no English, then a whole chunk's worth of English
+    // appeared at once — which reads as "a paragraph, then the translation"
+    // rather than line-by-line.
     return fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex] ?? null;
   }
 
