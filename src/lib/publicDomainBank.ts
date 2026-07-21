@@ -54,15 +54,20 @@ export function getDailyBankTexts({
 
   return seededShuffle(pool, `${todayKey(date)}::bank::${level}::${categoryKey}`)
     .sort((a, b) => {
-      // Purpose-written beginner texts come first at every level. The
+      // Texts at exactly the requested level lead, then the nearest
+      // neighbours. This has to come before the starter-first preference:
+      // the starter set is A1/A2 only, so preferring it unconditionally
+      // floated beginner texts above every B1/B2 text and — combined with
+      // the browser's strict per-level filter — left an explicit B1 or B2
+      // selection showing nothing at all.
+      const distanceA = Math.abs(CEFR_ORDER.indexOf(a.difficulty) - CEFR_ORDER.indexOf(level));
+      const distanceB = Math.abs(CEFR_ORDER.indexOf(b.difficulty) - CEFR_ORDER.indexOf(level));
+      if (distanceA !== distanceB) return distanceA - distanceB;
+      // Within the same level, purpose-written texts come first. The
       // public-domain bank is 19th-century literature, so even its "A1"
-      // excerpts are far above a real A1 reader; those stay available (and
-      // are the only option higher up), but they shouldn't be what someone
-      // meets on their first day.
-      const starterFirst = Number(isStarterText(b)) - Number(isStarterText(a));
-      if (starterFirst !== 0) return starterFirst;
-      return Math.abs(CEFR_ORDER.indexOf(a.difficulty) - CEFR_ORDER.indexOf(level)) -
-        Math.abs(CEFR_ORDER.indexOf(b.difficulty) - CEFR_ORDER.indexOf(level));
+      // excerpts read far above a real beginner; they stay available but
+      // shouldn't be what someone meets first at any level we've written for.
+      return Number(isStarterText(b)) - Number(isStarterText(a));
     })
     .slice(0, limit)
     .map(stripMetadataOnlyBlurb);

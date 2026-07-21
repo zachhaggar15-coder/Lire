@@ -288,6 +288,19 @@ console.log("\n--- Public-domain reading bank ---");
   const generatedExcerptSuffix = /:\s*extrait\s+\d+$/i;
   check("daily bank returns eight stable level-matched picks", dailyB1.length === 8 && dailyB1.map((text) => text.id).join(",") === dailyB1Repeat.map((text) => text.id).join(","));
   check("daily bank favours the selected CEFR level first", dailyB1.every((text) => ["B1", "A2", "B2", "A1", "C1"].includes(text.difficulty)));
+  // Regression: the browser applies a strict per-level filter on top of the
+  // bank result, so an explicit level must actually surface texts AT that
+  // level. The starter set is A1/A2 only; a bug once floated those above every
+  // B1/B2 text, so choosing B1 or B2 returned an empty list. Guard each level.
+  for (const requestedLevel of ["A1", "A2", "B1", "B2"]) {
+    const picks = getDailyBankTexts({ level: requestedLevel, limit: 24, date: new Date("2026-07-14T12:00:00Z") });
+    const exactLevel = picks.filter((text) => text.difficulty === requestedLevel);
+    check(
+      `daily bank surfaces texts at exactly ${requestedLevel} when it is selected`,
+      exactLevel.length > 0,
+      `bank returned ${picks.map((text) => text.difficulty).join(",")}`
+    );
+  }
   check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
   check(
     "exported public-domain articles strip generated extrait numbers from titles",

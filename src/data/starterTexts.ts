@@ -1,7 +1,7 @@
 import type { ReadingText } from "@/types";
 
 /**
- * Original A1/A2 French texts written for beginners.
+ * Original A1–B2 French texts written for learners.
  *
  * The public-domain bank (publicDomainTexts.ts) is Gutenberg literature —
  * Dumas, Flaubert, Maupassant. Even its "A1" excerpts are 19th-century
@@ -714,6 +714,638 @@ Je n'ai pas très bien dormi. Le lit était étroit et le train s'arrêtait souv
 Au petit matin, j'ai ouvert le rideau. Il y avait des montagnes partout, encore un peu roses.
 
 J'étais fatigué, mais je n'oublierai pas ce moment. En avion, on n'a jamais ça.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-001",
+    title: "Vivre sans voiture en ville",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Il y a trois ans, j'ai vendu ma voiture. Au début, j'avais peur de le regretter.",
+    blurbEn:
+      "A city dweller explains why they gave up their car — cost, stress and parking — and what they gained in exchange.",
+    body: `Il y a trois ans, j'ai vendu ma voiture. Au début, j'avais peur de le regretter. Aujourd'hui, je pense que c'était une bonne décision.
+
+En ville, la voiture coûte cher. Il faut payer l'essence, l'assurance et surtout le stationnement. Chaque matin, je perdais dix minutes à chercher une place.
+
+Maintenant, je prends le bus ou mon vélo. Quand il pleut, je marche sous un parapluie. Ce n'est pas toujours agréable, mais je suis plus détendu.
+
+Bien sûr, sans voiture, certaines choses sont plus difficiles. Faire de grandes courses, par exemple, demande un peu d'organisation. Et pour partir le week-end, je loue une voiture ou je prends le train.
+
+Je ne dis pas que tout le monde doit faire comme moi. À la campagne, la voiture reste souvent nécessaire. Mais en ville, on peut très bien vivre autrement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-002",
+    title: "Le télétravail, deux ans après",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis deux ans, je travaille trois jours par semaine à la maison.",
+    blurbEn:
+      "After two years working partly from home, the writer weighs the freedom it brings against the loss of everyday contact with colleagues.",
+    body: `Depuis deux ans, je travaille trois jours par semaine à la maison. Beaucoup de mes collègues font pareil. C'est une grande différence avec la vie d'avant.
+
+Le télétravail a des avantages évidents. Je ne perds plus une heure dans les transports. Le matin, je commence plus tôt et je suis plus concentré. Je peux aussi déjeuner tranquillement chez moi.
+
+Mais il y a un autre côté. À la maison, on est parfois seul toute la journée. On ne parle à personne, sauf par écran. Les petites discussions au bureau, autour d'un café, me manquent.
+
+Je pense que le bon équilibre se trouve au milieu. Deux ou trois jours à la maison, deux ou trois jours au bureau : pour moi, c'est le mieux.
+
+Mon entreprise a compris cela. Elle laisse chacun choisir, et je trouve que c'est une bonne idée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-003",
+    title: "Pourquoi les Français font la bise",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Quand on arrive en France, une habitude surprend souvent : la bise.",
+    blurbEn:
+      "A light look at the French cheek-kiss: when to do it, how many, and why the custom confuses visitors — and some French people too.",
+    body: `Quand on arrive en France, une habitude surprend souvent : la bise. Pour dire bonjour, les gens se font un ou plusieurs bisous sur la joue.
+
+Mais attention, ce n'est pas toujours simple. Le nombre de bises change selon les régions. À Paris, on en fait souvent deux. Dans le sud, parfois trois. Dans certaines villes, une seule suffit.
+
+En général, on fait la bise à la famille et aux amis. Entre collègues, cela dépend. Au travail, beaucoup de gens préfèrent se serrer la main.
+
+Les étrangers ne sont pas les seuls à hésiter. Les Français aussi se trompent parfois. Faut-il commencer par la joue droite ou la joue gauche ? Personne n'est vraiment sûr.
+
+Depuis quelques années, la bise est moins automatique. Certaines personnes préfèrent un simple bonjour, et c'est très bien aussi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-004",
+    title: "Les marchés du dimanche",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Le dimanche matin, dans beaucoup de villes françaises, il y a un marché.",
+    blurbEn:
+      "Why the Sunday market still matters in many French towns — not just for shopping, but as a place to meet neighbours and take your time.",
+    body: `Le dimanche matin, dans beaucoup de villes françaises, il y a un marché. Les gens y vont pour acheter des fruits, des légumes, du fromage et du pain.
+
+Mais le marché n'est pas seulement un endroit pour faire les courses. C'est aussi un lieu de rencontre. On y croise ses voisins, on discute, on prend son temps.
+
+Les produits sont souvent plus frais qu'au supermarché. Beaucoup viennent de fermes proches de la ville. Les vendeurs connaissent leurs produits et donnent volontiers des conseils.
+
+« Goûtez cette tomate », dit un vendeur. « Elle vient de mon jardin. »
+
+Bien sûr, le marché coûte parfois un peu plus cher. Mais pour beaucoup de gens, l'ambiance vaut ce petit prix.
+
+Après le marché, certains vont boire un café en terrasse. C'est une façon agréable de commencer le week-end.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-005",
+    title: "Le cinéma en plein air",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En été, quand il fait chaud, certaines villes organisent des séances de cinéma en plein air.",
+    blurbEn:
+      "Summer open-air cinema: watching a film under the stars, with all the small pleasures and problems that a screen indoors never has.",
+    body: `En été, quand il fait chaud, certaines villes organisent des séances de cinéma en plein air. On installe un grand écran dans un parc, et les gens viennent le soir avec une couverture.
+
+J'y suis allé pour la première fois l'année dernière. L'ambiance était très différente de celle d'une salle normale. Les enfants couraient, les gens mangeaient, on entendait les oiseaux.
+
+Le film a commencé quand la nuit est tombée, vers dix heures. Regarder un film sous les étoiles, c'est une expérience particulière.
+
+Il y a quand même quelques problèmes. S'il y a du vent, on entend mal. Et si un moustique décide de vous embêter, c'est fini pour la tranquillité.
+
+Malgré tout, j'ai adoré. Cette année, je compte y retourner, mais cette fois avec un pull et un bon répulsif.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-006",
+    title: "Pourquoi le ciel est bleu",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pourquoi le ciel est-il bleu ? C'est une question que posent souvent les enfants.",
+    blurbEn:
+      "A simple explanation of why the daytime sky looks blue and why sunsets turn red — all down to how light travels through the air.",
+    body: `Pourquoi le ciel est-il bleu ? C'est une question que posent souvent les enfants, et la réponse est plus intéressante qu'on ne le pense.
+
+La lumière du soleil semble blanche, mais elle contient en réalité toutes les couleurs. Quand cette lumière traverse l'air, elle rencontre des millions de petites particules.
+
+Ces particules changent la direction de la lumière. La couleur bleue est plus dispersée que les autres. C'est pour cette raison que, quand on regarde le ciel, on voit surtout du bleu.
+
+Le soir, la lumière traverse une plus grande quantité d'air. Le bleu se perd en chemin, et ce sont le rouge et l'orange qui restent. Voilà pourquoi les couchers de soleil sont souvent rouges.
+
+La prochaine fois que vous regarderez le ciel, vous saurez que sa couleur raconte le voyage de la lumière.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-007",
+    title: "Le sommeil et la mémoire",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Beaucoup d'étudiants pensent qu'il faut travailler tard le soir pour réussir.",
+    blurbEn:
+      "Why a good night's sleep helps you remember what you learned — and why staying up late to study often does more harm than good.",
+    body: `Beaucoup d'étudiants pensent qu'il faut travailler tard le soir pour réussir. Pourtant, les scientifiques disent souvent le contraire.
+
+Pendant la nuit, le cerveau ne se repose pas complètement. Il continue à travailler. Il range les informations de la journée et garde les plus importantes. C'est pendant le sommeil qu'on mémorise vraiment ce qu'on a appris.
+
+Une personne qui ne dort pas assez oublie plus vite. Elle a aussi plus de mal à se concentrer le lendemain. Étudier toute la nuit avant un examen n'est donc pas une bonne idée.
+
+Les chercheurs conseillent de dormir entre sept et neuf heures. Ils recommandent aussi de réviser un peu chaque jour, plutôt que tout d'un coup.
+
+Alors, avant un examen important, le meilleur conseil est peut-être simple : fermez vos livres et allez dormir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-008",
+    title: "Les abeilles et les villes",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Quand on pense aux abeilles, on imagine la campagne.",
+    blurbEn:
+      "Bees are moving into cities, where rooftops and parks can suit them better than the countryside. A look at why, and why it matters.",
+    body: `Quand on pense aux abeilles, on imagine la campagne. Pourtant, depuis quelques années, on installe de plus en plus de ruches en ville, sur les toits des immeubles.
+
+Cela peut sembler étrange, mais les abeilles vivent parfois mieux en ville qu'à la campagne. Dans les champs, on utilise beaucoup de produits chimiques qui les rendent malades. En ville, ces produits sont moins présents.
+
+De plus, les parcs et les jardins offrent des fleurs différentes pendant une grande partie de l'année. Les abeilles trouvent donc de la nourriture plus facilement.
+
+Les abeilles sont très importantes pour la nature. Sans elles, beaucoup de plantes ne pourraient pas se reproduire. Une grande partie de ce que nous mangeons dépend de leur travail.
+
+Protéger les abeilles, même en ville, c'est donc protéger notre alimentation.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-009",
+    title: "Courir un premier marathon",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "L'année dernière, j'ai décidé de courir mon premier marathon.",
+    blurbEn:
+      "Preparing for a first marathon: the months of training, the doubts, and what really carries you through the last, hardest kilometres.",
+    body: `L'année dernière, j'ai décidé de courir mon premier marathon. Quarante-deux kilomètres : au début, ce chiffre me faisait peur.
+
+Je me suis entraîné pendant quatre mois. Je courais trois fois par semaine, un peu plus longtemps à chaque fois. Certains jours, j'étais fatigué et je n'avais pas envie de sortir. Mais je pensais au jour de la course, et cela me donnait de l'énergie.
+
+Le jour du marathon, il faisait frais. Les premiers kilomètres sont passés vite. Après trente kilomètres, mes jambes sont devenues très lourdes.
+
+Ce qui m'a aidé, ce sont les gens dans la rue. Ils criaient, ils applaudissaient. Grâce à eux, j'ai continué.
+
+Quand j'ai franchi la ligne d'arrivée, j'étais épuisé mais très fier. Je comprends maintenant pourquoi tant de gens aiment ce sport.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-010",
+    title: "La natation, un sport pour tous",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "La natation est l'un des sports les plus complets.",
+    blurbEn:
+      "Why swimming suits almost everyone — gentle on the body, good for the mind, and possible at any age.",
+    body: `La natation est l'un des sports les plus complets. Elle fait travailler presque tous les muscles du corps, mais sans les abîmer.
+
+Contrairement à la course, la natation est douce pour les articulations. Dans l'eau, le corps est plus léger. C'est pour cette raison que ce sport convient à presque tout le monde : aux enfants, aux personnes âgées, et à ceux qui ont mal au dos.
+
+Nager est aussi bon pour la tête. Beaucoup de gens disent qu'après quelques longueurs, ils se sentent plus calmes. Le bruit de l'eau, le rythme régulier des mouvements : tout cela aide à oublier les soucis de la journée.
+
+On peut commencer à tout âge. Il n'est jamais trop tard pour apprendre à nager.
+
+Le seul vrai conseil, c'est la régularité. Nager une fois par mois ne sert à rien ; deux fois par semaine change tout.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-011",
+    title: "L'escalade, un sport qui monte",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Il y a quelques années, l'escalade était un sport rare, réservé à la montagne.",
+    blurbEn:
+      "Climbing has moved from cliffs to indoor gyms in the city, winning new fans — a sport that's as much about thinking as strength.",
+    body: `Il y a quelques années, l'escalade était un sport rare, réservé à la montagne. Aujourd'hui, on trouve des salles d'escalade dans presque toutes les grandes villes.
+
+Dans ces salles, on grimpe sur des murs artificiels, avec des prises de toutes les couleurs. Chaque couleur indique un chemin, plus ou moins difficile. On peut donc commencer doucement et progresser à son rythme.
+
+Beaucoup de gens pensent que l'escalade demande surtout de la force. En réalité, c'est aussi un sport de réflexion. Avant de monter, il faut observer le mur et choisir où mettre les mains et les pieds.
+
+L'escalade se pratique souvent à deux. Une personne grimpe, l'autre tient la corde et assure sa sécurité. Il faut donc avoir confiance en son partenaire.
+
+C'est peut-être pour cela que ce sport plaît autant : on progresse ensemble, sans vraiment être en compétition.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-012",
+    title: "Apprendre à cuisiner seul",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Quand j'ai quitté la maison de mes parents, je ne savais pas cuisiner.",
+    blurbEn:
+      "Leaving home means learning to cook. The writer recalls early disasters and how a few simple recipes turned cooking into a pleasure.",
+    body: `Quand j'ai quitté la maison de mes parents, je ne savais pas cuisiner. Les premières semaines, je mangeais surtout des pâtes et des pizzas surgelées.
+
+Très vite, j'en ai eu assez. Manger la même chose tous les jours devient vite ennuyeux, et ce n'était pas très bon pour ma santé.
+
+J'ai donc commencé à apprendre, petit à petit. Ma grand-mère m'a donné quelques recettes simples. Au début, j'ai fait beaucoup d'erreurs. Une fois, j'ai complètement brûlé un gâteau et la cuisine a senti le brûlé pendant deux jours.
+
+Mais peu à peu, j'ai progressé. J'ai compris qu'il ne faut pas beaucoup de choses pour bien manger : des légumes frais, un peu de patience et quelques idées.
+
+Aujourd'hui, cuisiner n'est plus une corvée. C'est devenu un vrai plaisir, surtout quand je reçois des amis.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-013",
+    title: "La musique dans le métro",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Dans le métro de Paris, on croise souvent des musiciens.",
+    blurbEn:
+      "The musicians who play in the Paris metro pass a real audition to be there. A look at the small daily concerts most passengers barely notice.",
+    body: `Dans le métro de Paris, on croise souvent des musiciens. Un guitariste, une chanteuse, parfois un petit groupe : ils jouent sur les quais ou dans les couloirs.
+
+Ce que beaucoup de gens ignorent, c'est que ces musiciens ne sont pas là par hasard. Pour jouer dans le métro, il faut passer une sorte d'examen. Chaque année, des centaines de personnes se présentent, et seules certaines sont choisies.
+
+La plupart des voyageurs passent sans s'arrêter. Ils sont pressés, ils pensent à leur travail. Pourtant, de temps en temps, quelqu'un ralentit, écoute un moment et sourit.
+
+Pour les musiciens, le métro est un endroit difficile. Il y a du bruit, du passage, et il faut jouer pendant des heures. Mais c'est aussi une façon de se faire connaître.
+
+Certains artistes célèbres ont commencé ainsi, en bas des escaliers, guitare à la main.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-014",
+    title: "Réduire ses déchets",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Chaque année, une personne produit des centaines de kilos de déchets.",
+    blurbEn:
+      "Small changes that cut how much rubbish a household throws away — and why the writer found it easier, and cheaper, than expected.",
+    body: `Chaque année, une personne produit des centaines de kilos de déchets. En y réfléchissant, j'ai eu envie de réduire les miens.
+
+J'ai commencé par des gestes simples. Au lieu d'acheter de l'eau en bouteille, je bois l'eau du robinet. Je fais mes courses avec un sac en tissu, et j'achète certains produits sans emballage.
+
+J'ai aussi appris à mieux garder les aliments. Avant, je jetais souvent des fruits ou des légumes oubliés au fond du frigo. Maintenant, je fais plus attention, et je cuisine ce qui reste.
+
+Au début, je pensais que ce serait compliqué. En réalité, ces habitudes sont vite devenues naturelles. Et j'ai remarqué une chose intéressante : je dépense moins d'argent qu'avant.
+
+Je ne suis pas parfait, loin de là. Mais je crois que si chacun fait un petit effort, cela finit par compter.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-015",
+    title: "Le yoga au bureau",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Dans certaines entreprises, on propose maintenant des séances de yoga pendant la journée de travail.",
+    blurbEn:
+      "Some companies now offer yoga sessions at work. A sceptic tries a class and is surprised by how much difference a short break makes.",
+    body: `Dans certaines entreprises, on propose maintenant des séances de yoga pendant la journée de travail. Au début, je trouvais cette idée un peu étrange.
+
+Je passe des heures assis devant un ordinateur. Le soir, j'ai souvent mal au dos et au cou. Un collègue m'a conseillé d'essayer le cours de yoga proposé le midi. J'ai accepté, sans grand enthousiasme.
+
+La séance durait trente minutes. Nous avons fait des mouvements lents et des exercices de respiration. Je pensais m'ennuyer, mais le temps est passé vite.
+
+En retournant à mon bureau, je me suis senti différent. J'étais plus calme et plus concentré. L'après-midi, j'ai mieux travaillé que d'habitude.
+
+Depuis, j'y vais chaque semaine. Je ne suis pas devenu un expert, et je reste assez raide. Mais ces trente minutes sont devenues un moment important de ma semaine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-001",
+    title: "Faut-il traduire les titres de films ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "En France, les titres de films étrangers posent une question curieuse.",
+    blurbEn:
+      "Why some foreign film titles get translated into French and others don't — and what these choices reveal about language and marketing.",
+    body: `En France, les titres de films étrangers posent une question curieuse. Certains sont traduits, d'autres sont gardés en anglais, et parfois on remplace un titre anglais par… un autre titre anglais, plus simple.
+
+Ce choix n'a rien d'automatique. Il dépend souvent du marketing. Les distributeurs pensent qu'un titre court et facile à prononcer attirera plus de spectateurs. Peu importe, alors, que le public comprenne ou non le sens exact.
+
+Certains regrettent cette habitude. Selon eux, garder les titres en anglais montre que la langue française perd du terrain. D'autres, au contraire, trouvent cela normal dans un monde où l'anglais est partout.
+
+Il est difficile de donner raison à un seul camp. Une belle traduction peut enrichir un titre ; une mauvaise peut le rendre ridicule.
+
+Ce petit détail en dit long sur notre rapport aux langues : nous voulons rester ouverts au monde sans pour autant oublier qui nous sommes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-002",
+    title: "La disparition des petits commerces",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Dans de nombreux villages français, les petits commerces ferment les uns après les autres.",
+    blurbEn:
+      "As big stores and online shopping spread, small neighbourhood shops are closing. What does a town lose when its last baker shuts?",
+    body: `Dans de nombreux villages français, les petits commerces ferment les uns après les autres. La boulangerie, l'épicerie, le café : autrefois au cœur de la vie locale, ils disparaissent peu à peu.
+
+Les raisons sont connues. Les grandes surfaces, souvent situées à l'extérieur des villes, proposent des prix plus bas. À cela s'ajoutent les achats sur Internet, qui permettent de tout commander sans sortir de chez soi.
+
+On pourrait croire qu'il s'agit d'un simple problème économique. Pourtant, l'enjeu est plus profond. Quand la dernière boulangerie ferme, ce n'est pas seulement un magasin qui disparaît. C'est un lieu où les habitants se retrouvaient, se parlaient, se connaissaient.
+
+Certaines communes réagissent. Elles aident les commerçants à s'installer, ou ouvrent des magasins gérés par le village lui-même.
+
+Rien ne garantit que ces efforts suffisent. Mais ils montrent au moins que beaucoup refusent de voir mourir leur centre-ville sans réagir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-003",
+    title: "L'intelligence artificielle et le travail",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Depuis quelques années, l'intelligence artificielle occupe une grande place dans les discussions sur l'avenir du travail.",
+    blurbEn:
+      "Will AI take our jobs or change them? A measured look beyond the headlines at which tasks machines do well and which still need people.",
+    body: `Depuis quelques années, l'intelligence artificielle occupe une grande place dans les discussions sur l'avenir du travail. Certains annoncent la disparition de millions d'emplois ; d'autres promettent une nouvelle révolution positive.
+
+La vérité se trouve sans doute entre les deux. Les machines sont désormais capables d'accomplir des tâches que l'on croyait réservées aux humains : rédiger des textes, analyser des images, répondre à des questions.
+
+Cependant, il serait exagéré de penser qu'elles remplaceront tout. L'intelligence artificielle réussit là où il faut traiter beaucoup d'informations rapidement. Elle échoue encore lorsqu'il s'agit de comprendre une situation humaine, de faire preuve de créativité ou de prendre une décision difficile.
+
+Le plus probable, c'est que de nombreux métiers changent plutôt qu'ils ne disparaissent. Il faudra apprendre à travailler avec ces outils, comme on a appris autrefois à utiliser l'ordinateur.
+
+La vraie question n'est peut-être pas de savoir si la machine nous remplacera, mais ce que nous choisirons de lui confier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-004",
+    title: "Le climat et nos habitudes alimentaires",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "On parle beaucoup des transports lorsqu'on évoque le climat, mais on oublie souvent notre assiette.",
+    blurbEn:
+      "Food choices have a real effect on the climate. The piece explains why, without lecturing, and argues that small shifts beat impossible rules.",
+    body: `On parle beaucoup des transports lorsqu'on évoque le climat, mais on oublie souvent notre assiette. Or, la façon dont nous nous nourrissons a un effet important sur l'environnement.
+
+Produire de la viande, en particulier, demande énormément d'eau, de terres et d'énergie. Cela ne signifie pas qu'il faille arrêter complètement d'en manger. Mais réduire un peu sa consommation change déjà les choses.
+
+Manger des produits de saison et cultivés près de chez soi aide également. Une tomate qui pousse dans la région en été a bien moins d'impact qu'une tomate cultivée sous serre en hiver.
+
+Il ne s'agit pas de culpabiliser chacun pour le moindre repas. Personne ne peut être parfait, et une règle trop stricte décourage vite.
+
+L'important, c'est peut-être de comprendre que nos choix quotidiens, additionnés à ceux de millions de personnes, finissent par peser lourd — dans un sens comme dans l'autre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-005",
+    title: "Le droit à la déconnexion",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Avec les téléphones et les ordinateurs portables, la frontière entre le travail et la vie privée est devenue floue.",
+    blurbEn:
+      "Should your boss email you at 10pm? France gave workers a 'right to disconnect' — but can a law really change habits?",
+    body: `Avec les téléphones et les ordinateurs portables, la frontière entre le travail et la vie privée est devenue floue. On peut désormais recevoir un message professionnel à n'importe quelle heure, même le soir ou le week-end.
+
+Pour répondre à ce problème, la France a introduit ce qu'on appelle le « droit à la déconnexion ». L'idée est simple : un salarié n'est pas obligé de répondre aux messages en dehors de ses heures de travail.
+
+Sur le papier, cette mesure semble excellente. Dans la réalité, les choses sont plus compliquées. Beaucoup de gens continuent de consulter leurs courriels le soir, par habitude ou par peur de prendre du retard.
+
+Une loi peut poser un principe, mais elle ne change pas facilement les comportements. Il faudrait aussi que les entreprises encouragent réellement leurs employés à se déconnecter.
+
+Tant que répondre vite sera vu comme une preuve de sérieux, ce droit restera, pour beaucoup, une belle idée difficile à appliquer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-006",
+    title: "Vivre en ville ou à la campagne",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Faut-il vivre en ville ou à la campagne ? Cette question, ancienne, revient régulièrement.",
+    blurbEn:
+      "The old debate between city and countryside, seen fresh after many people rethought where they wanted to live. Neither side wins easily.",
+    body: `Faut-il vivre en ville ou à la campagne ? Cette question, ancienne, revient régulièrement, surtout depuis que beaucoup de gens ont repensé leur mode de vie.
+
+La ville offre des avantages évidents : le travail, les transports, la culture, les rencontres. Tout est proche, tout va vite. Mais cette énergie a un prix. Les logements sont chers et souvent petits, l'air est moins pur, et le bruit ne s'arrête jamais vraiment.
+
+La campagne, elle, promet le calme, l'espace et un contact plus direct avec la nature. Pourtant, elle a aussi ses difficultés. Sans voiture, on se déplace mal, et certains services sont loin.
+
+Il n'existe pas de réponse universelle. Ce qui convient à une personne peut ne pas convenir à une autre.
+
+Peut-être que l'essentiel n'est pas le lieu lui-même, mais l'accord entre cet endroit et la vie que l'on souhaite vraiment mener.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-007",
+    title: "Pourquoi lit-on encore des romans ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "À une époque où tout va vite, on pourrait croire que le roman est condamné.",
+    blurbEn:
+      "In a world of screens and short videos, why do people still spend hours with a novel? A reflection on what fiction gives that nothing else does.",
+    body: `À une époque où tout va vite, où les écrans proposent des vidéos de quelques secondes, on pourrait croire que le roman est condamné. Pourquoi passer des heures sur un livre alors que tant de distractions plus rapides existent ?
+
+Et pourtant, les gens continuent de lire. Chaque année, des millions de romans se vendent dans le monde. Ce succès mérite qu'on s'y intéresse.
+
+Le roman offre quelque chose de rare : le temps. Il nous oblige à ralentir, à suivre une histoire, à entrer dans la tête d'un personnage. Contrairement à une image, il ne montre pas tout ; il laisse le lecteur imaginer.
+
+Lire un roman, c'est aussi vivre, l'espace de quelques pages, une vie qui n'est pas la nôtre. On comprend mieux les autres lorsqu'on a partagé, même par la fiction, leurs doutes et leurs joies.
+
+Il se peut que la forme du livre change avec le temps. Mais le besoin de récits, lui, ne disparaîtra sans doute jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-008",
+    title: "Les réseaux sociaux et l'attention",
+    category: "science",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Les réseaux sociaux sont devenus une partie de notre quotidien.",
+    blurbEn:
+      "Why apps are designed to keep you scrolling, what that does to concentration, and small ways to take back control of your own attention.",
+    body: `Les réseaux sociaux sont devenus une partie de notre quotidien. Nous les consultons dans le bus, au réveil, parfois même au milieu d'une conversation. Ce comportement n'a rien de surprenant : ces applications sont conçues pour capter notre attention.
+
+Chaque notification, chaque nouvelle image nous pousse à rester un peu plus longtemps. Les entreprises qui créent ces outils étudient précisément ce qui nous retient. Plus nous passons de temps sur l'écran, plus elles gagnent d'argent.
+
+Le problème, c'est que notre capacité de concentration en souffre. Après avoir sauté d'une vidéo à l'autre pendant une heure, il devient difficile de lire un texte long ou de réfléchir calmement.
+
+Il ne s'agit pas de tout rejeter. Ces outils ont aussi des avantages réels. Mais il serait sage de reprendre un peu de contrôle : couper les notifications, poser son téléphone pendant les repas, choisir quand le regarder plutôt que de le subir.
+
+Notre attention est précieuse. Il vaut la peine de décider nous-mêmes à quoi nous la donnons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-009",
+    title: "Le sport de haut niveau et l'argent",
+    category: "sport",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Le sport professionnel n'a jamais brassé autant d'argent qu'aujourd'hui.",
+    blurbEn:
+      "Huge salaries and sponsorships have transformed elite sport. What is gained and lost when a game becomes a global business?",
+    body: `Le sport professionnel n'a jamais brassé autant d'argent qu'aujourd'hui. Les meilleurs joueurs gagnent des sommes énormes, et les grands clubs ressemblent de plus en plus à de véritables entreprises.
+
+Cette évolution a des côtés positifs. Grâce à cet argent, les compétitions sont mieux organisées, les stades plus modernes, et le spectacle plus impressionnant. De nombreux jeunes rêvent de devenir sportifs, et certains y parviennent.
+
+Cependant, tout n'est pas si simple. Lorsque l'argent domine, la passion passe parfois au second plan. On voit des clubs acheter des joueurs à des prix impossibles, pendant que de petites équipes peinent à survivre.
+
+Il est légitime de se demander jusqu'où cela peut aller. Le risque, c'est que le sport devienne un simple produit, où seul compte le résultat financier.
+
+Le défi des années à venir sera sans doute de garder l'équilibre : profiter de cet argent sans oublier ce qui, au départ, rend le sport si beau.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-010",
+    title: "La cuisine française à l'étranger",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "À l'étranger, on trouve des restaurants français dans presque toutes les grandes villes.",
+    blurbEn:
+      "French dishes served abroad are often not quite what a French person would recognise. A betrayal, or simply how food travels and lives?",
+    body: `À l'étranger, on trouve des restaurants français dans presque toutes les grandes villes. Pourtant, ce qu'on y sert ne ressemble pas toujours à ce qu'un Français mangerait chez lui.
+
+Les plats sont souvent adaptés au goût local. Une recette peut devenir plus sucrée, plus épicée ou plus copieuse, selon le pays. Certains puristes s'en indignent : pour eux, il s'agit presque d'une trahison.
+
+On peut pourtant voir les choses autrement. Une cuisine qui voyage est une cuisine vivante. En passant d'un pays à l'autre, un plat se transforme, se mélange à d'autres traditions et donne parfois naissance à quelque chose de nouveau.
+
+Après tout, la cuisine française elle-même s'est construite au fil des siècles, en empruntant des produits et des idées venus d'ailleurs.
+
+Il n'est donc pas nécessaire qu'un plat reste identique pour qu'il ait de la valeur. Ce qui compte, c'est peut-être moins la fidélité à une recette que le plaisir qu'on éprouve à la table.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-011",
+    title: "Faut-il avoir peur des microbes ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Lorsqu'on entend le mot « microbe », on pense aussitôt à la maladie.",
+    blurbEn:
+      "Not all bacteria are enemies. How the microbes living in and on us keep us healthy — and why too much cleanliness can backfire.",
+    body: `Lorsqu'on entend le mot « microbe », on pense aussitôt à la maladie. Pourtant, la grande majorité des micro-organismes qui nous entourent ne sont pas dangereux, et beaucoup nous sont même indispensables.
+
+Notre corps abrite des milliards de bactéries, en particulier dans l'intestin. Loin de nous nuire, elles nous aident à digérer, à nous défendre contre certaines maladies et à rester en bonne santé.
+
+Depuis quelques années, les scientifiques s'y intéressent de près. Ils ont découvert que l'équilibre de ces bactéries jouait un rôle bien plus grand qu'on ne le croyait.
+
+Ce savoir change notre regard sur la propreté. Se laver reste évidemment important. Mais vouloir tout désinfecter en permanence peut se retourner contre nous, car cela détruit aussi de bonnes bactéries.
+
+Il ne faut donc pas avoir peur des microbes en général. Le véritable enjeu n'est pas de tous les éliminer, mais d'apprendre à vivre avec eux dans un juste équilibre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-012",
+    title: "Le minimalisme, mode ou choix ?",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Depuis quelques années, le minimalisme est à la mode.",
+    blurbEn:
+      "Owning less has become fashionable. The writer, once sceptical, asks whether minimalism is a real philosophy or just another thing to buy into.",
+    body: `Depuis quelques années, le minimalisme est à la mode. Des livres, des vidéos et des articles nous invitent à posséder moins d'objets pour vivre mieux. J'ai longtemps regardé cette tendance avec méfiance.
+
+Au début, elle me semblait un peu artificielle. Comment un magazine pouvait-il, à la fois, me vendre des produits et me conseiller d'en acheter moins ? Il y avait là une contradiction évidente.
+
+Puis j'ai fait un simple test : j'ai trié mes affaires et donné ce que je n'utilisais plus. À ma grande surprise, je me suis senti plus léger. Un logement moins encombré est aussi, d'une certaine façon, un esprit plus tranquille.
+
+Je ne crois pas pour autant qu'il faille tomber dans l'excès. Vivre presque sans rien n'a rien d'un idéal en soi.
+
+Le minimalisme n'est peut-être ni une mode ni une philosophie, mais une question toute simple : de quoi ai-je vraiment besoin pour être bien ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-013",
+    title: "Les langues régionales de France",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "On pense souvent que l'on parle une seule langue en France : le français.",
+    blurbEn:
+      "Breton, Occitan, Alsatian and more: France has many regional languages, long discouraged and now fragile. Can they still be saved?",
+    body: `On pense souvent que l'on parle une seule langue en France : le français. En réalité, le pays compte de nombreuses langues régionales, comme le breton, l'occitan, le corse ou l'alsacien.
+
+Pendant longtemps, ces langues ont été découragées, surtout à l'école. On demandait aux enfants de parler uniquement le français, et beaucoup de familles ont cessé de transmettre la langue de leurs grands-parents.
+
+Résultat : aujourd'hui, la plupart de ces langues sont fragiles. Certaines ne sont plus parlées que par des personnes âgées, et risquent de disparaître dans les décennies à venir.
+
+Pourtant, un mouvement inverse existe. Des écoles proposent un enseignement dans ces langues, et de jeunes parents choisissent d'y inscrire leurs enfants. Des chanteurs, des écrivains les font vivre autrement.
+
+Sauver une langue n'est jamais facile, car il ne suffit pas de l'étudier : il faut qu'elle soit parlée au quotidien. Mais tant que des gens y tiennent, rien n'est vraiment perdu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-014",
+    title: "L'eau, une ressource fragile",
+    category: "science",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Quand on ouvre le robinet, l'eau coule sans effort, et l'on oublie facilement qu'il s'agit d'une ressource limitée.",
+    blurbEn:
+      "Fresh water can feel unlimited from a tap, but it isn't. Why shortages are spreading and why the way we use water must change.",
+    body: `Quand on ouvre le robinet, l'eau coule sans effort, et l'on oublie facilement qu'il s'agit d'une ressource limitée. Sur l'ensemble de la planète, l'eau douce, celle que nous pouvons boire, représente une très petite partie de toute l'eau existante.
+
+Pendant longtemps, dans les pays riches, on a considéré cette ressource comme presque infinie. Mais les choses changent. Les périodes de sécheresse deviennent plus fréquentes, et certaines régions manquent d'eau à certains moments de l'année.
+
+L'agriculture, l'industrie et les villes en consomment d'énormes quantités. Il ne serait pas raisonnable de continuer comme si de rien n'était.
+
+Réduire le gaspillage est possible à tous les niveaux : réparer les fuites, arroser moins, choisir des cultures adaptées au climat.
+
+Il est encore temps d'agir, mais à condition de prendre le problème au sérieux dès maintenant. L'eau paraît ordinaire justement parce qu'elle est essentielle ; c'est peut-être pour cela qu'on la protège trop peu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-015",
+    title: "Marcher, le sport le plus simple",
+    category: "sport",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Parmi tous les sports, il en existe un que l'on néglige souvent, parce qu'il paraît trop simple : la marche.",
+    blurbEn:
+      "No gym, no gear, no cost: walking may be the most underrated exercise there is. The case for putting one foot in front of the other.",
+    body: `Parmi tous les sports, il en existe un que l'on néglige souvent, parce qu'il paraît trop simple : la marche. Pas besoin de matériel, d'abonnement ni de talent particulier. Il suffit de mettre un pied devant l'autre.
+
+Pourtant, ses bienfaits sont réels. Marcher régulièrement est bon pour le cœur, aide à garder la forme et réduit le stress. Contrairement à des sports plus intenses, la marche ne présente presque aucun risque, et convient à tous les âges.
+
+Elle a aussi un avantage que d'autres activités n'ont pas : on peut l'intégrer facilement à sa journée. Descendre un arrêt plus tôt, prendre l'escalier, faire une petite promenade après le déjeuner — ces gestes finissent par compter.
+
+Marcher offre enfin un temps rare : celui où l'on ne fait rien d'autre que réfléchir, ou simplement observer ce qui nous entoure.
+
+Il n'est donc pas nécessaire de courir un marathon pour prendre soin de soi. Parfois, il suffit de marcher.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
