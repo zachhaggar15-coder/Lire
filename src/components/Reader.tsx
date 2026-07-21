@@ -23,7 +23,6 @@ import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildContextualTranslation } from "@/lib/dictionary/contextualTranslation";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import {
-  buildInterlinearTranslationChunks,
   findNaturalTranslationForToken,
   isWordScopedAlignment,
   type ResolvedTranslationAlignment,
@@ -72,6 +71,8 @@ import {
   getOrCreateComprehensionQuestionBundle,
   type ComprehensionQuestionBundle,
 } from "@/lib/comprehensionCache";
+import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
+import LessonCompleteScreen from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -207,6 +208,13 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [quickChallengeAnswer, setQuickChallengeAnswer] = useState<string | null>(null);
   const [inferenceStats, setInferenceStats] = useState({ attempted: 0, correct: 0 });
   const [completionResult, setCompletionResult] = useState<ArticleCompletionRecord | null>(null);
+  /** When set, the full-screen "lesson complete" celebration is shown over the reader. */
+  const [lessonComplete, setLessonComplete] = useState<{
+    scoreChange: LevelScoreChange;
+    percentRead: number;
+    wordsTapped: number;
+    savedWords: number;
+  } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -1109,8 +1117,44 @@ export default function Reader({ text }: { text: ReadingText }) {
       challengeBudget,
     });
     setCompletionResult(result);
-    if (result.xpEarned > 0) showToast(`+${result.xpEarned} XP`);
     setStatus("completed");
+
+    // Per-level score + the full-screen celebration. The score is tied to the
+    // text's stored level (the one on the card and the filter), so "B1 score"
+    // means the B1 track. Re-reads award nothing (levelPointsForCompletion).
+    const wordsTapped = getWordTapsForArticle(text.id).length;
+    const points = levelPointsForCompletion({
+      savedWords: articleSavedWordCount,
+      wordsTapped,
+      comprehensionCorrect,
+      comprehensionTotal: comprehensionItems.length,
+      alreadyCompleted: wasAlreadyCompleted,
+    });
+    const scoreChange = addLevelScore(text.difficulty, points);
+    setLessonComplete({
+      scoreChange,
+      // A short lesson that fits on one screen never fires a scroll event, so
+      // treat "no scroll recorded" as fully read rather than 0%.
+      percentRead: Math.min(100, Math.round(maxProgressPercent.current) || 100),
+      wordsTapped,
+      savedWords: articleSavedWordCount,
+    });
+  }
+
+  function handleLessonCompleteContinue() {
+    // Return to where the lesson was opened from — the article tab by default,
+    // or home if that's where the reader was entered from.
+    let target = "/articles";
+    if (typeof document !== "undefined") {
+      try {
+        const ref = new URL(document.referrer);
+        if (ref.origin === window.location.origin && ref.pathname === "/") target = "/";
+      } catch {
+        // no usable referrer; keep the default
+      }
+    }
+    setLessonComplete(null);
+    router.push(target);
   }
 
   function handleContinueLesson() {
@@ -1443,45 +1487,6 @@ export default function Reader({ text }: { text: ReadingText }) {
     return renderSentenceFrame(sg, key, renderTokenNodes(sg));
   }
 
-  function renderInterlinearSentence(sg: SentenceGroup, key: number, flatIndex: number) {
-    const sentenceTranslation = sentenceTranslationForDisplay(flatIndex);
-    const chunks = buildInterlinearTranslationChunks(sg.tokens, fluentAlignments?.[flatIndex], sentenceTranslation);
-
-    return renderSentenceFrame(
-      sg,
-      key,
-      <span className="inline align-baseline">
-        {chunks.map((chunk, chunkIndex) => {
-          const tokenNodes = renderTokenNodes(sg, chunk.startIndex, chunk.endIndex);
-          if (!chunk.english) return <span key={chunkIndex}>{tokenNodes}</span>;
-
-          const sentenceFallback = chunk.source === "sentence";
-          return (
-            <span
-              key={chunkIndex}
-              className={
-                sentenceFallback
-                  ? "my-1 inline-flex w-full max-w-full flex-col items-start align-top leading-tight"
-                  : "mx-[0.04em] inline-flex max-w-[9rem] flex-col items-center align-baseline leading-tight"
-              }
-            >
-              <span className="leading-[1.35]">{tokenNodes}</span>
-              <span
-                className={
-                  sentenceFallback
-                    ? "border-l-2 border-cream-dark pl-3 text-[0.75em] italic leading-snug text-ink-muted"
-                    : "text-center text-[0.58em] italic leading-tight text-ink-muted"
-                }
-              >
-                {chunk.english}
-              </span>
-            </span>
-          );
-        })}
-      </span>,
-      rereadMode ? "rounded" : "cursor-pointer rounded transition-colors active:bg-sky-100/60"
-    );
-  }
 
   return (
     <div className="px-4 pt-4">
@@ -1632,19 +1637,29 @@ export default function Reader({ text }: { text: ReadingText }) {
       >
         {visibleParagraphEntries.map(({ sentences, paragraphIndex }) =>
           showEnglishTranslation ? (
-            // Translated mode stays paragraph-first, but each French sentence
-            // now renders as interlinear word/phrase chunks so English appears
-            // as close as possible to the corresponding French.
+            // Translated mode is line-by-line interlinear: each French sentence
+            // keeps its own line (words still tappable), and the English for
+            // that sentence sits directly beneath it in the opened-up gap. This
+            // reads far more cleanly than stacking English under every word,
+            // which spread the French out and reflowed the paragraph.
             <div key={paragraphIndex} className="flex items-start gap-2">
               {paragraphAudioButton(paragraphTexts[paragraphIndex] ?? sentences.map((sg) => sg.text).join(" "), paragraphIndex)}
-              <p className="min-w-0 flex-1 leading-[2.25]">
-                  {sentences.map((sg, si) => (
-                    <Fragment key={si}>
-                      {renderInterlinearSentence(sg, si, paragraphBreakBeforeIndex[paragraphIndex] + si)}
-                      {si < sentences.length - 1 && " "}
-                    </Fragment>
-                  ))}
-              </p>
+              <div className="min-w-0 flex-1 space-y-5">
+                {sentences.map((sg, si) => {
+                  const flatIndex = paragraphBreakBeforeIndex[paragraphIndex] + si;
+                  const english = sentenceTranslationForDisplay(flatIndex);
+                  return (
+                    <div key={si}>
+                      <p className="leading-[1.7]">{renderSentenceSpan(sg, si)}</p>
+                      {english && (
+                        <p className="mt-1.5 border-l-2 border-brand/30 pl-3 text-[0.82em] italic leading-snug text-ink-muted">
+                          {english}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             // Normal reading layout: sentences flow together into one paragraph.
@@ -1958,6 +1973,19 @@ export default function Reader({ text }: { text: ReadingText }) {
             showToast("Marked phrase as known");
           }}
           onAiRequested={() => markAiSupportUsed("phrase")}
+        />
+      )}
+      {lessonComplete && (
+        <LessonCompleteScreen
+          level={text.difficulty}
+          scoreChange={lessonComplete.scoreChange}
+          stats={{
+            percentRead: lessonComplete.percentRead,
+            wordsTapped: lessonComplete.wordsTapped,
+            savedWords: lessonComplete.savedWords,
+          }}
+          isLesson={isStarterLesson}
+          onContinue={handleLessonCompleteContinue}
         />
       )}
       <Toast message={toastMessage} />

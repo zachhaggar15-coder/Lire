@@ -92,6 +92,7 @@ import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
+import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/levelScore.ts";
 import {
   buildCategoryProficiency,
   buildContextualReviewArticles,
@@ -301,6 +302,12 @@ console.log("\n--- Public-domain reading bank ---");
       `bank returned ${picks.map((text) => text.difficulty).join(",")}`
     );
   }
+  // Per-level completion score (drives the lesson-complete bar).
+  check("finishing a fresh lesson awards a base of 5", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 5);
+  check("saved words and taps add on top, capped", levelPointsForCompletion({ savedWords: 10, wordsTapped: 4, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 9, "5 + min(3,10) + 1");
+  check("a perfect comprehension check adds a bonus", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: false }) === 7);
+  check("re-reading a finished lesson awards nothing", levelPointsForCompletion({ savedWords: 5, wordsTapped: 5, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: true }) === 0);
+  check("band maths wrap at 100", bandProgress(120) === 0.2 && bandNumber(120) === 2 && bandProgress(0) === 0 && bandNumber(0) === 1);
   check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
   check(
     "exported public-domain articles strip generated extrait numbers from titles",

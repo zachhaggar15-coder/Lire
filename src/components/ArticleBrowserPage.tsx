@@ -465,7 +465,13 @@ function ArticleContent({
     if (starterFirst !== 0) return starterFirst;
     return Number(a.text.difficulty !== level) - Number(b.text.difficulty !== level);
   });
-  const [featured, ...rest] = orderedArticles;
+  // Feature the next unfinished lesson as the hero ("what's next"), but leave
+  // finished lessons where they are in the path so they show greyed rather than
+  // disappearing — the way a completed Duolingo lesson stays on the map.
+  const firstIncompleteIndex = orderedArticles.findIndex((a) => getProgress(a.text.id).status !== "completed");
+  const featuredIndex = firstIncompleteIndex === -1 ? 0 : firstIncompleteIndex;
+  const featured = orderedArticles[featuredIndex];
+  const rest = orderedArticles.filter((_, index) => index !== featuredIndex);
   const pathLessons = rest.slice(0, 5);
   const morePractice = rest.slice(5);
 
@@ -555,7 +561,9 @@ function LessonPathItem({ article, lessonNumber }: { article: ScoredArticle; les
   return (
     <Link
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-3 active:scale-[0.99]"
+      // Completed lessons stay tappable ("Read again") but dim back so the eye
+      // lands on what's next, the way a finished Duolingo lesson greys out.
+      className={`flex items-center gap-3 rounded-2xl bg-cream px-3 py-3 active:scale-[0.99] ${completed ? "opacity-55" : ""}`}
     >
       {/* Scene first, then the step number as a small badge over it: the list
           is scannable by picture, while the numbered path stays legible. */}
@@ -570,12 +578,20 @@ function LessonPathItem({ article, lessonNumber }: { article: ScoredArticle; les
         </span>
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-bold text-ink">{text.title}</span>
+        <span className={`block truncate text-sm font-bold ${completed ? "text-ink-muted line-through decoration-ink-muted/40" : "text-ink"}`}>
+          {text.title}
+        </span>
         <span className="mt-0.5 block truncate text-xs text-ink-muted">
-          {text.difficulty} - {text.minutes} min - {isStarterText(text) ? "Written for beginners" : "Reading practice"}
+          {completed ? "Completed" : `${text.difficulty} - ${text.minutes} min - ${isStarterText(text) ? "Written for beginners" : "Reading practice"}`}
         </span>
       </span>
-      <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{action}</span>
+      <span
+        className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${
+          completed ? "bg-cream-dark text-ink-muted" : "bg-brand-light text-brand"
+        }`}
+      >
+        {action}
+      </span>
     </Link>
   );
 }
