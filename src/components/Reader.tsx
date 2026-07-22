@@ -95,6 +95,21 @@ type TranslationState = "idle" | "loading" | "ready";
 /** How many paragraphs go in each translation request — small enough that the first chunk (typically what's on screen when the toggle is tapped) comes back in a couple of seconds instead of waiting for the whole article, large enough that each request still has some real context to work with. */
 const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
 
+function buildWordStatusMap(words: SavedWord[]): Map<string, WordStatus> {
+  const map = new Map<string, WordStatus>();
+  for (const word of words) {
+    map.set(word.word.toLowerCase(), word.status);
+    if (word.lemma) map.set(word.lemma.toLowerCase(), word.status);
+  }
+  return map;
+}
+
+function lookupWordStatus(map: Map<string, WordStatus>, word: string, lemma: string | null | undefined): WordStatus | null {
+  const wordKey = word.toLowerCase();
+  const lemmaKey = lemma?.toLowerCase() ?? null;
+  return map.get(wordKey) ?? (lemmaKey ? map.get(lemmaKey) ?? null : null);
+}
+
 function journeyMomentForCompletion(before: JourneyState | null, after: JourneyState | null, textId: string): JourneyMoment | null {
   if (!before || !after) return null;
   const beforeStage = before.stages.find((stage) => stage.stage.textIds.includes(textId));
@@ -495,7 +510,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   useEffect(() => {
     const known = new Set(getKnownWords());
     const savedWords = getSavedWords();
-    setWordStatusMap(new Map(savedWords.map((w) => [w.word, w.status])));
+    setWordStatusMap(buildWordStatusMap(savedWords));
     setSavedWordsSnapshot(savedWords);
     setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && word.status !== "known").length);
     setKnownSet(known);
@@ -837,6 +852,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     return findNaturalTranslationForToken(tokens, index, fluentAlignments?.[sentenceIndex]);
   }
 
+  function statusForWord(clean: string, lemma: string | null | undefined): WordStatus | null {
+    const lemmaKey = lemma?.toLowerCase() ?? null;
+    const known = knownSet.has(clean) || (!!lemmaKey && knownSet.has(lemmaKey));
+    if (known) return "known";
+    return lookupWordStatus(wordStatusMap, clean, lemmaKey);
+  }
+
   function handleWordTap(sentenceText: string, tokens: Token[], index: number) {
     if (rereadMode) return;
     const clean = tokens[index]?.clean;
@@ -859,8 +881,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       return;
     }
     const lemma = lookup.lemma?.toLowerCase();
-    const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
-    const existingStatus: WordStatus | null = known ? "known" : wordStatusMap.get(clean) ?? null;
+    const existingStatus = statusForWord(clean, lemma);
     const { previous, next } = neighbours(sentenceText);
     const contextualTranslation = buildContextualTranslation({
       tokens,
@@ -884,7 +905,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     wordLookupCount.current += 1;
     trackEvent("word_lookup_opened", {
       articleId: text.id,
-      knownBeforeTap: known,
+      knownBeforeTap: existingStatus === "known",
       dictionarySource: lookup.source,
     });
 
@@ -931,12 +952,20 @@ export default function Reader({ text }: { text: ReadingText }) {
       return;
     }
     recordLearningAction();
-    setWordStatusMap((prev) => new Map(prev).set(activeWord.word, "learning"));
+    const nextStatusMap = buildWordStatusMap(nextWords);
+    setWordStatusMap(nextStatusMap);
     setSavedWordsSnapshot(nextWords);
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     rememberWordSaved("tap_lookup");
     pulseRewardWords("saved", [activeWord.word, activeWord.lookup.lemma]);
-    setActiveWord((prev) => (prev ? { ...prev, existingStatus: "learning" } : prev));
+    setActiveWord((prev) =>
+      prev
+        ? {
+            ...prev,
+            existingStatus: lookupWordStatus(nextStatusMap, prev.word, prev.lookup.lemma) ?? "learning",
+          }
+        : prev
+    );
     showToast("Saved");
   }
 
@@ -993,11 +1022,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       if (lemma) next.add(lemma.toLowerCase());
       return next;
     });
-    setWordStatusMap((prev) => {
-      const next = new Map(prev);
-      next.delete(activeWord.word);
-      return next;
-    });
+    setWordStatusMap(buildWordStatusMap(nextWords));
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     pulseRewardWords("known", [activeWord.word, lemma]);
     setActiveWord(null);
@@ -1311,7 +1336,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     const clean = token.clean;
     const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
-    const known = knownSet.has(clean) || (!!lemma && knownSet.has(lemma));
+    const wordStatus = statusForWord(clean, lemma);
+    const known = wordStatus === "known";
     const recentlyKnown = recentKnownWords.has(clean) || (!!lemma && recentKnownWords.has(lemma));
     const recentlySaved = recentSavedWords.has(clean) || (!!lemma && recentSavedWords.has(lemma));
 
@@ -1328,7 +1354,6 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
 
     if (settings.showSavedHighlights) {
-      const wordStatus = wordStatusMap.get(clean);
       const missingUnderline =
         entry.source === "missing"
           ? " underline decoration-dashed decoration-ink-muted underline-offset-2"
@@ -1362,7 +1387,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     recordLearningAction();
     rememberWordSaved("candidate");
     setSavedWordsSnapshot(nextWords);
-    setWordStatusMap((prev) => new Map(prev).set(candidate.word, "learning"));
+    setWordStatusMap(buildWordStatusMap(nextWords));
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     pulseRewardWords("saved", [candidate.word, candidate.lemma]);
     showToast("Saved learning candidate");
