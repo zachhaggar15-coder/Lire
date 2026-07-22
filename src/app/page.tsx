@@ -164,7 +164,6 @@ export default function HomePage() {
           selectedLevel={selectedLevel}
           levelScore={levelScore}
           dueReviews={stats.dueReviews}
-          savedLearningItems={stats.savedWords + stats.savedPhrases}
           savedPhrases={stats.savedPhrases}
         />
       ) : (
@@ -193,7 +192,6 @@ function BeginnerHome({
   selectedLevel,
   levelScore,
   dueReviews,
-  savedLearningItems,
   savedPhrases,
 }: {
   completedArticleCount: number;
@@ -201,10 +199,8 @@ function BeginnerHome({
   selectedLevel: Difficulty;
   levelScore: number;
   dueReviews: number;
-  savedLearningItems: number;
   savedPhrases: number;
 }) {
-  const scoreFill = bandProgress(levelScore);
   return (
     <div className="space-y-4">
       {/* The primary card carries the scene for the lesson it launches, so
@@ -245,16 +241,6 @@ function BeginnerHome({
         </Link>
       </section>
 
-      <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
-        <div className="mt-3 grid gap-2">
-          <BeginnerStep done={completedArticleCount > 0} label={nextLesson ? `Continue ${nextLesson.stageLabel}` : "Finish one guided reading"} />
-          <BeginnerStep done={savedLearningItems > 0} label="Save one word or phrase" />
-          <BeginnerStep done={completedArticleCount > 1} label="Start the next lesson" />
-        </div>
-        <XPProgressBar value={scoreFill} label={`${selectedLevel} level score`} className="mt-4" />
-      </section>
-
       <div className="grid grid-cols-2 gap-2">
         <Link href="/articles#journey-current" className="rounded-2xl bg-cream-card px-3 py-3 text-center text-sm font-bold text-ink shadow-card active:scale-95">
           Lessons
@@ -277,17 +263,6 @@ function TrustNote({ label }: { label: string }) {
         OK
       </span>
       <span>{label}</span>
-    </div>
-  );
-}
-
-function BeginnerStep({ done, label }: { done: boolean; label: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-2xl bg-cream px-3 py-2">
-      <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${done ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
-        {done ? "OK" : ""}
-      </span>
-      <p className="text-sm font-semibold text-ink">{label}</p>
     </div>
   );
 }
