@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
-import { XPProgressBar } from "@/components/GamificationCards";
+import { StreakCard, XPProgressBar } from "@/components/GamificationCards";
+import { getCurrentStreak, getLongestStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 import BetaNotice from "@/components/BetaNotice";
 import type { Difficulty } from "@/types";
@@ -50,6 +51,12 @@ export default function HomePage() {
   const [completedArticleCount, setCompletedArticleCount] = useState(0);
   const [nextLesson, setNextLesson] = useState<NextLesson | null>(null);
   const [levelScore, setLevelScore] = useState(0);
+  const [streak, setStreak] = useState<{ current: number; longest: number; activeToday: boolean; week: StreakDay[] }>({
+    current: 0,
+    longest: 0,
+    activeToday: false,
+    week: [],
+  });
 
   const nextStarterLesson = useCallback((level: Difficulty) => {
     const bank = getLessonPathTexts({ level, category: "all", limit: 20 });
@@ -86,6 +93,12 @@ export default function HomePage() {
     setLevelScore(getLevelScore(level));
     setCompletedArticleCount(validation.completedArticleCount);
     setNextLesson(nextStarterLesson(level));
+    setStreak({
+      current: getCurrentStreak(),
+      longest: getLongestStreak(),
+      activeToday: isActiveToday(),
+      week: getStreakWeek(),
+    });
     setStats({
       knownWords: getKnownWords().length,
       savedWords: savedWords.filter((word) => word.status !== "known").length,
@@ -141,6 +154,8 @@ export default function HomePage() {
           {selectedLevel}
         </Link>
       </header>
+
+      <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
 
       {completedArticleCount < 3 ? (
         <BeginnerHome
@@ -302,7 +317,6 @@ function DashboardCard({
   const dueMissions = progressSnapshot?.missions.filter((mission) => !mission.completed).length ?? 0;
   const totalXp = progressSnapshot?.level.totalXp ?? 0;
   const progress = progressSnapshot?.level.progress ?? 0;
-  const streak = progressSnapshot?.currentStreak ?? 0;
   const levelScoreProgress = bandProgress(levelScore);
 
   const links = [
@@ -342,7 +356,7 @@ function DashboardCard({
           <XPProgressBar value={nextLesson.unitProgress} label={nextLesson.unitProgressLabel} className="mt-3" />
         )}
         <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-          <Metric label="Streak" value={streak} />
+          <Metric label="Saved" value={stats.savedWords} />
           <Metric label={`${selectedLevel} score`} value={levelScore} />
           <Metric label="Due" value={stats.dueReviews} />
         </div>

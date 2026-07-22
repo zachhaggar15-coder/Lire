@@ -72,6 +72,7 @@ import {
   type ComprehensionQuestionBundle,
 } from "@/lib/comprehensionCache";
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
+import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import LessonCompleteScreen, { type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -215,6 +216,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     wordsTapped: number;
     savedWords: number;
     reviewItems: LessonMiniReviewItem[];
+    streak: { count: number; extended: boolean; week: StreakDay[] };
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -1111,6 +1113,10 @@ export default function Reader({ text }: { text: ReadingText }) {
       : [];
     const comprehensionCorrect = comprehensionItems.filter(Boolean).length;
     const phraseCount = getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === text.title).length;
+    // Capture whether today already counted before markCompleted records
+    // activity, so the completion screen knows if *this* finish extended the
+    // streak (a celebration) versus just kept an already-earned day.
+    const streakExtendedByThis = !isActiveToday();
     markCompleted(text.id);
     recordTranslationBudgetResult({
       articleId: text.id,
@@ -1198,6 +1204,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       wordsTapped,
       savedWords: articleSavedWordCount,
       reviewItems: buildLessonMiniReviewItems(),
+      streak: { count: getCurrentStreak(), extended: streakExtendedByThis, week: getStreakWeek() },
     });
   }
 
@@ -2045,6 +2052,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             savedWords: lessonComplete.savedWords,
           }}
           reviewItems={lessonComplete.reviewItems}
+          streak={lessonComplete.streak}
           isLesson={isStarterLesson}
           onContinue={handleLessonCompleteContinue}
         />

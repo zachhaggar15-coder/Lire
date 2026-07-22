@@ -10,6 +10,8 @@ import {
   type LevelScoreChange,
   type LevelScores,
 } from "@/lib/levelScore";
+import type { StreakDay } from "@/lib/habit";
+import { StreakFlame, StreakWeekStrip } from "@/components/GamificationCards";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -23,6 +25,7 @@ interface LessonCompleteScreenProps {
   scoreChange: LevelScoreChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
+  streak: { count: number; extended: boolean; week: StreakDay[] };
   isLesson: boolean;
   onContinue: () => void;
 }
@@ -36,7 +39,7 @@ interface LessonCompleteScreenProps {
  * fills the remainder — so crossing a milestone reads as a milestone rather
  * than the bar jumping backwards. "Continue" returns to the article tab.
  */
-export default function LessonCompleteScreen({ level, scoreChange, stats, reviewItems, isLesson, onContinue }: LessonCompleteScreenProps) {
+export default function LessonCompleteScreen({ level, scoreChange, stats, reviewItems, streak, isLesson, onContinue }: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -123,6 +126,30 @@ export default function LessonCompleteScreen({ level, scoreChange, stats, review
               <p className="mt-0.5 text-xs font-semibold uppercase tracking-wide text-ink-muted">{item.label}</p>
             </div>
           ))}
+        </div>
+
+        {/* Streak — the Duolingo moment: extending it is a small celebration. */}
+        <div className="mt-4 rounded-card bg-cream-card p-4 shadow-card">
+          <div className="flex items-center gap-3">
+            <div className={`lesson-complete-flame flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${streak.count > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
+              <StreakFlame active={streak.count > 0} className="h-7 w-7" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="flex items-center gap-2">
+                <span className="text-2xl font-extrabold leading-none text-ink tabular-nums">{streak.count}</span>
+                <span className="text-sm font-bold text-ink-muted">{streak.count === 1 ? "day streak" : "day streak"}</span>
+                {streak.extended && (
+                  <span className="lesson-complete-delta rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-700">
+                    {streak.count === 1 ? "Streak started!" : "+1 day"}
+                  </span>
+                )}
+              </p>
+              <p className="mt-0.5 text-xs text-ink-muted">
+                {streak.extended ? "You kept the fire going today." : "You'd already read today — nice."}
+              </p>
+            </div>
+          </div>
+          <StreakWeekStrip week={streak.week} className="mt-4" />
         </div>
 
         {reviewItems.length > 0 && (

@@ -67,6 +67,50 @@ export function getCurrentStreak(now: Date = new Date()): number {
   return streak;
 }
 
+/** Has a meaningful action already been recorded for today? Drives the "you've read today" state of the streak flame. */
+export function isActiveToday(now: Date = new Date()): boolean {
+  return new Set(getActivityDates()).has(dateKey(now));
+}
+
+export interface StreakDay {
+  dateKey: string;
+  /** Single-letter weekday label (Mon-first), e.g. "M", "T", "W". */
+  weekdayLabel: string;
+  active: boolean;
+  isToday: boolean;
+  isFuture: boolean;
+}
+
+/**
+ * The seven days of the current week (Monday-first), each flagged with whether
+ * it had activity — the row of day circles under the streak flame, the way
+ * Duolingo shows the week at a glance. Keyed to the same activity log the
+ * streak count uses, so the flames and the number never disagree.
+ */
+export function getStreakWeek(now: Date = new Date()): StreakDay[] {
+  const active = new Set(getActivityDates());
+  const todayKey = dateKey(now);
+  const mondayOffset = (now.getDay() + 6) % 7; // getDay(): 0 = Sunday
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - mondayOffset);
+
+  const labels = ["M", "T", "W", "T", "F", "S", "S"];
+  const week: StreakDay[] = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + i);
+    const key = dateKey(day);
+    week.push({
+      dateKey: key,
+      weekdayLabel: labels[i],
+      active: active.has(key),
+      isToday: key === todayKey,
+      isFuture: key > todayKey,
+    });
+  }
+  return week;
+}
+
 export function getLongestStreak(): number {
   const sorted = [...new Set(getActivityDates())].sort();
   let longest = 0;

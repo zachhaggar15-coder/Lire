@@ -101,6 +101,7 @@ import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/levelScore.ts";
+import { getStreakWeek } from "../src/lib/habit.ts";
 import {
   buildCategoryProficiency,
   buildContextualReviewArticles,
@@ -328,6 +329,12 @@ console.log("\n--- Public-domain reading bank ---");
   check("a perfect comprehension check adds a bonus", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: false }) === 7);
   check("re-reading a finished lesson awards nothing", levelPointsForCompletion({ savedWords: 5, wordsTapped: 5, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: true }) === 0);
   check("band maths wrap at 100", bandProgress(120) === 0.2 && bandNumber(120) === 2 && bandProgress(0) === 0 && bandNumber(0) === 1);
+  // Streak week strip (Monday-first, exactly one "today", days after today are future).
+  const week = getStreakWeek(new Date("2026-02-04T12:00:00Z")); // a Wednesday
+  const todayIndex = week.findIndex((d) => d.isToday);
+  check("streak week has seven Monday-first days", week.length === 7 && week.map((d) => d.weekdayLabel).join("") === "MTWTFSS");
+  check("streak week marks exactly one day as today", week.filter((d) => d.isToday).length === 1);
+  check("streak week flags days after today as future, earlier days as past", week.every((d, i) => d.isFuture === i > todayIndex));
   check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
   check(
     "exported public-domain articles strip generated extrait numbers from titles",

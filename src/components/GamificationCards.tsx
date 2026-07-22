@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { StreakDay } from "@/lib/habit";
 import type {
   AchievementStatus,
   ArticleCompletionRecord,
@@ -64,6 +65,99 @@ export function StreakEmber({
         {detail && <p className="mt-0.5 text-xs text-ink-muted">{detail}</p>}
       </div>
     </div>
+  );
+}
+
+/** The flame that carries the streak. Amber when the streak is alive, grey when it's at zero. */
+export function StreakFlame({ active, className = "h-6 w-6" }: { active: boolean; className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        d="M12 2c.5 3-1.8 4.4-3.2 6.1C7.3 9.8 6.5 11.6 6.5 13.5A5.5 5.5 0 0 0 17.5 13.5c0-1.6-.6-2.9-1.6-4.2-.4 1-1.2 1.7-2.2 1.9.8-2.1.4-4.4-1.7-6.2C11.4 4.2 11.9 3 12 2Z"
+        className={active ? "fill-amber-500" : "fill-cream-dark"}
+      />
+      {active && (
+        <path
+          d="M12 10.5c1.2 1 1.9 2 1.9 3.2A1.9 1.9 0 0 1 10.1 13.7c0-.7.3-1.3.8-1.9.3.5.7.8 1.1.9-.3-.8-.2-1.5 0-2.2Z"
+          className="fill-amber-200"
+        />
+      )}
+    </svg>
+  );
+}
+
+/** Row of seven day-dots for the current week, flames on the days with activity — the Duolingo week glance. */
+export function StreakWeekStrip({ week, className = "" }: { week: StreakDay[]; className?: string }) {
+  return (
+    <div className={`flex items-end justify-between gap-1 ${className}`}>
+      {week.map((day) => (
+        <div key={day.dateKey} className="flex flex-1 flex-col items-center gap-1">
+          <span className={`text-[0.7rem] font-bold ${day.isToday ? "text-brand" : "text-ink-muted"}`}>{day.weekdayLabel}</span>
+          <div
+            className={`flex h-8 w-8 items-center justify-center rounded-full ${
+              day.active ? "bg-amber-100" : "bg-cream-dark/60"
+            } ${day.isToday ? "ring-2 ring-brand" : ""} ${day.isFuture ? "opacity-40" : ""}`}
+            aria-label={`${day.weekdayLabel}${day.active ? " active" : ""}`}
+          >
+            {day.active ? (
+              <StreakFlame active className="h-5 w-5" />
+            ) : (
+              <span className={`h-2 w-2 rounded-full ${day.isFuture ? "bg-transparent" : "bg-ink-muted/40"}`} />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Prominent home-page streak card, Duolingo-style: a big flame with the day
+ * count, the week strip beneath, and a line that nudges the reader to keep it
+ * alive. `activeToday` drives the copy — "read today" vs "read to keep it".
+ */
+export function StreakCard({
+  streak,
+  longest,
+  week,
+  activeToday,
+}: {
+  streak: number;
+  longest: number;
+  week: StreakDay[];
+  activeToday: boolean;
+}) {
+  const message =
+    streak === 0
+      ? "Read anything today to start a streak."
+      : activeToday
+        ? streak === 1
+          ? "Day one done — come back tomorrow to build it."
+          : "You've read today. Nice — keep it going tomorrow."
+        : "Read one lesson today to keep your streak alive.";
+
+  return (
+    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
+      <div className="flex items-center gap-3">
+        <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${streak > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
+          <StreakFlame active={streak > 0} className="h-8 w-8" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="flex items-baseline gap-1.5">
+            <span className="text-3xl font-extrabold leading-none text-ink tabular-nums">{streak}</span>
+            <span className="text-sm font-bold text-ink-muted">{streak === 1 ? "day streak" : "day streak"}</span>
+          </p>
+          <p className="mt-1 text-xs text-ink-muted">{message}</p>
+        </div>
+        {longest > 0 && (
+          <div className="shrink-0 text-right">
+            <p className="text-lg font-extrabold leading-none text-ink tabular-nums">{longest}</p>
+            <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-ink-muted">best</p>
+          </div>
+        )}
+      </div>
+      <StreakWeekStrip week={week} className="mt-4" />
+    </section>
   );
 }
 
