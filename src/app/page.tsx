@@ -147,12 +147,15 @@ export default function HomePage() {
           <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
           <p className="text-sm text-ink-muted">Today</p>
         </div>
-        <Link
-          href="/settings"
-          className="rounded-full bg-cream-card px-3 py-2 text-xs font-bold text-ink-muted shadow-card active:scale-95"
-        >
-          {selectedLevel}
-        </Link>
+        <div className="flex items-center gap-2">
+          <HeaderLevelProgress selectedLevel={selectedLevel} levelScore={levelScore} />
+          <Link
+            href="/settings"
+            className="rounded-full bg-cream-card px-3 py-2 text-xs font-bold text-ink-muted shadow-card active:scale-95"
+          >
+            {selectedLevel}
+          </Link>
+        </div>
       </header>
 
       <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
@@ -162,7 +165,6 @@ export default function HomePage() {
           completedArticleCount={completedArticleCount}
           nextLesson={nextLesson}
           selectedLevel={selectedLevel}
-          levelScore={levelScore}
           dueReviews={stats.dueReviews}
           savedPhrases={stats.savedPhrases}
         />
@@ -190,14 +192,12 @@ function BeginnerHome({
   completedArticleCount,
   nextLesson,
   selectedLevel,
-  levelScore,
   dueReviews,
   savedPhrases,
 }: {
   completedArticleCount: number;
   nextLesson: NextLesson | null;
   selectedLevel: Difficulty;
-  levelScore: number;
   dueReviews: number;
   savedPhrases: number;
 }) {
@@ -223,12 +223,6 @@ function BeginnerHome({
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Current stage</p>
           <p className="mt-1 text-sm font-semibold text-ink">{nextLesson?.detail ?? "Guided reading"}</p>
           <XPProgressBar value={nextLesson?.stageProgress ?? 0} label={nextLesson?.stageProgressLabel ?? "Journey progress"} className="mt-3" />
-        </div>
-        <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
-          <TrustNote label={`Written for ${nextLesson?.level ?? selectedLevel} learners`} />
-          <TrustNote label={`${selectedLevel} score: ${levelScore} points, tier ${bandNumber(levelScore)}`} />
-          <TrustNote label="Your saved words stay on this device" />
-          <TrustNote label="AI help is optional" />
         </div>
         <Link
           href={nextLesson?.href ?? "/articles"}
@@ -256,13 +250,24 @@ function BeginnerHome({
   );
 }
 
-function TrustNote({ label }: { label: string }) {
+function HeaderLevelProgress({ selectedLevel, levelScore }: { selectedLevel: Difficulty; levelScore: number }) {
+  const percent = Math.max(0, Math.min(100, Math.round(bandProgress(levelScore) * 100)));
   return (
-    <div className="flex items-center gap-2 rounded-2xl bg-cream px-3 py-2">
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-light text-xs font-bold text-brand">
-        OK
-      </span>
-      <span>{label}</span>
+    <div className="w-24 sm:w-28">
+      <div className="mb-1 flex items-center justify-between gap-2 text-[0.65rem] font-bold uppercase leading-none text-ink-muted">
+        <span>{levelScore} XP</span>
+        <span>T{bandNumber(levelScore)}</span>
+      </div>
+      <div
+        className="h-2 overflow-hidden rounded-full bg-cream-dark shadow-inner"
+        role="progressbar"
+        aria-label={`${selectedLevel} XP progress`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={percent}
+      >
+        <div className="h-full rounded-full bg-brand transition-[width] duration-700" style={{ width: `${percent}%` }} />
+      </div>
     </div>
   );
 }
