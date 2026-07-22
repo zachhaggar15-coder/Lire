@@ -37,8 +37,16 @@ import { buildScoringContext } from "../src/lib/recommendation/context.ts";
 import { rankArticles } from "../src/lib/recommendation/score.ts";
 import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { texts as readingTexts } from "../src/data/texts.ts";
+import { starterTexts } from "../src/data/starterTexts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
+import {
+  getLessonPathTexts,
+  getLessonUnitProgress,
+  getLessonUnits,
+  lessonNumberInUnit,
+  lessonUnitForText,
+} from "../src/lib/lessonUnits.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
 import {
@@ -302,6 +310,18 @@ console.log("\n--- Public-domain reading bank ---");
       `bank returned ${picks.map((text) => text.difficulty).join(",")}`
     );
   }
+  for (const requestedLevel of ["A1", "A2", "B1", "B2"]) {
+    const newsCount = starterTexts.filter((text) => text.difficulty === requestedLevel && text.category === "news-style").length;
+    check(`starter news unit has at least five ${requestedLevel} texts`, newsCount >= 5, `${requestedLevel} news count ${newsCount}`);
+  }
+  const a1Units = getLessonUnits("A1");
+  const a1NewsUnit = getLessonUnits("A1", "news-style")[0];
+  const a1NewsProgress = getLessonUnitProgress(a1NewsUnit);
+  const a1Path = getLessonPathTexts({ level: "A1", category: "news-style", limit: 3 });
+  check("A1 lesson units include named category paths", a1Units.length === 5 && a1Units.every((unit) => unit.title && unit.goal));
+  check("news unit progress counts its own starter texts", a1NewsProgress.total >= 5 && a1NewsProgress.nextText?.category === "news-style");
+  check("lesson path follows unit order", a1Path.length === 3 && a1Path.every((text) => text.category === "news-style") && lessonNumberInUnit(a1Path[1]) === lessonNumberInUnit(a1Path[0]) + 1);
+  check("lessonUnitForText maps starter text to a named unit", lessonUnitForText(a1Path[0])?.title === a1NewsUnit.title);
   // Per-level completion score (drives the lesson-complete bar).
   check("finishing a fresh lesson awards a base of 5", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 5);
   check("saved words and taps add on top, capped", levelPointsForCompletion({ savedWords: 10, wordsTapped: 4, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 9, "5 + min(3,10) + 1");
@@ -319,7 +339,7 @@ console.log("\n--- Public-domain reading bank ---");
     limit: DAILY_BANK_ARTICLE_LIMIT * 3,
     date: new Date("2026-07-16T12:00:00Z"),
   })
-    .filter((text) => text.category !== "news-style")
+    .filter((text) => text.category !== "news-style" || text.id.startsWith("starter-"))
     .slice(0, DAILY_BANK_ARTICLE_LIMIT);
   const articleTabSections = buildSections(
     rankArticles(buildScorableArticles(articleTabDaily, new Set()), buildScoringContext(new Date("2026-07-16T12:00:00Z")))

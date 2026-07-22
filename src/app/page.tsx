@@ -9,14 +9,15 @@ import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 import BetaNotice from "@/components/BetaNotice";
 import type { Difficulty } from "@/types";
 import { buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
+import { bandNumber, bandProgress, getLevelScore } from "@/lib/levelScore";
 import { getKnownWords } from "@/lib/knownWords";
 import { getOnboardingState, getSelectedReadingLevel } from "@/lib/onboarding";
 import { getReviewStats } from "@/lib/spacedRepetition";
 import { getSavedWords } from "@/lib/storage";
 import { getSavedPhrases } from "@/lib/phrases";
 import { getValidationState } from "@/lib/validation/state";
+import { getLessonPathTexts, getLessonUnitProgress, lessonUnitForText } from "@/lib/lessonUnits";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
-import { getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import { getProgress } from "@/lib/progress";
 import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
@@ -29,6 +30,11 @@ type NextLesson = {
   detail: string;
   sentenceCount: number;
   level: Difficulty;
+  unitTitle: string | null;
+  unitGoal: string | null;
+  unitOrder: number | null;
+  unitProgress: number;
+  unitProgressLabel: string | null;
 };
 
 export default function HomePage() {
@@ -43,11 +49,14 @@ export default function HomePage() {
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [completedArticleCount, setCompletedArticleCount] = useState(0);
   const [nextLesson, setNextLesson] = useState<NextLesson | null>(null);
+  const [levelScore, setLevelScore] = useState(0);
 
   const nextStarterLesson = useCallback((level: Difficulty) => {
-    const bank = getDailyBankTexts({ level, category: "all", limit: 20 }).filter(isStarterText);
+    const bank = getLessonPathTexts({ level, category: "all", limit: 20 });
     const text = bank.find((item) => getProgress(item.id).status !== "completed") ?? bank[0];
     if (!text) return null;
+    const unit = lessonUnitForText(text);
+    const unitProgress = unit ? getLessonUnitProgress(unit) : null;
     return {
       id: text.id,
       category: text.category,
@@ -56,6 +65,11 @@ export default function HomePage() {
       detail: `${text.difficulty} - ${text.minutes} min`,
       sentenceCount: tokenizeParagraphsToSentences(text.body).flat().length,
       level: text.difficulty,
+      unitTitle: unit?.title ?? null,
+      unitGoal: unit?.goal ?? null,
+      unitOrder: unit?.order ?? null,
+      unitProgress: unitProgress && unitProgress.total > 0 ? unitProgress.completed / unitProgress.total : 0,
+      unitProgressLabel: unitProgress ? `${unitProgress.completed}/${unitProgress.total} complete` : null,
     };
   }, []);
 
@@ -69,6 +83,7 @@ export default function HomePage() {
     setOnboardingComplete(onboarding?.completed === true);
     setSelectedLevel(level);
     setProgressSnapshot(buildProgressSnapshot(savedWords));
+    setLevelScore(getLevelScore(level));
     setCompletedArticleCount(validation.completedArticleCount);
     setNextLesson(nextStarterLesson(level));
     setStats({
@@ -132,13 +147,20 @@ export default function HomePage() {
           completedArticleCount={completedArticleCount}
           nextLesson={nextLesson}
           selectedLevel={selectedLevel}
+          levelScore={levelScore}
           dueReviews={stats.dueReviews}
           savedLearningItems={stats.savedWords + stats.savedPhrases}
           savedPhrases={stats.savedPhrases}
         />
       ) : (
         <>
-          <DashboardCard progressSnapshot={progressSnapshot} selectedLevel={selectedLevel} stats={stats} />
+          <DashboardCard
+            progressSnapshot={progressSnapshot}
+            selectedLevel={selectedLevel}
+            stats={stats}
+            nextLesson={nextLesson}
+            levelScore={levelScore}
+          />
           <ContinueReadingBanner />
           <div className="mb-5">
             <BetaNotice />
@@ -154,6 +176,7 @@ function BeginnerHome({
   completedArticleCount,
   nextLesson,
   selectedLevel,
+  levelScore,
   dueReviews,
   savedLearningItems,
   savedPhrases,
@@ -161,12 +184,14 @@ function BeginnerHome({
   completedArticleCount: number;
   nextLesson: NextLesson | null;
   selectedLevel: Difficulty;
+  levelScore: number;
   dueReviews: number;
   savedLearningItems: number;
   savedPhrases: number;
 }) {
   const step = Math.min(3, completedArticleCount + 1);
   const sentenceGoal = nextLesson?.sentenceCount ?? 6;
+  const scoreFill = bandProgress(levelScore);
   return (
     <div className="space-y-4">
       {/* The primary card carries the scene for the lesson it launches, so
@@ -183,10 +208,19 @@ function BeginnerHome({
           <LessonScene name={sceneFor(nextLesson?.id ?? "", nextLesson?.category)} size={72} />
         </div>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          Lesson {step}: {nextLesson?.title ?? "your next short reading"}
+          {nextLesson?.unitOrder ? `Unit ${nextLesson.unitOrder}: ${nextLesson.unitTitle}` : `Lesson ${step}`}:{" "}
+          {nextLesson?.title ?? "your next short reading"}
         </p>
+        {nextLesson?.unitGoal && (
+          <div className="mt-3 rounded-2xl bg-cream px-3 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Current unit</p>
+            <p className="mt-1 text-sm font-semibold text-ink">{nextLesson.unitGoal}</p>
+            <XPProgressBar value={nextLesson.unitProgress} label={nextLesson.unitProgressLabel ?? "Unit progress"} className="mt-3" />
+          </div>
+        )}
         <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
           <TrustNote label={`Written for ${nextLesson?.level ?? selectedLevel} learners`} />
+          <TrustNote label={`${selectedLevel} score: ${levelScore} points, tier ${bandNumber(levelScore)}`} />
           <TrustNote label="Your saved words stay on this device" />
           <TrustNote label="AI help is optional" />
         </div>
@@ -204,10 +238,11 @@ function BeginnerHome({
       <section className="rounded-card bg-cream-card p-4 shadow-card">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s path</p>
         <div className="mt-3 grid gap-2">
-          <BeginnerStep done={completedArticleCount > 0} label="Finish one lesson" />
+          <BeginnerStep done={completedArticleCount > 0} label={nextLesson?.unitTitle ? `Continue ${nextLesson.unitTitle}` : "Finish one lesson"} />
           <BeginnerStep done={savedLearningItems > 0} label="Save one word or phrase" />
           <BeginnerStep done={completedArticleCount > 1} label="Start the next lesson" />
         </div>
+        <XPProgressBar value={scoreFill} label={`${selectedLevel} level score`} className="mt-4" />
       </section>
 
       <div className="grid grid-cols-2 gap-2">
@@ -251,6 +286,8 @@ function DashboardCard({
   progressSnapshot,
   selectedLevel,
   stats,
+  nextLesson,
+  levelScore,
 }: {
   progressSnapshot: ProgressSnapshot | null;
   selectedLevel: Difficulty;
@@ -259,10 +296,14 @@ function DashboardCard({
     savedWords: number;
     dueReviews: number;
   };
+  nextLesson: NextLesson | null;
+  levelScore: number;
 }) {
   const dueMissions = progressSnapshot?.missions.filter((mission) => !mission.completed).length ?? 0;
   const totalXp = progressSnapshot?.level.totalXp ?? 0;
   const progress = progressSnapshot?.level.progress ?? 0;
+  const streak = progressSnapshot?.currentStreak ?? 0;
+  const levelScoreProgress = bandProgress(levelScore);
 
   const links = [
     { href: "/articles", label: "Lessons", icon: "book", meta: "Path" },
@@ -293,15 +334,19 @@ function DashboardCard({
       <XPProgressBar value={progress} label={`${totalXp.toLocaleString()} XP`} className="mt-3" />
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s plan</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s win</p>
         <p className="mt-1 text-sm font-semibold text-ink">
-          Start a lesson, save what matters, then review anything due.
+          {nextLesson ? `${nextLesson.unitTitle ?? "Next lesson"}: ${nextLesson.title}` : "Start a lesson, save what matters, then review anything due."}
         </p>
+        {nextLesson?.unitProgressLabel && (
+          <XPProgressBar value={nextLesson.unitProgress} label={nextLesson.unitProgressLabel} className="mt-3" />
+        )}
         <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-          <Metric label="Known" value={stats.knownWords} />
-          <Metric label="Learning" value={stats.savedWords} />
+          <Metric label="Streak" value={streak} />
+          <Metric label={`${selectedLevel} score`} value={levelScore} />
           <Metric label="Due" value={stats.dueReviews} />
         </div>
+        <XPProgressBar value={levelScoreProgress} label={`Tier ${bandNumber(levelScore)} progress`} className="mt-3" />
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2">

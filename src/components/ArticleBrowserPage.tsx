@@ -16,6 +16,15 @@ import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics"
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT, getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import {
+  getLessonPathTexts,
+  getLessonUnitProgress,
+  getLessonUnits,
+  lessonNumberInUnit,
+  lessonUnitForText,
+  type LessonUnit,
+  type LessonUnitProgress,
+} from "@/lib/lessonUnits";
+import {
   buildScorableArticles,
   buildScoringContext,
   buildSections,
@@ -50,7 +59,7 @@ const CATEGORY_FILTERS: { value: CategoryFilter; label: string }[] = [
   { value: "science", label: "Science" },
   { value: "everyday life", label: "Life" },
 ];
-const ARTICLE_CATEGORY_FILTERS = CATEGORY_FILTERS.filter((item) => item.value !== "news-style");
+const ARTICLE_CATEGORY_FILTERS = CATEGORY_FILTERS;
 
 const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
   { value: "all", label: "All" },
@@ -78,7 +87,7 @@ function defaultCategoryForMode(mode: Mode): CategoryFilter {
 }
 
 function isEligibleArticleModeText(text: ReadingText): boolean {
-  return text.category !== "news-style";
+  return text.category !== "news-style" || isStarterText(text);
 }
 
 function shouldGateLiveNews(level: Difficulty, completedArticleCount: number, showAnyway: boolean): boolean {
@@ -200,11 +209,22 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
     function buildAndSetSections(rssTexts: ReadingText[], fallback: boolean) {
       const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
-      const bankTexts = getDailyBankTexts({
+      const lessonPathTexts =
+        mode === "articles"
+          ? getLessonPathTexts({
+              level: bankLevel,
+              category: categoryFilter,
+              limit: DAILY_BANK_ARTICLE_LIMIT * 3,
+            })
+          : [];
+      const fallbackBankTexts = getDailyBankTexts({
         level: bankLevel,
         category: categoryFilter,
         limit: mode === "articles" ? DAILY_BANK_ARTICLE_LIMIT * 3 : DAILY_BANK_ARTICLE_LIMIT,
-      }).filter((text) => mode !== "articles" || isEligibleArticleModeText(text)).slice(0, DAILY_BANK_ARTICLE_LIMIT);
+      });
+      const bankTexts = (lessonPathTexts.length > 0 ? lessonPathTexts : fallbackBankTexts)
+        .filter((text) => mode !== "articles" || isEligibleArticleModeText(text))
+        .slice(0, DAILY_BANK_ARTICLE_LIMIT);
       const importedTexts = getCustomTexts();
       const hiddenSources = new Set(getHiddenSources());
       const knownWords = new Set(getKnownWords());
@@ -294,6 +314,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           <ArticleContent
             sections={sections}
             selectedLevel={selectedLevel}
+            categoryFilter={categoryFilter}
             difficultyFilter={difficultyFilter}
             customArticles={customArticles}
             savedLaterArticles={savedLaterArticles}
@@ -449,18 +470,26 @@ function FilterRow<T extends string>({
 function ArticleContent({
   sections,
   selectedLevel,
+  categoryFilter,
   difficultyFilter,
   customArticles,
   savedLaterArticles,
 }: {
   sections: RecommendationSections;
   selectedLevel: Difficulty;
+  categoryFilter: CategoryFilter;
   difficultyFilter: DifficultyFilter;
   customArticles: ScoredArticle[];
   savedLaterArticles: ScoredArticle[];
 }) {
   const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
   const orderedArticles = [...sections.dailyBank].sort((a, b) => {
+    const unitA = lessonUnitForText(a.text);
+    const unitB = lessonUnitForText(b.text);
+    const unitOrder = (unitA?.order ?? 99) - (unitB?.order ?? 99);
+    if (unitOrder !== 0) return unitOrder;
+    const lessonOrder = lessonNumberInUnit(a.text) - lessonNumberInUnit(b.text);
+    if (lessonOrder !== 0) return lessonOrder;
     const starterFirst = Number(isStarterText(b.text)) - Number(isStarterText(a.text));
     if (starterFirst !== 0) return starterFirst;
     return Number(a.text.difficulty !== level) - Number(b.text.difficulty !== level);
@@ -474,19 +503,37 @@ function ArticleContent({
   const rest = orderedArticles.filter((_, index) => index !== featuredIndex);
   const pathLessons = rest.slice(0, 5);
   const morePractice = rest.slice(5);
+  const featuredUnit = featured ? lessonUnitForText(featured.text) : null;
+  const featuredUnitProgress = featuredUnit ? getLessonUnitProgress(featuredUnit) : null;
+  const unitCards = getLessonUnits(level, categoryFilter).map(getLessonUnitProgress).filter((progress) => progress.total > 0);
 
   return (
     <>
-      {featured && <FeaturedLessonCard article={featured} lessonNumber={1} level={level} />}
+      {unitCards.length > 0 && <LessonUnitOverview units={unitCards} currentUnitId={featuredUnit?.id ?? null} />}
+      {featured && (
+        <FeaturedLessonCard
+          article={featured}
+          lessonNumber={lessonNumberInUnit(featured.text)}
+          level={level}
+          unit={featuredUnit}
+          unitProgress={featuredUnitProgress}
+        />
+      )}
       {pathLessons.length > 0 && (
         <section className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
           <div className="px-1">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Lesson path</h2>
-            <p className="mt-0.5 text-xs text-ink-muted">A few short readings, one after another.</p>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">
+              {featuredUnit ? featuredUnit.title : "Lesson path"}
+            </h2>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              {featuredUnitProgress
+                ? `${featuredUnitProgress.unit.goal} ${featuredUnitProgress.completed}/${featuredUnitProgress.total} complete.`
+                : "A few short readings, one after another."}
+            </p>
           </div>
           <div className="mt-3 space-y-2">
-            {pathLessons.map((article, index) => (
-              <LessonPathItem key={article.text.id} article={article} lessonNumber={index + 2} />
+            {pathLessons.map((article) => (
+              <LessonPathItem key={article.text.id} article={article} lessonNumber={lessonNumberInUnit(article.text)} />
             ))}
           </div>
         </section>
@@ -520,14 +567,75 @@ function ArticleContent({
   );
 }
 
-function FeaturedLessonCard({ article, lessonNumber, level }: { article: ScoredArticle; lessonNumber: number; level: Difficulty }) {
+function LessonUnitOverview({ units, currentUnitId }: { units: LessonUnitProgress[]; currentUnitId: string | null }) {
+  return (
+    <section className="mb-5">
+      <div className="mb-2 flex items-center justify-between gap-3 px-1">
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Units</h2>
+          <p className="mt-0.5 text-xs text-ink-muted">A named path for each kind of reading.</p>
+        </div>
+      </div>
+      <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
+        {units.map((progress) => {
+          const active = progress.unit.id === currentUnitId;
+          const percent = progress.total === 0 ? 0 : Math.round((progress.completed / progress.total) * 100);
+          return (
+            <article
+              key={progress.unit.id}
+              className={`w-[78%] max-w-[260px] shrink-0 rounded-card p-4 shadow-card ${
+                active ? "bg-brand text-white" : "bg-cream-card text-ink"
+              }`}
+            >
+              <p className={`text-xs font-bold uppercase tracking-wide ${active ? "text-white/75" : "text-ink-muted"}`}>
+                Unit {progress.unit.order}
+              </p>
+              <h3 className="mt-1 text-base font-extrabold leading-tight">{progress.unit.title}</h3>
+              <p className={`mt-1 line-clamp-2 text-xs leading-relaxed ${active ? "text-white/80" : "text-ink-muted"}`}>
+                {progress.unit.goal}
+              </p>
+              <div className={`mt-3 h-2 overflow-hidden rounded-full ${active ? "bg-white/25" : "bg-cream-dark"}`}>
+                <div className={`h-full rounded-full ${active ? "bg-white" : "bg-brand"}`} style={{ width: `${percent}%` }} />
+              </div>
+              <p className={`mt-1 text-xs font-semibold ${active ? "text-white/80" : "text-ink-muted"}`}>
+                {progress.completed}/{progress.total} complete
+              </p>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FeaturedLessonCard({
+  article,
+  lessonNumber,
+  level,
+  unit,
+  unitProgress,
+}: {
+  article: ScoredArticle;
+  lessonNumber: number;
+  level: Difficulty;
+  unit: LessonUnit | null;
+  unitProgress: LessonUnitProgress | null;
+}) {
   const { text } = article;
   const progress = getProgress(text.id).status;
   const action = progress === "completed" ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
   return (
     <section className="mb-5 rounded-card bg-cream-card p-5 shadow-card">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson {lessonNumber}</p>
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">
+        {unit ? `Unit ${unit.order} - Lesson ${lessonNumber}` : `Lesson ${lessonNumber}`}
+      </p>
       <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">{text.title}</h2>
+      {unit && (
+        <p className="mt-1 text-sm font-semibold text-ink-muted">
+          {unit.title}
+          {unitProgress ? ` - ${unitProgress.completed}/${unitProgress.total} complete` : ""}
+        </p>
+      )}
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">
         {text.blurbEn ?? text.preview}
       </p>

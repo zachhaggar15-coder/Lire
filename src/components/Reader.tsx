@@ -72,7 +72,7 @@ import {
   type ComprehensionQuestionBundle,
 } from "@/lib/comprehensionCache";
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
-import LessonCompleteScreen from "@/components/LessonCompleteScreen";
+import LessonCompleteScreen, { type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -214,6 +214,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     percentRead: number;
     wordsTapped: number;
     savedWords: number;
+    reviewItems: LessonMiniReviewItem[];
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -967,6 +968,59 @@ export default function Reader({ text }: { text: ReadingText }) {
     showToast("Marked as known");
   }
 
+  function buildLessonMiniReviewItems(): LessonMiniReviewItem[] {
+    const items: LessonMiniReviewItem[] = [];
+    const seen = new Set<string>();
+    const add = (item: LessonMiniReviewItem) => {
+      const key = `${item.kind}:${item.french.toLowerCase()}`;
+      if (seen.has(key) || items.length >= 5) return;
+      seen.add(key);
+      items.push(item);
+    };
+
+    getSavedPhrases()
+      .filter((phrase) => phrase.sourceTextTitle === text.title && phrase.status !== "known")
+      .slice(0, 2)
+      .forEach((phrase) =>
+        add({
+          kind: "phrase",
+          french: phrase.phrase,
+          english: phrase.translation,
+          context: phrase.contextSentence || null,
+        })
+      );
+
+    getSavedWords()
+      .filter((word) => word.sourceTextTitle === text.title && word.status !== "known")
+      .slice(0, 5)
+      .forEach((word) =>
+        add({
+          kind: "word",
+          french: word.lemma ?? word.word,
+          english: word.primaryTranslation,
+          context: word.articleContextSentence || null,
+        })
+      );
+
+    getWordTapsForArticle(text.id)
+      .filter((tap) => !isProperNounWord(tap.word))
+      .sort((a, b) => b.count - a.count)
+      .forEach((tap) => {
+        if (items.length >= 5) return;
+        const lookup = lookupWord(tap.word);
+        const english = lookup.translations[0];
+        if (!english) return;
+        add({
+          kind: "word",
+          french: lookup.lemma ?? tap.lemma ?? tap.word,
+          english,
+          context: null,
+        });
+      });
+
+    return items.slice(0, 5);
+  }
+
   function startSentenceHold(sentenceText: string) {
     sentenceHoldTriggered.current = false;
     if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
@@ -1143,6 +1197,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       percentRead: Math.min(100, Math.round(maxProgressPercent.current) || 100),
       wordsTapped,
       savedWords: articleSavedWordCount,
+      reviewItems: buildLessonMiniReviewItems(),
     });
   }
 
@@ -1989,6 +2044,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             wordsTapped: lessonComplete.wordsTapped,
             savedWords: lessonComplete.savedWords,
           }}
+          reviewItems={lessonComplete.reviewItems}
           isLesson={isStarterLesson}
           onContinue={handleLessonCompleteContinue}
         />

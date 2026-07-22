@@ -11,10 +11,18 @@ import {
   type LevelScores,
 } from "@/lib/levelScore";
 
+export interface LessonMiniReviewItem {
+  kind: "word" | "phrase";
+  french: string;
+  english: string;
+  context: string | null;
+}
+
 interface LessonCompleteScreenProps {
   level: Difficulty;
   scoreChange: LevelScoreChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
+  reviewItems: LessonMiniReviewItem[];
   isLesson: boolean;
   onContinue: () => void;
 }
@@ -28,7 +36,7 @@ interface LessonCompleteScreenProps {
  * fills the remainder — so crossing a milestone reads as a milestone rather
  * than the bar jumping backwards. "Continue" returns to the article tab.
  */
-export default function LessonCompleteScreen({ level, scoreChange, stats, isLesson, onContinue }: LessonCompleteScreenProps) {
+export default function LessonCompleteScreen({ level, scoreChange, stats, reviewItems, isLesson, onContinue }: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -116,6 +124,36 @@ export default function LessonCompleteScreen({ level, scoreChange, stats, isLess
             </div>
           ))}
         </div>
+
+        {reviewItems.length > 0 && (
+          <div className="mt-4 rounded-card bg-cream-card p-4 shadow-card">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Mini review</p>
+                <h2 className="mt-0.5 text-base font-extrabold text-ink">Bring these forward</h2>
+              </div>
+              <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">
+                {reviewItems.length}
+              </span>
+            </div>
+            <div className="mt-3 space-y-2">
+              {reviewItems.map((item) => (
+                <div key={`${item.kind}-${item.french}`} className="rounded-2xl bg-cream px-3 py-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-extrabold text-ink">{item.french}</p>
+                      <p className="mt-0.5 text-xs font-semibold text-ink-muted">{item.english}</p>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-cream-card px-2 py-0.5 text-xs font-bold capitalize text-ink-muted">
+                      {item.kind}
+                    </span>
+                  </div>
+                  {item.context && <p className="mt-1 line-clamp-2 text-xs italic leading-relaxed text-ink-muted">{item.context}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* The level bar that just moved */}
         <div className="mt-7 rounded-card bg-cream-card p-5 shadow-card">

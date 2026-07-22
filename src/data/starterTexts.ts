@@ -3397,4 +3397,309 @@ L'espace ne résoudra pas la faim ni la pauvreté, et ceux qui l'opposent aux ur
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a1-036",
+    title: "La rue est fermée samedi",
+    category: "news-style",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Samedi, la rue Victor-Hugo est fermée aux voitures.",
+    blurbEn:
+      "A town closes one street to cars on Saturday so people can walk, listen to music, and visit local shops.",
+    body: `Samedi, la rue Victor-Hugo est fermée aux voitures. La rue est dans le centre-ville.
+
+La mairie organise une petite fête. Il y a de la musique devant la boulangerie. Il y a aussi des tables près du café.
+
+Les magasins restent ouverts. Les habitants peuvent marcher dans la rue sans voiture. Les enfants peuvent jouer.
+
+Le bus ne passe pas par la rue samedi. Il s'arrête devant la gare.
+
+La rue ouvre encore aux voitures dimanche matin.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-037",
+    title: "Une collecte de vêtements",
+    category: "news-style",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Une association collecte des manteaux et des pulls.",
+    blurbEn:
+      "A local association collects coats, jumpers, and shoes at the town hall for families who need warm clothes.",
+    body: `Une association collecte des vêtements cette semaine. Elle cherche des manteaux, des pulls et des chaussures.
+
+La collecte est à la mairie. Elle est ouverte de neuf heures à dix-huit heures.
+
+Les vêtements doivent être propres. Les habitants peuvent donner un vêtement ou plusieurs vêtements.
+
+Mardi matin, beaucoup de personnes arrivent avec des sacs. Une femme donne deux manteaux pour enfants.
+
+L'association donne ensuite les vêtements aux familles du quartier. "Merci pour votre aide", dit le responsable.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-038",
+    title: "Le bus change d'arrêt",
+    category: "news-style",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Le bus numéro 4 change d'arrêt pendant trois jours.",
+    blurbEn:
+      "Bus number 4 uses a different stop for three days because workers are repairing the road near the school.",
+    body: `Le bus numéro 4 change d'arrêt pendant trois jours. Il ne s'arrête pas devant l'école.
+
+Des ouvriers réparent la route. Il y a des machines et des barrières.
+
+Le nouvel arrêt est devant la pharmacie. Il est à cinq minutes à pied de l'école.
+
+Le matin, un agent aide les élèves. Il montre le chemin aux parents.
+
+Vendredi soir, les travaux sont finis. Lundi, le bus revient devant l'école.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-036",
+    title: "Un nouveau médecin arrive",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Un nouveau médecin va ouvrir un cabinet près de la place.",
+    blurbEn:
+      "A new doctor is opening a practice near the main square, which should make appointments easier for families in the town.",
+    body: `Un nouveau médecin va ouvrir un cabinet près de la place. Le cabinet sera au premier étage d'un ancien bureau.
+
+Depuis plusieurs mois, beaucoup d'habitants cherchent un rendez-vous. Ils doivent parfois aller dans une autre ville. Pour les familles sans voiture, ce n'est pas facile.
+
+La mairie a aidé le médecin à trouver un local. Des travaux ont commencé lundi. Il y aura deux salles de consultation et une petite salle d'attente.
+
+Le médecin recevra les premiers patients au début du mois prochain. Les rendez-vous pourront se prendre par téléphone ou sur internet.
+
+Pour les habitants, c'est une bonne nouvelle. "On attendait cela depuis longtemps", dit une mère devant l'école.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-037",
+    title: "La cantine jette moins de nourriture",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "La cantine du collège a changé son organisation.",
+    blurbEn:
+      "A school canteen reduces food waste by serving smaller first portions and letting students ask for more if they are still hungry.",
+    body: `La cantine du collège a changé son organisation. Depuis deux semaines, les élèves reçoivent une portion plus petite au début du repas.
+
+S'ils ont encore faim, ils peuvent demander une deuxième portion. Avant, beaucoup d'assiettes revenaient presque pleines. Maintenant, les élèves choisissent mieux.
+
+Chaque vendredi, une classe pèse la nourriture jetée. Les chiffres sont écrits sur une affiche près de l'entrée.
+
+La première semaine, la cantine a jeté trente kilos de moins. Le chef est content, mais il veut continuer les efforts.
+
+Les élèves proposent aussi des idées. Certains demandent plus de fruits coupés, d'autres veulent choisir entre deux légumes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-036",
+    title: "Une résidence pour étudiants ouvre",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Une nouvelle résidence étudiante ouvre près de la gare.",
+    blurbEn:
+      "A new student residence opens near the station, offering smaller but cheaper rooms in a city where rent has become difficult.",
+    body: `Une nouvelle résidence étudiante ouvre cette semaine près de la gare. Elle propose quatre-vingts chambres, une cuisine partagée à chaque étage et une grande salle de travail au rez-de-chaussée.
+
+Dans la ville, trouver un logement est devenu difficile pour les jeunes. Les loyers ont augmenté, et beaucoup d'étudiants vivent loin de l'université. Certains passent plus d'une heure dans les transports chaque matin.
+
+La nouvelle résidence n'est pas luxueuse. Les chambres sont petites, mais le loyer reste inférieur au prix moyen du quartier. La mairie a aussi demandé que dix chambres soient réservées aux étudiants qui reçoivent une bourse.
+
+Pour les associations étudiantes, l'ouverture va dans le bon sens, mais elle ne suffira pas. Elles rappellent que des centaines de jeunes cherchent encore une solution avant la rentrée.
+
+La ville promet déjà un deuxième projet dans deux ans. En attendant, les premiers habitants arrivent avec leurs cartons et beaucoup d'espoir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-037",
+    title: "Des rues plus fraîches en été",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "La ville teste de nouveaux aménagements contre la chaleur.",
+    blurbEn:
+      "The city tests shade, trees, and lighter pavement to reduce summer heat in streets where older residents struggle.",
+    body: `La ville teste cet été plusieurs aménagements pour rendre les rues plus fraîches. Dans trois quartiers, des arbres ont été plantés, des bancs ont été installés à l'ombre et une partie du sol a été peinte en couleur claire.
+
+Pendant les fortes chaleurs, certaines rues deviennent presque impossibles à traverser en milieu de journée. Les personnes âgées et les parents avec de jeunes enfants sont les premiers concernés.
+
+Le but n'est pas seulement de rendre la ville plus agréable. Il s'agit aussi de protéger la santé des habitants. Selon la mairie, quelques degrés de moins peuvent changer beaucoup de choses dans une rue sans arbre.
+
+Les commerçants observent déjà une différence. Quand il y a de l'ombre, les passants s'arrêtent davantage devant les vitrines. Certains demandent donc que le test devienne permanent.
+
+Un bilan sera publié à la fin du mois de septembre. Si les résultats sont bons, d'autres rues seront transformées l'année prochaine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-038",
+    title: "Les habitants parlent du bruit",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Une réunion publique a réuni des habitants du centre-ville.",
+    blurbEn:
+      "Residents meet to discuss noise in the town centre, balancing evening life with sleep, work, and shared rules.",
+    body: `Une réunion publique a réuni mardi soir des habitants du centre-ville, des élus et plusieurs responsables de bars. Le sujet était simple, mais sensible : le bruit le soir.
+
+Depuis le printemps, des habitants se plaignent de ne plus dormir correctement. Les terrasses restent pleines plus tard, et certains clients parlent fort dans la rue après la fermeture. Pour les riverains, la situation devient fatigante.
+
+Les propriétaires des bars répondent qu'ils font déjà attention. Ils rappellent aussi que les terrasses donnent de la vie au quartier et créent des emplois. Selon eux, fermer plus tôt punirait tout le monde pour le comportement de quelques personnes.
+
+La mairie cherche donc un compromis. Elle propose plus de contrôles après minuit, mais aussi une campagne d'information pour les clients. Des affiches demanderont de respecter le voisinage en quittant les bars.
+
+Une nouvelle réunion aura lieu dans deux mois. Les habitants espèrent des changements rapides, sans faire disparaître l'ambiance du centre-ville.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-039",
+    title: "Le cinéma change ses horaires",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Le cinéma municipal essaie une séance plus tôt.",
+    blurbEn:
+      "The municipal cinema tests earlier evening screenings to attract families, older viewers, and people who rely on public transport.",
+    body: `Le cinéma municipal change ses horaires pendant trois mois. Chaque jeudi, une séance commencera à dix-huit heures trente au lieu de vingt heures trente.
+
+Cette décision vient d'une enquête auprès des spectateurs. Beaucoup de familles trouvent les séances trop tardives en semaine. Des personnes âgées disent aussi qu'elles préfèrent rentrer avant la nuit, surtout en hiver.
+
+Le cinéma espère attirer un public plus large sans supprimer les séances du soir. Le directeur explique que les habitudes ont changé depuis quelques années. Les gens sortent moins tard et choisissent plus souvent de regarder des films chez eux.
+
+La première séance avancée proposera un film français récent, suivi d'une courte discussion. Si la salle est assez remplie, le cinéma gardera ce nouvel horaire.
+
+Pour la mairie, l'enjeu est important. Le cinéma n'est pas seulement un commerce : c'est aussi un lieu de rencontre au centre de la ville.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-040",
+    title: "Une association accueille les nouveaux habitants",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Une association aide les personnes qui viennent d'arriver.",
+    blurbEn:
+      "A local association helps newcomers discover services, meet neighbours, and feel less isolated after moving to town.",
+    body: `Une association locale lance un accueil mensuel pour les nouveaux habitants. La première rencontre aura lieu samedi matin dans la salle des fêtes.
+
+Quand on arrive dans une ville, il faut trouver beaucoup d'informations à la fois : les transports, les médecins, les activités pour les enfants, les démarches administratives. Même quand tout existe, il n'est pas toujours facile de savoir où chercher.
+
+L'association propose donc une matinée simple. Des bénévoles présenteront les principaux services, puis les participants pourront poser leurs questions autour d'un café. Des habitants installés depuis longtemps seront aussi présents pour parler de leur quartier.
+
+Le projet répond à un problème discret : l'isolement. Certaines personnes déménagent pour un travail ou des études et ne connaissent personne. Quelques échanges peuvent déjà changer leur première impression.
+
+Si la rencontre fonctionne, elle sera organisée le premier samedi de chaque mois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-036",
+    title: "La région veut réduire les déchets",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "La région présente un plan pour réduire les déchets ménagers.",
+    blurbEn:
+      "A regional waste plan combines composting, repair workshops, and incentives, but raises questions about cost and unequal access.",
+    body: `La région a présenté lundi un plan destiné à réduire les déchets ménagers de 15 % en cinq ans. Le programme repose sur trois axes : développer le compostage, encourager la réparation des objets et aider les communes à mieux informer les habitants.
+
+Sur le papier, le plan paraît consensuel. Personne ne défend sérieusement l'idée de produire toujours plus de déchets. Pourtant, sa mise en œuvre risque d'être moins simple qu'une affiche de sensibilisation. Installer des composteurs collectifs demande de l'espace, de l'entretien et des habitants prêts à changer leurs habitudes. Les ateliers de réparation, eux, supposent des locaux, des bénévoles formés et une vraie visibilité.
+
+Les associations écologistes saluent donc l'orientation générale, tout en demandant des moyens plus clairs. Elles craignent que les communes les plus riches avancent vite, tandis que les autres restent avec de bonnes intentions. Plusieurs maires ruraux posent aussi la question du transport : dans un village, se rendre à un atelier de réparation peut nécessiter une voiture.
+
+La région promet un premier bilan dans un an. Ce sera le moment de voir si le plan modifie réellement les pratiques ou s'il reste une ambition correcte, mais trop générale.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-037",
+    title: "Le débat sur les loyers continue",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "La hausse des loyers divise élus, propriétaires et locataires.",
+    blurbEn:
+      "Rising rents divide tenants, owners, and local officials, who must choose between regulation, building, and protecting mixed neighbourhoods.",
+    body: `La hausse des loyers continue d'alimenter le débat municipal. Dans plusieurs quartiers, des habitants expliquent qu'ils ne peuvent plus se loger près de leur travail, tandis que des propriétaires affirment que leurs charges augmentent elles aussi.
+
+La ville envisage d'encadrer davantage les loyers dans les zones les plus tendues. Pour les associations de locataires, cette mesure est indispensable : sans règle, disent-elles, le marché pousse peu à peu les familles modestes hors du centre. Les conséquences ne sont pas seulement individuelles. Quand seuls les ménages aisés peuvent rester, les écoles, les commerces et la vie de quartier changent profondément.
+
+Les représentants des propriétaires répondent que l'encadrement risque de décourager la location. Certains préféreront vendre ou laisser leur logement vide plutôt que de louer à un prix jugé trop bas. Selon eux, le vrai problème est le manque de logements disponibles.
+
+Entre ces deux positions, la mairie cherche une solution mixte : construire davantage, limiter les abus les plus visibles et réserver une partie des nouveaux programmes à des loyers accessibles. Reste à savoir si ces outils agiront assez vite pour les habitants déjà menacés de départ.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-038",
+    title: "Un lycée change le rythme de la semaine",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Un lycée expérimente un nouvel emploi du temps.",
+    blurbEn:
+      "A high school tests a different weekly rhythm with longer project periods, raising hopes for focus and concerns about fatigue.",
+    body: `Un lycée de la région expérimente depuis la rentrée un nouvel emploi du temps. Deux après-midi par semaine sont désormais réservés à des projets longs : laboratoire, théâtre, journal scolaire, soutien en petits groupes. Les cours classiques sont regroupés sur les autres demi-journées.
+
+L'objectif affiché est de rompre avec une succession de cours trop courts, où les élèves changent de matière sans avoir le temps d'approfondir. Les enseignants favorables au projet estiment qu'on apprend aussi en enquêtant, en fabriquant, en préparant une présentation ou en corrigeant un texte à plusieurs.
+
+Les premières réactions sont contrastées. Certains élèves apprécient de travailler autrement et disent mieux comprendre l'utilité de ce qu'ils apprennent. D'autres trouvent les matinées plus lourdes, car plusieurs matières exigeantes s'enchaînent. Des parents s'inquiètent également pour les élèves qui ont déjà des difficultés d'organisation.
+
+Le proviseur insiste sur le caractère expérimental du dispositif. Rien ne sera généralisé avant un bilan complet, avec les résultats scolaires, l'absentéisme et le ressenti des élèves. Cette prudence est nécessaire : changer le rythme scolaire touche à la fois au savoir, à la fatigue et à l'égalité entre élèves.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-039",
+    title: "Une consultation sur les arbres en ville",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Les habitants peuvent choisir des rues à végétaliser.",
+    blurbEn:
+      "Residents are asked where the city should plant trees, but the debate shows how climate adaptation competes with parking and street use.",
+    body: `La mairie lance une consultation pour choisir les prochaines rues à végétaliser. Les habitants peuvent signaler les endroits où planter des arbres, créer des bandes de terre ou installer des bacs plus grands.
+
+L'initiative répond à une urgence bien identifiée : lors des épisodes de chaleur, les rues minérales deviennent étouffantes. Les arbres apportent de l'ombre, retiennent une partie de l'eau de pluie et rendent l'espace public plus agréable. Mais planter en ville n'est jamais un geste purement décoratif. Il faut déplacer des réseaux, supprimer parfois des places de stationnement et accepter que la rue change d'usage.
+
+C'est là que le débat commence. Des habitants demandent plus d'arbres devant les écoles et les arrêts de bus. D'autres craignent de perdre des places pour leur voiture ou de voir les trottoirs encombrés. Les commerçants, eux, veulent être associés au choix des rues, car les travaux peuvent gêner leur activité.
+
+La consultation ne réglera pas toutes les tensions, mais elle peut rendre les arbitrages plus visibles. Adapter la ville au climat suppose des choix concrets, parfois modestes, rarement neutres. Un arbre planté est aussi une décision sur la façon de partager la rue.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-040",
+    title: "Les commerces cherchent un nouvel équilibre",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Les petits commerces du centre-ville s'adaptent aux nouveaux usages.",
+    blurbEn:
+      "Small town-centre shops adapt to online shopping and changed routines by combining service, events, and local identity.",
+    body: `Les petits commerces du centre-ville cherchent un nouvel équilibre. Depuis plusieurs années, ils subissent la concurrence des achats en ligne, la hausse des loyers commerciaux et des habitudes qui ont changé. Beaucoup d'habitants passent encore devant les vitrines, mais achètent moins souvent sur place.
+
+Face à cette situation, certains commerçants misent sur ce qu'internet offre mal : le conseil, la réparation, la relation personnelle. Une librairie organise des rencontres avec des auteurs. Un magasin de vêtements propose des retouches rapides. Un caviste prépare des soirées de découverte pour attirer des clients qui ne seraient pas venus seulement acheter une bouteille.
+
+La mairie tente aussi d'agir. Elle finance des animations le samedi et aide les boutiques à améliorer leur présence en ligne. Mais les commerçants rappellent que les événements ponctuels ne suffisent pas si le stationnement, les transports et les loyers rendent le centre moins accessible.
+
+Le débat dépasse donc la nostalgie des rues commerçantes d'autrefois. Il pose une question très actuelle : que veut-on trouver au centre d'une ville ? Si la réponse est seulement "des achats", les plateformes seront souvent plus efficaces. Si la réponse inclut le conseil, la rencontre et une certaine idée de la vie locale, alors les commerces ont encore un rôle à jouer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
