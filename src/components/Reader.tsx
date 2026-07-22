@@ -250,7 +250,6 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [gistAnswer, setGistAnswer] = useState<number | null>(null);
   const [toneAnswers, setToneAnswers] = useState<Record<string, number>>({});
   const [summaryDraft, setSummaryDraft] = useState("");
-  const [showTranslateLaterNote, setShowTranslateLaterNote] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationUses, setTranslationUses] = useState(0);
   const [challengeMode, setChallengeMode] = useState<TranslationChallengeMode>("none");
@@ -2031,31 +2030,9 @@ export default function Reader({ text }: { text: ReadingText }) {
         </details>
       )}
 
-      <div className="mb-6 space-y-2 text-center">
-        <div>
-          <button
-            onClick={() => setShowTranslateLaterNote((v) => !v)}
-            className="text-xs font-semibold text-ink-muted underline underline-offset-2"
-          >
-            About Translate vs. tap-to-explain
-          </button>
-          {showTranslateLaterNote && (
-            <p className="mx-auto mt-2 max-w-sm text-xs text-ink-muted">
-              The Translate toggle asks an AI tutor for a fluent, natural translation with word and phrase alignments,
-              shown between the French lines. Unless "Fluent AI
-              translation" is off in Settings, this starts loading in the background as soon as you open the
-              article — usually ready by the time you tap the toggle, rather than making you wait. It still
-              uses your OpenAI quota either way, once per article (cached after that). Until it's ready (or if
-              AI isn't available or turned off in Settings), an instant, free offline word-for-word version from
-              the local dictionary is shown instead, so there's never nothing to read. Tapping a single sentence
-              is different: it opens "Explain sentence," a deeper structured breakdown with grammar notes and
-              vocabulary — reach for that when one line is confusing rather than the whole article.
-            </p>
-          )}
-        </div>
-
-        {/* RSS-only metadata. */}
-        {text.sourceUrl && (
+      {/* RSS-only metadata. */}
+      {text.sourceUrl && (
+        <div className="mb-6 text-center">
           <a
             href={text.sourceUrl}
             target="_blank"
@@ -2064,8 +2041,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           >
             Original source
           </a>
-        )}
-      </div>
+        </div>
+      )}
 
       {activeWord && (
         <WordSheet
