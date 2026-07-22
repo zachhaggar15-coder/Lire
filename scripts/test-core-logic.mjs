@@ -39,14 +39,9 @@ import { estimateDifficulty } from "../src/lib/difficulty.ts";
 import { texts as readingTexts } from "../src/data/texts.ts";
 import { starterTexts } from "../src/data/starterTexts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
-import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts } from "../src/lib/publicDomainBank.ts";
-import {
-  getLessonPathTexts,
-  getLessonUnitProgress,
-  getLessonUnits,
-  lessonNumberInUnit,
-  lessonUnitForText,
-} from "../src/lib/lessonUnits.ts";
+import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts, getDailyExtraReadingTexts } from "../src/lib/publicDomainBank.ts";
+import { buildLadder, JOURNEY_BANDS, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
+import { getJourneyState, getNextTextForReader, STAGE_CLEAR_RATIO } from "../src/lib/journey/state.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
 import {
@@ -311,18 +306,77 @@ console.log("\n--- Public-domain reading bank ---");
       `bank returned ${picks.map((text) => text.difficulty).join(",")}`
     );
   }
-  for (const requestedLevel of ["A1", "A2", "B1", "B2"]) {
-    const newsCount = starterTexts.filter((text) => text.difficulty === requestedLevel && text.category === "news-style").length;
-    check(`starter news unit has at least five ${requestedLevel} texts`, newsCount >= 5, `${requestedLevel} news count ${newsCount}`);
-  }
-  const a1Units = getLessonUnits("A1");
-  const a1NewsUnit = getLessonUnits("A1", "news-style")[0];
-  const a1NewsProgress = getLessonUnitProgress(a1NewsUnit);
-  const a1Path = getLessonPathTexts({ level: "A1", category: "news-style", limit: 3 });
-  check("A1 lesson units include named category paths", a1Units.length === 5 && a1Units.every((unit) => unit.title && unit.goal));
-  check("news unit progress counts its own starter texts", a1NewsProgress.total >= 5 && a1NewsProgress.nextText?.category === "news-style");
-  check("lesson path follows unit order", a1Path.length === 3 && a1Path.every((text) => text.category === "news-style") && lessonNumberInUnit(a1Path[1]) === lessonNumberInUnit(a1Path[0]) + 1);
-  check("lessonUnitForText maps starter text to a named unit", lessonUnitForText(a1Path[0])?.title === a1NewsUnit.title);
+  const extraA1 = getDailyExtraReadingTexts({ level: "A1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
+  check("extra reading bank excludes guided starter texts", extraA1.length > 0 && extraA1.every((text) => text.id.startsWith("pd-")));
+
+  const ladder = buildLadder();
+  const guidedStarterTexts = starterTexts.filter((text) => JOURNEY_BANDS.includes(text.difficulty));
+  check("journey ladder contains the guided starter set", ladder.texts.length === guidedStarterTexts.length);
+  check(
+    "journey stages group at most five texts",
+    ladder.stages.every((stage) => stage.textIds.length > 0 && stage.textIds.length <= TEXTS_PER_STAGE)
+  );
+  check(
+    "journey ladder order is deterministic inside each band",
+    JOURNEY_BANDS.every((band) => {
+      const entries = ladder.texts.filter((text) => text.band === band);
+      return entries.every((entry, index) => index === 0 || entry.intrinsicDifficulty >= entries[index - 1].intrinsicDifficulty);
+    })
+  );
+
+  const a2StartStage = ladder.stages.find((stage) => stage.band === "A2");
+  const a2State = getJourneyState({ selectedLevel: "A2", progressById: {}, skippedTextIds: [] });
+  check(
+    "placement starts at the first stage for the selected band",
+    !!a2StartStage &&
+      a2State.currentStageIndex === a2StartStage.globalIndex &&
+      a2State.stages.filter((stage) => stage.stage.band === "A1").every((stage) => stage.optional && stage.status === "cleared")
+  );
+
+  const firstA1Stage = ladder.stages.find((stage) => stage.band === "A1");
+  const clearTarget = firstA1Stage ? Math.ceil(firstA1Stage.textIds.length * STAGE_CLEAR_RATIO) : 0;
+  const almostClearProgress = Object.fromEntries(
+    (firstA1Stage?.textIds.slice(0, Math.max(0, clearTarget - 1)) ?? []).map((id) => [id, { status: "completed" }])
+  );
+  const clearProgress = Object.fromEntries((firstA1Stage?.textIds.slice(0, clearTarget) ?? []).map((id) => [id, { status: "completed" }]));
+  const almostClearState = getJourneyState({ selectedLevel: "A1", progressById: almostClearProgress, skippedTextIds: [] });
+  const clearState = getJourneyState({ selectedLevel: "A1", progressById: clearProgress, skippedTextIds: [] });
+  check(
+    "stage stays current before the clear threshold",
+    !!firstA1Stage && almostClearState.stages.find((stage) => stage.stage.globalIndex === firstA1Stage.globalIndex)?.status === "current"
+  );
+  check(
+    "stage clears at the configured threshold from progress alone",
+    !!firstA1Stage &&
+      clearState.stages.find((stage) => stage.stage.globalIndex === firstA1Stage.globalIndex)?.status === "cleared" &&
+      clearState.currentStageIndex !== firstA1Stage.globalIndex
+  );
+  const skippedStageState = firstA1Stage
+    ? getJourneyState({
+        selectedLevel: "A1",
+        progressById: {},
+        skippedTextIds: firstA1Stage.textIds,
+      })
+    : null;
+  check(
+    "skipped texts do not block a stage",
+    !!firstA1Stage && skippedStageState?.stages.find((stage) => stage.stage.globalIndex === firstA1Stage.globalIndex)?.status === "cleared"
+  );
+  const nextRecommendation = getNextTextForReader({
+    selectedLevel: "A2",
+    progressById: {},
+    skippedTextIds: [],
+    knownWords: new Set(),
+    feedbackByTextId: {},
+  });
+  check(
+    "adaptive selector chooses an unfinished text from the current stage",
+    !!nextRecommendation &&
+      !!a2StartStage &&
+      nextRecommendation.stageIndex === a2StartStage.globalIndex &&
+      a2StartStage.textIds.includes(nextRecommendation.textId) &&
+      nextRecommendation.reason.length > 0
+  );
   // Per-level completion score (drives the lesson-complete bar).
   check("finishing a fresh lesson awards a base of 5", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 5);
   check("saved words and taps add on top, capped", levelPointsForCompletion({ savedWords: 10, wordsTapped: 4, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 9, "5 + min(3,10) + 1");
@@ -340,14 +394,12 @@ console.log("\n--- Public-domain reading bank ---");
     "exported public-domain articles strip generated extrait numbers from titles",
     readingTexts.filter((text) => text.id.startsWith("pd-")).every((text) => !generatedExcerptSuffix.test(text.title))
   );
-  const articleTabDaily = getDailyBankTexts({
+  const articleTabDaily = getDailyExtraReadingTexts({
     level: "A2",
     category: "all",
-    limit: DAILY_BANK_ARTICLE_LIMIT * 3,
+    limit: DAILY_BANK_ARTICLE_LIMIT,
     date: new Date("2026-07-16T12:00:00Z"),
-  })
-    .filter((text) => text.category !== "news-style" || text.id.startsWith("starter-"))
-    .slice(0, DAILY_BANK_ARTICLE_LIMIT);
+  });
   const articleTabSections = buildSections(
     rankArticles(buildScorableArticles(articleTabDaily, new Set()), buildScoringContext(new Date("2026-07-16T12:00:00Z")))
   );

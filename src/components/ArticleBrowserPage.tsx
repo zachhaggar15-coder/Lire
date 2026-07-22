@@ -3,27 +3,23 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ArticleSection from "@/components/ArticleSection";
+import JourneyMap from "@/components/JourneyMap";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
-import { getProgress, pruneStaleRssProgress } from "@/lib/progress";
+import { pruneStaleRssProgress } from "@/lib/progress";
 import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
-import { formatCategory } from "@/lib/format";
 import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
-import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT, getDailyBankTexts, isStarterText } from "@/lib/publicDomainBank";
 import {
-  getLessonPathTexts,
-  getLessonUnitProgress,
-  getLessonUnits,
-  lessonNumberInUnit,
-  lessonUnitForText,
-  type LessonUnit,
-  type LessonUnitProgress,
-} from "@/lib/lessonUnits";
+  DAILY_BANK_ARTICLE_LIMIT,
+  DAILY_RSS_ARTICLE_LIMIT,
+  getDailyExtraReadingTexts,
+  isStarterText,
+} from "@/lib/publicDomainBank";
 import {
   buildScorableArticles,
   buildScoringContext,
@@ -39,7 +35,6 @@ import {
   subscribeToRecommendationPreferences,
 } from "@/lib/recommendation/preferences";
 import { trackEvent } from "@/lib/analytics/client";
-import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 
 type Mode = "articles" | "live";
@@ -87,7 +82,7 @@ function defaultCategoryForMode(mode: Mode): CategoryFilter {
 }
 
 function isEligibleArticleModeText(text: ReadingText): boolean {
-  return text.category !== "news-style" || isStarterText(text);
+  return !isStarterText(text);
 }
 
 function shouldGateLiveNews(level: Difficulty, completedArticleCount: number, showAnyway: boolean): boolean {
@@ -113,7 +108,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
   const [completedArticleCount, setCompletedArticleCount] = useState(0);
   const [showLiveNewsAnyway, setShowLiveNewsAnyway] = useState(false);
-  /** Article difficulty is computed from dictionary lookups, so rescore once full coverage loads. */
   const dictionaryRevision = useGeneratedDictionary();
   const liveNewsGated = mode === "live" && shouldGateLiveNews(selectedLevel, completedArticleCount, showLiveNewsAnyway);
 
@@ -138,7 +132,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setLoadError(null);
       setIsSlowLoading(false);
       setUsedFallback(false);
-
       setState("loading");
       setSections(null);
       setTodayWords([]);
@@ -209,26 +202,18 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
     function buildAndSetSections(rssTexts: ReadingText[], fallback: boolean) {
       const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
-      const lessonPathTexts =
+      const extraReadingTexts =
         mode === "articles"
-          ? getLessonPathTexts({
+          ? getDailyExtraReadingTexts({
               level: bankLevel,
               category: categoryFilter,
-              limit: DAILY_BANK_ARTICLE_LIMIT * 3,
+              limit: DAILY_BANK_ARTICLE_LIMIT,
             })
           : [];
-      const fallbackBankTexts = getDailyBankTexts({
-        level: bankLevel,
-        category: categoryFilter,
-        limit: mode === "articles" ? DAILY_BANK_ARTICLE_LIMIT * 3 : DAILY_BANK_ARTICLE_LIMIT,
-      });
-      const bankTexts = (lessonPathTexts.length > 0 ? lessonPathTexts : fallbackBankTexts)
-        .filter((text) => mode !== "articles" || isEligibleArticleModeText(text))
-        .slice(0, DAILY_BANK_ARTICLE_LIMIT);
       const importedTexts = getCustomTexts();
       const hiddenSources = new Set(getHiddenSources());
       const knownWords = new Set(getKnownWords());
-      const pool = (mode === "articles" ? [...importedTexts, ...bankTexts] : rssTexts).filter(
+      const pool = (mode === "articles" ? [...importedTexts, ...extraReadingTexts] : rssTexts).filter(
         (text) => (!text.sourceName || !hiddenSources.has(text.sourceName)) && (mode !== "articles" || isEligibleArticleModeText(text))
       );
       const importedIds = new Set(importedTexts.map((text) => text.id));
@@ -257,10 +242,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   }
 
   const title = mode === "live" ? "Live News" : "Lessons";
-  const subtitle =
-    mode === "live"
-      ? "Current French articles for when you want a stretch."
-      : "Follow a short, level-matched path.";
+  const subtitle = mode === "live" ? "Current French articles for when you want a stretch." : "Follow one guided reading path.";
 
   return (
     <div className="px-4 pt-6">
@@ -307,24 +289,18 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         </p>
       )}
 
-      {!liveNewsGated && state === "success" && sections && (
-        mode === "live" ? (
+      {!liveNewsGated &&
+        state === "success" &&
+        sections &&
+        (mode === "live" ? (
           <LiveNewsContent sections={sections} todayWords={todayWords} />
         ) : (
-          <ArticleContent
-            sections={sections}
-            selectedLevel={selectedLevel}
-            categoryFilter={categoryFilter}
-            difficultyFilter={difficultyFilter}
-            customArticles={customArticles}
-            savedLaterArticles={savedLaterArticles}
-          />
-        )
-      )}
+          <LessonsContent sections={sections} customArticles={customArticles} savedLaterArticles={savedLaterArticles} />
+        ))}
 
       {!liveNewsGated && mode === "articles" && (
         <FilterPanel
-          summaryLabel="Browse more"
+          summaryLabel="Extra reading filters"
           categoryItems={ARTICLE_CATEGORY_FILTERS}
           categoryFilter={categoryFilter}
           difficultyFilter={difficultyFilter}
@@ -379,7 +355,7 @@ function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
         Start with a few short readings first, then come back when tapping words feels comfortable.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/articles" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+        <Link href="/articles#journey-current" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
           Start with lessons
         </Link>
         <button
@@ -421,7 +397,7 @@ function FilterPanel({
         {summaryLabel}
       </summary>
       <p className="mt-2 text-xs text-ink-muted">
-        {summaryLabel === "Browse more" ? "Find another topic, level, or imported text." : "Adjust the live-news list."}
+        {summaryLabel === "Extra reading filters" ? "Find another extra topic, level, or imported text." : "Adjust the live-news list."}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button type="button" onClick={onReset} className="rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted">
@@ -467,240 +443,54 @@ function FilterRow<T extends string>({
   );
 }
 
-function ArticleContent({
+function LessonsContent({
   sections,
-  selectedLevel,
-  categoryFilter,
-  difficultyFilter,
   customArticles,
   savedLaterArticles,
 }: {
   sections: RecommendationSections;
-  selectedLevel: Difficulty;
-  categoryFilter: CategoryFilter;
-  difficultyFilter: DifficultyFilter;
   customArticles: ScoredArticle[];
   savedLaterArticles: ScoredArticle[];
 }) {
-  const level = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
-  const orderedArticles = [...sections.dailyBank].sort((a, b) => {
-    const unitA = lessonUnitForText(a.text);
-    const unitB = lessonUnitForText(b.text);
-    const unitOrder = (unitA?.order ?? 99) - (unitB?.order ?? 99);
-    if (unitOrder !== 0) return unitOrder;
-    const lessonOrder = lessonNumberInUnit(a.text) - lessonNumberInUnit(b.text);
-    if (lessonOrder !== 0) return lessonOrder;
-    const starterFirst = Number(isStarterText(b.text)) - Number(isStarterText(a.text));
-    if (starterFirst !== 0) return starterFirst;
-    return Number(a.text.difficulty !== level) - Number(b.text.difficulty !== level);
-  });
-  // Feature the next unfinished lesson as the hero ("what's next"), but leave
-  // finished lessons where they are in the path so they show greyed rather than
-  // disappearing — the way a completed Duolingo lesson stays on the map.
-  const firstIncompleteIndex = orderedArticles.findIndex((a) => getProgress(a.text.id).status !== "completed");
-  const featuredIndex = firstIncompleteIndex === -1 ? 0 : firstIncompleteIndex;
-  const featured = orderedArticles[featuredIndex];
-  const rest = orderedArticles.filter((_, index) => index !== featuredIndex);
-  const pathLessons = rest.slice(0, 5);
-  const morePractice = rest.slice(5);
-  const featuredUnit = featured ? lessonUnitForText(featured.text) : null;
-  const featuredUnitProgress = featuredUnit ? getLessonUnitProgress(featuredUnit) : null;
-  const unitCards = getLessonUnits(level, categoryFilter).map(getLessonUnitProgress).filter((progress) => progress.total > 0);
+  const hasExtraReading = customArticles.length > 0 || sections.dailyBank.length > 0 || savedLaterArticles.length > 0;
 
   return (
     <>
-      {unitCards.length > 0 && <LessonUnitOverview units={unitCards} currentUnitId={featuredUnit?.id ?? null} />}
-      {featured && (
-        <FeaturedLessonCard
-          article={featured}
-          lessonNumber={lessonNumberInUnit(featured.text)}
-          level={level}
-          unit={featuredUnit}
-          unitProgress={featuredUnitProgress}
-        />
-      )}
-      {pathLessons.length > 0 && (
-        <section className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
-          <div className="px-1">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">
-              {featuredUnit ? featuredUnit.title : "Lesson path"}
-            </h2>
-            <p className="mt-0.5 text-xs text-ink-muted">
-              {featuredUnitProgress
-                ? `${featuredUnitProgress.unit.goal} ${featuredUnitProgress.completed}/${featuredUnitProgress.total} complete.`
-                : "A few short readings, one after another."}
-            </p>
-          </div>
-          <div className="mt-3 space-y-2">
-            {pathLessons.map((article) => (
-              <LessonPathItem key={article.text.id} article={article} lessonNumber={lessonNumberInUnit(article.text)} />
-            ))}
-          </div>
-        </section>
-      )}
-      {morePractice.length > 0 && (
-        <details className="mb-6">
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
-            Practice bank
-          </summary>
-          <div className="mt-3">
-            <ArticleSection title={`${level} practice bank`} articles={morePractice} variant="compact" />
-          </div>
-        </details>
-      )}
-      {customArticles.length > 0 && (
-        <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
-      )}
+      <JourneyMap />
       <details className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
         <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
-          Import your own text
+          Extra reading
         </summary>
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
-          <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
-            Import
-          </Link>
+        <div className="mt-4">
+          {hasExtraReading ? (
+            <>
+              {customArticles.length > 0 && (
+                <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
+              )}
+              <ArticleSection
+                title="Classic practice bank"
+                subtitle="Extra readings outside the guided path."
+                articles={sections.dailyBank}
+                variant="compact"
+              />
+              <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
+            </>
+          ) : (
+            <p className="mb-4 rounded-2xl bg-cream px-3 py-3 text-sm font-semibold text-ink-muted">
+              No extra readings match these filters right now.
+            </p>
+          )}
+          <div className="rounded-2xl bg-cream px-3 py-3">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
+              <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+                Import
+              </Link>
+            </div>
+          </div>
         </div>
       </details>
-      <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
     </>
-  );
-}
-
-function LessonUnitOverview({ units, currentUnitId }: { units: LessonUnitProgress[]; currentUnitId: string | null }) {
-  return (
-    <section className="mb-5">
-      <div className="mb-2 flex items-center justify-between gap-3 px-1">
-        <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Units</h2>
-          <p className="mt-0.5 text-xs text-ink-muted">A named path for each kind of reading.</p>
-        </div>
-      </div>
-      <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
-        {units.map((progress) => {
-          const active = progress.unit.id === currentUnitId;
-          const percent = progress.total === 0 ? 0 : Math.round((progress.completed / progress.total) * 100);
-          return (
-            <article
-              key={progress.unit.id}
-              className={`w-[78%] max-w-[260px] shrink-0 rounded-card p-4 shadow-card ${
-                active ? "bg-brand text-white" : "bg-cream-card text-ink"
-              }`}
-            >
-              <p className={`text-xs font-bold uppercase tracking-wide ${active ? "text-white/75" : "text-ink-muted"}`}>
-                Unit {progress.unit.order}
-              </p>
-              <h3 className="mt-1 text-base font-extrabold leading-tight">{progress.unit.title}</h3>
-              <p className={`mt-1 line-clamp-2 text-xs leading-relaxed ${active ? "text-white/80" : "text-ink-muted"}`}>
-                {progress.unit.goal}
-              </p>
-              <div className={`mt-3 h-2 overflow-hidden rounded-full ${active ? "bg-white/25" : "bg-cream-dark"}`}>
-                <div className={`h-full rounded-full ${active ? "bg-white" : "bg-brand"}`} style={{ width: `${percent}%` }} />
-              </div>
-              <p className={`mt-1 text-xs font-semibold ${active ? "text-white/80" : "text-ink-muted"}`}>
-                {progress.completed}/{progress.total} complete
-              </p>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function FeaturedLessonCard({
-  article,
-  lessonNumber,
-  level,
-  unit,
-  unitProgress,
-}: {
-  article: ScoredArticle;
-  lessonNumber: number;
-  level: Difficulty;
-  unit: LessonUnit | null;
-  unitProgress: LessonUnitProgress | null;
-}) {
-  const { text } = article;
-  const progress = getProgress(text.id).status;
-  const action = progress === "completed" ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
-  return (
-    <section className="mb-5 rounded-card bg-cream-card p-5 shadow-card">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">
-        {unit ? `Unit ${unit.order} - Lesson ${lessonNumber}` : `Lesson ${lessonNumber}`}
-      </p>
-      <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">{text.title}</h2>
-      {unit && (
-        <p className="mt-1 text-sm font-semibold text-ink-muted">
-          {unit.title}
-          {unitProgress ? ` - ${unitProgress.completed}/${unitProgress.total} complete` : ""}
-        </p>
-      )}
-      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-        {text.blurbEn ?? text.preview}
-      </p>
-      <div className="mt-3 flex flex-wrap gap-1.5">
-        <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{text.difficulty}</span>
-        <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold capitalize text-ink-muted">{formatCategory(text.category)}</span>
-        <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">{text.minutes} min</span>
-        {isStarterText(text) && (
-          <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">Written for beginners</span>
-        )}
-        {text.difficulty !== level && (
-          <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">near your level</span>
-        )}
-      </div>
-      <Link
-        href={`/reader/${encodeURIComponent(text.id)}`}
-        className="mt-5 block rounded-full bg-brand px-5 py-3 shadow-raised text-center text-sm font-bold text-white active:scale-95"
-      >
-        {action}
-      </Link>
-    </section>
-  );
-}
-
-function LessonPathItem({ article, lessonNumber }: { article: ScoredArticle; lessonNumber: number }) {
-  const { text } = article;
-  const progress = getProgress(text.id).status;
-  const completed = progress === "completed";
-  const action = completed ? "Read again" : progress === "in-progress" ? "Continue" : "Start";
-
-  return (
-    <Link
-      href={`/reader/${encodeURIComponent(text.id)}`}
-      // Completed lessons stay tappable ("Read again") but dim back so the eye
-      // lands on what's next, the way a finished Duolingo lesson greys out.
-      className={`flex items-center gap-3 rounded-2xl bg-cream px-3 py-3 active:scale-[0.99] ${completed ? "opacity-55" : ""}`}
-    >
-      {/* Scene first, then the step number as a small badge over it: the list
-          is scannable by picture, while the numbered path stays legible. */}
-      <span className="relative shrink-0">
-        <LessonScene name={sceneFor(text.id, text.category)} size={44} />
-        <span
-          className={`absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs font-extrabold ring-2 ring-cream ${
-            completed ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
-          }`}
-        >
-          {completed ? "✓" : lessonNumber}
-        </span>
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className={`block truncate text-sm font-bold ${completed ? "text-ink-muted line-through decoration-ink-muted/40" : "text-ink"}`}>
-          {text.title}
-        </span>
-        <span className="mt-0.5 block truncate text-xs text-ink-muted">
-          {completed ? "Completed" : `${text.difficulty} - ${text.minutes} min - ${isStarterText(text) ? "Written for beginners" : "Reading practice"}`}
-        </span>
-      </span>
-      <span
-        className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${
-          completed ? "bg-cream-dark text-ink-muted" : "bg-brand-light text-brand"
-        }`}
-      >
-        {action}
-      </span>
-    </Link>
   );
 }
 
@@ -728,7 +518,7 @@ function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSec
 function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
   return (
     <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words appearing across today&apos;s news</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words appearing across today's news</h2>
       <p className="mt-0.5 text-xs text-ink-muted">Open examples from different sources before choosing an article.</p>
       <div className="mt-3 space-y-2">
         {words.map((word) => (

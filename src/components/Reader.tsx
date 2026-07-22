@@ -73,7 +73,9 @@ import {
 } from "@/lib/comprehensionCache";
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
-import LessonCompleteScreen, { type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
+import { getJourneyState, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
+import { JOURNEY_BANDS } from "@/lib/journey/ladder";
+import LessonCompleteScreen, { type JourneyMoment, type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -92,6 +94,37 @@ const FONT_SIZE_CLASSES: Record<FontSize, string> = {
 type TranslationState = "idle" | "loading" | "ready";
 /** How many paragraphs go in each translation request — small enough that the first chunk (typically what's on screen when the toggle is tapped) comes back in a couple of seconds instead of waiting for the whole article, large enough that each request still has some real context to work with. */
 const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
+
+function journeyMomentForCompletion(before: JourneyState | null, after: JourneyState | null, textId: string): JourneyMoment | null {
+  if (!before || !after) return null;
+  const beforeStage = before.stages.find((stage) => stage.stage.textIds.includes(textId));
+  if (!beforeStage || beforeStage.status === "cleared") return null;
+  const afterStage = after.stages.find((stage) => stage.stage.globalIndex === beforeStage.stage.globalIndex);
+  if (!afterStage || afterStage.status !== "cleared") return null;
+
+  const band = afterStage.stage.band;
+  const bandClearedBefore = before.stages.filter((stage) => stage.stage.band === band).every((stage) => stage.status === "cleared");
+  const bandClearedAfter = after.stages.filter((stage) => stage.stage.band === band).every((stage) => stage.status === "cleared");
+
+  if (!bandClearedBefore && bandClearedAfter) {
+    const nextBand = JOURNEY_BANDS[JOURNEY_BANDS.indexOf(band) + 1] ?? null;
+    return {
+      kind: "band",
+      title: nextBand ? `${nextBand} path unlocked!` : `${band} path complete!`,
+      detail: nextBand
+        ? `${band} is clear. Your journey now continues into ${nextBand}.`
+        : "You have cleared every guided stage available right now.",
+      actionLabel: "Continue journey",
+    };
+  }
+
+  return {
+    kind: "stage",
+    title: "Stage cleared!",
+    detail: `${afterStage.stage.label} is clear. The next stage is open on your journey map.`,
+    actionLabel: "Continue journey",
+  };
+}
 
 export default function Reader({ text }: { text: ReadingText }) {
   const router = useRouter();
@@ -217,6 +250,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     savedWords: number;
     reviewItems: LessonMiniReviewItem[];
     streak: { count: number; extended: boolean; week: StreakDay[] };
+    journeyMoment: JourneyMoment | null;
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -1117,7 +1151,11 @@ export default function Reader({ text }: { text: ReadingText }) {
     // activity, so the completion screen knows if *this* finish extended the
     // streak (a celebration) versus just kept an already-earned day.
     const streakExtendedByThis = !isActiveToday();
+    const journeyBefore = isStarterLesson && !wasAlreadyCompleted ? getJourneyState() : null;
     markCompleted(text.id);
+    const journeyAfter = journeyBefore ? getJourneyState() : null;
+    const journeyMoment = journeyMomentForCompletion(journeyBefore, journeyAfter, text.id);
+    if (journeyAfter) markJourneyStageSeen(journeyAfter.currentStageIndex);
     recordTranslationBudgetResult({
       articleId: text.id,
       articleTitle: text.title,
@@ -1205,17 +1243,19 @@ export default function Reader({ text }: { text: ReadingText }) {
       savedWords: articleSavedWordCount,
       reviewItems: buildLessonMiniReviewItems(),
       streak: { count: getCurrentStreak(), extended: streakExtendedByThis, week: getStreakWeek() },
+      journeyMoment,
     });
   }
 
   function handleLessonCompleteContinue() {
     // Return to where the lesson was opened from — the article tab by default,
     // or home if that's where the reader was entered from.
-    let target = "/articles";
+    let target = isStarterLesson ? "/articles#journey-current" : "/articles";
     if (typeof document !== "undefined") {
       try {
         const ref = new URL(document.referrer);
         if (ref.origin === window.location.origin && ref.pathname === "/") target = "/";
+        if (ref.origin === window.location.origin && ref.pathname === "/live-news") target = "/live-news";
       } catch {
         // no usable referrer; keep the default
       }
@@ -2053,6 +2093,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           }}
           reviewItems={lessonComplete.reviewItems}
           streak={lessonComplete.streak}
+          journeyMoment={lessonComplete.journeyMoment}
           isLesson={isStarterLesson}
           onContinue={handleLessonCompleteContinue}
         />

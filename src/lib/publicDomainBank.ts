@@ -72,3 +72,32 @@ export function getDailyBankTexts({
     .slice(0, limit)
     .map(stripMetadataOnlyBlurb);
 }
+
+export function getDailyExtraReadingTexts({
+  level,
+  category,
+  limit = DAILY_BANK_ARTICLE_LIMIT,
+  date = new Date(),
+}: {
+  level: Difficulty;
+  category?: Category | "all";
+  limit?: number;
+  date?: Date;
+}): ReadingText[] {
+  const allowedLevels = adjacentLevels(level);
+  const categoryKey = category ?? "all";
+  const candidates = publicDomainTexts.filter((text) => {
+    if (!allowedLevels.includes(text.difficulty)) return false;
+    if (categoryKey !== "all" && text.category !== categoryKey) return false;
+    return true;
+  });
+
+  return seededShuffle(candidates, `${todayKey(date)}::extra::${level}::${categoryKey}`)
+    .sort((a, b) => {
+      const distanceA = Math.abs(CEFR_ORDER.indexOf(a.difficulty) - CEFR_ORDER.indexOf(level));
+      const distanceB = Math.abs(CEFR_ORDER.indexOf(b.difficulty) - CEFR_ORDER.indexOf(level));
+      return distanceA - distanceB;
+    })
+    .slice(0, limit)
+    .map(stripMetadataOnlyBlurb);
+}

@@ -20,12 +20,20 @@ export interface LessonMiniReviewItem {
   context: string | null;
 }
 
+export interface JourneyMoment {
+  kind: "stage" | "band";
+  title: string;
+  detail: string;
+  actionLabel?: string;
+}
+
 interface LessonCompleteScreenProps {
   level: Difficulty;
   scoreChange: LevelScoreChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
   streak: { count: number; extended: boolean; week: StreakDay[] };
+  journeyMoment?: JourneyMoment | null;
   isLesson: boolean;
   onContinue: () => void;
 }
@@ -39,7 +47,16 @@ interface LessonCompleteScreenProps {
  * fills the remainder — so crossing a milestone reads as a milestone rather
  * than the bar jumping backwards. "Continue" returns to the article tab.
  */
-export default function LessonCompleteScreen({ level, scoreChange, stats, reviewItems, streak, isLesson, onContinue }: LessonCompleteScreenProps) {
+export default function LessonCompleteScreen({
+  level,
+  scoreChange,
+  stats,
+  reviewItems,
+  streak,
+  journeyMoment,
+  isLesson,
+  onContinue,
+}: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -110,9 +127,22 @@ export default function LessonCompleteScreen({ level, scoreChange, stats, review
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
-          <h1 className="mt-4 text-3xl font-extrabold text-ink">{isLesson ? "Lesson complete!" : "Reading complete!"}</h1>
-          <p className="mt-1 text-sm text-ink-muted">Nice work — here&apos;s how this one went.</p>
+          <h1 className="mt-4 text-3xl font-extrabold text-ink">
+            {journeyMoment?.title ?? (isLesson ? "Lesson complete!" : "Reading complete!")}
+          </h1>
+          <p className="mt-1 text-sm text-ink-muted">
+            {journeyMoment?.detail ?? "Nice work - here's how this one went."}
+          </p>
         </div>
+
+        {journeyMoment && (
+          <div className="mt-5 rounded-card bg-brand px-4 py-3 text-white shadow-raised">
+            <p className="text-xs font-bold uppercase tracking-wide text-white/75">
+              {journeyMoment.kind === "band" ? "Band complete" : "Stage cleared"}
+            </p>
+            <p className="mt-1 text-sm font-semibold leading-relaxed text-white/90">{journeyMoment.detail}</p>
+          </div>
+        )}
 
         {/* Headline stats */}
         <div className="mt-7 grid grid-cols-3 gap-3">
@@ -241,7 +271,7 @@ export default function LessonCompleteScreen({ level, scoreChange, stats, review
           onClick={onContinue}
           className="mt-7 w-full rounded-full bg-brand px-4 py-3.5 text-base font-bold text-white shadow-raised active:scale-[0.98]"
         >
-          Continue
+          {journeyMoment?.actionLabel ?? "Continue"}
         </button>
       </div>
     </div>

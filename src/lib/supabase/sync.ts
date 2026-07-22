@@ -20,6 +20,7 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.knownWords.v1", kind: "list-of-strings" },
   { key: "lire.archive.v1", kind: "list-by-id", idField: "textId" },
   { key: "lire.progress.v1", kind: "record" },
+  { key: "lire.journey.v1", kind: "object" },
   { key: "lire.levelScore.v1", kind: "record" },
   { key: "lire.progress.lastOpened", kind: "object" },
   { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },
