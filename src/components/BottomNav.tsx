@@ -14,7 +14,20 @@ const items = [
     href: "/settings",
     label: "Profile",
     icon: ProfileIcon,
-    activePaths: ["/settings", "/progress", "/words", "/phrases", "/dictionary", "/sources", "/privacy", "/changelog"],
+    activePaths: [
+      "/settings",
+      "/progress",
+      "/words",
+      "/phrases",
+      "/dictionary",
+      "/sources",
+      "/privacy",
+      "/changelog",
+      "/grammar",
+      "/archive",
+      "/live-news",
+      "/lookup",
+    ],
   },
 ];
 

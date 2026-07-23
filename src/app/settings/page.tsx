@@ -7,12 +7,14 @@ import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
+import { getCurrentStreak, getLongestStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import AccountCard from "@/components/AccountCard";
 import SpeechSettingsCard from "@/components/SpeechSettingsCard";
 import BetaNotice from "@/components/BetaNotice";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
+import { StreakCard } from "@/components/GamificationCards";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -106,12 +108,24 @@ export default function SettingsPage() {
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
   const [knownCount, setKnownCount] = useState(0);
   const [offlineCount, setOfflineCount] = useState(0);
+  const [streak, setStreak] = useState<{ current: number; longest: number; activeToday: boolean; week: StreakDay[] }>({
+    current: 0,
+    longest: 0,
+    activeToday: false,
+    week: [],
+  });
 
   useEffect(() => {
     setSettings(getSettings());
     setSelectedLevel(getSelectedReadingLevel());
     setKnownCount(getKnownWords().length);
     setOfflineCount(getOfflineRssTextCount());
+    setStreak({
+      current: getCurrentStreak(),
+      longest: getLongestStreak(),
+      activeToday: isActiveToday(),
+      week: getStreakWeek(),
+    });
   }, []);
 
   function update(patch: Partial<AppSettings>) {
@@ -149,6 +163,22 @@ export default function SettingsPage() {
       </header>
 
       <div className="space-y-5">
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Streak" subtitle="Your recent reading rhythm." />
+          <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
+        </section>
+
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
+          <div className="space-y-3">
+            <SettingsLink href="/live-news" title="News" description="Read current French articles." />
+            <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
+            <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
+            <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
+            <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
+          </div>
+        </section>
+
         <section className="space-y-3">
           <SettingsSectionTitle title="Reading" subtitle="Level, text size, and English help." />
 
