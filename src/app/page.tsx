@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import { StreakFlame } from "@/components/GamificationCards";
+import HomeNewsSection from "@/components/HomeNewsSection";
 import { getCurrentStreak } from "@/lib/habit";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 import BetaNotice from "@/components/BetaNotice";
@@ -201,6 +202,7 @@ export default function HomePage() {
       <div className="min-h-[calc(100dvh-8rem)]">
         <HomeReadingHero target={heroTarget} selectedLevel={selectedLevel} />
         <ReviewNudge dueReviews={stats.dueReviews} />
+        <HomeNewsSection />
       </div>
 
       <div className="space-y-5 pb-6">
