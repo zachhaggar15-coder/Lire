@@ -219,24 +219,24 @@ function HomeReadingHero({ target, selectedLevel }: { target: HomeReadingTarget 
   const href = target?.id ? readerHref(target.id) : "/articles#journey-current";
 
   return (
-    <section className="rounded-card bg-cream-card p-5 shadow-raised">
-      <div className="flex items-start justify-between gap-4">
+    <section className="rounded-card bg-cream-card p-4 shadow-raised">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold uppercase tracking-wide text-brand">{stage}</p>
-          <h2 className="mt-2 text-2xl font-extrabold leading-tight text-ink">{title}</h2>
+          <p className="line-clamp-1 text-xs font-bold uppercase tracking-wide text-brand">{stage}</p>
+          <h2 className="mt-1.5 line-clamp-2 break-words text-lg font-extrabold leading-snug text-ink">{title}</h2>
         </div>
-        <LessonScene name={sceneFor(target?.id ?? "", target?.category)} size={88} />
+        <LessonScene name={sceneFor(target?.id ?? "", target?.category)} size={64} />
       </div>
 
       <StageProgressLine
         value={target?.stageProgress ?? 0}
         label={target?.stageProgressLabel ?? "Journey progress"}
-        className="mt-5"
+        className="mt-4"
       />
 
       <Link
         href={href}
-        className="mt-6 block rounded-full bg-brand px-5 py-3.5 shadow-raised text-center text-base font-bold text-white active:scale-95"
+        className="mt-4 block rounded-full bg-brand px-5 py-3 shadow-raised text-center text-sm font-bold text-white active:scale-95"
       >
         {target?.buttonLabel ?? "Start lesson"}
       </Link>
