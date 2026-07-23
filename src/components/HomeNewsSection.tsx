@@ -65,7 +65,7 @@ export default function HomeNewsSection() {
   const readyCount = articles?.length ?? 0;
 
   return (
-    <section className="mt-5">
+    <section>
       <div className="rounded-card bg-cream-card shadow-card">
         <button
           type="button"

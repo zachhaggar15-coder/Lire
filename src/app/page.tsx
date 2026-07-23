@@ -199,15 +199,17 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className="min-h-[calc(100dvh-8rem)]">
+      <div>
         <HomeReadingHero target={heroTarget} selectedLevel={selectedLevel} />
         <ReviewNudge dueReviews={stats.dueReviews} />
-        <HomeNewsSection />
+        <div className="mt-5 space-y-3">
+          <HomeNewsSection />
+          <ShortSnippetsBlock />
+        </div>
       </div>
 
-      <div className="space-y-5 pb-6">
+      <div className="mt-5 pb-6">
         <BetaNotice />
-        <ShortSnippetsBlock />
       </div>
     </div>
   );

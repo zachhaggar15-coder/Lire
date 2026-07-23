@@ -5,6 +5,8 @@ import Link from "next/link";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { formatDate } from "@/lib/format";
 
+const PHRASE_ACCENTS = ["border-sky-400", "border-orange-400", "border-violet-400", "border-emerald-400", "border-rose-400"];
+
 export default function PhrasesPage() {
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [ready, setReady] = useState(false);
@@ -70,8 +72,8 @@ function PhraseList({
     <section>
       <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <ul className="space-y-3">
-        {phrases.map((phrase) => (
-          <li key={phrase.phrase} className="rounded-card bg-cream-card p-4 shadow-card">
+        {phrases.map((phrase, index) => (
+          <li key={phrase.phrase} className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${PHRASE_ACCENTS[index % PHRASE_ACCENTS.length]}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-lg font-bold text-ink">{phrase.phrase}</p>

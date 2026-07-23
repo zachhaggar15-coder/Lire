@@ -314,8 +314,8 @@ function PhraseList({
     <section>
       <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
       <ul className="space-y-3">
-        {phrases.map((phrase) => (
-          <li key={phrase.phrase} className="rounded-card bg-cream-card p-4 shadow-card">
+        {phrases.map((phrase, index) => (
+          <li key={phrase.phrase} className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${WORD_ACCENTS[index % WORD_ACCENTS.length]}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-lg font-bold text-ink">{phrase.phrase}</p>

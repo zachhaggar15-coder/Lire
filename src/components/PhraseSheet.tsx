@@ -145,7 +145,10 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
           </button>
         </div>
 
-        <p className="mt-3 text-lg font-semibold text-ink">{state?.translation}</p>
+        <div className="mt-3 rounded-2xl bg-white/75 p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning</p>
+          <p className="mt-1 text-lg font-bold text-ink">{state?.translation}</p>
+        </div>
         {state?.partOfSpeech && (
           <span className="mt-2 inline-flex rounded-full bg-white/70 px-2 py-0.5 text-xs font-semibold text-brand">
             {state.partOfSpeech}
@@ -168,16 +171,16 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
 
         <div className="mt-5 grid grid-cols-2 gap-2">
           <button
-            onClick={handleSavePhrase}
-            className="rounded-2xl bg-white/80 py-3 text-sm font-semibold text-ink active:scale-95"
+            onClick={handleMarkKnown}
+            className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
           >
-            {saved ? "Saved" : "Save phrase"}
+            {savedKnown ? "Known" : "Got it"}
           </button>
           <button
-            onClick={handleMarkKnown}
-            className="rounded-2xl bg-emerald-100 py-3 text-sm font-semibold text-emerald-700 active:scale-95"
+            onClick={handleSavePhrase}
+            className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
           >
-            {savedKnown ? "Known" : "I know this"}
+            {saved ? "Saved" : "Save"}
           </button>
         </div>
 

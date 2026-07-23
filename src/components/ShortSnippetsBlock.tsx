@@ -45,7 +45,7 @@ export default function ShortSnippetsBlock() {
   const readyCount = snippets?.length ?? 0;
 
   return (
-    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <button
         type="button"
         aria-expanded={isOpen}
