@@ -137,7 +137,7 @@ export function StreakCard({
         : "Read one lesson today to keep your streak alive.";
 
   return (
-    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-center gap-3">
         <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${streak > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
           <StreakFlame active={streak > 0} className="h-8 w-8" />

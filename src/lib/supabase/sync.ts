@@ -31,6 +31,7 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.onboarding.v1", kind: "object" },
   { key: "lire.rssTexts.offline", kind: "list-by-id", idField: "id" },
   { key: "lire.activityDates.v1", kind: "list-of-strings" },
+  { key: "lire.streakGrace.v1", kind: "object" },
   { key: "lire.settings.v1", kind: "object" },
   { key: "lire.goals.v1", kind: "object" },
   { key: "lire.savedPhrases.v1", kind: "list-by-id", idField: "phrase" },

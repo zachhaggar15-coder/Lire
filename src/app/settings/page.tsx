@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import type { AppSettings, Difficulty, FontSize, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
-import { getCurrentStreak, getLongestStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
+import {
+  getCurrentStreak,
+  getLongestStreak,
+  getStreakGraceStatus,
+  getStreakWeek,
+  isActiveToday,
+  applyStreakGraceDay,
+  type StreakDay,
+  type StreakGraceStatus,
+} from "@/lib/habit";
 import AccountCard from "@/components/AccountCard";
 import SpeechSettingsCard from "@/components/SpeechSettingsCard";
 import BetaNotice from "@/components/BetaNotice";
@@ -103,6 +112,28 @@ function SettingsLink({ href, title, description }: { href: string; title: strin
   );
 }
 
+function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse: () => void }) {
+  if (!grace.available) return null;
+
+  return (
+    <div className="rounded-card bg-brand-light p-4 shadow-card">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-semibold text-brand">Streak save available</p>
+          <p className="mt-0.5 text-sm text-ink-muted">Use this week's grace day to cover yesterday.</p>
+        </div>
+        <button
+          type="button"
+          onClick={onUse}
+          className="shrink-0 rounded-full bg-brand px-3 py-2 text-sm font-semibold text-white shadow-raised active:scale-95"
+        >
+          Save streak
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
@@ -114,19 +145,30 @@ export default function SettingsPage() {
     activeToday: false,
     week: [],
   });
+  const [grace, setGrace] = useState<StreakGraceStatus>({
+    available: false,
+    usedThisWeek: false,
+    eligibleDateKey: "",
+    recoveredDateKey: null,
+  });
 
-  useEffect(() => {
-    setSettings(getSettings());
-    setSelectedLevel(getSelectedReadingLevel());
-    setKnownCount(getKnownWords().length);
-    setOfflineCount(getOfflineRssTextCount());
+  const refreshStreakView = useCallback(() => {
     setStreak({
       current: getCurrentStreak(),
       longest: getLongestStreak(),
       activeToday: isActiveToday(),
       week: getStreakWeek(),
     });
+    setGrace(getStreakGraceStatus());
   }, []);
+
+  useEffect(() => {
+    setSettings(getSettings());
+    setSelectedLevel(getSelectedReadingLevel());
+    setKnownCount(getKnownWords().length);
+    setOfflineCount(getOfflineRssTextCount());
+    refreshStreakView();
+  }, [refreshStreakView]);
 
   function update(patch: Partial<AppSettings>) {
     setSettings(saveSettings(patch));
@@ -151,36 +193,22 @@ export default function SettingsPage() {
     setOfflineCount(0);
   }
 
+  function handleUseGraceDay() {
+    if (applyStreakGraceDay()) refreshStreakView();
+  }
+
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
         <h1 className="text-2xl font-extrabold text-ink">Profile</h1>
-        <p className="text-sm text-ink-muted">Level, reading help, saved words, and privacy.</p>
-        <div className="mt-3 grid gap-2 text-xs font-semibold text-ink-muted">
-          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">Your lesson progress is stored locally on this device.</p>
-          <p className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">AI help is optional and clearly labelled when used.</p>
-        </div>
+        <p className="text-sm text-ink-muted">Learning, library, app setup, and advanced tools.</p>
       </header>
 
-      <div className="space-y-5">
+      <div className="space-y-6">
         <section className="space-y-3">
-          <SettingsSectionTitle title="Streak" subtitle="Your recent reading rhythm." />
+          <SettingsSectionTitle title="Learning" subtitle="Streak, level, and reader preferences." />
           <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
-        </section>
-
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <div className="space-y-3">
-            <SettingsLink href="/live-news" title="News" description="Read current French articles." />
-            <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
-            <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
-            <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
-            <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
-          </div>
-        </section>
-
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Reading" subtitle="Level, text size, and English help." />
+          <StreakRecoveryCard grace={grace} onUse={handleUseGraceDay} />
 
           <div className="rounded-card bg-cream-card p-4 shadow-card">
             <p className="font-semibold text-ink">Reading level</p>
@@ -244,8 +272,8 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <details className="rounded-card bg-cream-card p-4 shadow-card">
-            <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
+          <details>
+            <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
               Display and audio
             </summary>
             <div className="mt-3 space-y-3">
@@ -266,29 +294,46 @@ export default function SettingsPage() {
           </details>
         </section>
 
-        <details className="rounded-card bg-cream-card p-4 shadow-card">
-          <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
-            Account and app
-          </summary>
-          <div className="mt-3 space-y-3">
-            <BetaNotice />
-            <AccountCard />
-            <div className="rounded-card bg-cream p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-semibold text-ink">Get Lire on Android</p>
-                  <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
-                </div>
-                <AndroidBetaButton source="settings" label="Join" />
+        <section className="space-y-3">
+          <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
+          <SettingsLink href="/live-news" title="News" description="Read current French articles." />
+          <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
+          <SettingsLink href="/phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
+          <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
+          <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
+          <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
+        </section>
+
+        <section className="space-y-3">
+          <SettingsSectionTitle title="App" subtitle="Account, install options, feedback, and privacy." />
+          <BetaNotice />
+          <AccountCard />
+          <div className="rounded-card bg-cream-card p-4 shadow-card">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-semibold text-ink">Get Lire on Android</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
               </div>
+              <AndroidBetaButton source="settings" label="Join" />
             </div>
-            <PwaInstallCard />
           </div>
-        </details>
+          <PwaInstallCard />
+          <div className="rounded-card bg-cream-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="font-semibold text-ink">Feedback</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Report a dictionary, article, translation, or technical issue.</p>
+              </div>
+              <FeedbackButton feature="settings" label="Open" />
+            </div>
+          </div>
+          <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
+          <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Lire." />
+        </section>
 
         <details>
           <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
-            Advanced and support
+            Advanced
           </summary>
           <div className="mt-3 space-y-3">
             <Toggle
@@ -340,21 +385,8 @@ export default function SettingsPage() {
             </div>
 
             <SettingsLink href="/lookup" title="English to French lookup" description="Look up an English word offline." />
-            <SettingsLink href="/phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
             <SettingsLink href="/dictionary" title="Dictionary quality" description="See missing entries, saved corrections, and phrase coverage." />
             <SettingsLink href="/sources" title="RSS sources" description="Check which feeds are producing French articles." />
-            <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Lire." />
-            <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
-
-            <div className="rounded-card bg-cream-card p-4 shadow-card">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="font-semibold text-ink">Feedback</p>
-                  <p className="mt-0.5 text-sm text-ink-muted">Report a dictionary, article, translation, or technical issue.</p>
-                </div>
-                <FeedbackButton feature="settings" label="Open" />
-              </div>
-            </div>
           </div>
         </details>
       </div>

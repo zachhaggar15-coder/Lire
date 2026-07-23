@@ -352,6 +352,14 @@ export default function Reader({ text }: { text: ReadingText }) {
   const currentLessonStep = Math.min(lessonStep + 1, lessonStepCount);
   const isLastLessonStep = currentLessonStep >= lessonStepCount;
   const lessonProgress = isChunkedStarterLesson ? Math.round((currentLessonStep / lessonStepCount) * 100) : 100;
+  const lessonStepSentenceCount = isChunkedStarterLesson
+    ? visibleParagraphEntries.reduce((total, entry) => total + entry.sentences.length, 0)
+    : 0;
+  const lessonStepSentenceLabel = `${lessonStepSentenceCount} ${lessonStepSentenceCount === 1 ? "sentence" : "sentences"} left`;
+  const remainingLessonSteps = Math.max(0, lessonStepCount - currentLessonStep);
+  const remainingLessonStepLabel = isLastLessonStep
+    ? "Final step"
+    : `${remainingLessonSteps} ${remainingLessonSteps === 1 ? "step" : "steps"} after this`;
 
   /**
    * The first difficulty estimate may have run against curated-only coverage,
@@ -1751,13 +1759,24 @@ export default function Reader({ text }: { text: ReadingText }) {
         <section className="mt-5 rounded-card bg-cream-card p-4 shadow-card">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-brand">Lesson step {currentLessonStep} of {lessonStepCount}</p>
-              <p className="mt-0.5 text-sm font-semibold text-ink">Read this short part, then continue.</p>
+              <p className="text-xs font-bold uppercase tracking-wide text-brand">Step {currentLessonStep} of {lessonStepCount}</p>
+              <p className="mt-0.5 text-sm font-semibold text-ink">{lessonStepSentenceLabel}</p>
             </div>
             <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{lessonProgress}%</span>
           </div>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-cream-dark">
+          <div
+            className="mt-3 h-2 overflow-hidden rounded-full bg-cream-dark"
+            role="progressbar"
+            aria-label="Lesson progress"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={lessonProgress}
+          >
             <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${lessonProgress}%` }} />
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-3 border-t border-cream-dark pt-3 text-xs font-semibold text-ink-muted">
+            <span>{remainingLessonStepLabel}</span>
+            <span>{isLastLessonStep ? "Finish when ready" : "Continue unlocks the next part"}</span>
           </div>
         </section>
       )}

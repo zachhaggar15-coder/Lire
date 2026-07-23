@@ -96,7 +96,7 @@ import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/levelScore.ts";
-import { getStreakWeek } from "../src/lib/habit.ts";
+import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
 import {
   buildCategoryProficiency,
   buildContextualReviewArticles,
@@ -389,6 +389,20 @@ console.log("\n--- Public-domain reading bank ---");
   check("streak week has seven Monday-first days", week.length === 7 && week.map((d) => d.weekdayLabel).join("") === "MTWTFSS");
   check("streak week marks exactly one day as today", week.filter((d) => d.isToday).length === 1);
   check("streak week flags days after today as future, earlier days as past", week.every((d, i) => d.isFuture === i > todayIndex));
+  const previousActivityDates = window.localStorage.getItem("lire.activityDates.v1");
+  const previousGraceDay = window.localStorage.getItem("lire.streakGrace.v1");
+  window.localStorage.setItem("lire.activityDates.v1", JSON.stringify(["2026-02-02", "2026-02-03"]));
+  window.localStorage.removeItem("lire.streakGrace.v1");
+  const graceDate = new Date("2026-02-05T12:00:00Z");
+  const graceBefore = getStreakGraceStatus(graceDate);
+  check("streak grace appears after one missed day", graceBefore.available && graceBefore.eligibleDateKey === "2026-02-04");
+  check("using streak grace fills the missed day", applyStreakGraceDay(graceDate) && getCurrentStreak(graceDate) === 3);
+  const graceAfter = getStreakGraceStatus(graceDate);
+  check("streak grace is once per week", !graceAfter.available && graceAfter.usedThisWeek && graceAfter.recoveredDateKey === "2026-02-04");
+  if (previousActivityDates === null) window.localStorage.removeItem("lire.activityDates.v1");
+  else window.localStorage.setItem("lire.activityDates.v1", previousActivityDates);
+  if (previousGraceDay === null) window.localStorage.removeItem("lire.streakGrace.v1");
+  else window.localStorage.setItem("lire.streakGrace.v1", previousGraceDay);
   check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
   check(
     "exported public-domain articles strip generated extrait numbers from titles",
