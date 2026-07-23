@@ -21,6 +21,7 @@ import {
 export default function JourneyMap() {
   const [, setVersion] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [openStageIndex, setOpenStageIndex] = useState<number | null>(null);
   useGeneratedDictionary();
   const currentRef = useRef<HTMLDivElement | null>(null);
   const fallbackOptions = { selectedLevel: "A2" as const, progressById: {}, skippedTextIds: [], knownWords: new Set<string>(), feedbackByTextId: {} };
@@ -29,6 +30,18 @@ export default function JourneyMap() {
   const next = mounted ? getNextTextForReader() : getNextTextForReader(fallbackOptions);
   const skipped = mounted ? new Set(getJourneyStore().skippedTextIds) : new Set<string>();
   const ladder = buildLadder();
+  const unlockedStageIndexes = journey.stages
+    .filter((stageProgress) => stageProgress.status !== "locked")
+    .map((stageProgress) => stageProgress.stage.globalIndex);
+  const fallbackOpenStageIndex =
+    journey.currentStageIndex ?? (unlockedStageIndexes.length > 0 ? unlockedStageIndexes[unlockedStageIndexes.length - 1] : null);
+  const activeStageIndex =
+    openStageIndex !== null && unlockedStageIndexes.includes(openStageIndex) ? openStageIndex : fallbackOpenStageIndex;
+  const activeStageProgress = activeStageIndex === null ? null : journey.stages.find((stage) => stage.stage.globalIndex === activeStageIndex) ?? null;
+  const activeStagePosition = activeStageIndex === null ? -1 : unlockedStageIndexes.indexOf(activeStageIndex);
+  const previousStageIndex = activeStagePosition > 0 ? unlockedStageIndexes[activeStagePosition - 1] : null;
+  const nextStageIndex =
+    activeStagePosition >= 0 && activeStagePosition < unlockedStageIndexes.length - 1 ? unlockedStageIndexes[activeStagePosition + 1] : null;
 
   useEffect(() => {
     setMounted(true);
@@ -54,6 +67,7 @@ export default function JourneyMap() {
   function handleJump(stage: Stage) {
     const remaining = stage.textIds.filter((id) => getProgress(id).status !== "completed");
     skipJourneyTexts(remaining);
+    setOpenStageIndex(stage.globalIndex + 1);
     refresh();
   }
 
@@ -67,6 +81,22 @@ export default function JourneyMap() {
         </p>
         <XPProgressBar value={journey.overallProgress} label="Path progress" className="mt-4" />
         {next && <NextTextCard next={next} />}
+        {activeStageProgress && (
+          <StageNavigator
+            activeLabel={activeStageProgress.stage.label}
+            canGoBack={previousStageIndex !== null}
+            canGoForward={nextStageIndex !== null}
+            currentActive={activeStageProgress.stage.globalIndex === journey.currentStageIndex}
+            hasCurrent={journey.currentStageIndex !== null}
+            onBack={() => {
+              if (previousStageIndex !== null) setOpenStageIndex(previousStageIndex);
+            }}
+            onCurrent={() => setOpenStageIndex(journey.currentStageIndex)}
+            onForward={() => {
+              if (nextStageIndex !== null) setOpenStageIndex(nextStageIndex);
+            }}
+          />
+        )}
       </div>
 
       <div className="space-y-5">
@@ -94,7 +124,9 @@ export default function JourneyMap() {
                     stageProgress={stageProgress}
                     next={next}
                     skipped={skipped}
+                    expanded={activeStageIndex === stageProgress.stage.globalIndex}
                     currentRef={stageProgress.status === "current" ? currentRef : undefined}
+                    onSelectStage={setOpenStageIndex}
                     onSkip={handleSkip}
                     onJump={handleJump}
                   />
@@ -132,18 +164,78 @@ function NextTextCard({ next }: { next: NextTextRecommendation }) {
   );
 }
 
+function StageNavigator({
+  activeLabel,
+  canGoBack,
+  canGoForward,
+  currentActive,
+  hasCurrent,
+  onBack,
+  onCurrent,
+  onForward,
+}: {
+  activeLabel: string;
+  canGoBack: boolean;
+  canGoForward: boolean;
+  currentActive: boolean;
+  hasCurrent: boolean;
+  onBack: () => void;
+  onCurrent: () => void;
+  onForward: () => void;
+}) {
+  return (
+    <div className="mt-4 rounded-2xl bg-cream p-3">
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          aria-label="Previous unlocked stage"
+          disabled={!canGoBack}
+          onClick={onBack}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream-card text-base font-extrabold text-ink-muted shadow-card active:scale-95 disabled:opacity-40"
+        >
+          &larr;
+        </button>
+        <button
+          type="button"
+          disabled={!hasCurrent}
+          onClick={onCurrent}
+          className={`min-w-0 flex-1 rounded-full px-3 py-2 text-xs font-bold active:scale-95 disabled:opacity-40 ${
+            currentActive ? "bg-brand text-white shadow-raised" : "bg-brand-light text-brand"
+          }`}
+        >
+          <span className="block truncate">Current stage</span>
+        </button>
+        <button
+          type="button"
+          aria-label="Next unlocked stage"
+          disabled={!canGoForward}
+          onClick={onForward}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream-card text-base font-extrabold text-ink-muted shadow-card active:scale-95 disabled:opacity-40"
+        >
+          &rarr;
+        </button>
+      </div>
+      <p className="mt-2 truncate text-center text-xs font-semibold text-ink-muted">{activeLabel}</p>
+    </div>
+  );
+}
+
 function StageRow({
   stageProgress,
   next,
   skipped,
+  expanded,
   currentRef,
+  onSelectStage,
   onSkip,
   onJump,
 }: {
   stageProgress: StageProgress;
   next: NextTextRecommendation | null;
   skipped: Set<string>;
+  expanded: boolean;
   currentRef?: RefObject<HTMLDivElement | null>;
+  onSelectStage: (stageIndex: number) => void;
   onSkip: (textId: string) => void;
   onJump: (stage: Stage) => void;
 }) {
@@ -154,14 +246,16 @@ function StageRow({
   const progress = stageProgress.targetCount === 0 ? 1 : stageProgress.completedCount / stageProgress.targetCount;
   const stageNext = current && next?.stageIndex === stage.globalIndex ? next : null;
   const canJump = !!stageNext?.canJumpAhead && stageProgress.completedCount > 0;
+  const stageTone = current
+    ? "bg-cream ring-2 ring-brand/25"
+    : cleared
+      ? expanded
+        ? "bg-cream"
+        : "bg-cream opacity-75"
+      : "bg-cream-dark/55 opacity-65";
 
   return (
-    <div
-      ref={currentRef}
-      className={`rounded-2xl px-3 py-3 ${
-        current ? "bg-cream ring-2 ring-brand/25" : cleared ? "bg-cream opacity-65" : "bg-cream-dark/55 opacity-65"
-      }`}
-    >
+    <div ref={currentRef} className={`rounded-2xl px-3 py-3 ${stageTone}`}>
       <div className="flex items-center gap-3">
         <span
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-extrabold ${
@@ -170,18 +264,32 @@ function StageRow({
         >
           {cleared ? "OK" : locked ? "L" : stage.indexInBand + 1}
         </span>
-        <div className="min-w-0 flex-1">
+        <button
+          type="button"
+          disabled={locked}
+          onClick={() => onSelectStage(stage.globalIndex)}
+          className="min-w-0 flex-1 text-left active:scale-[0.99] disabled:cursor-default disabled:active:scale-100"
+        >
           <div className="flex items-center justify-between gap-3">
             <p className="truncate text-sm font-extrabold text-ink">{stage.label}</p>
             <p className="shrink-0 text-xs font-bold text-ink-muted">
               {stageProgress.completedCount}/{stageProgress.targetCount}
             </p>
           </div>
-          <XPProgressBar value={progress} label={stageProgress.optional ? "Optional earlier path" : "Stage progress"} className="mt-1" />
-        </div>
+        </button>
+        <button
+          type="button"
+          aria-label={locked ? `${stage.label} locked` : expanded ? `Collapse ${stage.label}` : `Open ${stage.label}`}
+          disabled={locked}
+          onClick={() => onSelectStage(stage.globalIndex)}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream-card text-sm font-extrabold text-ink-muted shadow-card"
+        >
+          {locked ? "L" : expanded ? "-" : "+"}
+        </button>
       </div>
+      <XPProgressBar value={progress} label={stageProgress.optional ? "Optional earlier path" : "Stage progress"} className="mt-2 pl-12 pr-10" />
 
-      {current && (
+      {expanded && !locked && (
         <div className="mt-3 space-y-2">
           {stage.textIds.map((textId) => (
             <TextNode
@@ -189,10 +297,11 @@ function StageRow({
               textId={textId}
               next={stageNext?.textId === textId ? stageNext : null}
               skipped={skipped.has(textId)}
+              allowSkip={current}
               onSkip={onSkip}
             />
           ))}
-          {canJump && (
+          {current && canJump && (
             <button
               type="button"
               onClick={() => onJump(stage)}
@@ -211,30 +320,30 @@ function TextNode({
   textId,
   next,
   skipped,
+  allowSkip,
   onSkip,
 }: {
   textId: string;
   next: NextTextRecommendation | null;
   skipped: boolean;
+  allowSkip: boolean;
   onSkip: (textId: string) => void;
 }) {
   const text = getJourneyText(textId);
   if (!text) return null;
   const progress = getProgress(textId).status;
   const completed = progress === "completed";
-  const disabled = completed || skipped;
+  const muted = skipped && !completed;
 
   return (
     <div
       className={`flex items-center gap-3 rounded-2xl px-3 py-3 ${
-        next ? "bg-cream-card shadow-card" : disabled ? "bg-cream-dark/60 opacity-70" : "bg-cream-card/75"
+        next ? "bg-cream-card shadow-card" : muted ? "bg-cream-dark/60 opacity-75" : "bg-cream-card/75"
       }`}
     >
       <LessonScene name={sceneFor(text.id, text.category)} size={44} />
       <div className="min-w-0 flex-1">
-        <p className={`truncate text-sm font-bold ${disabled ? "text-ink-muted line-through decoration-ink-muted/40" : "text-ink"}`}>
-          {text.title}
-        </p>
+        <p className={`truncate text-sm font-bold ${muted ? "text-ink-muted" : "text-ink"}`}>{text.title}</p>
         <p className="mt-0.5 truncate text-xs text-ink-muted">
           {completed
             ? "Completed"
@@ -243,31 +352,25 @@ function TextNode({
               : `${formatCategory(text.category)} - ${text.minutes} min${next ? ` - ${Math.round(next.unknownWordRatio * 100)}% new` : ""}`}
         </p>
       </div>
-      {completed || skipped ? (
-        <span className="shrink-0 rounded-full bg-cream-card px-2.5 py-1 text-xs font-bold text-ink-muted">
-          {completed ? "OK" : "Skip"}
-        </span>
-      ) : (
-        <div className="flex shrink-0 items-center gap-1">
-          <Link
-            href={`/reader/${encodeURIComponent(text.id)}`}
-            className={`rounded-full px-3 py-1.5 text-xs font-bold active:scale-95 ${
-              next ? "bg-brand text-white shadow-raised" : "bg-brand-light text-brand"
-            }`}
+      <div className="flex shrink-0 items-center gap-1">
+        <Link
+          href={`/reader/${encodeURIComponent(text.id)}`}
+          className={`rounded-full px-3 py-1.5 text-xs font-bold active:scale-95 ${
+            next ? "bg-brand text-white shadow-raised" : completed ? "bg-cream-dark text-ink-muted" : "bg-brand-light text-brand"
+          }`}
+        >
+          {completed ? "Review" : progress === "in-progress" ? "Continue" : next ? "Start" : "Open"}
+        </Link>
+        {allowSkip && !next && !completed && !skipped && (
+          <button
+            type="button"
+            onClick={() => onSkip(text.id)}
+            className="rounded-full bg-cream-dark px-2.5 py-1.5 text-xs font-bold text-ink-muted active:scale-95"
           >
-            {progress === "in-progress" ? "Continue" : next ? "Start" : "Open"}
-          </Link>
-          {!next && (
-            <button
-              type="button"
-              onClick={() => onSkip(text.id)}
-              className="rounded-full bg-cream-dark px-2.5 py-1.5 text-xs font-bold text-ink-muted active:scale-95"
-            >
-              Skip
-            </button>
-          )}
-        </div>
-      )}
+            Skip
+          </button>
+        )}
+      </div>
     </div>
   );
 }
