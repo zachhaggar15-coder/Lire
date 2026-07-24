@@ -3702,4 +3702,438 @@ Le débat dépasse donc la nostalgie des rues commerçantes d'autrefois. Il pose
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-041",
+    title: "Mon premier emploi",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "À dix-neuf ans, j'ai trouvé mon premier emploi.",
+    blurbEn:
+      "Nervous on the first day of her first real job, Salma learns her tasks, meets her colleagues, and discovers that a kind boss makes all the difference. (Section: Work & careers, 1/5.)",
+    body: `À dix-neuf ans, j'ai trouvé mon premier emploi : vendeuse dans une petite librairie. Le premier jour, j'étais très nerveuse. Je ne connaissais personne et je ne savais pas exactement quelles étaient mes tâches.
+
+Ma patronne, madame Leroy, m'a accueillie avec un grand sourire. « Ne t'inquiète pas, m'a-t-elle dit. Tout le monde débute un jour. » Elle m'a présenté mes deux collègues, Karim et Julie, qui travaillaient dans la librairie depuis plusieurs années.
+
+Au début, mes tâches étaient simples : ranger les livres, aider les clients, tenir la caisse. Karim m'a tout expliqué patiemment. Quand je faisais une erreur, il ne se moquait pas ; il me montrait comment faire mieux.
+
+Le travail n'était pas toujours facile. Certains jours, il y avait beaucoup de clients et je rentrais chez moi fatiguée. Mais j'apprenais quelque chose de nouveau chaque semaine, et petit à petit, j'ai gagné en confiance.
+
+À la fin du mois, j'ai reçu mon premier salaire. Ce n'était pas beaucoup, mais j'étais fière : c'était mon argent, gagné par mon travail. J'ai invité mes collègues à boire un café pour les remercier.
+
+Aujourd'hui, je ne travaille plus dans cette librairie. Mais je n'oublierai jamais ce premier emploi. J'y ai appris une chose importante : un bon patron et des collègues gentils changent tout.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-042",
+    title: "L'entretien d'embauche",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Avant d'obtenir un emploi, il faut souvent passer un entretien.",
+    blurbEn:
+      "Before you get the job comes the interview. A first-timer's account of preparing, staying calm, and what a recruiter is really looking for. (Section: Work & careers, 2/5.)",
+    body: `Avant d'obtenir un emploi, il faut souvent passer une étape stressante : l'entretien d'embauche. J'ai passé mon premier entretien il y a deux ans, et je me souviens encore de mes mains qui tremblaient.
+
+Pour postuler, j'avais envoyé mon CV et une lettre. Quelques jours plus tard, l'entreprise m'a appelée pour me proposer un rendez-vous. J'étais contente, mais aussi très inquiète. Comment se présenter ? Que dire ? Que faut-il porter ?
+
+Un ami qui avait déjà embauché des gens m'a donné des conseils. « Le patron ne cherche pas quelqu'un de parfait, m'a-t-il expliqué. Il veut savoir si tu es motivée, honnête, et si tu vas bien travailler avec tes futurs collègues. »
+
+Le jour de l'entretien, je suis arrivée en avance. La recruteuse m'a posé beaucoup de questions : sur mes études, sur mes compétences, sur mes qualités et mes défauts. La plus difficile a été : « Pourquoi voulez-vous ce poste ? » J'ai répondu honnêtement, avec mes propres mots.
+
+À la fin, elle m'a demandé si j'avais des questions. J'en avais préparé deux ; cela montre qu'on s'intéresse vraiment à l'emploi.
+
+Une semaine plus tard, bonne nouvelle : j'étais embauchée ! Depuis, j'ai passé d'autres entretiens, et je suis toujours un peu nerveuse. Mais j'ai compris que ce n'est pas un examen : c'est simplement une conversation entre deux personnes qui cherchent à se connaître.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-043",
+    title: "Une journée de télétravail",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Deux jours par semaine, je reste chez moi pour travailler.",
+    blurbEn:
+      "Working from home sounds like a dream — no commute, coffee in hand — but a day of remote work has its own quiet challenges. (Section: Work & careers, 3/5.)",
+    body: `Depuis la pandémie, beaucoup de gens font du télétravail, c'est-à-dire qu'ils travaillent à la maison au lieu d'aller au bureau. Deux jours par semaine, moi aussi, je reste chez moi pour travailler.
+
+Le matin du télétravail est agréable. Pas de transport, pas de métro bondé. Je prends mon café tranquillement et j'allume mon ordinateur. Mais attention : travailler à la maison demande de la discipline.
+
+Le plus difficile, c'est de se concentrer. À la maison, il y a mille distractions : la télévision, le frigo, le linge à laver. Il faut vraiment s'organiser. Moi, je m'installe toujours à la même table, comme si c'était mon bureau, et je fais une liste de mes tâches pour la journée.
+
+Bien sûr, je ne suis pas seule. Grâce à l'écran, je reste en contact avec mes collègues. Nous avons souvent des réunions en visioconférence. Ce n'est pas comme au bureau : parfois la connexion est mauvaise, et tout le monde parle en même temps ! Mais on s'habitue.
+
+Le vrai danger du télétravail, c'est l'équilibre. Quand le travail est à la maison, on ne s'arrête jamais vraiment. Le soir, je suis parfois tentée de répondre à un dernier message. Alors j'ai pris une décision : à dix-huit heures, je ferme mon ordinateur et je ne le rouvre pas.
+
+Le télétravail a des avantages et des inconvénients. J'aime la liberté qu'il me donne, mais j'ai aussi besoin de voir mes collègues en vrai. C'est pour ça que l'équilibre entre les deux me convient parfaitement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-044",
+    title: "Changer de métier",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Après dix ans dans le même métier, Thomas s'ennuyait.",
+    blurbEn:
+      "After ten years in the same job, Thomas felt stuck. Retraining as a carpenter meant risk and a pay cut — but also a reason to get up in the morning. (Section: Work & careers, 4/5.)",
+    body: `Pendant dix ans, Thomas a fait le même métier : comptable dans une grande entreprise. Le salaire était bon, l'emploi était stable, mais il s'ennuyait. Chaque jour, les mêmes tâches, la même routine. Un matin, il a compris qu'il n'avait plus envie de se lever pour aller travailler.
+
+Changer de métier après trente-cinq ans, ce n'est pas facile. C'est même un vrai risque. Thomas gagnait bien sa vie ; en changeant, il allait peut-être gagner moins, au moins au début. « Tu es fou », lui disaient certains collègues. Mais d'autres l'encourageaient : « Au moins, tu essaies. »
+
+Thomas rêvait depuis longtemps de travailler le bois. Il a donc décidé de se reconvertir et de devenir menuisier. Pour cela, il a suivi une formation pendant un an. Retourner à l'école à son âge, avec des étudiants plus jeunes, demandait du courage. Mais il a osé.
+
+Aujourd'hui, Thomas gagne un peu moins d'argent qu'avant, et ses journées sont plus fatigantes physiquement. Pourtant, il n'a jamais été aussi heureux. Le soir, il regarde les meubles qu'il a fabriqués de ses mains, et il ressent une vraie fierté.
+
+Bien sûr, se reconvertir n'est pas possible pour tout le monde, et ce n'est pas toujours une réussite. Mais l'histoire de Thomas pose une bonne question : vaut-il mieux un emploi confortable qui nous ennuie, ou un métier plus difficile qui a du sens pour nous ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-045",
+    title: "Les petits boulots",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "De plus en plus d'adultes vivent de petits emplois.",
+    blurbEn:
+      "Delivering food, walking dogs, driving strangers: the 'gig economy' offers freedom and flexible hours — but at the cost of security. (Section: Work & careers, 5/5.)",
+    body: `Autrefois, un petit boulot était souvent un job d'été pour un étudiant. Aujourd'hui, de plus en plus d'adultes vivent uniquement de ces petits emplois. On appelle cela « l'économie des petits boulots ».
+
+De quoi s'agit-il ? Livrer des repas à vélo, promener des chiens, conduire des passagers, faire du ménage chez des particuliers : ce sont des tâches simples, que l'on trouve souvent grâce à une application sur son téléphone. Pas besoin de passer un long entretien ni d'envoyer un CV : on s'inscrit, et on commence à travailler.
+
+Le grand avantage, c'est la liberté. On n'a pas de patron qui surveille chaque minute. On choisit ses horaires : on peut travailler le matin, le soir, ou seulement le week-end. Pour un parent ou un étudiant, cette flexibilité est précieuse. On est, en quelque sorte, son propre patron.
+
+Mais il y a un prix à payer. Ces emplois sont souvent précaires : le salaire n'est pas garanti, et il change d'une semaine à l'autre. Il n'y a pas de contrat stable, pas de sécurité en cas de maladie. Quand on est indépendant, personne ne s'occupe de nous.
+
+L'économie des petits boulots pose donc une question difficile pour l'avenir du travail. Faut-il préférer la liberté et la flexibilité, ou la sécurité d'un emploi classique ? La réponse n'est pas simple. Ce qui est sûr, c'est que le monde du travail change vite, et que ces petits boulots ne sont plus si petits.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-046",
+    title: "Bien dormir",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup de gens dorment mal et se réveillent fatigués.",
+    blurbEn:
+      "We spend a third of our lives asleep, yet many of us sleep badly. Simple, practical habits for better nights — and better days. (Section: Everyday health, 1/5.)",
+    body: `Nous passons environ un tiers de notre vie à dormir. Pourtant, beaucoup de gens dorment mal et se réveillent fatigués. Le sommeil est important : c'est pendant la nuit que le corps se repose et retrouve son énergie.
+
+Quand on ne dort pas assez, tout devient plus difficile. On a du mal à se concentrer, on est de mauvaise humeur, et la moindre tâche demande un gros effort. La fatigue s'accumule jour après jour.
+
+Alors, comment mieux dormir ? Il existe quelques habitudes simples. D'abord, il vaut mieux se coucher et se réveiller à la même heure, même le week-end. Le corps aime la régularité.
+
+Ensuite, il faut préparer la nuit. Le soir, on évite le café et les écrans, car la lumière du téléphone empêche le cerveau de se préparer au sommeil. Une chambre calme, un peu fraîche et dans le noir aide beaucoup.
+
+Enfin, il ne faut pas rester au lit quand on ne dort pas. Si le sommeil ne vient pas après vingt minutes, il vaut mieux se lever, lire quelques pages, puis retourner se coucher.
+
+Bien dormir n'est pas un luxe : c'est un besoin. Une bonne nuit donne de l'énergie pour toute la journée. Prendre soin de son sommeil, c'est prendre soin de tout le reste.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-047",
+    title: "Manger sainement sans se compliquer",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Bien manger repose sur quelques habitudes simples.",
+    blurbEn:
+      "Eating well doesn't mean diets or expensive food. A few simple habits — more vegetables, less sugar, home cooking — go a long way. (Section: Everyday health, 2/5.)",
+    body: `« Manger sainement, c'est compliqué et cher. » Cette idée est très répandue, mais elle est fausse. En réalité, bien manger repose sur quelques habitudes simples, et cela donne au corps l'énergie dont il a besoin.
+
+La première règle est facile : manger plus de légumes et de fruits. Ils sont pleins de vitamines, ils ne coûtent pas cher, surtout de saison, et ils rassasient sans fatiguer le corps. Dans chaque repas, la moitié de l'assiette devrait être des légumes.
+
+La deuxième règle concerne le sucre. Nous mangeons aujourd'hui beaucoup trop de sucre, souvent sans le savoir : dans les sodas, les gâteaux, mais aussi dans des produits qui n'ont pas un goût sucré. Le sucre donne une énergie rapide, puis une grosse fatigue une heure plus tard. Mieux vaut l'éviter et boire de l'eau.
+
+La troisième règle est peut-être la plus importante : cuisiner soi-même. Quand on prépare son repas, on sait ce qu'on mange. Pas besoin d'être un grand chef : une soupe, une salade, un plat de pâtes avec des légumes, c'est simple et équilibré.
+
+Manger sainement ne veut pas dire se priver de tout. On peut se faire plaisir de temps en temps. L'important, c'est l'habitude de tous les jours. Le corps, comme une voiture, fonctionne mieux avec un bon carburant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-048",
+    title: "Bouger un peu chaque jour",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Bouger un peu chaque jour fait déjà beaucoup de bien.",
+    blurbEn:
+      "You don't need a gym or a marathon. Twenty minutes of walking a day is enough to keep the body — and the mood — in good shape. (Section: Everyday health, 3/5.)",
+    body: `Pour rester en bonne santé, il faut bouger. Mais attention : cela ne veut pas dire courir un marathon ni passer des heures dans une salle de sport. Bouger un peu chaque jour suffit déjà à faire beaucoup de bien au corps.
+
+Le problème de la vie moderne, c'est qu'on reste assis toute la journée : assis au travail, assis dans la voiture, assis devant la télévision. Or le corps humain n'est pas fait pour l'immobilité. Sans exercice, les muscles s'affaiblissent et l'énergie diminue.
+
+La bonne nouvelle, c'est qu'un petit effort régulier vaut mieux qu'un gros effort de temps en temps. Marcher vingt minutes par jour, prendre les escaliers au lieu de l'ascenseur, descendre du bus un arrêt plus tôt : ces petites habitudes font une vraie différence. Le cœur travaille, les muscles se réveillent, et on se sent plus en forme.
+
+Bouger n'est pas seulement bon pour le corps ; c'est aussi bon pour le moral. Après une marche, même courte, on se sent souvent plus calme et de meilleure humeur. La fatigue mentale de la journée diminue.
+
+Le secret, c'est de choisir une activité qu'on aime : marcher, danser, faire du vélo, jardiner. Quand une activité est un plaisir, on la répète sans effort. Et c'est la régularité, plus que l'intensité, qui garde le corps en bonne santé toute la vie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-049",
+    title: "Gérer le stress",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Trop de stress, trop longtemps, fatigue le corps et l'esprit.",
+    blurbEn:
+      "Stress is part of modern life, but too much of it wears the body down. Simple ways to let off pressure — breathe, pause, and protect your sleep. (Section: Everyday health, 4/5.)",
+    body: `Le stress fait partie de la vie moderne. Le travail, l'argent, la famille, les nouvelles du monde : les raisons de se sentir sous pression ne manquent pas. Un peu de stress est normal, et même utile. Mais trop de stress, pendant trop longtemps, fatigue le corps et l'esprit.
+
+Quand on est stressé, le corps réagit : le cœur bat plus vite, les muscles se tendent, on dort mal. On devient irritable et on a moins d'énergie. Si cet état dure, il peut nuire à la santé. Il est donc important d'apprendre à gérer le stress.
+
+La première chose à faire est simple : respirer. Quand on se sent submergé, quelques respirations lentes et profondes calment déjà le corps. Fermer les yeux, inspirer doucement, souffler lentement : cela ne coûte rien et cela aide vraiment.
+
+Il faut aussi savoir faire des pauses. On croit souvent qu'il faut travailler sans s'arrêter pour être efficace. C'est faux. Une courte pause pour marcher, boire un thé ou regarder par la fenêtre permet à l'esprit de souffler et de se détendre.
+
+Enfin, le stress et le sommeil sont liés. Une personne fatiguée supporte moins bien la pression. Protéger ses nuits, c'est donc aussi protéger son calme.
+
+On ne peut pas supprimer tout le stress de sa vie. Mais on peut apprendre à mieux vivre avec, en écoutant son corps et en s'accordant, chaque jour, quelques vrais moments de calme.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-050",
+    title: "Chez le médecin",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Consulter à temps fait partie du soin qu'on doit à son corps.",
+    blurbEn:
+      "Nobody enjoys the waiting room, but seeing a doctor early is part of taking care of yourself. What to expect, and why prevention beats cure. (Section: Everyday health, 5/5.)",
+    body: `Personne n'aime aller chez le médecin. La salle d'attente, les questions, parfois la peur d'une mauvaise nouvelle : on préfère souvent attendre et espérer que ça passe tout seul. Pourtant, consulter à temps fait partie du soin qu'on doit à son corps.
+
+En général, on prend rendez-vous quand quelque chose ne va pas : une douleur qui dure, une grande fatigue, des symptômes qu'on ne comprend pas. Le médecin pose des questions, examine le corps, et cherche à comprendre la cause du problème. Il faut être honnête et tout expliquer, même les détails qui semblent gênants.
+
+Après l'examen, le médecin explique ce qu'on a et propose un traitement. Souvent, il donne une ordonnance : une liste de médicaments à acheter à la pharmacie. Il est important de bien suivre ses conseils et de prendre le traitement jusqu'au bout, même quand on se sent mieux, pour vraiment guérir.
+
+Mais le rôle du médecin n'est pas seulement de soigner les malades. Il est aussi de les aider à rester en bonne santé. C'est ce qu'on appelle la prévention. Une visite régulière permet de repérer un problème avant qu'il devienne grave. « Mieux vaut prévenir que guérir », dit le proverbe, et c'est particulièrement vrai pour la santé.
+
+Prendre soin de son corps, c'est donc aussi accepter de consulter, sans attendre le dernier moment. Le médecin n'est pas un ennemi : c'est un allié pour une vie plus longue et en meilleure santé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-041",
+    title: "Faire un budget",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 3,
+    preview: "Faire un budget n'est pas une punition.",
+    blurbEn:
+      "A budget sounds joyless, but knowing where your money actually goes is the first step to being free of money worries. (Section: Money & everyday life, 1/5.)",
+    body: `Le mot « budget » n'inspire pas l'enthousiasme. Il évoque des tableaux ennuyeux, des calculs et l'idée de se priver. Pourtant, faire un budget n'est pas une punition : c'est l'un des meilleurs moyens de vivre plus sereinement avec son argent.
+
+Le principe est simple. Un budget, c'est une comparaison entre ce qui entre et ce qui sort : d'un côté les revenus, c'est-à-dire l'argent qu'on gagne ; de l'autre les dépenses, c'est-à-dire l'argent qu'on utilise. Tant qu'on ne fait pas ce calcul, on avance un peu à l'aveugle.
+
+La première étape consiste à noter, pendant un mois, absolument toutes ses dépenses. L'exercice est souvent une surprise. On découvre que les grosses dépenses — le loyer, les factures — ne sont pas les seules à peser. Ce sont surtout les petites dépenses quotidiennes, additionnées, qui font disparaître l'argent : un café par-ci, un achat par-là, un abonnement oublié.
+
+Une fois ces chiffres sous les yeux, on peut agir. Il ne s'agit pas de tout supprimer, mais de choisir. Sur quoi ai-je vraiment envie de dépenser ? Qu'est-ce qui ne m'apporte, au fond, aucun plaisir ? Gérer son argent, c'est décider soi-même plutôt que de subir la fin du mois.
+
+Un bon budget prévoit aussi une part pour économiser, même petite. Mettre de côté un peu chaque mois, avant même de dépenser, change tout. Cette réserve permet de faire face à un imprévu — une machine qui casse, une facture surprise — sans paniquer ni s'endetter.
+
+Il serait naïf de croire qu'un budget résout tous les problèmes : quand les revenus sont trop faibles, aucun tableau ne suffit. Mais pour la plupart des gens, le vrai problème n'est pas de gagner plus ; c'est de savoir où va l'argent. Et cette clarté, curieusement, ne rend pas la vie plus triste. Elle apporte quelque chose de précieux : la tranquillité d'esprit.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-042",
+    title: "Économiser sans se priver",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Les gens qui épargnent le mieux distinguent une envie d'un besoin.",
+    blurbEn:
+      "Saving money is usually pitched as sacrifice. But the biggest savings come from spotting the difference between a want and a need. (Section: Money & everyday life, 2/5.)",
+    body: `On imagine souvent qu'économiser signifie se priver : renoncer aux plaisirs, compter chaque centime, mener une vie triste. C'est une erreur. Les personnes qui épargnent le plus efficacement ne sont pas forcément les plus radines ; ce sont celles qui savent distinguer une envie d'un besoin.
+
+La différence paraît évidente, mais elle ne l'est pas dans la vie réelle. Un besoin, c'est ce qui est nécessaire : se loger, se nourrir, se déplacer. Une envie, c'est ce qui ferait plaisir sur le moment : le dernier téléphone, un vêtement de plus, un objet vu dans une publicité. Le problème, c'est que le marketing moderne travaille sans cesse à transformer nos envies en besoins. Il nous persuade que nous ne pouvons pas vivre sans ce que, hier encore, nous ignorions.
+
+Résister à ce piège ne demande pas une volonté de fer, mais quelques habitudes simples. La plus efficace consiste à attendre. Devant une envie d'achat, on se donne quelques jours avant de décider. Bien souvent, l'envie disparaît d'elle-même : on avait confondu un désir passager avec un vrai besoin. L'argent économisé de cette façon ne représente aucun sacrifice, puisqu'on ne regrette pas ce qu'on n'a pas acheté.
+
+Une autre clé est de se poser la bonne question. Non pas « est-ce que je peux me le permettre ? », mais « quelle valeur cet achat va-t-il vraiment m'apporter ? ». Certaines dépenses, même importantes, enrichissent la vie : un voyage, un livre, un repas partagé. D'autres, une fois l'excitation retombée, ne laissent qu'un objet de plus dans un placard.
+
+Économiser intelligemment, ce n'est donc pas dire non à tout. C'est dire oui à ce qui compte, et non à ce qui ne compte pas. Vu ainsi, l'épargne cesse d'être une privation pour devenir une forme de liberté : celle de ne plus dépenser par réflexe, et de garder son argent pour ce qui a, pour nous, une vraie valeur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-043",
+    title: "Le piège du crédit",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "« Achetez maintenant, payez plus tard. »",
+    blurbEn:
+      "'Buy now, pay later' makes everything feel affordable — until the monthly payments pile up. Why easy credit so often costs more than it seems. (Section: Money & everyday life, 3/5.)",
+    body: `« Achetez maintenant, payez plus tard. » Cette promesse est partout : dans les magasins, sur internet, à la fin de nos achats en ligne. Le crédit à la consommation a rendu presque tout accessible immédiatement, sans attendre d'avoir économisé. C'est pratique, parfois utile, mais c'est aussi un piège dans lequel beaucoup de gens tombent.
+
+Le principe du crédit est simple : une banque ou un magasin vous prête de l'argent pour un achat, et vous le remboursez petit à petit, chaque mois. Le problème, c'est que cet argent n'est pas gratuit. En échange du prêt, il faut payer des intérêts. Autrement dit, l'objet acheté à crédit finit par coûter plus cher — parfois beaucoup plus cher — que son prix affiché.
+
+Le danger vient de la facilité. Comme on ne paie pas tout de suite, on a l'impression que la dépense est petite : « seulement trente euros par mois ». Mais ces petites mensualités s'accumulent. On prend un crédit pour un canapé, un autre pour un téléphone, un autre pour des vacances, et bientôt une grande partie du salaire part chaque mois en remboursements. C'est ainsi que l'on s'endette sans même s'en rendre compte.
+
+Le crédit n'est pas mauvais en soi. Emprunter peut avoir du sens pour un projet important et durable, comme un logement, ou en cas de nécessité réelle. Mais il faut toujours se poser la même question avant de signer : est-ce que j'emprunte pour un vrai besoin, ou simplement parce que je n'ai pas la patience d'économiser ?
+
+La règle la plus sage tient en une phrase : ne jamais s'endetter pour un plaisir passager. Le canapé sera vieux bien avant que la dette soit remboursée, et l'on continuera de payer un objet dont on ne profite même plus. Face à la publicité qui pousse à consommer tout de suite, la vieille habitude d'attendre et d'économiser reste, souvent, la plus rentable — et la plus tranquille.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-044",
+    title: "Faut-il parler d'argent ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'argent est le dernier grand tabou.",
+    blurbEn:
+      "In many cultures money is the last taboo — we'll discuss anything but our salary. Yet the silence around money may do more harm than talking would. (Section: Money & everyday life, 4/5.)",
+    body: `Il existe un sujet dont on parle moins volontiers que de politique, de religion ou même de sa vie intime : l'argent. Demander à quelqu'un combien il gagne passe, dans beaucoup de cultures, pour une grossièreté. L'argent est le dernier grand tabou. Mais ce silence est-il vraiment une bonne chose ?
+
+Les raisons de cette gêne sont anciennes et profondes. Parler de son salaire, c'est risquer d'être jugé : trop riche, on paraît prétentieux ; trop pauvre, on a honte. C'est aussi s'exposer à la comparaison, ce poison discret qui transforme le voisin en rival. Alors, par prudence, on préfère se taire, et cette discrétion se transmet de génération en génération comme une règle de bonne éducation.
+
+Pourtant, ce tabou a un coût, et il ne profite pas toujours à ceux qui se taisent. Dans le monde du travail, par exemple, le silence sur les salaires arrange surtout les employeurs : quand personne ne sait ce que gagnent les autres, il est plus difficile de remarquer une injustice ou de négocier. La transparence, à l'inverse, permet de comparer et, parfois, de corriger des différences qui n'ont aucune raison d'exister.
+
+Le silence pèse aussi dans la vie privée. Combien de couples évitent le sujet jusqu'au jour où une dette cachée ou des dépenses secrètes provoquent une vraie crise ? Combien de familles se déchirent, à la mort d'un proche, faute d'avoir jamais abordé calmement ces questions ? Ne pas parler d'argent ne fait pas disparaître les problèmes d'argent ; cela les laisse simplement grandir dans l'ombre.
+
+Il ne s'agit pas, bien sûr, d'afficher son compte en banque à la première rencontre. Mais il serait sain de pouvoir parler d'argent plus librement avec ceux qui comptent : sa famille, son partenaire, ses collègues proches. Aborder le sujet avec honnêteté demande un peu de courage et beaucoup de confiance. En retour, cela évite bien des malentendus, et souvent bien des injustices. Le vrai tabou, au fond, n'est peut-être pas l'argent lui-même, mais la peur de ce qu'il révèle de nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-045",
+    title: "L'argent et le temps",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'argent, bien utilisé, permet de racheter du temps.",
+    blurbEn:
+      "We spend our lives trading time for money — but the wisest spending often does the reverse, buying time back. A reflection on the truest cost of everything. (Section: Money & everyday life, 5/5.)",
+    body: `Nous passons une grande partie de notre vie à échanger du temps contre de l'argent : c'est, au fond, la définition même du travail. Nous vendons nos heures, nos journées, nos années, en échange d'un salaire. Mais nous oublions souvent que cet échange peut aussi fonctionner dans l'autre sens : l'argent, bien utilisé, permet de racheter du temps. Et c'est peut-être là son plus grand pouvoir.
+
+Réfléchissons à ce que nous achetons réellement quand nous dépensons. Un objet, souvent ; mais parfois autre chose de bien plus précieux. Payer quelqu'un pour faire le ménage, prendre un train plus cher mais plus rapide, acheter un plat déjà préparé un soir de fatigue : dans tous ces cas, on ne paie pas vraiment pour une chose, on paie pour du temps et de l'énergie rendus. Les recherches sur le bonheur le confirment : dépenser son argent pour gagner du temps rend, en moyenne, plus heureux que dépenser la même somme en objets.
+
+Pourtant, nous faisons rarement ce calcul. Nous acceptons de longs trajets pour économiser quelques euros, nous passons des heures à réparer nous-mêmes ce qu'un professionnel ferait en un instant, par principe ou par habitude. Nous traitons notre argent avec attention et notre temps avec négligence — alors que le temps, lui, ne se rembourse jamais. On peut toujours regagner de l'argent perdu ; une journée perdue est perdue pour toujours.
+
+Cela ne signifie pas qu'il faille tout payer pour ne rien faire, ni que le temps libre soit toujours mieux employé que le travail. Réparer soi-même un objet peut être un plaisir ; la lenteur choisie a sa valeur. La vraie question n'est pas « quel est le prix ? », mais « qu'est-ce que cet argent m'achète en temps et en tranquillité, et ce temps, qu'en ferai-je ? ».
+
+Apprendre à voir l'argent comme un moyen d'acheter du temps, et non seulement des choses, change la façon de le dépenser. On cesse de courir après le dernier objet à la mode pour se demander, plus simplement : de quoi ai-je besoin pour vivre les journées que je veux vivre ? À cette question, l'argent n'est plus un but, mais un outil — et le temps qu'il libère devient la vraie richesse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-046",
+    title: "Comprendre le réchauffement climatique",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le mécanisme de base du climat est étonnamment simple.",
+    blurbEn:
+      "Behind the headlines and the arguments, the basic science of climate change is surprisingly simple. A calm, jargon-free explanation. (Section: The environment & you, 1/5.)",
+    body: `Le réchauffement climatique est partout dans l'actualité, souvent au milieu de débats passionnés et de chiffres compliqués. Pourtant, le mécanisme de base est étonnamment simple, et le comprendre aide à dépasser les slogans. Essayons de l'expliquer calmement, sans jargon.
+
+Tout part d'un phénomène naturel et, en réalité, indispensable : l'effet de serre. Autour de la Terre, l'atmosphère contient certains gaz qui retiennent une partie de la chaleur du soleil, comme une couverture. Sans eux, la planète serait glacée et la vie impossible. Le problème n'est donc pas l'effet de serre lui-même, mais son intensité.
+
+Or, depuis deux siècles, l'activité humaine ajoute d'énormes quantités de ces gaz dans l'atmosphère. En brûlant du charbon, du pétrole et du gaz pour produire de l'énergie, nous rejetons des émissions de dioxyde de carbone. La couverture s'épaissit, retient davantage de chaleur, et la température moyenne de la planète augmente. C'est ce qu'on appelle le réchauffement climatique.
+
+Une hausse de un ou deux degrés peut sembler minuscule ; après tout, la température change bien plus que cela entre le matin et l'après-midi. Mais il s'agit ici d'une moyenne mondiale, et à cette échelle, quelques degrés suffisent à tout déséquilibrer : fonte des glaces, montée du niveau des mers, sécheresses, tempêtes plus violentes. Le climat ne devient pas seulement « plus chaud » ; il devient plus instable.
+
+Sur les causes, la communauté scientifique est aujourd'hui quasi unanime : ce réchauffement rapide est bien d'origine humaine. Le débat sérieux ne porte plus sur le « si », mais sur le « combien » et sur ce que nous décidons de faire.
+
+Comprendre cela ne règle rien à soi seul, et peut même donner le vertige devant l'ampleur du problème. Mais c'est un point de départ nécessaire. On ne peut pas agir intelligemment face à une menace qu'on ne comprend pas. Et la bonne nouvelle, c'est que les mêmes activités qui ont causé le problème peuvent, transformées, faire partie de la solution.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-047",
+    title: "La montagne de nos déchets",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Chaque habitant jette près d'une demi-tonne de déchets par an.",
+    blurbEn:
+      "Every European throws away nearly half a tonne of rubbish a year. Why recycling isn't enough, and why the best waste is the waste we never create. (Section: The environment & you, 2/5.)",
+    body: `Chaque habitant d'un pays riche jette, en moyenne, près d'une demi-tonne de déchets par an. Mis bout à bout, ces déchets forment une montagne invisible que nous préférons ne pas regarder : une fois la poubelle sortie, le problème semble disparaître. Mais il ne disparaît pas ; il se déplace.
+
+Où vont nos déchets ? Une partie est brûlée, ce qui produit à son tour des émissions. Une autre finit dans d'immenses décharges, où certains matériaux, comme le plastique, mettront des siècles à se décomposer. Une partie, enfin, est recyclée — mais beaucoup moins qu'on ne le croit. Trier ses déchets est un geste utile, et il faut continuer à le faire ; mais le recyclage a ses limites. Il coûte de l'énergie, et de nombreux objets ne peuvent tout simplement pas être recyclés.
+
+C'est pourquoi les spécialistes rappellent une vérité inconfortable : le meilleur déchet est celui qu'on ne produit pas. Avant de recycler, il faudrait surtout réduire. Or notre mode de vie va dans le sens inverse. Nous consommons de plus en plus d'objets, souvent emballés plusieurs fois, souvent conçus pour être jetés rapidement. Le gaspillage n'est pas un accident du système ; il en fait partie.
+
+Que peut-on faire, concrètement ? À l'échelle individuelle, quelques habitudes réduisent nettement nos déchets : refuser les emballages inutiles, acheter en vrac, réparer au lieu de remplacer, éviter les objets à usage unique. Ces gestes, seuls, ne sauveront pas la planète — il ne faut pas se raconter d'histoires. Mais ils changent notre regard, et ils envoient un signal.
+
+Car le vrai levier est plus large. Ce sont les entreprises qui décident des emballages, et les gouvernements qui fixent les règles. Un citoyen qui réduit ses déchets est aussi un consommateur et un électeur qui pousse, à sa mesure, dans la bonne direction. La montagne de nos déchets n'est pas une fatalité : elle est le résultat de milliards de petites décisions, et ces décisions peuvent changer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-048",
+    title: "D'où vient notre énergie ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Toutes les sources d'énergie ne se valent pas.",
+    blurbEn:
+      "Flip a switch and light appears — but the electricity behind it may come from coal or from the sun, and the difference matters enormously. (Section: The environment & you, 3/5.)",
+    body: `Nous utilisons de l'énergie à chaque instant, presque sans y penser : pour nous éclairer, nous chauffer, nous déplacer, faire fonctionner nos appareils. Il suffit d'appuyer sur un bouton. Mais derrière ce geste banal se cache une question essentielle, et rarement posée : d'où vient réellement cette énergie ? Car toutes les sources ne se valent pas, loin de là.
+
+Depuis deux siècles, l'essentiel de notre énergie provient des énergies fossiles : le charbon, le pétrole et le gaz. Elles ont un immense avantage — elles sont puissantes et faciles à utiliser — mais un défaut majeur : en les brûlant, on rejette d'énormes émissions de gaz, principales responsables du réchauffement climatique. De plus, ces ressources ne sont pas infinies ; un jour, elles s'épuiseront.
+
+Face à ce double problème, les énergies renouvelables se développent. Comme leur nom l'indique, elles ne s'épuisent pas : le solaire capte la lumière du soleil, l'éolien utilise le vent, d'autres exploitent l'eau des rivières. Leur grand mérite est de produire de l'énergie sans presque polluer. Leurs limites sont réelles aussi : le soleil ne brille pas la nuit, le vent ne souffle pas toujours, et il faut donc apprendre à stocker cette énergie et à équilibrer le réseau.
+
+La transition d'un modèle à l'autre est l'un des plus grands défis de notre époque. Elle est compliquée, coûteuse, et personne ne prétend qu'elle sera simple. Changer la façon dont un pays entier produit son énergie ne se fait pas en quelques années.
+
+Cette question dépasse largement nos gestes individuels : éteindre une lumière est une bonne habitude, mais l'essentiel se joue à l'échelle des pays et des entreprises, dans les choix qu'ils font aujourd'hui. Pourtant, comprendre d'où vient notre énergie n'est pas inutile. Un citoyen informé fait de meilleurs choix, soutient de meilleures décisions, et cesse de croire que l'électricité vient, comme par magie, de la prise au mur. Derrière chaque interrupteur, il y a un choix de société.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-049",
+    title: "Consommer autrement",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le meilleur produit est souvent celui qu'on possède déjà.",
+    blurbEn:
+      "The greenest product is often the one you already own. Beyond recycling lies a bigger shift: buying less and choosing better. (Section: The environment & you, 4/5.)",
+    body: `Quand on pense à protéger l'environnement, on imagine souvent le tri des déchets ou les énergies renouvelables. On oublie une cause plus discrète, mais essentielle : la façon dont nous consommons. Car chaque objet que nous achetons a demandé, pour être fabriqué, de l'énergie, de l'eau et des matières premières, bien avant d'arriver entre nos mains. Réduire notre consommation est donc l'un des gestes les plus efficaces — et l'un des plus difficiles.
+
+Le problème porte un nom : la surconsommation. Nous achetons plus que jamais, et souvent des objets conçus pour ne pas durer. Un vêtement porté trois fois puis oublié, un appareil qui tombe en panne juste après la garantie et qu'on ne peut pas réparer, un téléphone remplacé alors que l'ancien fonctionnait encore : ce modèle du « jetable » est devenu normal. Il enrichit l'industrie, mais il épuise la planète et remplit nos décharges.
+
+Consommer autrement ne veut pas dire ne plus rien acheter, ce qui serait irréaliste. Cela veut dire acheter mieux, et moins. Quelques principes simples suffisent à changer les choses. D'abord, se demander si l'on a vraiment besoin de l'objet avant de l'acheter. Ensuite, privilégier la qualité : un objet solide et réparable coûte plus cher au départ, mais dure des années, et revient donc moins cher — pour nous comme pour l'environnement. Enfin, redécouvrir la seconde main : acheter d'occasion, c'est offrir une deuxième vie à un objet qui existe déjà, sans en fabriquer un nouveau.
+
+Ce changement se heurte pourtant à une force puissante : le marketing, qui travaille sans relâche à nous faire désirer du neuf. La mode elle-même repose sur cette logique : ce qui était parfait l'an dernier devient soudain « dépassé ». Résister à cette pression demande une certaine liberté d'esprit — celle de ne pas laisser la publicité décider de nos besoins.
+
+Consommer de façon plus responsable n'est pas un sacrifice, et ce n'est pas non plus la solution unique au problème écologique. Mais c'est un choix qui a du sens, et qui a un avantage inattendu : il allège aussi nos vies. Moins d'objets, c'est moins de désordre, moins de dépenses, moins de choses à ranger et à entretenir. En prenant soin de la planète, on finit souvent par prendre soin de soi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-050",
+    title: "Un seul geste suffit-il ?",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nos efforts individuels sont-ils dérisoires ?",
+    blurbEn:
+      "Do our small green gestures matter, or are they a comforting distraction from the real, collective decisions? A hard, honest question. (Section: The environment & you, 5/5.)",
+    body: `Trier ses déchets, éteindre la lumière en quittant une pièce, prendre le vélo plutôt que la voiture : on nous répète que chaque petit geste compte pour la planète. Mais est-ce vraiment vrai ? Face à un problème aussi immense que le changement climatique, nos efforts individuels ne sont-ils pas dérisoires ? La question est inconfortable, et elle mérite mieux qu'une réponse simple.
+
+Commençons par l'objection, car elle est sérieuse. Si l'on additionne toutes les émissions du monde, la part que chaque individu peut réduire par ses gestes quotidiens est minuscule. Pendant qu'une personne économise soigneusement l'eau, une seule usine, un seul vol en avion, une seule décision politique peuvent annuler en un instant les efforts de millions de gens. Pire : à force de se concentrer sur les petits gestes, on risque d'oublier l'essentiel. Certaines grandes entreprises encouragent d'ailleurs volontiers cette idée, car elle déplace la responsabilité vers le consommateur et les laisse tranquilles.
+
+Faut-il en conclure que nos gestes ne servent à rien ? Ce serait aller trop vite, et ce serait dangereux. D'abord, parce que ces gestes ont une valeur qui n'est pas seulement mathématique. Celui qui change ses habitudes change aussi son regard : il devient plus attentif, plus cohérent, plus difficile à convaincre que « rien ne peut être fait ». Ensuite, parce que les comportements se transmettent. Une habitude, quand elle se répand, finit par changer les normes de toute une société, puis les décisions de ceux qui nous gouvernent.
+
+Le vrai piège serait de choisir entre les deux. Opposer l'action individuelle et l'action collective est une fausse alternative, et une alternative qui paralyse : ceux qui attendent tout des gouvernements ne font rien eux-mêmes, et ceux qui misent tout sur les petits gestes se découragent en découvrant leurs limites. Or les deux se nourrissent l'un l'autre. Un citoyen qui agit dans sa vie est aussi celui qui vote, qui parle autour de lui, qui pousse les entreprises et les États à bouger.
+
+Alors, un seul geste suffit-il ? Non, évidemment. Mais poser la question ainsi, c'est déjà se tromper. Le geste individuel n'a jamais eu vocation à suffire ; il est un point de départ, pas une fin. Il compte non pas parce qu'il sauve la planète à lui seul, mais parce qu'il nous garde en mouvement, et parce que rien de grand, à l'échelle collective, n'a jamais commencé sans que des individus, un jour, décident d'agir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

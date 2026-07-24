@@ -2,6 +2,7 @@ import type { Difficulty, ReadingText } from "@/types";
 import { starterTexts } from "@/data/starterTexts";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { tokenize } from "@/lib/words";
+import { JOURNEY_SECTIONS, sectionedTextIds } from "@/lib/journey/sections";
 
 export const TEXTS_PER_STAGE = 5;
 export const JOURNEY_BANDS: Difficulty[] = ["A1", "A2", "B1", "B2"];
@@ -104,30 +105,49 @@ export function buildLadder(): BuiltLadder {
   const textToStage = new Map<string, number>();
   const textById = new Map(starterTexts.map((text) => [text.id, text]));
 
+  const sectioned = sectionedTextIds();
+  const difficultyById = new Map<string, number>();
+
   for (const band of JOURNEY_BANDS) {
-    const ordered = scoreBand(starterTexts.filter((text) => text.difficulty === band));
-    for (let i = 0; i < ordered.length; i += TEXTS_PER_STAGE) {
-      const slice = ordered.slice(i, i + TEXTS_PER_STAGE);
-      const stageIndexInBand = Math.floor(i / TEXTS_PER_STAGE);
+    // Intrinsic difficulty is scored across the whole band (sections included),
+    // so every LadderText still carries a comparable difficulty value.
+    for (const scored of scoreBand(starterTexts.filter((text) => text.difficulty === band))) {
+      difficultyById.set(scored.text.id, scored.intrinsicDifficulty);
+    }
+
+    let indexInBand = 0;
+    const pushStage = (textIds: string[], label: string) => {
       const globalIndex = stages.length;
-      const stage: Stage = {
-        globalIndex,
-        band,
-        indexInBand: stageIndexInBand,
-        textIds: slice.map((item) => item.text.id),
-        label: `${band} - Stage ${stageIndexInBand + 1}`,
-      };
-      stages.push(stage);
-      for (const item of slice) {
+      stages.push({ globalIndex, band, indexInBand, textIds, label });
+      for (const id of textIds) {
         texts.push({
-          id: item.text.id,
+          id,
           band,
-          stageIndexInBand,
+          stageIndexInBand: indexInBand,
           globalStageIndex: globalIndex,
-          intrinsicDifficulty: item.intrinsicDifficulty,
+          intrinsicDifficulty: difficultyById.get(id) ?? 0,
         });
-        textToStage.set(item.text.id, globalIndex);
+        textToStage.set(id, globalIndex);
       }
+      indexInBand += 1;
+    };
+
+    // 1) Explicit themed sections first, in authored order and authored reading
+    //    order (NOT re-sorted by difficulty) — this is where vocabulary threads.
+    for (const section of JOURNEY_SECTIONS.filter((s) => s.band === band)) {
+      const ids = section.textIds.filter((id) => textById.has(id));
+      if (ids.length > 0) pushStage(ids, section.title);
+    }
+
+    // 2) Everything else in the band, difficulty-sorted and chunked into stages.
+    const remaining = scoreBand(
+      starterTexts.filter((text) => text.difficulty === band && !sectioned.has(text.id))
+    );
+    let stageNumber = 1;
+    for (let i = 0; i < remaining.length; i += TEXTS_PER_STAGE) {
+      const slice = remaining.slice(i, i + TEXTS_PER_STAGE);
+      pushStage(slice.map((item) => item.text.id), `${band} - Stage ${stageNumber}`);
+      stageNumber += 1;
     }
   }
 

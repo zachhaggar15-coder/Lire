@@ -41,6 +41,7 @@ import { starterTexts } from "../src/data/starterTexts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts, getDailyExtraReadingTexts } from "../src/lib/publicDomainBank.ts";
 import { buildLadder, JOURNEY_BANDS, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
+import { JOURNEY_SECTIONS, sectionedTextIds } from "../src/lib/journey/sections.ts";
 import { getJourneyState, getNextTextForReader, STAGE_CLEAR_RATIO } from "../src/lib/journey/state.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
 import { NOT_TRANSLATED_YET } from "../src/lib/dictionary/constants.ts";
@@ -316,11 +317,30 @@ console.log("\n--- Public-domain reading bank ---");
     "journey stages group at most five texts",
     ladder.stages.every((stage) => stage.textIds.length > 0 && stage.textIds.length <= TEXTS_PER_STAGE)
   );
+  const sectioned = sectionedTextIds();
   check(
-    "journey ladder order is deterministic inside each band",
+    "difficulty-sorted (non-section) stages are ordered by intrinsic difficulty inside each band",
     JOURNEY_BANDS.every((band) => {
-      const entries = ladder.texts.filter((text) => text.band === band);
+      const entries = ladder.texts.filter((text) => text.band === band && !sectioned.has(text.id));
       return entries.every((entry, index) => index === 0 || entry.intrinsicDifficulty >= entries[index - 1].intrinsicDifficulty);
+    })
+  );
+  // Themed sections must lead their band, in authored order and authored reading
+  // order (this is what carries the vocabulary progression).
+  check(
+    "each themed section is a stage with its exact texts in authored order",
+    JOURNEY_SECTIONS.every((section) => {
+      const found = ladder.stages.find((stage) => stage.band === section.band && stage.label === section.title);
+      return !!found && found.textIds.join(",") === section.textIds.join(",");
+    })
+  );
+  check(
+    "each themed section leads its band before the difficulty-sorted stages",
+    JOURNEY_SECTIONS.every((section) => {
+      const bandStages = ladder.stages.filter((stage) => stage.band === section.band);
+      const sectionCount = JOURNEY_SECTIONS.filter((s) => s.band === section.band).length;
+      const sectionStageIndex = bandStages.findIndex((s) => s.label === section.title);
+      return sectionStageIndex >= 0 && sectionStageIndex < sectionCount;
     })
   );
 
