@@ -140,13 +140,19 @@ export function buildLadder(): BuiltLadder {
     }
 
     // 2) Everything else in the band, difficulty-sorted and chunked into stages.
-    const remaining = scoreBand(
-      starterTexts.filter((text) => text.difficulty === band && !sectioned.has(text.id))
-    );
+    //    Sort by the SAME whole-band difficulty recorded above: re-scoring just
+    //    the remainder would renormalise over a different range and could order
+    //    the stages differently from the intrinsicDifficulty each text carries.
+    const remaining = starterTexts
+      .filter((text) => text.difficulty === band && !sectioned.has(text.id))
+      .sort(
+        (a, b) =>
+          (difficultyById.get(a.id) ?? 0) - (difficultyById.get(b.id) ?? 0) || a.id.localeCompare(b.id)
+      );
     let stageNumber = 1;
     for (let i = 0; i < remaining.length; i += TEXTS_PER_STAGE) {
       const slice = remaining.slice(i, i + TEXTS_PER_STAGE);
-      pushStage(slice.map((item) => item.text.id), `${band} - Stage ${stageNumber}`);
+      pushStage(slice.map((text) => text.id), `${band} - Stage ${stageNumber}`);
       stageNumber += 1;
     }
   }

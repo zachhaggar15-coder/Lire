@@ -26,6 +26,162 @@ export interface JourneySection {
 
 export const JOURNEY_SECTIONS: JourneySection[] = [
   {
+    id: "a1-day",
+    band: "A1",
+    title: "My day",
+    goal: "Talk about a daily routine: waking, working, eating, going to bed.",
+    textIds: [
+      "starter-a1-039", // Le réveil de Julien (introduces the routine verbs)
+      "starter-a1-040", // Julien au bureau
+      "starter-a1-041", // Le soir chez Julien
+      "starter-a1-042", // Le samedi de Julien
+      "starter-a1-043", // Un lundi difficile (hardest)
+    ],
+  },
+  {
+    id: "a1-table",
+    band: "A1",
+    title: "At the table",
+    goal: "Describe meals, cooking and eating together.",
+    textIds: [
+      "starter-a1-044", // Le déjeuner du dimanche (introduces food words)
+      "starter-a1-045", // Je prépare une soupe
+      "starter-a1-046", // Le goûter à quatre heures
+      "starter-a1-047", // Au restaurant pour un anniversaire
+      "starter-a1-048", // Qu'est-ce qu'il y a dans le frigo ?
+    ],
+  },
+  {
+    id: "a1-town",
+    band: "A1",
+    title: "My town",
+    goal: "Describe a neighbourhood, its shops, and how to give directions.",
+    textIds: [
+      "starter-a1-049", // Mon quartier (introduces place words)
+      "starter-a1-050", // La boulangerie de ma rue
+      "starter-a1-051", // Où est la pharmacie ? (directions)
+      "starter-a1-052", // La bibliothèque de la ville
+      "starter-a1-053", // Le marché du mercredi
+    ],
+  },
+  {
+    id: "a1-people",
+    band: "A1",
+    title: "Family and friends",
+    goal: "Introduce people, describe them, and talk about relationships.",
+    textIds: [
+      "starter-a1-054", // Ma famille (introduces family words)
+      "starter-a1-055", // Mon meilleur ami
+      "starter-a1-056", // Le bébé de ma cousine
+      "starter-a1-057", // Les cousins arrivent
+      "starter-a1-058", // La photo de mariage
+    ],
+  },
+  {
+    id: "a1-freetime",
+    band: "A1",
+    title: "Free time",
+    goal: "Say what you like doing: music, films, hobbies and games.",
+    textIds: [
+      "starter-a1-059", // J'écoute de la musique (introduces leisure verbs)
+      "starter-a1-060", // Le cours de dessin
+      "starter-a1-061", // Un film le samedi soir
+      "starter-a1-062", // J'apprends la guitare
+      "starter-a1-063", // La soirée jeux
+    ],
+  },
+  {
+    id: "a1-transport",
+    band: "A1",
+    title: "Getting around",
+    goal: "Travel by bike, train, car and on foot; buy a ticket.",
+    textIds: [
+      "starter-a1-064", // Je vais au travail à vélo (introduces transport words)
+      "starter-a1-065", // À la gare
+      "starter-a1-066", // Le voyage en train
+      "starter-a1-067", // La vieille voiture de mon père
+      "starter-a1-068", // Marcher en ville
+    ],
+  },
+  {
+    id: "a1-home",
+    band: "A1",
+    title: "At home",
+    goal: "Describe rooms, furniture, tidying and moving house.",
+    textIds: [
+      "starter-a1-069", // Ma chambre (introduces house words)
+      "starter-a1-070", // Le grand ménage
+      "starter-a1-071", // Une étagère à monter
+      "starter-a1-072", // Les plantes de la maison
+      "starter-a1-073", // Ma sœur déménage
+    ],
+  },
+  {
+    id: "a1-school",
+    band: "A1",
+    title: "At school",
+    goal: "Talk about lessons, subjects, tests and school life.",
+    textIds: [
+      "starter-a1-074", // Le jour de la rentrée (introduces school words)
+      "starter-a1-075", // Ma matière préférée
+      "starter-a1-076", // Le contrôle de maths
+      "starter-a1-077", // À la cantine
+      "starter-a1-078", // Le voyage scolaire
+    ],
+  },
+  {
+    id: "a1-shopping",
+    band: "A1",
+    title: "Shopping",
+    goal: "Make a list, compare prices, pay, and buy clothes and gifts.",
+    textIds: [
+      "starter-a1-079", // La liste de courses (introduces shopping words)
+      "starter-a1-080", // Au supermarché
+      "starter-a1-081", // Combien ça coûte ?
+      "starter-a1-082", // J'achète un manteau
+      "starter-a1-083", // Un cadeau pour maman
+    ],
+  },
+  {
+    id: "a1-weather",
+    band: "A1",
+    title: "The weather",
+    goal: "Describe the weather and the seasons through the year.",
+    textIds: [
+      "starter-a1-084", // Quel temps fait-il ? (introduces weather words)
+      "starter-a1-085", // Une journée de grand soleil
+      "starter-a1-086", // Le vent d'automne
+      "starter-a1-087", // Le premier jour de froid
+      "starter-a1-088", // Le printemps arrive
+    ],
+  },
+  {
+    id: "a1-animals",
+    band: "A1",
+    title: "Animals",
+    goal: "Talk about pets, farm animals and wildlife.",
+    textIds: [
+      "starter-a1-089", // Les oiseaux du balcon (introduces animal words)
+      "starter-a1-090", // Une visite à la ferme
+      "starter-a1-091", // Le poisson rouge
+      "starter-a1-092", // Les animaux de la forêt
+      "starter-a1-093", // Le refuge pour animaux
+    ],
+  },
+  {
+    id: "a1-french-life",
+    band: "A1",
+    title: "Life in France",
+    goal: "Meet French customs and compare them with British habits.",
+    textIds: [
+      "starter-a1-094", // Bonjour et la bise (introduces custom words)
+      "starter-a1-095", // Les repas en France
+      "starter-a1-096", // Le dimanche, tout est fermé
+      "starter-a1-097", // Les vacances scolaires
+      "starter-a1-098", // Le café français et le thé anglais
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

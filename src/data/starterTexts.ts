@@ -4136,4 +4136,2198 @@ Alors, un seul geste suffit-il ? Non, évidemment. Mais poser la question ainsi,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a1-039",
+    title: "Le réveil de Julien",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le réveil sonne à six heures et demie. Julien ouvre les yeux.",
+    blurbEn:
+      "Julien's morning, minute by minute: the alarm, the shower, coffee, and the race to catch the 7:40 bus. (Section: My day, 1/5.)",
+    body: `Le réveil sonne à six heures et demie. Julien ouvre les yeux. Il est fatigué. « Encore cinq minutes », pense-t-il.
+
+À six heures trente-cinq, il se lève enfin. Il va dans la salle de bains. Il se lave et il se brosse les dents. L'eau est chaude. C'est agréable.
+
+Ensuite, il s'habille. Aujourd'hui, il porte un pantalon noir et une chemise bleue. Il travaille dans un bureau, alors il ne met pas de jean.
+
+À sept heures, Julien prend son petit déjeuner. Il boit un café et il mange deux tartines. Il écoute la radio. Le journaliste parle du temps : il va pleuvoir cet après-midi.
+
+À sept heures et quart, Julien prépare son sac. Son ordinateur, ses clés, son téléphone. Il prend aussi un parapluie.
+
+À sept heures et demie, il regarde l'heure. « Oh non, je suis en retard ! » Il met son manteau très vite.
+
+Julien sort de l'appartement à sept heures trente-cinq. Il court dans la rue. Le bus part à sept heures quarante.
+
+Il arrive à l'arrêt. Le bus est là ! Julien monte dans le bus. Il est content.
+
+Sa journée commence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-040",
+    title: "Julien au bureau",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Julien arrive au bureau à huit heures.",
+    blurbEn:
+      "The middle of Julien's day: emails, a colleague's questions, lunch in the park and a coffee that keeps him going. (Section: My day, 2/5.)",
+    body: `Julien arrive au bureau à huit heures. Il dit bonjour à ses collègues. « Bonjour Julien ! » répond Sophie.
+
+Il allume son ordinateur et il commence à travailler. Le matin, il lit ses messages. Il y a vingt-trois messages ! C'est beaucoup.
+
+À dix heures, Julien fait une pause. Il boit un café avec Sophie. Ils parlent du week-end. Sophie va à la mer avec sa famille.
+
+Ensuite, Julien travaille encore. Il téléphone à un client. Il écrit un document. Le temps passe vite.
+
+À midi et demi, c'est l'heure du déjeuner. Aujourd'hui, il ne mange pas au restaurant. Il apporte un sandwich et une pomme.
+
+Il fait beau, alors Julien mange dans le petit parc à côté du bureau. Il regarde les gens qui passent. Il y a des enfants qui jouent. C'est calme.
+
+À une heure et demie, il retourne au bureau. L'après-midi est plus difficile. Julien est un peu fatigué. Il boit un autre café.
+
+À cinq heures et demie, il éteint son ordinateur. « Bonne soirée ! » dit Sophie.
+
+« Bonne soirée ! » répond Julien.
+
+Il prend le bus et il rentre à la maison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-041",
+    title: "Le soir chez Julien",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Julien rentre à la maison à six heures et quart.",
+    blurbEn:
+      "Evening at home: cooking pasta, a phone call from his mother, a film, and a book that puts him to sleep. (Section: My day, 3/5.)",
+    body: `Julien rentre à la maison à six heures et quart. Il enlève son manteau et ses chaussures. Enfin !
+
+D'abord, il prend une douche. L'eau chaude est très agréable après la journée de travail. Après, il met un jean et un pull confortable.
+
+À sept heures, Julien prépare le dîner. Ce soir, il fait des pâtes avec des tomates. Ce n'est pas compliqué, mais c'est bon. Il écoute de la musique dans la cuisine.
+
+Il mange à sept heures et demie. Il mange seul, mais ce n'est pas triste. Il aime ce moment calme.
+
+Après le dîner, il fait la vaisselle. Puis son téléphone sonne : c'est sa mère.
+
+« Ça va, mon chéri ? Tu manges bien ? »
+
+« Oui maman, ça va très bien. »
+
+Ils parlent pendant vingt minutes.
+
+À neuf heures, Julien regarde un film à la télévision. C'est un film policier. Mais il est fatigué et il ne comprend pas la fin.
+
+À dix heures et demie, il va dans sa chambre. Il lit trois pages de son livre. Ses yeux se ferment.
+
+À onze heures, Julien dort. Demain, le réveil sonne encore à six heures et demie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-042",
+    title: "Le samedi de Julien",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le samedi, Julien ne met pas de réveil.",
+    blurbEn:
+      "Saturday is the opposite of a weekday: no alarm, a slow breakfast, the market, football, and friends in the evening. (Section: My day, 4/5.)",
+    body: `Le samedi, Julien ne met pas de réveil. Il ouvre les yeux à neuf heures. Personne ne l'attend. Quel bonheur !
+
+Il reste au lit dix minutes. Il regarde son téléphone. Puis il se lève doucement.
+
+Le samedi, le petit déjeuner est différent. Julien ne mange pas seulement deux tartines. Il prépare des œufs et il boit un grand café. Il ne regarde pas l'heure.
+
+Vers onze heures, il va au marché. Il achète des légumes, du fromage et du pain. Le marché est plein de monde. Julien parle avec le vendeur de fruits. C'est un moment agréable.
+
+L'après-midi, Julien joue au football avec ses amis dans le parc. Il court beaucoup. Son équipe perd trois à deux, mais ce n'est pas grave.
+
+Après le match, il rentre à la maison. Il prend une douche et il se repose sur le canapé.
+
+Le soir, ses amis viennent chez lui. Ils mangent une pizza et ils regardent un film. Ils rient beaucoup.
+
+À minuit, ses amis partent. Julien est fatigué, mais content.
+
+Demain, c'est dimanche. Il ne travaille pas non plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-043",
+    title: "Un lundi difficile",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ce matin, Julien n'entend pas son réveil.",
+    blurbEn:
+      "Everything goes wrong on Monday: a silent alarm, no hot water, a missed bus — and one small kindness that saves the day. (Section: My day, 5/5.)",
+    body: `Ce matin, il y a un problème. Julien n'entend pas son réveil. Il ouvre les yeux et il regarde l'heure : sept heures vingt !
+
+Il se lève très vite. Pas de douche aujourd'hui, il n'a pas le temps. Il ouvre l'eau : elle est froide ! L'eau chaude ne marche pas.
+
+Julien s'habille en deux minutes. Il ne prend pas de petit déjeuner. Il n'a pas le temps pour un café.
+
+Il cherche ses clés. Où sont-elles ? Pas sur la table, pas dans le sac. Enfin, il les trouve : elles sont dans son manteau.
+
+Julien sort de l'appartement. Il court dans la rue. Mais quand il arrive à l'arrêt, le bus part. « Non ! » crie Julien.
+
+Il attend le bus suivant pendant quinze minutes. Il pleut un peu. Et bien sûr, aujourd'hui, il n'a pas son parapluie.
+
+Julien arrive au bureau à neuf heures moins le quart. Il est en retard.
+
+Mais Sophie sourit et lui donne un café chaud. « Tu as l'air fatigué », dit-elle.
+
+Julien boit son café. Il est encore mouillé, mais il se sent mieux.
+
+Ce soir, il va acheter un nouveau réveil.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-044",
+    title: "Le déjeuner du dimanche",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le dimanche, toute la famille mange ensemble.",
+    blurbEn:
+      "The big Sunday family lunch: chicken, potatoes, cheese and cake — and a table that stays busy for hours. (Section: At the table, 1/5.)",
+    body: `Le dimanche, toute la famille mange ensemble. C'est une tradition. Nous sommes huit personnes à table.
+
+Ma mère prépare le déjeuner. Aujourd'hui, elle fait un poulet avec des pommes de terre. Ça sent très bon dans la maison. J'ai faim !
+
+À une heure, nous nous asseyons à table. Mon père ouvre une bouteille d'eau et une bouteille de vin. « Bon appétit ! » dit-il.
+
+D'abord, nous mangeons une salade de tomates. Ensuite, il y a le poulet. C'est délicieux. Ma grand-mère mange lentement. Mon petit frère mange très vite.
+
+« Encore un peu de poulet ? » demande ma mère.
+
+« Oui, s'il te plaît », je réponds. « C'est très bon. »
+
+Après le plat, il y a du fromage. En France, le fromage arrive avant le dessert. Mon père adore le camembert.
+
+Enfin, il y a le dessert : un gâteau au chocolat. Tout le monde est content.
+
+Nous parlons beaucoup à table. Nous parlons de la semaine, du travail, de l'école.
+
+À quatre heures, nous sommes encore là. Le repas est fini, mais nous restons ensemble.
+
+C'est ça, le dimanche.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-045",
+    title: "Je prépare une soupe",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ce soir, il fait froid. Je prépare une soupe.",
+    blurbEn:
+      "A simple soup, step by step: carrots, potatoes, an onion, water and patience — plus bread and cheese. (Section: At the table, 2/5.)",
+    body: `Ce soir, il fait froid et il pleut. J'ai envie d'une chose chaude. Je prépare une soupe de légumes.
+
+C'est très facile. Je prends trois carottes, deux pommes de terre et un oignon. J'ai aussi du sel, du poivre et un peu de beurre.
+
+D'abord, je lave les légumes. Ensuite, je coupe les carottes et les pommes de terre en petits morceaux. Attention au couteau ! Il est très coupant.
+
+Je coupe aussi l'oignon. Mes yeux pleurent un peu. C'est normal, l'oignon fait toujours ça.
+
+Je mets le beurre dans une grande casserole. Puis j'ajoute l'oignon. Ça fait un bruit agréable.
+
+Après deux minutes, j'ajoute les carottes et les pommes de terre. Je mets de l'eau, du sel et du poivre.
+
+Maintenant, il faut attendre. La soupe cuit pendant trente minutes. Pendant ce temps, je lis un livre dans le salon.
+
+À sept heures et demie, la soupe est prête. La cuisine sent très bon.
+
+Je mange ma soupe avec du pain et du fromage. C'est simple, mais c'est parfait pour un soir de pluie.
+
+Demain, il reste de la soupe pour le déjeuner.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-046",
+    title: "Le goûter à quatre heures",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, les enfants mangent à quatre heures.",
+    blurbEn:
+      "In France children eat at four o'clock — the 'goûter'. Bread and chocolate, and a small daily ritual after school. (Section: At the table, 3/5.)",
+    body: `En France, il y a un repas spécial pour les enfants : le goûter. C'est à quatre heures de l'après-midi, après l'école.
+
+Le déjeuner est à midi et le dîner est à huit heures. C'est long ! Alors, à quatre heures, les enfants ont faim.
+
+Ma fille Camille rentre de l'école à quatre heures et quart. Elle pose son sac et elle dit toujours la même phrase : « Maman, j'ai faim ! »
+
+Le goûter n'est pas un grand repas. C'est quelque chose de simple. Aujourd'hui, Camille mange du pain avec du chocolat. C'est son goûter préféré.
+
+Elle boit aussi un verre de lait. Parfois, elle prend un yaourt ou un fruit.
+
+Pendant le goûter, Camille me raconte sa journée. Elle parle de son maître, de ses amis, du sport. Ce moment est important pour nous deux.
+
+Après le goûter, elle fait ses devoirs. Elle a plus d'énergie pour travailler.
+
+Le goûter, ce n'est pas seulement de la nourriture. C'est un moment ensemble, chaque jour, à la même heure.
+
+Et le soir, Camille a encore faim pour le dîner !`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-047",
+    title: "Au restaurant pour un anniversaire",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "C'est l'anniversaire de ma sœur. Nous allons au restaurant.",
+    blurbEn:
+      "A birthday dinner out: reading the menu, ordering, and a dessert with a candle that surprises the birthday girl. (Section: At the table, 4/5.)",
+    body: `Aujourd'hui, c'est l'anniversaire de ma sœur Alice. Elle a trente ans. Pour la fête, nous allons au restaurant.
+
+Le restaurant s'appelle « Le Petit Jardin ». Nous sommes six : Alice, ses parents, son mari, son amie Léa et moi.
+
+Le serveur nous donne le menu. Je lis le menu attentivement. Il y a beaucoup de choix ! Poisson, viande, légumes...
+
+« Vous avez choisi ? » demande le serveur.
+
+Alice prend un poisson avec du riz. Son mari prend une viande. Moi, je prends des pâtes aux champignons.
+
+Nous attendons vingt minutes. Nous parlons et nous rions.
+
+Les plats arrivent. Mes pâtes sont chaudes et délicieuses. Alice goûte mon plat. « C'est très bon ! » dit-elle.
+
+Après le plat, le serveur arrive avec un dessert. Il y a une bougie dessus ! Alice ne comprend pas.
+
+Tout le restaurant chante « Joyeux anniversaire ». Alice est rouge, mais elle sourit beaucoup.
+
+Elle souffle la bougie et elle ferme les yeux. Elle fait un vœu.
+
+« Qu'est-ce que tu demandes ? » je demande.
+
+« Je ne peux pas le dire ! » répond Alice.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-048",
+    title: "Qu'est-ce qu'il y a dans le frigo ?",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Il est sept heures. J'ouvre le frigo. Il est presque vide.",
+    blurbEn:
+      "Seven o'clock, an almost-empty fridge, and no wish to go out: how three sad ingredients become a good omelette. (Section: At the table, 5/5.)",
+    body: `Il est sept heures du soir. J'ai faim. J'ouvre le frigo et je regarde.
+
+Le frigo est presque vide. Ce n'est pas bon.
+
+Qu'est-ce qu'il y a ? Il y a trois œufs. Il y a un morceau de fromage. Il y a aussi une tomate, mais elle n'est pas très belle.
+
+Dans le placard, il y a du pain d'hier. Il est un peu dur.
+
+Je n'ai pas envie de sortir. Il fait froid et il est tard. Le supermarché ferme à huit heures.
+
+Alors, je réfléchis. Trois œufs, du fromage, une tomate... Je peux faire une omelette !
+
+Je casse les œufs dans un bol. J'ajoute du sel et du poivre. Je coupe le fromage en petits morceaux. Je coupe aussi la tomate.
+
+Je mets un peu de beurre dans la poêle. Puis j'ajoute les œufs. Ça cuit vite, en trois minutes.
+
+Le fromage fond. Ça sent très bon !
+
+Je mets mon omelette dans une assiette. Je mange avec le pain dur.
+
+C'est simple, mais c'est vraiment bon. Et je n'ai rien jeté.
+
+Demain, je vais au supermarché. Promis !`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-049",
+    title: "Mon quartier",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "J'habite dans un petit quartier, près du centre.",
+    blurbEn:
+      "A tour of the narrator's neighbourhood: the square, the bakery, the pharmacy, the school and the park at the end of the street. (Section: My town, 1/5.)",
+    body: `J'habite dans un petit quartier, près du centre-ville. J'aime beaucoup mon quartier.
+
+Ma rue s'appelle la rue des Fleurs. Elle n'est pas très grande. Il y a des arbres et des voitures garées.
+
+Au bout de ma rue, il y a une place. Sur la place, il y a une fontaine et quelques bancs. Le mercredi, il y a un marché.
+
+À côté de la place, il y a une boulangerie. Le pain est excellent. En face de la boulangerie, il y a une pharmacie verte.
+
+Il y a aussi un petit café. Les gens boivent un café le matin et lisent le journal.
+
+L'école est à deux minutes de chez moi. À huit heures et demie, il y a beaucoup d'enfants dans la rue. C'est bruyant, mais c'est joyeux.
+
+Derrière l'école, il y a un parc. Le parc n'est pas grand, mais il est joli. Il y a de l'herbe, des arbres et un endroit pour les enfants.
+
+Le dimanche matin, je marche dans le parc. Je rencontre souvent mes voisins.
+
+Mon quartier n'est pas célèbre. Mais ici, tout le monde se dit bonjour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-050",
+    title: "La boulangerie de ma rue",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Chaque matin, je vais à la boulangerie.",
+    blurbEn:
+      "Every morning at the bakery: warm bread, croissants on Sunday, and a baker who knows exactly what you want. (Section: My town, 2/5.)",
+    body: `Chaque matin, je vais à la boulangerie de ma rue. Elle ouvre à sept heures.
+
+Quand j'ouvre la porte, ça sent très bon. C'est l'odeur du pain chaud. J'adore cette odeur.
+
+Derrière le comptoir, il y a madame Bernard. Elle travaille ici depuis vingt ans. Elle connaît tous les clients.
+
+« Bonjour ! Comme d'habitude ? » demande-t-elle.
+
+« Oui, une baguette s'il vous plaît. »
+
+Elle prend une baguette. Le pain est encore chaud. Ça coûte un euro dix.
+
+Dans la boulangerie, il y a beaucoup de choses. Il y a des baguettes, du pain complet, et aussi des gâteaux. Les tartes aux fruits sont très jolies.
+
+Le dimanche, c'est différent. J'achète des croissants pour toute la famille. Il y a souvent une queue : cinq ou six personnes attendent.
+
+Les gens parlent dans la queue. Ils parlent du temps, du quartier, des enfants.
+
+Sur le chemin de la maison, je mange toujours un petit morceau de ma baguette. Le bout du pain, c'est le meilleur.
+
+Ma mère dit : « Encore ! Tu manges toujours le pain avant la maison ! »
+
+C'est vrai. Mais c'est trop bon.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-051",
+    title: "Où est la pharmacie ?",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Une dame me demande son chemin dans la rue.",
+    blurbEn:
+      "A stranger asks for directions to the pharmacy — left, right, straight on — and the narrator discovers she's a new neighbour. (Section: My town, 3/5.)",
+    body: `Je marche dans la rue. Une dame arrive vers moi. Elle a l'air perdue.
+
+« Excusez-moi, monsieur. Où est la pharmacie, s'il vous plaît ? »
+
+« La pharmacie ? Ce n'est pas loin. »
+
+Je réfléchis un moment. Comment expliquer ?
+
+« Vous continuez tout droit dans cette rue. Vous passez devant la boulangerie. »
+
+« D'accord », dit la dame.
+
+« Ensuite, vous tournez à gauche. C'est la rue Victor Hugo. »
+
+« À gauche à la boulangerie », répète la dame.
+
+« Non, après la boulangerie. Vous marchez encore cinquante mètres, puis vous tournez à gauche. »
+
+« Ah, d'accord ! »
+
+« La pharmacie est à droite, en face de la banque. Il y a une grande croix verte. Vous ne pouvez pas la manquer. »
+
+« Merci beaucoup, monsieur ! C'est loin ? »
+
+« Non, cinq minutes à pied. »
+
+La dame sourit. « Merci ! J'habite ici depuis une semaine seulement. Je ne connais pas encore le quartier. »
+
+« Bienvenue dans le quartier ! » je réponds.
+
+Elle part vers la boulangerie. Puis elle se retourne.
+
+« À gauche après la boulangerie, c'est ça ? »
+
+« C'est ça ! » je crie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-052",
+    title: "La bibliothèque de la ville",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "La bibliothèque est un endroit calme et gratuit.",
+    blurbEn:
+      "The town library: free books, a warm reading room, story hour for children, and a card that costs nothing. (Section: My town, 4/5.)",
+    body: `Dans ma ville, il y a une bibliothèque. Elle est près de la mairie, dans un grand bâtiment ancien.
+
+J'aime beaucoup cet endroit. C'est calme et c'est gratuit.
+
+À l'intérieur, il y a des milliers de livres. Il y a des romans, des livres d'histoire, des livres pour les enfants. Il y a aussi des journaux et des magazines.
+
+Pour emprunter un livre, il faut une carte. Ma carte est gratuite parce que j'habite dans la ville. Je peux prendre cinq livres pendant trois semaines.
+
+La bibliothécaire s'appelle madame Rossi. Elle est très gentille. Quand je ne sais pas quoi lire, elle me donne des idées.
+
+« Vous aimez les romans policiers ? » demande-t-elle. « Alors, essayez celui-ci. »
+
+Elle a toujours raison.
+
+Il y a aussi une grande salle de lecture. Il y a des tables et des chaises confortables. Des étudiants travaillent. Des personnes âgées lisent le journal. Tout le monde parle doucement.
+
+Le mercredi après-midi, la bibliothèque est différente. Il y a l'heure du conte pour les enfants. Ils écoutent des histoires, assis par terre.
+
+En hiver, la bibliothèque est pleine. Il fait chaud ici, et les livres ne coûtent rien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-053",
+    title: "Le marché du mercredi",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le mercredi matin, la place devient un marché.",
+    blurbEn:
+      "Wednesday morning transforms the square into a market: vegetables, cheese, a chicken seller who shouts, and neighbours who stop to talk. (Section: My town, 5/5.)",
+    body: `Le mercredi matin, la place de mon quartier change complètement. Il n'y a plus de voitures. À la place, il y a le marché.
+
+Les vendeurs arrivent très tôt, à six heures. Ils installent leurs tables sous de grands parasols blancs.
+
+À neuf heures, il y a beaucoup de monde. Les gens marchent lentement entre les tables. Ils regardent, ils touchent, ils demandent les prix.
+
+Il y a de tout. Des légumes, des fruits, du fromage, du poisson, des fleurs. Les couleurs sont magnifiques : les tomates rouges, les carottes oranges, les salades vertes.
+
+Un vendeur crie très fort : « Trois euros les poulets ! Regardez mes beaux poulets ! » Tout le monde l'entend.
+
+Ma voisine, madame Lopez, achète toujours ses légumes chez le même vendeur. « Bonjour Antoine ! Ça va ? » « Ça va, madame Lopez ! Comme d'habitude ? »
+
+Le marché n'est pas seulement pour acheter. C'est aussi pour parler. Je rencontre souvent des gens que je connais. Nous parlons cinq ou dix minutes.
+
+À une heure, c'est fini. Les vendeurs partent avec leurs tables.
+
+À deux heures, la place est normale. Les voitures reviennent.
+
+Et il faut attendre mercredi prochain.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-054",
+    title: "Ma famille",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Nous sommes cinq dans ma famille.",
+    blurbEn:
+      "Meet the family: a father who talks a lot, a calm mother, a big sister, a little brother — and a grandmother next door. (Section: Family and friends, 1/5.)",
+    body: `Nous sommes cinq dans ma famille : mon père, ma mère, ma sœur, mon frère et moi.
+
+Mon père s'appelle Marc. Il a quarante-huit ans. Il est professeur de mathématiques. Il est grand et il porte des lunettes. Il parle beaucoup et il rit fort.
+
+Ma mère s'appelle Nadia. Elle a quarante-cinq ans. Elle travaille dans un hôpital. Elle est plus calme que mon père. Quand il y a un problème, elle trouve toujours une solution.
+
+Ma sœur Inès a dix-neuf ans. Elle est étudiante à Lyon. Elle n'habite plus à la maison, mais elle revient le week-end. Elle me manque un peu.
+
+Mon frère Théo a huit ans. Il est petit et il a beaucoup d'énergie. Il pose mille questions par jour : « Pourquoi ? Comment ? Et après ? » Parfois, c'est fatigant.
+
+Et moi ? J'ai quinze ans. Je suis au lycée.
+
+Nous avons aussi un chat, Moustache. Il dort toute la journée.
+
+Ma grand-mère habite dans la même rue, à deux minutes. Elle vient dîner le mardi et le vendredi.
+
+Nous ne sommes pas une famille parfaite. Nous ne sommes pas toujours d'accord. Mais nous sommes ensemble.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-055",
+    title: "Mon meilleur ami",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Mon meilleur ami s'appelle Yanis.",
+    blurbEn:
+      "Yanis and the narrator met at six and have been opposites ever since — which is exactly why the friendship works. (Section: Family and friends, 2/5.)",
+    body: `Mon meilleur ami s'appelle Yanis. Nous nous connaissons depuis l'âge de six ans.
+
+Nous sommes dans la même classe à l'école primaire. Le premier jour, il est assis à côté de moi. Il me donne un crayon rouge. Et voilà : nous sommes amis.
+
+Yanis est très différent de moi. Il est grand, je suis petit. Il parle beaucoup, je suis timide. Il adore le football, je préfère les jeux vidéo.
+
+Mais nous rions des mêmes choses. C'est peut-être ça, l'amitié.
+
+Après l'école, nous allons souvent chez lui. Sa mère prépare toujours quelque chose à manger. Elle dit : « Tu es trop maigre ! Mange ! »
+
+Le week-end, nous sortons ensemble. Nous marchons dans la ville, nous regardons les magasins, nous parlons de tout.
+
+Yanis n'habite plus dans mon quartier. Sa famille déménage l'année dernière, à vingt minutes en bus. Au début, c'est difficile.
+
+Mais nous nous téléphonons souvent. Et le samedi, il vient toujours.
+
+Il y a des choses que je ne dis à personne. Sauf à Yanis.
+
+C'est ça, un meilleur ami : quelqu'un qui connaît tout de toi, et qui reste.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-056",
+    title: "Le bébé de ma cousine",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ma cousine Sarah a un bébé depuis trois mois.",
+    blurbEn:
+      "Meeting baby Léo for the first time: tiny hands, no sleep for his parents, and a first smile that makes everyone go quiet. (Section: Family and friends, 3/5.)",
+    body: `Ma cousine Sarah a un bébé. Il s'appelle Léo et il a trois mois.
+
+Aujourd'hui, je vais chez elle pour le voir. C'est la première fois.
+
+Sarah ouvre la porte. Elle a l'air très fatiguée. « Entre ! Il dort, mais il va se réveiller bientôt. »
+
+Dans le salon, il y a des choses partout : des vêtements de bébé, des jouets, des couvertures. La maison n'est plus très rangée. Sarah rit : « Avec un bébé, c'est normal ! »
+
+Léo se réveille. Sarah le prend dans ses bras.
+
+Il est tout petit. Ses mains sont minuscules. Ses cheveux sont noirs et fins.
+
+« Tu veux le porter ? » demande Sarah.
+
+J'ai un peu peur. « Il est si petit... »
+
+« Ne t'inquiète pas. Mets ta main ici, sous sa tête. »
+
+Je porte Léo. Il est chaud et léger. Il me regarde avec de grands yeux.
+
+Et soudain, il sourit.
+
+« Il sourit ! » je crie.
+
+« Oui », dit Sarah, très fière. « Depuis quelques jours seulement. »
+
+Nous sommes tous silencieux pendant un moment.
+
+Sarah dort trois heures par nuit. Elle est épuisée.
+
+Mais quand elle regarde Léo, elle sourit aussi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-057",
+    title: "Les cousins arrivent",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Aujourd'hui, mes cousins arrivent pour le week-end.",
+    blurbEn:
+      "The cousins arrive for the weekend: a loud house, a football match in the garden, and everyone too tired at bedtime. (Section: Family and friends, 4/5.)",
+    body: `Aujourd'hui, mes cousins arrivent pour le week-end. Ils habitent à Marseille, à quatre heures de chez nous.
+
+Ils sont trois : Lucas, quatorze ans, Emma, onze ans, et le petit Noah, six ans.
+
+À onze heures, j'entends une voiture. Je cours à la porte. Les voilà !
+
+Noah sort le premier. Il court vers moi et il saute dans mes bras. « Salut ! »
+
+Ma mère embrasse tout le monde. « Vous avez fait bon voyage ? »
+
+« Long, mais ça va », répond ma tante.
+
+La maison change tout de suite. Avant, c'est calme. Maintenant, il y a du bruit partout ! Des voix, des rires, des pas dans l'escalier.
+
+Nous déjeunons tous ensemble. Nous sommes neuf à table. Il n'y a pas assez de chaises, alors Noah s'assoit sur un tabouret.
+
+L'après-midi, nous jouons au football dans le jardin. Les grands contre les petits. Noah marque un but et il crie très fort.
+
+Le soir, nous mangeons une grande pizza devant un film.
+
+À dix heures, Noah dort déjà sur le canapé. Emma bâille. Même Lucas est fatigué.
+
+Demain, ils repartent. La maison sera trop calme.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-058",
+    title: "La photo de mariage",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Dans le salon de ma grand-mère, il y a une vieille photo.",
+    blurbEn:
+      "An old black-and-white wedding photo on grandma's wall opens a window on 1961 — and on a grandfather the narrator never met. (Section: Family and friends, 5/5.)",
+    body: `Dans le salon de ma grand-mère, il y a une vieille photo sur le mur. C'est une photo en noir et blanc.
+
+Sur la photo, il y a un homme et une femme. Ils sont jeunes. La femme porte une robe blanche et des fleurs dans les mains. L'homme porte un costume noir.
+
+« C'est toi ? » je demande.
+
+« Oui », dit ma grand-mère. « C'est le jour de mon mariage. En 1961. »
+
+Je regarde la photo. Ma grand-mère a quatre-vingt-trois ans aujourd'hui. Sur la photo, elle a vingt-deux ans. Elle est très belle.
+
+« Et lui, c'est grand-père ? »
+
+« Oui. Tu ne l'as pas connu. Il est mort avant ta naissance. »
+
+Elle prend la photo dans ses mains. Elle la regarde longtemps.
+
+« Il était drôle », dit-elle doucement. « Il chantait tout le temps. Mal, mais tout le temps. »
+
+Je souris. Mon père chante mal aussi.
+
+« Et le mariage, c'était comment ? »
+
+« Il pleuvait ! Toute la journée ! Mais nous étions heureux. Nous avons dansé jusqu'à trois heures du matin. »
+
+Ma grand-mère remet la photo sur le mur.
+
+« Regarde bien, » dit-elle. « Tu as ses yeux. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-059",
+    title: "J'écoute de la musique",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "J'écoute de la musique tous les jours.",
+    blurbEn:
+      "Music for every moment of the day — calm in the morning, loud for cleaning, and one song that always brings back a memory. (Section: Free time, 1/5.)",
+    body: `J'écoute de la musique tous les jours. Le matin, dans le bus, le soir à la maison. La musique m'accompagne partout.
+
+J'aime beaucoup de styles différents. J'aime le rock, le rap et aussi la musique classique. Ça dépend du moment.
+
+Le matin, j'écoute de la musique calme. Je ne suis pas encore bien réveillé. Une musique douce, c'est parfait.
+
+Quand je fais le ménage, c'est le contraire ! Je mets la musique très fort et je chante. Mes voisins ne sont pas contents.
+
+J'ai une chanson préférée. C'est une vieille chanson française. Mon père l'écoutait quand j'étais petit.
+
+Quand j'entends cette chanson, je pense tout de suite aux vacances, à la voiture, à la mer. C'est étrange : une chanson peut ouvrir une porte dans la tête.
+
+Le samedi, je vais parfois à un concert. J'aime être là, avec beaucoup de gens, dans le bruit et la lumière. Tout le monde chante ensemble.
+
+Je ne joue pas très bien d'un instrument. Je ne sais pas lire les notes.
+
+Mais pour écouter, pas besoin de savoir. Il faut seulement des oreilles et un peu de temps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-060",
+    title: "Le cours de dessin",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le jeudi soir, je vais à un cours de dessin.",
+    blurbEn:
+      "A Thursday-night drawing class for people who 'can't draw': a patient teacher, a bowl of fruit, and slow progress. (Section: Free time, 2/5.)",
+    body: `Le jeudi soir, je vais à un cours de dessin. C'est dans une petite salle, près de la mairie.
+
+Nous sommes dix personnes. Il y a des jeunes et des personnes âgées. La plus âgée a soixante-dix-huit ans.
+
+Le professeur s'appelle Vincent. Il est artiste. Il est très patient.
+
+« Tout le monde peut dessiner », dit-il souvent. « Il faut seulement regarder. »
+
+Au début, je ne suis pas d'accord. Mes dessins sont horribles ! Mes maisons ne sont pas droites. Mes personnes ont des bras trop longs.
+
+Aujourd'hui, nous dessinons des fruits. Sur la table, il y a une pomme, une banane et un verre.
+
+« Regardez la lumière », dit Vincent. « Où est l'ombre ? »
+
+Je regarde longtemps. C'est étrange : quand on regarde vraiment, on voit des choses différentes.
+
+Je dessine pendant une heure. Je ne parle pas. Je ne pense à rien d'autre. Le temps passe très vite.
+
+À la fin, je regarde mon dessin. Ce n'est pas parfait. La banane est bizarre.
+
+Mais la pomme ? La pomme est bonne !
+
+Vincent regarde et sourit. « Vous voyez ? Vous progressez. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-061",
+    title: "Un film le samedi soir",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le samedi soir, c'est la soirée film à la maison.",
+    blurbEn:
+      "Saturday film night at home: choosing takes longer than watching, and the popcorn is the best part. (Section: Free time, 3/5.)",
+    body: `Le samedi soir, c'est la soirée film à la maison. C'est une tradition dans ma famille.
+
+Vers huit heures, nous nous installons dans le salon. Il y a mon père, ma mère, ma sœur et moi.
+
+D'abord, il faut choisir le film. Et là, c'est compliqué !
+
+Ma sœur veut un film d'amour. Mon père préfère les films d'action. Ma mère aime les comédies. Moi, je veux un film de science-fiction.
+
+« On regarde un film d'amour ! » dit ma sœur.
+
+« Ah non, pas encore ! » répond mon père.
+
+Nous discutons pendant vingt minutes. Parfois trente.
+
+Finalement, nous choisissons une comédie. C'est souvent la solution : tout le monde aime rire.
+
+Ma mère prépare du popcorn dans la cuisine. Ça sent très bon. Pour moi, le popcorn est le meilleur moment de la soirée.
+
+Le film commence. Nous éteignons la lumière.
+
+Le film est drôle. Nous rions beaucoup. Mon père rit le plus fort.
+
+Vers dix heures et demie, je regarde ma mère. Elle dort ! Elle dort toujours pendant les films.
+
+À la fin, elle ouvre les yeux : « Il était très bien, ce film. »
+
+Nous rions encore.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-062",
+    title: "J'apprends la guitare",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Depuis six mois, j'apprends la guitare.",
+    blurbEn:
+      "Six months of learning guitar: sore fingers, three chords, a patient neighbour — and the first song played all the way through. (Section: Free time, 4/5.)",
+    body: `Depuis six mois, j'apprends la guitare. C'est un vieux rêve.
+
+Ma guitare n'est pas neuve. Je l'achète d'occasion pour quarante euros. Elle est un peu abîmée, mais elle sonne bien.
+
+Au début, c'est très difficile. Mes doigts font mal. Après dix minutes, je dois m'arrêter. La peau de mes doigts est rouge.
+
+« C'est normal », dit mon voisin Paul. Il joue depuis trente ans. « Dans un mois, tu n'auras plus mal. »
+
+Il a raison.
+
+J'apprends d'abord trois accords. Seulement trois ! Mais avec ces trois accords, on peut jouer beaucoup de chansons.
+
+Je joue vingt minutes chaque soir, après le dîner. Ce n'est pas long, mais c'est tous les jours.
+
+Au début, ma musique est horrible. Je m'arrête tout le temps. Je change d'accord trop lentement.
+
+Puis, un jour, quelque chose change. Mes mains bougent toutes seules. Je ne réfléchis plus.
+
+Hier soir, je joue une chanson complète, du début à la fin, sans erreur.
+
+Paul frappe à ma porte. J'ai peur : le bruit ?
+
+Mais non. Il sourit.
+
+« C'était bien ! » dit-il. « Continue. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-063",
+    title: "La soirée jeux",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Une fois par mois, mes amis viennent jouer chez moi.",
+    blurbEn:
+      "Once a month friends come round for board games: phones in a bowl, a lot of shouting, and one very competitive grandmother. (Section: Free time, 5/5.)",
+    body: `Une fois par mois, mes amis viennent chez moi. C'est la soirée jeux.
+
+Ils arrivent vers sept heures. Chacun apporte quelque chose : du pain, du fromage, des gâteaux, des boissons.
+
+Il y a une règle importante : pas de téléphone. À l'entrée, il y a un grand bol. Tout le monde met son téléphone dedans.
+
+Au début, c'est difficile pour certains ! Mais après dix minutes, personne ne pense plus au téléphone.
+
+Nous jouons à des jeux de société. Nous avons beaucoup de jeux : des jeux de cartes, des jeux de questions, des jeux avec un plateau.
+
+Ce soir, nous jouons à un jeu de questions. Nous sommes six, en deux équipes.
+
+Il y a beaucoup de bruit ! Tout le monde crie les réponses. Marc n'est pas d'accord avec les règles. Léa rit trop et elle ne peut plus parler.
+
+Ma grand-mère joue avec nous. Elle a soixante-dix-neuf ans et elle adore gagner. Ce soir, son équipe gagne encore.
+
+« Encore une partie ! » dit-elle à minuit.
+
+Nous jouons jusqu'à une heure du matin.
+
+Quand mes amis partent, ils reprennent leur téléphone.
+
+« Bizarre », dit Marc. « Je n'ai pas regardé l'heure une seule fois. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-064",
+    title: "Je vais au travail à vélo",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Chaque matin, je vais au travail à vélo.",
+    blurbEn:
+      "Twenty-five minutes by bike beats the metro: fresh air, no traffic jams, a route along the river — and rain gear for bad days. (Section: Getting around, 1/5.)",
+    body: `Chaque matin, je vais au travail à vélo. Mon bureau est à cinq kilomètres de chez moi. Le trajet dure vingt-cinq minutes.
+
+Avant, je prends le métro. Mais le métro est plein le matin. Il y a trop de monde. Je n'aime pas ça.
+
+Un jour, j'achète un vélo. Et maintenant, je ne veux plus changer.
+
+Le matin, je pars à huit heures. L'air est frais. La ville se réveille doucement.
+
+Il y a une piste cyclable le long de la rivière. C'est très joli. Je vois l'eau, les arbres, parfois des canards.
+
+Il y a beaucoup de cyclistes. Nous ne nous parlons pas, mais nous nous voyons chaque jour.
+
+Le vélo a des avantages. C'est gratuit. C'est rapide : parfois plus rapide que la voiture, parce qu'il n'y a pas d'embouteillages. Et c'est du sport !
+
+Bien sûr, il y a un problème : la pluie. Quand il pleut, je porte une veste spéciale et un pantalon de pluie. J'arrive au bureau un peu mouillé.
+
+Mes collègues rient : « Encore le vélo ? Par ce temps ? »
+
+Oui. Encore le vélo.
+
+Le soir, je rentre à vélo aussi. Après une journée devant l'ordinateur, ça fait du bien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-065",
+    title: "À la gare",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "La gare est un endroit plein de monde et de bruit.",
+    blurbEn:
+      "Buying a ticket, finding the platform, and watching people say goodbye: a small portrait of a busy station. (Section: Getting around, 2/5.)",
+    body: `Aujourd'hui, je vais à Bordeaux pour le week-end. J'arrive à la gare à deux heures.
+
+La gare est grande et pleine de monde. Il y a du bruit partout : des voix, des valises, des annonces.
+
+D'abord, j'achète mon billet. Il y a une queue devant les machines. J'attends cinq minutes.
+
+Sur la machine, je choisis ma destination : Bordeaux. Je choisis l'heure : quatorze heures quarante. Le billet coûte trente-deux euros.
+
+Ensuite, je regarde le grand panneau. Il y a beaucoup de trains et beaucoup de villes : Paris, Lyon, Toulouse, Nantes...
+
+Je cherche mon train. Bordeaux, quatorze heures quarante... voie 7.
+
+Je marche vers la voie 7. Mon sac est lourd.
+
+Sur le quai, j'attends. Je regarde les gens.
+
+Une mère dit au revoir à son fils. Elle l'embrasse trois fois. Elle pleure un peu.
+
+Deux amis se retrouvent. Ils crient et ils rient très fort.
+
+Un homme court : son train part dans une minute !
+
+Une gare, c'est un endroit d'arrivées et de départs. Il y a de la joie et de la tristesse en même temps.
+
+Mon train arrive. Je monte. Bon voyage à moi !`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-066",
+    title: "Le voyage en train",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le train part à quatorze heures quarante.",
+    blurbEn:
+      "Three hours through changing countryside, a shared sandwich with the woman opposite, and the sea appearing at the window. (Section: Getting around, 3/5.)",
+    body: `Le train part à quatorze heures quarante, exactement à l'heure.
+
+Je trouve ma place : voiture 12, place 45, à côté de la fenêtre. J'aime beaucoup les places à la fenêtre.
+
+En face de moi, il y a une dame âgée. Elle lit un livre. Elle me dit bonjour avec un sourire.
+
+Le train sort de la ville. D'abord, je vois des immeubles et des routes. Puis, après vingt minutes, tout change.
+
+Maintenant, il y a des champs. Il y a des vaches, des petits villages, des arbres. La campagne est verte et calme.
+
+Je regarde par la fenêtre pendant longtemps. Je ne fais rien d'autre. C'est reposant.
+
+À quatre heures, j'ai faim. Je sors mon sandwich et une pomme.
+
+La dame sort aussi son repas. Elle a beaucoup de choses : du pain, du fromage, des tomates.
+
+« Vous voulez un peu de fromage ? » demande-t-elle.
+
+« Merci beaucoup ! »
+
+Nous parlons pendant une heure. Elle va voir sa fille et ses petits-enfants.
+
+À dix-sept heures trente, le train arrive à Bordeaux.
+
+« Bon week-end ! » dit la dame.
+
+« Merci ! À vous aussi ! »
+
+Je ne connais pas son nom. Mais ce voyage était très agréable.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-067",
+    title: "La vieille voiture de mon père",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Mon père a une voiture très vieille. Il l'adore.",
+    blurbEn:
+      "Dad's twenty-two-year-old car makes strange noises and has no screen — but he refuses to sell it, and everyone secretly understands why. (Section: Getting around, 4/5.)",
+    body: `Mon père a une voiture très vieille. Elle est bleue et elle a vingt-deux ans.
+
+La voiture n'est pas belle. Il y a des marques sur les portes. Le siège du conducteur est abîmé.
+
+Elle fait aussi des bruits bizarres. Quand mon père tourne, elle fait « criii ». Quand il freine, elle fait « chhh ».
+
+Il n'y a pas d'écran, pas de GPS. Pour trouver le chemin, mon père utilise une carte en papier !
+
+Ma mère dit souvent : « Marc, il faut acheter une nouvelle voiture. »
+
+Mon père répond toujours la même chose : « Elle marche très bien ! »
+
+C'est vrai : elle marche. Elle ne tombe jamais en panne. Le garagiste dit que le moteur est excellent.
+
+Avec cette voiture, nous allons partout. Nous allons à la mer chaque été. Nous allons chez ma grand-mère. Nous transportons des meubles, des vélos, un arbre de Noël.
+
+Dans la voiture, il y a beaucoup de souvenirs. Il y a une petite tache sur le siège arrière : c'est moi, à six ans, avec un chocolat.
+
+L'année dernière, un homme propose de l'acheter.
+
+« Non merci », dit mon père.
+
+Il ne vend pas sa voiture. Je crois qu'il ne la vendra jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-068",
+    title: "Marcher en ville",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le samedi, je ne prends pas le bus. Je marche.",
+    blurbEn:
+      "Walking instead of taking the bus turns a journey into a discovery: hidden streets, an old door, and a bookshop that was always there. (Section: Getting around, 5/5.)",
+    body: `Le samedi, je ne prends pas le bus, je ne prends pas le métro. Je marche.
+
+Pendant la semaine, je suis toujours pressé. Métro, bus, vite, vite. Je ne regarde rien.
+
+Mais le samedi, j'ai le temps. Alors je marche dans la ville.
+
+Quand on marche, on voit des choses. Beaucoup de choses.
+
+Aujourd'hui, je découvre une petite rue. Je passe ici depuis dix ans, mais en bus. Je ne connais pas cette rue !
+
+Elle est très étroite. Il y a des maisons anciennes et des fleurs aux fenêtres.
+
+Au bout de la rue, il y a une porte magnifique. Elle est en bois, très vieille, avec des dessins. Je m'arrête et je la regarde.
+
+Un peu plus loin, il y a une petite librairie. Elle est ouverte. J'entre.
+
+À l'intérieur, il y a des livres partout, du sol au plafond. Ça sent le papier.
+
+J'achète un livre d'occasion pour trois euros.
+
+Je continue à marcher. Je regarde les gens, les magasins, les arbres.
+
+Je rentre à la maison une heure plus tard que d'habitude.
+
+Mais je connais mieux ma ville qu'hier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-069",
+    title: "Ma chambre",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ma chambre est petite, mais c'est mon endroit préféré.",
+    blurbEn:
+      "A small bedroom described piece by piece: the bed, the desk, the window, the posters — and why it's the narrator's favourite place. (Section: At home, 1/5.)",
+    body: `Ma chambre est petite, mais c'est mon endroit préféré dans la maison.
+
+Elle fait environ douze mètres carrés. Ce n'est pas grand, mais c'est assez pour moi.
+
+Quand j'entre, il y a mon lit à droite. Il est simple, avec une couverture bleue. Au-dessus du lit, il y a une étagère avec mes livres.
+
+À gauche, il y a mon bureau. Sur le bureau, il y a mon ordinateur, une lampe, des stylos et beaucoup de papiers. Ma mère dit que c'est en désordre. Elle a raison.
+
+En face de la porte, il y a la fenêtre. C'est le meilleur endroit de la chambre. Je vois le jardin du voisin et un grand arbre.
+
+Le matin, le soleil entre par la fenêtre. La chambre devient toute jaune. J'adore ce moment.
+
+Sur les murs, il y a des posters : un groupe de musique, une carte du monde, et une photo de mes amis.
+
+Il y a aussi une petite plante verte sur la fenêtre. Elle s'appelle Georges. Oui, j'ai donné un nom à ma plante.
+
+Le soir, je ferme la porte, j'allume ma lampe et je lis.
+
+Ici, je suis tranquille. C'est mon petit monde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-070",
+    title: "Le grand ménage",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Samedi matin, c'est le grand ménage à la maison.",
+    blurbEn:
+      "Saturday cleaning with the whole family: everyone has a job, music helps, and strange things turn up under the sofa. (Section: At home, 2/5.)",
+    body: `Samedi matin, neuf heures. Ma mère ouvre la porte de ma chambre.
+
+« Debout ! Aujourd'hui, c'est le grand ménage ! »
+
+Toute la famille travaille. Chacun a une tâche.
+
+Mon père passe l'aspirateur dans le salon. Ma mère nettoie la cuisine. Ma sœur fait les fenêtres. Et moi ? Je range ma chambre et je nettoie la salle de bains.
+
+Ma mère met de la musique très fort. C'est mieux avec de la musique.
+
+Je commence par ma chambre. Je mets les vêtements dans l'armoire. Je range mes livres. Je jette de vieux papiers.
+
+Sous mon lit, je trouve des choses incroyables : une chaussette, un stylo, un vieux gâteau (beurk !) et un livre de la bibliothèque. Je le cherche depuis deux mois !
+
+Dans le salon, mon père crie : « Regardez ce que je trouve sous le canapé ! »
+
+C'est la télécommande de la télévision. Nous la cherchons depuis trois semaines.
+
+À midi, la maison est propre. Tout brille. Ça sent le savon.
+
+Nous nous asseyons dans le salon, fatigués.
+
+« C'est agréable, une maison propre », dit ma mère.
+
+C'est vrai. Mais dans une semaine, tout sera en désordre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-071",
+    title: "Une étagère à monter",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "J'achète une étagère. Il faut la monter moi-même.",
+    blurbEn:
+      "Flat-pack furniture, forty-two screws, instructions with no words, and one piece that ends up upside down. (Section: At home, 3/5.)",
+    body: `Aujourd'hui, j'achète une étagère pour ma chambre. Elle coûte trente-cinq euros.
+
+Mais il y a un problème : dans le magasin, l'étagère est dans une boîte plate. Il faut la monter à la maison.
+
+« Ce n'est pas difficile », dit le vendeur. « Trente minutes. »
+
+Trente minutes ? Nous allons voir.
+
+À la maison, j'ouvre la boîte. À l'intérieur, il y a beaucoup de morceaux de bois. Il y a aussi un petit sac avec quarante-deux vis.
+
+Il y a un papier avec des dessins. Il n'y a pas de mots, seulement des images. Un petit personnage sourit et monte l'étagère facilement.
+
+Je commence. Étape un : je mets deux morceaux ensemble. Ça marche !
+
+Étape deux : je mets une vis. Ça marche aussi. Je suis content.
+
+Étape trois... Attention. Il y a un problème. Le morceau C ne va pas avec le morceau D.
+
+Je regarde le dessin. Je tourne le papier. Je regarde encore.
+
+Ah ! Le morceau C est à l'envers.
+
+Je recommence. Je perds une vis sous le lit. Je la cherche pendant dix minutes.
+
+Deux heures plus tard, l'étagère est finie.
+
+Elle est droite. Elle est solide. Elle est parfaite.
+
+Et je suis très fier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-072",
+    title: "Les plantes de la maison",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Dans mon appartement, il y a onze plantes vertes.",
+    blurbEn:
+      "Eleven house plants, each with a name and a personality — and the hard lesson that too much water kills faster than too little. (Section: At home, 4/5.)",
+    body: `Dans mon appartement, il y a onze plantes vertes. Oui, onze ! Je les compte hier.
+
+Il y a des grandes et des petites. Il y en a dans le salon, dans la cuisine, dans la chambre, et même dans la salle de bains.
+
+Ma plante préférée est près de la fenêtre du salon. Elle est très grande maintenant : un mètre cinquante ! Quand je l'achète, il y a trois ans, elle est toute petite.
+
+Les plantes ont besoin de trois choses : de l'eau, de la lumière et un peu d'attention.
+
+Au début, je fais une erreur. Je donne trop d'eau. Beaucoup trop ! Les feuilles deviennent jaunes et la plante meurt.
+
+Ma voisine m'explique : « Trop d'eau, c'est pire que pas assez. Touche la terre avec ton doigt. Si elle est sèche, tu arroses. Si elle est humide, tu attends. »
+
+Maintenant, j'arrose une fois par semaine, le dimanche matin. C'est devenu un petit rituel.
+
+Les plantes changent une maison. L'air est meilleur. La pièce est plus jolie, plus vivante.
+
+Et il y a autre chose. Quand je rentre le soir, je regarde mes plantes. Une nouvelle feuille ? Une fleur ?
+
+Quelque chose grandit ici, doucement, pendant que je travaille.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-073",
+    title: "Ma sœur déménage",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Aujourd'hui, ma sœur quitte la maison.",
+    blurbEn:
+      "Boxes, a rented van, four flights of stairs and a first night in an empty flat — the day a sister moves out. (Section: At home, 5/5.)",
+    body: `Aujourd'hui, ma sœur Inès quitte la maison. Elle va habiter dans son propre appartement, à Lyon.
+
+Elle a dix-neuf ans. C'est la première fois.
+
+Depuis une semaine, il y a des cartons partout dans sa chambre. Des cartons de vêtements, de livres, de vaisselle.
+
+Ce matin, mon père loue une camionnette. Nous chargeons tout : les cartons, une table, une chaise, un petit lit.
+
+C'est lourd ! Nous travaillons pendant deux heures.
+
+Puis nous partons pour Lyon. Le voyage dure une heure.
+
+Le nouvel appartement est petit. Il y a une pièce, une petite cuisine et une salle de bains. C'est au quatrième étage, et il n'y a pas d'ascenseur.
+
+Quatre étages avec des cartons ! Mon père ne dit rien, mais il est rouge.
+
+L'appartement est vide et un peu triste. Il n'y a pas de rideaux. Le sol est froid.
+
+Mais Inès sourit. « C'est chez moi », dit-elle.
+
+Nous montons les meubles. Ma mère nettoie la cuisine.
+
+Le soir, nous partons. Ma mère pleure un peu dans la voiture.
+
+À la maison, la chambre d'Inès est vide.
+
+Elle m'envoie un message : « Ma première nuit ! J'ai un peu peur. Mais ça va. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-074",
+    title: "Le jour de la rentrée",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "C'est le premier jour d'école après les vacances.",
+    blurbEn:
+      "The first day back after the summer: new shoes, a new classroom, nervous stomachs, and finding out who's in your class. (Section: At school, 1/5.)",
+    body: `C'est le jour de la rentrée. Après deux mois de vacances, l'école recommence.
+
+Hier soir, je prépare mon sac. Des cahiers neufs, des stylos, une trousse. Tout est propre et neuf. Ça sent le papier.
+
+Ce matin, je me réveille tôt. Je ne dors pas très bien. J'ai un peu mal au ventre.
+
+Ma mère prépare le petit déjeuner. « Tu es nerveux ? » demande-t-elle.
+
+« Non », je réponds. Mais ce n'est pas vrai.
+
+Je mets mes nouvelles chaussures. Elles font un peu mal.
+
+À huit heures, j'arrive à l'école. Il y a beaucoup d'élèves dans la cour. Tout le monde parle très fort.
+
+Je cherche mes amis. Où sont-ils ?
+
+Enfin, je vois Yanis ! Il est plus grand qu'avant. Il a grandi pendant l'été.
+
+« Salut ! Tu es dans quelle classe ? » je demande.
+
+Nous regardons les listes sur le mur. Il y a beaucoup de noms.
+
+Je cherche mon nom... Classe de 3e B.
+
+Et Yanis ? Il regarde. Il sourit.
+
+« 3e B ! Nous sommes ensemble ! »
+
+La cloche sonne. Nous entrons dans la classe.
+
+Une nouvelle année commence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-075",
+    title: "Ma matière préférée",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "À l'école, ma matière préférée est l'histoire.",
+    blurbEn:
+      "Why history beats maths: a teacher who tells stories instead of listing dates, and the day the past suddenly felt real. (Section: At school, 2/5.)",
+    body: `À l'école, j'étudie beaucoup de matières : les mathématiques, le français, l'anglais, les sciences, le sport, l'histoire.
+
+Ma matière préférée est l'histoire.
+
+Avant, je n'aime pas l'histoire. C'est ennuyeux : des dates, des noms, des rois. Il faut tout apprendre par cœur. Je ne comprends pas pourquoi.
+
+Mais cette année, nous avons un nouveau professeur. Il s'appelle monsieur Faure.
+
+Monsieur Faure ne donne pas de listes de dates. Il raconte des histoires.
+
+Il raconte la vie des gens ordinaires. Comment ils mangent, comment ils travaillent, comment ils s'amusent. Qui a peur, qui est courageux.
+
+Quand il parle, la classe est silencieuse. Même les élèves qui parlent toujours écoutent.
+
+La semaine dernière, il apporte un objet : une vieille lettre. C'est la lettre d'un soldat à sa mère, il y a cent ans.
+
+Il la lit à voix haute. Le soldat parle de la pluie, du froid, et de sa mère.
+
+Personne ne parle dans la classe.
+
+Soudain, l'histoire n'est plus dans les livres. Elle est vraie. Ces gens existent vraiment.
+
+Maintenant, je lis des livres d'histoire à la maison. Pour le plaisir.
+
+Un bon professeur change tout.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-076",
+    title: "Le contrôle de maths",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ce matin, il y a un contrôle de mathématiques.",
+    blurbEn:
+      "Maths test day: revising the night before, a silent classroom, one impossible question — and a result that surprises everyone. (Section: At school, 3/5.)",
+    body: `Ce matin, il y a un contrôle de mathématiques. Je n'aime pas les contrôles.
+
+Hier soir, je travaille pendant deux heures. Je relis mes cahiers. Je fais des exercices. Ma mère m'aide un peu.
+
+« Tu es prêt ? » demande-t-elle à dix heures.
+
+« Je crois... »
+
+À huit heures, nous entrons dans la classe. Tout le monde est nerveux. Personne ne parle beaucoup.
+
+Madame Girard donne les feuilles. « Vous avez une heure. Bon courage ! »
+
+Je regarde les questions. Il y en a huit.
+
+Question 1 : facile ! Je connais.
+Question 2 : facile aussi.
+Question 3 : d'accord, ça va.
+Question 4... Ah. Je ne comprends pas.
+
+Je lis la question trois fois. Je réfléchis. Je regarde le plafond.
+
+Je décide de continuer et de revenir après.
+
+Les questions 5, 6 et 7 sont normales. La question 8 est difficile, mais j'essaie.
+
+Je reviens à la question 4. Et soudain, je comprends ! C'est comme l'exercice d'hier soir.
+
+« C'est fini ! » dit madame Girard.
+
+Dans le couloir, tout le monde parle : « Tu as trouvé quoi pour la 4 ? »
+
+Une semaine plus tard, madame Girard rend les copies.
+
+J'ai quinze sur vingt. Mon meilleur résultat de l'année !`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-077",
+    title: "À la cantine",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "À midi, nous mangeons à la cantine de l'école.",
+    blurbEn:
+      "Lunch at the school canteen: a starter, a main course, cheese and dessert — and the noisiest room in the building. (Section: At school, 4/5.)",
+    body: `À midi, nous mangeons à la cantine de l'école. Nous avons une heure et demie pour déjeuner.
+
+En France, le repas de la cantine est un vrai repas. Il y a quatre parties : une entrée, un plat, du fromage ou un yaourt, et un dessert.
+
+Aujourd'hui, l'entrée est une salade de carottes. Le plat est du poisson avec du riz. Après, il y a du fromage. Et pour le dessert, une pomme.
+
+Nous prenons un plateau et nous avançons dans la queue. Les dames de la cantine servent les plats.
+
+« Tu veux du poisson ? » demande une dame.
+
+« Oui, merci. »
+
+« Et des légumes ? »
+
+« Un peu, s'il vous plaît. »
+
+Ensuite, nous cherchons une table. La cantine est grande, avec beaucoup de tables.
+
+Il y a du bruit ! Beaucoup de bruit ! Deux cents élèves parlent en même temps. Les couverts font du bruit sur les assiettes.
+
+Je mange avec Yanis et deux autres amis. Nous parlons du contrôle de maths, du sport, du week-end.
+
+Le poisson n'est pas très bon aujourd'hui. Mais le dessert est correct.
+
+Après le repas, nous allons dans la cour. Nous avons encore quarante minutes.
+
+Nous jouons au football jusqu'à la cloche.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-078",
+    title: "Le voyage scolaire",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Cette année, notre classe part trois jours à Paris.",
+    blurbEn:
+      "Three days in Paris with the class: an early bus, a museum, the Eiffel Tower, and very little sleep in the hostel. (Section: At school, 5/5.)",
+    body: `Cette année, notre classe part en voyage scolaire. Nous allons à Paris pendant trois jours !
+
+Nous partons lundi matin, très tôt. Le bus part à six heures. Tout le monde est fatigué, mais content.
+
+Dans le bus, il y a beaucoup de bruit. Les professeurs demandent le silence. Personne n'écoute.
+
+Nous arrivons à Paris à onze heures.
+
+Le premier jour, nous visitons un grand musée. Il y a des tableaux magnifiques. Notre professeur explique les peintures. Certains élèves écoutent, d'autres regardent leur téléphone.
+
+Moi, j'aime beaucoup un tableau : une femme avec un chapeau bleu. Je reste devant pendant cinq minutes.
+
+Le soir, nous dormons dans une auberge de jeunesse. Nous sommes six garçons dans une chambre.
+
+Nous ne dormons pas beaucoup. Nous parlons jusqu'à deux heures du matin ! À sept heures, le professeur frappe à la porte. Nous sommes très fatigués.
+
+Le deuxième jour, nous montons à la tour Eiffel. De là-haut, on voit toute la ville. C'est immense !
+
+Le troisième jour, nous marchons le long de la Seine.
+
+Dans le bus du retour, tout le monde dort. Même les professeurs.
+
+C'était un très bon voyage.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-079",
+    title: "La liste de courses",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Avant d'aller au supermarché, je fais une liste.",
+    blurbEn:
+      "Making a shopping list by checking every cupboard — and the golden rule: never shop when you're hungry. (Section: Shopping, 1/5.)",
+    body: `Avant d'aller au supermarché, je fais toujours une liste. C'est important.
+
+Sans liste, j'oublie des choses. Et j'achète des choses inutiles.
+
+Je prends un papier et un stylo. Puis je regarde dans la cuisine.
+
+D'abord, le frigo. Il n'y a plus de lait. J'écris : lait. Il n'y a plus d'œufs. J'écris : œufs. Il reste un peu de fromage, mais pas beaucoup. J'écris : fromage.
+
+Ensuite, les placards. Il n'y a plus de riz ni de pâtes. J'écris les deux.
+
+Dans la salle de bains, il n'y a presque plus de savon. J'écris : savon.
+
+Ma liste :
+- lait
+- œufs
+- fromage
+- riz
+- pâtes
+- savon
+- fruits
+- légumes
+- pain
+
+Neuf choses. C'est bien.
+
+Il y a une règle très importante : ne jamais faire les courses quand on a faim !
+
+Quand j'ai faim, j'achète tout. Des gâteaux, du chocolat, des chips. Après, à la maison, je regarde mes sacs et je me demande : pourquoi ?
+
+Alors, avant de partir, je mange une pomme.
+
+Maintenant, je suis prêt. J'ai ma liste, mon sac et je n'ai pas faim.
+
+Allons au supermarché !`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-080",
+    title: "Au supermarché",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le supermarché est grand. Il y a beaucoup de rayons.",
+    blurbEn:
+      "A walk through the aisles with a list and a trolley — and the two extra things that end up in the basket anyway. (Section: Shopping, 2/5.)",
+    body: `J'arrive au supermarché à dix heures. Il n'y a pas trop de monde le matin.
+
+Je prends un chariot. Une roue fait un bruit bizarre, mais ça va.
+
+Le supermarché est grand. Il y a beaucoup de rayons.
+
+Je commence par les fruits et les légumes. J'achète des pommes, des bananes, des tomates et une salade. Je choisis les fruits attentivement.
+
+Ensuite, je vais au rayon des produits frais. Je prends le lait, les œufs et le fromage. Je regarde toujours la date sur les produits.
+
+Après, le rayon des pâtes et du riz. C'est facile : je prends les mêmes marques que d'habitude.
+
+Il y a beaucoup de choix ! Pour les pâtes, il y a vingt sortes différentes. C'est trop.
+
+Je passe devant le rayon des gâteaux. Je ne regarde pas. Non, non, non.
+
+Bon, d'accord. Je prends un paquet de biscuits au chocolat.
+
+Je regarde ma liste : le savon ! J'oublie le savon. Je retourne dans l'autre rayon.
+
+À la caisse, il y a une queue de quatre personnes. J'attends cinq minutes.
+
+« Bonjour ! Vous avez la carte du magasin ? » demande la caissière.
+
+« Oui, la voilà. »
+
+Ça fait quarante-trois euros. Un peu plus que prévu.
+
+C'est la faute des biscuits.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-081",
+    title: "Combien ça coûte ?",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Au marché, il faut regarder les prix.",
+    blurbEn:
+      "Comparing prices at the market: the same tomatoes cost very different amounts, and the cheapest stall isn't always the best. (Section: Shopping, 3/5.)",
+    body: `Au marché, il y a beaucoup de vendeurs. Ils vendent souvent les mêmes choses. Mais les prix ne sont pas les mêmes !
+
+Aujourd'hui, je cherche des tomates.
+
+Le premier vendeur a de belles tomates. Je regarde le prix : quatre euros le kilo. C'est cher.
+
+« Bonjour ! Combien coûtent les tomates ? » je demande.
+
+« Quatre euros le kilo. Elles sont excellentes ! »
+
+Je continue. Le deuxième vendeur a des tomates à deux euros cinquante le kilo. C'est beaucoup moins cher !
+
+Mais je regarde bien : ces tomates sont plus petites et moins jolies.
+
+Le troisième vendeur a des tomates à trois euros. Elles sont belles et le prix est correct.
+
+Je prends un kilo chez lui. Ça fait trois euros.
+
+« Et avec ça ? » demande le vendeur.
+
+« Une salade, s'il vous plaît. Combien ? »
+
+« Un euro vingt. »
+
+Je paie quatre euros vingt en tout. Je donne cinq euros. Le vendeur me rend quatre-vingts centimes.
+
+Le moins cher n'est pas toujours le meilleur. Le plus cher non plus.
+
+Il faut regarder, comparer et choisir.
+
+Mes tomates sont excellentes. Ce soir, je fais une salade.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-082",
+    title: "J'achète un manteau",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Mon vieux manteau est trop petit. J'en cherche un nouveau.",
+    blurbEn:
+      "Buying a winter coat: too big, too small, too expensive — then the right one, in a colour that wasn't the plan. (Section: Shopping, 4/5.)",
+    body: `L'hiver arrive et mon vieux manteau est trop petit. Je dois en acheter un nouveau.
+
+Je vais dans un magasin de vêtements du centre-ville.
+
+Il y a beaucoup de manteaux : des noirs, des bleus, des gris, des verts. Il y a des manteaux longs et des manteaux courts.
+
+Une vendeuse arrive. « Bonjour ! Je peux vous aider ? »
+
+« Oui, je cherche un manteau chaud pour l'hiver. »
+
+« Quelle taille faites-vous ? »
+
+« Du 40, je crois. »
+
+Elle me montre trois manteaux. J'essaie le premier : il est noir et il est trop grand. Les manches sont trop longues.
+
+J'essaie le deuxième : il est bleu. La taille est bonne ! Mais je regarde le prix : cent quatre-vingt-dix euros. C'est beaucoup trop cher pour moi.
+
+J'essaie le troisième : il est vert foncé. Je me regarde dans le miroir.
+
+Hmm. Je ne voulais pas un manteau vert. Je voulais un manteau noir.
+
+Mais il est très confortable. Et il est chaud.
+
+Le prix ? Soixante-quinze euros. C'est correct.
+
+« Il vous va très bien », dit la vendeuse.
+
+Je réfléchis deux minutes. Puis je décide : je le prends.
+
+Finalement, j'aime beaucoup le vert.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-083",
+    title: "Un cadeau pour maman",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "C'est bientôt l'anniversaire de ma mère.",
+    blurbEn:
+      "Hunting for the right birthday present with a small budget, and discovering that the best gift isn't the most expensive one. (Section: Shopping, 5/5.)",
+    body: `C'est bientôt l'anniversaire de ma mère. Je veux lui acheter un cadeau.
+
+Mais quoi ? C'est difficile !
+
+J'ai trente euros. Ce n'est pas beaucoup, mais c'est mon argent.
+
+Je vais en ville avec ma sœur. Nous cherchons ensemble.
+
+D'abord, nous entrons dans une parfumerie. Il y a des parfums magnifiques. Mais ils coûtent soixante ou quatre-vingts euros. C'est trop cher.
+
+Ensuite, nous regardons des vêtements. Ma sœur trouve une écharpe rouge très jolie. Vingt-cinq euros. C'est possible !
+
+Mais je réfléchis. Maman a déjà beaucoup d'écharpes. Cinq ou six.
+
+Nous continuons. Nous passons devant une librairie.
+
+Et là, j'ai une idée. Ma mère adore le jardinage. Elle parle toujours de ses plantes.
+
+Nous entrons. Je trouve un beau livre sur les jardins, avec des photos magnifiques. Il coûte dix-huit euros.
+
+Avec l'argent qui reste, j'achète une petite plante verte pour son bureau. Six euros.
+
+Total : vingt-quatre euros.
+
+Le jour de l'anniversaire, ma mère ouvre le paquet.
+
+Elle regarde le livre longtemps. Puis elle me regarde.
+
+« Comment tu sais ? » demande-t-elle.
+
+« Tu parles toujours de tes plantes, maman. »
+
+Elle me serre très fort.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-084",
+    title: "Quel temps fait-il ?",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, on parle beaucoup du temps.",
+    blurbEn:
+      "Weather is the great French conversation-starter: sunny, rainy, cold, windy — and what people say about each. (Section: The weather, 1/5.)",
+    body: `En France, on parle beaucoup du temps. C'est un sujet facile. On peut parler du temps avec tout le monde : le voisin, le boulanger, une personne dans le bus.
+
+« Quel beau temps aujourd'hui ! »
+« Ah oui, ça fait du bien ! »
+
+Quand il fait beau, le soleil brille. Le ciel est bleu. Les gens sont contents. Ils sortent, ils marchent, ils s'assoient aux terrasses des cafés.
+
+Quand il pleut, c'est différent. Il faut un parapluie et un manteau. Les rues sont mouillées. Les gens marchent vite, la tête baissée.
+
+« Quel temps horrible ! »
+« Oui, et ça continue demain ! »
+
+Quand il fait froid, on met un bonnet, une écharpe et des gants. On voit son souffle dans l'air. Les mains font mal.
+
+Quand il fait chaud, c'est le contraire. On ouvre les fenêtres. On boit beaucoup d'eau. On cherche l'ombre des arbres.
+
+Il y a aussi le vent. Le vent est fatigant : il pousse, il fait du bruit, il décoiffe.
+
+Chaque matin, je regarde par la fenêtre avant de m'habiller.
+
+Aujourd'hui ? Le ciel est gris, mais il ne pleut pas.
+
+Je prends quand même mon parapluie. On ne sait jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-085",
+    title: "Une journée de grand soleil",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Aujourd'hui, il fait très chaud. Trente-quatre degrés !",
+    blurbEn:
+      "A day of thirty-four degrees: closed shutters, cold water, an empty street at noon, and the whole town outside after eight. (Section: The weather, 2/5.)",
+    body: `Aujourd'hui, il fait très chaud. Trente-quatre degrés ! C'est beaucoup pour ma région.
+
+Le matin, à sept heures, il fait déjà chaud. Je ferme les volets tout de suite. C'est un vieux truc : les volets fermés gardent la maison fraîche.
+
+À midi, la rue est vide. Personne ne marche dehors. C'est trop chaud. Même les chats dorment à l'ombre.
+
+Dans la maison, je bois beaucoup d'eau. Un verre, deux verres, trois verres. Mon corps a soif tout le temps.
+
+Je ne cuisine pas : la cuisinière fait trop de chaleur. Je mange une salade froide et du melon.
+
+L'après-midi, je vais à la piscine avec mes enfants. Il y a beaucoup de monde ! Tout le monde a la même idée.
+
+L'eau est froide. C'est délicieux. Mes enfants jouent pendant deux heures.
+
+À sept heures du soir, il fait encore chaud, mais c'est mieux.
+
+Vers huit heures, la ville se réveille. Les gens sortent. La place est pleine. Les enfants courent. Les terrasses des cafés sont pleines.
+
+Nous mangeons dehors, dans le jardin, à neuf heures.
+
+La nuit est douce. Il y a des étoiles.
+
+Ces soirées d'été sont mes moments préférés de l'année.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-086",
+    title: "Le vent d'automne",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Cette nuit, le vent est très fort.",
+    blurbEn:
+      "A windy autumn night keeps the narrator awake, and the morning after reveals branches, leaves and one lost bin lid. (Section: The weather, 3/5.)",
+    body: `Cette nuit, le vent est très fort. Je ne dors pas bien.
+
+J'entends le vent contre les fenêtres. Il fait « ouuuuh ». C'est un bruit étrange, un peu inquiétant.
+
+Dehors, les arbres bougent beaucoup. Leurs branches touchent le mur de la maison.
+
+À trois heures du matin, j'entends un grand bruit dans le jardin. Bang !
+
+Je me lève et je regarde par la fenêtre. Je ne vois rien dans le noir.
+
+Le matin, je sors dans le jardin. Le vent est plus calme maintenant.
+
+Je vois le problème : la poubelle est tombée. Il y a des papiers partout. Le couvercle n'est pas là.
+
+Je cherche le couvercle. Il est dans le jardin du voisin, à dix mètres !
+
+Dans la rue, il y a beaucoup de feuilles et de petites branches. Une chaise de jardin est renversée.
+
+Mon voisin sort aussi. Il regarde son jardin.
+
+« Quelle nuit ! » dit-il. « Vous avez dormi ? »
+
+« Pas beaucoup ! »
+
+Nous ramassons les feuilles ensemble.
+
+L'automne est comme ça. Un jour, il fait beau et calme. Le lendemain, tout vole.
+
+Ce soir, je ferme bien les volets.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-087",
+    title: "Le premier jour de froid",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Ce matin, il fait vraiment froid pour la première fois.",
+    blurbEn:
+      "The first properly cold morning of the year: frost on the car, breath in the air, and the coats coming out of the cupboard. (Section: The weather, 4/5.)",
+    body: `Ce matin, il fait vraiment froid pour la première fois cette année.
+
+Quand j'ouvre les yeux, la chambre est froide. Je ne veux pas sortir du lit ! Ma couverture est chaude et confortable.
+
+Enfin, je me lève. Le sol est glacé sous mes pieds. Où sont mes chaussettes ?
+
+Je regarde par la fenêtre. Surprise : les voitures sont blanches ! Il y a du givre partout.
+
+Je descends et j'allume le chauffage. C'est la première fois depuis le printemps.
+
+Pour le petit déjeuner, je ne veux pas de jus d'orange froid. Je prends un thé chaud. Je tiens la tasse dans mes deux mains.
+
+Ensuite, je cherche mes vêtements d'hiver. Ils sont dans le placard depuis six mois. Je sors mon manteau, mon écharpe et mes gants.
+
+Dehors, l'air est glacé. Il entre dans mon nez et ça fait un peu mal.
+
+Je vois mon souffle : de la petite fumée blanche devant ma bouche. Quand j'étais enfant, j'adorais ça.
+
+Dans la rue, tout le monde marche vite. Les gens ont les mains dans les poches.
+
+À l'arrêt de bus, une dame dit : « Ça y est, c'est l'hiver ! »
+
+Oui. C'est l'hiver.
+
+Ce soir, je fais une soupe.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-088",
+    title: "Le printemps arrive",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Il y a quelque chose de différent aujourd'hui.",
+    blurbEn:
+      "The first real day of spring: longer light, birds at five in the morning, blossom on the trees, and everyone smiling in the street. (Section: The weather, 5/5.)",
+    body: `Il y a quelque chose de différent aujourd'hui. Je le sens tout de suite.
+
+Ce matin, à sept heures, il fait déjà jour. Pendant l'hiver, à sept heures, il fait encore noir.
+
+J'ouvre la fenêtre. L'air n'est pas chaud, mais il n'est plus glacé.
+
+Et j'entends les oiseaux ! Ils chantent beaucoup. Depuis quelques jours, ils commencent à cinq heures du matin. C'est un peu tôt, mais c'est joli.
+
+Dans le jardin, la terre est encore humide. Mais il y a des petites choses vertes qui sortent. Ce sont mes fleurs. Elles reviennent chaque année.
+
+L'arbre devant la maison a des fleurs blanches. Il est magnifique. Il ressemble à un nuage.
+
+Dans la rue, les gens sont différents aussi. Ils marchent plus lentement. Ils ne portent plus de bonnet.
+
+Une dame me dit bonjour avec un grand sourire. En janvier, personne ne sourit dans la rue !
+
+À midi, je mange dehors, sur mon balcon. C'est le premier repas dehors depuis octobre. J'ai encore besoin d'un pull, mais ça va.
+
+Le soir, à sept heures, il fait toujours jour.
+
+Je peux marcher dans le parc après le travail.
+
+L'hiver était long. Le printemps est là.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-089",
+    title: "Les oiseaux du balcon",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Chaque matin, des oiseaux viennent sur mon balcon.",
+    blurbEn:
+      "Winter birds on a city balcony: seeds on the table, a bold sparrow, a shy robin, and a blackbird that bullies everyone. (Section: Animals, 1/5.)",
+    body: `Chaque matin d'hiver, des oiseaux viennent sur mon balcon.
+
+Tout commence en décembre. Il fait très froid et il n'y a plus beaucoup de nourriture pour eux. Alors je mets des graines sur la petite table.
+
+Le premier jour, personne ne vient. J'attends.
+
+Le deuxième jour, un petit oiseau arrive. Il regarde partout. Il a peur. Puis il mange vite et il part.
+
+Le troisième jour, ils sont trois.
+
+Maintenant, ils sont dix ou douze chaque matin !
+
+Je les connais bien. Il y a un moineau très courageux : il arrive toujours le premier. Il n'a pas peur de moi.
+
+Il y a un petit oiseau avec le ventre rouge. C'est un rouge-gorge. Il est timide et il attend son tour.
+
+Et il y a un merle noir, plus grand que les autres. Il n'est pas gentil : il pousse les petits oiseaux !
+
+Je les regarde avec mon café, derrière la fenêtre. Je ne bouge pas trop.
+
+Ma fille aime beaucoup ça aussi. Elle compte les oiseaux : « Un, deux, trois, quatre... »
+
+Au printemps, ils viennent moins. Ils trouvent de la nourriture ailleurs.
+
+Mais en décembre, je remets des graines.
+
+Et ils reviennent.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-090",
+    title: "Une visite à la ferme",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Aujourd'hui, nous visitons une ferme avec les enfants.",
+    blurbEn:
+      "A farm visit with the children: cows, chickens, a very loud pig, and milk that comes from somewhere other than a supermarket. (Section: Animals, 2/5.)",
+    body: `Aujourd'hui, nous visitons une ferme avec les enfants. La ferme est à trente minutes de la ville.
+
+Le fermier s'appelle monsieur Duval. Il travaille ici depuis quarante ans.
+
+D'abord, nous voyons les vaches. Elles sont grandes ! Elles sont blanches et marron. Elles mangent de l'herbe tranquillement.
+
+« Combien de vaches avez-vous ? » demande ma fille.
+
+« Quarante-deux », répond le fermier.
+
+Ma fille touche une vache. Sa peau est chaude et un peu dure. La vache ne bouge pas.
+
+Ensuite, nous allons voir les poules. Il y en a beaucoup ! Elles courent partout et elles font du bruit.
+
+Le fermier montre une petite maison en bois. À l'intérieur, il y a des œufs. Ils sont encore chauds !
+
+Mon fils est très surpris. « Les œufs viennent des poules ? » demande-t-il.
+
+Le fermier rit. « Oui ! Ils ne viennent pas du supermarché ! »
+
+Après, nous voyons un cochon. Il est énorme et très rose. Quand il nous voit, il fait un bruit terrible : « GROIIINK ! »
+
+Les enfants ont un peu peur, puis ils rient beaucoup.
+
+À la fin, nous achetons du fromage et des œufs.
+
+Dans la voiture, mon fils dit : « Je veux habiter dans une ferme. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-091",
+    title: "Le poisson rouge",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Pour ses sept ans, mon fils demande un animal.",
+    blurbEn:
+      "A seven-year-old wants a dog, gets a goldfish called Bubulle — and learns that even a small animal is a responsibility. (Section: Animals, 3/5.)",
+    body: `Pour ses sept ans, mon fils demande un animal.
+
+« Je veux un chien ! » dit-il.
+
+Un chien, c'est beaucoup de travail. Il faut sortir trois fois par jour. Notre appartement est petit et nous travaillons toute la journée.
+
+« Un chat, alors ? »
+
+Ma femme est allergique aux chats.
+
+Nous réfléchissons. Puis nous trouvons une solution : un poisson.
+
+« Un poisson ? » dit mon fils. Il n'est pas très content. « Un poisson ne joue pas. »
+
+« C'est vrai. Mais c'est un début. »
+
+Nous allons dans un magasin. Nous achetons un aquarium, des petites pierres, une plante et un poisson rouge.
+
+Mon fils choisit lui-même le poisson. Il le regarde longtemps.
+
+Il l'appelle Bubulle.
+
+À la maison, nous installons l'aquarium dans le salon. Bubulle nage doucement. Il explore sa nouvelle maison.
+
+Mon fils le regarde pendant une heure entière !
+
+Maintenant, c'est lui qui s'occupe de Bubulle. Chaque matin, il lui donne à manger. Un peu seulement : trop de nourriture, c'est mauvais.
+
+Une fois par semaine, nous nettoyons l'aquarium ensemble.
+
+Bubulle ne joue pas. C'est vrai.
+
+Mais mon fils lui parle tous les jours.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-092",
+    title: "Les animaux de la forêt",
+    category: "science",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Dans la forêt, il y a beaucoup d'animaux. Mais on ne les voit pas.",
+    blurbEn:
+      "The forest is full of animals you never see — unless you walk slowly, stay quiet, and go early. (Section: Animals, 4/5.)",
+    body: `Dans la forêt près de chez moi, il y a beaucoup d'animaux. Mais normalement, on ne les voit pas.
+
+Pourquoi ? Parce que les animaux nous entendent avant. Nous marchons vite, nous parlons, nous faisons du bruit. Alors ils partent.
+
+Un ami me donne un conseil : « Va tôt le matin. Marche lentement. Ne parle pas. Et attends. »
+
+Alors, dimanche, je pars à six heures et demie.
+
+La forêt est différente le matin. Il y a de la brume entre les arbres. Il fait frais. Tout est très calme.
+
+Je marche doucement pendant vingt minutes. Puis je m'assois sur un vieil arbre tombé.
+
+J'attends. Cinq minutes. Dix minutes. Je ne bouge pas.
+
+Et puis, quelque chose bouge à ma droite.
+
+C'est un écureuil ! Il monte sur un arbre très vite. Il tient quelque chose dans sa bouche.
+
+Un peu plus tard, j'entends un bruit. Je tourne la tête lentement.
+
+Un chevreuil ! Il est à quinze mètres. Il mange de l'herbe. Il est brun, avec de grands yeux noirs.
+
+Il lève la tête. Il me regarde.
+
+Nous nous regardons pendant cinq secondes.
+
+Puis il part en courant, sans bruit.
+
+Cinq secondes seulement. Mais je m'en souviendrai longtemps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-093",
+    title: "Le refuge pour animaux",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le samedi, je travaille au refuge pour animaux.",
+    blurbEn:
+      "Volunteering at an animal shelter: walking dogs nobody wants, cleaning cages, and the joy when one of them finds a family. (Section: Animals, 5/5.)",
+    body: `Le samedi matin, je vais au refuge pour animaux. Je suis bénévole : je ne gagne pas d'argent, je viens aider.
+
+Le refuge est à l'extérieur de la ville. Il y a environ quarante chiens et trente chats.
+
+Ces animaux n'ont pas de maison. Certains sont perdus. D'autres sont abandonnés par leur famille. C'est triste.
+
+J'arrive à neuf heures. Le bruit est incroyable : tous les chiens aboient !
+
+Mon travail est simple. D'abord, je nettoie les cages. Ce n'est pas agréable, mais c'est nécessaire.
+
+Ensuite, je donne à manger et à boire.
+
+Et après, le meilleur moment : je promène les chiens.
+
+Chaque chien sort trente minutes. Ils sont tellement contents ! Ils courent, ils sentent tout, ils sont heureux.
+
+Il y a un vieux chien noir. Il s'appelle Rex. Il est ici depuis deux ans. Personne ne le veut, parce qu'il est vieux.
+
+Rex est mon préféré. Il est calme et très gentil.
+
+Le mois dernier, une famille vient au refuge. Ils cherchent un chien calme, pas un jeune chien.
+
+Ils choisissent Rex.
+
+Le jour de son départ, je suis triste et content en même temps.
+
+Rex a une maison maintenant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-094",
+    title: "Bonjour et la bise",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, on dit bonjour à tout le monde.",
+    blurbEn:
+      "Saying hello in France: 'bonjour' to everyone, and the famous cheek-kiss that confuses British visitors. (Section: Life in France, 1/5.)",
+    body: `En France, il y a une règle très importante : on dit toujours bonjour.
+
+Quand on entre dans un magasin, on dit « Bonjour ». Quand on monte dans un bus, on dit bonjour au chauffeur. Chez le médecin, dans l'ascenseur avec un voisin : bonjour.
+
+Si on ne dit pas bonjour, les gens pensent qu'on est impoli.
+
+Mon ami anglais, Tom, ne comprend pas au début. En Angleterre, on n'entre pas dans un magasin pour dire bonjour au vendeur. On regarde, c'est tout.
+
+La première fois, Tom entre dans une boulangerie et il demande directement : « Une baguette, s'il vous plaît. »
+
+La boulangère le regarde. Elle attend.
+
+« Bonjour ! » dit-elle, un peu froidement.
+
+« Ah ! Bonjour ! » répond Tom, très surpris.
+
+Il y a aussi la bise. Entre amis et en famille, on ne serre pas la main : on fait la bise. On touche la joue de l'autre personne, à droite et à gauche.
+
+Mais attention : le nombre change ! À Paris, c'est deux bises. Dans le sud, souvent trois. Dans certaines régions, quatre !
+
+Tom trouve ça très compliqué. « Deux ou trois ? Je ne sais jamais ! »
+
+Une fois, il tourne la tête au mauvais moment.
+
+Maintenant, il attend toujours une seconde.
+
+C'est plus sûr.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-095",
+    title: "Les repas en France",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, on mange à des heures fixes.",
+    blurbEn:
+      "French meal times are fixed and long: no dinner at six, cheese before dessert, and lunch that can last two hours. (Section: Life in France, 2/5.)",
+    body: `En France, les repas sont importants. Et les heures sont assez fixes.
+
+Le petit déjeuner est simple : un café, du pain, parfois un croissant le week-end. Ce n'est pas un grand repas.
+
+Le déjeuner est à midi ou à midi et demi. Beaucoup de gens s'arrêtent vraiment de travailler pour manger.
+
+Le dîner est tard : à huit heures, parfois plus tard.
+
+Mon ami Tom vient d'Angleterre. Chez lui, on dîne à six heures, ou même à cinq heures et demie.
+
+La première semaine en France, il a très faim à six heures ! Il attend deux heures. C'est long.
+
+Maintenant, il comprend le goûter : à quatre heures, on mange un petit quelque chose. Comme ça, on peut attendre huit heures.
+
+Il y a aussi l'ordre des plats. En France, on mange souvent une entrée, puis un plat, puis du fromage, puis un dessert.
+
+Le fromage arrive avant le dessert. Toujours.
+
+« Pourquoi ? » demande Tom.
+
+Bonne question. C'est la tradition, voilà tout.
+
+Et le repas est long. Un déjeuner du dimanche peut durer deux heures ou trois heures.
+
+On mange, mais surtout, on parle.
+
+« En Angleterre, dit Tom, on mange en trente minutes. »
+
+« Alors reste ici », je réponds. « C'est plus agréable. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-096",
+    title: "Le dimanche, tout est fermé",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "Le dimanche en France, beaucoup de magasins sont fermés.",
+    blurbEn:
+      "Sunday in France: closed shops, open bakeries, empty streets in the morning — and why the day feels different from a British Sunday. (Section: Life in France, 3/5.)",
+    body: `Le dimanche en France, beaucoup de magasins sont fermés.
+
+Les grands supermarchés ferment souvent à midi, ou ils n'ouvrent pas du tout. Les magasins de vêtements sont fermés. Les banques aussi, bien sûr.
+
+Mon ami Tom trouve ça difficile au début.
+
+Un dimanche, il veut acheter une lampe pour son appartement. Il va en ville. Tout est fermé ! Il rentre à la maison sans lampe.
+
+« En Angleterre, dit-il, les magasins sont ouverts le dimanche. Pas toute la journée, mais ils sont ouverts. »
+
+Mais il y a des exceptions en France. La boulangerie est ouverte le dimanche matin. C'est très important : il faut du pain frais pour le déjeuner !
+
+Le marché est ouvert aussi, souvent le dimanche matin. Il y a beaucoup de monde.
+
+Et les cafés et les restaurants sont ouverts.
+
+Le dimanche matin, la ville est calme. Il n'y a pas beaucoup de voitures. Les gens dorment plus longtemps.
+
+Vers onze heures, les rues se remplissent. Les gens sortent de la boulangerie avec du pain et des gâteaux.
+
+L'après-midi, les familles se promènent dans le parc.
+
+Tom achète sa lampe le lundi.
+
+Et maintenant, il aime bien les dimanches français. « On ne fait rien, dit-il. C'est reposant. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-097",
+    title: "Les vacances scolaires",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, les élèves ont beaucoup de vacances.",
+    blurbEn:
+      "French school holidays: two weeks every six weeks, two months in summer — and the great August exodus when cities empty out. (Section: Life in France, 4/5.)",
+    body: `En France, les élèves ont beaucoup de vacances.
+
+Il y a des vacances toutes les six ou sept semaines. Elles durent deux semaines.
+
+Il y a les vacances de la Toussaint en octobre, les vacances de Noël en décembre, les vacances d'hiver en février et les vacances de printemps en avril.
+
+Et puis, il y a les grandes vacances : deux mois complets, en juillet et en août !
+
+Mon ami Tom est surpris. « Deux mois ? En Angleterre, c'est six semaines. »
+
+Les grandes vacances changent tout le pays.
+
+En juillet et en août, beaucoup de familles partent. Elles vont à la mer, à la montagne, ou chez les grands-parents.
+
+Au mois d'août, les grandes villes sont différentes. Beaucoup de gens partent en vacances. Certains magasins ferment pendant trois semaines. Sur la porte, il y a un petit papier : « Fermé pour congés. »
+
+Paris est presque vide au mois d'août. C'est étrange et agréable : il n'y a pas d'embouteillages.
+
+Sur les routes, c'est le contraire. Le premier week-end d'août, il y a des kilomètres de voitures.
+
+À la rentrée, en septembre, tout le monde revient. Les enfants racontent leurs vacances.
+
+Et huit semaines plus tard, ce sont déjà les vacances de la Toussaint.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-098",
+    title: "Le café français et le thé anglais",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 2,
+    preview: "En France, on boit du café. En Angleterre, on boit du thé.",
+    blurbEn:
+      "Coffee in France, tea in England: two small cultures of drinking, two different ways of taking a break. (Section: Life in France, 5/5.)",
+    body: `En France, on boit beaucoup de café. En Angleterre, on boit beaucoup de thé. C'est une petite différence, mais elle raconte beaucoup de choses.
+
+Le café français est petit et fort. On l'appelle un « expresso ». On le boit vite, debout, au comptoir du café. Ça prend deux minutes.
+
+Le matin, dans un café français, il y a des gens debout. Ils boivent leur café, ils disent un mot au serveur, et ils partent travailler.
+
+Le café coûte moins cher au comptoir qu'à une table. C'est vrai partout en France !
+
+Mon ami Tom trouve le café français très fort. « C'est tout petit ! » dit-il la première fois. « Où est le reste ? »
+
+En Angleterre, le thé est différent. On le boit lentement, dans une grande tasse, souvent avec du lait.
+
+Le thé anglais est un moment. On s'assoit. On parle. Ça prend vingt minutes.
+
+Quand je vais chez Tom, sa mère demande toujours : « Un thé ? » C'est la première question, avant tout.
+
+En France, quand quelqu'un arrive à la maison, on demande : « Un café ? »
+
+Alors, le café ou le thé ?
+
+Chez moi, maintenant, il y a les deux.
+
+Et quand Tom vient, je fais du thé. Avec du lait.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
