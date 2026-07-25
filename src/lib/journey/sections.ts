@@ -468,6 +468,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-environment",
+    band: "B1",
+    title: "The environment",
+    goal: "Weigh which actions matter, insulation, water, cycling and climate anxiety.",
+    textIds: [
+      "starter-b1-081", // Les gestes qui comptent vraiment (levels up A2 Nature)
+      "starter-b1-082", // Isoler les logements
+      "starter-b1-083", // L'eau va-t-elle manquer ?
+      "starter-b1-084", // Le retour du vélo en ville
+      "starter-b1-085", // L'éco-anxiété
+    ],
+  },
+  {
+    id: "b1-learning",
+    band: "B1",
+    title: "Learning",
+    goal: "How adults learn, why we forget, reading, training and the role of mistakes.",
+    textIds: [
+      "starter-b1-086", // Apprendre à tout âge (introduces learning vocabulary)
+      "starter-b1-087", // Pourquoi nous oublions
+      "starter-b1-088", // La lecture rend-elle plus intelligent ?
+      "starter-b1-089", // Se former quand on travaille déjà
+      "starter-b1-090", // L'erreur fait partie de l'apprentissage
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

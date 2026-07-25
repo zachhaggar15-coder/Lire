@@ -10033,4 +10033,330 @@ Mais c'est écrit dans nos deux agendas, et c'est probablement pour cela que ça
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-081",
+    title: "Les gestes qui comptent vraiment",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Tous les gestes écologiques n'ont pas le même effet.",
+    blurbEn:
+      "Not all green actions are equal. Some feel virtuous and change little; a few change a lot. The orders of magnitude are worth knowing. (Section: The environment, 1/5.)",
+    body: `Il existe une confusion fréquente dans les discussions écologiques : on met sur le même plan des gestes dont les effets diffèrent d'un facteur cent.
+
+Éteindre la lumière en sortant d'une pièce est une bonne habitude. Mais en termes d'émissions, cela ne se compare pas à un vol long-courrier.
+
+Les analyses disponibles donnent des ordres de grandeur assez stables pour un ménage européen. Ce qui pèse le plus lourd, ce sont, dans le désordre : les déplacements en avion, la voiture individuelle utilisée quotidiennement, le chauffage d'un logement mal isolé, et l'alimentation — en particulier la viande rouge.
+
+Ce qui pèse nettement moins : les sacs plastiques, les pailles, l'eau du robinet laissée couler quelques secondes, l'éclairage.
+
+Cela ne signifie pas que les petits gestes soient inutiles. Ils ont une valeur d'habitude et de cohérence, et certains ont d'autres bénéfices — la pollution plastique est un vrai problème, même si son poids climatique est faible.
+
+Mais il est décourageant, et un peu injuste, de faire porter aux ménages une culpabilité disproportionnée pour des gestes marginaux, alors que les décisions structurantes — l'isolation des logements, l'offre de transports, l'aménagement des villes — dépendent largement de politiques publiques et d'entreprises.
+
+La conclusion pratique est plutôt libératrice.
+
+Mieux vaut concentrer ses efforts sur deux ou trois leviers réellement importants — réduire l'avion, isoler son logement, changer sa façon de se déplacer au quotidien, ajuster son alimentation — que se disperser sur vingt micro-gestes.
+
+Et il reste un dernier levier, souvent oublié : la voix.
+
+Un citoyen qui vote, qui écrit, qui soutient un projet local pèse davantage que le tri parfait de ses déchets.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-082",
+    title: "Isoler les logements",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Des millions de logements français sont mal isolés.",
+    blurbEn:
+      "Poorly insulated homes cost their occupants money and health. Why renovation is slow, and what is being tried. (Section: The environment, 2/5.)",
+    body: `On estime que plusieurs millions de logements français sont considérés comme des « passoires thermiques » : mal isolés, coûteux à chauffer, inconfortables l'hiver et de plus en plus pénibles l'été.
+
+Le sujet paraît technique. Il est en réalité social autant qu'écologique.
+
+Le chauffage représente une part importante des émissions liées au logement, et le bâtiment constitue l'un des principaux postes d'émissions du pays. Réduire les besoins en chauffage est donc un levier majeur.
+
+Mais l'effet le plus immédiat concerne les habitants eux-mêmes. Vivre dans un logement mal isolé signifie payer davantage pour être moins bien chauffé. Ce sont souvent les ménages les plus modestes qui occupent ces logements, notamment en location. On parle de « précarité énergétique » : devoir choisir entre se chauffer correctement et d'autres dépenses essentielles.
+
+Pourquoi la rénovation avance-t-elle lentement ?
+
+D'abord parce qu'elle coûte cher : une rénovation complète se chiffre en dizaines de milliers d'euros. Des aides existent, mais les dossiers sont complexes et il faut souvent avancer l'argent.
+
+Ensuite parce que le propriétaire n'est pas toujours celui qui paie le chauffage. Un bailleur n'a pas d'intérêt financier direct à isoler un logement dont il ne règle pas les factures.
+
+Enfin parce que les travaux sont lourds et que le nombre d'artisans formés reste insuffisant.
+
+Des mesures ont été prises, notamment l'interdiction progressive de louer les logements les moins performants.
+
+Elles suscitent des débats légitimes : mal appliquées, elles peuvent réduire l'offre locative.
+
+Mais laisser des millions de foyers dans des logements coûteux à chauffer n'est pas non plus une politique.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-083",
+    title: "L'eau va-t-elle manquer ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La France n'est pas un pays sec. Elle connaît pourtant des restrictions.",
+    blurbEn:
+      "France is not a dry country, yet summer water restrictions have become normal. Where the water actually goes, and what is changing. (Section: The environment, 3/5.)",
+    body: `La France n'a pas la réputation d'un pays sec. Elle reçoit des précipitations abondantes et dispose de nappes souterraines importantes.
+
+Pourtant, depuis plusieurs étés, des restrictions d'eau sont mises en place dans une majorité de départements. Comment expliquer ce décalage ?
+
+Le problème n'est pas tant la quantité totale que la répartition dans le temps. Les pluies deviennent plus irrégulières : des épisodes intenses en automne et en hiver, puis de longues périodes sèches en été. Or une pluie violente ruisselle et repart vers les rivières ; elle recharge mal les nappes. Ce sont les pluies lentes de l'hiver qui remplissent les réserves.
+
+À cela s'ajoute une demande qui augmente précisément quand la ressource baisse : l'irrigation agricole en été, le tourisme dans les régions déjà les plus sèches.
+
+Il est utile de connaître la répartition des usages. En France, l'agriculture représente une part majoritaire de l'eau réellement consommée sur l'année, en particulier l'été. L'eau potable domestique représente une part beaucoup plus faible, même si elle est la plus visible.
+
+Cela ne rend pas les économies domestiques inutiles — elles comptent localement, et elles ont une valeur d'exemple. Mais on ne résoudra pas la question avec des douches plus courtes.
+
+Les réponses discutées concernent surtout les infrastructures et les usages. Réparer les réseaux, dont une partie non négligeable de l'eau se perd en fuites. Adapter les cultures aux ressources disponibles. Réutiliser les eaux usées traitées, ce que la France pratique encore peu par rapport à d'autres pays.
+
+Ces choix sont techniques mais aussi politiques.
+
+Décider qui peut utiliser l'eau, et pour quoi, sera l'une des questions des prochaines décennies.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-084",
+    title: "Le retour du vélo en ville",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le nombre de cyclistes a fortement augmenté dans les villes françaises.",
+    blurbEn:
+      "Cycling has risen sharply in French cities. The change was not moral persuasion but infrastructure — and the lesson generalises. (Section: The environment, 4/5.)",
+    body: `En une dizaine d'années, la pratique du vélo a fortement progressé dans la plupart des grandes villes françaises. Dans certaines, le nombre de cyclistes a plus que doublé.
+
+Ce changement mérite d'être analysé, car il contredit une idée répandue : celle selon laquelle les comportements changeraient surtout par conviction.
+
+Ce qui a fait bouger les choses n'est pas principalement la sensibilisation. C'est l'aménagement.
+
+Les études sur le sujet sont convergentes. Le facteur déterminant dans la décision de faire du vélo n'est ni l'écologie ni la santé : c'est le sentiment de sécurité. Tant qu'un trajet suppose de rouler au milieu des voitures, la grande majorité des gens refuse — et ce refus est parfaitement rationnel.
+
+Dès qu'une piste protégée et continue existe, la fréquentation augmente rapidement, y compris chez des personnes qui ne se considéraient pas du tout comme des cyclistes.
+
+Le mot important est « continue ». Une piste qui s'interrompt à un carrefour dangereux n'est pas un itinéraire : c'est un tronçon. Les villes qui ont le mieux réussi ont construit des réseaux cohérents plutôt que des morceaux isolés.
+
+Les bénéfices constatés dépassent les émissions évitées. Moins de bruit, moins de pollution de l'air, moins de congestion, et une activité physique quotidienne intégrée sans effort, ce que les autorités sanitaires cherchent depuis longtemps.
+
+Il existe aussi des critiques légitimes. Les aménagements se font parfois au détriment des piétons, ou dans des quartiers déjà bien dotés, tandis que les zones périphériques restent dépendantes de la voiture.
+
+La leçon générale est pourtant claire, et elle vaut au-delà du vélo.
+
+On change plus efficacement les comportements en rendant le bon choix facile qu'en demandant aux gens d'être meilleurs.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-085",
+    title: "L'éco-anxiété",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup de jeunes disent être inquiets pour l'avenir de la planète.",
+    blurbEn:
+      "Climate anxiety is not an illness but a reasonable response to real information. What helps, and what makes it worse. (Section: The environment, 5/5.)",
+    body: `Le terme « éco-anxiété » est apparu récemment dans le débat public. Il désigne l'inquiétude, parfois profonde, ressentie face au changement climatique et à la dégradation de l'environnement.
+
+Plusieurs enquêtes internationales indiquent qu'une part importante des jeunes déclarent être inquiets, et qu'une fraction non négligeable dit que cela affecte leur vie quotidienne, voire leurs projets d'avenir.
+
+Il faut être prudent avec ces chiffres, mais le phénomène est réel et documenté.
+
+La première chose à dire est qu'il ne s'agit pas d'une maladie. L'inquiétude face à un danger documenté est une réaction rationnelle. Traiter cette anxiété comme un simple trouble individuel reviendrait à demander aux gens de mal percevoir la réalité.
+
+Cela dit, une anxiété qui paralyse ne rend service à personne, ni à la personne ni à la cause.
+
+Ce que rapportent les psychologues qui travaillent sur ce sujet est assez cohérent.
+
+Ce qui aggrave le sentiment d'impuissance : la consommation continue d'informations catastrophiques sans possibilité d'agir, et l'isolement — vivre cette inquiétude seul, entouré de gens qui n'en parlent pas.
+
+Ce qui l'atténue : l'action concrète, même modeste, et surtout l'action collective. Participer à un projet local, une association, un chantier de plantation produit un effet nettement supérieur à des gestes individuels isolés, non pas parce que l'impact est plus grand, mais parce qu'on cesse d'être seul.
+
+Un autre élément aide : distinguer ce sur quoi on peut agir de ce sur quoi on ne peut pas.
+
+Personne ne peut résoudre le climat mondial à lui seul.
+
+Mais presque tout le monde peut faire quelque chose quelque part, avec d'autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-086",
+    title: "Apprendre à tout âge",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'idée qu'on n'apprend plus après un certain âge est fausse.",
+    blurbEn:
+      "The belief that adults cannot learn is wrong, but adult learning does work differently — and knowing how changes the results. (Section: Learning, 1/5.)",
+    body: `« Je suis trop vieux pour apprendre ça. » Cette phrase est parmi les plus répandues, et parmi les moins exactes.
+
+Le cerveau adulte conserve une capacité d'apprentissage tout au long de la vie. Le phénomène porte un nom, la plasticité cérébrale, et il est bien établi : les connexions se réorganisent en fonction de ce que l'on pratique, à trente ans comme à soixante-dix.
+
+Cela ne veut pas dire qu'il n'y a aucune différence.
+
+Certaines choses sont effectivement plus faciles jeune, notamment l'acquisition d'un accent parfait dans une langue étrangère.
+
+Mais les adultes disposent d'avantages réels et sous-estimés : ils comprennent les structures, font des liens avec ce qu'ils savent déjà, choisissent leurs méthodes, et savent pourquoi ils apprennent — une motivation choisie vaut mieux qu'une motivation imposée.
+
+Ce qui change surtout, ce sont les conditions. Un adulte a moins de temps, plus de fatigue, et beaucoup plus de peur du ridicule. Cette peur est probablement le principal obstacle, bien avant l'âge.
+
+Les recherches sur l'apprentissage donnent quelques principes solides, valables à tout âge.
+
+La répétition espacée bat la répétition massée : trois fois vingt minutes dans la semaine valent mieux qu'une heure le dimanche.
+
+Se tester est plus efficace que relire. Chercher à se souvenir, même sans y arriver, ancre davantage que passer le texte en revue.
+
+Enfin, la difficulté modérée est utile : ce qui est trop facile n'apprend rien.
+
+La question n'est donc pas de savoir si l'on peut encore apprendre.
+
+Elle est de savoir si l'on accepte d'être mauvais pendant quelques semaines.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-087",
+    title: "Pourquoi nous oublions",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Oublier n'est pas un défaut du cerveau.",
+    blurbEn:
+      "Forgetting is not a failure of memory but a feature of it — and understanding the forgetting curve makes revision far more efficient. (Section: Learning, 2/5.)",
+    body: `Nous parlons de l'oubli comme d'un défaut : « j'ai une mauvaise mémoire ». Les chercheurs le décrivent plutôt comme une fonction.
+
+Un cerveau qui retiendrait absolument tout serait ingérable. L'oubli trie : il élimine ce qui n'a pas servi, pour laisser accessible ce qui sert souvent.
+
+Le problème est que ce tri ne correspond pas toujours à nos intentions.
+
+Les travaux sur la mémoire ont mis en évidence une régularité connue sous le nom de courbe de l'oubli. Après avoir appris quelque chose, on en perd une grande partie très rapidement — souvent la majorité dans les premiers jours — puis la perte ralentit.
+
+Cette courbe explique une expérience familière : réviser intensément la veille d'un examen permet de réussir l'examen, et de tout oublier trois semaines plus tard.
+
+Mais elle indique aussi la solution.
+
+Chaque fois qu'on récupère une information juste avant de l'oublier, la courbe s'aplatit : l'oubli devient plus lent. C'est le principe de la répétition espacée. On revoit une notion après un jour, puis trois, puis une semaine, puis un mois, en espaçant progressivement.
+
+Cette méthode paraît contre-intuitive, parce qu'elle est moins confortable. Relire ses notes donne une impression de maîtrise ; se tester, au contraire, met en évidence ce qu'on ne sait pas. C'est désagréable, et c'est précisément ce qui fonctionne.
+
+Les applications de vocabulaire les plus efficaces reposent toutes sur ce principe.
+
+Le principe vaut au-delà des langues : pour un cours, une procédure professionnelle, un morceau de musique.
+
+Il ne s'agit pas de travailler plus.
+
+Il s'agit de travailler au bon moment.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-088",
+    title: "La lecture rend-elle plus intelligent ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "On attribue beaucoup de vertus à la lecture. Que sait-on vraiment ?",
+    blurbEn:
+      "Reading is credited with many benefits. Some are well supported, others less so — and the difference matters. (Section: Learning, 3/5.)",
+    body: `On prête à la lecture des vertus nombreuses : elle rendrait plus intelligent, plus empathique, plus concentré. Ces affirmations méritent d'être examinées séparément, car elles ne reposent pas sur les mêmes preuves.
+
+L'effet le mieux établi concerne le vocabulaire. Les personnes qui lisent beaucoup disposent d'un vocabulaire nettement plus étendu, et ce lien est solide. La raison est simple : la langue écrite contient des mots que la conversation courante n'emploie presque jamais. On peut passer une vie sans jamais entendre certains termes qu'un roman utilise naturellement.
+
+Or le vocabulaire n'est pas un ornement. Il conditionne la capacité à comprendre un texte complexe, un contrat, un article médical, un débat public.
+
+Le deuxième effet, plus discuté, concerne l'empathie. Plusieurs études suggèrent que la lecture de fiction améliore la capacité à percevoir les états mentaux d'autrui. Les résultats sont réels mais fragiles, et le sens de la relation reste incertain : les personnes plus empathiques lisent peut-être davantage de romans, plutôt que l'inverse.
+
+Le troisième effet est le plus intéressant à notre époque : la concentration.
+
+Lire un texte long suppose de maintenir son attention sans récompense immédiate, en gardant en mémoire ce qui précède. C'est un exercice devenu rare. La plupart de nos lectures quotidiennes sont brèves et interrompues.
+
+Il ne s'agit pas de nostalgie : rien ne prouve qu'un roman vaille mieux qu'un bon article. Ce qui compte, c'est la durée d'attention continue.
+
+Alors, la lecture rend-elle plus intelligent ?
+
+La question est mal posée.
+
+Elle entraîne une capacité que peu d'autres activités entraînent encore.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-089",
+    title: "Se former quand on travaille déjà",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La formation continue existe, mais elle est mal connue.",
+    blurbEn:
+      "Continuing training exists and is funded, yet many workers never use it. Why, and what makes the difference for those who do. (Section: Learning, 4/5.)",
+    body: `La France consacre chaque année des sommes considérables à la formation professionnelle. Il existe des dispositifs, des droits individuels, des financements.
+
+Et pourtant, une proportion importante de salariés n'en bénéficie jamais.
+
+Ce paradoxe s'explique par plusieurs obstacles, rarement dus au manque d'envie.
+
+Le premier est l'information. Beaucoup de personnes ignorent leurs droits ou ne savent pas par où commencer. Le vocabulaire administratif n'aide pas : sigles, plateformes, dossiers.
+
+Le deuxième est le temps. Se former suppose des heures qu'il faut prendre quelque part — sur le travail, ce qui nécessite l'accord de l'employeur, ou sur la vie personnelle, ce qui est difficile avec des enfants ou plusieurs emplois.
+
+Le troisième est plus discret : la répartition inégale. Les formations bénéficient davantage aux cadres, déjà diplômés, qu'aux salariés les moins qualifiés — ceux dont les métiers sont pourtant les plus exposés aux transformations.
+
+Il y a aussi un frein psychologique. Reprendre une formation à quarante ou cinquante ans suppose d'accepter d'être débutant, souvent devant des personnes plus jeunes. Beaucoup y renoncent par crainte de ne pas y arriver.
+
+Ce qui distingue ceux qui se forment effectivement ? Presque toujours, un déclencheur concret : un poste visé, une mobilité annoncée, un métier qui change.
+
+Une formation « pour se cultiver » est rarement menée à son terme ; une formation avec un objectif précis l'est beaucoup plus souvent.
+
+Le conseil qui revient le plus souvent est donc simple.
+
+Ne pas commencer par chercher une formation.
+
+Commencer par définir ce qu'on veut pouvoir faire, puis chercher.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-090",
+    title: "L'erreur fait partie de l'apprentissage",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "En France, on apprend tôt que l'erreur est une faute.",
+    blurbEn:
+      "In French schooling, mistakes are often treated as failures. Research suggests they are the mechanism by which learning happens. (Section: Learning, 5/5.)",
+    body: `Il existe un trait souvent relevé dans le système éducatif français : le rapport à l'erreur.
+
+Historiquement, l'évaluation y a été construite en retirant des points. On part de vingt et on descend. L'erreur y est un manque, quelque chose à éviter.
+
+Ce rapport laisse des traces durables. Beaucoup d'adultes français hésitent à parler une langue étrangère tant qu'ils ne la maîtrisent pas correctement — attitude que les enseignants observent moins dans d'autres pays, où l'on se lance plus volontiers avec un vocabulaire limité.
+
+Or les recherches sur l'apprentissage indiquent presque l'inverse.
+
+Se tromper, puis recevoir une correction, produit un apprentissage plus solide que de recevoir directement la bonne réponse. L'erreur crée une attente, et la correction s'ancre sur cette attente. Certains chercheurs parlent d'« erreurs productives ».
+
+Cela suppose une condition : que l'erreur soit corrigée rapidement et sans humiliation. Une erreur non corrigée peut s'installer ; une erreur sanctionnée décourage d'essayer.
+
+Cette distinction est essentielle. Il ne s'agit pas de valoriser l'erreur en soi, ni de prétendre que tout se vaut. Il s'agit de la considérer comme une étape normale et informative.
+
+Dans l'apprentissage d'une langue, c'est particulièrement net. Celui qui parle mal progresse. Celui qui attend d'être prêt attend indéfiniment, parce qu'on ne devient jamais prêt en silence.
+
+J'ai mis des années à l'accepter.
+
+Aujourd'hui, quand je parle une langue étrangère, je fais beaucoup de fautes.
+
+Et je suis compris, ce qui était exactement l'objectif.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
