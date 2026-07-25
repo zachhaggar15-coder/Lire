@@ -12271,4 +12271,320 @@ Il vaut mieux en garder trois œuvres vivantes que cent oubliées.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-151",
+    title: "L'art de la conversation",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Bien parler avec quelqu'un tient surtout à savoir écouter.",
+    blurbEn:
+      "Good conversation is often blamed on charisma. It relies far more on a skill anyone can learn: genuine listening. (Section: Social life, 1/5.)",
+    body: `On croit souvent que les bons interlocuteurs sont ceux qui parlent bien, avec aisance et esprit. L'observation dit le contraire : ce sont d'abord ceux qui savent écouter.
+
+Cette idée paraît banale, mais elle va à l'encontre de nos réflexes.
+
+Dans une conversation, la plupart des gens n'écoutent pas vraiment : ils attendent leur tour. Pendant que l'autre parle, ils préparent déjà leur réponse, cherchent une anecdote à raconter, guettent le moment d'intervenir. L'écoute devient une pause avant de reprendre la parole.
+
+Les personnes avec qui l'on aime parler font autre chose. Elles posent des questions qui prolongent, plutôt que des questions qui redirigent vers elles-mêmes. Elles laissent des silences. Elles reformulent parfois ce qu'on vient de dire, ce qui prouve qu'elles ont écouté.
+
+Un détail révélateur a été étudié : après qu'on a partagé une expérience, il existe deux réactions possibles. La première ramène à soi : « Ah, moi aussi, la dernière fois... ». La seconde reste sur l'autre : « Et qu'est-ce que tu as ressenti ? ». La première coupe le fil ; la seconde le tisse.
+
+Ce n'est pas une question de gentillesse forcée. On peut être en désaccord, débattre vivement, tout en écoutant réellement.
+
+Il y a aussi une part de courage. Écouter vraiment expose : on peut être touché, contredit, obligé de changer d'avis. Parler protège ; écouter ouvre.
+
+À l'ère des conversations en ligne, où chacun publie sans se répondre, cette compétence devient rare et précieuse.
+
+La prochaine fois, un test simple : compter combien de questions on pose sur l'autre.
+
+Souvent, la réponse est zéro.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-152",
+    title: "Recevoir des invités",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Recevoir intimide, souvent pour de mauvaises raisons.",
+    blurbEn:
+      "People stress about hosting for reasons that have little to do with what guests actually enjoy. What matters, and what does not. (Section: Social life, 2/5.)",
+    body: `Recevoir des amis à dîner intimide beaucoup de gens. Ils repoussent, s'inquiètent du menu, de la maison, de la vaisselle. Cette anxiété repose souvent sur un malentendu : elle porte sur des choses qui comptent peu pour les invités.
+
+Quand on interroge des gens sur les repas dont ils gardent un bon souvenir, ils évoquent rarement la complexité des plats. Ils citent l'ambiance, les conversations, le sentiment d'être bien accueillis.
+
+Cela ne veut pas dire que la nourriture n'a aucune importance. Mais un plat simple et réussi vaut mieux qu'un plat ambitieux et raté, qui laisse d'ailleurs l'hôte tendu et absent, coincé dans sa cuisine.
+
+Les personnes chez qui l'on aime aller partagent quelques traits.
+
+Elles préparent l'essentiel à l'avance, pour être présentes au moment où les invités arrivent. Un hôte stressé rend ses invités mal à l'aise ; un hôte détendu les met à l'aise.
+
+Elles assument la simplicité. Dire « j'ai fait quelque chose de facile » est plus généreux qu'un festin qui transforme le repas en démonstration.
+
+Elles pensent aux personnes, pas seulement au repas : placer les gens de façon à ce que la conversation circule, éviter de laisser quelqu'un isolé.
+
+En France, il existe quelques codes utiles à connaître : ne pas arriver exactement à l'heure, apporter quelque chose, ne pas se lever de table trop vite. Mais ces règles servent la même chose : le confort commun.
+
+Le meilleur conseil est peut-être le plus libérateur.
+
+Les invités ne viennent pas juger.
+
+Ils viennent passer un moment avec vous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-153",
+    title: "Dire non sans se justifier",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup de gens acceptent ce qu'ils ne veulent pas, par gêne.",
+    blurbEn:
+      "Saying no clearly is a social skill many never learn. The trick is refusing without over-explaining, which usually makes things worse. (Section: Social life, 3/5.)",
+    body: `Il existe une petite compétence sociale que beaucoup n'ont jamais apprise : refuser clairement.
+
+Une invitation qui ne nous tente pas, un service qu'on n'a pas le temps de rendre, une sollicitation de trop. Plutôt que de dire non, beaucoup de gens acceptent à contrecœur, ou inventent une excuse compliquée, ou promettent vaguement pour se dégager sur le moment.
+
+Ces stratégies posent problème.
+
+Accepter ce qu'on ne veut pas produit du ressentiment, souvent dirigé, injustement, contre celui qui a demandé. Inventer une excuse crée un risque : l'excuse peut être démentie, et il faut ensuite s'en souvenir. Promettre vaguement reporte simplement le malaise.
+
+Le refus clair est en réalité plus respectueux. Il laisse l'autre libre de s'organiser autrement, sans faux espoir.
+
+La difficulté principale n'est pas de dire non, mais de résister à l'envie de trop se justifier. Plus on ajoute d'explications, plus on paraît chercher une permission, et plus on ouvre la porte à la négociation.
+
+Quelques formules simples suffisent souvent. « Merci de penser à moi, mais je ne pourrai pas. » « C'est gentil, mais je vais passer cette fois. » Ces phrases sont complètes. Elles n'ont pas besoin d'être développées.
+
+On peut, si on le souhaite, proposer autre chose : « Pas ce soir, mais un autre jour avec plaisir. » Le refus porte alors sur la demande précise, pas sur la personne.
+
+Ce qui surprend le plus ceux qui s'y essaient, c'est la réaction des autres.
+
+Presque personne ne se vexe.
+
+La plupart des gens acceptent un non honnête bien mieux qu'un oui qui traîne.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-154",
+    title: "Les petites politesses du quotidien",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Tenir une porte, dire bonjour : des gestes minuscules et puissants.",
+    blurbEn:
+      "Tiny courtesies seem trivial, but research on daily life suggests they do real work in holding a society together. (Section: Social life, 4/5.)",
+    body: `Tenir une porte, dire bonjour au chauffeur, laisser passer quelqu'un, remercier d'un signe de tête : ces gestes semblent insignifiants. Ils occupent pourtant une place plus importante qu'on ne le croit dans la qualité de la vie commune.
+
+Les chercheurs qui étudient la vie quotidienne appellent parfois ces gestes des « micro-interactions ». Prises isolément, elles ne pèsent rien. Multipliées par des milliers chaque jour, elles composent l'atmosphère d'une ville ou d'un quartier.
+
+Leur fonction n'est pas seulement pratique. Dire bonjour à un commerçant ne sert pas à échanger une information : cela sert à se reconnaître mutuellement comme des personnes. C'est un signal minimal, mais réel : « je te vois, tu comptes ».
+
+L'absence de ces gestes se remarque immédiatement. Dans un lieu où personne ne se dit bonjour, où chacun regarde son téléphone, une tension diffuse s'installe, difficile à nommer.
+
+Ces politesses ont un autre effet, mesurable celui-là : elles se propagent. Un geste de courtoisie augmente la probabilité que la personne qui en bénéficie en fasse un à son tour. À l'inverse, la grossièreté est contagieuse : quelqu'un de mal reçu tend à mal recevoir ensuite.
+
+Il faut éviter deux excès. Le premier serait d'idéaliser un passé forcément plus poli — chaque génération croit à tort que la politesse se perd. Le second serait de mépriser ces gestes comme superficiels.
+
+Ils ne règlent aucun grand problème.
+
+Mais ils rendent supportable le fait de vivre à des millions au même endroit.
+
+Une société n'est pas seulement faite de lois.
+
+Elle est faite, aussi, de bonjours.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-155",
+    title: "La solitude choisie",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Passer du temps seul n'est pas un problème à résoudre.",
+    blurbEn:
+      "Being alone is treated as a failure to be fixed. But chosen solitude is a resource, distinct from loneliness, and worth protecting. (Section: Social life, 5/5.)",
+    body: `Dans une culture qui valorise la vie sociale, passer du temps seul est souvent perçu comme un manque, voire un problème. Celui qui dîne seul au restaurant ou part en voyage sans compagnie suscite parfois une pitié discrète.
+
+Cette confusion mérite d'être défaite, car elle mélange deux choses opposées : la solitude subie et la solitude choisie.
+
+La solitude subie — l'isolement — est réellement nuisible. Ne pas avoir de relations, se sentir seul contre son gré, affecte la santé physique et mentale. Sur ce point, les données sont solides.
+
+La solitude choisie est autre chose. C'est le fait de rechercher, par moments, d'être seul. Et loin d'être un signe de faiblesse, elle est une ressource.
+
+Les moments de solitude permettent des choses que la présence des autres empêche. Réfléchir sans être interrompu. Ressentir ce qu'on ressent vraiment, sans l'ajuster au regard d'autrui. Se reposer d'un effort permanent souvent invisible : celui de tenir un rôle en société.
+
+Les créateurs, les penseurs, mais aussi beaucoup de gens ordinaires savent qu'une part de leur meilleur travail, ou simplement de leur équilibre, dépend de ces moments seuls.
+
+Le besoin de solitude varie fortement d'une personne à l'autre. Certains en ont besoin de beaucoup, d'autres de peu. Ni l'un ni l'autre n'est un défaut.
+
+Le problème contemporain n'est pas l'excès de solitude, mais sa disparition. Entre le travail, la famille et les écrans, les vrais moments seuls, sans sollicitation, sont devenus rares.
+
+Apprendre à être bien seul n'éloigne pas des autres.
+
+C'est souvent le contraire.
+
+On a plus à offrir quand on ne fuit pas le silence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-156",
+    title: "La mode jetable",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous achetons plus de vêtements que jamais, et les gardons moins longtemps.",
+    blurbEn:
+      "Fast fashion made clothes cheaper than ever, and disposable. The true costs are paid elsewhere — by workers, and by the planet. (Section: Consumer choices, 1/5.)",
+    body: `Nous achetons aujourd'hui beaucoup plus de vêtements qu'il y a vingt ans, et nous les gardons deux fois moins longtemps. Ce modèle porte un nom : la « mode rapide ».
+
+Son principe est simple. Au lieu de deux collections par an, les enseignes en proposent parfois plusieurs dizaines. Les prix sont très bas, la nouveauté permanente, et le vêtement devient un produit qu'on remplace plutôt qu'on entretient.
+
+Ce modèle a rendu la mode accessible, ce qui est réel et positif : s'habiller ne coûte plus une fortune. Mais ses coûts, eux, sont simplement payés ailleurs.
+
+Ils sont d'abord environnementaux. L'industrie textile consomme d'énormes quantités d'eau et d'énergie, et une grande partie des vêtements produits sont peu portés avant d'être jetés. Les fibres synthétiques relâchent en outre des microplastiques à chaque lavage.
+
+Ils sont ensuite humains. Les prix très bas supposent des coûts de fabrication très bas, souvent dans des pays où les salaires et les conditions de travail sont difficiles à vérifier.
+
+Face à cela, les réponses individuelles existent, mais il faut les présenter sans naïveté. Acheter moins et mieux, entretenir, réparer, se tourner vers l'occasion : ces gestes ont un effet, surtout multipliés.
+
+Il faut cependant éviter deux pièges. Le premier serait de culpabiliser ceux qui n'ont pas les moyens d'acheter cher. Le second serait de croire que les seuls choix des consommateurs suffiront, alors que les décisions structurantes dépendent aussi de la réglementation.
+
+Le vêtement le plus écologique reste, comme souvent, celui qu'on possède déjà.
+
+Une garde-robe plus petite, mais réellement portée, coûte moins cher et pèse moins lourd.
+
+Ce n'est pas de la privation.
+
+C'est simplement cesser d'acheter ce qu'on ne mettra pas.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-157",
+    title: "Les avis en ligne sont-ils fiables ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous nous fions aux étoiles et aux commentaires. À tort, parfois.",
+    blurbEn:
+      "Online reviews shape most of our purchases, yet they are easy to manipulate. How to read them more critically. (Section: Consumer choices, 2/5.)",
+    body: `Avant d'acheter un produit, de réserver un restaurant ou de choisir un hôtel, la plupart d'entre nous consultent les avis en ligne. Ces étoiles et ces commentaires guident désormais une part énorme de nos décisions.
+
+Le principe est excellent : mettre en commun l'expérience de nombreux clients devrait donner une information fiable, indépendante du vendeur.
+
+En pratique, plusieurs biais compliquent la lecture.
+
+Le premier est le biais des extrêmes. Les gens laissent plus volontiers un avis quand ils sont très mécontents ou très enthousiastes. Les expériences moyennes, pourtant les plus fréquentes, sont sous-représentées. La note reflète donc mal l'expérience typique.
+
+Le deuxième est la manipulation. Il existe de faux avis, positifs pour gonfler un produit, négatifs pour nuire à un concurrent. Certaines entreprises en achètent. Les plateformes luttent contre ces pratiques, avec un succès inégal.
+
+Le troisième est plus subtil : les avis anciens pèsent sur la note globale, même si le produit ou l'établissement a changé.
+
+Quelques réflexes améliorent la lecture. Ignorer la note globale et lire plutôt les avis récents. Se méfier d'une avalanche de commentaires enthousiastes très courts et publiés en peu de temps. Chercher les critiques détaillées, qui décrivent précisément un problème : elles sont plus crédibles qu'un « nul » ou un « parfait ». Et se rappeler qu'un défaut mentionné par une personne peut être sans importance pour nous.
+
+L'avis en ligne reste utile, à condition d'être lu comme un indice, non comme une preuve.
+
+Un chiffre global rassure.
+
+Trois commentaires précis renseignent davantage.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-158",
+    title: "Acheter local, vraiment ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« Local » n'est pas toujours synonyme de meilleur pour la planète.",
+    blurbEn:
+      "'Local' feels obviously greener, but the arithmetic is more complicated. Season and production method often matter more than distance. (Section: Consumer choices, 3/5.)",
+    body: `« Acheter local » est devenu un conseil répandu, presque un réflexe. L'idée semble évidente : un produit qui vient de près a moins voyagé, donc moins pollué. La réalité est plus nuancée.
+
+Les avantages du local sont réels. Il fait vivre les producteurs de la région, garantit souvent des produits plus frais, et maintient une agriculture de proximité. Ces raisons suffisent à le défendre.
+
+Mais sur le plan strictement climatique, l'affaire se complique. Le transport ne représente en effet qu'une petite partie de l'empreinte de la plupart des aliments — souvent moins de dix pour cent. L'essentiel se joue dans la manière de produire.
+
+Un exemple parlant : une tomate cultivée à côté de chez soi, mais sous une serre chauffée en plein hiver, peut avoir une empreinte bien supérieure à une tomate venue d'un pays ensoleillé et transportée par bateau. Le chauffage de la serre pèse davantage que le trajet.
+
+De même, le mode de transport compte énormément. Le bateau transporte de grandes quantités pour peu d'émissions par kilo ; l'avion, à l'inverse, est catastrophique. Un produit lointain arrivé par cargo peut être plus sobre qu'un produit régional acheminé par avion.
+
+Ce qui compte le plus, finalement, c'est la saison. La formule la plus juste tient en deux mots : local et de saison. La fraise de mai de sa région, oui ; la fraise de décembre, non, qu'elle vienne de loin ou d'une serre voisine.
+
+Il ne s'agit donc pas de renoncer au local, qui garde de nombreuses vertus.
+
+Il s'agit de ne pas croire qu'un seul mot sur une étiquette résout la question.
+
+Le bon sens géographique doit s'accompagner d'un calendrier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-159",
+    title: "La publicité est partout",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous voyons des milliers de messages publicitaires par jour.",
+    blurbEn:
+      "We see thousands of ads a day and believe they don't affect us. That belief is exactly what makes advertising work. (Section: Consumer choices, 4/5.)",
+    body: `Selon les estimations, une personne vivant dans une ville est exposée à plusieurs milliers de messages publicitaires par jour. Panneaux, écrans, applications, vidéos, marques sur les vêtements : la publicité occupe une part considérable de notre environnement visuel.
+
+La plupart des gens affirment y être insensibles. « La pub ne marche pas sur moi. » C'est précisément cette conviction qui la rend efficace.
+
+Car la publicité moderne ne cherche pas seulement à vanter un produit. Elle vise souvent quelque chose de plus discret : associer une marque à une émotion, un statut, une identité. On ne vend pas une voiture, mais la liberté ; pas une boisson, mais l'amitié.
+
+Ce mécanisme fonctionne en dehors de la décision consciente. On n'a pas besoin de croire la publicité pour qu'elle agisse : il suffit qu'elle installe une association dans la mémoire. Au moment de choisir, une marque nous « vient » plus facilement, sans qu'on sache pourquoi.
+
+La répétition joue un rôle central. Un message vu une fois s'oublie ; vu mille fois, il devient familier, et le cerveau confond souvent familiarité et confiance.
+
+Reconnaître cela ne rend pas immunisé — ces mécanismes agissent même quand on les connaît. Mais quelques réflexes réduisent leur emprise.
+
+Se demander, devant une envie soudaine, d'où elle vient. Attendre avant un achat, le temps que l'effet retombe. Utiliser des outils qui limitent la publicité en ligne. Et se méfier des contenus qui font semblant de ne pas en être : recommandations d'influenceurs, articles promotionnels.
+
+La publicité n'est ni un complot ni une catastrophe.
+
+C'est un environnement, et comme tout environnement, il nous façonne.
+
+Le minimum est de savoir qu'il est là.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-160",
+    title: "Le vrai coût du pas cher",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un prix bas cache souvent un coût payé ailleurs.",
+    blurbEn:
+      "A low price is not the same as a low cost. Someone, or something, usually pays the difference. Learning to see it changes how we buy. (Section: Consumer choices, 5/5.)",
+    body: `« C'est moins cher » est probablement l'argument de vente le plus puissant qui soit. Il paraît indiscutable : à produit égal, pourquoi payer davantage ?
+
+La question mérite pourtant d'être retournée. Un prix bas n'est pas la même chose qu'un coût bas. Quand un produit coûte peu, la différence est presque toujours payée quelque part.
+
+Elle peut être payée par la durée. Un objet peu cher qui casse au bout d'un an et qu'il faut remplacer trois fois revient plus cher qu'un objet solide acheté une fois. Le prix affiché ment sur le coût réel.
+
+Elle peut être payée par quelqu'un. Un vêtement très bon marché suppose des coûts de fabrication très bas, donc des salaires très bas, quelque part, chez des gens qu'on ne voit pas.
+
+Elle peut être payée par l'environnement. Un prix qui n'intègre ni la pollution produite ni les ressources épuisées est un prix incomplet. La nature paie la différence, et souvent une génération future avec elle.
+
+Elle peut enfin être payée collectivement. Certaines activités très rentables pour une entreprise créent des coûts supportés par la société — soins de santé, dépollution, aides sociales.
+
+Voir ces coûts cachés ne signifie pas qu'il faille toujours payer plus cher. Beaucoup de gens n'ont pas le choix, et culpabiliser les plus modestes serait injuste. C'est précisément pour cela que le prix ne peut pas être le seul régulateur.
+
+Mais pour ceux qui ont une marge, la question utile change.
+
+Non pas « combien ça coûte ? », mais « qui paie la différence ? ».
+
+Une fois qu'on voit cette question, on ne la voit plus jamais tout à fait de la même façon.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

@@ -650,6 +650,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-social",
+    band: "B1",
+    title: "Social life",
+    goal: "Conversation, hosting, saying no, everyday courtesy and chosen solitude.",
+    textIds: [
+      "starter-b1-151", // L'art de la conversation (levels up B1 Relationships)
+      "starter-b1-152", // Recevoir des invités
+      "starter-b1-153", // Dire non sans se justifier
+      "starter-b1-154", // Les petites politesses du quotidien
+      "starter-b1-155", // La solitude choisie
+    ],
+  },
+  {
+    id: "b1-consumer",
+    band: "B1",
+    title: "Consumer choices",
+    goal: "Fast fashion, online reviews, buying local, advertising and the true cost of cheap.",
+    textIds: [
+      "starter-b1-156", // La mode jetable (levels up B1 Money and choices)
+      "starter-b1-157", // Les avis en ligne sont-ils fiables ?
+      "starter-b1-158", // Acheter local, vraiment ?
+      "starter-b1-159", // La publicité est partout
+      "starter-b1-160", // Le vrai coût du pas cher
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
