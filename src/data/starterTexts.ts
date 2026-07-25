@@ -11953,4 +11953,322 @@ La science ne vieillit pas comme les techniques.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-141",
+    title: "Pourquoi étudier l'histoire",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« L'histoire ne sert à rien », dit-on parfois. C'est faux.",
+    blurbEn:
+      "History is often dismissed as useless memorising of dates. Its real value is a way of thinking that applies far beyond the past. (Section: History and memory, 1/5.)",
+    body: `« À quoi sert l'histoire ? On ne peut pas changer le passé. » Cette objection paraît solide. Elle repose pourtant sur une idée fausse de ce qu'est l'histoire.
+
+Étudier l'histoire, ce n'est pas mémoriser des dates. C'est apprendre une façon de raisonner, et cette façon s'applique bien au-delà du passé.
+
+L'historien travaille sur des sources : des documents, des témoignages, des objets. Chaque source a un auteur, une intention, des limites. Un même événement est raconté différemment selon celui qui l'écrit. Le métier consiste précisément à confronter ces récits, à repérer les silences, à distinguer un fait d'une opinion.
+
+Or c'est exactement ce que nous devons faire chaque jour face à l'information. Qui parle ? Dans quel intérêt ? Que ne dit-on pas ? La méthode historique est, en réalité, une éducation à l'esprit critique.
+
+L'histoire enseigne aussi la complexité. Les événements ont plusieurs causes ; les acteurs ne sont ni entièrement bons ni entièrement mauvais ; une décision qui semble évidente aujourd'hui ne l'était pas sur le moment, avec les informations de l'époque. Cette prudence est précieuse à une époque qui aime les explications simples.
+
+Elle rend enfin plus humble. En voyant combien de sociétés ont cru détenir une vérité définitive, on relativise ses propres certitudes.
+
+Il existe une phrase souvent citée : « ceux qui ignorent l'histoire sont condamnés à la répéter ». Elle est en partie vraie, mais un peu naïve : l'histoire ne se répète jamais à l'identique.
+
+Son utilité est plus subtile.
+
+Elle ne prédit pas l'avenir.
+
+Elle apprend à ne pas croire le premier récit venu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-142",
+    title: "Les monuments aux morts",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Presque chaque village français possède un monument aux morts.",
+    blurbEn:
+      "Almost every French village has a war memorial. Their near-universal presence tells a story about a whole generation. (Section: History and memory, 2/5.)",
+    body: `Il est presque impossible de traverser un village français sans rencontrer un monument aux morts. On en compte des dizaines de milliers. Cette présence, si banale qu'on n'y prête plus attention, mérite qu'on s'y arrête.
+
+La grande majorité de ces monuments ont été érigés après la Première Guerre mondiale, entre 1920 et 1925. Ils portent les noms des habitants de la commune tués pendant le conflit.
+
+Ce qui frappe, quand on lit ces listes, c'est leur longueur, y compris dans de tout petits villages. Certaines communes de quelques centaines d'habitants comptent plusieurs dizaines de noms. On y trouve souvent le même nom de famille répété : des frères, des cousins, tombés à quelques mois d'intervalle.
+
+Cette guerre a tué environ un million et demi de soldats français, dans un pays de quarante millions d'habitants. Presque chaque famille a été touchée. C'est ce qui explique l'élan qui a conduit tant de communes, même les plus modestes, à construire un monument.
+
+Ces monuments ne sont pas seulement des listes. Ils portent des messages qui révèlent l'état d'esprit de l'époque : la fierté patriotique, mais aussi, sur certains, le refus de la guerre, plus rare et plus courageux.
+
+Chaque 11 novembre, une cérémonie s'y déroule. Elle attire aujourd'hui moins de monde qu'autrefois, à mesure que s'éloigne le souvenir direct.
+
+Se pose alors une question : que transmettre quand il n'y a plus de témoins ?
+
+Les derniers combattants de cette guerre sont morts depuis longtemps.
+
+Restent les pierres, et les noms gravés dessus.
+
+Les lire à voix haute, une fois, suffit souvent à comprendre pourquoi ces monuments existent.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-143",
+    title: "Comment on écrit l'histoire",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'histoire qu'on enseigne change au fil du temps.",
+    blurbEn:
+      "The history taught in schools is not fixed: it shifts as new questions are asked and new voices are included. That is a strength, not a weakness. (Section: History and memory, 3/5.)",
+    body: `Beaucoup de gens imaginent l'histoire comme un ensemble de faits établis une fois pour toutes. La réalité est différente : l'histoire enseignée évolue, et cette évolution n'est pas un défaut, mais le signe d'une discipline vivante.
+
+Ce changement a plusieurs sources.
+
+La première est la découverte de nouvelles sources. Des archives s'ouvrent après des décennies de fermeture ; des documents réapparaissent ; les techniques progressent, permettant de dater ou d'analyser ce qu'on ne pouvait pas examiner auparavant.
+
+La deuxième, plus profonde, est le changement des questions posées. Longtemps, l'histoire s'est concentrée sur les rois, les batailles, les grands hommes. Au vingtième siècle, des historiens ont commencé à s'intéresser à la vie des gens ordinaires : comment ils mangeaient, travaillaient, mouraient. Cette histoire du quotidien n'existait pas avant qu'on décide de la chercher.
+
+Plus récemment, d'autres voix ont été intégrées : celles des femmes, largement absentes des récits anciens, celles des colonisés, celles des vaincus.
+
+Ce processus est parfois mal compris. On y voit une « réécriture » suspecte, comme si l'on manipulait le passé. C'est confondre deux choses.
+
+Falsifier des faits est une faute. Poser de nouvelles questions sur les mêmes faits est le travail normal de la discipline.
+
+Un exemple : les faits de la conquête coloniale sont largement connus. Mais les raconter du point de vue des colonisateurs ou de celui des colonisés donne deux histoires différentes, toutes deux fondées sur des sources.
+
+L'histoire n'est donc jamais entièrement neutre.
+
+Ce qui la rend fiable n'est pas l'absence de point de vue.
+
+C'est la méthode, et la possibilité de vérifier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-144",
+    title: "Les objets racontent le passé",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un objet ordinaire en dit parfois plus qu'un texte officiel.",
+    blurbEn:
+      "An ordinary object — a cooking pot, a shoe, a coin — can reveal how people actually lived in ways that official documents cannot. (Section: History and memory, 4/5.)",
+    body: `Quand on pense à l'histoire, on pense d'abord aux textes : des lois, des lettres, des récits. Pourtant, les objets ordinaires racontent parfois le passé mieux que les documents officiels.
+
+La raison est simple. Un document est écrit par quelqu'un, avec une intention, souvent par les puissants et pour eux. Un objet du quotidien, lui, n'a pas été fabriqué pour transmettre un message. Il témoigne sans le vouloir, et c'est précisément ce qui le rend précieux.
+
+Une simple marmite renseigne sur ce qu'on mangeait, comment on cuisinait, quelles ressources on avait. Une chaussure indique la taille des gens, leur métier, la distance qu'ils parcouraient. Une pièce de monnaie révèle les échanges, les images qu'un pouvoir voulait diffuser, l'étendue d'un commerce.
+
+L'archéologie repose entièrement sur cette idée. En fouillant les traces matérielles, elle reconstitue des sociétés entières qui n'ont laissé aucun écrit, ou dont les écrits ont disparu.
+
+Ces objets corrigent souvent les récits officiels. Les textes anciens parlent des rois et des guerres ; les fouilles révèlent la vie des paysans, l'alimentation réelle, les maladies, l'espérance de vie. On y découvre parfois que la vie quotidienne différait beaucoup de l'image qu'en donnaient les documents.
+
+C'est aussi pourquoi ce que nous jetons aujourd'hui intéressera les historiens de demain. Nos déchets, nos emballages, nos objets banals raconteront notre époque plus fidèlement que nos discours.
+
+Un archéologue l'a joliment formulé.
+
+Les gens mentent dans leurs écrits.
+
+Ils mentent rarement dans leurs poubelles.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-145",
+    title: "La mémoire des familles",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Chaque famille a ses histoires, transmises et déformées.",
+    blurbEn:
+      "Family stories are history's smallest unit — passed down, embellished, and lost within three generations unless someone writes them down. (Section: History and memory, 5/5.)",
+    body: `Il existe une forme d'histoire à laquelle nous participons tous sans y penser : la mémoire familiale. Ces récits transmis à table, ces photos sans légende, ces objets qu'on garde sans savoir pourquoi.
+
+Cette mémoire est fragile, et elle obéit à une règle assez constante : elle disparaît vite. Les chercheurs qui étudient la transmission familiale constatent que, dans la plupart des familles, le souvenir concret s'efface au bout de trois générations.
+
+Nous connaissons souvent bien nos parents, un peu nos grands-parents, et presque rien de nos arrière-grands-parents. Leurs noms subsistent parfois, mais leur voix, leur métier, leur caractère ont disparu.
+
+Cette mémoire est aussi transformée à chaque transmission. Chaque génération sélectionne, embellit, oublie. Une histoire familiale racontée trois fois n'est plus tout à fait la même. Les défauts s'atténuent, les exploits grandissent, les épisodes gênants s'effacent.
+
+Ce n'est pas un mensonge : c'est le fonctionnement normal de la mémoire, appliqué à un groupe.
+
+Pourtant, cette mémoire compte. Elle donne un sentiment de continuité, une place dans une lignée. Les personnes qui connaissent leur histoire familiale traversent parfois mieux les épreuves : elles se savent partie d'une suite plus longue qu'elles-mêmes.
+
+Ce qui la sauve de l'oubli tient à peu de choses. Poser des questions aux plus âgés tant qu'ils sont là. Enregistrer une conversation. Noter au dos des photos qui figure dessus et quand.
+
+Ces gestes paraissent modestes.
+
+Ils font pourtant la différence entre une personne dont on se souvient et un simple nom sur un vieux document.
+
+La grande histoire garde les rois.
+
+La petite histoire, il faut la garder soi-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-146",
+    title: "Pourquoi l'art nous touche",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un tableau, une musique peuvent nous émouvoir sans qu'on sache pourquoi.",
+    blurbEn:
+      "Art can move us without our understanding why. That does not mean the feeling is arbitrary — nor that knowledge spoils it. (Section: Art and music, 1/5.)",
+    body: `Il arrive qu'une œuvre nous saisisse : un tableau devant lequel on s'arrête sans raison, une musique qui serre la gorge, un poème qui reste en tête. Souvent, on serait incapable d'expliquer pourquoi.
+
+Cette émotion, apparemment mystérieuse, intéresse aussi bien les artistes que les chercheurs.
+
+Une première réponse est que l'art travaille sur des mécanismes profonds, en partie communs à tous les humains. Certaines proportions, certains rythmes, certains contrastes produisent des effets assez constants. Ce n'est pas un hasard si des musiques de cultures très différentes utilisent des structures voisines.
+
+Mais l'émotion artistique n'est pas seulement universelle. Elle dépend aussi de ce que nous apportons à l'œuvre : nos souvenirs, notre culture, notre état du moment. Une chanson banale peut nous bouleverser parce qu'elle est liée à un moment de notre vie. La même œuvre ne touche pas deux personnes de la même manière, ni la même personne à deux âges différents.
+
+Se pose une question fréquente : faut-il « comprendre » l'art pour l'apprécier ? Faut-il connaître l'histoire d'un tableau, la théorie d'une musique ?
+
+La réponse honnête est : non, ce n'est pas nécessaire, mais cela ajoute quelque chose.
+
+On peut être ému sans rien savoir. C'est même l'expérience la plus commune. Mais connaître le contexte, les intentions, les techniques ouvre souvent des portes supplémentaires — sans annuler l'émotion première, contrairement à une crainte répandue.
+
+Comprendre comment fonctionne un coucher de soleil n'empêche pas de le trouver beau.
+
+Comprendre une œuvre, c'est pareil.
+
+La connaissance ne remplace pas l'émotion.
+
+Elle lui donne parfois plus de place.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-147",
+    title: "La musique nous accompagne partout",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous écoutons de la musique presque en continu. Que nous fait-elle ?",
+    blurbEn:
+      "We listen to music almost constantly now. What that does to mood, memory and movement — and what constant listening might cost. (Section: Art and music, 2/5.)",
+    body: `Pour la première fois dans l'histoire, une grande partie de l'humanité peut écouter de la musique presque sans interruption. Dans les transports, au travail, en marchant, en cuisinant, le casque sur les oreilles.
+
+Cette omniprésence est récente. Pendant des siècles, la musique était rare : on l'entendait lors d'une fête, à l'église, quand quelqu'un jouait. L'écouter était un événement.
+
+Que nous fait cette écoute continue ?
+
+Ses effets positifs sont bien documentés. La musique agit sur l'humeur, souvent efficacement : une chanson entraînante peut réellement changer un état d'esprit. Elle facilite l'effort physique, ce que les sportifs connaissent bien. Elle aide à la concentration pour certaines tâches, surtout dans un environnement bruyant qu'elle vient masquer.
+
+Elle a aussi un lien étroit avec la mémoire. Une chanson peut ramener, intact, un souvenir vieux de vingt ans. Cette propriété est utilisée en médecine : chez des personnes ayant perdu une grande partie de leurs souvenirs, une musique de jeunesse ranime parfois le regard et les mots.
+
+Mais l'écoute permanente a peut-être un coût, moins étudié.
+
+En remplissant chaque instant, elle supprime le silence — ces moments vides où l'esprit vagabonde, où viennent les idées. Elle transforme aussi la musique en fond sonore : à force d'écouter tout le temps, on n'écoute plus vraiment.
+
+Certains musiciens le regrettent : leur art, conçu pour être au centre de l'attention, est devenu un décor.
+
+Il n'y a pas de conclusion morale à en tirer.
+
+Peut-être seulement une invitation.
+
+Écouter, parfois, un seul morceau, sans rien faire d'autre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-148",
+    title: "Faut-il apprendre à jouer d'un instrument ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Apprendre la musique demande des années. Cela en vaut-il la peine ?",
+    blurbEn:
+      "Learning an instrument is slow and often abandoned. The benefits, and the reasons most people quit, are both well understood. (Section: Art and music, 3/5.)",
+    body: `Beaucoup de gens ont appris un instrument enfant, puis abandonné. Beaucoup d'adultes rêvent de s'y mettre, sans oser. La question revient donc souvent : cela en vaut-il la peine ?
+
+Les bénéfices sont réels, mais il faut les présenter honnêtement, sans exagération.
+
+Apprendre un instrument développe la coordination, la mémoire et la capacité à maintenir son attention sur une tâche exigeante. Chez l'enfant, certaines études associent la pratique musicale à de meilleures capacités de langage, sans qu'on puisse toujours établir un lien de cause à effet — les enfants qui font de la musique diffèrent souvent par d'autres aspects.
+
+Chez l'adulte, apprendre un instrument tardivement reste tout à fait possible, contrairement à une idée reçue. On n'atteindra peut-être pas la virtuosité, mais on peut atteindre un vrai plaisir de jeu.
+
+Il faut aussi être franc sur la difficulté. Un instrument demande une pratique régulière, souvent quotidienne, sur des années. Les débuts sont ingrats : on produit des sons désagréables, la progression est lente, invisible sur le moment.
+
+C'est précisément là qu'une majorité de gens abandonnent, non par manque de talent, mais par découragement, généralement dans les premiers mois.
+
+Ceux qui persévèrent citent souvent les mêmes clés. Une pratique courte mais quotidienne vaut mieux qu'une longue séance hebdomadaire. Jouer des morceaux qu'on aime, même simplifiés, entretient la motivation mieux que des exercices arides. Et accepter d'être mauvais un certain temps est la condition de tout progrès.
+
+Le vrai bénéfice, au fond, n'est peut-être pas mesurable.
+
+C'est le plaisir de fabriquer soi-même de la musique, plutôt que de seulement la consommer.
+
+Peu de gens le regrettent.
+
+Beaucoup regrettent d'avoir arrêté.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-149",
+    title: "L'art dans l'espace public",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une statue, une fresque : qui décide de ce qu'on voit dans la rue ?",
+    blurbEn:
+      "Public art belongs to everyone and pleases no one entirely. The debates it provokes reveal what a community values. (Section: Art and music, 4/5.)",
+    body: `L'art dans l'espace public a une particularité : personne ne l'a choisi individuellement, et tout le monde le voit. Une statue sur une place, une fresque sur un mur, une sculpture devant une gare s'imposent à tous, qu'on les aime ou non.
+
+Cela explique pourquoi ces œuvres provoquent des débats si vifs.
+
+Une œuvre exposée dans un musée, on peut ne pas aller la voir. Une œuvre dans la rue, on la croise chaque jour. Elle appartient à l'espace commun, et chacun se sent légitime à donner son avis — ce qui est sain.
+
+Les controverses portent sur plusieurs plans.
+
+Le premier est esthétique : une œuvre contemporaine installée dans un quartier ancien divise presque toujours. Certains y voient une audace bienvenue, d'autres une agression visuelle.
+
+Le deuxième est financier : dépenser de l'argent public pour de l'art suscite la question « n'y avait-il pas plus urgent ? ». Question légitime, mais qui suppose que la beauté d'un lieu commun ne serait jamais prioritaire.
+
+Le troisième est mémoriel, et c'est le plus vif aujourd'hui. Les statues érigées au passé honorent des personnages dont le regard porté sur eux a changé. Faut-il les retirer, les expliquer, les laisser ? Le débat oppose ceux qui veulent effacer et ceux qui veulent contextualiser.
+
+Ces conflits, si épuisants soient-ils, ont une vertu.
+
+Ils obligent une collectivité à se demander ce qu'elle valorise, ce dont elle veut se souvenir, ce qu'elle veut montrer d'elle-même.
+
+Une ville sans art public serait plus tranquille.
+
+Elle dirait aussi quelque chose de plus triste : que l'espace commun ne mérite que l'utile.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-150",
+    title: "Le musée est-il ennuyeux ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup de gens trouvent les musées fatigants. C'est peut-être une question de méthode.",
+    blurbEn:
+      "Many people find museums exhausting rather than enjoyable. The problem is usually the way we visit them, not the museums themselves. (Section: Art and music, 5/5.)",
+    body: `Beaucoup de gens avouent, à voix basse, trouver les musées ennuyeux ou fatigants. Ils s'en veulent un peu, comme s'ils manquaient de culture. Le problème vient pourtant plus souvent de la façon de visiter que du musée lui-même.
+
+L'erreur la plus répandue est de vouloir tout voir. Devant un grand musée qui expose des milliers d'œuvres, on avance de salle en salle, on regarde chaque tableau quelques secondes, et au bout de deux heures, on est épuisé sans se souvenir de rien. Les spécialistes appellent parfois cela la « fatigue muséale », et elle est bien réelle : l'attention s'effondre après un certain temps.
+
+L'approche inverse fonctionne beaucoup mieux, et elle est presque contre-intuitive.
+
+Choisir peu, regarder longtemps. Décider à l'avance de voir cinq ou dix œuvres, pas cent. S'asseoir devant un tableau plusieurs minutes, le laisser agir, remarquer les détails, revenir. On sort avec moins d'œuvres vues, mais avec de vrais souvenirs.
+
+Une autre clé est le contexte. Une œuvre seule peut sembler muette ; la même œuvre, une fois qu'on connaît son histoire ou son époque, devient parlante. C'est pourquoi une visite guidée, un audioguide, ou simplement quelques lectures préalables changent radicalement l'expérience.
+
+Enfin, il n'est pas obligatoire d'aimer. On peut regarder attentivement une œuvre, s'y intéresser, et décider qu'elle ne nous touche pas. C'est une réaction valable, bien plus honnête que l'admiration polie et distraite.
+
+Le musée n'est pas un examen.
+
+Personne ne vérifiera ce qu'on a retenu.
+
+Il vaut mieux en garder trois œuvres vivantes que cent oubliées.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

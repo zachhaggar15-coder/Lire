@@ -624,6 +624,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-history",
+    band: "B1",
+    title: "History and memory",
+    goal: "Why history matters, memorials, how history is written, objects and family memory.",
+    textIds: [
+      "starter-b1-141", // Pourquoi étudier l'histoire
+      "starter-b1-142", // Les monuments aux morts
+      "starter-b1-143", // Comment on écrit l'histoire
+      "starter-b1-144", // Les objets racontent le passé
+      "starter-b1-145", // La mémoire des familles
+    ],
+  },
+  {
+    id: "b1-art",
+    band: "B1",
+    title: "Art and music",
+    goal: "Why art moves us, music everywhere, learning an instrument, public art, museums.",
+    textIds: [
+      "starter-b1-146", // Pourquoi l'art nous touche
+      "starter-b1-147", // La musique nous accompagne partout
+      "starter-b1-148", // Faut-il apprendre à jouer d'un instrument ?
+      "starter-b1-149", // L'art dans l'espace public
+      "starter-b1-150", // Le musée est-il ennuyeux ?
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
