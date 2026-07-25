@@ -338,6 +338,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-nature",
+    band: "A2",
+    title: "Nature and animals",
+    goal: "Notice wildlife, gardens, forests and the sea — and how they are changing.",
+    textIds: [
+      "starter-a2-098", // Les hérissons du jardin (levels up A1 Animals)
+      "starter-a2-099", // La forêt près de chez nous
+      "starter-a2-100", // Mon balcon pour les abeilles
+      "starter-a2-101", // Le chien que nous avons adopté
+      "starter-a2-102", // Une sortie à la mer en hiver
+    ],
+  },
+  {
+    id: "a2-future",
+    band: "A2",
+    title: "Plans and the future",
+    goal: "Talk about what you are going to do: projects, moving, retirement, ambitions.",
+    textIds: [
+      "starter-a2-103", // Mes projets pour l'année prochaine (introduces futur proche)
+      "starter-a2-104", // Nous allons déménager
+      "starter-a2-105", // Quand je serai à la retraite (futur simple)
+      "starter-a2-106", // Ma fille veut devenir vétérinaire
+      "starter-a2-107", // Si j'avais plus de temps (hardest)
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

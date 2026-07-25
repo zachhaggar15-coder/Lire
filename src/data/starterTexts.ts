@@ -8438,4 +8438,343 @@ Le télétravail n'est ni bon ni mauvais. Tout dépend des règles qu'on se donn
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-098",
+    title: "Les hérissons du jardin",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Un soir, j'ai découvert un hérisson sous la haie.",
+    blurbEn:
+      "Discovering hedgehogs in the garden, and the small changes that turned a tidy lawn into a place where wildlife can live. (Section: Nature and animals, 1/5.)",
+    body: `Un soir de mai, vers vingt-deux heures, j'ai entendu un bruit dans le jardin. J'ai pris une lampe et je suis sorti.
+
+Sous la haie, il y avait un hérisson. Il s'est immédiatement mis en boule et il n'a plus bougé.
+
+Je suis rentré tout de suite pour ne pas le déranger, mais j'étais content. Je n'avais jamais vu de hérisson chez moi.
+
+Le lendemain, j'ai cherché des informations. J'ai appris que les hérissons sont de plus en plus rares en France. Leur nombre a beaucoup baissé depuis trente ans.
+
+Les raisons sont nombreuses : les routes, les produits chimiques dans les jardins, et surtout les jardins trop propres. Un hérisson a besoin de feuilles mortes, de bois, de coins sauvages pour dormir et manger.
+
+Alors j'ai changé quelques habitudes.
+
+D'abord, j'ai arrêté d'utiliser des produits contre les limaces. Ces produits tuent aussi les animaux qui les mangent. De toute façon, le hérisson mange les limaces : c'est un jardinier gratuit.
+
+Ensuite, j'ai laissé un coin du jardin sans le toucher, avec un tas de feuilles et de branches.
+
+Enfin, j'ai fait un petit trou en bas de ma clôture, de treize centimètres. Cela peut paraître étrange, mais les hérissons parcourent un ou deux kilomètres par nuit. Si tous les jardins sont fermés, ils ne peuvent plus circuler.
+
+Cet été, j'ai vu le hérisson quatre fois.
+
+Un soir, il y en avait deux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-099",
+    title: "La forêt près de chez nous",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "La forêt a changé depuis que j'étais enfant.",
+    blurbEn:
+      "Walking the same forest for thirty years and noticing what has changed: drier summers, sick trees, and new species arriving. (Section: Nature and animals, 2/5.)",
+    body: `Je marche dans la même forêt depuis trente ans. Enfant, j'y allais avec mon père. Aujourd'hui, j'y vais avec mes enfants.
+
+C'est une forêt ordinaire, à vingt minutes de la maison. Il y a des chênes, des hêtres, quelques pins, et un petit ruisseau.
+
+Cette forêt a beaucoup changé, et il faut du temps pour le remarquer.
+
+Le ruisseau, d'abord. Quand j'étais petit, il y avait de l'eau toute l'année. Nous jouions dedans en été. Depuis six ou sept ans, il est complètement sec de juillet à septembre.
+
+Ensuite, les arbres. Beaucoup de hêtres sont malades. Leurs feuilles brunissent trop tôt, dès le mois d'août. Un garde forestier m'a expliqué que les hêtres n'aiment pas les étés secs et chauds : leurs racines ne descendent pas assez profond.
+
+« Dans cinquante ans, m'a-t-il dit, il n'y aura probablement plus de hêtres ici. On plante déjà d'autres espèces, qui viennent du sud. »
+
+Il y a aussi des choses nouvelles. Certains oiseaux et insectes qui vivaient plus au sud sont arrivés dans notre région.
+
+Mes enfants, eux, ne voient rien de tout cela. Pour eux, cette forêt est simplement la forêt. Elle est normale.
+
+C'est ce qui me trouble le plus.
+
+Chaque génération pense que le monde qu'elle découvre est le monde normal.
+
+Alors je leur raconte le ruisseau.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-100",
+    title: "Mon balcon pour les abeilles",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "J'ai transformé mon balcon pour aider les insectes.",
+    blurbEn:
+      "Turning a small city balcony into a place for bees and butterflies: the right flowers, no chemicals, and water. (Section: Nature and animals, 3/5.)",
+    body: `J'habite en ville, au quatrième étage. Je n'ai pas de jardin, seulement un balcon de trois mètres carrés.
+
+L'année dernière, j'ai décidé de le transformer pour aider les insectes.
+
+L'idée est venue d'un article que j'avais lu : le nombre d'insectes a chuté de façon spectaculaire en Europe. Or, sans insectes, il n'y a pas de pollinisation, et sans pollinisation, il n'y a presque plus de fruits ni de légumes.
+
+Je pensais qu'un balcon serait inutile. Une voisine, qui travaille dans une association de nature, m'a dit le contraire : en ville, chaque balcon fleuri est une petite étape pour les insectes qui traversent la ville.
+
+J'ai commencé par changer mes plantes. Avant, j'achetais des fleurs jolies mais sans intérêt pour les abeilles. Certaines fleurs modernes ne produisent presque pas de nectar.
+
+Ma voisine m'a conseillé des plantes simples : de la lavande, du thym, de la sauge, des soucis. Ce sont aussi des plantes faciles, qui demandent peu d'eau.
+
+Ensuite, j'ai arrêté tout produit chimique.
+
+Enfin, j'ai mis une petite coupelle d'eau avec des cailloux, pour que les insectes puissent boire sans se noyer.
+
+Les résultats ont été rapides. Dès le mois de juin, il y avait des abeilles chaque jour sur la lavande. En juillet, j'ai vu trois papillons différents.
+
+Ce n'est pas grand-chose. Mais le matin, avec mon café, je regarde mon balcon travailler.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-101",
+    title: "Le chien que nous avons adopté",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Nous avons adopté un chien de sept ans, pas un chiot.",
+    blurbEn:
+      "Adopting an older dog nobody wanted: less work than a puppy, a difficult first month, and a companion who was already grateful. (Section: Nature and animals, 4/5.)",
+    body: `Il y a deux ans, nous avons décidé d'adopter un chien. Mes enfants voulaient un chiot, bien sûr.
+
+Mais au refuge, la bénévole nous a expliqué quelque chose d'important. Les chiots trouvent une famille en quelques jours. Les chiens âgés, eux, restent parfois des années.
+
+« Les gens veulent tous des chiots », a-t-elle dit. « Pourtant, un chien de sept ans est souvent plus facile : il est calme, il est propre, et il connaît déjà les règles. »
+
+Nous avons rencontré Oscar, un chien de sept ans, noir et blanc. Son maître était entré en maison de retraite et ne pouvait plus le garder.
+
+Oscar était au refuge depuis onze mois.
+
+Il ne courait pas vers nous comme les jeunes chiens. Il est resté assis et il nous a regardés calmement.
+
+Nous l'avons choisi.
+
+Le premier mois a été difficile. Il ne mangeait pas beaucoup et il dormait près de la porte, comme s'il attendait quelqu'un. Une nuit, il a hurlé pendant une heure.
+
+Le vétérinaire nous a dit d'être patients : un chien âgé a une histoire, et il lui faut du temps.
+
+Petit à petit, Oscar a changé de place. Il a quitté la porte pour le tapis du salon, puis pour le canapé.
+
+Aujourd'hui, il a neuf ans. Il marche lentement et il dort beaucoup.
+
+Mais chaque soir, il vient poser sa tête sur les genoux de ma fille.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-102",
+    title: "Une sortie à la mer en hiver",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Nous sommes allés à la mer en janvier, sans personne.",
+    blurbEn:
+      "The seaside in January: empty beaches, closed shops, wind, and a quiet kind of beauty summer never shows. (Section: Nature and animals, 5/5.)",
+    body: `En janvier, nous sommes allés passer une journée à la mer. Beaucoup de gens trouvent cette idée étrange : la mer, c'est pour l'été.
+
+Nous sommes arrivés vers onze heures. Il faisait six degrés et il y avait beaucoup de vent.
+
+La plage était complètement vide. En août, il y a des milliers de personnes ici, des parasols partout et il faut arriver à neuf heures pour trouver une place.
+
+Ce jour-là, nous avons vu quatre personnes en trois heures : un couple âgé, un homme avec un chien, et un pêcheur.
+
+La ville aussi était différente. La moitié des restaurants et des magasins étaient fermés jusqu'en avril. Sur les portes, il y avait des papiers : « Réouverture le 1er avril ».
+
+Nous avons marché sur la plage pendant une heure. Le vent était fort et froid ; il fallait parler très fort pour s'entendre. Mes enfants ont ramassé des coquillages et ont couru devant les vagues.
+
+La mer était grise et agitée. Les vagues étaient hautes et faisaient beaucoup de bruit.
+
+Ce n'était pas la mer des cartes postales. C'était plus sauvage, et je l'ai trouvée plus belle.
+
+À midi, nous avons trouvé le seul restaurant ouvert. Il n'y avait que des habitants de la ville à l'intérieur.
+
+La patronne nous a dit : « Vous avez raison de venir maintenant. L'hiver, la mer est à nous. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-103",
+    title: "Mes projets pour l'année prochaine",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "L'année prochaine, je vais changer plusieurs choses.",
+    blurbEn:
+      "Plans for next year, in the near future tense: a course, a trip, and a promise to stop putting off the dentist. (Section: Plans and the future, 1/5.)",
+    body: `Nous sommes en décembre, et comme chaque année à cette période, je pense à l'année prochaine.
+
+Cette fois, j'ai décidé de faire les choses différemment. D'habitude, je fais une longue liste de résolutions en janvier : faire du sport, manger mieux, lire plus, apprendre l'espagnol, ranger la maison, économiser.
+
+Résultat : au mois de mars, je n'ai rien fait du tout. Trop de projets en même temps, c'est comme n'avoir aucun projet.
+
+Alors cette année, j'ai choisi trois choses seulement.
+
+D'abord, je vais m'inscrire à une formation de comptabilité. Mon travail va changer l'année prochaine et j'aurai besoin de ces connaissances. Les cours commencent en février, le mardi soir, pendant quatre mois.
+
+Ensuite, je vais partir en voyage avec ma sœur. Nous en parlons depuis six ans et nous ne l'avons jamais fait. Cette fois, nous avons déjà choisi les dates : la première semaine de septembre. Nous allons réserver en janvier, pour que ce soit vraiment décidé.
+
+Enfin — et c'est le plus petit projet — je vais aller chez le dentiste. Je repousse ce rendez-vous depuis deux ans.
+
+Trois projets, c'est peu. Mais chacun a une date, et c'est nouveau pour moi.
+
+Ma sœur m'a demandé pourquoi je ne mettais pas « faire du sport » sur la liste.
+
+J'ai répondu : « Parce que je le mets tous les ans depuis dix ans. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-104",
+    title: "Nous allons déménager",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Dans trois mois, nous allons quitter la ville.",
+    blurbEn:
+      "A family plans to leave the city for a small town: the reasons, the doubts, and the things they will miss. (Section: Plans and the future, 2/5.)",
+    body: `Dans trois mois, nous allons quitter la ville. Nous allons nous installer dans une petite ville, à quarante minutes d'ici.
+
+La décision n'a pas été facile. Nous en avons parlé pendant presque un an.
+
+Il y a plusieurs raisons. La première est financière : ici, un appartement de trois pièces coûte très cher. Là-bas, pour le même prix, nous aurons une maison avec un jardin.
+
+La deuxième raison, ce sont les enfants. Ils grandissent, et notre appartement devient trop petit. Ils partagent une chambre et ils se disputent tous les soirs.
+
+Mais il y a aussi des inquiétudes.
+
+Mon mari va garder son travail en ville. Il va donc prendre le train chaque matin : quarante minutes à l'aller, quarante minutes au retour. C'est presque une heure et demie par jour.
+
+Moi, je vais devoir chercher un nouveau travail. Ce n'est pas simple, et j'ai un peu peur.
+
+Les enfants vont changer d'école. Ma fille est triste : elle va quitter ses amies. Nous lui avons promis qu'elle pourrait les inviter souvent.
+
+Et je vais quitter mon quartier, où j'habite depuis onze ans. Je connais le boulanger, la pharmacienne, mes voisins.
+
+La semaine prochaine, nous allons commencer à trier nos affaires.
+
+Nous sommes contents et inquiets en même temps. Je crois que c'est normal.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-105",
+    title: "Quand je serai à la retraite",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mon père prend sa retraite dans huit mois.",
+    blurbEn:
+      "A father counts down to retirement with excitement — and a quiet fear of empty days that nobody talks about. (Section: Plans and the future, 3/5.)",
+    body: `Mon père prend sa retraite dans huit mois. Il a soixante-trois ans et il a travaillé quarante-deux ans dans la même entreprise.
+
+Depuis un an, il en parle beaucoup. Il compte les mois, puis les semaines.
+
+Il a plein de projets. Il va enfin refaire le jardin, qu'il a négligé pendant des années. Il va apprendre à faire du pain — il a déjà acheté deux livres. Il va aussi voyager avec ma mère : ils veulent visiter l'Italie au printemps.
+
+Mais la semaine dernière, pendant un déjeuner, il m'a dit quelque chose de plus sérieux.
+
+Nous étions seuls dans la cuisine. Il a posé sa tasse et il a dit : « Tu sais, j'ai un peu peur aussi. »
+
+J'ai été surpris.
+
+Il a expliqué : « Pendant quarante ans, je me suis levé à six heures avec une raison. Les gens me demandaient des choses. J'étais utile. Dans huit mois, plus rien. »
+
+Il m'a raconté l'histoire d'un ancien collègue, parti à la retraite il y a trois ans. Les six premiers mois, cet homme était ravi. Puis il est devenu triste et il ne sortait presque plus.
+
+« Je ne veux pas ça », m'a dit mon père.
+
+Alors il a déjà pris une décision : il va faire du bénévolat deux matins par semaine, dans une association qui aide les enfants à faire leurs devoirs.
+
+« Le jardin, c'est bien », m'a-t-il dit. « Mais il ne me dira jamais merci. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-106",
+    title: "Ma fille veut devenir vétérinaire",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Ma fille a quinze ans et elle sait déjà ce qu'elle veut faire.",
+    blurbEn:
+      "A fifteen-year-old is certain she will be a vet. Her parents research what that really takes — and decide how much to say. (Section: Plans and the future, 4/5.)",
+    body: `Ma fille Inès a quinze ans et elle sait exactement ce qu'elle veut faire : elle veut devenir vétérinaire.
+
+Ce n'est pas une idée nouvelle. Elle en parle depuis l'âge de neuf ans, et son idée n'a jamais changé.
+
+Elle adore les animaux. Elle a lu des dizaines de livres sur le sujet. L'été dernier, elle a passé deux semaines chez un vétérinaire de campagne, comme observatrice.
+
+Mais ce métier est très difficile à obtenir. Il faut d'excellentes notes, surtout en sciences, et les études durent six ans après le lycée. Il y a beaucoup plus de candidats que de places.
+
+Mon mari et moi, nous avons hésité sur l'attitude à prendre.
+
+Fallait-il l'avertir ? Lui dire que c'était très dur, que peu de gens réussissaient ?
+
+Nous avons finalement choisi d'être honnêtes, mais sans casser son rêve.
+
+Nous lui avons donné les vraies informations : les notes nécessaires, la durée des études, le nombre de places. Elle a tout écouté sérieusement.
+
+Puis elle a dit : « Je sais. C'est pour ça que je travaille. »
+
+Cette année, elle a dix-sept de moyenne en sciences.
+
+Nous lui avons aussi dit une chose importante : si elle n'y arrive pas, ce ne sera pas un échec. Il existe d'autres métiers avec les animaux.
+
+Elle a répondu : « D'accord. Mais d'abord, j'essaie. »
+
+Je crois que c'est exactement la bonne réponse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-107",
+    title: "Si j'avais plus de temps",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "« Si j'avais le temps... » Je dis cette phrase trop souvent.",
+    blurbEn:
+      "'If I had time' is the most common excuse — until an honest look at one week shows where the hours actually go. (Section: Plans and the future, 5/5.)",
+    body: `« Si j'avais le temps, j'apprendrais le piano. »
+« Si j'avais le temps, je verrais mes amis plus souvent. »
+
+Je dis ces phrases très souvent. Presque tout le monde les dit.
+
+Mais le mois dernier, j'ai fait une expérience un peu désagréable. Pendant une semaine, j'ai noté comment je passais mes journées, heure par heure.
+
+Les résultats étaient clairs.
+
+Le travail et les transports : neuf heures par jour. Le sommeil : sept heures. Les repas, la douche, les courses, le ménage : environ deux heures et demie.
+
+Il restait donc environ cinq heures par jour.
+
+Cinq heures ! Je pensais n'avoir aucun temps libre, et j'avais cinq heures.
+
+Alors où allaient-elles ?
+
+D'après mon téléphone, j'utilisais les écrans presque trois heures par jour : les réseaux sociaux, les vidéos, les informations que je relisais dix fois.
+
+Le reste partait dans des choses que je ne me rappelais même pas le soir.
+
+Cette découverte m'a mise mal à l'aise. Je n'avais pas un problème de temps : j'avais un problème de choix.
+
+Je n'ai pas tout changé, parce que se reposer est nécessaire aussi. On ne peut pas remplir chaque minute.
+
+Mais j'ai pris une petite décision : deux soirs par semaine, je laisse mon téléphone dans une autre pièce après vingt heures.
+
+En trois mois, j'ai lu quatre livres.
+
+Je n'ai toujours pas commencé le piano. Mais maintenant, je sais que ce n'est pas le temps qui manque.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
