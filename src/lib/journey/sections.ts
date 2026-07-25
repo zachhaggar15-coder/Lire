@@ -364,6 +364,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-localnews",
+    band: "A2",
+    title: "Local news",
+    goal: "Read short local reports: transport, schools, markets and public works.",
+    textIds: [
+      "starter-a2-108", // La nouvelle ligne de tram (introduces reporting style)
+      "starter-a2-109", // L'école du village va fermer
+      "starter-a2-110", // Un marché de producteurs le jeudi
+      "starter-a2-111", // La bibliothèque prête aussi des outils
+      "starter-a2-112", // Le pont sera fermé cet été
+    ],
+  },
+  {
+    id: "a2-france-britain",
+    band: "A2",
+    title: "France and Britain",
+    goal: "Compare French and British habits: tu/vous, work, health, humour, queueing.",
+    textIds: [
+      "starter-a2-113", // Le tutoiement et le vouvoiement (levels up A1 Life in France)
+      "starter-a2-114", // Le travail et les vacances
+      "starter-a2-115", // Aller chez le médecin en France
+      "starter-a2-116", // L'humour français et l'humour anglais
+      "starter-a2-117", // Deux façons de faire la queue
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

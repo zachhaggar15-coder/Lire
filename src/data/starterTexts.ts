@@ -8777,4 +8777,340 @@ Je n'ai toujours pas commencé le piano. Mais maintenant, je sais que ce n'est p
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-108",
+    title: "La nouvelle ligne de tram",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "La ville va construire une nouvelle ligne de tram.",
+    blurbEn:
+      "The city announces a new tram line: two years of roadworks, divided opinions, and a public meeting that fills the room. (Section: Local news, 1/5.)",
+    body: `La mairie a annoncé la semaine dernière la construction d'une nouvelle ligne de tram. Elle traversera la ville de l'est à l'ouest et devrait ouvrir dans quatre ans.
+
+Le projet coûtera environ trois cent millions d'euros. Il comprend quatorze stations et permettra de relier deux quartiers qui sont aujourd'hui mal desservis.
+
+La nouvelle a divisé les habitants.
+
+Beaucoup de gens sont contents. Dans le quartier est, il n'y a qu'une ligne de bus, souvent en retard. Une habitante interrogée par le journal local a expliqué qu'elle mettait cinquante minutes pour aller travailler, contre vingt minutes en voiture.
+
+Mais d'autres sont inquiets, surtout les commerçants du centre.
+
+Les travaux vont durer plus de deux ans. Pendant cette période, plusieurs rues seront fermées à la circulation, et les places de stationnement disparaîtront.
+
+« Mes clients viennent en voiture », a déclaré un boulanger de la rue principale. « Deux ans sans stationnement, c'est très long pour un petit commerce. »
+
+La mairie a organisé une réunion publique mardi soir. La salle était pleine : plus de deux cents personnes sont venues.
+
+L'adjoint au maire a présenté le projet pendant quarante minutes, puis il a répondu aux questions pendant plus d'une heure.
+
+Il a promis des aides financières pour les commerçants pendant les travaux.
+
+Une deuxième réunion aura lieu en mars, quartier par quartier.
+
+Les travaux devraient commencer en septembre prochain.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-109",
+    title: "L'école du village va fermer",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "L'école du village n'aura plus assez d'élèves l'année prochaine.",
+    blurbEn:
+      "A village school with too few pupils is set to close, and the parents organise to stop it. (Section: Local news, 2/5.)",
+    body: `L'école de Saint-Martin, un village de six cents habitants, pourrait fermer à la fin de l'année scolaire.
+
+La raison est simple : le nombre d'élèves diminue. Il y a dix ans, l'école accueillait soixante-huit enfants. Aujourd'hui, ils ne sont plus que vingt-trois, répartis dans deux classes.
+
+Selon les règles, il faut un minimum d'élèves pour maintenir une classe. Si la fermeture est confirmée, les enfants devront aller à l'école du bourg voisin, à onze kilomètres.
+
+Pour les familles, cela signifie trente minutes de bus le matin et trente minutes le soir, pour des enfants de cinq à dix ans.
+
+Les parents se sont organisés rapidement. Ils ont créé une association et ils ont récolté quatre cent cinquante signatures en deux semaines — presque tout le village.
+
+Samedi dernier, ils ont organisé une manifestation devant la mairie. Environ cent personnes étaient présentes, dont des habitants sans enfants.
+
+« Ce n'est pas seulement une école », a expliqué une mère de famille. « Quand l'école ferme, les jeunes familles ne viennent plus s'installer. Ensuite, c'est la boulangerie qui ferme. »
+
+Le maire soutient les parents. Il a proposé une solution : accueillir les enfants d'un village voisin, qui n'a plus d'école depuis trois ans.
+
+Cette proposition permettrait d'atteindre trente et un élèves.
+
+La décision sera prise au mois de mai.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-110",
+    title: "Un marché de producteurs le jeudi",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Un nouveau marché de producteurs ouvre chaque jeudi soir.",
+    blurbEn:
+      "A new Thursday-evening farmers' market gives local producers a direct outlet — and gives shoppers a reason to linger. (Section: Local news, 3/5.)",
+    body: `Depuis le mois d'avril, un nouveau marché a lieu chaque jeudi soir sur la place de la République, de dix-sept heures à vingt et une heures.
+
+Ce marché est différent des marchés habituels : tous les vendeurs sont des producteurs de la région. Ils vendent uniquement ce qu'ils produisent eux-mêmes, dans un rayon de quarante kilomètres.
+
+Il y a quatorze stands : des légumes, des fruits, du fromage, du miel, du pain, de la viande et même de la bière fabriquée dans un village voisin.
+
+L'idée vient d'un groupe d'agriculteurs. Ils voulaient vendre directement aux habitants, sans intermédiaire.
+
+« Quand je vends à un supermarché, je reçois environ trente pour cent du prix final », a expliqué un producteur de légumes. « Ici, je reçois tout, et je peux discuter avec les gens qui mangent mes produits. »
+
+Le choix de l'horaire n'est pas un hasard. Le marché ouvre à dix-sept heures pour que les personnes qui travaillent puissent venir après le bureau.
+
+Le succès a été rapide. Le premier jeudi, il y avait environ deux cents visiteurs. Au mois de juin, ils étaient plus de huit cents.
+
+La mairie a installé quelques tables et un producteur vend des plats à emporter. Beaucoup de gens restent pour manger sur place.
+
+« Ce n'est plus seulement un marché », dit une habitante. « C'est devenu la soirée du village. »
+
+Le marché continuera tout l'hiver.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-111",
+    title: "La bibliothèque prête aussi des outils",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "On peut maintenant emprunter une perceuse à la bibliothèque.",
+    blurbEn:
+      "The town library starts lending tools as well as books — a simple idea that saves money and cupboard space. (Section: Local news, 4/5.)",
+    body: `Depuis le mois de janvier, la bibliothèque municipale prête des objets, en plus des livres. On peut y emprunter une perceuse, une machine à coudre, un appareil à raclette ou une tente.
+
+Le service s'appelle la « bibliothèque d'objets ». Il compte aujourd'hui environ cent quatre-vingts articles.
+
+L'idée est simple. Beaucoup d'objets sont utilisés très rarement. Une perceuse, par exemple, sert en moyenne quelques minutes par an dans une maison. Pourtant, presque chaque foyer en possède une.
+
+« Nous achetons tous les mêmes objets, nous les utilisons deux fois, puis ils dorment dans un placard », explique la responsable du projet.
+
+Le fonctionnement ressemble à celui des livres. Il faut être inscrit à la bibliothèque, ce qui est gratuit pour les habitants de la commune. On peut emprunter un objet pendant une semaine, et les outils les plus demandés pendant trois jours seulement.
+
+Le prêt est gratuit, mais il faut laisser une caution pour certains appareils.
+
+Les objets ont été donnés par des habitants ou achetés grâce à une subvention.
+
+Après huit mois, le bilan est positif : plus de mille deux cents emprunts. Les outils de bricolage sont les plus demandés, suivis par les appareils de cuisine.
+
+Un utilisateur raconte : « J'avais besoin d'une ponceuse pour un week-end. En acheter une coûtait quatre-vingts euros. »
+
+Trois autres villes de la région étudient maintenant le même projet.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-112",
+    title: "Le pont sera fermé cet été",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Le vieux pont sera fermé pendant trois mois pour des travaux.",
+    blurbEn:
+      "The old bridge closes for three months of essential repairs, and the town works out how to cope. (Section: Local news, 5/5.)",
+    body: `Le pont Saint-Jacques sera complètement fermé du 1er juillet au 30 septembre. La mairie a annoncé cette décision lundi.
+
+Le pont, construit en 1911, a besoin de travaux importants. Lors d'une inspection en février, les ingénieurs ont constaté que la structure était fragilisée. Depuis mars, les camions de plus de trois tonnes y sont déjà interdits.
+
+« Ces travaux ne peuvent pas attendre », a déclaré le maire. « Il s'agit de sécurité. »
+
+La fermeture posera des difficultés, car le pont est très utilisé : environ douze mille véhicules par jour. C'est le seul passage direct entre le nord et le sud de la ville.
+
+Pendant les travaux, les automobilistes devront faire un détour de six kilomètres par le pont de l'Europe.
+
+Plusieurs mesures ont été prévues pour limiter les problèmes.
+
+D'abord, la ligne de bus numéro 4 sera renforcée : un bus toutes les dix minutes au lieu de vingt.
+
+Ensuite, une navette fluviale gratuite transportera les piétons et les cyclistes d'une rive à l'autre, de sept heures à vingt heures.
+
+Enfin, la mairie a choisi la période des vacances scolaires, quand la circulation est plus faible.
+
+Les commerçants des deux rives s'inquiètent malgré tout.
+
+Le coût total des travaux est estimé à quatre millions d'euros.
+
+Le pont rouvrira le 1er octobre, avec une piste cyclable en plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-113",
+    title: "Le tutoiement et le vouvoiement",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En français, il faut choisir entre « tu » et « vous ».",
+    blurbEn:
+      "French makes you choose between 'tu' and 'vous' — a decision English speakers never have to make, and often get wrong. (Section: France and Britain, 1/5.)",
+    body: `En anglais, il n'y a qu'un seul mot : « you ». En français, il faut choisir entre « tu » et « vous ». Pour mon ami anglais Tom, c'est l'une des choses les plus difficiles.
+
+La règle générale semble simple. On dit « tu » à la famille, aux amis, aux enfants et aux collègues proches. On dit « vous » aux inconnus, aux personnes plus âgées, aux clients et dans les situations officielles.
+
+Mais dans la vraie vie, c'est beaucoup plus compliqué.
+
+Tom m'a raconté plusieurs erreurs.
+
+Un jour, il a tutoyé un homme de soixante ans dans un magasin. L'homme a paru surpris et un peu froid. En France, tutoyer un inconnu plus âgé peut sembler impoli.
+
+Une autre fois, c'était l'inverse. Dans une soirée, il a vouvoyé un ami de son âge pendant deux heures. À la fin, l'autre lui a dit en riant : « On peut se tutoyer, tu sais ! »
+
+Les règles changent aussi selon les milieux. Dans certaines entreprises, tout le monde se tutoie, même le directeur. Dans d'autres, on vouvoie son chef pendant vingt ans.
+
+J'ai donné un conseil simple à Tom : quand tu ne sais pas, commence par « vous ». C'est la solution la plus sûre.
+
+Et il existe une phrase magique pour changer : « On peut se tutoyer ? »
+
+Le plus souvent, c'est la personne la plus âgée qui la propose.
+
+Tom l'a apprise par cœur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-114",
+    title: "Le travail et les vacances",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En France, on a cinq semaines de vacances par an.",
+    blurbEn:
+      "Five weeks of paid holiday, the 35-hour week and the 'right to disconnect': how French working life looks to a British friend. (Section: France and Britain, 2/5.)",
+    body: `Quand Tom est arrivé en France pour travailler, plusieurs choses l'ont surpris.
+
+La première, ce sont les vacances. En France, tous les salariés ont au minimum cinq semaines de congés payés par an. Beaucoup d'entreprises en donnent même un peu plus.
+
+Au Royaume-Uni, le minimum légal est d'environ quatre semaines, jours fériés compris. La différence n'est pas énorme sur le papier, mais elle est réelle dans la pratique.
+
+La deuxième surprise, c'est la durée légale du travail : trente-cinq heures par semaine. Cela ne veut pas dire que personne ne travaille plus — beaucoup de gens font plus. Mais au-delà, ce sont des heures supplémentaires, qui doivent être payées ou récupérées.
+
+La troisième surprise concerne les e-mails du soir.
+
+Dans son ancien travail à Londres, Tom recevait des messages à vingt-deux heures et il y répondait. C'était normal.
+
+En France, il existe depuis 2017 un « droit à la déconnexion ». Les entreprises doivent respecter le temps de repos de leurs salariés en dehors des heures de travail.
+
+La première fois que Tom a envoyé un message professionnel un dimanche, un collègue lui a répondu le lundi matin : « Le dimanche, je ne lis pas mes messages. »
+
+Tom l'a mal pris au début. Puis il a compris que ce n'était pas une critique.
+
+Aujourd'hui, il éteint son ordinateur à dix-huit heures.
+
+« C'est la meilleure habitude que la France m'a donnée », dit-il.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-115",
+    title: "Aller chez le médecin en France",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En France, on paie le médecin, puis on est remboursé.",
+    blurbEn:
+      "You pay the doctor first and get refunded later — a system that puzzles British visitors used to the NHS. (Section: France and Britain, 3/5.)",
+    body: `La première fois que Tom est allé chez le médecin en France, il n'a rien compris.
+
+Au Royaume-Uni, avec le NHS, on ne paie pas la consultation. On prend rendez-vous, on voit le médecin, et on repart sans payer.
+
+En France, le système est différent. À la fin de la consultation, le médecin demande le paiement : environ trente euros pour un généraliste.
+
+Tom a été très surpris. Il pensait que la santé était gratuite en France aussi.
+
+En réalité, elle n'est pas gratuite : elle est remboursée.
+
+Après la consultation, la Sécurité sociale rembourse environ soixante-dix pour cent du prix. Ensuite, une assurance complémentaire — la « mutuelle » — rembourse souvent le reste.
+
+Avec la carte Vitale, tout se fait automatiquement, en quelques jours.
+
+Tom trouvait ce système compliqué. Mais il a remarqué un avantage.
+
+En France, on peut prendre rendez-vous rapidement, souvent en deux ou trois jours. On peut aussi choisir librement son médecin, et même consulter directement certains spécialistes.
+
+« Chez moi, dit-il, j'attendais parfois trois semaines pour un rendez-vous. »
+
+Chaque système a ses qualités et ses défauts. Le système britannique est plus simple : rien à payer, rien à réclamer. Le système français est plus rapide, mais il demande de l'argent à l'avance.
+
+Tom a maintenant une carte Vitale et une mutuelle.
+
+« J'ai mis un an à comprendre », dit-il. « Maintenant, ça va. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-116",
+    title: "L'humour français et l'humour anglais",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Tom trouve que les Français ne comprennent pas son humour.",
+    blurbEn:
+      "British irony delivered with a straight face confuses French listeners — and French wordplay confuses Tom. (Section: France and Britain, 4/5.)",
+    body: `Tom dit souvent une chose amusante : « En Angleterre, j'étais quelqu'un de drôle. En France, je suis quelqu'un de bizarre. »
+
+L'humour voyage mal. Ce n'est pas une question de langue seulement : c'est une question de style.
+
+L'humour britannique utilise beaucoup l'ironie et l'auto-dérision. On dit le contraire de ce qu'on pense, avec un visage sérieux, et l'autre doit comprendre.
+
+Par exemple, sous une pluie terrible, un Britannique dira : « Quel temps magnifique ! » En Angleterre, tout le monde sourit.
+
+La première fois que Tom a fait cette blague en France, un collègue lui a répondu très sérieusement : « Non, il pleut beaucoup aujourd'hui. »
+
+Tom ne savait pas quoi dire.
+
+Le problème n'est pas que les Français n'aiment pas l'ironie. Ils l'utilisent aussi. Mais elle est souvent accompagnée d'un signe : un sourire, un ton particulier. Le visage complètement neutre des Britanniques peut être déroutant.
+
+De son côté, Tom ne comprend pas toujours l'humour français. Il y a beaucoup de jeux de mots, et les jeux de mots sont presque impossibles à traduire.
+
+« Quand tout le monde rit et que je dois demander l'explication, ce n'est plus drôle », dit-il.
+
+Il progresse quand même. La semaine dernière, il a fait un jeu de mots en français.
+
+Il était mauvais. Mais tout le monde a ri.
+
+Et cette fois, c'était pour la bonne raison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-117",
+    title: "Deux façons de faire la queue",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Les Britanniques adorent les files d'attente. Les Français, moins.",
+    blurbEn:
+      "Queueing is almost sacred in Britain and rather more flexible in France — a small difference that reveals a lot. (Section: France and Britain, 5/5.)",
+    body: `Il existe une différence culturelle dont Tom parle souvent : la façon de faire la queue.
+
+Au Royaume-Uni, la file d'attente est presque sacrée. Les gens se placent naturellement les uns derrière les autres, en ligne droite, même à un arrêt de bus. Passer devant quelqu'un est considéré comme très grave.
+
+En France, la queue existe aussi, bien sûr. Mais elle est souvent moins droite et moins stricte. À la boulangerie, par exemple, les gens forment plutôt un petit groupe.
+
+La première fois, Tom a trouvé cela chaotique. Il pensait que personne ne savait qui était arrivé le premier.
+
+Puis il a observé, et il a compris qu'il se trompait.
+
+Les gens savent parfaitement à qui c'est le tour. Ils s'observent, et souvent quelqu'un dit : « C'est à vous, madame, je crois. »
+
+Il y a une règle importante à connaître. Quand on entre dans une petite boutique, il faut demander : « C'est qui le dernier ? » ou « Vous êtes la dernière ? »
+
+Cette question résout tout, sans ligne droite.
+
+Tom a mis du temps à l'apprendre. Au début, il restait poliment près de la porte, et les gens entraient après lui et passaient devant. Il attendait quinze minutes sans être servi.
+
+« Personne n'était malhonnête », dit-il maintenant. « Simplement, je n'avais pas dit que j'étais là. »
+
+Deux cultures, deux méthodes.
+
+Dans les deux cas, l'idée est la même : chacun son tour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
