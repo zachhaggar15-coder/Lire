@@ -9113,4 +9113,302 @@ Dans les deux cas, l'idée est la même : chacun son tour.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-051",
+    title: "Vivre dans une grande ville",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La ville promet tout, et elle épuise aussi.",
+    blurbEn:
+      "Cities offer everything — work, culture, anonymity — and exhaust you at the same time. An honest balance sheet of urban life. (Section: City living, 1/5.)",
+    body: `J'habite dans une grande ville depuis douze ans. On me demande souvent si j'aime ça, et je n'arrive jamais à répondre simplement. La vérité, c'est que la ville donne beaucoup et prend beaucoup.
+
+Commençons par ce qu'elle donne. Le choix, d'abord. Il y a du travail, et pas seulement quelques emplois : des milliers, dans des domaines très différents. Quand j'ai voulu changer de métier, je n'ai pas eu besoin de déménager. Dans le village de mes parents, c'était impossible.
+
+Il y a aussi la culture. Un concert un mardi soir, une exposition un dimanche, un cinéma qui passe des films que personne ne connaît. Je n'en profite pas toutes les semaines, loin de là. Mais savoir que c'est possible change quelque chose.
+
+Enfin, il y a l'anonymat. Dans un village, tout le monde sait ce que vous faites. En ville, personne ne vous regarde. Selon les personnes, c'est une liberté ou une solitude.
+
+Maintenant, ce qu'elle prend.
+
+Le bruit, d'abord, qui ne s'arrête jamais vraiment. Le prix, ensuite : je paie pour trente-huit mètres carrés ce que mon frère paie pour une maison avec jardin. Et la fatigue, surtout. Les transports pleins, les files d'attente, les gens pressés : tout demande un petit effort, et ces petits efforts s'additionnent.
+
+Alors, faut-il rester ou partir ? Je crois que la question est mal posée. Ce qui compte, c'est de savoir ce qu'on est venu chercher.
+
+Moi, je suis venu pour le travail et pour les possibilités. Tant que j'en profite, la ville a du sens.
+
+Le jour où je paierai ce loyer sans plus rien en tirer, je saurai qu'il est temps de partir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-052",
+    title: "Le prix du logement",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Se loger est devenu le premier problème des habitants.",
+    blurbEn:
+      "Housing has become the biggest expense and the biggest worry in French cities. Why prices rose, and what is actually being tried. (Section: City living, 2/5.)",
+    body: `Dans la plupart des grandes villes françaises, se loger est devenu le premier problème des habitants. Le logement représente aujourd'hui environ un tiers du budget d'un ménage, et souvent bien plus pour les jeunes et les personnes seules.
+
+Comment en est-on arrivé là ? Plusieurs facteurs se sont additionnés.
+
+D'abord, la population des villes a augmenté, alors que le nombre de logements n'a pas suivi au même rythme. Quand la demande dépasse l'offre, les prix montent : c'est mécanique.
+
+Ensuite, la taille des ménages a changé. Il y a cinquante ans, un logement accueillait en moyenne trois personnes ; aujourd'hui, un peu plus de deux. Il faut donc davantage de logements pour la même population.
+
+Enfin, dans les villes très touristiques, une partie du parc est passée à la location de courte durée, plus rentable pour les propriétaires. Des appartements qui abritaient des habitants accueillent désormais des voyageurs.
+
+Les conséquences sont concrètes. Des personnes qui travaillent en ville n'y habitent plus : elles s'installent à trente ou quarante kilomètres et passent deux heures par jour dans les transports. Certains métiers essentiels — infirmiers, enseignants, employés municipaux — deviennent difficiles à pourvoir, faute de logement abordable.
+
+Que faire ? Aucune solution unique ne suffit. Construire davantage est nécessaire, mais long et parfois impopulaire. Encadrer les loyers, comme le font plusieurs villes, protège les locataires mais ne crée pas de logements. Limiter les locations de courte durée aide dans les quartiers les plus touchés.
+
+Ce qui est certain, c'est que le sujet ne concerne pas seulement les mal-logés.
+
+Une ville où seuls les plus aisés peuvent habiter finit par perdre ce qui la faisait fonctionner.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-053",
+    title: "Pourquoi les villes plantent des arbres",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les arbres en ville ne sont pas seulement décoratifs.",
+    blurbEn:
+      "Urban trees are not decoration: they cool streets by several degrees, absorb water and calm the mind. Why cities are planting again. (Section: City living, 3/5.)",
+    body: `Depuis quelques années, de nombreuses villes françaises plantent des arbres à un rythme qu'on n'avait pas vu depuis longtemps. Ce n'est pas seulement une question d'esthétique.
+
+La première raison est la chaleur. Les villes sont nettement plus chaudes que les campagnes qui les entourent — parfois de cinq à dix degrés lors des nuits d'été. Le béton et le bitume absorbent la chaleur toute la journée et la restituent la nuit. On appelle ce phénomène « l'îlot de chaleur urbain ».
+
+Les arbres agissent de deux façons. Ils font de l'ombre, ce qui est évident. Mais surtout, ils rafraîchissent l'air en évaporant de l'eau par leurs feuilles, un peu comme un brumisateur naturel. Une rue bien plantée peut être de trois à six degrés plus fraîche qu'une rue nue. Lors d'une canicule, cette différence n'est pas un confort : elle peut être vitale pour les personnes âgées.
+
+La deuxième raison concerne l'eau. Quand il pleut fort sur une ville entièrement bétonnée, l'eau ne pénètre nulle part et les égouts débordent. Les sols plantés absorbent une partie de cette eau et réduisent les inondations.
+
+Il existe enfin un effet moins mesurable, mais réel. Plusieurs études montrent que la présence d'arbres réduit le stress et améliore le bien-être des habitants. Les quartiers verts sont, en moyenne, des quartiers où les gens sortent davantage.
+
+Tout cela suppose des choix. Un arbre en ville coûte cher à planter et à entretenir, et il faut parfois supprimer des places de stationnement pour lui faire de la place.
+
+Ces débats sont souvent vifs en conseil municipal.
+
+Mais un arbre planté aujourd'hui rendra service pendant soixante ans.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-054",
+    title: "La ville la nuit",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La nuit, la ville appartient à d'autres personnes.",
+    blurbEn:
+      "After midnight a different city appears: bakers, cleaners, nurses and drivers. A portrait of the people who keep it running while we sleep. (Section: City living, 4/5.)",
+    body: `Il y a quelques mois, j'ai dû travailler de nuit pendant trois semaines. J'ai découvert une ville que je ne connaissais pas.
+
+Entre minuit et cinq heures du matin, la ville ne dort pas : elle change d'habitants.
+
+Vers une heure, ce sont encore les gens qui sortent. Les rues autour des bars sont animées, parfois bruyantes. Les taxis attendent. Puis, peu à peu, le calme s'installe.
+
+À partir de trois heures, une autre population apparaît. Elle est invisible le jour, et pourtant elle fait fonctionner tout le reste.
+
+Les boulangers, d'abord. Dans le fournil, la lumière est allumée depuis deux heures du matin. Le pain que nous achèterons à sept heures est déjà en train de cuire.
+
+Les employés du nettoyage, ensuite. Ils entrent dans les bureaux et les gares quand tout le monde en est sorti. Le matin, nous trouvons des lieux propres sans jamais voir qui les a nettoyés.
+
+Il y a aussi les soignants des hôpitaux, les conducteurs qui livrent les magasins, les agents qui réparent les rails du métro pendant les quelques heures où il ne circule pas.
+
+Ce qui m'a le plus frappé, c'est le silence relatif. On entend des choses qu'on n'entend jamais : le bruit d'un volet, un oiseau à quatre heures et demie, ses propres pas.
+
+Quand je suis revenu à un rythme normal, j'ai gardé une habitude.
+
+Le matin, à la boulangerie, je regarde la personne derrière le comptoir et je me demande à quelle heure elle a commencé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-055",
+    title: "Faut-il quitter la ville ?",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup en rêvent. Certains le font. Tous ne réussissent pas.",
+    blurbEn:
+      "Leaving the city for the countryside is a common dream. What the people who actually did it say about the reality. (Section: City living, 5/5.)",
+    body: `« Un jour, je quitterai la ville. » Beaucoup de citadins le disent. Certains le font vraiment. Il est intéressant d'écouter ce qu'ils racontent ensuite.
+
+Les raisons du départ se ressemblent souvent : le prix des logements, la fatigue, le bruit, l'envie d'un jardin, parfois la naissance d'un enfant. La possibilité du télétravail a rendu ce projet réaliste pour des gens qui, autrefois, n'auraient pas pu l'envisager.
+
+Ceux qui réussissent leur installation citent presque toujours les mêmes éléments.
+
+D'abord, ils ont choisi un endroit qu'ils connaissaient déjà, où ils avaient de la famille ou des amis. Arriver quelque part sans connaître personne est beaucoup plus difficile qu'on ne l'imagine.
+
+Ensuite, ils ont vérifié les aspects pratiques avant de partir : la couverture internet, la distance de l'école, du médecin, du supermarché. Ces détails paraissent secondaires depuis un appartement en ville ; ils structurent la vie quotidienne à la campagne.
+
+Enfin, ils se sont impliqués dans la vie locale — l'association sportive, le comité des fêtes, l'école. Ceux qui restent entre eux, sans jamais participer, se sentent souvent isolés au bout d'un an.
+
+Ceux qui reviennent en ville, eux, évoquent trois choses : l'isolement, la dépendance à la voiture pour le moindre déplacement, et l'ennui de leurs adolescents.
+
+Il n'y a donc pas de bonne réponse générale.
+
+La vraie question n'est pas « ville ou campagne ? », mais « qu'est-ce que je fuis, et qu'est-ce que je cherche ? ».
+
+Ceux qui partent seulement pour fuir sont rarement satisfaits.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-056",
+    title: "Voyager moins, mais mieux",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Faut-il visiter cinq villes en une semaine ?",
+    blurbEn:
+      "Five cities in seven days leaves you with photographs and exhaustion. The case for staying longer in fewer places. (Section: Travel, 1/5.)",
+    body: `Il y a quelques années, je voyageais d'une certaine façon : le plus de choses possible en le moins de temps possible. Cinq villes en sept jours, trois musées par jour, une liste à cocher.
+
+Je rentrais épuisé, avec sept cents photos et des souvenirs étrangement flous. Je confondais les églises. Je ne me rappelais pas dans quelle ville j'avais mangé tel plat.
+
+Depuis trois ans, je fais l'inverse : une seule ville, ou même un seul quartier, pendant toute la durée du séjour.
+
+Le changement a été plus profond que prévu.
+
+Quand on reste plusieurs jours au même endroit, on cesse d'être un visiteur pressé. On prend le même café le matin, et le troisième jour, la serveuse vous reconnaît. On comprend le rythme du lieu : à quelle heure les rues se remplissent, quel jour est celui du marché, où les habitants vont réellement manger.
+
+On a aussi le temps d'avoir des journées ratées, ce qui est précieux. Il pleut ? Ce n'est pas grave, il reste quatre jours. Dans un programme serré, une journée de pluie détruit tout.
+
+Cette manière de voyager a un autre avantage, moins personnel. Rester plus longtemps au même endroit réduit les trajets, donc les émissions liées au voyage, et l'argent dépensé profite davantage à l'économie locale qu'aux compagnies de transport.
+
+Je ne prétends pas que ce soit la seule bonne méthode. Un premier voyage dans un pays justifie parfois de bouger beaucoup.
+
+Mais je ne compte plus les villes visitées.
+
+Je compte les endroits où j'ai fini par me sentir un peu chez moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-057",
+    title: "Quand le tourisme dérange les habitants",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Certaines villes reçoivent plus de visiteurs qu'elles ne peuvent en accueillir.",
+    blurbEn:
+      "Tourism brings money and jobs — and can hollow out the places it loves. What over-visited towns are trying to do about it. (Section: Travel, 2/5.)",
+    body: `Le tourisme fait vivre des régions entières. En France, il représente environ huit pour cent de l'économie et des centaines de milliers d'emplois. Personne de sérieux ne propose de s'en passer.
+
+Pourtant, dans certaines villes, la relation entre les habitants et les visiteurs s'est tendue.
+
+Le problème n'est pas le tourisme en soi : c'est sa concentration. Les visiteurs arrivent aux mêmes endroits, aux mêmes mois, et souvent aux mêmes heures. Une ruelle qui accueille agréablement cinquante personnes devient invivable avec cinq cents.
+
+Les conséquences sont bien documentées. Les logements se transforment en locations de courte durée, plus rentables, ce qui fait monter les loyers pour les habitants. Les commerces changent : la quincaillerie et le cordonnier laissent la place aux boutiques de souvenirs. Peu à peu, le centre-ville cesse d'être un lieu de vie pour devenir un décor.
+
+Plusieurs villes européennes ont commencé à réagir. Certaines limitent le nombre de croisières autorisées. D'autres encadrent strictement les locations touristiques ou instaurent une taxe de séjour plus élevée. Quelques sites naturels très fragiles imposent désormais une réservation obligatoire.
+
+Ces mesures sont critiquées, parfois par les habitants eux-mêmes, car beaucoup vivent du tourisme. L'équilibre est difficile à trouver.
+
+En tant que voyageurs, nous avons pourtant une petite marge d'action. Venir hors saison, éviter les trois mêmes sites que tout le monde photographie, dormir dans un hôtel plutôt que dans un appartement retiré du marché locatif : ces choix ont un effet réel quand ils se multiplient.
+
+Aimer un endroit, ce n'est pas seulement vouloir le voir.
+
+C'est aussi accepter qu'il continue d'appartenir à ceux qui y vivent.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-058",
+    title: "Le retour du train de nuit",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les trains de nuit reviennent, après avoir presque disparu.",
+    blurbEn:
+      "Night trains almost vanished from Europe; now they are being reopened. Why they disappeared, and why they are coming back. (Section: Travel, 3/5.)",
+    body: `Dans les années deux mille, les trains de nuit ont presque disparu d'Europe. En France, la plupart des lignes ont été fermées entre 2000 et 2017. Elles coûtaient cher, le matériel vieillissait, et les compagnies aériennes à bas prix proposaient des billets imbattables.
+
+Depuis quelques années, le mouvement s'inverse. Plusieurs lignes ont rouvert, d'autres sont annoncées, en France comme en Autriche, en Suède ou en Allemagne.
+
+Pourquoi ce retour ?
+
+La raison la plus évidente est écologique. Un trajet en train émet en moyenne bien moins de gaz à effet de serre que le même trajet en avion. Pour des distances de six cents à mille cinq cents kilomètres, le train de nuit devient une alternative crédible.
+
+Mais il y a aussi un argument pratique, souvent sous-estimé. Un train de nuit ne prend pas de temps sur la journée : on monte le soir, on dort, on arrive le matin. Pas d'aéroport à rejoindre, pas de contrôle deux heures avant, pas de nuit d'hôtel à payer. Comparé honnêtement, l'écart de durée réelle est plus faible qu'il n'y paraît.
+
+Les difficultés restent nombreuses. Le matériel roulant coûte cher et il faut des années pour le construire. Les voies sont utilisées la nuit pour l'entretien. Enfin, il est difficile de rendre ces lignes rentables sans soutien public.
+
+Le confort, lui, s'est amélioré : les nouvelles voitures proposent des compartiments plus petits, parfois individuels, très loin des couchettes à six d'autrefois.
+
+J'ai pris un train de nuit l'an dernier. J'ai mal dormi, je l'admets.
+
+Mais je me suis réveillé dans une autre région, sans avoir perdu un seul jour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-059",
+    title: "Apprendre quelques mots avant de partir",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Vingt mots changent complètement un voyage.",
+    blurbEn:
+      "You don't need to be fluent. Twenty words of the local language change how a country receives you — and why that is. (Section: Travel, 4/5.)",
+    body: `Avant chaque voyage, j'apprends une vingtaine de mots dans la langue du pays. Pas des phrases compliquées : bonjour, merci, s'il vous plaît, pardon, oui, non, combien, où est, je ne comprends pas, au revoir.
+
+Cela demande environ deux heures au total. Et l'effet est disproportionné.
+
+La première fois que je l'ai constaté, c'était en Grèce. J'avais appris « bonjour » et « merci » dans l'avion. Dans une petite épicerie, je les ai utilisés maladroitement, avec un accent certainement terrible.
+
+Le commerçant, qui parlait anglais, a immédiatement changé d'attitude. Il a souri, il a corrigé ma prononciation en riant, et il m'a offert un fruit.
+
+Pourquoi une telle différence pour deux mots ?
+
+Je crois que la raison est simple. Ces mots ne servent pas vraiment à communiquer : l'anglais aurait suffi. Ils servent à dire autre chose : « je sais que je suis chez vous, et je fais un effort ».
+
+C'est une forme de politesse, et la politesse a toujours été un signal plus qu'une information.
+
+L'inverse est vrai aussi. Un voyageur qui arrive et parle immédiatement anglais, en supposant que tout le monde le comprend, envoie lui aussi un message — même s'il ne s'en rend pas compte.
+
+Je ne parle correctement aucune des langues des pays que j'ai visités. Je ne prétends pas le contraire.
+
+Mais je n'ai jamais regretté ces deux heures.
+
+Et il m'arrive encore, des années plus tard, de me souvenir du mot « merci » en hongrois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-060",
+    title: "Ce qu'on rapporte d'un voyage",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les objets rapportés finissent souvent dans un tiroir.",
+    blurbEn:
+      "Souvenirs end up in drawers; habits stay for years. What travel actually leaves behind once the photographs are filed away. (Section: Travel, 5/5.)",
+    body: `Pendant longtemps, j'ai rapporté des objets de mes voyages. Des petites statues, des boîtes décorées, des aimants pour le frigo. Presque tous ont fini dans un tiroir, et je serais incapable de dire de quel pays vient la moitié d'entre eux.
+
+Ce qui est resté, en revanche, ce sont des choses que je n'avais pas prévu de rapporter.
+
+Des habitudes, d'abord. Depuis un séjour en Espagne, je dîne plus tard et je marche après le repas. Depuis un voyage au Japon, j'enlève mes chaussures en entrant chez moi, et je trouve maintenant étrange de faire autrement. Ces gestes sont entrés dans ma vie sans que je les décide.
+
+Des goûts, ensuite. J'ai découvert dans un marché marocain un mélange d'épices que je n'avais jamais utilisé. Je l'achète encore aujourd'hui, six ans plus tard, dans une épicerie de mon quartier.
+
+Et surtout, une façon de voir. C'est plus difficile à expliquer.
+
+Vivre quelques jours dans un endroit où les évidences ne sont pas les mêmes — les horaires, la place de la famille, la façon de discuter dans la rue — a un effet durable. On revient en trouvant un peu moins naturelles ses propres habitudes.
+
+C'est peut-être là le vrai bénéfice du voyage : non pas ce qu'on a vu, mais ce qu'on cesse de considérer comme allant de soi.
+
+Aujourd'hui, je n'achète presque plus de souvenirs.
+
+En revanche, je note quelques lignes chaque soir. Ce carnet est le seul objet que je rapporte, et c'est le seul que je rouvre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

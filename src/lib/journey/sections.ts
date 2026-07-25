@@ -390,6 +390,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-city",
+    band: "B1",
+    title: "City living",
+    goal: "Weigh up urban life: cost, housing, green space, nights and leaving.",
+    textIds: [
+      "starter-b1-051", // Vivre dans une grande ville (introduces urban vocabulary)
+      "starter-b1-052", // Le prix du logement
+      "starter-b1-053", // Pourquoi les villes plantent des arbres
+      "starter-b1-054", // La ville la nuit
+      "starter-b1-055", // Faut-il quitter la ville ?
+    ],
+  },
+  {
+    id: "b1-travel",
+    band: "B1",
+    title: "Travel",
+    goal: "Think about how we travel: slowly, by train, with a few words of the language.",
+    textIds: [
+      "starter-b1-056", // Voyager moins, mais mieux (levels up A2 A short trip)
+      "starter-b1-057", // Quand le tourisme dérange les habitants
+      "starter-b1-058", // Le retour du train de nuit
+      "starter-b1-059", // Apprendre quelques mots avant de partir
+      "starter-b1-060", // Ce qu'on rapporte d'un voyage
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
