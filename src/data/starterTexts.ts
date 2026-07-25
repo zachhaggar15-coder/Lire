@@ -8096,4 +8096,346 @@ Maintenant, je ne trouve plus cette visite inutile.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-088",
+    title: "Je me suis inscrite à un club",
+    category: "sport",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En septembre, je me suis inscrite à un club de volley.",
+    blurbEn:
+      "Joining a volleyball club as a complete beginner at thirty-five: the first terrible training session, and why she went back. (Section: Sport and hobbies, 1/5.)",
+    body: `En septembre dernier, je me suis inscrite à un club de volley. Je n'avais pas joué depuis le lycée, il y a vingt ans.
+
+Tout a commencé au forum des associations, en ville. C'est un événement organisé chaque année en septembre : tous les clubs de la ville installent un stand et présentent leurs activités.
+
+Je suis passée devant le stand du volley presque par hasard. Une femme m'a souri et m'a demandé : « Vous jouez ? »
+
+« J'ai joué, il y a très longtemps. »
+
+« Nous avons un groupe loisir, le mardi soir. Aucun niveau demandé. Venez essayer, c'est gratuit la première fois. »
+
+J'ai hésité toute la semaine. Puis je suis allée au premier entraînement.
+
+Ce fut une catastrophe. Je ratais presque toutes les balles. Je ne me souvenais d'aucune règle. Après vingt minutes, j'étais essoufflée et j'avais mal partout.
+
+Pendant la pause, j'ai pensé : « Je ne reviendrai pas. »
+
+Mais une joueuse est venue me parler. Elle m'a dit qu'elle avait commencé deux ans plus tôt, dans le même état que moi.
+
+« Le premier mois, on est nul. C'est normal. Après, ça vient. »
+
+Je suis revenue la semaine suivante. Puis la suivante.
+
+Aujourd'hui, huit mois plus tard, je joue toujours mal. Mais je rate moins de balles, et je connais les règles.
+
+Et le mardi soir est devenu un rendez-vous que je ne manque jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-089",
+    title: "Le match de mon fils",
+    category: "sport",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Le samedi matin, je regarde mon fils jouer au football.",
+    blurbEn:
+      "Watching a nine-year-old's football match from the touchline — and the parents who shout too much. (Section: Sport and hobbies, 2/5.)",
+    body: `Chaque samedi matin, je vais voir mon fils Léo jouer au football. Il a neuf ans et il joue dans le club de notre quartier.
+
+Le match commence à dix heures. Il faut être là à neuf heures et quart pour l'échauffement, alors nous partons tôt.
+
+Sur le bord du terrain, il y a une vingtaine de parents. Certains apportent un thermos de café. En hiver, il fait vraiment froid et nous restons debout pendant une heure et demie.
+
+J'aime beaucoup ces matins. Les enfants jouent avec beaucoup d'énergie et parfois très peu d'organisation. Ils courent tous vers le ballon en même temps.
+
+Mais il y a un problème sur le bord du terrain : certains parents crient trop.
+
+Un père, en particulier, crie sans arrêt sur son fils : « Passe ! Cours ! Mais qu'est-ce que tu fais ? » Le garçon a huit ans et il baisse la tête à chaque fois.
+
+Samedi dernier, l'entraîneur a arrêté le match pendant une minute. Il s'est tourné vers les parents et il a dit calmement :
+
+« Ce sont des enfants. Ils jouent pour s'amuser. Laissez-les jouer, s'il vous plaît. »
+
+Il y a eu un grand silence.
+
+Après, le match a continué, et c'était beaucoup plus agréable.
+
+Léo a marqué un but. Son équipe a perdu quatre à deux.
+
+Dans la voiture, il m'a dit : « C'était bien aujourd'hui. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-090",
+    title: "Ma collection de vieux disques",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "J'ai commencé à collectionner les disques vinyles il y a cinq ans.",
+    blurbEn:
+      "Collecting vinyl records: the hunt in flea markets, the ritual of listening, and why a slower format can be a pleasure. (Section: Sport and hobbies, 3/5.)",
+    body: `J'ai commencé à collectionner les disques vinyles il y a cinq ans. Aujourd'hui, j'en ai environ deux cents.
+
+Tout a commencé chez mes parents. En vidant le grenier, j'ai trouvé un carton avec les disques de mon père : du jazz et de la chanson française des années soixante-dix.
+
+J'ai acheté un vieux tourne-disque d'occasion pour quarante euros, et j'ai écouté ces disques un dimanche après-midi.
+
+Ça m'a surpris. Le son n'était pas parfait — il y avait des petits bruits — mais l'écoute était différente.
+
+Avec un vinyle, on ne peut pas passer d'une chanson à l'autre en une seconde. Il faut se lever, retourner le disque, faire attention à l'aiguille. On écoute l'album entier, dans l'ordre, comme l'artiste l'avait prévu.
+
+Depuis, je cherche des disques partout : dans les vide-greniers, les brocantes, les petits magasins d'occasion.
+
+C'est un plaisir en deux parties. Il y a d'abord la recherche : on regarde des centaines de pochettes, souvent pour ne rien trouver. Puis, parfois, il y a la découverte.
+
+Le mois dernier, dans une brocante, j'ai trouvé un album que je cherchais depuis deux ans. Il coûtait trois euros. J'étais si content que le vendeur a ri.
+
+Mes amis me disent parfois : « Tu peux tout écouter gratuitement sur internet. »
+
+C'est vrai. Mais ce n'est pas la même chose.
+
+Le dimanche soir, je mets un disque, et je ne fais rien d'autre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-091",
+    title: "J'ai recommencé à courir",
+    category: "sport",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Après deux ans sans sport, j'ai recommencé à courir doucement.",
+    blurbEn:
+      "Starting to run again after two years off: one minute running, two walking — and the slow method that finally stuck. (Section: Sport and hobbies, 4/5.)",
+    body: `Après deux ans sans sport, j'ai recommencé à courir au mois de mars.
+
+Ma première tentative, l'année dernière, avait été un échec. J'étais parti trop vite et trop longtemps. J'avais couru trente minutes le premier jour, et j'avais eu mal aux jambes pendant une semaine. Je n'avais jamais recommencé.
+
+Cette fois, j'ai lu quelques conseils avant de commencer. Tous disaient la même chose : commencer beaucoup plus doucement qu'on ne le pense.
+
+Alors j'ai suivi un programme très simple pour débutants.
+
+La première semaine : une minute de course, puis deux minutes de marche, huit fois. Cela paraît ridicule. C'était même un peu gênant : je croisais des gens qui couraient vraiment.
+
+Mais je n'avais pas mal, et je suis revenu trois jours plus tard.
+
+La deuxième semaine : deux minutes de course, deux de marche.
+
+Chaque semaine, j'augmentais un peu. Certaines semaines, je ne progressais pas du tout, et ce n'était pas grave.
+
+Après huit semaines, j'ai couru vingt minutes sans m'arrêter. Après quatre mois, quarante minutes.
+
+Aujourd'hui, je cours trois fois par semaine, le lundi, le mercredi et le samedi.
+
+Je ne suis pas rapide. Je ne fais pas de compétition. Mais je dors mieux et je suis plus calme.
+
+Ce qui a changé, ce n'est pas ma motivation : c'est ma patience.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-092",
+    title: "Le club de lecture",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Une fois par mois, nous nous réunissons pour parler d'un livre.",
+    blurbEn:
+      "A monthly book club at the library: one book, eight readers, and eight completely different opinions. (Section: Sport and hobbies, 5/5.)",
+    body: `Depuis deux ans, je fais partie d'un club de lecture. Nous nous réunissons une fois par mois, le premier jeudi, à la bibliothèque de la ville.
+
+Nous sommes huit personnes. La plus jeune a vingt-trois ans, la plus âgée en a soixante-dix-huit. En dehors du club, nous n'avons presque rien en commun.
+
+Le principe est simple : nous choisissons un livre ensemble, tout le monde le lit pendant le mois, et nous en parlons pendant une heure et demie.
+
+Ce qui me plaît le plus, c'est de lire des livres que je n'aurais jamais choisis moi-même. Avant, je lisais toujours le même genre de romans. Depuis deux ans, j'ai lu de la science-fiction, de la poésie, une biographie et même un livre d'histoire.
+
+Certains livres ne m'ont pas plu du tout. Mais même ceux-là étaient intéressants à discuter.
+
+Le plus surprenant, c'est la différence entre nous. Nous lisons le même livre, et nous ne lisons pas le même livre.
+
+Le mois dernier, par exemple, nous avons lu un roman sur une famille. Pour moi, le personnage principal était égoïste. Pour Sylvie, il était courageux. Nous avons discuté pendant quarante minutes.
+
+Personne n'a changé d'avis, et ce n'était pas le but.
+
+À la fin, la bibliothécaire nous dit toujours : « Il faut fermer ! »
+
+Alors nous continuons dehors, sur le trottoir, encore dix minutes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-093",
+    title: "J'ai acheté un nouveau téléphone",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mon téléphone avait six ans. J'ai dû en acheter un autre.",
+    blurbEn:
+      "Replacing a six-year-old phone: the repair that cost almost as much as a new one, and a reluctant purchase. (Section: Technology, 1/5.)",
+    body: `Mon téléphone avait six ans. Pour un téléphone, c'est très vieux.
+
+Depuis quelques mois, il avait des problèmes : la batterie ne tenait plus que quatre heures, il devenait lent, et certaines applications ne fonctionnaient plus.
+
+Je ne voulais pas en acheter un neuf. J'ai d'abord essayé de le faire réparer.
+
+Je suis allé dans un magasin de réparation près de chez moi. Le technicien a regardé mon téléphone pendant dix minutes.
+
+« La batterie, je peux la changer : soixante-dix euros. Mais le problème principal, c'est le système. Ce modèle ne reçoit plus les mises à jour depuis un an. »
+
+Il m'a expliqué que sans mises à jour, le téléphone devient moins sûr, et certaines applications s'arrêtent de fonctionner.
+
+« Vous pouvez le garder encore quelques mois, mais pas des années. »
+
+J'ai trouvé cela absurde. L'appareil fonctionnait — pas parfaitement, mais il fonctionnait. Ce n'est pas la machine qui était morte : c'est le logiciel qui l'avait abandonnée.
+
+J'ai finalement acheté un téléphone reconditionné, c'est-à-dire un téléphone d'occasion réparé et vérifié. Il m'a coûté deux cent trente euros au lieu de six cents pour un neuf.
+
+Il a deux ans, mais il reçoit encore les mises à jour pendant trois ans.
+
+Mon ancien téléphone, je l'ai déposé dans un bac de recyclage au magasin.
+
+J'espère garder celui-ci six ans aussi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-094",
+    title: "Ma mère apprend à utiliser internet",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "À soixante-douze ans, ma mère a acheté une tablette.",
+    blurbEn:
+      "Teaching a seventy-two-year-old to use a tablet: patience, repetition, and the fear of pressing the wrong button. (Section: Technology, 2/5.)",
+    body: `À soixante-douze ans, ma mère a acheté une tablette. Elle voulait voir ses petits-enfants en vidéo, parce qu'ils habitent loin.
+
+J'ai proposé de lui apprendre. Je pensais que ce serait rapide. Je me trompais complètement.
+
+Le premier jour, nous avons passé deux heures sur des choses que je croyais évidentes. Comment allumer l'appareil. Comment toucher l'écran — ni trop fort, ni trop longtemps. Comment revenir en arrière.
+
+J'ai compris que je n'expliquais pas bien. Je disais des mots comme « application », « icône », « menu » sans jamais les définir. Pour moi, c'était naturel ; pour elle, c'était une langue étrangère.
+
+J'ai aussi remarqué autre chose : elle avait peur. Peur d'appuyer au mauvais endroit, de tout casser, de supprimer quelque chose d'important.
+
+Alors je lui ai dit une phrase qui a beaucoup aidé : « Tu ne peux rien casser. Si tu te trompes, on répare en trente secondes. »
+
+Après ça, elle a osé essayer toute seule.
+
+Nous avons fait une chose utile : nous avons écrit un petit cahier. À chaque étape, elle notait les instructions avec ses propres mots. Ce cahier lui sert encore.
+
+Il a fallu environ deux mois.
+
+Aujourd'hui, elle appelle ses petits-enfants en vidéo toute seule, elle envoie des photos et elle lit le journal en ligne.
+
+La semaine dernière, elle m'a appelée pour me montrer une chose que je ne savais pas faire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-095",
+    title: "Trop de messages",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je recevais deux cents notifications par jour.",
+    blurbEn:
+      "Two hundred notifications a day, constant interruptions — and what happened after turning almost all of them off. (Section: Technology, 3/5.)",
+    body: `Il y a six mois, j'ai regardé les statistiques de mon téléphone. Le chiffre m'a choquée : je recevais en moyenne deux cents notifications par jour.
+
+Deux cents ! Cela fait une interruption toutes les cinq minutes environ, pendant toute la journée.
+
+Il y avait de tout : des messages, des e-mails, des applications de magasins, des jeux, des informations. Beaucoup d'entre elles ne servaient à rien.
+
+Le problème n'était pas seulement le bruit. C'était l'attention. Chaque fois que mon téléphone vibrait, je perdais le fil de ce que je faisais. Et même quand je le remettais dans ma poche, je pensais encore au message.
+
+Un soir, pendant le dîner, ma fille m'a dit : « Maman, tu regardes ton téléphone tout le temps. »
+
+Elle avait raison, et cela m'a fait honte.
+
+Alors j'ai fait quelque chose de simple. J'ai ouvert les paramètres et j'ai désactivé presque toutes les notifications.
+
+J'ai gardé seulement les appels, les messages de ma famille et l'application de mon travail.
+
+Les premiers jours ont été bizarres. Je regardais mon téléphone sans raison, comme par réflexe, pour vérifier que je n'avais rien manqué.
+
+Puis, après une semaine, quelque chose a changé. J'étais plus calme. Je lisais des pages entières sans m'arrêter.
+
+Je n'ai rien manqué d'important en six mois.
+
+Les nouvelles arrivent quand même. Elles attendent simplement que je vienne les chercher.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-096",
+    title: "Une arnaque par téléphone",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Un homme a appelé mon père en disant qu'il était de la banque.",
+    blurbEn:
+      "A convincing phone scam nearly works on the narrator's father — and the simple rule that stopped it. (Section: Technology, 4/5.)",
+    body: `Le mois dernier, mon père a failli perdre beaucoup d'argent à cause d'une arnaque par téléphone.
+
+Un homme l'a appelé un mardi après-midi. Il a dit qu'il travaillait à la banque de mon père, au service de sécurité.
+
+Il connaissait le nom de mon père, le nom de sa banque et même son adresse. Il parlait poliment et calmement.
+
+Il a expliqué qu'une opération suspecte venait d'être détectée sur le compte : quelqu'un essayait de retirer mille huit cents euros. Pour bloquer l'opération, il fallait agir tout de suite.
+
+Il a demandé à mon père de confirmer son numéro de carte et de donner le code reçu par SMS.
+
+Mon père était inquiet. L'homme parlait vite et répétait que c'était urgent.
+
+Mais juste avant de donner le code, mon père s'est souvenu d'une chose que je lui avais répétée plusieurs fois : une vraie banque ne demande jamais un code par téléphone.
+
+Alors il a dit : « Je vais raccrocher et rappeler ma banque moi-même. »
+
+L'homme a immédiatement changé de ton. Il est devenu agressif et il a dit que ce serait trop tard.
+
+Mon père a raccroché.
+
+Il a appelé sa banque avec le numéro écrit sur sa carte. Il n'y avait aucune opération suspecte, bien sûr.
+
+L'urgence, c'est l'arme principale de ces escrocs. Ils ne veulent pas qu'on réfléchisse.
+
+Depuis, mon père a une règle : il raccroche toujours, et il rappelle lui-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-097",
+    title: "Le télétravail chez moi",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Depuis deux ans, je travaille chez moi trois jours par semaine.",
+    blurbEn:
+      "Two years of working from home: no commute and more focus, but a table that is also a desk and a day that never quite ends. (Section: Technology, 5/5.)",
+    body: `Depuis deux ans, je travaille chez moi trois jours par semaine. Le mardi et le jeudi, je vais au bureau.
+
+Au début, j'étais très content. Plus de transport : j'économisais une heure et demie par jour. Je pouvais dormir un peu plus longtemps et déjeuner tranquillement chez moi.
+
+J'ai aussi remarqué que je travaillais mieux sur certaines tâches. Au bureau, les gens m'interrompaient sans arrêt. Chez moi, je pouvais me concentrer pendant deux heures sans être dérangé.
+
+Mais après quelques mois, les problèmes sont apparus.
+
+Le premier problème était l'espace. Mon appartement est petit. Je travaillais sur la table de la cuisine, la même table où je mangeais le soir. Le travail et la maison se mélangeaient.
+
+Le deuxième problème était le temps. Sans trajet, il n'y avait plus de limite claire. Je commençais à huit heures et je regardais encore mes messages à vingt et une heures.
+
+Le troisième problème était la solitude. Certains jours, je ne parlais à personne en face à face.
+
+Alors j'ai changé plusieurs choses. J'ai acheté un petit bureau d'occasion pour séparer le travail du repas. Je fais maintenant une « fausse sortie » : je marche vingt minutes avant de commencer et vingt minutes à la fin.
+
+Et je ferme complètement mon ordinateur à dix-huit heures.
+
+Le télétravail n'est ni bon ni mauvais. Tout dépend des règles qu'on se donne.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

@@ -312,6 +312,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-hobbies",
+    band: "A2",
+    title: "Sport and hobbies",
+    goal: "Join a club, follow a sport, collect, read — talk about what you do for pleasure.",
+    textIds: [
+      "starter-a2-088", // Je me suis inscrite à un club (levels up A1 Free time)
+      "starter-a2-089", // Le match de mon fils
+      "starter-a2-090", // Ma collection de vieux disques
+      "starter-a2-091", // J'ai recommencé à courir
+      "starter-a2-092", // Le club de lecture
+    ],
+  },
+  {
+    id: "a2-technology",
+    band: "A2",
+    title: "Technology",
+    goal: "Handle phones, the internet, notifications, scams and working from home.",
+    textIds: [
+      "starter-a2-093", // J'ai acheté un nouveau téléphone (introduces tech words)
+      "starter-a2-094", // Ma mère apprend à utiliser internet
+      "starter-a2-095", // Trop de messages
+      "starter-a2-096", // Une arnaque par téléphone
+      "starter-a2-097", // Le télétravail chez moi
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
