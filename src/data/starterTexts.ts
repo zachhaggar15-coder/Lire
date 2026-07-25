@@ -11645,4 +11645,312 @@ La réponse paraît évidente jusqu'au moment où il faut décider où construir
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-131",
+    title: "À quoi sert vraiment l'école ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'école transmet des savoirs, mais pas seulement.",
+    blurbEn:
+      "School teaches knowledge, but that was never its only job. A look at the functions we rarely name — and the tension between them. (Section: Education, 1/5.)",
+    body: `On répond souvent à la question « à quoi sert l'école ? » par une évidence : transmettre des connaissances. La réponse est juste, mais incomplète, car l'école remplit plusieurs fonctions à la fois, qui ne s'accordent pas toujours.
+
+La première est effectivement la transmission des savoirs : lire, écrire, compter, comprendre le monde. C'est la mission la plus visible.
+
+La deuxième est la socialisation. À l'école, un enfant apprend à vivre avec des personnes qu'il n'a pas choisies, à respecter des règles communes, à attendre son tour, à coopérer et à supporter le désaccord. Ces apprentissages ne figurent dans aucun programme, mais ils comptent parmi les plus durables.
+
+La troisième fonction est plus rarement formulée : la sélection. L'école oriente, classe, distribue des diplômes qui ouvrent ou ferment des portes. Cette fonction est nécessaire — il faut bien organiser l'accès aux formations — mais elle entre parfois en tension avec les deux autres.
+
+Cette tension est réelle. Un système obsédé par la sélection risque de réduire l'apprentissage à la performance mesurable, au détriment de la curiosité. À l'inverse, un système qui néglige l'évaluation prive les élèves de repères et peut masquer des difficultés jusqu'à ce qu'il soit trop tard.
+
+Ce débat traverse toutes les réformes éducatives, dans tous les pays.
+
+Il explique pourquoi ces réformes sont si difficiles : elles ne tranchent pas un problème technique, mais un désaccord sur ce que l'école doit produire en priorité.
+
+La plupart des gens veulent, en réalité, les trois fonctions à la fois.
+
+Le problème est qu'elles tirent parfois dans des directions opposées.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-132",
+    title: "Les devoirs à la maison",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le débat sur les devoirs revient régulièrement.",
+    blurbEn:
+      "Homework is defended and attacked with equal certainty. The evidence is more nuanced, and it depends heavily on age. (Section: Education, 2/5.)",
+    body: `Peu de sujets scolaires divisent autant que les devoirs à la maison. Les uns y voient une école du travail personnel ; les autres, une source d'inégalités et de tensions familiales.
+
+Les recherches sur le sujet permettent de dépasser les certitudes des deux camps, à condition de distinguer selon l'âge.
+
+Pour les élèves de l'école primaire, les études ne montrent pas d'effet significatif des devoirs sur les résultats. Un enfant jeune apprend surtout en classe et par le jeu ; l'ajout de travail à la maison n'apporte pas grand-chose, et peut même dégrader la relation à l'école s'il génère des conflits le soir.
+
+Pour les élèves plus âgés, en revanche, un effet positif apparaît, à condition que les devoirs restent raisonnables en durée. Au-delà d'un certain seuil, le bénéfice disparaît, voire s'inverse.
+
+Mais l'argument le plus solide contre les devoirs n'est pas leur inefficacité : c'est leur effet sur les inégalités.
+
+Un devoir suppose implicitement un environnement favorable : un endroit calme, un adulte disponible pour aider, parfois des ressources matérielles. Ces conditions ne sont pas également réparties. Deux enfants recevant le même devoir ne sont donc pas dans la même situation.
+
+C'est pourquoi de nombreux établissements ont développé des dispositifs d'aide aux devoirs après la classe, précisément pour rétablir cette égalité.
+
+Le débat, au fond, porte moins sur les devoirs eux-mêmes que sur ce qu'on attend des familles.
+
+Un système qui repose fortement sur le travail à la maison suppose des familles disponibles et outillées.
+
+Toutes ne le sont pas, et c'est là que le principe d'égalité se joue réellement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-133",
+    title: "Apprendre un métier par l'apprentissage",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'apprentissage a longtemps souffert d'une mauvaise image.",
+    blurbEn:
+      "Vocational apprenticeship was long seen as a second-class path in France. That perception is shifting, and the results explain why. (Section: Education, 3/5.)",
+    body: `En France, l'apprentissage — cette formation qui alterne travail en entreprise et cours — a longtemps souffert d'une image dévalorisée. On l'associait à l'échec scolaire : la voie de ceux qui « ne pouvaient pas » suivre des études générales.
+
+Cette représentation était largement injuste, et elle est en train de changer.
+
+Le principe de l'apprentissage est ancien et efficace. L'apprenti apprend un métier en le pratiquant, aux côtés de professionnels, tout en suivant un enseignement théorique. Il est rémunéré, et l'entreprise participe à sa formation.
+
+Les résultats, en matière d'insertion, sont souvent supérieurs à ceux des filières purement scolaires : une proportion élevée d'apprentis trouvent un emploi rapidement, parfois dans l'entreprise qui les a formés.
+
+Plusieurs pays d'Europe, notamment l'Allemagne et la Suisse, ont fait de l'apprentissage une voie prestigieuse, choisie par de bons élèves, et non un lot de consolation. Le taux de chômage des jeunes y est structurellement plus bas.
+
+En France, le regard évolue. Le nombre d'apprentis a fortement augmenté ces dernières années, y compris dans l'enseignement supérieur, où l'on peut désormais préparer un diplôme de niveau élevé par cette voie.
+
+Cette évolution a des causes concrètes : des aides financières aux entreprises, mais aussi une lassitude vis-à-vis d'un modèle unique, valorisant une seule forme d'intelligence.
+
+Car c'est peut-être là l'essentiel.
+
+Il existe des intelligences différentes : abstraite, manuelle, relationnelle. Un système qui n'en reconnaît qu'une gaspille les autres.
+
+Un bon plombier, un bon cuisinier, un bon électricien exercent un savoir complexe.
+
+Le mépris qui a longtemps entouré ces métiers en dit plus long sur nous que sur eux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-134",
+    title: "Les écrans à l'école",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les tablettes sont entrées dans les classes. Le bilan est mitigé.",
+    blurbEn:
+      "Digital tools entered classrooms with high hopes. The results are mixed, and some countries are quietly walking back. (Section: Education, 4/5.)",
+    body: `Il y a une dizaine d'années, de nombreux pays ont massivement équipé les écoles en tablettes et en ordinateurs, avec la conviction que le numérique améliorerait les apprentissages.
+
+Le bilan, aujourd'hui, est plus nuancé que prévu, et certains pays reviennent partiellement en arrière.
+
+Les études disponibles suggèrent quelques constats.
+
+Le numérique n'améliore pas automatiquement les résultats. Un outil n'enseigne pas ; c'est l'usage qui compte. Une tablette utilisée pour recopier ce qu'on écrivait sur un cahier n'apporte rien.
+
+Certains usages sont en revanche réellement utiles : les exercices interactifs qui s'adaptent au niveau, la production de contenus par les élèves, l'accès à des ressources indisponibles autrement, l'apprentissage à distance quand la présence est impossible.
+
+Mais des inconvénients sont également documentés. La prise de notes à la main est associée à une meilleure mémorisation que la saisie au clavier. La lecture sur écran favorise un parcours plus superficiel qu'un texte imprimé. Et l'appareil est une source permanente de distraction, difficile à contrôler.
+
+Un autre enseignement concerne l'illusion de compétence. Les élèves qui ont grandi avec des écrans manient les applications avec aisance, mais cette aisance ne signifie pas qu'ils savent évaluer une source, protéger leurs données ou distinguer une information fiable. Ces compétences-là s'enseignent, et elles ne viennent pas d'elles-mêmes.
+
+La conclusion qui se dégage est décevante pour ceux qui espéraient une solution simple.
+
+Le numérique à l'école n'est ni un progrès automatique, ni un danger en soi.
+
+C'est un outil dont tout dépend de l'usage — ce qui ramène, encore une fois, à la question de la formation des enseignants.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-135",
+    title: "Le poids du diplôme en France",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "En France, le diplôme initial suit longtemps une carrière.",
+    blurbEn:
+      "In France the qualification you get at twenty follows you for decades. Why, and how that differs from more forgiving systems. (Section: Education, 5/5.)",
+    body: `Il existe une particularité française souvent relevée par les observateurs étrangers : le poids durable du diplôme initial.
+
+Dans beaucoup de pays, le parcours professionnel corrige progressivement le point de départ. Ce que l'on a fait compte davantage que l'école fréquentée à vingt ans. En France, le diplôme d'origine, et surtout l'établissement où il a été obtenu, continue de peser des décennies plus tard.
+
+Ce système a une logique. Il repose sur l'idée d'un concours équitable, où le mérite scolaire ouvre l'accès à des positions. Il a permis, à certaines époques, une réelle mobilité sociale : des enfants d'origine modeste ont accédé, par l'école, à des fonctions élevées.
+
+Mais il présente aussi des effets pervers, aujourd'hui bien identifiés.
+
+Le premier est la difficulté du second départ. Celui qui a mal choisi, échoué, ou simplement mûri tard, traîne longtemps ce démarrage. Reprendre des études plus tard reste possible, mais le système valorise moins ces parcours.
+
+Le second est une forme d'assignation. La réussite scolaire à seize ans dépend fortement du milieu d'origine. Un système qui fige tôt tend donc à reproduire les inégalités qu'il prétend corriger.
+
+Le troisième est un rapport tendu à l'échec, qui rejoint la culture de la note. Se tromper de voie y est vécu comme une faute presque définitive, alors qu'ailleurs c'est une étape.
+
+Les choses évoluent lentement : la formation continue se développe, les reconversions se banalisent, et le diplôme perd un peu de son pouvoir absolu.
+
+Mais l'idée reste ancrée.
+
+Dans un entretien d'embauche, en France, on demande encore fréquemment ce que le candidat a étudié il y a vingt-cinq ans.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-136",
+    title: "Pourquoi le ciel change de couleur",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le ciel n'est pas bleu par hasard, et rouge le soir non plus.",
+    blurbEn:
+      "The blue of the day and the red of sunset come from the same simple physics. Understanding it explains a surprising amount. (Section: Everyday science, 1/5.)",
+    body: `Le ciel est bleu le jour et souvent rouge ou orange au coucher du soleil. Ces deux phénomènes, qui semblent séparés, viennent en réalité de la même cause.
+
+La lumière du soleil paraît blanche, mais elle est composée de toutes les couleurs. Chaque couleur correspond à une longueur d'onde différente : le bleu et le violet sont courts, le rouge est long.
+
+Quand cette lumière traverse l'atmosphère, elle rencontre d'innombrables molécules d'air. Celles-ci dévient la lumière, et ce phénomène de dispersion n'affecte pas toutes les couleurs de la même façon : les couleurs courtes, comme le bleu, sont beaucoup plus dispersées que les couleurs longues.
+
+Résultat, en pleine journée : le bleu est renvoyé dans toutes les directions du ciel, si bien qu'en levant les yeux, on le voit partout. Le violet est encore plus dispersé, mais notre œil y est moins sensible et une partie est absorbée en haute atmosphère.
+
+Le soir, la situation change. Le soleil est bas, et sa lumière traverse une épaisseur d'atmosphère bien plus grande. Sur ce long trajet, le bleu est dispersé si tôt qu'il n'atteint plus nos yeux directement. Ne restent que les couleurs longues, le rouge et l'orange, d'où la couleur des couchers de soleil.
+
+Cela explique aussi une observation courante : les couchers de soleil sont particulièrement rouges lorsque l'air contient davantage de particules — poussières, pollution, cendres.
+
+Ce mécanisme, décrit au dix-neuvième siècle, illustre une idée intéressante.
+
+Une couleur n'est pas seulement une propriété de la lumière.
+
+C'est le résultat d'un trajet, et de ce qu'il a rencontré en chemin.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-137",
+    title: "Pourquoi le pain lève",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une pâte vivante travaille pendant qu'on ne la regarde pas.",
+    blurbEn:
+      "Bread rising is a controlled fermentation by living organisms. A little biology transforms how you cook. (Section: Everyday science, 2/5.)",
+    body: `Faire du pain semble simple : de la farine, de l'eau, du sel, de la levure. Pourtant, entre ces ingrédients et une belle miche, il se produit un phénomène biologique remarquable.
+
+La levure est un organisme vivant : un champignon microscopique. Lorsqu'on la mélange à une pâte, elle trouve de quoi se nourrir dans les sucres de la farine. En les consommant, elle produit du gaz — du dioxyde de carbone — ainsi que de petites quantités d'alcool.
+
+C'est ce gaz qui fait lever la pâte. Emprisonné dans le réseau formé par les protéines de la farine — le gluten —, il gonfle la masse comme des milliers de minuscules bulles. Sans gluten, le gaz s'échapperait et le pain resterait plat, ce qui explique pourquoi les pains sans gluten sont plus difficiles à faire lever.
+
+Le temps et la température jouent un rôle décisif. Au chaud, la levure travaille vite ; au froid, lentement. C'est pourquoi de nombreux boulangers laissent reposer leur pâte au réfrigérateur toute une nuit : une fermentation lente développe davantage d'arômes.
+
+À la cuisson, la chaleur provoque une dernière poussée du gaz, puis fixe la structure et tue la levure. L'alcool, lui, s'évapore.
+
+Le levain, plus ancien que la levure de boulanger, repose sur le même principe, mais avec un mélange naturel de micro-organismes capturés dans l'air et la farine. Il donne un goût plus acide et une meilleure conservation.
+
+Comprendre cela change la façon de cuisiner.
+
+On cesse de suivre une recette à l'aveugle.
+
+On commence à travailler avec un organisme vivant, qui a ses préférences et son rythme.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-138",
+    title: "Pourquoi nous avons le hoquet",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le hoquet est inutile, et personne n'en connaît la fonction.",
+    blurbEn:
+      "Hiccups serve no known purpose, and the many folk cures work — or don't — for one underlying reason. (Section: Everyday science, 3/5.)",
+    body: `Le hoquet est un phénomène banal, un peu ridicule, et scientifiquement plus mystérieux qu'on ne l'imagine.
+
+Il résulte d'une contraction brusque et involontaire du diaphragme, ce grand muscle situé sous les poumons qui commande la respiration. Cette contraction provoque une inspiration soudaine, immédiatement stoppée par la fermeture rapide de la gorge — d'où le petit bruit caractéristique.
+
+La plupart des épisodes sont bénins et déclenchés par des causes identifiables : manger trop vite, boire des boissons gazeuses, un changement brusque de température, parfois une émotion.
+
+La vraie question est ailleurs : à quoi sert le hoquet ? Et la réponse honnête est qu'on l'ignore. Contrairement à la toux ou à l'éternuement, qui protègent l'organisme, le hoquet ne semble avoir aucune fonction utile. Certains chercheurs y voient un vestige de notre lointaine histoire évolutive, sans usage actuel.
+
+Il existe d'innombrables remèdes populaires : retenir sa respiration, boire de l'eau à l'envers, se faire surprendre. Fait intéressant, beaucoup fonctionnent réellement, mais pour une raison commune.
+
+Le hoquet est entretenu par un réflexe. Or plusieurs de ces méthodes agissent sur le même mécanisme : elles augmentent le taux de dioxyde de carbone dans le sang, ou elles stimulent des nerfs qui interrompent le cycle. Retenir sa respiration fait les deux à la fois.
+
+Cela explique pourquoi il n'existe pas un remède unique : plusieurs voies mènent au même résultat.
+
+Dans de très rares cas, un hoquet persiste des jours, voire des semaines, et signale alors un problème médical.
+
+Mais pour l'immense majorité d'entre nous, il reste ce qu'il est : un rappel étrange que notre corps fait parfois des choses sans raison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-139",
+    title: "Comment fonctionne un vaccin",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un vaccin entraîne le corps sans lui faire courir le danger.",
+    blurbEn:
+      "A vaccine trains the immune system using a harmless preview of a threat. The basic idea is old and surprisingly intuitive. (Section: Everyday science, 4/5.)",
+    body: `La vaccination compte parmi les mesures de santé publique les plus efficaces de l'histoire. Elle a fait reculer, et parfois éliminer, des maladies qui tuaient massivement.
+
+Son principe est ancien et, une fois expliqué, assez intuitif.
+
+Notre corps possède un système immunitaire capable de reconnaître et de combattre les agents infectieux. Le problème est que, face à une menace inconnue, il met du temps à réagir — et pendant ce temps, la maladie peut faire des dégâts.
+
+Mais le système immunitaire a une mémoire. Une fois qu'il a rencontré un agent, il le reconnaît et réagit beaucoup plus vite la fois suivante. C'est pourquoi on n'attrape en général qu'une seule fois certaines maladies infantiles.
+
+Le vaccin exploite cette mémoire. Il présente au corps un aperçu inoffensif de la menace : un agent affaibli, un fragment de celui-ci, ou une instruction pour en fabriquer un morceau. Le système immunitaire s'entraîne alors, comme lors d'un exercice, sans subir la vraie maladie.
+
+Ainsi, en cas de rencontre réelle, la défense est déjà prête.
+
+Il existe un second effet, collectif, souvent mal compris : l'immunité de groupe. Quand une proportion suffisante d'une population est protégée, l'agent circule difficilement. Cela protège indirectement ceux qui ne peuvent pas être vaccinés — nourrissons, personnes immunodéprimées. La protection n'est donc pas seulement individuelle.
+
+Comme tout acte médical, la vaccination comporte des effets indésirables, presque toujours bénins, à mettre en regard des risques de la maladie évitée.
+
+Ce calcul de bénéfice et de risque est précisément ce que les autorités sanitaires évaluent avant de recommander un vaccin.
+
+Comprendre ce principe ne remplace pas cette évaluation.
+
+Mais il rend le débat plus clair.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-140",
+    title: "Pourquoi les objets flottent",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un bateau d'acier flotte, un clou d'acier coule. Pourquoi ?",
+    blurbEn:
+      "A steel ship floats while a steel nail sinks. The answer is one of the most useful ideas in physics. (Section: Everyday science, 5/5.)",
+    body: `Voici une énigme apparente : un clou en acier coule immédiatement, mais un navire de plusieurs milliers de tonnes, fait du même acier, flotte. Comment est-ce possible ?
+
+La réponse tient à un principe découvert dans l'Antiquité par Archimède, et il est plus simple qu'il n'y paraît.
+
+Lorsqu'un objet est plongé dans l'eau, il pousse l'eau et prend sa place. En retour, l'eau exerce sur lui une force qui le pousse vers le haut. Cette force est égale au poids de l'eau déplacée.
+
+Un objet flotte donc si le poids de l'eau qu'il déplace est supérieur ou égal à son propre poids.
+
+Ce qui compte n'est pas le matériau en lui-même, mais le rapport entre le poids et le volume — ce qu'on appelle la densité.
+
+Le clou est petit et dense : il déplace très peu d'eau, dont le poids est inférieur au sien. Il coule.
+
+Le navire, lui, n'est pas un bloc plein d'acier. C'est une coque, remplie surtout d'air. Son volume est énorme par rapport à sa masse. Il déplace donc une quantité d'eau considérable, dont le poids dépasse le sien. Il flotte.
+
+C'est aussi pourquoi un navire s'enfonce davantage lorsqu'il est chargé : il lui faut déplacer plus d'eau pour équilibrer le poids supplémentaire.
+
+Ce principe explique une multitude de phénomènes quotidiens : pourquoi on flotte mieux dans l'eau de mer, plus dense que l'eau douce ; pourquoi un ballon rempli d'un gaz léger s'élève dans l'air, qui obéit à la même logique.
+
+Une idée vieille de plus de deux mille ans continue ainsi de faire naviguer nos plus grands navires.
+
+La science ne vieillit pas comme les techniques.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

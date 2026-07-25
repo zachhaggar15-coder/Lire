@@ -598,6 +598,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-education",
+    band: "B1",
+    title: "Education",
+    goal: "What school is for, homework, apprenticeship, screens and the weight of the diploma.",
+    textIds: [
+      "starter-b1-131", // À quoi sert vraiment l'école ? (levels up A2 First jobs / At school)
+      "starter-b1-132", // Les devoirs à la maison
+      "starter-b1-133", // Apprendre un métier par l'apprentissage
+      "starter-b1-134", // Les écrans à l'école
+      "starter-b1-135", // Le poids du diplôme en France
+    ],
+  },
+  {
+    id: "b1-science",
+    band: "B1",
+    title: "Everyday science",
+    goal: "The physics and biology behind ordinary things: sky, bread, hiccups, vaccines, floating.",
+    textIds: [
+      "starter-b1-136", // Pourquoi le ciel change de couleur (levels up A2 D'où vient la pluie)
+      "starter-b1-137", // Pourquoi le pain lève
+      "starter-b1-138", // Pourquoi nous avons le hoquet
+      "starter-b1-139", // Comment fonctionne un vaccin
+      "starter-b1-140", // Pourquoi les objets flottent
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
