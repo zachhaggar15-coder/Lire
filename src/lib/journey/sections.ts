@@ -182,6 +182,58 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-past",
+    band: "A2",
+    title: "Telling the past",
+    goal: "Recount past events with the passé composé and imparfait.",
+    textIds: [
+      "starter-a2-038", // Hier, quelle journée ! (introduces past-tense narration)
+      "starter-a2-039", // Le week-end dernier
+      "starter-a2-040", // Mon premier jour dans cette ville
+      "starter-a2-041", // Un souvenir d'enfance (imparfait for habits)
+      "starter-a2-042", // Le jour où j'ai changé d'avis (hardest)
+    ],
+  },
+  {
+    id: "a2-food",
+    band: "A2",
+    title: "Cooking and eating out",
+    goal: "Talk about recipes, restaurants and eating with other people.",
+    textIds: [
+      "starter-a2-043", // J'ai essayé une nouvelle recette (introduces cooking words)
+      "starter-a2-044", // Le petit restaurant du coin
+      "starter-a2-045", // Un dîner chez des amis
+      "starter-a2-046", // Le poissonnier du marché
+      "starter-a2-047", // J'ai raté mon gâteau
+    ],
+  },
+  {
+    id: "a2-errands",
+    band: "A2",
+    title: "Errands in town",
+    goal: "Handle everyday admin: post office, bank, hairdresser, lost property.",
+    textIds: [
+      "starter-a2-048", // Une longue liste de choses à faire (introduces errand words)
+      "starter-a2-049", // À la poste
+      "starter-a2-050", // Chez le coiffeur
+      "starter-a2-051", // Un problème à la banque
+      "starter-a2-052", // Le bureau des objets trouvés
+    ],
+  },
+  {
+    id: "a2-firstjobs",
+    band: "A2",
+    title: "First jobs",
+    goal: "Describe summer jobs, interviews, training and colleagues.",
+    textIds: [
+      "starter-a2-053", // Mon job d'été (introduces work words at A2)
+      "starter-a2-054", // Un entretien pour un petit boulot
+      "starter-a2-055", // Retourner à l'école à trente ans
+      "starter-a2-056", // Mon stage en entreprise
+      "starter-a2-057", // Le collègue qui m'a aidé
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

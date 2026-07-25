@@ -6330,4 +6330,714 @@ Et quand Tom vient, je fais du thé. Avec du lait.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-038",
+    title: "Hier, quelle journée !",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Hier, j'ai eu une journée très longue.",
+    blurbEn:
+      "Camille recounts a very long day in the past tense: an early meeting, a lost document, and a small victory at six o'clock. (Section: Telling the past, 1/5.)",
+    body: `Hier, j'ai eu une journée très longue. Je m'en souviendrai longtemps !
+
+Tout a commencé à cinq heures et demie du matin. J'avais une réunion importante à huit heures, alors je me suis levée très tôt. Dehors, il faisait encore nuit.
+
+J'ai pris un café rapidement, puis je suis partie. Pendant le trajet, j'ai relu mes documents dans le train.
+
+Quand je suis arrivée au bureau, il y avait déjà du monde. Mon collègue Samir m'a dit : « Tu es prête ? »
+
+« Je crois », j'ai répondu.
+
+La réunion a bien commencé. J'ai présenté mon projet et les clients ont posé beaucoup de questions. Mais soudain, j'ai cherché un document important... et il n'était pas là ! Je l'avais oublié chez moi.
+
+J'ai eu très chaud. Alors j'ai expliqué le problème avec des mots simples, sans le papier. Et finalement, ça a marché.
+
+À midi, j'étais épuisée. J'ai mangé un sandwich devant mon ordinateur parce que j'avais encore beaucoup de travail.
+
+L'après-midi est passé très vite. J'ai répondu à quarante messages et j'ai téléphoné à six personnes.
+
+À six heures, mon patron est venu me voir. Il a souri.
+
+« Les clients ont accepté ton projet. Bravo. »
+
+Je suis rentrée chez moi à sept heures et demie. J'étais fatiguée, mais très contente.
+
+Ce soir-là, je me suis couchée à neuf heures.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-039",
+    title: "Le week-end dernier",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le week-end dernier, je n'ai rien fait d'extraordinaire.",
+    blurbEn:
+      "An ordinary weekend told simply: a long lie-in, a walk by the river, a film, and Sunday lunch with friends. (Section: Telling the past, 2/5.)",
+    body: `Le week-end dernier, je n'ai rien fait d'extraordinaire. Et c'était parfait.
+
+Samedi matin, je me suis réveillée tard, vers dix heures. Je n'avais pas mis de réveil parce que je voulais dormir. Quand j'ai ouvert les rideaux, il faisait beau.
+
+J'ai pris un petit déjeuner tranquille : du pain, de la confiture et un grand café. J'ai lu pendant une heure, encore en pyjama.
+
+L'après-midi, je suis sortie marcher au bord de la rivière. Il y avait beaucoup de gens : des familles, des cyclistes, un homme qui jouait de la guitare. Je me suis assise sur un banc et je suis restée là vingt minutes, sans rien faire.
+
+Le soir, j'ai regardé un film chez moi. Je voulais aller au cinéma, mais finalement j'étais trop bien sur mon canapé.
+
+Dimanche, mes amis Léa et Karim sont venus déjeuner. J'ai préparé des pâtes et une salade, et Léa a apporté une tarte aux pommes.
+
+Nous avons mangé pendant deux heures, puis nous avons parlé jusqu'à cinq heures. Nous avons beaucoup ri.
+
+Quand ils sont partis, j'ai fait la vaisselle et j'ai rangé un peu.
+
+Dimanche soir, j'ai préparé mes affaires pour lundi. J'étais un peu triste : le week-end était fini.
+
+Mais j'étais reposée. Et ça, c'est le plus important.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-040",
+    title: "Mon premier jour dans cette ville",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je suis arrivée dans cette ville il y a cinq ans.",
+    blurbEn:
+      "Arriving alone in a new city five years ago: an empty flat, a wrong bus, and a neighbour who knocked on the door. (Section: Telling the past, 3/5.)",
+    body: `Je suis arrivée dans cette ville il y a cinq ans, au mois de septembre. Je me souviens très bien de ce jour.
+
+J'avais vingt-quatre ans et je ne connaissais personne ici. J'avais trouvé un travail, alors j'ai déménagé seule, avec deux valises et quelques cartons.
+
+Quand je suis entrée dans mon nouvel appartement, il était complètement vide. Il n'y avait pas de rideaux, pas de meubles, rien. Le sol était froid et l'appartement sentait la peinture.
+
+Je me suis assise par terre au milieu de la pièce et j'ai pensé : « Qu'est-ce que je fais ici ? »
+
+L'après-midi, je suis sortie acheter des choses pour manger. Mais je ne connaissais pas le quartier et je me suis perdue. J'ai pris le bus dans le mauvais sens ! Je suis arrivée à l'autre bout de la ville.
+
+Quand je suis rentrée, il était huit heures du soir. J'avais faim et j'étais fatiguée.
+
+Puis quelqu'un a frappé à la porte. C'était ma voisine, une dame de soixante ans.
+
+« Bonsoir ! J'ai vu que vous étiez nouvelle. Vous avez mangé ? »
+
+J'ai dit non. Alors elle m'a invitée à dîner chez elle.
+
+Nous avons mangé une soupe et nous avons parlé pendant deux heures.
+
+Cinq ans plus tard, cette dame est toujours ma voisine. Et nous dînons encore ensemble, une fois par mois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-041",
+    title: "Un souvenir d'enfance",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Quand j'étais petite, je passais tous les étés chez ma grand-mère.",
+    blurbEn:
+      "Childhood summers at grandma's house in the country: the imperfect tense for how things always were, and one afternoon in particular. (Section: Telling the past, 4/5.)",
+    body: `Quand j'étais petite, je passais tous les étés chez ma grand-mère, à la campagne.
+
+Sa maison était vieille et un peu sombre. Il y avait un grand jardin derrière, avec des arbres et un vieux mur en pierre.
+
+Chaque matin, je me réveillais avec le bruit des oiseaux. Ma grand-mère était déjà dans la cuisine. Elle préparait toujours du chocolat chaud, même en été.
+
+Après le petit déjeuner, je sortais dans le jardin et je jouais pendant des heures. Je n'avais pas de jouets, mais ça ne me manquait pas. Je construisais des maisons avec des pierres et des feuilles.
+
+L'après-midi, quand il faisait trop chaud, nous restions à l'intérieur. Ma grand-mère cousait et moi, je dessinais à côté d'elle. Nous ne parlions pas beaucoup. C'était très calme.
+
+Mais je me souviens surtout d'un après-midi. J'avais peut-être sept ans. Il y avait un grand orage : le ciel est devenu noir et la pluie est tombée très fort.
+
+J'avais peur, alors ma grand-mère m'a prise sur ses genoux. Nous avons regardé la pluie par la fenêtre et elle m'a raconté une histoire de son enfance.
+
+L'orage a duré une heure. Après, le jardin sentait la terre mouillée.
+
+Ma grand-mère est morte il y a dix ans. Mais quand il pleut très fort, je pense toujours à cet après-midi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-042",
+    title: "Le jour où j'ai changé d'avis",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Il y a deux ans, j'ai failli quitter mon travail.",
+    blurbEn:
+      "Two years ago the narrator had written a resignation letter — then a single conversation changed the decision entirely. (Section: Telling the past, 5/5.)",
+    body: `Il y a deux ans, j'ai failli quitter mon travail. Aujourd'hui, je suis contente d'être restée.
+
+À cette époque, j'étais malheureuse. Je travaillais beaucoup, mais je ne voyais pas le résultat. Mon équipe était petite et nous avions trop de projets. Chaque soir, je rentrais épuisée.
+
+Un lundi matin, j'ai pris ma décision. J'ai écrit une lettre de démission sur mon ordinateur et je l'ai imprimée. Je voulais la donner à ma patronne l'après-midi.
+
+Mais pendant le déjeuner, j'ai parlé avec une collègue, Aïcha. Elle travaillait dans l'entreprise depuis douze ans.
+
+Je lui ai tout expliqué. Elle a écouté sans m'interrompre.
+
+Puis elle m'a dit : « Je comprends. Mais avant de partir, est-ce que tu as parlé à ta patronne du problème ? »
+
+J'ai réfléchi. Non. Je n'avais jamais rien dit. Je pensais que c'était inutile.
+
+Alors, cet après-midi, je suis allée voir ma patronne. Mais je n'ai pas donné ma lettre. À la place, j'ai expliqué la situation honnêtement.
+
+Elle a été surprise. « Pourquoi tu ne m'as pas parlé plus tôt ? »
+
+Nous avons discuté pendant une heure. Deux semaines plus tard, elle a embauché une personne de plus dans mon équipe.
+
+Aujourd'hui, mon travail me plaît de nouveau.
+
+J'ai gardé la lettre dans un tiroir. Elle me rappelle une leçon : il faut parler avant de partir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-043",
+    title: "J'ai essayé une nouvelle recette",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Samedi, j'ai décidé d'essayer une recette marocaine.",
+    blurbEn:
+      "A first attempt at a Moroccan tagine: unfamiliar spices, a long slow cook, and a dish that turned out better than expected. (Section: Cooking and eating out, 1/5.)",
+    body: `Samedi dernier, j'ai décidé d'essayer une nouvelle recette. Je cuisine souvent les mêmes plats, alors je voulais changer un peu.
+
+Ma collègue Aïcha m'avait donné la recette d'un tajine, un plat marocain. Elle m'avait dit : « C'est facile, mais il faut du temps. »
+
+D'abord, je suis allée faire les courses. Il me fallait du poulet, des oignons, des citrons, des olives et beaucoup d'épices. Je ne connaissais pas certaines épices, alors j'ai demandé au vendeur. Il m'a bien expliqué.
+
+À la maison, j'ai commencé à quatre heures. J'ai coupé les oignons et j'ai pleuré, comme toujours ! Puis j'ai mis le poulet dans une grande casserole avec un peu d'huile.
+
+Ensuite, j'ai ajouté les épices. La cuisine sentait merveilleusement bon. C'était une odeur complètement nouvelle pour moi.
+
+J'ai ajouté les citrons, les olives et un peu d'eau. Puis j'ai baissé le feu et j'ai attendu.
+
+Le plat a cuit pendant une heure et demie. Pendant ce temps, j'ai rangé la cuisine et j'ai mis la table.
+
+Quand mon frère est arrivé à sept heures, il a dit : « Waouh ! Qu'est-ce que ça sent bon ! »
+
+Nous avons mangé le tajine avec du pain. C'était délicieux, vraiment.
+
+J'ai envoyé un message à Aïcha : « Merci ! Je vais le refaire. »
+
+Elle a répondu : « La prochaine fois, viens le manger chez moi. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-044",
+    title: "Le petit restaurant du coin",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Il y a un petit restaurant en bas de ma rue.",
+    blurbEn:
+      "The lunchtime 'formule' at a tiny neighbourhood restaurant: no printed menu, a blackboard, and whatever the owner cooked that morning. (Section: Cooking and eating out, 2/5.)",
+    body: `Il y a un petit restaurant en bas de ma rue. Il n'est pas beau et il n'est pas célèbre. Mais j'y vais souvent, et je vais vous expliquer pourquoi.
+
+Le restaurant a seulement huit tables. Le patron s'appelle Bruno et il cuisine lui-même. Sa femme sert les clients.
+
+Il n'y a pas de carte imprimée. Sur le mur, il y a un tableau noir et Bruno écrit le menu du jour à la craie, chaque matin. Il y a deux entrées, deux plats et deux desserts. C'est tout.
+
+Pourquoi si peu de choix ? Parce que Bruno achète les produits au marché le matin. Il cuisine ce qu'il a trouvé de bon et de frais.
+
+À midi, il propose une « formule » : une entrée et un plat pour quinze euros. Beaucoup de gens qui travaillent dans le quartier viennent manger ici.
+
+La première fois, j'y suis allée seule. J'étais un peu gênée, mais la femme de Bruno m'a mise à l'aise tout de suite.
+
+« Vous êtes nouvelle dans le quartier ? »
+
+Nous avons parlé cinq minutes, et depuis, elle se souvient toujours de moi.
+
+Ce midi, j'ai mangé une soupe de légumes et un poisson avec du riz. C'était simple et vraiment bon.
+
+Quand je suis partie, Bruno est sorti de la cuisine pour dire au revoir.
+
+Dans un grand restaurant, ça n'arrive jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-045",
+    title: "Un dîner chez des amis",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Samedi soir, nous étions invités chez Léa et Karim.",
+    blurbEn:
+      "Dinner at friends' place: arriving a little late on purpose, bringing something, and a table that nobody leaves before midnight. (Section: Cooking and eating out, 3/5.)",
+    body: `Samedi soir, nous étions invités chez nos amis Léa et Karim. Ils nous avaient invités pour huit heures.
+
+En France, il y a une petite règle amusante : il ne faut pas arriver exactement à l'heure. Si on arrive à huit heures pile, les hôtes ne sont peut-être pas prêts. Alors nous sommes arrivés à huit heures et quart.
+
+Nous n'arrivons jamais les mains vides. J'avais apporté une bouteille de vin et mon mari avait acheté des fleurs.
+
+Léa nous a accueillis avec un grand sourire. Karim était encore dans la cuisine.
+
+D'abord, nous avons pris l'apéritif dans le salon. Il y avait des olives, des petits gâteaux salés et des tomates cerises. Nous avons parlé du travail, des vacances, des enfants.
+
+L'apéritif a duré presque une heure. C'est normal : c'est un moment important du repas.
+
+Puis nous sommes passés à table. Karim avait préparé un poulet avec des légumes du marché. Il était un peu inquiet : « C'est la première fois que je fais ce plat. » Mais c'était excellent.
+
+Après le plat, il y avait du fromage, puis une tarte au citron.
+
+Nous avons parlé pendant des heures. Personne ne regardait sa montre.
+
+Quand nous sommes partis, il était minuit et demi.
+
+Dans la voiture, mon mari a dit : « Nous devons les inviter chez nous maintenant. »
+
+Il avait raison. C'est notre tour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-046",
+    title: "Le poissonnier du marché",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je ne savais pas cuisiner le poisson. Alors j'ai demandé.",
+    blurbEn:
+      "Learning to cook fish by asking the man who sells it — and discovering that a good stallholder will teach you for free. (Section: Cooking and eating out, 4/5.)",
+    body: `Pendant longtemps, je n'ai jamais cuisiné de poisson. J'avais peur : je ne savais pas comment le choisir ni comment le préparer. Alors j'achetais toujours de la viande.
+
+Un samedi, au marché, je me suis arrêtée devant le poissonnier. Il y avait beaucoup de poissons sur la glace. Je les regardais sans comprendre.
+
+Le poissonnier m'a vue. « Je peux vous aider ? »
+
+J'ai été honnête : « Je voudrais essayer, mais je ne connais rien au poisson. »
+
+Il a souri. « Alors je vais vous expliquer. »
+
+Il m'a montré comment choisir un poisson frais. « Regardez les yeux : ils doivent être clairs, pas gris. Et sentez : un poisson frais ne sent presque rien. »
+
+Ensuite, il m'a conseillé un poisson simple pour débuter. « Prenez celui-ci. Vous le mettez au four vingt minutes avec du citron, de l'huile et un peu de sel. C'est tout. Ne faites rien de compliqué. »
+
+Il l'a préparé pour moi et il l'a emballé.
+
+Le soir, j'ai suivi ses conseils exactement. J'ai mis le poisson au four à deux cents degrés pendant vingt minutes.
+
+C'était parfait. Vraiment parfait.
+
+Maintenant, j'y retourne chaque semaine. Le poissonnier me reconnaît et il me donne toujours une idée nouvelle.
+
+La semaine dernière, il m'a dit : « Vous voyez ? Ce n'était pas difficile. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-047",
+    title: "J'ai raté mon gâteau",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Pour l'anniversaire de ma nièce, j'ai voulu faire un gâteau.",
+    blurbEn:
+      "A birthday cake goes badly wrong — flat, burnt at the edges — and a seven-year-old saves the day with a bag of sweets. (Section: Cooking and eating out, 5/5.)",
+    body: `Pour l'anniversaire de ma nièce Chloé, j'ai voulu faire un gâteau au chocolat moi-même. C'était une mauvaise idée.
+
+J'avais trouvé une recette sur internet. Sur la photo, le gâteau était magnifique : haut, brillant, parfait.
+
+J'ai commencé à deux heures. J'ai cassé les œufs, j'ai fait fondre le chocolat, j'ai ajouté la farine et le sucre. Tout allait bien.
+
+Mais je n'avais pas de balance. Alors j'ai deviné les quantités. « Deux cents grammes de farine ? Ça doit être à peu près comme ça. »
+
+Première erreur.
+
+J'ai mis le gâteau au four. La recette disait trente minutes à cent quatre-vingts degrés. Mais mon four est vieux et il chauffe trop.
+
+Deuxième erreur : je ne l'ai pas surveillé. Pendant ce temps, je répondais à des messages.
+
+Après vingt-cinq minutes, j'ai senti quelque chose. J'ai ouvert le four : le gâteau était noir sur les bords et complètement plat au milieu.
+
+Il ne ressemblait pas du tout à la photo.
+
+J'ai eu envie de pleurer. Puis j'ai eu envie de rire.
+
+Alors j'ai coupé les bords noirs et j'ai mis du sucre dessus pour cacher le reste.
+
+Quand Chloé est arrivée, elle a regardé le gâteau. Elle a sept ans, alors elle est honnête.
+
+« Il est bizarre, ton gâteau. »
+
+« Je sais. »
+
+Puis elle a sorti des bonbons de sa poche et elle les a posés dessus.
+
+« Voilà ! Maintenant il est beau. »
+
+Nous l'avons mangé. Et il était bon.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-048",
+    title: "Une longue liste de choses à faire",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Samedi matin, j'avais six choses à faire en ville.",
+    blurbEn:
+      "Six errands in one Saturday morning, planned in the right order to avoid walking twice — and one shop that was closed anyway. (Section: Errands in town, 1/5.)",
+    body: `Samedi matin, j'avais une longue liste de choses à faire en ville. Six choses exactement.
+
+J'avais tout écrit sur un papier :
+- aller à la poste
+- passer à la banque
+- acheter du pain
+- récupérer mes chaussures chez le cordonnier
+- prendre un médicament à la pharmacie
+- acheter un cadeau pour Chloé
+
+Avant de partir, j'ai réfléchi à l'ordre. C'est important : sinon, on marche deux fois dans la même rue. La poste et la banque sont sur la même place, alors j'ai commencé par là.
+
+Je suis partie à neuf heures. Il faisait frais, mais le soleil brillait.
+
+D'abord, la poste. Il y avait une queue de sept personnes ! J'ai attendu vingt minutes. Ensuite, la banque, juste en face : c'était plus rapide.
+
+Après, je suis allée chez le cordonnier. Mes chaussures étaient prêtes et il ne m'a pris que douze euros. J'étais contente.
+
+Puis la pharmacie, où la pharmacienne m'a bien expliqué le médicament.
+
+Ensuite, le magasin de jouets pour le cadeau de ma nièce. J'ai hésité longtemps, puis j'ai choisi un jeu de construction.
+
+Enfin, la boulangerie. Mais quand je suis arrivée, il y avait un papier sur la porte : « Fermé le samedi après-midi. »
+
+Il était une heure et quart. Trop tard !
+
+Cinq choses sur six. Pour le pain, ce sera demain.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-049",
+    title: "À la poste",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je devais envoyer un colis à ma sœur au Canada.",
+    blurbEn:
+      "Sending a parcel abroad: forms, weight, two prices, and a decision between fast and expensive or slow and cheap. (Section: Errands in town, 2/5.)",
+    body: `Je devais envoyer un colis à ma sœur, qui habite au Canada. C'était son anniversaire dans deux semaines.
+
+J'avais mis dans une boîte un livre, une écharpe et des biscuits français, parce qu'elle adore ça.
+
+À la poste, j'ai pris un ticket : numéro 34. Sur l'écran, il y avait le numéro 27. J'ai attendu.
+
+Pendant ce temps, j'ai regardé autour de moi. Une dame envoyait des lettres. Un homme retirait de l'argent. Un jeune homme achetait des timbres.
+
+Quand mon tour est arrivé, l'employée m'a demandé : « Bonjour, c'est pour quoi ? »
+
+« Je voudrais envoyer ce colis au Canada, s'il vous plaît. »
+
+Elle a mis la boîte sur une balance. « Un kilo trois cents. Il y a des objets fragiles ? »
+
+« Non, mais il y a des biscuits. »
+
+Elle m'a donné un formulaire à remplir. Il fallait écrire l'adresse, mais aussi ce qu'il y avait dans le colis et la valeur.
+
+Puis elle m'a proposé deux options : « En express, il arrive dans cinq jours : quarante-deux euros. En normal, entre deux et trois semaines : dix-neuf euros. »
+
+J'ai réfléchi. Deux ou trois semaines, c'était trop long pour l'anniversaire. Mais quarante-deux euros, c'était plus cher que le cadeau !
+
+Finalement, j'ai choisi l'express.
+
+Ma sœur a reçu le colis quatre jours plus tard. Elle m'a envoyé une photo : elle mangeait déjà les biscuits.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-050",
+    title: "Chez le coiffeur",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je n'étais pas allée chez le coiffeur depuis huit mois.",
+    blurbEn:
+      "Eight months without a haircut, a vague instruction, and the moment in front of the mirror when it's much shorter than planned. (Section: Errands in town, 3/5.)",
+    body: `Je n'étais pas allée chez le coiffeur depuis huit mois. Mes cheveux étaient beaucoup trop longs.
+
+J'ai téléphoné jeudi pour prendre rendez-vous. « Samedi à onze heures, ça vous va ? » m'a-t-on demandé. J'ai dit oui.
+
+Samedi, je suis arrivée un peu en avance. Le salon était plein et il y avait de la musique. Ça sentait le shampooing.
+
+Une jeune femme m'a installée devant un miroir. « Alors, qu'est-ce qu'on fait aujourd'hui ? »
+
+Et là, j'ai fait une erreur. Je ne savais pas exactement ce que je voulais, alors j'ai répondu : « Juste un peu plus court, s'il vous plaît. »
+
+« Un peu plus court », c'est très vague. Cinq centimètres ? Quinze ?
+
+Elle a d'abord lavé mes cheveux. C'était très agréable : l'eau chaude, le massage. J'ai presque dormi.
+
+Ensuite, elle a commencé à couper. Je regardais les cheveux tomber par terre. Beaucoup de cheveux.
+
+Quand elle a fini, elle a tourné le miroir. « Voilà ! Ça vous plaît ? »
+
+J'ai regardé. C'était court. Vraiment court. Bien plus court que dans ma tête.
+
+J'ai dit : « C'est... très bien, merci. »
+
+Dans la rue, j'étais un peu triste. Mais le soir, mon mari a dit : « Tu as l'air plus jeune ! »
+
+Et le lundi, deux collègues m'ont fait des compliments.
+
+Finalement, j'aime beaucoup. Mais la prochaine fois, j'apporterai une photo.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-051",
+    title: "Un problème à la banque",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mardi, ma carte bancaire n'a pas marché au supermarché.",
+    blurbEn:
+      "A bank card that stops working in a supermarket queue, a phone call that goes nowhere, and a real person who solves it in ten minutes. (Section: Errands in town, 4/5.)",
+    body: `Mardi, au supermarché, ma carte bancaire n'a pas marché.
+
+J'avais un chariot plein et il y avait quatre personnes derrière moi. La caissière a essayé deux fois. « Carte refusée », disait la machine.
+
+J'étais très gênée. Heureusement, j'avais un peu d'argent liquide dans mon sac, alors j'ai pu payer.
+
+Mais je ne comprenais pas pourquoi. J'étais sûre d'avoir de l'argent sur mon compte.
+
+Le soir, j'ai regardé sur internet. Mon compte allait bien. Alors quel était le problème ?
+
+J'ai téléphoné à ma banque. J'ai attendu quinze minutes avec une musique horrible. Puis une voix a dit : « Toutes nos lignes sont occupées. Rappelez plus tard. » Et ça a coupé !
+
+J'étais énervée.
+
+Le lendemain matin, je suis allée directement à l'agence. J'ai attendu dix minutes, puis un conseiller m'a reçue.
+
+Je lui ai expliqué le problème. Il a regardé son ordinateur pendant une minute.
+
+« Ah, je vois. Votre carte a expiré à la fin du mois dernier. Nous vous avons envoyé une nouvelle carte il y a trois semaines. »
+
+Une nouvelle carte ? Je n'avais rien reçu.
+
+Puis j'ai réfléchi... et j'ai compris. Il y avait une enveloppe de la banque sur mon bureau, à la maison. Je ne l'avais jamais ouverte.
+
+Le conseiller a souri. « Ça arrive souvent, vous savez. »
+
+Le soir, j'ai ouvert l'enveloppe. Ma nouvelle carte était dedans.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-052",
+    title: "Le bureau des objets trouvés",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "J'ai oublié mon parapluie dans le tram. Je suis allé le chercher.",
+    blurbEn:
+      "A lost umbrella leads to the lost-property office, a room full of forgotten things, and a surprising conversation about what people leave behind. (Section: Errands in town, 5/5.)",
+    body: `La semaine dernière, j'ai oublié mon parapluie dans le tram. Ce n'était pas un parapluie ordinaire : c'était un cadeau de mon grand-père.
+
+Le soir, j'ai cherché sur internet et j'ai trouvé l'adresse du bureau des objets trouvés. Il était ouvert du lundi au vendredi, de neuf heures à midi.
+
+Jeudi matin, j'y suis allé. Le bureau était petit et il n'y avait personne, sauf un employé derrière un comptoir.
+
+« Bonjour, j'ai perdu un parapluie dans le tram lundi soir. »
+
+« Quelle ligne ? »
+
+« La ligne B. »
+
+Il a écrit quelque chose, puis il a disparu dans une pièce derrière lui.
+
+Pendant qu'il cherchait, j'ai regardé par la porte ouverte. Cette pièce était incroyable ! Il y avait des étagères du sol au plafond, remplies d'objets : des sacs, des manteaux, des livres, des lunettes, des jouets. Il y avait même une guitare et un vélo d'enfant.
+
+L'employé est revenu avec trois parapluies. « C'est l'un de ceux-là ? »
+
+Le deuxième était le mien ! Noir, avec une poignée en bois.
+
+Il m'a demandé une pièce d'identité et j'ai signé un papier.
+
+« Vous avez de la chance », m'a-t-il dit. « Les gens ne viennent presque jamais chercher leurs affaires. Nous gardons tout pendant un an, puis nous donnons les objets. »
+
+En partant, j'ai regardé encore les étagères.
+
+Toutes ces choses attendent quelqu'un.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-053",
+    title: "Mon job d'été",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "L'été de mes dix-huit ans, j'ai travaillé dans un camping.",
+    blurbEn:
+      "A first summer job at a campsite: cleaning, tired feet, difficult customers — and a first pay slip that felt enormous. (Section: First jobs, 1/5.)",
+    body: `L'été de mes dix-huit ans, j'ai travaillé dans un camping au bord de la mer. C'était mon premier vrai travail.
+
+J'avais envoyé mon CV à dix endroits différents. Un seul m'a répondu : le camping « Les Pins ». Le patron m'a téléphoné et il m'a embauché pour deux mois, en juillet et en août.
+
+Mon travail n'était pas très intéressant. Le matin, je nettoyais les sanitaires. L'après-midi, je ramassais les poubelles et je balayais les allées. Le soir, j'aidais à l'accueil.
+
+Je commençais à sept heures et je finissais à seize heures, six jours par semaine.
+
+C'était fatigant. À la fin de la journée, j'avais mal aux jambes et au dos. Je n'avais jamais imaginé qu'un travail physique était si dur.
+
+Certains clients étaient très gentils. D'autres étaient difficiles : ils se plaignaient de tout, et parfois ils me parlaient mal. Au début, ça me blessait beaucoup.
+
+Un collègue plus âgé m'a donné un conseil : « Ne le prends pas personnellement. Ils sont en vacances et ils sont stressés. Ce n'est pas contre toi. »
+
+Il avait raison, et ça m'a beaucoup aidé.
+
+À la fin du mois de juillet, j'ai reçu mon premier salaire : mille deux cents euros. J'ai regardé le papier pendant cinq minutes. C'était mon argent, gagné par mon travail.
+
+Ce job n'était pas mon rêve. Mais il m'a appris deux choses : la valeur de l'argent, et le respect pour les gens qui font ces métiers toute leur vie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-054",
+    title: "Un entretien pour un petit boulot",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "J'avais rendez-vous à quatorze heures pour un poste de serveur.",
+    blurbEn:
+      "A short interview for a waiter's job: nerves, honest answers about no experience, and one question that got the job. (Section: First jobs, 2/5.)",
+    body: `Le mois dernier, j'ai passé un entretien pour un petit boulot de serveur dans un café. J'avais rendez-vous à quatorze heures.
+
+J'étais nerveux. C'était mon premier entretien et je n'avais aucune expérience dans un restaurant.
+
+Avant de partir, ma sœur m'a aidé. « Habille-toi correctement, arrive en avance, et regarde la personne dans les yeux. »
+
+Je suis arrivé à deux heures moins dix. La patronne du café s'appelait madame Fournier. Elle m'a fait asseoir à une table, dans le café vide.
+
+Elle a regardé mon CV pendant quelques secondes. Il était très court.
+
+« Vous n'avez jamais travaillé dans la restauration ? »
+
+« Non », j'ai répondu. J'avais envie de mentir un peu, mais je ne l'ai pas fait. « Mais j'apprends vite et je suis sérieux. »
+
+Elle a posé d'autres questions. Est-ce que je pouvais travailler le week-end ? Est-ce que j'étais disponible le soir ? Comment est-ce que je réagissais quand un client n'était pas content ?
+
+Cette dernière question était difficile. J'ai réfléchi, puis j'ai répondu : « J'écouterais d'abord, et j'irais chercher quelqu'un si je ne savais pas quoi faire. »
+
+Elle a fait un petit signe de la tête.
+
+À la fin, elle m'a demandé si j'avais des questions. J'en avais préparé une : « Comment se passe une journée typique ici ? »
+
+Elle a parlé pendant cinq minutes, avec plaisir.
+
+Deux jours après, elle m'a appelé. Je commençais le samedi suivant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-055",
+    title: "Retourner à l'école à trente ans",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "À trente-deux ans, je suis retournée sur les bancs de l'école.",
+    blurbEn:
+      "Going back to study at thirty-two: younger classmates, forgotten habits, and the strange pride of being the oldest in the room. (Section: First jobs, 3/5.)",
+    body: `À trente-deux ans, je suis retournée à l'école. Enfin, pas exactement à l'école : j'ai commencé une formation d'infirmière.
+
+Avant, je travaillais dans un magasin. Le travail était correct, mais je m'ennuyais. Je voulais faire quelque chose d'utile.
+
+La décision a été difficile. J'avais un salaire, un appartement, une vie tranquille. Pendant la formation, j'allais gagner beaucoup moins d'argent. Mes parents étaient inquiets : « Tu es sûre ? À ton âge ? »
+
+Le premier jour, j'étais très nerveuse. Dans la salle, il y avait vingt-cinq étudiants. La plupart avaient vingt ou vingt-deux ans. J'étais la plus âgée.
+
+Au début, je me sentais bizarre. Les autres parlaient de choses que je ne connaissais pas. Ils sortaient le soir, moi j'étais fatiguée à neuf heures.
+
+Et j'avais oublié comment étudier ! Pendant dix ans, je n'avais pas ouvert un cahier. Les premiers examens ont été durs.
+
+Mais peu à peu, j'ai trouvé ma place. J'avais aussi des avantages : j'étais organisée, j'avais l'habitude de travailler avec le public, et je savais pourquoi j'étais là.
+
+Deux jeunes étudiantes ont commencé à travailler avec moi. Elles m'appelaient « la sage ». Ça me faisait rire.
+
+Maintenant, je suis en deuxième année. Je travaille beaucoup et j'ai moins d'argent qu'avant.
+
+Mais le matin, je me lève sans effort.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-056",
+    title: "Mon stage en entreprise",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Pendant mes études, j'ai fait un stage de trois mois.",
+    blurbEn:
+      "Three months as an intern: making coffee at first, then a small real task — and the moment of being taken seriously. (Section: First jobs, 4/5.)",
+    body: `Pendant mes études, j'ai fait un stage de trois mois dans une entreprise. Je devais le faire pour valider mon diplôme.
+
+Le premier jour, je ne savais pas où me mettre. On m'a donné un bureau dans un coin et un ordinateur très lent.
+
+La première semaine a été ennuyeuse. Je n'avais presque rien à faire. Je classais des papiers, je photocopiais des documents, et une fois, on m'a demandé d'aller chercher des cafés.
+
+Le soir, je rentrais un peu déçue. Ce n'était pas ce que j'avais imaginé.
+
+Mais je ne voulais pas rester assise à ne rien faire. Alors j'ai commencé à poser des questions. Je demandais aux gens ce qu'ils faisaient et comment ça marchait. Certains n'avaient pas le temps, mais d'autres m'expliquaient volontiers.
+
+Après deux semaines, une collègue, Nathalie, m'a proposé quelque chose. « Tu veux m'aider à préparer un document pour un client ? »
+
+J'ai dit oui immédiatement.
+
+J'ai travaillé sur ce document pendant trois jours. J'ai fait des recherches, j'ai écrit un résumé, j'ai vérifié les chiffres deux fois.
+
+Quand Nathalie l'a lu, elle a dit : « C'est très bien. Je vais l'envoyer comme ça. »
+
+Après ce jour, tout a changé. On m'a confié d'autres tâches, plus intéressantes.
+
+À la fin du stage, Nathalie m'a dit : « Envoie-moi ton CV quand tu auras fini tes études. »
+
+Deux ans plus tard, je l'ai fait.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-057",
+    title: "Le collègue qui m'a aidé",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Quand j'ai commencé ce travail, je ne comprenais rien.",
+    blurbEn:
+      "A patient older colleague makes the difference in a difficult first month — and years later, the favour gets passed on. (Section: First jobs, 5/5.)",
+    body: `Quand j'ai commencé mon travail actuel, il y a six ans, je ne comprenais presque rien.
+
+L'entreprise utilisait des logiciels que je ne connaissais pas. Il y avait des règles, des habitudes, des mots que tout le monde comprenait sauf moi.
+
+Pendant les réunions, je notais tout, mais je ne posais pas de questions. J'avais peur de paraître bête.
+
+Le soir, je rentrais chez moi épuisée et inquiète. Je pensais : « Ils ont fait une erreur en m'embauchant. »
+
+Après deux semaines, un collègue est venu me parler. Il s'appelait Bernard et il travaillait là depuis vingt-deux ans. Il avait presque soixante ans.
+
+« Ça va ? » m'a-t-il demandé. « Tu as l'air perdue. »
+
+J'ai hésité, puis j'ai dit la vérité : « Je ne comprends pas la moitié de ce qu'on me dit. »
+
+Il a ri gentiment. « Bien sûr ! Personne ne comprend au début. Moi non plus, en 2002. »
+
+À partir de ce jour, Bernard a pris quinze minutes chaque matin pour m'expliquer les choses. Il ne se moquait jamais de mes questions.
+
+Il m'a dit une phrase que je n'ai pas oubliée : « La question bête, c'est celle qu'on ne pose pas. »
+
+Bernard est parti à la retraite l'année dernière.
+
+Le mois dernier, une jeune femme a rejoint mon équipe. Elle avait l'air perdue en réunion.
+
+Alors je suis allée la voir. « Ça va ? Tu veux qu'on prenne quinze minutes demain matin ? »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
