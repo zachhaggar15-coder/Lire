@@ -546,6 +546,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-france-britain",
+    band: "B1",
+    title: "France and Britain",
+    goal: "Compare schooling, protest, bureaucracy, holidays and mutual admiration.",
+    textIds: [
+      "starter-b1-111", // Deux façons de faire l'école (levels up A2 France and Britain)
+      "starter-b1-112", // Manifester, une tradition française ?
+      "starter-b1-113", // L'administration française vue de l'étranger
+      "starter-b1-114", // Le rapport au temps libre
+      "starter-b1-115", // Ce que chacun envie à l'autre
+    ],
+  },
+  {
+    id: "b1-work-meaning",
+    band: "B1",
+    title: "Work and meaning",
+    goal: "Passion at work, meetings, invisible labour, disappearing jobs and retirement.",
+    textIds: [
+      "starter-b1-116", // Faut-il aimer son travail ? (levels up B1 Work & careers)
+      "starter-b1-117", // Les réunions qui ne servent à rien
+      "starter-b1-118", // Le travail invisible
+      "starter-b1-119", // Quand le métier disparaît
+      "starter-b1-120", // Prendre sa retraite, et après ?
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

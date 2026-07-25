@@ -10991,4 +10991,332 @@ Il suffit, littéralement, d'appuyer sur un interrupteur.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-111",
+    title: "Deux façons de faire l'école",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les systèmes scolaires français et britannique diffèrent profondément.",
+    blurbEn:
+      "French and British schooling differ in structure, philosophy and pace. Neither is obviously better, but the contrast is revealing. (Section: France and Britain, 1/5.)",
+    body: `Les systèmes éducatifs français et britannique se ressemblent moins qu'on ne le croit, et les différences ne portent pas seulement sur l'organisation.
+
+La première tient à la spécialisation. En France, les élèves suivent un tronc commun assez large jusqu'au baccalauréat : même en filière scientifique, ils étudient la philosophie, l'histoire et une ou deux langues. En Angleterre, la spécialisation intervient beaucoup plus tôt : un élève de dix-sept ans peut n'étudier que trois matières.
+
+Chaque approche a sa logique. La spécialisation précoce permet d'aller plus loin dans un domaine ; le tronc commun retarde le choix et maintient une culture générale partagée.
+
+La deuxième différence est l'évaluation. Le système français note traditionnellement sur vingt, avec une culture où quinze est déjà une très bonne note et où vingt est presque théorique. Le système britannique fonctionne par lettres et par paliers, avec des attentes différentes.
+
+Cette différence dépasse la technique. Un élève français apprend tôt qu'il n'atteindra pas la perfection ; certains y voient une saine exigence, d'autres une source de découragement.
+
+La troisième différence concerne la journée. La journée scolaire française est longue, avec une vraie pause déjeuner et un repas servi à table. Les activités sportives et artistiques se déroulent souvent en dehors de l'école, dans des clubs. En Angleterre, ces activités sont fréquemment intégrées à l'établissement.
+
+Enfin, l'uniforme, courant outre-Manche, est très rare en France.
+
+Il serait vain de désigner un vainqueur.
+
+Les deux systèmes forment des élèves compétents, avec des habitudes intellectuelles différentes.
+
+Ce qu'ils révèlent surtout, ce sont deux idées de ce qu'une école doit produire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-112",
+    title: "Manifester, une tradition française ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La France a la réputation de descendre facilement dans la rue.",
+    blurbEn:
+      "The French reputation for protest is real but often misunderstood. It has roots in history and in how negotiation actually works. (Section: France and Britain, 2/5.)",
+    body: `La France a, à l'étranger, une réputation solide : celle d'un pays où l'on manifeste souvent. Cette image n'est pas fausse, mais elle mérite d'être expliquée plutôt que caricaturée.
+
+Les statistiques comparatives confirment une fréquence de mobilisations supérieure à celle de la plupart des voisins européens. Reste à comprendre pourquoi.
+
+Une première explication est historique. La Révolution de 1789 a installé l'idée que le peuple peut légitimement contester le pouvoir. Cette mémoire est enseignée à l'école et reste vivante dans le discours politique.
+
+Une deuxième explication tient au fonctionnement du dialogue social. Dans plusieurs pays d'Europe du Nord, les syndicats sont puissants, comptent de nombreux adhérents et négocient directement avec les employeurs. En France, le taux de syndicalisation est faible, mais la capacité de mobilisation est forte.
+
+Il en résulte une culture différente : la négociation intervient souvent après le rapport de force, alors qu'ailleurs elle le précède.
+
+Une troisième explication est institutionnelle. Le pouvoir français est fortement centralisé. Quand une décision importante se prend à Paris, contester localement a peu d'effet, et la rue devient le canal d'expression.
+
+Cette culture a ses coûts, régulièrement rappelés : grèves de transports, conflits longs, difficulté à réformer.
+
+Elle a aussi produit des acquis auxquels une majorité de Français tient, obtenus par des mobilisations.
+
+Mon ami Tom, arrivé de Londres, a mis du temps à s'y faire. La première grève qu'il a vécue l'a exaspéré.
+
+Puis un collègue lui a dit une phrase qui l'a marqué :
+
+« Ici, quand personne ne descend dans la rue, cela veut souvent dire que personne n'écoute. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-113",
+    title: "L'administration française vue de l'étranger",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les démarches administratives déroutent souvent les nouveaux arrivants.",
+    blurbEn:
+      "French bureaucracy has a formidable reputation. Some of it is deserved, some of it is a misunderstanding of a different logic. (Section: France and Britain, 3/5.)",
+    body: `Peu de sujets font autant parler les étrangers installés en France que l'administration. Le mot « paperasse » figure parmi les premiers qu'ils apprennent.
+
+Une partie de cette réputation est méritée. Les démarches supposent souvent de fournir des documents multiples, parfois plusieurs fois au même organisme, et les délais peuvent être longs.
+
+Mais une partie relève du malentendu, car les logiques diffèrent.
+
+Le système français est fondé sur la preuve écrite. Il demande des justificatifs parce qu'il part du principe qu'une affirmation doit être documentée. Le système britannique repose davantage sur la déclaration : on affirme, et les contrôles interviennent ensuite, par sondage.
+
+Aucune des deux approches n'est absurde. La première est plus lourde mais crée moins de contentieux ; la seconde est plus rapide mais suppose une confiance qui peut être trahie.
+
+Autre différence : la France a longtemps préféré des règles très détaillées, prévoyant chaque cas, plutôt que des principes généraux laissés à l'appréciation. Cela produit des textes précis, et une difficulté réelle quand une situation n'entre dans aucune case.
+
+Il faut ajouter que la dématérialisation a amélioré beaucoup de démarches. Déclarer ses impôts en ligne prend aujourd'hui quelques minutes, ce qui était impensable il y a vingt ans.
+
+Le conseil que donnent unanimement les expatriés est très concret : garder tout, classer tout, et ne jamais jeter un justificatif de domicile.
+
+Tom a mis trois ans à comprendre le système.
+
+Il conserve désormais un classeur — une habitude qu'il n'avait jamais eue à Londres.
+
+« Ça m'agace toujours », dit-il. « Mais je n'ai plus jamais de problème. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-114",
+    title: "Le rapport au temps libre",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Prendre ses vacances complètes est normal en France.",
+    blurbEn:
+      "Taking all your holiday is normal in France and less so in Britain. The difference is cultural, and it shows up in how offices run in August. (Section: France and Britain, 4/5.)",
+    body: `Une différence culturelle frappe souvent les Britanniques installés en France : le rapport aux congés.
+
+En France, prendre l'intégralité de ses vacances va de soi. Personne ne s'en excuse, et un salarié qui ne prendrait pas ses jours inquiéterait plutôt son entourage.
+
+Au Royaume-Uni comme aux États-Unis, il n'est pas rare que des salariés laissent des jours non pris. Certaines entreprises s'en félicitaient d'ailleurs implicitement, l'implication étant mesurée à la disponibilité.
+
+Cette différence se manifeste très concrètement au mois d'août. Une partie du pays ralentit : des artisans ferment trois semaines, des dossiers attendent la rentrée, et il devient difficile d'obtenir une décision administrative.
+
+Pour un nouveau venu, c'est déroutant, voire irritant. Tom a passé un mois d'août à s'agacer que personne ne réponde à ses courriels.
+
+Son collègue lui a répondu, à son retour : « J'étais en vacances. »
+
+Cette réponse, en France, est complète. Elle n'appelle ni excuse ni justification.
+
+Il y a derrière cela une idée qui structure une bonne part de la culture du travail française : le temps hors travail n'est pas un résidu, c'est une part légitime de la vie.
+
+Le droit à la déconnexion, inscrit dans la loi depuis 2017, prolonge cette logique.
+
+Il serait naïf d'idéaliser ce modèle : la France connaît aussi le surmenage, et certains secteurs le pratiquent intensément.
+
+Mais la norme sociale, elle, diffère.
+
+Après six ans en France, Tom prend désormais toutes ses vacances.
+
+« Au début, je culpabilisais », dit-il. « Maintenant, je trouve ça normal. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-115",
+    title: "Ce que chacun envie à l'autre",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les Français et les Britanniques s'observent depuis des siècles.",
+    blurbEn:
+      "After centuries of rivalry and mockery, each country quietly admires things in the other. A look at what, and why. (Section: France and Britain, 5/5.)",
+    body: `Les relations entre la France et le Royaume-Uni sont anciennes, faites de conflits, d'alliances et d'une longue tradition de moqueries réciproques.
+
+Ce qui est plus intéressant, ce sont les admirations discrètes.
+
+Ce que beaucoup de Britanniques envient à la France : le système de santé, régulièrement cité pour son accessibilité et ses délais. La qualité de l'alimentation ordinaire, notamment le fait qu'un repas correct reste abordable. La place accordée au temps libre. Et un aménagement du territoire qui a maintenu des services publics dans des villes moyennes, alors que la centralisation britannique sur Londres a été plus brutale.
+
+Ce que beaucoup de Français envient au Royaume-Uni : une administration plus légère et plus rapide. Un marché du travail où il est plus facile de rebondir après un échec, y compris après une faillite. Une culture du service commercial souvent jugée plus aimable. Et un rapport plus décontracté à la hiérarchie et au diplôme — en France, l'école fréquentée à vingt ans pèse encore à cinquante.
+
+Il y a aussi des reproches croisés, tout aussi révélateurs. Les Français trouvent les Britanniques indirects, au point qu'on ne sait jamais ce qu'ils pensent vraiment. Les Britanniques trouvent les Français abrupts, voire agressifs, alors qu'il s'agit souvent d'une franchise assumée.
+
+Ces malentendus ont un point commun : chacun interprète l'autre avec ses propres codes.
+
+Tom résume les choses à sa façon.
+
+« En Angleterre, on dit "c'est intéressant" quand on pense que c'est mauvais. En France, on dit que c'est mauvais. »
+
+« Ça m'a choqué pendant deux ans. »
+
+« Maintenant, ça me fait gagner du temps. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-116",
+    title: "Faut-il aimer son travail ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« Fais ce que tu aimes » est un conseil récent, et discutable.",
+    blurbEn:
+      "'Do what you love' is recent advice, and not harmless. What happens when a job is expected to provide meaning as well as income. (Section: Work and meaning, 1/5.)",
+    body: `« Fais ce que tu aimes et tu ne travailleras jamais un seul jour. » Cette phrase circule beaucoup. Elle mérite d'être examinée, car elle est plus récente et plus problématique qu'il n'y paraît.
+
+Pendant l'essentiel de l'histoire, le travail n'était pas censé être épanouissant. Il servait à subvenir aux besoins. L'idée qu'un emploi doive apporter du sens et de la réalisation personnelle est apparue tardivement, et surtout dans certaines catégories professionnelles.
+
+Cette évolution a du bon : elle a légitimé le refus de conditions dégradantes.
+
+Mais elle produit aussi des effets pervers.
+
+Le premier est la culpabilité. Si le travail doit être une passion, ne pas aimer le sien devient un échec personnel plutôt qu'une situation ordinaire. Or la majorité des emplois, dans n'importe quelle société, sont nécessaires sans être passionnants.
+
+Le deuxième effet est plus concret. Les secteurs où l'on fait valoir la passion — la culture, le soin, l'animation, la recherche, le sport — sont souvent ceux où les rémunérations sont les plus faibles et les conditions les plus difficiles. La passion supposée y sert d'argument implicite : puisque vous aimez cela, vous accepterez moins.
+
+Des chercheurs ont donné un nom à ce phénomène et l'ont documenté dans plusieurs pays.
+
+Faut-il alors renoncer à chercher du sens ? Certainement pas.
+
+Mais peut-être faut-il déplacer l'exigence. Un travail peut être supportable et bien payé, laissant du temps et de l'énergie pour ce qui compte ailleurs.
+
+Ce n'est pas un renoncement.
+
+C'est une autre façon de refuser que l'emploi occupe toute la place.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-117",
+    title: "Les réunions qui ne servent à rien",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une part importante du temps de travail passe en réunion.",
+    blurbEn:
+      "Meetings consume a large share of working time, and much of it is wasted. What research says about why, and what actually helps. (Section: Work and meaning, 2/5.)",
+    body: `Les cadres passent, selon les estimations, entre un tiers et la moitié de leur temps en réunion. Une proportion importante de ces réunions est jugée inutile par ceux qui y participent.
+
+Ce constat est banal. Les raisons le sont moins.
+
+La première est l'absence de décision claire à prendre. Beaucoup de réunions servent à informer, ce qu'un message écrit ferait mieux et plus vite, en laissant une trace consultable.
+
+La deuxième est le nombre de participants. Au-delà de six ou sept personnes, la discussion devient difficile : les plus à l'aise parlent, les autres se taisent, et le temps de parole individuel devient si faible que la présence perd son sens.
+
+La troisième est la durée par défaut. Une réunion programmée pour une heure durera une heure, quel que soit le sujet. Le format s'impose au contenu plutôt que l'inverse.
+
+Ce qui fonctionne, dans les organisations qui s'y sont attaquées, tient à quelques règles simples.
+
+Envoyer un ordre du jour avec la question à trancher : s'il n'y en a pas, la réunion n'a pas lieu d'être. Limiter le nombre de participants et rendre la présence facultative pour ceux qui sont seulement concernés de loin. Réduire la durée par défaut à vingt-cinq ou cinquante minutes, ce qui laisse aussi le temps de se déplacer. Terminer en énonçant qui fait quoi et pour quand.
+
+Ces principes sont connus depuis longtemps et rarement appliqués.
+
+La raison en est peut-être moins organisationnelle que sociale.
+
+Convoquer une réunion reste, dans beaucoup de structures, une manière de montrer qu'on existe.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-118",
+    title: "Le travail invisible",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une grande partie du travail effectué chaque jour n'est ni vue ni comptée.",
+    blurbEn:
+      "Domestic work, caring and organising are essential and largely uncounted. Who does them, and what happens when they are ignored. (Section: Work and meaning, 3/5.)",
+    body: `Il existe une quantité considérable de travail qui n'apparaît dans aucune statistique économique : les tâches domestiques, les soins aux enfants et aux proches âgés, l'organisation quotidienne d'un foyer.
+
+Ce travail n'est pas rémunéré, donc il n'est pas compté. Il n'en est pas moins indispensable : sans lui, aucune activité professionnelle ne serait possible.
+
+Les enquêtes sur l'emploi du temps mesurent régulièrement sa répartition. Elles montrent une réalité constante, même si l'écart se réduit lentement : les femmes en accomplissent la plus grande part, y compris lorsque les deux membres du couple travaillent à temps plein.
+
+À cette charge s'ajoute une dimension moins visible encore, que les chercheurs appellent la charge mentale. Il ne s'agit pas seulement d'exécuter une tâche, mais d'y penser : savoir qu'il faut prendre rendez-vous chez le dentiste, que les chaussures sont trop petites, qu'il faut un cadeau pour samedi.
+
+Cette charge d'anticipation est difficile à partager, parce qu'elle est invisible tant qu'elle est bien assurée. On ne remarque son existence que lorsqu'elle cesse.
+
+Les conséquences sont concrètes : ce sont majoritairement des femmes qui réduisent leur temps de travail ou interrompent leur carrière, ce qui pèse ensuite sur les salaires et sur les retraites.
+
+Les solutions relèvent de plusieurs niveaux : services de garde accessibles, congés parentaux réellement partagés, reconnaissance du statut d'aidant.
+
+Mais une part se joue à l'intérieur des foyers, dans une répartition explicitement discutée.
+
+Les couples qui y parviennent décrivent souvent la même méthode.
+
+Ils n'ont pas partagé les tâches.
+
+Ils ont partagé la responsabilité de savoir ce qu'il y a à faire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-119",
+    title: "Quand le métier disparaît",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Des métiers disparaissent, d'autres apparaissent. Ce n'est pas nouveau.",
+    blurbEn:
+      "Jobs have always disappeared with technology. What is different this time is the speed, and what happens to the people in between. (Section: Work and meaning, 4/5.)",
+    body: `La disparition de métiers n'a rien d'inédit. Les allumeurs de réverbères, les dactylographes, les opératrices téléphoniques ont existé, puis n'ont plus existé. À chaque fois, d'autres emplois sont apparus, souvent plus nombreux.
+
+Cette observation est utilisée pour rassurer : l'automatisation ne détruit pas l'emploi, elle le déplace.
+
+Sur le long terme, l'histoire lui donne plutôt raison. Mais elle passe sous silence deux difficultés.
+
+La première est le rythme. Une transformation étalée sur cinquante ans se traite par le renouvellement des générations : les enfants exercent un autre métier que leurs parents. Une transformation qui s'opère en dix ans frappe des personnes en milieu de carrière, qui doivent se reconvertir avec des charges familiales et un crédit en cours.
+
+La seconde est la géographie. Les emplois qui disparaissent et ceux qui se créent ne se trouvent pas au même endroit. Quand une usine ferme dans une ville moyenne, dire que des emplois se créent dans le numérique à deux cents kilomètres n'aide pas concrètement.
+
+Ce qui distingue les pays qui traversent bien ces transitions n'est pas la vitesse de l'automatisation : c'est l'accompagnement. Formation financée et anticipée, revenus maintenus pendant la reconversion, aide à la mobilité.
+
+Là où cet accompagnement manque, les conséquences se lisent longtemps après : chômage durable, dégradation de la santé, défiance politique.
+
+Le débat sur l'intelligence artificielle reprend aujourd'hui les mêmes termes.
+
+La question utile n'est probablement pas « combien d'emplois vont disparaître ? », car personne ne le sait précisément.
+
+Elle est : qu'aura-t-on prévu pour ceux qui les occupaient ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-120",
+    title: "Prendre sa retraite, et après ?",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La retraite est attendue, puis parfois plus difficile que prévu.",
+    blurbEn:
+      "Retirement is looked forward to for decades and can still be destabilising. What makes the difference, according to those who navigate it well. (Section: Work and meaning, 5/5.)",
+    body: `La retraite est l'un des rares événements que l'on anticipe pendant des décennies. On la souhaite, on la calcule, on en parle.
+
+Et pourtant, une partie des nouveaux retraités décrivent une période difficile, généralement six à dix-huit mois après l'arrêt.
+
+Le phénomène est documenté. Les premiers mois ressemblent souvent à de longues vacances : on dort, on répare ce qu'on avait laissé, on voyage. Puis vient une phase plus délicate, quand cette liste est épuisée.
+
+Trois pertes se combinent, rarement anticipées.
+
+La première est la structure du temps. Un emploi impose un rythme : des horaires, des échéances, des jours différenciés. Sans lui, les journées se ressemblent, et beaucoup de retraités disent avoir été surpris par cette absence de repères.
+
+La deuxième est le réseau social. Une grande partie des relations quotidiennes d'un adulte passe par le travail. Elles s'estompent souvent en quelques mois, sans conflit, simplement parce que le lien était contextuel.
+
+La troisième est l'utilité perçue. Être attendu quelque part, avoir un rôle, produit un sentiment que le repos ne remplace pas.
+
+Ceux qui traversent bien cette transition ont généralement prévu autre chose qu'un arrêt : une activité bénévole, une formation, un engagement associatif, la garde régulière de petits-enfants.
+
+Le point commun de ces activités est d'apporter à la fois du rythme, des relations et une forme de responsabilité.
+
+Un ancien collègue me l'a résumé après deux années de retraite :
+
+« Je croyais que je voulais ne rien faire. »
+
+« En réalité, je voulais choisir ce que je fais. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
