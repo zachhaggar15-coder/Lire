@@ -9411,4 +9411,310 @@ En revanche, je note quelques lignes chaque soir. Ce carnet est le seul objet qu
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-061",
+    title: "Pourquoi nous dépensons sans le vouloir",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nos décisions d'achat sont moins rationnelles qu'on ne le croit.",
+    blurbEn:
+      "We believe we choose freely, but shops and apps are designed around well-known mental shortcuts. Recognising them is the first defence. (Section: Money and choices, 1/5.)",
+    body: `Nous aimons penser que nos achats sont réfléchis : nous comparons, nous évaluons, nous décidons. Les recherches en économie comportementale racontent une autre histoire.
+
+Prenons un exemple courant. Dans un magasin, un article est affiché « 80 € au lieu de 120 € ». Notre cerveau ne retient pas vraiment le prix : il retient l'écart. Nous avons l'impression d'avoir gagné quarante euros, alors que nous en avons dépensé quatre-vingts. Le prix de référence sert d'ancre, et il est souvent choisi précisément pour cela.
+
+Autre mécanisme bien connu : la douleur du paiement. Payer en espèces fait physiquement remarquer la dépense. Payer sans contact, en une seconde, la rend presque invisible. Plusieurs études montrent que nous dépensons davantage lorsque le geste de payer est moins concret. Les paiements en plusieurs fois amplifient encore l'effet : « quatre fois vingt-cinq euros » semble plus petit que cent euros, alors que c'est la même somme.
+
+Il y a enfin la rareté artificielle. « Plus que deux en stock », « offre valable aujourd'hui » : ces messages déclenchent une réaction ancienne, la peur de manquer. Ils ne nous informent pas ; ils nous pressent.
+
+Comprendre cela ne rend personne totalement rationnel. Ces mécanismes fonctionnent même quand on les connaît.
+
+Mais on peut mettre en place quelques garde-fous simples : attendre vingt-quatre heures avant tout achat non prévu, regarder le prix final plutôt que la réduction, et se demander non pas « est-ce une bonne affaire ? » mais « en aurais-je voulu au prix normal ? ».
+
+Cette dernière question, posée honnêtement, fait souvent tomber l'envie.
+
+Ce n'est pas de la privation. C'est simplement reprendre la décision.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-062",
+    title: "L'épargne de précaution",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une réserve d'argent change la façon de vivre les imprévus.",
+    blurbEn:
+      "An emergency fund is not about getting rich; it is about not being forced into bad decisions when something breaks. (Section: Money and choices, 2/5.)",
+    body: `On parle beaucoup d'investissement et assez peu d'une chose plus élémentaire : l'épargne de précaution, c'est-à-dire une réserve d'argent disponible immédiatement en cas d'imprévu.
+
+L'idée n'a rien de spectaculaire. Il ne s'agit pas de faire fructifier son argent, mais de pouvoir absorber un choc : une voiture en panne, un appareil à remplacer, un mois de revenus en moins.
+
+Son intérêt principal n'est d'ailleurs pas financier. Il est stratégique.
+
+Une personne sans réserve subit les imprévus. Si sa machine à laver tombe en panne, elle doit soit s'endetter à un taux élevé, soit accepter la première solution disponible, soit se passer de la machine. Aucune de ces options n'est bonne, et toutes coûtent cher à terme.
+
+Une personne qui dispose d'une réserve, même modeste, peut au contraire prendre le temps de comparer, attendre une réparation moins chère, ou refuser un crédit désavantageux.
+
+C'est ce que les spécialistes appellent parfois « le coût de la pauvreté » : être à court d'argent oblige à faire des choix qui, précisément, coûtent plus cher.
+
+Combien faut-il mettre de côté ? Les conseils varient, souvent entre un et trois mois de dépenses courantes. Mais ce chiffre décourage beaucoup de gens, qui renoncent avant de commencer.
+
+Or l'essentiel est ailleurs. Une réserve de cinq cents euros change déjà énormément de situations quotidiennes.
+
+Le meilleur conseil que j'aie reçu était très simple : mettre de côté un petit montant automatiquement, le jour du salaire, avant de dépenser quoi que ce soit.
+
+Ce qu'on ne voit pas passer ne manque pas.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-063",
+    title: "Réparer plutôt que remplacer",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Réparer un appareil est parfois plus difficile que d'en acheter un neuf.",
+    blurbEn:
+      "Repairing used to be normal and is now oddly difficult. What changed, and what repair cafés and new rules are trying to fix. (Section: Money and choices, 3/5.)",
+    body: `Il y a quarante ans, on réparait. Un grille-pain, une télévision, une machine à laver : il existait un réparateur dans chaque quartier, et remplacer un appareil en état de marche aurait paru absurde.
+
+Aujourd'hui, la situation s'est inversée. Faire réparer coûte souvent presque aussi cher qu'acheter neuf, et parfois davantage.
+
+Plusieurs raisons expliquent ce basculement.
+
+D'abord, le prix des objets manufacturés a beaucoup baissé, tandis que le coût du travail humain a augmenté. Une heure de main-d'œuvre peut dépasser la valeur de l'appareil.
+
+Ensuite, la conception a changé. Beaucoup de produits sont assemblés par collage plutôt que par vis, ce qui rend l'ouverture difficile sans casse. Certaines pièces détachées ne sont pas vendues séparément, ou disparaissent quelques années après la commercialisation.
+
+Enfin, les logiciels jouent un rôle croissant. Un appareil parfaitement fonctionnel peut devenir inutilisable simplement parce qu'il ne reçoit plus de mises à jour.
+
+Des choses bougent toutefois. La France a instauré un « indice de réparabilité » affiché sur certains produits, et un bonus réparation qui prend en charge une partie du coût. Le droit européen impose progressivement la disponibilité des pièces détachées.
+
+Parallèlement, des « repair cafés » se sont développés : des bénévoles y aident à réparer gratuitement, en apprenant aux gens à le faire eux-mêmes.
+
+J'y suis allé une fois, avec un aspirateur qui ne fonctionnait plus.
+
+Le problème était un morceau de tissu coincé. La réparation a pris douze minutes.
+
+J'ai failli jeter un appareil de deux cents euros.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-064",
+    title: "Les abonnements qu'on oublie",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Douze euros par mois paraissent peu. Ils ne le sont pas.",
+    blurbEn:
+      "Small monthly subscriptions are designed to be forgotten. An audit of one household's bank statement, and what it revealed. (Section: Money and choices, 4/5.)",
+    body: `Le mois dernier, j'ai fait un exercice que je recommande à tout le monde : j'ai relu douze mois de relevés bancaires, ligne par ligne, en cherchant uniquement les paiements récurrents.
+
+J'ai trouvé onze abonnements actifs. J'en utilisais réellement quatre.
+
+Il y avait deux services de vidéo, dont un que je n'avais pas ouvert depuis huit mois. Une application de sport souscrite en janvier, dans un moment d'enthousiasme, et utilisée trois fois. Un espace de stockage en ligne dont j'avais oublié l'existence. Un magazine numérique. Une garantie sur un appareil que je ne possédais plus.
+
+Le total atteignait soixante-treize euros par mois, soit près de neuf cents euros par an.
+
+Ce qui m'a frappé, ce n'est pas la somme : c'est de ne pas l'avoir remarquée.
+
+Le modèle de l'abonnement repose précisément là-dessus. Chaque montant est volontairement modeste, en dessous du seuil où l'on réagit. Le prélèvement est automatique, donc invisible. Et il n'y a aucun moment de décision : on ne choisit pas de payer, on choisit seulement d'arrêter — ce qui demande un effort actif.
+
+Les entreprises le savent parfaitement. C'est pourquoi il faut souvent trois clics pour s'inscrire et beaucoup plus pour résilier.
+
+J'ai supprimé sept abonnements. La procédure a pris environ quarante minutes au total.
+
+Quarante minutes pour six cents euros par an : c'est probablement le meilleur taux horaire de ma vie.
+
+Depuis, j'ai adopté une règle. Chaque année, en janvier, je relis mes relevés.
+
+Et j'annule tout ce que je ne pourrais pas justifier à voix haute.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-065",
+    title: "Le prix des choses n'est pas leur valeur",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Deux objets au même prix ne se valent pas.",
+    blurbEn:
+      "Cost per use, not sticker price, is the useful measure — and it explains why cheap things are often expensive. (Section: Money and choices, 5/5.)",
+    body: `Il y a quelques années, j'ai acheté une paire de chaussures à trente euros. Elles ont tenu sept mois. J'en ai racheté une paire semblable, puis une autre.
+
+Un ami m'a alors expliqué un calcul très simple, qui a changé ma façon d'acheter : le coût par utilisation.
+
+Trente euros pour sept mois de port quotidien, cela revient à environ quatorze centimes par jour. Une paire à cent vingt euros qui dure cinq ans revient à sept centimes. La paire « chère » coûte donc deux fois moins.
+
+Ce raisonnement ne s'applique pas partout, et il ne faut pas en faire une règle absolue. Le prix élevé ne garantit nullement la qualité : dans beaucoup de secteurs, on paie surtout une marque. Il faut donc regarder la fabrication, la garantie, la possibilité de réparer.
+
+Il suppose aussi d'avoir l'argent au départ, ce qui est loin d'être le cas de tout le monde. Ne pas pouvoir acheter durable et devoir remplacer sans cesse est l'une des façons les plus concrètes dont le manque d'argent coûte cher.
+
+Mais quand le choix est possible, la question utile n'est pas « combien ça coûte ? ». Elle est : « combien de temps cela va-t-il durer, et pourrai-je le faire réparer ? »
+
+J'ai appliqué cette logique à quelques objets seulement : les chaussures, un manteau, une casserole, un sac.
+
+Ils m'ont coûté plus cher au départ. Je les ai tous encore.
+
+Et curieusement, j'y fais davantage attention.
+
+On prend mieux soin de ce qu'on n'a pas prévu de remplacer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-066",
+    title: "Nos téléphones captent notre attention",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les applications sont conçues pour être difficiles à quitter.",
+    blurbEn:
+      "Apps are engineered to hold attention, using the same mechanisms as slot machines. Understanding the design makes it easier to resist. (Section: Technology in daily life, 1/5.)",
+    body: `Il est facile de se reprocher son manque de volonté devant un téléphone. C'est oublier que ces applications sont conçues, par des équipes entières, pour capter l'attention le plus longtemps possible.
+
+Le mécanisme principal porte un nom : la récompense variable. Quand on tire le fil d'actualité vers le bas, on ne sait pas ce qu'on va trouver — rien d'intéressant, ou quelque chose de passionnant. Cette incertitude est exactement le principe des machines à sous, et le cerveau y réagit très fortement. Une récompense prévisible lasse ; une récompense imprévisible retient.
+
+S'y ajoutent d'autres éléments : le défilement infini, qui supprime tout point d'arrêt naturel ; la lecture automatique de la vidéo suivante ; les notifications, qui créent une interruption à laquelle il est difficile de ne pas répondre.
+
+Aucune de ces techniques n'est un accident. Elles sont mesurées, testées, optimisées.
+
+Le résultat est mesurable : le temps d'écran moyen dépasse trois heures par jour dans la plupart des pays européens. Ce n'est pas que trois heures perdues, car une partie est utile. Mais très peu de gens, interrogés honnêtement, disent avoir choisi ce temps.
+
+Que faire ? Les conseils qui fonctionnent ne reposent pas sur la volonté, mais sur la friction.
+
+Désactiver les notifications non essentielles supprime les interruptions. Ranger les applications les plus captivantes dans un dossier, hors de l'écran d'accueil, ajoute deux gestes — ce qui suffit souvent. Laisser le téléphone dans une autre pièce le soir est plus efficace que toute résolution.
+
+L'idée n'est pas de diaboliser ces outils, qui rendent d'immenses services.
+
+Elle est de rétablir un rapport plus équilibré : que ce soit nous qui décidions du moment, et non l'inverse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-067",
+    title: "Qui n'a pas accès au numérique ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Tout se fait en ligne. Pour certains, c'est un vrai problème.",
+    blurbEn:
+      "As administration moves online, millions are left behind — not only older people. What digital exclusion actually looks like. (Section: Technology in daily life, 2/5.)",
+    body: `En France, la plupart des démarches administratives se font aujourd'hui en ligne : déclarer ses revenus, demander une aide, renouveler un document, prendre un rendez-vous médical.
+
+Pour la majorité des gens, c'est un progrès : plus rapide, disponible à toute heure, sans file d'attente.
+
+Mais une partie importante de la population rencontre de réelles difficultés. On parle d'illectronisme, ou d'exclusion numérique. Selon les estimations, plusieurs millions de personnes sont concernées en France.
+
+On imagine spontanément des personnes âgées, et elles constituent effectivement une part importante. Mais ce serait une erreur de s'arrêter là.
+
+Il y a aussi des personnes qui n'ont pas d'équipement adapté : un smartphone ne remplace pas un ordinateur pour remplir un dossier complexe ou téléverser des documents. Il y a celles qui vivent dans des zones où la connexion reste mauvaise. Il y a celles qui lisent difficilement le français administratif — une langue déjà compliquée sur papier, et qui ne s'améliore pas à l'écran.
+
+Et il y a, tout simplement, ceux que la peur de l'erreur bloque : beaucoup de démarches ne permettent pas de revenir en arrière.
+
+Les conséquences sont sérieuses. Un pourcentage non négligeable de personnes renoncent à des droits auxquels elles ont droit, faute de pouvoir accomplir la démarche.
+
+Des réponses existent : des « France Services » dans les territoires, des médiateurs numériques, le maintien d'un accueil physique et téléphonique.
+
+Mais ces dispositifs supposent un choix politique clair : considérer que l'accompagnement fait partie du service, et non qu'il est une dépense à réduire.
+
+Une administration accessible seulement en ligne n'est pas accessible à tous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-068",
+    title: "Faut-il donner un téléphone à un enfant ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La question revient dans toutes les familles, vers dix ou onze ans.",
+    blurbEn:
+      "Every family faces the same question around age ten. Not yes or no, but what kind of phone, with what rules, and why. (Section: Technology in daily life, 3/5.)",
+    body: `La question se pose dans presque toutes les familles, généralement vers dix ou onze ans : faut-il donner un téléphone à son enfant ?
+
+Elle est souvent mal posée, car elle mélange deux choses très différentes : avoir un téléphone, et avoir un accès complet à internet et aux réseaux sociaux.
+
+Un téléphone simple, permettant d'appeler et d'envoyer des messages, répond au besoin pratique qui motive la plupart des parents : joindre son enfant quand il rentre seul de l'école ou va chez un ami. Ce besoin est réel.
+
+Un smartphone connecté est autre chose. Il donne accès à des contenus conçus pour capter l'attention, à des jeux monétisés, et à des espaces où l'enfant peut être exposé à des messages ou à des images difficiles.
+
+Les données disponibles invitent à la prudence, sans dramatiser. Ce qui inquiète le plus les spécialistes n'est pas l'usage modéré, mais deux situations précises : l'accès aux réseaux sociaux avant l'adolescence, et le téléphone dans la chambre la nuit, qui réduit nettement le temps de sommeil.
+
+Le sommeil est peut-être l'argument le plus solide, parce qu'il est mesurable et que ses effets sur l'humeur, la concentration et les résultats scolaires sont bien établis.
+
+Dans la pratique, les familles qui s'en sortent le mieux ne sont pas les plus strictes ni les plus permissives. Ce sont celles qui posent des règles claires, discutées, et surtout appliquées aux adultes aussi.
+
+Il est difficile d'exiger qu'un adolescent laisse son téléphone hors de la chambre si ses parents dînent avec le leur à table.
+
+La cohérence convainc mieux que l'interdiction.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-069",
+    title: "L'intelligence artificielle au quotidien",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous utilisons déjà l'IA, souvent sans le savoir.",
+    blurbEn:
+      "Artificial intelligence is already in translation, maps and photos. What it does well, where it fails, and why it sounds so confident. (Section: Technology in daily life, 4/5.)",
+    body: `L'intelligence artificielle occupe beaucoup l'actualité, entre promesses spectaculaires et inquiétudes. Il est utile de regarder ce qu'elle fait déjà, concrètement, dans une journée ordinaire.
+
+Elle est présente quand une application de traduction transforme un menu photographié en texte compréhensible. Quand un service de navigation recalcule un itinéraire en tenant compte du trafic. Quand un téléphone retrouve toutes les photos où apparaît une même personne. Quand une messagerie écarte les courriers indésirables.
+
+Ces usages ont un point commun : la machine reconnaît des régularités dans d'énormes quantités de données. C'est ce qu'elle fait très bien.
+
+Les outils plus récents, capables de rédiger un texte ou de répondre à une question, fonctionnent sur un principe voisin. Ils ont appris, à partir de très nombreux textes, quels mots suivent probablement quels autres. C'est ce qui explique à la fois leur aisance et leur principal défaut.
+
+Car ces systèmes ne « savent » rien au sens où nous l'entendons. Ils produisent la suite la plus plausible, ce qui n'est pas la même chose que la plus vraie. Ils peuvent donc affirmer avec assurance des informations fausses, inventer une référence, ou se tromper de date sans jamais hésiter.
+
+Cette assurance est précisément le piège : nous associons spontanément le ton confiant à la fiabilité.
+
+L'usage raisonnable qui se dégage est assez simple. Ces outils sont utiles pour dégrossir, reformuler, traduire, résumer, proposer des pistes.
+
+Ils ne remplacent pas la vérification, surtout dès qu'il s'agit de faits, de chiffres ou de décisions importantes.
+
+Autrement dit : un assistant rapide, jamais une source.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-070",
+    title: "Ce que nos données racontent de nous",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« Je n'ai rien à cacher » est une réponse trop rapide.",
+    blurbEn:
+      "'I have nothing to hide' misunderstands what data collection is. It is less about secrets than about the profile built from ordinary details. (Section: Technology in daily life, 5/5.)",
+    body: `Quand on évoque la collecte de données, une réponse revient souvent : « Je n'ai rien à cacher. »
+
+Elle part d'une intuition compréhensible, mais elle repose sur un malentendu. La question n'est pas de savoir si nous avons des secrets. Elle est de savoir ce que révèle l'accumulation de détails parfaitement anodins.
+
+Pris séparément, ces éléments ne disent rien. L'heure à laquelle on se connecte. Les trajets quotidiens. Les recherches effectuées. Les achats, les pauses, les hésitations avant de cliquer.
+
+Rassemblés, ils dessinent quelque chose de très précis : des horaires de travail, un état de santé probable, une situation familiale, des convictions, une capacité financière, parfois un moment de fragilité.
+
+Ce profil a une valeur, et c'est pour cela qu'il est constitué.
+
+Ses usages ne sont pas tous inquiétants — un service mieux adapté est parfois agréable. Mais certains posent de vraies questions : des prix qui varient selon le profil de l'acheteur, des offres de crédit ciblées sur des personnes en difficulté, des publicités politiques adressées différemment selon les sensibilités supposées.
+
+Un autre problème est la durée. Ce qui est collecté aujourd'hui peut être conservé longtemps, et interprété plus tard dans un contexte que personne ne prévoit.
+
+Le droit européen offre des protections réelles : consentement, droit d'accès, droit à l'effacement. Elles sont utiles, mais peu utilisées, tant les interfaces rendent le refus fastidieux.
+
+Quelques gestes simples réduisent la collecte : refuser les cookies non essentiels, limiter les autorisations des applications, utiliser un navigateur plus protecteur.
+
+Rien de tout cela ne relève de la paranoïa.
+
+C'est simplement décider qui, de nous ou d'un autre, connaît le mieux nos habitudes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

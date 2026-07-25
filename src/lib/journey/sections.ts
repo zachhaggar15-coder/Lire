@@ -416,6 +416,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-money",
+    band: "B1",
+    title: "Money and choices",
+    goal: "Understand why we spend, build a buffer, repair, and judge real value.",
+    textIds: [
+      "starter-b1-061", // Pourquoi nous dépensons sans le vouloir (levels up A2 Money)
+      "starter-b1-062", // L'épargne de précaution
+      "starter-b1-063", // Réparer plutôt que remplacer
+      "starter-b1-064", // Les abonnements qu'on oublie
+      "starter-b1-065", // Le prix des choses n'est pas leur valeur
+    ],
+  },
+  {
+    id: "b1-tech",
+    band: "B1",
+    title: "Technology in daily life",
+    goal: "Attention, digital exclusion, children and phones, AI, and personal data.",
+    textIds: [
+      "starter-b1-066", // Nos téléphones captent notre attention (levels up A2 Technology)
+      "starter-b1-067", // Qui n'a pas accès au numérique ?
+      "starter-b1-068", // Faut-il donner un téléphone à un enfant ?
+      "starter-b1-069", // L'intelligence artificielle au quotidien
+      "starter-b1-070", // Ce que nos données racontent de nous
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
