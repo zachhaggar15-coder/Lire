@@ -442,6 +442,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-food",
+    band: "B1",
+    title: "Food culture",
+    goal: "Discuss meals, origins, waste, meat and cooking as a skill.",
+    textIds: [
+      "starter-b1-071", // Le repas français est-il en train de changer ? (levels up A2 Cooking)
+      "starter-b1-072", // D'où vient ce que nous mangeons ?
+      "starter-b1-073", // Le gaspillage alimentaire
+      "starter-b1-074", // Manger moins de viande
+      "starter-b1-075", // Cuisiner, une compétence qui se perd ?
+    ],
+  },
+  {
+    id: "b1-relationships",
+    band: "B1",
+    title: "Relationships",
+    goal: "Friendship in adulthood, living alone, conflict, ageing parents, distance.",
+    textIds: [
+      "starter-b1-076", // Les amitiés à l'âge adulte (levels up A2 Friends and feelings)
+      "starter-b1-077", // Vivre seul, est-ce un problème ?
+      "starter-b1-078", // Les disputes utiles
+      "starter-b1-079", // Quand les parents vieillissent
+      "starter-b1-080", // Rester en contact quand on est loin
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

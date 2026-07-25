@@ -9717,4 +9717,320 @@ C'est simplement décider qui, de nous ou d'un autre, connaît le mieux nos habi
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-071",
+    title: "Le repas français est-il en train de changer ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le repas structuré résiste, mais il se transforme.",
+    blurbEn:
+      "The three-course French meal is not dead, but it is changing — shorter lunches, fewer courses, and a stubborn attachment to eating together. (Section: Food culture, 1/5.)",
+    body: `Le repas à la française — une entrée, un plat, du fromage, un dessert, pris ensemble et sans se presser — figure sur la liste du patrimoine immatériel de l'UNESCO depuis 2010. Cette reconnaissance a surpris certains : peut-on classer une façon de manger ?
+
+L'argument était pourtant précis. Ce qui était distingué, ce n'était pas la cuisine française, mais le rituel : la table dressée, l'ordre des plats, le fait de manger ensemble et de parler de ce qu'on mange.
+
+Ce rituel a-t-il disparu ? Les chiffres racontent une histoire nuancée.
+
+D'un côté, il s'est nettement raccourci. Le déjeuner de semaine dure aujourd'hui environ trente minutes en moyenne, contre bien davantage il y a quarante ans. Beaucoup de salariés mangent devant un écran, et le sandwich a pris une place considérable.
+
+Le nombre de plats a également diminué : peu de familles servent quatre services en semaine.
+
+De l'autre côté, quelque chose résiste avec une force réelle. Comparée à ses voisins, la France conserve des horaires de repas remarquablement synchronisés : à treize heures, une grande partie du pays mange au même moment. Le repas y reste très majoritairement une pratique collective, assise et à table.
+
+Et le week-end, le repas long réapparaît, surtout le dimanche.
+
+Ce qui a changé n'est donc pas tant la valeur accordée au repas que la place que le travail lui laisse en semaine.
+
+Il serait excessif de parler de disparition.
+
+Il est plus juste de dire que le repas s'est concentré : moins fréquent, mais toujours important quand il a lieu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-072",
+    title: "D'où vient ce que nous mangeons ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Peu de gens savent d'où vient réellement leur repas.",
+    blurbEn:
+      "Most of us cannot say where our food comes from. Labels help less than they seem, and the honest answers are more complicated. (Section: Food culture, 2/5.)",
+    body: `Posez la question à table : d'où vient ce poulet ? Ces tomates ? Ce fromage ? Rares sont ceux qui peuvent répondre précisément.
+
+Ce n'est pas un reproche. Les chaînes d'approvisionnement modernes sont longues et volontairement discrètes.
+
+Les étiquettes aident, mais moins qu'on ne le croit. « Fabriqué en France » signifie que la transformation a eu lieu en France, pas nécessairement que les ingrédients en viennent. Un biscuit français peut contenir du blé, du sucre et de l'huile venus de trois continents. Pour la viande, l'origine est mieux encadrée, mais la mention peut distinguer le lieu de naissance, d'élevage et d'abattage — qui ne sont pas toujours les mêmes.
+
+Faut-il alors chercher à tout savoir ? Ce serait épuisant et un peu vain.
+
+Quelques repères simples suffisent souvent.
+
+Le premier est la saison. Un produit de saison a rarement voyagé longtemps ou poussé sous serre chauffée. Il est en général moins cher, meilleur, et plus sobre en énergie.
+
+Le deuxième est le degré de transformation. Plus un produit compte d'ingrédients, plus son origine devient impossible à retracer.
+
+Le troisième est le circuit. Acheter directement à un producteur ne garantit pas la qualité, mais il permet au moins de poser la question — et d'obtenir une réponse.
+
+Il y a enfin un intérêt moins pratique. Savoir qu'une pomme met des mois à mûrir, qu'un fromage demande un affinage, qu'un poulet met plusieurs semaines à grandir change le regard porté sur son prix.
+
+Ce que nous appelons « cher » paraît parfois moins cher quand on sait ce que cela suppose.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-073",
+    title: "Le gaspillage alimentaire",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un tiers de la nourriture produite n'est jamais mangée.",
+    blurbEn:
+      "A third of the food produced worldwide is never eaten. Where the waste actually happens, and what has been shown to reduce it. (Section: Food culture, 3/5.)",
+    body: `Selon les estimations des Nations unies, près d'un tiers de la nourriture produite dans le monde n'est jamais consommée. Le chiffre est difficile à croire, et pourtant il est largement documenté.
+
+Le gaspillage ne se produit pas au même endroit selon les pays.
+
+Dans les pays à faibles revenus, les pertes surviennent surtout avant la vente : mauvaises conditions de stockage, transport lent, absence de chaîne du froid. La nourriture s'abîme avant d'arriver.
+
+Dans les pays riches, c'est l'inverse. L'essentiel du gaspillage a lieu à la fin de la chaîne, dans la distribution et surtout à la maison. En France, on estime que chaque personne jette environ trente kilos de nourriture par an, dont une part encore emballée.
+
+Les causes domestiques sont banales : on achète trop, on oublie ce qu'il y a au fond du réfrigérateur, on cuisine des portions trop grandes, on confond deux mentions de date.
+
+Cette confusion mérite d'être clarifiée. « À consommer jusqu'au » concerne la sécurité : passé ce délai, le produit peut être dangereux. « À consommer de préférence avant le » concerne la qualité : le produit reste consommable, il perd seulement en goût ou en texture. Des tonnes de riz, de pâtes et de conserves parfaitement bonnes sont jetées à cause de ce malentendu.
+
+Ce qui fonctionne, en pratique, tient à peu de choses : planifier les repas de la semaine, faire une liste, ranger les produits anciens devant, et considérer les restes comme un repas prévu plutôt que comme un reste.
+
+La loi française interdit désormais aux grandes surfaces de jeter les invendus consommables ; elles doivent les donner.
+
+C'est une avancée. Mais l'essentiel se joue encore dans nos cuisines.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-074",
+    title: "Manger moins de viande",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le débat oppose souvent deux camps. La réalité est plus graduelle.",
+    blurbEn:
+      "The meat debate is usually presented as all-or-nothing. The evidence points instead to something duller and more effective: less, and better. (Section: Food culture, 4/5.)",
+    body: `Le débat sur la viande est souvent présenté de façon binaire : en manger ou n'en manger pas du tout. Cette opposition rend la discussion difficile, alors que les données invitent à une conclusion plus modeste.
+
+Sur le plan environnemental, les ordres de grandeur sont clairs. L'élevage représente une part importante des émissions de gaz à effet de serre liées à l'alimentation, ainsi qu'une utilisation considérable de terres et d'eau. Mais toutes les viandes ne se valent pas : l'écart entre le bœuf et la volaille est très supérieur à l'écart entre la volaille et certains produits végétaux.
+
+Sur le plan de la santé, les recommandations officielles ne demandent pas la suppression. Elles conseillent de limiter la viande rouge et surtout la charcuterie, sans exclure les autres sources.
+
+Il existe aussi une dimension sociale rarement évoquée. La viande occupe une place symbolique forte dans beaucoup de cultures, y compris en France : elle marque le repas de fête, l'accueil, la générosité. Ignorer cela conduit à des discours moralisateurs qui produisent surtout de la résistance.
+
+C'est pourquoi l'approche qui fonctionne le mieux, dans les études comme dans les cantines, est peu spectaculaire : réduire la fréquence plutôt qu'interdire, améliorer la qualité de ce qui est servi, et proposer des alternatives réellement bonnes.
+
+Un plat végétarien mal préparé ne convainc personne. Un bon plat végétarien se choisit sans y penser.
+
+Personnellement, je suis passé de la viande presque chaque jour à deux ou trois fois par semaine.
+
+Je dépense autant, parce que j'achète mieux.
+
+Et je n'ai jamais eu l'impression de me priver.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-075",
+    title: "Cuisiner, une compétence qui se perd ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous regardons plus d'émissions de cuisine et nous cuisinons moins.",
+    blurbEn:
+      "We watch more cooking than ever and cook less. Why basic kitchen skills matter for money, health and independence. (Section: Food culture, 5/5.)",
+    body: `Il existe un paradoxe contemporain : jamais la cuisine n'a été aussi présente dans les médias, et jamais le temps passé à cuisiner n'a été aussi faible.
+
+Les émissions culinaires attirent des millions de téléspectateurs. Les recettes circulent en vidéo par milliers. Pourtant, le temps consacré quotidiennement à la préparation des repas a nettement diminué en cinquante ans, et la part des plats préparés dans les achats a fortement augmenté.
+
+Regarder cuisiner n'est pas cuisiner.
+
+Cette évolution s'explique aisément : des journées plus longues, des trajets, une offre de plats prêts abondante et bon marché. Il serait injuste d'y voir de la paresse.
+
+Mais elle a des conséquences concrètes.
+
+La première est financière. Cuisiner des produits bruts reste, à qualité comparable, nettement moins cher.
+
+La deuxième est nutritionnelle. Les plats industriels contiennent en moyenne plus de sel, de sucre et d'additifs, non par malveillance, mais parce qu'ils doivent se conserver et plaire immédiatement.
+
+La troisième est une forme d'autonomie. Savoir cuisiner, c'est pouvoir manger correctement avec peu d'argent, improviser avec ce qu'on a, et ne pas dépendre entièrement de ce que l'industrie propose.
+
+Or il ne s'agit pas d'un talent rare. Cinq ou six techniques suffisent pour couvrir l'essentiel : cuire des œufs, faire revenir des oignons, cuire des féculents, rôtir des légumes, faire une vinaigrette, monter une soupe.
+
+Avec cela, on tient des mois de repas.
+
+Ce n'est pas de la gastronomie, et ce n'est pas le but.
+
+C'est simplement savoir se nourrir soi-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-076",
+    title: "Les amitiés à l'âge adulte",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Se faire des amis devient plus difficile après trente ans.",
+    blurbEn:
+      "Adult friendships are harder to start, not because people change, but because the conditions that create friendship disappear. (Section: Relationships, 1/5.)",
+    body: `Beaucoup d'adultes font le même constat : il est nettement plus difficile de se faire de nouveaux amis à trente-cinq ans qu'à dix-huit.
+
+On l'explique souvent par le caractère — on serait devenu moins ouvert, plus difficile. L'explication est probablement ailleurs, et elle est plus rassurante.
+
+Les sociologues identifient trois conditions qui favorisent la naissance d'une amitié : la proximité répétée, des interactions non planifiées, et un cadre qui encourage à baisser un peu sa garde.
+
+À l'école ou à l'université, ces trois conditions sont réunies en permanence, sans aucun effort. On voit les mêmes personnes tous les jours, on se croise sans l'avoir décidé, et on partage une situation commune.
+
+À l'âge adulte, elles disparaissent presque toutes.
+
+On voit ses collègues souvent, mais dans un cadre professionnel qui limite ce qu'on montre de soi. Les rencontres deviennent planifiées : il faut proposer une date, la reporter, réorganiser. Et l'imprévu, qui crée les liens, se raréfie.
+
+Ce diagnostic a l'avantage d'être actionnable.
+
+Si les amitiés naissent de la répétition, alors ce qui fonctionne, c'est l'activité régulière : un cours hebdomadaire, un club sportif, un engagement associatif, une chorale. Non pas parce que l'activité importe, mais parce qu'elle recrée la fréquence.
+
+Un dîner unique produit rarement une amitié. Douze séances de la même activité, souvent.
+
+L'autre levier est moins confortable : il faut oser proposer. À l'âge adulte, quelqu'un doit faire le premier pas, et tout le monde attend que ce soit l'autre.
+
+Ce n'est pas envahissant.
+
+Dans la plupart des cas, la personne en face est simplement soulagée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-077",
+    title: "Vivre seul, est-ce un problème ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "De plus en plus de personnes vivent seules. Ce n'est pas la même chose que la solitude.",
+    blurbEn:
+      "More people live alone than ever, and that is not automatically bad. Isolation is what harms health — and the two are often confused. (Section: Relationships, 2/5.)",
+    body: `En France, environ un ménage sur trois est composé d'une seule personne. Cette proportion a doublé en cinquante ans, et elle continue d'augmenter.
+
+Ce chiffre est souvent commenté sur un ton inquiet. Il mérite d'être examiné plus calmement, car il mélange deux réalités différentes.
+
+Vivre seul est une situation de logement. C'est parfois choisi et apprécié : liberté, calme, absence de compromis quotidiens. Beaucoup de personnes vivant seules ont une vie sociale riche.
+
+L'isolement est autre chose. C'est l'absence de relations régulières et de soutien, et il peut parfaitement exister à l'intérieur d'un couple ou d'une famille.
+
+Cette distinction est importante, car les effets documentés sur la santé concernent l'isolement, pas le fait d'habiter seul. Les recherches sont assez convergentes : l'isolement prolongé augmente les risques cardiovasculaires, favorise la dépression et se compare, dans certaines études, à des facteurs de risque bien connus comme le tabagisme.
+
+Les populations les plus concernées ne sont pas toujours celles qu'on imagine. Les personnes âgées veuves, oui. Mais aussi les jeunes adultes fraîchement arrivés dans une ville, et les aidants qui s'occupent d'un proche malade et n'ont plus de temps pour eux.
+
+Les réponses efficaces ne consistent pas à dire aux gens de « sortir davantage ». Elles créent des occasions : associations, activités de quartier, jardins partagés, tiers-lieux, visites organisées.
+
+Ce qui rend ces dispositifs efficaces, c'est la régularité. Un événement ponctuel ne suffit pas.
+
+Vivre seul n'est donc ni bon ni mauvais en soi.
+
+Ce qui compte, c'est le nombre de personnes qui remarqueraient votre absence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-078",
+    title: "Les disputes utiles",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les couples qui durent ne sont pas ceux qui ne se disputent jamais.",
+    blurbEn:
+      "Research on couples suggests the frequency of arguments matters far less than how they are conducted. (Section: Relationships, 3/5.)",
+    body: `On imagine souvent qu'une relation réussie est une relation sans conflit. Les travaux menés sur les couples depuis plusieurs décennies suggèrent le contraire : ce n'est pas la fréquence des désaccords qui distingue les relations durables, mais leur manière de se dérouler.
+
+Certains schémas reviennent systématiquement dans les relations qui se dégradent.
+
+Le premier est la critique globale. Il y a une différence importante entre « tu n'as pas fait la vaisselle » et « tu ne fais jamais rien ». Le premier énoncé porte sur un fait ; le second porte sur la personne, et il appelle presque nécessairement une défense.
+
+Le deuxième est le mépris : l'ironie blessante, le ton condescendant, les yeux levés au ciel. C'est le signal le plus négatif identifié dans ces recherches.
+
+Le troisième est le retrait : ne plus répondre, quitter la pièce, laisser tomber. Cela met fin à la dispute sans rien résoudre, et le problème réapparaît intact.
+
+À l'inverse, les échanges qui fonctionnent partagent quelques caractéristiques : ils commencent doucement, ils portent sur un comportement précis, ils laissent à chacun la possibilité de reconnaître un point, et ils admettent des pauses quand le ton monte.
+
+Un détail souvent cité : lorsque l'un des deux devient trop tendu pour écouter, la discussion ne peut plus avancer. Une interruption de vingt minutes, annoncée et suivie d'un retour, change tout.
+
+Rien de tout cela n'est propre au couple. Les mêmes principes valent entre amis, entre collègues, entre parents et enfants.
+
+Ce n'est pas le désaccord qui abîme les relations.
+
+C'est la façon dont on le mène, et surtout dont on le termine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-079",
+    title: "Quand les parents vieillissent",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un moment arrive où les rôles commencent à s'inverser.",
+    blurbEn:
+      "The slow reversal of roles between adult children and ageing parents: the conversations nobody wants to start, and why starting early helps. (Section: Relationships, 4/5.)",
+    body: `Il existe un moment, difficile à situer, où la relation avec ses parents commence à changer. Ce n'est pas un événement unique : c'est une accumulation de petits signes.
+
+Un rendez-vous médical oublié. Une facture impayée. Une conversation où l'on répète trois fois la même chose. Une chute sans gravité, mais qui inquiète.
+
+La plupart des familles réagissent tard, et il y a de bonnes raisons à cela. Aborder le sujet suppose de reconnaître un déclin, ce que ni les parents ni les enfants n'ont envie de faire. On repousse donc, jusqu'à ce qu'une urgence impose des décisions dans la précipitation — souvent les pires conditions possibles.
+
+Les personnes qui ont traversé cette période donnent presque toujours le même conseil : parler avant.
+
+Non pas de tout organiser, mais de connaître quelques réponses. Où vos parents souhaitent-ils vivre s'ils ne peuvent plus rester seuls ? Qui doit décider s'ils ne le peuvent plus ? Où se trouvent les documents importants ? Quel est le médecin traitant ?
+
+Ces conversations sont plus faciles quand elles sont hypothétiques. Elles deviennent presque impossibles à l'hôpital, un dimanche soir.
+
+Il y a un second point, moins pratique mais tout aussi réel : la culpabilité.
+
+Beaucoup d'aidants ont le sentiment de ne jamais en faire assez, quelle que soit la quantité de temps donnée. Cette culpabilité épuise, et elle conduit fréquemment les aidants à négliger leur propre santé.
+
+S'occuper d'un parent sur plusieurs années suppose d'être encore debout à la fin.
+
+Demander de l'aide n'est pas un abandon.
+
+C'est la condition pour tenir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-080",
+    title: "Rester en contact quand on est loin",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Nous n'avons jamais eu autant d'outils, et les liens se défont quand même.",
+    blurbEn:
+      "We have more ways to stay in touch than ever, and relationships still fade. What actually keeps a long-distance friendship alive. (Section: Relationships, 5/5.)",
+    body: `Nous disposons de plus de moyens de communication que n'importe quelle génération précédente. Messages, photos, appels vidéo gratuits vers l'autre bout du monde : tout est techniquement possible.
+
+Et pourtant, les amitiés à distance continuent de s'éteindre, souvent sans dispute et sans décision.
+
+Ce paradoxe s'explique en partie par la nature de ces outils. Ils sont excellents pour le contact bref et fréquent : une photo, une réaction, un message de trois mots. Ils sont beaucoup moins adaptés à ce qui construit réellement une relation, c'est-à-dire une conversation longue et sans objectif précis.
+
+Or nous confondons facilement les deux. Voir régulièrement les publications de quelqu'un donne l'impression de garder le lien. En réalité, on suit sa vie sans jamais lui parler. Le sentiment de proximité augmente pendant que la relation, elle, s'appauvrit.
+
+Ce qui fonctionne, d'après ceux qui maintiennent des amitiés à distance sur des années, tient à deux choses.
+
+La première est la régularité choisie. Un rendez-vous fixe — le premier dimanche du mois, un appel de trente minutes — résiste bien mieux que la bonne intention de s'appeler « bientôt ». Sans date, le temps passe et la gêne s'installe.
+
+La seconde est d'accepter que la relation change de forme. Une amitié à distance ne peut pas être ce qu'elle était quand on se voyait chaque semaine. Vouloir retrouver exactement la même chose conduit surtout à la déception.
+
+J'ai un ami au Canada depuis six ans. Nous nous parlons un dimanche matin sur deux.
+
+Ce n'est pas grand-chose.
+
+Mais c'est écrit dans nos deux agendas, et c'est probablement pour cela que ça tient.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
