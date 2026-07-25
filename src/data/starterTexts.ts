@@ -7040,4 +7040,702 @@ Alors je suis allée la voir. « Ça va ? Tu veux qu'on prenne quinze minutes de
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-058",
+    title: "J'ai fait mon premier budget",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Le mois dernier, j'ai noté toutes mes dépenses.",
+    blurbEn:
+      "Writing down every expense for a month reveals where the money really goes — and it isn't the rent. (Section: Money, 1/5.)",
+    body: `Le mois dernier, j'ai fait quelque chose que je n'avais jamais fait : j'ai noté toutes mes dépenses pendant trente jours.
+
+Avant, je ne comprenais pas. Je gagnais un salaire correct, mais à la fin du mois, il ne restait presque rien. Où allait l'argent ?
+
+Alors j'ai pris un cahier. Chaque soir, j'écrivais ce que j'avais dépensé : le loyer, les courses, un café, un ticket de bus, tout.
+
+Au début, c'était pénible. Puis c'est devenu une habitude, comme se brosser les dents.
+
+À la fin du mois, j'ai additionné. Les résultats m'ont surprise.
+
+Le loyer et les factures, je les connaissais : c'était la moitié de mon salaire, mais je ne pouvais rien changer. Les courses, c'était normal aussi.
+
+Mais il y avait une troisième catégorie : les petites dépenses. Un café par-ci, un sandwich par-là, des achats sur internet. Ensemble, cela faisait deux cent quarante euros !
+
+Deux cent quarante euros. Je n'avais rien remarqué, parce que chaque dépense était petite.
+
+Ce mois-ci, j'ai décidé de changer deux choses seulement. J'apporte mon déjeuner trois fois par semaine, et je prends un café au bureau au lieu de l'acheter dehors.
+
+Je n'ai rien supprimé d'autre. Je sors toujours avec mes amis.
+
+Hier, j'ai regardé mon compte : j'ai économisé cent trente euros ce mois-ci.
+
+Un cahier à deux euros m'a fait gagner cent trente euros.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-059",
+    title: "C'est la période des soldes",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En France, les soldes ont lieu deux fois par an.",
+    blurbEn:
+      "France's twice-yearly sales are fixed by law. Crowds, real bargains, and the shirt bought only because it was cheap. (Section: Money, 2/5.)",
+    body: `En France, les soldes ont lieu deux fois par an : en janvier et en juin. Les dates sont fixées par la loi, et elles sont les mêmes pour tous les magasins.
+
+Le premier jour des soldes, il y a beaucoup de monde en ville. Certaines personnes attendent devant les magasins avant l'ouverture.
+
+Samedi dernier, j'y suis allée avec mon amie Léa. Nous avions besoin de manteaux d'hiver.
+
+Dans le premier magasin, c'était impossible : il y avait trop de gens. Les vêtements étaient partout, même par terre. Les cabines d'essayage avaient une queue de vingt minutes.
+
+Léa a trouvé un manteau à moins cinquante pour cent. Il était bleu, chaud, et il lui allait très bien. Prix d'origine : cent quarante euros. Prix soldé : soixante-dix euros. Une vraie bonne affaire !
+
+Moi, je n'ai rien trouvé dans ma taille. Les tailles moyennes partent toujours en premier.
+
+Alors j'ai fait une bêtise. J'ai acheté une chemise que je n'aimais pas beaucoup, simplement parce qu'elle coûtait douze euros au lieu de quarante.
+
+Dans le bus, Léa m'a demandé : « Tu vas la porter ? »
+
+J'ai réfléchi. « Peut-être pas. »
+
+« Alors ce n'est pas une économie. C'est une dépense. »
+
+Elle avait raison. Une chose pas chère qu'on ne porte pas coûte cher.
+
+La chemise est encore dans mon armoire, avec l'étiquette.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-060",
+    title: "J'achète beaucoup d'occasion",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Depuis deux ans, j'achète presque tout d'occasion.",
+    blurbEn:
+      "Buying second-hand for two years: cheaper, greener, and the small thrill of finding something nobody else has. (Section: Money, 3/5.)",
+    body: `Depuis deux ans, j'achète presque tout d'occasion : mes vêtements, mes meubles, mes livres. Au début, c'était pour économiser. Maintenant, c'est devenu un plaisir.
+
+Tout a commencé quand j'ai déménagé. Mon appartement était vide et je n'avais que quatre cents euros pour le meubler. Impossible d'acheter du neuf.
+
+Alors j'ai cherché sur les sites d'occasion et dans les brocantes. J'ai trouvé une table pour trente euros, quatre chaises pour quarante, et un canapé pour quatre-vingts euros. Le canapé était un peu vieux, mais très confortable.
+
+Avec du neuf, tout cela m'aurait coûté plus de mille euros.
+
+J'ai découvert deux autres avantages.
+
+D'abord, c'est meilleur pour l'environnement. Quand j'achète un objet qui existe déjà, on ne fabrique rien de nouveau. On ne jette rien non plus.
+
+Ensuite — et c'est ce que je préfère — chaque objet a une histoire. Ma table vient d'une vieille dame qui déménageait à la campagne. Elle m'a raconté que sa famille avait mangé autour de cette table pendant trente ans.
+
+Bien sûr, il faut être patient. On ne trouve pas tout de suite exactement ce qu'on veut. Il faut chercher, attendre, revenir.
+
+Mais quand on trouve la bonne chose, c'est une vraie victoire.
+
+Le mois dernier, j'ai acheté un vélo pour soixante euros. Il roule parfaitement.
+
+Mes amis me demandent souvent : « Où as-tu trouvé ça ? »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-061",
+    title: "Un achat que je regrette",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Il y a un an, j'ai acheté une machine à café très chère.",
+    blurbEn:
+      "An expensive coffee machine bought on a whim now sits unused in a cupboard — and taught a useful rule about waiting. (Section: Money, 4/5.)",
+    body: `Il y a un an, j'ai acheté une machine à café très chère : deux cent quatre-vingts euros. Aujourd'hui, elle est dans un placard.
+
+Je vais vous expliquer comment c'est arrivé.
+
+Un samedi, je suis entré dans un magasin d'électroménager pour acheter une bouilloire. Une bouilloire coûte vingt euros.
+
+Mais près de l'entrée, il y avait une démonstration. Un vendeur préparait des cafés avec une machine magnifique. Les cafés sentaient délicieusement bon.
+
+Il m'a proposé de goûter. C'était le meilleur café de ma vie.
+
+Puis il m'a expliqué tout ce que la machine pouvait faire : des expressos, des cappuccinos, du lait chaud. Il y avait dix boutons.
+
+« Vous économiserez de l'argent », m'a-t-il dit. « Un café dehors coûte deux euros cinquante. »
+
+Le calcul semblait logique. J'ai payé avec ma carte, sans réfléchir.
+
+Les deux premières semaines, j'étais ravi. Je faisais des cappuccinos tous les matins.
+
+Puis les problèmes ont commencé. La machine était compliquée à nettoyer : il fallait vingt minutes chaque semaine. Il fallait aussi acheter des capsules spéciales, assez chères.
+
+Et le matin, je n'avais pas le temps. Je voulais juste un café rapide.
+
+Après trois mois, j'ai recommencé à acheter mon café dehors.
+
+Maintenant, j'ai une règle : pour tout achat de plus de cent euros, j'attends une semaine.
+
+Souvent, l'envie disparaît.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-062",
+    title: "Prêter de l'argent à un ami",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mon ami m'a demandé de lui prêter trois cents euros.",
+    blurbEn:
+      "Lending money to a friend is never only about money. How one loan was handled well — and why the conversation mattered more than the sum. (Section: Money, 5/5.)",
+    body: `L'année dernière, mon ami Karim m'a demandé de lui prêter trois cents euros. Sa voiture était en panne et il avait besoin d'une réparation urgente pour aller travailler.
+
+J'ai hésité. Pas parce que je ne lui faisais pas confiance, mais parce que j'avais entendu beaucoup d'histoires : des amis qui se disputent à cause de l'argent, des familles qui ne se parlent plus.
+
+Prêter de l'argent, ce n'est jamais seulement une question d'argent. C'est aussi une question de relation.
+
+Finalement, j'ai dit oui. Mais nous avons fait quelque chose d'important : nous avons parlé clairement, avant.
+
+Nous avons décidé ensemble : trois cents euros, remboursés en trois fois, cent euros par mois. Karim l'a même écrit dans un message, pour que nous ayons tous les deux la même information.
+
+Certains trouvent ça froid entre amis. Moi, je pense le contraire. Le malaise vient toujours du flou : quand personne ne sait quand ni comment l'argent sera rendu.
+
+Karim m'a remboursé les deux premiers mois sans problème. Le troisième mois, il m'a envoyé un message : « Je peux te rendre les cent euros dans deux semaines ? J'ai eu une facture. »
+
+Il avait prévenu, alors ce n'était pas un problème.
+
+Il m'a tout remboursé en quatre mois au lieu de trois.
+
+Aujourd'hui, nous sommes toujours amis. Et je crois que nous le sommes restés justement parce que nous avons osé parler d'argent au début.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-063",
+    title: "Nous avons réservé un week-end",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Il y a un mois, nous avons décidé de partir un week-end.",
+    blurbEn:
+      "Planning a weekend away: comparing prices, choosing a town nobody knew, and the pleasure of having something booked. (Section: A short trip, 1/5.)",
+    body: `Il y a un mois, nous avons décidé de partir un week-end, mon mari et moi. Nous n'avions pas voyagé depuis presque deux ans.
+
+Un soir, après le dîner, nous avons ouvert l'ordinateur.
+
+« Où est-ce qu'on va ? » a demandé mon mari.
+
+Nous avions trois conditions : pas trop loin, pas trop cher, et une ville que nous ne connaissions pas.
+
+Nous avons regardé plusieurs possibilités et nous avons comparé les prix des trains et des hôtels pendant une heure.
+
+Finalement, nous avons choisi une petite ville à deux heures de chez nous. Personne ne nous en avait jamais parlé, mais les photos étaient jolies : une rivière, des maisons anciennes, un marché le samedi.
+
+Nous avons réservé le train : quarante-huit euros aller-retour pour deux personnes. Ensuite l'hôtel : un petit hôtel dans le centre, quatre-vingt-quinze euros la nuit avec le petit déjeuner.
+
+Nous avons tout payé le même soir. Total : environ deux cent quarante euros pour deux jours.
+
+Puis nous avons fermé l'ordinateur, et j'ai remarqué quelque chose : nous étions déjà de bonne humeur. Le voyage était dans trois semaines, mais le plaisir avait déjà commencé.
+
+Pendant les semaines suivantes, nous en avons parlé souvent. Mon mari a lu des choses sur la ville. Moi, j'ai fait une petite liste d'endroits à voir.
+
+Attendre fait partie du voyage.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-064",
+    title: "L'arrivée à l'hôtel",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Nous sommes arrivés à midi, mais la chambre n'était pas prête.",
+    blurbEn:
+      "Checking in early, leaving the bags, and a receptionist whose local advice turns out better than any guidebook. (Section: A short trip, 2/5.)",
+    body: `Nous sommes arrivés dans la ville à midi. L'hôtel était à dix minutes à pied de la gare, alors nous avons marché.
+
+L'hôtel était exactement comme sur les photos : un vieux bâtiment avec une porte bleue et des fleurs aux fenêtres.
+
+À la réception, une jeune femme nous a accueillis.
+
+« Bonjour ! Vous avez une réservation ? »
+
+« Oui, au nom de Martin, pour deux nuits. »
+
+Elle a vérifié sur son ordinateur. « C'est parfait. Mais je suis désolée : la chambre n'est pas encore prête. Le check-in est à quinze heures. »
+
+Il était midi et quart. Nous devions attendre presque trois heures !
+
+Mais elle a proposé une solution. « Vous pouvez laisser vos valises ici. Elles seront en sécurité. »
+
+Nous avons accepté et nous avons laissé nos bagages derrière le comptoir.
+
+Puis je lui ai demandé un conseil : « Où est-ce qu'on peut bien déjeuner, pas trop cher ? »
+
+Elle a souri et elle a pris un plan de la ville. « Ne mangez pas sur la grande place, c'est pour les touristes et c'est cher. Allez plutôt ici », a-t-elle dit en montrant une petite rue. « C'est un restaurant familial. Le menu du midi coûte seize euros. »
+
+Nous avons suivi son conseil. Le restaurant était petit, plein d'habitants du quartier, et le repas était excellent.
+
+À quinze heures, notre chambre était prête. Elle donnait sur la rivière.
+
+Le meilleur guide, c'est souvent quelqu'un qui habite là.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-065",
+    title: "Visiter une ville inconnue",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Le samedi, nous avons marché toute la journée dans la ville.",
+    blurbEn:
+      "A whole day walking an unfamiliar town with no plan: a market, a church, a hill with a view, and tired feet. (Section: A short trip, 3/5.)",
+    body: `Le samedi, nous avons visité la ville. Nous n'avions pas de programme précis, et c'était très agréable comme ça.
+
+Nous avons commencé par le marché, sur la place principale. Il était énorme ! Il y avait des fruits, du fromage, du poisson, mais aussi des vêtements et des fleurs.
+
+Nous avons acheté des fraises et nous les avons mangées en marchant. Elles étaient délicieuses.
+
+Ensuite, nous sommes entrés dans une vieille église. À l'intérieur, il faisait frais et sombre. Il n'y avait presque personne. Nous sommes restés assis dix minutes, en silence.
+
+Puis nous avons marché dans les petites rues autour du centre. C'est là que j'ai préféré la ville. Il y avait du linge aux fenêtres, des chats sur les murs, des enfants qui jouaient. Ce n'était pas un quartier touristique : c'était la vraie vie.
+
+L'après-midi, nous sommes montés sur une colline, au-dessus de la ville. La montée a duré vingt-cinq minutes et il faisait chaud.
+
+Mais en haut, la vue était magnifique. On voyait toute la ville, la rivière et les collines derrière. Nous sommes restés là longtemps, sans parler.
+
+Le soir, nous avons dîné en terrasse. J'avais mal aux pieds : nous avions marché presque quinze kilomètres.
+
+Avant de dormir, mon mari a dit : « Je ne connaissais même pas le nom de cette ville il y a un mois. »
+
+Moi non plus. Et maintenant, je l'aime beaucoup.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-066",
+    title: "Notre train a été annulé",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Dimanche soir, à la gare, notre train était annulé.",
+    blurbEn:
+      "The Sunday train home is cancelled. A queue, a long wait, and strangers who become temporary friends on a delayed platform. (Section: A short trip, 4/5.)",
+    body: `Dimanche soir, nous sommes arrivés à la gare à dix-huit heures. Notre train partait à dix-huit heures trente.
+
+Mais sur le grand panneau, à côté de notre train, il y avait un mot rouge : ANNULÉ.
+
+« Ce n'est pas possible », a dit mon mari.
+
+Nous sommes allés au guichet. Il y avait déjà une queue de trente personnes. Tout le monde parlait en même temps et certains étaient en colère.
+
+Nous avons attendu quarante minutes. Devant nous, une dame âgée était très inquiète : sa fille l'attendait à la gare d'arrivée.
+
+Quand notre tour est arrivé, l'employé nous a expliqué qu'il y avait un problème technique sur la ligne. Le train suivant partait à vingt et une heures quinze — presque trois heures plus tard.
+
+Il nous a donné de nouveaux billets, sans supplément, et un papier pour demander un remboursement partiel.
+
+Alors nous avons attendu. Nous avons mangé un sandwich dans un café de la gare. Nous avons lu. Nous avons regardé les gens.
+
+Vers vingt heures, nous avons commencé à parler avec un jeune couple qui attendait le même train. Ils revenaient aussi d'un week-end. Nous avons discuté pendant une heure : de voyages, de travail, de nos villes.
+
+Le train est finalement parti à vingt et une heures trente.
+
+Nous sommes rentrés chez nous à minuit, épuisés.
+
+Mais ce matin, je repense surtout à cette conversation dans la gare.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-067",
+    title: "Les photos du voyage",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Après le voyage, j'ai regardé mes deux cent quarante photos.",
+    blurbEn:
+      "Two hundred and forty holiday photos, and the discovery that the best one wasn't of a monument at all. (Section: A short trip, 5/5.)",
+    body: `Quand nous sommes rentrés de notre week-end, j'ai regardé mes photos sur mon téléphone. J'en avais pris deux cent quarante en deux jours !
+
+Deux cent quarante photos pour deux jours. C'est énorme.
+
+J'ai commencé à les regarder une par une, et j'ai vite compris quelque chose : la plupart n'étaient pas intéressantes.
+
+Il y avait quinze photos de la même église, presque identiques. Il y avait des photos floues, prises en marchant. Il y avait aussi beaucoup de photos de bâtiments sans personne dessus.
+
+Ces photos ne racontaient rien.
+
+Alors j'ai fait le tri. J'en ai supprimé cent quatre-vingts. J'en ai gardé soixante.
+
+Et parmi celles-là, il y en avait une que j'ai préférée tout de suite.
+
+Ce n'était pas la vue depuis la colline. Ce n'était pas l'église.
+
+C'était une photo de mon mari, assis à la terrasse du café, samedi soir. Il ne regardait pas l'appareil. Il tenait son verre et il riait de quelque chose que j'avais dit — je ne me souviens même plus de quoi.
+
+Derrière lui, on voyait un peu la rue et la lumière du soir.
+
+Cette photo n'est pas belle techniquement. Elle est un peu sombre.
+
+Mais quand je la regarde, je me souviens exactement de ce moment : la température de l'air, le bruit de la place, notre fatigue heureuse.
+
+Je l'ai imprimée. Elle est maintenant sur le frigo.
+
+Les autres soixante photos, je ne les ai jamais rouvertes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-068",
+    title: "Comment j'ai rencontré mes amis",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mes trois meilleurs amis, je les ai rencontrés par hasard.",
+    blurbEn:
+      "Three close friendships, all of them accidents: a queue, a broken-down car, and a wrong seat in a lecture hall. (Section: Friends and feelings, 1/5.)",
+    body: `Mes trois meilleurs amis, je ne les ai pas choisis. Je les ai rencontrés par hasard.
+
+Léa, je l'ai rencontrée dans une queue. C'était à la préfecture, il y a six ans. Nous attendions depuis deux heures pour un papier administratif. À un moment, elle s'est tournée vers moi et elle a dit : « Vous croyez qu'on va y arriver aujourd'hui ? »
+
+Nous avons parlé pendant une heure et demie. À la fin, nous avons échangé nos numéros. Le lendemain, elle m'a envoyé un message.
+
+Karim, je l'ai rencontré à cause d'une voiture. Un matin d'hiver, ma voiture ne démarrait pas. Il passait dans la rue et il s'est arrêté. Il a regardé le moteur, il a essayé quelque chose, et la voiture a démarré.
+
+Je voulais lui donner de l'argent, mais il a refusé. Alors je lui ai offert un café. Nous sommes restés deux heures au café.
+
+Nathalie, je l'ai rencontrée parce que je m'étais assise à la mauvaise place. C'était pendant une formation. Je me suis installée à côté d'elle, et à la pause, nous avons découvert que nous venions de la même petite ville.
+
+Aucune de ces rencontres n'était prévue.
+
+Parfois, je pense à ça : si j'étais arrivée cinq minutes plus tard à la préfecture, je n'aurais jamais connu Léa.
+
+C'est un peu effrayant. Et c'est aussi très beau.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-069",
+    title: "Nous nous sommes disputés",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Le mois dernier, je me suis disputée avec ma meilleure amie.",
+    blurbEn:
+      "An argument with a best friend over something small, three weeks of silence, and who finally sent the first message. (Section: Friends and feelings, 2/5.)",
+    body: `Le mois dernier, je me suis disputée avec Léa, ma meilleure amie. C'était la première vraie dispute en six ans.
+
+Tout a commencé pour une petite chose. Nous devions organiser un week-end ensemble. J'avais tout préparé : les dates, l'endroit, le logement. Puis, trois jours avant, Léa m'a annoncé qu'elle ne pouvait plus venir.
+
+J'étais déçue, mais ce n'était pas grave. Ce qui m'a blessée, c'est la raison : elle avait accepté une invitation à une fête.
+
+Je le lui ai dit au téléphone, et j'ai parlé trop fort. Elle a répondu que je n'écoutais jamais ses envies et que je décidais toujours de tout.
+
+Nous avons raccroché toutes les deux en colère.
+
+Ensuite, il y a eu trois semaines de silence. Trois semaines, c'est long. Chaque jour, je pensais lui écrire, puis je ne le faisais pas. J'attendais qu'elle commence.
+
+Je crois qu'elle faisait exactement la même chose.
+
+Finalement, un dimanche soir, je lui ai envoyé un message très simple : « Tu me manques. On peut se voir ? »
+
+Elle a répondu en dix minutes : « Oui. Moi aussi je voulais t'écrire depuis deux semaines. »
+
+Nous nous sommes vues le mardi. Nous avons parlé pendant trois heures.
+
+Elle avait raison sur une chose : j'organise trop, sans demander. Et moi, j'avais raison aussi.
+
+Nous avons appris quelque chose : il ne faut pas laisser passer trois semaines.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-070",
+    title: "Mon ami est parti à l'étranger",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "L'été dernier, Karim est parti travailler au Canada.",
+    blurbEn:
+      "A close friend moves abroad. The goodbye, the time difference, and the effort it takes to keep a friendship alive at 6,000 km. (Section: Friends and feelings, 3/5.)",
+    body: `L'été dernier, Karim est parti travailler au Canada. Il avait reçu une très bonne proposition et il a accepté.
+
+J'étais content pour lui, bien sûr. Mais j'étais aussi triste, et je ne l'ai pas dit tout de suite.
+
+Nous nous voyions deux ou trois fois par semaine. Nous jouions au foot le jeudi, nous prenions un café le week-end. Il habitait à dix minutes de chez moi.
+
+Le jour de son départ, je l'ai accompagné à l'aéroport. Nous n'avons pas beaucoup parlé dans la voiture.
+
+Devant la porte d'embarquement, il m'a dit : « On s'appelle. »
+
+« Oui, bien sûr », j'ai répondu.
+
+Mais je savais que ce n'était pas si simple. J'avais déjà vu des amitiés disparaître avec la distance.
+
+Les premières semaines, nous nous sommes écrit tous les jours. Puis les messages sont devenus moins fréquents.
+
+Le problème, c'est aussi le décalage horaire : il y a six heures de différence. Quand je finis ma journée, il est encore au travail. Quand il est libre, je dors.
+
+Alors nous avons décidé quelque chose. Le dimanche matin, à dix heures pour moi et quatre heures pour lui — c'est tôt, mais il accepte —, nous nous appelons pendant une heure.
+
+Nous le faisons depuis huit mois, presque chaque dimanche.
+
+Ce n'est pas comme avant. Mais notre amitié n'a pas disparu.
+
+Elle demande simplement plus d'efforts.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-071",
+    title: "Un ami qui traverse une période difficile",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mon collègue Bruno allait mal, et je ne savais pas quoi dire.",
+    blurbEn:
+      "When a friend is going through something hard, advice usually helps less than simply staying nearby. (Section: Friends and feelings, 4/5.)",
+    body: `L'année dernière, mon ami Bruno a traversé une période très difficile. Il a perdu son travail, et deux mois plus tard, sa compagne l'a quitté.
+
+Au début, je ne savais pas quoi faire. J'avais peur de dire quelque chose de bête.
+
+Alors j'ai fait ce que beaucoup de gens font : j'ai donné des conseils. « Tu devrais chercher un travail dans une autre ville. » « Tu devrais sortir plus. » « Il faut positiver. »
+
+Un soir, Bruno m'a interrompu. Il n'était pas en colère, mais il était fatigué.
+
+« Je sais tout ça », m'a-t-il dit. « Je n'ai pas besoin de solutions. J'ai besoin que quelqu'un écoute. »
+
+Ça m'a fait réfléchir pendant plusieurs jours.
+
+Alors j'ai changé de méthode. J'ai arrêté de proposer des solutions. À la place, j'ai posé des questions simples : « Comment tu te sens aujourd'hui ? » Et surtout, je l'ai laissé parler sans l'interrompre.
+
+J'ai aussi fait des choses concrètes, sans demander. Je passais chez lui avec un plat le mardi soir. Nous marchions le dimanche, parfois sans parler beaucoup.
+
+Ces mois ont été longs. Il n'y a pas eu de moment magique.
+
+Puis, doucement, il a trouvé un travail. Et il a recommencé à rire.
+
+Un jour, il m'a dit : « Merci d'être resté. Beaucoup de gens ont disparu. »
+
+Je n'avais rien résolu. J'étais simplement là.
+
+C'était suffisant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-072",
+    title: "Dire ce que l'on ressent",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Dans ma famille, on ne parlait jamais de ses sentiments.",
+    blurbEn:
+      "Growing up in a family that never discussed feelings, and learning as an adult to say the simple, difficult sentences. (Section: Friends and feelings, 5/5.)",
+    body: `Dans ma famille, on ne parlait jamais de ses sentiments. Ce n'était pas de la méchanceté : c'était simplement l'habitude.
+
+Quand j'étais triste, mon père disait : « Ça va passer. » Quand quelqu'un était en colère, on attendait que ça se calme. On ne disait pas « je suis blessé » ou « j'ai besoin d'aide ».
+
+J'ai grandi comme ça, et j'ai fait la même chose pendant longtemps.
+
+Le problème, c'est que les sentiments ne disparaissent pas quand on ne les dit pas. Ils restent quelque part, et ils sortent plus tard, souvent au mauvais moment.
+
+Il y a trois ans, j'ai commencé à changer. Ce n'était pas facile, et je ne suis pas devenue une autre personne. Mais j'ai appris quelques phrases simples.
+
+« Ça m'a fait de la peine quand tu as dit ça. »
+« Je suis fatiguée en ce moment, je ne suis pas contre toi. »
+« J'ai besoin d'être un peu seule ce soir. »
+
+Ces phrases paraissent faciles. Mais la première fois, ma voix tremblait.
+
+Ce qui m'a surprise, c'est la réaction des autres. Personne ne s'est moqué de moi. Au contraire : mes amis ont commencé à parler plus honnêtement aussi.
+
+L'année dernière, j'ai même eu une conversation avec mon père. Je lui ai dit que j'aurais aimé parler davantage quand j'étais petite.
+
+Il est resté silencieux un moment. Puis il a répondu : « Personne ne m'a appris à faire ça. »
+
+Nous n'avons pas tout réparé ce jour-là. Mais nous avons commencé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-073",
+    title: "L'été où il a fait très chaud",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "L'été dernier, il a fait quarante degrés pendant six jours.",
+    blurbEn:
+      "A six-day heatwave: closed shutters, sleepless nights, and a town that only comes alive after nine in the evening. (Section: Weather and seasons, 1/5.)",
+    body: `L'été dernier, nous avons eu une canicule. Il a fait plus de quarante degrés pendant six jours.
+
+Je n'avais jamais connu ça dans ma région. Normalement, en juillet, il fait vingt-huit ou trente degrés.
+
+Les premiers jours, tout le monde en parlait avec le sourire : « Quelle chaleur ! » Mais après trois jours, plus personne ne souriait.
+
+Le plus dur, c'était la nuit. La température ne descendait pas sous vingt-huit degrés. Je dormais très mal. J'ouvrais les fenêtres, mais l'air était chaud aussi.
+
+La ville a changé complètement. Pendant la journée, les rues étaient vides. Les gens fermaient les volets dès neuf heures du matin pour garder un peu de fraîcheur.
+
+Ma voisine, qui a quatre-vingt-deux ans, ne sortait plus du tout. Ma mère l'appelait deux fois par jour pour vérifier qu'elle buvait de l'eau. Les personnes âgées sont les plus en danger pendant une canicule.
+
+La mairie a ouvert une salle climatisée près de la mairie. Beaucoup de gens y passaient l'après-midi.
+
+À partir de neuf heures du soir, tout le monde sortait en même temps. Les rues se remplissaient. C'était étrange : la vie commençait la nuit.
+
+Le septième jour, un orage est arrivé. La température est descendue de douze degrés en une heure.
+
+Je me souviens que les gens sont sortis sous la pluie. Certains applaudissaient.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-074",
+    title: "La tempête de novembre",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En novembre, une grosse tempête est passée sur la région.",
+    blurbEn:
+      "A November storm brings down a tree, cuts the power for eighteen hours, and reveals how much a street can help itself. (Section: Weather and seasons, 2/5.)",
+    body: `En novembre dernier, une grosse tempête est passée sur notre région. La météo avait prévenu deux jours avant : « Vents de cent trente kilomètres par heure. »
+
+Nous avons préparé la maison. Nous avons rentré les chaises du jardin, fermé tous les volets et acheté des bougies et des piles.
+
+La tempête est arrivée vers vingt-deux heures. Le bruit était impressionnant : le vent sifflait et faisait trembler les fenêtres.
+
+Vers minuit, l'électricité a été coupée. Tout est devenu noir et silencieux — plus de frigo, plus de chauffage, rien.
+
+Nous avons allumé les bougies et nous sommes restés dans le salon. Les enfants avaient un peu peur, alors nous avons raconté des histoires.
+
+Vers deux heures du matin, nous avons entendu un craquement très fort, puis un choc.
+
+Le matin, nous avons compris : un grand arbre était tombé dans la rue. Il avait cassé une clôture, mais heureusement, il n'avait touché aucune maison et personne n'était blessé.
+
+Toute la rue est sortie. Un voisin avait une tronçonneuse, un autre avait une remorque. Nous avons travaillé ensemble pendant quatre heures pour dégager la route.
+
+Je ne connaissais pas la moitié de ces gens.
+
+L'électricité est revenue le soir, après dix-huit heures.
+
+Depuis cette tempête, nous nous disons tous bonjour dans la rue.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-075",
+    title: "Un hiver sans neige",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Cet hiver, il n'a pas neigé une seule fois.",
+    blurbEn:
+      "A winter with no snow at all, and a grandmother's memories of skiing to school — a quiet way to notice the climate changing. (Section: Weather and seasons, 3/5.)",
+    body: `Cet hiver, il n'a pas neigé une seule fois chez nous. Pas une seule.
+
+En décembre, en janvier, en février : il a fait gris et humide, avec des températures de huit ou dix degrés. Il a beaucoup plu, mais l'eau est restée de l'eau.
+
+Mes enfants étaient déçus. Ma fille m'a demandé : « On va faire un bonhomme de neige cette année ? » J'ai répondu : « On va voir. »
+
+Nous n'en avons pas fait.
+
+Ce n'est pas la première fois. L'hiver d'avant, il a neigé une journée seulement, et la neige a fondu avant le soir.
+
+Un dimanche, nous avons déjeuné chez ma grand-mère. Ma fille lui a parlé de la neige.
+
+Ma grand-mère a souri, puis elle a raconté son enfance dans ce même village, dans les années cinquante.
+
+« Chaque hiver, il y avait de la neige pendant des semaines. Parfois quarante centimètres. Mon frère et moi, nous allions à l'école avec des skis, parce que la route était fermée. »
+
+Ma fille l'a regardée avec de grands yeux. « Des skis ? Pour aller à l'école ? »
+
+« Tous les hivers », a répondu ma grand-mère.
+
+Puis elle a ajouté quelque chose de plus sérieux : « Ici, la neige, c'était normal. Maintenant, c'est un événement. »
+
+Dans la voiture, ma fille était silencieuse.
+
+Puis elle a demandé : « Est-ce qu'il neigera encore quand je serai grande ? »
+
+Je n'ai pas su quoi répondre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-076",
+    title: "Le printemps est arrivé trop tôt",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Cette année, les arbres ont fleuri au mois de février.",
+    blurbEn:
+      "Blossom in February looks lovely — until the frost returns in April and the fruit harvest is lost. (Section: Weather and seasons, 4/5.)",
+    body: `Cette année, le printemps est arrivé très tôt. Au mois de février, les arbres du jardin avaient déjà des fleurs.
+
+Au début, c'était magnifique. Il faisait dix-huit degrés en plein février ! Nous avons déjeuné dehors le vingt-deux, en tee-shirt. Les gens souriaient dans la rue et les terrasses des cafés étaient pleines.
+
+Mais mon voisin, qui a un verger, n'était pas content du tout.
+
+« C'est beau, mais c'est mauvais », m'a-t-il dit. « Beaucoup trop tôt. »
+
+Je n'ai pas compris tout de suite. Il m'a expliqué.
+
+Quand les arbres fleurissent, ils deviennent fragiles. Si le froid revient après, les fleurs meurent — et sans fleurs, il n'y a pas de fruits.
+
+« Et le froid revient presque toujours », a-t-il ajouté.
+
+Il avait raison. Le sept avril, il y a eu une gelée pendant deux nuits : moins trois degrés.
+
+Le matin, les fleurs de ses abricotiers étaient brunes. Elles étaient mortes.
+
+Il a perdu presque toute sa récolte d'abricots. C'était la troisième fois en cinq ans.
+
+Les agriculteurs essaient des solutions : des bougies entre les arbres, de grands ventilateurs, parfois de l'eau. Mais tout cela coûte cher et ne marche pas toujours.
+
+Cet été, les abricots ont été rares et chers au marché.
+
+Quand j'ai vu le prix, j'ai pensé à ces deux nuits d'avril.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-077",
+    title: "Le climat a changé ici",
+    category: "science",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Je vis dans le même village depuis quarante ans.",
+    blurbEn:
+      "Forty years in the same village, and a gardener's notebook that quietly records the seasons shifting. (Section: Weather and seasons, 5/5.)",
+    body: `Je vis dans le même village depuis quarante ans, et j'ai un jardin depuis presque aussi longtemps.
+
+Comme beaucoup de jardiniers, je note tout dans un cahier : les dates des semis, la première tomate, le premier gel, la dernière pluie de l'été.
+
+Au début, je faisais ça pour mieux organiser mon jardin. Mais avec le temps, ce cahier est devenu autre chose : une petite histoire du climat de mon village.
+
+Hier soir, j'ai comparé les années. Ce que j'ai vu est très clair.
+
+Dans les années quatre-vingt, je plantais mes tomates vers le quinze mai. Aujourd'hui, je les plante fin avril, deux semaines plus tôt.
+
+Le premier gel de l'automne arrivait autour du vingt octobre. Maintenant, il arrive souvent en novembre.
+
+Les été sont plus secs. Avant, j'arrosais deux fois par semaine en juillet. Depuis cinq ans, j'arrose presque chaque jour, et parfois la mairie interdit l'arrosage.
+
+Certaines plantes ne poussent plus bien ici : elles souffrent de la chaleur. D'autres, qui venaient du sud, poussent maintenant très bien dans mon jardin.
+
+Je ne suis pas scientifique. Je ne parle pas de la planète entière : je parle seulement de mon jardin, dans mon village.
+
+Mais je note ces dates depuis quarante ans, et les chiffres ne mentent pas.
+
+Mon petit-fils m'a demandé pourquoi je gardais ce vieux cahier.
+
+Je lui ai répondu : « Pour me souvenir de ce qui était normal avant. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

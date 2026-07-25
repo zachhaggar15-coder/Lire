@@ -234,6 +234,58 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-money",
+    band: "A2",
+    title: "Money",
+    goal: "Budget, compare prices, buy second-hand, and talk about lending.",
+    textIds: [
+      "starter-a2-058", // J'ai fait mon premier budget (introduces money words at A2)
+      "starter-a2-059", // C'est la période des soldes
+      "starter-a2-060", // J'achète beaucoup d'occasion
+      "starter-a2-061", // Un achat que je regrette
+      "starter-a2-062", // Prêter de l'argent à un ami
+    ],
+  },
+  {
+    id: "a2-trip",
+    band: "A2",
+    title: "A short trip",
+    goal: "Book, arrive, explore and get home again — travel from start to finish.",
+    textIds: [
+      "starter-a2-063", // Nous avons réservé un week-end (introduces travel words)
+      "starter-a2-064", // L'arrivée à l'hôtel
+      "starter-a2-065", // Visiter une ville inconnue
+      "starter-a2-066", // Notre train a été annulé
+      "starter-a2-067", // Les photos du voyage
+    ],
+  },
+  {
+    id: "a2-friends",
+    band: "A2",
+    title: "Friends and feelings",
+    goal: "Describe friendships, arguments, distance and how you feel.",
+    textIds: [
+      "starter-a2-068", // Comment j'ai rencontré mes amis (introduces relationship words)
+      "starter-a2-069", // Nous nous sommes disputés
+      "starter-a2-070", // Mon ami est parti à l'étranger
+      "starter-a2-071", // Un ami qui traverse une période difficile
+      "starter-a2-072", // Dire ce que l'on ressent (hardest)
+    ],
+  },
+  {
+    id: "a2-weather",
+    band: "A2",
+    title: "Weather and seasons",
+    goal: "Describe extreme weather and notice how the seasons are shifting.",
+    textIds: [
+      "starter-a2-073", // L'été où il a fait très chaud (levels up A1 weather words)
+      "starter-a2-074", // La tempête de novembre
+      "starter-a2-075", // Un hiver sans neige
+      "starter-a2-076", // Le printemps est arrivé trop tôt
+      "starter-a2-077", // Le climat a changé ici (hardest)
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
