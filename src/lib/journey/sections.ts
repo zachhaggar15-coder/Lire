@@ -494,6 +494,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-media",
+    band: "B1",
+    title: "Media and information",
+    goal: "Understand how news is made, checked, funded and filtered.",
+    textIds: [
+      "starter-b1-091", // Comment se fabrique une information (levels up A2 Local news)
+      "starter-b1-092", // Vérifier avant de partager
+      "starter-b1-093", // Pourquoi les mauvaises nouvelles dominent
+      "starter-b1-094", // Qui paie l'information ?
+      "starter-b1-095", // Nous ne voyons pas tous la même chose
+    ],
+  },
+  {
+    id: "b1-body",
+    band: "B1",
+    title: "Sport and the body",
+    goal: "Movement and health, women's sport, body image, injury and school PE.",
+    textIds: [
+      "starter-b1-096", // Bouger, même un peu (levels up A2 Sport and hobbies)
+      "starter-b1-097", // Le sport féminin gagne du terrain
+      "starter-b1-098", // Le corps et l'image de soi
+      "starter-b1-099", // Les blessures des sportifs amateurs
+      "starter-b1-100", // Le sport à l'école
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

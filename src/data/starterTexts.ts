@@ -10359,4 +10359,316 @@ Et je suis compris, ce qui était exactement l'objectif.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-091",
+    title: "Comment se fabrique une information",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une information passe par plusieurs étapes avant d'arriver jusqu'à nous.",
+    blurbEn:
+      "Before it reaches you, a news item passes through selection, sourcing, editing and headlining. Knowing the process explains a lot. (Section: Media and information, 1/5.)",
+    body: `Nous consommons des informations toute la journée sans nous demander comment elles ont été fabriquées. Or ce processus explique une bonne partie de ce qui nous étonne ou nous agace.
+
+Tout commence par une sélection. Chaque jour, il se produit infiniment plus d'événements qu'un journal ne peut en traiter. Il faut choisir, et ce choix obéit à des critères assez constants : la nouveauté, la proximité, le nombre de personnes concernées, le caractère spectaculaire ou inhabituel.
+
+Ce dernier critère explique un biais bien connu. Un avion qui s'écrase est une information ; des milliers d'avions qui atterrissent normalement n'en sont pas. À force, nous surestimons les risques rares et spectaculaires, et sous-estimons les risques fréquents et banals.
+
+Vient ensuite la collecte. Le journaliste dispose rarement d'un accès direct : il s'appuie sur des sources — communiqués, experts, témoins, dépêches d'agence. Chaque source a ses intérêts, ce qui n'est pas nécessairement un problème, à condition d'être connu.
+
+Puis l'écriture et l'édition. Le texte est raccourci, structuré, hiérarchisé. Un article commence par l'essentiel, car beaucoup de lecteurs ne liront que le début.
+
+Enfin, le titre. C'est l'étape la plus trompeuse, parce qu'il n'est presque jamais écrit par l'auteur de l'article, et qu'il doit attirer l'attention. Un titre peut donc être plus catégorique que le texte qu'il annonce.
+
+D'où un conseil très concret : ne jamais partager un article dont on n'a lu que le titre.
+
+Les études montrent que cela arrive extrêmement souvent.
+
+Lire l'article prend deux minutes. Cela suffit à éviter la moitié des malentendus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-092",
+    title: "Vérifier avant de partager",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Quelques réflexes simples suffisent à éviter la plupart des fausses informations.",
+    blurbEn:
+      "Most false information can be caught with three quick checks — no expertise required, just a small pause before sharing. (Section: Media and information, 2/5.)",
+    body: `Les fausses informations circulent vite, et elles circulent d'autant mieux qu'elles provoquent une émotion forte : indignation, peur, colère.
+
+C'est d'ailleurs le premier signal d'alerte. Une information qui nous fait immédiatement réagir mérite quelques secondes de méfiance supplémentaire. Ce n'est pas un hasard : les contenus les plus partagés sont ceux qui déclenchent le plus d'émotion.
+
+Trois vérifications élémentaires permettent d'écarter une grande partie des contenus douteux. Elles ne demandent aucune compétence particulière.
+
+La première : qui dit cela ? Il ne s'agit pas de faire confiance aveuglément à certains médias, mais de savoir si l'information vient d'une source identifiable ou d'un compte anonyme. Un contenu qui ne mentionne aucun auteur, aucune date, aucun lieu doit être traité avec prudence.
+
+La deuxième : quand ? Beaucoup de fausses informations sont en réalité de vraies informations sorties de leur époque. Une photographie authentique d'une catastrophe survenue il y a dix ans, republiée comme une actualité, trompe efficacement.
+
+La troisième : est-ce ailleurs ? Si un événement important a réellement eu lieu, plusieurs sources indépendantes en parlent. Une information majeure qui n'existerait qu'à un seul endroit est suspecte.
+
+À cela s'ajoute un outil très simple pour les images : la recherche inversée, qui permet de retrouver les précédentes publications d'une photo. Elle prend quelques secondes.
+
+Enfin, un principe utile : nous sommes tous plus crédules face à ce qui confirme nos opinions.
+
+La vraie difficulté n'est donc pas de vérifier ce que disent les autres.
+
+C'est de vérifier ce qui nous arrange.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-093",
+    title: "Pourquoi les mauvaises nouvelles dominent",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le monde s'améliore sur plusieurs points. L'information ne le reflète pas.",
+    blurbEn:
+      "The news is not designed to describe the world accurately, and that produces a distorted picture. How to stay informed without despairing. (Section: Media and information, 3/5.)",
+    body: `Si l'on se fiait uniquement à l'actualité, on conclurait que tout empire, partout, en permanence.
+
+Or certaines évolutions de long terme vont dans l'autre sens : la mortalité infantile mondiale a fortement baissé en quelques décennies, l'accès à l'éducation a progressé, l'extrême pauvreté a reculé.
+
+Cela ne signifie pas que tout va bien — les inégalités, le climat et plusieurs conflits contredisent tout optimisme naïf. Mais il existe un écart net entre l'image que donne l'actualité et les tendances mesurables.
+
+Cet écart s'explique par la nature même de l'information.
+
+Une nouvelle est, par définition, un événement. Or les catastrophes sont des événements, alors que les progrès sont des processus. Un tremblement de terre a lieu un mardi ; la baisse progressive de la mortalité infantile n'a lieu aucun jour en particulier, donc elle n'est presque jamais annoncée.
+
+S'ajoute un phénomène psychologique bien documenté : nous accordons plus de poids aux informations négatives qu'aux positives. Les rédactions n'ont pas inventé ce biais ; elles y répondent, parce que nous cliquons davantage.
+
+Le résultat est une forme d'usure. Beaucoup de gens déclarent éviter l'actualité — non par désintérêt, mais par fatigue.
+
+Que faire ? Se couper complètement n'est pas satisfaisant : rester informé fait partie de la vie collective.
+
+Ce qui fonctionne, pour beaucoup, tient en deux ajustements. Choisir des moments définis plutôt qu'un flux continu, qui augmente l'anxiété sans augmenter la compréhension. Et privilégier des formats longs, qui expliquent des tendances, plutôt que l'accumulation d'alertes.
+
+Être informé, ce n'est pas tout savoir en temps réel.
+
+C'est comprendre ce qui se passe.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-094",
+    title: "Qui paie l'information ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'information gratuite a un coût, simplement pas au moment de la lecture.",
+    blurbEn:
+      "News feels free, but producing it is not. Who pays — advertisers, subscribers, the state — shapes what gets produced. (Section: Media and information, 4/5.)",
+    body: `Nous avons pris l'habitude de lire l'actualité sans payer. Cette gratuité apparente a des conséquences qu'il est utile de comprendre.
+
+Produire une information coûte cher. Envoyer un journaliste sur le terrain, vérifier des documents, mener une enquête de plusieurs mois : tout cela suppose des salaires et du temps, parfois pour un seul article.
+
+Historiquement, ce coût était couvert par deux sources : la vente du journal et la publicité. Les petites annonces, notamment, ont longtemps financé une grande part de la presse locale.
+
+Internet a fait s'effondrer ces deux piliers. Les annonces sont parties vers des plateformes spécialisées, et la publicité en ligne rapporte beaucoup moins que la publicité imprimée, l'essentiel des revenus étant capté par quelques très grandes entreprises.
+
+Les conséquences sont visibles. De nombreux titres locaux ont disparu ou fusionné. Or la presse locale est précisément celle qui couvre les conseils municipaux, les tribunaux, les décisions qui affectent le quotidien. Des recherches montrent que la disparition d'un journal local s'accompagne d'une baisse de la participation électorale et d'un contrôle moindre des dépenses publiques.
+
+Plusieurs modèles tentent de compenser : abonnements numériques, financement participatif, soutien public, fondations.
+
+Chacun pose ses propres questions d'indépendance, et aucun n'a encore remplacé ce qui a été perdu.
+
+Il y a là un choix collectif, rarement formulé ainsi.
+
+Une information de qualité n'est pas un bien qui apparaît spontanément.
+
+Si personne ne la paie, quelqu'un finira par la financer pour d'autres raisons que nous informer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-095",
+    title: "Nous ne voyons pas tous la même chose",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Deux personnes peuvent utiliser le même réseau et voir deux mondes différents.",
+    blurbEn:
+      "Recommendation algorithms mean two people on the same platform see different worlds. The effect is real, though often exaggerated. (Section: Media and information, 5/5.)",
+    body: `Sur la plupart des plateformes, ce que nous voyons n'est pas ce que voit notre voisin. Un algorithme sélectionne, pour chacun, les contenus jugés les plus susceptibles de retenir son attention.
+
+Le principe n'est pas absurde : la quantité de contenus disponibles dépasse toute capacité humaine de tri.
+
+Mais le critère utilisé pose problème. Ces systèmes n'optimisent pas la qualité ni la véracité ; ils optimisent l'engagement, c'est-à-dire le temps passé et les réactions.
+
+Or les contenus qui font le plus réagir ne sont pas les plus nuancés. Ce sont les plus tranchés, les plus indignants, les plus émotionnels. Un texte équilibré, qui reconnaît la complexité d'un sujet, circule mal par construction.
+
+On parle souvent de « bulles de filtres » : chacun serait enfermé dans un univers d'opinions semblables aux siennes. La recherche invite à nuancer ce diagnostic. En réalité, les utilisateurs de réseaux sociaux sont souvent exposés à des opinions opposées — mais dans leur version la plus caricaturale, ce qui renforce l'hostilité plutôt que le dialogue.
+
+L'effet n'est donc pas tant l'isolement que la déformation.
+
+Quelques réflexes limitent le phénomène. Suivre volontairement quelques sources sérieuses avec lesquelles on n'est pas d'accord. Chercher activement une information plutôt que d'attendre qu'elle apparaisse. Se méfier des extraits très courts, qui suppriment le contexte par nature.
+
+Et se rappeler une chose simple, souvent oubliée dans les discussions en ligne.
+
+La personne qui écrit une opinion absurde n'est pas nécessairement représentative de quoi que ce soit.
+
+Elle a peut-être seulement été choisie pour nous parce qu'elle nous fait réagir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-096",
+    title: "Bouger, même un peu",
+    category: "sport",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'écart le plus important est entre zéro et un peu.",
+    blurbEn:
+      "The biggest health gain is not between moderate and intense exercise, but between none and some — which changes the advice entirely. (Section: Sport and the body, 1/5.)",
+    body: `Les recommandations sanitaires évoquent souvent trente minutes d'activité par jour, ou cent cinquante minutes par semaine. Ces chiffres découragent beaucoup de personnes qui en sont loin.
+
+Or ils masquent un fait plus encourageant.
+
+Quand on examine la relation entre activité physique et santé, la courbe n'est pas droite. Le bénéfice le plus important ne se situe pas entre « modéré » et « intense », mais entre « rien » et « un peu ».
+
+Autrement dit, une personne totalement sédentaire qui se met à marcher vingt minutes par jour obtient un gain proportionnellement bien plus grand qu'un sportif régulier qui ajoute une séance.
+
+Cette nuance change complètement le conseil à donner. Il ne s'agit pas d'atteindre un objectif idéal, mais de sortir de zéro.
+
+Un deuxième point mérite d'être connu : la sédentarité et l'exercice sont deux choses distinctes. On peut courir une heure le matin et passer ensuite dix heures assis. Les recherches suggèrent que la position assise prolongée a ses propres effets, indépendamment de l'activité sportive.
+
+D'où l'intérêt de fractionner : se lever quelques minutes toutes les heures, prendre les escaliers, descendre un arrêt plus tôt. Ces gestes ne remplacent pas le sport, mais ils agissent sur un autre facteur.
+
+Enfin, l'activité la plus efficace reste celle qu'on pratique réellement. Un sport parfait sur le papier mais abandonné au bout d'un mois vaut moins qu'une marche quotidienne poursuivie pendant dix ans.
+
+La question n'est donc pas « quel est le meilleur exercice ? ».
+
+Elle est : « qu'est-ce que je ferai encore dans un an ? »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-097",
+    title: "Le sport féminin gagne du terrain",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les compétitions féminines attirent un public de plus en plus large.",
+    blurbEn:
+      "Women's sport is drawing record audiences after decades of near-invisibility. What changed, and what still has not. (Section: Sport and the body, 2/5.)",
+    body: `Depuis une dizaine d'années, le sport féminin connaît une progression rapide. Les compétitions attirent des audiences records, les stades se remplissent, et des clubs professionnels se sont structurés dans des disciplines où ils n'existaient pratiquement pas.
+
+Ce mouvement s'explique en partie par une décision simple : la diffusion.
+
+Pendant longtemps, l'argument avancé pour ne pas retransmettre les compétitions féminines était l'absence de public. Le raisonnement était circulaire : sans diffusion, pas de spectateurs ; sans spectateurs, pas de diffusion.
+
+Lorsque de grandes chaînes ont commencé à retransmettre des matchs féminins aux heures de grande écoute, les audiences ont dépassé les prévisions, parfois largement.
+
+Les progrès restent toutefois inégaux.
+
+Les écarts de rémunération demeurent considérables dans la plupart des disciplines. Les moyens d'entraînement, les infrastructures et l'encadrement médical restent souvent inférieurs. Plusieurs athlètes ont témoigné d'installations sommaires comparées à celles des équipes masculines du même club.
+
+Un autre sujet a émergé récemment : la recherche médicale. Pendant des décennies, la physiologie sportive a été étudiée presque exclusivement sur des hommes, et les protocoles d'entraînement ont été conçus sur cette base. Des travaux plus récents s'intéressent enfin aux spécificités féminines, notamment aux blessures des ligaments du genou, nettement plus fréquentes chez les sportives.
+
+Il y a enfin l'effet d'exemple, difficile à quantifier mais réel.
+
+Les inscriptions en clubs augmentent régulièrement après les grandes compétitions féminines.
+
+On pratique plus facilement un sport quand on a vu quelqu'un qui vous ressemble le pratiquer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-098",
+    title: "Le corps et l'image de soi",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les images que nous voyons ne représentent presque personne.",
+    blurbEn:
+      "Filtered and edited images now form most of what we see of other bodies. The effect is measurable, and it is not only about vanity. (Section: Sport and the body, 3/5.)",
+    body: `Nous voyons chaque jour un très grand nombre d'images de corps humains. La quasi-totalité d'entre elles sont sélectionnées, cadrées, retouchées, éclairées, parfois modifiées automatiquement par un filtre.
+
+Ce n'est pas nouveau — la publicité retouche depuis longtemps — mais l'échelle a changé. Le phénomène concerne désormais les photos de personnes ordinaires, et les filtres s'appliquent en temps réel, souvent par défaut.
+
+Les recherches en psychologie sociale montrent un mécanisme constant : nous nous comparons à ce que nous voyons régulièrement, sans décider de le faire. Lorsque le point de comparaison est un ensemble d'images optimisées, la comparaison est systématiquement défavorable.
+
+Les effets documentés incluent une insatisfaction corporelle accrue, en particulier chez les adolescentes, mais pas uniquement : les jeunes hommes sont de plus en plus concernés, avec un idéal musculaire tout aussi inaccessible.
+
+Il serait simpliste d'en faire une question de vanité. Une image de soi dégradée influence des comportements concrets : éviter certaines activités, renoncer à la piscine, adopter des régimes déséquilibrés, ou à l'inverse abandonner tout sport par découragement.
+
+Que faire ? Les approches efficaces ne consistent pas à demander aux gens de « s'accepter » — injonction facile et peu opérante.
+
+Ce qui fonctionne davantage : diversifier ce que l'on voit, en suivant des comptes montrant des corps variés et non retouchés ; réduire l'exposition aux contenus qui déclenchent la comparaison ; et déplacer l'attention de l'apparence vers la fonction.
+
+Cette dernière idée mérite d'être soulignée.
+
+Un corps qui marche, porte, nage ou danse fait quelque chose.
+
+C'est un critère plus juste, et plus durable, que son apparence sur une photographie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-099",
+    title: "Les blessures des sportifs amateurs",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La plupart des blessures viennent d'une progression trop rapide.",
+    blurbEn:
+      "Most amateur injuries are not accidents. They come from doing too much too soon — and the pattern is remarkably consistent. (Section: Sport and the body, 4/5.)",
+    body: `Chaque année, de nombreux sportifs amateurs se blessent. Contrairement à ce qu'on imagine, la majorité de ces blessures ne résultent pas d'un accident : ce sont des blessures dites « de surcharge », apparues progressivement.
+
+Le schéma est presque toujours le même. Une personne reprend le sport avec enthousiasme, augmente rapidement la durée ou l'intensité, et ressent au bout de quelques semaines une douleur qu'elle ignore d'abord, puis qui l'oblige à s'arrêter plusieurs mois.
+
+L'explication tient à une différence de rythme entre les tissus du corps.
+
+Le système cardiovasculaire s'adapte vite : en quelques semaines, on est nettement moins essoufflé. Les muscles suivent assez rapidement. Mais les tendons, les ligaments et les os s'adaptent beaucoup plus lentement, sur plusieurs mois.
+
+Le danger vient précisément de cet écart. On se sent capable de faire davantage bien avant que les structures qui encaissent le choc ne soient prêtes.
+
+D'où la règle souvent citée par les kinésithérapeutes : augmenter la charge d'environ dix pour cent par semaine au maximum, et prévoir régulièrement une semaine plus légère.
+
+Deux autres facteurs reviennent constamment.
+
+Le premier est le sommeil : c'est pendant le repos que la réparation se produit. S'entraîner beaucoup en dormant peu est un excellent moyen de se blesser.
+
+Le second est la variété. Répéter exactement le même mouvement sollicite toujours les mêmes tissus. Alterner les activités répartit la contrainte.
+
+Enfin, une douleur qui persiste plus de quelques jours mérite un avis, pas de la patience.
+
+La plupart des blessures longues ont commencé par une gêne qu'on a choisi d'ignorer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-100",
+    title: "Le sport à l'école",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les enfants bougent moins qu'il y a trente ans.",
+    blurbEn:
+      "Children move markedly less than a generation ago, and school PE cannot compensate alone. Why the walk to school matters as much as the lesson. (Section: Sport and the body, 5/5.)",
+    body: `Les études sanitaires convergent : la condition physique des enfants a baissé de façon mesurable depuis une trentaine d'années. La capacité d'endurance moyenne d'un enfant de dix ans est aujourd'hui nettement inférieure à celle des générations précédentes.
+
+Plusieurs causes se combinent, et il serait réducteur de tout attribuer aux écrans.
+
+Le mode de déplacement a changé. Une part importante des enfants était autrefois conduite à l'école à pied ou à vélo ; la voiture domine désormais, souvent pour de courtes distances. Cette marche quotidienne représentait une activité régulière, invisible mais constante.
+
+Le jeu libre extérieur a également reculé, pour des raisons de sécurité, d'aménagement urbain et d'organisation des familles.
+
+L'école ne peut pas compenser seule ce déficit. Les horaires d'éducation physique représentent quelques heures par semaine, largement insuffisantes pour atteindre les recommandations, qui portent sur une heure d'activité quotidienne.
+
+Certaines initiatives cherchent à agir autrement qu'en ajoutant des cours. Des écoles ont mis en place de courtes séances d'activité intégrées à la journée. D'autres organisent des trajets collectifs à pied, encadrés par des adultes bénévoles, qui permettent aux enfants de marcher en sécurité.
+
+Ces dispositifs ont un avantage : ils ne dépendent ni d'équipements coûteux ni d'un talent sportif particulier.
+
+Car il existe un risque à ne penser l'activité qu'à travers la compétition. Les enfants les moins à l'aise en sport sont précisément ceux qui en auraient le plus besoin, et ce sont souvent eux que l'évaluation décourage le plus tôt.
+
+L'enjeu n'est pas de former des athlètes.
+
+Il est que bouger reste, à l'âge adulte, quelque chose de normal plutôt qu'une épreuve.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
