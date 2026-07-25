@@ -572,6 +572,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-medicine",
+    band: "B1",
+    title: "Health and medicine",
+    goal: "Antibiotics, the placebo effect, mental health at work, ageing well, self-diagnosis.",
+    textIds: [
+      "starter-b1-121", // Les antibiotiques ne soignent pas tout (levels up B1 Everyday health)
+      "starter-b1-122", // L'effet placebo
+      "starter-b1-123", // La santé mentale au travail
+      "starter-b1-124", // Vieillir en bonne santé
+      "starter-b1-125", // Chercher ses symptômes sur internet
+    ],
+  },
+  {
+    id: "b1-housing",
+    band: "B1",
+    title: "Housing",
+    goal: "Rent or buy, intergenerational living, small flats, renovation, social housing.",
+    textIds: [
+      "starter-b1-126", // Louer ou acheter ? (levels up B1 City living)
+      "starter-b1-127", // La colocation entre générations
+      "starter-b1-128", // Vivre dans un petit logement
+      "starter-b1-129", // Rénover une vieille maison
+      "starter-b1-130", // À quoi sert le logement social ?
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

@@ -11319,4 +11319,330 @@ Un ancien collègue me l'a résumé après deux années de retraite :
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-121",
+    title: "Les antibiotiques ne soignent pas tout",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un antibiotique n'agit pas contre un virus.",
+    blurbEn:
+      "Antibiotics do nothing against viruses, yet are still asked for. Why that matters far beyond the individual patient. (Section: Health and medicine, 1/5.)",
+    body: `Les antibiotiques comptent parmi les découvertes médicales les plus importantes du vingtième siècle. Avant eux, une infection banale pouvait tuer.
+
+Ils souffrent pourtant d'un malentendu tenace : beaucoup de gens les considèrent comme un remède général contre le fait d'être malade.
+
+Or un antibiotique agit contre des bactéries. Il n'a strictement aucun effet sur un virus. Cela signifie qu'il est inutile contre la grippe, le rhume ou la plupart des angines et des bronchites, qui sont d'origine virale.
+
+Prendre un antibiotique dans ces cas n'accélère pas la guérison d'un seul jour.
+
+Cela pose deux problèmes.
+
+Le premier est individuel : les antibiotiques ont des effets secondaires, notamment sur la flore intestinale, et il est absurde de les subir sans bénéfice.
+
+Le second est collectif, et il est bien plus sérieux. Chaque usage inutile favorise l'apparition de bactéries résistantes. Le mécanisme est simple : les bactéries qui survivent au traitement sont précisément celles qui y résistent, et ce sont elles qui se multiplient ensuite.
+
+L'antibiorésistance est aujourd'hui considérée par les autorités sanitaires comme l'une des principales menaces à long terme. Des infections autrefois faciles à traiter redeviennent difficiles.
+
+C'est pourquoi les campagnes rappellent régulièrement que les antibiotiques ne sont pas automatiques, et pourquoi il faut aller au bout d'un traitement prescrit plutôt que de l'arrêter dès que l'on se sent mieux.
+
+Il faut aussi reconnaître que la pression ne vient pas uniquement des patients.
+
+Un médecin pressé, face à quelqu'un qui insiste, prescrit parfois pour éviter un conflit.
+
+La bonne question à poser n'est pas « pouvez-vous me donner quelque chose ? », mais « est-ce que c'est viral ? ».`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-122",
+    title: "L'effet placebo",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un traitement sans substance active peut produire un effet réel.",
+    blurbEn:
+      "The placebo effect is not imagination: it produces measurable changes. Understanding it explains a lot about how medicine is tested. (Section: Health and medicine, 2/5.)",
+    body: `L'effet placebo est souvent mal compris. On l'emploie comme synonyme de « faux » ou d'« imaginaire ». La réalité est plus intéressante.
+
+Un placebo est un traitement sans substance active : un comprimé de sucre, une injection d'eau salée. Or, dans de nombreuses études, les patients qui le reçoivent constatent une amélioration mesurable.
+
+Cette amélioration n'est pas une invention du patient. On a observé des modifications physiologiques réelles, notamment la libération de substances antidouleur naturelles par le cerveau.
+
+L'effet est particulièrement marqué sur la douleur, la fatigue, l'anxiété et les nausées — c'est-à-dire sur des symptômes fortement modulés par le système nerveux. Il n'a en revanche aucun effet sur une infection bactérienne ou sur une tumeur.
+
+Plusieurs éléments renforcent le phénomène : la conviction du soignant, le temps consacré à l'écoute, l'aspect du traitement, et même son prix. Un comprimé présenté comme coûteux fonctionne mieux qu'un comprimé identique présenté comme bon marché.
+
+C'est précisément pour cela que les essais cliniques comparent un médicament à un placebo. Sans cette comparaison, il serait impossible de savoir si l'amélioration vient du produit ou du contexte.
+
+Il existe aussi l'effet inverse, moins connu : le nocebo. Informer un patient des effets secondaires possibles augmente la probabilité qu'il les ressente.
+
+Ce phénomène pose une question difficile aux soignants, entre information honnête et suggestion involontaire.
+
+Ce qu'il enseigne, en tout cas, est important.
+
+La relation entre un patient et son médecin n'est pas un supplément d'humanité optionnel.
+
+Elle fait partie du traitement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-123",
+    title: "La santé mentale au travail",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le sujet était tabou. Il ne l'est plus tout à fait.",
+    blurbEn:
+      "Mental health at work has moved from taboo to policy. Recognising the difference between stress, exhaustion and burnout matters. (Section: Health and medicine, 3/5.)",
+    body: `Pendant longtemps, la souffrance psychique au travail relevait du domaine privé. Un salarié en difficulté était supposé « tenir » ou partir.
+
+Ce n'est plus tout à fait le cas. Les arrêts de travail pour raisons psychologiques ont fortement augmenté, et les entreprises ont l'obligation légale de préserver la santé mentale de leurs salariés, pas seulement leur sécurité physique.
+
+Encore faut-il distinguer des réalités différentes, souvent confondues.
+
+Le stress ponctuel n'est pas une maladie. Il est une réponse normale à une échéance ou à une difficulté, et il disparaît quand la situation se résout.
+
+L'épuisement professionnel — le burn-out — est autre chose. Il se caractérise par un épuisement profond qui ne se répare pas avec le repos habituel, une distance croissante vis-à-vis du travail, et un sentiment d'inefficacité. Il s'installe progressivement, souvent chez des personnes très impliquées.
+
+Ce dernier point est important : contrairement à une idée reçue, ce ne sont pas les moins engagés qui s'effondrent. Ce sont fréquemment ceux qui en font le plus.
+
+Les facteurs de risque identifiés sont assez constants : une charge de travail durablement excessive, un manque d'autonomie, l'absence de reconnaissance, des consignes contradictoires, et des conflits de valeurs — devoir faire mal ce qu'on sait faire bien.
+
+Les réponses individuelles — sport, sommeil, relaxation — aident, mais elles ne suffisent pas si l'organisation ne change pas.
+
+C'est là que le débat se tend, car il est plus simple de proposer une séance de méditation que de réduire une charge de travail.
+
+Les entreprises qui obtiennent des résultats agissent presque toujours sur l'organisation elle-même.
+
+Le reste relève de l'affichage.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-124",
+    title: "Vieillir en bonne santé",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'espérance de vie augmente. L'espérance de vie en bonne santé moins vite.",
+    blurbEn:
+      "Living longer is not the same as living well for longer. The gap between the two is where prevention actually matters. (Section: Health and medicine, 4/5.)",
+    body: `L'espérance de vie a considérablement augmenté au cours du vingtième siècle. C'est l'un des progrès les plus spectaculaires de l'histoire humaine.
+
+Mais un autre indicateur, moins médiatisé, mérite attention : l'espérance de vie en bonne santé, c'est-à-dire le nombre d'années vécues sans limitation importante dans les activités quotidiennes.
+
+Cet indicateur progresse moins vite que l'espérance de vie totale. Autrement dit, nous gagnons des années, mais une partie de ces années se vit avec des difficultés.
+
+Réduire cet écart est devenu un objectif central des politiques de santé publique.
+
+Ce qui influence cette période est assez bien identifié, et sans grande surprise : l'activité physique, l'alimentation, le tabac, l'alcool, la qualité du sommeil, et — élément souvent oublié — le maintien des liens sociaux.
+
+Deux points méritent d'être soulignés.
+
+Le premier est l'importance du maintien musculaire. À partir d'un certain âge, la masse musculaire diminue naturellement, et cette perte est un facteur majeur de dépendance : elle augmente le risque de chute, et une chute est fréquemment le point de bascule vers la perte d'autonomie. Le renforcement musculaire, même modeste, a un effet démontré à tout âge, y compris après quatre-vingts ans.
+
+Le second est que la prévention n'a pas d'âge limite. Arrêter de fumer à soixante-cinq ans apporte encore des bénéfices mesurables. Commencer une activité physique à soixante-quinze ans améliore l'équilibre en quelques mois.
+
+L'idée qu'il serait « trop tard » est démentie par les données.
+
+Le corps, y compris âgé, répond à ce qu'on lui demande.
+
+Il faut simplement continuer à lui demander quelque chose.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-125",
+    title: "Chercher ses symptômes sur internet",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Presque tout le monde le fait. Ce n'est ni inutile ni sans risque.",
+    blurbEn:
+      "Almost everyone searches their symptoms online. It is neither useless nor harmless — the difference lies in how you read the results. (Section: Health and medicine, 5/5.)",
+    body: `Une large majorité de personnes cherchent des informations médicales en ligne avant, ou parfois au lieu de, consulter un médecin.
+
+Cette pratique est souvent moquée. Elle mérite un regard plus nuancé.
+
+Elle a de réels avantages. Un patient informé pose de meilleures questions, comprend mieux ce qu'on lui explique, et suit plus volontiers un traitement dont il saisit la logique. Pour les maladies chroniques, les communautés de patients en ligne apportent une aide concrète que le système de soins ne fournit pas toujours.
+
+Mais elle comporte deux pièges bien identifiés.
+
+Le premier est statistique. Les moteurs de recherche ne classent pas les résultats par probabilité médicale. Un mal de tête peut correspondre à des dizaines de causes, dont l'immense majorité sont bénignes ; ce sont pourtant les causes graves qui apparaissent, parce qu'elles génèrent plus de contenus. Le résultat est une anxiété disproportionnée, parfois appelée « cybercondrie ».
+
+Le second est la qualité inégale des sources. Des sites commerciaux, des forums non modérés et des contenus promotionnels côtoient des ressources sérieuses, sans que la présentation permette toujours de les distinguer.
+
+Quelques réflexes limitent ces risques. Privilégier les sites institutionnels ou les organismes publics de santé. Se méfier de tout contenu qui vend simultanément une solution. Regarder la date : les recommandations médicales évoluent.
+
+Et surtout, garder à l'esprit une limite fondamentale.
+
+Un moteur de recherche liste des possibilités.
+
+Un médecin examine une personne, connaît son histoire, et écarte l'immense majorité de ces possibilités en quelques minutes.
+
+Ce n'est pas la même opération.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-126",
+    title: "Louer ou acheter ?",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "En France, acheter est présenté comme l'objectif normal.",
+    blurbEn:
+      "Buying is treated as the obvious goal in France. The arithmetic is less clear-cut than the culture suggests. (Section: Housing, 1/5.)",
+    body: `En France, devenir propriétaire est largement présenté comme une évolution normale, presque une étape obligée. « Payer un loyer, c'est jeter de l'argent par les fenêtres » figure parmi les phrases les plus répétées sur le sujet.
+
+Cette affirmation mérite d'être examinée, car elle est partiellement inexacte.
+
+Acheter comporte des coûts que l'on oublie souvent. Les frais de notaire représentent environ sept à huit pour cent du prix dans l'ancien. S'y ajoutent la taxe foncière, les charges de copropriété, l'entretien, et surtout les intérêts d'emprunt — qui constituent, dans les premières années, la majorité des mensualités.
+
+Ces sommes ne sont pas récupérées. Elles sont, elles aussi, dépensées.
+
+Le calcul dépend donc de plusieurs facteurs : la durée pendant laquelle on reste dans le logement, l'évolution des prix, l'écart entre le loyer et la mensualité, et le taux d'emprunt.
+
+La durée est le facteur décisif. En dessous de cinq à sept ans, l'achat est fréquemment défavorable, car les frais initiaux n'ont pas eu le temps d'être amortis.
+
+Il existe pourtant de bons arguments en faveur de l'achat, qui ne sont pas seulement financiers. La stabilité : on ne peut pas être contraint de partir. La liberté d'aménager. Et surtout, la perspective de la retraite, période où l'absence de loyer change considérablement le niveau de vie.
+
+Inversement, la location offre une mobilité réelle, précieuse dans un marché du travail où l'on change souvent d'emploi et de ville.
+
+Le débat est donc mal posé lorsqu'il oppose un choix intelligent à un choix stupide.
+
+La vraie question est simple : combien de temps compte-t-on rester ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-127",
+    title: "La colocation entre générations",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un étudiant loge chez une personne âgée, en échange de présence.",
+    blurbEn:
+      "Students housed by older people in exchange for company: a scheme that answers two problems at once, when it is properly organised. (Section: Housing, 2/5.)",
+    body: `Il existe un dispositif qui répond simultanément à deux problèmes distincts : le logement étudiant, cher et rare dans les grandes villes, et l'isolement des personnes âgées vivant seules dans des logements devenus trop grands.
+
+Le principe de la cohabitation intergénérationnelle est simple. Un étudiant est logé chez une personne âgée pour un loyer très réduit, parfois nul, en échange d'une présence régulière et de menus services : partager quelques repas, être là le soir, aider pour les courses ou un appareil.
+
+Il ne s'agit pas d'un emploi d'aide à domicile. L'étudiant n'assure aucun soin médical ni aucune tâche lourde, et c'est une distinction essentielle, régulièrement rappelée par les associations qui organisent ces binômes.
+
+Ces associations jouent d'ailleurs un rôle déterminant. Elles vérifient les logements, rencontrent les deux parties, établissent une convention écrite précisant les engagements, et interviennent en cas de difficulté.
+
+Les expériences menées sans cadre échouent beaucoup plus souvent : les attentes implicites divergent, personne n'ose en parler, et la situation se dégrade.
+
+Les retours des participants sont majoritairement positifs, avec un point commun : les bénéfices ne sont pas ceux qu'on attendait. Les étudiants évoquent moins l'économie de loyer que les conversations. Les personnes âgées évoquent moins la sécurité que le fait d'avoir quelqu'un à qui raconter sa journée.
+
+Le dispositif reste modeste en nombre, limité par la logistique et par la réticence, compréhensible, à faire entrer un inconnu chez soi.
+
+Mais il illustre une idée utile.
+
+Certains problèmes sociaux ne se résolvent pas séparément.
+
+Ils se résolvent en les mettant en présence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-128",
+    title: "Vivre dans un petit logement",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La surface moyenne par habitant a cessé d'augmenter dans les grandes villes.",
+    blurbEn:
+      "Small flats are a fact of urban life. What actually makes them liveable is less about square metres than about light, storage and layout. (Section: Housing, 3/5.)",
+    body: `Dans les grandes villes, la surface disponible par habitant a cessé de progresser, et elle recule même dans certains centres. Les logements y sont plus petits que la moyenne nationale, et les studios très compacts se sont multipliés.
+
+Il existe une surface minimale légale pour une location, mais cette limite reste basse, et le débat ne porte pas seulement sur les mètres carrés.
+
+Les études sur le confort du logement identifient en effet d'autres facteurs, souvent plus déterminants que la surface.
+
+La lumière naturelle arrive en tête. Un logement petit mais lumineux est presque toujours mieux vécu qu'un logement plus grand et sombre. L'orientation et la taille des fenêtres pèsent lourd sur le sentiment d'enfermement.
+
+Le rangement vient ensuite. Ce qui rend un petit logement invivable, ce n'est pas sa taille mais l'encombrement. Sans espace de stockage, les objets occupent le sol, et la surface utile disparaît.
+
+La séparation des usages compte également. Pouvoir dormir ailleurs que là où l'on travaille, même par une simple cloison ou un rideau, change nettement la qualité de vie — un constat devenu évident avec le télétravail.
+
+Le bruit, enfin, est déterminant. Une isolation phonique médiocre annule presque tous les autres avantages.
+
+Ces éléments sont connus des architectes, mais ils sont fréquemment sacrifiés dans les opérations où le prix au mètre carré prime.
+
+Vivre à l'étroit n'est donc pas nécessairement mal vivre.
+
+Cela dépend surtout de choix de conception qui ne coûtent pas grand-chose au moment de la construction.
+
+Et beaucoup, ensuite, à ceux qui y habitent.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-129",
+    title: "Rénover une vieille maison",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le budget prévu est presque toujours dépassé.",
+    blurbEn:
+      "Renovating an old house almost always costs more and takes longer than planned. Why that happens so consistently, and what reduces the risk. (Section: Housing, 4/5.)",
+    body: `Il existe une régularité si constante qu'elle en devient une règle : une rénovation coûte plus cher et dure plus longtemps que prévu.
+
+Ce n'est pas une question d'incompétence. Le phénomène a des causes structurelles.
+
+La première est l'invisible. Dans une maison ancienne, on ne découvre l'état réel des murs, des planchers et des réseaux qu'en ouvrant. Un devis établi avant travaux repose donc partiellement sur des hypothèses, et les mauvaises surprises sont fréquentes : humidité, charpente attaquée, électricité non conforme.
+
+La deuxième est l'enchaînement des décisions. Refaire l'électricité suppose d'ouvrir les murs ; puisque les murs sont ouverts, il devient absurde de ne pas isoler ; l'isolation modifie l'épaisseur, donc les menuiseries. Chaque décision en appelle une autre, et le projet grossit sans qu'aucune étape ne soit déraisonnable.
+
+La troisième est l'ordre des travaux. Beaucoup de particuliers commencent par ce qui se voit — la cuisine, la peinture — et découvrent ensuite qu'il faut tout défaire pour traiter la toiture ou l'humidité. L'ordre correct est constant : d'abord le clos et le couvert, puis les réseaux, puis l'isolation, et seulement ensuite les finitions.
+
+Les personnes qui s'en sortent le mieux appliquent généralement deux principes.
+
+Elles prévoient une réserve financière d'environ vingt pour cent, considérée comme faisant partie du budget et non comme un dépassement.
+
+Et elles font établir un diagnostic sérieux avant d'acheter, pas après.
+
+Un ami m'a résumé son chantier ainsi, deux ans après :
+
+« Ce n'est pas que j'avais mal calculé. »
+
+« C'est que je ne savais pas encore ce que j'achetais. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-130",
+    title: "À quoi sert le logement social ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Un logement social sur deux est occupé par un ménage salarié.",
+    blurbEn:
+      "Social housing in France covers far more people than the stereotype suggests. Who lives there, how it is allocated, and why waiting lists are long. (Section: Housing, 5/5.)",
+    body: `Le logement social occupe une place importante en France : il représente environ un logement sur six, et loge plusieurs millions de personnes.
+
+Il fait l'objet de représentations souvent éloignées de la réalité.
+
+La première concerne les habitants. Contrairement à une idée répandue, le logement social ne s'adresse pas uniquement aux personnes sans emploi. Les plafonds de ressources sont fixés de telle sorte qu'une part importante de la population y est éligible, et une majorité de locataires occupent un emploi. On y trouve des infirmiers, des employés, des enseignants — c'est-à-dire des métiers indispensables au fonctionnement des villes où se loger est devenu difficile.
+
+La deuxième concerne l'attribution. Elle ne dépend pas d'une décision individuelle mais de commissions, qui examinent les dossiers selon des critères : composition du foyer, ressources, ancienneté de la demande, situations prioritaires.
+
+Les délais d'attente sont longs, particulièrement dans les zones tendues, où ils se comptent en années. La raison est arithmétique : le nombre de demandes dépasse largement le nombre de logements qui se libèrent chaque année.
+
+La construction, elle, se heurte à plusieurs obstacles : le coût du foncier, la durée des procédures, et parfois l'opposition locale à des projets pourtant approuvés dans le principe.
+
+Ce dernier point est révélateur. Le logement social bénéficie d'un soutien large en théorie et rencontre des résistances précises en pratique, quartier par quartier.
+
+La question posée n'est donc pas seulement technique ou budgétaire.
+
+Elle est de savoir si les personnes qui font fonctionner une ville doivent pouvoir y habiter.
+
+La réponse paraît évidente jusqu'au moment où il faut décider où construire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
