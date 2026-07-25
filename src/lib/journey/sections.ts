@@ -520,6 +520,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-traditions",
+    band: "B1",
+    title: "French traditions",
+    goal: "Holidays, markets, laïcité, regional languages and heritage.",
+    textIds: [
+      "starter-b1-101", // Pourquoi la France a tant de fêtes en mai (levels up A2 France and Britain)
+      "starter-b1-102", // Le marché, une institution qui résiste
+      "starter-b1-103", // La laïcité, souvent mal comprise
+      "starter-b1-104", // Les langues régionales
+      "starter-b1-105", // Le patrimoine, qui décide de ce qu'on garde ?
+    ],
+  },
+  {
+    id: "b1-wildlife",
+    band: "B1",
+    title: "Nature and wildlife",
+    goal: "Insect decline, the wolf's return, urban nature, feeding birds and light pollution.",
+    textIds: [
+      "starter-b1-106", // La disparition silencieuse des insectes
+      "starter-b1-107", // Le retour du loup
+      "starter-b1-108", // Nos villes peuvent accueillir la nature
+      "starter-b1-109", // Faut-il nourrir les oiseaux en hiver ?
+      "starter-b1-110", // La nuit a besoin d'obscurité
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

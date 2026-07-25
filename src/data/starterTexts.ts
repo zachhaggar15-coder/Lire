@@ -10671,4 +10671,324 @@ Il est que bouger reste, à l'âge adulte, quelque chose de normal plutôt qu'un
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-101",
+    title: "Pourquoi la France a tant de fêtes en mai",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le mois de mai compte plusieurs jours fériés. Ce n'est pas un hasard.",
+    blurbEn:
+      "May is full of French public holidays, and each one comes from a different history: labour, war, religion. What they commemorate, and why. (Section: French traditions, 1/5.)",
+    body: `Chaque année, les salariés français regardent le calendrier de mai avec attention. Le mois compte plusieurs jours fériés, parfois placés de façon à permettre de « faire le pont ».
+
+Cette concentration n'a rien d'un hasard : elle résulte de trois histoires différentes qui se sont superposées.
+
+Le 1er mai est une fête du travail. Son origine est internationale et remonte à la fin du dix-neuvième siècle, en mémoire d'un mouvement pour la journée de huit heures. En France, il est devenu jour chômé et payé en 1948. C'est le seul jour férié où presque tout le monde s'arrête vraiment — même les commerces, sauf exceptions. La tradition du brin de muguet, offert ce jour-là, est plus ancienne et sans rapport direct.
+
+Le 8 mai commémore la fin de la Seconde Guerre mondiale en Europe, en 1945. Il a été supprimé comme jour férié dans les années soixante-quinze, puis rétabli en 1981 — signe que ces dates restent des choix politiques.
+
+Viennent ensuite deux fêtes religieuses, héritées d'un calendrier chrétien ancien : l'Ascension, toujours un jeudi, et la Pentecôte, un lundi. Leurs dates changent chaque année car elles dépendent de Pâques, dont le calcul suit les cycles lunaires.
+
+Cette coexistence entre des fêtes ouvrières, mémorielles et religieuses surprend souvent les étrangers, en particulier dans un pays officiellement laïque.
+
+Elle s'explique simplement : ces jours n'ont pas été décidés ensemble, mais accumulés au fil de deux siècles.
+
+Peu de Français pourraient expliquer ce que célèbre l'Ascension.
+
+Tous savent qu'elle tombe un jeudi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-102",
+    title: "Le marché, une institution qui résiste",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Malgré les supermarchés, les marchés n'ont pas disparu.",
+    blurbEn:
+      "Supermarkets should have killed the open-air market decades ago. They did not, and the reasons say something about what shopping is for. (Section: French traditions, 2/5.)",
+    body: `On aurait pu penser que les marchés de plein air disparaîtraient avec l'essor des supermarchés. Ils sont pourtant restés : la France en compte plusieurs milliers, hebdomadaires ou bihebdomadaires, dans les villes comme dans les villages.
+
+Leur survie est intéressante, car sur le papier, le supermarché gagne sur presque tous les critères : horaires plus larges, choix plus vaste, abri en cas de pluie, stationnement, prix souvent inférieurs.
+
+Pourquoi, alors, continuer d'aller au marché ?
+
+La première réponse est la qualité perçue, notamment pour les fruits, les légumes et les fromages. Elle n'est pas toujours objectivement supérieure — un marché peut vendre des produits venus des mêmes circuits — mais la possibilité de voir, de sentir, de demander compte beaucoup.
+
+La deuxième réponse est la relation. Au marché, il y a quelqu'un en face. On peut demander comment cuisiner un légume inconnu, obtenir un conseil, être reconnu d'une semaine à l'autre. Ce lien n'existe pas dans un rayon.
+
+La troisième réponse est sociale, et c'est probablement la plus déterminante. Le marché est l'un des rares lieux où des personnes de générations et de milieux différents se croisent sans rendez-vous. On y va aussi pour rencontrer des gens, souvent sans le formuler ainsi.
+
+Les municipalités l'ont compris : beaucoup soutiennent activement leurs marchés, y compris quand ils ne sont pas rentables, parce qu'ils font vivre un centre-ville.
+
+Le marché n'a donc pas résisté malgré son inefficacité commerciale.
+
+Il a résisté parce qu'il ne servait pas seulement à acheter.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-103",
+    title: "La laïcité, souvent mal comprise",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le mot revient sans cesse dans le débat français.",
+    blurbEn:
+      "Laïcité is central to French public life and frequently misunderstood abroad. What the 1905 law actually says, and what it does not. (Section: French traditions, 3/5.)",
+    body: `Peu de mots reviennent aussi souvent dans le débat public français que celui de laïcité. Peu sont aussi régulièrement mal compris, en France comme à l'étranger.
+
+Le principe trouve sa forme actuelle dans la loi de 1905, qui sépare les Églises et l'État. Cette loi a mis fin à un régime où l'État finançait et encadrait certains cultes.
+
+Elle repose sur deux idées, souvent citées séparément alors qu'elles vont ensemble.
+
+La première est la neutralité de l'État. La puissance publique ne reconnaît, ne salarie ni ne subventionne aucun culte. Un fonctionnaire, dans l'exercice de ses fonctions, ne manifeste pas ses convictions religieuses.
+
+La seconde est la liberté de conscience. L'État garantit le libre exercice des cultes. Autrement dit, la laïcité n'a pas été conçue contre les religions, mais pour permettre leur coexistence sans qu'aucune n'occupe l'État.
+
+Le malentendu le plus fréquent consiste à confondre ces deux niveaux. La neutralité s'impose à l'État et à ses agents, non aux individus dans l'espace public. Un usager d'un service public n'est pas soumis aux mêmes obligations qu'un agent.
+
+Il existe aussi des exceptions historiques peu connues : en Alsace et en Moselle, rattachées à l'Allemagne en 1905, un régime concordataire antérieur s'applique encore, et certains cultes y sont financés.
+
+Les débats contemporains portent rarement sur le principe lui-même, largement accepté.
+
+Ils portent sur son application concrète — à l'école, dans le sport, au travail.
+
+C'est-à-dire, comme souvent, non sur la règle, mais sur sa frontière.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-104",
+    title: "Les langues régionales",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le breton, l'occitan, l'alsacien : des langues longtemps découragées.",
+    blurbEn:
+      "France has many regional languages, most of them now endangered. Their decline was policy, and their partial revival is recent. (Section: French traditions, 4/5.)",
+    body: `On oublie souvent que le français n'a été la langue majoritaire de la France que tardivement. À la Révolution, une part importante de la population parlait d'abord une autre langue : breton, occitan, basque, alsacien, corse, flamand, catalan, et de nombreuses variantes.
+
+Le recul de ces langues n'a pas été spontané.
+
+Il a résulté d'une politique délibérée, menée à partir du dix-neuvième siècle, avec l'idée que l'unité nationale supposait une langue unique. L'école a joué un rôle central. De nombreux témoignages rapportent des punitions infligées aux élèves surpris à parler leur langue maternelle dans la cour.
+
+Cette politique a produit un effet durable, moins par l'interdiction que par la honte : beaucoup de parents ont cessé de transmettre leur langue à leurs enfants, convaincus qu'elle les désavantagerait.
+
+C'est ce mécanisme — l'arrêt de la transmission familiale — qui fait disparaître une langue, bien plus sûrement que les règlements.
+
+Depuis les années soixante-dix, un mouvement inverse s'est amorcé. Des écoles associatives et bilingues ont vu le jour, la loi a évolué, et ces langues sont désormais reconnues comme faisant partie du patrimoine de la France.
+
+Les résultats sont contrastés. Le nombre de locuteurs continue de baisser, car les générations qui parlaient ces langues quotidiennement disparaissent. Mais le nombre d'élèves scolarisés en breton ou en occitan augmente.
+
+Ces nouveaux locuteurs ne parlent pas exactement la même langue que leurs grands-parents.
+
+Une langue apprise à l'école n'est jamais identique à une langue héritée.
+
+Elle a toutefois un avantage décisif : elle est encore là.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-105",
+    title: "Le patrimoine, qui décide de ce qu'on garde ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Conserver un bâtiment ancien coûte cher. Il faut choisir.",
+    blurbEn:
+      "France protects tens of thousands of monuments, but conservation costs money and requires choices. Who decides what deserves saving? (Section: French traditions, 5/5.)",
+    body: `La France protège plusieurs dizaines de milliers de monuments historiques, des cathédrales aux lavoirs de village. Cette politique est ancienne : elle remonte au dix-neuvième siècle, à une époque où de nombreux édifices médiévaux étaient détruits ou pillés.
+
+Elle soulève pourtant une question rarement posée : qui décide de ce qui mérite d'être conservé ?
+
+Le classement suit des procédures précises, avec des experts et des commissions. Mais tout choix de conservation est aussi un choix de récit.
+
+Pendant longtemps, on a protégé en priorité les châteaux, les églises et les demeures aristocratiques — c'est-à-dire les traces des puissants. Les bâtiments du travail ordinaire, eux, ont massivement disparu : ateliers, usines, fermes, logements ouvriers.
+
+Depuis quelques décennies, ce regard a changé. Le patrimoine industriel est désormais reconnu, et d'anciennes usines sont transformées en musées, en logements ou en lieux culturels plutôt que démolies.
+
+Reste la question du coût. L'entretien d'un monument est permanent, et beaucoup de communes rurales possèdent des églises qu'elles n'ont pas les moyens de restaurer. Le nombre d'édifices en péril est important.
+
+Les solutions sont diverses : loteries dédiées, mécénat, financement participatif, réutilisation pour un autre usage.
+
+Cette dernière piste est probablement la plus efficace. Un bâtiment vide se dégrade ; un bâtiment occupé est entretenu par ceux qui s'en servent.
+
+Conserver ne signifie donc pas figer.
+
+Beaucoup des édifices que nous admirons ont changé plusieurs fois de fonction au cours des siècles.
+
+Ce que nous appelons patrimoine est souvent le résultat d'une longue série de réemplois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-106",
+    title: "La disparition silencieuse des insectes",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le nombre d'insectes a chuté de façon spectaculaire.",
+    blurbEn:
+      "Insect numbers have collapsed across Europe. It matters far more than it sounds, because almost everything else depends on them. (Section: Nature and wildlife, 1/5.)",
+    body: `Les insectes n'ont pas bonne presse. Ils piquent, ils dérangent, ils apparaissent dans la cuisine en été. Peu de gens s'en inquiètent quand ils se raréfient.
+
+Or les données disponibles sont préoccupantes. Plusieurs études européennes, dont une menée en Allemagne sur près de trente ans, ont mesuré une chute considérable de la biomasse d'insectes volants — de l'ordre de plusieurs dizaines de pour cent selon les sites.
+
+Beaucoup de gens ont observé le phénomène sans le nommer : les pare-brise des voitures, autrefois couverts d'insectes après un trajet d'été, restent aujourd'hui presque propres.
+
+Pourquoi est-ce grave ?
+
+D'abord pour la pollinisation. Une part importante des cultures destinées à l'alimentation humaine dépend, totalement ou partiellement, de pollinisateurs. Sans eux, certaines productions deviennent impossibles ou nécessitent une pollinisation manuelle, pratiquée dans quelques régions du monde à un coût considérable.
+
+Ensuite parce que les insectes sont à la base des chaînes alimentaires. Les oiseaux insectivores, dont les populations déclinent également, en dépendent directement.
+
+Enfin pour la décomposition : sans insectes, la matière organique se dégrade beaucoup plus lentement.
+
+Les causes identifiées sont multiples et se cumulent : usage massif de pesticides, disparition des haies et des prairies, artificialisation des sols, éclairage nocturne, changement climatique.
+
+Des mesures existent, à toutes les échelles : réduire les traitements, replanter des haies, laisser des zones non tondues, limiter l'éclairage inutile.
+
+Ce qui rend ce sujet difficile, c'est son invisibilité.
+
+Personne ne remarque l'absence d'un insecte.
+
+On remarque seulement, des années plus tard, qu'il n'y en a plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-107",
+    title: "Le retour du loup",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le loup est revenu en France seul, sans être réintroduit.",
+    blurbEn:
+      "Wolves returned to France on their own in 1992 and the debate has been fierce ever since. Both sides have a real case. (Section: Nature and wildlife, 2/5.)",
+    body: `Le loup avait disparu de France dans les années trente, éliminé par la chasse. Il est réapparu en 1992, dans le parc du Mercantour, venu d'Italie par ses propres moyens.
+
+Ce point est important : le loup n'a pas été réintroduit. Il est revenu seul, à la faveur de la reforestation et de la protection dont il bénéficie au niveau européen.
+
+Depuis, sa population a progressé et s'est étendue à de nombreux départements.
+
+Le débat qu'il suscite est vif, et les deux positions reposent sur des arguments réels.
+
+Du côté de la protection, on souligne que le loup est une espèce protégée, qu'il joue un rôle dans la régulation des populations d'herbivores, et que son retour témoigne d'une amélioration des milieux naturels.
+
+Du côté des éleveurs, la difficulté est concrète. Les attaques sur les troupeaux se comptent en milliers chaque année. Au-delà des pertes indemnisées, les éleveurs décrivent une charge de travail supplémentaire et une tension permanente : surveiller, regrouper, entretenir des clôtures, dormir mal.
+
+Il faut reconnaître que la protection des troupeaux, dans les zones de pâturage difficiles, n'est pas toujours possible. Les chiens de protection fonctionnent bien, mais posent d'autres problèmes, notamment avec les randonneurs.
+
+Les politiques actuelles combinent protection de l'espèce, indemnisations, aides aux mesures de protection et prélèvements encadrés d'un nombre limité d'individus.
+
+Cette solution ne satisfait pleinement personne, ce qui est peut-être inévitable.
+
+Le retour du loup pose en réalité une question plus large : jusqu'où sommes-nous prêts à partager le territoire avec une faune sauvage que nous avions éliminée ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-108",
+    title: "Nos villes peuvent accueillir la nature",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Certaines espèces vivent mieux en ville qu'à la campagne.",
+    blurbEn:
+      "Some species now do better in cities than in intensively farmed countryside. What that says about both, and how urban design can help. (Section: Nature and wildlife, 3/5.)",
+    body: `On oppose souvent la ville et la nature, comme si l'une excluait l'autre. La réalité est plus nuancée, et parfois surprenante.
+
+Plusieurs études montrent que certaines espèces — notamment des abeilles sauvages et des oiseaux — se portent aujourd'hui mieux dans certaines villes que dans les zones de grande culture intensive environnantes.
+
+Ce constat n'est pas un compliment adressé aux villes. C'est surtout un signal préoccupant concernant les campagnes où les haies ont disparu et où les traitements sont intensifs.
+
+Les villes présentent néanmoins de vrais atouts. Elles offrent une grande diversité de milieux sur un petit espace : jardins, parcs, friches, toitures, cimetières, bords de voies ferrées. Les floraisons y sont étalées sur une longue période, alors qu'un champ fleurit tout en même temps puis plus rien. Et l'usage de pesticides y est désormais très encadré dans les espaces publics.
+
+Elles présentent aussi de sérieux inconvénients : imperméabilisation des sols, circulation, et surtout éclairage nocturne, dont l'effet sur les insectes et les chauves-souris est important.
+
+Ce qui fonctionne, dans les villes qui s'y intéressent, tient à quelques principes simples.
+
+La continuité d'abord : des espaces verts reliés entre eux valent mieux que des espaces isolés, car les espèces doivent pouvoir circuler.
+
+La gestion ensuite : tondre moins souvent, laisser des zones en herbe haute, accepter une esthétique moins nette.
+
+Ce dernier point est le plus difficile, car il suppose de changer ce qu'on considère comme « bien entretenu ».
+
+Une pelouse rase et verte est un désert écologique.
+
+Un coin d'herbe folle est un habitat.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-109",
+    title: "Faut-il nourrir les oiseaux en hiver ?",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Le geste est répandu. Il demande quelques précautions.",
+    blurbEn:
+      "Feeding garden birds helps, but only if done correctly. The season, the food and the hygiene all matter more than people think. (Section: Nature and wildlife, 4/5.)",
+    body: `Nourrir les oiseaux en hiver est un geste très répandu, et globalement bénéfique. Il aide de nombreuses espèces à passer la période où la nourriture naturelle est rare, et il permet à beaucoup de gens d'observer la faune de près.
+
+Il demande toutefois quelques précautions, que les associations naturalistes rappellent régulièrement.
+
+La première concerne la période. Le nourrissage est utile de la fin de l'automne à la fin de l'hiver, tant que le froid persiste. Il est en revanche déconseillé au printemps et en été : les oisillons ont besoin d'insectes riches en protéines, et des graines apportées à ce moment peuvent leur être nuisibles.
+
+La deuxième concerne la nourriture. Les graines de tournesol non salées et les boules de graisse conviennent à beaucoup d'espèces. Le pain, en revanche, est à éviter : il gonfle, nourrit mal et peut provoquer des troubles digestifs. Tout aliment salé est à proscrire.
+
+La troisième précaution est la plus importante, et la plus souvent oubliée : l'hygiène.
+
+Une mangeoire concentre des dizaines d'oiseaux au même endroit, ce qui facilite la transmission de maladies. Des épidémies touchant certaines espèces ont été documentées et attribuées en partie à des mangeoires mal entretenues.
+
+Il faut donc nettoyer régulièrement le dispositif, retirer les restes humides, et déplacer occasionnellement le point de nourrissage.
+
+Un dernier conseil vaut d'être mentionné : une fois commencé, il vaut mieux continuer jusqu'à la fin de l'hiver. Les oiseaux intègrent la ressource dans leurs déplacements quotidiens.
+
+Et si l'on veut vraiment aider, le meilleur geste n'est pas la mangeoire.
+
+C'est de planter une haie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-110",
+    title: "La nuit a besoin d'obscurité",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "L'éclairage nocturne perturbe une grande partie du vivant.",
+    blurbEn:
+      "Artificial light at night disrupts insects, birds, plants and people. Switching some of it off is one of the cheapest environmental measures available. (Section: Nature and wildlife, 5/5.)",
+    body: `La pollution lumineuse est un sujet relativement récent, longtemps considéré comme secondaire. Les recherches menées depuis une vingtaine d'années ont changé ce regard.
+
+L'éclairage artificiel nocturne a fortement augmenté dans le monde, et la quasi-totalité de la population européenne vit désormais sous un ciel où la Voie lactée est invisible.
+
+Les effets documentés concernent une grande partie du vivant.
+
+Pour les insectes, la lumière agit comme un piège. Ils tournent autour des sources lumineuses jusqu'à l'épuisement, ne se reproduisent pas et deviennent des proies faciles. On estime que l'éclairage nocturne compte parmi les causes du déclin des insectes.
+
+Pour les oiseaux migrateurs, qui se repèrent en partie sur les étoiles, les villes éclairées désorientent. Des collisions avec des bâtiments illuminés sont régulièrement observées.
+
+Les chauves-souris, qui chassent la nuit, évitent les zones éclairées et perdent ainsi des territoires de chasse.
+
+Les plantes elles-mêmes sont affectées : des arbres situés sous des lampadaires conservent leurs feuilles plus longtemps à l'automne.
+
+Chez l'humain, la lumière nocturne perturbe la production de mélatonine et la qualité du sommeil.
+
+Ce qui rend ce sujet particulier, c'est qu'il est facile à corriger — bien plus que la plupart des problèmes environnementaux.
+
+Éteindre une lumière ne demande ni technologie ni investissement lourd. Cela réduit même la facture.
+
+De nombreuses communes françaises ont déjà instauré une extinction en milieu de nuit, sans hausse constatée de la délinquance, contrairement aux craintes exprimées.
+
+Peu de mesures écologiques coûtent moins cher et agissent aussi vite.
+
+Il suffit, littéralement, d'appuyer sur un interrupteur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
