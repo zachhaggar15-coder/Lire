@@ -7738,4 +7738,362 @@ Je lui ai répondu : « Pour me souvenir de ce qui était normal avant. »`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a2-078",
+    title: "J'ai emménagé dans un immeuble",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Après des années en maison, j'ai emménagé dans un immeuble.",
+    blurbEn:
+      "Moving from a house into a block of flats: thinner walls, shared stairs, and learning who everyone is. (Section: Home and neighbours, 1/5.)",
+    body: `Après huit ans dans une petite maison, j'ai emménagé dans un immeuble, au troisième étage. C'était un grand changement.
+
+L'appartement lui-même me plaisait tout de suite : il était lumineux, avec un balcon et une vue sur les toits.
+
+Mais la vie en immeuble est différente. Dans une maison, on est seul. Dans un immeuble, on partage : l'entrée, l'escalier, l'ascenseur, les poubelles, parfois le jardin.
+
+La première semaine, j'ai découvert les bruits. J'entendais l'eau dans les tuyaux, les pas au-dessus de moi, une porte qui claquait au rez-de-chaussée. Au début, cela me dérangeait beaucoup. Puis je m'y suis habituée.
+
+J'ai aussi rencontré les voisins, petit à petit, dans l'escalier.
+
+Au premier étage, il y a un couple âgé, très gentil. Ils m'ont apporté un gâteau le deuxième jour.
+
+Au deuxième, il y a une jeune famille avec un bébé. Le bébé pleure parfois la nuit, mais les parents s'excusent toujours.
+
+Au-dessus de moi, il y a un homme d'une trentaine d'années. Je l'ai croisé trois fois en deux mois et je ne connais pas encore son nom.
+
+Il y a aussi madame Renard, qui habite ici depuis vingt-huit ans et qui sait absolument tout.
+
+Ce qui m'a surprise, c'est que je me sens moins seule qu'avant.
+
+Dans ma maison, je pouvais passer une semaine sans parler à personne.
+
+Ici, c'est impossible.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-079",
+    title: "Le bruit du voisin du dessus",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Pendant trois semaines, mon voisin a fait du bruit chaque soir.",
+    blurbEn:
+      "Three weeks of noise from upstairs, a difficult knock on the door, and a problem solved by talking instead of complaining. (Section: Home and neighbours, 2/5.)",
+    body: `Pendant trois semaines, mon voisin du dessus a fait beaucoup de bruit. Chaque soir, entre vingt-deux heures et minuit, j'entendais de la musique et des pas lourds.
+
+Je dormais mal. Le matin, j'étais fatiguée au travail.
+
+Au début, je n'ai rien dit. J'espérais que ça s'arrêterait tout seul.
+
+Puis j'ai commencé à être vraiment en colère. J'ai pensé écrire un mot anonyme, ou même appeler la police.
+
+Ma collègue Aïcha m'a donné un conseil : « Va lui parler d'abord. La plupart des gens ne savent pas qu'ils dérangent. »
+
+Elle avait probablement raison, mais j'avais peur. Et s'il devenait agressif ?
+
+Un samedi matin, j'ai pris mon courage et je suis montée frapper à sa porte.
+
+Il a ouvert. Il avait l'air surpris et un peu inquiet.
+
+J'ai expliqué calmement : « Bonjour, j'habite juste en dessous. J'entends beaucoup de bruit le soir et je dors mal. »
+
+Sa réaction m'a étonnée. Il est devenu tout rouge.
+
+« Je suis vraiment désolé ! Je ne savais pas. Je viens d'emménager et je fais du sport le soir, après le travail. Je ne pensais pas qu'on entendait. »
+
+Nous avons parlé dix minutes. Il a proposé d'acheter un tapis épais et de finir avant vingt-deux heures.
+
+Depuis, presque plus de bruit.
+
+Trois semaines de colère, et il a suffi d'une conversation de dix minutes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-080",
+    title: "La réunion des voisins",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Une fois par an, tous les propriétaires de l'immeuble se réunissent.",
+    blurbEn:
+      "The annual residents' meeting: a broken lift, a long argument about the entrance paint, and how decisions actually get made. (Section: Home and neighbours, 3/5.)",
+    body: `Une fois par an, tous les propriétaires de l'immeuble se réunissent. On appelle cela l'assemblée générale. C'est là qu'on décide des travaux et du budget.
+
+Ma première réunion a eu lieu en mars. Elle a duré deux heures et demie. Je ne savais pas du tout à quoi m'attendre.
+
+Nous étions quinze personnes dans une petite salle. Le gestionnaire de l'immeuble dirigeait la réunion avec un ordre du jour.
+
+Le premier sujet était sérieux : l'ascenseur. Il tombe en panne trois ou quatre fois par an et il a trente ans. Le réparer coûterait cher ; le remplacer coûterait beaucoup plus cher.
+
+Nous avons discuté quarante minutes. Le couple du premier étage ne voulait pas payer : ils n'utilisent jamais l'ascenseur. Les habitants du quatrième et du cinquième insistaient, ce qui est compréhensible.
+
+Finalement, nous avons voté pour un remplacement, payé sur trois ans.
+
+Le deuxième sujet était la peinture de l'entrée. Et là, la discussion a duré cinquante minutes ! Cinquante minutes pour choisir entre le beige et le gris clair.
+
+Madame Renard voulait absolument le beige. Un autre voisin trouvait le beige « triste ».
+
+À la fin, nous avons choisi le gris clair, par huit voix contre sept.
+
+En sortant, j'étais épuisée. Mais j'ai compris quelque chose : dans un immeuble, personne ne décide seul.
+
+Même pour une couleur de mur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-081",
+    title: "J'ai gardé le chat de ma voisine",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Ma voisine m'a demandé de garder son chat pendant dix jours.",
+    blurbEn:
+      "Cat-sitting for ten days turns into a small favour that changes a neighbourly relationship for good. (Section: Home and neighbours, 4/5.)",
+    body: `L'été dernier, ma voisine du premier étage, madame Lambert, m'a demandé un service. Elle partait dix jours chez sa fille et elle cherchait quelqu'un pour s'occuper de son chat.
+
+« Je ne veux pas le mettre en pension », m'a-t-elle expliqué. « Il est vieux et il serait malheureux. »
+
+J'ai accepté tout de suite. Ce n'était pas compliqué : il fallait monter deux fois par jour pour lui donner à manger, changer son eau et nettoyer sa litière.
+
+Elle m'a donné ses clés et beaucoup d'instructions, écrites sur une feuille. Il y avait même l'heure exacte des repas.
+
+Le chat s'appelait Gaston. Les deux premiers jours, il s'est caché sous le lit. Il ne mangeait presque rien et il ne voulait pas me voir.
+
+J'étais un peu inquiète. J'ai envoyé un message à madame Lambert : « Il ne mange pas beaucoup. »
+
+Elle a répondu : « C'est normal, il boude. Parlez-lui doucement, il aime ça. »
+
+Alors, chaque soir, je restais dix minutes dans son appartement et je lui parlais.
+
+Le quatrième jour, il est sorti de sous le lit. Le sixième jour, il est venu contre ma jambe. Le neuvième jour, il a dormi sur mes genoux pendant vingt minutes.
+
+Quand madame Lambert est rentrée, elle m'a apporté un cadeau de la région où elle était partie.
+
+Depuis, nous prenons un café ensemble presque chaque semaine.
+
+Un chat a créé une amitié.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-082",
+    title: "Le jardin partagé de l'immeuble",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Derrière l'immeuble, il y avait un terrain vide et inutile.",
+    blurbEn:
+      "An unused patch of ground behind a block of flats becomes a shared garden — and the neighbours change with it. (Section: Home and neighbours, 5/5.)",
+    body: `Derrière notre immeuble, il y avait un terrain vide depuis des années. Personne ne s'en occupait. Il y avait de l'herbe haute, quelques papiers et une vieille chaise cassée.
+
+Un jour, le jeune homme du quatrième étage a eu une idée. Pendant la réunion des voisins, il a proposé de transformer ce terrain en jardin partagé.
+
+Au début, beaucoup de gens étaient contre. « Qui va s'en occuper ? » « Et si personne ne le fait ? » « Ça va coûter de l'argent. »
+
+Mais il avait bien préparé son projet. Il a expliqué que la mairie donnait une aide pour ce type de jardin, et il a proposé de commencer petit : six carrés de légumes seulement.
+
+Après une longue discussion, nous avons voté oui, de justesse.
+
+Nous avons commencé en avril. Nous étions sept au début : le jeune homme, moi, le couple âgé du premier, la famille du deuxième et madame Renard, qui râlait mais qui est venue chaque samedi.
+
+Nous avons nettoyé le terrain, apporté de la terre et construit les carrés en bois.
+
+Chaque famille s'occupe d'un carré, mais nous arrosons tous ensemble : il y a un tableau dans l'entrée avec les semaines.
+
+Cet été, nous avons récolté des tomates, des courgettes, des salades et beaucoup d'herbes.
+
+Mais le plus intéressant n'est pas les légumes.
+
+Avant, je connaissais trois voisins. Maintenant, j'en connais douze.
+
+Et madame Renard ne râle presque plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-083",
+    title: "Je suis tombée malade",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mardi matin, je me suis réveillée avec de la fièvre.",
+    blurbEn:
+      "A bad flu: fever, three days in bed, a doctor's note, and the difficult decision to actually rest. (Section: Health, 1/5.)",
+    body: `Mardi matin, je me suis réveillée et j'ai tout de suite compris que quelque chose n'allait pas. J'avais mal à la tête, mal à la gorge et j'avais froid.
+
+J'ai pris ma température : trente-huit degrés huit. J'avais de la fièvre.
+
+Ma première réaction a été de me préparer quand même pour aller travailler. J'avais une réunion importante, et je pensais : « Ça va passer dans la journée. »
+
+Je me suis levée, puis j'ai dû m'asseoir. J'avais la tête qui tournait.
+
+Alors j'ai fait quelque chose que je fais rarement : j'ai téléphoné au bureau et j'ai dit que je ne venais pas.
+
+L'après-midi, j'ai appelé mon médecin. Il m'a reçue à dix-sept heures.
+
+Il m'a examinée : la gorge, les oreilles, la respiration. Puis il a dit : « C'est une grippe. Il n'y a pas de traitement magique. Vous devez vous reposer, boire beaucoup et attendre. »
+
+Il m'a donné un médicament pour la fièvre et un arrêt de travail de trois jours.
+
+Ces trois jours ont été longs. J'ai dormi énormément — parfois douze heures par nuit et deux heures l'après-midi. Je n'avais pas faim. Je regardais des séries sans vraiment les suivre.
+
+Le vendredi, je me sentais un peu mieux. Le lundi, j'ai pu retourner travailler.
+
+Ma collègue m'a dit : « Tu as bien fait de rester chez toi. La dernière fois, tu es venue malade et la moitié du bureau a été malade aussi. »
+
+Elle avait raison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-084",
+    title: "Chez le dentiste",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "J'avais mal à une dent depuis deux semaines.",
+    blurbEn:
+      "Two weeks of putting off the dentist makes a small problem bigger — and the appointment is far less frightening than the waiting. (Section: Health, 2/5.)",
+    body: `J'avais mal à une dent depuis deux semaines. Au début, c'était une petite douleur, seulement quand je buvais quelque chose de froid.
+
+Je savais qu'il fallait aller chez le dentiste. Mais je n'aime pas le dentiste. Personne n'aime le dentiste.
+
+Alors j'ai attendu. J'ai pris des médicaments contre la douleur et j'ai évité les boissons froides.
+
+Après dix jours, la douleur est devenue plus forte. Une nuit, je n'ai pas pu dormir du tout.
+
+Le lendemain matin, j'ai téléphoné. La secrétaire m'a proposé un rendez-vous trois semaines plus tard.
+
+« Trois semaines ? Mais j'ai très mal ! »
+
+« Attendez... Il y a une annulation demain à huit heures. Ça vous convient ? »
+
+J'ai dit oui immédiatement.
+
+Dans la salle d'attente, j'étais nerveuse comme un enfant. J'entendais le bruit des instruments dans l'autre pièce.
+
+Le dentiste a regardé ma dent pendant deux minutes, puis il a fait une radio.
+
+« Vous avez une carie assez profonde. Si vous étiez venue il y a deux semaines, c'était simple. Maintenant, c'est un peu plus de travail, mais ça reste réparable. »
+
+Il m'a fait une piqûre, puis il a travaillé pendant quarante minutes. Ce n'était pas agréable, mais je n'ai presque rien senti.
+
+En partant, il m'a dit une phrase que je n'ai pas oubliée : « Une dent qui fait mal ne guérit jamais toute seule. »
+
+Depuis, j'y vais deux fois par an.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-085",
+    title: "Je me suis fait mal au dos",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "En portant un carton, j'ai senti une douleur dans le dos.",
+    blurbEn:
+      "One badly lifted box, a week of pain, and a physiotherapist who explains that sitting still all day was the real cause. (Section: Health, 3/5.)",
+    body: `Il y a trois mois, je me suis fait mal au dos. C'est arrivé bêtement, en portant un carton de livres.
+
+J'ai plié le dos au lieu de plier les jambes. J'ai senti une douleur soudaine, comme un choc électrique, et je n'ai plus pu bouger pendant quelques secondes.
+
+Le lendemain, c'était pire. Je ne pouvais pas mettre mes chaussettes seule.
+
+Mon médecin m'a examinée et m'a rassurée : ce n'était pas grave. « Vous avez un muscle bloqué. Ça va prendre une ou deux semaines. »
+
+Il m'a donné des médicaments et un conseil surprenant : « Ne restez pas au lit. Bougez doucement. »
+
+Je pensais qu'il fallait se reposer complètement. Il m'a expliqué que rester allongé trop longtemps rendait le problème plus long.
+
+Il m'a aussi envoyée chez un kinésithérapeute. J'y suis allée six fois.
+
+Le kiné m'a montré des exercices simples, à faire chaque matin pendant dix minutes.
+
+Mais surtout, il m'a posé des questions sur ma vie quotidienne. Combien d'heures est-ce que je passais assise ? Environ neuf heures par jour.
+
+« Voilà le vrai problème », a-t-il dit. « Le carton était seulement la goutte d'eau. Votre dos est fragile parce qu'il ne bouge jamais. »
+
+Depuis, j'ai changé deux choses. Je me lève toutes les heures au bureau, et je marche vingt minutes chaque jour.
+
+Je n'ai plus mal au dos.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-086",
+    title: "Mon frère a arrêté de fumer",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Mon frère fumait depuis vingt ans. Cette année, il a arrêté.",
+    blurbEn:
+      "Twenty years of smoking, four failed attempts, and the fifth try that finally worked — with help this time. (Section: Health, 4/5.)",
+    body: `Mon frère Thomas a fumé pendant vingt ans. Il a commencé à seize ans et il fumait environ un paquet par jour.
+
+Il avait déjà essayé d'arrêter quatre fois. Chaque fois, il tenait deux ou trois semaines, puis il recommençait.
+
+L'année dernière, quelque chose a changé. Notre père a eu un problème cardiaque. Il a passé une semaine à l'hôpital.
+
+Thomas est resté longtemps silencieux après cette visite. Puis il m'a dit : « Cette fois, j'arrête pour de bon. »
+
+Mais il a fait une chose différente : il a demandé de l'aide. Avant, il essayait toujours seul.
+
+Il est allé voir son médecin, qui lui a proposé des patchs et un suivi. Il a aussi rejoint un petit groupe de personnes qui arrêtaient en même temps.
+
+Les premières semaines ont été très dures. Il était nerveux, il dormait mal, il s'énervait pour rien. Il m'a téléphoné plusieurs fois le soir, simplement pour parler et ne pas fumer.
+
+Il a aussi changé ses habitudes. Avant, il fumait toujours avec son café du matin. Alors il a arrêté de prendre son café à la même place.
+
+Après un mois, c'était plus facile. Après trois mois, il a remarqué qu'il montait les escaliers sans être essoufflé.
+
+Cela fait maintenant quatorze mois.
+
+Il m'a dit récemment : « Les quatre premières fois, j'ai essayé tout seul. La cinquième fois, j'ai accepté d'être aidé. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-087",
+    title: "La visite médicale au travail",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 3,
+    preview: "Tous les deux ans, nous avons une visite médicale au travail.",
+    blurbEn:
+      "A routine workplace check-up finds slightly high blood pressure — and a small warning turns into a useful change. (Section: Health, 5/5.)",
+    body: `Dans mon entreprise, nous avons une visite médicale tous les deux ans. C'est obligatoire, et je la trouvais inutile.
+
+En février, c'était mon tour. J'y suis allée sans y penser, entre deux réunions.
+
+L'infirmière a d'abord fait les mesures habituelles : le poids, la taille, la vue, l'audition.
+
+Puis elle a pris ma tension. Elle a noté le chiffre, puis elle a recommencé cinq minutes plus tard. Elle ne disait rien.
+
+« Il y a un problème ? » j'ai demandé.
+
+« Votre tension est un peu élevée. Ce n'est pas grave, mais ce n'est pas idéal. »
+
+J'ai été surprise. J'ai quarante-deux ans, je ne suis pas en mauvaise santé, je ne fume pas.
+
+Ensuite, le médecin du travail m'a posé beaucoup de questions. Est-ce que je dormais bien ? Combien de café est-ce que je buvais ? Est-ce que je me sentais stressée ?
+
+Mes réponses ont été honnêtes : je dormais six heures par nuit, je buvais cinq ou six cafés par jour, et oui, j'étais stressée depuis six mois.
+
+Il m'a dit : « Rien de tout cela n'est dramatique. Mais tout cela ensemble, sur des années, peut devenir un problème. »
+
+Il ne m'a pas donné de médicament. Il m'a conseillé de voir mon médecin dans trois mois et de commencer par une chose : réduire le café.
+
+Je suis passée de six cafés à deux.
+
+Trois mois plus tard, ma tension était normale.
+
+Maintenant, je ne trouve plus cette visite inutile.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

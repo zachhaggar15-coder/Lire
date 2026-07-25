@@ -286,6 +286,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a2-neighbours",
+    band: "A2",
+    title: "Home and neighbours",
+    goal: "Live alongside other people: noise, shared decisions, small favours.",
+    textIds: [
+      "starter-a2-078", // J'ai emménagé dans un immeuble (levels up A1 At home)
+      "starter-a2-079", // Le bruit du voisin du dessus
+      "starter-a2-080", // La réunion des voisins
+      "starter-a2-081", // J'ai gardé le chat de ma voisine
+      "starter-a2-082", // Le jardin partagé de l'immeuble
+    ],
+  },
+  {
+    id: "a2-health",
+    band: "A2",
+    title: "Health",
+    goal: "Describe illness, pain and treatment; talk to doctors and dentists.",
+    textIds: [
+      "starter-a2-083", // Je suis tombée malade (introduces health words at A2)
+      "starter-a2-084", // Chez le dentiste
+      "starter-a2-085", // Je me suis fait mal au dos
+      "starter-a2-086", // Mon frère a arrêté de fumer
+      "starter-a2-087", // La visite médicale au travail
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
