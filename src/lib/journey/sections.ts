@@ -1195,6 +1195,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-030", // Ce que la science ne dira jamais (hardest)
     ],
   },
+  {
+    id: "c1-art-modern",
+    band: "C1",
+    title: "Art and the modern world",
+    goal: "Must art be beautiful, original vs copy, mass culture, when machines create, kitsch and the sublime.",
+    textIds: [
+      "starter-c1-031", // L'art doit-il être beau ?
+      "starter-c1-032", // L'original et la copie
+      "starter-c1-033", // La culture de masse est-elle une culture ?
+      "starter-c1-034", // Quand la machine crée
+      "starter-c1-035", // Le kitsch et le sublime (hardest)
+    ],
+  },
+  {
+    id: "c1-tech-human",
+    band: "C1",
+    title: "Technology and the human",
+    goal: "Tools that reshape us, the price of convenience, delegating judgement, the world through a screen, staying human among machines.",
+    textIds: [
+      "starter-c1-036", // L'outil qui nous transforme
+      "starter-c1-037", // La commodité a-t-elle un prix ?
+      "starter-c1-038", // Déléguer nos décisions
+      "starter-c1-039", // Le monde à portée d'écran
+      "starter-c1-040", // Rester humain parmi les machines (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */

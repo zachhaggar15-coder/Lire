@@ -16921,4 +16921,234 @@ Tenir fermement la frontière entre le fait et la valeur, c'est donc rendre just
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-031",
+    title: "L'art doit-il être beau ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "L'art moderne a rompu avec la beauté. Trahison, ou libération ?",
+    blurbEn:
+      "Modern art broke with beauty, provoking lasting outrage. A C1 essay on whether art must please the eye, or has other, deeper tasks. (Section: Art and the modern world, 1/5.)",
+    body: `Devant certaines œuvres de l'art moderne et contemporain, une réaction revient, si fréquente qu'elle est presque un lieu commun : « ce n'est pas beau », « ce n'est pas de l'art », « mon enfant en ferait autant ». Derrière ces protestations se cache une conviction profonde et largement partagée : l'art aurait pour mission de produire du beau, et l'art qui rompt avec la beauté trahirait sa vocation. Cette conviction, si naturelle qu'elle paraisse, mérite d'être interrogée, car l'histoire de l'art moderne est précisément celle d'une rupture assumée avec la beauté comme fin, et cette rupture avait ses raisons.
+
+Rappelons d'abord que l'identification de l'art à la beauté n'a rien d'évident ni d'éternel. Pendant des siècles, l'art occidental a bien visé le beau, selon des canons établis ; mais il visait aussi, et parfois surtout, d'autres fins : célébrer le sacré, représenter le pouvoir, raconter, édifier, commémorer. La beauté était souvent un moyen au service de ces fins, non la fin ultime. L'idée que l'art aurait pour seule vocation de produire du beau est elle-même historiquement située, et la remettre en question n'est pas nécessairement trahir l'art, mais peut-être renouer avec une conception plus large de ce qu'il peut être.
+
+Pourquoi l'art moderne a-t-il rompu avec la beauté ? Pour des raisons qui ne sont pas de simple provocation. D'abord, parce que la beauté académique, à force d'être codifiée, était devenue une convention creuse, une virtuosité sans âme ; rompre avec elle était une manière de retrouver une vérité que la belle forme convenue avait fini par étouffer. Ensuite, parce que le monde moderne, avec ses horreurs et ses bouleversements, ne pouvait plus se dire dans le langage de la seule beauté ; représenter la guerre, l'angoisse, l'absurde, exigeait de briser l'harmonie, car une belle image de l'horreur eût été un mensonge. L'art qui renonce à la beauté cherche souvent à dire ce que la beauté ne peut pas dire.
+
+Car l'art peut viser autre chose que le plaisir esthétique. Il peut chercher à provoquer la pensée, à déranger, à révéler, à faire éprouver ce qu'on préférerait ignorer. Une œuvre peut être puissante sans être belle, importante sans être plaisante ; elle peut nous saisir par sa vérité, sa force, son étrangeté, plutôt que par son agrément. Réduire l'art à la production de beau, c'est l'amputer de ces autres pouvoirs, exiger de lui qu'il plaise là où il pourrait bouleverser. L'art qui ne cherche pas à plaire n'est pas nécessairement un art raté ; c'est parfois un art qui vise plus haut, ou ailleurs, que le plaisir.
+
+Faut-il alors donner raison à tout l'art contemporain, et tenir pour réactionnaire quiconque lui résiste ? Ce serait tomber dans l'excès inverse. Car la rupture avec la beauté, si elle a libéré l'art, l'a aussi exposé à des dérives : la provocation gratuite qui ne dit rien, l'obscurité qui masque le vide, l'imposture qui se pare de profondeur. Que l'art ne soit pas tenu d'être beau ne signifie pas que tout vaille, ni que l'absence de beauté soit en elle-même une qualité. Il y a un art qui rompt avec la beauté pour dire davantage, et un art qui s'en dispense pour n'avoir rien à dire ; les distinguer exige un jugement que ni le rejet global ni l'admiration béate ne remplacent.
+
+La vraie question n'est donc pas « l'art doit-il être beau ? », à laquelle on ne peut répondre par un simple oui ou non, mais « qu'attendons-nous de l'art ? ». Si nous n'en attendons que du plaisir, alors l'art qui renonce à la beauté nous décevra ; si nous acceptons qu'il puisse aussi nous faire penser, nous déranger, nous révéler, alors nous pourrons accueillir des œuvres qui ne cherchent pas à plaire. La beauté demeure l'un des pouvoirs de l'art, l'un des plus précieux ; mais en faire son unique mission, c'est méconnaître tout ce que l'art peut être d'autre. Un art qui ne serait que beau serait, à sa manière, aussi pauvre qu'un art qui aurait renoncé à toute exigence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-032",
+    title: "L'original et la copie",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "À l'ère de la reproduction infinie, que vaut encore l'original d'une œuvre ?",
+    blurbEn:
+      "When any image can be reproduced perfectly and endlessly, what remains of the value of an original? A C1 essay on authenticity in the age of the copy. (Section: Art and the modern world, 2/5.)",
+    body: `Nous vivons à l'ère de la reproduction infinie. Une œuvre d'art peut être photographiée, numérisée, diffusée en des millions d'exemplaires identiques, accessibles à tous, partout, à tout instant. On pourrait croire que cette reproductibilité aurait dévalué l'original : à quoi bon se déplacer pour voir un tableau qu'on peut contempler en meilleure définition sur un écran ? Et pourtant, c'est l'inverse qui s'est produit : jamais les originaux n'ont attiré autant de foules, jamais leur valeur n'a été aussi élevée. Ce paradoxe mérite qu'on l'interroge, car il révèle quelque chose de profond sur notre rapport à l'authenticité.
+
+Réfléchissons à ce que la reproduction préserve et à ce qu'elle perd. Une reproduction fidèle conserve tout ce qui, dans l'œuvre, relève de l'information visible : les formes, les couleurs, la composition. En un sens, elle donne accès à l'œuvre, et cet accès démocratisé est un bien immense, qui a rendu l'art disponible au plus grand nombre. Mais elle perd quelque chose que l'information ne capture pas : la présence de l'objet unique, le fait que ceci, précisément, est l'objet que l'artiste a touché, façonné, devant lequel on se tient dans le même espace. Cette présence, que le philosophe nommait l'« aura », résiste à la reproduction, car elle ne tient pas à ce que l'œuvre montre, mais à ce qu'elle est.
+
+Qu'est-ce qui fonde cette aura de l'original ? D'abord son unicité et son authenticité : l'original est le seul objet réel, celui qui a une histoire, qui a traversé le temps, qui porte la trace de la main qui l'a fait. La reproduction, si parfaite soit-elle, n'a pas cette histoire ; elle est un exemplaire sans origine, détaché du temps et du lieu. Devant l'original, nous éprouvons le vertige d'une présence réelle, le sentiment d'un contact direct avec l'acte créateur et avec les siècles qui nous en séparent. Ce sentiment n'est pas rationnel — l'image est la même —, mais il est puissant, et il tient à ce que nous ne valorisons pas seulement ce qu'une chose montre, mais ce qu'elle est.
+
+Ce constat en dit long sur nous. Il montre que notre rapport aux œuvres, et plus largement aux choses, n'est pas purement informationnel. Nous ne cherchons pas seulement à voir une image ; nous cherchons un contact avec le réel, avec l'authentique, avec l'unique. C'est pourquoi la reproductibilité, loin d'abolir la valeur de l'original, l'a peut-être exaltée : en rendant les images omniprésentes, elle a rendu plus précieux, par contraste, le contact avec la chose même. Plus les copies abondent, plus l'original se singularise comme le seul lieu d'une présence authentique.
+
+Ce phénomène dépasse le seul domaine de l'art. À l'ère où tout se reproduit, se simule, se virtualise, l'authentique acquiert une valeur nouvelle, précisément parce qu'il devient rare. On recherche l'expérience « réelle », le contact « vrai », l'objet « authentique », dans un monde saturé de reproductions et de simulacres. Cette quête d'authenticité, si caractéristique de notre époque, est peut-être une réaction à la reproductibilité généralisée : plus le monde se remplit de copies, plus nous avons soif d'originaux, de ce qui est unique, réel, irremplaçable.
+
+Il ne s'agit pas d'opposer naïvement l'original noble à la copie méprisable, ni de regretter la reproduction, qui a démocratisé l'accès à l'art et à la culture. Il s'agit de comprendre ce que chacune apporte et ce que chacune perd. La reproduction diffuse l'information de l'œuvre, la rend accessible, l'inscrit dans nos vies ; l'original offre la présence, l'authenticité, le contact avec le réel. Les deux ont leur valeur, et notre époque, loin de devoir choisir, jouit des deux à la fois : elle connaît les œuvres par leurs reproductions, et se presse vers les originaux pour éprouver ce que nulle copie ne donne. Cette coexistence révèle que nous sommes des êtres pour qui la présence réelle a un prix que l'information, si parfaite soit-elle, ne remplace pas.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-033",
+    title: "La culture de masse est-elle une culture ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Divertissement produit en série : appauvrissement de la culture, ou démocratisation ?",
+    blurbEn:
+      "Is mass entertainment a debasement of culture or its democratisation? A C1 essay refusing both the elitist and the populist answer. (Section: Art and the modern world, 3/5.)",
+    body: `La culture de masse — ce vaste ensemble de productions destinées au plus grand nombre, diffusées à l'échelle industrielle, des séries aux chansons populaires, des blockbusters aux jeux — suscite depuis longtemps un débat où s'affrontent deux positions inconciliables. Pour les uns, elle est un appauvrissement, une dégradation de la culture, un divertissement facile qui abêtit les foules et étouffe la vraie création. Pour les autres, elle est une démocratisation heureuse, l'accès enfin donné à tous à une culture longtemps réservée à une élite. Ces deux positions, également assurées, méritent d'être dépassées, car chacune saisit une part de vérité tout en versant dans l'excès.
+
+La critique élitiste de la culture de masse n'est pas sans fondement. Il est vrai qu'une bonne part de la production de masse obéit à une logique commerciale qui privilégie ce qui plaît immédiatement au plus grand nombre, au détriment de l'exigence, de la difficulté, de la nouveauté. Il est vrai que cette logique tend à uniformiser, à reproduire des formules éprouvées, à flatter les goûts établis plutôt qu'à les élever. Il est vrai, enfin, qu'un divertissement conçu pour occuper sans effort peut endormir l'esprit critique, détourner de créations plus exigeantes, habituer à la facilité. Ces critiques touchent quelque chose de réel, et les balayer au nom de la démocratie serait aveugle.
+
+Mais la critique élitiste, poussée à bout, verse dans un mépris qui la disqualifie. Car elle méprise, en méprisant la culture de masse, les goûts et les plaisirs de l'immense majorité, tenus pour vulgaires du seul fait qu'ils sont partagés. Elle suppose que ce qui plaît au grand nombre serait par là même sans valeur, et que la culture véritable serait le privilège de quelques esprits distingués. Cette posture, outre son arrogance, est fausse : la culture populaire a produit des œuvres d'une réelle valeur, et le fait qu'une œuvre plaise à beaucoup ne prouve nullement qu'elle soit médiocre. Confondre l'exigence avec la rareté, tenir pour vulgaire tout ce qui est partagé, c'est faire de la culture un instrument de distinction sociale plutôt qu'un bien à partager.
+
+La position inverse, qui célèbre sans réserve la culture de masse au nom de la démocratie, a elle aussi sa part de vérité et son excès. Sa vérité : la diffusion de masse a effectivement donné accès à la culture à des populations qui en étaient exclues, brisé le monopole des élites, permis à chacun de jouir d'œuvres et de plaisirs autrefois réservés. C'est un progrès réel, et le déplorer serait une nostalgie coupable d'un temps où la culture était un privilège. Son excès : refuser toute hiérarchie, tenir toutes les productions pour équivalentes, faire de la popularité le seul critère de valeur. Car si le succès ne prouve pas la médiocrité, il ne prouve pas davantage l'excellence ; le nombre de ceux qui aiment une œuvre ne mesure pas sa valeur.
+
+Sortir de ce faux débat suppose de refuser l'alternative entre le mépris élitiste et la complaisance populiste. On peut reconnaître à la fois que la culture de masse a démocratisé l'accès à la culture, ce qui est un bien, et qu'elle obéit souvent à une logique qui appauvrit, ce qui est un risque. On peut apprécier des œuvres populaires sans renoncer à l'exigence, distinguer dans la production de masse ce qui a de la valeur de ce qui n'en a pas, sans mépriser le peuple ni flatter tous ses goûts. La vraie question n'est pas « la culture de masse est-elle bonne ou mauvaise ? », mais « comment faire pour qu'une culture accessible à tous reste aussi une culture exigeante ? ».
+
+Car l'enjeu véritable est là : non de choisir entre l'élite et la masse, entre l'exigence et l'accessibilité, mais de refuser qu'on les oppose. Une culture qui serait exigeante mais réservée à quelques-uns trahirait sa vocation à être partagée ; une culture qui serait accessible mais renoncerait à toute exigence trahirait sa vocation à élever. L'idéal serait une culture à la fois exigeante et partagée, qui ne sacrifie ni la qualité à la diffusion, ni la diffusion à la qualité. Cet idéal est difficile, jamais pleinement atteint, mais c'est vers lui qu'il faut tendre — plutôt que de se résigner au faux choix entre une culture de qualité pour quelques-uns et une culture appauvrie pour tous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-034",
+    title: "Quand la machine crée",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Des machines produisent des images, des textes, des musiques. Est-ce de la création ?",
+    blurbEn:
+      "Machines now generate images, texts and music. A C1 essay asking whether this is genuine creation, and what the question reveals about art itself. (Section: Art and the modern world, 4/5.)",
+    body: `Des machines produisent désormais des images saisissantes, des textes fluides, des musiques agréables, à partir de quelques instructions. Cette capacité nouvelle bouleverse notre rapport à la création artistique et soulève une question qui n'est pas seulement technique, mais philosophique : ce que produisent ces machines est-il de la création ? Et si oui, que reste-t-il de propre à la création humaine ? Cette interrogation, que l'actualité rend pressante, oblige à préciser ce que nous entendons par créer, et révèle peut-être que nous ne le savions pas si bien.
+
+Une première réaction consiste à dénier aux machines toute véritable création, au motif qu'elles ne font que recombiner ce qui existe. Elles ont été nourries d'innombrables œuvres humaines, dont elles extraient des régularités qu'elles réagencent ; elles ne créent rien de nouveau, elles recyclent. Cet argument a sa force, mais il se heurte à une objection : la création humaine elle-même n'est-elle pas, en grande partie, recombinaison ? L'artiste humain, lui aussi, est nourri de tout ce qu'il a vu, entendu, appris ; il ne crée pas à partir de rien, mais réagence des éléments hérités. Si recombiner disqualifie la machine, il faudrait aussi disqualifier une part de la création humaine, ce que nous refusons. La frontière n'est donc pas si nette.
+
+Une deuxième approche cherche la différence non dans le résultat, mais dans l'intention et l'expérience. La machine produit sans vouloir rien exprimer, sans avoir rien vécu, sans qu'aucune intériorité ne se dise dans ce qu'elle fait. L'artiste humain, lui, crée pour exprimer quelque chose, à partir d'une expérience, d'une sensibilité, d'un rapport au monde ; son œuvre porte une intention, un vécu, une présence. Ce qui manquerait à la machine, ce ne serait pas la capacité de produire de belles formes, mais ce qui, dans l'art humain, fait qu'une œuvre est la trace d'une conscience, l'expression d'un être qui a quelque chose à dire parce qu'il a quelque chose à vivre.
+
+Cette approche est plus solide, mais elle déplace la difficulté plutôt qu'elle ne la résout. Car si la valeur de l'art tient à l'intention et à l'expérience de son auteur, alors elle ne se lit pas dans l'œuvre elle-même : deux images identiques, l'une faite par un humain qui exprime une souffrance, l'autre par une machine sans intention, auraient la même apparence mais non la même valeur. Cela signifie que ce que nous valorisons dans l'art n'est pas seulement ce que nous percevons, mais ce que nous savons de son origine. Étrange conclusion, qui suggère que la valeur de l'art tient autant à son contexte — qui l'a fait, pourquoi, à partir de quoi — qu'à ses qualités visibles.
+
+Peut-être est-ce là ce que la question des machines nous apprend sur l'art. Nous découvrons, en la posant, que nous ne valorisons pas seulement le beau ou l'habile, que la machine peut produire, mais la présence d'une conscience, l'expression d'un vécu, le lien avec un autre être humain. Ce qui nous touche dans une œuvre, ce n'est pas seulement sa forme, mais le fait qu'un être comme nous l'ait créée pour dire quelque chose ; l'art est une communication entre consciences, et une production sans conscience, si réussie soit-elle, manque ce qui en fait le prix. La machine, en imitant les résultats de l'art, nous révèle que l'art n'était pas seulement dans ses résultats.
+
+Cela ne règle pas toutes les questions pratiques que soulèvent ces machines, ni ne préjuge de ce qu'elles deviendront. Mais cela suggère que la création humaine garde quelque chose d'irréductible, non parce que la machine ne pourrait produire d'aussi belles formes, mais parce que ce que nous cherchons dans l'art n'est pas que la forme. Face aux machines qui créent, la question n'est peut-être pas de savoir si elles remplaceront les artistes, mais de redécouvrir ce que nous attendions vraiment de l'art — et de reconnaître que ce que nous en attendions supposait, au fond, la présence d'un autre que nous, qui, ayant vécu, avait quelque chose à nous dire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-035",
+    title: "Le kitsch et le sublime",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Pourquoi certaines émotions esthétiques faciles nous laissent-elles un malaise ?",
+    blurbEn:
+      "Why does easy sentimental beauty — the kitsch — leave a faint unease, while the sublime unsettles yet elevates? A closing C1 essay on taste and truth in feeling. (Section: Art and the modern world, 5/5.)",
+    body: `Il existe une forme de beauté qui plaît immédiatement, émeut sans effort, flatte nos sentiments les plus doux — et qui, pourtant, laisse chez qui y prête attention un vague malaise. On la nomme le kitsch : ces images trop douces, ces mélodies trop touchantes, ces spectacles calculés pour tirer des larmes, qui donnent l'émotion sans en payer le prix. À l'opposé se tient ce que l'on nomme le sublime : ce qui nous saisit, nous dépasse, nous trouble en même temps qu'il nous élève. Réfléchir à cette opposition, c'est s'interroger sur ce qui distingue l'émotion esthétique authentique de sa contrefaçon.
+
+Qu'est-ce qui fait le kitsch ? Non pas l'émotion qu'il suscite, car l'art authentique émeut aussi, mais la manière dont il la suscite et la nature de cette émotion. Le kitsch produit une émotion facile, attendue, préfabriquée ; il ne montre pas la réalité, mais une image idéalisée, adoucie, expurgée de tout ce qui pourrait déranger. Il donne du sentiment sans vérité, de l'émotion sans profondeur, une beauté qui rassure au lieu d'interroger. Sa douceur même est suspecte, car elle repose sur un mensonge : elle nous fait éprouver une émotion agréable en nous cachant tout ce qui, dans la réalité, résisterait à cette douceur. Le kitsch est une émotion qui se ment à elle-même.
+
+C'est en quoi il diffère de l'émotion esthétique authentique. Une œuvre véritable peut être bouleversante, mais elle ne trompe pas : son émotion naît d'un rapport vrai à la réalité, y compris à ce qu'elle a de difficile. Elle ne nous épargne pas la complexité, l'ambiguïté, la part d'ombre ; elle nous fait éprouver quelque chose de vrai, fût-ce au prix de l'inconfort. L'émotion qu'elle procure n'est pas une flatterie, mais une révélation ; elle ne nous conforte pas dans nos sentiments faciles, elle nous ouvre à quelque chose que nous ne connaissions pas. C'est pourquoi elle laisse, non le vague malaise du kitsch, mais le sentiment d'avoir touché à quelque chose d'essentiel.
+
+Le sublime pousse cette différence à l'extrême. Il ne cherche pas à plaire, mais nous confronte à ce qui nous dépasse : l'immensité, la puissance, l'infini, ce devant quoi nous éprouvons notre petitesse. Cette expérience mêle le trouble et l'élévation, l'effroi et l'exaltation ; elle n'a rien de la douceur du kitsch, elle est presque une épreuve. Et pourtant, elle nous grandit, elle nous met en contact avec quelque chose de plus vaste que nous, elle nous arrache à la petitesse de nos préoccupations ordinaires. Le sublime est le contraire du kitsch : là où celui-ci nous rapetisse en nous flattant, celui-là nous élève en nous dépassant.
+
+Cette opposition a une portée qui dépasse l'esthétique. Car le kitsch n'est pas seulement une catégorie artistique ; c'est une manière de rapport au monde, qui préfère l'image rassurante à la réalité complexe, l'émotion facile à la vérité difficile. On peut vivre dans le kitsch, se raconter une vie idéalisée, fuir tout ce qui dérange, préférer les sentiments doux aux vérités dures. Le kitsch est une tentation permanente, celle de se contenter d'une belle image mensongère plutôt que d'affronter le réel dans sa complexité. Y résister, en art comme dans la vie, c'est refuser la facilité de l'émotion préfabriquée pour chercher une vérité qui, même douloureuse, vaut mieux qu'un beau mensonge.
+
+Distinguer le kitsch du sublime, l'émotion facile de l'émotion vraie, n'est donc pas une subtilité d'esthète. C'est apprendre à ne pas se contenter de ce qui flatte, à se méfier de ce qui émeut trop aisément, à préférer ce qui nous dépasse à ce qui nous rassure. Cette exigence, difficile, est celle du goût véritable, qui n'est pas la capacité de jouir des belles choses, mais celle de distinguer l'authentique de sa contrefaçon. Et cette distinction, au fond, est une exigence de vérité : car le kitsch, sous sa douceur, est un mensonge, et le sublime, sous son trouble, une vérité. Choisir le second contre le premier, c'est préférer, jusque dans l'émotion, le vrai au commode.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-036",
+    title: "L'outil qui nous transforme",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nous façonnons nos outils, puis nos outils nous façonnent. Une histoire réciproque.",
+    blurbEn:
+      "We shape our tools, and thereafter our tools shape us. A C1 essay on how technology quietly remakes the humans who use it. (Section: Technology and the human, 1/5.)",
+    body: `On aime croire que nous sommes les maîtres de nos outils : que nous les concevons pour servir nos fins, et qu'ils demeurent de purs instruments à notre disposition. Cette vision, rassurante, n'est qu'une moitié de la vérité. Car si nous façonnons nos outils, ceux-ci, en retour, nous façonnent. L'usage d'une technique n'est jamais sans effet sur celui qui l'emploie ; à mesure que nous nous servons de nos instruments, ils modifient nos manières de percevoir, de penser, d'agir, jusqu'à transformer, insensiblement, ce que nous sommes. Cette réciprocité est l'une des vérités les plus importantes, et les plus négligées, de notre rapport à la technique.
+
+Prenons un exemple ancien pour mesurer la profondeur du phénomène. L'invention de l'écriture ne fut pas un simple ajout d'un outil de mémoire ; elle transforma la pensée elle-même. En permettant de fixer les idées, de les relire, de les comparer, de les critiquer, elle rendit possibles des formes de raisonnement, d'analyse, d'accumulation du savoir qui n'existaient pas dans les cultures purement orales. L'écriture ne se contenta pas de conserver la pensée ; elle la changea, engendrant un type d'esprit nouveau. Les penseurs de l'époque redoutaient d'ailleurs qu'elle n'affaiblît la mémoire — ce qu'elle fit sans doute, tout en ouvrant d'autres possibilités. Tout outil majeur opère ainsi : il donne et il retire, il ouvre des capacités nouvelles et en atrophie d'autres.
+
+Ce que l'écriture illustre à l'échelle des millénaires, nos techniques contemporaines le produisent sous nos yeux, à un rythme accéléré. Les instruments qui nous permettent de tout trouver instantanément modifient notre mémoire et notre attention ; ceux qui nous relient en permanence transforment notre rapport aux autres et à nous-mêmes ; ceux qui nous guident partout altèrent notre sens de l'orientation et de l'espace. Chacun de ces outils rend un service réel, mais chacun, aussi, nous transforme, en développant certaines de nos capacités et en laissant s'atrophier celles dont il nous dispense. Nous ne sortons pas indemnes de l'usage de nos instruments ; nous en sortons autres.
+
+Cette transformation est d'autant plus profonde qu'elle est invisible et involontaire. Nous ne décidons pas d'être transformés par nos outils ; cela se produit à notre insu, par l'usage répété, par l'habitude, par l'adaptation. Nous croyons rester les mêmes en utilisant simplement des instruments plus performants, alors qu'en réalité ces instruments remodèlent nos habitudes mentales, nos attentes, nos manières d'être. Le danger n'est pas dans les outils eux-mêmes, mais dans notre inconscience de leur pouvoir transformateur, qui nous fait subir ces changements sans les percevoir ni les choisir. On ne se méfie pas de ce dont on ignore l'effet.
+
+Faut-il en conclure qu'il faudrait renoncer à nos outils, ou les redouter ? Nullement. La transformation par la technique n'est pas en soi un mal ; elle est la condition même de l'aventure humaine, qui s'est construite en s'équipant d'instruments qui l'ont chaque fois métamorphosée. L'humanité est cet être qui se transforme lui-même en transformant ses outils, et il n'y a pas de retour à une humanité « pure » qui existerait avant ses techniques. Le problème n'est pas que les outils nous changent, mais que nous l'ignorions, et que nous subissions ces changements sans les évaluer.
+
+Ce que cette réciprocité commande, c'est donc une vigilance : prendre conscience que nos outils nous façonnent, se demander en quoi ils nous transforment, quelles capacités ils développent et lesquelles ils atrophient, quel type d'êtres ils font de nous. Cette lucidité ne suffit pas à contrôler entièrement leur effet, mais elle permet, au moins, de le percevoir, de le peser, parfois de le corriger. Choisir consciemment ses outils, mesurer ce qu'ils nous font, préserver délibérément les capacités qu'ils tendent à effacer : voilà ce que suppose un usage libre de la technique. Car nous ne pouvons pas empêcher nos outils de nous transformer ; mais nous pouvons, si nous y prenons garde, avoir notre mot à dire sur ce qu'ils font de nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-037",
+    title: "La commodité a-t-elle un prix ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Tout devient plus facile, plus rapide, plus commode. Que perdons-nous en gagnant du temps ?",
+    blurbEn:
+      "Everything grows easier, faster, more convenient. A C1 essay asking what we quietly surrender each time an effort is spared us. (Section: Technology and the human, 2/5.)",
+    body: `Le progrès technique se présente le plus souvent sous les traits de la commodité : tout devient plus facile, plus rapide, moins pénible. Ce qui exigeait de l'effort, du temps, de la peine, se fait désormais sans effort, en un instant, sans peine. Cette promesse de commodité est si évidemment désirable qu'on ne songe guère à la questionner : qui voudrait de la difficulté quand on peut avoir la facilité ? Et pourtant, il faut oser se demander si la commodité, ce bien apparemment sans revers, n'a pas un prix caché, et si tout ce qui nous épargne un effort nous rend vraiment service.
+
+Commençons par reconnaître ce que la commodité a de légitime. Bien des efforts que la technique nous épargne étaient de pures pénibilités, sans valeur, dont nous délivrer est un progrès incontestable. Personne ne regrette sincèrement de laver son linge à la main, de parcourir des kilomètres pour un renseignement, de recopier des textes péniblement. Ces peines n'avaient aucune vertu ; nous en libérer a ouvert du temps et de l'énergie pour mieux. La commodité, dans ces cas, est un bienfait pur, et le nier relèverait d'un dolorisme absurde qui confondrait l'effort avec la valeur.
+
+Mais tous les efforts ne sont pas de pures pénibilités, et c'est ici que la commodité devient ambiguë. Car certains efforts ont une valeur, non malgré leur difficulté, mais à cause d'elle. L'effort d'apprendre forge des capacités ; l'effort de chercher fait rencontrer ce qu'on ne cherchait pas ; l'effort de faire soi-même donne une compétence et une satisfaction que le résultat obtenu sans peine ne procure pas. Quand la commodité nous épargne ces efforts-là, elle ne nous rend pas seulement service : elle nous prive aussi de ce que l'effort produisait. Nous gagnons du temps, mais nous perdons ce que le temps dépensé nous apportait.
+
+Il y a plus subtil. La commodité généralisée nous rend progressivement incapables de l'effort, en atrophiant les capacités qu'elle dispense d'exercer. À force de tout obtenir sans peine, nous perdons l'habitude et le goût de l'effort, jusqu'à ce que le moindre obstacle nous paraisse insupportable. La facilité crée un besoin de facilité, une intolérance croissante à tout ce qui résiste, une impatience devant tout ce qui ne se donne pas immédiatement. Ainsi la commodité, en nous épargnant l'effort, nous rend inaptes à l'effort, et cette inaptitude a un coût, car bien des choses précieuses — la maîtrise, la profondeur, la persévérance — exigent précisément ce que la commodité nous désapprend.
+
+Ce n'est pas tout. La commodité a aussi un prix que nous ne voyons pas parce qu'il est payé ailleurs. Ce qui nous est rendu si facile repose souvent sur un travail invisible, sur des ressources consommées, sur des coûts reportés sur d'autres ou sur l'avenir. La livraison instantanée, l'accès immédiat, le service permanent supposent des chaînes entières d'efforts et de dépenses que la commodité nous masque. Nous jouissons de la facilité sans en voir le prix, qui est bien réel, mais payé hors de notre vue. La commodité n'abolit pas l'effort et le coût ; elle les déplace, les rend invisibles, les fait supporter par d'autres.
+
+Reconnaître le prix de la commodité, ce n'est pas la refuser en bloc, ni prôner un retour à une difficulté érigée en vertu. C'est distinguer les efforts dont il est bon d'être délivré de ceux qui valaient la peine d'être faits, et se demander, devant chaque facilité nouvelle, ce qu'elle nous épargne et ce qu'elle nous coûte. C'est parfois choisir délibérément l'effort là où il a de la valeur, préférer faire soi-même, chercher, apprendre, plutôt que de tout déléguer à la commodité. Dans un monde qui érige la facilité en valeur suprême, se réserver des espaces d'effort choisi n'est pas de l'archaïsme ; c'est préserver ce que la commodité, à trop nous épargner, finit par nous ôter : la capacité de faire, de peiner, de mériter ce que nous obtenons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-038",
+    title: "Déléguer nos décisions",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Des systèmes décident pour nous, de mieux en mieux. Que devient notre jugement ?",
+    blurbEn:
+      "Algorithms increasingly decide for us — often better than we would. A C1 essay on what we lose when we delegate our judgement. (Section: Technology and the human, 3/5.)",
+    body: `De plus en plus, des systèmes décident à notre place. Ils choisissent notre chemin, nous recommandent ce que nous devrions regarder, lire, acheter, parfois qui nous devrions rencontrer ; ils orientent des décisions médicales, financières, administratives. Souvent, ils décident mieux que nous ne le ferions : plus vite, avec plus de données, moins d'erreurs. Cette délégation croissante de nos décisions à des systèmes se présente donc comme un progrès, et elle l'est à bien des égards. Mais elle soulève une question que son efficacité même fait oublier : que devient notre jugement quand nous cessons de l'exercer ?
+
+Il faut d'abord reconnaître les bénéfices réels de cette délégation. Dans bien des domaines, les systèmes qui décident pour nous nous épargnent des erreurs, des efforts, des pertes de temps. Ils traitent des masses d'informations que nous ne pourrions embrasser, repèrent des régularités qui nous échappent, évitent les biais qui faussent nos jugements. Refuser ces aides par principe, au nom d'une autonomie de la décision érigée en absolu, serait déraisonnable : il est des décisions où mieux vaut se fier à un système fiable qu'à son propre jugement faillible. La délégation n'est pas en soi un mal.
+
+Mais le jugement, comme toute faculté, s'entretient par l'exercice et s'atrophie par le désœuvrement. À mesure que nous déléguons nos décisions, nous cessons d'exercer la capacité de décider, et cette capacité, faute d'usage, s'affaiblit. Nous perdons l'habitude de peser, de choisir, d'assumer ; nous nous en remettons, et à force de nous en remettre, nous devenons incapables de faire autrement. Ce qui commence comme une commodité — laisser le système décider parce qu'il décide mieux — finit comme une dépendance : nous ne savons plus décider sans lui, nous avons désappris le jugement que nous avons cessé d'exercer. L'aide est devenue une béquille dont nous ne pouvons plus nous passer.
+
+Cette atrophie du jugement est d'autant plus préoccupante qu'elle nous rend vulnérables. Car les systèmes auxquels nous déléguons ne sont pas infaillibles, ni désintéressés. Ils peuvent se tromper, être biaisés, servir des intérêts qui ne sont pas les nôtres. Or celui qui a perdu la capacité de juger par lui-même ne peut plus contrôler les décisions qu'on prend pour lui ; il ne peut que s'y soumettre, incapable de discerner quand le système se trompe ou le trompe. La délégation qui commençait comme un gain d'efficacité aboutit à une perte d'autonomie : nous sommes à la merci de systèmes que nous ne comprenons plus et ne pouvons plus contester, faute d'avoir gardé le jugement qui permettrait de les évaluer.
+
+Il y a plus troublant encore. En déléguant nos décisions, nous déléguons aussi, peu à peu, la responsabilité qui les accompagne. Décider, c'est assumer ; se soumettre à une décision prise par un système, c'est se décharger de cette responsabilité. « Ce n'est pas moi, c'est le système » : cette formule, commode, dissout la responsabilité dans des mécanismes anonymes, où plus personne ne répond de rien. Or une société où les décisions sont prises par des systèmes dont nul n'est responsable est une société où la responsabilité elle-même s'évanouit, où l'on subit des décisions sans pouvoir en demander compte à personne. La délégation du jugement est aussi une dilution de la responsabilité.
+
+Préserver notre jugement face à la délégation croissante ne suppose pas de refuser toute aide, ce qui serait vain et déraisonnable. Cela suppose de garder la main : de comprendre, au moins dans leurs principes, les systèmes auxquels nous nous fions ; de conserver la capacité de décider par nous-mêmes, en l'exerçant assez pour qu'elle ne s'atrophie pas ; de ne pas déléguer les décisions qui engagent le plus profondément nos valeurs et nos vies. Car il est des choix qu'on peut sans dommage confier à des systèmes, et d'autres qui doivent rester nôtres, non parce que nous déciderions mieux, mais parce que décider fait partie de ce que c'est qu'être un sujet libre et responsable. Renoncer entièrement à juger, ce ne serait pas seulement perdre une compétence ; ce serait renoncer à une part de ce qui fait de nous des êtres autonomes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-039",
+    title: "Le monde à portée d'écran",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nous accédons à tout sans bouger. Mais accéder à une image du monde, est-ce le connaître ?",
+    blurbEn:
+      "We reach the whole world through a screen without moving. A C1 essay asking whether access to images of things is the same as knowing them. (Section: Technology and the human, 4/5.)",
+    body: `Jamais le monde n'a été aussi accessible. Sans quitter notre place, nous pouvons voir les lieux les plus lointains, assister aux événements les plus divers, accéder à une part immense du savoir humain, entrer en contact avec des personnes à l'autre bout de la terre. Le monde entier semble tenir à portée d'écran, disponible d'un geste. Cette accessibilité sans précédent est une conquête extraordinaire, et il serait ingrat de la déprécier. Mais elle appelle une interrogation : accéder à une image du monde, à sa représentation sur un écran, est-ce vraiment connaître le monde, en faire l'expérience, le rencontrer ?
+
+Il faut d'abord reconnaître tout ce que cette accessibilité apporte de réel. Par elle, des savoirs autrefois réservés se sont ouverts à tous ; des réalités lointaines sont devenues visibles ; des personnes séparées peuvent se relier. Celui qui, jadis, ne connaissait que son village peut aujourd'hui embrasser le monde du regard. C'est une ouverture immense, qui a élargi l'horizon de chacun, brisé bien des isolements, rendu disponible ce qui était hors d'atteinte. Mépriser cette accessibilité au nom d'une expérience « authentique » réservée à quelques privilégiés serait une pose méprisable.
+
+Et pourtant, l'accès à la représentation d'une chose n'est pas l'expérience de la chose même, et confondre les deux serait s'appauvrir sans le savoir. Voir l'image d'un lieu n'est pas y être ; en connaître la représentation n'est pas en faire l'expérience. L'expérience réelle engage tout notre être — le corps, les sens, la présence, le temps vécu — d'une manière que la représentation sur un écran ne saurait reproduire. Se tenir réellement devant une montagne, dans un lieu, auprès d'une personne, mobilise une plénitude de perception, une présence, un rapport que l'image, si fidèle soit-elle, réduit à sa seule dimension visuelle. L'écran donne à voir, mais il ne donne pas à vivre.
+
+Cette différence n'est pas mince, car elle touche à la nature même de la connaissance et de l'expérience. Connaître le monde par ses représentations, c'est le connaître à distance, de l'extérieur, sans le contact qui seul fait éprouver. C'est risquer de croire connaître ce qu'on n'a fait que voir en image, de confondre l'information sur une chose avec l'expérience de cette chose, de prendre la carte pour le territoire. Or il y a des dimensions du réel qui ne se livrent qu'à la présence, à l'engagement, à l'épreuve directe — et qui restent inaccessibles à qui n'en connaît que la représentation. Le monde à portée d'écran est un monde réduit à ce qui peut passer par un écran, c'est-à-dire amputé de tout ce que l'écran ne transmet pas.
+
+Il y a un risque supplémentaire, plus insidieux : que l'accès facile à la représentation nous détourne de l'expérience réelle, en nous en donnant l'illusion. Pourquoi se déplacer, s'engager, éprouver, quand on peut tout voir sans effort sur un écran ? Cette facilité peut engendrer une forme de passivité, où l'on se contente de contempler des images du monde au lieu de le vivre, où l'expérience médiate remplace l'expérience directe. Nous risquons alors de vivre par procuration, spectateurs d'un monde que nous regardons sans y être, connaissant tout en image et rien en réalité. L'accessibilité, en rendant l'expérience réelle moins nécessaire en apparence, pourrait nous en détourner.
+
+Il ne s'agit pas d'opposer l'expérience réelle noble à la représentation méprisable, ni de renoncer à l'accessibilité qui a tant apporté. Il s'agit de ne pas confondre l'une avec l'autre, de garder conscience que voir n'est pas vivre, que l'image du monde n'est pas le monde. C'est préserver, à côté de l'accès facile aux représentations, le goût et la pratique de l'expérience réelle, de la présence, de l'engagement direct ; c'est se rappeler que certaines choses ne se connaissent qu'en les vivant, et que l'écran, si précieux soit-il pour donner accès, ne remplace pas ce contact avec le réel dont il ne transmet que l'apparence. Le monde à portée d'écran est un don ; le prendre pour le monde même serait s'enfermer dans sa représentation.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-040",
+    title: "Rester humain parmi les machines",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "À mesure que les machines nous ressemblent, la question de ce qui nous est propre se pose.",
+    blurbEn:
+      "As machines grow more capable and more like us, the question of what is distinctively human sharpens. A closing C1 essay on humanity in a technological age. (Section: Technology and the human, 5/5.)",
+    body: `À mesure que les machines deviennent plus capables, accomplissant des tâches qu'on croyait réservées à l'humain, imitant nos productions, parfois nos comportements, une question ancienne se pose avec une acuité nouvelle : qu'est-ce qui nous est proprement humain ? Longtemps, nous nous sommes définis par ce que nous seuls pouvions faire — calculer, raisonner, créer, parler. Mais à mesure que les machines nous rejoignent sur ces terrains, ces définitions vacillent, et nous sommes contraints de chercher ailleurs ce qui nous distingue. Cette recherche, que la technique nous impose, est peut-être l'une des plus fécondes de notre temps.
+
+Il faut d'abord se défaire d'un réflexe défensif qui consiste à chercher notre spécificité dans telle ou telle capacité que les machines n'auraient pas encore égalée. Cette stratégie est vouée à l'échec, car elle recule sans cesse : chaque fois qu'on définit l'humain par une capacité, les machines finissent par l'imiter, et il faut battre en retraite vers une autre. Se définir par ce que les machines ne savent pas encore faire, c'est se condamner à une redéfinition perpétuelle, et à une inquiétude sans fin. Ce n'est pas dans une performance que réside notre humanité, car toute performance est, en principe, imitable.
+
+Peut-être faut-il chercher non dans ce que nous faisons, mais dans ce que nous sommes et vivons. Ce qui distingue l'humain n'est peut-être pas une capacité supérieure, mais une manière d'exister : le fait d'avoir une conscience, d'éprouver, de souffrir et de jouir, de donner du sens, de savoir que l'on va mourir et de vivre à la lumière de ce savoir. Une machine peut imiter les résultats de nos activités, mais éprouve-t-elle quelque chose ? A-t-elle une intériorité, un vécu, un rapport à sa propre existence ? Rien ne l'indique. Ce qui nous serait propre, ce ne serait pas de faire ceci ou cela, mais de le vivre, d'en avoir l'expérience, d'exister pour soi-même et non seulement de fonctionner.
+
+Cette piste déplace la question de manière féconde. Elle suggère que notre humanité ne tient pas à notre supériorité fonctionnelle, mais à notre condition d'êtres conscients et vulnérables, capables d'éprouver et de donner sens. Et cette condition, loin d'être menacée par les machines, en est même mise en relief : en accomplissant sans conscience ce que nous accomplissons en le vivant, les machines nous révèlent que notre valeur n'était pas dans l'accomplissement, mais dans l'expérience vécue qui l'accompagnait. Ce n'est pas parce que nous calculons que nous sommes humains, mais parce que, en calculant, nous vivons quelque chose ; la machine calcule sans rien vivre, et c'est cette différence, non la performance, qui compte.
+
+Cette réflexion a une portée pratique, car elle indique ce que nous devrions préserver et cultiver dans un monde de machines. Non pas rivaliser avec elles sur le terrain de la performance, où nous serons toujours dépassés, mais approfondir ce qui nous est propre : la vie de la conscience, la profondeur du vécu, la capacité de sens, les relations vraies entre êtres qui éprouvent. Dans un monde où les machines font de mieux en mieux ce qui est fonctionnel, ce qui restera précieux, ce sera précisément ce qui ne l'est pas : la présence, l'attention, l'expérience partagée, tout ce qui relève non de l'accomplissement d'une tâche, mais de la rencontre de consciences.
+
+Rester humain parmi les machines, ce n'est donc pas s'accrocher à une supériorité menacée, ni imiter les machines pour ne pas être distancé. C'est cultiver ce qui nous constitue en propre : notre condition d'êtres conscients, sensibles, mortels, capables de sens et de relation. Les machines, en nous dépossédant de nos performances, nous rendent peut-être un service inattendu : nous forcer à redécouvrir ce qui, en nous, n'était pas réductible à une performance, et à le cultiver enfin pour lui-même. Le défi n'est pas de rester supérieurs aux machines, mais de rester pleinement humains — et cela ne se joue pas sur le terrain où les machines nous rejoignent, mais sur celui, plus profond, où elles ne nous suivent pas : celui de la vie vécue et du sens éprouvé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
