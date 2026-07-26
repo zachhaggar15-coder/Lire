@@ -858,6 +858,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-health-self",
+    band: "B2",
+    title: "Health and the self",
+    goal: "Health beyond illness, the displayed body, neglected sleep, mental health without shame, prevention.",
+    textIds: [
+      "starter-b2-091", // La santé n'est pas que l'absence de maladie (introduces the core words)
+      "starter-b2-092", // Le corps que l'on donne à voir
+      "starter-b2-093", // Le sommeil, ce grand négligé
+      "starter-b2-094", // Guérir la tête comme le corps
+      "starter-b2-095", // Prévenir plutôt que guérir (hardest)
+    ],
+  },
+  {
+    id: "b2-value",
+    band: "B2",
+    title: "Money and value",
+    goal: "Does money buy happiness, what spending reveals, the true cost of things, debt, and the idea of 'enough'.",
+    textIds: [
+      "starter-b2-096", // L'argent fait-il le bonheur ? (introduces the core words)
+      "starter-b2-097", // Ce que révèle la façon dont on dépense
+      "starter-b2-098", // Le vrai prix des choses
+      "starter-b2-099", // L'endettement, servitude moderne ?
+      "starter-b2-100", // Assez, cela existe-t-il ? (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

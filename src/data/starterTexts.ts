@@ -14161,4 +14161,234 @@ Apprendre toute la vie n'est donc pas seulement une obligation imposée par l'é
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-091",
+    title: "La santé n'est pas que l'absence de maladie",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Être en bonne santé, est-ce seulement ne pas être malade ?",
+    blurbEn:
+      "Health is often defined simply as not being ill. But that narrow definition misses most of what it means to be well. (Section: Health and the self, 1/5.)",
+    body: `Qu'est-ce qu'être en bonne santé ? La réponse la plus courante consiste à dire : ne pas être malade. Selon cette conception, la santé serait un état par défaut, celui qu'on possède tant qu'aucune maladie ne vient le troubler. Cette définition, en apparence évidente, est pourtant étonnamment pauvre, et elle nous empêche de penser correctement ce qui fait, au fond, une vie saine.
+
+Réduire la santé à l'absence de maladie revient à la définir négativement, par ce qu'elle n'est pas. Mais on sent bien que la santé est davantage. Deux personnes peuvent n'avoir aucune maladie déclarée et se trouver dans des états très différents : l'une pleine d'énergie, l'autre épuisée ; l'une sereine, l'autre rongée par l'angoisse. Aucune n'est « malade » au sens strict, et pourtant l'une va bien quand l'autre va mal. La santé, manifestement, ne se laisse pas enfermer dans la seule absence de pathologie.
+
+C'est pourquoi une définition plus riche a été proposée, qui voit dans la santé un état complet de bien-être physique, mental et social. Cette formule a ses défauts — un tel état complet n'est peut-être jamais pleinement atteint —, mais elle a le mérite d'élargir le regard. Elle rappelle que la santé engage le corps, mais aussi l'esprit et les liens sociaux, et qu'on ne saurait la réduire à l'un de ces aspects.
+
+Cette conception élargie a des conséquences pratiques. Si la santé n'est pas seulement l'absence de maladie, alors s'en occuper ne consiste pas seulement à soigner ce qui va mal, mais à cultiver ce qui va bien. Bouger, dormir, entretenir des relations, trouver du sens, gérer son stress : autant de dimensions qui relèvent pleinement de la santé, bien qu'aucune ne figure sur une ordonnance. Prendre soin de soi, c'est plus que se soigner.
+
+Il faut néanmoins se garder d'un excès. Faire de la santé un idéal de « bien-être complet » risque de la transformer en obligation permanente, en injonction à être toujours au mieux de sa forme. Or personne ne l'est en permanence, et culpabiliser de ne pas atteindre un état parfait serait une nouvelle forme de mal-être. La santé n'est pas une performance à réussir, mais un équilibre à chercher, toujours imparfaitement.
+
+Comprendre que la santé dépasse l'absence de maladie, c'est cesser d'attendre d'être malade pour s'en soucier. C'est reconnaître qu'elle se construit chaque jour, dans les gestes ordinaires d'une vie, et non seulement chez le médecin quand quelque chose ne va plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-092",
+    title: "Le corps que l'on donne à voir",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Jamais tant d'images de corps parfaits. Jamais tant de mal-être.",
+    blurbEn:
+      "We are surrounded by images of ideal bodies, and increasingly unhappy with our own. How the culture of the displayed body shapes our sense of self. (Section: Health and the self, 2/5.)",
+    body: `Nous vivons entourés d'images de corps. Sur les écrans, dans la publicité, sur les réseaux, défilent en permanence des silhouettes présentées comme idéales : minces, fermes, jeunes, sans défaut. Ce déluge d'images, historiquement inédit par son ampleur, ne reste pas sans effet sur la manière dont chacun perçoit son propre corps. Et cet effet, les études le confirment, est le plus souvent négatif.
+
+Le mécanisme est celui de la comparaison. En voyant sans cesse des corps idéalisés, nous prenons ces images pour la norme, et notre propre corps, jugé à cette aune, nous paraît toujours insuffisant. Ce que nous comparons, pourtant, n'est pas comparable : les images qui nous entourent sont sélectionnées, retouchées, mises en scène, quand notre corps, lui, nous apparaît dans sa réalité ordinaire. Nous nous mesurons à une perfection qui n'existe pas, et nous nous trouvons, forcément, en défaut.
+
+Cette comparaison permanente a un coût réel. Insatisfaction, honte, obsession du contrôle, parfois troubles graves du rapport à l'alimentation : le mal-être corporel, particulièrement répandu chez les plus jeunes, n'a rien d'anecdotique. Il ne s'agit pas d'une simple coquetterie, mais d'une souffrance qui peut envahir la vie entière, en volant à ceux qui l'éprouvent une part de leur estime d'eux-mêmes.
+
+Il faut aussi mesurer ce que ces normes ont d'arbitraire et de changeant. Ce qui est présenté aujourd'hui comme le corps idéal n'a rien d'universel : d'autres époques, d'autres cultures, ont valorisé des silhouettes tout autres. L'idéal actuel n'est pas une vérité de la nature, mais une construction sociale, façonnée notamment par des intérêts commerciaux. Car il ne faut pas l'oublier : une bonne part de cette insatisfaction est délibérément entretenue, parce qu'elle fait vendre.
+
+Reconnaître cela ne suffit pas à s'en libérer, mais aide à prendre du recul. Comprendre que ces images sont truquées, que ces normes sont arbitraires, que ce mal-être est en partie fabriqué, c'est commencer à desserrer leur emprise. On peut aussi choisir ce que l'on regarde, se détourner des sources qui nourrissent la comparaison, et rechercher des représentations plus diverses et plus vraies des corps réels.
+
+Le corps n'est pas d'abord un objet à donner à voir, un produit à conformer à une norme. Il est ce par quoi nous vivons, éprouvons, agissons. Renouer avec cette évidence — habiter son corps plutôt que le juger — est peut-être le premier pas vers une paix que nulle image parfaite ne procurera jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-093",
+    title: "Le sommeil, ce grand négligé",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On sacrifie volontiers son sommeil, comme s'il était du temps perdu.",
+    blurbEn:
+      "We treat sleep as wasted time, the first thing to sacrifice. Why that is one of the costliest mistakes we make with our health. (Section: Health and the self, 3/5.)",
+    body: `Parmi tous les besoins du corps, le sommeil est sans doute celui que nous traitons avec le plus de désinvolture. On se vante volontiers de dormir peu, on rogne sur ses nuits pour travailler ou se divertir, on considère le sommeil comme du temps perdu qu'il serait presque vertueux de réduire. Cette attitude, si répandue soit-elle, repose sur une profonde méconnaissance de ce qu'est réellement le sommeil et de ce qu'il accomplit.
+
+Car dormir n'est pas ne rien faire. Pendant que nous dormons, notre organisme est loin d'être inactif : il se répare, consolide la mémoire, régule les émotions, entretient les défenses immunitaires, élimine des déchets accumulés dans le cerveau. Le sommeil n'est pas une interruption de la vie, mais l'un de ses processus essentiels, aussi vital que l'alimentation. Le négliger, ce n'est pas gagner du temps ; c'est saboter un travail indispensable.
+
+Les conséquences du manque chronique de sommeil sont considérables, et la recherche ne cesse d'en préciser l'étendue. Sur le plan mental, il altère la concentration, le jugement, l'humeur, la mémoire. Sur le plan physique, il est associé à un risque accru de nombreuses maladies. Un esprit et un corps privés de sommeil fonctionnent mal, même lorsque celui qui en souffre, habitué à son état, ne s'en rend plus compte. Car le manque de sommeil a ceci de trompeur qu'il nous rend mauvais juges de nos propres capacités.
+
+Comment expliquer, dès lors, que nous le maltraitions à ce point ? En partie parce que ses effets sont différés et invisibles : une nuit trop courte ne se paie pas immédiatement, et l'on peut s'illusionner longtemps sur sa capacité à « tenir ». En partie aussi parce que notre culture valorise l'activité et méprise le repos, comme si dormir était un aveu de faiblesse ou de paresse. Nous sacrifions notre sommeil sur l'autel d'une productivité qui, paradoxalement, en souffre.
+
+Réhabiliter le sommeil suppose donc un changement de regard. Il ne s'agit pas d'une faveur qu'on accorde à son corps quand on en a le loisir, mais d'un besoin fondamental qu'il faut respecter. Cela passe par des gestes concrets — des horaires réguliers, une chambre calme et sombre, une distance avec les écrans le soir —, mais surtout par une conviction : que le temps consacré à dormir n'est jamais du temps perdu.
+
+Bien dormir n'est pas un luxe ni une paresse ; c'est l'une des conditions les plus élémentaires d'une vie saine. En méprisant notre sommeil, c'est nous-mêmes que nous négligeons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-094",
+    title: "Guérir la tête comme le corps",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On soigne une jambe cassée sans honte. Pourquoi pas un esprit qui souffre ?",
+    blurbEn:
+      "We treat a broken leg without shame, yet mental suffering is still met with silence and stigma. Why that double standard costs lives, and is slowly changing. (Section: Health and the self, 4/5.)",
+    body: `Si quelqu'un se casse une jambe, il consulte sans hésiter, se fait soigner, et personne n'y trouve à redire. Mais si ce même quelqu'un souffre d'anxiété, de dépression ou d'un autre trouble psychique, tout devient plus compliqué : la honte s'en mêle, le silence s'installe, et le recours à un soin, quand il a lieu, se fait souvent tardivement et à contrecœur. Cette différence de traitement entre les maux du corps et ceux de l'esprit est l'une des injustices les plus tenaces de notre rapport à la santé.
+
+D'où vient cette différence ? En partie d'une longue histoire de méconnaissance et de préjugés. Pendant des siècles, les troubles psychiques ont été mal compris, entourés de peur, associés à la faiblesse morale, à la folie, à quelque chose de honteux. Ces représentations, bien qu'en recul, n'ont pas disparu. Beaucoup continuent de croire, plus ou moins consciemment, qu'un trouble psychique serait un manque de volonté, qu'il suffirait de « se secouer » pour aller mieux — comme si l'on pouvait guérir une dépression par la seule force du caractère.
+
+Cette croyance est non seulement fausse, mais dangereuse. Les troubles psychiques ne sont pas des faiblesses de caractère ; ce sont des affections réelles, qui ont leurs causes, leurs mécanismes et leurs traitements, au même titre que les maladies physiques. Y opposer une exigence de volonté, c'est ajouter la culpabilité à la souffrance, et détourner ceux qui en souffrent des soins qui pourraient les aider. Le silence et la honte tuent, littéralement, en empêchant de demander de l'aide.
+
+Il faut donc affirmer une évidence trop longtemps ignorée : la santé mentale est une composante de la santé, ni plus honteuse ni moins sérieuse que la santé physique. Souffrir dans sa tête n'est pas plus déshonorant que souffrir dans son corps, et se faire aider n'est pas un aveu de faiblesse, mais un acte de bon sens et de courage. Consulter pour un mal de l'esprit devrait être aussi naturel que consulter pour un mal du corps.
+
+Les choses, heureusement, évoluent. On parle davantage, on comprend mieux, la parole se libère peu à peu, et des personnalités publiques osent témoigner de leurs propres épreuves, contribuant à faire reculer la honte. Ce mouvement, encore fragile, va dans le bon sens : il rapproche, lentement, le traitement des maux de l'esprit de celui des maux du corps.
+
+Guérir la tête comme le corps : cette formule simple résume tout un progrès à accomplir. Tant qu'elle ne sera pas une évidence pour tous, des personnes continueront de souffrir en silence, faute d'oser demander l'aide qu'on leur accorderait sans hésiter pour n'importe quelle blessure visible.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-095",
+    title: "Prévenir plutôt que guérir",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Notre médecine excelle à soigner. Sait-elle assez empêcher ?",
+    blurbEn:
+      "Modern medicine is brilliant at treating illness once it strikes — but far less focused on preventing it. A look at why prevention matters and why we neglect it. (Section: Health and the self, 5/5.)",
+    body: `La médecine moderne accomplit des prodiges. Elle répare des corps gravement atteints, opère avec une précision inouïe, guérit des maladies autrefois fatales. Cette puissance à soigner est l'une des grandes conquêtes de notre époque, et il serait ingrat de la sous-estimer. Pourtant, cette médecine excelle surtout à intervenir une fois la maladie installée ; elle est bien moins attentive à ce qui pourrait l'empêcher d'apparaître. Or c'est peut-être là, dans la prévention, que se joue l'essentiel.
+
+L'idée n'a rien de nouveau : mieux vaut prévenir que guérir. Empêcher une maladie de survenir vaut toujours mieux que d'avoir à la traiter, tant pour la personne, épargnée de la souffrance, que pour la collectivité, épargnée du coût. Une part considérable des maladies qui pèsent le plus lourd aujourd'hui pourraient être évitées, ou du moins retardées, par des changements de mode de vie et par un dépistage précoce. Le potentiel de la prévention est immense, et largement inexploité.
+
+Pourquoi, alors, la néglige-t-on ? Plusieurs raisons se conjuguent. La première tient à la nature même de la prévention : ses succès sont invisibles. On ne voit jamais la maladie qui n'a pas eu lieu, tandis qu'une guérison spectaculaire se remarque. Il est plus gratifiant, et plus valorisé, de sauver un malade que d'empêcher, discrètement, qu'il ne le devienne. La médecine curative brille ; la prévention œuvre dans l'ombre.
+
+La deuxième raison est économique. Nos systèmes de santé sont largement organisés pour traiter des maladies, non pour les prévenir : on rémunère l'acte de soin bien plus que le conseil qui l'aurait rendu inutile. La prévention, faute d'être aussi valorisée, reste le parent pauvre du système, malgré les discours qui la célèbrent.
+
+La troisième raison, enfin, tient à nous-mêmes. Prévenir suppose d'agir aujourd'hui pour un bénéfice lointain et incertain, ce à quoi notre esprit, on l'a vu, résiste. Il est plus facile de remettre à plus tard les efforts qui protègent, quitte à devoir se soigner ensuite. La prévention se heurte à notre penchant pour l'immédiat.
+
+Rééquilibrer soin et prévention ne signifie pas renoncer à l'un pour l'autre ; les deux sont nécessaires. Il s'agit de cesser d'attendre la maladie pour agir, et de reconnaître à la prévention la place qu'elle mérite — dans nos systèmes de santé comme dans nos vies. Car la plus belle des guérisons reste celle dont on n'a jamais eu besoin.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-096",
+    title: "L'argent fait-il le bonheur ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Vieille question, réponse plus subtile qu'un simple oui ou non.",
+    blurbEn:
+      "Does money buy happiness? The honest answer is neither a flat yes nor a flat no, but something more interesting. (Section: Money and value, 1/5.)",
+    body: `« L'argent ne fait pas le bonheur », dit le proverbe, auquel un cynique ajoute volontiers : « mais il y contribue ». Derrière cet échange usé se cache une vraie question, à laquelle les recherches modernes apportent une réponse plus subtile qu'un simple oui ou non. Car l'argent entretient bien avec le bonheur un rapport réel, mais ce rapport n'est ni celui qu'annonce le proverbe ni celui que suggère le cynique.
+
+Commençons par ce qui est solidement établi : jusqu'à un certain point, l'argent contribue bel et bien au bien-être. Pour qui manque du nécessaire, un revenu supplémentaire change tout. Sortir de la pauvreté, pouvoir se nourrir, se loger, se soigner, cesser de vivre dans l'angoisse du lendemain : à ce niveau, l'argent achète non pas le bonheur en soi, mais la fin d'un malheur bien concret. Prétendre le contraire, du confort d'une vie aisée, relève de l'indécence.
+
+Mais le lien se transforme à mesure que l'on s'élève. Au-delà du seuil où les besoins essentiels sont couverts, chaque gain supplémentaire apporte de moins en moins de bien-être. Doubler un revenu déjà confortable ne double pas la satisfaction ; l'effet s'amenuise, jusqu'à devenir presque imperceptible. L'argent, passé un certain point, obéit à une loi de rendement décroissant : il compte toujours, mais de moins en moins.
+
+Pourquoi cet essoufflement ? En partie à cause de l'accoutumance déjà évoquée : nous nous habituons vite à ce que nous acquérons, et le confort nouveau devient rapidement la norme, cessant de nous réjouir. En partie aussi parce que, une fois l'essentiel assuré, ce qui fait le bonheur — les relations, le sens, la santé, le temps — ne s'achète guère. On peut acheter une belle maison, non l'affection de ceux qui l'habitent.
+
+Il y a plus troublant encore : la manière dont on gagne et dépense l'argent compte davantage que la somme elle-même. Un travail épuisant qui rapporte beaucoup peut nuire au bonheur qu'il prétend servir. Et les recherches montrent qu'on tire plus de satisfaction à dépenser pour des expériences, ou pour autrui, que pour accumuler des biens. Ce n'est pas seulement combien l'on a, mais ce qu'on en fait, qui importe.
+
+La réponse honnête à la vieille question est donc nuancée. L'argent ne fait pas le bonheur, mais son manque fait le malheur ; il y contribue, mais de moins en moins ; il compte, mais moins que l'usage qu'on en fait. Le mépriser serait naïf ; en attendre le bonheur le serait tout autant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-097",
+    title: "Ce que révèle la façon dont on dépense",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nos dépenses en disent long sur ce que nous valorisons vraiment.",
+    blurbEn:
+      "How we spend our money reveals what we truly value — often more honestly than what we say. A reflection on budgets as mirrors of priorities. (Section: Money and value, 2/5.)",
+    body: `On dit souvent qu'il faut écouter ce que les gens font plutôt que ce qu'ils disent. Cela vaut particulièrement pour l'argent. Nos discours sur nos valeurs peuvent être trompeurs, mais nos dépenses, elles, ne mentent guère : elles révèlent, souvent mieux que nos paroles, ce que nous valorisons réellement. Regarder où va notre argent, c'est se regarder soi-même dans un miroir parfois surprenant.
+
+Chacun affirme volontiers ce qui compte pour lui : la famille, la santé, la culture, les autres. Mais un examen honnête de nos dépenses confirme-t-il toujours ces déclarations ? Il arrive qu'on prétende accorder du prix à une chose tout en n'y consacrant, en réalité, ni argent ni temps, tandis qu'on dépense sans compter pour ce qu'on affirme mépriser. Cet écart entre les valeurs proclamées et les valeurs vécues, l'argent le met impitoyablement en lumière.
+
+Ce constat n'a rien d'un jugement moral ; il est plutôt un outil de lucidité. Examiner ses dépenses, ce n'est pas se culpabiliser, mais se connaître. En voyant concrètement à quoi passe notre argent, nous découvrons nos priorités effectives, celles qui gouvernent nos choix quotidiens, par-delà les intentions que nous affichons. Et il arrive que cette découverte soit inconfortable, lorsqu'elle révèle un décalage entre l'existence que nous menons et celle que nous voudrions mener.
+
+Cet exercice ouvre alors une possibilité : celle de réaligner ses dépenses sur ses valeurs. Si je constate que je consacre beaucoup à ce qui compte peu pour moi, et peu à ce qui compte vraiment, je peux corriger le tir. Dépenser en conscience, ce n'est pas nécessairement dépenser moins ; c'est dépenser en accord avec ce à quoi l'on tient. Un budget, dans cette perspective, n'est pas une contrainte comptable, mais l'expression concrète d'un ensemble de priorités.
+
+Il faut se garder, ici, d'un piège : celui de croire que tout se réduit à l'argent. Bien des choses précieuses ne s'achètent pas, et une vie n'est pas la somme de ses dépenses. Mais dans un monde où l'argent est le moyen de tant de choses, la manière dont nous l'employons reste un révélateur fidèle de ce que nous sommes.
+
+Se demander « où va mon argent ? », c'est donc se demander, indirectement, « qu'est-ce qui compte vraiment pour moi ? ». La réponse, inscrite dans nos relevés plus sûrement que dans nos discours, mérite qu'on la regarde en face.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-098",
+    title: "Le vrai prix des choses",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le prix affiché cache souvent des coûts que personne ne paie sur le ticket.",
+    blurbEn:
+      "The price on the label often hides real costs paid by others — workers, the environment, the future. A look at what a price does and does not tell us. (Section: Money and value, 3/5.)",
+    body: `Nous jugeons couramment de la valeur d'une chose par son prix. Ce qui est cher nous paraît précieux, ce qui est bon marché, avantageux. Ce réflexe, commode, repose pourtant sur une confusion : le prix d'une chose ne dit pas son coût réel. Bien souvent, le prix affiché ne reflète qu'une partie de ce que la chose a véritablement coûté, le reste étant supporté par d'autres, ailleurs, sans figurer sur le ticket de caisse.
+
+Prenons un produit vendu à très bas prix. Ce prix attractif peut cacher des coûts bien réels, mais invisibles : des travailleurs sous-payés qui l'ont fabriqué, un environnement dégradé par sa production, des ressources épuisées, des dégâts reportés sur l'avenir. Ces coûts existent ; simplement, ce n'est pas l'acheteur qui les paie directement. Les économistes parlent de coûts « externalisés » : rejetés hors du prix, supportés par la société, par la nature, par les générations futures. Le bas prix n'est alors pas une véritable économie ; c'est un déplacement du coût vers ceux qui ne peuvent se défendre.
+
+À l'inverse, un prix élevé ne garantit pas qu'une chose « vaille » réellement ce qu'elle coûte. Une part du prix peut rémunérer non la qualité, mais une image, une marque, une rareté artificielle. Payer cher n'est pas toujours payer pour de la valeur ; c'est parfois payer pour du prestige, ou pour la seule satisfaction d'avoir payé cher. Le prix, décidément, est un guide trompeur.
+
+Comprendre cela transforme le regard que l'on porte sur la consommation. Cela invite à se demander, derrière chaque prix, quel est le coût réel : qui l'a produit, dans quelles conditions, avec quelles conséquences ? Ces questions n'ont pas toujours de réponse facile, et l'on ne peut mener une enquête sur chaque achat. Mais leur seule présence à l'esprit suffit à nous rendre moins naïfs, moins prompts à confondre le bon marché avec l'avantageux.
+
+Cette lucidité a aussi une portée collective. Si les prix disaient la vérité — s'ils intégraient les coûts aujourd'hui externalisés —, bien des produits nuisibles seraient plus chers, et bien des produits vertueux plus compétitifs. Faire en sorte que les prix reflètent les coûts réels est l'un des grands enjeux d'une économie plus juste et plus durable, même s'il se heurte à d'immenses résistances.
+
+Le prix n'est donc qu'une information partielle, et parfois mensongère. Derrière les chiffres affichés se cache une réalité plus complexe, qu'il vaut la peine d'apprendre à voir. Car ce que nous ne payons pas, quelqu'un, quelque part, le paie à notre place.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-099",
+    title: "L'endettement, servitude moderne ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le crédit facilite la vie. Il peut aussi l'enchaîner.",
+    blurbEn:
+      "Credit makes life easier — and can quietly enslave. A measured look at debt: when it serves us, when it traps us, and why the line matters. (Section: Money and value, 4/5.)",
+    body: `Le crédit est l'une des grandes commodités de la vie moderne. Il permet d'acquérir aujourd'hui ce qu'on ne pourrait s'offrir qu'après des années d'épargne : un logement, une voiture, des études. En étalant le paiement dans le temps, il rend accessibles des projets qui, autrement, resteraient hors de portée. À ce titre, il est un outil précieux, et il serait absurde de le condamner en bloc. Mais ce même outil, mal maîtrisé, peut se retourner en une forme de servitude.
+
+Le mécanisme est insidieux. Emprunter, c'est engager son avenir : les revenus de demain sont d'avance affectés au remboursement de ce qu'on a consommé aujourd'hui. Tant que cet engagement reste mesuré, il n'a rien d'inquiétant. Mais lorsqu'il s'accumule, lorsque les remboursements dévorent une part croissante des revenus, la dette cesse d'être un moyen pour devenir un poids. On ne travaille plus pour vivre, mais pour rembourser ; on n'est plus libre de ses choix, enchaîné à des échéances que l'on redoute.
+
+Ce basculement est d'autant plus dangereux qu'il est encouragé. Tout, dans notre environnement, pousse à consommer immédiatement et à payer plus tard. Le crédit est proposé partout, présenté comme facile, indolore, presque gratuit — jusqu'à ce que les intérêts, patiemment accumulés, révèlent leur vrai poids. Les plus fragiles sont les premières victimes de cette facilité, attirés vers des emprunts coûteux qui aggravent, au lieu de les résoudre, leurs difficultés.
+
+Il faut donc distinguer deux usages de la dette, aussi différents que possible. Il y a la dette choisie, mesurée, mise au service d'un projet qui construit l'avenir : emprunter pour se loger ou se former peut être un investissement raisonnable. Et il y a la dette subie, qui finance une consommation immédiate au détriment de l'avenir, et qui enferme peu à peu dans une spirale. La première peut libérer ; la seconde asservit.
+
+Se prémunir contre la mauvaise dette suppose quelques principes simples : n'emprunter que ce qu'on peut rembourser sans détresse, se méfier des crédits faciles et coûteux, distinguer le désir de l'instant du besoin réel. Cela suppose surtout de résister à une culture qui fait de l'endettement une habitude et de la patience une faiblesse.
+
+La question n'est donc pas de bannir le crédit, mais de rester son maître plutôt que son serviteur. Un emprunt au service d'un projet est un outil de liberté ; une dette qui gouverne la vie en est le contraire. Toute la différence tient dans ce renversement, qu'il vaut mieux prévenir que subir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-100",
+    title: "Assez, cela existe-t-il ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Quand a-t-on assez ? La question, simple, n'a rien d'évident.",
+    blurbEn:
+      "When is enough enough? A deceptively simple question that our economy is designed to make us never ask. A reflection on the idea of sufficiency. (Section: Money and value, 5/5.)",
+    body: `Voici une question d'apparence naïve, et pourtant vertigineuse : quand a-t-on assez ? À partir de quel point peut-on dire que l'on possède, que l'on gagne, que l'on consomme suffisamment, et qu'il n'est plus nécessaire d'en vouloir davantage ? Cette question, chacun devrait se la poser ; or presque personne ne se la pose, et notre monde tout entier semble conçu pour qu'on ne la pose jamais.
+
+Car l'idée même d'« assez » va à l'encontre d'une logique profonde de notre économie, fondée sur la croissance perpétuelle et le désir sans cesse relancé. Tout, autour de nous, nous invite à vouloir plus : plus de biens, plus de revenus, plus de confort, plus d'expériences. La publicité, l'exemple d'autrui, notre propre accoutumance conspirent à repousser toujours plus loin le seuil de ce qui nous paraît suffisant. À peine avons-nous atteint un but qu'un autre se dresse, et la notion d'« assez » recule à mesure que nous avançons.
+
+Cette course sans fin a quelque chose d'épuisant, et même d'absurde. Si le seuil de « assez » recule perpétuellement, il ne sera jamais atteint, et l'on est condamné à une insatisfaction permanente, quelle que soit l'abondance dont on jouit. On peut ainsi posséder beaucoup et se sentir démuni, gagner toujours plus et n'être jamais rassasié. Le manque, alors, ne vient plus de ce qui nous fait défaut, mais de notre incapacité à reconnaître que nous avons assez.
+
+Poser la question du « assez », c'est donc introduire une rupture dans cette logique. C'est affirmer qu'il existe un point au-delà duquel vouloir davantage n'ajoute plus rien d'essentiel, sinon le fardeau de vouloir. Définir son « assez », ce n'est pas se résigner ni renoncer à toute ambition ; c'est se donner une chance d'être un jour satisfait, au lieu de courir sans fin après un horizon qui se dérobe.
+
+Encore faut-il se garder d'un malentendu. Parler d'« assez » n'a de sens que pour qui possède déjà le nécessaire. À celui qui manque de l'essentiel, il serait indécent de prêcher la modération : son problème n'est pas d'avoir trop, mais trop peu. La question du « assez » s'adresse à ceux, nombreux dans les sociétés d'abondance, qui ont depuis longtemps dépassé le seuil des besoins réels sans jamais s'en apercevoir.
+
+Savoir dire « c'est assez » est peut-être l'une des libertés les plus rares et les plus précieuses de notre temps. Dans un monde qui vit de notre insatiabilité, reconnaître qu'on a assez est presque un acte de résistance — et sans doute l'une des conditions d'une vie apaisée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
