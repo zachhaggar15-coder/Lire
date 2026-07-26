@@ -15541,4 +15541,234 @@ Reconnaître un droit à la nuit, c'est donc affirmer une limite face à cette l
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-151",
+    title: "Vivre sous le regard",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Caméras, traces numériques : nous sommes observés comme jamais.",
+    blurbEn:
+      "Cameras, phones, digital traces: we are watched as no generation before us. A reflection on what constant observation does to how we live and who we are. (Section: Privacy in a watched world, 1/5.)",
+    body: `Nous vivons sous le regard comme aucune génération avant nous. Des caméras jalonnent les rues, les magasins, les transports ; nos téléphones enregistrent nos déplacements ; nos activités laissent partout des traces qui, rassemblées, dessinent le portrait détaillé de nos vies. Cette surveillance, diffuse et permanente, est devenue si banale qu'on ne la remarque plus. Pourtant, il vaut la peine de s'arrêter sur ce qu'elle change, car vivre observé n'est pas anodin, et transforme insensiblement notre manière d'être.
+
+Il faut d'abord mesurer l'ampleur du phénomène. Ce qui distingue notre époque, ce n'est pas l'existence de la surveillance — les pouvoirs ont toujours cherché à observer les gens —, mais son étendue et sa permanence. Jamais il n'a été possible de suivre les faits et gestes de tant de personnes, de manière si continue, si détaillée, à si faible coût. La surveillance, autrefois limitée par ses moyens, est devenue quasi totale, s'étendant à des pans de l'existence qui échappaient jusqu'ici à tout regard.
+
+Or être observé change le comportement, même quand on n'a rien à cacher. Les études le confirment : se savoir regardé nous rend plus conformes, plus prudents, moins spontanés. Nous nous surveillons nous-mêmes, anticipant le regard des autres, évitant ce qui pourrait être mal vu. Ce n'est pas nécessairement conscient ; c'est un effet subtil, mais profond. Une société où chacun se sait potentiellement observé est une société où chacun s'autocensure un peu, où la liberté d'être soi, de s'écarter, d'expérimenter, se trouve discrètement rognée.
+
+C'est pourquoi la surveillance généralisée pose un problème qui dépasse la seule vie privée. Elle touche à la liberté elle-même. Une part de notre liberté tient à l'existence d'espaces soustraits au regard, où l'on peut être sans être vu, penser sans être jugé, essayer sans crainte. En abolissant ces espaces, la surveillance permanente ne nous prive pas seulement d'intimité ; elle rétrécit le champ de ce que nous osons être et faire. Un monde entièrement observé serait un monde où l'audace, la dissidence, la simple singularité deviendraient plus difficiles.
+
+On objectera que cette surveillance a ses raisons, souvent bonnes : la sécurité, la prévention, le bon fonctionnement de services. C'est vrai, et il ne s'agit pas de la rejeter en bloc. Mais il s'agit de ne pas l'accepter aveuglément, comme une évidence sans coût. Chaque dispositif de surveillance devrait être pesé : quel bénéfice réel, pour quelle atteinte à la liberté ? Trop souvent, on adopte la surveillance pour un gain de sécurité incertain, sans jamais mesurer ce qu'on abandonne en échange. La question n'est pas « avez-vous quelque chose à cacher ? », mais « quelle société voulons-nous ? ».
+
+Vivre sous le regard n'est donc pas une fatalité qu'il faudrait subir sans y penser. C'est un choix de société, qui engage notre liberté autant que notre sécurité, et qui mérite d'être discuté plutôt que consenti par défaut. Préserver des espaces sans regard, des moments sans traces, une part de vie soustraite à l'observation, ce n'est pas défendre des secrets coupables ; c'est défendre les conditions mêmes d'une existence libre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-152",
+    title: "« Je n'ai rien à cacher »",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'argument paraît de bon sens. Il est plus fragile qu'il n'y paraît.",
+    blurbEn:
+      "'I have nothing to hide, so why should I care about privacy?' A close examination of the most common — and most misleading — argument against protecting it. (Section: Privacy in a watched world, 2/5.)",
+    body: `« Je n'ai rien à cacher, donc la surveillance ne me dérange pas. » Cet argument, sans doute le plus répandu contre le souci de la vie privée, a pour lui une apparence de bon sens. Si l'on ne fait rien de mal, pourquoi craindre d'être observé ? Seuls les coupables auraient à redouter le regard. Cette idée est si commune qu'elle passe pour évidente. Elle repose pourtant sur plusieurs confusions, et l'examiner de près suffit à en révéler la fragilité.
+
+La première confusion assimile la vie privée à la dissimulation d'une faute. Or protéger son intimité n'a jamais consisté à cacher des méfaits. Nous fermons la porte des toilettes, nous baissons la voix pour une confidence, nous tenons secrets nos sentiments les plus intimes — non parce que nous faisons quelque chose de mal, mais parce qu'il existe une sphère qui n'appartient qu'à nous. La vie privée n'est pas l'ombre où se cache le coupable ; c'est l'espace propre de toute personne, l'aveu qu'une part de nous ne regarde pas les autres. « N'avoir rien à cacher » ne signifie pas « accepter de tout montrer ».
+
+La deuxième confusion suppose que ce qui est innocent aujourd'hui le restera toujours, et ne pourra jamais se retourner contre nous. C'est oublier que le regard peut changer de nature. Une information anodine sous un régime peut devenir compromettante sous un autre ; une opinion banale aujourd'hui peut être condamnée demain ; des données collectées dans un but précis peuvent être détournées vers un autre. Livrer ses traces en se fiant à la bienveillance présente de ceux qui les détiennent, c'est faire un pari imprudent sur l'avenir, dont on ne maîtrise ni les acteurs ni les intentions.
+
+La troisième confusion, plus subtile, ramène tout à la seule personne qui parle. « Moi, je n'ai rien à cacher » : mais la vie privée n'est pas seulement une affaire individuelle. Même si chacun, pour son propre compte, acceptait d'être observé, l'accumulation des données de tous confère à quelques-uns un pouvoir considérable, dont les effets pèsent sur la société entière. Et il est des gens pour qui la protection de la vie privée n'est pas un luxe mais une nécessité vitale : le dissident, le journaliste, la victime qui cherche à échapper à son bourreau. En renonçant à la vie privée parce qu'« on n'a rien à cacher », on affaiblit une protection dont d'autres ont désespérément besoin.
+
+Il y a enfin quelque chose de troublant dans l'argument lui-même. Dire « je n'ai rien à cacher », c'est déjà accepter l'idée que le regard serait légitime, et qu'il reviendrait à chacun de prouver son innocence en s'exposant. Mais pourquoi devrais-je justifier mon droit à l'intimité ? C'est à la surveillance de se justifier, non à la vie privée. Renverser la charge, exiger de chacun qu'il montre patte blanche, c'est déjà avoir cédé l'essentiel : le principe qu'une personne a droit, par défaut, à une part d'existence soustraite au regard.
+
+L'argument du « rien à cacher » est donc bien plus faible qu'il n'y paraît. Il confond intimité et culpabilité, parie imprudemment sur l'avenir, oublie la dimension collective, et renverse la charge de la justification. Défendre la vie privée n'est pas le réflexe de qui a des secrets honteux ; c'est reconnaître qu'une existence libre a besoin d'ombre autant que de lumière, pour soi et pour les autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-153",
+    title: "Nos données valent de l'or",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Ce que nous laissons de traces est devenu une immense richesse. Pour d'autres.",
+    blurbEn:
+      "The traces we leave online have become one of the most valuable resources of our age — for those who collect them. A look at the economy built on our data. (Section: Privacy in a watched world, 3/5.)",
+    body: `Chaque jour, sans y penser, nous produisons une immense quantité de données : ce que nous cherchons, achetons, regardons, où nous allons, à qui nous parlons. Prises isolément, ces traces semblent insignifiantes. Rassemblées et analysées, elles constituent l'une des richesses les plus convoitées de notre époque. Autour d'elles s'est bâtie une économie considérable, qui a fait la fortune de quelques entreprises parmi les plus puissantes du monde. Comprendre cette économie, c'est comprendre ce que nous cédons sans le savoir.
+
+Ces données valent de l'or pour une raison précise : elles permettent de prévoir et d'influencer les comportements. En analysant nos traces, on peut deviner nos goûts, nos besoins, nos faiblesses, nos moments de vulnérabilité. On peut alors nous adresser, au bon moment, le message qui a le plus de chances de nous faire agir — acheter, cliquer, voter parfois. Nos données ne servent pas seulement à nous connaître ; elles servent à agir sur nous, avec une précision d'autant plus grande qu'elles sont plus nombreuses et mieux analysées.
+
+Le marché qui s'est constitué sur cette base est largement invisible pour ceux qui l'alimentent, c'est-à-dire nous. Nous fournissons la matière première — nos traces — sans en percevoir la valeur, en échange de services qui nous paraissent gratuits. Mais rien n'est gratuit : ce que nous ne payons pas en argent, nous le payons en données, et ces données valent souvent bien plus que le service reçu. Nous sommes, dans cette économie, moins des clients que le produit vendu à d'autres : les annonceurs, à qui l'on revend l'accès à notre attention et la connaissance de nos comportements.
+
+Ce système soulève des questions qui dépassent la seule vie privée. D'abord une question d'équité : est-il juste que la valeur créée par nos données profite presque entièrement à ceux qui les collectent, sans que nous en tirions rien, ni même n'en soyons conscients ? Ensuite une question de pouvoir : l'accumulation de ces données confère à quelques entreprises une connaissance et une influence sans précédent, qui échappent largement au contrôle démocratique. Ceux qui savent tout de nous disposent, sur nous, d'un pouvoir que nul n'a jamais eu.
+
+Face à cette situation, plusieurs réponses se dessinent. Certains plaident pour une reprise de contrôle individuel : que chacun puisse savoir quelles données sont collectées, s'y opposer, voire en tirer profit. D'autres estiment que la réponse ne peut être que collective et politique : encadrer strictement la collecte, limiter ce qui peut être fait des données, briser la concentration de ce pouvoir. Les deux voies ne s'excluent pas, et toutes deux supposent d'abord une prise de conscience : que ce que nous cédons si légèrement a une immense valeur.
+
+Nos données valent de l'or, mais cet or, d'autres le ramassent. Prendre conscience de cette réalité, ce n'est pas céder à la paranoïa ; c'est cesser d'être naïf. Ce que nous laissons derrière nous, jour après jour, n'est pas sans conséquence : c'est la matière d'un pouvoir qui s'exerce sur nous, et qu'il vaudrait mieux regarder en face que continuer d'ignorer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-154",
+    title: "La mémoire qui n'oublie jamais",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Autrefois, on pouvait oublier et être oublié. Internet, lui, se souvient de tout.",
+    blurbEn:
+      "Once, mistakes faded and people were allowed to move on. The internet forgets nothing — and that changes what it means to have a past. (Section: Privacy in a watched world, 4/5.)",
+    body: `Il fut un temps où l'oubli était la règle, et la mémoire l'exception. Ce qu'on faisait, disait, écrivait s'effaçait avec le temps ; les erreurs de jeunesse se dissolvaient dans le passé ; on pouvait changer, recommencer, échapper à ce qu'on avait été. Cette faculté d'oubli, loin d'être un défaut, était une condition de la vie humaine. Or le monde numérique a inversé cette règle : désormais, tout se conserve, rien ne s'efface, et cette mémoire qui n'oublie jamais transforme profondément notre rapport au passé.
+
+Sur internet, en effet, les traces demeurent. Une parole imprudente, une photo compromettante, une opinion d'un jour peuvent resurgir des années plus tard, intactes, comme si le temps n'avait pas passé. Ce que nous laissons en ligne ne vieillit pas, ne s'estompe pas ; cela reste disponible, indexé, retrouvable. Le passé, autrefois enfoui par l'oubli, est devenu perpétuellement présent, susceptible de nous rattraper à tout moment. Nous traînons désormais derrière nous une mémoire complète, dont nous ne maîtrisons ni le contenu ni les réapparitions.
+
+Cette permanence a des conséquences profondes. Elle rend difficile ce qui était naguère naturel : changer, se corriger, se défaire de son passé. Un adolescent qui commet une bêtise, un adulte qui exprime un jour une opinion qu'il reniera, se voient liés pour toujours à ce moment, que l'oubli aurait autrefois effacé. On peut leur opposer indéfiniment ce qu'ils furent, leur refuser le droit d'avoir changé. La mémoire numérique fige les gens dans leur passé, alors que la vie, précisément, est mouvement, transformation, possibilité de devenir autre.
+
+C'est pourquoi certains ont plaidé pour un « droit à l'oubli » : le droit, sous certaines conditions, de faire effacer des informations anciennes qui nous concernent, afin que le passé cesse de peser indéfiniment. Cette idée, reconnue dans certains cadres juridiques, se heurte à d'évidentes difficultés : elle entre en tension avec la liberté d'information, avec la mémoire collective, avec le droit de savoir. Où passe la frontière entre l'oubli légitime, qui permet de tourner la page, et l'effacement abusif, qui réécrirait l'histoire ? La question est délicate, et n'admet pas de réponse simple.
+
+Mais qu'on y réponde ainsi ou autrement, l'enjeu demeure. Une société où rien ne s'oublie n'est pas nécessairement plus juste ; elle peut être plus impitoyable. L'oubli avait une fonction : il permettait le pardon, la seconde chance, la réconciliation avec un passé qu'on n'était plus condamné à traîner. En abolissant l'oubli, nous risquons d'abolir aussi ces possibilités, et de bâtir un monde où chacun serait éternellement responsable de son plus mauvais moment.
+
+La mémoire qui n'oublie jamais n'est donc pas un progrès sans revers. Elle nous prive d'un bienfait qu'on ne mesurait pas tant qu'on l'avait : la capacité de laisser le passé s'estomper, pour soi et pour les autres. Réapprendre à oublier, ou du moins à ne pas tout retenir contre les gens, est peut-être l'un des défis de notre temps — car une humanité incapable d'oubli serait aussi une humanité incapable de pardon.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-155",
+    title: "Se cacher est-il encore possible ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "À l'heure des traces permanentes, peut-on encore disparaître, se soustraire ?",
+    blurbEn:
+      "In an age of permanent traces, is it still possible to withdraw, to be unobserved, to disappear? A closing reflection on the value of the unseen. (Section: Privacy in a watched world, 5/5.)",
+    body: `Au terme de cette réflexion sur la surveillance et les données, une question demeure, presque vertigineuse : est-il encore possible, aujourd'hui, de se soustraire au regard, de disparaître, de vivre sans laisser de traces ? Dans un monde où tout s'enregistre, où chaque geste peut être suivi, la possibilité même de se cacher — non pour fuir une faute, mais pour préserver un espace à soi — semble se réduire jour après jour. Interroger cette possibilité, c'est mesurer ce qui nous reste de cette liberté élémentaire : n'être pas vu.
+
+Il faut reconnaître d'emblée que se soustraire entièrement est devenu extraordinairement difficile. Pour vivre dans le monde contemporain — travailler, se déplacer, communiquer, accéder aux services —, il faut laisser des traces ; s'y refuser reviendrait à se marginaliser, à renoncer à une part de la vie commune. Celui qui voudrait échapper totalement à toute observation devrait mener une existence d'ermite, et encore. La disparition volontaire, jadis toujours possible, est aujourd'hui presque hors de portée pour qui veut demeurer dans la société.
+
+Cette difficulté nouvelle a quelque chose d'inquiétant, car la possibilité de se soustraire au regard n'est pas un caprice : c'est une composante de la liberté. Pouvoir, à certains moments, échapper à toute observation, se retirer, n'être là pour personne, c'est disposer d'un espace où l'on s'appartient. Une société qui rendrait cela impossible, où chacun serait en permanence visible et traçable, aurait aboli quelque chose d'essentiel, sans que nul l'ait vraiment décidé. Le pouvoir de disparaître, même s'il n'est pas exercé, importe par sa seule existence : il garantit qu'un refuge reste possible.
+
+Faut-il en conclure que la partie est perdue, et se résigner à un monde de transparence totale ? Ce serait céder trop vite. Car si la disparition totale est devenue quasi impossible, la préservation d'espaces de retrait, elle, reste à notre portée — à condition de la vouloir. On peut limiter ses traces, choisir ce qu'on expose, protéger certains moments, réclamer des règles qui garantissent des zones soustraites au regard. La transparence intégrale n'est pas une fatalité technique ; elle est, comme la surveillance, le produit de choix que d'autres choix peuvent infléchir.
+
+Ces choix sont à la fois individuels et collectifs. Individuellement, chacun peut décider de ce qu'il livre, résister à l'injonction de tout montrer, préserver une part d'ombre. Collectivement, une société peut décider de protéger la vie privée, d'encadrer la surveillance, de garantir à chacun le droit de n'être pas observé en permanence. Rien de tout cela n'est acquis ; tout dépend de la valeur que nous accordons à cette liberté, et de notre volonté de la défendre contre les forces qui la menacent.
+
+Se cacher est-il encore possible ? De moins en moins, si nous laissons faire ; encore un peu, si nous le voulons. La vraie question n'est peut-être pas de savoir si nous pouvons disparaître, mais si nous tenons assez à cette possibilité pour la préserver. Car une humanité qui aurait perdu jusqu'au droit de se soustraire au regard aurait perdu, avec lui, une part de ce qui fait qu'une vie est vraiment la sienne.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-156",
+    title: "Le temps qui file",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Pourquoi le temps semble-t-il s'accélérer à mesure que l'on vieillit ?",
+    blurbEn:
+      "Why does time seem to speed up as we grow older? A reflection on our strange, shifting perception of the one resource we cannot renew. (Section: Ageing and time, 1/5.)",
+    body: `Presque tout le monde en fait l'expérience : le temps semble s'accélérer à mesure que l'on vieillit. Les étés de l'enfance paraissaient interminables ; les années de l'âge adulte défilent à une vitesse déconcertante. Ce sentiment, si répandu, a quelque chose de troublant, car le temps, objectivement, s'écoule toujours au même rythme. Pourquoi, alors, le percevons-nous si différemment selon l'âge ? La réponse en dit long sur notre rapport au temps, et sur la manière dont nous pourrions le vivre autrement.
+
+Une première explication tient à la proportion. Pour un enfant de cinq ans, une année représente le cinquième de toute son existence ; pour un homme de cinquante ans, elle n'en est qu'un cinquantième. Chaque année qui passe pèse ainsi de moins en moins lourd, relativement à la somme des années déjà vécues. Le temps ne s'accélère pas ; c'est notre échelle qui change, chaque durée nouvelle se mesurant à un passé de plus en plus long. Ce qui paraissait vaste dans l'enfance devient un détail dans une longue vie.
+
+Une seconde explication, plus profonde, tient à la nouveauté. Dans l'enfance et la jeunesse, tout est neuf : chaque expérience est une première fois, riche, marquante, gravée dans la mémoire. Le temps rempli d'expériences nouvelles paraît long, car la mémoire y trouve beaucoup à retenir. À mesure qu'on vieillit, en revanche, les journées se ressemblent, faites d'habitudes et de répétitions ; elles laissent peu de traces, et le temps semble filer, car la mémoire n'y accroche rien. Ce n'est pas le temps qui accélère, mais notre vie qui, en se routinisant, cesse de le remplir d'événements mémorables.
+
+Cette seconde explication est riche d'enseignement, car elle suggère un moyen d'agir. Si le temps paraît filer parce que nos journées se ressemblent, alors le remplir de nouveauté peut, en un sens, le ralentir. Les périodes riches en expériences inédites — un voyage, un apprentissage, un changement de vie — paraissent longues rétrospectivement, denses, pleines. Rompre la routine, s'exposer au neuf, sortir de ses habitudes, c'est non seulement vivre plus intensément, mais aussi, d'une certaine manière, étirer le temps, en lui redonnant la densité qu'il avait dans l'enfance.
+
+Cette réflexion touche à quelque chose d'essentiel dans notre rapport au temps. Nous mesurons souvent le temps en quantité — les heures, les années —, mais ce qui compte est peut-être sa densité, la manière dont il est rempli. Une vie longue mais vide peut sembler avoir passé en un instant ; une vie plus courte mais dense peut sembler avoir contenu des mondes. Le temps que nous vivons vraiment n'est pas celui de l'horloge, mais celui que nous éprouvons, et cet éprouvé dépend de ce que nous en faisons.
+
+Le temps qui file n'est donc pas seulement une fatalité liée à l'âge ; c'est aussi, en partie, le reflet de la manière dont nous vivons. Le laisser s'écouler dans la répétition, c'est le voir s'accélérer et se vider ; le remplir de nouveauté, d'attention, de présence, c'est lui redonner de l'épaisseur. Nous ne pouvons pas ralentir l'horloge, mais nous pouvons, peut-être, changer la façon dont nous habitons le temps qu'elle mesure.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-157",
+    title: "Une société qui vieillit",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nous vivons plus longtemps, et faisons moins d'enfants. Que faut-il en penser ?",
+    blurbEn:
+      "People live longer and have fewer children, so societies are ageing fast. Is this a crisis, an achievement, or both? A measured look past the alarm. (Section: Ageing and time, 2/5.)",
+    body: `Un bouleversement discret transforme nos sociétés : elles vieillissent. Nous vivons de plus en plus longtemps, et nous faisons de moins en moins d'enfants ; de ce double mouvement résulte une population dont l'âge moyen s'élève, où les personnes âgées sont de plus en plus nombreuses par rapport aux jeunes. Ce phénomène, souvent présenté comme une menace, mérite un examen plus nuancé, car il est à la fois un défi réel et, à bien des égards, le signe d'une réussite.
+
+Commençons par ce qu'il a de positif, trop souvent oublié dans les discours alarmistes. Si nous vieillissons, c'est d'abord parce que nous vivons plus longtemps — ce qui est une magnifique conquête. Que la durée de vie ait tant augmenté, que la vieillesse soit devenue une longue étape de l'existence et non plus une rareté, témoigne des progrès de la médecine, de l'hygiène, du niveau de vie. On ne saurait déplorer purement et simplement un vieillissement qui procède, pour une part, du fait heureux que la mort recule. Le premier visage du vieillissement est celui d'une victoire sur la mort précoce.
+
+Cela dit, ce vieillissement pose de réels défis, qu'il serait naïf d'ignorer. Une société où les personnes âgées sont de plus en plus nombreuses par rapport aux actifs doit repenser bien des équilibres : comment financer les retraites, assurer les soins, faire vivre la solidarité entre les générations quand celles qui travaillent sont proportionnellement moins nombreuses. Ces questions sont sérieuses, et les esquiver serait irresponsable. Le vieillissement oblige à réinventer une organisation sociale conçue pour des populations plus jeunes.
+
+Mais la manière dont on pose ces défis n'est pas neutre, et certains discours glissent vers une vision inquiétante. Présenter les personnes âgées comme un « fardeau », opposer les générations, réduire le vieillissement à un problème de coût, c'est oublier que ces personnes âgées ont travaillé, cotisé, construit la société dont bénéficient les plus jeunes, et qu'elles continuent d'y apporter beaucoup — par leur expérience, leur aide, leur présence. Une société qui ne verrait dans ses aînés qu'une charge se renierait elle-même, et préparerait le sort qu'elle réserverait, un jour, à ceux qui la tiennent aujourd'hui pour un poids.
+
+Il faut aussi se garder d'un catastrophisme qui présente le vieillissement comme une fatalité menant au déclin. Les sociétés se sont toujours adaptées à des transformations profondes, et rien n'interdit de penser qu'elles sauront s'adapter à celle-ci. Cela suppose des choix — sur le travail, la solidarité, la place des âges —, mais ces choix sont possibles. Le vieillissement n'est un désastre que si l'on refuse de s'y adapter ; il peut être vécu autrement si l'on accepte de repenser nos manières de vivre ensemble.
+
+Une société qui vieillit n'est donc ni simplement une réussite ni simplement une crise. C'est une transformation majeure, née d'un progrès, porteuse de défis, qui appelle non l'alarme ni le déni, mais l'intelligence et la justice. La question n'est pas de savoir s'il faut s'en réjouir ou s'en désoler, mais comment faire, d'une société plus âgée, une société qui reste juste envers tous ses âges.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-158",
+    title: "La place des vieux",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nos sociétés vénèrent la jeunesse. Quelle place laissent-elles à la vieillesse ?",
+    blurbEn:
+      "Modern societies worship youth. What place, then, do they leave for old age — and what have we lost by pushing it out of sight? (Section: Ageing and time, 3/5.)",
+    body: `Nos sociétés vouent à la jeunesse un véritable culte. La jeunesse est présentée partout comme l'idéal : on veut paraître jeune, rester jeune, on redoute de vieillir comme une déchéance. Dans ce contexte, la vieillesse est devenue quelque chose qu'on cache, qu'on repousse, dont on parle avec gêne. Cette dévalorisation de l'âge, si contraire à ce qu'ont connu d'autres époques et d'autres cultures, mérite qu'on l'interroge, car elle nous prive peut-être de quelque chose d'important.
+
+Il n'en a pas toujours été ainsi, et il n'en va pas ainsi partout. Bien des sociétés ont accordé aux personnes âgées une place éminente, voyant en elles des dépositaires de la sagesse, de la mémoire, de l'expérience. Le grand âge y était respecté, écouté, honoré ; vieillir, c'était gagner en autorité et en considération. Ce n'est pas un hasard si tant de traditions ont fait du vieillard une figure de sagesse : l'âge, disait-on, apporte un savoir que la jeunesse ne peut avoir, celui qui vient d'avoir longtemps vécu.
+
+Notre époque a largement rompu avec cette vision. Plusieurs raisons y ont concouru. Le rythme du changement, d'abord : dans un monde qui se transforme si vite, l'expérience des anciens paraît vite dépassée, leurs savoirs périmés, si bien que la vieillesse semble avoir perdu son utilité. Le culte de la performance et de la productivité, ensuite, qui valorise la vigueur et l'efficacité, et relègue ceux qui ne produisent plus. Une société tournée vers l'avenir, la nouveauté, la vitesse, a du mal à faire une place à ceux qui incarnent la durée et la lenteur.
+
+Or cette relégation a un coût, pour les personnes âgées comme pour la société entière. Pour les aînés, elle signifie l'exclusion, l'inutilité, la solitude ; on les écarte de la vie active, on les cantonne dans des lieux à part, on cesse de les écouter. Pour la société, elle représente une perte : celle de tout ce que les personnes âgées pourraient transmettre — l'expérience, la mémoire, le recul, une autre relation au temps. En reléguant ses vieux, une société se prive de leur apport, et se condamne à réapprendre sans cesse ce qu'ils auraient pu lui enseigner.
+
+Il ne s'agit pas de retourner à une vénération naïve de l'âge, ni de prétendre que la vieillesse apporterait automatiquement la sagesse — vieillir ne rend pas nécessairement sage. Mais il s'agit de refuser la relégation inverse, qui ne voit dans le grand âge qu'un déclin sans valeur. Entre le culte de l'ancien et le culte de la jeunesse, il y a place pour une reconnaissance juste : celle qui accorde à chaque âge sa dignité et son apport propres, sans hiérarchie méprisante.
+
+Redonner une place aux vieux, ce n'est donc pas seulement une question de justice envers eux ; c'est aussi une manière, pour la société, de ne pas s'appauvrir. Une civilisation qui n'aurait d'yeux que pour la jeunesse serait comme un être sans mémoire, coupé de sa propre durée. Faire une place à la vieillesse, l'écouter, l'honorer, c'est reconnaître que la vie ne vaut pas seulement par sa vigueur, et qu'il y a, dans le fait d'avoir longtemps vécu, quelque chose qui mérite respect et attention.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-159",
+    title: "Faut-il vouloir vivre toujours plus longtemps ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La médecine repousse la mort. Y a-t-il une limite à souhaiter ?",
+    blurbEn:
+      "Medicine keeps pushing back the frontier of death. But is living ever longer always desirable — and would living forever be a blessing or a curse? (Section: Ageing and time, 4/5.)",
+    body: `La médecine ne cesse de repousser les frontières de la mort. Ce qui était fatal hier se soigne aujourd'hui ; la durée de vie a spectaculairement augmenté, et certains rêvent même de la prolonger indéfiniment, voire d'abolir un jour la mort. Devant ces perspectives, une question, longtemps théorique, se pose avec une acuité nouvelle : faut-il vouloir vivre toujours plus longtemps ? Le désir de repousser la mort, si naturel soit-il, a-t-il une limite qu'il serait sage de reconnaître ?
+
+Le désir de vivre est le plus fondamental qui soit, et il serait absurde de le condamner. Que la médecine ait tant reculé la mort précoce, épargné tant de souffrances et de deuils, est une bénédiction incontestable. Nul ne souhaite sérieusement revenir à une époque où l'on mourait jeune, où la maladie fauchait sans recours. Vouloir vivre, et vivre en bonne santé le plus longtemps possible, est légitime, et les progrès qui le permettent méritent d'être salués. La question n'est donc pas de renoncer à ce désir, mais de savoir s'il connaît un point au-delà duquel il se retournerait.
+
+Car allonger la vie n'a de sens que si cette vie prolongée reste digne d'être vécue. Repousser la mort au prix d'une existence diminuée, dépendante, dénuée de ce qui fait le prix de vivre, n'est pas nécessairement un progrès. Prolonger la durée sans prolonger la qualité peut être une cruauté plutôt qu'un bienfait. C'est pourquoi la vraie question n'est peut-être pas « combien de temps ? », mais « quelle vie ? » — non la quantité d'années, mais ce qu'elles contiennent. Ajouter des années à la vie ne vaut que si l'on ajoute aussi de la vie aux années.
+
+Il y a plus vertigineux encore : l'idée d'une vie sans fin. Certains rêvent d'abolir la mort elle-même. Mais serait-ce vraiment souhaitable ? On peut en douter. Bien des penseurs ont soutenu que la mort, loin d'être seulement un mal, donne à la vie une part de son sens et de sa saveur. C'est parce que le temps nous est compté que chaque instant a du prix, que nous choisissons, que nous nous engageons. Une existence infinie, où rien ne presserait jamais, où tout pourrait toujours être remis, perdrait peut-être ce qui rend la vie précieuse : son caractère irremplaçable et fini. La mort n'est pas seulement ce qui nous prive de la vie ; elle est aussi, paradoxalement, ce qui lui donne son poids.
+
+Cela ne signifie pas qu'il faille cesser de reculer la mort, ni renoncer aux progrès qui allongent et améliorent la vie. Cela signifie de ne pas faire de la seule durée un absolu, comme si vivre toujours plus longtemps était en soi le but suprême. Une sagesse ancienne enseignait qu'il faut moins chercher à ajouter des jours à sa vie qu'à donner de la vie à ses jours. Cette distinction reste précieuse à l'heure où la médecine nous donne des pouvoirs inédits sur la durée de l'existence.
+
+Faut-il vouloir vivre toujours plus longtemps ? Oui, tant qu'il s'agit de vivre pleinement, en bonne santé, dans une existence qui vaut la peine. Mais peut-être pas au point de faire de la durée le tout, ni de rêver d'une immortalité qui, en abolissant la mort, abolirait aussi ce qui donne à la vie son prix. Bien vivre importe plus que vivre longtemps — et la sagesse consiste peut-être à accepter que le temps nous soit compté, sans cesser pour autant de chérir chaque instant qu'il nous accorde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-160",
+    title: "Ce que le temps nous apprend",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Vieillir, ce n'est pas seulement perdre. C'est aussi, parfois, comprendre.",
+    blurbEn:
+      "Ageing is usually framed as pure loss. But time also teaches things youth cannot know. A closing reflection on what may be gained as the years pass. (Section: Ageing and time, 5/5.)",
+    body: `On parle du vieillissement presque toujours en termes de perte : perte de la vigueur, de la santé, de la beauté, des capacités. Cette vision n'est pas fausse — vieillir comporte des pertes réelles, qu'il serait vain de nier. Mais elle est incomplète, car elle passe sous silence ce que le temps peut aussi apporter. Vieillir, ce n'est pas seulement perdre ; c'est aussi, parfois, gagner — comprendre, s'apaiser, s'alléger de bien des illusions. Reconnaître cet autre versant, c'est refuser une vision purement négative de l'avancée en âge.
+
+Le premier don du temps est une certaine sagesse — non pas automatique, mais possible. Avoir longtemps vécu, traversé des épreuves, commis et vu commettre des erreurs, tout cela peut enseigner ce qu'aucun livre ne transmet : la connaissance de la vie, des êtres, de soi-même. Celui qui a vécu sait souvent relativiser ce qui affole les plus jeunes, distinguer l'important du secondaire, reconnaître que bien des drames n'en étaient pas. Cette sagesse pratique, faite d'expérience plus que de savoir, est l'un des fruits que le temps peut mûrir.
+
+Le deuxième don est une forme d'apaisement. La jeunesse est souvent tourmentée : par l'ambition, par le désir de prouver, par l'inquiétude de sa place, par la comparaison aux autres. Avec l'âge, ces tourments peuvent se calmer. On a moins à prouver, moins à conquérir ; on connaît mieux ses limites et les accepte ; on se compare moins, ayant appris la vanité de bien des courses. Cet apaisement n'est pas toujours au rendez-vous, mais il est possible, et ceux qui l'atteignent goûtent une sérénité que la jeunesse agitée ignore. Vieillir peut être se délester d'un poids.
+
+Le troisième don, lié aux précédents, est une meilleure perception de ce qui compte. Face au temps qui reste, plus court, on cesse souvent de le gaspiller en futilités. Ce qui paraissait essentiel — la réussite, la reconnaissance, l'accumulation — se révèle secondaire, tandis que ce qu'on négligeait — les relations, les instants simples, la présence des êtres aimés — prend enfin sa vraie valeur. Le temps qui passe, en nous rapprochant de la fin, nous apprend parfois à vivre, en nous dessillant sur ce qui, seul, mérite qu'on lui consacre nos jours comptés.
+
+Il ne s'agit pas d'idéaliser la vieillesse, ni de nier ses souffrances. Vieillir apporte aussi des épreuves, et la sagesse, l'apaisement, la lucidité ne sont pas garantis : on peut vieillir aigri, apeuré, sans rien avoir appris. Ces dons du temps ne sont pas automatiques ; ils demandent qu'on y consente, qu'on accepte de vieillir plutôt que de le refuser. Mais ils sont possibles, et ceux qui les reçoivent témoignent qu'il y a, dans l'avancée en âge, autre chose que du déclin.
+
+Ce que le temps nous apprend, c'est peut-être, au fond, à vivre — trop tard parfois, mais pas toujours. Et cette leçon, les aînés pourraient la transmettre aux plus jeunes, si nous savions les écouter. Car dans une société obsédée par la jeunesse et pressée de vivre, la voix de ceux qui ont traversé le temps a quelque chose d'irremplaçable à dire : que la vie est brève, qu'elle est précieuse, et qu'il vaut mieux le comprendre tôt que tard.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

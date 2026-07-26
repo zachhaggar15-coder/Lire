@@ -1014,6 +1014,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-privacy",
+    band: "B2",
+    title: "Privacy in a watched world",
+    goal: "Living under the gaze, the 'nothing to hide' argument, data as gold, a memory that never forgets, whether hiding is still possible.",
+    textIds: [
+      "starter-b2-151", // Vivre sous le regard (introduces the core words)
+      "starter-b2-152", // « Je n'ai rien à cacher »
+      "starter-b2-153", // Nos données valent de l'or
+      "starter-b2-154", // La mémoire qui n'oublie jamais
+      "starter-b2-155", // Se cacher est-il encore possible ? (hardest)
+    ],
+  },
+  {
+    id: "b2-ageing",
+    band: "B2",
+    title: "Ageing and time",
+    goal: "Why time speeds up, an ageing society, the place of the old, living ever longer, what time teaches.",
+    textIds: [
+      "starter-b2-156", // Le temps qui file (introduces the core words)
+      "starter-b2-157", // Une société qui vieillit
+      "starter-b2-158", // La place des vieux
+      "starter-b2-159", // Faut-il vouloir vivre toujours plus longtemps ?
+      "starter-b2-160", // Ce que le temps nous apprend (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",
