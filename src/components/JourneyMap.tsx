@@ -28,6 +28,15 @@ interface JourneyMapProps {
 type PathAlign = "left" | "center" | "right";
 type MapToneName = "mint" | "sky" | "gold" | "violet" | "pink";
 
+const BAND_HEADER_TONES: Record<Difficulty, string> = {
+  A1: "bg-accent-mint",
+  A2: "bg-accent-sky",
+  B1: "bg-accent-gold",
+  B2: "bg-accent-violet",
+  C1: "bg-accent-pink",
+  C2: "bg-gradient-to-br from-accent-sky via-accent-mint to-accent-violet",
+};
+
 interface MapTone {
   name: MapToneName;
   node: string;
@@ -268,20 +277,23 @@ function LevelSwitcher({
   onChange: (level: Difficulty) => void;
 }) {
   return (
-    <div className="mt-4 grid grid-cols-3 gap-1 rounded-2xl bg-cream-card/70 p-1 sm:grid-cols-6" role="group" aria-label="Reading level">
-      {JOURNEY_BANDS.map((level) => (
-        <button
-          key={level}
-          type="button"
-          aria-pressed={selectedLevel === level}
-          onClick={() => onChange(level)}
-          className={`rounded-full px-3 py-2 text-sm font-extrabold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-95 ${
-            selectedLevel === level ? "bg-brand text-white shadow-raised" : "text-ink-muted"
-          }`}
-        >
-          {level}
-        </button>
-      ))}
+    <div className="mt-4" role="group" aria-label="Choose map level">
+      <div className="grid grid-cols-3 gap-1.5 rounded-2xl bg-cream-card/70 p-1 sm:grid-cols-6">
+        {JOURNEY_BANDS.map((level) => (
+          <button
+            key={level}
+            type="button"
+            aria-label={`Show ${level} map`}
+            aria-pressed={selectedLevel === level}
+            onClick={() => onChange(level)}
+            className={`min-h-10 rounded-full px-3 py-2 text-center text-sm font-extrabold transition-[background-color,color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-card active:scale-95 ${
+              selectedLevel === level ? "bg-brand text-white shadow-raised" : "text-ink-muted"
+            }`}
+          >
+            {level}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -556,19 +568,8 @@ function pathStemClass(align: PathAlign): string {
   return "hidden";
 }
 
-function bandHeaderTone(band: string): string {
-  switch (band) {
-    case "A1":
-      return "bg-accent-mint";
-    case "A2":
-      return "bg-accent-sky";
-    case "B1":
-      return "bg-accent-gold";
-    case "B2":
-      return "bg-accent-violet";
-    default:
-      return "bg-accent-pink";
-  }
+function bandHeaderTone(band: Difficulty): string {
+  return BAND_HEADER_TONES[band];
 }
 
 function StageStatusIcon({
