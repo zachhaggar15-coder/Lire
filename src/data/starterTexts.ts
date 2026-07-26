@@ -15311,4 +15311,234 @@ C'est peut-être là le sens le plus haut de tout ce parcours entre deux culture
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-141",
+    title: "Les machines vont-elles nous libérer ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On promet depuis un siècle que les machines nous libéreront du travail.",
+    blurbEn:
+      "For a century we have been promised that machines would free us from toil. Why that promise keeps being made — and keeps not quite arriving. (Section: Work and automation, 1/5.)",
+    body: `Depuis plus d'un siècle, une promesse revient à chaque avancée technique : les machines vont nous libérer du travail. En accomplissant à notre place les tâches pénibles, elles devaient nous offrir un temps de loisir sans précédent, une existence enfin délivrée du labeur. Certains penseurs prévoyaient même que nos descendants ne travailleraient plus que quelques heures par jour, occupés surtout à cultiver leur esprit. Or ce paradis annoncé n'est jamais tout à fait venu. Pourquoi cette promesse, sans cesse renouvelée, se dérobe-t-elle toujours ?
+
+Il faut d'abord reconnaître ce que la promesse a de fondé. Les machines ont bel et bien accompli des prodiges : elles nous ont épargné une part immense de travaux éreintants, ont multiplié ce qu'un être humain peut produire, ont rendu possible un confort qu'aucune époque n'avait connu. En ce sens, elles nous ont libérés d'innombrables peines. Nul, aujourd'hui, ne voudrait revenir aux travaux exténuants d'autrefois, et cette libération-là est réelle, considérable, acquise.
+
+Et pourtant, le temps libre promis n'a pas suivi à proportion. Malgré des gains de productivité gigantesques, nous ne travaillons pas radicalement moins qu'il y a plusieurs décennies, et beaucoup se sentent même plus pressés, plus débordés que jamais. Comment expliquer ce paradoxe ? Où sont passées les heures que les machines devaient nous rendre ?
+
+Une première réponse tient à ce que nous avons fait de ces gains. Plutôt que de les convertir en temps libre, nous les avons, pour l'essentiel, convertis en production et en consommation accrues. Les machines nous ont permis de produire plus vite ; nous avons choisi de produire davantage plutôt que de travailler moins. Le temps que la technique libérait, nous l'avons aussitôt rempli de nouveaux besoins, de nouveaux désirs, d'un niveau de vie sans cesse relevé. La libération était possible ; nous lui avons préféré l'abondance.
+
+Une seconde réponse tient à la répartition. Les fruits de l'automatisation ne se sont pas partagés également : ils ont surtout profité à certains, tandis que d'autres continuaient de travailler dur, parfois davantage. Le temps libéré pour les uns s'est parfois payé du travail intensifié des autres. La promesse d'une libération générale supposait un partage qui n'a pas eu lieu, et sans lequel les machines libèrent les uns en asservissant les autres.
+
+Cela signifie que la libération par les machines n'a jamais été une conséquence automatique de la technique, mais dépendait de choix que nous n'avons pas faits. Rien, dans les machines elles-mêmes, ne nous condamne à travailler autant ; c'est notre organisation sociale, nos priorités, notre course à la consommation qui en décident. La promesse pourrait donc encore être tenue — mais elle suppose de vouloir vraiment le temps libre plutôt que l'accroissement sans fin de la production. Les machines peuvent nous libérer ; encore faudrait-il le décider.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-142",
+    title: "Un revenu pour tous ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Verser à chacun un revenu, sans condition : idée folle ou nécessité future ?",
+    blurbEn:
+      "The idea of an unconditional basic income for everyone divides opinion sharply. A balanced look at the arguments for and against a once-fringe proposal. (Section: Work and automation, 2/5.)",
+    body: `Une idée longtemps marginale s'invite désormais dans le débat public : verser à chaque citoyen, sans condition ni contrepartie, un revenu garanti suffisant pour vivre. Ce « revenu universel » suscite des réactions passionnées, entre ceux qui y voient une utopie dangereuse et ceux qui la tiennent pour une nécessité de l'avenir. Par-delà les slogans, l'idée mérite un examen sérieux, car elle touche à des questions fondamentales sur le travail, la dignité et la solidarité.
+
+Les arguments en sa faveur sont de plusieurs ordres. Le premier est lié à l'automatisation : si les machines détruisent durablement une partie des emplois, comment assurer un revenu à ceux qui n'en trouveront plus ? Un revenu garanti offrirait une réponse, en déconnectant la survie de l'emploi. Le deuxième argument est celui de la dignité : en assurant à chacun un minimum inconditionnel, on supprimerait la peur du lendemain, on libérerait les individus de la contrainte d'accepter n'importe quel travail à n'importe quelles conditions. Le troisième est celui de la simplicité : un revenu universel remplacerait le maquis compliqué et parfois humiliant des aides existantes.
+
+Mais les objections ne sont pas moins sérieuses. La première est le coût : verser à tous un revenu suffisant représenterait une somme colossale, dont le financement soulève d'immenses difficultés. La deuxième touche au travail : si chacun reçoit de quoi vivre sans travailler, certains craignent un effondrement de l'activité, une société où l'on cesserait de produire. La troisième est morale : est-il juste de verser un revenu à ceux qui pourraient travailler et choisissent de ne pas le faire, au risque de faire porter à d'autres le poids de leur oisiveté ?
+
+Ces objections méritent d'être prises au sérieux, mais certaines reposent sur des présupposés discutables. L'idée que les gens cesseraient massivement de travailler s'ils recevaient un revenu de base n'est pas confirmée par les expérimentations menées ici ou là : la plupart continuent de travailler, mais avec plus de liberté dans leurs choix. Quant à la crainte de l'oisiveté généralisée, elle repose sur une vision pessimiste de l'être humain, supposé ne travailler que sous la contrainte du besoin — vision que dément le désir, largement répandu, d'être actif et utile.
+
+La question du financement demeure toutefois réelle, et l'on ne saurait la balayer. Un revenu universel généreux exigerait une refonte profonde de la fiscalité et de la protection sociale, aux conséquences difficiles à prévoir. C'est pourquoi le débat porte souvent moins sur le principe que sur les modalités : quel montant, financé comment, en remplacement de quoi. Un revenu modeste n'a pas les mêmes effets qu'un revenu suffisant pour vivre, et l'on peut soutenir l'idée dans une version et la rejeter dans une autre.
+
+Que l'on soit pour ou contre, le débat sur le revenu universel a le mérite de poser une question que l'avenir rendra peut-être incontournable : dans une société où le travail pourrait ne plus suffire à occuper et à faire vivre tout le monde, comment garantir à chacun de quoi exister dignement ? La réponse n'est pas évidente, mais la question, elle, ne se laissera pas éluder longtemps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-143",
+    title: "Le travail qui restera aux humains",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Si les machines font tant de choses, que restera-t-il que nous seuls puissions faire ?",
+    blurbEn:
+      "If machines can do so much, what work will remain that only humans can do? A look at the tasks where the human touch may prove irreplaceable. (Section: Work and automation, 3/5.)",
+    body: `À mesure que les machines accomplissent des tâches toujours plus nombreuses, une question s'impose : que restera-t-il que nous seuls, humains, puissions faire ? Si l'on peut automatiser non seulement les travaux physiques, mais aussi une part croissante des tâches intellectuelles, où se situera, demain, la valeur propre du travail humain ? La réponse, incertaine, dessine peut-être ce que sera le travail de l'avenir.
+
+On a longtemps cru que le refuge de l'humain serait l'intelligence, par opposition à la force. Mais les machines se révèlent de plus en plus capables de calculer, d'analyser, de traiter l'information mieux et plus vite que nous. Le domaine de la pure performance intellectuelle, qu'on croyait notre apanage, se rétrécit. Il serait donc imprudent de fonder la valeur du travail humain sur ce terrain, où la machine nous rattrape et souvent nous dépasse. Ce qui nous distingue est ailleurs.
+
+Un premier domaine où l'humain paraît difficile à remplacer est celui de la relation. Prendre soin d'un malade, éduquer un enfant, accompagner une personne âgée, écouter celui qui souffre : ces tâches supposent une présence, une empathie, une attention à autrui qu'aucune machine ne peut vraiment offrir. On peut automatiser des gestes, non la chaleur d'une relation humaine. Or ces métiers du soin et du lien, souvent mal reconnus et mal payés, pourraient bien être ceux dont la valeur apparaîtra, demain, la plus irremplaçable.
+
+Un deuxième domaine est celui de la création véritable, non pas la production en série de contenus, mais l'invention de ce qui n'existait pas, née d'une sensibilité, d'une expérience, d'un regard singulier sur le monde. Les machines peuvent recombiner ce qui existe ; il est moins sûr qu'elles puissent créer au sens fort, apporter cette nouveauté qui procède d'une vie vécue et d'une intériorité. La part la plus profonde de l'art, de la pensée, de l'innovation pourrait rester un territoire humain.
+
+Un troisième domaine, enfin, est celui du jugement, surtout lorsqu'il engage des valeurs. Décider de ce qui est juste, arbitrer entre des intérêts contradictoires, assumer une responsabilité morale : ces actes supposent non seulement de traiter de l'information, mais de peser, de choisir, de répondre de ses choix. On peut confier à une machine des calculs ; il est plus douteux, et peut-être dangereux, de lui confier les décisions qui engagent le sens et la responsabilité. Ces décisions-là devraient rester nôtres.
+
+Ce qui se dessine, à travers ces domaines, c'est une possible redéfinition du travail humain autour de ce qui nous est le plus propre : la relation, la création, le jugement, le soin. Loin d'être dévalorisées, ces dimensions pourraient gagner en importance à mesure que le reste s'automatise. Encore faudrait-il que nos sociétés les reconnaissent et les valorisent, au lieu de les mépriser comme elles le font trop souvent. L'avenir du travail humain dépendra moins de ce que les machines peuvent faire que de ce que nous choisirons de tenir pour précieux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-144",
+    title: "Être remplacé par une machine",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Que ressent-on quand une machine fait, mieux que soi, ce qui faisait notre fierté ?",
+    blurbEn:
+      "Beyond the economics, what does it feel like to be replaced by a machine at something you were proud of? A reflection on dignity, worth and technological change. (Section: Work and automation, 4/5.)",
+    body: `On analyse le plus souvent l'automatisation en termes économiques : des emplois perdus, des coûts, des reconversions. Cette approche est nécessaire, mais elle laisse dans l'ombre une dimension plus intime, plus douloureuse : ce que ressent celui qui se voit remplacé par une machine à une tâche qui faisait sa compétence, sa fierté, parfois son identité. Cette expérience, que vivront de plus en plus de gens, mérite qu'on s'y arrête, car elle touche à quelque chose de profond dans notre rapport au travail.
+
+Être remplacé par une machine n'est pas seulement perdre un revenu. C'est se voir signifier que ce qu'on faisait, et qu'on croyait précieux, peut être accompli sans nous, souvent mieux et pour moins cher. Le savoir-faire patiemment acquis, la maîtrise dont on était fier, se trouvent soudain dévalués, rendus superflus. À la perte matérielle s'ajoute une blessure de l'estime de soi : on n'est pas seulement sans emploi, on se sent devenu inutile. Cette blessure, invisible dans les statistiques, est pourtant l'une des plus lourdes conséquences du progrès technique.
+
+Cette expérience est d'autant plus dure que notre société, on l'a vu, tend à définir les gens par leur travail. Celui dont le métier disparaît perd donc plus qu'une activité : il perd une part de ce qui le situait dans le monde, de ce qui lui donnait une place et une reconnaissance. Et le discours ambiant, qui célèbre l'innovation et somme chacun de « s'adapter », ajoute souvent à la peine en la teintant de culpabilité, comme si celui qui souffre de sa mise à l'écart était responsable de n'avoir pas su suivre.
+
+Il faut pourtant se garder de deux réactions également stériles. La première serait de vouloir arrêter le progrès technique pour préserver chaque emploi menacé : c'est ni possible ni souhaitable, et l'on a vu que la machine nous délivre aussi de bien des peines. La seconde serait de balayer d'un revers de main la souffrance de ceux qu'elle déplace, au nom d'un progrès abstrait dont ils feraient les frais sans qu'on s'en émeuve. Entre le refus du changement et l'indifférence à ses victimes, il y a place pour une autre attitude.
+
+Cette attitude consiste à reconnaître le coût humain du progrès, et à ne pas le laisser peser sur les seuls individus qui le subissent. Une société qui accepte l'automatisation, parce qu'elle en tire des bénéfices collectifs, a une dette envers ceux qu'elle déplace. Cette dette ne se solde pas par une simple indemnité, mais par les moyens réels de retrouver une place et une dignité : formation véritable, accompagnement, reconnaissance des compétences, création de nouvelles activités valorisées. Le progrès n'est juste que si ses fruits et ses coûts sont partagés.
+
+Au fond, l'expérience d'être remplacé par une machine nous adresse une question sur la valeur des personnes. Si nous ne valons que par ce que nous produisons, alors celui que la machine remplace ne vaut plus rien, et cette conclusion est insupportable. C'est peut-être l'occasion de reconnaître que la valeur d'un être humain ne se réduit pas à son utilité économique — vérité qu'il vaudrait mieux affirmer avant que les machines ne nous forcent à la redécouvrir dans la douleur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-145",
+    title: "Qui décide de ce que font les machines ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Les machines ne décident pas seules. Derrière elles, il y a toujours des choix.",
+    blurbEn:
+      "We speak as if technology decides our future by itself. But behind every machine are human choices about what to build and why. On reclaiming that agency. (Section: Work and automation, 5/5.)",
+    body: `Nous parlons souvent de l'automatisation comme d'une force naturelle, un destin qui s'imposerait à nous : les machines « vont » faire ceci, « vont » supprimer cela, comme s'il s'agissait d'un phénomène inéluctable, comparable à la marée. Cette façon de parler, si commune, comporte une illusion dangereuse. Car les machines ne décident rien par elles-mêmes ; derrière chacune, il y a des choix humains — sur ce qu'on construit, à quelles fins, au bénéfice de qui. Retrouver conscience de ces choix, c'est refuser de subir comme une fatalité ce qui relève, en réalité, de décisions.
+
+Considérons ce qu'on présente comme le cours inévitable de la technique. Que telle tâche soit automatisée plutôt que telle autre, que les gains servent à supprimer des emplois plutôt qu'à alléger le travail de chacun, que les machines soient conçues pour remplacer les humains ou pour les assister : rien de tout cela n'est dicté par la technique elle-même. Ce sont des orientations, prises par des entreprises, des investisseurs, des pouvoirs publics, en fonction d'intérêts et de priorités. La même puissance technique peut être mise au service de fins très différentes.
+
+Cette vérité est capitale, car elle change tout. Si l'automatisation était un destin, il ne resterait qu'à s'y résigner ou à s'y adapter. Mais si elle résulte de choix, alors ces choix peuvent être discutés, contestés, orientés autrement. On peut décider de développer des machines qui assistent les travailleurs plutôt que de les remplacer ; on peut décider de partager les gains de productivité plutôt que de les concentrer ; on peut décider de protéger ceux que le changement déplace. Ces décisions ne sont pas écrites d'avance ; elles dépendent de la volonté collective.
+
+Pourquoi, dès lors, présente-t-on si souvent l'automatisation comme inéluctable ? En partie parce que cela arrange ceux qui en tirent profit. Présenter un choix comme une fatalité, c'est le soustraire au débat, décourager toute contestation, faire accepter comme naturel ce qui sert des intérêts particuliers. « On n'y peut rien, c'est le progrès » : cette formule, en apparence neutre, désarme ceux qui pourraient vouloir un autre usage de la technique. L'illusion du destin technique est aussi une manière de confisquer les décisions.
+
+Résister à cette illusion ne signifie pas s'opposer au progrès technique, ni rêver d'arrêter les machines. Cela signifie réaffirmer que la technique est un moyen au service de fins que nous devons choisir, et non une fin qui s'imposerait à nous. Cela signifie poser, à chaque étape, les questions que l'illusion du destin fait taire : quelles machines voulons-nous, pour quoi faire, au bénéfice de qui, avec quelles conséquences pour ceux qu'elles affectent ?
+
+Qui décide de ce que font les machines ? La réponse ne devrait pas être : personne, ou la technique elle-même. Elle devrait être : nous, collectivement, à travers des choix assumés et débattus. Reconquérir ces choix, c'est refuser d'être les spectateurs passifs d'un avenir qu'on nous présente comme déjà écrit. Car l'avenir du travail, comme celui des machines, n'est pas une prédiction à subir ; c'est une décision à prendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-146",
+    title: "La ville ne dort jamais",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Quand la nuit tombe, une autre ville s'éveille, invisible le jour.",
+    blurbEn:
+      "When night falls, a different city wakes — one of workers, wanderers and quiet. A reflection on the hidden life of cities after dark. (Section: The city at night, 1/5.)",
+    body: `Quand la nuit tombe et que la plupart des habitants rentrent chez eux, on croit la ville endormie. Elle ne l'est pas. Une autre ville s'éveille alors, différente de celle du jour, peuplée d'êtres et d'activités qu'on ne voit pas d'ordinaire. La nuit urbaine a sa vie propre, ses habitants, ses rythmes, et l'explorer, c'est découvrir un versant caché de la cité, souvent ignoré de ceux qui n'en connaissent que la face diurne.
+
+La ville nocturne est d'abord celle du travail invisible. Pendant que la majorité dort, une foule d'hommes et de femmes veillent pour que la ville fonctionne : soignants des hôpitaux, agents qui nettoient les rues et les bureaux, ouvriers des usines qui ne s'arrêtent jamais, chauffeurs, boulangers, gardiens. Ce travail nocturne, indispensable, s'accomplit dans l'ombre, ignoré de ceux qui, au matin, trouveront la ville propre, les transports prêts, le pain chaud, sans se demander qui l'a rendu possible. La nuit révèle tout un peuple laborieux que le jour dissimule.
+
+La ville nocturne est aussi celle de la fête et du plaisir. Quand le travail cesse, d'autres cherchent dans la nuit ce que le jour ne leur offre pas : la liberté, la rencontre, l'oubli, l'ivresse. Les lieux de sortie s'animent, une jeunesse s'y presse, une sociabilité particulière s'y déploie, plus libre, plus intense parfois que celle du jour. La nuit a toujours été le temps de la transgression permise, où les règles se desserrent, où l'on peut être un peu autre que ce qu'on est le jour.
+
+Mais la nuit urbaine a aussi son ombre. Elle est le temps de la solitude, pour ceux qui la traversent sans sommeil ; le temps de la peur, pour ceux qui n'osent sortir ; le temps où se réfugient aussi les plus démunis, les sans-abri pour qui la ville nocturne n'est pas un choix mais un dénuement. La nuit qui libère les uns expose les autres, et la même obscurité peut être fête ou détresse selon qu'on la traverse par plaisir ou par nécessité.
+
+Cette double nature de la nuit urbaine en fait un révélateur. Ce qui se passe dans la ville après la tombée du jour dit beaucoup de ce qu'est cette ville : la manière dont elle traite ceux qui y travaillent la nuit, dont elle accueille ou repousse ceux qui la peuplent, dont elle éclaire ou abandonne ses rues obscures. La nuit met en lumière, paradoxalement, ce que le jour cache : les inégalités, les solitudes, mais aussi les libertés et les solidarités d'une cité.
+
+Regarder la ville la nuit, c'est donc la voir autrement, dans une vérité que le jour recouvre. C'est découvrir qu'une cité n'est jamais tout entière celle qu'on croit, qu'elle mène, dans l'ombre, une existence parallèle, faite de labeur et de fête, de liberté et de détresse. La ville ne dort jamais ; elle change seulement de visage, et ce visage nocturne mérite qu'on apprenne, aussi, à le regarder.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-147",
+    title: "Travailler pendant que les autres dorment",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le travail de nuit a un coût que l'on mesure mal.",
+    blurbEn:
+      "Night work keeps society running, but it exacts a hidden toll on the bodies and lives of those who do it. A look at a form of labour we rely on and overlook. (Section: The city at night, 2/5.)",
+    body: `Nos sociétés fonctionnent vingt-quatre heures sur vingt-quatre, et cela suppose que, chaque nuit, des millions de personnes travaillent pendant que les autres dorment. Ce travail nocturne, longtemps réservé à quelques métiers, s'est étendu à mesure que la vie s'est accélérée et que l'exigence de disponibilité permanente a gagné du terrain. Or ce travail de nuit, dont nous profitons tous, a un coût que l'on mesure mal, et qui pèse sur ceux qui l'accomplissent.
+
+Le premier coût est physiologique, et il est lourd. Notre corps est réglé sur un rythme jour-nuit inscrit au plus profond de notre biologie : nous sommes faits pour être actifs le jour et dormir la nuit. Travailler la nuit, dormir le jour, va à l'encontre de cette horloge interne, et le corps le paie. Le sommeil diurne est plus court, moins réparateur ; la fatigue s'accumule ; et la recherche associe le travail de nuit prolongé à divers problèmes de santé. Ceux qui veillent pour nous usent leur corps d'une manière que nous ne voyons pas.
+
+Le deuxième coût est social. Vivre décalé, c'est vivre en partie à contretemps des autres. Le travailleur de nuit dort quand ses proches sont éveillés, travaille quand ils se reposent, peine à partager les repas, les soirées, les moments de vie commune. Sa vie familiale et sociale en souffre, désaccordée de celle de son entourage. Il habite un monde parallèle, éveillé quand les siens dorment, et cette désynchronisation est une forme de solitude, d'autant plus dure qu'elle est invisible.
+
+Ce qui frappe, c'est que ce travail pénible et coûteux est souvent le fait des plus modestes. Les métiers de nuit — nettoyage, sécurité, soin, manutention, service — comptent parmi les moins bien rémunérés et les moins reconnus. Ceux qui en paient le prix physique et social le plus élevé sont rarement ceux qui en tirent le plus grand bénéfice. Il y a là une injustice discrète : la pénibilité de la nuit s'ajoute souvent à la précarité du jour, frappant deux fois les mêmes.
+
+Reconnaître cela ne conduit pas à réclamer la fin de tout travail nocturne, dont une part est indispensable : on ne fermera pas les hôpitaux la nuit. Mais cela invite à distinguer le travail de nuit nécessaire de celui qui ne l'est pas, imposé par la seule course à la disponibilité permanente et à la rentabilité. Une part de notre activité nocturne relève moins d'un besoin réel que d'une exigence de consommation immédiate à laquelle on pourrait renoncer sans grand dommage.
+
+Cela invite surtout à mieux reconnaître, protéger et rémunérer ceux qui travaillent la nuit pour que la ville tourne. Le minimum serait de ne pas oublier leur existence, de mesurer ce que nous leur devons, de compenser la pénibilité qu'ils assument à notre place. Car le confort de nos journées repose, pour une part, sur le sacrifice de leurs nuits — et il serait juste, au moins, de ne pas l'ignorer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-148",
+    title: "La peur du noir, la peur des autres",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La nuit fait peur. Mais de quoi, au juste, avons-nous peur ?",
+    blurbEn:
+      "The night frightens us — but is it the darkness we fear, or other people, or ourselves? A reflection on the fears that keep some citizens indoors after dark. (Section: The city at night, 3/5.)",
+    body: `La nuit fait peur, et cette peur, aussi ancienne que l'humanité, façonne notre rapport à la ville nocturne. Beaucoup n'osent sortir la nuit, ou seulement dans certains lieux, évitant les rues obscures, pressant le pas. Cette peur n'est pas sans fondement, mais elle mérite d'être interrogée : de quoi, au juste, avons-nous peur dans la nuit ? Et cette peur reflète-t-elle un danger réel, ou nous en dit-elle davantage sur nous-mêmes que sur la nuit ?
+
+La peur de la nuit plonge ses racines très loin. Pendant l'essentiel de son histoire, l'humanité fut, la nuit, vulnérable : privée de vue, exposée aux prédateurs, aux dangers de l'obscurité. Cette peur ancestrale, inscrite en nous, subsiste bien que ses causes premières aient largement disparu. Nous ne craignons plus guère les bêtes sauvages dans nos rues, mais l'obscurité continue de nous inquiéter, réveillant une angoisse plus vieille que la raison.
+
+Dans la ville, toutefois, la peur de la nuit s'est déplacée : ce n'est plus le noir en soi qu'on redoute, mais ce qu'il pourrait cacher — et surtout, les autres. La nuit urbaine fait peur parce qu'elle est peuplée d'inconnus dont on ne sait ce qu'ils veulent, parce qu'elle abrite, croit-on, la menace, l'agression, le danger que représentent des autres devenus invisibles et imprévisibles. La peur du noir est devenue, pour une large part, la peur des autres, de ceux qu'on imagine rôder dans l'ombre.
+
+Cette peur est en partie justifiée : la nuit connaît sa part réelle de dangers, et il serait naïf de la nier. Mais elle est aussi, pour une large part, une construction, nourrie par l'imagination, les récits, une perception souvent exagérée du risque. Les études montrent que le sentiment d'insécurité nocturne dépasse largement les dangers réels, et qu'il frappe surtout ceux qui, en réalité, sont les moins exposés. Nous avons peur bien au-delà de ce que la réalité justifie, et cette peur excessive a elle-même des effets.
+
+Car la peur de la nuit transforme la ville. En désertant les rues obscures, nous les rendons plus inquiétantes encore, car une rue vide fait plus peur qu'une rue vivante. La peur se nourrit ainsi elle-même : moins on sort, plus la nuit paraît menaçante, plus on reste chez soi. Elle frappe aussi inégalement : certains, par leur condition, se sentent plus vulnérables et voient la nuit se fermer à eux, tandis que d'autres la parcourent librement. La peur nocturne dessine des frontières invisibles, exclut, restreint la liberté de se mouvoir.
+
+Interroger la peur de la nuit, ce n'est donc pas nier ses dangers, mais refuser qu'elle nous gouverne au-delà de ce que la réalité justifie. C'est aussi comprendre que la sécurité de la nuit ne se gagne pas seulement en éclairant les rues ou en y multipliant les surveillances, mais en y ramenant la vie : car une ville nocturne habitée, animée, partagée, est plus sûre qu'une ville désertée par la peur. Reconquérir la nuit, c'est peut-être, d'abord, cesser d'avoir peur les uns des autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-149",
+    title: "La pollution qui efface les étoiles",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Dans nos villes, on ne voit presque plus les étoiles. Est-ce sans conséquence ?",
+    blurbEn:
+      "City lights have erased the stars from our skies — a loss so gradual we barely noticed. A look at light pollution and what vanishes with the dark. (Section: The city at night, 4/5.)",
+    body: `Levez les yeux, la nuit, au cœur d'une grande ville : vous ne verrez presque plus d'étoiles. Le ciel nocturne, que l'humanité a contemplé depuis ses origines, semé d'astres innombrables, a pratiquement disparu de nos villes, noyé sous la lumière artificielle. Cette disparition, si progressive qu'on l'a à peine remarquée, est le signe d'un phénomène qu'on nomme la pollution lumineuse — et qui, loin d'être anodin, nous prive de bien plus qu'un spectacle.
+
+La cause en est simple : nous éclairons de plus en plus, de plus en plus fort, la nuit. Lampadaires, enseignes, éclairages de bâtiments, publicités lumineuses : nos villes rayonnent d'une clarté artificielle qui monte vers le ciel et forme, au-dessus d'elles, un halo qui efface les étoiles. Une part de cette lumière est utile, assurément ; mais une part considérable est gaspillée, dirigée vers le ciel plutôt que vers le sol, éclairant des lieux déserts, brûlant de l'énergie pour rien.
+
+La première perte est celle du ciel étoilé lui-même. On pourrait la juger secondaire — après tout, on peut vivre sans voir les étoiles. Mais ce serait mésestimer ce qui disparaît. Le ciel nocturne a nourri, depuis toujours, l'imagination, la science, la poésie, le sentiment religieux ; il a donné à l'humanité le sens de sa place dans un univers immense. Priver des générations entières de cette vue, c'est les couper d'une expérience fondamentale, celle de lever les yeux vers l'infini. Un enfant qui n'a jamais vu la Voie lactée a perdu quelque chose dont il ne sait même pas qu'il est privé.
+
+Mais la pollution lumineuse a aussi des effets bien concrets, longtemps ignorés. La nuit, l'obscurité, ont un rôle biologique : d'innombrables espèces règlent sur elles leur vie, leurs migrations, leur reproduction. En éclairant la nuit, nous perturbons ce monde vivant nocturne : oiseaux désorientés, insectes attirés et décimés, cycles dérangés. Notre propre corps, lui aussi, a besoin d'obscurité pour bien dormir et se régénérer ; la lumière permanente trouble ce besoin. En abolissant la nuit, nous perturbons un ordre biologique dont nous faisons partie.
+
+La bonne nouvelle, c'est que cette pollution est peut-être la plus facile à corriger de toutes. Contrairement à d'autres, elle ne laisse pas de traces durables : il suffit d'éteindre ou de mieux orienter la lumière pour que, aussitôt, la nuit et les étoiles reviennent. Éclairer moins, éclairer mieux, éclairer seulement où et quand il le faut : ces mesures simples réduiraient le gaspillage, économiseraient de l'énergie, rendraient la nuit à la vie et le ciel aux étoiles. Rarement un problème environnemental aura eu de solution si accessible.
+
+Reconquérir l'obscurité n'est donc pas un caprice de contemplateurs nostalgiques. C'est préserver un patrimoine — le ciel étoilé —, protéger le vivant nocturne, respecter notre propre besoin de nuit, et cesser un gaspillage absurde. La nuit noire, que nous avons effacée sans y penser, mérite qu'on la retrouve. Car une ville qui aurait perdu jusqu'à la vue des étoiles aurait, sans le savoir, perdu un peu de ce qui relie les humains à l'univers.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-150",
+    title: "Le droit à la nuit",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Et si la nuit, le repos, l'obscurité étaient des droits à défendre ?",
+    blurbEn:
+      "In a world that never switches off, the right to rest, to darkness, to being unreachable may need active defending. A closing reflection on reclaiming the night. (Section: The city at night, 5/5.)",
+    body: `Au terme de ce parcours dans la ville nocturne, une idée se dégage, qui les relie toutes : la nuit, avec ce qu'elle porte — le repos, l'obscurité, le silence, une certaine liberté d'être injoignable —, pourrait bien être quelque chose qu'il faut désormais défendre comme un droit. Car dans un monde qui ne s'éteint jamais, qui éclaire, sollicite et fait travailler sans relâche, ce que la nuit offrait naturellement devient rare, menacé, et doit être reconquis.
+
+Longtemps, la nuit s'imposait d'elle-même. Quand tombait l'obscurité, l'activité cessait faute de lumière ; le repos suivait le jour comme une nécessité. La nuit était un temps protégé, non par choix, mais par nature. Cette protection naturelle a disparu. La lumière artificielle a aboli l'obscurité ; la connexion permanente a aboli l'injoignabilité ; l'exigence de disponibilité a grignoté le repos. Ce que la nature garantissait, il faut désormais le vouloir et le défendre.
+
+Ce qui est en jeu dépasse le simple agrément. Le repos nocturne est une nécessité biologique, on l'a vu ; l'obscurité, un besoin du vivant ; le droit d'être injoignable, une condition de la liberté et de la vie intérieure. En laissant s'éroder la nuit, ce n'est pas un luxe que nous perdons, mais des besoins fondamentaux, sacrifiés à la logique d'un monde qui voudrait fonctionner sans interruption. Défendre la nuit, c'est défendre le droit au repos, au silence, à l'obscurité, à la déconnexion — tout ce dont l'être humain a besoin pour se reconstituer.
+
+Ce droit à la nuit a une dimension sociale, car la nuit n'est pas également accessible à tous. Certains peuvent se protéger — s'isoler du bruit et de la lumière, refuser d'être joints, préserver leur repos —, quand d'autres subissent le travail nocturne, les logements exposés, l'impossibilité de se soustraire aux sollicitations. Le droit à la nuit, comme le droit au silence dont il est proche, tend à devenir un privilège, réservé à ceux qui en ont les moyens. Le défendre, c'est aussi veiller à ce qu'il soit garanti à tous, et non seulement à quelques-uns.
+
+Défendre la nuit suppose des choix, individuels et collectifs. Individuels : se ménager des temps d'obscurité et de déconnexion, protéger son repos, résister à l'injonction d'être toujours disponible. Collectifs : limiter la pollution lumineuse, encadrer le travail nocturne, préserver des temps et des espaces où la ville ralentit, où la nuit reste la nuit. Ces choix vont à l'encontre d'une logique puissante, celle d'un monde qui voudrait tout éclairer, tout accélérer, ne jamais s'arrêter.
+
+Reconnaître un droit à la nuit, c'est donc affirmer une limite face à cette logique. C'est dire qu'il est des moments où il faut pouvoir s'éteindre, se taire, disparaître, se reposer — et qu'une civilisation qui abolirait la nuit abolirait, avec elle, une part de ce dont l'humain a besoin pour demeurer humain. La nuit n'est pas un vide à combler ni un temps à exploiter ; c'est un bien précieux, qu'il nous faut réapprendre à protéger.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

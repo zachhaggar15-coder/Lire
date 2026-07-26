@@ -988,6 +988,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-automation",
+    band: "B2",
+    title: "Work and automation",
+    goal: "Whether machines free us, basic income, work only humans can do, being replaced, who decides what machines do.",
+    textIds: [
+      "starter-b2-141", // Les machines vont-elles nous libérer ? (introduces the core words)
+      "starter-b2-142", // Un revenu pour tous ?
+      "starter-b2-143", // Le travail qui restera aux humains
+      "starter-b2-144", // Être remplacé par une machine
+      "starter-b2-145", // Qui décide de ce que font les machines ? (hardest)
+    ],
+  },
+  {
+    id: "b2-night",
+    band: "B2",
+    title: "The city at night",
+    goal: "The hidden nocturnal city, night work, fear of the dark and of others, light pollution, the right to the night.",
+    textIds: [
+      "starter-b2-146", // La ville ne dort jamais (introduces the core words)
+      "starter-b2-147", // Travailler pendant que les autres dorment
+      "starter-b2-148", // La peur du noir, la peur des autres
+      "starter-b2-149", // La pollution qui efface les étoiles
+      "starter-b2-150", // Le droit à la nuit (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",
