@@ -13,6 +13,7 @@ import { getOnboardingState, getSelectedReadingLevel } from "@/lib/onboarding";
 import { getReviewStats } from "@/lib/spacedRepetition";
 import { getSavedWords } from "@/lib/storage";
 import { getCustomTextById } from "@/lib/customTexts";
+import { getArchive } from "@/lib/archive";
 import { getJourneyState, getNextTextForReader, type StageProgress } from "@/lib/journey/state";
 import { getJourneyText, getStageForText } from "@/lib/journey/ladder";
 import { getLastOpenedTextId, getProgress } from "@/lib/progress";
@@ -105,6 +106,7 @@ export default function HomePage() {
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [heroTarget, setHeroTarget] = useState<HomeReadingTarget | null>(null);
   const [currentStreak, setCurrentStreak] = useState(0);
+  const [completedReadingCount, setCompletedReadingCount] = useState(0);
 
   const nextJourneyLesson = useCallback((level: Difficulty) => {
     const journey = getJourneyState({ selectedLevel: level });
@@ -138,6 +140,7 @@ export default function HomePage() {
     setSelectedLevel(level);
     setHeroTarget(fallbackTarget);
     setCurrentStreak(getCurrentStreak());
+    setCompletedReadingCount(getArchive().length);
     setStats({ dueReviews: reviewStats.dueToday + reviewStats.newWords });
 
     void resolveInProgressTarget(level).then((target) => {
@@ -149,6 +152,8 @@ export default function HomePage() {
     refreshDashboard();
     return subscribeToRecommendationPreferences(() => refreshDashboard());
   }, [refreshDashboard]);
+
+  const shouldGateRealWorldContent = (selectedLevel === "A1" || selectedLevel === "A2") && completedReadingCount < 3;
 
   if (onboardingComplete === null) {
     return (
@@ -203,8 +208,14 @@ export default function HomePage() {
         <HomeReadingHero target={heroTarget} selectedLevel={selectedLevel} />
         <ReviewNudge dueReviews={stats.dueReviews} />
         <div className="mt-5 space-y-3">
-          <HomeNewsSection />
-          <ShortSnippetsBlock />
+          {shouldGateRealWorldContent ? (
+            <BeginnerRealWorldGate completedCount={completedReadingCount} />
+          ) : (
+            <>
+              <HomeNewsSection />
+              <ShortSnippetsBlock />
+            </>
+          )}
         </div>
       </div>
 
@@ -212,6 +223,32 @@ export default function HomePage() {
         <BetaNotice />
       </div>
     </div>
+  );
+}
+
+function BeginnerRealWorldGate({ completedCount }: { completedCount: number }) {
+  const target = 3;
+  const safeCount = Math.max(0, Math.min(target, completedCount));
+
+  return (
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Real-world French</p>
+      <h2 className="mt-1 text-lg font-extrabold leading-tight text-ink">News unlocks after a few guided lessons.</h2>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        Live articles are faster, messier French. Finish three guided readings first so word taps and English help feel automatic.
+      </p>
+      <StageProgressLine
+        value={safeCount / target}
+        label={`${safeCount}/${target} guided readings complete`}
+        className="mt-4"
+      />
+      <Link
+        href="/articles#journey-current"
+        className="mt-4 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white shadow-raised active:scale-95"
+      >
+        Continue lessons
+      </Link>
+    </section>
   );
 }
 

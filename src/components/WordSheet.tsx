@@ -126,6 +126,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
   const [primary, ...rest] = lookup?.translations ?? [];
   const firstExample = lookup?.examples[0];
   const wordFamily = state ? getWordFamily(state.lookup.lemma ?? state.word) : null;
+  const existingActionLabel = state?.existingStatus === "known" ? "Marked known" : "In review";
   const hasWordFamily =
     !!wordFamily &&
     [
@@ -483,21 +484,21 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               onClick={onKnow}
               className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
             >
-              Got it
+              I know this
             </button>
             {state?.existingStatus ? (
               <button
                 onClick={onClose}
                 className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Saved
+                {existingActionLabel}
               </button>
             ) : (
               <button
                 onClick={onSave}
                 className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Save
+                Add to review
               </button>
             )}
           </div>

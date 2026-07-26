@@ -332,6 +332,7 @@ export default function ReviewPage() {
   const shouldShowWordStart = reviewMode === "words" && !!current && !reviewStarted;
   const shouldShowWordReview = reviewMode === "words" && !!current && reviewStarted;
   const remainingPhraseCount = sessionPhraseQueue.length;
+  const shouldShowPracticeHub = shouldShowWordStart;
   const reviewProgressLabel =
     !ready
       ? ""
@@ -353,8 +354,8 @@ export default function ReviewPage() {
           <p className="text-ink-muted">{articleFilter ? "No saved words from this article yet." : "Nothing to review yet."}</p>
           <p className="mt-1 text-xs text-ink-muted">
             {articleFilter
-              ? "Save words as Learning or Unsure while reading, then come back here."
-              : "Words you save as Learning or Unsure while reading show up here."}
+              ? "Add words to review while reading, then come back here."
+              : "Words you add to review while reading show up here."}
           </p>
           <Link
             href="/"
@@ -430,17 +431,34 @@ export default function ReviewPage() {
         tiles above it just pushed it down the screen and had to be scrolled
         past on every answer. They're back as soon as the session ends.
       */}
-      {!shouldShowWordReview && statsBar}
+      {shouldShowPracticeHub && (
+        <PracticeHubCard
+          wordCount={wordQueue.length}
+          dueToday={stats.dueToday}
+          newWords={stats.newWords}
+          notDueYet={stats.notDueYet}
+          totalLearning={stats.totalLearning}
+          phraseCount={sessionPhraseQueue.length}
+          vocabularyStates={vocabularyStates}
+          direction={reviewDirection}
+          onDirectionChange={(direction) => {
+            setReviewDirection(direction);
+            resetWordCard();
+            setPhraseTypedAnswer("");
+            setPhraseRevealed(false);
+          }}
+          onModeChange={setReviewMode}
+          onStart={startWordReview}
+        />
+      )}
 
-      {!shouldShowWordReview && vocabularyStates.length > 0 && (
+      {!shouldShowPracticeHub && !shouldShowWordReview && reviewMode === "words" && statsBar}
+
+      {!shouldShowPracticeHub && !shouldShowWordReview && reviewMode === "words" && vocabularyStates.length > 0 && (
         <VocabularyStateSummary items={vocabularyStates} />
       )}
 
-      {shouldShowWordStart && (
-        <StartReviewButton onStart={startWordReview} />
-      )}
-
-      {phrases.length > 0 && (
+      {!shouldShowPracticeHub && phrases.length > 0 && (
         <PhraseModeSwitch mode={reviewMode} onChange={setReviewMode} phraseCount={sessionPhraseQueue.length} />
       )}
 
@@ -616,17 +634,100 @@ function shouldShowReviewExample(word: SavedWord): boolean {
   return true;
 }
 
-function StartReviewButton({ onStart }: { onStart: () => void }) {
+function PracticeHubCard({
+  wordCount,
+  dueToday,
+  newWords,
+  notDueYet,
+  totalLearning,
+  phraseCount,
+  vocabularyStates,
+  direction,
+  onDirectionChange,
+  onModeChange,
+  onStart,
+}: {
+  wordCount: number;
+  dueToday: number;
+  newWords: number;
+  notDueYet: number;
+  totalLearning: number;
+  phraseCount: number;
+  vocabularyStates: VocabularyStateItem[];
+  direction: ReviewDirection;
+  onDirectionChange: (direction: ReviewDirection) => void;
+  onModeChange: (mode: "words" | "phrases") => void;
+  onStart: () => void;
+}) {
+  const focusCount = vocabularyStates.filter((item) => item.state === "fragile" || item.state === "forgotten").length;
+  const readyCopy =
+    dueToday > 0 && newWords > 0
+      ? `${dueToday} due and ${newWords} new`
+      : dueToday > 0
+        ? `${dueToday} due`
+        : `${newWords} new`;
+  const stats = [
+    { label: "Due today", value: dueToday },
+    { label: "New", value: newWords },
+    { label: "Later", value: notDueYet },
+    { label: "Total", value: totalLearning },
+  ];
+  const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
+
   return (
-    <div className="mb-4">
+    <section className="mb-4 rounded-card bg-cream-card p-5 shadow-card">
+      <p className="text-xs font-bold uppercase tracking-wide text-brand">Practice Hub</p>
+      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">
+        {wordCount} {wordCount === 1 ? "card" : "cards"} ready
+      </h2>
+      <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+        Start with a quick {directionCopy} review. No setup needed; options are here if you want them.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
+        <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-ink-muted">
+          {promptLabel(direction)}
+        </span>
+        {focusCount > 0 && (
+          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+            {focusCount} need care
+          </span>
+        )}
+      </div>
       <button
         type="button"
         onClick={onStart}
-        className="w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-card active:scale-95"
+        className="mt-4 w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-raised active:scale-95"
       >
-        Start Review
+        Start quick review
       </button>
-    </div>
+
+      <details className="mt-3 rounded-2xl bg-cream px-3 py-2">
+        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+          Review options
+        </summary>
+        <div className="mt-3 space-y-3">
+          {phraseCount > 0 && (
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Practice type</p>
+              <PhraseModeSwitch mode="words" onChange={onModeChange} phraseCount={phraseCount} />
+            </div>
+          )}
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Direction</p>
+            <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {stats.map((item) => (
+              <div key={item.label} className="rounded-2xl bg-cream-card p-2 text-center shadow-card">
+                <p className="text-base font-extrabold text-ink">{item.value}</p>
+                <p className="text-[0.65rem] font-semibold uppercase tracking-wide text-ink-muted">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </details>
+    </section>
   );
 }
 
