@@ -241,6 +241,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
                   pathAlign={mapNodeAlign(index)}
                   tone={tone}
                   hasNextStage={index < visibleStages.length - 1}
+                  enterDelayMs={Math.min(index, 9) * 36}
                   onToggleStage={handleToggleStage}
                   onSkip={handleSkip}
                   onJump={handleJump}
@@ -274,7 +275,7 @@ function LevelSwitcher({
           type="button"
           aria-pressed={selectedLevel === level}
           onClick={() => onChange(level)}
-          className={`rounded-full px-3 py-2 text-sm font-extrabold active:scale-95 ${
+          className={`rounded-full px-3 py-2 text-sm font-extrabold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-95 ${
             selectedLevel === level ? "bg-brand text-white shadow-raised" : "text-ink-muted"
           }`}
         >
@@ -291,7 +292,7 @@ function NextTextCard({ next }: { next: NextTextRecommendation }) {
   return (
     <Link
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className="journey-next-glow mt-4 flex items-center gap-3 rounded-[1.25rem] bg-brand px-4 py-3 text-white active:scale-[0.99]"
+      className="journey-next-glow mt-4 flex items-center gap-3 rounded-[1.25rem] bg-brand px-4 py-3 text-white transition-transform duration-200 ease-out active:scale-[0.99]"
     >
       <span className="min-w-0 flex-1">
         <span className="block text-xs font-bold uppercase text-white/75">Next stop</span>
@@ -314,6 +315,7 @@ function StageMapNode({
   pathAlign,
   tone,
   hasNextStage,
+  enterDelayMs,
   onToggleStage,
   onSkip,
   onJump,
@@ -326,6 +328,7 @@ function StageMapNode({
   pathAlign: PathAlign;
   tone: MapTone;
   hasNextStage: boolean;
+  enterDelayMs: number;
   onToggleStage: (stageIndex: number) => void;
   onSkip: (textId: string) => void;
   onJump: (stage: Stage) => void;
@@ -348,7 +351,12 @@ function StageMapNode({
         : "";
 
   return (
-    <li id={current ? "journey-current" : undefined} ref={currentRef} className="relative pb-8">
+    <li
+      id={current ? "journey-current" : undefined}
+      ref={currentRef}
+      className="journey-map-node-enter relative pb-8"
+      style={{ animationDelay: `${enterDelayMs}ms` }}
+    >
       {hasNextStage && (
         <span
           aria-hidden="true"
@@ -365,7 +373,7 @@ function StageMapNode({
             aria-label={locked ? `${stage.label} locked` : expanded ? `Close ${stage.label}` : `Open ${stage.label}`}
             disabled={locked}
             onClick={() => onToggleStage(stage.globalIndex)}
-            className={`mx-auto block rounded-full active:scale-95 disabled:cursor-default disabled:active:scale-100 ${nodeClass}`}
+            className={`mx-auto block rounded-full transition-[box-shadow,opacity,transform] duration-200 ease-out active:scale-95 disabled:cursor-default disabled:active:scale-100 ${nodeClass}`}
           >
             <StageStatusIcon
               cleared={cleared}
@@ -386,7 +394,7 @@ function StageMapNode({
       </div>
 
       {expanded && !locked && (
-        <div id={panelId} className={`relative z-20 mt-3 rounded-[1.25rem] border p-3 shadow-card ${tone.panelBorder} ${tone.panel}`}>
+        <div id={panelId} className={`journey-stage-panel-enter relative z-20 mt-3 rounded-[1.25rem] border p-3 shadow-card ${tone.panelBorder} ${tone.panel}`}>
           <XPProgressBar value={progress} label="Progress" className="mb-3" />
           <div className="space-y-3">
             {stage.themes.map((theme) => (
@@ -416,7 +424,7 @@ function StageMapNode({
             <button
               type="button"
               onClick={() => onJump(stage)}
-              className="mt-3 w-full rounded-full bg-brand-light px-3 py-2 text-xs font-bold text-brand active:scale-95"
+              className="mt-3 w-full rounded-full bg-brand-light px-3 py-2 text-xs font-bold text-brand transition-transform duration-150 ease-out active:scale-95"
             >
               Jump ahead
             </button>
@@ -455,7 +463,7 @@ function LessonPreviewRow({
 
   return (
     <div
-      className={`rounded-2xl px-3 py-3 ${
+      className={`rounded-2xl px-3 py-3 transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out ${
         next ? `${tone.rowNext} shadow-card` : muted ? "bg-cream-dark/70 opacity-75" : tone.row
       }`}
     >
@@ -469,7 +477,7 @@ function LessonPreviewRow({
       <div className="mt-3 flex flex-wrap gap-2 pl-6">
         <Link
           href={`/reader/${encodeURIComponent(text.id)}`}
-          className={`rounded-full px-3 py-1.5 text-xs font-bold active:scale-95 ${
+          className={`rounded-full px-3 py-1.5 text-xs font-bold transition-[background-color,color,box-shadow,transform] duration-150 ease-out active:scale-95 ${
             next ? "bg-brand text-white shadow-raised" : completed ? tone.badge : "bg-cream-card text-brand shadow-card"
           }`}
         >
@@ -479,7 +487,7 @@ function LessonPreviewRow({
           <button
             type="button"
             onClick={() => onSkip(text.id)}
-            className="rounded-full bg-cream-dark px-2.5 py-1.5 text-xs font-bold text-ink-muted active:scale-95"
+            className="rounded-full bg-cream-dark px-2.5 py-1.5 text-xs font-bold text-ink-muted transition-transform duration-150 ease-out active:scale-95"
           >
             Skip
           </button>
@@ -585,7 +593,7 @@ function StageStatusIcon({
         : `${tone.panel} ${tone.text} ring-1 ring-cream-dark shadow-card`;
 
   return (
-    <span aria-hidden="true" className={`flex h-16 w-16 items-center justify-center rounded-full ${className}`}>
+    <span aria-hidden="true" className={`flex h-16 w-16 items-center justify-center rounded-full transition-[background-color,color,box-shadow,transform] duration-200 ease-out ${className}`}>
       {cleared ? (
         <CheckIcon className="h-7 w-7" />
       ) : locked ? (

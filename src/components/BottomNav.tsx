@@ -65,7 +65,7 @@ export default function BottomNav() {
             <li key={href} className="flex-1">
               <Link
                 href={href}
-                className={`flex flex-col items-center gap-1 px-1 py-3 text-xs font-medium transition-colors ${
+                className={`flex flex-col items-center gap-1 px-1 py-3 text-xs font-medium transition-[color,transform] duration-200 ease-out active:scale-95 ${
                   active ? "text-brand" : "text-ink-muted"
                 }`}
               >

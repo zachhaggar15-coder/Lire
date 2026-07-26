@@ -44,8 +44,9 @@ h3 {
 
 @layer utilities {
   .app-route-shell {
-    animation: app-route-enter 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation: app-route-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
     min-height: 100%;
+    transform-origin: center top;
   }
 
   .review-card-smooth {
@@ -81,6 +82,14 @@ h3 {
 
   .lesson-complete-pop {
     animation: lesson-complete-pop 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .lesson-complete-screen {
+    animation: lesson-complete-screen-enter 260ms ease-out both;
+  }
+
+  .lesson-complete-card-enter {
+    animation: lesson-complete-card-enter 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
   .lesson-complete-stat {
@@ -133,6 +142,15 @@ h3 {
   .journey-next-glow {
     animation: journey-next-glow 2.35s ease-in-out infinite;
     box-shadow: 0 0.55rem 1.4rem rgb(47 93 70 / 0.16), 0 0 0 0.18rem rgb(47 93 70 / 0.1);
+  }
+
+  .journey-map-node-enter {
+    animation: journey-map-node-enter 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .journey-stage-panel-enter {
+    animation: journey-stage-panel-enter 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-origin: top center;
   }
 
   .reward-progress-fill {
@@ -195,11 +213,11 @@ h3 {
 @keyframes app-route-enter {
   0% {
     opacity: 0;
-    transform: translateY(0.45rem);
+    transform: translateY(0.55rem) scale(0.992);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -322,6 +340,26 @@ h3 {
   }
 }
 
+@keyframes lesson-complete-screen-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lesson-complete-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes lesson-complete-delta {
   0% {
     opacity: 0;
@@ -381,6 +419,28 @@ h3 {
   }
 }
 
+@keyframes journey-map-node-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes journey-stage-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reward-word-save,
   .app-route-shell,
@@ -390,12 +450,16 @@ h3 {
   .reward-completion-reveal,
   .reward-stat-reveal,
   .lesson-complete-pop,
+  .lesson-complete-screen,
+  .lesson-complete-card-enter,
   .lesson-complete-stat,
   .lesson-complete-delta,
   .lesson-complete-flame,
   .lesson-scene-float,
   .review-answer-reveal,
   .journey-next-glow,
+  .journey-map-node-enter,
+  .journey-stage-panel-enter,
   .reward-progress-fill::after,
   .reward-completion-ring,
   .reward-ember::before,
@@ -405,5 +469,12 @@ h3 {
 
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-delay: 0ms !important;
+    transition-duration: 0ms !important;
   }
 }

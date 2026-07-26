@@ -5,6 +5,7 @@ import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import AuthSync from "@/components/AuthSync";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
+import AppRouteTransition from "@/components/AppRouteTransition";
 
 /**
  * Headings only. The app was entirely system-ui, so it rendered as Segoe UI on
@@ -68,11 +69,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={display.variable}>
+    <html lang="en" className={display.variable} data-scroll-behavior="smooth">
       <body>
         {/* App is capped to a phone-like width and centered on desktop. */}
         <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream shadow-card">
-          <main className="flex-1 pb-24">{children}</main>
+          <main data-app-route-shell className="flex-1 pb-24">
+            <AppRouteTransition />
+            {children}
+          </main>
           <BottomNav />
         </div>
         <ServiceWorker />

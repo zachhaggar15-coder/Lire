@@ -121,7 +121,7 @@ export default function LessonCompleteScreen({
   const celebrationScene = sceneForCompletion(level);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-cream px-5 pb-6 pt-[calc(var(--safe-top)+1rem)]">
+    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-5 pb-6 pt-[calc(var(--safe-top)+1rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop text-center">
           <div className="relative mx-auto h-28 w-28">
@@ -141,7 +141,7 @@ export default function LessonCompleteScreen({
         </div>
 
         {journeyMoment && (
-          <div className="mt-5 rounded-card bg-brand px-4 py-3 text-white shadow-raised">
+          <div className="lesson-complete-card-enter mt-5 rounded-card bg-brand px-4 py-3 text-white shadow-raised">
             <p className="text-xs font-bold uppercase tracking-wide text-white/75">
               {journeyMoment.kind === "band" ? "Band complete" : "Stage cleared"}
             </p>
@@ -164,7 +164,7 @@ export default function LessonCompleteScreen({
         </div>
 
         {/* Streak — the Duolingo moment: extending it is a small celebration. */}
-        <div className="mt-4 rounded-card bg-cream-card p-4 shadow-card">
+        <div className="lesson-complete-card-enter mt-4 rounded-card bg-cream-card p-4 shadow-card">
           <div className="flex items-center gap-3">
             <div className={`lesson-complete-flame flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${streak.count > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
               <StreakFlame active={streak.count > 0} className="h-7 w-7" />
@@ -188,7 +188,7 @@ export default function LessonCompleteScreen({
         </div>
 
         {reviewItems.length > 0 && (
-          <div className="mt-4 rounded-card bg-cream-card p-4 shadow-card">
+          <div className="lesson-complete-card-enter mt-4 rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Mini review</p>
@@ -218,7 +218,7 @@ export default function LessonCompleteScreen({
         )}
 
         {/* The level bar that just moved */}
-        <div className="mt-7 rounded-card bg-cream-card p-5 shadow-card">
+        <div className="lesson-complete-card-enter mt-7 rounded-card bg-cream-card p-5 shadow-card">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-extrabold text-ink">
               {level} score
@@ -245,7 +245,7 @@ export default function LessonCompleteScreen({
         </div>
 
         {/* All four levels, so progress is legible at a glance */}
-        <div className="mt-4 rounded-card bg-cream-card p-4 shadow-card">
+        <div className="lesson-complete-card-enter mt-4 rounded-card bg-cream-card p-4 shadow-card">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Your levels</p>
           <div className="mt-3 space-y-2.5">
             {TAUGHT_LEVELS.map((lvl) => {
@@ -274,7 +274,7 @@ export default function LessonCompleteScreen({
         <button
           type="button"
           onClick={onContinue}
-          className="mt-7 w-full rounded-full bg-brand px-4 py-3.5 text-base font-bold text-white shadow-raised active:scale-[0.98]"
+          className="mt-7 w-full rounded-full bg-brand px-4 py-3.5 text-base font-bold text-white shadow-raised transition-transform duration-150 ease-out active:scale-[0.98]"
         >
           {journeyMoment?.actionLabel ?? "Continue"}
         </button>
