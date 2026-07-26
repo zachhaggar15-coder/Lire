@@ -910,6 +910,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-history",
+    band: "B2",
+    title: "History and memory",
+    goal: "What knowing the past is for, collective memory, judging the past, national narratives, remembering to prevent.",
+    textIds: [
+      "starter-b2-111", // À quoi sert de connaître le passé ? (introduces the core words)
+      "starter-b2-112", // La mémoire des peuples
+      "starter-b2-113", // Juger le passé avec les yeux d'aujourd'hui ?
+      "starter-b2-114", // Les récits qui font les nations
+      "starter-b2-115", // Se souvenir pour ne pas recommencer (hardest)
+    ],
+  },
+  {
+    id: "b2-science-doubt",
+    band: "B2",
+    title: "Science and doubt",
+    goal: "What science can and cannot do, doubt as its engine, trusting experts, simple explanations, understanding chance.",
+    textIds: [
+      "starter-b2-116", // Ce que la science peut et ne peut pas (introduces the core words)
+      "starter-b2-117", // Le doute, moteur de la science
+      "starter-b2-118", // Quand faut-il croire un expert ?
+      "starter-b2-119", // La tentation des explications simples
+      "starter-b2-120", // Comprendre le hasard (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

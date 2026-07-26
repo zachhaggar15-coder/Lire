@@ -317,6 +317,11 @@ console.log("\n--- Public-domain reading bank ---");
     "journey stages group at most five texts",
     ladder.stages.every((stage) => stage.textIds.length > 0 && stage.textIds.length <= TEXTS_PER_STAGE)
   );
+  check(
+    "journey stages use themed labels instead of numbered stage labels",
+    ladder.stages.every((stage) => !/\bstage\s+\d+/i.test(stage.label)),
+    ladder.stages.map((stage) => stage.label).filter((label) => /\bstage\s+\d+/i.test(label)).join(", ")
+  );
   const sectioned = sectionedTextIds();
   check(
     "difficulty-sorted (non-section) stages are ordered by intrinsic difficulty inside each band",

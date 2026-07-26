@@ -1,4 +1,4 @@
-import type { Difficulty, ReadingText } from "@/types";
+import type { Category, Difficulty, ReadingText } from "@/types";
 import { starterTexts } from "@/data/starterTexts";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { tokenize } from "@/lib/words";
@@ -13,6 +13,17 @@ const INTRINSIC_WEIGHTS = {
   lowFrequencyShare: 0.3,
   minutes: 0.1,
 } as const;
+
+type AutoStageTheme = Category | "mixed";
+
+const AUTO_STAGE_LABELS: Record<AutoStageTheme, string[]> = {
+  "everyday life": ["Everyday scenes", "Home and routine", "People and places", "Daily choices"],
+  sport: ["Sport and movement", "Active life", "Games and effort", "Body and practice"],
+  culture: ["Culture and stories", "Art and ideas", "Music and memory", "French life"],
+  science: ["How things work", "Nature and science", "Everyday science", "Curious questions"],
+  "news-style": ["Local reports", "Public life", "News practice", "Civic moments"],
+  mixed: ["Mixed practice", "Real-world reads", "Short readings", "Fresh practice"],
+};
 
 export interface LadderText {
   id: string;
@@ -74,6 +85,19 @@ function rawScore(text: ReadingText): RawScore {
     lowFrequencyShare: wordCount === 0 ? 0 : lowFrequencyCount / wordCount,
     minutes: text.minutes,
   };
+}
+
+function autoStageTheme(texts: ReadingText[]): AutoStageTheme {
+  const counts = new Map<Category, number>();
+  for (const text of texts) counts.set(text.category, (counts.get(text.category) ?? 0) + 1);
+  const [topCategory, topCount] = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0] ?? [];
+  if (!topCategory || !topCount) return "mixed";
+  return topCount >= Math.ceil(texts.length / 2) ? topCategory : "mixed";
+}
+
+function autoStageLabel(texts: ReadingText[], stageNumber: number): string {
+  const labels = AUTO_STAGE_LABELS[autoStageTheme(texts)];
+  return labels[(stageNumber - 1) % labels.length];
 }
 
 function scoreBand(texts: ReadingText[]): Array<{ text: ReadingText; intrinsicDifficulty: number }> {
@@ -152,7 +176,7 @@ export function buildLadder(): BuiltLadder {
     let stageNumber = 1;
     for (let i = 0; i < remaining.length; i += TEXTS_PER_STAGE) {
       const slice = remaining.slice(i, i + TEXTS_PER_STAGE);
-      pushStage(slice.map((text) => text.id), `${band} - Stage ${stageNumber}`);
+      pushStage(slice.map((text) => text.id), autoStageLabel(slice, stageNumber));
       stageNumber += 1;
     }
   }

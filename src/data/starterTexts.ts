@@ -14621,4 +14621,234 @@ Pourquoi certaines œuvres traversent-elles le temps ? Par un mélange de valeur
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-111",
+    title: "À quoi sert de connaître le passé ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le passé est passé. Pourquoi s'obstiner à l'étudier ?",
+    blurbEn:
+      "The past is over and cannot be changed. So why study it? A reflection on what history is really for, beyond dates and dead kings. (Section: History and memory, 1/5.)",
+    body: `Le passé est passé : il ne reviendra pas, on ne peut plus rien y changer. Pourquoi, dès lors, s'obstiner à l'étudier, à enseigner l'histoire, à ressasser des événements et des personnages depuis longtemps disparus ? Cette objection, que formule volontiers celui qui trouve l'histoire ennuyeuse, n'est pas sans force. Y répondre oblige à préciser ce qu'on attend vraiment de la connaissance du passé.
+
+Une première réponse, souvent avancée, veut que le passé nous instruise, que l'histoire soit « maîtresse de vie », et qu'en l'étudiant nous éviterions de répéter les erreurs de nos aïeux. Cette idée contient une part de vérité, mais elle est fragile. Car le passé ne se répète jamais à l'identique, et les leçons qu'on prétend en tirer sont souvent contradictoires ou trompeuses. L'histoire n'offre pas de recettes toutes faites ; elle ne dit pas mécaniquement ce qu'il faut faire. Ceux qui la connaissaient le mieux n'ont pas toujours évité les pires fautes.
+
+La véritable utilité de l'histoire est ailleurs, plus profonde. Connaître le passé, c'est d'abord se comprendre soi-même. Nous sommes les héritiers d'une longue chaîne d'événements qui ont façonné le monde où nous vivons : nos lois, nos frontières, nos langues, nos institutions, nos conflits mêmes viennent de loin. Ignorer cette histoire, c'est vivre dans un présent sans épaisseur, incapable de comprendre pourquoi les choses sont ce qu'elles sont. L'histoire donne au présent sa profondeur et son sens.
+
+Connaître le passé, c'est aussi apprendre que le monde n'a pas toujours été tel qu'il est, et qu'il pourrait être autrement. Rien n'est plus précieux que cette leçon. Ce que nous tenons pour naturel, éternel, immuable, l'histoire nous le montre comme le produit d'un devenir, donc comme quelque chose qui a commencé et qui pourrait finir. Elle nous délivre de l'illusion que le présent serait le seul monde possible, et nous rend, par là, capables de le transformer.
+
+Il y a enfin, dans l'étude du passé, une dimension proprement humaine. Se pencher sur ceux qui nous ont précédés, sur leurs espoirs, leurs souffrances, leurs combats, c'est étendre notre humanité au-delà des étroites limites de notre propre temps. C'est reconnaître une dette envers ceux qui ont bâti le monde dont nous héritons, et une responsabilité envers ceux qui hériteront du nôtre. L'histoire nous inscrit dans une chaîne qui nous dépasse.
+
+À quoi sert donc de connaître le passé ? Non à en tirer des recettes, mais à comprendre d'où nous venons, à mesurer que les choses peuvent changer, à nous relier à ce qui nous précède. Un peuple sans mémoire est comme un homme amnésique : il ne sait plus qui il est. C'est pourquoi, bien qu'on ne puisse rien changer au passé, il importe tant de ne pas l'oublier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-112",
+    title: "La mémoire des peuples",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Ce qu'une société choisit de commémorer, et ce qu'elle préfère oublier.",
+    blurbEn:
+      "What a society chooses to remember — and what it prefers to forget — is never neutral. A look at collective memory as a battleground of the present. (Section: History and memory, 2/5.)",
+    body: `Les sociétés, comme les individus, ont une mémoire. Elles se souviennent de certains événements, en commémorent d'autres, érigent des monuments, célèbrent des dates, transmettent des récits. Mais cette mémoire collective, loin d'être un simple reflet du passé, résulte de choix : on retient certaines choses, on en oublie d'autres, on met en avant tel épisode et l'on passe tel autre sous silence. Ce que retient la mémoire d'un peuple n'a donc rien de neutre ; c'est un enjeu, et souvent un champ de bataille.
+
+Car le passé d'une nation n'est jamais simple, ni uniquement glorieux. Il comporte des pages sombres autant que des pages fières : des conquêtes et des défaites, des grandeurs et des crimes. Or une société ne peut pas tout garder présent avec la même intensité. Elle sélectionne, hiérarchise, éclaire certains souvenirs et en laisse d'autres dans l'ombre. Cette sélection reflète ce qu'elle veut être, l'image qu'elle se fait d'elle-même, et parfois ce qu'elle préfère ne pas voir.
+
+Cette mémoire sélective se rejoue à chaque génération. Ce qu'on célébrait hier peut être remis en question aujourd'hui ; des figures autrefois honorées sont contestées, des événements longtemps tus resurgissent et exigent d'être reconnus. Les débats sur les statues, les commémorations, les noms de rues, qui agitent tant de pays, ne sont pas des querelles vaines : ils portent sur ce qu'une société choisit de célébrer ou de condamner, donc sur ce qu'elle est et veut devenir. La bataille se livre sur le passé, mais l'enjeu est le présent.
+
+Ces conflits de mémoire sont souvent douloureux, et il serait tentant de vouloir les apaiser en décrétant un oubli commode : « ne remuons pas le passé ». Mais cet oubli a un prix. Passer sous silence les crimes d'autrefois, refuser de reconnaître les souffrances infligées, c'est priver les victimes et leurs descendants d'une reconnaissance dont ils ont besoin, et laisser des blessures s'envenimer faute d'être nommées. Une mémoire qui ne retient que le glorieux n'apaise pas ; elle refoule, et ce qui est refoulé finit par resurgir.
+
+À l'inverse, une mémoire obsédée par les seules fautes, incapable de reconnaître aussi ce qui fut grand, sombrerait dans une autocritique stérile. L'enjeu n'est pas de choisir entre la fierté et la honte, mais de tenir ensemble la vérité tout entière : les grandeurs et les crimes, sans complaisance ni reniement. Une mémoire adulte est celle qui peut regarder son passé en face, dans toute sa complexité.
+
+La manière dont un peuple se souvient dit donc beaucoup de sa maturité. Assumer son passé, y compris ses zones d'ombre, sans s'y complaire ni le nier, est le signe d'une société sûre d'elle-même. Car on ne se construit pas sur un mensonge, fût-il flatteur, mais sur la vérité, fût-elle difficile.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-113",
+    title: "Juger le passé avec les yeux d'aujourd'hui ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Peut-on condamner nos ancêtres au nom de valeurs qu'ils ignoraient ?",
+    blurbEn:
+      "Can we judge people of the past by today's moral standards? A careful look at a question with no easy answer, between excusing everything and condemning all. (Section: History and memory, 3/5.)",
+    body: `Une question difficile traverse notre rapport au passé : peut-on juger ceux qui nous ont précédés à l'aune de nos propres valeurs ? Lorsque nous découvrons que des figures admirées ont commis, ou toléré, ce qui nous paraît aujourd'hui inacceptable, comment réagir ? Faut-il les condamner au nom de nos principes, ou les excuser au motif qu'ils étaient de leur temps ? La question n'a pas de réponse simple, et les deux positions extrêmes se révèlent, à l'examen, également insatisfaisantes.
+
+La première position consiste à juger le passé sans indulgence, à appliquer nos valeurs actuelles à ceux qui vivaient autrefois, et à condamner sans appel ce qui les heurte. Cette attitude a pour elle une exigence morale : elle refuse de fermer les yeux sur des injustices réelles sous prétexte qu'elles sont anciennes. Mais elle comporte un défaut majeur : elle est anachronique. Elle reproche aux gens du passé de n'avoir pas partagé des idées qui n'existaient pas encore, de n'avoir pas vu ce que personne, ou presque, ne voyait alors. Elle juge sans comprendre, du haut d'une supériorité facile.
+
+La seconde position, inverse, consiste à tout excuser au nom du contexte : « ils étaient de leur temps », dit-on, comme si cela suffisait à absoudre. Cette attitude a pour elle un sens de la nuance historique : elle rappelle que les hommes du passé pensaient dans un cadre qui n'était pas le nôtre. Mais poussée à bout, elle devient un relativisme confortable qui interdit tout jugement, et finit par admettre que rien, jamais, ne saurait être condamné, puisque tout s'expliquerait par son époque. Si tout est excusable, alors le pire l'est aussi.
+
+Entre ces deux impasses, une voie plus juste consiste à distinguer comprendre et approuver. On peut comprendre pourquoi les gens d'autrefois pensaient et agissaient comme ils le faisaient, replacer leurs actes dans leur contexte, mesurer ce qu'ils pouvaient ou non concevoir — sans pour autant approuver ce qui reste condamnable. Comprendre n'est pas excuser ; c'est refuser le jugement paresseux tout en gardant la capacité de juger. On peut reconnaître qu'une injustice fut une injustice, tout en tenant compte de l'aveuglement de l'époque.
+
+Cette distinction permet aussi une forme d'humilité. Car si nous jugeons sévèrement l'aveuglement de nos ancêtres, nous devrions nous souvenir que nous avons, nous aussi, nos aveuglements, que les générations futures jugeront peut-être avec la même sévérité. Nous tolérons sans doute, aujourd'hui, des choses qui paraîtront un jour scandaleuses. Juger le passé devrait donc nous rendre non pas arrogants, mais lucides sur notre propre temps.
+
+Juger le passé avec les yeux d'aujourd'hui, c'est donc à la fois nécessaire et périlleux. Nécessaire, car renoncer à tout jugement serait renoncer à la morale ; périlleux, car juger sans comprendre est injuste. La sagesse consiste à tenir les deux : comprendre sans absoudre, juger sans se croire supérieur. Et à ne jamais oublier que nous serons, à notre tour, jugés.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-114",
+    title: "Les récits qui font les nations",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Une nation tient ensemble par une histoire qu'elle se raconte.",
+    blurbEn:
+      "Nations are held together not only by borders but by the stories they tell about themselves. On the power, and the danger, of national narratives. (Section: History and memory, 4/5.)",
+    body: `Qu'est-ce qui fait qu'une multitude d'individus, souvent très différents, se sentent membres d'une même nation ? Ni le seul territoire, ni la seule langue, ni les seules lois ne suffisent à l'expliquer. Ce qui unit un peuple, c'est aussi, et peut-être surtout, un récit : une histoire commune qu'il se raconte, sur ses origines, ses épreuves, ses gloires, sa vocation. Les nations tiennent ensemble par ces récits partagés, autant que par leurs frontières.
+
+Ce récit national remplit une fonction réelle et précieuse. Il crée un sentiment d'appartenance, relie des inconnus dans une communauté imaginée, donne aux individus le sentiment de participer à quelque chose qui les dépasse et les précède. Sans ce lien narratif, une nation ne serait qu'une juxtaposition d'individus sans rien de commun. Les récits fondateurs, les héros célébrés, les grands moments commémorés tissent cette solidarité invisible sans laquelle aucune vie commune durable n'est possible.
+
+Mais ces récits ont un défaut inhérent : ils simplifient, embellissent, et parfois falsifient. Pour unir, un récit national tend à lisser les aspérités, à magnifier les gloires et à taire les hontes, à présenter comme une évidence naturelle ce qui fut le produit de hasards et de violences. Il transforme une histoire complexe et souvent trouble en un récit cohérent et flatteur. Ce faisant, il s'éloigne de la vérité, et peut devenir un mythe qui aveugle plus qu'il n'éclaire.
+
+Le danger apparaît lorsque ce récit, au lieu de simplement unir, se met à exclure et à opposer. Car un récit national peut aussi se construire contre d'autres : en désignant des ennemis, en glorifiant sa propre supériorité, en nourrissant le mépris ou la haine de ceux qui n'en font pas partie. L'histoire montre à quels désastres peuvent mener les récits nationaux dévoyés, quand un peuple se raconte une histoire de grandeur et de pureté qui justifie l'agression ou l'exclusion. Le récit qui unit peut aussi armer.
+
+Faut-il alors renoncer à tout récit national, au nom de la seule vérité historique ? Ce serait à la fois impossible et dangereux. Impossible, car aucune communauté ne se passe de récit ; dangereux, car le vide laissé serait aussitôt comblé par des récits plus grossiers. L'enjeu n'est pas de supprimer le récit, mais de le vouloir plus honnête : capable d'unir sans mentir, de fonder une appartenance sans nier la complexité, d'être fier sans être aveugle.
+
+Une nation adulte est celle qui peut se raconter une histoire vraie, avec ses grandeurs et ses fautes, et y trouver malgré tout de quoi tenir ensemble. C'est là un équilibre difficile, toujours menacé, entre le mythe qui unit et la vérité qui libère. Mais c'est à cette condition qu'un récit commun peut rassembler les vivants sans les armer contre d'autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-115",
+    title: "Se souvenir pour ne pas recommencer",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On répète que le souvenir prévient le pire. Est-ce si sûr ?",
+    blurbEn:
+      "'Never again' rests on the belief that remembering atrocities prevents their return. A clear-eyed look at whether memory really protects us — and what it takes. (Section: History and memory, 5/5.)",
+    body: `« Se souvenir pour que cela ne se reproduise pas. » Cette formule, souvent répétée à propos des grandes tragédies de l'histoire, exprime une conviction profonde : le souvenir des horreurs passées nous prémunirait contre leur retour. C'est au nom de cette idée qu'on entretient la mémoire des massacres, qu'on visite les lieux de l'horreur, qu'on transmet aux jeunes générations le récit du pire. Mais cette conviction, si noble soit-elle, mérite d'être examinée avec lucidité. Le souvenir suffit-il vraiment à empêcher que le pire recommence ?
+
+L'idée repose sur un raisonnement séduisant : si les gens savent ce à quoi ont mené certaines idées, certaines haines, certaines lâchetés, ils sauront les reconnaître et les refuser. Le souvenir serait ainsi une vigilance, une immunité acquise au prix du malheur passé. Et il est vrai que l'ignorance du passé favorise sa répétition : un peuple qui ne saurait rien des désastres de l'histoire serait plus exposé à en refaire le chemin. À ce titre, la mémoire est bien une protection, et l'oubli, un danger.
+
+Pourtant, l'histoire elle-même invite à ne pas surestimer ce pouvoir. Car des atrocités se sont répétées quand bien même le souvenir des précédentes était vivace. Connaître le passé n'a pas toujours empêché de recommencer, et l'on a vu des sociétés instruites de l'horreur y sombrer de nouveau. Le souvenir, à lui seul, ne vaccine pas. Il peut même, mal orienté, nourrir de nouveaux ressentiments, entretenir des haines anciennes, servir à justifier de nouvelles violences au nom de blessures passées. La mémoire n'est pas toujours du côté de la paix.
+
+C'est que le souvenir peut prendre des formes très différentes. Se souvenir en victime, pour entretenir une rancune, n'a pas le même effet que se souvenir pour comprendre. Une mémoire qui se contente de ressasser l'émotion, sans effort de compréhension, protège mal : elle émeut sans éclairer. Ce qui protège vraiment, c'est moins le souvenir brut que ce qu'on en fait : comprendre comment le pire a été possible, quels mécanismes y ont conduit, quelles lâchetés ordinaires l'ont permis. Se souvenir des faits ne suffit pas ; il faut en tirer une intelligence.
+
+Le souvenir n'est donc une protection qu'à certaines conditions. Il faut qu'il s'accompagne de compréhension, qu'il vise à reconnaître les mécanismes du mal plutôt qu'à seulement en pleurer les victimes, qu'il éclaire le présent plutôt que d'enfermer dans le passé. Un souvenir intelligent regarde moins vers l'arrière que vers l'avant : il scrute le présent pour y déceler les signes de ce qu'il connaît.
+
+Se souvenir pour ne pas recommencer : oui, mais à condition de se souvenir vraiment, c'est-à-dire de comprendre. La mémoire n'est pas une garantie automatique ; c'est une vigilance à entretenir, un travail toujours à reprendre. Elle ne nous protège que si nous la faisons travailler, non si nous la laissons dormir dans les commémorations.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-116",
+    title: "Ce que la science peut et ne peut pas",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La science répond à beaucoup de questions. Mais pas à toutes.",
+    blurbEn:
+      "Science answers a vast range of questions — but not every question is scientific. A reflection on the reach and the limits of scientific knowledge. (Section: Science and doubt, 1/5.)",
+    body: `La science a transformé le monde et notre compréhension de lui avec une puissance sans égale. Elle a percé des mystères qu'on croyait insondables, guéri des maux qu'on croyait fatals, révélé l'immensité de l'univers et l'intimité de la matière. Devant tant de réussites, il est tentant de croire qu'elle pourrait répondre à toutes les questions, et que ce qu'elle ne saurait établir ne mériterait pas d'être pris au sérieux. Cette confiance, pourtant, mérite d'être nuancée : la science peut beaucoup, mais elle ne peut pas tout, et confondre ses limites avec celles de la connaissance serait une erreur.
+
+Ce que la science peut faire, elle le fait mieux que toute autre approche : décrire et expliquer le monde tel qu'il est. Comment se meuvent les astres, de quoi sont faits les corps, comment évoluent les espèces, ce qui cause les maladies : à ces questions, et à d'innombrables autres, la science apporte des réponses éprouvées, sans cesse vérifiées et corrigées. Sa force est précisément là : dans une méthode qui soumet toute affirmation à l'épreuve des faits, et n'accorde sa confiance qu'à ce qui résiste à l'examen.
+
+Mais cette force même dessine ses limites. La science répond à des questions sur ce qui est ; elle est démunie devant les questions sur ce qui doit être. Elle peut dire ce qu'une action produira, non si cette action est bonne ou juste. Elle peut décrire la vie, non dire quel sens lui donner. Ces questions — morales, existentielles, esthétiques — ne sont pas des questions scientifiques, non parce qu'elles seraient négligeables, mais parce qu'elles ne relèvent pas de l'observation des faits. Aucune expérience ne dira si une vie vaut la peine d'être vécue, ni ce que nous devons à autrui.
+
+Il faut se garder, ici, de deux erreurs symétriques. La première, qu'on pourrait appeler le scientisme, consiste à croire que seule la science donne un savoir véritable, et à tenir pour vaine toute question qui échappe à sa méthode. Cette attitude ampute l'existence de dimensions essentielles — la morale, le sens, la beauté — sous prétexte qu'elles ne se mesurent pas. La seconde erreur, inverse, consiste à se servir des limites de la science pour discréditer ce qu'elle établit, comme si le fait qu'elle ne réponde pas à tout autorisait à douter de ce à quoi elle répond. Reconnaître que la science ne dit pas tout ne permet nullement de nier ce qu'elle démontre.
+
+La juste attitude tient dans un double respect. Respect de la science dans son domaine : sur les questions de fait, son autorité est légitime, et lui préférer l'opinion ou la croyance est déraisonnable. Respect, aussi, de ce qui échappe à son domaine : les questions de sens et de valeur, qu'elle ne saurait trancher, appellent d'autres ressources — la philosophie, la morale, l'expérience, la sagesse.
+
+La science est un instrument admirable, mais un instrument, non un oracle universel. Savoir ce qu'elle peut nous éviter de la mépriser ; savoir ce qu'elle ne peut pas nous éviter de lui demander ce qu'elle ne saurait donner. Entre l'idolâtrie et la méfiance, il y a place pour une confiance lucide.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-117",
+    title: "Le doute, moteur de la science",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On reproche parfois à la science de changer d'avis. C'est sa force.",
+    blurbEn:
+      "People sometimes distrust science because 'it keeps changing its mind'. But revising beliefs in light of evidence is not a weakness — it is the whole point. (Section: Science and doubt, 2/5.)",
+    body: `On entend parfois, pour discréditer la science, un reproche qui se veut décisif : elle change d'avis. Ce qu'elle affirmait hier, elle le corrige aujourd'hui ; ses certitudes d'une époque sont démenties par la suivante. Comment lui faire confiance, dès lors, si elle se contredit ainsi ? Ce reproche, courant, repose pourtant sur un profond malentendu. Car ce qu'on présente comme une faiblesse est, en réalité, la force même de la science, et ce qui la distingue de tout ce qui prétend au savoir sans jamais se remettre en question.
+
+Comprenons bien ce que signifie « changer d'avis » en science. Cela ne veut pas dire céder au caprice ou à la mode, mais réviser ses conclusions à la lumière de faits nouveaux. Lorsqu'une observation contredit une théorie, le scientifique ne s'entête pas à défendre sa théorie contre les faits ; il la modifie, ou l'abandonne pour une meilleure. Cette capacité à se corriger n'est pas un défaut du savoir scientifique : c'en est le principe. La science progresse précisément parce qu'elle accepte de se tromper et de rectifier.
+
+Ce qui devrait nous inquiéter, ce n'est donc pas une science qui se corrige, mais un savoir qui ne se corrigerait jamais. Une doctrine qui prétendrait détenir une vérité définitive, insensible à toute objection, à tout fait contraire, ne serait pas plus fiable : elle serait dogmatique. Face à une réalité complexe et en partie inconnue, la certitude inébranlable est suspecte, et la capacité à douter, à réviser, à admettre son erreur, est au contraire la marque d'un rapport honnête au vrai. Le doute n'est pas l'ennemi du savoir ; il en est le gardien.
+
+C'est ce doute méthodique qui fait la fiabilité de la science, malgré ses erreurs — ou plutôt grâce à sa façon de les traiter. Aucune affirmation scientifique n'est à l'abri d'être un jour révisée ; toutes sont, par principe, provisoires, offertes à la critique et à l'épreuve des faits. Cette absence de certitude définitive, qui peut sembler une faiblesse, est ce qui permet à la science de s'approcher, correction après correction, d'une compréhension toujours plus juste. Ce qui est solide en elle, ce ne sont pas des vérités éternelles, mais une méthode qui apprend de ses fautes.
+
+Il faut cependant se garder d'un contresens. Que la science se corrige ne signifie pas que tout s'y vaut, ni que ses conclusions actuelles ne mériteraient aucune confiance sous prétexte qu'elles pourraient changer. Une théorie longuement éprouvée, confirmée par d'innombrables observations, mérite qu'on s'y fie, même si l'avenir peut l'affiner. Du fait que la science est révisable, on ne saurait conclure que ses résultats seraient sans valeur : ce serait confondre la prudence avec le scepticisme paresseux.
+
+Le doute, bien compris, n'affaiblit donc pas la science ; il la fonde. Se défier de ce qui ne doute jamais, faire confiance à ce qui accepte de se corriger : voilà peut-être la leçon la plus précieuse que la science puisse nous transmettre, bien au-delà de ses résultats. Car cette disposition à réviser ses croyances devant les faits n'est pas seulement une méthode scientifique ; c'est une vertu intellectuelle dont nos débats, souvent, manquent cruellement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-118",
+    title: "Quand faut-il croire un expert ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On ne peut pas tout vérifier soi-même. À qui, alors, se fier ?",
+    blurbEn:
+      "We cannot verify everything ourselves, so we must trust experts — but which ones, and when? A guide to trusting expertise without abandoning judgement. (Section: Science and doubt, 3/5.)",
+    body: `Nul ne peut tout savoir ni tout vérifier par soi-même. Sur l'immense majorité des sujets, nous sommes contraints de nous en remettre à ceux qui savent : médecins, scientifiques, ingénieurs, spécialistes en tout genre. Cette confiance dans les experts est inévitable, et même raisonnable : il serait absurde de prétendre juger de tout à partir de sa seule opinion. Mais elle soulève une question délicate : à qui se fier, et jusqu'où ? Car les experts ne sont pas infaillibles, il leur arrive de se tromper, et parfois de se contredire entre eux.
+
+Commençons par écarter deux attitudes également commodes et également fausses. La première est la soumission aveugle : croire un expert sur parole, simplement parce qu'il est présenté comme tel, sans jamais s'interroger. La seconde est la défiance systématique : rejeter par principe la parole des experts, au nom d'un « je me fais ma propre opinion » qui, faute de compétence, n'est souvent qu'une opinion mal informée déguisée en indépendance d'esprit. Entre la crédulité et le rejet, il faut chercher une voie plus juste.
+
+Cette voie repose sur quelques repères. D'abord, la compétence n'est pas générale mais spécialisée : un expert n'est fiable que dans son domaine propre. Un savant éminent dans une discipline n'a, sur un autre sujet, pas plus d'autorité qu'un autre. Se méfier de ceux qui se prononcent avec assurance hors de leur champ de compétence est un premier réflexe salutaire. La notoriété n'est pas la compétence, et le titre d'expert ne vaut que sur le terrain où il a été acquis.
+
+Ensuite, il faut distinguer l'accord et le désaccord des experts. Lorsque, sur une question, l'immense majorité des spécialistes s'accordent après des années de travaux, cet accord constitue le meilleur savoir disponible, et le contredire sur la foi de sa seule intuition est déraisonnable. Lorsque, au contraire, les experts sont réellement divisés, la prudence s'impose, et nul ne peut prétendre trancher au nom de la science. Confondre un désaccord marginal avec une véritable controverse, ou présenter un consensus comme une simple opinion, sont deux manières courantes de tromper.
+
+Il faut enfin s'interroger sur les intérêts. Un expert n'est pas un pur esprit : il peut être influencé par ce qui le finance, par ses convictions, par les intérêts qu'il sert. Cela ne suffit pas à le disqualifier — un chercheur financé peut dire vrai —, mais invite à la vigilance, surtout quand ses conclusions coïncident opportunément avec les intérêts de qui le rémunère. Chercher qui parle, et au nom de quoi, fait partie d'un jugement éclairé.
+
+Faire confiance aux experts n'est donc ni une abdication ni une naïveté, à condition de le faire avec discernement : respecter la compétence dans son domaine, suivre les consensus solides, rester prudent devant les désaccords, s'interroger sur les intérêts. On peut ainsi se fier à ceux qui savent sans renoncer à son jugement — car le vrai jugement ne consiste pas à tout savoir soi-même, mais à savoir raisonnablement à qui se fier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-119",
+    title: "La tentation des explications simples",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Face au complexe, l'esprit préfère les réponses claires. Au risque du faux.",
+    blurbEn:
+      "Faced with a complicated world, the mind craves simple, clear answers — which is exactly what makes false explanations so appealing. A look at a universal weakness. (Section: Science and doubt, 4/5.)",
+    body: `Le monde est compliqué. Les phénomènes qui nous entourent — sociaux, économiques, naturels — résultent le plus souvent de causes multiples, enchevêtrées, difficiles à démêler. Or notre esprit, face à cette complexité, éprouve un malaise et cherche instinctivement à le dissiper. Il préfère les explications simples, claires, qui rassurent et se retiennent aisément. Cette préférence, bien naturelle, est aussi l'une de nos plus dangereuses faiblesses, car ce qui est simple à comprendre n'est pas nécessairement vrai.
+
+La tentation de l'explication simple prend des formes reconnaissables. Elle cherche une cause unique là où il y en a plusieurs : ce problème vient de telle chose, et d'elle seule. Elle désigne un responsable commode : si les choses vont mal, c'est la faute de tel groupe, de telle décision, de telle personne. Elle réduit une réalité complexe à une opposition tranchée, à un récit clair où le bien et le mal, la cause et l'effet, se laissent identifier sans effort. Ces explications ont un immense attrait : elles apaisent l'inconfort de l'incertitude et donnent le sentiment de comprendre.
+
+Cet attrait explique le succès des théories qui prétendent tout expliquer par une cause cachée unique. Face à des événements troublants, dont les causes réelles sont diffuses et décevantes, l'esprit se laisse séduire par l'idée qu'un plan, une volonté, un coupable se dissimuleraient derrière tout. De telles explications ont pour elles la clarté et le drame ; elles transforment le désordre déroutant du réel en un récit satisfaisant. Qu'elles soient fausses ne les empêche pas d'être crues, car elles répondent à un besoin plus fort que le souci de la vérité : le besoin de comprendre, ou de croire comprendre.
+
+Résister à cette tentation demande un effort, et même un certain courage : celui d'accepter la complexité, de tolérer l'incertitude, de reconnaître qu'on ne comprend pas tout. Il est plus confortable de tenir une explication simple et fausse que d'admettre que la vérité est compliquée, incertaine, peut-être en partie hors de portée. Accepter de ne pas trancher, de suspendre son jugement, de vivre avec des questions sans réponse claire, va à l'encontre de notre penchant le plus naturel. C'est pourtant à ce prix qu'on échappe aux illusions rassurantes.
+
+Cela ne signifie pas qu'il faille se réfugier dans un scepticisme paralysant, où rien ne serait jamais explicable. Toutes les explications ne se valent pas, et certaines, quoique complexes, sont solidement établies. Il ne s'agit pas de renoncer à comprendre, mais de se méfier des compréhensions trop faciles, de préférer une vérité compliquée à un mensonge limpide. La simplicité peut être la marque d'une pensée profonde ; elle est plus souvent celle d'une pensée paresseuse.
+
+Se défier des explications simples, c'est cultiver une forme de maturité intellectuelle : celle qui préfère l'inconfort du vrai au confort du faux, qui accepte que le monde résiste à nos désirs de clarté. Dans un temps où tant de voix offrent des réponses tranchées à des questions complexes, cette défiance n'est pas un luxe ; c'est une nécessité.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-120",
+    title: "Comprendre le hasard",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Notre esprit résiste au hasard : il veut, partout, voir un sens.",
+    blurbEn:
+      "The human mind is bad at hazard: it insists on seeing patterns and meaning where there is only chance. Why understanding randomness matters more than we think. (Section: Science and doubt, 5/5.)",
+    body: `Le hasard existe, mais notre esprit le supporte mal. Face à des événements dus à la seule chance, nous cherchons obstinément un sens, une cause, une intention. Nous voyons des figures dans le nuage des coïncidences, des signes dans ce qui n'est que fortuit, des tendances dans ce qui n'est que fluctuation. Cette difficulté à admettre le hasard, à le reconnaître pour ce qu'il est, n'est pas anodine : elle fausse notre jugement de mille manières, et comprendre le hasard est l'une des choses les plus utiles, et les plus contre-intuitives, que la raison puisse apprendre.
+
+D'où vient cette résistance ? Sans doute d'un penchant profond à chercher partout des explications. Voir des causes et des intentions a été, pour nos ancêtres, un avantage : mieux valait imaginer un prédateur derrière un bruit que d'ignorer un danger réel. Ce réflexe, précieux face aux menaces, nous égare face au hasard : il nous fait attribuer un sens à ce qui n'en a pas, discerner une volonté là où il n'y a que des coïncidences. Nous sommes, en quelque sorte, câblés pour refuser le hasard.
+
+Ce refus produit des erreurs caractéristiques. Après une série de coïncidences, nous croyons à un lien qui n'existe pas. Devant une suite de résultats, nous imaginons une régularité, une « série », là où le hasard seul opère. Nous nous étonnons de coïncidences qui, statistiquement, étaient presque certaines de se produire un jour, sur un si grand nombre d'occasions. Nous tirons des conclusions d'un petit nombre de cas, oubliant qu'un échantillon réduit fluctue énormément. Toutes ces erreurs ont une racine commune : notre incapacité à concevoir ce que le hasard produit réellement.
+
+Comprendre le hasard, c'est donc d'abord accepter une idée dérangeante : bien des choses arrivent sans raison, sans cause déterminée, sans intention. Une coïncidence frappante peut n'être qu'une coïncidence ; une réussite ou un échec peuvent devoir beaucoup à la chance ; une série peut n'avoir aucun sens. Reconnaître la part du hasard, ce n'est pas renoncer à comprendre le monde ; c'est comprendre qu'une part du monde échappe, par nature, à toute explication en termes de causes ou d'intentions.
+
+Cette compréhension a des vertus concrètes. Elle rend plus prudent devant les coïncidences, plus modeste devant ses réussites comme devant ses échecs, plus résistant aux illusions qui exploitent notre difficulté avec le hasard. Elle protège contre ceux qui, jouant sur ce penchant, nous vendent des causes imaginaires, des remèdes miracles, des explications trompeuses de ce qui n'est que fluctuation. Savoir reconnaître le hasard, c'est se prémunir contre une foule d'erreurs et de manipulations.
+
+Comprendre le hasard, enfin, est une forme de sagesse. C'est accepter que nous ne contrôlons pas tout, que la chance joue dans nos vies un rôle que nous préférons ignorer, que tout n'a pas un sens caché. Cette lucidité peut sembler austère ; elle est aussi libératrice. Car reconnaître la part du hasard, c'est cesser de chercher désespérément un sens là où il n'y en a pas, et concentrer son intelligence là où elle peut vraiment comprendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

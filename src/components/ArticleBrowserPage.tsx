@@ -13,7 +13,7 @@ import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
 import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
-import { getSelectedReadingLevel } from "@/lib/onboarding";
+import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
 import {
   DAILY_BANK_ARTICLE_LIMIT,
   DAILY_RSS_ARTICLE_LIMIT,
@@ -241,6 +241,11 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     setLanguageFilter("all");
   }
 
+  function changeSelectedLevel(level: Difficulty) {
+    updateSelectedReadingLevel(level);
+    setSelectedLevel(level);
+  }
+
   const title = mode === "live" ? "Live News" : "Lessons";
   const subtitle = mode === "live" ? "Current French articles for when you want a stretch." : "Follow one guided reading path.";
 
@@ -295,7 +300,13 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         (mode === "live" ? (
           <LiveNewsContent sections={sections} todayWords={todayWords} />
         ) : (
-          <LessonsContent sections={sections} customArticles={customArticles} savedLaterArticles={savedLaterArticles} />
+          <LessonsContent
+            sections={sections}
+            customArticles={customArticles}
+            savedLaterArticles={savedLaterArticles}
+            selectedLevel={selectedLevel}
+            onLevelChange={changeSelectedLevel}
+          />
         ))}
 
       {!liveNewsGated && mode === "articles" && (
@@ -447,16 +458,20 @@ function LessonsContent({
   sections,
   customArticles,
   savedLaterArticles,
+  selectedLevel,
+  onLevelChange,
 }: {
   sections: RecommendationSections;
   customArticles: ScoredArticle[];
   savedLaterArticles: ScoredArticle[];
+  selectedLevel: Difficulty;
+  onLevelChange: (level: Difficulty) => void;
 }) {
   const hasExtraReading = customArticles.length > 0 || sections.dailyBank.length > 0 || savedLaterArticles.length > 0;
 
   return (
     <>
-      <JourneyMap />
+      <JourneyMap selectedLevel={selectedLevel} onLevelChange={onLevelChange} />
       <details className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
         <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
           Extra reading
