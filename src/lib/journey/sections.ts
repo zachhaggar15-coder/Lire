@@ -1117,6 +1117,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-b2-050", // Un seul geste suffit-il ? (hardest)
     ],
   },
+  {
+    id: "c1-public-debate",
+    band: "C1",
+    title: "Public debate",
+    goal: "Essay register: debate as a fragile civilisation, indignation vs thought, the tyranny of transparency, permanent scandal, the courage of nuance.",
+    textIds: [
+      "starter-c1-001", // Le débat, une civilisation fragile (sets the register)
+      "starter-c1-002", // L'indignation contre la pensée
+      "starter-c1-003", // La tyrannie de la transparence
+      "starter-c1-004", // Le scandale permanent
+      "starter-c1-005", // Le courage de la nuance (hardest)
+    ],
+  },
+  {
+    id: "c1-philosophy",
+    band: "C1",
+    title: "Philosophy and society",
+    goal: "What philosophy is for, the illusion of free will, what we owe others, the meaning of progress, thinking against oneself.",
+    textIds: [
+      "starter-c1-006", // À quoi bon la philosophie ?
+      "starter-c1-007", // La liberté est-elle une illusion ?
+      "starter-c1-008", // Ce que nous devons aux autres
+      "starter-c1-009", // Le progrès a-t-il un sens ?
+      "starter-c1-010", // Penser contre soi-même (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */

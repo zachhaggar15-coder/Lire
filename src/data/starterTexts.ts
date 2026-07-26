@@ -16231,4 +16231,234 @@ Ainsi s'achève ce long parcours, sur la plus haute des questions. Vivre en sach
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-001",
+    title: "Le débat, une civilisation fragile",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Débattre suppose une confiance que rien ne garantit, et que tout peut ruiner.",
+    blurbEn:
+      "Public debate rests on fragile, unspoken conditions we rarely notice until they fail. An essay on what it takes for a society to argue rather than fight. (Section: Public debate, 1/5.)",
+    body: `On tient le débat pour une évidence, presque pour un décor naturel de la vie démocratique. On oublie qu'il constitue en réalité une conquête tardive et précaire, reposant sur des conditions si exigeantes qu'il est plus étonnant qu'il existe que fragile qu'il le soit. Car débattre, au sens plein, ne consiste pas à faire coexister des opinions contraires dans un même espace ; c'est accepter de soumettre ses convictions à l'épreuve de la contradiction, dans l'espoir qu'il en sorte quelque chose de plus vrai ou de plus juste. Une telle disposition n'a rien de spontané ; elle va même à l'encontre de nos penchants les plus profonds.
+
+La première condition du débat est en effet la plus improbable : reconnaître à celui qui nous contredit une légitimité égale à la nôtre. Rien ne nous y incline naturellement. Nous sommes portés à tenir nos convictions pour évidentes, et donc à expliquer le désaccord d'autrui par son ignorance, sa mauvaise foi ou ses intérêts. Débattre suppose de suspendre ce réflexe, d'admettre que l'autre puisse penser différemment pour des raisons qu'il croit, comme nous, bonnes. Sans cette présomption de légitimité, il n'y a pas de débat, seulement l'affrontement de camps qui se dénient mutuellement le droit de parler.
+
+La deuxième condition est l'existence de faits partagés. Un débat véritable suppose un terrain commun, un socle de réalités que les adversaires reconnaissent ensemble, et sur lequel leur désaccord peut se déployer. Là où chacun dispose de ses propres faits, où la réalité elle-même devient objet de dispute, le débat perd son sol : on ne discute plus des interprétations d'un monde commun, on habite des mondes séparés. C'est pourquoi la dislocation du socle factuel — cette impression que « chacun a sa vérité » — n'est pas un détail, mais une menace pour la possibilité même de délibérer.
+
+La troisième condition tient à une disposition intérieure rare : accepter de pouvoir avoir tort. Celui qui entre dans un débat en tenant sa conclusion pour acquise ne débat pas ; il plaide. Le débat authentique comporte un risque, celui d'être convaincu, de devoir réviser ses vues, de sortir de l'échange autre qu'on y est entré. Cette vulnérabilité consentie est la marque du débat véritable, et son exigence la plus difficile, car elle heurte notre attachement à nos propres opinions, que nous vivons moins comme des hypothèses que comme des possessions, voire comme des parts de nous-mêmes.
+
+Que ces conditions soient si exigeantes explique la fragilité du débat, et la facilité avec laquelle il se dégrade en son contraire. Il suffit qu'une seule vienne à manquer — que l'on dénie à l'adversaire sa légitimité, que le socle factuel se dissolve, que nul n'accepte plus de pouvoir se tromper — pour que la délibération cède la place à l'invective, à la propagande, à la guerre des camps. Or ces trois conditions sont aujourd'hui simultanément attaquées, ce qui devrait nous inquiéter plus que le contenu de tel ou tel débat particulier.
+
+Comprendre le débat comme une civilisation fragile, et non comme un acquis, change le regard qu'on porte sur lui. Cela invite à le tenir non pour un droit qu'il suffirait de proclamer, mais pour une pratique délicate qu'il faut entretenir, protéger, réapprendre. Une société ne cesse pas de débattre du jour au lendemain ; elle en perd insensiblement la capacité, à mesure que se défont les conditions qui la rendaient possible. Et lorsqu'un peuple a désappris à débattre, il ne lui reste, pour trancher ses désaccords, que des voies dont l'histoire a montré le prix.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-002",
+    title: "L'indignation contre la pensée",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "S'indigner est devenu une posture. Mais l'indignation dispense-t-elle de penser ?",
+    blurbEn:
+      "Indignation feels like moral engagement, yet it can be the enemy of thought. An essay on how the reflex to be outraged short-circuits judgement. (Section: Public debate, 2/5.)",
+    body: `L'indignation jouit aujourd'hui d'un prestige singulier. S'indigner passe pour une vertu, la marque d'une conscience éveillée, d'un refus des injustices ; ne pas s'indigner, pour une forme de complicité, d'indifférence coupable. Cette valorisation n'est pas sans fondement : l'indignation a été, dans l'histoire, le ressort de nobles combats, et l'incapacité à s'émouvoir du mal a quelque chose de glaçant. Pourtant, il faut oser interroger cette posture devenue dominante, car l'indignation, si elle peut éveiller la pensée, peut aussi, plus souvent qu'on ne le croit, en tenir lieu et la dispenser.
+
+Ce qui caractérise l'indignation, c'est son immédiateté. Elle est une réaction, un mouvement de l'affect qui précède le jugement et souvent le remplace. Devant ce qui la déclenche, elle ne s'interroge pas ; elle condamne. Or cette rapidité, qui fait sa force apparente, est aussi sa faiblesse. Car les situations qui appellent un jugement sont le plus souvent complexes, ambiguës, traversées de considérations contradictoires. L'indignation, elle, tranche d'emblée, sans examen, sur la seule foi de l'émotion ressentie. Elle offre le confort d'une certitude morale immédiate, là où la pensée exigerait le lent travail de la nuance.
+
+Il y a plus troublant. L'indignation procure un plaisir qu'on avoue rarement : celui de se sentir du bon côté. S'indigner, c'est se placer aussitôt dans le camp des justes, contre celui des coupables ; c'est jouir d'une supériorité morale sans avoir eu à la mériter par le moindre acte. Cette satisfaction est d'autant plus vive qu'elle ne coûte rien : on peut s'indigner à peu de frais, sans agir, sans réfléchir, en éprouvant néanmoins le sentiment gratifiant de sa propre vertu. L'indignation devient alors une posture, une manière de se donner à voir comme conscience morale, davantage qu'un engagement réel.
+
+Cette dérive est aggravée par les dispositifs qui organisent aujourd'hui l'expression publique. Les plateformes numériques récompensent précisément ce que l'indignation produit : la réaction vive, le partage impulsif, l'émotion qui se propage. Elles font de l'indignation une monnaie, un ressort de visibilité, et incitent chacun à s'indigner toujours plus fort, toujours plus vite, sur toujours plus de sujets. Il en résulte une inflation de l'indignation qui, loin d'aiguiser les consciences, les épuise et les brutalise, transformant le débat en une compétition d'affects où le plus outré l'emporte sur le plus juste.
+
+Faut-il en conclure qu'il faudrait bannir l'indignation, lui préférer une froideur détachée ? Ce serait une erreur symétrique. L'indignation a sa place et sa légitimité : elle peut être le premier mouvement, sain et nécessaire, par lequel une conscience refuse l'inacceptable. Le problème n'est pas qu'on s'indigne, mais qu'on en reste là, que l'indignation se substitue à l'examen au lieu de le précéder. Une indignation qui débouche sur la pensée, qui accepte ensuite de s'interroger, de nuancer, de comprendre, reste féconde ; une indignation qui se suffit à elle-même se stérilise et stérilise le débat.
+
+Le véritable enjeu est donc de rendre à l'indignation sa juste fonction : celle d'une alerte, non d'un verdict. Éprouver le choc du mal, mais ne pas s'en contenter ; laisser l'émotion appeler la réflexion plutôt que la clore. Cela suppose de résister à la facilité du jugement immédiat, à la douceur de la certitude morale, à la pente qui fait préférer l'éclat de l'indignation à la patience de la pensée. Dans une époque qui érige l'indignation en vertu suprême, revendiquer le droit de penser avant de condamner est devenu, paradoxalement, une audace.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-003",
+    title: "La tyrannie de la transparence",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "On exige que tout soit visible. Mais une société sans opacité est-elle vivable ?",
+    blurbEn:
+      "Transparency has become an unquestioned virtue. This essay asks whether a society that demands total visibility leaves room for freedom and nuance. (Section: Public debate, 3/5.)",
+    body: `La transparence s'est imposée comme une exigence morale de notre temps, au point qu'il paraît presque scandaleux de la mettre en question. On la réclame partout : dans la vie politique, dans les entreprises, dans les institutions, jusque dans les rapports privés. Ce qui est caché devient suspect ; ce qui refuse de se montrer semble avoir quelque chose à dissimuler. Cette aspiration a d'évidentes vertus : elle combat le secret des puissants, l'opacité qui protège les abus, l'arbitraire qui prospère dans l'ombre. Et pourtant, il faut avoir le courage de se demander si la transparence érigée en absolu ne se retourne pas contre ce qu'elle prétend servir.
+
+Car la transparence totale a un coût que son prestige fait oublier. Une société où tout devrait être visible, où rien ne pourrait rester à l'abri du regard, serait une société invivable. La pensée elle-même a besoin d'un espace de retrait où elle puisse se former avant de s'exposer, tâtonner, se tromper, mûrir. Exiger que tout soit immédiatement public, c'est interdire ce travail de l'ombre sans lequel rien de profond ne s'élabore. Un responsable dont chaque hésitation, chaque doute, chaque délibération intérieure serait exposée ne pourrait plus penser librement ; il ne pourrait que se conformer, par avance, à ce que le regard attend.
+
+Il y a plus. La transparence, présentée comme une garantie de vérité, produit souvent l'inverse. Lorsque tout est susceptible d'être vu, chacun se surveille, se met en scène, calcule ses paroles et ses gestes en fonction du regard supposé. La visibilité totale n'engendre pas l'authenticité, mais la performance : on ne montre plus ce qu'on est, on donne à voir ce qui sera bien vu. Ainsi la transparence, loin de dévoiler la vérité des êtres, les contraint à une comédie permanente, et substitue à la sincérité, qui a besoin d'intimité, la conformité, qui naît de l'exposition.
+
+Cette exigence a aussi partie liée avec une défiance généralisée qu'elle nourrit autant qu'elle exprime. Réclamer une transparence sans limite, c'est présupposer que nul ne mérite la confiance, que tout pouvoir, toute institution, toute personne cache par principe quelque faute qu'il faut traquer. Or une société ne peut fonctionner sans une part de confiance, c'est-à-dire sans accepter de ne pas tout vérifier, de faire crédit, de laisser à autrui une zone d'ombre. La transparence intégrale, en refusant ce crédit, mine le lien qu'elle prétend assainir : elle installe la suspicion là où il faudrait de la confiance, et transforme chacun en surveillant de tous.
+
+Il ne s'agit pas, en critiquant la transparence absolue, de défendre le secret des puissants ni l'opacité qui couvre les abus. La distinction est ici décisive : autre chose est d'exiger que ceux qui exercent un pouvoir rendent des comptes, autre chose est de vouloir que tout, en toute chose, soit exposé au regard. La première exigence est légitime et salutaire ; la seconde est une chimère dangereuse. Confondre les deux, au nom d'une transparence indistincte, c'est risquer de détruire, avec l'opacité coupable, l'ombre légitime dont la liberté, la pensée et la confiance ont besoin.
+
+Ce qu'une société libre doit préserver, c'est donc moins la transparence que sa juste mesure : la visibilité là où le pouvoir doit rendre des comptes, l'ombre là où la vie, la pensée et l'intimité doivent se protéger. Une civilisation ne se juge pas seulement à ce qu'elle expose, mais à ce qu'elle sait laisser dans une pénombre respectée. Car un monde entièrement transparent ne serait pas un monde entièrement vrai ; ce serait un monde où plus personne, se sachant toujours vu, n'oserait être tout à fait soi-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-004",
+    title: "Le scandale permanent",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Quand tout est scandale, plus rien ne l'est. L'usure d'une émotion collective.",
+    blurbEn:
+      "When everything is a scandal, nothing is. An essay on how the constant manufacture of outrage exhausts a society's capacity for genuine moral alarm. (Section: Public debate, 4/5.)",
+    body: `Notre vie publique vit à l'heure du scandale permanent. À peine une controverse s'est-elle éteinte qu'une autre l'a déjà remplacée ; chaque jour apporte son indignation nouvelle, son coupable désigné, son affaire à commenter. Ce régime d'agitation continue, nous nous y sommes accoutumés au point de ne plus le percevoir comme anormal. Il mérite pourtant qu'on l'interroge, car il produit un effet paradoxal : à force de tout ériger en scandale, on épuise la capacité même de s'alarmer de ce qui le mérite vraiment.
+
+Le mécanisme du scandale permanent obéit à une logique qu'il faut comprendre. Dans un espace saturé où d'innombrables voix se disputent une attention rare, le scandale est ce qui capte le regard. Il faut donc, pour exister, produire du scandale, en fabriquer sans cesse de nouveaux, en amplifier l'ampleur, en dramatiser les enjeux. Ce qui, hier, eût paru un incident mineur devient aujourd'hui une affaire d'État ; ce qui méritait une réserve devient objet d'indignation générale. L'inflation du scandale n'est pas le signe d'une société plus exigeante moralement, mais d'une économie de l'attention qui a besoin, pour tourner, d'un carburant émotionnel toujours renouvelé.
+
+Or cette inflation a le même effet que toute inflation : elle dévalue la monnaie qu'elle multiplie. Quand tout est présenté comme scandaleux, le mot perd son sens et son pouvoir. L'émotion collective, sans cesse sollicitée, s'émousse ; l'indignation, trop souvent réclamée, se fatigue. Il en résulte une accoutumance qui est le contraire de la vigilance : à force d'être alarmés pour tout, nous finissons par ne plus nous alarmer de rien, ou par réserver notre indignation à ce qui touche notre camp. Le scandale permanent ne rend pas les consciences plus sensibles ; il les anesthésie.
+
+Cette usure a une conséquence grave, souvent inaperçue. Dans le vacarme des scandales interchangeables, les injustices réelles, celles qui exigeraient une mobilisation durable, se trouvent noyées, traitées sur le même plan que des broutilles montées en épingle. Faute de hiérarchie, le grave et le futile se confondent, et l'indignation, dispersée sur tout, ne se concentre plus sur rien. Ainsi le scandale permanent, loin de servir la justice, la dessert : il consume l'énergie morale d'une société en la dilapidant sur mille objets, au lieu de la réserver aux causes qui la justifieraient.
+
+Il faut ajouter que ce régime favorise une forme particulière d'injustice : le procès expéditif. Le scandale exige un coupable immédiat, une condamnation rapide, sans le temps de l'examen ni les précautions du jugement. Emportée par sa propre dynamique, l'indignation collective désigne, condamne et punit avant d'avoir instruit, quitte à briser des réputations sur la foi d'accusations que nul n'a vérifiées. La vitesse du scandale est incompatible avec la lenteur de la justice, et cette incompatibilité fait des victimes que l'oubli du scandale suivant n'innocentera jamais.
+
+Résister au scandale permanent suppose une discipline collective difficile : réapprendre à distinguer, à hiérarchiser, à réserver l'alarme à ce qui la mérite, à accorder au jugement le temps qu'il exige. Cela suppose aussi une défiance envers notre propre appétit de scandale, envers le plaisir trouble qu'il y a à s'indigner, à condamner, à participer à la curée. Une société qui saurait s'indigner moins, mais mieux, serait plus juste qu'une société qui s'indigne de tout. Car la valeur de l'indignation ne tient pas à sa fréquence, mais à sa justesse — et une émotion qu'on prodigue sur tout finit par ne plus rien pouvoir défendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-005",
+    title: "Le courage de la nuance",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Dans un monde de camps, nuancer passe pour trahir. C'est pourtant une exigence.",
+    blurbEn:
+      "In a world of hardened camps, nuance is treated as betrayal or cowardice. This essay argues that it is, on the contrary, a demanding form of courage. (Section: Public debate, 5/5.)",
+    body: `Il faut aujourd'hui une forme de courage pour nuancer. Dans un espace public organisé en camps, où chaque question semble appeler un choix binaire, celui qui introduit une distinction, reconnaît une part de vérité à l'adversaire, refuse de trancher aussi nettement qu'on l'exige, s'expose à un double soupçon : la tiédeur pour les uns, la trahison pour les autres. La nuance passe pour une dérobade, un manque de courage, une manière de ne pas choisir. Il faut renverser ce préjugé, car la nuance, loin d'être une lâcheté, est l'une des formes les plus exigeantes du courage intellectuel.
+
+Comprenons d'abord pourquoi la nuance est ainsi dévaluée. Dans un débat polarisé, la clarté du camp l'emporte sur la justesse du propos. Ce qu'on attend de vous, ce n'est pas que vous pensiez juste, mais que vous soyez lisible : de quel côté êtes-vous ? La nuance brouille cette lisibilité ; elle rend incertain, inclassable, donc suspect. Celui qui nuance ne fournit pas au groupe le ralliement qu'il réclame ; il refuse la simplification qui permet de savoir aussitôt qui est ami et qui est ennemi. C'est ce refus qu'on lui reproche, sous couvert de lui reprocher son manque de fermeté.
+
+Or nuancer n'est pas hésiter, ni refuser de conclure. C'est reconnaître que le réel est complexe, que les questions difficiles comportent des considérations contradictoires, qu'une position peut être majoritairement juste tout en ayant ses angles morts, et l'adversaire majoritairement dans l'erreur tout en touchant, sur un point, quelque chose de vrai. La nuance n'est pas l'absence de conviction ; c'est la conviction qui a traversé la complexité au lieu de la fuir. Elle demande plus, et non moins, que la position tranchée : elle exige de tenir ensemble ce que la polarisation somme de séparer.
+
+C'est en quoi elle est un courage. Il est facile, et confortable, d'épouser sans réserve la position de son camp, d'en reprendre les certitudes, d'en partager les indignations ; on y gagne l'approbation des siens, le sentiment d'appartenir, la dispense de penser par soi-même. Nuancer, au contraire, c'est accepter de déplaire à son propre camp, de s'exposer à son reproche, de renoncer au confort de l'appartenance sans réserve. C'est risquer la solitude de celui qui ne se range pas entièrement, qui maintient sa liberté de juger contre la pression du groupe. Ce risque, beaucoup ne l'osent pas, et préfèrent la sécurité du ralliement à l'inconfort de la justesse.
+
+La nuance a en outre une vertu que la polarisation détruit : elle maintient ouvert l'espace du dialogue. Là où les positions tranchées s'affrontent sans se rencontrer, la nuance ménage des points de contact, reconnaît à l'autre une part de raison, rend possible qu'on s'écoute encore. Elle est le contraire de la guerre des camps, non parce qu'elle refuse de prendre parti, mais parce qu'elle prend parti sans nier la complexité ni diaboliser l'adversaire. En cela, elle est peut-être la condition même d'un débat qui ne dégénère pas en affrontement — cette civilisation fragile dont il a été question.
+
+Défendre la nuance n'est donc pas prôner la tiédeur, ni le refus de s'engager. C'est rappeler qu'une pensée juste épouse la complexité de son objet, qu'une conviction solide n'a pas peur de reconnaître ce qui la limite, et qu'un débat fécond suppose des esprits capables de distinguer plutôt que de rallier. Dans une époque qui récompense la certitude bruyante et le ralliement sans réserve, oser la nuance, maintenir la complexité contre la pression de simplifier, refuser de haïr ceux qu'on désapprouve : voilà qui exige, aujourd'hui plus que jamais, un véritable courage. Et c'est peut-être de ce courage-là, plus que de convictions plus fermes, que nos débats manquent le plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-006",
+    title: "À quoi bon la philosophie ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Une discipline qui ne produit rien, ne résout rien. Et pourtant, indispensable.",
+    blurbEn:
+      "Philosophy invents nothing and settles nothing, yet no civilisation has done without it. An essay on the strange, indispensable uselessness of thinking. (Section: Philosophy and society, 1/5.)",
+    body: `La philosophie souffre d'un discrédit particulier, celui des activités qui ne produisent rien de tangible. Elle ne construit pas de ponts, ne guérit pas de maladies, ne fait pas croître la richesse ; pis, elle ne semble même pas progresser, revenant sans cesse aux mêmes questions que se posaient déjà les Anciens, sans jamais les résoudre. Dans un monde qui juge toute chose à son utilité et à son rendement, elle fait figure de survivance, de luxe intellectuel dont on peine à dire à quoi il sert. Et pourtant, aucune civilisation digne de ce nom ne s'en est passée, et son apparente inutilité pourrait bien être le signe non de sa vanité, mais de sa profondeur.
+
+Il faut d'abord dissiper un malentendu. On reproche à la philosophie de ne rien résoudre, comme si elle avait échoué à faire ce que font les sciences. Mais ce reproche méconnaît sa nature. La philosophie ne traite pas des questions que l'observation ou le calcul pourraient trancher ; elle traite précisément de celles qui leur échappent, celles qui concernent le sens, la valeur, le juste, le bien, la nature de la connaissance ou de la conscience. Ces questions ne sont pas résolubles à la manière d'un problème scientifique, non parce qu'elles seraient mal posées, mais parce qu'elles engagent ce que nous sommes et ce que nous tenons pour important. Reprocher à la philosophie de ne pas les résoudre définitivement, c'est lui reprocher de s'attaquer à ce qui, par nature, ne se laisse pas clore.
+
+Que fait-elle, alors, si elle ne résout pas ? Elle interroge. Sa fonction première est de mettre en question ce qui va de soi, de débusquer les évidences qui gouvernent nos vies sans que nous les ayons jamais examinées. Nous vivons sur une masse de présupposés — sur ce qui est juste, sur ce qui vaut, sur ce que nous devons — que nous tenons pour naturels alors qu'ils sont hérités, contingents, discutables. La philosophie a cette vertu inconfortable de les rendre visibles, de nous forcer à les justifier, de nous priver du repos des idées reçues. Elle ne nous donne pas des réponses ; elle nous rend capables de poser les questions.
+
+Cette fonction, qui semble purement négative, est en réalité une libération. Car celui qui n'a jamais interrogé ses présupposés n'en est pas libre : il les subit, il pense et agit selon des cadres qu'il n'a pas choisis, croyant décider quand il ne fait qu'obéir à des évidences invisibles. Prendre conscience de ces cadres, les examiner, c'est commencer à s'en affranchir, à penser par soi-même au lieu de penser malgré soi. En ce sens, la philosophie n'est pas un savoir de plus, mais une émancipation : elle rend à l'esprit une liberté que l'habitude et le conformisme lui avaient dérobée.
+
+On objectera que cette émancipation est un luxe, réservé à quelques-uns, sans effet sur le cours du monde. Ce serait sous-estimer la portée des idées. Les conceptions que nous nous faisons du juste, de la liberté, de la nature humaine, ne restent pas dans les livres : elles gouvernent nos institutions, nos lois, nos manières de vivre ensemble. Les grandes transformations politiques ont presque toujours été précédées et nourries par un travail de la pensée qui avait, d'abord, rendu pensable ce qui allait devenir réel. La philosophie n'agit pas directement, mais elle façonne l'horizon dans lequel l'action devient possible ; son inutilité apparente masque une efficacité lente et profonde.
+
+Il reste que sa valeur ne se réduit pas à ses effets. La philosophie répond à un besoin qui n'est pas d'utilité mais de sens : celui, proprement humain, de comprendre sa condition, de ne pas traverser l'existence sans jamais s'interroger sur ce qu'on fait et pourquoi. Une vie qui ne se poserait jamais ces questions ne serait pas moins efficace ; elle serait moins pleinement humaine. C'est pourquoi la philosophie, qui ne sert à rien au sens où l'on sert un intérêt, est indispensable au sens où l'est tout ce qui fait que la vie mérite d'être examinée. Son inutilité n'est pas un défaut ; c'est le signe qu'elle touche à ce qui, en nous, dépasse le seul besoin de vivre pour interroger le fait même de vivre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-007",
+    title: "La liberté est-elle une illusion ?",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Si tout a une cause, nos choix aussi. Sommes-nous vraiment libres ?",
+    blurbEn:
+      "If every event has a cause, our choices do too — so are we really free? An essay on the oldest and most unsettling question about the human will. (Section: Philosophy and society, 2/5.)",
+    body: `Nous vivons dans la certitude d'être libres. Nous délibérons, nous choisissons, nous tenons les autres et nous-mêmes pour responsables de nos actes ; toute notre vie morale et sociale repose sur cette conviction. Et pourtant, un doute ancien la mine, que la science moderne a ravivé. Si tout événement a une cause, si le monde obéit à un enchaînement de causes et d'effets, alors nos choix, qui sont aussi des événements, ont eux aussi leurs causes ; ils résultent de l'état de notre cerveau, de notre histoire, de nos dispositions, elles-mêmes issues de causes antérieures. Où, dans cette chaîne, loger une liberté véritable ? Le sentiment que nous en avons ne serait-il qu'une illusion ?
+
+L'argument est redoutable par sa simplicité. Quand je crois choisir librement, je ne fais, dit-il, qu'exécuter ce que l'état antérieur du monde et de moi-même rendait inévitable. Ma délibération elle-même, mes raisons, mon sentiment de décider, sont les effets de causes que je ne maîtrise pas. La liberté que je m'attribue ne serait que l'ignorance des causes qui me déterminent : je me crois libre parce que je ne vois pas ce qui me fait agir, comme la pierre qui tomberait se croirait libre si elle ignorait la pesanteur. Cette thèse, le déterminisme, a pour elle la cohérence et l'appui de tout ce que la science nous apprend sur l'enchaînement des causes.
+
+Faut-il donc renoncer à la liberté ? Avant de le concéder, il convient d'examiner ce que nous entendons par ce mot. Si être libre signifie échapper à toute cause, agir sans que rien ne détermine notre action, alors la liberté est en effet impossible, et peut-être même inintelligible : une action sans aucune cause ne serait pas un acte libre, mais un pur hasard, ce qui n'est pas davantage ce que nous cherchons. La liberté comme absence totale de détermination est une chimère ; mais est-ce vraiment cela que nous voulons dire quand nous nous disons libres ?
+
+Une autre conception est possible, qui ne place pas la liberté hors des causes, mais dans une certaine manière d'être causé. Je suis libre, selon cette vue, non quand rien ne me détermine, mais quand ce qui me détermine, c'est moi-même : mes propres raisons, mes valeurs, ma réflexion, par opposition à une contrainte extérieure ou à une impulsion subie. L'homme poussé de force n'est pas libre ; celui qui agit sous l'emprise d'une passion qui le dépasse ne l'est guère ; mais celui qui agit selon ce qu'il juge, après délibération, être le meilleur, est libre en un sens réel, quand bien même sa délibération aurait elle-même des causes. La liberté ne serait pas l'absence de causes, mais l'accord de l'acte avec le moi qui l'accomplit.
+
+Cette conception ne dissipe pas toute difficulté, car on peut objecter que ce moi lui-même, avec ses raisons et ses valeurs, est le produit de causes qu'il n'a pas choisies. Le débat, ici, ne se laisse pas trancher d'un mot, et il serait présomptueux de prétendre le clore. Mais il faut remarquer ceci : même celui qui se persuade, en théorie, que la liberté est illusoire, continue, en pratique, de délibérer, de choisir, de tenir les autres pour responsables. Il ne peut pas vivre selon sa thèse. Cette impossibilité n'est pas une preuve, mais elle indique que la liberté, quoi qu'on pense de son statut métaphysique, est une catégorie dont nous ne pouvons nous défaire, inscrite au cœur de notre expérience et de notre vie commune.
+
+Peut-être la question n'est-elle pas de savoir si nous sommes libres au sens absolu — question qui pourrait n'avoir pas de réponse —, mais de reconnaître les degrés de liberté qui font une différence réelle dans nos vies. Entre l'homme dominé par ses impulsions et celui qui les maîtrise, entre celui qui suit aveuglément et celui qui réfléchit, entre l'esclave et l'homme libre, il y a des différences que nul déterminisme n'efface. Cultiver ces différences, accroître en soi la part de ce qui agit par raison plutôt que par contrainte, c'est peut-être cela, être libre : non échapper aux causes, mais devenir toujours davantage la cause de ses propres actes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-008",
+    title: "Ce que nous devons aux autres",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Jusqu'où va notre obligation envers autrui ? La morale ordinaire vacille.",
+    blurbEn:
+      "How far does our obligation to others extend — to neighbours, strangers, the distant and unborn? An essay on the demanding logic of moral duty. (Section: Philosophy and society, 3/5.)",
+    body: `Nous reconnaissons tous avoir des devoirs envers autrui : ne pas nuire, secourir celui qui est en péril, tenir nos promesses. Cette morale ordinaire nous paraît évidente, et nous la croyons cohérente. Mais dès qu'on l'examine, elle se met à vaciller, car il est étonnamment difficile de dire jusqu'où va notre obligation, et pourquoi elle s'arrête là où nous la faisons s'arrêter. Interroger ce que nous devons aux autres, c'est découvrir que nos intuitions morales, si assurées en apparence, reposent sur des frontières que rien ne justifie tout à fait.
+
+Considérons un cas simple. Si je passe près d'un enfant qui se noie dans un étang, et que je puisse le sauver sans risque, au prix seulement de salir mes vêtements, chacun jugera que je dois le faire, et que m'en abstenir serait monstrueux. L'intuition est unanime. Mais elle a des conséquences que nous n'assumons pas. Car si je suis tenu de sacrifier quelque chose de mineur pour sauver une vie à mes pieds, pourquoi ne le serais-je pas pour sauver une vie lointaine, que je pourrais préserver au prix d'un sacrifice comparable ? La distance change-t-elle quelque chose à l'obligation ? Il est difficile de soutenir qu'un enfant qui meurt loin de moi compte moins qu'un enfant qui meurt sous mes yeux, et pourtant nous vivons comme si c'était le cas.
+
+Cette logique, si on la suit, devient vertigineuse. Elle semble impliquer que nous serions moralement tenus de donner presque tout ce que nous avons au-delà du nécessaire, tant qu'il reste, quelque part, des vies que nous pourrions sauver. Peu d'entre nous acceptent cette conclusion ; elle heurte notre sentiment qu'une vie nous appartient aussi, que nous avons le droit de poursuivre nos projets, de préférer nos proches, de ne pas nous sacrifier sans fin. Mais si nous la rejetons, il nous faut dire où et pourquoi l'obligation s'arrête — et c'est là que nos justifications deviennent fragiles.
+
+Nous invoquons volontiers la proximité : nous devrions plus à nos proches qu'aux étrangers. Cette intuition est puissante, et sans doute contient-elle une part de vérité, car des liens particuliers créent des obligations particulières. Mais elle ne peut tout justifier. Que je doive davantage à mes enfants n'implique pas que je ne doive rien à l'enfant lointain ; la préférence pour les miens peut expliquer une hiérarchie des devoirs, non l'abolition de toute obligation envers les autres. Entre le devoir illimité qui nous sacrifierait entièrement et l'indifférence qui ne reconnaîtrait de devoirs qu'envers les proches, la morale ordinaire occupe une position intermédiaire qu'elle peine à fonder.
+
+Peut-être faut-il accepter que la morale ne se laisse pas réduire à un principe unique et cohérent, appliqué sans reste. Nos obligations résultent de la tension entre plusieurs exigences légitimes : l'universalité, qui veut que toute vie compte également ; la partialité, qui reconnaît les liens particuliers ; et le droit que chacun a de vivre sa propre vie, de n'être pas un pur instrument du bien d'autrui. Ces exigences ne se hiérarchisent pas aisément, et la vie morale consiste peut-être moins à appliquer une règle qu'à composer, tant bien que mal, entre des devoirs qui tirent en des sens différents.
+
+Ce qui demeure, au terme de cet examen, ce n'est pas une réponse claire, mais une inquiétude salutaire. Nous ne pouvons plus tenir nos frontières morales pour évidentes, ni nous croire quittes envers les autres au motif que nous respectons la morale ordinaire. Reconnaître que nous devons probablement plus que nous ne faisons, sans pour autant nous croire tenus à un sacrifice illimité, c'est habiter honnêtement la tension qui constitue la vie morale. Cette lucidité inconfortable vaut mieux que la fausse tranquillité de qui croit avoir rempli tous ses devoirs — car la question de ce que nous devons aux autres n'est pas de celles qu'on peut clore, mais de celles avec lesquelles il faut apprendre à vivre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-009",
+    title: "Le progrès a-t-il un sens ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nous croyons que l'histoire avance. Mais vers quoi, et selon quelle mesure ?",
+    blurbEn:
+      "We assume history moves forward, toward something better. An essay on the idea of progress — its power, its blind spots, and whether it still holds. (Section: Philosophy and society, 4/5.)",
+    body: `L'idée de progrès est si profondément inscrite en nous que nous la tenons pour une évidence. Nous croyons spontanément que l'histoire avance, que l'humanité, malgré des reculs, s'améliore, que demain sera meilleur qu'hier. Cette croyance oriente notre rapport au temps, justifie nos efforts, console de nos peines. Elle est pourtant récente à l'échelle de l'histoire, et loin d'aller de soi. L'interroger, ce n'est pas verser dans le pessimisme, mais examiner l'un des présupposés les plus puissants de notre civilisation.
+
+L'idée de progrès a des titres considérables à faire valoir. Sur bien des plans, l'amélioration est incontestable : la durée de vie s'est allongée, la souffrance physique a reculé, des maladies ont été vaincues, l'instruction s'est répandue, des formes de cruauté autrefois banales sont devenues intolérables. Celui qui nierait ces avancées, au nom d'une nostalgie d'un passé idéalisé, se tromperait gravement et insulterait ceux qui, jadis, mouraient jeunes, dans la douleur et l'ignorance. Il y a bien un progrès, et le méconnaître serait une faute autant qu'une ingratitude.
+
+Mais l'idée de progrès, dès qu'elle se fait doctrine, comporte des illusions qu'il faut débusquer. La première est de croire le progrès nécessaire, inscrit dans le sens même de l'histoire, comme si une force le garantissait. Rien n'est plus faux. Rien n'assure que ce qui a été acquis ne puisse être perdu ; l'histoire connaît des régressions, des effondrements, des retours de la barbarie qu'on croyait révolue. Le progrès, quand il a lieu, est le fruit d'efforts et de choix, non d'une loi de l'histoire ; le tenir pour acquis, c'est cesser de le défendre, et donc préparer sa perte.
+
+La deuxième illusion est de croire le progrès unifié, comme si l'amélioration touchait tous les plans à la fois. Or on peut progresser en un domaine et régresser en un autre. La puissance technique s'accroît, mais notre sagesse suit-elle ? Nous soignons mieux, mais nous détruisons notre milieu ; nous communiquons plus, mais nous nous comprenons peut-être moins ; nous savons davantage, mais savons-nous mieux vivre ? Le progrès matériel et technique, incontestable, ne garantit nullement un progrès moral ou humain, et il peut même, en accroissant nos pouvoirs sans accroître notre sagesse, rendre plus périlleuses nos fautes. Confondre les différents progrès, c'est se rassurer à bon compte.
+
+La troisième illusion, plus subtile, concerne la mesure du progrès. Progrès vers quoi ? Dire que l'histoire s'améliore suppose un critère, une idée de ce qui est meilleur. Or ce critère n'est pas donné ; il dépend de ce que nous valorisons. Une civilisation qui juge le progrès à la puissance et à la richesse ne mesure pas la même chose que celle qui le jugerait à la justice ou à la qualité des vies. L'idée de progrès dissimule souvent ce présupposé : elle fait passer pour une avancée objective ce qui n'est qu'un mouvement vers ce que, nous, tenons pour désirable. Interroger le progrès, c'est interroger nos propres valeurs, que nous projetons sur l'histoire en croyant y lire un sens qu'elle contiendrait.
+
+Faut-il pour autant abandonner l'idée de progrès ? Ce serait renoncer à ce qui donne à l'action humaine une part de son ressort : l'espoir de rendre le monde meilleur. Mais il faut la tenir autrement : non comme une loi de l'histoire qui nous porterait, mais comme une tâche qui nous incombe ; non comme un fait acquis, mais comme une possibilité fragile ; non comme un mouvement unifié et garanti, mais comme un effort toujours partiel, réversible, à reprendre. Un progrès ainsi compris est plus modeste, mais plus vrai, et surtout plus exigeant : il ne nous dispense pas d'agir, il nous y oblige. Car si rien ne garantit que demain sera meilleur, alors il dépend de nous qu'il le soit.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-010",
+    title: "Penser contre soi-même",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La forme la plus haute de la pensée est peut-être de résister à ses propres certitudes.",
+    blurbEn:
+      "The highest form of thought may be the willingness to argue against one's own convictions. A closing essay on intellectual honesty as a discipline. (Section: Philosophy and society, 5/5.)",
+    body: `Il existe une disposition de l'esprit rare et précieuse, que l'on pourrait nommer la faculté de penser contre soi-même. Elle consiste à ne pas se contenter de défendre ses convictions, mais à les soumettre délibérément à l'épreuve la plus rude, à chercher les objections les plus fortes qu'on pourrait leur opposer, à se demander sincèrement si l'on ne se trompe pas. Cette disposition va à l'encontre de tous nos penchants, et c'est peut-être pourquoi elle est le sommet de l'honnêteté intellectuelle, et l'une des choses les plus difficiles qui soient.
+
+Nos penchants nous portent en effet à l'inverse. Nous cherchons spontanément ce qui confirme ce que nous croyons, non ce qui le contredit ; nous accueillons avec faveur les arguments qui nous donnent raison, et avec méfiance ceux qui nous dérangent ; nous fréquentons ceux qui pensent comme nous et fuyons la contradiction. Cette pente, profondément ancrée, fait que nos convictions, au lieu d'être éprouvées, se renforcent d'elles-mêmes, se muent en certitudes d'autant plus fermes qu'elles n'ont jamais été mises à l'épreuve. Penser contre soi-même, c'est résister à cette pente, faire l'effort contre nature d'aller chercher ce qui pourrait nous démentir.
+
+Pourquoi s'imposer un tel effort ? Parce que c'est la seule voie vers une conviction qui vaille. Une opinion qu'on n'a jamais confrontée à ses objections n'est pas une pensée, mais un préjugé, quand bien même elle serait vraie ; on la tient par habitude, par appartenance, par paresse, non parce qu'on l'a éprouvée. Celui qui a cherché les meilleures raisons de penser autrement, et maintient malgré elles sa position, tient celle-ci d'une tout autre manière : non comme un dogme reçu, mais comme une conclusion conquise. Penser contre soi-même n'affaiblit pas les convictions solides ; il les fortifie, en écartant celles qui ne l'étaient pas.
+
+Cette discipline a une vertu supplémentaire : elle est le meilleur remède à l'aveuglement des camps. Celui qui s'astreint à chercher ce que son adversaire pourrait avoir de juste, à formuler la position adverse sous sa forme la plus forte plutôt que sous sa caricature, celui-là ne peut plus traiter ceux qui pensent autrement comme des imbéciles ou des malfaisants. Il découvre que le désaccord repose souvent sur des raisons, non sur la seule bêtise ou méchanceté de l'autre. Penser contre soi-même est ainsi une école de justice envers autrui, autant que de rigueur envers soi.
+
+Il ne s'agit pas, pour autant, de sombrer dans un doute universel qui interdirait toute conviction. Penser contre soi-même n'est pas ne plus rien penser, ni changer d'avis à chaque objection ; c'est éprouver ses convictions, non les dissoudre. Le but n'est pas l'incertitude perpétuelle, mais une certitude qui a payé le prix de l'examen. Après avoir cherché les raisons contraires et pesé leur force, on peut, on doit conclure — mais on conclut alors en connaissance de cause, en sachant ce qu'on a écarté et pourquoi. C'est une fermeté qui a traversé le doute, non qui l'a fui.
+
+Une telle discipline est exigeante, et nul ne la pratique parfaitement, car elle demande de dominer sans cesse notre amour-propre, notre désir d'avoir raison, notre attachement à ce que nous sommes. Mais elle est le cœur de toute vie intellectuelle honnête, et sa rareté même en fait le prix. Dans une époque qui récompense la certitude affichée et le ralliement sans faille, où chacun s'entoure de ce qui le conforte, faire l'effort de penser contre soi-même est presque un acte de résistance. C'est aussi la marque d'un esprit véritablement libre : non celui qui ne doute jamais, ni celui qui doute de tout, mais celui qui a le courage de se demander, à propos de ses convictions les plus chères, s'il ne se pourrait pas qu'il ait tort.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
