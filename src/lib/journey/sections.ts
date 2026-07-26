@@ -1066,6 +1066,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-community",
+    band: "B2",
+    title: "Community and solitude",
+    goal: "Alone together, chosen solitude, what binds a community, giving and receiving help, bonds as strength.",
+    textIds: [
+      "starter-b2-171", // Seuls ensemble (introduces the core words)
+      "starter-b2-172", // Éloge de la solitude choisie
+      "starter-b2-173", // Ce qui nous relie
+      "starter-b2-174", // Aider et être aidé
+      "starter-b2-175", // Le lien fait la force (hardest)
+    ],
+  },
+  {
+    id: "b2-good-life",
+    band: "B2",
+    title: "What makes a good life",
+    goal: "The capstone: what a successful life is, the paradox of seeking happiness, meaning, accepting what we cannot change, living toward death.",
+    textIds: [
+      "starter-b2-176", // Qu'est-ce qu'une vie réussie ? (introduces the core words)
+      "starter-b2-177", // Le bonheur se cherche-t-il ?
+      "starter-b2-178", // Donner un sens
+      "starter-b2-179", // Accepter ce qu'on ne peut changer
+      "starter-b2-180", // Vivre en sachant que l'on va mourir (hardest — closes B2)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

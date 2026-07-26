@@ -16001,4 +16001,234 @@ Penser par soi-même, au fond, ce n'est donc pas produire seul ses opinions, ni 
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-171",
+    title: "Seuls ensemble",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Jamais si connectés, jamais si seuls : le paradoxe de notre époque.",
+    blurbEn:
+      "We are more connected than ever, yet loneliness is rising. A look at the strange modern paradox of being surrounded and still alone. (Section: Community and solitude, 1/5.)",
+    body: `Un paradoxe étrange marque notre époque : jamais nous n'avons été aussi connectés, et jamais, pourtant, la solitude n'a semblé si répandue. Nous pouvons joindre n'importe qui à tout instant, nous avons des centaines de « contacts », nous sommes reliés en permanence à un vaste réseau d'autres personnes. Et cependant, le sentiment de solitude, l'isolement réel, gagnent du terrain, au point que certains parlent d'une véritable épidémie. Comment expliquer que tant de liens s'accompagnent de tant de solitude ?
+
+La réponse tient sans doute à une confusion entre deux choses très différentes : être en contact et être en lien. Nos technologies multiplient les contacts — messages, réactions, échanges brefs —, mais ces contacts ne font pas nécessairement des liens véritables. On peut échanger cent messages par jour sans avoir avec quiconque une relation profonde ; on peut avoir des milliers d'« amis » en ligne et n'avoir personne à qui confier ce qui compte vraiment. La quantité des contacts a explosé ; la qualité des liens, elle, ne suit pas, et parfois même recule.
+
+Il y a plus. Ces contacts permanents peuvent nourrir la solitude au lieu de la combler. En donnant l'illusion de la relation, ils dispensent d'en chercher de véritables ; en occupant le temps et l'attention, ils laissent moins de place aux rencontres réelles, plus exigeantes. On peut passer ses soirées à faire défiler les vies des autres sur un écran, en éprouvant, au bout du compte, un vide plus grand encore. Le contact facile devient alors un substitut appauvrissant du lien difficile, une manière d'être avec les autres sans être vraiment avec eux.
+
+À cela s'ajoute un effet plus subtil. En voyant sans cesse, sur les écrans, les vies apparemment épanouies des autres — leurs fêtes, leurs succès, leurs bonheurs mis en scène —, nous nous sentons, par contraste, plus seuls et plus insuffisants. La comparaison permanente avec des existences idéalisées creuse le sentiment d'être, soi, à l'écart, exclu d'une convivialité dont les autres sembleraient jouir. La connexion permanente ne nous montre pas la solitude des autres, aussi réelle que la nôtre ; elle nous montre leurs moments choisis, et nous laisse seuls avec notre ordinaire.
+
+Faut-il en conclure que ces technologies seraient la cause de notre solitude, et qu'il faudrait s'en détourner ? Ce serait trop simple. Elles peuvent aussi relier vraiment, maintenir des liens précieux malgré la distance, rompre l'isolement de certains. Le problème n'est pas l'outil, mais l'usage qui substitue le contact au lien, la connexion à la présence. Ce qui nous manque, ce ne sont pas des moyens de communiquer, que nous avons en abondance ; ce sont des relations profondes, qui demandent du temps, de la présence, une attention que le contact permanent tend, au contraire, à disperser.
+
+Sortir de cette solitude au milieu de la foule ne suppose donc pas de se couper des autres, mais de distinguer le contact du lien, et de cultiver le second. Cela veut dire privilégier quelques relations profondes à la multitude des contacts superficiels ; offrir une présence réelle plutôt qu'une disponibilité permanente et distraite ; accepter l'exigence du lien véritable, qui ne se noue pas d'un clic. Être vraiment avec quelqu'un, dans un monde de contacts sans fin, est devenu à la fois plus rare et plus précieux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-172",
+    title: "Éloge de la solitude choisie",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La solitude fait peur. Pourtant, choisie, elle est une richesse.",
+    blurbEn:
+      "We fear solitude and flee it. But solitude freely chosen — unlike loneliness — is one of the richest states a person can know. (Section: Community and solitude, 2/5.)",
+    body: `La solitude a mauvaise presse. On la fuit, on la redoute, on la range parmi les malheurs. Rester seul est souvent perçu comme un échec, le signe qu'on n'a pas su s'entourer, une situation à corriger au plus vite. Cette peur de la solitude est si répandue que beaucoup ne supportent pas de rester seuls un instant, remplissant chaque vide de présence ou de distraction. Pourtant, cette vision est incomplète, car elle confond deux choses très différentes : la solitude subie et la solitude choisie.
+
+La solitude subie, celle de l'isolement, est bien une souffrance. Se sentir seul contre son gré, privé de liens qu'on désire, exclu de la compagnie des autres, est une épreuve réelle, dont on a vu qu'elle se répand. Cette solitude-là, il faut la combattre, et rien de ce qui suit ne prétend le contraire. Mais il existe une tout autre solitude : celle qu'on choisit, qu'on recherche, dont on fait un espace de vie. Et cette solitude choisie, loin d'être un malheur, est l'une des plus grandes richesses de l'existence.
+
+Car la solitude choisie offre ce que la présence continue des autres ne permet pas : le retour à soi. Entouré en permanence, sollicité sans cesse, on finit par ne plus s'appartenir, happé par le regard et les demandes d'autrui. La solitude est le moment où l'on se retrouve, où l'on peut penser sans être interrompu, ressentir sans avoir à le montrer, être soi sans avoir à composer avec les autres. Bien des choses essentielles — la réflexion profonde, la création, la prière, le simple repos de l'esprit — exigent cette solitude, et ne peuvent naître dans le bruit continuel de la compagnie.
+
+L'histoire témoigne de cette fécondité de la solitude. Les penseurs, les artistes, les sages ont presque tous eu besoin de moments de retrait, loin du monde, pour créer et pour comprendre. Ce n'est pas un hasard : c'est dans le silence et la solitude que l'esprit se recueille, que les idées mûrissent, que l'on prend la distance nécessaire pour voir clair. Fuir toute solitude, c'est se priver de cet espace intérieur où se fait le travail le plus profond, celui qu'aucune conversation ne remplace.
+
+La solitude choisie a aussi une vertu pour la vie avec les autres. Celui qui sait être seul ne dépend pas des autres pour ne pas s'ennuyer, pour se sentir exister, pour combler un vide ; il vient à eux par choix, non par besoin de fuir sa propre compagnie. Il peut donc entretenir des relations plus libres, plus saines, moins avides. Savoir être seul, paradoxalement, rend meilleur avec les autres : on ne leur demande plus de nous sauver de nous-mêmes. La capacité à la solitude est une condition de relations équilibrées.
+
+Il ne s'agit donc pas de choisir entre les autres et la solitude, mais de faire une place à l'une et aux autres. Une vie tout entière tournée vers les autres, sans jamais de retour à soi, s'épuise et se disperse ; une vie tout entière solitaire se dessèche et s'attriste. L'équilibre est dans l'alternance : des moments de lien véritable, et des moments de solitude choisie. Réhabiliter cette dernière, apprendre à être seul sans en souffrir, à goûter le silence et le retour à soi, c'est reconquérir une part de richesse que la peur de la solitude nous a fait oublier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-173",
+    title: "Ce qui nous relie",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Qu'est-ce qui fait qu'un ensemble d'individus devient une communauté ?",
+    blurbEn:
+      "What turns a collection of individuals into a real community? A reflection on the fragile, essential bonds that hold people together. (Section: Community and solitude, 3/5.)",
+    body: `Qu'est-ce qui fait qu'un ensemble d'individus qui vivent côte à côte devient une véritable communauté, et non une simple juxtaposition d'étrangers ? La question mérite d'être posée, car nos sociétés modernes semblent parfois avoir perdu ce lien communautaire, produisant des multitudes d'individus qui coexistent sans se connaître ni se soucier les uns des autres. Comprendre ce qui relie les gens, c'est comprendre ce qui, précisément, tend aujourd'hui à se défaire.
+
+Une communauté se noue d'abord autour de quelque chose de partagé. Un lieu qu'on habite ensemble, une histoire commune, des épreuves traversées, des valeurs, une activité, un but : ces éléments partagés créent un sentiment d'appartenance, la conscience de faire partie d'un même « nous ». Là où il n'y a rien de commun, il n'y a que des individus séparés ; là où quelque chose est partagé et reconnu comme tel, un lien se tisse. La communauté suppose un dénominateur commun, réel ou senti, qui fait que le sort de l'autre ne m'est pas indifférent.
+
+Mais le partage ne suffit pas ; il faut aussi l'interdépendance. Une communauté se renforce quand ses membres ont besoin les uns des autres, quand ils s'entraident, quand chacun compte sur les autres et sait qu'on compte sur lui. C'est dans l'échange de services, le soutien mutuel, la réciprocité que se tissent les liens les plus solides. Là où chacun se suffit à lui-même, ou croit se suffire, le lien communautaire s'atrophie : on n'a plus besoin des autres, donc on ne les fréquente plus, donc la communauté se défait. L'autonomie individuelle, si précieuse, peut ainsi, poussée à l'extrême, dissoudre ce qui relie.
+
+Il y a un troisième ingrédient, plus discret : la rencontre régulière, la présence répétée. Les communautés vivent de lieux et de moments où les gens se croisent, se parlent, se reconnaissent : la place du village, le café, la fête, le marché, le lieu de culte, l'association. Ces espaces de rencontre, souvent modestes, sont le tissu vivant de la communauté ; c'est là que naissent les liens, que se transmettent les nouvelles, que se reconnaît le « nous ». Là où ces lieux disparaissent, où chacun rentre chez soi sans plus se croiser, la communauté perd son support et s'étiole.
+
+Or ces trois ingrédients — le partagé, l'interdépendance, la rencontre — sont aujourd'hui fragilisés. La mobilité défait les appartenances à un lieu ; l'autonomie matérielle réduit l'interdépendance ; la vie privée et les écrans raréfient les rencontres. Nous vivons de plus en plus comme des individus indépendants, autosuffisants, mobiles, ce qui a ses avantages — plus de liberté, moins de contraintes du groupe —, mais nous prive aussi de ce que la communauté apportait : le soutien, l'appartenance, le sentiment de ne pas être seul face à la vie.
+
+Ce constat ne conduit pas à regretter naïvement les communautés d'autrefois, souvent étouffantes, pesantes, peu tolérantes à la différence. Il invite plutôt à chercher comment recréer du lien dans un monde d'individus : par des engagements choisis, des associations, des projets communs, des lieux de rencontre à préserver ou à réinventer. Car si l'ancienne communauté avait ses servitudes, l'individu sans communauté a sa détresse. Ce qui nous relie ne va plus de soi ; il faut désormais le vouloir et le construire — mais nous en avons, plus que jamais, besoin.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-174",
+    title: "Aider et être aidé",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Recevoir de l'aide est parfois plus difficile que d'en donner.",
+    blurbEn:
+      "We are taught the value of helping others, but accepting help can be harder to give. A reflection on the quiet difficulty, and dignity, of receiving. (Section: Community and solitude, 4/5.)",
+    body: `On célèbre volontiers la générosité, la vertu de celui qui aide, qui donne, qui se dévoue pour les autres. Et cette célébration est juste : aider autrui est l'une des plus belles choses dont l'être humain soit capable. Mais on parle beaucoup moins de l'autre versant de cette relation, plus discret et souvent plus difficile : celui de recevoir. Or accepter d'être aidé, se laisser secourir, dépendre des autres, est parfois plus difficile que d'aider soi-même, et cette difficulté mérite qu'on s'y arrête.
+
+Pourquoi est-il si dur de recevoir ? D'abord à cause de l'orgueil, ou de ce qu'on prend pour de la dignité. Demander de l'aide, avouer qu'on n'y arrive pas seul, se montrer dans sa faiblesse, heurte le désir d'être fort, autonome, à la hauteur. Dans une culture qui valorise l'indépendance et fait de l'autosuffisance une vertu, avoir besoin des autres passe presque pour un échec, une déchéance. On préfère souvent souffrir en silence que de reconnaître qu'on a besoin d'être aidé, comme si le besoin lui-même était honteux.
+
+Il y a aussi la crainte de la dette. Recevoir crée une obligation, un déséquilibre : celui qui a reçu se sent redevable, en position d'infériorité vis-à-vis de celui qui a donné. Cette asymétrie est inconfortable ; elle peut peser sur la relation, y introduire un sentiment de dépendance ou d'humiliation. Beaucoup refusent l'aide précisément pour ne pas se trouver en dette, pour préserver une forme d'égalité ou d'indépendance. Recevoir, c'est accepter de ne pas être quitte, et cela coûte.
+
+Pourtant, savoir recevoir est une vertu au moins aussi grande que savoir donner, et peut-être plus rare. Car accepter l'aide, c'est reconnaître humblement sa propre vulnérabilité, faire confiance à l'autre, accepter de ne pas être tout-puissant. C'est aussi, paradoxalement, un don fait à celui qui aide : en le laissant nous aider, nous lui offrons la joie de se rendre utile, de donner, de compter pour nous. Refuser toute aide, au nom de sa fierté, c'est priver l'autre de cette joie, et se couper du lien que l'aide reçue aurait tissé. Il y a de l'orgueil à ne jamais rien accepter.
+
+Cette réflexion touche à la nature même du lien communautaire. Une communauté ne vit pas seulement de gens qui donnent, mais de la circulation de l'aide, où chacun tour à tour aide et est aidé, donne et reçoit. Celui qui veut toujours donner sans jamais recevoir se place au-dessus des autres, dans une générosité qui peut cacher un refus du lien d'égalité. La vraie réciprocité suppose qu'on accepte aussi de recevoir, de se laisser aider, de reconnaître qu'on a besoin des autres autant qu'ils ont besoin de nous.
+
+Apprendre à recevoir est donc, à sa manière, un apprentissage de l'humilité et du lien. C'est accepter que nous sommes des êtres vulnérables, interdépendants, qui ne s'en sortent pas seuls et n'ont pas à s'en sortir seuls. Dans un monde qui exalte l'autonomie et fait du besoin une faiblesse, savoir demander et accepter l'aide est un acte de sagesse et de confiance. Car une vie où l'on n'aurait jamais besoin de personne ne serait pas une vie plus réussie ; ce serait une vie plus pauvre, coupée de ce que le lien humain a de plus profond : le fait de compter les uns pour les autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-175",
+    title: "Le lien fait la force",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Face aux épreuves, ce qui protège le mieux, c'est souvent les autres.",
+    blurbEn:
+      "When hardship strikes, the strongest protection is often other people. A closing look at how bonds between us are a resource we neglect at our peril. (Section: Community and solitude, 5/5.)",
+    body: `Au terme de cette réflexion sur le lien et la solitude, une vérité se dégage, que confirment aussi bien l'expérience commune que la recherche : face aux épreuves de la vie, ce qui protège le mieux, ce ne sont pas d'abord les biens ni même la force individuelle, mais les autres. Le lien social, la présence de personnes sur qui l'on peut compter, est l'une des ressources les plus précieuses de l'existence — et l'une des plus négligées.
+
+Les études sur le bien-être et la santé sont, sur ce point, remarquablement convergentes. La qualité des relations d'une personne — la profondeur de ses liens, la présence de proches, le sentiment d'être soutenu — compte parmi les facteurs les plus déterminants de son bonheur, de sa résistance aux épreuves, et même de sa santé physique et de sa longévité. Ceux qui sont entourés traversent mieux les difficultés, guérissent mieux, vivent plus longtemps. Le lien n'est pas seulement une source de joie ; c'est une véritable protection, aussi concrète qu'invisible.
+
+On comprend pourquoi. Face à une épreuve — une maladie, un deuil, une perte, une difficulté —, celui qui est seul l'affronte de toutes ses forces, souvent insuffisantes ; celui qui est entouré peut s'appuyer sur d'autres, être soutenu, aidé, réconforté. Les autres apportent une aide matérielle, mais surtout ce soutien moral qui permet de tenir : le sentiment de ne pas être seul, d'être porté, de compter pour quelqu'un. Une épreuve partagée est plus légère qu'une épreuve solitaire, non parce qu'elle change de nature, mais parce qu'on ne la porte plus seul.
+
+Cette force du lien vaut aussi à l'échelle des communautés et des sociétés. Face aux catastrophes, aux crises, aux malheurs collectifs, ce sont les sociétés les plus solidaires, où les liens sont les plus forts, qui résistent le mieux. Là où chacun est seul, la crise disloque ; là où les gens sont reliés, ils s'entraident, se soutiennent, tiennent ensemble. La solidité d'une société ne se mesure pas seulement à sa richesse ou à sa puissance, mais à la qualité des liens qui unissent ses membres, à cette capacité à faire face ensemble plutôt que chacun pour soi.
+
+Ce constat devrait nous alerter, car nous vivons dans des sociétés qui, on l'a vu, tendent à défaire les liens : individualisme, mobilité, écrans, disparition des lieux de rencontre. En affaiblissant ce qui nous relie, nous affaiblissons aussi, sans le mesurer, notre protection collective et individuelle face aux épreuves. Nous gagnons en autonomie et en liberté, mais nous perdons en résilience, en soutien, en force partagée. Une société d'individus isolés est une société plus fragile, où chacun est plus exposé.
+
+Reconnaître que le lien fait la force, c'est donc comprendre qu'entretenir ses relations, tisser et préserver des liens, n'est pas un simple agrément, mais un investissement essentiel. Le temps consacré aux autres, l'attention portée à ses proches, l'engagement dans une communauté, ne sont jamais du temps perdu : ils construisent le filet qui nous portera dans les épreuves, et que nous tendrons, à notre tour, sous les autres. Dans un monde qui exalte l'individu autonome, il vaut la peine de se souvenir de cette vérité ancienne : que notre plus grande force, face à la fragilité de la vie, ce sont les uns les autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-176",
+    title: "Qu'est-ce qu'une vie réussie ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La grande question, celle que tout le reste sert : bien vivre, qu'est-ce à dire ?",
+    blurbEn:
+      "The oldest question of all: what makes a life go well? A reflection on the many rival answers, and why the question matters more than any single answer. (Section: What makes a good life, 1/5.)",
+    body: `Voici la plus vieille et la plus importante des questions, celle que toutes les autres, d'une certaine manière, servent : qu'est-ce qu'une vie réussie ? Que signifie bien vivre, mener une existence qui vaille la peine, dont on puisse dire, au terme, qu'elle fut bonne ? Chacun se la pose, au moins confusément, car de la réponse qu'on lui donne dépend l'orientation de toute une vie. Et pourtant, cette question fondamentale, nous prenons rarement le temps de l'examiner vraiment, happés que nous sommes par les tâches de l'existence.
+
+La difficulté commence dès qu'on cherche à répondre, car les réponses possibles sont nombreuses et divergentes. Pour les uns, une vie réussie est une vie heureuse, riche en plaisirs et pauvre en souffrances. Pour d'autres, c'est une vie accomplie, où l'on a réalisé son potentiel, créé, laissé une trace. Pour d'autres encore, c'est une vie bonne au sens moral, vécue avec droiture, au service des autres. Pour d'autres enfin, c'est une vie authentique, fidèle à soi-même, à ses choix, à sa vérité. Ces réponses ne se recouvrent pas, et l'on peut réussir selon l'une en échouant selon l'autre.
+
+Cette diversité pourrait décourager, comme si la question n'avait pas de réponse. Mais on peut la lire autrement : peut-être ces réponses saisissent-elles chacune une part de ce qu'est une vie réussie, sans qu'aucune l'épuise. Le plaisir compte, mais une vie de plaisirs vides laisserait un goût d'inachevé ; l'accomplissement compte, mais une réussite sans joie ni bonté serait amère ; la moralité compte, mais une vertu sans aucun bonheur serait austère ; l'authenticité compte, mais être fidèle à un soi mauvais ne serait pas une réussite. Peut-être une vie pleinement réussie tient-elle ensemble ces dimensions, plutôt que d'en sacrifier certaines aux autres.
+
+Il faut aussi se méfier des réponses que notre époque nous souffle sans que nous les ayons choisies. Notre monde tend à mesurer la réussite d'une vie à des critères extérieurs : l'argent, le statut, la réussite professionnelle, la reconnaissance, la consommation. Ces critères ont une force d'évidence trompeuse : on les poursuit sans les avoir jamais vraiment interrogés, comme si réussir sa vie, c'était réussir selon ces mesures-là. Or rien n'est moins sûr, et beaucoup, parvenus au sommet de ces réussites extérieures, découvrent qu'elles ne suffisent pas, qu'il leur manque l'essentiel. Se demander ce qu'est une vie réussie, c'est d'abord se libérer des réponses toutes faites.
+
+Il y a peut-être plus important que de trouver la bonne réponse : c'est de se poser vraiment la question. Car le danger n'est pas tant de se tromper de réponse que de ne jamais réfléchir, de vivre sans jamais s'interroger sur ce qu'on cherche, emporté par le courant, poursuivant des buts qu'on n'a pas choisis. Une vie non examinée, disait un ancien, ne vaut pas la peine d'être vécue. Ce n'est pas qu'il faille passer sa vie à philosopher ; mais une existence qui ne se demanderait jamais ce vers quoi elle tend risquerait de passer à côté d'elle-même.
+
+Ces dernières réflexions n'apporteront pas de réponse définitive, car il n'y en a pas qui vaille pour tous. Mais elles exploreront quelques-unes des grandes questions qui se cachent derrière celle de la vie réussie : le bonheur, le sens, la place des autres, l'acceptation de la finitude. Non pour dicter une réponse, mais pour aider chacun à chercher la sienne — car c'est là, au fond, une tâche que nul ne peut accomplir à notre place, et qui donne à l'existence, même incertaine, sa gravité et son prix.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-177",
+    title: "Le bonheur se cherche-t-il ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Vouloir être heureux à tout prix pourrait bien nous rendre malheureux.",
+    blurbEn:
+      "We are told to pursue happiness — yet chasing it directly may push it further away. A look at the paradox at the heart of the search for happiness. (Section: What makes a good life, 2/5.)",
+    body: `Le bonheur est devenu, dans notre époque, une sorte d'obligation. On nous enjoint d'être heureux, on nous propose mille méthodes pour y parvenir, on fait de la quête du bonheur le but suprême de l'existence. Cette injonction paraît bienveillante : qui ne voudrait être heureux ? Pourtant, elle recèle un paradoxe troublant : à force de chercher le bonheur, de le poursuivre directement, on risque précisément de le faire fuir. Le bonheur se cherche-t-il vraiment, ou est-il de ces choses qui ne se donnent qu'à qui ne les traque pas ?
+
+Il y a quelque chose de contradictoire dans la poursuite directe du bonheur. Se demander sans cesse « suis-je heureux ? », guetter son propre bonheur, en faire l'objet d'une quête anxieuse, c'est souvent le meilleur moyen de ne pas l'être. Car cette surveillance de soi introduit une inquiétude, une insatisfaction : à mesure qu'on vérifie si l'on est heureux, on découvre tout ce qui manque, on se compare à un idéal de bonheur qu'on n'atteint jamais tout à fait. L'injonction au bonheur peut ainsi engendrer son contraire : la culpabilité de n'être pas assez heureux, l'angoisse de rater sa vie.
+
+Il semble, en effet, que le bonheur soit rarement au bout d'une poursuite directe. Il vient plutôt par surcroît, comme un effet second, quand on est absorbé par autre chose que lui : un travail qui nous passionne, une relation qui nous comble, une cause qui nous dépasse, un moment de beauté. Ceux qui paraissent les plus heureux ne sont pas ceux qui cherchent le plus le bonheur, mais ceux qui sont pris par quelque chose qui les engage et les oublie eux-mêmes. Le bonheur naît de l'engagement dans la vie, non de la quête inquiète de son propre contentement.
+
+Cela suggère un déplacement : plutôt que de chercher le bonheur, chercher ce qui donne du sens et de la joie, et laisser le bonheur venir de surcroît. Se demander non « qu'est-ce qui me rendra heureux ? », mais « qu'est-ce qui mérite que je m'y engage, que j'y consacre ma vie ? ». Car le bonheur durable ne semble pas résider dans l'accumulation de plaisirs ou dans la satisfaction de soi, mais dans une vie remplie de ce qui a du sens : des relations profondes, une activité qui nous absorbe, un dépassement de soi. Le bonheur, en un sens, est ce qu'on trouve quand on cherche autre chose.
+
+Il faut néanmoins se garder d'un contresens. Dire que le bonheur ne se cherche pas directement ne signifie pas qu'il faille s'en désintéresser, ni s'imposer une vie de sacrifice austère. Cela signifie que le chemin vers le bonheur passe indirectement, par ce à quoi l'on s'attache et que l'on fait, plutôt que par une obsession de son propre état. Prendre soin de ce qui compte — ses liens, son activité, son rapport au monde — est plus fécond que scruter son bonheur. On ne cueille pas le bonheur en le fixant ; on le rencontre en marchant vers autre chose.
+
+Le bonheur se cherche donc, mais pas comme on cherche un objet qu'on pourrait saisir. Il se cherche indirectement, en construisant une vie qui en vaille la peine, riche de sens et de liens, et en renonçant à l'obsession anxieuse de son propre contentement. Peut-être la sagesse consiste-t-elle moins à poursuivre le bonheur qu'à le rendre possible, puis à savoir l'accueillir quand il vient — sans le retenir de force, ni s'affoler de ses absences. Car une vie qui exige d'être heureuse à tout prix est une vie qui se condamne, souvent, à ne pas l'être.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-178",
+    title: "Donner un sens",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Plus que le plaisir, c'est peut-être le sens qui rend une vie supportable.",
+    blurbEn:
+      "More than pleasure, it may be meaning that makes a life bearable and worth living. A reflection on where a sense of meaning comes from — and why it matters. (Section: What makes a good life, 3/5.)",
+    body: `S'il est une chose dont l'être humain semble avoir besoin autant que de bonheur, c'est de sens. Nous pouvons supporter d'immenses souffrances si elles ont un sens, et être accablés par une vie confortable qui nous paraît vide. Le sens n'est pas le plaisir, ni même le bonheur ; c'est le sentiment que notre vie compte, qu'elle a une direction, une valeur, une raison d'être. Et ce besoin de sens, souvent négligé, est peut-être plus fondamental encore que la recherche du bonheur.
+
+On mesure l'importance du sens à ce qui arrive quand il manque. Une vie privée de sens, même pourvue de tout le reste — confort, plaisirs, sécurité —, sombre dans une forme de vide, de lassitude, de désespoir sourd. À l'inverse, ceux qui ont trouvé un sens à leur existence — dans une cause, une foi, une œuvre, un dévouement — supportent des épreuves qui accableraient les autres, puisent dans ce sens une force qui les tient debout. Un penseur qui avait traversé les pires horreurs l'avait constaté : ceux qui survivaient étaient souvent ceux qui avaient une raison de vivre, quelque chose ou quelqu'un pour qui tenir.
+
+D'où vient le sens ? Il ne se décrète pas, ne s'achète pas, ne se trouve pas tout fait. Il naît le plus souvent d'un lien : le sentiment d'appartenir à quelque chose qui nous dépasse, de servir une cause, d'être utile à d'autres, de contribuer à quelque chose de plus grand que soi. Ce qui donne du sens, c'est souvent ce qui nous fait sortir de nous-mêmes : l'amour, l'engagement, la création, la transmission, le service. Une vie tout entière repliée sur son propre intérêt, sur son seul contentement, trouve rarement le sens ; celui-ci se rencontre dans le dépassement, dans le don, dans le lien à autre chose que soi.
+
+Le sens naît aussi de la cohérence entre ce qu'on fait et ce qu'on croit. Une vie a du sens quand nos actes sont en accord avec nos valeurs, quand nous vivons selon ce que nous tenons pour important, quand il n'y a pas de fossé entre ce que nous croyons et ce que nous faisons. À l'inverse, une existence qui trahit ses propres valeurs, qui poursuit des buts auxquels on ne croit pas vraiment, se vide de sens même si elle réussit selon les critères extérieurs. Le sens tient à cette intégrité, à cette fidélité à ce qu'on croit devoir être et faire.
+
+Il faut noter que le sens ne dépend pas des circonstances autant qu'on le croit. On peut trouver du sens dans une vie modeste, difficile, dépourvue de réussite éclatante ; et manquer de sens dans une vie comblée de succès. Car le sens ne se mesure pas à ce qu'on a, mais à la manière dont on habite sa vie, aux liens qu'on tisse, à ce à quoi l'on se dévoue. C'est une bonne nouvelle : le sens n'est pas réservé à quelques privilégiés ; il est, en principe, à la portée de chacun, quelles que soient les circonstances, pour peu qu'on cherche ce à quoi se donner.
+
+Donner un sens à sa vie n'est donc pas un luxe philosophique, mais une nécessité vitale, aussi essentielle que le pain. Dans un monde qui offre plaisirs et distractions en abondance mais peine à proposer du sens, cette quête est peut-être la plus urgente de toutes. Non pas attendre que la vie ait un sens tout fait, mais le construire : par ce à quoi l'on s'attache, ce à quoi l'on se dévoue, ce que l'on choisit de servir. Car une vie qui a du sens peut supporter presque tout, quand une vie qui n'en a pas ne supporte, à la fin, plus rien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-179",
+    title: "Accepter ce qu'on ne peut changer",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Une part de la sagesse tient à savoir distinguer ce qui dépend de nous.",
+    blurbEn:
+      "Much of wisdom lies in distinguishing what we can change from what we cannot — and making peace with the latter. A reflection on an ancient teaching. (Section: What makes a good life, 4/5.)",
+    body: `Il est une distinction ancienne, au cœur de bien des sagesses, dont la simplicité cache la profondeur : parmi les choses qui nous affectent, certaines dépendent de nous, et d'autres non. Cette distinction, que des penseurs de l'Antiquité avaient placée au fondement de la vie bonne, reste d'une actualité saisissante. Car une grande part de notre souffrance vient de ce que nous les confondons : nous nous épuisons à vouloir changer ce qui ne dépend pas de nous, et négligeons ce qui, lui, en dépend.
+
+Que dépend-il de nous ? Non les événements extérieurs, le comportement des autres, le passé, la maladie, la mort, les mille circonstances qui échappent à notre volonté. Mais nos propres jugements, nos choix, nos efforts, la manière dont nous réagissons à ce qui nous arrive. Voilà le partage : au-dehors, un vaste domaine que nous ne maîtrisons pas ; au-dedans, un domaine plus restreint mais réel, celui de notre attitude, sur lequel nous avons prise. La sagesse commence par reconnaître cette frontière, et cesser de la franchir en imagination.
+
+Car une source majeure de tourment est de vouloir ce qui ne dépend pas de nous. Nous nous révoltons contre ce qui est, nous nous rongeons d'un passé irrémédiable, nous voulons contrôler l'incontrôlable, changer les autres, plier les événements à nos désirs. Cette lutte contre l'inévitable est perdue d'avance, et elle nous épuise sans rien changer. On ne fait pas revenir un mort, on ne refait pas le passé, on ne contraint pas autrui à être ce qu'il n'est pas. Vouloir ces choses, c'est se condamner à une souffrance stérile.
+
+Accepter ce qu'on ne peut changer n'est pas de la résignation ni de la passivité. Ce n'est pas renoncer à agir, ni tout accepter avec indifférence. C'est reconnaître lucidement les limites de notre pouvoir, pour concentrer notre énergie là où elle peut quelque chose, plutôt que de la gaspiller là où elle ne peut rien. Face à ce qui ne dépend pas de nous, l'acceptation ; face à ce qui en dépend, l'action et l'effort. Cette répartition, loin d'affaiblir, rend plus fort : on cesse de lutter en vain, pour agir efficacement là où l'on a prise.
+
+Cette sagesse s'applique jusqu'aux limites de l'existence. Il est des maux qu'on ne peut éviter, des pertes qu'on ne peut réparer, une finitude qu'on ne peut abolir. Contre eux, la révolte est vaine, et l'acceptation, non la résignation amère mais la reconnaissance sereine, est la seule voie vers la paix. Accepter qu'on ne peut pas tout, qu'on est mortel, vulnérable, dépendant, n'est pas une défaite ; c'est la condition d'une existence apaisée, qui a cessé de se battre contre la réalité pour apprendre à vivre avec elle.
+
+Distinguer ce qui dépend de nous de ce qui n'en dépend pas est donc une clé de la vie bonne. Elle nous délivre de deux erreurs : l'illusion de toute-puissance, qui veut tout contrôler et se brise sur le réel ; et le sentiment d'impuissance, qui croit ne rien pouvoir et renonce à agir là où il le pourrait. Entre les deux, il y a la juste mesure : agir avec toute son énergie sur ce qui dépend de nous, accepter avec sérénité ce qui n'en dépend pas. Une part de la sagesse — et de la paix — tient dans cette distinction, simple à énoncer, difficile à vivre, mais qui éclaire toute une existence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-180",
+    title: "Vivre en sachant que l'on va mourir",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 5,
+    preview: "La conscience de notre fin n'est pas seulement une angoisse : elle peut éclairer la vie.",
+    blurbEn:
+      "We are the animal that knows it will die. Far from only a source of dread, that awareness may be what gives life its urgency and its depth. A closing reflection for B2. (Section: What makes a good life, 5/5.)",
+    body: `Nous sommes l'être qui sait qu'il va mourir. Cette conscience, que nous partageons peut-être avec nul autre, est l'une des choses les plus étranges et les plus lourdes de la condition humaine. Nous vivons en sachant que nous mourrons, que tout ce que nous faisons, aimons, construisons, aura une fin. On pourrait croire que cette conscience n'est qu'une source d'angoisse, un fardeau dont il vaudrait mieux se détourner. Mais elle est aussi, à bien la considérer, ce qui peut donner à la vie sa profondeur et son prix. Ce dernier texte de tout un parcours mérite de s'y arrêter.
+
+La tentation la plus courante est de fuir cette conscience, de vivre comme si nous ne devions pas mourir. Notre époque excelle dans cet évitement : elle cache la mort, la repousse hors de la vue, l'entoure de silence, nous distrait sans cesse pour ne pas y penser. Cette fuite est compréhensible — la pensée de la mort est difficile —, mais elle a un prix. En refusant de regarder notre finitude, nous vivons souvent dans une sorte d'illusion, comme si nous avions un temps infini, remettant à plus tard l'essentiel, gaspillant des jours que nous croyons innombrables. L'oubli de la mort nourrit une certaine inconscience de la vie.
+
+Car, paradoxalement, c'est la conscience de la mort qui peut donner à la vie toute sa valeur. Si nous vivions éternellement, rien ne presserait, rien n'aurait d'urgence, chaque moment pourrait être remis à l'infini ; le temps, illimité, perdrait son prix. C'est parce que nos jours sont comptés qu'ils sont précieux, que chaque instant est unique et ne reviendra pas, que nos choix ont un poids. La finitude, loin de rendre la vie absurde, est peut-être ce qui la rend intense. Ce qui est rare et fini a de la valeur ; ce qui est infini et illimité n'en a plus.
+
+La conscience de la mort, bien accueillie, est ainsi une maîtresse de vie. Elle nous rappelle ce qui compte vraiment, distingue l'essentiel de l'accessoire, nous délivre des vanités qui nous absorbent. Devant la pensée de sa fin, on cesse de s'agiter pour des futilités, on mesure le prix des êtres aimés, du temps présent, des choses simples. Bien des sagesses ont fait de la méditation sur la mort non un exercice morbide, mais un chemin vers une vie plus juste, plus lucide, plus pleine. Se souvenir qu'on va mourir, c'est se souvenir de vivre.
+
+Cette conscience peut même nous apaiser, plutôt que nous angoisser. Accepter notre finitude, cesser de la fuir ou de la nier, c'est faire la paix avec la condition qui est la nôtre. Ceux qui ont regardé la mort en face témoignent souvent d'une sérénité nouvelle, d'une capacité à goûter la vie qu'ils n'avaient pas auparavant. Non parce qu'ils ne craignent plus rien, mais parce qu'ayant accepté la fin, ils sont enfin libres de vivre pleinement le temps qui reste. L'acceptation de la mort peut être la condition d'une vie vraiment vivante.
+
+Ainsi s'achève ce long parcours, sur la plus haute des questions. Vivre en sachant que l'on va mourir n'est pas une malédiction dont il faudrait se détourner, mais peut-être le fondement même d'une vie consciente et pleine. Cette conscience nous invite à ne pas remettre l'essentiel, à chérir ce qui est, à donner sens et profondeur à nos jours comptés. Elle rappelle, à qui apprend une langue comme à quiconque, que le temps est précieux, que rien n'est acquis, et qu'il vaut la peine de vivre chaque jour comme s'il comptait — car, en vérité, il compte. C'est là, peut-être, la plus ancienne et la plus simple des sagesses : puisque la vie est brève, il n'en est que plus important de la vivre bien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
