@@ -12,7 +12,6 @@ import { pruneStaleRssProgress } from "@/lib/progress";
 import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
-import { buildTodayNewsWords, type TodayNewsWord } from "@/lib/readingAnalytics";
 import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
 import {
   DAILY_BANK_ARTICLE_LIMIT,
@@ -36,6 +35,7 @@ import {
 } from "@/lib/recommendation/preferences";
 import { trackEvent } from "@/lib/analytics/client";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
+import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success" | "error";
@@ -105,7 +105,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [reloadKey, setReloadKey] = useState(0);
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
-  const [todayWords, setTodayWords] = useState<TodayNewsWord[]>([]);
   const [completedArticleCount, setCompletedArticleCount] = useState(0);
   const [showLiveNewsAnyway, setShowLiveNewsAnyway] = useState(false);
   const dictionaryRevision = useGeneratedDictionary();
@@ -134,7 +133,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setUsedFallback(false);
       setState("loading");
       setSections(null);
-      setTodayWords([]);
 
       if (mode === "live" && liveNewsGated) {
         setRssTexts([]);
@@ -227,7 +225,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setSections(buildSections(ranked.filter((article) => mode === "live" || !importedIds.has(article.text.id))));
       setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
       setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
-      setTodayWords(mode === "live" ? buildTodayNewsWords(rssTexts) : []);
       setUsedFallback(fallback);
       setState("success");
     }
@@ -246,15 +243,17 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     setSelectedLevel(level);
   }
 
-  const title = mode === "live" ? "Live News" : "Lessons";
-  const subtitle = mode === "live" ? "Current French articles for when you want a stretch." : "Follow one guided reading path.";
+  const title = mode === "live" ? "News" : "Lessons";
+  const subtitle = mode === "live" ? "Current articles and short snippets for a stretch." : "Follow one guided reading path.";
 
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <Link href="/" className="text-sm font-semibold text-brand">
-          Back to Today
-        </Link>
+        {mode === "live" && (
+          <Link href="/" className="text-sm font-semibold text-brand">
+            Back to Lessons
+          </Link>
+        )}
         <div className="mt-2 flex items-end justify-between gap-3">
           <div>
             <h1 className="text-2xl font-extrabold text-ink">{title}</h1>
@@ -298,7 +297,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         state === "success" &&
         sections &&
         (mode === "live" ? (
-          <LiveNewsContent sections={sections} todayWords={todayWords} />
+          <LiveNewsContent sections={sections} />
         ) : (
           <LessonsContent
             sections={sections}
@@ -366,7 +365,7 @@ function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
         Start with a few short readings first, then come back when tapping words feels comfortable.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/articles#journey-current" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+        <Link href="/#journey-current" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
           Start with lessons
         </Link>
         <button
@@ -509,56 +508,28 @@ function LessonsContent({
   );
 }
 
-function LiveNewsContent({ sections, todayWords }: { sections: RecommendationSections; todayWords: TodayNewsWord[] }) {
-  const hasLiveContent = sections.liveNews.length > 0 || sections.latestNews.length > 0 || todayWords.length > 0;
+function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
+  const hasLiveContent = sections.liveNews.length > 0 || sections.latestNews.length > 0;
 
   if (!hasLiveContent) {
     return (
-      <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
-        <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
-        <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
-      </div>
+      <>
+        <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
+          <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
+          <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
+        </div>
+        <div className="mt-4">
+          <ShortSnippetsBlock defaultOpen />
+        </div>
+      </>
     );
   }
 
   return (
     <>
-      <ArticleSection title="Current News" subtitle="Pick one article and use word taps generously." articles={sections.liveNews} variant="cards" />
+      <ArticleSection title="Current News" subtitle="Fresh articles for real-world French." articles={sections.liveNews} variant="cards" />
+      <ShortSnippetsBlock defaultOpen />
       <ArticleSection title="More News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" />
-      {todayWords.length > 0 && <TodayNewsWordsSection words={todayWords} />}
     </>
-  );
-}
-
-function TodayNewsWordsSection({ words }: { words: TodayNewsWord[] }) {
-  return (
-    <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words appearing across today's news</h2>
-      <p className="mt-0.5 text-xs text-ink-muted">Open examples from different sources before choosing an article.</p>
-      <div className="mt-3 space-y-2">
-        {words.map((word) => (
-          <details key={word.lemma} className="rounded-2xl bg-cream px-3 py-2">
-            <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1">
-              <span className="text-sm font-bold text-ink">{word.lemma}</span>
-              <span className="rounded-full bg-cream-card px-2 py-0.5 text-xs font-semibold text-ink-muted">
-                {word.translation}
-              </span>
-              <span className="text-xs text-ink-muted">
-                {word.articleCount} {word.articleCount === 1 ? "article" : "articles"}
-              </span>
-            </summary>
-            <div className="mt-2 space-y-2 border-t border-cream-dark pt-2">
-              {word.examples.map((example) => (
-                <Link key={`${word.lemma}-${example.articleId}`} href={`/reader/${example.articleId}`} className="block rounded-xl bg-cream-card px-3 py-2 active:bg-cream-dark/60">
-                  <p className="text-xs font-semibold text-ink">{example.title}</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">{example.sourceName ?? "Saved text"}</p>
-                  <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">{example.sentence}</p>
-                </Link>
-              ))}
-            </div>
-          </details>
-        ))}
-      </div>
-    </section>
   );
 }

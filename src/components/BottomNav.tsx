@@ -7,8 +7,8 @@ import { getOnboardingState } from "@/lib/onboarding";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 
 const items = [
-  { href: "/", label: "Today", icon: HomeIcon, activePaths: ["/"] },
-  { href: "/articles", label: "Lessons", icon: BookIcon, activePaths: ["/articles"] },
+  { href: "/", label: "Lessons", icon: BookIcon, activePaths: ["/", "/articles"] },
+  { href: "/live-news", label: "News", icon: NewsIcon, activePaths: ["/live-news"] },
   { href: "/review", label: "Review", icon: CardsIcon, activePaths: ["/review"] },
   {
     href: "/settings",
@@ -25,7 +25,6 @@ const items = [
       "/changelog",
       "/grammar",
       "/archive",
-      "/live-news",
       "/lookup",
     ],
   },
@@ -59,8 +58,7 @@ export default function BottomNav() {
     >
       <ul className="flex">
         {items.map(({ href, label, icon: Icon, activePaths }) => {
-          const active =
-            href === "/" ? pathname === "/" : activePaths.some((path) => pathname.startsWith(path));
+          const active = activePaths.some((path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)));
           return (
             <li key={href} className="flex-1">
               <Link
@@ -80,16 +78,6 @@ export default function BottomNav() {
   );
 }
 
-function HomeIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 11l9-8 9 8" />
-      <path d="M5 10v10h14V10" />
-      <path d="M9 20v-6h6v6" />
-    </svg>
-  );
-}
-
 function CardsIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -105,6 +93,17 @@ function BookIcon({ className }: { className?: string }) {
       <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4z" />
       <path d="M9 8h5" />
       <path d="M9 12h6" />
+    </svg>
+  );
+}
+
+function NewsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="5" width="16" height="14" rx="2" />
+      <path d="M8 9h8" />
+      <path d="M8 13h5" />
+      <path d="M8 17h8" />
     </svg>
   );
 }

@@ -1283,11 +1283,11 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleLessonCompleteContinue() {
     // Return to where the lesson was opened from — the article tab by default,
     // or home if that's where the reader was entered from.
-    let target = isStarterLesson ? "/articles#journey-current" : "/articles";
+    let target = isStarterLesson ? "/#journey-current" : "/";
     if (typeof document !== "undefined") {
       try {
         const ref = new URL(document.referrer);
-        if (ref.origin === window.location.origin && ref.pathname === "/") target = "/";
+        if (ref.origin === window.location.origin && (ref.pathname === "/" || ref.pathname === "/articles")) target = "/#journey-current";
         if (ref.origin === window.location.origin && ref.pathname === "/live-news") target = "/live-news";
       } catch {
         // no usable referrer; keep the default

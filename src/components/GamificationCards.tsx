@@ -393,7 +393,7 @@ export function CompletionSummary({
     ["Phrases", completion.phrasesSaved],
     ["Comprehension", completion.comprehensionTotal ? `${completion.comprehensionCorrect}/${completion.comprehensionTotal}` : "Not scored"],
   ];
-  const nextHref = reviewHref ?? "/articles";
+  const nextHref = reviewHref ?? "/#journey-current";
   const nextLabel = reviewHref ? (savedItems === 1 ? "Review saved item" : "Review saved items") : isLesson ? "Next lesson" : "Next reading";
   const nextCopy =
     savedItems > 0

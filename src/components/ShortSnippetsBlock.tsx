@@ -10,9 +10,9 @@ import { getHiddenSources } from "@/lib/recommendation/preferences";
 
 const SNIPPET_LIMIT = 6;
 
-export default function ShortSnippetsBlock() {
+export default function ShortSnippetsBlock({ defaultOpen = false }: { defaultOpen?: boolean } = {}) {
   const [snippets, setSnippets] = useState<ReadingText[] | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   useEffect(() => {
     let cancelled = false;

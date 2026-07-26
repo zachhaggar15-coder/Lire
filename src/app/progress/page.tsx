@@ -279,7 +279,7 @@ function FirstStepsProgressCard() {
           </div>
         ))}
       </div>
-      <Link href="/articles" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95">
+      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95">
         Start reading
       </Link>
     </section>
