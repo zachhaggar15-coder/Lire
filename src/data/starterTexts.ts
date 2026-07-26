@@ -13701,4 +13701,234 @@ Dans un monde qui éparpille nos vies, le repas partagé reste l'un des derniers
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-071",
+    title: "Aimer à l'ère du choix illimité",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Jamais autant de rencontres possibles. Est-il pour autant plus facile d'aimer ?",
+    blurbEn:
+      "Dating apps offer an apparently endless supply of potential partners. But does infinite choice make love easier, or strangely harder? (Section: Love and relationships, 1/5.)",
+    body: `Jamais il n'a été aussi facile de rencontrer quelqu'un. Les applications mettent à portée de main des milliers de partenaires possibles, que l'on peut trier, comparer, contacter d'un simple geste. En théorie, cette abondance devrait rendre l'amour plus accessible que jamais. En pratique, beaucoup témoignent du contraire : ils n'ont jamais eu autant de choix, ni trouvé aussi difficile de s'attacher. Ce paradoxe mérite qu'on s'y arrête.
+
+Le premier effet du choix illimité est de transformer notre regard sur l'autre. Face à une offre apparemment inépuisable, chaque personne rencontrée devient une option parmi d'autres, comparée à celles qui pourraient suivre. Pourquoi s'investir dans une relation imparfaite, quand un profil plus séduisant semble n'être qu'à un geste de distance ? Cette logique, empruntée à la consommation, s'accorde mal avec ce qu'exige l'amour : la patience, l'engagement, l'acceptation des imperfections.
+
+Le deuxième effet est plus subtil. À force de choisir, on finit par ne plus savoir choisir. La psychologie a montré que, passé un certain seuil, l'abondance des options ne libère pas : elle paralyse. On hésite, on remet à plus tard, on garde toujours une porte ouverte, de peur de renoncer à mieux. Et à trop vouloir se réserver le meilleur, on passe souvent à côté du bien.
+
+Il ne s'agit pas de condamner ces outils, qui ont aussi permis à d'innombrables couples de se former, et qui rendent service à ceux que la vie n'aurait pas mis en présence. Le problème n'est pas l'outil, mais l'état d'esprit qu'il encourage : celui du consommateur qui compare, jamais tout à fait satisfait, toujours en quête de l'option idéale qui, par définition, n'existe pas.
+
+Aimer suppose peut-être, au fond, le contraire de ce que promet le choix illimité. Non pas trouver la personne parfaite parmi une infinité de possibles, mais décider de s'attacher à une personne réelle, avec ses défauts, et de construire quelque chose avec elle plutôt que de continuer à chercher. L'engagement n'est pas la fin de la liberté ; il en est peut-être l'usage le plus profond.
+
+Dans un monde qui nous invite sans cesse à garder toutes nos options ouvertes, choisir vraiment quelqu'un — et renoncer, pour lui, à tous les autres — est devenu un acte presque à contre-courant. C'est peut-être ce qui lui donne, aujourd'hui plus que jamais, sa valeur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-072",
+    title: "L'amitié à l'âge adulte",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Se faire de vrais amis devient plus rare à mesure qu'on avance en âge.",
+    blurbEn:
+      "Making real friends gets harder with age, and old friendships quietly fade. Why adult friendship takes deliberate effort — and why it is worth it. (Section: Love and relationships, 2/5.)",
+    body: `Il est une expérience que beaucoup font en avançant en âge, sans toujours oser l'avouer : il devient plus difficile de se faire de vrais amis. Les amitiés de l'enfance et de la jeunesse s'étaient nouées presque sans effort, portées par la proximité quotidienne de l'école ou des études. À l'âge adulte, cette facilité disparaît, et l'on découvre que l'amitié, loin d'aller de soi, demande désormais une attention qu'on n'avait jamais eu à lui accorder.
+
+Les raisons en sont concrètes. La vie adulte disperse : on déménage, on change de travail, on fonde une famille, et le temps libre se raréfie. Les occasions de rencontres régulières, qui faisaient naître les amitiés sans qu'on y pense, deviennent rares. Or l'amitié a besoin de temps et de répétition : on ne devient pas proche de quelqu'un qu'on ne voit qu'occasionnellement. Ce qui se tissait autrefois par la simple force de l'habitude exige maintenant d'être entretenu volontairement.
+
+Cette évolution explique un phénomène discret mais répandu : la lente disparition d'amitiés qui comptaient. Non par brouille ni par désaccord, mais par simple négligence. On ne se dispute pas ; on cesse, peu à peu, de se voir. Les liens ne se rompent pas d'un coup ; ils se défont par manque d'entretien, comme un jardin qu'on aurait cessé de cultiver.
+
+Reconnaître cela n'a rien de désespérant ; c'est au contraire libérateur. Car si l'amitié adulte ne naît plus toute seule, elle peut encore se construire, à condition d'y consacrer une intention. Proposer, relancer, fixer des rendez-vous réguliers, accepter d'être celui qui fait le premier pas : ces gestes, un peu volontaires, sont le prix de l'amitié à l'âge adulte. Ils peuvent sembler artificiels à qui garde la nostalgie des liens spontanés d'autrefois, mais ils sont, en réalité, une forme de fidélité.
+
+Il faut aussi accepter que toutes les amitiés n'ont pas vocation à durer, et que certaines s'éteignent naturellement, sans qu'on ait à s'en vouloir. L'important n'est pas de retenir tout le monde, mais d'entretenir ce qui compte vraiment.
+
+L'amitié adulte est peut-être moins facile que celle de la jeunesse, mais elle n'en est pas moins précieuse — et le fait même qu'elle demande un effort lui confère, en un sens, plus de valeur. Ce qu'on choisit délibérément de cultiver vaut souvent mieux que ce qui nous était simplement donné.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-073",
+    title: "Vivre seul, une histoire nouvelle",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "De plus en plus de gens vivent seuls. Faut-il s'en inquiéter ou s'en réjouir ?",
+    blurbEn:
+      "More people live alone than ever before in history. Is this a sign of freedom, of isolation, or of both at once? A look past the easy conclusions. (Section: Love and relationships, 3/5.)",
+    body: `Un fait social discret, mais considérable, marque notre époque : jamais autant de gens n'ont vécu seuls. Dans les grandes villes, les ménages d'une seule personne sont devenus l'une des formes de vie les plus répandues. Ce phénomène, historiquement inédit à cette échelle, provoque des réactions contradictoires : les uns y voient un progrès, les autres un symptôme inquiétant. La vérité, comme souvent, résiste aux conclusions faciles.
+
+D'un côté, vivre seul est aussi le signe d'une liberté nouvelle. Pendant des siècles, rares étaient ceux qui pouvaient se le permettre : on vivait en famille par nécessité économique, et le célibat prolongé était souvent subi plus que choisi. Que tant de personnes puissent aujourd'hui habiter seules témoigne d'une autonomie — matérielle, sociale, personnelle — qui n'existait pas. Beaucoup vivent seuls parce qu'ils le veulent, et y trouvent un espace pour être pleinement eux-mêmes.
+
+De l'autre, cette évolution s'accompagne d'un risque bien réel : l'isolement. Vivre seul n'est pas nécessairement être seul, mais les deux se rejoignent parfois. Sans les liens quotidiens qu'imposait autrefois la vie commune, certains glissent, presque sans s'en apercevoir, vers une solitude qu'ils n'avaient pas choisie. Le danger est d'autant plus grand qu'il est silencieux : on peut s'isoler progressivement sans que personne ne le remarque.
+
+Il faut donc se garder des deux discours symétriques. Celui qui célèbre béatement le mode de vie solitaire oublie que l'être humain reste un animal social, qui a besoin des autres pour aller bien. Celui qui déplore un effondrement du lien oublie que vivre seul peut être un choix heureux, et que le mariage forcé de jadis n'avait rien d'un paradis.
+
+Ce que révèle surtout la montée de la vie solitaire, c'est un enjeu nouveau : puisqu'on ne vit plus automatiquement entouré, il faut désormais construire son entourage de manière plus délibérée. Les liens que la vie commune fournissait sans effort, chacun doit maintenant les cultiver : amitiés entretenues, voisinage vivant, engagements partagés.
+
+Vivre seul n'est donc en soi ni une chance ni un malheur ; tout dépend de ce qu'on en fait, et surtout des liens que l'on tisse au-delà de son propre logement. La solitude choisie peut être une richesse ; la solitude subie reste une épreuve. Toute la différence tient dans ce petit mot : choisir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-074",
+    title: "Ce que les écrans font à nos conversations",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La simple présence d'un téléphone sur la table change nos échanges.",
+    blurbEn:
+      "Even a phone lying face-down on the table changes how we talk to each other. What constant connection is quietly doing to the depth of our conversations. (Section: Love and relationships, 4/5.)",
+    body: `Il suffit parfois d'un détail pour révéler un changement profond. Des chercheurs ont observé que la simple présence d'un téléphone posé sur une table, même éteint et retourné, suffit à modifier la qualité d'une conversation. Les échanges deviennent plus superficiels, les interlocuteurs se confient moins, comme si l'objet, par sa seule présence, rappelait qu'un ailleurs est toujours disponible. Ce constat, en apparence anodin, en dit long sur ce que la connexion permanente fait à nos relations.
+
+Le mécanisme est subtil. Nos conversations les plus profondes exigent une attention pleine et une certaine vulnérabilité : il faut se sentir écouté pour oser se livrer. Or la présence d'un écran, toujours prêt à nous happer, introduit une distraction latente. Même quand on ne le regarde pas, on sait qu'il est là, et cette conscience diffuse suffit à retenir, à écourter, à empêcher que l'échange aille au fond des choses.
+
+À cela s'ajoute une transformation plus large de nos habitudes relationnelles. Nous multiplions les contacts brefs — un message, une réaction, une notification — au détriment des échanges longs et attentifs. Nous sommes reliés en permanence à des dizaines de personnes, mais rarement pleinement présents à celle qui se trouve en face de nous. La quantité de nos interactions a explosé ; leur profondeur, elle, s'est amenuisée.
+
+Il ne faut pas céder à la nostalgie facile d'un âge d'or de la conversation qui n'a peut-être jamais existé. Les écrans nous relient aussi à ceux qui sont loin, et rendent d'immenses services. Le problème n'est pas la technologie en elle-même, mais l'usage qui en fait un tiers permanent, présent jusque dans nos moments les plus intimes.
+
+La solution ne réside pas dans un rejet spectaculaire, mais dans quelques gestes simples et délibérés : ranger son téléphone lors d'un repas, d'une confidence, d'un moment qui compte. Créer, dans la journée, des espaces protégés où l'on soit vraiment là, tout entier, pour l'autre.
+
+Car ce que nous risquons de perdre, à force de présence partielle, n'est pas mince : c'est cette qualité d'attention qui fait qu'une conversation nous relie vraiment. Être pleinement présent à quelqu'un est devenu, paradoxalement, l'un des cadeaux les plus rares que l'on puisse offrir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-075",
+    title: "La famille, un lien qui se réinvente",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La famille change de forme sans cesser d'être essentielle.",
+    blurbEn:
+      "The family has changed shape dramatically, prompting fears of its decline. But perhaps it is not disappearing — only being reinvented. (Section: Love and relationships, 5/5.)",
+    body: `Peu d'institutions ont autant changé, en si peu de temps, que la famille. Le modèle qui paraissait encore évident il y a quelques décennies — un couple marié pour la vie, entouré de ses enfants — n'est plus qu'une forme parmi d'autres. Familles recomposées, monoparentales, sans enfants, unissant des personnes de même sexe : la diversité des configurations est aujourd'hui la règle. Face à cette transformation, une inquiétude revient : assisterait-on au déclin, voire à la disparition de la famille ?
+
+Cette crainte repose sur une confusion. Ce qui décline, ce n'est pas la famille, mais une forme particulière de famille, historiquement située, qu'on avait fini par prendre pour la seule possible. Or l'histoire montre que la famille a toujours varié selon les époques et les lieux. Le modèle qu'on croyait éternel n'était lui-même qu'un moment dans une longue évolution. Ce n'est donc pas la fin de la famille que l'on observe, mais une nouvelle métamorphose.
+
+Ce qui demeure, à travers toutes ces formes, c'est la fonction essentielle de la famille : offrir un lien durable, un lieu d'appartenance, un soutien face aux épreuves de l'existence. Que ce lien prenne des formes inédites ne le rend pas moins réel. Un enfant élevé avec amour par un seul parent, ou par deux parents de même sexe, ne manque pas de famille ; il en a simplement une qui ne ressemble pas à l'image d'autrefois.
+
+Il serait naïf de nier que ces évolutions posent aussi des difficultés. Les familles recomposées doivent inventer des liens sans modèle établi ; les parents isolés portent seuls une charge lourde ; les repères, moins évidents, doivent être construits plutôt que reçus. Reconnaître la richesse de ces nouvelles formes n'oblige pas à en ignorer les défis.
+
+Mais l'essentiel est peut-être ailleurs. Ce qui fait une famille n'a jamais été la conformité à un modèle, mais la qualité des liens qui unissent ses membres : l'attention, la fidélité, l'amour qui résiste au temps. À cette aune, une famille qui ne ressemble à aucune image d'autrefois peut être pleinement une famille, et une famille en apparence conforme peut n'en avoir que l'apparence.
+
+La famille ne disparaît pas ; elle se réinvente, comme elle l'a toujours fait. Et tant que des êtres humains auront besoin d'être aimés et soutenus par d'autres, dans la durée, elle continuera, sous mille formes, d'exister.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-076",
+    title: "La technologie est-elle neutre ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "« Ce n'est qu'un outil » : cette phrase rassurante est-elle exacte ?",
+    blurbEn:
+      "'It's just a tool — what matters is how you use it.' A close look at this reassuring idea, and why technology may shape us more than we admit. (Section: Technology and society, 1/5.)",
+    body: `« La technologie est neutre ; tout dépend de l'usage qu'on en fait. » Cette phrase, mille fois répétée, a quelque chose de rassurant : elle place la responsabilité entièrement du côté de l'utilisateur et disculpe l'outil lui-même. Un couteau peut couper du pain ou blesser ; ce n'est pas le couteau qui décide. L'idée paraît de bon sens. Elle est pourtant, à y regarder de près, largement insuffisante.
+
+Car si toute technologie autorise plusieurs usages, elle ne les autorise pas tous également. Chaque outil rend certaines actions faciles et d'autres difficiles ; il incline, il oriente, il suggère. Une voiture ne force personne à rouler vite, mais elle rend la vitesse possible et désirable d'une manière qu'un vélo ne permet pas. Un réseau social ne contraint personne à se comparer aux autres, mais il est conçu de telle sorte que la comparaison devient presque inévitable. L'outil ne décide pas à notre place, mais il n'est pas non plus indifférent à ce que nous en faisons.
+
+On peut aller plus loin. Certaines technologies portent en elles des effets qui dépassent tout usage individuel. L'automobile, en se généralisant, n'a pas seulement transporté des gens : elle a remodelé les villes, dispersé l'habitat, transformé nos modes de vie. Nul n'avait décidé cela ; c'est l'outil lui-même qui, par sa logique propre, a façonné le monde autour de lui. Prétendre qu'il était « neutre » revient à ignorer ce pouvoir de transformation.
+
+Reconnaître cela ne signifie pas rendre la technologie responsable de tout, ni dédouaner les individus. Nous restons libres de nos usages, et cette liberté est réelle. Mais elle s'exerce dans un cadre que l'outil a déjà, en partie, disposé. Ignorer ce cadre, c'est se croire plus libre qu'on ne l'est, et se rendre aveugle aux forces qui orientent nos comportements.
+
+L'enjeu est important, car il concerne la manière dont nous concevons les technologies elles-mêmes. Si l'on admet qu'elles ne sont pas neutres, alors il devient légitime de se demander, avant même de les adopter, quels usages elles favorisent et quels effets elles produisent. La question n'est plus seulement « comment vais-je m'en servir ? », mais « que va faire de moi, et de nous, cet outil ? ».
+
+Croire la technologie neutre, c'est renoncer à la juger. Or les outils que nous nous donnons nous façonnent en retour, et il vaut mieux le savoir avant qu'ils ne nous aient changés.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-077",
+    title: "L'intelligence artificielle et nos métiers",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Des tâches que l'on croyait réservées aux humains sont désormais automatisées.",
+    blurbEn:
+      "Machines now perform tasks we thought only humans could do. A measured look past both panic and hype at what this means for work. (Section: Technology and society, 2/5.)",
+    body: `Pendant longtemps, on s'est rassuré en pensant que les machines ne remplaceraient jamais que les tâches répétitives et physiques, laissant à l'homme le monopole de l'intelligence, de la création, du jugement. Cette frontière, qu'on croyait solide, s'est mise à vaciller. Des programmes rédigent des textes, produisent des images, analysent des documents, tiennent des conversations. Des activités que l'on tenait pour exclusivement humaines sont désormais, en partie, automatisables. Comment penser ce bouleversement sans céder ni à la panique ni à l'aveuglement ?
+
+Il faut d'abord écarter deux discours également trompeurs. Le premier annonce une catastrophe : les machines vont tout faire, le travail humain va disparaître, le chômage de masse est inévitable. Le second promet un paradis : la technologie va nous libérer des tâches ingrates et nous laisser le meilleur. L'histoire suggère que la réalité sera plus nuancée, et surtout plus inégale, que ne le prétendent ces prophéties opposées.
+
+Ce que l'on peut raisonnablement anticiper, c'est une transformation profonde, plutôt qu'une disparition pure et simple du travail. Certaines tâches seront automatisées, d'autres apparaîtront, et beaucoup de métiers seront moins supprimés que redéfinis. L'expérience passée montre que les techniques nouvelles détruisent des emplois mais en créent d'autres, souvent imprévisibles. Rien ne garantit cependant que ce sera indolore, ni que les emplois perdus et créés concerneront les mêmes personnes.
+
+C'est là que se situe le vrai enjeu, souvent négligé dans le débat. Le problème n'est pas tant l'automatisation en soi que la manière dont ses bénéfices et ses coûts seront répartis. Si les gains de productivité enrichissent une minorité tandis que d'autres perdent leur emploi sans perspective, la technologie aura aggravé les inégalités. Si, au contraire, ces gains sont partagés et accompagnés — par la formation, la protection, la répartition du travail —, elle pourra profiter au plus grand nombre.
+
+Autrement dit, les conséquences de l'intelligence artificielle ne sont pas inscrites dans la technique elle-même ; elles dépendront de choix collectifs. Ce n'est pas la machine qui décidera si elle nous libère ou nous appauvrit, mais la société qui l'emploie et la façon dont elle en organise les effets.
+
+Face à ces transformations, la bonne attitude n'est donc ni la résignation ni l'enthousiasme naïf, mais la vigilance. Une technologie puissante n'est jamais bonne ou mauvaise en soi ; tout dépend de ce que nous en ferons, ensemble.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-078",
+    title: "Les bulles où nous nous enfermons",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Les algorithmes nous montrent ce qui nous plaît, au risque de nous isoler.",
+    blurbEn:
+      "Algorithms show us what we already agree with, quietly walling us into 'bubbles'. How this happens, why it matters for democracy, and what can be done. (Section: Technology and society, 3/5.)",
+    body: `Pour retenir notre attention, les plateformes numériques nous montrent en priorité ce qui est susceptible de nous plaire. Cette logique, en apparence bienveillante, a une conséquence qu'on mesure mal : à force de nous présenter ce qui conforte nos goûts et nos opinions, elle tend à nous enfermer dans une bulle, où nous ne rencontrons plus que le reflet de nous-mêmes. Ce phénomène, souvent désigné comme celui des « bulles de filtres », mérite qu'on en comprenne le mécanisme et les enjeux.
+
+Le principe est simple. Un algorithme observe ce sur quoi nous nous attardons, ce que nous approuvons, ce que nous partageons, et nous en propose davantage. Ce faisant, il ne cherche pas à nous informer, mais à nous satisfaire, car un utilisateur satisfait reste plus longtemps connecté. Or ce qui nous satisfait, ce n'est pas ce qui nous contredit, mais ce qui nous conforte. Peu à peu, sans que nous l'ayons voulu, notre horizon se rétrécit à ce qui nous ressemble.
+
+Les effets de ce rétrécissement sont préoccupants. En ne rencontrant plus que des opinions semblables aux nôtres, nous finissons par les croire universelles, et par tenir pour aberrant tout point de vue différent. Nos convictions, jamais confrontées à la contradiction, se durcissent. Les autres, dont nous n'entendons plus les raisons, nous deviennent étrangers, voire incompréhensibles. Ainsi se creusent, entre des groupes qui ne se parlent plus, des fossés qui menacent la vie commune.
+
+Car une démocratie suppose un espace partagé, où des citoyens aux vues différentes puissent se rencontrer, débattre, se comprendre au moins un peu. Si chacun vit dans sa bulle, exposé à une version différente de la réalité, cet espace commun se disloque. On ne débat plus ; on s'invective, chacun persuadé que l'autre est de mauvaise foi. La fragmentation de l'information menace, à terme, la possibilité même de délibérer ensemble.
+
+Que faire face à ce risque ? Les plateformes ont, certes, une responsabilité, et l'on peut exiger d'elles plus de transparence et de diversité. Mais il appartient aussi à chacun de résister à sa propre bulle : rechercher délibérément des points de vue différents, fréquenter des sources variées, se méfier du confort de n'entendre que ce qui nous plaît.
+
+Sortir de sa bulle demande un effort, car il est plus agréable d'avoir raison que d'être contredit. Mais c'est à ce prix que l'on reste capable de comprendre le monde tel qu'il est, et non tel qu'un algorithme a décidé de nous le montrer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-079",
+    title: "Le droit de se déconnecter",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Être joignable partout, tout le temps : est-ce un progrès ou une servitude ?",
+    blurbEn:
+      "Being reachable everywhere, always, was sold as freedom. A reflection on why the right to disconnect has become something we must consciously defend. (Section: Technology and society, 4/5.)",
+    body: `Pouvoir être joint partout, à tout moment, fut d'abord présenté comme une conquête : plus jamais coupé du monde, toujours à portée de ceux qu'on aime, jamais perdu. Cette promesse s'est en grande partie réalisée. Mais elle s'est accompagnée d'un revers que l'on n'avait pas mesuré : si l'on peut toujours être joint, on est aussi toujours joignable, et cette disponibilité permanente, d'abord vécue comme une liberté, se révèle peu à peu comme une forme de servitude.
+
+Le glissement s'est opéré insensiblement. Ce qui était possible est devenu attendu, puis obligatoire. Ne pas répondre rapidement à un message passe désormais pour de la négligence, voire de l'impolitesse. On se sent tenu de rester connecté, de vérifier, de réagir, comme si le monde entier réclamait de nous une présence de tous les instants. La technologie qui devait nous libérer nous a enchaînés à une attente ininterrompue.
+
+Ce que nous perdons dans cette disponibilité perpétuelle, c'est quelque chose de précieux : le droit d'être, par moments, injoignable. Le droit de nous absenter du flux, de nous retirer, de n'être là pour personne d'autre que ceux qui nous entourent réellement. Ce droit, que nos aïeux exerçaient sans même y penser — car nul ne pouvait les joindre —, est devenu un bien rare, qu'il faut désormais défendre consciemment.
+
+Il ne s'agit pas de diaboliser des outils qui rendent d'immenses services, ni de rêver d'un retour impossible à un monde déconnecté. Il s'agit de rétablir un équilibre, en distinguant ce qui relève d'une nécessité réelle et ce qui n'est qu'une habitude ou une pression sociale. Presque rien, en vérité, n'exige d'être traité dans la seconde ; l'urgence permanente est le plus souvent une illusion que nous entretenons nous-mêmes.
+
+Reconquérir le droit de se déconnecter suppose des décisions concrètes : des plages sans écran, des moments où l'on éteint, des règles que l'on se donne et que l'on assume face aux autres. Cela demande un certain courage, car il faut accepter de décevoir des attentes devenues excessives. Mais c'est à ce prix que l'on redevient maître de son temps, au lieu d'en être le serviteur.
+
+Être joignable est une commodité ; pouvoir ne pas l'être est une liberté. Dans un monde qui confond les deux, préserver la seconde est devenu un acte de résistance ordinaire, mais essentiel.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-080",
+    title: "Qui décide de ce que nous voyons ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Derrière chaque écran, des choix invisibles orientent notre regard.",
+    blurbEn:
+      "Behind every feed, invisible choices decide what reaches us and what does not. On the quiet, immense power of those who design what we see. (Section: Technology and society, 5/5.)",
+    body: `Nous avons le sentiment de choisir librement ce que nous regardons. Nous ouvrons une application, faisons défiler, cliquons ici plutôt que là. Pourtant, ce sentiment de liberté masque une réalité plus complexe : ce que nous voyons a d'abord été trié, hiérarchisé, sélectionné par des systèmes que nous ne contrôlons pas et que, le plus souvent, nous ne comprenons pas. Derrière l'apparente spontanéité de nos choix, des décisions invisibles orientent notre regard.
+
+Ces décisions n'ont rien d'anodin. Sur les grandes plateformes, ce qui apparaît en premier, ce qui est mis en avant, ce qui reste au contraire enfoui, résulte de règles conçues par quelques entreprises. Ces règles déterminent quelles informations nous atteignent, quelles opinions gagnent en visibilité, quelles voix sont amplifiées et lesquelles sont réduites au silence. C'est un pouvoir immense, d'autant plus redoutable qu'il s'exerce discrètement, sans qu'on le perçoive comme un pouvoir.
+
+Ce pouvoir soulève des questions démocratiques inédites. Dans une société, la manière dont circule l'information n'est jamais indifférente : elle façonne ce que les citoyens savent, croient et discutent. Or ce rôle, autrefois tenu par des institutions au moins partiellement soumises au débat public, est aujourd'hui exercé, pour une large part, par des acteurs privés, guidés par leurs propres intérêts et échappant largement au contrôle collectif. Quelques entreprises décident, de fait, de ce que des milliards de personnes voient et ne voient pas.
+
+Le problème est aggravé par l'opacité. Les critères qui régissent ces choix sont rarement rendus publics ; ils sont protégés comme des secrets industriels. Nous subissons donc des décisions dont nous ignorons les principes, incapables de savoir pourquoi tel contenu nous est montré et tel autre caché. Cette opacité rend tout contrôle, toute critique, presque impossible : on ne peut discuter ce qu'on ne connaît pas.
+
+Que faire face à cette situation ? La première nécessité est d'en prendre conscience, car on ne se méfie pas d'un pouvoir qu'on ne voit pas. La deuxième est d'exiger de la transparence : ceux qui organisent la circulation de l'information à si vaste échelle devraient rendre des comptes sur les règles qu'ils appliquent. La troisième est de refuser de s'en remettre à une source unique, et de diversifier délibérément ce qui nous informe.
+
+Nous croyons regarder le monde ; le plus souvent, nous regardons ce que d'autres ont choisi de nous montrer. Le savoir ne nous rend pas entièrement libres, mais c'est le commencement de toute liberté.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

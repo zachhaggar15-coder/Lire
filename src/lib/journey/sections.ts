@@ -806,6 +806,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-relationships",
+    band: "B2",
+    title: "Love and relationships",
+    goal: "Loving amid infinite choice, adult friendship, living alone, screens and conversation, the reinvented family.",
+    textIds: [
+      "starter-b2-071", // Aimer à l'ère du choix illimité (introduces the core words)
+      "starter-b2-072", // L'amitié à l'âge adulte
+      "starter-b2-073", // Vivre seul, une histoire nouvelle
+      "starter-b2-074", // Ce que les écrans font à nos conversations
+      "starter-b2-075", // La famille, un lien qui se réinvente (hardest)
+    ],
+  },
+  {
+    id: "b2-technology",
+    band: "B2",
+    title: "Technology and society",
+    goal: "Is technology neutral, AI and jobs, filter bubbles, the right to disconnect, who decides what we see.",
+    textIds: [
+      "starter-b2-076", // La technologie est-elle neutre ? (introduces the core words)
+      "starter-b2-077", // L'intelligence artificielle et nos métiers
+      "starter-b2-078", // Les bulles où nous nous enfermons
+      "starter-b2-079", // Le droit de se déconnecter
+      "starter-b2-080", // Qui décide de ce que nous voyons ? (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",
