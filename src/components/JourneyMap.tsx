@@ -23,7 +23,7 @@ export default function JourneyMap() {
   const [mounted, setMounted] = useState(false);
   const [openStageIndex, setOpenStageIndex] = useState<number | null>(null);
   useGeneratedDictionary();
-  const currentRef = useRef<HTMLDivElement | null>(null);
+  const currentRef = useRef<HTMLLIElement | null>(null);
   const fallbackOptions = { selectedLevel: "A2" as const, progressById: {}, skippedTextIds: [], knownWords: new Set<string>(), feedbackByTextId: {} };
 
   const journey = mounted ? getJourneyState() : getJourneyState(fallbackOptions);
@@ -42,6 +42,7 @@ export default function JourneyMap() {
   const previousStageIndex = activeStagePosition > 0 ? unlockedStageIndexes[activeStagePosition - 1] : null;
   const nextStageIndex =
     activeStagePosition >= 0 && activeStagePosition < unlockedStageIndexes.length - 1 ? unlockedStageIndexes[activeStagePosition + 1] : null;
+  const nextText = next ? getJourneyText(next.textId) : null;
 
   useEffect(() => {
     setMounted(true);
@@ -73,14 +74,28 @@ export default function JourneyMap() {
 
   return (
     <section className="mb-6">
-      <div className="mb-4 rounded-card bg-cream-card p-5 shadow-card">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand">Journey</p>
-        <h2 className="mt-1 text-2xl font-extrabold leading-tight text-ink">Continue your French path</h2>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          The next reading is chosen from your current stage and tuned to the words you already know.
-        </p>
-        <XPProgressBar value={journey.overallProgress} label="Path progress" className="mt-4" />
-        {next && <NextTextCard next={next} />}
+      <div className="mb-4 overflow-hidden rounded-card bg-cream-card shadow-card">
+        <div className="bg-brand px-5 py-5 text-white">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-xs font-bold uppercase tracking-wide text-white/75">Journey</p>
+              <h2 className="mt-1 text-2xl font-extrabold leading-tight">Continue your French path</h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/80">
+                One guided reading at a time, with the next stop tuned to the words you already know.
+              </p>
+            </div>
+            {nextText && (
+              <LessonScene
+                name={sceneFor(nextText.id, nextText.category)}
+                size={96}
+                className="lesson-scene-float rounded-[1.35rem] bg-white/15 p-1 shadow-raised"
+              />
+            )}
+          </div>
+        </div>
+        <div className="p-5">
+          <XPProgressBar value={journey.overallProgress} label="Path progress" />
+          {next && <NextTextCard next={next} />}
         {activeStageProgress && (
           <StageNavigator
             activeLabel={activeStageProgress.stage.label}
@@ -97,6 +112,7 @@ export default function JourneyMap() {
             }}
           />
         )}
+        </div>
       </div>
 
       <div className="space-y-5">
@@ -106,18 +122,20 @@ export default function JourneyMap() {
           const cleared = bandStages.filter((stage) => stage.status === "cleared").length;
           const progress = cleared / bandStages.length;
           return (
-            <section key={band} className="rounded-card bg-cream-card p-4 shadow-card">
-              <div className="flex items-start justify-between gap-3">
+            <section key={band} className="overflow-hidden rounded-card bg-cream-card shadow-card">
+              <div className={`flex items-start justify-between gap-3 px-4 py-4 ${bandHeaderTone(band)}`}>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Band</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide opacity-70">Band</p>
                   <h3 className="text-xl font-extrabold text-ink">{band} path</h3>
                 </div>
-                <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
+                <span className="rounded-full bg-white/60 px-3 py-1 text-xs font-bold text-ink">
                   {cleared}/{bandStages.length}
                 </span>
               </div>
-              <XPProgressBar value={progress} label={`${band} progress`} className="mt-3" />
-              <div className="mt-4 space-y-3">
+              <div className="px-4 pt-3">
+                <XPProgressBar value={progress} label={`${band} progress`} />
+              </div>
+              <ol className="relative mt-4 space-y-4 px-4 pb-4 before:absolute before:bottom-8 before:left-[2.375rem] before:top-4 before:w-1 before:rounded-full before:bg-cream-dark">
                 {bandStages.map((stageProgress) => (
                   <StageRow
                     key={stageProgress.stage.globalIndex}
@@ -131,7 +149,7 @@ export default function JourneyMap() {
                     onJump={handleJump}
                   />
                 ))}
-              </div>
+              </ol>
             </section>
           );
         })}
@@ -151,15 +169,17 @@ function NextTextCard({ next }: { next: NextTextRecommendation }) {
     <Link
       id="journey-current"
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className="mt-4 flex items-center gap-3 rounded-2xl bg-brand px-3 py-3 text-white shadow-raised active:scale-[0.99]"
+      className="mt-4 flex items-center gap-3 overflow-hidden rounded-[1.25rem] bg-brand px-3 py-3 text-white shadow-raised active:scale-[0.99]"
     >
-      <LessonScene name={sceneFor(text.id, text.category)} size={56} />
+      <LessonScene name={sceneFor(text.id, text.category)} size={64} className="rounded-2xl bg-white/15 p-1" />
       <span className="min-w-0 flex-1">
         <span className="block text-xs font-bold uppercase tracking-wide text-white/75">You are here</span>
         <span className="mt-0.5 block truncate text-base font-extrabold">{text.title}</span>
         <span className="mt-0.5 block text-xs font-semibold text-white/80">{next.reason}</span>
       </span>
-      <span className="shrink-0 rounded-full bg-white/15 px-2.5 py-1 text-xs font-bold">Start</span>
+      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15" aria-hidden="true">
+        <ChevronRightIcon className="h-4 w-4" />
+      </span>
     </Link>
   );
 }
@@ -193,7 +213,7 @@ function StageNavigator({
           onClick={onBack}
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream-card text-base font-extrabold text-ink-muted shadow-card active:scale-95 disabled:opacity-40"
         >
-          &larr;
+          <ChevronLeftIcon className="h-4 w-4" />
         </button>
         <button
           type="button"
@@ -212,7 +232,7 @@ function StageNavigator({
           onClick={onForward}
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream-card text-base font-extrabold text-ink-muted shadow-card active:scale-95 disabled:opacity-40"
         >
-          &rarr;
+          <ChevronRightIcon className="h-4 w-4" />
         </button>
       </div>
       <p className="mt-2 truncate text-center text-xs font-semibold text-ink-muted">{activeLabel}</p>
@@ -234,7 +254,7 @@ function StageRow({
   next: NextTextRecommendation | null;
   skipped: Set<string>;
   expanded: boolean;
-  currentRef?: RefObject<HTMLDivElement | null>;
+  currentRef?: RefObject<HTMLLIElement | null>;
   onSelectStage: (stageIndex: number) => void;
   onSkip: (textId: string) => void;
   onJump: (stage: Stage) => void;
@@ -247,23 +267,26 @@ function StageRow({
   const stageNext = current && next?.stageIndex === stage.globalIndex ? next : null;
   const canJump = !!stageNext?.canJumpAhead && stageProgress.completedCount > 0;
   const stageTone = current
-    ? "bg-cream ring-2 ring-brand/25"
+    ? "border-brand/30 bg-brand-light shadow-card"
     : cleared
       ? expanded
-        ? "bg-cream"
-        : "bg-cream opacity-75"
-      : "bg-cream-dark/55 opacity-65";
+        ? "border-accent-mint bg-cream"
+        : "border-transparent bg-cream opacity-80"
+      : "border-cream-dark bg-cream-dark/60 opacity-70";
 
   return (
-    <div ref={currentRef} className={`rounded-2xl px-3 py-3 ${stageTone}`}>
+    <li ref={currentRef} className="relative pl-11">
+      <span className="absolute left-0 top-3 z-10">
+        <StageStatusIcon
+          cleared={cleared}
+          current={current}
+          locked={locked}
+          label={cleared ? "Stage cleared" : locked ? "Stage locked" : current ? "Current stage" : `Stage ${stage.indexInBand + 1}`}
+          number={stage.indexInBand + 1}
+        />
+      </span>
+      <div className={`rounded-2xl border px-3 py-3 ${stageTone}`}>
       <div className="flex items-center gap-3">
-        <span
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-extrabold ${
-            cleared ? "bg-brand text-white" : current ? "bg-brand-light text-brand" : "bg-cream-card text-ink-muted"
-          }`}
-        >
-          {cleared ? "OK" : locked ? "L" : stage.indexInBand + 1}
-        </span>
         <button
           type="button"
           disabled={locked}
@@ -284,10 +307,10 @@ function StageRow({
           onClick={() => onSelectStage(stage.globalIndex)}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream-card text-sm font-extrabold text-ink-muted shadow-card"
         >
-          {locked ? "L" : expanded ? "-" : "+"}
+          {locked ? <LockIcon className="h-3.5 w-3.5" /> : expanded ? <ChevronDownIcon className="h-4 w-4" /> : <ChevronRightIcon className="h-4 w-4" />}
         </button>
       </div>
-      <XPProgressBar value={progress} label={stageProgress.optional ? "Optional earlier path" : "Stage progress"} className="mt-2 pl-12 pr-10" />
+      <XPProgressBar value={progress} label={stageProgress.optional ? "Optional earlier path" : "Stage progress"} className="mt-2 pr-10" />
 
       {expanded && !locked && (
         <div className="mt-3 space-y-2">
@@ -312,7 +335,8 @@ function StageRow({
           )}
         </div>
       )}
-    </div>
+      </div>
+    </li>
   );
 }
 
@@ -337,11 +361,15 @@ function TextNode({
 
   return (
     <div
-      className={`flex items-center gap-3 rounded-2xl px-3 py-3 ${
-        next ? "bg-cream-card shadow-card" : muted ? "bg-cream-dark/60 opacity-75" : "bg-cream-card/75"
+      className={`flex items-center gap-3 rounded-2xl border px-3 py-3 ${
+        next ? "border-brand/20 bg-cream-card shadow-card" : muted ? "border-transparent bg-cream-dark/60 opacity-75" : "border-transparent bg-cream-card/75"
       }`}
     >
-      <LessonScene name={sceneFor(text.id, text.category)} size={44} />
+      <LessonScene
+        name={sceneFor(text.id, text.category)}
+        size={52}
+        className={next ? "rounded-2xl bg-brand-light/80 p-0.5" : ""}
+      />
       <div className="min-w-0 flex-1">
         <p className={`truncate text-sm font-bold ${muted ? "text-ink-muted" : "text-ink"}`}>{text.title}</p>
         <p className="mt-0.5 truncate text-xs text-ink-muted">
@@ -356,7 +384,7 @@ function TextNode({
         <Link
           href={`/reader/${encodeURIComponent(text.id)}`}
           className={`rounded-full px-3 py-1.5 text-xs font-bold active:scale-95 ${
-            next ? "bg-brand text-white shadow-raised" : completed ? "bg-cream-dark text-ink-muted" : "bg-brand-light text-brand"
+            next ? "bg-brand text-white shadow-raised" : completed ? "bg-accent-mint text-accent-minttext" : "bg-brand-light text-brand"
           }`}
         >
           {completed ? "Review" : progress === "in-progress" ? "Continue" : next ? "Start" : "Open"}
@@ -372,5 +400,106 @@ function TextNode({
         )}
       </div>
     </div>
+  );
+}
+
+function bandHeaderTone(band: string): string {
+  switch (band) {
+    case "A1":
+      return "bg-accent-mint";
+    case "A2":
+      return "bg-accent-sky";
+    case "B1":
+      return "bg-accent-gold";
+    case "B2":
+      return "bg-accent-violet";
+    default:
+      return "bg-accent-pink";
+  }
+}
+
+function StageStatusIcon({
+  cleared,
+  current,
+  locked,
+  label,
+  number,
+}: {
+  cleared: boolean;
+  current: boolean;
+  locked: boolean;
+  label: string;
+  number: number;
+}) {
+  const className = cleared
+    ? "bg-brand text-white shadow-raised"
+    : current
+      ? "bg-cream-card text-brand ring-4 ring-brand/20 shadow-raised"
+      : locked
+        ? "bg-cream-card text-ink-muted ring-1 ring-cream-dark"
+        : "bg-cream-card text-ink ring-1 ring-cream-dark shadow-card";
+
+  return (
+    <span aria-label={label} className={`flex h-11 w-11 items-center justify-center rounded-full ${className}`}>
+      {cleared ? (
+        <CheckIcon className="h-5 w-5" />
+      ) : locked ? (
+        <LockIcon className="h-4 w-4" />
+      ) : current ? (
+        <MapPinIcon className="h-5 w-5" />
+      ) : (
+        <span className="text-sm font-extrabold tabular-nums">{number}</span>
+      )}
+    </span>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="5" y="10" width="14" height="10" rx="2" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+    </svg>
+  );
+}
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 21s7-5.1 7-11a7 7 0 1 0-14 0c0 5.9 7 11 7 11Z" />
+      <circle cx="12" cy="10" r="2.4" />
+    </svg>
+  );
+}
+
+function ChevronLeftIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
   );
 }

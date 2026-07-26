@@ -344,6 +344,7 @@ export default function ReviewPage() {
           // saying "3 cards due" directly above a "Due today: 0" tile read as
           // a contradiction.
           : `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} to review`;
+  const wordCardIndex = wordSessionTotal > 0 ? wordSessionTotal - wordQueue.length + 1 : 1;
 
   // No learning/unsure words saved at all.
   if (ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
@@ -491,25 +492,34 @@ export default function ReviewPage() {
       )}
 
       {shouldShowWordReview && current && (
-        <div ref={reviewCardRef} className="flex flex-1 flex-col">
+        <div ref={reviewCardRef} className="flex flex-1 flex-col pt-2">
           {/* Flashcard */}
-          <div
-            className={`review-card-smooth flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-card bg-cream-card p-5 text-center shadow-card ${
-              revealed ? "justify-start" : "justify-center"
-            } ${
-              cardFeedback === "correct"
-                ? "reward-card-lock-in bg-emerald-50"
-                : cardFeedback === "repeat" || cardFeedback === "missed"
-                  ? "reward-card-still-learning ring-2 ring-amber-200"
-                  : ""
-            }`}
-          >
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-              {promptLabel(reviewDirection)}
-            </p>
-            <p className="mt-2 text-3xl font-bold text-ink">
-              {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
-            </p>
+          <div className="review-card-stack relative z-0">
+            <div
+              className={`review-card-smooth relative z-10 flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-card bg-cream-card p-5 text-center shadow-card ${
+                revealed ? "justify-start" : "justify-center"
+              } ${
+                cardFeedback === "correct"
+                  ? "reward-card-lock-in bg-emerald-50"
+                  : cardFeedback === "repeat" || cardFeedback === "missed"
+                    ? "reward-card-still-learning ring-2 ring-amber-200"
+                    : ""
+              }`}
+            >
+              <div className="mb-4 flex w-full items-center justify-between gap-3">
+                <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">
+                  {wordCardIndex}/{Math.max(1, wordSessionTotal)}
+                </span>
+                <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">
+                  {revealed ? "Answer side" : "Prompt side"}
+                </span>
+              </div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                {promptLabel(reviewDirection)}
+              </p>
+              <p className="mt-2 text-3xl font-bold text-ink">
+                {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
+              </p>
             {reviewDirection === "fr-en" && current.lemma && current.lemma !== current.word && (
               <p className="text-xs text-ink-muted">from "{current.lemma}"</p>
             )}
@@ -547,8 +557,8 @@ export default function ReviewPage() {
               </button>
             </form>
 
-            {revealed && (
-              <div className="mt-5 w-full border-t border-cream-dark pt-5">
+              {revealed && (
+              <div className="review-answer-reveal mt-5 w-full border-t border-cream-dark pt-5">
                 <p className={`text-sm font-bold ${typedAnswerCorrect ? "text-emerald-700" : "text-amber-700"}`}>
                   {typedAnswerCorrect ? "Looks right." : "Check it against the answer."}
                 </p>
@@ -584,31 +594,36 @@ export default function ReviewPage() {
                   </p>
                 )}
               </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Answer buttons */}
           <div className="mt-4 pb-6">
-            <div className="rounded-card bg-cream/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
+            <div className="rounded-card bg-cream-card/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
+              <div className="mb-2 flex items-center justify-between px-1 text-xs font-semibold text-ink-muted">
+                <span>Grade this card</span>
+                <span>{revealed ? "Choose what happened" : "Reveal before grading"}</span>
+              </div>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   onClick={() => answer("knew")}
                   disabled={!revealed || cardFeedback !== null}
-                  className="rounded-2xl bg-emerald-100 px-1 py-3 text-xs font-semibold text-emerald-700 active:scale-95 disabled:opacity-40"
+                  className="rounded-2xl border border-emerald-200 bg-emerald-100 px-1 py-3 text-xs font-semibold text-emerald-700 shadow-card active:scale-95 disabled:opacity-40"
                 >
                   Knew it
                 </button>
                 <button
                   onClick={() => answer("repeat")}
                   disabled={!revealed || cardFeedback !== null}
-                  className="rounded-2xl bg-amber-100 px-1 py-3 text-xs font-semibold text-amber-700 active:scale-95 disabled:opacity-40"
+                  className="rounded-2xl border border-amber-200 bg-amber-100 px-1 py-3 text-xs font-semibold text-amber-700 shadow-card active:scale-95 disabled:opacity-40"
                 >
                   One more time
                 </button>
                 <button
                   onClick={() => answer("missed")}
                   disabled={cardFeedback !== null}
-                  className="rounded-2xl bg-rose-100 px-1 py-3 text-xs font-semibold text-rose-700 active:scale-95 disabled:opacity-40"
+                  className="rounded-2xl border border-rose-200 bg-rose-100 px-1 py-3 text-xs font-semibold text-rose-700 shadow-card active:scale-95 disabled:opacity-40"
                 >
                   No idea
                 </button>
@@ -899,15 +914,22 @@ function PhraseReviewCard({
   const prompt = direction === "en-fr" ? phrase.translation : phrase.phrase;
   return (
     <div className="flex flex-1 flex-col">
-      <div
-        className={`review-card-smooth rounded-card bg-cream-card p-5 shadow-card ${
-          feedback === "correct"
-            ? "reward-card-lock-in bg-emerald-50"
-            : feedback === "repeat" || feedback === "missed"
-              ? "reward-card-still-learning ring-2 ring-amber-200"
-              : ""
-        }`}
-      >
+      <div className="review-card-stack relative z-0">
+        <div
+          className={`review-card-smooth relative z-10 rounded-card bg-cream-card p-5 shadow-card ${
+            feedback === "correct"
+              ? "reward-card-lock-in bg-emerald-50"
+              : feedback === "repeat" || feedback === "missed"
+                ? "reward-card-still-learning ring-2 ring-amber-200"
+                : ""
+          }`}
+        >
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <span className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">Phrase card</span>
+          <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">
+            {revealed ? "Answer side" : "Prompt side"}
+          </span>
+        </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
         <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
         <form
@@ -941,7 +963,7 @@ function PhraseReviewCard({
         </form>
 
         {revealed && (
-          <div className="mt-4 space-y-3 border-t border-cream-dark pt-4">
+          <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
             <p className={`text-sm font-semibold ${typedCorrect ? "text-emerald-700" : "text-amber-700"}`}>
               {typedCorrect ? "Looks right." : "Check it against the answer."}
             </p>
@@ -965,20 +987,21 @@ function PhraseReviewCard({
 
         <div className="mt-4 grid grid-cols-3 gap-2">
           {[
-            { grade: "knew" as const, label: "Knew it", className: "bg-emerald-100 text-emerald-700", disabled: !revealed },
-            { grade: "repeat" as const, label: "One more time", className: "bg-amber-100 text-amber-700", disabled: !revealed },
-            { grade: "missed" as const, label: "No idea", className: "bg-rose-100 text-rose-700", disabled: false },
+            { grade: "knew" as const, label: "Knew it", className: "border-emerald-200 bg-emerald-100 text-emerald-700", disabled: !revealed },
+            { grade: "repeat" as const, label: "One more time", className: "border-amber-200 bg-amber-100 text-amber-700", disabled: !revealed },
+            { grade: "missed" as const, label: "No idea", className: "border-rose-200 bg-rose-100 text-rose-700", disabled: false },
           ].map((option) => (
             <button
               key={option.grade}
               type="button"
               onClick={() => onGrade(option.grade, typedCorrect)}
               disabled={option.disabled || feedback !== null}
-              className={`rounded-2xl px-1 py-3 text-xs font-semibold active:scale-95 disabled:opacity-40 ${option.className}`}
+              className={`rounded-2xl border px-1 py-3 text-xs font-semibold shadow-card active:scale-95 disabled:opacity-40 ${option.className}`}
             >
               {option.label}
             </button>
           ))}
+        </div>
         </div>
       </div>
     </div>

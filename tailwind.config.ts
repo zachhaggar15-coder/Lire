@@ -31,6 +31,14 @@ const config: Config = {
           pink: "#F7DAD0",
           // Same reason: #B5563C measured 3.64:1 on accent.pink.
           pinktext: "#9C4530",
+          sky: "#DDEFF7",
+          skytext: "#24566D",
+          violet: "#E9E0F6",
+          violettext: "#5D4A8C",
+          gold: "#F7E3A6",
+          goldtext: "#7A541F",
+          mint: "#D9F0E3",
+          minttext: "#28624A",
         },
       },
       fontFamily: {

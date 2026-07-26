@@ -75,6 +75,7 @@ import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS } from "@/lib/journey/ladder";
+import LessonScene, { sceneFor } from "@/components/LessonScene";
 import LessonCompleteScreen, { type JourneyMoment, type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -1626,13 +1627,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     return renderSentenceFrame(sg, key, renderTokenNodes(sg));
   }
 
+  const headerScene = sceneFor(text.id, text.category);
+  const headerTone = readerHeaderTone(text.category);
 
   return (
     <div className="px-4 pt-4">
       {showProgressBadge && (
-        <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-xs font-bold tabular-nums text-brand shadow-card ring-1 ring-cream-dark/70 backdrop-blur">
-          {scrollProgressPercent}% read
-        </div>
+        <>
+          <div className="pointer-events-none fixed left-1/2 top-0 z-40 h-1 w-full max-w-md -translate-x-1/2 bg-cream-dark/70">
+            <div className="h-full bg-brand transition-[width] duration-200" style={{ width: `${scrollProgressPercent}%` }} />
+          </div>
+          <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-xs font-bold tabular-nums text-brand shadow-card ring-1 ring-cream-dark/70 backdrop-blur">
+            {scrollProgressPercent}% read
+          </div>
+        </>
       )}
 
       {/* Header with back button */}
@@ -1649,21 +1657,26 @@ export default function Reader({ text }: { text: ReadingText }) {
         </button>
       </div>
 
-      {(difficulty?.cefr ?? text.difficulty) && (
-        <span className="mb-2 inline-block rounded-full bg-brand-light px-2.5 py-0.5 text-xs font-semibold text-brand capitalize">
-          {formatCategory(text.category)}
-        </span>
-      )}
-      <h1 className="text-2xl font-extrabold leading-tight text-ink">
-        {text.title}
-      </h1>
+      <section className="overflow-hidden rounded-card bg-cream-card shadow-card">
+        <div className={`flex items-center gap-4 p-4 ${headerTone}`}>
+          <div className="min-w-0 flex-1">
+            <span className="mb-2 inline-block rounded-full bg-cream-card/75 px-2.5 py-0.5 text-xs font-semibold text-brand capitalize">
+              {formatCategory(text.category)}
+            </span>
+            <h1 className="break-words text-2xl font-extrabold leading-tight text-ink">
+              {text.title}
+            </h1>
       {/* The stored level, matching the card that led here — see the note in
           ReadingCard. The estimate only ever speaks in the "Reading help"
           note below, where it describes the fit rather than renaming it. */}
-      <p className="mt-1 text-xs text-ink-muted">
-        {text.difficulty} - {text.minutes} min
-      </p>
-      <details className="mt-2 text-xs text-ink-muted">
+            <p className="mt-1 text-xs font-semibold text-ink-muted">
+              {text.difficulty} - {text.minutes} min
+            </p>
+          </div>
+          <LessonScene name={headerScene} size={82} className="lesson-scene-float rounded-[1.25rem] bg-white/60 p-1 shadow-card" />
+        </div>
+        <div className="p-4">
+      <details className="text-xs text-ink-muted">
         <summary className="cursor-pointer font-semibold underline underline-offset-2">Reading help</summary>
         <p className="mt-1">
           Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
@@ -1683,7 +1696,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             type="button"
             onClick={handleToggleListenToArticle}
             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
-              isSpeakingArticle ? "bg-brand text-white" : "bg-cream-card text-ink shadow-card"
+              isSpeakingArticle ? "bg-brand text-white" : "bg-cream text-ink shadow-card"
             }`}
           >
             {isSpeakingArticle ? (
@@ -1710,7 +1723,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex items-center gap-2 rounded-full bg-cream-card px-3.5 py-2 text-xs font-semibold text-ink shadow-card active:scale-95 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full bg-cream px-3.5 py-2 text-xs font-semibold text-ink shadow-card active:scale-95 disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -1754,6 +1767,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           )}
         </p>
       )}
+        </div>
+      </section>
 
       {isChunkedStarterLesson && (
         <section className="mt-5 rounded-card bg-cream-card p-4 shadow-card">
@@ -2128,6 +2143,21 @@ function dedupeArticles(articles: ReadingText[]): ReadingText[] {
   const byId = new Map<string, ReadingText>();
   for (const article of articles) byId.set(article.id, article);
   return [...byId.values()];
+}
+
+function readerHeaderTone(category: ReadingText["category"]): string {
+  switch (category) {
+    case "news-style":
+      return "bg-accent-pink";
+    case "sport":
+      return "bg-accent-gold";
+    case "culture":
+      return "bg-accent-violet";
+    case "science":
+      return "bg-accent-sky";
+    case "everyday life":
+      return "bg-accent-mint";
+  }
 }
 
 function buildRelatedArticles(current: ReadingText, candidates: ReadingText[], limit = 3): ReadingText[] {

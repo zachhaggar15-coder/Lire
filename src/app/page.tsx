@@ -168,7 +168,7 @@ export default function HomePage() {
     return (
       <div className="min-h-[100dvh] px-4 pt-6">
         <header className="mb-5">
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink">Lire</h1>
+          <h1 className="text-3xl font-extrabold text-ink">Lire</h1>
           <p className="mt-1 text-sm text-ink-muted">Set your starting point, then read one short French text.</p>
         </header>
         <FirstRunOnboarding
@@ -185,7 +185,7 @@ export default function HomePage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-4 flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Lire</h1>
+        <h1 className="text-2xl font-extrabold text-ink">Lire</h1>
         <div className="flex items-center gap-2">
           <Link
             href="/settings"
@@ -231,23 +231,30 @@ function BeginnerRealWorldGate({ completedCount }: { completedCount: number }) {
   const safeCount = Math.max(0, Math.min(target, completedCount));
 
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Real-world French</p>
-      <h2 className="mt-1 text-lg font-extrabold leading-tight text-ink">News unlocks after a few guided lessons.</h2>
-      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-        Live articles are faster, messier French. Finish three guided readings first so word taps and English help feel automatic.
-      </p>
-      <StageProgressLine
-        value={safeCount / target}
-        label={`${safeCount}/${target} guided readings complete`}
-        className="mt-4"
-      />
-      <Link
-        href="/articles#journey-current"
-        className="mt-4 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white shadow-raised active:scale-95"
-      >
-        Continue lessons
-      </Link>
+    <section className="overflow-hidden rounded-card bg-cream-card shadow-card">
+      <div className="flex items-center gap-4 bg-accent-gold p-4">
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase tracking-wide text-accent-goldtext">Real-world French</p>
+          <h2 className="mt-1 text-lg font-extrabold leading-tight text-ink">News unlocks after a few guided lessons.</h2>
+        </div>
+        <LessonScene name="work" size={76} className="rounded-[1.25rem] bg-white/50 p-1" />
+      </div>
+      <div className="p-4">
+        <p className="text-sm leading-relaxed text-ink-muted">
+          Live articles are faster, messier French. Finish three guided readings first so word taps and English help feel automatic.
+        </p>
+        <StageProgressLine
+          value={safeCount / target}
+          label={`${safeCount}/${target} guided readings complete`}
+          className="mt-4"
+        />
+        <Link
+          href="/articles#journey-current"
+          className="mt-4 block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white shadow-raised active:scale-95"
+        >
+          Continue lessons
+        </Link>
+      </div>
     </section>
   );
 }
@@ -258,33 +265,49 @@ function HomeReadingHero({ target, selectedLevel }: { target: HomeReadingTarget 
   const href = target?.id ? readerHref(target.id) : "/articles#journey-current";
 
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-raised">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <p className="line-clamp-1 text-xs font-bold uppercase tracking-wide text-brand">{stage}</p>
-          <h2 className="mt-1.5 line-clamp-2 break-words text-lg font-extrabold leading-snug text-ink">{title}</h2>
+    <section className="overflow-hidden rounded-card bg-cream-card shadow-raised">
+      <div className="bg-brand p-5 text-white">
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <p className="line-clamp-1 text-xs font-bold uppercase tracking-wide text-white/75">{stage}</p>
+            <h2 className="mt-1.5 line-clamp-3 break-words text-2xl font-extrabold leading-tight">{title}</h2>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white">{selectedLevel}</span>
+              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/80">
+                {target?.buttonLabel === "Continue" ? "In progress" : "Next lesson"}
+              </span>
+            </div>
+          </div>
+          <LessonScene
+            name={sceneFor(target?.id ?? "", target?.category)}
+            size={108}
+            className="lesson-scene-float rounded-[1.5rem] bg-white/15 p-1 shadow-raised"
+          />
         </div>
-        <LessonScene name={sceneFor(target?.id ?? "", target?.category)} size={64} />
       </div>
 
-      <StageProgressLine
-        value={target?.stageProgress ?? 0}
-        label={target?.stageProgressLabel ?? "Journey progress"}
-        className="mt-4"
-      />
+      <div className="p-4">
+        <StageProgressLine
+          value={target?.stageProgress ?? 0}
+          label={target?.stageProgressLabel ?? "Journey progress"}
+        />
 
-      <Link
-        href={href}
-        className="mt-4 block rounded-full bg-brand px-5 py-3 shadow-raised text-center text-sm font-bold text-white active:scale-95"
-      >
-        {target?.buttonLabel ?? "Start lesson"}
-      </Link>
-      <Link
-        href="/articles#journey-current"
-        className="mt-3 block text-center text-xs font-semibold text-ink-muted underline underline-offset-2"
-      >
-        See the full path &rarr;
-      </Link>
+        <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
+          <Link
+            href={href}
+            className="block rounded-full bg-brand px-5 py-3 text-center text-sm font-bold text-white shadow-raised active:scale-95"
+          >
+            {target?.buttonLabel ?? "Start lesson"}
+          </Link>
+          <Link
+            href="/articles#journey-current"
+            aria-label="See the full path"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-light text-brand shadow-card active:scale-95"
+          >
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

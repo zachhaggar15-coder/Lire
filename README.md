@@ -47,31 +47,33 @@ backend, works instantly.
 
 ## Visual design system
 
-A warm, paper-like palette replaces the earlier plain slate/blue theme —
-same functionality everywhere, purely a visual pass. Defined as Tailwind
-theme tokens in `tailwind.config.ts` so every component references a name,
-not a raw hex:
+Lire uses a warm, paper-like interface with larger illustrated lesson moments
+and calm reading surfaces. The main palette lives in `tailwind.config.ts`, so
+components reference named tokens rather than raw hex values:
 
 | Token | Value | Used for |
 | --- | --- | --- |
 | `cream` | `#F4EEE0` | Page background |
-| `cream-card` | `#FFFFFF` | Card surfaces |
-| `cream-dark` | `#E8DFC9` | Neutral pills, dividers, skeleton loaders |
+| `cream-card` | `#FFFFFF` | Primary card and sheet surfaces |
+| `cream-dark` | `#E8DFC9` | Neutral rails, dividers, skeleton loaders, inactive pills |
 | `ink` | `#2B2A22` | Primary text |
-| `ink-muted` | `#8C8570` | Secondary/tertiary text |
-| `brand` / `brand-dark` / `brand-light` | `#2F5D46` / `#1F4534` / `#E3EEE7` | Primary actions, active states, the streak badge, "Continue reading" banner |
-| `accent-pink` / `accent-pinktext` | `#F7DAD0` / `#B5563C` | The word-lookup sheet only, for visual distinction from the sentence sheet |
+| `ink-muted` | `#6B6350` | Secondary text with AA contrast on cream and white |
+| `brand` / `brand-dark` / `brand-light` | `#2F5D46` / `#1F4534` / `#E3EEE7` | Primary actions, active states, path progress, streak accents |
+| `accent-pink` / `accent-sky` / `accent-violet` / `accent-gold` / `accent-mint` | soft category tones | Lesson frames, journey bands, onboarding choices, and unlock panels |
 
-Cards are `rounded-3xl` with a soft shadow and no visible border (`shadow-sm`
-does the separation, not a border line). Article cards
-(`src/components/ReadingCard.tsx`) and saved-word cards
-(`src/app/words/page.tsx`) each get a 4px colored left-border accent —
-category-based for articles (rose/orange/violet/sky/emerald for news-style/
-sport/culture/science/everyday life), cycled by row index for saved words,
-matching the "colored shelf" look from the design reference. Pills (CEFR,
-category, status, difficulty label) keep pastel Tailwind colors (`rose-100`,
-`sky-100`, etc.) since they already read well against the cream background.
+The main screens now share a stronger learning-app language:
 
+- `LessonScene` artwork is no longer only a tiny thumbnail. It appears at
+  hero scale on onboarding, the Today lesson card, the journey header, reader
+  lesson frames, and the completion screen.
+- `JourneyMap` renders guided readings as a connected path with check, lock,
+  current-location, and chevron icons instead of letter placeholders.
+- The reader keeps the article body quiet, but the title/help area is framed
+  with a category tint and a thin scroll-progress rail.
+- Review cards use a stacked-card treatment and a small answer reveal motion,
+  so spaced repetition feels more like working through a physical deck.
+- Headings use the Nunito display face with zero letter spacing. The reading
+  body remains on the system stack for legibility and fast rendering.
 ## Run it locally
 
 ```bash

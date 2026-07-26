@@ -12,6 +12,7 @@ import {
 } from "@/lib/levelScore";
 import type { StreakDay } from "@/lib/habit";
 import { StreakFlame, StreakWeekStrip } from "@/components/GamificationCards";
+import LessonScene, { type SceneName } from "@/components/LessonScene";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -117,15 +118,19 @@ export default function LessonCompleteScreen({
     { label: stats.wordsTapped === 1 ? "word tapped" : "words tapped", value: stats.wordsTapped },
     { label: stats.savedWords === 1 ? "word saved" : "words saved", value: stats.savedWords },
   ];
+  const celebrationScene = sceneForCompletion(level);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-6 py-10">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
         <div className="lesson-complete-pop text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-brand-light">
-            <svg className="h-11 w-11 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
+          <div className="relative mx-auto h-28 w-28">
+            <LessonScene name={celebrationScene} size={112} className="lesson-scene-float rounded-[1.6rem] bg-brand-light p-1 shadow-raised" />
+            <span className="absolute -bottom-2 -right-2 flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white shadow-raised">
+              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </span>
           </div>
           <h1 className="mt-4 text-3xl font-extrabold text-ink">
             {journeyMoment?.title ?? (isLesson ? "Lesson complete!" : "Reading complete!")}
@@ -276,4 +281,21 @@ export default function LessonCompleteScreen({
       </div>
     </div>
   );
+}
+
+function sceneForCompletion(level: Difficulty): SceneName {
+  switch (level) {
+    case "A1":
+      return "coffee";
+    case "A2":
+      return "home";
+    case "B1":
+      return "book";
+    case "B2":
+      return "train";
+    case "C1":
+      return "art";
+    case "C2":
+      return "moon";
+  }
 }

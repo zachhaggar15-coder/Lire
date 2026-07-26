@@ -5,12 +5,13 @@ import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 import { trackEvent } from "@/lib/analytics/client";
+import LessonScene, { type SceneName } from "@/components/LessonScene";
 
-const STARTING_POINTS: { value: Difficulty; label: string; detail: string }[] = [
-  { value: "A1", label: "I'm brand new", detail: "Very short texts with lots of help." },
-  { value: "A2", label: "I know the basics", detail: "Simple stories and everyday language." },
-  { value: "B1", label: "I can read a little", detail: "Short articles with some challenge." },
-  { value: "B2", label: "I want a stretch", detail: "Richer texts and faster vocabulary growth." },
+const STARTING_POINTS: { value: Difficulty; label: string; detail: string; scene: SceneName; tone: string }[] = [
+  { value: "A1", label: "I'm brand new", detail: "Very short texts with lots of help.", scene: "coffee", tone: "bg-accent-mint" },
+  { value: "A2", label: "I know the basics", detail: "Simple stories and everyday language.", scene: "home", tone: "bg-accent-sky" },
+  { value: "B1", label: "I can read a little", detail: "Short articles with some challenge.", scene: "book", tone: "bg-accent-gold" },
+  { value: "B2", label: "I want a stretch", detail: "Richer texts and faster vocabulary growth.", scene: "train", tone: "bg-accent-violet" },
 ];
 
 const ADVANCED_LEVELS: Difficulty[] = ["C1", "C2"];
@@ -74,16 +75,19 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
   }
 
   return (
-    <section className={`${variant === "focus" ? "rounded-card bg-cream-card p-5 shadow-card" : "mb-5 rounded-card bg-cream-card p-4 shadow-card"}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-brand">Start here</h2>
-          <p className="mt-1 text-lg font-extrabold leading-tight text-ink">How much French do you know?</p>
-          <p className="mt-1 text-sm text-ink-muted">Pick the closest answer. Lire will open your first short reading next.</p>
+    <section className={`${variant === "focus" ? "rounded-card bg-cream-card shadow-card" : "mb-5 rounded-card bg-cream-card shadow-card"} overflow-hidden`}>
+      <div className="bg-brand p-5 text-white">
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-white/75">Start here</h2>
+            <p className="mt-1 text-2xl font-extrabold leading-tight">Read your first tiny French scene.</p>
+            <p className="mt-2 text-sm leading-relaxed text-white/80">Pick the closest starting point. Lire will open a short lesson right away.</p>
+          </div>
+          <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-white/15 p-1 shadow-raised" />
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="p-5">
         <div className="grid gap-2">
           {STARTING_POINTS.map((option) => (
             <button
@@ -94,18 +98,21 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                 finish(option.value);
               }}
               aria-pressed={level === option.value}
-              className={`rounded-2xl px-3 py-3 text-left active:scale-[0.99] ${
-                level === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink"
+              className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left active:scale-[0.99] ${
+                level === option.value ? "border-brand bg-brand text-white shadow-raised" : `border-transparent ${option.tone} text-ink`
               }`}
             >
-              <span className="flex items-center justify-between gap-3">
-                <span className="text-sm font-bold">{option.label}</span>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-white/20 text-white" : "bg-cream-card text-ink-muted"}`}>
-                  {option.value}
+              <LessonScene name={option.scene} size={44} className={level === option.value ? "rounded-2xl bg-white/15 p-0.5" : ""} />
+              <span className="min-w-0 flex-1">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-sm font-bold">{option.label}</span>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-white/20 text-white" : "bg-cream-card/70 text-ink-muted"}`}>
+                    {option.value}
+                  </span>
                 </span>
-              </span>
-              <span className={`mt-0.5 block text-xs ${level === option.value ? "text-white/80" : "text-ink-muted"}`}>
-                {option.detail}
+                <span className={`mt-0.5 block text-xs ${level === option.value ? "text-white/80" : "text-ink-muted"}`}>
+                  {option.detail}
+                </span>
               </span>
             </button>
           ))}
@@ -133,8 +140,6 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
             ))}
           </div>
         </details>
-      </div>
-
       <details className="mt-4 rounded-2xl bg-cream px-3 py-2">
         <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
           Optional: topics and daily goal
@@ -195,6 +200,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
       >
         Start with A1
       </button>
+      </div>
     </section>
   );
 }
