@@ -884,6 +884,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-travel",
+    band: "B2",
+    title: "Travel and the tourist gaze",
+    goal: "Whether we still truly travel, overtourism, photography vs seeing, the foreign as mirror, the guilt of flying.",
+    textIds: [
+      "starter-b2-101", // Voyage-t-on encore vraiment ? (introduces the core words)
+      "starter-b2-102", // Quand le tourisme étouffe les villes
+      "starter-b2-103", // La photographie remplace-t-elle le regard ?
+      "starter-b2-104", // L'étranger, miroir de soi
+      "starter-b2-105", // Faut-il culpabiliser de prendre l'avion ? (hardest)
+    ],
+  },
+  {
+    id: "b2-art",
+    band: "B2",
+    title: "Art and meaning",
+    goal: "What art is for, understanding vs feeling, whether taste can be discussed, culture as commodity, why works last.",
+    textIds: [
+      "starter-b2-106", // À quoi sert l'art ? (introduces the core words)
+      "starter-b2-107", // Faut-il tout comprendre pour apprécier ?
+      "starter-b2-108", // Le goût se discute-t-il ?
+      "starter-b2-109", // La culture, un bien comme un autre ?
+      "starter-b2-110", // Pourquoi certaines œuvres traversent le temps (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

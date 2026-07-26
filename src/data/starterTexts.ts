@@ -14391,4 +14391,234 @@ Savoir dire « c'est assez » est peut-être l'une des libertés les plus rares 
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-101",
+    title: "Voyage-t-on encore vraiment ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Jamais on n'a autant voyagé. Mais voyage-t-on encore, au vrai sens du mot ?",
+    blurbEn:
+      "We travel more than any generation before us. Yet mass tourism may have hollowed out what travel once meant. A reflection on seeing versus consuming places. (Section: Travel and the tourist gaze, 1/5.)",
+    body: `Jamais, dans l'histoire, les êtres humains n'ont autant voyagé. Ce qui était naguère le privilège de quelques-uns est devenu une pratique de masse : on part loin, souvent, pour peu cher. Cette démocratisation du voyage est, à bien des égards, une chance. Et pourtant, une question dérangeante se pose : à force de voyager autant, voyage-t-on encore vraiment, au sens plein du mot ?
+
+Car voyager fut longtemps autre chose que se déplacer. C'était s'exposer à l'inconnu, se laisser transformer par la rencontre d'un ailleurs, revenir un peu différent de celui qu'on était parti. Le voyage supposait une lenteur, une part d'imprévu, un effort de compréhension. Il fallait du temps pour atteindre un lieu, du temps pour l'habiter, du temps pour en être changé. C'est de cette épreuve que naissait, précisément, l'enrichissement qu'on attend d'un voyage.
+
+Le tourisme de masse a, en partie, dissous cette expérience. On parcourt désormais les lieux au pas de course, on coche des sites comme on remplit une liste, on rapporte des images plus qu'on ne rapporte des souvenirs vécus. Les destinations elles-mêmes, façonnées pour cette consommation rapide, offrent partout les mêmes commodités, si bien qu'on peut faire le tour du monde sans jamais quitter un décor familier. On voit beaucoup ; on rencontre peu.
+
+Il y a plus troublant encore : notre manière de voyager transforme, et souvent dégrade, ce que nous venons chercher. Les lieux les plus prisés se vident de leurs habitants, se muent en décors pour visiteurs, perdent l'authenticité même qui faisait leur attrait. Le voyageur détruit, sans le vouloir, l'objet de son désir : à force d'être vus, certains lieux cessent d'être ce qu'on venait y voir.
+
+Faut-il pour autant renoncer au voyage, ou le réserver de nouveau à quelques privilégiés ? Ce serait une conclusion injuste et triste. Le problème n'est pas de voyager, mais la manière dont nous le faisons. On peut voyager autrement : moins loin peut-être, mais plus longtemps ; moins vite, mais plus attentivement ; en cherchant non à consommer des lieux, mais à les comprendre et à s'y laisser surprendre.
+
+Voyager vraiment n'est pas une question de distance ni de nombre de pays visités. C'est une question de disposition intérieure : celle qui accepte d'être dépaysé, ralenti, changé. À cette aune, on peut faire le tour du monde sans jamais voyager, et voyager profondément à quelques heures de chez soi. Tout dépend, au fond, non de l'endroit où l'on va, mais de la façon dont on y regarde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-102",
+    title: "Quand le tourisme étouffe les villes",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Certaines villes se plaignent d'avoir trop de visiteurs. Paradoxe ?",
+    blurbEn:
+      "Some cities now protest that they have too many tourists. The strange problem of 'overtourism', who it harms, and why it is so hard to fix. (Section: Travel and the tourist gaze, 2/5.)",
+    body: `Il fut un temps où les villes se disputaient les touristes, y voyant une source de prospérité. Aujourd'hui, certaines d'entre elles se plaignent, au contraire, d'en avoir trop. Des habitants manifestent contre l'afflux de visiteurs, des municipalités cherchent à le limiter, un mot nouveau est apparu pour désigner ce phénomène : le « surtourisme ». Ce renversement, en apparence paradoxal, révèle une réalité que l'enthousiasme touristique avait longtemps masquée : au-delà d'un certain seuil, le tourisme cesse de bénéficier aux lieux qui l'accueillent pour commencer à les détruire.
+
+Les effets de cette saturation sont concrets. Dans les villes les plus visitées, les logements se transforment en hébergements pour touristes, chassant les habitants par la hausse des loyers. Les commerces de proximité cèdent la place aux boutiques de souvenirs. Les rues, envahies, deviennent impraticables pour ceux qui y vivent. Peu à peu, la ville se vide de ses habitants et de sa vie propre, se muant en décor pour visiteurs de passage. Elle survit économiquement, mais meurt comme lieu habité.
+
+Le paradoxe est que ce processus finit par ruiner ce qui attirait les visiteurs. On vient dans ces villes pour leur charme, leur authenticité, leur vie particulière ; mais l'afflux même des visiteurs détruit ce charme et cette vie. À la fin, il ne reste qu'une coquille, belle peut-être, mais vidée de sa substance — un lieu que l'on visite sans plus pouvoir y rencontrer autre chose que d'autres visiteurs.
+
+Pourquoi ce problème est-il si difficile à résoudre ? Parce que le tourisme rapporte, et que les intérêts qui en vivent sont puissants. Limiter le nombre de visiteurs, c'est renoncer à des revenus immédiats, ce à quoi peu se résolvent volontiers. De plus, chaque acteur, pris isolément, a intérêt à profiter de la manne, quitte à ce que l'ensemble en pâtisse. Aucun visiteur ne se sent responsable d'une saturation à laquelle il ne contribue, croit-il, que de façon infime.
+
+Des solutions existent pourtant, même si elles se heurtent à ces résistances : limiter le nombre de visiteurs, encadrer les hébergements touristiques, protéger le logement des habitants, répartir les flux dans le temps et l'espace. Aucune n'est simple, toutes supposent de faire passer l'intérêt des lieux et de ceux qui les habitent avant le profit immédiat.
+
+Le surtourisme nous tend, au fond, un miroir. Il montre ce qui arrive lorsqu'on traite un lieu comme une simple ressource à exploiter, sans égard pour ceux qui y vivent. Et il rappelle une vérité que le voyageur oublie souvent : les endroits que nous aimons visiter sont d'abord les maisons d'autres que nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-103",
+    title: "La photographie remplace-t-elle le regard ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "À force de photographier, regardons-nous encore ce qui est devant nous ?",
+    blurbEn:
+      "We photograph everything we see while travelling. But does capturing a moment help us remember it — or replace the act of truly looking? (Section: Travel and the tourist gaze, 3/5.)",
+    body: `Devant un paysage, un monument, une scène qui nous touche, notre premier geste, désormais, est presque toujours le même : nous sortons un appareil et nous photographions. Ce réflexe, devenu universel, semble innocent, voire utile — ne s'agit-il pas de garder une trace de ce que nous vivons ? Pourtant, une question mérite d'être posée : à force de photographier ce que nous voyons, le voyons-nous encore vraiment ?
+
+Des recherches troublantes suggèrent que photographier une scène peut, paradoxalement, nuire au souvenir qu'on en garde. Lorsque nous confions à l'appareil le soin de retenir, notre attention se relâche, comme si nous nous déchargions sur lui de l'effort de mémoriser. Nous regardons alors moins intensément, sûrs que l'image conservera pour nous ce que nous n'avons pas vraiment pris la peine de contempler. La photographie, censée fixer le souvenir, risque ainsi de l'appauvrir.
+
+Il y a plus. Le geste de photographier interpose un écran entre nous et ce que nous vivons. Occupés à cadrer, à régler, à saisir le bon angle, nous cessons d'être pleinement présents à la scène ; nous la traitons comme une image à capturer plutôt que comme un moment à vivre. L'expérience directe, immédiate, s'efface derrière sa reproduction. Nous rapportons des milliers de clichés, et parfois bien peu de souvenirs réellement éprouvés.
+
+Ce phénomène s'aggrave lorsque la photographie n'est plus destinée à nous, mais aux autres. Photographier pour montrer, pour publier, pour prouver qu'on était là, transforme l'expérience en spectacle. On ne regarde plus un lieu pour lui-même, mais pour l'image qu'on en tirera ; on choisit ce qu'on voit en fonction de ce qui « rendra bien ». L'ailleurs devient un décor, et le voyage, une collection d'images destinées au regard d'autrui.
+
+Faut-il alors renoncer à photographier ? Ce serait excessif, car l'image a aussi ses vertus : elle peut raviver un souvenir, prolonger une émotion, partager une beauté. Le problème n'est pas la photographie en soi, mais son automatisme, qui nous fait saisir avant d'avoir regardé. On peut photographier autrement : moins, mieux, après avoir d'abord contemplé.
+
+Peut-être faudrait-il, devant ce qui nous émeut, résister au premier réflexe et commencer par regarder — vraiment, longuement, sans appareil. Puis, seulement ensuite, décider si l'on veut en garder une image. Car aucune photographie ne remplacera jamais ce qu'on n'a pas pris le temps de voir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-104",
+    title: "L'étranger, miroir de soi",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On croit partir pour découvrir l'ailleurs. On revient en se connaissant mieux.",
+    blurbEn:
+      "We travel to discover other places, yet what travel teaches us most is about ourselves. On the foreign as a mirror that reveals what we took for granted. (Section: Travel and the tourist gaze, 4/5.)",
+    body: `On part, croit-on, pour découvrir l'ailleurs : d'autres paysages, d'autres coutumes, d'autres manières de vivre. Et c'est vrai que le voyage nous fait découvrir tout cela. Mais son effet le plus profond est peut-être ailleurs : en nous confrontant à d'autres façons d'être, il nous révèle, en retour, notre propre façon d'être, que nous prenions jusque-là pour la seule naturelle. L'étranger est un miroir, et c'est souvent nous-mêmes que nous finissons par y voir.
+
+Le mécanisme est subtil. Tant que nous ne connaissons que notre propre monde, nous ne le percevons pas comme une possibilité parmi d'autres, mais comme l'évidence même. Nos habitudes, nos valeurs, nos manières de manger, de saluer, de concevoir le temps ou la famille nous paraissent aller de soi, parce que nous n'avons jamais vu qu'elles pouvaient être autres. C'est en découvrant qu'ailleurs on fait, on pense, on vit autrement que nous découvrons, du même coup, que nos propres façons n'avaient rien d'inévitable.
+
+Cette révélation peut être déstabilisante, et c'est là sa vertu. Voir que d'autres organisent leur existence sur d'autres principes, et n'en vivent pas plus mal, ébranle nos certitudes. Ce que nous tenions pour naturel se révèle culturel ; ce que nous croyions universel se découvre particulier. Le voyage, en ce sens, est une leçon d'humilité : il nous apprend que notre manière de voir le monde n'est qu'une manière parmi d'autres, ni la seule ni forcément la meilleure.
+
+Mais cette confrontation peut aussi être une leçon de reconnaissance. En découvrant d'autres façons de vivre, nous ne renonçons pas nécessairement aux nôtres ; parfois, nous les redécouvrons, nous les comprenons mieux, nous en mesurons la valeur que l'habitude nous avait cachée. On revient de loin en voyant sa propre maison d'un œil neuf, capable enfin d'apprécier ou de questionner ce qu'on ne voyait même plus.
+
+C'est pourquoi le voyage véritable exige une disposition particulière : celle de se laisser interroger. Le voyageur qui juge tout à l'aune de ses propres habitudes, qui trouve « bizarre » ou « arriéré » ce qui diffère de lui, ne verra dans l'étranger qu'une déviation par rapport à sa norme. Il ne voyage pas vraiment : il transporte son monde avec lui. Voyager, c'est au contraire accepter, un temps, de voir avec d'autres yeux.
+
+Le plus beau bénéfice du voyage n'est donc peut-être pas ce qu'il nous fait découvrir du monde, mais ce qu'il nous fait découvrir de nous-mêmes. On part chercher l'ailleurs ; on revient avec un peu plus de lucidité sur soi. L'étranger, décidément, est le meilleur des miroirs.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-105",
+    title: "Faut-il culpabiliser de prendre l'avion ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Voyager loin pollue. Cette évidence doit-elle gâcher tous nos départs ?",
+    blurbEn:
+      "Flying far pollutes heavily, and travellers increasingly feel guilty about it. A calm look at a genuine dilemma between the value of travel and its cost. (Section: Travel and the tourist gaze, 5/5.)",
+    body: `Le voyage lointain, que nous avons appris à considérer comme un enrichissement, se heurte aujourd'hui à une objection difficile à écarter : il pollue, et lourdement. L'avion, en particulier, figure parmi les manières les plus intenses d'émettre les gaz responsables du réchauffement. Un aller-retour au bout du monde peut peser, à lui seul, autant que des mois d'efforts par ailleurs. Face à ce constat, une culpabilité nouvelle s'est répandue chez les voyageurs. Est-elle justifiée, et doit-elle nous faire renoncer à partir ?
+
+Il faut d'abord reconnaître la réalité du dilemme, sans le fuir. D'un côté, le voyage a une valeur réelle : il ouvre l'esprit, rapproche les peuples, nourrit la compréhension entre les cultures — tout ce que nous avons évoqué. De l'autre, il a un coût environnemental non moins réel, qui pèse sur un climat déjà menacé. Ces deux vérités sont également fondées, et c'est leur tension qui rend la question inconfortable. Prétendre que le voyage n'aurait aucun coût, ou qu'il ne vaudrait aucun coût, serait également malhonnête.
+
+La culpabilité, cependant, est une réponse peu utile. Elle ronge sans guider, et se transforme aisément en son contraire : à force de culpabiliser sans changer de comportement, on finit par s'y résigner, ou par rejeter en bloc une exigence vécue comme moralisatrice. La culpabilité individuelle, de surcroît, détourne l'attention des responsabilités collectives, bien plus déterminantes. Se sentir coupable ne réchauffe ni ne refroidit la planète ; seuls les actes comptent.
+
+Une réponse plus juste consisterait à réfléchir en termes de mesure, non de faute. Non pas « ai-je le droit de voyager ? », mais « comment voyager de manière plus raisonnable ? ». Voyager moins souvent, mais plus longtemps ; privilégier des destinations plus proches, atteintes par des moyens moins polluants ; faire du voyage lointain une exception réfléchie plutôt qu'une habitude machinale. Ces choix ne suppriment pas le dilemme, mais ils l'atténuent, en conservant l'essentiel de ce que le voyage apporte tout en réduisant son coût.
+
+Il faut aussi refuser une hypocrisie fréquente : celle qui fait peser toute la responsabilité sur les individus, tout en laissant intactes les structures qui rendent les alternatives difficiles. Tant que le train coûtera plus cher que l'avion, tant que les transports peu polluants resteront lents et rares, il sera injuste de reprocher à chacun ses choix contraints. La question du voyage rejoint ici celle, plus large, d'une transition qui doit être collective pour être juste.
+
+Faut-il donc culpabiliser de prendre l'avion ? Non, si la culpabilité ne mène à rien. Oui, en revanche, à s'interroger, à modérer, à choisir avec conscience. Le voyage n'est ni un droit sans coût ni un péché à expier, mais un bien précieux dont il nous faut apprendre à user avec plus de mesure.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-106",
+    title: "À quoi sert l'art ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'art ne nourrit pas, ne soigne pas, ne loge pas. Pourquoi y tenons-nous tant ?",
+    blurbEn:
+      "Art feeds no one, cures nothing, shelters nobody. So why has no human society ever done without it? A reflection on what art is really for. (Section: Art and meaning, 1/5.)",
+    body: `Voici une question que l'on ose rarement poser, tant elle paraît naïve : à quoi sert l'art ? Un tableau ne nourrit personne, une symphonie ne soigne aucune maladie, un poème n'a jamais construit de maison. Mesuré à l'aune de l'utilité, l'art semble parfaitement superflu. Et pourtant, aucune société humaine, aussi pauvre ou menacée fût-elle, n'a jamais choisi de s'en passer. Cette contradiction — l'inutilité apparente de l'art et son universalité obstinée — mérite qu'on s'y arrête.
+
+La réponse tient peut-être dans la question elle-même, ou plutôt dans son présupposé. Demander à quoi « sert » l'art, c'est le juger selon la logique de l'utilité, celle des moyens en vue d'une fin. Or l'art échappe précisément à cette logique. Il ne sert pas à autre chose que lui-même ; il n'est pas un moyen, mais une fin. Comme l'amour, comme l'amitié, comme la contemplation, il appartient à ces expériences qui valent pour elles-mêmes, et non pour ce à quoi elles mèneraient. Leur « inutilité » n'est pas un défaut : elle est le signe qu'elles touchent à autre chose que la survie.
+
+Car l'être humain ne se contente pas de survivre. Une fois ses besoins vitaux assurés, il éprouve d'autres exigences, moins immédiates mais non moins profondes : donner un sens à son existence, exprimer ce qu'il ressent, comprendre sa condition, éprouver de la beauté. L'art répond à ces exigences-là. Il dit ce que le langage ordinaire ne parvient pas à dire, donne forme à des émotions confuses, permet de partager ce qu'on croyait incommunicable. En ce sens, il ne sert à rien, mais il répond à tout ce qui, en nous, dépasse la simple nécessité.
+
+L'art a aussi ce pouvoir singulier de nous faire éprouver ce que nous ne vivrons jamais. Par un roman, nous habitons une autre vie ; par un tableau, nous voyons par d'autres yeux ; par une musique, nous ressentons ce qu'un autre a ressenti, à des siècles de distance. L'art élargit ainsi notre expérience bien au-delà des limites étroites de notre existence individuelle. Il nous relie aux autres, aux morts comme aux vivants, dans une communauté d'émotions et de sens.
+
+Il faut se garder, ici, de deux erreurs opposées. La première serait de mépriser l'art comme un luxe superflu, bon pour les temps d'abondance. La seconde serait d'en faire une religion, de le sacraliser jusqu'à le rendre intimidant, réservé à quelques initiés. L'art n'est ni un ornement inutile ni un culte réservé ; il est un besoin humain fondamental, aussi ancien que l'humanité elle-même, et accessible, sous mille formes, à chacun.
+
+À quoi sert l'art ? À rien, si l'on entend par là une utilité pratique. À tout, si l'on comprend qu'une vie purement utile ne serait pas une vie humaine. L'art ne nous aide pas à vivre ; il est une part de ce qui fait que la vie vaut d'être vécue.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-107",
+    title: "Faut-il tout comprendre pour apprécier ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Devant une œuvre difficile, faut-il des explications pour l'aimer ?",
+    blurbEn:
+      "Faced with a difficult artwork, do we need to understand it before we can enjoy it? On the tension between immediate feeling and informed appreciation. (Section: Art and meaning, 2/5.)",
+    body: `Devant une œuvre qui nous déroute — un tableau abstrait, une musique complexe, un poème obscur —, une question surgit souvent, teintée d'un léger malaise : faut-il la comprendre pour l'apprécier ? Beaucoup se sentent exclus de l'art parce qu'ils ne « comprennent » pas, comme s'il fallait un savoir préalable pour avoir le droit de ressentir. Cette croyance, répandue, mérite d'être examinée, car elle repose sur une conception discutable de ce qu'est apprécier une œuvre.
+
+Il y a une part de vérité dans l'idée que le savoir enrichit l'expérience. Connaître le contexte d'une œuvre, les intentions de son auteur, les codes de son époque, permet souvent d'y percevoir des dimensions qui, autrement, resteraient invisibles. Un tableau religieux ancien se donne mieux à qui en connaît les symboles ; une musique savante s'apprécie autrement quand on en saisit la construction. En ce sens, comprendre approfondit le plaisir, et l'ignorance peut priver de beaucoup.
+
+Mais faire de la compréhension une condition préalable de l'appréciation serait une erreur. Car bien des œuvres nous touchent avant même que nous les comprenions, et parfois sans que nous les comprenions jamais tout à fait. Une musique nous émeut sans que nous sachions pourquoi ; un poème nous saisit avant que nous en ayons démêlé le sens ; un tableau nous retient par sa seule présence. Cette émotion immédiate, antérieure à toute explication, est une forme d'appréciation pleine et entière, qui n'a nul besoin d'être justifiée par un savoir.
+
+Il y a même quelque chose de précieux dans cette rencontre directe, non médiatisée par le commentaire. Elle nous rappelle que l'art s'adresse d'abord à la sensibilité, et non à l'érudition ; qu'il parle à quelque chose en nous qui précède le raisonnement. Réduire l'appréciation à la compréhension, ce serait oublier cette part sensible, et transformer le rapport à l'art en un exercice intellectuel réservé à ceux qui savent.
+
+Le danger de la croyance selon laquelle « il faut comprendre » est justement là : elle décourage, elle intimide, elle éloigne de l'art ceux qui, faute de savoir, n'osent plus ressentir. Elle transforme ce qui devrait être une rencontre libre en un examen que l'on craint d'échouer. Combien renoncent à entrer dans un musée ou à écouter une œuvre exigeante, persuadés que « ce n'est pas pour eux » ?
+
+La vérité est plus accueillante : on peut apprécier sans tout comprendre, ressentir sans savoir expliquer, être touché sans pouvoir en rendre raison. Le savoir peut venir ensuite, approfondir, enrichir — et il en vaut la peine. Mais il n'est pas le péage à payer pour avoir droit à l'émotion. Devant une œuvre, la première chose à faire n'est pas de comprendre ; c'est de se laisser toucher.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-108",
+    title: "Le goût se discute-t-il ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "« Des goûts et des couleurs, on ne discute pas. » Vraiment ?",
+    blurbEn:
+      "'There's no accounting for taste,' we say. But is taste purely personal, or can some judgements be better than others? A look at a deeper question than it seems. (Section: Art and meaning, 3/5.)",
+    body: `« Des goûts et des couleurs, on ne discute pas », dit la sagesse populaire. Chacun aurait ses préférences, également valables, et il serait vain — voire prétentieux — de vouloir juger les goûts d'autrui. Cette idée, qui a pour elle une apparente tolérance, mérite pourtant d'être questionnée. Car si elle contient une part de vérité, elle en masque une autre, plus dérangeante : tout se vaut-il vraiment en matière de goût ?
+
+Reconnaissons d'abord ce que cette maxime a de juste. Nos goûts sont en partie irréductiblement personnels, façonnés par notre histoire, notre sensibilité, nos souvenirs. Nul ne peut me prouver que je dois aimer telle musique plutôt que telle autre, et il y a quelque chose d'absurde à vouloir imposer ses préférences comme des vérités. En ce sens, les goûts ne se discutent pas : ils s'éprouvent, et personne n'a le droit de dicter à un autre ce qu'il doit ressentir.
+
+Mais s'arrêter là serait trop simple. Car si tous les goûts étaient strictement équivalents, certaines conséquences deviendraient difficiles à admettre. Faudrait-il dire qu'une œuvre profonde et une production grossière se valent, dès lors que chacune trouve des amateurs ? Que le jugement d'un connaisseur, qui a longuement fréquenté un art, ne vaut pas plus que celui d'un ignorant ? L'idée que « tout se vaut » conduit à ces conclusions, qui heurtent notre expérience.
+
+C'est qu'il existe une différence entre le goût comme simple préférence et le goût comme discernement. Le premier est purement subjectif : j'aime ou je n'aime pas, et cela ne se discute pas. Le second se cultive, s'affine, s'éduque : à mesure qu'on fréquente un art, on apprend à y percevoir des nuances, des qualités, des profondeurs que l'on ne voyait pas d'abord. Ce goût-là n'est pas arbitraire ; il repose sur une familiarité acquise, et il peut, à ce titre, se discuter, s'argumenter, se transmettre.
+
+Reconnaître cela n'a rien d'élitiste, à condition de ne pas confondre le discernement avec le mépris. Dire que certains jugements sont plus éclairés que d'autres ne revient pas à mépriser ceux qui aiment des choses simples ; c'est seulement affirmer que le goût peut s'approfondir, et qu'il vaut la peine de le cultiver. Celui qui a appris à apprécier une musique complexe n'a pas un goût « meilleur » en tant que personne ; il a un goût plus formé, qui lui ouvre des plaisirs plus riches.
+
+Le goût, en somme, se discute et ne se discute pas, selon ce qu'on entend par là. Comme préférence brute, il échappe à la discussion ; comme discernement cultivé, il l'appelle. Entre le relativisme qui nivelle tout et l'arrogance qui méprise, il y a place pour une attitude plus juste : respecter les goûts de chacun, tout en croyant qu'il vaut la peine d'éduquer le sien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-109",
+    title: "La culture, un bien comme un autre ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Un film, un livre, une chanson se vendent. Sont-ils des produits comme les autres ?",
+    blurbEn:
+      "Films, books and songs are bought and sold like any product. Yet treating culture purely as merchandise may cost us something vital. A look at the tension. (Section: Art and meaning, 4/5.)",
+    body: `Un livre s'achète, un film se vend, une chanson se monnaie. La culture, à l'évidence, est aussi une économie : elle emploie, elle rapporte, elle s'échange sur des marchés considérables. Faut-il en conclure qu'une œuvre est un produit comme un autre, soumis aux mêmes lois que n'importe quelle marchandise ? La question n'est pas seulement théorique : la réponse qu'on lui donne engage la manière dont une société traite sa création artistique.
+
+D'un côté, il serait naïf de nier la dimension économique de la culture. Les artistes doivent vivre, les œuvres ont un coût de production, leur diffusion suppose des moyens. Prétendre que l'art serait au-dessus de toute considération matérielle relèverait d'un idéalisme confortable, souvent tenu par ceux qui n'ont pas à en vivre. Une œuvre a bien une valeur économique, et l'ignorer ne rend service ni aux créateurs ni au public.
+
+Mais réduire la culture à sa seule dimension marchande, la traiter exactement comme n'importe quel produit, comporte un danger sérieux. Car si l'on ne juge une œuvre qu'à son succès commercial, on finit par ne produire que ce qui se vend le mieux, au détriment de ce qui a de la valeur sans nécessairement rencontrer un large public. La logique du marché favorise ce qui plaît immédiatement au plus grand nombre, non ce qui est exigeant, nouveau, ou dérangeant. Livrée à elle seule, elle appauvrirait la création, en éliminant tout ce qui ne trouve pas aussitôt son marché.
+
+C'est pourquoi la plupart des sociétés ont estimé que la culture ne devait pas être abandonnée aux seules lois du commerce. Elles ont mis en place des protections, des soutiens, des exceptions : subventions, prix réglementés, aides à la création, institutions publiques. Ces dispositifs reposent sur une conviction : la culture n'est pas un bien comme un autre, parce qu'elle remplit une fonction que le marché seul ne saurait assurer. Elle transmet un patrimoine, nourrit le débat, forme les esprits, exprime ce qu'une société a de plus profond.
+
+Cette conviction ne va pas sans tensions ni sans abus, et l'on peut discuter des formes que doit prendre le soutien à la culture. Mais le principe demeure : une œuvre n'est pas seulement une marchandise, parce que sa valeur ne se mesure pas seulement à ce qu'elle rapporte. Un livre qui ne se vend guère peut compter immensément ; un succès commercial peut n'avoir aucune portée durable. Le marché mesure une chose ; la valeur culturelle en est une autre.
+
+Traiter la culture comme un bien ordinaire, ce serait donc oublier ce qui la rend précieuse. Non qu'il faille la soustraire à toute économie — c'est impossible et ce ne serait pas souhaitable —, mais parce qu'il faut la protéger d'une logique qui, laissée seule, finirait par la réduire à ce qui se vend, en sacrifiant ce qui vaut.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-110",
+    title: "Pourquoi certaines œuvres traversent le temps",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Des milliers d'œuvres naissent chaque année. Quelques-unes restent. Pourquoi ?",
+    blurbEn:
+      "Countless works are created every year; only a few survive the centuries. What makes a work a 'classic' — and is it merit, or something more arbitrary? (Section: Art and meaning, 5/5.)",
+    body: `Chaque année naissent d'innombrables œuvres — livres, films, musiques, tableaux. La plupart seront oubliées en quelques années ; certaines survivront à peine à leur auteur. Et quelques-unes, rares, traverseront les siècles, lues, vues, écoutées bien après que le monde qui les a vues naître aura disparu. Qu'est-ce qui distingue ces œuvres durables, celles qu'on appelle des « classiques » ? La réponse est moins évidente qu'il n'y paraît, et elle mêle le mérite et le hasard.
+
+On aimerait croire que les œuvres qui durent sont simplement les meilleures, et que le temps opère un tri juste, ne conservant que ce qui le mérite. Cette idée réconfortante contient une part de vérité : les œuvres qui traversent les âges ont souvent une profondeur, une richesse, une qualité de facture qui les distinguent. Il y a en elles quelque chose d'assez vaste ou d'assez juste pour continuer de parler à des époques très différentes de la leur. Leur survie n'est pas sans raison.
+
+Mais réduire la durée au seul mérite serait ignorer la part considérable du hasard et des circonstances. Bien des œuvres remarquables ont été perdues ou oubliées, non par manque de valeur, mais par accident : un manuscrit détruit, un auteur mal défendu, une mode contraire. À l'inverse, certaines œuvres doivent leur survie à des facteurs étrangers à leur qualité : le prestige de leur auteur, le soutien d'institutions, leur inscription dans des programmes scolaires, ou simplement la chance d'avoir été conservées. Le tri du temps n'est pas aussi juste qu'on voudrait le croire.
+
+Il y a plus. Ce qu'on appelle un « classique » n'est pas seulement une œuvre qui a duré ; c'est aussi une œuvre qu'on a choisi, collectivement, de faire durer. Chaque époque reconsidère l'héritage qu'elle reçoit, redécouvre des œuvres oubliées, en délaisse d'autres qu'on croyait immortelles. Le canon des œuvres qui comptent n'est pas figé ; il se recompose sans cesse, au gré des sensibilités, des valeurs, des combats de chaque temps. Ce que nous tenons pour un chef-d'œuvre éternel est aussi le produit d'un jugement qui pourrait changer.
+
+Cette part d'arbitraire ne doit pourtant pas conduire au relativisme, à l'idée que tout se vaudrait et que la durée serait pur hasard. Car si le hasard fait beaucoup, il ne fait pas tout : une œuvre sans qualité ne dure pas longtemps, quelle que soit la faveur dont elle bénéficie d'abord. Le mérite ne suffit pas à assurer la survie, mais il en est le plus souvent la condition. Le temps ne garde pas toujours le meilleur, mais il finit par écarter ce qui n'a rien à dire.
+
+Pourquoi certaines œuvres traversent-elles le temps ? Par un mélange de valeur propre, de circonstances favorables et de choix collectifs sans cesse renouvelés. Ni pur mérite ni pur hasard : les deux, entremêlés. Ce qui devrait nous rendre à la fois exigeants envers ce que nous créons, et humbles devant ce que nous jugeons — car nous ne savons jamais tout à fait ce que l'avenir retiendra de nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
