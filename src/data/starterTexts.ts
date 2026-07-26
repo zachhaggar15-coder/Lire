@@ -13477,4 +13477,228 @@ Notre attention est ce que nous avons de plus précieux : c'est par elle que nou
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-061",
+    title: "La ville nous appartient-elle ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On habite une ville, mais en est-on vraiment chez soi ?",
+    blurbEn:
+      "We live in cities, but do they truly belong to us? A reflection on public space, who shapes it, and what it means to feel at home in a place. (Section: Cities and belonging, 1/5.)",
+    body: `On peut vivre trente ans dans une ville sans jamais avoir le sentiment qu'elle nous appartient. On y travaille, on y dort, on y circule, mais on la traverse plus qu'on ne l'habite. Cette impression, très répandue dans les grandes villes contemporaines, pose une question qui n'a rien d'évident : que faut-il pour se sentir chez soi dans un lieu, et pas seulement y résider ?
+
+La réponse tient en partie à l'espace public. Une ville n'est pas seulement une addition de logements et de bureaux ; elle est aussi faite de rues, de places, de jardins, de bancs — de tous ces lieux qui n'appartiennent à personne en particulier et donc, en un sens, à tous. C'est là que se joue le sentiment d'appartenance. Là où l'espace public est accueillant, on s'attarde, on se rencontre, on tisse ces liens ténus qui font qu'un quartier devient le sien. Là où il se réduit, on ne fait que passer.
+
+Or cet espace commun est aujourd'hui fragilisé. Il rétrécit sous la pression de la voiture, du commerce, de la peur parfois. On aménage des lieux pour qu'on y consomme, non pour qu'on y demeure sans rien acheter. On multiplie les dispositifs qui découragent de s'asseoir, de s'attarder, de simplement être là. Peu à peu, la ville cesse d'offrir des endroits où l'on puisse exister gratuitement, et avec eux disparaît une part de ce qui la rendait habitable.
+
+Se sentir chez soi suppose aussi d'avoir une prise sur son cadre de vie. Or les décisions qui façonnent une ville — ce qu'on y construit, ce qu'on y démolit — échappent le plus souvent aux habitants. On leur demande rarement leur avis, et lorsqu'on le fait, c'est parfois pour la forme. Comment s'approprier un lieu qu'on n'a pas contribué à façonner, et qui peut changer du jour au lendemain sans qu'on y soit pour rien ?
+
+La ville nous appartiendra vraiment le jour où nous cesserons d'en être seulement les usagers pour en redevenir les habitants : des gens qui y ont une place, une voix, et des lieux où s'attarder sans autre raison que le plaisir d'y être. C'est à cette condition, modeste et exigeante, qu'un espace devient un chez-soi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-062",
+    title: "Quand un quartier change de visage",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Un quartier populaire se transforme, s'embellit — et se vide de ses habitants.",
+    blurbEn:
+      "A run-down neighbourhood is renovated, becomes desirable — and its original residents can no longer afford to stay. The double edge of urban renewal. (Section: Cities and belonging, 2/5.)",
+    body: `Le scénario se répète dans de nombreuses villes, et il a quelque chose de troublant. Un quartier autrefois modeste, voire délaissé, commence à changer. Des cafés ouvrent, de vieux immeubles sont rénovés, des habitants plus aisés s'y installent, séduits par le charme et les prix encore abordables. Le quartier s'embellit, gagne en réputation. Et, à mesure qu'il devient désirable, ceux qui y vivaient depuis toujours n'ont plus les moyens d'y rester.
+
+Ce phénomène, que l'on désigne souvent par un mot venu de l'anglais, la « gentrification », présente un double visage. D'un côté, il est difficile de regretter qu'un quartier dégradé soit rénové, mieux entretenu, plus sûr, mieux desservi. De telles améliorations sont, en elles-mêmes, bienvenues, et personne ne souhaite sérieusement que des quartiers restent pauvres pour préserver leur « authenticité ».
+
+De l'autre, ces transformations ont un coût humain que l'on passe trop souvent sous silence. À mesure que les loyers augmentent, les habitants d'origine — souvent les plus modestes — se voient contraints de partir, chassés non par la force mais par le prix. On les remplace sans les expulser formellement, ce qui rend l'injustice moins visible, mais non moins réelle. Un quartier peut ainsi s'embellir tout en se vidant de ceux qui l'avaient fait vivre.
+
+Ce qui se perd alors n'est pas seulement un logement, mais un tissu de relations : les commerçants qu'on connaissait, les voisins de longue date, les habitudes patiemment tissées. On ne déménage pas seulement d'un appartement ; on est arraché à un monde. Et ceux qui arrivent, aussi bien intentionnés soient-ils, héritent d'un lieu dont l'âme s'est en partie enfuie avec ses anciens habitants.
+
+Faut-il alors renoncer à améliorer les quartiers pauvres ? Certainement pas. Mais on peut le faire autrement, en veillant à ce que la rénovation profite d'abord à ceux qui y vivent, plutôt que de les remplacer. Cela suppose des logements protégés, un encadrement des loyers, une volonté politique de ne pas abandonner les habitants aux seules lois du marché.
+
+Car une ville juste ne se contente pas d'embellir ses quartiers : elle veille à ce que ceux qui les ont habités puissent y demeurer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-063",
+    title: "L'anonymat des grandes villes",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Entouré de millions de gens, on peut s'y sentir plus seul qu'ailleurs.",
+    blurbEn:
+      "In a city of millions you can feel lonelier than anywhere. But anonymity is not only a burden — it is also a strange kind of freedom. (Section: Cities and belonging, 3/5.)",
+    body: `Il y a un paradoxe propre aux grandes villes : c'est souvent là, entouré de millions d'êtres humains, que l'on se sent le plus seul. On croise chaque jour des centaines de visages sans en connaître aucun. On vit à quelques mètres de voisins dont on ignore le nom. Cette solitude au milieu de la foule est l'une des expériences caractéristiques de la vie urbaine, et elle nourrit une critique récurrente : la grande ville rendrait les gens froids, indifférents, étrangers les uns aux autres.
+
+Cette critique n'est pas sans fondement. Dans un village, chacun connaît chacun, et cette familiarité crée une entraide naturelle, un filet de solidarité. Dans la grande ville, ce filet se distend. On peut y traverser une épreuve sans que personne ne s'en aperçoive, tomber malade sans que nul ne s'en inquiète. L'anonymat urbain a bien une part d'ombre, et il serait malhonnête de la nier.
+
+Mais il serait tout aussi injuste de n'en retenir que le côté sombre, car cet anonymat est aussi une forme de liberté. Dans le village où tout le monde se connaît, tout le monde s'observe, et le regard des autres pèse parfois lourd. Ceux qui ne rentrent pas dans le moule, qui vivent autrement, qui veulent échapper à un passé ou à une réputation, trouvent dans l'anonymat de la ville un espace pour respirer. On y peut être soi-même sans avoir à s'expliquer, changer de vie sans que tout un village en fasse le commentaire.
+
+C'est pourquoi les grandes villes ont si souvent attiré ceux que leur milieu d'origine étouffait. L'artiste, le marginal, celui qui aime différemment, celui qui veut recommencer : tous ont vu dans la ville non pas un désert humain, mais une promesse d'émancipation. L'indifférence des autres, si dure lorsqu'on souffre, devient bienfaisante lorsqu'on veut simplement vivre sans être jugé.
+
+L'anonymat des villes n'est donc ni un mal ni un bien absolu ; il est l'un et l'autre selon le moment de la vie où l'on se trouve. Le défi n'est pas de le supprimer — on ne peut pas connaître des millions de gens —, mais de créer, à l'intérieur de l'immense ville anonyme, de petits cercles de familiarité : un immeuble où l'on se salue, un quartier où l'on a ses repères. La liberté de l'inconnu, tempérée par la chaleur de quelques liens choisis.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-064",
+    title: "À qui profite la ville intelligente ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Capteurs, données, gestion automatisée : la ville se met à nous surveiller.",
+    blurbEn:
+      "Sensors, data and automated management promise more efficient cities. But the 'smart city' also watches its inhabitants — and it is worth asking whom it really serves. (Section: Cities and belonging, 4/5.)",
+    body: `On nous promet la « ville intelligente » : une cité truffée de capteurs, capable de mesurer en permanence la circulation, la consommation d'énergie, la qualité de l'air, les flux de piétons, et d'ajuster son fonctionnement en conséquence. Feux qui s'adaptent au trafic, éclairage qui se règle sur la présence, transports optimisés : l'idée séduit, et ses promesses d'efficacité ne sont pas illusoires. Bien conçue, une telle ville pourrait gaspiller moins et fonctionner mieux.
+
+Pourtant, derrière cette vision techniquement séduisante se cache une question que l'enthousiasme fait souvent oublier : une ville qui mesure tout est aussi une ville qui surveille tout. Les mêmes capteurs qui optimisent la circulation peuvent suivre les déplacements des personnes. Les mêmes données qui améliorent un service peuvent servir à contrôler, à ficher, à prévoir les comportements. La frontière entre la ville efficace et la ville de surveillance est plus mince qu'on ne le dit.
+
+Il faut donc se demander qui détient ces données et à quelles fins. Trop souvent, l'infrastructure de la ville intelligente est conçue et exploitée par des entreprises privées, qui en tirent une connaissance précieuse des habitants. Ceux-ci, en échange de quelques commodités, se retrouvent observés en permanence, sans toujours l'avoir voulu ni même compris. La ville, espace commun par excellence, risque ainsi de devenir un vaste dispositif de captation, au bénéfice de quelques-uns.
+
+Une autre inquiétude concerne la démocratie. Lorsqu'une ville est gérée par des algorithmes, qui décide de leurs règles ? Un logiciel qui répartit les ressources, oriente les investissements ou hiérarchise les priorités exerce, en réalité, un pouvoir politique. Or ce pouvoir échappe au débat public : on ne vote pas pour un algorithme, et l'on peine même à savoir comment il fonctionne. L'efficacité technique tend alors à se substituer au choix collectif.
+
+Rien de tout cela ne condamne l'idée d'une ville plus intelligente. La technologie peut rendre de réels services, à condition qu'elle reste un moyen et non une fin. Mais cela suppose de poser d'emblée les bonnes questions : qui contrôle les données, dans quel but, sous quel regard démocratique ?
+
+Une ville n'est pas intelligente parce qu'elle mesure tout ; elle l'est lorsqu'elle met la technique au service de ceux qui l'habitent, et non l'inverse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-065",
+    title: "Refaire une place au silence",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le bruit de la ville est devenu un fond permanent qu'on n'entend plus.",
+    blurbEn:
+      "City noise has become a constant background we no longer notice — yet it wears on us. Why silence deserves to be treated as a right, not a luxury. (Section: Cities and belonging, 5/5.)",
+    body: `Le bruit est peut-être la pollution la plus sous-estimée de la vie urbaine. Circulation, chantiers, sirènes, machines, voix amplifiées : la ville produit un fond sonore permanent auquel on finit par ne plus prêter attention. Non qu'il ait disparu, mais parce qu'on s'y est habitué. Or cette habitude est trompeuse : même lorsqu'on ne l'écoute plus, le bruit continue d'agir sur nous.
+
+Les recherches sur ce sujet sont éloquentes. Une exposition prolongée au bruit ne provoque pas seulement une gêne passagère ; elle affecte le sommeil, élève la tension, entretient un état de stress dont on n'a même pas conscience. Le corps, lui, réagit au vacarme quand bien même l'esprit croit l'ignorer. Le silence n'est donc pas un simple agrément pour âmes sensibles ; c'est une condition de la santé, au même titre que l'air ou l'eau.
+
+Le problème est que le silence, dans nos villes, est devenu un luxe inégalement réparti. Ceux qui en ont les moyens s'installent dans des quartiers calmes, isolent leur logement, s'échappent le week-end vers des lieux paisibles. Les autres subissent, sans échappatoire, le grondement continu des grands axes et des logements mal insonorisés. Le calme, autrefois disponible à tous, tend ainsi à devenir un privilège que l'argent achète.
+
+Redonner une place au silence dans la ville n'est pourtant pas hors de portée. Cela passe par des choix concrets : limiter la vitesse et donc le bruit de la circulation, végétaliser les rues, créer des zones apaisées, exiger une meilleure isolation des logements. Aucune de ces mesures n'est spectaculaire, mais leur effet cumulé transformerait profondément l'expérience quotidienne de millions d'habitants.
+
+Il faut surtout cesser de considérer le bruit comme une fatalité de la vie urbaine, une nuisance à laquelle il faudrait simplement s'adapter. Le vacarme n'est pas une propriété inévitable des villes ; il est le résultat de choix — d'aménagement, de transport, de construction — que d'autres choix pourraient corriger.
+
+Réclamer du silence n'est pas fuir la ville ni rêver d'un impossible calme de campagne. C'est demander que la vie urbaine, si dense et si vivante, ménage aussi des espaces où l'on puisse, enfin, s'entendre penser.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-066",
+    title: "Manger est devenu compliqué",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Un acte autrefois simple s'est chargé de questions morales et écologiques.",
+    blurbEn:
+      "Eating, once a simple act, has become loaded with moral, ecological and health questions. Why our plates now carry so much weight — and how to bear it lightly. (Section: Food, culture and ethics, 1/5.)",
+    body: `Manger fut longtemps l'un des actes les plus simples de l'existence : on mangeait ce qu'on avait, ce que produisait la région, ce que la saison offrait. En quelques décennies, cet acte s'est étrangement compliqué. Chaque repas semble désormais poser des questions : est-ce bon pour ma santé ? pour la planète ? pour les animaux ? pour les producteurs ? Ce qui allait de soi est devenu un champ de préoccupations et parfois de culpabilité.
+
+Cette complexité n'est pas imaginaire ; elle reflète une réalité nouvelle. Nous savons aujourd'hui ce que nous ignorions hier : l'impact de notre alimentation sur le climat, les conditions d'élevage des animaux, les effets de certains produits sur notre corps, les difficultés du monde agricole. Cette connaissance est un progrès, mais elle a un revers : elle charge chaque bouchée d'un poids moral que les générations précédentes ne connaissaient pas.
+
+Le risque est double. D'un côté, une indifférence commode, qui consiste à ne rien vouloir savoir pour continuer à manger sans y penser. De l'autre, une anxiété permanente, qui transforme chaque repas en dilemme et finit par gâcher un plaisir pourtant essentiel. Entre l'aveuglement et l'obsession, il n'est pas toujours facile de trouver une voie.
+
+Il faut d'abord reconnaître que peu de choix sont parfaits. L'aliment idéal — sain, écologique, éthique, accessible, savoureux — n'existe pratiquement jamais. Manger, c'est presque toujours composer avec des contraintes contradictoires : ce qui est bon pour la santé n'est pas toujours abordable, ce qui est écologique n'est pas toujour disponible. Exiger la perfection, c'est se condamner à l'échec et à la culpabilité.
+
+Une attitude plus juste consisterait à viser le mieux plutôt que le parfait. Réduire, sans forcément supprimer ; privilégier, sans se l'interdire absolument ; s'informer, sans se laisser paralyser. De petits changements tenus dans la durée valent mieux qu'une rigueur héroïque et brève.
+
+Il importe enfin de ne pas oublier ce qu'est aussi un repas : un plaisir, un moment de partage, un héritage culturel. À trop faire de l'alimentation une affaire de calculs et de règles, on risque d'oublier qu'elle est d'abord l'une des grandes joies de vivre. Manger avec conscience, oui ; manger avec angoisse, sûrement pas.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-067",
+    title: "Faut-il manger moins de viande ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La question dérange, car elle touche à des habitudes profondes.",
+    blurbEn:
+      "The case for eating less meat is strong on climate, health and ethical grounds. A calm look at an argument that tends to inflame, and how to weigh it honestly. (Section: Food, culture and ethics, 2/5.)",
+    body: `Peu de questions alimentaires soulèvent autant de passions que celle de la viande. Elle touche à des habitudes profondes, à des souvenirs d'enfance, à une certaine idée du repas, et le simple fait de la poser suffit parfois à agacer. Pourtant, elle mérite qu'on l'examine calmement, en distinguant les arguments plutôt qu'en s'échauffant.
+
+Trois raisons principales plaident pour une réduction de notre consommation de viande. La première est écologique : l'élevage, en particulier celui des grands animaux, pèse lourd dans les émissions responsables du réchauffement, et exige des quantités considérables de terres et d'eau. La deuxième est sanitaire : une consommation excessive de viande, notamment transformée, est associée à divers problèmes de santé. La troisième est éthique : les conditions dans lesquelles beaucoup d'animaux sont élevés heurtent, à juste titre, un nombre croissant de consciences.
+
+Ces arguments sont sérieux, et il serait malhonnête de les balayer. Mais il faut aussi se garder de deux excès symétriques. Le premier consisterait à nier ces réalités pour ne rien changer à ses habitudes. Le second, inverse, consisterait à faire de la question un absolu moral, à diviser le monde entre les vertueux et les coupables, et à culpabiliser quiconque mange encore de la viande.
+
+La vérité est que « manger moins de viande » ne signifie pas « ne plus jamais en manger ». Entre l'assiette quotidienne de viande et son abandon total, il existe une vaste zone intermédiaire, où se situent la plupart des solutions raisonnables. Réduire la fréquence, choisir une viande de meilleure qualité et mieux produite, en faire une occasion plutôt qu'une habitude : ces changements, modestes à l'échelle individuelle, auraient un effet considérable s'ils étaient largement adoptés.
+
+Il faut aussi reconnaître les obstacles réels. Changer d'alimentation suppose du temps, des connaissances, parfois des moyens. On ne peut pas demander les mêmes efforts à qui cuisine sans contrainte et à qui peine déjà à se nourrir. Faire de la réduction de viande une affaire purement individuelle, sans se soucier de ces inégalités, serait injuste.
+
+La question n'est donc pas de savoir si l'on est « pour » ou « contre » la viande, comme s'il s'agissait d'un camp à choisir. Elle est de savoir combien, laquelle, à quelle fréquence — des questions de mesure, non de dogme. Et sur ce terrain, chacun peut avancer à son rythme, sans renoncer d'un coup ni s'aveugler sur les enjeux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-068",
+    title: "Le gaspillage alimentaire",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Un tiers de la nourriture produite dans le monde finit à la poubelle.",
+    blurbEn:
+      "A third of the food produced in the world is thrown away. The scandal of waste, where it really happens, and why it is a solvable problem. (Section: Food, culture and ethics, 3/5.)",
+    body: `C'est un chiffre qui devrait nous arrêter : environ un tiers de la nourriture produite dans le monde n'est jamais mangée. Elle est perdue ou jetée, à un moment ou à un autre de son parcours, de la ferme à l'assiette. Dans un monde où des millions de personnes souffrent encore de la faim, et où la production alimentaire pèse lourdement sur l'environnement, un tel gaspillage a quelque chose de proprement scandaleux.
+
+Il faut d'abord comprendre où se produit ce gaspillage, car les responsabilités sont partagées. Une partie des pertes survient très tôt, aux champs et pendant le transport : des récoltes abîmées, des fruits écartés parce qu'ils ne sont pas assez calibrés, des denrées perdues faute de moyens de conservation. Une autre partie survient dans les magasins, où l'on jette ce qui approche de sa date limite ou ce qui ne se vend pas. Une dernière, enfin, se produit chez nous, dans nos cuisines, où l'on achète trop, oublie, laisse se gâter.
+
+Ce qui frappe, dans ce gaspillage, c'est son absurdité. Il ne résulte pas d'une pénurie, mais au contraire d'une abondance mal gérée. On ne jette pas la nourriture parce qu'on en manque, mais parce qu'on en a trop et qu'on la traite comme une chose sans valeur. Des normes esthétiques absurdes conduisent à écarter des légumes parfaitement comestibles ; une lecture trop stricte des dates fait jeter des produits encore bons.
+
+La bonne nouvelle, c'est qu'aucune de ces causes n'est insurmontable. Contrairement à d'autres problèmes environnementaux, qui exigent des transformations profondes, la lutte contre le gaspillage relève souvent du bon sens et de l'organisation. Redistribuer les invendus, revoir les normes d'apparence, clarifier les dates, mieux planifier ses achats : autant de mesures concrètes, déjà expérimentées avec succès, qui ne demandent aucun renoncement, seulement de l'attention.
+
+À l'échelle individuelle, quelques habitudes simples suffisent à réduire considérablement ses propres pertes : acheter selon ses besoins réels, accommoder les restes, faire confiance à ses sens plutôt qu'à une date. Rien d'héroïque, mais un respect élémentaire pour ce que représente la nourriture.
+
+Le gaspillage alimentaire est peut-être l'un des rares grands problèmes que l'on pourrait largement résoudre sans sacrifice, seulement en cessant de traiter comme un déchet ce qui a demandé tant de terre, d'eau et de travail. Il suffirait, en somme, de nous souvenir de la valeur de ce que nous jetons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-069",
+    title: "La cuisine, un patrimoine vivant",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Une recette transmise porte en elle une histoire, une mémoire, une culture.",
+    blurbEn:
+      "A handed-down recipe carries history, memory and identity. Why cuisine is a living heritage — and what is lost when we stop cooking it ourselves. (Section: Food, culture and ethics, 4/5.)",
+    body: `Une recette n'est jamais seulement une liste d'ingrédients et de gestes. Elle porte en elle une histoire, celle d'une région, d'une famille, d'une époque. Le plat qu'une grand-mère transmet à ses petits-enfants n'est pas qu'une nourriture : c'est un fragment de mémoire, un lien avec ceux qui l'ont cuisiné avant, une manière de faire durer un peu de ce qui, sans lui, disparaîtrait. En ce sens, la cuisine est un patrimoine, mais un patrimoine particulier : vivant, fragile, qui n'existe que tant qu'on le pratique.
+
+C'est ce qui la distingue d'un monument ou d'un tableau. Une cathédrale demeure même si nul ne la regarde ; une recette, elle, meurt dès qu'on cesse de la faire. Elle ne se conserve pas dans un musée, mais dans des mains qui répètent des gestes, dans une transmission qui se joue d'une génération à l'autre. Rompez cette chaîne, et c'est tout un savoir qui s'évanouit, souvent sans qu'on s'en aperçoive avant qu'il soit trop tard.
+
+Or cette transmission est aujourd'hui menacée. Le temps manque, les modes de vie ont changé, et il est devenu si facile d'acheter tout prêt qu'on cuisine de moins en moins. À quoi bon apprendre un plat long à préparer quand on peut, en quelques minutes, s'en procurer un équivalent ? La question paraît raisonnable, mais elle oublie ce qui se perd dans l'échange : non pas seulement une saveur, mais un savoir-faire et le lien qu'il portait.
+
+Il ne s'agit pas de condamner la commodité, ni de sommer chacun de passer des heures aux fourneaux. La vie moderne a ses contraintes, et l'on peut légitimement s'en remettre, parfois, à la facilité. Mais il serait dommage de laisser entièrement disparaître cet art domestique, sous prétexte qu'il n'est plus nécessaire. Car ce qui n'est plus nécessaire n'est pas pour autant sans valeur.
+
+Cuisiner soi-même, transmettre une recette, apprendre un plat de sa famille : ces gestes modestes entretiennent un lien précieux avec le passé et avec les autres. Ils rappellent que se nourrir n'est pas qu'une fonction, mais une culture. Préserver ce patrimoine vivant ne demande ni loi ni musée : seulement que, de temps à autre, quelqu'un prenne le temps de faire, et de montrer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-070",
+    title: "Le repas, dernier rituel commun",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Manger ensemble, à heure fixe : un rituel simple qui résiste, et se défait.",
+    blurbEn:
+      "Sitting down to eat together at a set time is one of our last shared rituals — and it is quietly dissolving. What we stand to lose when meals fragment. (Section: Food, culture and ethics, 5/5.)",
+    body: `Parmi tous les rituels qui structuraient autrefois la vie quotidienne, le repas partagé est l'un des derniers à résister. Se retrouver à heure fixe, autour d'une même table, pour manger ensemble : ce geste si banal est aussi l'un des rares moments où une famille, une communauté, se rassemble vraiment. Or ce rituel, longtemps tenu pour évident, se défait peu à peu, et il vaut la peine de mesurer ce qui se joue dans cette lente dissolution.
+
+Les causes en sont connues. Les horaires se sont désynchronisés : chacun mange quand il peut, selon son emploi du temps. Les écrans se sont invités à table, captant les regards qui, autrefois, se croisaient. La nourriture individuelle, avalée seul et à la hâte, a gagné du terrain sur le plat partagé. Peu à peu, le repas cesse d'être un moment de rassemblement pour devenir une simple fonction, accomplie chacun de son côté.
+
+Ce qui se perd dans cette évolution n'est pas mince. Le repas partagé n'est pas qu'une question de nourriture ; c'est un espace de conversation, de transmission, de lien. C'est souvent là que les nouvelles s'échangent, que les enfants apprennent à écouter et à parler, que se tissent, jour après jour, les fils invisibles qui relient les membres d'un foyer. Supprimez ce moment, et vous ne supprimez pas seulement un dîner : vous retirez à la vie commune l'un de ses principaux points d'appui.
+
+Les études sur le sujet confirment cette intuition. Là où l'on partage régulièrement les repas, les liens familiaux se portent mieux, et les enfants eux-mêmes s'en trouvent, à bien des égards, avantagés. Non que le repas ait des vertus magiques, mais parce qu'il crée ce que la vie moderne offre de plus en plus rarement : un temps régulier, prévisible, où l'on est simplement ensemble, sans autre but que d'être là.
+
+Préserver ce rituel ne demande pas de grands moyens, seulement une décision : celle de traiter le repas partagé comme un rendez-vous qui compte, et non comme une variable d'ajustement. Éteindre les écrans, s'attendre les uns les autres, faire du dîner un moment protégé : ces choix modestes suffisent souvent à sauver ce qui, une fois perdu, se retrouve difficilement.
+
+Dans un monde qui éparpille nos vies, le repas partagé reste l'un des derniers lieux où l'on peut, chaque jour, se rassembler. Ce serait une étrange pauvreté que de le laisser disparaître par simple négligence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

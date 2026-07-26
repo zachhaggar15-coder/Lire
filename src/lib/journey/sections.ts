@@ -780,6 +780,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-belonging",
+    band: "B2",
+    title: "Cities and belonging",
+    goal: "Whether the city is ours, gentrification, anonymity, the surveilled 'smart city', and reclaiming silence.",
+    textIds: [
+      "starter-b2-061", // La ville nous appartient-elle ? (introduces the core words)
+      "starter-b2-062", // Quand un quartier change de visage
+      "starter-b2-063", // L'anonymat des grandes villes
+      "starter-b2-064", // À qui profite la ville intelligente ?
+      "starter-b2-065", // Refaire une place au silence (hardest)
+    ],
+  },
+  {
+    id: "b2-food-ethics",
+    band: "B2",
+    title: "Food, culture and ethics",
+    goal: "Eating made complicated, less meat, food waste, cuisine as living heritage, the shared meal.",
+    textIds: [
+      "starter-b2-066", // Manger est devenu compliqué (introduces the core words)
+      "starter-b2-067", // Faut-il manger moins de viande ?
+      "starter-b2-068", // Le gaspillage alimentaire
+      "starter-b2-069", // La cuisine, un patrimoine vivant
+      "starter-b2-070", // Le repas, dernier rituel commun (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",
