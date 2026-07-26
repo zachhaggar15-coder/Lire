@@ -4,12 +4,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { SavedWord } from "@/types";
-import { getSavedWords, recordReviewResult } from "@/lib/storage";
+import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
 import { getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { getCustomTexts } from "@/lib/customTexts";
 import { getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
+import {
+  applyTypedWordCorrectPass,
+  clearTypedWordCorrectPass,
+  getTypedWordCorrectPasses,
+  type WordReviewConfirmationPasses,
+} from "@/lib/reviewSession";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
@@ -96,6 +102,8 @@ export default function ReviewPage() {
   const [phraseRevealed, setPhraseRevealed] = useState(false);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
   const [cardFeedback, setCardFeedback] = useState<CardFeedback>(null);
+  const [wordConfirmationPasses, setWordConfirmationPasses] = useState<WordReviewConfirmationPasses>({});
+  const [wordFeedbackMessage, setWordFeedbackMessage] = useState<string | null>(null);
   const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
@@ -162,6 +170,7 @@ export default function ReviewPage() {
   const done = reviewMode === "words" && ready && reviewStarted && wordSessionTotal > 0 && wordQueue.length === 0;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
   const typedAnswerCorrect = current ? answerMatches(typedAnswer, wordAnswerCandidates(current, reviewDirection)) : false;
+  const currentWordCorrectPasses = current ? getTypedWordCorrectPasses(wordConfirmationPasses, current.word) : 0;
 
   useEffect(() => {
     if (!ready || reviewSessionStarted.current) return;
@@ -209,27 +218,34 @@ export default function ReviewPage() {
   function resetWordCard() {
     setTypedAnswer("");
     setRevealed(false);
+    setWordFeedbackMessage(null);
   }
 
-  function answer(grade: ReviewGrade) {
+  function submitCorrectWordAnswer(answerValue = typedAnswer) {
     if (!current || cardFeedback) return;
-    const correct = grade === "knew";
+    if (!answerMatches(answerValue, wordAnswerCandidates(current, reviewDirection))) return;
+
+    const passResult = applyTypedWordCorrectPass(wordConfirmationPasses, current.word);
+    const savedAsKnown = passResult.outcome === "known";
     const nextScore = {
-      knew: score.knew + (correct ? 1 : 0),
-      missed: score.missed + (correct ? 0 : 1),
+      knew: score.knew + (savedAsKnown ? 1 : 0),
+      missed: score.missed,
     };
+    setWordConfirmationPasses(passResult.confirmationPasses);
     setRevealed(true);
-    setCardFeedback(grade === "knew" ? "correct" : grade === "repeat" ? "repeat" : "missed");
+    setCardFeedback("correct");
+    setWordFeedbackMessage(savedAsKnown ? "Saved as known" : "Correct. One more time.");
     trackEvent("review_answer_submitted", {
       mode: "words",
-      correct,
-      typedCorrect: typedAnswerCorrect,
-      grade,
+      correct: true,
+      typedCorrect: true,
+      grade: savedAsKnown ? "knew" : "repeat",
+      typedPass: savedAsKnown ? 2 : 1,
       cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
       totalCards: wordSessionTotal || wordQueue.length,
       articleFiltered: !!articleFilter,
     });
-    if (grade === "knew") {
+    if (savedAsKnown) {
       const xp = recordReviewSuccessXp(current.word);
       if (xp > 0) {
         setXpNotice(`+${xp} XP`);
@@ -238,7 +254,44 @@ export default function ReviewPage() {
     }
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const nextWords = visibleWords(recordReviewResult(current.word, correct ? "correct" : "incorrect"));
+      const remainingQueue = wordQueue.slice(1);
+      const nextQueue = savedAsKnown ? remainingQueue : [...remainingQueue, current];
+      if (savedAsKnown) recordReviewResult(current.word, "correct");
+      const nextWords = savedAsKnown
+        ? visibleWords(markWordAsKnown(current.word))
+        : visibleWords(getSavedWords());
+      setWords(nextWords);
+      setWordQueue(nextQueue);
+      setScore(nextScore);
+      resetWordCard();
+      if (nextQueue.length === 0) completeReviewSession("words", wordSessionTotal, nextScore.knew);
+      setCardFeedback(null);
+      cardFeedbackTimeout.current = null;
+    }, REVIEW_FEEDBACK_DELAY_MS);
+  }
+
+  function answer(grade: Exclude<ReviewGrade, "knew">) {
+    if (!current || cardFeedback) return;
+    const nextScore = {
+      knew: score.knew,
+      missed: score.missed + 1,
+    };
+    setRevealed(true);
+    setWordConfirmationPasses((passes) => clearTypedWordCorrectPass(passes, current.word));
+    setWordFeedbackMessage(grade === "repeat" ? "Still in the deck" : "Needs review later");
+    setCardFeedback(grade === "repeat" ? "repeat" : "missed");
+    trackEvent("review_answer_submitted", {
+      mode: "words",
+      correct: false,
+      typedCorrect: typedAnswerCorrect,
+      grade,
+      cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
+      totalCards: wordSessionTotal || wordQueue.length,
+      articleFiltered: !!articleFilter,
+    });
+    if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
+    cardFeedbackTimeout.current = setTimeout(() => {
+      const nextWords = visibleWords(recordReviewResult(current.word, "incorrect"));
       const remainingQueue = wordQueue.slice(1);
       const nextQueue = grade === "repeat" ? [...remainingQueue, current] : remainingQueue;
       setWords(nextWords);
@@ -272,6 +325,8 @@ export default function ReviewPage() {
     setReviewStarted(nextWordQueue.length > 0 && reviewMode === "words");
     setScore({ knew: 0, missed: 0 });
     setCardFeedback(null);
+    setWordConfirmationPasses({});
+    setWordFeedbackMessage(null);
     phraseScore.current = { correct: 0, total: 0 };
     reviewSessionStarted.current = false;
     reviewSessionCompleted.current = false;
@@ -347,7 +402,7 @@ export default function ReviewPage() {
   const wordCardIndex = wordSessionTotal > 0 ? wordSessionTotal - wordQueue.length + 1 : 1;
 
   // No learning/unsure words saved at all.
-  if (ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
+  if (!done && ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
     return (
       <div className="px-4 pt-6">
         <h1 className="text-2xl font-extrabold text-ink">Review</h1>
@@ -396,7 +451,7 @@ export default function ReviewPage() {
           <p className="text-4xl">🎉</p>
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
-            Knew it: {score.knew} - Needs another look: {score.missed}
+            Known: {score.knew} - Needs another look: {score.missed}
           </p>
           <button
             onClick={restart}
@@ -511,7 +566,13 @@ export default function ReviewPage() {
                   {wordCardIndex}/{Math.max(1, wordSessionTotal)}
                 </span>
                 <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">
-                  {revealed ? "Answer side" : "Prompt side"}
+                  {cardFeedback === "correct"
+                    ? "Correct"
+                    : currentWordCorrectPasses > 0
+                      ? "1 tick earned"
+                      : revealed
+                        ? "Answer side"
+                        : "Prompt side"}
                 </span>
               </div>
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
@@ -528,7 +589,12 @@ export default function ReviewPage() {
               className="mt-6 w-full"
               onSubmit={(event) => {
                 event.preventDefault();
-                if (typedAnswer.trim()) setRevealed(true);
+                if (!typedAnswer.trim()) return;
+                if (typedAnswerCorrect) {
+                  submitCorrectWordAnswer();
+                } else {
+                  setRevealed(true);
+                }
               }}
             >
               <label htmlFor="word-review-answer" className="sr-only">
@@ -539,8 +605,13 @@ export default function ReviewPage() {
                 type="text"
                 value={typedAnswer}
                 onChange={(event) => {
-                  setTypedAnswer(event.target.value);
+                  const nextAnswer = event.target.value;
+                  setTypedAnswer(nextAnswer);
                   setRevealed(false);
+                  setWordFeedbackMessage(null);
+                  if (current && answerMatches(nextAnswer, wordAnswerCandidates(current, reviewDirection))) {
+                    submitCorrectWordAnswer(nextAnswer);
+                  }
                 }}
                 placeholder={reviewDirection === "en-fr" ? "Type the French" : "Type the English"}
                 autoCapitalize="none"
@@ -553,8 +624,28 @@ export default function ReviewPage() {
                 disabled={!typedAnswer.trim() || cardFeedback !== null}
                 className="mt-3 w-full rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-40"
               >
-                Check answer
+                {typedAnswerCorrect ? "Correct" : "Show answer"}
               </button>
+              {wordFeedbackMessage && (
+                <div
+                  aria-live="polite"
+                  className={`mt-3 inline-flex items-center justify-center gap-2 rounded-full px-3 py-1.5 text-sm font-bold ${
+                    cardFeedback === "correct"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-amber-100 text-amber-700"
+                  }`}
+                >
+                  {cardFeedback === "correct" && (
+                    <span
+                      aria-hidden="true"
+                      className="grid h-5 w-5 place-items-center rounded-full bg-emerald-600 text-xs text-white"
+                    >
+                      {"\u2713"}
+                    </span>
+                  )}
+                  <span>{wordFeedbackMessage}</span>
+                </div>
+              )}
             </form>
 
               {revealed && (
@@ -602,30 +693,23 @@ export default function ReviewPage() {
           <div className="mt-4 pb-6">
             <div className="rounded-card bg-cream-card/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
               <div className="mb-2 flex items-center justify-between px-1 text-xs font-semibold text-ink-muted">
-                <span>Grade this card</span>
-                <span>{revealed ? "Choose what happened" : "Reveal before grading"}</span>
+                <span>Need help?</span>
+                <span>{revealed ? "Keep practicing or move on" : "Correct typing checks itself"}</span>
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => answer("knew")}
-                  disabled={!revealed || cardFeedback !== null}
-                  className="rounded-2xl border border-emerald-200 bg-emerald-100 px-1 py-3 text-xs font-semibold text-emerald-700 shadow-card active:scale-95 disabled:opacity-40"
-                >
-                  Knew it
-                </button>
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => answer("repeat")}
                   disabled={!revealed || cardFeedback !== null}
                   className="rounded-2xl border border-amber-200 bg-amber-100 px-1 py-3 text-xs font-semibold text-amber-700 shadow-card active:scale-95 disabled:opacity-40"
                 >
-                  One more time
+                  Keep in deck
                 </button>
                 <button
                   onClick={() => answer("missed")}
                   disabled={cardFeedback !== null}
                   className="rounded-2xl border border-rose-200 bg-rose-100 px-1 py-3 text-xs font-semibold text-rose-700 shadow-card active:scale-95 disabled:opacity-40"
                 >
-                  No idea
+                  Skip for now
                 </button>
               </div>
             </div>

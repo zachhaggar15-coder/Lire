@@ -71,7 +71,7 @@ export interface SavedWord {
   lastReviewedAt: string | null;
   /**
    * "learning" (saved via the "Save" action), "unsure" (saved via the
-   * "Unsure" action), or "known" (promoted from Review's "Mark as known").
+   * "Unsure" action), or "known" (promoted by a correct typed review).
    * Words marked known straight from the reader's "I know this" button
    * never get a SavedWord at all — see src/lib/knownWords.ts.
    */

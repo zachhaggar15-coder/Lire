@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { getSavedWords, deleteWord, clearWords, markWordAsKnown } from "@/lib/storage";
+import { getSavedWords, deleteWord, clearWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate } from "@/lib/format";
@@ -41,10 +41,6 @@ export default function WordsPage() {
 
   function handleDelete(word: string) {
     setWords(deleteWord(word));
-  }
-
-  function handleMarkKnown(word: string) {
-    setWords(markWordAsKnown(word));
   }
 
   function handleClear() {
@@ -221,14 +217,6 @@ export default function WordsPage() {
                         <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
                       </svg>
                     </button>
-                    {w.status !== "known" && (
-                      <button
-                        onClick={() => handleMarkKnown(w.word)}
-                        className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
-                      >
-                        Mark known
-                      </button>
-                    )}
                   </div>
                 </div>
               </li>
