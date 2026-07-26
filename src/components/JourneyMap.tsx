@@ -467,23 +467,24 @@ function LessonPreviewRow({
   if (!text) return null;
   const progress = getProgress(textId).status;
   const completed = progress === "completed";
-  const muted = skipped && !completed;
+  const reviewableSkipped = skipped && !completed;
   const statusLabel = completed
     ? "Completed"
-    : skipped
-      ? "Skipped"
+    : reviewableSkipped
+      ? "Skipped - review anytime"
       : `${formatCategory(text.category)} - ${text.minutes} min${next ? ` - ${Math.round(next.unknownWordRatio * 100)}% new` : ""}`;
+  const actionLabel = completed || reviewableSkipped ? "Review" : progress === "in-progress" ? "Continue" : next ? "Start" : "Open";
 
   return (
     <div
       className={`rounded-2xl px-3 py-3 transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out ${
-        next ? `${tone.rowNext} shadow-card` : muted ? "bg-cream-dark/70 opacity-75" : tone.row
+        next ? `${tone.rowNext} shadow-card` : tone.row
       }`}
     >
       <div className="flex items-start gap-3">
-        <LessonStatusDot completed={completed} next={!!next} muted={muted} tone={tone} />
+        <LessonStatusDot completed={completed} next={!!next} skipped={reviewableSkipped} tone={tone} />
         <div className="min-w-0 flex-1">
-          <p className={`break-words text-sm font-bold leading-snug ${muted ? "text-ink-muted" : "text-ink"}`}>{text.title}</p>
+          <p className="break-words text-sm font-bold leading-snug text-ink">{text.title}</p>
           <p className="mt-1 text-xs font-semibold text-ink-muted">{statusLabel}</p>
         </div>
       </div>
@@ -494,7 +495,7 @@ function LessonPreviewRow({
             next ? "bg-brand text-white shadow-raised" : completed ? tone.badge : "bg-cream-card text-brand shadow-card"
           }`}
         >
-          {completed ? "Review" : progress === "in-progress" ? "Continue" : next ? "Start" : "Open"}
+          {actionLabel}
         </Link>
         {allowSkip && !next && !completed && !skipped && (
           <button
@@ -502,7 +503,7 @@ function LessonPreviewRow({
             onClick={() => onSkip(text.id)}
             className="rounded-full bg-cream-dark px-2.5 py-1.5 text-xs font-bold text-ink-muted transition-transform duration-150 ease-out active:scale-95"
           >
-            Skip
+            Skip for now
           </button>
         )}
       </div>
@@ -510,13 +511,13 @@ function LessonPreviewRow({
   );
 }
 
-function LessonStatusDot({ completed, next, muted, tone }: { completed: boolean; next: boolean; muted: boolean; tone: MapTone }) {
+function LessonStatusDot({ completed, next, skipped, tone }: { completed: boolean; next: boolean; skipped: boolean; tone: MapTone }) {
   const className = completed
     ? tone.connector
     : next
       ? "bg-accent-gold"
-      : muted
-        ? "bg-ink-muted/40"
+      : skipped
+        ? tone.badge
         : "bg-cream-dark";
   return <span aria-hidden="true" className={`mt-1 h-3 w-3 shrink-0 rounded-full ${className}`} />;
 }
