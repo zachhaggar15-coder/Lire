@@ -936,6 +936,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-language",
+    band: "B2",
+    title: "Language and thought",
+    goal: "Whether words shape thought, dying languages, who owns a language, eloquence vs thinking, the meaning of silence.",
+    textIds: [
+      "starter-b2-121", // Les mots façonnent-ils la pensée ? (introduces the core words)
+      "starter-b2-122", // Faut-il défendre les langues qui meurent ?
+      "starter-b2-123", // La langue appartient-elle à ceux qui la parlent ?
+      "starter-b2-124", // Bien parler, est-ce bien penser ?
+      "starter-b2-125", // Le silence a-t-il un sens ? (hardest)
+    ],
+  },
+  {
+    id: "b2-justice",
+    band: "B2",
+    title: "Justice and fairness",
+    goal: "What a just society is, equality of opportunity, the purposes of punishment, limits of liberty, unjust laws.",
+    textIds: [
+      "starter-b2-126", // Qu'est-ce qu'une société juste ? (introduces the core words)
+      "starter-b2-127", // L'égalité des chances suffit-elle ?
+      "starter-b2-128", // Punir, pour quoi faire ?
+      "starter-b2-129", // La liberté des uns et celle des autres
+      "starter-b2-130", // Faut-il obéir à des lois injustes ? (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

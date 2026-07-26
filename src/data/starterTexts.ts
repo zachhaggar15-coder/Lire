@@ -14851,4 +14851,234 @@ Comprendre le hasard, enfin, est une forme de sagesse. C'est accepter que nous n
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-121",
+    title: "Les mots façonnent-ils la pensée ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La langue que nous parlons influence-t-elle notre manière de penser ?",
+    blurbEn:
+      "Does the language we speak shape the way we think? A careful look at a fascinating idea that is often exaggerated in both directions. (Section: Language and thought, 1/5.)",
+    body: `Voici une idée fascinante, et souvent mal comprise : la langue que nous parlons influencerait notre manière de penser. Selon cette thèse, les mots dont nous disposons, les distinctions que notre langue nous impose, façonneraient jusqu'à notre perception du monde. Ceux qui parlent des langues différentes ne se contenteraient pas de nommer différemment les mêmes réalités : ils les verraient, en un sens, différemment. Cette idée séduisante mérite d'être examinée avec soin, car elle est aussi souvent exagérée que sous-estimée.
+
+Dans sa version forte, la thèse affirme que la langue déterminerait entièrement la pensée : on ne pourrait concevoir que ce que sa langue permet d'exprimer. Cette version est fausse, et l'expérience la dément. Nous pouvons penser des choses que notre langue ne nomme pas d'un mot unique ; nous inventons des expressions, empruntons des termes, forgeons des concepts nouveaux. Si la langue emprisonnait totalement la pensée, aucune idée neuve ne pourrait naître, et la traduction serait impossible. Or nous traduisons, nous créons, nous comprenons ce que d'autres langues expriment autrement.
+
+Mais rejeter la version forte ne doit pas conduire à nier toute influence. Car dans une version plus modeste, la thèse résiste bien mieux. La langue n'emprisonne pas la pensée, mais elle l'oriente, la facilite ici, la freine là. Une langue qui possède un mot précis pour une nuance rend cette nuance plus aisée à percevoir et à manier ; une langue qui oblige à préciser certaines distinctions y rend l'esprit plus attentif. Sans nous enfermer, la langue trace des chemins plus ou moins commodes pour la pensée.
+
+Des recherches ont mis en évidence de tels effets, subtils mais réels. Selon les catégories que leur langue distingue, les locuteurs se montrent parfois plus prompts à remarquer certaines différences, à se souvenir de certains détails, à organiser leur perception d'une certaine manière. Ces effets ne font pas d'eux des prisonniers de leur langue ; ils montrent seulement que celle-ci, en découpant le monde à sa façon, incline légèrement l'attention et la mémoire. La langue ne dicte pas la pensée ; elle la nuance.
+
+Cette conclusion mesurée a des implications qui dépassent la linguistique. Elle suggère que parler plusieurs langues, c'est disposer de plusieurs manières de découper le monde, donc, en un sens, enrichir sa pensée de perspectives multiples. Elle invite aussi à la vigilance : si les mots orientent l'esprit, alors le choix des mots, dans le débat public, n'est jamais innocent. Nommer une réalité d'une certaine façon, c'est déjà incliner à la voir ainsi.
+
+Les mots ne façonnent donc pas la pensée à eux seuls, mais ils ne la laissent pas non plus intacte. Entre le mythe d'une langue qui déterminerait tout et l'illusion d'une pensée totalement indépendante des mots, la vérité tient dans cet entre-deux : la langue est moins une prison qu'un paysage, où certains chemins sont plus faciles que d'autres, mais où l'esprit, toujours, peut tracer de nouvelles voies.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-122",
+    title: "Faut-il défendre les langues qui meurent ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Des langues disparaissent chaque année. Est-ce une perte, ou un progrès ?",
+    blurbEn:
+      "A language dies somewhere in the world every few weeks. Is that a loss worth fighting, or a natural simplification? A look at what vanishes with a language. (Section: Language and thought, 2/5.)",
+    body: `À intervalles réguliers, quelque part dans le monde, une langue s'éteint : son dernier locuteur meurt, et avec lui disparaît une manière unique de nommer le monde. Ce phénomène, longtemps ignoré, s'accélère : une grande part des langues aujourd'hui parlées pourraient avoir disparu d'ici la fin du siècle. Faut-il s'en émouvoir et lutter pour les préserver, ou accepter cette disparition comme une simplification naturelle, voire souhaitable ? La question est plus délicate qu'il n'y paraît.
+
+Un argument revient souvent en faveur de l'indifférence, voire de la disparition : moins de langues, ce serait plus de compréhension mutuelle. Si tous parlaient les mêmes quelques langues, ne se comprendrait-on pas mieux ? La diversité des langues, obstacle à la communication, ne serait-elle pas un vestige à dépasser ? Cet argument a une apparence de bon sens, mais il repose sur une conception étroite de ce qu'est une langue, réduite à un simple outil de communication interchangeable.
+
+Car une langue est bien plus qu'un moyen de communiquer. Elle est le dépôt d'une culture entière, la trace d'une manière particulière de voir le monde, de le découper, de le ressentir. Chaque langue contient des concepts, des nuances, des tournures qui n'existent nulle part ailleurs, et qui disparaissent avec elle. Elle porte une littérature, une mémoire, un savoir accumulé sur un lieu et une histoire. Quand une langue meurt, ce n'est pas un simple doublon qui s'efface ; c'est un monde de pensée qui s'éteint, irremplaçable.
+
+On peut comparer cette perte à celle de la biodiversité. De même que la disparition d'une espèce appauvrit l'ensemble du vivant, la mort d'une langue appauvrit l'ensemble de l'humanité, qui perd l'une de ses façons d'être humaine. Cette diversité linguistique est un patrimoine commun, dont chaque langue est un fragment unique. La laisser s'éroder par indifférence, c'est accepter un appauvrissement irréversible de la richesse humaine.
+
+Il faut néanmoins se garder d'un idéalisme qui ignorerait les réalités. Les langues meurent rarement par hasard : elles disparaissent souvent parce que leurs locuteurs, sous la pression économique ou sociale, sont contraints d'en adopter une autre pour vivre. On ne peut donc défendre les langues menacées sans se soucier du sort de ceux qui les parlent. Préserver une langue contre la volonté de ses locuteurs n'aurait pas de sens ; il s'agit plutôt de leur donner les moyens de la garder s'ils le souhaitent, sans avoir à sacrifier leur avenir.
+
+Défendre les langues qui meurent, ce n'est donc pas s'opposer par nostalgie au cours du monde. C'est reconnaître que chaque langue est une richesse irremplaçable, et refuser qu'elle disparaisse par simple négligence ou sous la contrainte. Un monde qui ne parlerait plus qu'une poignée de langues serait peut-être plus commode ; il serait, à coup sûr, infiniment plus pauvre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-123",
+    title: "La langue appartient-elle à ceux qui la parlent ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Faut-il fixer la langue, ou la laisser vivre et changer ?",
+    blurbEn:
+      "Should a language be fixed and protected by rules, or left to evolve freely with its speakers? The old quarrel between guardians and users of a language. (Section: Language and thought, 3/5.)",
+    body: `Une querelle ancienne oppose deux visions de la langue. Pour les uns, une langue doit être protégée, fixée par des règles, défendue contre les fautes et les emprunts qui la dénaturent ; il existerait une forme correcte, qu'il faut préserver de la corruption. Pour les autres, une langue est un organisme vivant, qui appartient à ceux qui la parlent, et qui a le droit d'évoluer, de se transformer, d'intégrer des mots nouveaux ; vouloir la figer serait vain et même nuisible. Ce désaccord, qui ressurgit à chaque changement de la langue, mérite qu'on l'examine sans passion.
+
+Les défenseurs de la norme n'ont pas tout à fait tort. Une langue a besoin de règles communes pour remplir sa fonction première : permettre à ses locuteurs de se comprendre. Si chacun écrivait et parlait à sa guise, sans convention partagée, la communication deviendrait difficile. La grammaire, l'orthographe, un vocabulaire stable sont des biens communs qui facilitent l'échange et donnent accès à un patrimoine écrit. À ce titre, veiller à une certaine correction n'est pas une pédanterie, mais un service rendu à tous.
+
+Mais les partisans de l'évolution ont, eux aussi, de solides arguments. Toute langue vivante change, et c'est le signe même de sa vitalité : seules les langues mortes ne bougent plus. La langue que défendent aujourd'hui les gardiens de la norme est elle-même le produit de siècles de transformations, d'emprunts, d'innovations qu'on aurait pu, à chaque époque, dénoncer comme des fautes. Vouloir arrêter ce mouvement, c'est ignorer que la langue « pure » qu'on prétend défendre n'a jamais existé, et que ce qu'on appelle faute aujourd'hui deviendra peut-être le bon usage de demain.
+
+Il y a plus. Une langue n'appartient pas à une académie ni à quelques gardiens, mais à la multitude de ceux qui la parlent et la font vivre chaque jour. Ce sont eux qui, par leur usage, décident en dernier ressort de ce qui se dit et de ce qui se perd. Les règles suivent l'usage plus qu'elles ne le précèdent : elles enregistrent, avec retard, ce que les locuteurs ont déjà adopté. Prétendre imposer d'en haut une langue contre l'usage réel de ses locuteurs, c'est méconnaître la nature même du langage.
+
+La vérité est sans doute que ces deux forces sont l'une et l'autre nécessaires, et que leur tension même est féconde. La norme retient, stabilise, transmet ; l'usage innove, adapte, renouvelle. Une langue livrée à la seule norme se figerait et s'éloignerait de ses locuteurs ; une langue livrée au seul usage, sans aucun repère commun, risquerait de se fragmenter. C'est de l'équilibre entre ces deux tendances que naît une langue à la fois stable et vivante.
+
+La langue appartient donc bien à ceux qui la parlent, mais ceux qui la parlent ont aussi intérêt à en préserver la cohérence. Entre le conservatisme qui voudrait tout figer et le laisser-faire qui renoncerait à toute règle, la sagesse consiste à accompagner l'évolution sans la précipiter ni la refuser — à traiter la langue non comme un monument à conserver intact, ni comme une matière informe, mais comme un héritage vivant qu'on transmet en le laissant, prudemment, changer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-124",
+    title: "Bien parler, est-ce bien penser ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'éloquence impressionne. Garantit-elle la justesse de la pensée ?",
+    blurbEn:
+      "We are impressed by those who speak well — but does eloquence guarantee sound thinking? A reflection on the seductive and sometimes deceptive power of fine words. (Section: Language and thought, 4/5.)",
+    body: `Nous sommes spontanément impressionnés par ceux qui parlent bien. L'éloquence, la maîtrise des mots, l'aisance du discours nous en imposent, et nous inclinent à prêter à celui qui les possède intelligence et justesse de vue. Cette association entre bien parler et bien penser est profondément ancrée en nous. Mais elle mérite d'être interrogée, car le lien entre la qualité de l'expression et celle de la pensée est plus incertain qu'on ne le croit, et peut même, parfois, se retourner.
+
+Il y a, certes, une part de vérité dans cette association. Exprimer clairement une idée suppose souvent de l'avoir clairement conçue ; la confusion du propos trahit fréquemment la confusion de la pensée. Savoir ordonner ses mots, distinguer, nuancer, argumenter, ce sont là des opérations qui relèvent autant de la pensée que du langage. En ce sens, bien parler peut être le signe qu'on pense bien, et l'effort pour mieux dire est souvent un effort pour mieux penser. Le langage et la pensée sont liés, et travailler l'un aide l'autre.
+
+Mais cette association a ses limites, et même ses pièges. Car l'éloquence est aussi un art, qui peut se cultiver indépendamment de la justesse des idées. On peut apprendre à parler magnifiquement pour ne rien dire, à revêtir de beaux mots des pensées creuses ou fausses. L'histoire abonde en orateurs brillants au service de causes détestables, en discours superbes qui ont conduit aux pires égarements. L'éloquence est une puissance, et comme toute puissance, elle est moralement neutre : elle sert le vrai comme le faux, avec la même efficacité.
+
+Il y a plus troublant encore. L'éloquence peut non seulement masquer l'absence de pensée, mais tromper activement le jugement. Un discours habile émeut, séduit, entraîne, et cette séduction affaiblit l'esprit critique de celui qui l'écoute. Nous sommes portés à croire ce qui est bien dit, à confondre la beauté de la forme avec la vérité du fond. Les manipulateurs le savent bien, qui soignent leur rhétorique précisément pour désarmer notre vigilance. Le charme des mots peut être le meilleur allié du mensonge.
+
+Inversement, une pensée juste peut se dire maladroitement. Bien des gens qui pensent avec profondeur s'expriment sans éclat, hésitent, cherchent leurs mots, et nous les jugeons à tort médiocres parce qu'ils manquent d'aisance. Nous risquons ainsi de préférer un beau parleur creux à un penseur maladroit mais juste, trompés par la forme au détriment du fond. La séduction de l'éloquence peut nous rendre injustes envers la vérité mal habillée.
+
+Bien parler n'est donc ni la garantie ni la preuve de bien penser. C'en est parfois le signe, parfois le masque. La sagesse consiste à ne pas se laisser éblouir par la forme, à chercher sous les mots la solidité des idées, à se méfier de sa propre tendance à croire ce qui est bien dit. Non pour mépriser l'éloquence — qui, au service du vrai, est précieuse —, mais pour ne jamais la confondre avec la vérité qu'elle peut aussi bien servir que trahir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-125",
+    title: "Le silence a-t-il un sens ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On croit que parler, c'est communiquer. Le silence aussi parle.",
+    blurbEn:
+      "We equate communication with speaking, yet silence too says a great deal. A reflection on what we express, and lose, when we stop filling every space with words. (Section: Language and thought, 5/5.)",
+    body: `Nous associons spontanément la communication à la parole : communiquer, ce serait parler, dire, exprimer par des mots. Le silence, dans cette perspective, n'est qu'une absence, un vide, l'interruption de la vraie communication. Pourtant, cette conception est incomplète. Car le silence n'est pas seulement l'absence de parole ; il est lui-même chargé de sens, il communique à sa manière, et il joue dans nos échanges un rôle que le bavardage nous fait souvent oublier.
+
+Le silence, d'abord, parle. Un silence après une question peut dire l'embarras, le désaccord, la réflexion ou le refus. Un silence partagé entre deux êtres proches exprime une entente que nul mot ne dirait mieux. Un silence face à la souffrance d'autrui peut valoir plus que toutes les consolations verbales. Le silence n'est pas un blanc dans la communication ; il en est une modalité, aussi riche et parfois plus juste que la parole. Ce que nous taisons signifie autant que ce que nous disons.
+
+Le silence a aussi une valeur propre, que notre époque tend à ignorer. Nous vivons dans un monde saturé de paroles, de bruits, de sollicitations, où le silence est devenu rare et presque suspect. Nous nous empressons de le combler, comme s'il était insupportable, remplissant chaque vide de musique, de mots, de contenus. Or ce silence que nous fuyons est précisément ce dont l'esprit a besoin pour se poser, réfléchir, sentir. C'est dans le silence que naissent souvent les pensées les plus profondes, que se déploie la vie intérieure que le bruit continuel étouffe.
+
+Dans l'échange même, le silence a des vertus que la parole abondante ne remplace pas. Savoir se taire pour écouter vraiment, laisser à l'autre l'espace de s'exprimer, ne pas combler chaque pause par des mots : c'est une forme d'attention et de respect. Celui qui parle sans cesse n'écoute pas ; il occupe l'espace, empêche l'autre d'exister. Le silence, au contraire, fait place à l'autre, et cette place est le fondement de toute rencontre véritable. Il y a une éloquence du silence attentif que nul discours n'égale.
+
+Il ne s'agit pas, bien sûr, de faire du silence une valeur absolue, ni de mépriser la parole, qui reste le moyen par excellence de nous comprendre et de nous relier. Le silence a aussi ses ombres : il peut être fuite, lâcheté, refus de dire ce qui devrait l'être. Se taire quand il faudrait parler, garder le silence devant l'injustice, n'a rien d'une vertu. Le silence ne vaut pas en lui-même ; il vaut par ce qu'il porte et par le moment où on le choisit.
+
+Le silence a donc bien un sens, et même plusieurs. Loin d'être le simple contraire de la communication, il en est une part essentielle, que notre culture bavarde a désappris à entendre. Retrouver le sens du silence — savoir se taire, écouter, laisser de l'espace, habiter les vides plutôt que les fuir —, c'est peut-être retrouver une part de ce que le trop-plein de paroles nous a fait perdre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-126",
+    title: "Qu'est-ce qu'une société juste ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Chacun veut une société juste. Mais nul ne s'accorde sur ce qu'elle serait.",
+    blurbEn:
+      "Everyone wants a just society, yet no one agrees on what justice requires. An introduction to the deepest disagreement in political life. (Section: Justice and fairness, 1/5.)",
+    body: `Presque tout le monde se réclame de la justice. Nul ne défend ouvertement l'injustice, et « ce n'est pas juste » compte parmi les protestations les plus universelles. Pourtant, dès qu'on cherche à préciser ce qu'est une société juste, l'accord se défait. Car sous un même mot se cachent des conceptions profondément différentes, et le désaccord sur la justice est peut-être le plus fondamental de la vie politique. Comprendre ce désaccord, c'est comprendre l'essentiel de nos divisions.
+
+Prenons une question simple en apparence : comment répartir justement les richesses produites par une société ? Une première réponse dit : à chacun selon son mérite. Il serait juste que celui qui travaille plus, prend plus de risques, apporte plus, reçoive davantage. Récompenser l'effort et le talent, laisser à chacun le fruit de son travail : voilà, pour beaucoup, l'exigence même de la justice. Selon cette vue, les inégalités ne sont pas injustes en elles-mêmes, dès lors qu'elles reflètent des mérites différents.
+
+Une deuxième réponse conteste cette vision. Le mérite, dit-elle, n'est pas si pur qu'il y paraît : celui qui réussit doit beaucoup à ce dont il n'est pas l'auteur — sa naissance, son milieu, ses talents innés, la chance. Est-il juste que celui qui a eu la chance de naître dans un milieu favorable en récolte toute sa vie les fruits, tandis qu'un autre, né dans le dénuement, en porte tout le poids ? Selon cette conception, une société juste doit corriger les inégalités qui ne résultent pas des choix des individus mais de la loterie de la naissance. La justice exige alors une forme de redistribution.
+
+Une troisième réponse déplace encore la question. Ce qui importe, dit-elle, n'est pas tant la répartition des richesses que la garantie, pour chacun, d'un minimum de dignité et de liberté. Une société juste serait celle où nul ne manque de l'essentiel, où chacun peut vivre décemment et mener la vie qu'il a raison de vouloir, quelles que soient par ailleurs les inégalités. L'accent porte moins sur l'égalité que sur un seuil au-dessous duquel il serait indigne de laisser tomber quiconque.
+
+Ces conceptions ne sont pas de simples opinions arbitraires ; chacune s'appuie sur des valeurs respectables — la liberté, l'égalité, la dignité, la responsabilité — qui comptent toutes, mais qui entrent en tension. On ne peut maximiser à la fois la récompense du mérite et la correction des inégalités de naissance ; il faut arbitrer, et c'est dans cet arbitrage que se logent nos désaccords. Ceux qui s'opposent sur la justice ne sont pas, le plus souvent, les uns justes et les autres non : ils accordent un poids différent à des valeurs également légitimes.
+
+Reconnaître cela ne résout pas le désaccord, mais le rend plus fécond. Cela permet de cesser de voir dans l'adversaire un ennemi de la justice, pour comprendre qu'il en a une autre conception, fondée sur d'autres priorités. Une société juste n'est peut-être pas celle qui aurait trouvé la formule définitive de la justice — il n'y en a pas —, mais celle qui sait débattre de ces tensions sans les trancher par la force, et chercher, sans jamais l'atteindre tout à fait, un équilibre entre des exigences toutes réelles.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-127",
+    title: "L'égalité des chances suffit-elle ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Donner à tous les mêmes chances au départ : est-ce assez pour être juste ?",
+    blurbEn:
+      "Giving everyone the same starting line sounds fair. But does equality of opportunity deliver on its promise — and is it enough on its own? (Section: Justice and fairness, 2/5.)",
+    body: `Parmi les idées de justice, l'égalité des chances jouit d'un prestige presque unanime. Son principe séduit : peu importe les inégalités de résultats, pourvu que chacun parte avec les mêmes chances et que la réussite dépende du mérite, non de la naissance. Une course est juste, dit l'image, si tous partent de la même ligne ; ce qui se passe ensuite relève de l'effort et du talent de chacun. Cette idée, largement partagée, mérite pourtant d'être examinée de près, car sa mise en œuvre et sa suffisance posent de sérieuses questions.
+
+Le premier problème est que l'égalité des chances, telle qu'on la proclame, est rarement réalisée. Prétendre que tous partent de la même ligne est, dans la plupart des sociétés, une fiction. L'enfant né dans un milieu aisé et cultivé bénéficie, dès sa naissance, d'avantages considérables : un environnement stimulant, des relations, une aisance financière, mille aides invisibles. L'enfant né dans le dénuement affronte, dès le départ, des obstacles que l'autre ignore. Parler d'égalité des chances quand les points de départ sont si différents relève souvent de l'illusion, ou de l'hypocrisie.
+
+Réaliser vraiment l'égalité des chances exigerait donc bien plus qu'on ne le dit. Il faudrait compenser les inégalités de naissance, offrir à chacun une éducation, une santé, un environnement qui neutralisent les désavantages initiaux. C'est une tâche immense, coûteuse, jamais pleinement accomplie. Ceux qui invoquent l'égalité des chances pour justifier les inégalités de résultats oublient souvent qu'ils invoquent un principe qui n'est, en réalité, pas respecté — et qui, s'il l'était vraiment, bouleverserait l'ordre existant.
+
+Mais supposons même l'égalité des chances parfaitement réalisée : suffirait-elle à faire une société juste ? Rien n'est moins sûr. Car une compétition parfaitement équitable produit tout de même des gagnants et des perdants, et le sort réservé aux perdants reste une question de justice. Faut-il abandonner à leur misère ceux qui, dans une course pourtant loyale, sont arrivés derniers ? Une société qui aurait assuré des chances égales, mais laisserait les vaincus sans dignité ni ressources, serait-elle juste ? L'égalité des chances organise la compétition ; elle ne dit rien du traitement de ceux qui la perdent.
+
+Il y a plus. L'idée même de mérite, sur laquelle repose l'égalité des chances, est fragile. Car les talents, l'énergie, la capacité de travail, dont dépend la réussite dans une compétition équitable, sont eux-mêmes largement des dons, hérités ou reçus, dont nul n'est vraiment l'auteur. Celui qui gagne parce qu'il est plus doué mérite-t-il pleinement sa victoire, s'il n'a pas mérité son don ? L'égalité des chances déplace la loterie de la naissance sans l'abolir tout à fait.
+
+L'égalité des chances est donc un idéal précieux, mais ni pleinement réalisé ni pleinement suffisant. Précieux, car il vaut mieux une société qui s'en approche qu'une société où tout se joue à la naissance. Insuffisant, car même parfaite, elle laisse entières les questions du sort des perdants et de la dignité due à tous. La justice ne se réduit pas à organiser une compétition équitable ; elle concerne aussi ce qu'on doit à chacun, gagnant ou perdant, dans une société qui se veut humaine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-128",
+    title: "Punir, pour quoi faire ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Une société punit ceux qui transgressent. Mais dans quel but, au juste ?",
+    blurbEn:
+      "Every society punishes wrongdoing — but to what end? Protection, deterrence, retribution, or reform? A look at the confused purposes we ask punishment to serve. (Section: Justice and fairness, 3/5.)",
+    body: `Toute société punit ceux qui enfreignent ses règles les plus graves. La prison, l'amende, la sanction sous ses diverses formes paraissent aller de soi, tant l'idée qu'un crime doive être puni est ancrée en nous. Mais dès qu'on demande pourquoi l'on punit, à quelle fin, la réponse se brouille. Car nous attendons de la punition plusieurs choses à la fois, souvent contradictoires, et cette confusion des buts explique beaucoup des impasses de nos systèmes pénaux.
+
+Une première raison de punir est de protéger la société. En écartant celui qui a commis un acte grave, on empêche qu'il en commette d'autres ; la sanction met les autres à l'abri. Cette fonction est réelle et légitime : une société a le droit de se protéger de ceux qui la menacent. Mais elle ne justifie la punition que le temps où le danger persiste, et elle ne dit rien de ce qu'on doit à celui qui n'est plus dangereux. Punir pour protéger, c'est une logique de sûreté, non de justice.
+
+Une deuxième raison est de dissuader. En punissant, on adresse un avertissement à tous : voilà ce qui attend qui transgresse. La peur de la sanction découragerait les candidats au crime. Cette fonction dissuasive est souvent invoquée, mais son efficacité est incertaine : la sévérité des peines, l'expérience le montre, dissuade moins qu'on ne le croit, car celui qui passe à l'acte pense rarement se faire prendre. Et surtout, punir un individu pour l'exemple, afin d'effrayer les autres, revient à le traiter comme un moyen, ce qui heurte le sens de la justice.
+
+Une troisième raison, plus obscure, est de rétribuer : le coupable doit payer, souffrir en retour du mal qu'il a fait, parce que ce serait juste en soi. Cette idée, ancienne et puissante, répond à un sentiment profond — que le mal appelle réparation, que l'impunité est insupportable. Mais elle est aussi la plus proche de la vengeance, et l'on peut se demander si faire souffrir en retour ajoute quelque chose au monde, ou ne fait que redoubler le mal. La frontière entre la justice qui rétribue et la vengeance qui se satisfait est mince.
+
+Une quatrième raison, enfin, est de corriger : la punition devrait viser à amender le coupable, à le réinsérer, à faire en sorte qu'il ne recommence pas et retrouve une place dans la société. Cette fonction, la plus tournée vers l'avenir, est aussi la plus exigeante et la plus souvent négligée. Une société qui punit sans jamais chercher à réinsérer se condamne à produire des récidivistes, et manque à ce qu'elle doit même à ceux qui ont fauté : la possibilité de se racheter.
+
+Ces quatre buts — protéger, dissuader, rétribuer, corriger — coexistent dans nos systèmes pénaux sans jamais s'accorder pleinement. Ce qui sert l'un dessert parfois l'autre : la sévérité qui prétend dissuader ou rétribuer contrarie souvent la réinsertion. Réfléchir à la punition, c'est d'abord clarifier ce qu'on en attend, et accepter qu'on ne peut tout obtenir à la fois. Une société se juge peut-être moins à la façon dont elle punit qu'à la clarté avec laquelle elle sait pourquoi elle le fait — et à la place qu'elle laisse, malgré tout, au rachat.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-129",
+    title: "La liberté des uns et celle des autres",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Ma liberté s'arrête où commence celle d'autrui. Mais où, exactement ?",
+    blurbEn:
+      "'My freedom ends where yours begins' — a fine formula, but it hides the hardest question: exactly where is that line? A look at the limits of liberty. (Section: Justice and fairness, 4/5.)",
+    body: `« La liberté des uns s'arrête où commence celle des autres. » Cette formule, souvent citée, paraît résoudre d'un mot le problème des limites de la liberté. Chacun serait libre de faire ce qu'il veut, à condition de ne pas empiéter sur la liberté d'autrui. L'idée est juste dans son principe, et elle exprime une exigence fondamentale : nul n'a le droit d'écraser la liberté d'un autre au nom de la sienne. Mais dès qu'on cherche à l'appliquer, on s'aperçoit qu'elle déplace la difficulté plus qu'elle ne la résout. Car toute la question est de savoir où, précisément, ma liberté empiète sur celle d'autrui.
+
+Considérons les cas simples : ils sont rares. Frapper quelqu'un, le voler, le contraindre : voilà des atteintes évidentes à la liberté d'autrui, que nul ne conteste. Mais l'immense majorité de nos actes ont sur les autres des effets moins directs, plus diffus, dont on peut débattre à l'infini. Ma manière de vivre, de consommer, de m'exprimer affecte autrui de mille façons indirectes. À partir de quand cet effet constitue-t-il une atteinte à sa liberté, qui justifierait de limiter la mienne ? La formule ne le dit pas ; elle suppose résolu ce qui fait justement problème.
+
+Prenons un exemple. Suis-je libre de nuire à ma propre santé, si cela ne regarde que moi ? On serait tenté de répondre oui, au nom de ma liberté sur moi-même. Mais mes choix ont des conséquences sur les autres : sur mes proches, sur une collectivité qui devra peut-être me soigner, sur l'exemple que je donne. Où finit ce qui ne regarde que moi, où commence ce qui concerne autrui ? La frontière, loin d'être nette, est l'objet même du débat politique et moral.
+
+Il y a plus. Les libertés, entre elles, entrent souvent en conflit, sans qu'aucune n'empiète clairement sur l'autre. Ma liberté d'expression peut heurter le droit d'un autre à ne pas être diffamé ; ma liberté d'entreprendre peut se heurter à la liberté d'autrui de vivre dans un environnement sain. Ces conflits ne se résolvent pas en traçant une frontière simple, car il s'agit de deux libertés également légitimes qui se limitent mutuellement. Il faut alors arbitrer, peser, décider laquelle doit céder, et jusqu'où — ce que la formule est incapable de nous dire.
+
+C'est pourquoi la question des limites de la liberté ne se règle pas par une formule, mais par une délibération continue. Une société doit constamment décider, sur mille sujets, où placer les bornes : quelles libertés protéger absolument, lesquelles limiter au nom d'autrui ou de l'intérêt commun, comment arbitrer entre des libertés rivales. Ces décisions ne sont jamais définitives ; elles se rediscutent à chaque époque, à mesure que changent les mœurs et les techniques.
+
+La belle formule sur la liberté des uns et des autres n'est donc pas fausse ; elle est seulement le début du problème, non sa solution. Elle nous rappelle un principe essentiel — que ma liberté n'est pas illimitée, qu'elle doit composer avec celle d'autrui —, mais elle nous laisse toute la tâche difficile : tracer, cas par cas, la frontière qu'elle se contente de nommer. Vivre libres ensemble, c'est accepter de rediscuter sans fin cette frontière, plutôt que de croire qu'une phrase pourrait la fixer une fois pour toutes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-130",
+    title: "Faut-il obéir à des lois injustes ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La loi oblige. Mais que faire quand la loi paraît injuste ?",
+    blurbEn:
+      "We are meant to obey the law — but what should we do when a law seems clearly unjust? A careful look at one of the oldest dilemmas of the citizen. (Section: Justice and fairness, 5/5.)",
+    body: `La loi oblige, et une société ne peut fonctionner si chacun décide de n'obéir qu'aux lois qui lui conviennent. Cette exigence est le fondement de toute vie commune : sans respect général des lois, ce serait le désordre, où le plus fort impose sa volonté. Pourtant, l'histoire a connu des lois profondément injustes — des lois qui opprimaient, excluaient, permettaient l'inhumain. Devant de telles lois, la question se pose, redoutable : faut-il obéir à une loi qu'on juge injuste ? Ce dilemme, aussi ancien que le droit, n'admet pas de réponse simple.
+
+Une première position soutient qu'il faut toujours obéir à la loi, quelle qu'elle soit, quitte à travailler pacifiquement à la changer. L'argument est solide : si chacun se croyait autorisé à désobéir aux lois qu'il estime injustes, il n'y aurait plus de loi du tout, car chacun a sa propre idée de la justice. La désobéissance, même bien intentionnée, ouvrirait la porte à l'arbitraire général et à la loi du plus fort. Mieux vaut donc obéir tout en militant pour le changement, dans le respect des règles communes. Cette position a pour elle la stabilité et l'ordre.
+
+Mais poussée à bout, elle conduit à une conclusion insoutenable : il faudrait obéir aux pires lois, participer aux pires injustices, sous prétexte qu'elles sont légales. L'histoire montre où mène cette obéissance absolue : à des crimes commis « en application de la loi », par des gens qui se retranchaient derrière leur devoir d'obéir. Si la légalité justifiait tout, aucune loi, si monstrueuse fût-elle, ne pourrait jamais être désobéie. Or notre conscience se refuse à admettre que le seul fait qu'une chose soit légale la rende juste, ou obligatoire.
+
+Une deuxième position affirme donc qu'il existe une justice supérieure à la loi, au nom de laquelle on peut, parfois, désobéir. Lorsqu'une loi viole les exigences les plus fondamentales de l'humanité, y obéir devient une faute, et lui résister, un devoir. C'est au nom d'une telle conviction que des hommes et des femmes ont désobéi à des lois iniques, souvent au prix de leur liberté ou de leur vie, et que nous les honorons aujourd'hui. Leur exemple montre que l'obéissance n'est pas toujours la vertu, ni la désobéissance toujours le crime.
+
+Reste à savoir quand la désobéissance est légitime, car ce ne peut être à la seule mesure de nos préférences. Une pensée s'est développée autour de cette question, celle de la désobéissance civile, qui en précise les conditions : qu'il s'agisse d'une injustice grave et non d'un simple désaccord ; que la désobéissance soit publique et non clandestine ; qu'elle soit non violente ; que celui qui désobéit accepte d'en assumer les conséquences légales. À ces conditions, désobéir n'est pas nier la loi, mais en appeler, au nom de la justice, à une loi meilleure.
+
+Faut-il donc obéir à des lois injustes ? En règle générale, oui, car l'obéissance aux lois est la condition de la vie commune, et le désaccord doit d'abord chercher la voie du changement légal. Mais il est un point au-delà duquel l'injustice devient si grave que l'obéissance elle-même devient complicité. Reconnaître ce point, sans en abuser, est l'une des responsabilités les plus lourdes du citoyen. La loi mérite le respect ; la justice, davantage encore — et savoir distinguer, dans les cas extrêmes, ce qu'on doit à l'une et à l'autre, est peut-être la marque même de la conscience.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
