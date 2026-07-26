@@ -962,6 +962,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-nature-wild",
+    band: "B2",
+    title: "Nature and the wild",
+    goal: "Whether we are separate from nature, rights of nature, the need for nature, wilderness, loving animals.",
+    textIds: [
+      "starter-b2-131", // Sommes-nous séparés de la nature ? (introduces the core words)
+      "starter-b2-132", // La nature a-t-elle des droits ?
+      "starter-b2-133", // Le besoin de nature
+      "starter-b2-134", // Faut-il laisser une place au sauvage ?
+      "starter-b2-135", // Aimer les animaux, jusqu'où ? (hardest)
+    ],
+  },
+  {
+    id: "b2-france-britain",
+    band: "B2",
+    title: "France and Britain",
+    goal: "Cultural contrast: two neighbours, state vs initiative, British humour, rules and authority, life between cultures (Tom).",
+    textIds: [
+      "starter-b2-136", // Deux voisins que tout rapproche et sépare (introduces the theme)
+      "starter-b2-137", // L'État providence et l'esprit d'initiative
+      "starter-b2-138", // L'humour, une affaire sérieuse
+      "starter-b2-139", // Le rapport aux règles
+      "starter-b2-140", // Ce que Tom a appris en France (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

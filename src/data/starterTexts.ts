@@ -15081,4 +15081,234 @@ Faut-il donc obéir à des lois injustes ? En règle générale, oui, car l'obé
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-131",
+    title: "Sommes-nous séparés de la nature ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nous opposons « l'homme » et « la nature ». Cette séparation a-t-elle un sens ?",
+    blurbEn:
+      "We habitually speak of 'humans' and 'nature' as two separate things. A reflection on where that division comes from, and the harm it may do. (Section: Nature and the wild, 1/5.)",
+    body: `Nous avons l'habitude d'opposer deux termes comme s'ils désignaient deux mondes distincts : d'un côté « l'homme », de l'autre « la nature ». Nous parlons de protéger la nature, de retourner à la nature, comme si elle était un domaine extérieur, séparé de nous. Cette manière de penser est si profondément ancrée qu'elle nous paraît évidente. Pourtant, à l'examiner, cette séparation se révèle problématique, et il n'est pas sûr qu'elle nous serve bien.
+
+Car en quel sens serions-nous séparés de la nature ? Nous sommes des êtres vivants, faits de la même matière que le reste du vivant, soumis aux mêmes lois biologiques, dépendant à chaque instant de l'air, de l'eau, des autres espèces. Notre corps est nature ; notre existence est tissée dans le réseau du vivant. Nous ne planons pas au-dessus de la nature comme un royaume à part ; nous en sommes une partie, aussi intégralement qu'un arbre ou qu'un animal. L'opposition entre l'homme et la nature contredit ce fait élémentaire.
+
+D'où vient, alors, cette séparation si tenace ? De plusieurs sources. D'une longue tradition qui a placé l'homme au-dessus du reste de la création, doté d'une âme ou d'une raison qui le distinguerait radicalement. Du développement des villes, qui a éloigné la plupart d'entre nous du contact quotidien avec le monde vivant, au point de le percevoir comme un ailleurs. De notre puissance technique enfin, qui nous a donné l'illusion de dominer la nature, donc de lui être extérieurs et supérieurs. Cette séparation est une construction historique, non une donnée.
+
+Or cette construction n'est pas sans conséquences, et beaucoup sont fâcheuses. En nous pensant hors de la nature, nous avons pu la traiter comme un simple décor, un réservoir de ressources à exploiter sans limite, sans mesurer qu'en la dégradant, c'est nous-mêmes que nous atteignons. La crise écologique est, en un sens, le retour de refoulé de cette séparation : nous découvrons brutalement que nous n'étions pas au-dehors, que ce que nous infligeons à la nature, nous nous l'infligeons à nous-mêmes. On ne scie pas la branche sur laquelle on est assis en croyant qu'elle appartient à un autre arbre.
+
+Faut-il pour autant nier toute différence entre l'humain et le reste du vivant ? Ce serait un excès inverse. Nous avons des capacités singulières — le langage, la réflexion, la culture, une puissance d'agir sans équivalent — qui font de nous des êtres à part, non par nature séparée, mais par responsabilité accrue. Reconnaître notre appartenance à la nature n'efface pas notre spécificité ; elle lui donne son vrai sens : non celui d'une domination, mais celui d'une responsabilité envers un monde dont nous faisons partie.
+
+Repenser notre rapport à la nature suppose donc de dépasser la séparation qui nous en a fait des étrangers. Non pour nous dissoudre dans elle, ni pour renoncer à ce qui nous distingue, mais pour nous reconnaître comme ce que nous sommes : une partie du vivant, singulière et responsable, dont le sort est lié à celui de l'ensemble. Se savoir dans la nature, et non au-dessus, est peut-être le premier pas vers un rapport plus juste au monde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-132",
+    title: "La nature a-t-elle des droits ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Un fleuve, une forêt peuvent-ils avoir des droits, comme une personne ?",
+    blurbEn:
+      "Some countries now grant legal rights to rivers and forests. A strange idea, or an overdue one? A look at what it would mean to give nature rights. (Section: Nature and the wild, 2/5.)",
+    body: `Une idée, qui aurait paru saugrenue il y a peu, gagne du terrain : accorder des droits à la nature elle-même. Ici, un fleuve se voit reconnaître le statut de personne juridique ; là, une forêt ou une montagne acquiert des droits qu'on peut défendre en justice. Ce qui semble d'abord une bizarrerie mérite d'être pris au sérieux, car cette évolution touche à une question profonde : la nature n'est-elle qu'un ensemble de choses à notre disposition, ou peut-elle être un sujet, porteur de droits propres ?
+
+Notre droit, tel qu'il s'est constitué, ne connaît guère que deux catégories : les personnes, qui ont des droits, et les choses, qui n'en ont pas et peuvent être possédées et utilisées. La nature, dans ce cadre, relève des choses : un fleuve, une forêt sont des biens, dont on peut disposer. On ne peut leur nuire au sens juridique ; on peut seulement nuire aux intérêts humains qui s'y attachent. Reconnaître des droits à la nature, c'est faire éclater cette division, en admettant qu'un élément naturel puisse valoir pour lui-même, et non seulement pour l'usage que nous en faisons.
+
+L'argument en faveur de cette évolution est double. Il est d'abord pratique : tant que la nature n'est qu'une chose, sa protection dépend entièrement de la volonté des humains, et cède facilement devant leurs intérêts. Lui reconnaître des droits, c'est lui donner une défense propre, que l'on ne puisse pas si aisément sacrifier. Il est ensuite philosophique : peut-être est-il temps d'admettre que la nature a une valeur qui ne se réduit pas à son utilité pour nous, et que la traiter comme un simple stock de ressources est précisément à la racine de nos désastres écologiques.
+
+Les objections, cependant, ne manquent pas. On fait valoir qu'un fleuve n'a pas de conscience, pas d'intérêts qu'il puisse faire valoir lui-même, et que lui accorder des droits n'aurait guère de sens : ce sont toujours des humains qui parleraient en son nom. On craint aussi une confusion des catégories, un affaiblissement de la notion même de droit à force de l'étendre. Reconnaître des droits à un fleuve, n'est-ce pas une fiction commode, qui masque mal que ce sont bien des intérêts humains — écologiques, culturels — que l'on protège ainsi ?
+
+Ces objections ne sont pas sans force, mais elles ne tranchent pas la question. Après tout, le droit a toujours procédé par fictions utiles : une entreprise, une association sont des « personnes » juridiques sans avoir de conscience, et nul ne s'en offusque. Que la nature soit défendue par des humains parlant en son nom ne diffère pas fondamentalement de la manière dont on défend les droits d'un enfant ou d'un être incapable de se défendre seul. L'essentiel est peut-être moins la cohérence juridique parfaite que le changement de regard qu'une telle reconnaissance opère.
+
+Que la nature ait ou non des droits au sens strict, la question elle-même est révélatrice. Elle marque une insatisfaction croissante à l'égard d'un monde où tout ce qui n'est pas humain n'est que matière exploitable. Qu'on réponde par des droits ou par d'autres moyens, l'enjeu demeure : trouver les formes juridiques et morales d'un rapport à la nature qui ne la réduise plus à une chose. Et sur ce point, la simple émergence de la question est déjà, peut-être, un progrès.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-133",
+    title: "Le besoin de nature",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Pourquoi un simple parc, quelques arbres, nous font-ils tant de bien ?",
+    blurbEn:
+      "Why does a walk in a park, a few trees, water, so reliably calm us? A look at the growing evidence that contact with nature is a genuine human need. (Section: Nature and the wild, 3/5.)",
+    body: `Chacun l'a éprouvé : une promenade dans un parc, quelques instants au bord de l'eau, la vue d'un paysage naturel apaisent, réconfortent, font du bien d'une manière difficile à expliquer. Longtemps, on a pu tenir ce bien-être pour une simple préférence, une affaire de goût. Mais un ensemble croissant de recherches suggère qu'il s'agit de bien plus : le contact avec la nature répondrait à un besoin humain réel, dont la privation nous affecte plus que nous ne le croyons.
+
+Les études sur ce sujet convergent de façon frappante. La présence de nature — des arbres, de la verdure, de l'eau — réduit le stress, améliore l'humeur, favorise la concentration et la récupération. Des patients qui aperçoivent des arbres de leur fenêtre guériraient plus vite ; des habitants de quartiers verdoyants se porteraient mieux, physiquement et mentalement, que ceux qui en sont privés. Ces effets, mesurables, ne relèvent pas de l'imagination ni du simple agrément : ils touchent au fonctionnement même de notre corps et de notre esprit.
+
+Comment expliquer ce besoin ? Une hypothèse séduisante y voit l'héritage de notre longue histoire. Pendant l'immense majorité de son existence, l'espèce humaine a vécu au cœur de la nature, dont elle dépendait pour survivre. Notre esprit et notre corps se sont façonnés dans ce milieu, et y restent, en quelque sorte, accordés. La vie urbaine, coupée du vivant, est à l'échelle de cette histoire une nouveauté récente, à laquelle nous ne sommes peut-être pas faits. Le bien-être que nous procure la nature serait ainsi le signe d'une harmonie ancienne, et le mal-être des environnements entièrement artificiels, celui d'un désaccord.
+
+Cette hypothèse, qu'on ne saurait tenir pour certaine, éclaire cependant un phénomène préoccupant. À mesure que l'humanité s'urbanise, le contact quotidien avec la nature se raréfie, surtout pour les plus modestes, entassés dans des quartiers minéraux et privés d'espaces verts. Les enfants, en particulier, grandissent de plus en plus loin du monde vivant, dans un univers d'écrans et de béton. Si le besoin de nature est réel, cette privation n'est pas anodine : elle pourrait contribuer, silencieusement, au mal-être de nos sociétés.
+
+Reconnaître ce besoin a des implications concrètes. Cela fait de l'accès à la nature non un luxe, mais une composante de la santé et du bien-être, qui devrait être garantie à tous. Végétaliser les villes, préserver et créer des espaces verts, rapprocher les enfants du vivant : ces choix, souvent traités comme des ornements, apparaissent alors comme des nécessités. Une ville sans nature n'est pas seulement moins agréable ; elle est, en un sens, moins humaine.
+
+Le besoin de nature nous rappelle enfin ce que la séparation d'avec elle nous fait oublier : que nous en faisons partie, et qu'elle nous manque quand nous en sommes coupés. Ce bien-être que nous éprouvons devant un arbre ou une rivière n'est pas une nostalgie sentimentale ; c'est peut-être le signe, inscrit en nous, de notre appartenance au monde vivant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-134",
+    title: "Faut-il laisser une place au sauvage ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nous maîtrisons presque toute la planète. Faut-il en garder des parts libres ?",
+    blurbEn:
+      "Humans now shape nearly the whole planet. Should we deliberately leave some places wild, beyond our control and use? A reflection on the value of wilderness. (Section: Nature and the wild, 4/5.)",
+    body: `L'emprise humaine s'étend désormais sur presque toute la planète. Il ne reste que bien peu d'espaces que nous n'ayons transformés, exploités, aménagés. Face à ce constat, une question se pose : faut-il, délibérément, laisser subsister des lieux sauvages, soustraits à notre contrôle et à notre usage, ou bien mettre toute la Terre au service de nos besoins ? La réponse engage l'idée que nous nous faisons de notre place dans le monde.
+
+Une conception purement utilitaire répondrait qu'il n'y a pas de raison de préserver des espaces inutiles. Si une terre peut nourrir, produire, loger, pourquoi la laisser en friche ? Le sauvage, dans cette vue, n'est qu'un potentiel non exploité, un gaspillage à corriger. Cette logique, longtemps dominante, a présidé à la conquête méthodique de la planète, à l'idée que tout espace non aménagé attendait seulement d'être mis en valeur. Elle repose sur un présupposé : que la valeur d'un lieu se mesure à son utilité pour nous.
+
+Mais une autre conception, plus profonde, plaide pour la préservation du sauvage. Elle avance d'abord des raisons pratiques : les espaces naturels préservés rendent des services essentiels — régulation du climat, préservation de la diversité du vivant, réserves dont nous ne mesurons pas encore toute l'importance. Détruire le sauvage, c'est saper les fondements mêmes de notre existence, souvent sans le savoir. La prudence, à elle seule, commande d'en préserver des parts substantielles.
+
+Mais l'argument le plus intéressant est d'un autre ordre. Il y a une valeur, dit-on, à ce qui échappe à notre contrôle, à ce qui existe indépendamment de nous et de nos usages. Un monde entièrement maîtrisé, façonné de part en part par la main humaine, aurait quelque chose d'étouffant, d'appauvri. Le sauvage nous rappelle qu'il existe autre chose que nous, que nous ne sommes pas les seuls maîtres, que le monde ne se réduit pas à nos projets. Savoir qu'existent encore des lieux libres, même si nous n'y allons jamais, a une valeur qui n'est pas d'usage.
+
+Cette valeur du sauvage rejoint quelque chose de notre propre équilibre. Face à un monde entièrement humanisé, où tout porterait notre marque, nous perdrions un point de repère essentiel : la mesure de ce qui nous dépasse. Le sauvage est une leçon d'humilité, un rappel de nos limites, une présence de l'autre qui nous empêche de nous croire seuls au monde. Le préserver, ce n'est pas seulement protéger des écosystèmes ; c'est préserver une certaine idée de notre place, ni toute-puissante ni centrale.
+
+Faut-il donc laisser une place au sauvage ? Oui, pour des raisons qui vont de la simple prudence à une exigence plus haute. Non que l'humanité doive renoncer à transformer le monde — elle ne le peut ni ne le doit —, mais qu'elle sache s'imposer des limites, réserver des espaces à ce qui n'est pas elle. Une civilisation se juge peut-être aussi à ce qu'elle sait ne pas s'approprier, à sa capacité à laisser, quelque part, le monde être sans elle.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-135",
+    title: "Aimer les animaux, jusqu'où ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nous chérissons certaines bêtes et en mangeons d'autres. Cohérent ?",
+    blurbEn:
+      "We adore some animals and eat others, often without noticing the contradiction. A calm look at our tangled, inconsistent relationship with the animal world. (Section: Nature and the wild, 5/5.)",
+    body: `Notre rapport aux animaux est fait de contradictions que nous remarquons rarement. Nous chérissons certaines bêtes comme des membres de la famille, nous nous indignons de la souffrance de telle espèce, tandis que nous en élevons et en mangeons d'autres sans y penser. Nous pleurons un chien et découpons un cochon, sans percevoir toujours ce que cette différence de traitement peut avoir d'étrange. Interroger cette incohérence n'est pas verser dans le sentimentalisme ; c'est se demander ce que nous devons, au juste, aux êtres sensibles qui partagent le monde avec nous.
+
+Le point de départ est un fait que la science a solidement établi : beaucoup d'animaux sont des êtres sensibles, capables d'éprouver la douleur, la peur, et sans doute des formes de bien-être. Ce n'est plus une hypothèse sentimentale, mais une donnée. Or si un être peut souffrir, sa souffrance compte moralement — c'est un principe difficile à récuser. Nous admettons tous qu'il est mal de faire souffrir un animal gratuitement ; nous reconnaissons donc, au moins implicitement, que leur souffrance a une valeur, qu'elle nous oblige à quelque chose.
+
+Mais jusqu'où va cette obligation ? C'est là que commencent les difficultés, et que nos intuitions se brouillent. Faut-il traiter également tous les animaux sensibles, du chien au cochon, du chat au poulet ? La logique le suggérerait, mais nos habitudes s'y refusent. Nous établissons entre les espèces des hiérarchies qui doivent souvent plus à la coutume, à l'affection ou à l'utilité qu'à des différences réelles de sensibilité. Le cochon n'est pas moins sensible que le chien ; si nous les traitons si différemment, ce n'est pas au nom d'un principe clair, mais par habitude culturelle.
+
+Reconnaître cette incohérence ne conduit pas nécessairement à une conclusion unique. Certains en tirent qu'il faut cesser de faire souffrir et de tuer les animaux pour notre usage ; d'autres estiment que nous pouvons continuer à les utiliser, mais en réduisant leur souffrance et en respectant certaines limites. Entre ces positions, le débat est ouvert, et légitime. Mais ce qui semble difficile à défendre, c'est le statu quo irréfléchi : traiter des êtres sensibles de manières radicalement opposées sans jamais s'interroger sur ce qui le justifie.
+
+Ce qui est certain, c'est que l'ampleur de la souffrance animale que nous infligeons ne peut plus être ignorée. Les conditions dans lesquelles sont élevés et abattus la plupart des animaux destinés à notre consommation heurtent, dès qu'on les regarde en face, le principe même que nous reconnaissons : qu'il est mal de faire souffrir inutilement. Que nous choisissions de renoncer à cette consommation ou de la transformer profondément, il devient difficile de la poursuivre en fermant les yeux.
+
+Aimer les animaux, jusqu'où ? La question n'appelle pas une réponse simple, mais elle appelle une réponse cohérente, ou du moins réfléchie. Nous ne pouvons plus nous contenter d'aimer les uns et d'ignorer le sort des autres, comme si nos sentiments spontanés tenaient lieu de morale. Prendre au sérieux la sensibilité animale, c'est accepter d'interroger nos habitudes, et de mettre nos actes un peu plus en accord avec ce que, au fond, nous savons déjà.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-136",
+    title: "Deux voisins que tout rapproche et sépare",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La France et la Grande-Bretagne : si proches, si différentes.",
+    blurbEn:
+      "France and Britain: neighbours separated by a narrow strait and a thousand years of rivalry, fascination and mutual misunderstanding. An affectionate look. (Section: France and Britain, 1/5.)",
+    body: `Peu de pays se connaissent aussi bien tout en se comprenant aussi mal que la France et la Grande-Bretagne. Séparés par un bras de mer que l'on traverse en quelques heures, liés par mille ans d'histoire commune, de guerres, d'alliances et d'échanges, les deux voisins entretiennent un rapport unique, fait d'attirance et de rivalité, de fascination et de moquerie réciproques. Les observer ensemble, c'est comprendre comment deux nations si proches ont pu forger des caractères si différents.
+
+L'histoire, d'abord, les a intimement mêlés. Il fut un temps où les rois d'Angleterre parlaient français, où les deux couronnes se disputaient les mêmes terres, où leurs destins s'entrelaçaient au point qu'on ne savait plus toujours les distinguer. De cette proximité ancienne est né un mélange singulier : la langue anglaise elle-même est truffée de mots venus du français, souvenirs de cette histoire partagée. Les deux peuples ne sont pas des étrangers l'un pour l'autre ; ils sont, plutôt, de vieux parents qui se connaissent trop bien.
+
+Et pourtant, que de différences. Là où le Français aime les principes, les idées générales, les grands débats abstraits, le Britannique se méfie des théories et préfère le pragmatisme, le cas particulier, la solution qui marche. Là où la France a fait sa révolution et tranché avec son passé, la Grande-Bretagne a préféré l'évolution lente, gardant sa monarchie et ses traditions tout en se transformant. Ces deux tempéraments — l'un plus porté à la logique et à la rupture, l'autre au compromis et à la continuité — se retrouvent dans mille aspects de la vie des deux pays.
+
+Ces différences nourrissent des clichés que chacun entretient avec délectation. Le Français voit volontiers le Britannique comme distant, obsédé par la politesse et le temps qu'il fait, mangeant mal ; le Britannique voit le Français comme arrogant, indiscipliné, prompt à la grève et donneur de leçons. Ces caricatures, comme toutes les caricatures, déforment tout en saisissant quelque chose. Elles disent surtout le plaisir que prennent ces deux voisins à se définir l'un contre l'autre, chacun ayant besoin de l'autre comme repoussoir et comme miroir.
+
+Car sous la moquerie perce souvent une secrète fascination. Le Français rêve parfois du flegme britannique, de cette capacité à ne pas se départir de son calme, de cet humour qui désamorce tout. Le Britannique envie parfois l'art de vivre français, ce goût de la table, de la conversation, du plaisir sans culpabilité. Chacun trouve chez l'autre ce qui lui manque, et c'est peut-être pourquoi, par-delà les railleries, les deux peuples ne se lassent pas l'un de l'autre.
+
+Comprendre le rapport entre la France et la Grande-Bretagne, c'est donc saisir bien plus qu'une rivalité de voisinage. C'est observer comment deux nations, parties d'une histoire commune, ont emprunté des chemins opposés, et comment elles continuent, aujourd'hui encore, à se définir l'une par rapport à l'autre. Ces articles exploreront quelques-unes de ces différences — dans le rapport à l'État, à la nourriture, aux règles, à la vie quotidienne — non pour trancher qui a raison, mais pour comprendre ce que chacune révèle de l'autre, et de nous-mêmes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-137",
+    title: "L'État providence et l'esprit d'initiative",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "La France attend beaucoup de l'État ; la Grande-Bretagne, de l'individu.",
+    blurbEn:
+      "France looks to the state; Britain, more to the individual and the market. A look at two different answers to the question of who should provide security. (Section: France and Britain, 2/5.)",
+    body: `L'une des différences les plus profondes entre la France et la Grande-Bretagne tient au rôle qu'elles attribuent à l'État. En France, on attend beaucoup de la puissance publique : qu'elle protège, qu'elle organise, qu'elle garantisse à chacun l'éducation, la santé, la sécurité. En Grande-Bretagne, malgré un système public de santé auquel les Britanniques sont très attachés, on fait davantage confiance à l'initiative individuelle, au marché, à la responsabilité de chacun. Ces deux attitudes, également respectables, reflètent deux conceptions de la société.
+
+La tradition française est marquée par une longue histoire de centralisation. Depuis des siècles, l'État y a joué un rôle moteur, façonnant la nation, unifiant le territoire, organisant la vie collective. De cette histoire est né un réflexe : devant un problème, on se tourne vers l'État, on attend de lui qu'il agisse, on lui reproche de ne pas en faire assez. L'État est perçu comme le garant de l'intérêt général, au-dessus des intérêts particuliers, et l'on tient à ce qu'il assure à tous une protection que le marché, seul, ne garantirait pas.
+
+La tradition britannique est différente. Elle se méfie davantage de la concentration du pouvoir, valorise l'autonomie individuelle, fait confiance à la société civile et à l'initiative privée pour résoudre bien des problèmes. L'État y est perçu moins comme un protecteur naturel que comme une force qu'il faut limiter, de peur qu'elle n'empiète sur les libertés. On y attend de l'individu qu'il se prenne en charge, qu'il ne compte pas d'abord sur la collectivité, et l'on y voit dans l'esprit d'entreprise une vertu cardinale.
+
+Ces deux visions ont chacune leurs forces et leurs faiblesses. Le modèle français offre une protection étendue, réduit certaines inégalités, assure une sécurité que beaucoup lui envient ; mais on lui reproche parfois de peser lourd, de brider l'initiative, d'entretenir chez les citoyens une attente excessive envers l'État. Le modèle britannique laisse plus de place à l'initiative, à la souplesse, au dynamisme ; mais on lui reproche de laisser se creuser les inégalités, d'abandonner les plus faibles à un marché indifférent. Chaque modèle paie ses vertus de défauts correspondants.
+
+Il serait vain de vouloir décréter lequel est supérieur, car ils répondent à des questions sur lesquelles les valeurs légitiment divergent : combien de sécurité, combien de liberté ; combien de solidarité imposée, combien de responsabilité individuelle. Ce sont là des arbitrages, non des vérités, et chaque société les tranche selon son histoire et ses préférences. Le Français attaché à l'État et le Britannique attaché à l'initiative n'ont pas l'un tort et l'autre raison ; ils privilégient des biens différents.
+
+Observer ces deux modèles, c'est comprendre qu'il n'existe pas une seule bonne manière d'organiser une société, mais des choix qui engagent des valeurs. Et c'est aussi, pour chacun, l'occasion de mieux voir son propre modèle : le Français, en découvrant l'attachement britannique à l'autonomie, mesure ce que son goût de l'État a de particulier ; le Britannique, en découvrant la protection française, s'interroge peut-être sur ce que son individualisme laisse de côté. Chaque voisin est, pour l'autre, un miroir révélateur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-138",
+    title: "L'humour, une affaire sérieuse",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'humour britannique déroute les Français autant qu'il les fascine.",
+    blurbEn:
+      "British humour — dry, self-deprecating, deadpan — puzzles and fascinates the French in equal measure. What a nation's way of joking reveals about it. (Section: France and Britain, 3/5.)",
+    body: `S'il est un domaine où les Britanniques revendiquent une singularité, c'est bien l'humour. L'« humour anglais » est une expression que les Français emploient eux-mêmes, avec un mélange d'admiration et de perplexité, pour désigner une manière de plaisanter qui leur échappe en partie. Cet humour particulier — pince-sans-rire, autodérision, absurde imperturbable — mérite qu'on s'y arrête, car la façon dont un peuple rit en dit long sur ce qu'il est.
+
+L'humour britannique se reconnaît d'abord à son goût du pince-sans-rire : dire les choses les plus drôles ou les plus absurdes sans se départir d'un sérieux imperturbable, sans le moindre sourire, laissant à l'interlocuteur le soin de saisir la plaisanterie. Cette forme déroute qui n'y est pas habitué : on ne sait pas toujours si l'on doit rire, si l'autre plaisante ou parle sérieusement. C'est précisément là son ressort : l'humour naît de cet écart entre le sérieux du ton et l'absurdité du propos, et du plaisir partagé de le percevoir sans qu'il soit souligné.
+
+L'autodérision en est un autre trait majeur. Là où l'on pourrait se mettre en valeur, le Britannique préférera se moquer de lui-même, minimiser ses réussites, tourner ses propres défauts en dérision. Se prendre au sérieux est, dans cette culture, presque une faute de goût ; savoir rire de soi, une marque d'élégance et de maturité. Cette autodérision désamorce la vantardise, mais aussi le conflit : il est difficile de se quereller avec quelqu'un qui rit d'abord de lui-même. Elle exprime une certaine pudeur, un refus de l'emphase que les Britanniques associent volontiers, non sans malice, à leurs voisins.
+
+Cet humour a aussi une fonction sociale profonde. Dans une culture qui valorise la retenue et déteste l'expression trop directe des émotions, l'humour offre un moyen détourné de dire ce qui, autrement, resterait tu. On désamorce une tension par une plaisanterie, on exprime une critique par l'ironie, on manifeste son affection par la moquerie amicale. Le rire devient un langage codé, qui permet de communiquer beaucoup en disant peu, et de préserver cette distance pudique à laquelle les Britanniques tiennent tant.
+
+Le Français, dont l'humour existe bien sûr mais s'accommode d'un rapport plus direct aux émotions et aux idées, est souvent décontenancé par ce jeu. Il peine parfois à savoir quand on plaisante, prend au premier degré ce qui était ironique, ou s'étonne qu'on tourne en dérision des choses sérieuses. Réciproquement, le Britannique peut trouver le Français trop sérieux, trop prompt à s'enflammer, insuffisamment capable de rire de lui-même. Chacun, à travers l'humour de l'autre, bute sur une manière différente d'habiter le monde.
+
+Comprendre l'humour d'un peuple, c'est donc bien plus qu'apprendre à rire de ses plaisanteries. C'est saisir son rapport au sérieux, à l'émotion, à soi-même, aux autres. L'humour britannique, avec son flegme et son autodérision, exprime toute une vision : celle d'une culture qui se méfie de l'emphase, préfère la litote à l'exagération, et tient qu'on peut dire les choses les plus graves à condition de savoir en sourire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-139",
+    title: "Le rapport aux règles",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Faire la queue, respecter la règle : un art où les deux peuples diffèrent.",
+    blurbEn:
+      "The British queue patiently and follow rules; the French question and bend them. A look at two very different relationships with rules and authority. (Section: France and Britain, 4/5.)",
+    body: `Il est un domaine où le contraste entre Français et Britanniques amuse toujours : le rapport aux règles. Le Britannique, dit-on, respecte la règle, fait la queue avec une patience exemplaire, suit les consignes sans rechigner ; le Français, lui, discute la règle, la contourne volontiers, tient la contestation pour un droit, voire un devoir. Ces images, forcément simplifiées, saisissent pourtant une différence réelle dans la manière dont chaque peuple se rapporte à l'autorité et à la norme.
+
+Le respect britannique des règles s'observe dans mille détails de la vie quotidienne. La file d'attente, en particulier, est une véritable institution : on s'y range spontanément, dans l'ordre, et resquiller y est perçu comme une faute grave, presque scandaleuse. Cette discipline traduit une confiance de fond dans les règles communes, tenues pour justes et utiles, et un sens aigu du fair-play : chacun joue le jeu, parce que le jeu profite à tous. Suivre la règle n'y est pas ressenti comme une soumission, mais comme une forme de civisme et de respect mutuel.
+
+L'attitude française est plus ambivalente. Le Français ne méprise pas les règles, mais il entretient avec elles un rapport critique : il veut en comprendre le bien-fondé, se réserve le droit de les juger, et n'hésite pas à les contourner s'il les estime absurdes ou injustes. Cette disposition a une longue histoire, celle d'un peuple qui a fait de la contestation de l'autorité un ressort de son histoire politique. Discuter la règle, protester, désobéir à l'occasion, n'y est pas honteux : c'est presque une manière d'affirmer sa liberté et son esprit critique.
+
+Ces deux attitudes ont, là encore, leurs vertus et leurs revers. Le respect britannique des règles produit une société ordonnée, prévisible, où la vie commune se déroule avec fluidité et courtoisie ; mais on peut lui reprocher une certaine docilité, une tendance à suivre la règle même quand elle mériterait d'être contestée. L'esprit critique français entretient une vigilance à l'égard du pouvoir, une capacité à se révolter contre l'injuste ; mais il peut verser dans l'indiscipline, la contestation systématique, la difficulté à s'accorder sur des règles communes.
+
+Ce contraste renvoie à des conceptions différentes de la liberté. Pour le Britannique, la liberté s'accommode fort bien du respect des règles, pourvu qu'elles soient justes et acceptées : obéir à une règle qu'on approuve n'aliène en rien. Pour le Français, la liberté implique le droit permanent de juger la règle, de la contester, de ne pas s'y soumettre aveuglément : l'obéissance sans examen lui paraît suspecte. L'un voit dans la règle un pacte qui protège la liberté de tous ; l'autre, un pouvoir dont il faut toujours se méfier.
+
+Aucune de ces attitudes n'est en soi supérieure. Une société a besoin, sans doute, des deux : du respect des règles qui permet de vivre ensemble, et de l'esprit critique qui empêche les règles injustes de perdurer. Le Britannique gagnerait parfois à contester davantage ; le Français, à respecter davantage. En s'observant l'un l'autre, chacun peut apercevoir ce que son propre rapport aux règles a d'excessif — et ce qu'il pourrait emprunter à son voisin.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-140",
+    title: "Ce que Tom a appris en France",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Après des années à Paris, l'Anglais Tom ne voit plus ni la France ni l'Angleterre pareil.",
+    blurbEn:
+      "After years living in Paris, our recurring Englishman Tom sees both countries — and himself — differently. A closing reflection on what living between cultures teaches. (Section: France and Britain, 5/5.)",
+    body: `Tom, cet Anglais qui a traversé plusieurs de ces lectures, vit maintenant depuis des années à Paris. Arrivé avec sa valise de clichés — les Français arrogants, indisciplinés, obsédés par la nourriture —, il a peu à peu vu ces images se fissurer, se nuancer, puis se retourner parfois contre les siennes. Son expérience, celle de tant de gens qui vivent entre deux cultures, offre une conclusion à ce parcours : que nous apprend, vraiment, la fréquentation prolongée d'un autre pays ?
+
+La première leçon de Tom fut de découvrir que ses certitudes sur la France en disaient autant sur l'Angleterre que sur elle. En trouvant les Français « trop » attachés à l'État, il mesurait, sans l'avoir jamais formulé, à quel point il tenait, lui, l'autonomie individuelle pour évidente. En s'étonnant qu'on prenne deux heures pour déjeuner, il révélait son propre rapport, tout britannique, au temps et au travail. Chaque jugement qu'il portait sur la France était, en creux, un aveu sur ce qu'il avait cru universel et qui n'était qu'anglais. L'étranger, une fois de plus, se révélait un miroir.
+
+La deuxième leçon fut plus subtile. À mesure qu'il comprenait la France de l'intérieur, Tom cessait d'expliquer les différences par des jugements de valeur — « ils font mal » ou « ils font mieux » — pour les comprendre comme des réponses cohérentes à des questions communes. L'attachement français à l'État n'était plus, à ses yeux, une faiblesse, mais un choix qui avait ses raisons et son prix ; l'individualisme britannique, non plus une évidence, mais une option parmi d'autres, avec ses forces et ses failles. Comprendre l'autre l'avait guéri de croire que sa propre manière allait de soi.
+
+La troisième leçon, la plus profonde, fut un certain inconfort, mais fécond. Tom n'était plus tout à fait anglais, ni jamais tout à fait français ; il se tenait dans un entre-deux, capable de voir chaque pays avec les yeux de l'autre, mais appartenant pleinement à aucun. Cette position a ses mélancolies : on n'est plus tout à fait chez soi nulle part. Mais elle a ses richesses : on gagne une liberté, celle de n'être plus prisonnier d'une seule manière de voir, de pouvoir choisir, comprendre, relativiser. Vivre entre deux cultures, c'est perdre une appartenance simple, mais gagner un regard.
+
+Ce que Tom a fini par comprendre vaut au-delà de la France et de l'Angleterre. La rencontre d'une autre culture, quand elle est vécue en profondeur et non en touriste, ne nous apprend pas seulement l'autre : elle nous apprend nous-mêmes, en nous révélant ce que nous prenions pour naturel. Elle nous délivre de l'illusion que notre monde serait le seul possible, et nous rend capables de le regarder de l'extérieur, avec un mélange d'attachement et de distance critique.
+
+C'est peut-être là le sens le plus haut de tout ce parcours entre deux cultures voisines. Non pas décider qui, de la France ou de la Grande-Bretagne, aurait raison — question sans réponse et sans intérêt —, mais découvrir, à travers l'autre, la relativité et la valeur de ce qui est nôtre. Comme Tom, quiconque prend le temps de comprendre un autre peuple revient, au fond, mieux armé pour se comprendre lui-même. Et c'est déjà, pour un lecteur qui apprend une langue étrangère, la plus belle des raisons de continuer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
