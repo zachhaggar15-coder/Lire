@@ -1143,6 +1143,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-010", // Penser contre soi-même (hardest)
     ],
   },
+  {
+    id: "c1-work-identity",
+    band: "C1",
+    title: "Work and identity",
+    goal: "Defining ourselves by work, the tyranny of the useful, recognition, the trouble with merit, whether we must love our jobs.",
+    textIds: [
+      "starter-c1-011", // Sommes-nous définis par notre travail ?
+      "starter-c1-012", // L'utile et le gratuit
+      "starter-c1-013", // La reconnaissance, ce besoin invisible
+      "starter-c1-014", // Le mérite, une idée trouble
+      "starter-c1-015", // Faut-il aimer son travail ? (hardest)
+    ],
+  },
+  {
+    id: "c1-memory-history",
+    band: "C1",
+    title: "Memory and history",
+    goal: "History vs the past, political uses of the past, the duty of memory, judging monuments, the necessity of forgetting.",
+    textIds: [
+      "starter-c1-016", // L'histoire n'est pas le passé
+      "starter-c1-017", // Les usages politiques du passé
+      "starter-c1-018", // Le devoir de mémoire et ses limites
+      "starter-c1-019", // Faut-il juger les statues ?
+      "starter-c1-020", // L'oubli est-il nécessaire ? (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */

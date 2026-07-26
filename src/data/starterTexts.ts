@@ -16461,4 +16461,234 @@ Une telle discipline est exigeante, et nul ne la pratique parfaitement, car elle
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-011",
+    title: "Sommes-nous définis par notre travail ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "L'identité par le métier n'a rien d'évident ; c'est une construction historique.",
+    blurbEn:
+      "The habit of defining ourselves by our work is not natural but historically produced — and it may be quietly unravelling. A C1-register essay. (Section: Work and identity, 1/5.)",
+    body: `Que la première question adressée à un inconnu porte sur son métier en dit long sur notre époque. Nous nous définissons, et nous définissons les autres, par le travail, au point de confondre l'être et le faire, la personne et la fonction. Cette identification paraît si naturelle qu'on la croit universelle. Elle est pourtant une construction historique récente, propre aux sociétés où le travail salarié a pris le centre de l'existence, et rien n'assure qu'elle doive durer. L'interroger, ce n'est pas nier l'importance du travail, mais refuser qu'il absorbe toute notre identité.
+
+Il faut d'abord mesurer ce que cette identification a de particulier. Dans bien des sociétés, passées ou présentes, on se définit d'abord par sa lignée, sa communauté, sa foi, son rang, non par une activité productive. Le travail y est ce qu'on fait pour vivre, non ce qui dit qui l'on est. Que le métier soit devenu, chez nous, la réponse par défaut à la question « qui êtes-vous ? » procède d'une histoire précise : celle de l'avènement d'une société où la production est devenue la valeur cardinale, et le travail, la voie principale de la reconnaissance sociale. Cette identification n'est pas dans la nature des choses ; elle est datée, située, et donc réversible.
+
+Elle a, certes, ses vertus. Le travail structure l'existence, insère dans un collectif, procure le sentiment d'être utile et reconnu. S'identifier à son métier, c'est aussi tenir à ce qu'on fait, y engager sa fierté, y trouver une part de sens. Il y aurait quelque hypocrisie à mépriser cette identification du confort d'une vie oisive : pour beaucoup, le travail est ce qui donne à leurs jours forme et dignité, et le priver de sa dimension identitaire l'appauvrirait. La critique de l'identité par le travail ne doit pas glisser vers le dédain du travail lui-même.
+
+Mais cette identification a un revers, qui apparaît lorsqu'elle devient exclusive. Si je ne suis que mon métier, que suis-je quand je le perds — par le chômage, la maladie, la retraite ? L'expérience de ceux que le travail quitte révèle la fragilité d'une identité qui n'a pas d'autre socle : elle vacille, se vide, comme si l'on avait retiré à la personne non un emploi, mais une part d'elle-même. Une société qui a appris à ses membres à n'exister que par leur fonction les laisse démunis dès que cette fonction leur échappe, et prépare, à mesure que le travail se raréfie ou se transforme, une crise de l'identité autant que de l'emploi.
+
+Il y a plus. L'identification au travail sert aussi une logique qui n'est pas innocente. En faisant du métier le lieu principal de la valeur et de la reconnaissance, une société oriente les énergies vers la production, subordonne les autres dimensions de l'existence à l'activité professionnelle, et rend suspecte toute vie qui ne se définirait pas par un travail. Celui qui ne produit pas — parce qu'il ne le peut, ou ne le veut — se voit dénié une part de dignité, comme s'il manquait à un devoir d'exister utilement. Cette pression, intériorisée, transforme le travail de moyen en fin, et l'être humain en producteur qui n'existe qu'en tant qu'il produit.
+
+Reconnaître le caractère construit de l'identité par le travail, c'est se donner la liberté de la relativiser. Non pour dévaloriser le travail, qui garde son importance, mais pour lui assigner sa juste place : une dimension de l'existence parmi d'autres, non son tout. Un être humain est aussi un proche, un citoyen, un curieux, un créateur, un vivant — rôles qu'aucune fiche de poste n'enregistre. Se souvenir que nous ne sommes pas réductibles à ce que nous faisons pour gagner notre vie, c'est préserver, contre une époque qui tend à l'oublier, une conception plus ample de ce qu'est une personne — et se ménager, pour le jour où le travail viendrait à manquer, un socle d'identité que sa perte ne pourrait emporter.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-012",
+    title: "L'utile et le gratuit",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Une civilisation qui ne valorise que l'utile perd ce qui vaut pour soi-même.",
+    blurbEn:
+      "A civilisation that prizes only the useful risks losing everything that has value in itself. An essay on the quiet tyranny of usefulness. (Section: Work and identity, 2/5.)",
+    body: `Notre époque a fait de l'utilité une valeur souveraine. Une activité, une étude, une dépense, une vie même, se justifient par ce à quoi elles servent ; ce qui ne sert à rien est suspect, sommé de rendre des comptes, menacé de disparaître faute de rentabilité. Cette exigence d'utilité, qui paraît de simple bon sens, exerce en réalité une tyrannie discrète, car elle en vient à mesurer toute chose à l'aune du service qu'elle rend, et à dévaloriser tout ce qui vaudrait pour soi-même. Or une civilisation qui ne reconnaîtrait plus que l'utile perdrait ce qui fait, précisément, le prix de l'existence.
+
+Il faut d'abord voir que l'utilité est, par nature, un critère relatif : une chose est utile à autre chose, en vue d'une fin qui la dépasse. Le marteau est utile au clou, le clou à la planche, la planche à la maison. Mais cette chaîne des moyens doit bien s'arrêter quelque part, sur quelque chose qui ne soit pas utile à autre chose, mais qui vaille pour soi-même, et en vue de quoi tout le reste est utile. Si tout n'était qu'utile, la chaîne serait sans fin et sans objet ; l'utilité elle-même n'aurait pas de sens, faute d'une fin qui ne soit pas, à son tour, un simple moyen. L'utile suppose donc, pour avoir un sens, quelque chose qui échappe à l'utilité.
+
+Ce quelque chose, ce sont ces expériences et ces biens qui valent pour eux-mêmes : l'amitié, la beauté, la connaissance recherchée pour elle-même, la contemplation, le jeu, la joie. Aucun ne « sert » à rien au sens strict ; on ne cultive pas une amitié pour ce qu'elle rapporte, on ne contemple pas un paysage pour son rendement. Ces choses sont des fins, non des moyens, et c'est en vue d'elles, en dernière analyse, que tout le reste s'ordonne. Les tenir pour inutiles parce qu'elles ne servent à rien d'autre, c'est renverser la hiérarchie : c'est prendre les moyens pour les fins, et sacrifier ce qui vaut à ce qui ne vaut que pour autre chose.
+
+C'est pourtant ce renversement qu'opère la tyrannie de l'utile. Elle somme la beauté de se justifier par son utilité économique, la connaissance par ses applications, le loisir par sa fonction de récupération au service du travail. Tout doit servir, et ce qui ne sert pas doit prouver qu'il sert malgré tout, sous peine d'être aboli. Ainsi une société entièrement vouée à l'utile finit par ne plus savoir à quoi tout cela sert, ayant perdu de vue les fins non utiles en vue desquelles l'utilité avait un sens. Elle produit et s'affaire sans plus savoir pourquoi, l'activité étant devenue sa propre justification.
+
+Cette dérive touche jusqu'à la conception que nous nous faisons de la vie humaine. Sommer chaque existence de se justifier par son utilité, c'est nier qu'une vie puisse valoir pour elle-même, indépendamment de ce qu'elle produit ou rapporte. C'est la pente qui conduit à mesurer les êtres à leur rendement, à tenir pour un poids ceux qui ne produisent plus, à ne plus reconnaître de dignité qu'à la vie utile. Or une vie n'est pas un moyen ; elle est, s'il est quelque chose qui vaille pour soi-même, ce quelque chose même. Réduire l'existence à son utilité, c'est manquer ce qui, en elle, dépasse toute utilité.
+
+Défendre le gratuit contre la tyrannie de l'utile n'est donc pas plaider pour l'oisiveté ou le gaspillage. C'est rappeler que l'utilité n'est pas la valeur suprême, mais un ordre subordonné, qui n'a de sens qu'au service de fins qui, elles, ne servent à rien parce qu'elles sont ce à quoi tout sert. Une civilisation se juge peut-être moins à ce qu'elle produit qu'à ce qu'elle sait préserver de gratuit : la place qu'elle laisse à la beauté, à la pensée désintéressée, aux liens qui ne rapportent rien, à tout ce qui, ne servant à rien, fait pourtant que la vie mérite d'être vécue. Car ce qui n'a pas de prix, au sens où l'on ne saurait le monnayer, est aussi ce qui n'a pas de prix au sens où rien ne le vaut.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-013",
+    title: "La reconnaissance, ce besoin invisible",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Au-delà du salaire, ce que le travail nous donne ou nous refuse : être reconnu.",
+    blurbEn:
+      "Beyond wages, work grants or withholds something deeper: recognition. An essay on the invisible human need to be seen and valued by others. (Section: Work and identity, 3/5.)",
+    body: `On analyse le travail en termes de revenu, de conditions, de temps ; on oublie souvent ce qu'il engage de plus profond et de plus intime : le besoin de reconnaissance. Car ce que nous cherchons dans le travail, au-delà du salaire, c'est aussi d'être reconnus — vus, estimés, tenus pour comptant aux yeux des autres. Ce besoin, rarement nommé, gouverne pourtant une grande part de notre rapport au travail, et son défaut explique bien des souffrances que le seul examen des conditions matérielles laisserait incompréhensibles.
+
+La reconnaissance est un besoin proprement humain, aussi réel que les besoins matériels, quoique invisible. Nous ne nous constituons comme sujets que dans le regard d'autrui : c'est en étant reconnus par les autres que nous acquérons le sentiment de notre propre valeur. Un être que nul ne reconnaîtrait, dont l'existence serait ignorée de tous, se vivrait comme rien. Ce besoin d'être reconnu n'est pas de la vanité ; il est constitutif de notre condition d'êtres sociaux, qui ne peuvent se rapporter à eux-mêmes qu'à travers le rapport aux autres. Et le travail est l'un des lieux majeurs où ce besoin se joue.
+
+Car le travail nous expose au regard d'autrui d'une manière particulière. Il nous fait contribuer à une œuvre commune, produire quelque chose qui sera jugé, utilisé, apprécié ou méprisé. Y être reconnu, c'est voir sa contribution remarquée, son effort estimé, sa compétence saluée ; c'est exister aux yeux des autres comme quelqu'un qui compte, qui apporte, qui a une place. Cette reconnaissance nourrit l'estime de soi, donne au travail son sens, transforme une tâche en source de fierté. À l'inverse, le travail non reconnu, ignoré, méprisé, blesse d'une manière que nul salaire ne compense.
+
+C'est ici que se révèle une souffrance majeure du travail contemporain, souvent invisible aux analyses purement économiques. Nombre de ceux qui souffrent au travail ne souffrent pas d'abord de leurs conditions matérielles, mais d'un défaut de reconnaissance : le sentiment que leur effort n'est pas vu, que leur contribution ne compte pas, qu'ils sont interchangeables, réduits à une fonction anonyme. Ce déni de reconnaissance atteint la personne au plus profond, car il lui signifie qu'elle ne vaut rien aux yeux de ceux pour qui elle travaille. On peut mieux supporter un travail dur mais reconnu qu'un travail facile mais méprisé.
+
+Cette dimension éclaire aussi le sort réservé à certains métiers. Il est des travaux indispensables — le soin, le nettoyage, l'aide aux plus vulnérables — qui sont pourtant parmi les moins reconnus, mal payés et socialement dévalorisés. Le déni de reconnaissance s'ajoute alors à la pénibilité, et redouble l'injustice : ceux qui accomplissent les tâches dont la société ne saurait se passer sont ceux à qui elle refuse l'estime. Certaines circonstances, en révélant soudain l'utilité vitale de ces métiers, ont fait apparaître ce scandale — sans que la reconnaissance proclamée se traduise toujours, ensuite, dans les faits.
+
+Prendre au sérieux le besoin de reconnaissance transforme la manière de penser le travail. Il ne suffit pas d'améliorer les salaires et les conditions, si essentiel que cela soit ; il faut aussi que le travail permette à chacun d'être reconnu dans sa contribution, estimé dans son effort, tenu pour une personne et non pour une fonction. Une organisation qui broie la reconnaissance, qui rend les êtres interchangeables et invisibles, produit de la souffrance quand bien même elle paierait correctement. Car l'homme au travail ne demande pas seulement de quoi vivre ; il demande à exister aux yeux des autres — et ce besoin invisible, si on le méconnaît, se venge par une souffrance que rien de matériel n'apaise.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-014",
+    title: "Le mérite, une idée trouble",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Récompenser le mérite semble juste. Mais qu'est-ce, au juste, que mériter ?",
+    blurbEn:
+      "Rewarding merit sounds like the essence of fairness — until you ask what merit really is, and how much of it we can truly claim. An essay. (Section: Work and identity, 4/5.)",
+    body: `L'idée de mérite est au cœur de notre conception de la justice. Il semble évident que chacun doive recevoir selon ce qu'il mérite, que l'effort et le talent doivent être récompensés, que la réussite obtenue par le travail est légitime. Cette idée, la méritocratie, jouit d'un consensus si large qu'il paraît presque indécent de la contester. Et pourtant, dès qu'on examine la notion de mérite, elle se trouble, se dérobe, révèle des présupposés fragiles. Non que le mérite ne soit rien, mais il est bien moins clair, et bien moins pur, qu'on ne le croit.
+
+La difficulté commence avec l'origine de ce qui fait le mérite. Nous méritons, dit-on, par notre effort et notre talent. Mais d'où viennent notre capacité d'effort et nos talents ? Le talent est, pour une large part, un don : on naît doué ou non pour telle chose, sans y être pour rien. Quant à la capacité de fournir des efforts, la persévérance, la discipline, elles dépendent elles-mêmes de dispositions, d'une éducation, d'un environnement dont nul n'est l'auteur. Celui qui a la chance d'être né avec des talents et dans un milieu qui a cultivé sa capacité d'effort mérite-t-il vraiment ce qui découle de dons qu'il n'a pas mérités ? Le mérite, à sa racine, plonge dans une loterie qui n'a rien de méritoire.
+
+Cette objection, si on la pousse, semble dissoudre entièrement le mérite : si tout ce qui fait ma réussite — mes talents, mon énergie, jusqu'à ma volonté — m'a été donné, que reste-t-il qui soit vraiment mien, dont je puisse revendiquer le mérite ? Il y a là un vertige. Mais il faut se garder d'en tirer la conclusion inverse, qui abolirait toute responsabilité et tout mérite : car nous faisons bien quelque chose de nos dons, nous les cultivons ou les gâchons, et cette part-là, si mince soit-elle, n'est pas rien. Le mérite n'est pas une illusion totale ; il est seulement bien plus limité, et bien moins pur, que la méritocratie ne le prétend.
+
+Or cette illusion a des conséquences politiques et morales considérables. En faisant croire que la réussite est entièrement méritée, la méritocratie légitime les inégalités : si les vainqueurs ont ce qu'ils méritent, leur position est juste, et les perdants n'ont à s'en prendre qu'à eux-mêmes. Cette logique a deux effets pervers symétriques. Chez les gagnants, elle nourrit l'orgueil et le mépris : persuadés de tout devoir à leur mérite, ils oublient ce qu'ils doivent à la chance, et se croient supérieurs à ceux qui ont échoué. Chez les perdants, elle nourrit l'humiliation : dans un monde qui proclame que chacun a ce qu'il mérite, l'échec n'est plus un malheur, mais une faute, un verdict sur sa propre valeur.
+
+Cette humiliation méritocratique est peut-être l'un des ressorts méconnus du ressentiment qui traverse nos sociétés. Aux inégalités anciennes, on pouvait au moins opposer qu'elles étaient injustes, imméritées ; la méritocratie ôte cette consolation, en présentant les inégalités comme le juste reflet des mérites. Celui qui échoue est alors sommé de se juger lui-même responsable de son sort, privé même de la dignité de la protestation. Il n'est pas étonnant qu'une telle blessure engendre la colère de ceux à qui l'on dit, en substance, que leur place au bas de l'échelle est ce qu'ils méritent.
+
+Reconnaître le caractère trouble du mérite ne conduit pas à renoncer à toute idée de responsabilité ou de récompense de l'effort ; ce serait une autre illusion, et une injustice inverse. Cela conduit à plus de modestie chez ceux qui réussissent — qui devraient mesurer ce qu'ils doivent à la chance —, à plus de compassion envers ceux qui échouent, et à une société qui ne ferait pas dépendre la dignité des personnes de leur seule réussite. Une justice lucide sur les limites du mérite serait à la fois plus humble et plus humaine : elle récompenserait l'effort sans en faire un absolu, et n'oublierait jamais que, derrière tout mérite, il y a une part de grâce reçue, dont nul ne saurait tirer gloire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-015",
+    title: "Faut-il aimer son travail ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "L'injonction à la passion professionnelle est-elle une libération ou un piège ?",
+    blurbEn:
+      "'Do what you love' sounds liberating, but the demand to be passionate about work may be a subtle trap. A closing essay on the ideology of loving one's job. (Section: Work and identity, 5/5.)",
+    body: `« Fais ce que tu aimes, et tu ne travailleras jamais un seul jour de ta vie. » Cette maxime, mille fois répétée, résume une exigence devenue dominante : le travail ne devrait pas seulement nourrir, mais passionner ; on devrait aimer son métier, s'y épanouir, y trouver l'accomplissement de soi. Cette injonction se présente comme une libération, un progrès sur l'époque où l'on travaillait sans joie, par pure nécessité. Il faut pourtant l'examiner de près, car sous ses dehors bienveillants, l'exigence d'aimer son travail pourrait bien dissimuler un piège.
+
+Reconnaissons d'abord ce que cette aspiration a de légitime. Qu'on refuse de passer sa vie à une tâche haïe, qu'on cherche dans le travail autre chose qu'un salaire, qu'on aspire à une activité qui ait du sens et procure de la joie, rien de plus sain. L'idée que le travail pourrait être aimé, et non seulement subi, a libéré bien des vies de la résignation, et il serait absurde de la condamner en bloc. Le problème n'est pas dans l'aspiration à aimer son travail, mais dans sa transformation en norme, en devoir, en injonction générale.
+
+Car dès que l'amour du travail devient une exigence, il se retourne. D'abord, il culpabilise. Celui qui n'aime pas son travail — et ils sont nombreux, car tous les travaux ne sont pas aimables — se voit signifier qu'il a échoué, qu'il n'a pas su trouver sa voie, que son insatisfaction est de sa faute. À la peine du travail non aimé s'ajoute la honte de ne pas l'aimer, comme si c'était un défaut personnel. L'injonction au bonheur professionnel produit ainsi une souffrance supplémentaire chez ceux qui ne peuvent y satisfaire, c'est-à-dire chez la plupart.
+
+Ensuite, et surtout, l'exigence d'aimer son travail sert une logique qui n'est pas innocente. Car celui qui aime son travail y consacre plus, sans compter, sans exiger de contrepartie ; il accepte des conditions qu'il refuserait pour un travail simplement alimentaire ; il confond son épanouissement personnel avec les intérêts de qui l'emploie. L'injonction à la passion peut ainsi devenir un formidable instrument d'exploitation, qui obtient, au nom de l'amour du métier, un engagement sans limite et souvent sans juste rémunération. « Fais ce que tu aimes » peut vouloir dire, en pratique : « Puisque tu aimes, tu ne compteras pas tes heures et ne réclameras pas ton dû. » Les secteurs où l'on exige le plus de passion sont souvent ceux où l'on paie le moins.
+
+Il y a plus. L'idéologie de l'amour du travail suppose que chacun pourrait trouver un métier qui le passionne, comme si de tels métiers existaient en nombre suffisant pour tous. Or l'immense majorité des tâches nécessaires à la vie collective ne sont pas passionnantes, et il faudra bien que quelqu'un les accomplisse. Prétendre que chacun devrait aimer son travail, c'est ignorer la réalité de ces tâches indispensables et ingrates, et faire porter à ceux qui les accomplissent le poids d'un idéal inaccessible. C'est un discours de privilégiés, qui projette sur tous une possibilité réservée à quelques-uns.
+
+Peut-être faut-il donc libérer le travail de cette injonction elle-même. Non pour revenir à la résignation d'autrefois, mais pour rendre au travail une place plus juste : une activité qui peut être aimée, mais ne doit pas nécessairement l'être ; qui peut avoir du sens, sans qu'on exige qu'elle comble toute l'existence. On peut faire correctement, et sans honte, un travail qu'on n'aime pas passionnément, en trouvant ailleurs — dans ses liens, ses passions, sa vie hors travail — de quoi s'épanouir. Cette conception, plus modeste, est aussi plus libre : elle délivre de la culpabilité de ne pas aimer, et de l'exploitation qui se cache sous l'amour exigé. Aimer son travail, quand cela arrive, est une chance ; en faire un devoir est une manière de nous lier plus étroitement encore à lui — au risque de n'avoir plus, hors de lui, aucune vie à aimer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-016",
+    title: "L'histoire n'est pas le passé",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Le passé est ce qui fut ; l'histoire, ce que nous en faisons. Distinction décisive.",
+    blurbEn:
+      "The past is what happened; history is what we make of it. An essay on the crucial difference, and why it shapes how a society understands itself. (Section: Memory and history, 1/5.)",
+    body: `On confond volontiers le passé et l'histoire, comme si l'histoire n'était que le passé lui-même, fidèlement rapporté. Cette confusion est source de bien des malentendus, car le passé et l'histoire sont deux choses distinctes. Le passé est ce qui fut, l'ensemble révolu des événements, à jamais hors d'atteinte. L'histoire est ce que nous faisons de ce passé : le récit que nous en construisons, la sélection que nous opérons, le sens que nous lui donnons. Distinguer les deux n'est pas une subtilité d'érudit ; c'est comprendre que l'histoire, loin d'être un simple reflet du passé, est toujours une construction du présent.
+
+Le passé, en effet, est infini et muet. Il ne se raconte pas lui-même ; il est un chaos d'événements innombrables, dont l'immense majorité ne nous est pas parvenue et ne nous parviendra jamais. Faire de l'histoire, c'est prélever, dans cet océan, quelques faits jugés significatifs, les ordonner, les relier, en dégager un sens. Or ce prélèvement, cet ordonnancement, ce sens ne sont pas donnés dans le passé lui-même ; ils sont l'œuvre de l'historien, et derrière lui, de l'époque qui le porte. L'histoire répond toujours, en partie, à des questions que le présent lui pose, et retient du passé ce qui éclaire ces questions.
+
+C'est pourquoi l'histoire se réécrit sans cesse, non par caprice, mais par nécessité. Chaque époque interroge le passé à partir de ses propres préoccupations, y découvre ce que les précédentes n'avaient pas vu, néglige ce qui les avait occupées. Des pans entiers du passé, longtemps ignorés — l'histoire des femmes, des dominés, des vaincus, de la vie quotidienne —, sont apparus à mesure que le présent devenait sensible à ces réalités. Ce n'est pas que le passé ait changé ; c'est que les questions qu'on lui pose se sont transformées. L'histoire est un dialogue entre le présent et le passé, et comme le présent change, le dialogue se renouvelle.
+
+Faut-il en conclure que l'histoire serait arbitraire, que chacun pourrait raconter le passé à sa guise ? Ce serait une conclusion fausse et dangereuse. Car si l'histoire est une construction, elle n'est pas une fiction : elle est tenue par les faits, contrainte par les traces, soumise à des règles de méthode qui distinguent l'histoire sérieuse du roman ou de la propagande. On ne peut pas faire dire au passé n'importe quoi ; les documents résistent, les faits opposent leur objectivité, et une reconstruction qui les contredit est réfutable. L'histoire est une construction, mais une construction rigoureuse, responsable devant le réel — ce qui la sépare radicalement du mythe, qui, lui, ne rend de comptes à aucun fait.
+
+Comprendre cette nature de l'histoire a des conséquences importantes. Cela invite à la vigilance envers tout récit du passé qui se présenterait comme la vérité pure et simple, alors qu'il est toujours une interprétation, portée par des choix et des valeurs. Cela invite aussi à distinguer l'histoire, soumise à la critique, des usages politiques du passé, qui l'instrumentalisent au service d'une cause. Une nation, un pouvoir, un groupe peuvent mobiliser le passé pour se légitimer, mais cette mobilisation n'est pas de l'histoire ; c'est de la mémoire militante, souvent nécessaire, mais qu'il ne faut pas confondre avec le travail critique de l'historien.
+
+Distinguer le passé et l'histoire, c'est donc à la fois reconnaître que notre rapport au passé est toujours construit, situé, révisable, et refuser d'en conclure qu'il serait arbitraire. C'est tenir ensemble deux vérités : que l'histoire répond à des questions du présent, et qu'elle demeure responsable devant les faits du passé. Cette double conscience est le propre d'un rapport mûr à l'histoire — celui qui ne prend pas un récit pour la vérité définitive, mais qui ne sombre pas non plus dans l'idée que tout se vaudrait. Le passé ne reviendra pas ; mais ce que nous en faisons, l'histoire que nous en écrivons, engage ce que nous sommes et ce que nous voulons être.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-017",
+    title: "Les usages politiques du passé",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Le passé est une arme. Les pouvoirs le savent, et s'en servent.",
+    blurbEn:
+      "The past is a weapon, and power knows it. An essay on how history is mobilised, distorted and instrumentalised in the service of present-day agendas. (Section: Memory and history, 2/5.)",
+    body: `Le passé n'est jamais neutre dans le présent ; il est un enjeu, et souvent une arme. Les pouvoirs, les nations, les mouvements le savent, qui ne cessent de le mobiliser à leur profit : pour se légitimer, pour souder une communauté, pour désigner des ennemis, pour justifier une politique. Cet usage politique du passé, aussi ancien que le pouvoir lui-même, mérite d'être analysé, car il opère souvent à notre insu, et confond volontiers ses fins avec celles de la connaissance historique, dont il se réclame tout en la trahissant.
+
+L'usage le plus courant du passé est la légitimation. Un pouvoir, un régime, une nation cherchent dans l'histoire les titres de leur existence : une origine glorieuse, une continuité, une mission. On se dote d'un récit des origines qui fonde le présent, on célèbre les ancêtres, on commémore les hauts faits, on inscrit l'ordre actuel dans une histoire qui semble le rendre nécessaire et juste. Ce récit n'est pas nécessairement faux, mais il est toujours sélectif : il retient ce qui légitime et tait ce qui dérange, transforme une histoire complexe et souvent violente en une geste flatteuse. Le passé y sert moins à comprendre qu'à justifier.
+
+Un autre usage, complémentaire, est la construction de l'identité collective. Pour qu'un ensemble d'individus se sente une communauté, il faut un passé commun, réel ou reconstruit : des épreuves partagées, des gloires, des souffrances, des héros. Ce passé commun crée le sentiment d'appartenance, le « nous » sans lequel il n'y a pas de communauté. Mais ce faisant, il opère aussi une clôture : le « nous » se définit contre un « eux », et le récit qui unit les uns peut exclure ou stigmatiser les autres. Le passé mobilisé pour souder peut ainsi devenir un instrument de division, désignant des ennemis héréditaires, ravivant des rancunes, justifiant des haines au nom de blessures anciennes.
+
+L'usage le plus pervers, enfin, est l'instrumentalisation au service d'une cause présente. On convoque le passé non pour l'éclairer, mais pour trancher un débat actuel : telle analogie historique disqualifie un adversaire, telle mémoire justifie une revendication, tel précédent légitime une action. Le passé devient un arsenal où chacun puise les armes de ses combats présents, quitte à le déformer, à le simplifier, à en faire un usage anachronique. L'histoire sérieuse, qui replace les faits dans leur contexte et résiste aux simplifications, gêne alors cet usage militant, qui préfère un passé mythifié, réduit à quelques images frappantes et manipulables.
+
+Ces usages posent un problème redoutable, car ils se réclament de l'histoire tout en la trahissant. Ils invoquent le passé, les faits, la mémoire, mais les plient à des fins qui ne sont pas celles de la connaissance. Le pouvoir qui instrumentalise l'histoire ne dit pas qu'il la déforme ; il prétend, au contraire, restaurer la vérité que d'autres auraient occultée. Distinguer l'histoire de son instrumentalisation devient alors difficile, d'autant que la frontière n'est pas toujours nette, et que l'historien lui-même n'est pas exempt des préoccupations de son temps. Mais cette difficulté ne doit pas conduire au renoncement : entre le travail critique, soumis aux faits et à la méthode, et l'usage militant, soumis à une cause, la différence demeure, et elle est décisive.
+
+Face aux usages politiques du passé, la meilleure protection est la connaissance historique elle-même, avec ses exigences de rigueur, de contexte, de complexité. Un peuple instruit de son histoire réelle, dans ses grandeurs et ses ombres, résiste mieux aux mythes qu'on voudrait lui vendre ; un peuple ignorant, ou qui ne connaît qu'un récit flatteur, est à la merci de ceux qui manipulent le passé. C'est pourquoi l'enseignement d'une histoire critique, qui apprend à distinguer les faits de leur usage, n'est pas un luxe, mais une nécessité démocratique. Car celui qui contrôle le récit du passé oriente le présent — et rien n'est plus dangereux qu'un peuple qui ne connaît de son histoire que ce qu'on a voulu lui en faire croire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-018",
+    title: "Le devoir de mémoire et ses limites",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Se souvenir des crimes du passé est un devoir. Mais la mémoire suffit-elle ?",
+    blurbEn:
+      "Remembering past atrocities is a moral duty — but the 'duty of memory' has limits and paradoxes worth examining honestly. An essay. (Section: Memory and history, 3/5.)",
+    body: `L'expression « devoir de mémoire » s'est imposée pour désigner l'obligation de se souvenir des grandes tragédies du passé, en particulier des crimes de masse, afin de les honorer et d'en prévenir le retour. Cette obligation est juste et nécessaire : oublier les victimes, effacer les crimes, serait une seconde injustice, et une société qui ne saurait rien de ses propres abîmes serait plus exposée à y retomber. Et pourtant, le devoir de mémoire, érigé en impératif indiscutable, comporte des limites et des paradoxes qu'il faut avoir le courage d'examiner, non pour le récuser, mais pour en préciser le sens.
+
+La première difficulté tient à la relation entre mémoire et histoire. La mémoire n'est pas l'histoire : elle est chargée d'émotion, tournée vers les victimes, orientée par le devoir de fidélité ; l'histoire vise la compréhension, le contexte, l'explication, avec la distance que cela suppose. Or le devoir de mémoire, s'il domine sans partage, peut entrer en tension avec le travail de l'historien. Comprendre comment un crime a été possible, en analyser froidement les mécanismes, peut sembler manquer de respect aux victimes, voire glisser vers l'excuse. Mais renoncer à comprendre au nom de la mémoire, c'est se priver précisément de ce qui pourrait prévenir le retour du pire : car on ne prévient bien que ce qu'on a compris.
+
+La deuxième difficulté tient à la sélection de la mémoire. On ne peut pas tout commémorer avec la même intensité ; la mémoire, comme l'histoire, choisit. Or ce choix n'est pas neutre : certaines victimes sont abondamment mémorées, d'autres oubliées ; certains crimes occupent l'espace public, d'autres restent dans l'ombre. Cette inégalité de la mémoire peut engendrer des concurrences douloureuses, chaque groupe réclamant pour ses propres souffrances une reconnaissance équivalente, au risque d'une surenchère où la mémoire des uns semble se faire contre celle des autres. Le devoir de mémoire, censé unir dans le recueillement, peut ainsi devenir un terrain de conflit.
+
+La troisième difficulté, plus profonde, concerne l'efficacité même de la mémoire. On postule que se souvenir prémunit contre la répétition. Mais l'histoire dément en partie ce postulat rassurant : des atrocités se sont reproduites en dépit de la mémoire vive des précédentes, et la commémoration n'a pas toujours empêché de nouveaux crimes. La mémoire, à elle seule, ne vaccine pas. Pire, une mémoire mal orientée peut nourrir de nouveaux ressentiments, entretenir des haines, servir à justifier des violences présentes au nom des souffrances passées. Se souvenir n'est pas toujours du côté de la paix ; tout dépend de ce qu'on fait de ce souvenir.
+
+Faut-il alors relativiser le devoir de mémoire ? Non, mais le penser autrement. Il ne s'agit pas de moins se souvenir, mais de mieux : de lier la mémoire à la compréhension, plutôt que de les opposer ; de viser, à travers le souvenir des victimes, l'intelligence des mécanismes qui ont rendu le crime possible ; de faire de la mémoire non un culte figé, tourné vers le passé, mais une vigilance active, tournée vers le présent. Une mémoire qui ne servirait qu'à commémorer, sans éclairer ni prévenir, manquerait à sa fin ; une mémoire qui rendrait attentif aux signes annonciateurs, dans le présent, de ce qu'elle rappelle du passé, remplirait vraiment son office.
+
+Le devoir de mémoire, bien compris, n'est donc pas le devoir de ressasser, mais celui de comprendre pour rester vigilant. Il ne s'oppose pas à l'histoire ; il l'appelle. Honorer les victimes, oui, mais aussi comprendre les bourreaux, non pour les excuser, mais pour reconnaître, dans l'humanité ordinaire, la possibilité du pire — car c'est cette reconnaissance, plus que l'émotion commémorative, qui peut nous armer. La mémoire sans la compréhension est une piété stérile ; la compréhension sans la mémoire, une froideur coupable. C'est de leur union que peut naître ce que le devoir de mémoire vise vraiment : non seulement ne pas oublier, mais ne pas recommencer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-019",
+    title: "Faut-il juger les statues ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Déboulonner ou conserver les monuments d'un passé qui nous heurte ?",
+    blurbEn:
+      "Should we tear down the monuments of a past that now offends us, or keep them? An essay on statues, memory and the difficulty of judging history. (Section: Memory and history, 4/5.)",
+    body: `Les statues, ces objets qu'on croyait inertes, sont devenues le théâtre de vifs affrontements. Faut-il déboulonner les monuments érigés à la gloire de personnages dont le passé nous heurte — esclavagistes, colonisateurs, hommes d'un autre âge honorés pour des raisons que nous récusons aujourd'hui ? Ou faut-il les conserver, au nom de l'histoire, du patrimoine, du refus d'effacer le passé ? Cette question, qui agite tant de sociétés, n'est pas aussi simple que le voudraient les camps qui s'y opposent, et elle mérite mieux que les slogans.
+
+Ceux qui réclament le retrait des statues avancent des arguments sérieux. Une statue n'est pas un document neutre ; c'est un hommage, un honneur rendu dans l'espace public. Ériger une statue, c'est proposer un modèle, dire à tous : voici quelqu'un digne d'admiration. Or comment justifier qu'on continue d'honorer, sur les places, des figures qui ont commis ou soutenu ce que nous tenons pour des crimes ? Pour les descendants de ceux qui furent asservis ou colonisés, ces statues ne sont pas de l'histoire abstraite ; elles sont une blessure quotidienne, la célébration persistante de leurs bourreaux. Les maintenir, c'est perpétuer un hommage devenu insultant.
+
+Ceux qui s'opposent au déboulonnement ne manquent pas non plus d'arguments. Effacer les traces d'un passé qui nous dérange, disent-ils, c'est se condamner à l'oublier, et l'oubli n'a jamais rien réglé. Juger les hommes du passé à l'aune de nos valeurs présentes est anachronique : ils étaient de leur temps, et presque tous nos ancêtres, à cette mesure, seraient condamnables. Où s'arrêterait-on, si l'on entreprenait de purger l'espace public de tout ce qui heurte les sensibilités d'aujourd'hui ? N'y a-t-il pas, dans cette volonté d'effacer, quelque chose d'une réécriture du passé, d'un refus de le regarder tel qu'il fut, avec ses grandeurs et ses crimes mêlés ?
+
+Ces deux positions ont chacune leur part de vérité, et c'est pourquoi la question est difficile. Mais peut-être l'opposition entre conserver et détruire est-elle mal posée, comme si ces deux termes épuisaient les possibilités. Car il existe des voies intermédiaires, plus fécondes que le maintien pur et simple ou l'effacement. On peut déplacer une statue d'un lieu d'honneur vers un musée, où elle sera non plus célébrée mais expliquée, replacée dans son contexte, offerte à la réflexion plutôt qu'à l'admiration. On peut la maintenir tout en la contextualisant, en lui adjoignant ce qui rappelle la part sombre du personnage, transformant le monument en occasion d'apprendre. On peut en faire un objet de mémoire critique, plutôt qu'un hommage ou un vide.
+
+Ce qui importe, au fond, c'est de distinguer ce que la statue fait dans l'espace public. Tant qu'elle trône en gloire, elle honore ; c'est cet honneur qui pose problème, non l'existence de l'objet. La question n'est donc pas tant « faut-il détruire ou conserver ? » que « faut-il continuer d'honorer ? » — et à celle-là, la réponse peut être non sans qu'il faille pour autant effacer. Retirer un hommage n'est pas effacer une histoire ; c'est cesser de célébrer ce qui ne doit plus l'être, tout en gardant les moyens de le comprendre.
+
+Le débat sur les statues, par-delà les objets qu'il concerne, touche à notre rapport au passé. Il révèle que ce rapport n'est jamais figé, qu'il se rediscute à chaque génération, et que l'espace public, où le passé se donne à voir, est aussi un lieu où le présent affirme ses valeurs. Ni le conservatisme qui voudrait tout maintenir intact, ni l'iconoclasme qui voudrait tout effacer ne rendent justice à la complexité de la tâche : assumer un passé dans sa vérité, sans continuer d'en honorer ce qui ne le mérite plus. Une société mûre n'est ni celle qui vénère aveuglément ses monuments, ni celle qui les abat dans la fièvre, mais celle qui sait, devant eux, à la fois se souvenir et juger.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-020",
+    title: "L'oubli est-il nécessaire ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "On célèbre la mémoire. Mais une société, comme un individu, a besoin d'oublier.",
+    blurbEn:
+      "We praise memory and condemn forgetting — yet a society, like a person, may need to forget in order to live and reconcile. A closing essay. (Section: Memory and history, 5/5.)",
+    body: `Notre époque a fait de la mémoire une vertu et de l'oubli un vice. Se souvenir serait un devoir, oublier une faute, voire une complicité. Cette valorisation unilatérale de la mémoire, si compréhensible après des siècles où les crimes étaient enfouis dans le silence, mérite pourtant d'être nuancée. Car l'oubli, que nous condamnons, a aussi ses fonctions et ses nécessités ; une société qui ne saurait rien oublier ne serait pas plus juste, mais peut-être plus prisonnière de son passé. Il faut avoir l'audace de se demander si l'oubli, dans certaines limites, n'est pas lui aussi nécessaire.
+
+Considérons d'abord l'individu. Une mémoire qui ne connaîtrait aucun oubli serait un fardeau insupportable. Se souvenir de tout, revivre sans cesse chaque offense, chaque souffrance, chaque blessure, interdirait de vivre : on serait écrasé sous le poids d'un passé qui ne passerait jamais. L'oubli, chez l'individu, n'est pas seulement une défaillance de la mémoire ; c'est une fonction vitale, qui allège, qui permet de tourner la page, de guérir, d'aller de l'avant. Celui qui ne peut rien oublier, qui rumine indéfiniment ses griefs, se condamne à une souffrance perpétuelle. Pardonner, se réconcilier, recommencer supposent une forme d'oubli, ou du moins d'apaisement du souvenir.
+
+Ce qui vaut pour l'individu vaut aussi, en partie, pour les sociétés. Après les grandes déchirures — guerres civiles, conflits fratricides —, les peuples ont souvent dû, pour se reconstruire, consentir à une forme d'oubli. Non l'effacement des faits, mais la renonciation à la vengeance, à la ressaisie perpétuelle des torts, au ressassement des haines. Certaines sorties de conflit ont reposé sur des amnisties, des pactes d'oubli, qui permettaient à des ennemis d'hier de vivre de nouveau ensemble. Ces oublis n'étaient pas des trahisons de la mémoire ; ils étaient la condition d'une paix sans laquelle le souvenir n'aurait entretenu que la guerre. Une société qui n'oublierait jamais aucune de ses fractures les rouvrirait sans cesse.
+
+Il y a là un paradoxe qu'il faut tenir. D'un côté, l'oubli des crimes est une injustice, et le devoir de mémoire a raison de la combattre. De l'autre, l'impossibilité d'oublier enferme dans le passé, entretient les haines, interdit la réconciliation. Comment concilier ces deux vérités ? Peut-être en distinguant les objets et les moments de l'oubli. Il est des choses qu'on ne doit pas oublier — les faits, les victimes, la responsabilité des crimes ; et d'autres qu'il faut savoir laisser s'apaiser — la soif de vengeance, le ressentiment, la volonté de faire payer indéfiniment. Se souvenir des faits n'oblige pas à entretenir la haine ; on peut garder la mémoire vive et déposer les armes du ressentiment.
+
+Cette distinction éclaire ce que pourrait être un rapport équilibré au passé. Ni l'oubli qui efface et prépare la répétition, ni la mémoire qui ressasse et entretient la guerre, mais une mémoire apaisée, qui sait les faits sans en faire une arme éternelle. Le pardon, dont on parle tant, n'est pas l'oubli des faits ; il est le renoncement à la vengeance malgré le souvenir. C'est peut-être là la forme la plus haute du rapport au passé : se souvenir pleinement, et pourtant cesser de faire du souvenir un motif de haine. Non oublier pour pardonner, mais pardonner sans oublier.
+
+Réhabiliter une part d'oubli, ce n'est donc pas trahir la mémoire ; c'est reconnaître que la mémoire, seule, ne suffit pas, et qu'elle peut même, mal orientée, devenir un poison. Une société, comme un être humain, a besoin à la fois de se souvenir et de pouvoir laisser le passé passer, faute de quoi elle demeure prisonnière de ses blessures. La sagesse, ici comme ailleurs, n'est pas dans l'un des termes contre l'autre, mais dans leur juste équilibre : savoir ce qu'il faut garder vif, et ce qu'il faut laisser s'apaiser. Car un peuple qui n'oublierait jamais rien serait aussi malheureux qu'un peuple qui aurait tout oublié.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
