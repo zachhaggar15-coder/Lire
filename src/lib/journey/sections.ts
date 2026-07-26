@@ -676,6 +676,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-transport",
+    band: "B1",
+    title: "Transport and cities",
+    goal: "The 15-minute city, cars downtown, free transit, noise and life without a car.",
+    textIds: [
+      "starter-b1-161", // La ville des quinze minutes (levels up B1 City living)
+      "starter-b1-162", // Faut-il des voitures en centre-ville ?
+      "starter-b1-163", // Les transports en commun gratuits ?
+      "starter-b1-164", // Le bruit, une pollution oubliée
+      "starter-b1-165", // Quand la voiture devient inutile
+    ],
+  },
+  {
+    id: "b1-language",
+    band: "B1",
+    title: "Learning a language",
+    goal: "Learning as an adult, regularity, understanding first, the pleasure, and false promises.",
+    textIds: [
+      "starter-b1-166", // Pourquoi apprendre une langue à l'âge adulte (levels up B1 Learning)
+      "starter-b1-167", // La régularité bat l'intensité
+      "starter-b1-168", // Comprendre avant de parler
+      "starter-b1-169", // Le plaisir d'une langue étrangère
+      "starter-b1-170", // Les fausses promesses des méthodes miracles
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",

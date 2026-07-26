@@ -12587,4 +12587,328 @@ Une fois qu'on voit cette question, on ne la voit plus jamais tout à fait de la
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-161",
+    title: "La ville des quinze minutes",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Et si tout l'essentiel était à un quart d'heure de chez soi ?",
+    blurbEn:
+      "The '15-minute city' idea says daily needs should be a short walk away. Simple in principle, contested in practice. (Section: Transport and cities, 1/5.)",
+    body: `Une idée urbanistique a beaucoup circulé ces dernières années : la « ville du quart d'heure ». Le principe est simple. Chacun devrait pouvoir accéder à l'essentiel de ses besoins quotidiens — commerces, école, médecin, travail, loisirs, espaces verts — en quinze minutes à pied ou à vélo.
+
+Ce n'est pas une idée entièrement neuve. C'est, en réalité, la façon dont fonctionnaient la plupart des villes avant l'automobile. Les quartiers mêlaient logements, commerces et ateliers, et l'on vivait près de tout.
+
+Le vingtième siècle a séparé ces fonctions. On a construit des zones d'habitation d'un côté, des zones commerciales de l'autre, des zones de bureaux ailleurs, reliées par la voiture. Cette organisation a produit de longs trajets quotidiens et une dépendance totale à l'automobile.
+
+La ville du quart d'heure propose de recoudre ce tissu : rapprocher les fonctions, favoriser la marche et le vélo, réduire les déplacements contraints.
+
+Les bénéfices attendus sont nombreux : moins de pollution, plus d'activité physique, des commerces de proximité qui revivent, du temps gagné.
+
+Mais le concept fait débat, et ces critiques méritent d'être entendues.
+
+Certains y voient une idée pensée pour les centres-villes aisés, difficile à appliquer dans des zones périphériques ou rurales où les distances sont grandes. D'autres craignent qu'elle n'accroisse les inégalités, les quartiers bien dotés devenant plus désirables et plus chers.
+
+Il y a aussi une confusion fréquente à écarter : il ne s'agit pas d'empêcher les gens de sortir de leur quartier, mais de faire en sorte qu'ils n'y soient pas obligés pour le quotidien.
+
+L'idée n'est donc ni une utopie ni une menace.
+
+C'est un objectif d'aménagement, plus facile à réaliser dans certaines villes que dans d'autres.
+
+Et une manière de reposer une vieille question : à quelle distance vit-on de sa propre vie ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-162",
+    title: "Faut-il des voitures en centre-ville ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Réduire la place de la voiture divise fortement les habitants.",
+    blurbEn:
+      "Cutting car access to city centres provokes fierce opposition and, often, later approval. A look at how these changes actually unfold. (Section: Transport and cities, 2/5.)",
+    body: `De nombreuses villes européennes réduisent progressivement la place de la voiture en centre-ville : rues piétonnes, zones à faibles émissions, suppression de places de stationnement au profit de pistes cyclables ou de terrasses.
+
+Ces décisions provoquent presque toujours de vives oppositions. Il est utile de comprendre pourquoi, et ce qui se passe ensuite.
+
+Les craintes exprimées sont réelles. Les commerçants redoutent une baisse de fréquentation, persuadés que leurs clients viennent en voiture. Les habitants des périphéries, moins bien desservis par les transports, se sentent visés. Les personnes âgées ou à mobilité réduite s'inquiètent, à juste titre, de l'accessibilité.
+
+Ces objections ne doivent pas être balayées : une politique qui les ignore échoue et se retourne contre elle.
+
+Pourtant, un phénomène se répète dans les villes qui ont mené ces transformations.
+
+D'abord, les études montrent que les commerçants surestiment généralement la part de leurs clients venant en voiture ; une majorité arrive souvent à pied, à vélo ou en transports. Ensuite, une fois les aménagements réalisés et l'espace rendu agréable, la fréquentation se maintient, voire augmente. Une rue piétonne bien conçue attire du monde.
+
+Autre constat récurrent : l'opposition est forte avant, plus faible après. Beaucoup d'habitants d'abord hostiles ne voudraient plus revenir en arrière une fois habitués.
+
+Cela ne signifie pas que toute piétonnisation est une réussite. Mal pensée, sans transports alternatifs ni prise en compte des livraisons et de l'accessibilité, elle peut vider un quartier.
+
+La question n'est donc pas « pour ou contre la voiture ».
+
+Elle est : comment redistribuer un espace limité entre des usages qui se disputent chaque mètre ?
+
+Et cette question, par nature, ne se tranche pas sans conflit.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-163",
+    title: "Les transports en commun gratuits ?",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Quelques villes ont rendu leurs bus et tramways gratuits.",
+    blurbEn:
+      "A handful of cities have made public transport free. The results are mixed and reveal a deeper question about what transport is for. (Section: Transport and cities, 3/5.)",
+    body: `Quelques villes, en France et ailleurs, ont fait un choix audacieux : rendre les transports en commun entièrement gratuits pour les usagers. L'expérience alimente un débat intéressant.
+
+Les arguments en faveur de la gratuité sont séduisants. Elle supprime un obstacle pour les personnes à faibles revenus. Elle encourage à laisser la voiture. Elle élimine les coûts liés à la vente des tickets et au contrôle. Et elle envoie un signal : le transport public est un service essentiel, comme l'école ou l'éclairage des rues.
+
+Les résultats observés sont cependant nuancés.
+
+La gratuité augmente bien la fréquentation, parfois fortement. Mais une partie de cette hausse ne vient pas des automobilistes : elle vient de personnes qui marchaient ou pédalaient auparavant, et qui prennent désormais le bus. L'effet sur le trafic automobile est donc plus faible qu'espéré.
+
+Surtout, la gratuité pose la question du financement. L'argent des tickets doit être remplacé par autre chose : impôts locaux, taxes sur les entreprises. Or ces recettes servaient souvent à améliorer le réseau. Le risque est d'obtenir un transport gratuit mais insuffisant.
+
+Car ce qui pousse réellement les gens à abandonner la voiture, ce n'est pas d'abord le prix : c'est la qualité. Un réseau fréquent, ponctuel, qui va où l'on veut, convainc davantage qu'un réseau gratuit mais rare.
+
+Ce constat ne condamne pas la gratuité, qui garde un sens social fort.
+
+Il rappelle simplement une évidence souvent oubliée.
+
+Un transport que personne ne veut prendre reste inutilisé, même gratuit.
+
+Le vrai luxe, en matière de transport, n'est pas la gratuité.
+
+C'est de pouvoir compter dessus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-164",
+    title: "Le bruit, une pollution oubliée",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "On s'habitue au bruit. Le corps, lui, ne s'y habitue pas.",
+    blurbEn:
+      "Noise is treated as a nuisance rather than a health risk, but the evidence says otherwise. Cities are beginning to take it seriously. (Section: Transport and cities, 4/5.)",
+    body: `Parmi les pollutions urbaines, le bruit est probablement la plus sous-estimée. On le considère comme une gêne, un inconfort, rarement comme un problème de santé. Les données disent le contraire.
+
+Le bruit permanent — trafic, travaux, activités — a des effets mesurables sur l'organisme, indépendamment de l'agacement qu'il provoque. Il perturbe le sommeil, même quand on croit s'y être habitué. Il maintient le corps dans un léger état d'alerte, ce qui, sur le long terme, augmente la tension et les risques cardiovasculaires.
+
+Ce dernier point est contre-intuitif. On pense s'habituer au bruit, et c'est vrai consciemment : on cesse de le remarquer. Mais le corps, lui, continue de réagir. On peut dormir dans une rue bruyante et présenter malgré tout des micro-réveils qui dégradent la qualité du repos.
+
+Les organisations sanitaires classent aujourd'hui le bruit parmi les facteurs environnementaux ayant un impact réel sur la santé des populations urbaines.
+
+Les sources principales sont bien identifiées, et le trafic routier arrive largement en tête.
+
+C'est pourquoi les mesures de réduction du bruit rejoignent souvent d'autres politiques : réduire la vitesse en ville diminue nettement le bruit ; les véhicules électriques sont plus silencieux à basse vitesse ; certains revêtements de chaussée absorbent le son.
+
+L'aménagement joue aussi : éloigner les logements des grands axes, créer des zones calmes, protéger le silence relatif des parcs.
+
+Le bruit a un défaut par rapport à d'autres pollutions : il est invisible et sans trace.
+
+On ne le photographie pas, on ne le mesure pas d'un coup d'œil.
+
+C'est peut-être pour cela qu'il a été si longtemps toléré.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-165",
+    title: "Quand la voiture devient inutile",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Se passer de voiture est un choix, pas toujours possible partout.",
+    blurbEn:
+      "Living without a car is liberating for some and impossible for others. The difference is rarely about willpower — it is about geography. (Section: Transport and cities, 5/5.)",
+    body: `Depuis quatre ans, je vis sans voiture. Quand je le dis, les réactions sont extrêmes : certains trouvent cela admirable, d'autres inimaginable. Les deux se trompent en partie, car tout dépend d'où l'on habite.
+
+Dans mon cas, ce n'était pas un sacrifice écologique héroïque. C'était un calcul.
+
+J'ai fait le compte de ce que me coûtait ma voiture : l'achat, l'assurance, l'entretien, le carburant, le stationnement. La somme annuelle m'a surpris. Or je vis dans une ville où le bus, le vélo et la marche suffisent pour l'essentiel, et où l'on peut louer une voiture les rares fois où c'est nécessaire.
+
+Le calcul était vite fait : garder une voiture utilisée trois fois par mois n'avait pas de sens.
+
+Les bénéfices ont dépassé le budget. Marcher et pédaler chaque jour a remplacé, sans effort, le sport que je ne trouvais jamais le temps de faire. Je connais mieux ma ville. Et j'ai découvert un soulagement inattendu : ne plus chercher de place, ne plus penser au contrôle technique, ne plus subir les embouteillages.
+
+Mais je me garde d'en faire une leçon générale. Ce choix n'est possible que grâce à ma situation : une ville dense, bien desservie, un travail proche. Pour une famille en zone rurale, sans transports, avec des trajets longs et des enfants à conduire, la voiture n'est pas un luxe : c'est une nécessité.
+
+Culpabiliser ces personnes serait injuste et absurde.
+
+La vraie question n'est donc pas individuelle mais collective.
+
+Elle n'est pas « pourquoi gardez-vous une voiture ? ».
+
+Elle est : combien de gens n'ont aujourd'hui pas d'autre choix, et que fait-on pour cela ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-166",
+    title: "Pourquoi apprendre une langue à l'âge adulte",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "On croit qu'il est trop tard. C'est faux, mais différent.",
+    blurbEn:
+      "Adults are told they are too old to learn a language. The truth is more encouraging, and it changes how you should go about it. (Section: Learning a language, 1/5.)",
+    body: `« Je suis trop vieux pour apprendre une langue. » C'est l'une des croyances les plus répandues, et l'une des plus fausses.
+
+Elle repose sur une observation exacte, mal interprétée. Il est vrai que les enfants acquièrent un accent parfait plus facilement, et qu'un cerveau jeune absorbe certaines choses sans effort. Mais l'accent n'est qu'une petite partie d'une langue, et le reste avantage souvent les adultes.
+
+Un adulte comprend les structures, fait des liens avec ce qu'il sait déjà, apprend par la logique autant que par l'imitation. Il choisit ses méthodes et sait pourquoi il apprend. Ces atouts compensent largement une mémoire un peu moins souple.
+
+Ce qui change vraiment, ce ne sont pas les capacités, mais les conditions. Un adulte a moins de temps, plus de fatigue, et surtout beaucoup plus de peur du ridicule. C'est ce dernier point, bien plus que l'âge, qui bloque la plupart des gens.
+
+Car apprendre une langue oblige à une chose désagréable : parler mal, longtemps, devant les autres. Il faut accepter de ressembler à un enfant, de chercher ses mots, de faire des fautes. Les adultes détestent cela, précisément parce qu'ils ont l'habitude d'être compétents.
+
+Or c'est exactement là que se joue la réussite. Ceux qui progressent ne sont pas les plus doués : ce sont ceux qui acceptent d'être mauvais assez longtemps.
+
+Les bénéfices, eux, dépassent la langue elle-même. Voyager autrement, accéder à une culture de l'intérieur, et, selon certaines études, entretenir son cerveau.
+
+Il n'est donc jamais trop tard.
+
+La seule vraie question n'est pas « en suis-je capable ? ».
+
+Elle est : « suis-je prêt à me tromper pendant un an ? »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-167",
+    title: "La régularité bat l'intensité",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Dix minutes par jour valent mieux que trois heures le dimanche.",
+    blurbEn:
+      "The single most reliable finding in language learning is dull but powerful: little and often beats long and rare. (Section: Learning a language, 2/5.)",
+    body: `S'il fallait retenir une seule chose sur l'apprentissage d'une langue, ce serait celle-ci : la régularité bat l'intensité. Dix minutes chaque jour font plus de progrès que trois heures une fois par semaine.
+
+Ce constat est solide, et il s'explique par le fonctionnement de la mémoire.
+
+Après avoir appris quelque chose, on l'oublie rapidement, sauf si on le revoit avant l'oubli complet. Chaque nouvelle rencontre avec l'information ralentit l'oubli suivant. C'est le principe de la répétition espacée : revoir un mot après un jour, puis trois, puis une semaine, l'ancre durablement.
+
+Une longue séance hebdomadaire s'oppose à cette logique. On y apprend beaucoup, puis on laisse le tout s'effacer pendant six jours. La semaine suivante, on repart presque de zéro.
+
+À l'inverse, une courte pratique quotidienne rencontre sans cesse les mêmes éléments, juste avant qu'ils ne disparaissent. Le progrès est lent au jour le jour, mais il s'accumule.
+
+La régularité a un second avantage, psychologique celui-là. Dix minutes sont faciles à tenir. On trouve toujours dix minutes : dans les transports, en attendant, avant de dormir. Impossible de prétendre le contraire. Trois heures, en revanche, se reportent facilement.
+
+C'est pourquoi les applications de langue efficaces reposent toutes sur ce principe : de courtes sessions, tous les jours, avec des rappels espacés.
+
+Cela vaut d'ailleurs bien au-delà des langues, pour n'importe quel apprentissage durable.
+
+Le conseil paraît décevant, car il ne promet aucun raccourci.
+
+Mais c'est justement sa force.
+
+Il ne demande pas de la volonté héroïque.
+
+Il demande une habitude minuscule, tenue longtemps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-168",
+    title: "Comprendre avant de parler",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "On peut comprendre beaucoup avant de savoir produire une phrase.",
+    blurbEn:
+      "In every language, understanding runs ahead of speaking. Accepting that gap makes learning less frustrating and more effective. (Section: Learning a language, 3/5.)",
+    body: `Il existe, dans l'apprentissage de toute langue, un décalage naturel entre deux compétences : on comprend toujours plus qu'on ne sait produire.
+
+Ce décalage se vérifie même dans notre langue maternelle. Nous comprenons des mots que nous n'employons jamais, des registres que nous ne saurions pas imiter. Comprendre est plus facile que produire.
+
+Beaucoup d'apprenants ignorent ce phénomène, et s'en trouvent découragés. Ils se jugent nuls parce qu'ils ne parviennent pas à parler couramment, alors qu'ils comprennent déjà l'essentiel d'une conversation. Ils confondent deux niveaux qui n'avancent pas au même rythme.
+
+Cette réalité a des conséquences pratiques.
+
+D'abord, elle valorise l'écoute et la lecture, souvent négligées au profit de la seule expression. Écouter beaucoup, lire des textes adaptés à son niveau, construit une base solide de compréhension. Cette base finit par nourrir la production : on ne peut dire que ce qu'on a d'abord rencontré ailleurs.
+
+C'est pourquoi lire des textes légèrement au-dessus de son niveau, avec l'aide de traductions, est l'une des méthodes les plus efficaces. On y rencontre les mots dans leur contexte, plusieurs fois, sans effort de mémorisation forcée.
+
+Ensuite, cette réalité déculpabilise. Ne pas parler parfaitement tout en comprenant bien n'est pas un échec : c'est l'ordre normal des choses.
+
+Il ne faut pas pour autant attendre d'être « prêt » pour parler, car on ne l'est jamais tout à fait. Comprendre prépare, mais seul l'usage active vraiment la parole.
+
+L'ordre efficace est donc clair.
+
+Comprendre beaucoup, tôt.
+
+Parler imparfaitement, tôt aussi.
+
+Et accepter que les deux ne progressent jamais à la même vitesse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-169",
+    title: "Le plaisir d'une langue étrangère",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une langue ouvre plus qu'un moyen de communiquer.",
+    blurbEn:
+      "Beyond communication, a new language offers something harder to name: another way of seeing, and a second identity. (Section: Learning a language, 4/5.)",
+    body: `On apprend souvent une langue pour une raison pratique : le travail, un voyage, un examen. Ce sont de bonnes raisons. Mais ceux qui vont loin découvrent généralement autre chose, plus difficile à nommer.
+
+Une langue n'est pas seulement un code pour dire les mêmes choses autrement. Chaque langue découpe le monde à sa façon.
+
+Certaines distinguent des couleurs que d'autres regroupent. Certaines possèdent un mot précis pour une émotion qui, ailleurs, demande une phrase entière. Le français distingue le tu et le vous, distinction qui n'existe pas en anglais et qui change subtilement chaque relation. Apprendre une langue, c'est donc découvrir des catégories qu'on n'avait pas.
+
+Il y a aussi une expérience troublante, que rapportent beaucoup de personnes bilingues : elles ne se sentent pas tout à fait les mêmes selon la langue qu'elles parlent. Plus directes dans l'une, plus réservées dans l'autre. Comme si chaque langue activait une version légèrement différente de soi.
+
+Ce n'est pas de la magie. Une langue est liée à une culture, à des situations, à des souvenirs. La parler, c'est entrer un peu dans ce monde.
+
+Il y a enfin le plaisir simple, concret, du seuil franchi. Le jour où l'on comprend une blague, où l'on suit une conversation rapide, où l'on rêve dans l'autre langue. Ce moment récompense des mois d'efforts ingrats.
+
+Ces bénéfices ne se promettent pas au début. On ne peut pas les vendre, car ils ne se révèlent qu'en chemin.
+
+C'est peut-être pour cela qu'ils comptent.
+
+Une langue n'ajoute pas seulement un outil à sa boîte.
+
+Elle ajoute une fenêtre à sa maison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-170",
+    title: "Les fausses promesses des méthodes miracles",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« Parlez couramment en trente jours. » Vraiment ?",
+    blurbEn:
+      "'Fluent in 30 days' sells because we want it to be true. What such promises get wrong, and what honest learning looks like. (Section: Learning a language, 5/5.)",
+    body: `« Parlez anglais couramment en trente jours. » « La méthode secrète que les écoles vous cachent. » Les promesses de ce type sont partout, et elles se vendent bien, parce qu'elles répondent à un désir réel : apprendre vite et sans effort.
+
+Elles reposent pourtant sur un mensonge, ou du moins sur une imprécision soigneusement entretenue.
+
+Le premier problème est le mot « couramment ». Il n'a pas de définition claire. Commander un café et débattre de philosophie sont deux niveaux séparés par des années. Une méthode peut vous rendre capable de dire quelques phrases en un mois — c'est vrai — puis appeler cela « couramment ».
+
+Le deuxième problème est l'effacement du temps réel. Toutes les estimations sérieuses convergent : atteindre un niveau conversationnel dans une langue demande des centaines d'heures de pratique. Aucune méthode ne supprime ces heures. Certaines les rendent plus efficaces ou plus agréables, ce qui est déjà précieux, mais aucune ne les remplace.
+
+Cela ne veut pas dire que toutes les méthodes se valent. De vraies différences existent. Les approches qui font parler tôt, qui exposent à la langue réelle, qui reposent sur la répétition espacée, fonctionnent mieux que la mémorisation de listes ou la grammaire abstraite.
+
+Mais la meilleure méthode reste, de loin, celle qu'on utilise vraiment. Une application parfaite abandonnée au bout de deux semaines vaut moins qu'une méthode médiocre pratiquée un an.
+
+Le vrai secret, s'il en existe un, est décevant de banalité.
+
+Un peu, chaque jour, longtemps, avec du contact réel avec la langue.
+
+Ce n'est pas vendeur.
+
+C'est simplement ce qui marche.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
