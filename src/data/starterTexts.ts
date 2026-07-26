@@ -13931,4 +13931,234 @@ Nous croyons regarder le monde ; le plus souvent, nous regardons ce que d'autres
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-081",
+    title: "Le poids de nos petits gestes",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Trier, éteindre, économiser : nos gestes comptent-ils vraiment ?",
+    blurbEn:
+      "Sorting rubbish, saving energy: do individual gestures really matter against a planetary problem? A careful answer to a question that paralyses many. (Section: Climate and responsibility, 1/5.)",
+    body: `Face au réchauffement climatique, une question revient, souvent teintée de découragement : à quoi bon ? Que peut peser mon geste, si modeste, face à un problème d'une telle ampleur ? Je trie mes déchets, je réduis ma consommation, tandis que des industries entières continuent de polluer massivement. N'est-ce pas dérisoire, voire hypocrite ? Cette interrogation est légitime, et elle mérite une réponse honnête, qui ne se contente ni de culpabiliser ni de rassurer à bon compte.
+
+Il faut d'abord reconnaître une part de vérité dans le doute. Oui, à l'échelle de la planète, le geste d'un individu est infime. Non, le tri de nos déchets ne suffira pas, à lui seul, à résoudre la crise climatique. Ceux qui laissent croire que la responsabilité repose entièrement sur les épaules des consommateurs commettent une erreur, et parfois une malhonnêteté : ils détournent l'attention des décisions collectives et industrielles qui, elles, pèsent lourd.
+
+Mais tirer de ce constat la conclusion que nos gestes ne servent à rien serait une autre erreur, symétrique et tout aussi commode. Car cette conclusion, en réalité, arrange bien : elle offre une excuse parfaite pour ne rien changer. « Puisque cela ne sert à rien, autant continuer comme avant. » Le sentiment d'impuissance devient alors une justification confortable de l'inaction.
+
+Or nos gestes comptent, à plusieurs titres. D'abord parce qu'additionnés, les comportements de millions de personnes finissent par peser réellement. Ensuite parce que nos actes individuels ne sont pas isolés : ils influencent notre entourage, façonnent des normes, rendent certains changements désirables et d'autres honteux. Celui qui modifie sa manière de vivre ne change pas seulement son propre bilan ; il déplace, un peu, ce qui paraît normal.
+
+Enfin, et peut-être surtout, il existe un lien entre nos actes et nos convictions. Difficile de réclamer des changements profonds tout en refusant d'en accomplir aucun soi-même. Nos gestes, même modestes, nous engagent, donnent de la crédibilité à nos exigences, et nous transforment en citoyens cohérents plutôt qu'en spectateurs impuissants.
+
+La véritable réponse n'est donc pas de choisir entre l'action individuelle et l'action collective, comme si l'une excluait l'autre. C'est de comprendre qu'elles se nourrissent mutuellement. Changer sa vie sans jamais peser sur les décisions collectives serait insuffisant ; réclamer des changements collectifs sans jamais rien changer à sa vie serait peu crédible. Les deux vont ensemble, et c'est leur conjonction qui, seule, peut espérer faire la différence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-082",
+    title: "Penser à long terme",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nos sociétés peinent à agir pour un avenir qu'elles ne verront pas.",
+    blurbEn:
+      "Human societies are bad at acting for a future they will not see. Why long-term thinking is so hard, and why the climate crisis forces us to learn it. (Section: Climate and responsibility, 2/5.)",
+    body: `La crise climatique révèle une faiblesse profonde de nos sociétés : leur difficulté à penser et à agir à long terme. Les efforts qu'on nous demande aujourd'hui ne porteront leurs fruits que dans des décennies, et bénéficieront surtout à des générations que nous ne connaîtrons pas. Or agir maintenant pour un avenir lointain, au prix de sacrifices immédiats, va à l'encontre de puissantes tendances, individuelles et collectives.
+
+À l'échelle individuelle, notre esprit est ainsi fait qu'il accorde bien plus de poids au présent qu'à l'avenir. Une satisfaction immédiate nous attire davantage qu'un bénéfice lointain, même supérieur. Ce trait, sans doute utile à nos lointains ancêtres, dont la survie se jouait au jour le jour, nous dessert face à des menaces dont les effets se déploient sur des générations. Nous savons le danger, mais il nous paraît abstrait, distant, facile à repousser à plus tard.
+
+À l'échelle collective, les obstacles ne sont pas moindres. Les responsables politiques sont élus pour des mandats courts et jugés sur des résultats immédiats. Consacrer des ressources à un problème dont les bénéfices n'apparaîtront que longtemps après leur départ n'a, pour eux, guère d'attrait. Les marchés, de leur côté, valorisent le rendement rapide et se soucient peu d'un horizon qui dépasse quelques années. Nos institutions, dans leur ensemble, sont construites pour le court terme.
+
+Cette myopie n'a rien d'une fatalité ; elle est plutôt un défi à relever. D'autres époques, d'autres cultures, ont su penser au-delà de leur propre existence. Ceux qui plantaient des arbres dont ils ne verraient jamais l'ombre, ou bâtissaient des cathédrales qu'ils ne verraient pas achevées, agissaient bien pour un avenir qui les dépassait. Cette capacité existe en nous ; il s'agit de la raviver.
+
+Y parvenir suppose de transformer notre rapport au temps. Cela passe par l'éducation, qui peut apprendre à se projeter au-delà de l'immédiat. Cela passe par des institutions repensées, capables de représenter les intérêts des générations futures dans les décisions présentes. Cela passe, enfin, par un récit : celui d'une responsabilité qui nous relie à ceux qui viendront après nous, comme nous sommes reliés à ceux qui nous ont précédés.
+
+Penser à long terme n'est pas naturel ; c'est une conquête, une discipline, presque une vertu. La crise climatique nous oblige à l'acquérir. Peut-être est-ce là, au fond, l'un des rares bienfaits qu'elle pourrait nous apporter : nous forcer à devenir enfin les gardiens d'un avenir qui nous dépasse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-083",
+    title: "L'écologie est-elle un luxe ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "« On verra l'environnement quand on aura de quoi vivre. »",
+    blurbEn:
+      "'We'll worry about the planet once we can make ends meet.' A serious look at the tension between ecology and social justice — and why it is a false choice. (Section: Climate and responsibility, 3/5.)",
+    body: `« L'écologie, c'est bien joli, mais c'est un luxe de riches. » Cette objection, souvent formulée avec une pointe d'amertume, exprime une réalité qu'il serait malhonnête d'ignorer. Comment demander à quelqu'un qui peine à finir le mois de se soucier de la planète ? Les changements que l'on prône — consommer mieux, se déplacer autrement, choisir des produits plus vertueux — ont souvent un coût, et ce coût pèse d'abord sur ceux qui ont le moins. La question de la justice sociale traverse toute la question écologique, et l'oublier serait une faute.
+
+Il y a du vrai dans cette objection, et les défenseurs de l'environnement auraient tort de la balayer. Trop de discours écologiques, tenus par des gens à l'aise, ignorent la contrainte de ceux qui n'ont pas le choix. Culpabiliser une personne parce qu'elle prend sa voiture pour aller travailler, quand aucun transport ne dessert son village et qu'elle n'a pas les moyens d'un véhicule propre, n'est pas seulement injuste : c'est politiquement absurde, car cela dresse contre l'écologie ceux dont on aurait besoin.
+
+Mais l'idée que l'écologie serait un luxe repose aussi sur un renversement trompeur. Car ce sont précisément les plus modestes qui souffrent le plus des dégradations de l'environnement. Ce sont eux qui habitent les zones les plus polluées, qui subissent le plus durement les canicules, les inondations, la hausse du prix de l'énergie et de l'alimentation. Le dérèglement climatique n'est pas un souci d'esthètes ; c'est une menace qui frappe d'abord les plus vulnérables. En ce sens, l'écologie n'est pas l'ennemie des pauvres, mais leur intérêt le plus direct.
+
+Le vrai problème n'est donc pas de choisir entre la fin du mois et la fin du monde, comme le résume une formule répandue. C'est de refuser ce faux dilemme. Une écologie qui aggraverait les inégalités serait vouée à l'échec, car elle susciterait le rejet. Mais une justice sociale qui ignorerait l'environnement condamnerait les plus démunis aux premières catastrophes. Les deux exigences ne s'opposent pas ; elles doivent être tenues ensemble.
+
+Concrètement, cela signifie que la transition écologique doit être juste : que ses coûts ne pèsent pas sur les plus fragiles, que les alternatives soient rendues accessibles à tous, que l'effort demandé soit proportionné aux moyens de chacun. Une écologie qui n'est pas sociale se condamne elle-même ; une politique sociale qui n'est pas écologique prépare de pires injustices.
+
+L'écologie n'est un luxe que lorsqu'on la conçoit mal. Bien pensée, elle est au contraire ce qui protège d'abord ceux qui ont le moins.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-084",
+    title: "L'espoir est-il raisonnable ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Entre le déni et le désespoir, y a-t-il une place pour un espoir lucide ?",
+    blurbEn:
+      "Faced with the climate crisis, denial and despair both lead to inaction. Is there room for a clear-eyed hope — and is hope even the right word? (Section: Climate and responsibility, 4/5.)",
+    body: `Face à l'ampleur de la crise écologique, deux attitudes opposées mènent au même résultat : l'inaction. La première est le déni, qui refuse de voir le problème ou en minimise la gravité, et permet ainsi de ne rien changer. La seconde est le désespoir, qui juge la situation si désespérée que tout effort paraît vain, et conduit lui aussi à baisser les bras. Entre ces deux impasses, y a-t-il une place pour une autre attitude, un espoir qui soit à la fois lucide et actif ?
+
+Le désespoir mérite qu'on le prenne au sérieux, car il n'est pas absurde. Les nouvelles sont souvent alarmantes, les progrès lents, les résistances puissantes. Devant ce constat, le découragement est une réaction compréhensible, et il serait vain de le nier par un optimisme forcé. Un espoir qui refuserait de regarder la réalité en face ne serait qu'une forme polie du déni.
+
+Pourtant, le désespoir comporte un défaut décisif : il se trompe sur la nature de l'avenir. Il suppose que le pire est certain, alors que rien ne l'est. L'avenir n'est pas écrit ; il dépend, précisément, de ce que nous ferons. Or déclarer la partie perdue d'avance, c'est contribuer à la perdre, en démobilisant ceux qui pourraient encore agir. Le désespoir a ceci de paradoxal qu'il produit ce qu'il prétend seulement constater.
+
+C'est ici qu'un autre espoir devient possible, à condition de le bien comprendre. Il ne s'agit pas de croire naïvement que tout finira bien, ni de se rassurer à bon compte. Il s'agit de reconnaître que rien n'est joué, et que cette incertitude même est une raison d'agir. Puisque l'avenir dépend de nos actes, chaque effort compte, non parce qu'il garantit la victoire, mais parce qu'il pèse sur une issue encore ouverte. Cet espoir-là n'est pas une prédiction ; c'est un choix, et presque une responsabilité.
+
+On pourrait même dire que l'espoir, ainsi entendu, n'est pas un préalable à l'action, mais son fruit. Ce n'est pas parce qu'on espère qu'on agit ; c'est souvent en agissant qu'on retrouve l'espoir. Ceux qui s'engagent, à leur mesure, témoignent presque tous de ce renversement : l'action, en donnant un sens et une prise, dissipe l'accablement que l'inaction entretient.
+
+L'espoir raisonnable n'est donc ni l'optimisme béat ni la résignation déguisée. C'est la conviction que, l'avenir restant indéterminé, il vaut la peine de se battre pour l'infléchir. Non parce que nous sommes sûrs de gagner, mais parce que nous ne sommes pas sûrs de perdre — et que c'est déjà une raison suffisante.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-085",
+    title: "Consommer moins, un appauvrissement ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Réduire notre consommation, est-ce forcément vivre moins bien ?",
+    blurbEn:
+      "Must consuming less mean living worse? A reflection on the strange modern assumption that a good life requires an ever-growing pile of things. (Section: Climate and responsibility, 5/5.)",
+    body: `On associe spontanément la réduction de la consommation à un appauvrissement, comme si vivre avec moins de biens revenait nécessairement à vivre moins bien. Cette équation paraît évidente ; elle repose pourtant sur une croyance particulière, propre à notre époque, selon laquelle le bonheur dépendrait de la quantité de choses que nous possédons et consommons. Or cette croyance, à l'examen, se révèle plus fragile qu'il n'y paraît.
+
+Il ne s'agit pas de nier que la satisfaction des besoins matériels soit essentielle. Manquer du nécessaire — se nourrir, se loger, se soigner — est une véritable pauvreté, et il serait indécent de la relativiser. Personne de sensé ne prétend que le dénuement rend heureux. La question n'est pas là ; elle concerne ce qui se passe une fois le nécessaire assuré. Et sur ce point, les observations convergent : au-delà d'un certain seuil, l'accumulation de biens n'accroît plus guère le bien-être.
+
+Ce constat s'explique par un mécanisme bien connu. Nous nous habituons vite à ce que nous acquérons. L'objet longtemps désiré, une fois obtenu, cesse rapidement de nous réjouir, et un nouveau désir prend sa place. Cette course sans fin — désirer, obtenir, s'habituer, désirer encore — nous maintient dans une insatisfaction permanente, où chaque acquisition n'apaise que brièvement un manque aussitôt renouvelé. Consommer davantage ne comble pas ce manque ; il l'entretient.
+
+Dans cette perspective, consommer moins pourrait n'être pas un appauvrissement, mais une libération. Se défaire de la logique de l'accumulation, c'est échapper à une course épuisante, retrouver du temps, de l'argent et de l'attention pour ce qui compte vraiment. Car ce qui rend les vies riches — les relations, l'engagement, la création, la nature, le temps libre — ne s'achète guère, et l'obsession de posséder nous en détourne souvent.
+
+Il faut se garder, ici, d'un piège inverse : celui de faire de la sobriété une nouvelle morale culpabilisante, ou de romantiser le manque. Vivre avec moins n'a de sens que si l'essentiel est assuré, et il serait cruel de prêcher la frugalité à ceux qui subissent déjà la privation. La sobriété heureuse est un choix ; imposée, elle n'est que misère.
+
+Mais pour ceux qui ont assez, la question mérite d'être posée sans préjugé : et si vivre mieux, ce n'était pas avoir davantage, mais désirer autrement ? Consommer moins n'est un appauvrissement que si l'on a d'abord confondu la richesse avec l'abondance des choses.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-086",
+    title: "Apprend-on vraiment à l'école ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On y passe des années. Que reste-t-il, des années plus tard ?",
+    blurbEn:
+      "We spend years in school, yet forget most of the content. So what does education actually leave behind — and what is it really for? (Section: Learning and the mind, 1/5.)",
+    body: `Nous passons à l'école une part considérable de notre enfance et de notre jeunesse. Pourtant, si l'on nous interrogeait sur ce que nous y avons appris, bien des connaissances se révéleraient étonnamment effacées. Les dates, les formules, les règles patiemment mémorisées se sont, pour la plupart, envolées. Ce constat, un peu troublant, conduit à une question radicale : apprend-on vraiment à l'école, et si oui, quoi au juste ?
+
+On peut être tenté d'en conclure que l'école échoue, puisque tant de ses contenus s'oublient. Mais cette conclusion repose sur une conception étroite de ce qu'apprendre veut dire. Réduire l'éducation à l'accumulation de connaissances, c'est passer à côté de l'essentiel. Car ce qui reste, des années plus tard, n'est pas la liste des savoirs engrangés, mais quelque chose de plus profond et de plus durable.
+
+Ce qui reste, d'abord, ce sont des façons de penser. Apprendre à lire un texte, à suivre un raisonnement, à résoudre un problème, à douter d'une affirmation : ces compétences, une fois acquises, ne s'oublient pas comme une date. Elles se sont incorporées, sont devenues des manières d'aborder le monde. On oublie le contenu d'un cours de mathématiques ; on garde, souvent sans le savoir, la rigueur qu'il a contribué à former.
+
+Ce qui reste, ensuite, c'est un rapport au savoir. L'école, quand elle réussit, ne transmet pas seulement des connaissances : elle apprend à apprendre, éveille la curiosité, montre qu'on peut comprendre ce qui semblait obscur. Cette confiance dans sa propre capacité à saisir le monde est peut-être le plus précieux des héritages, car elle permet de continuer à apprendre bien après avoir quitté les bancs de l'école.
+
+Ce qui reste, enfin, ce sont des rencontres et des ouvertures. Un professeur qui a transmis le goût d'une discipline, un livre qui a révélé un monde, une idée qui a bouleversé une manière de voir : ces éclairs-là façonnent une vie plus sûrement que mille leçons oubliées. L'école n'est pas seulement un lieu où l'on emmagasine ; c'est un lieu où l'on peut être éveillé.
+
+Reconnaître cela ne dispense pas de s'interroger sur ce que l'école transmet et sur la manière dont elle le fait. Mais cela déplace la question. Le but de l'éducation n'est pas de remplir des têtes de savoirs voués à s'effacer ; c'est de former des esprits capables de penser, de comprendre et de continuer à apprendre. À cette aune, ce qui s'oublie n'est pas ce qui compte le plus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-087",
+    title: "L'erreur, ennemie ou alliée ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On redoute l'erreur. Et si elle était la condition même du progrès ?",
+    blurbEn:
+      "We are taught to fear mistakes, yet error may be the very engine of learning. Why a culture that punishes error may teach us the wrong lesson. (Section: Learning and the mind, 2/5.)",
+    body: `Dès l'enfance, on nous apprend à redouter l'erreur. À l'école, elle est sanctionnée d'une mauvaise note ; dans la vie, elle est source de honte. Nous en venons à la considérer comme un échec, quelque chose qu'il faudrait éviter à tout prix. Or cette conception, si répandue soit-elle, repose sur un malentendu profond. Loin d'être seulement l'ennemie de l'apprentissage, l'erreur en est souvent la condition même.
+
+Réfléchissons à la manière dont on apprend réellement quoi que ce soit. On essaie, on se trompe, on comprend pourquoi, on corrige, on recommence. L'enfant qui apprend à marcher tombe d'innombrables fois ; celui qui apprend une langue accumule les fautes avant de parler juste. À aucun moment ces erreurs ne sont des échecs : elles sont les étapes nécessaires d'un progrès. Sans elles, aucun apprentissage véritable ne serait possible, car c'est précisément en se heurtant à ses limites qu'on les repousse.
+
+La recherche confirme cette intuition. On apprend mieux et plus durablement lorsqu'on a d'abord tâtonné, lutté, échoué, que lorsqu'on reçoit passivement une solution toute faite. L'effort qui précède l'erreur, et la compréhension qui suit sa correction, gravent le savoir bien plus profondément qu'une leçon assimilée sans difficulté. L'erreur n'est pas un accident regrettable du chemin ; elle est le chemin lui-même.
+
+Pourquoi, dès lors, la craignons-nous tant ? Parce que nous avons été formés dans une culture qui la punit au lieu de l'exploiter. En sanctionnant l'erreur plutôt qu'en s'en servant, on apprend aux gens non pas à ne plus se tromper, mais à avoir peur d'essayer. Or celui qui craint de se tromper ose moins, tente moins, et finalement apprend moins. La peur de l'erreur produit ainsi l'exact contraire de ce qu'elle prétend obtenir.
+
+Changer notre rapport à l'erreur aurait des effets considérables, bien au-delà de l'école. Dans le travail, dans la création, dans la recherche, les avancées naissent presque toujours d'une succession d'échecs surmontés. Les milieux qui autorisent l'erreur, qui la traitent comme une information plutôt que comme une faute, sont ceux où l'on invente et où l'on progresse le plus. À l'inverse, la peur de se tromper stérilise.
+
+Il ne s'agit pas de célébrer l'erreur pour elle-même, ni de se satisfaire de ses fautes. Il s'agit de cesser de la diaboliser, pour y voir ce qu'elle est vraiment : non l'échec de l'apprentissage, mais son instrument le plus fidèle. Qui n'accepte jamais de se tromper se condamne, en réalité, à ne jamais vraiment apprendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-088",
+    title: "La mémoire à l'ère de l'information disponible",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "À quoi bon retenir, puisque tout se trouve en un instant ?",
+    blurbEn:
+      "If any fact is a search away, why bother memorising anything? A reflection on what we lose when we outsource our memory to our devices. (Section: Learning and the mind, 3/5.)",
+    body: `Puisque n'importe quelle information se trouve désormais en un instant, une question s'impose : à quoi bon encore mémoriser quoi que ce soit ? Pourquoi retenir des dates, des faits, des connaissances, si notre téléphone les fournit à la demande ? Cette interrogation, que l'accès permanent au savoir rend inévitable, mérite mieux qu'une réponse hâtive, car elle touche à ce qu'est, au fond, la pensée.
+
+L'argument en faveur de l'oubli assumé paraît séduisant. À quoi sert de charger sa mémoire de données facilement accessibles ? Ne vaut-il pas mieux garder l'esprit libre, disponible pour réfléchir plutôt que pour retenir ? Après tout, nul ne regrette de ne plus mémoriser les numéros de téléphone. Déléguer à des machines le fardeau de la mémorisation semble un progrès, qui nous libérerait pour des tâches plus nobles.
+
+Cet argument, pourtant, néglige quelque chose d'essentiel. Penser ne consiste pas à manipuler des informations extérieures ; cela suppose de disposer, en soi, d'un savoir déjà intégré. On ne réfléchit pas avec ce qu'on peut consulter, mais avec ce qu'on sait. Pour comprendre une situation nouvelle, établir un lien, avoir une intuition, il faut que des connaissances soient présentes à l'esprit, prêtes à se combiner. Un esprit vide, qui devrait tout consulter, ne penserait pas ; il ne ferait que chercher.
+
+C'est que la mémoire n'est pas un simple entrepôt d'informations, séparé de l'intelligence. Elle en est l'un des matériaux. Les idées naissent du rapprochement de connaissances que l'on possède ; la créativité elle-même consiste souvent à relier des savoirs éloignés. Or on ne peut relier que ce qu'on a en tête. Externaliser entièrement sa mémoire reviendrait à se priver de la matière même avec laquelle on pense.
+
+Il ne s'agit pas de tout mémoriser, ni de tenir la mémorisation pour une fin en soi. L'accès facile à l'information est un progrès réel, et libérer l'esprit de certains fardeaux n'a rien de regrettable. Mais il faut distinguer ce qu'on peut sans dommage confier aux machines de ce qui doit demeurer en nous. Les connaissances fondamentales d'un domaine, celles qui permettent de comprendre et de raisonner, ne sauraient être déléguées sans que la pensée elle-même s'appauvrisse.
+
+La vraie question n'est donc pas de choisir entre mémoriser et consulter, mais de savoir quoi garder en soi et quoi confier au dehors. Un esprit qui ne retiendrait plus rien ne serait pas un esprit libéré ; ce serait un esprit dépossédé, incapable de penser sans béquille. Se souvenir reste, à l'ère de l'information disponible, une condition de la pensée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-089",
+    title: "Comprendre ou retenir ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Réciter n'est pas comprendre. Mais peut-on comprendre sans rien savoir ?",
+    blurbEn:
+      "Reciting is not understanding — but can you understand with no knowledge at all? A look at a false opposition that distorts how we think about learning. (Section: Learning and the mind, 4/5.)",
+    body: `Une opposition traverse depuis longtemps les débats sur l'éducation : faut-il privilégier la compréhension ou la mémorisation ? D'un côté, ceux qui dénoncent le « par cœur », cette récitation mécanique de savoirs mal digérés. De l'autre, ceux qui déplorent que les élèves ne sachent plus rien et confondent la compréhension avec une vague impression. Cette opposition, si elle contient une part de vérité, repose en réalité sur un faux dilemme.
+
+Ceux qui critiquent la mémorisation ont raison sur un point : réciter n'est pas comprendre. On peut restituer parfaitement une formule sans en saisir le sens, énoncer une règle sans savoir l'appliquer. Un savoir purement mémorisé, non relié, non compris, reste inerte : il ne sert à rien, s'oublie vite, et donne l'illusion d'un savoir qui n'en est pas un. À cet égard, la méfiance envers le « par cœur » est justifiée.
+
+Mais l'opposition inverse — comprendre sans avoir besoin de retenir — est tout aussi trompeuse. Car on ne comprend jamais dans le vide. La compréhension suppose des connaissances préalables auxquelles rattacher ce qu'on découvre. Pour comprendre un texte, il faut connaître les mots ; pour saisir une idée, il faut disposer d'autres idées qui l'éclairent. Prétendre développer la compréhension sans transmettre de savoirs, c'est vouloir construire sans matériaux. Un esprit qui ne sait rien ne comprend rien, faute de ce à quoi relier ce qu'il rencontre.
+
+En vérité, comprendre et retenir ne s'opposent pas ; ils se soutiennent mutuellement. On retient mieux ce qu'on a compris, car le sens donne aux connaissances une place et une cohérence qui les fixent. Et l'on comprend mieux quand on possède déjà un socle de savoirs, car la compréhension se nourrit de ce qu'on sait. Loin d'être ennemies, mémoire et compréhension sont les deux faces d'un même apprentissage.
+
+Le faux dilemme vient de ce qu'on a confondu la mauvaise mémorisation — mécanique, isolée, sans compréhension — avec la mémorisation en général. Or il existe une autre manière de retenir : celle qui accompagne la compréhension, qui fixe des savoirs qu'on a saisis et qui, à leur tour, permettront d'en comprendre de nouveaux. Cette mémoire-là n'est pas l'ennemie de l'intelligence ; elle en est l'un des fondements.
+
+La question n'est donc pas de choisir entre comprendre et retenir, comme s'il fallait sacrifier l'un à l'autre. Elle est de retenir en comprenant, et de comprendre grâce à ce qu'on a retenu. Séparer les deux, c'est se condamner soit à un savoir vide, soit à une compréhension sans objet.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-090",
+    title: "Apprendre toute la vie",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "L'apprentissage ne s'arrête pas au diplôme. Il ne devrait jamais s'arrêter.",
+    blurbEn:
+      "Learning does not end with a diploma — and in a fast-changing world, it cannot. A case for lifelong learning as a source of vitality, not just necessity. (Section: Learning and the mind, 5/5.)",
+    body: `Nous avons hérité d'une conception de l'apprentissage qui l'associe à une période précise de la vie : l'enfance et la jeunesse. On apprendrait à l'école, puis, le diplôme obtenu, on entrerait dans la vie active, l'apprentissage derrière soi. Cette vision, longtemps commode, est aujourd'hui doublement dépassée : par les nécessités d'un monde qui change vite, et par ce que l'on sait désormais du fonctionnement de l'esprit.
+
+La première raison est pratique. Dans un monde où les savoirs, les techniques et les métiers évoluent sans cesse, s'arrêter d'apprendre une fois pour toutes n'est plus tenable. Ce qu'on a appris dans sa jeunesse se périme, de nouvelles compétences deviennent nécessaires, des métiers apparaissent quand d'autres disparaissent. Continuer à apprendre n'est plus un luxe ni une passion réservée à quelques-uns ; c'est une condition pour rester à sa place dans un monde mouvant.
+
+Mais réduire l'apprentissage permanent à cette nécessité économique serait passer à côté de l'essentiel. Car apprendre tout au long de la vie n'est pas seulement une contrainte à subir ; c'est aussi l'une des grandes sources de vitalité de l'existence. Découvrir, comprendre, progresser dans un domaine nouveau procure une satisfaction profonde, à tout âge. L'esprit qui continue d'apprendre reste vivant, curieux, ouvert ; celui qui cesse se referme peu à peu.
+
+Les recherches sur le cerveau confortent cette idée. Contrairement à une croyance tenace, la capacité d'apprendre ne disparaît pas avec la jeunesse. Le cerveau conserve, jusqu'à un âge avancé, une remarquable faculté de se transformer, de créer de nouvelles connexions, de s'adapter. Apprendre plus tard demande parfois plus d'efforts, mais reste tout à fait possible, et cet exercice même contribue à préserver la vivacité de l'esprit avec les années.
+
+Encore faut-il se défaire de quelques obstacles intérieurs. Le premier est la croyance qu'on serait « trop vieux » pour apprendre, croyance qui, en décourageant d'essayer, se vérifie d'elle-même. Le second est la peur de recommencer, d'être débutant, de se tromper — cette peur de l'erreur qui, là encore, entrave l'apprentissage. Accepter d'être maladroit, de ne pas savoir, de progresser lentement, est le prix, modeste, de tout apprentissage nouveau.
+
+Apprendre toute la vie n'est donc pas seulement une obligation imposée par l'époque ; c'est une manière de rester pleinement vivant. L'esprit, comme le corps, s'entretient par l'exercice, et le jour où l'on cesse d'apprendre est peut-être celui où l'on commence, doucement, à vieillir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

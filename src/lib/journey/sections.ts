@@ -832,6 +832,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-climate",
+    band: "B2",
+    title: "Climate and responsibility",
+    goal: "The weight of small gestures, long-term thinking, ecology and justice, reasonable hope, consuming less.",
+    textIds: [
+      "starter-b2-081", // Le poids de nos petits gestes (introduces the core words)
+      "starter-b2-082", // Penser à long terme
+      "starter-b2-083", // L'écologie est-elle un luxe ?
+      "starter-b2-084", // L'espoir est-il raisonnable ?
+      "starter-b2-085", // Consommer moins, un appauvrissement ? (hardest)
+    ],
+  },
+  {
+    id: "b2-mind",
+    band: "B2",
+    title: "Learning and the mind",
+    goal: "What school really leaves behind, error as ally, memory in the age of search, understanding vs retaining, lifelong learning.",
+    textIds: [
+      "starter-b2-086", // Apprend-on vraiment à l'école ? (introduces the core words)
+      "starter-b2-087", // L'erreur, ennemie ou alliée ?
+      "starter-b2-088", // La mémoire à l'ère de l'information disponible
+      "starter-b2-089", // Comprendre ou retenir ?
+      "starter-b2-090", // Apprendre toute la vie (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",
