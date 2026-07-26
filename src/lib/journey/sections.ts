@@ -754,6 +754,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-work-identity",
+    band: "B2",
+    title: "Work and identity",
+    goal: "Argue about work as identity, the search for meaning, work spilling into life, lost trades, and working less.",
+    textIds: [
+      "starter-b2-051", // Sommes-nous ce que nous faisons ? (introduces the core words)
+      "starter-b2-052", // La quête de sens au travail
+      "starter-b2-053", // Le travail qui déborde
+      "starter-b2-054", // Quand le métier disparaît
+      "starter-b2-055", // Travailler moins, vivre mieux ? (hardest)
+    ],
+  },
+  {
+    id: "b2-attention",
+    band: "B2",
+    title: "Attention and media",
+    goal: "The attention economy, lost concentration, the news flood, the price of 'free', and reclaiming your focus.",
+    textIds: [
+      "starter-b2-056", // L'économie de l'attention (introduces the core words)
+      "starter-b2-057", // Pourquoi nous n'arrivons plus à nous concentrer
+      "starter-b2-058", // L'information en continu nous informe-t-elle ?
+      "starter-b2-059", // Le prix de la gratuité
+      "starter-b2-060", // Reprendre le contrôle de son attention (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

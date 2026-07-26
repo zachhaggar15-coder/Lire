@@ -13247,4 +13247,234 @@ Cette question-là a presque toujours une réponse.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-051",
+    title: "Sommes-nous ce que nous faisons ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "« Que faites-vous dans la vie ? » En apparence, une question anodine.",
+    blurbEn:
+      "Why the first question we ask a stranger is about their job — and what it reveals about how thoroughly work has colonised our sense of identity. (Section: Work and identity, 1/5.)",
+    body: `« Que faites-vous dans la vie ? » Lorsque nous rencontrons quelqu'un, cette question surgit presque toujours en premier, avant même que nous ayons appris son prénom ou ses passions. Elle paraît anodine, mais elle révèle quelque chose de profond sur notre époque : nous avons pris l'habitude de définir les gens, et de nous définir nous-mêmes, par notre travail.
+
+Il n'en a pas toujours été ainsi, et il n'en va pas ainsi partout. Dans bien des cultures, on se présente d'abord par sa famille, son village ou sa foi. Que le métier soit devenu la réponse par défaut n'a donc rien d'évident ; c'est le produit d'une histoire particulière, celle des sociétés où le travail salarié occupe le centre de l'existence.
+
+Cette identification a des vertus. Le travail structure nos journées, nous relie à d'autres et nous procure le sentiment d'être utiles. Bien qu'on le critique volontiers, peu de gens supporteraient de n'avoir absolument rien à faire. Le travail, pour beaucoup, n'est pas seulement une source de revenus : c'est une manière d'exister dans le regard des autres.
+
+Mais cette même identification comporte un piège. Si je ne suis que mon métier, que devient mon identité lorsque je le perds — par un licenciement, une maladie, ou simplement la retraite ? Beaucoup de personnes décrivent, au moment où elles cessent de travailler, une impression de vide, comme si on leur avait retiré non pas un emploi, mais une part d'elles-mêmes.
+
+Il serait naïf de prétendre qu'on pourrait se passer entièrement du travail comme repère. Mais il serait sage de ne pas y réduire toute notre valeur. Un être humain est aussi un parent, un ami, un voisin, un curieux, un rêveur — des rôles qu'aucune fiche de poste ne mentionne.
+
+La prochaine fois que nous rencontrerons un inconnu, nous pourrions essayer une autre question. Non pas « que faites-vous ? », mais « qu'est-ce qui vous passionne ? ». La réponse, souvent, nous en apprendrait davantage sur la personne réelle.
+
+Car ce que nous faisons pour gagner notre vie n'est qu'une facette de ce que nous sommes. La confondre avec le tout, c'est passer à côté de l'essentiel.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-052",
+    title: "La quête de sens au travail",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On ne demande plus seulement au travail de nous nourrir, mais de nous épanouir.",
+    blurbEn:
+      "We increasingly ask our jobs not just to pay us but to fulfil us. A look at whether that expectation is liberating, or a new kind of trap. (Section: Work and identity, 2/5.)",
+    body: `Une exigence nouvelle traverse le monde du travail : nous ne demandons plus seulement à notre métier de nous nourrir, mais de nous épanouir. Le travail devrait avoir du sens, correspondre à nos valeurs, nous permettre de « nous réaliser ». Cette aspiration, largement partagée par les jeunes générations, marque une rupture avec l'époque où l'on travaillait d'abord pour vivre, sans attendre de son emploi qu'il donne un sens à l'existence.
+
+Cette évolution a quelque chose d'admirable. Qu'on refuse de passer huit heures par jour à une tâche que l'on juge absurde ou nuisible témoigne d'une exigence morale. Que des salariés quittent un poste bien rémunéré pour une activité plus modeste mais qu'ils estiment utile n'est pas de la naïveté : c'est le signe qu'ils placent le sens au-dessus du confort.
+
+Pourtant, cette quête comporte ses propres dangers. En attendant du travail qu'il comble tous nos besoins — matériels, sociaux et spirituels —, nous lui confions une charge qu'il ne peut peut-être pas porter. Un emploi qui déçoit devient alors non plus un simple désagrément, mais un échec personnel. La déception est d'autant plus vive que l'attente était élevée.
+
+Il faut aussi reconnaître un privilège dans cette exigence. Chercher du sens dans son travail suppose qu'on ait le choix. Une grande partie de l'humanité travaille avant tout pour survivre, et se demander si son emploi « a du sens » relèverait, pour elle, du luxe. Le discours sur l'épanouissement professionnel oublie parfois cette réalité.
+
+Faut-il pour autant renoncer à cette aspiration ? Certainement pas. Mais il serait peut-être plus juste de chercher le sens à plusieurs endroits de la vie, et non dans le seul travail. Un emploi supportable qui laisse du temps et de l'énergie pour ce qu'on aime vaut peut-être mieux qu'une passion dévorante qui ne laisse plus rien.
+
+Le travail peut avoir du sens ; il ne devrait pas avoir à en porter tout le poids. Attendre qu'un emploi nous sauve, c'est presque à coup sûr le condamner à nous décevoir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-053",
+    title: "Le travail qui déborde",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Les courriels du soir, les messages du week-end : la frontière s'efface.",
+    blurbEn:
+      "Email at night, messages on weekends: the boundary between work and life is dissolving. Why 'always available' is quietly costing us more than we think. (Section: Work and identity, 3/5.)",
+    body: `Il fut un temps où quitter son lieu de travail signifiait, littéralement, quitter son travail. On fermait la porte du bureau ou de l'atelier, et ce qui restait à faire attendait le lendemain. Cette frontière, autrefois nette, s'est progressivement effacée. Les courriels du soir, les messages du week-end, la possibilité permanente d'être joint : le travail déborde désormais sur des espaces et des heures qui lui échappaient.
+
+Cette évolution s'est faite sans qu'on la décide vraiment. Les outils qui permettent de travailler à distance ont d'abord été présentés comme une libération : on pourrait enfin s'organiser à sa guise. Mais cette liberté s'est retournée. Puisqu'il est possible de répondre à tout moment, il devient difficile de justifier qu'on ne le fasse pas. La disponibilité, d'abord facultative, s'est muée en attente implicite.
+
+Les conséquences, que la recherche commence à documenter, sont préoccupantes. Un esprit qui n'est jamais tout à fait déconnecté ne se repose jamais tout à fait. Même sans travailler, on guette. Cette vigilance de fond épuise, moins visiblement qu'une longue journée, mais plus durablement. Le repos suppose qu'on puisse, à un moment, cesser de penser à ses obligations — ce que la connexion permanente rend presque impossible.
+
+Certains pays ont tenté de réagir, en reconnaissant un « droit à la déconnexion » qui autorise à ignorer les sollicitations professionnelles en dehors des heures de travail. L'intention est bonne, mais une loi peine à défaire une culture. Tant que la disponibilité sera perçue comme une preuve d'engagement, les plus consciencieux continueront de répondre, quand bien même rien ne les y obligerait formellement.
+
+La responsabilité est donc partagée. Il appartient aux employeurs de ne pas récompenser la disponibilité permanente, et de distinguer l'urgence réelle de l'habitude. Mais il appartient aussi à chacun de reconquérir des espaces où le travail n'a pas droit de cité — un repas, une soirée, un dimanche.
+
+Une vie où le travail ne s'arrête jamais n'est pas une vie plus productive. C'est une vie où l'on ne se repose plus, et l'on finit par y perdre ce que le repos, seul, permet de reconstruire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-054",
+    title: "Quand le métier disparaît",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Des métiers entiers s'effacent. Que reste-t-il de ceux qui les exerçaient ?",
+    blurbEn:
+      "Whole trades vanish as technology advances. Beyond the economics lies a quieter loss: what happens to the identity and knowledge tied to a disappearing job. (Section: Work and identity, 4/5.)",
+    body: `L'histoire du travail est aussi une histoire de disparitions. Des métiers autrefois répandus se sont effacés, rendus inutiles par une invention, une machine ou un changement d'usage. Allumeurs de réverbères, opératrices téléphoniques, typographes : ces professions, qui occupaient des foules, n'existent pratiquement plus. Et le mouvement se poursuit, touchant aujourd'hui des métiers qu'on croyait à l'abri.
+
+On analyse généralement ce phénomène en termes économiques : des emplois détruits, d'autres créés, un solde à mesurer. Cette approche est nécessaire, mais elle laisse dans l'ombre une dimension plus intime. Un métier n'est pas seulement une source de revenus ; c'est un savoir-faire, une fierté, une place dans le monde. Lorsqu'il disparaît, ce n'est pas seulement un salaire qui s'évanouit, mais une identité.
+
+Prenons l'exemple d'un artisan dont le geste, transmis sur des générations, devient soudain sans objet. Même s'il retrouve un autre emploi, quelque chose s'est perdu qu'aucune reconversion ne remplace : la maîtrise patiemment acquise, la reconnaissance qui l'accompagnait, le sentiment d'appartenir à une lignée de gens qui faisaient la même chose. On lui demande, en somme, de renoncer non à une tâche, mais à une part de lui-même.
+
+Il serait vain de vouloir figer le monde pour préserver chaque métier. Le progrès technique, dans l'ensemble, a libéré les humains de travaux pénibles, et bien peu regretteraient sincèrement de descendre encore à la mine. Refuser tout changement au nom des emplois menacés reviendrait à condamner les générations futures à un présent perpétuel.
+
+Mais reconnaître la nécessité du changement n'oblige pas à en ignorer le coût humain. Une société qui accepte que des métiers disparaissent devrait, en retour, accompagner ceux qui les exerçaient — non par une simple indemnité, mais par les moyens réels de se reconstruire une place et une dignité.
+
+Car derrière chaque métier qui s'efface, il y a des personnes qui avaient appris à en être fières. L'oublier, c'est traiter comme une simple statistique ce qui est, pour elles, une déchirure.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-055",
+    title: "Travailler moins, vivre mieux ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Et si l'on travaillait moins ? L'idée revient, sérieusement débattue.",
+    blurbEn:
+      "The idea of working less — a four-day week, shorter hours — keeps returning. A measured look at whether it would make us better off, or simply poorer. (Section: Work and identity, 5/5.)",
+    body: `L'idée revient périodiquement, et elle est aujourd'hui débattue sérieusement : et si l'on travaillait moins ? Semaine de quatre jours, réduction du temps de travail, ralentissement volontaire — sous des formes diverses, une même question se pose. Après des décennies passées à produire toujours davantage, ne serait-il pas temps de convertir une partie de cette richesse en temps libre plutôt qu'en biens supplémentaires ?
+
+Les partisans de cette idée avancent des arguments solides. Les gains de productivité, disent-ils, ont été considérables : nous produisons en quelques heures ce qui exigeait autrefois des journées entières. Or ces gains se sont presque toujours traduits par une hausse de la consommation, rarement par une baisse du temps de travail. On aurait pu choisir de travailler moins ; on a préféré posséder plus. Rien n'interdit de choisir autrement.
+
+À ces arguments s'ajoutent des considérations de santé et d'écologie. Un temps de travail réduit diminuerait l'épuisement, laisserait de la place à la vie familiale, à l'engagement, au repos. Et une société qui produit et consomme un peu moins pèserait un peu moins lourd sur une planète dont les limites se rappellent à nous.
+
+Les objections, toutefois, ne sont pas négligeables. Travailler moins signifie, à moins de gains de productivité équivalents, produire moins et donc, potentiellement, gagner moins. Or tout le monde ne peut pas se permettre une telle baisse de revenus. Ce qui séduit ceux qui vivent confortablement pourrait aggraver la situation des plus modestes. Une réduction du temps de travail qui ne serait pas pensée avec soin risquerait de creuser les inégalités qu'elle prétend réduire.
+
+Il faut également se garder d'une illusion : le temps libéré n'est pas automatiquement un temps heureux. Encore faut-il savoir qu'en faire. Le loisir, lui aussi, s'apprend, et une société qui ne saurait remplir son temps que par la consommation passive n'y gagnerait pas grand-chose.
+
+La question n'est donc pas de savoir s'il faut travailler moins dans l'absolu, mais comment, pour qui, et en échange de quoi. Bien menée, une telle évolution pourrait enrichir nos vies. Mal pensée, elle ne ferait que déplacer les problèmes. Le temps, comme l'argent, ne vaut que par l'usage qu'on en fait.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-056",
+    title: "L'économie de l'attention",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Ce qui est gratuit a pourtant un prix : votre attention.",
+    blurbEn:
+      "Free apps and sites cost nothing in money because the real currency is your attention — and understanding that changes how you see the screens around you. (Section: Attention and media, 1/5.)",
+    body: `Nous vivons entourés de services qui ne nous coûtent rien : réseaux sociaux, moteurs de recherche, vidéos, jeux. Cette gratuité paraît si naturelle qu'on ne s'interroge guère sur elle. Pourtant, ces entreprises comptent parmi les plus riches du monde. Comment prospèrent-elles en offrant, semble-t-il, leurs produits ? La réponse tient en une formule devenue célèbre : si c'est gratuit, c'est que vous êtes le produit.
+
+Ce que ces services vendent, ce n'est pas leur application, mais notre attention. Chaque minute passée devant un écran peut être mesurée, analysée, puis revendue à des annonceurs. Notre regard est une marchandise, et notre temps, une ressource que ces entreprises se disputent. On a donné à ce phénomène un nom : l'économie de l'attention.
+
+Cette économie a une conséquence redoutable. Puisque le profit dépend du temps que nous passons connectés, tout est conçu pour nous retenir le plus longtemps possible. Les notifications qui nous rappellent, les contenus qui s'enchaînent sans fin, les récompenses imprévisibles qui nous incitent à revenir : rien de tout cela n'est accidentel. Ces mécanismes sont pensés, testés, affinés par des équipes entières, avec un objectif unique — capter notre attention et la garder.
+
+Le déséquilibre est saisissant. D'un côté, des entreprises disposant de moyens colossaux et d'une connaissance fine de nos comportements. De l'autre, un individu, seul face à son écran, dont la volonté ne fait pas le poids. Croire qu'il suffirait « d'avoir de la volonté » pour résister, c'est méconnaître à quel point la partie est inégale. On ne se reproche pas de céder au sommeil ; on ne devrait pas s'étonner de céder à des dispositifs conçus pour être irrésistibles.
+
+Comprendre cette logique ne suffit pas à s'en libérer, mais c'est un premier pas indispensable. Car tant que l'on croit que ces outils sont neutres, de simples instruments à notre service, on ne songe pas à s'en méfier. Or ils ne sont pas neutres : ils ont un intérêt, et cet intérêt n'est pas toujours le nôtre.
+
+Reconnaître que notre attention est convoitée, c'est commencer à la considérer comme ce qu'elle est : un bien précieux, limité, qu'il vaut la peine de défendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-057",
+    title: "Pourquoi nous n'arrivons plus à nous concentrer",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Lire dix pages sans vérifier son téléphone est devenu un exploit.",
+    blurbEn:
+      "Reading ten pages without checking your phone has become an achievement. What constant interruption does to the mind, and why concentration is a skill we are losing. (Section: Attention and media, 2/5.)",
+    body: `Beaucoup de gens font aujourd'hui le même constat, un peu inquiet : ils n'arrivent plus à se concentrer comme avant. Lire un livre pendant une heure, suivre un raisonnement long, rester absorbé dans une seule tâche sans céder à l'envie de vérifier son téléphone — ce qui allait de soi semble devenu difficile. Ce n'est pas une impression isolée ; c'est une expérience largement partagée, et elle mérite qu'on la prenne au sérieux.
+
+Il faut d'abord écarter une explication trop facile, celle qui accuserait un affaiblissement des individus. Nos cerveaux n'ont pas changé en vingt ans. Ce qui a changé, c'est l'environnement dans lequel ils fonctionnent. Nous vivons désormais sous un flot ininterrompu de sollicitations : notifications, messages, alertes, contenus qui réclament sans cesse notre regard. Or l'attention, par nature, se construit dans la durée et la continuité, précisément ce que ces interruptions détruisent.
+
+Chaque interruption a un coût que l'on sous-estime. Lorsque notre attention est détournée, même quelques secondes, il faut ensuite un effort et du temps pour retrouver le fil. Multipliez ces ruptures par les dizaines de fois où elles surviennent chaque jour, et vous obtenez un esprit qui ne se pose jamais vraiment, sautant d'un objet à l'autre sans jamais s'y enfoncer. On appelle parfois cela « l'attention partielle continue » : nous sommes un peu partout, et pleinement nulle part.
+
+Les conséquences dépassent le simple inconfort. La pensée profonde — celle qui permet de comprendre une idée complexe, de créer, de réfléchir vraiment — exige une concentration soutenue. Une culture qui rendrait cette concentration rare rendrait, du même coup, la pensée profonde plus rare. Ce n'est pas seulement notre confort qui est en jeu, mais notre capacité collective à réfléchir.
+
+La bonne nouvelle, c'est que la concentration se rééduque. Comme un muscle, elle se renforce par l'exercice : s'imposer des plages sans écran, lire de nouveau des textes longs, accepter l'ennui plutôt que de le fuir aussitôt. Rien de tout cela n'est spectaculaire, et rien n'est immédiat.
+
+Mais l'enjeu en vaut la peine. Retrouver sa capacité de concentration, ce n'est pas seulement mieux travailler ; c'est reconquérir la maîtrise de son propre esprit.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-058",
+    title: "L'information en continu nous informe-t-elle ?",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Jamais autant d'informations. Sommes-nous pour autant mieux informés ?",
+    blurbEn:
+      "We have never had access to so much news. Yet being flooded with information may leave us less informed, not more. A look at the paradox of the endless feed. (Section: Attention and media, 3/5.)",
+    body: `Jamais l'humanité n'a eu accès à autant d'informations. À toute heure, depuis n'importe où, nous pouvons savoir ce qui se passe à l'autre bout du monde, presque en temps réel. Cette abondance devrait faire de nous des citoyens exceptionnellement bien informés. Or rien n'est moins sûr, et il se pourrait même que l'inverse soit vrai.
+
+Le premier problème tient au volume. Un flot continu d'informations ne laisse pas le temps de les digérer. À peine avons-nous saisi un événement qu'un autre le chasse, puis un autre encore. Cette succession donne l'illusion de suivre le monde, alors qu'elle nous empêche de le comprendre. Comprendre exige du recul, des liens, une mise en perspective — tout ce que la rapidité interdit.
+
+Le deuxième problème tient à la nature de ce qui retient notre attention. Dans un espace saturé, seuls surnagent les contenus les plus frappants : le dramatique, le scandaleux, l'indignant. Non parce qu'ils sont les plus importants, mais parce qu'ils captent le regard. Ainsi se forme une image déformée du monde, où l'exceptionnel paraît ordinaire et où les évolutions lentes, pourtant décisives, restent invisibles faute d'être spectaculaires.
+
+Un troisième problème, plus insidieux, concerne nos émotions. L'information continue nous maintient dans un état d'alerte permanent, mêlant inquiétude, colère et impuissance. Or un esprit constamment agité juge mal. Submergés par des nouvelles anxiogènes sur lesquelles nous n'avons aucune prise, nous finissons souvent par un sentiment d'accablement qui ne débouche sur aucune action.
+
+Faut-il alors se couper de l'actualité ? Ce serait une erreur inverse, car s'informer reste un devoir dans une démocratie. La solution n'est pas de moins savoir, mais de savoir autrement. Mieux vaut lire quelques analyses approfondies qu'engloutir des dizaines de brèves ; mieux vaut choisir ses moments d'information que subir un flux permanent.
+
+S'informer véritablement demande un effort que la facilité du flux continu nous fait oublier. Être exposé à l'information n'est pas la comprendre, et confondre les deux, c'est se croire éclairé quand on ne fait que s'agiter dans le noir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-059",
+    title: "Le prix de la gratuité",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Nos données personnelles sont la monnaie que nous versons sans y penser.",
+    blurbEn:
+      "The personal data we hand over without thinking is the currency behind 'free' services. Why privacy is not just an individual concern but a collective one. (Section: Attention and media, 4/5.)",
+    body: `Nous avons vu que les services « gratuits » se paient de notre attention. Ils se paient aussi d'autre chose, de plus intime encore : nos données personnelles. Chaque recherche, chaque achat, chaque déplacement, chaque message laisse une trace, et ces traces, rassemblées, dessinent un portrait d'une précision troublante. Ce portrait a une valeur, et c'est en partie lui que nous cédons en échange de la gratuité.
+
+Longtemps, on a balayé cette inquiétude d'une phrase : « Je n'ai rien à cacher. » L'argument paraît de bon sens ; il est pourtant fragile. La protection de la vie privée n'a jamais consisté à cacher des fautes, mais à conserver un espace qui n'appartient qu'à soi. Fermer la porte de sa chambre n'est pas l'aveu d'un secret coupable ; c'est l'exercice d'une liberté élémentaire. Or c'est précisément cette porte que la collecte massive de données tend à ouvrir en permanence.
+
+De plus, l'objection du « rien à cacher » suppose que ces données ne serviront jamais contre nous. Rien ne le garantit. Une information anodine aujourd'hui peut devenir compromettante demain, si les lois changent ou si le pouvoir change de mains. Des données rassemblées dans un but précis peuvent être détournées vers un autre. Confier ses traces, c'est faire un pari sur l'avenir, un pari dont on ne maîtrise pas les termes.
+
+Il faut enfin dépasser la seule perspective individuelle. Même si chacun, pour son propre compte, acceptait volontiers cet échange, l'accumulation de nos données confère à quelques entreprises un pouvoir considérable : celui de prévoir nos comportements, d'orienter nos choix, parfois d'influencer nos opinions. Ce pouvoir ne concerne pas seulement les individus qui l'ont, en apparence, consenti ; il pèse sur la société tout entière.
+
+Défendre la vie privée n'est donc pas une lubie de gens ayant quelque chose à dissimuler. C'est défendre une condition de la liberté, pour soi et pour les autres. La gratuité qu'on nous offre a un prix, et ce prix n'est pas seulement personnel : il est, en dernière analyse, politique.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-060",
+    title: "Reprendre le contrôle de son attention",
+    category: "everyday life",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Résister ne relève pas de la seule volonté. Cela s'organise.",
+    blurbEn:
+      "If our attention is under constant, engineered assault, resisting takes more than willpower. Practical, honest strategies for reclaiming a mind of one's own. (Section: Attention and media, 5/5.)",
+    body: `Après avoir mesuré la puissance des dispositifs qui captent notre attention, une question demeure : que faire ? Se contenter de « faire des efforts » ne suffit pas, on l'a vu, tant la partie est inégale. Reprendre le contrôle de son attention ne relève pas de la seule volonté ; cela s'organise, avec méthode et sans illusions.
+
+Le premier principe est de modifier son environnement plutôt que de compter sur sa discipline. Notre volonté est une ressource limitée qui s'épuise vite ; il est vain de la solliciter à chaque instant. Mieux vaut agir en amont : désactiver les notifications, retirer les applications les plus captivantes de son téléphone, éloigner physiquement l'écran pendant le travail ou le repas. On ne résiste pas à une tentation qu'on ne rencontre pas.
+
+Le deuxième principe est de réhabiliter l'ennui. Nous avons pris l'habitude de combler le moindre vide — une file d'attente, un trajet, une pause — en saisissant aussitôt notre téléphone. Or ces moments creux ont une valeur : c'est souvent dans l'ennui que l'esprit vagabonde, réfléchit, invente. En les remplissant systématiquement, nous nous privons d'un temps précieux. Accepter de s'ennuyer, parfois, c'est rendre à l'esprit un espace qu'on lui avait retiré.
+
+Le troisième principe est de cultiver délibérément l'attention longue. De même qu'un flot d'interruptions l'affaiblit, un exercice régulier la renforce. Lire un livre entier, écouter une œuvre musicale sans rien faire d'autre, se promener sans écouteurs : ces pratiques, en apparence modestes, réentraînent une faculté que le monde ambiant tend à atrophier.
+
+Il importe enfin d'aborder tout cela sans culpabilité. Le but n'est pas de renoncer aux outils numériques, qui rendent d'immenses services, ni de se juger sévèrement à chaque écart. Il est de rétablir un rapport de force plus juste, où c'est nous qui décidons de notre attention, et non des machines conçues pour la capter.
+
+Notre attention est ce que nous avons de plus précieux : c'est par elle que nous entrons en contact avec le monde, avec les autres, avec nous-mêmes. La défendre n'est pas un caprice ; c'est veiller sur l'étoffe même de notre vie intérieure.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
