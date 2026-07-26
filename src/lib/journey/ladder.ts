@@ -5,7 +5,8 @@ import { tokenize } from "@/lib/words";
 import { JOURNEY_SECTIONS, sectionedTextIds } from "@/lib/journey/sections";
 
 export const TEXTS_PER_STAGE = 5;
-export const JOURNEY_BANDS: Difficulty[] = ["A1", "A2", "B1", "B2"];
+export const ROUTE_STAGES_PER_BAND = 10;
+export const JOURNEY_BANDS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const INTRINSIC_WEIGHTS = {
   sentenceLength: 0.35,
@@ -39,6 +40,13 @@ export interface Stage {
   indexInBand: number;
   textIds: string[];
   label: string;
+  themes: StageTheme[];
+}
+
+export interface StageTheme {
+  id: string;
+  title: string;
+  textIds: string[];
 }
 
 export interface BuiltLadder {
@@ -100,6 +108,30 @@ function autoStageLabel(texts: ReadingText[], stageNumber: number): string {
   return labels[(stageNumber - 1) % labels.length];
 }
 
+function compactThemeTitle(title: string): string {
+  return title
+    .replace(/\s*&\s*/g, " and ")
+    .replace(/\s+in daily life$/i, "")
+    .replace(/^The\s+/i, "")
+    .trim();
+}
+
+function groupedStageLabel(themes: StageTheme[]): string {
+  const titles = themes.map((theme) => compactThemeTitle(theme.title));
+  if (titles.length <= 2) return titles.join(" + ");
+  return `${titles[0]} + ${titles[titles.length - 1]}`;
+}
+
+function groupThemesForRoute(themes: StageTheme[]): StageTheme[][] {
+  if (themes.length <= ROUTE_STAGES_PER_BAND) return themes.map((theme) => [theme]);
+
+  return Array.from({ length: ROUTE_STAGES_PER_BAND }, (_, index) => {
+    const start = Math.floor((index * themes.length) / ROUTE_STAGES_PER_BAND);
+    const end = Math.floor(((index + 1) * themes.length) / ROUTE_STAGES_PER_BAND);
+    return themes.slice(start, Math.max(start + 1, end));
+  });
+}
+
 function scoreBand(texts: ReadingText[]): Array<{ text: ReadingText; intrinsicDifficulty: number }> {
   const raw = texts.map(rawScore);
   const ranges = {
@@ -139,10 +171,16 @@ export function buildLadder(): BuiltLadder {
       difficultyById.set(scored.text.id, scored.intrinsicDifficulty);
     }
 
+    const stageThemes: StageTheme[] = [];
+    const pushTheme = (theme: StageTheme) => {
+      if (theme.textIds.length > 0) stageThemes.push(theme);
+    };
+
     let indexInBand = 0;
-    const pushStage = (textIds: string[], label: string) => {
+    const pushStage = (themes: StageTheme[]) => {
+      const textIds = themes.flatMap((theme) => theme.textIds);
       const globalIndex = stages.length;
-      stages.push({ globalIndex, band, indexInBand, textIds, label });
+      stages.push({ globalIndex, band, indexInBand, textIds, label: groupedStageLabel(themes), themes });
       for (const id of textIds) {
         texts.push({
           id,
@@ -160,10 +198,10 @@ export function buildLadder(): BuiltLadder {
     //    order (NOT re-sorted by difficulty) — this is where vocabulary threads.
     for (const section of JOURNEY_SECTIONS.filter((s) => s.band === band)) {
       const ids = section.textIds.filter((id) => textById.has(id));
-      if (ids.length > 0) pushStage(ids, section.title);
+      pushTheme({ id: section.id, title: section.title, textIds: ids });
     }
 
-    // 2) Everything else in the band, difficulty-sorted and chunked into stages.
+    // 2) Everything else in the band, difficulty-sorted and chunked into route themes.
     //    Sort by the SAME whole-band difficulty recorded above: re-scoring just
     //    the remainder would renormalise over a different range and could order
     //    the stages differently from the intrinsicDifficulty each text carries.
@@ -176,8 +214,16 @@ export function buildLadder(): BuiltLadder {
     let stageNumber = 1;
     for (let i = 0; i < remaining.length; i += TEXTS_PER_STAGE) {
       const slice = remaining.slice(i, i + TEXTS_PER_STAGE);
-      pushStage(slice.map((text) => text.id), autoStageLabel(slice, stageNumber));
+      pushTheme({
+        id: `${band.toLowerCase()}-practice-${stageNumber}`,
+        title: autoStageLabel(slice, stageNumber),
+        textIds: slice.map((text) => text.id),
+      });
       stageNumber += 1;
+    }
+
+    for (const themes of groupThemesForRoute(stageThemes)) {
+      pushStage(themes);
     }
   }
 

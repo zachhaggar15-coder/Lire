@@ -121,8 +121,8 @@ export default function LessonCompleteScreen({
   const celebrationScene = sceneForCompletion(level);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-6 py-10">
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-cream px-5 pb-6 pt-[calc(var(--safe-top)+1rem)]">
+      <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop text-center">
           <div className="relative mx-auto h-28 w-28">
             <LessonScene name={celebrationScene} size={112} className="lesson-scene-float rounded-[1.6rem] bg-brand-light p-1 shadow-raised" />

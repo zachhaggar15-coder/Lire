@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
 import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { XPProgressBar } from "@/components/GamificationCards";
-import type { Difficulty } from "@/types";
+import type { Category, Difficulty } from "@/types";
 import { getProgress } from "@/lib/progress";
 import { formatCategory } from "@/lib/format";
 import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
@@ -26,6 +26,79 @@ interface JourneyMapProps {
 }
 
 type PathAlign = "left" | "center" | "right";
+type MapToneName = "mint" | "sky" | "gold" | "violet" | "pink";
+
+interface MapTone {
+  name: MapToneName;
+  node: string;
+  text: string;
+  connector: string;
+  panel: string;
+  panelBorder: string;
+  row: string;
+  rowNext: string;
+  badge: string;
+}
+
+const MUTED_CONNECTOR = "bg-cream-dark/80";
+
+const MAP_TONES: Record<MapToneName, MapTone> = {
+  mint: {
+    name: "mint",
+    node: "bg-accent-mint text-accent-minttext",
+    text: "text-accent-minttext",
+    connector: "bg-accent-minttext/65",
+    panel: "bg-accent-mint/30",
+    panelBorder: "border-accent-mint",
+    row: "bg-accent-mint/25",
+    rowNext: "bg-accent-mint/60",
+    badge: "bg-accent-mint text-accent-minttext",
+  },
+  sky: {
+    name: "sky",
+    node: "bg-accent-sky text-accent-skytext",
+    text: "text-accent-skytext",
+    connector: "bg-accent-skytext/62",
+    panel: "bg-accent-sky/30",
+    panelBorder: "border-accent-sky",
+    row: "bg-accent-sky/25",
+    rowNext: "bg-accent-sky/60",
+    badge: "bg-accent-sky text-accent-skytext",
+  },
+  gold: {
+    name: "gold",
+    node: "bg-accent-gold text-accent-goldtext",
+    text: "text-accent-goldtext",
+    connector: "bg-accent-goldtext/62",
+    panel: "bg-accent-gold/30",
+    panelBorder: "border-accent-gold",
+    row: "bg-accent-gold/25",
+    rowNext: "bg-accent-gold/60",
+    badge: "bg-accent-gold text-accent-goldtext",
+  },
+  violet: {
+    name: "violet",
+    node: "bg-accent-violet text-accent-violettext",
+    text: "text-accent-violettext",
+    connector: "bg-accent-violettext/62",
+    panel: "bg-accent-violet/30",
+    panelBorder: "border-accent-violet",
+    row: "bg-accent-violet/25",
+    rowNext: "bg-accent-violet/60",
+    badge: "bg-accent-violet text-accent-violettext",
+  },
+  pink: {
+    name: "pink",
+    node: "bg-accent-pink text-accent-pinktext",
+    text: "text-accent-pinktext",
+    connector: "bg-accent-pinktext/62",
+    panel: "bg-accent-pink/30",
+    panelBorder: "border-accent-pink",
+    row: "bg-accent-pink/25",
+    rowNext: "bg-accent-pink/60",
+    badge: "bg-accent-pink text-accent-pinktext",
+  },
+};
 
 export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelChange }: JourneyMapProps = {}) {
   const [, setVersion] = useState(0);
@@ -51,10 +124,11 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   const nextText = next ? getJourneyText(next.textId) : null;
   const nextVisible = nextText?.difficulty === visibleBand ? next : null;
   const visibleStages = journey.stages.filter((stageProgress) => stageProgress.stage.band === visibleBand);
+  const hasVisibleStages = visibleStages.length > 0;
   const visibleCleared = visibleStages.filter((stageProgress) => stageProgress.status === "cleared").length;
   const visibleCompletedTargets = visibleStages.reduce((sum, stageProgress) => sum + Math.min(stageProgress.completedCount, stageProgress.targetCount), 0);
   const visibleTotalTargets = visibleStages.reduce((sum, stageProgress) => sum + stageProgress.targetCount, 0);
-  const visibleProgress = visibleTotalTargets === 0 ? 1 : visibleCompletedTargets / visibleTotalTargets;
+  const visibleProgress = !hasVisibleStages ? 0 : visibleTotalTargets === 0 ? 1 : visibleCompletedTargets / visibleTotalTargets;
   const currentStageIsVisible = visibleStages.some((stageProgress) => stageProgress.stage.globalIndex === journey.currentStageIndex);
   const expandedStageIndex = openStageIndex !== null && visibleStages.some((stageProgress) => stageProgress.stage.globalIndex === openStageIndex)
     ? openStageIndex
@@ -130,6 +204,11 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
           <XPProgressBar value={visibleProgress} label={`${visibleBand} progress`} />
           {nextVisible ? (
             <NextTextCard next={nextVisible} />
+          ) : !hasVisibleStages ? (
+            <div className="mt-4 rounded-[1.25rem] bg-cream px-4 py-3">
+              <p className="text-sm font-extrabold text-ink">{visibleBand} route coming soon</p>
+              <p className="mt-1 text-xs font-semibold text-ink-muted">New guided articles will appear here when they are added.</p>
+            </div>
           ) : (
             <div className="mt-4 rounded-[1.25rem] bg-cream px-4 py-3">
               <p className="text-sm font-extrabold text-ink">{visibleBand} route complete</p>
@@ -147,22 +226,34 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
           </span>
         </div>
 
-        <ol className="relative mx-auto max-w-[28rem] py-3 before:absolute before:bottom-8 before:left-1/2 before:top-10 before:w-1.5 before:-translate-x-1/2 before:rounded-full before:bg-cream-dark/80">
-          {visibleStages.map((stageProgress, index) => (
-            <StageMapNode
-              key={stageProgress.stage.globalIndex}
-              stageProgress={stageProgress}
-              next={nextVisible}
-              skipped={skipped}
-              expanded={expandedStageIndex === stageProgress.stage.globalIndex}
-              currentRef={stageProgress.status === "current" ? currentRef : undefined}
-              pathAlign={mapNodeAlign(index)}
-              onToggleStage={handleToggleStage}
-              onSkip={handleSkip}
-              onJump={handleJump}
-            />
-          ))}
-        </ol>
+        {hasVisibleStages ? (
+          <ol className="relative mx-auto max-w-[28rem] py-3 before:absolute before:bottom-8 before:left-1/2 before:top-10 before:w-1.5 before:-translate-x-1/2 before:rounded-full before:bg-cream-dark/80">
+            {visibleStages.map((stageProgress, index) => {
+              const tone = toneForStage(stageProgress.stage);
+              return (
+                <StageMapNode
+                  key={stageProgress.stage.globalIndex}
+                  stageProgress={stageProgress}
+                  next={nextVisible}
+                  skipped={skipped}
+                  expanded={expandedStageIndex === stageProgress.stage.globalIndex}
+                  currentRef={stageProgress.status === "current" ? currentRef : undefined}
+                  pathAlign={mapNodeAlign(index)}
+                  tone={tone}
+                  hasNextStage={index < visibleStages.length - 1}
+                  onToggleStage={handleToggleStage}
+                  onSkip={handleSkip}
+                  onJump={handleJump}
+                />
+              );
+            })}
+          </ol>
+        ) : (
+          <div className="mt-4 rounded-[1.25rem] bg-cream px-4 py-5 text-center">
+            <p className="text-sm font-extrabold text-ink">No {visibleBand} map stops yet</p>
+            <p className="mt-1 text-xs font-semibold text-ink-muted">The colour trail and route stages will apply automatically when this level is added.</p>
+          </div>
+        )}
       </section>
     </section>
   );
@@ -176,7 +267,7 @@ function LevelSwitcher({
   onChange: (level: Difficulty) => void;
 }) {
   return (
-    <div className="mt-4 grid grid-cols-4 gap-1 rounded-full bg-cream-card/70 p-1" role="group" aria-label="Reading level">
+    <div className="mt-4 grid grid-cols-3 gap-1 rounded-2xl bg-cream-card/70 p-1 sm:grid-cols-6" role="group" aria-label="Reading level">
       {JOURNEY_BANDS.map((level) => (
         <button
           key={level}
@@ -200,7 +291,7 @@ function NextTextCard({ next }: { next: NextTextRecommendation }) {
   return (
     <Link
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className="mt-4 flex items-center gap-3 rounded-[1.25rem] bg-brand px-4 py-3 text-white shadow-raised active:scale-[0.99]"
+      className="journey-next-glow mt-4 flex items-center gap-3 rounded-[1.25rem] bg-brand px-4 py-3 text-white active:scale-[0.99]"
     >
       <span className="min-w-0 flex-1">
         <span className="block text-xs font-bold uppercase text-white/75">Next stop</span>
@@ -221,6 +312,8 @@ function StageMapNode({
   expanded,
   currentRef,
   pathAlign,
+  tone,
+  hasNextStage,
   onToggleStage,
   onSkip,
   onJump,
@@ -231,6 +324,8 @@ function StageMapNode({
   expanded: boolean;
   currentRef?: RefObject<HTMLLIElement | null>;
   pathAlign: PathAlign;
+  tone: MapTone;
+  hasNextStage: boolean;
   onToggleStage: (stageIndex: number) => void;
   onSkip: (textId: string) => void;
   onJump: (stage: Stage) => void;
@@ -243,8 +338,9 @@ function StageMapNode({
   const stageNext = current && next?.stageIndex === stage.globalIndex ? next : null;
   const canJump = !!stageNext?.canJumpAhead && stageProgress.completedCount > 0;
   const panelId = `journey-stage-${stage.globalIndex}`;
+  const reached = cleared || current;
   const nodeClass = current
-    ? "ring-4 ring-brand/20"
+    ? "journey-next-glow ring-4 ring-brand/30"
     : cleared
       ? "opacity-95"
       : locked
@@ -253,7 +349,13 @@ function StageMapNode({
 
   return (
     <li id={current ? "journey-current" : undefined} ref={currentRef} className="relative pb-8">
-      <span aria-hidden="true" className={`absolute top-8 z-0 h-1.5 rounded-full bg-cream-dark/80 ${pathStemClass(pathAlign)}`} />
+      {hasNextStage && (
+        <span
+          aria-hidden="true"
+          className={`absolute bottom-0 left-1/2 top-8 z-0 w-1.5 -translate-x-1/2 rounded-full ${cleared ? tone.connector : "bg-transparent"}`}
+        />
+      )}
+      <span aria-hidden="true" className={`absolute top-8 z-0 h-1.5 rounded-full ${reached ? tone.connector : MUTED_CONNECTOR} ${pathStemClass(pathAlign)}`} />
       <div className={`relative z-10 flex ${pathAlignClass(pathAlign)}`}>
         <div className="w-[10rem] text-center">
           <button
@@ -270,30 +372,44 @@ function StageMapNode({
               current={current}
               locked={locked}
               number={stage.indexInBand + 1}
+              tone={tone}
             />
           </button>
-          <p className={`mt-2 min-h-[2.25rem] break-words text-sm font-extrabold leading-tight ${locked ? "text-ink-muted" : "text-ink"}`}>
+          <p className={`mt-2 min-h-[2.25rem] break-words text-sm font-extrabold leading-tight ${locked ? "text-ink-muted" : reached ? tone.text : "text-ink"}`}>
             {stage.label}
           </p>
           <p className="mt-1 text-xs font-bold text-ink-muted">
             {stageProgress.completedCount}/{stageProgress.targetCount}
+            {stage.themes.length > 1 ? ` - ${stage.themes.length} themes` : ""}
           </p>
         </div>
       </div>
 
       {expanded && !locked && (
-        <div id={panelId} className="relative z-20 mt-3 rounded-[1.25rem] border border-cream-dark bg-cream-card p-3 shadow-card">
+        <div id={panelId} className={`relative z-20 mt-3 rounded-[1.25rem] border p-3 shadow-card ${tone.panelBorder} ${tone.panel}`}>
           <XPProgressBar value={progress} label="Progress" className="mb-3" />
-          <div className="space-y-2">
-            {stage.textIds.map((textId) => (
-              <LessonPreviewRow
-                key={textId}
-                textId={textId}
-                next={stageNext?.textId === textId ? stageNext : null}
-                skipped={skipped.has(textId)}
-                allowSkip={current}
-                onSkip={onSkip}
-              />
+          <div className="space-y-3">
+            {stage.themes.map((theme) => (
+              <div key={theme.id}>
+                {stage.themes.length > 1 && (
+                  <p className="mb-2 rounded-full bg-cream-card/70 px-3 py-1 text-xs font-extrabold text-ink-muted">
+                    {theme.title}
+                  </p>
+                )}
+                <div className="space-y-2">
+                  {theme.textIds.map((textId) => (
+                    <LessonPreviewRow
+                      key={textId}
+                      textId={textId}
+                      next={stageNext?.textId === textId ? stageNext : null}
+                      skipped={skipped.has(textId)}
+                      allowSkip={current}
+                      onSkip={onSkip}
+                      tone={tone}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
           {current && canJump && (
@@ -317,12 +433,14 @@ function LessonPreviewRow({
   skipped,
   allowSkip,
   onSkip,
+  tone,
 }: {
   textId: string;
   next: NextTextRecommendation | null;
   skipped: boolean;
   allowSkip: boolean;
   onSkip: (textId: string) => void;
+  tone: MapTone;
 }) {
   const text = getJourneyText(textId);
   if (!text) return null;
@@ -338,11 +456,11 @@ function LessonPreviewRow({
   return (
     <div
       className={`rounded-2xl px-3 py-3 ${
-        next ? "bg-brand-light shadow-card" : muted ? "bg-cream-dark/70 opacity-75" : "bg-cream"
+        next ? `${tone.rowNext} shadow-card` : muted ? "bg-cream-dark/70 opacity-75" : tone.row
       }`}
     >
       <div className="flex items-start gap-3">
-        <LessonStatusDot completed={completed} next={!!next} muted={muted} />
+        <LessonStatusDot completed={completed} next={!!next} muted={muted} tone={tone} />
         <div className="min-w-0 flex-1">
           <p className={`break-words text-sm font-bold leading-snug ${muted ? "text-ink-muted" : "text-ink"}`}>{text.title}</p>
           <p className="mt-1 text-xs font-semibold text-ink-muted">{statusLabel}</p>
@@ -352,7 +470,7 @@ function LessonPreviewRow({
         <Link
           href={`/reader/${encodeURIComponent(text.id)}`}
           className={`rounded-full px-3 py-1.5 text-xs font-bold active:scale-95 ${
-            next ? "bg-brand text-white shadow-raised" : completed ? "bg-accent-mint text-accent-minttext" : "bg-cream-card text-brand shadow-card"
+            next ? "bg-brand text-white shadow-raised" : completed ? tone.badge : "bg-cream-card text-brand shadow-card"
           }`}
         >
           {completed ? "Review" : progress === "in-progress" ? "Continue" : next ? "Start" : "Open"}
@@ -371,15 +489,46 @@ function LessonPreviewRow({
   );
 }
 
-function LessonStatusDot({ completed, next, muted }: { completed: boolean; next: boolean; muted: boolean }) {
+function LessonStatusDot({ completed, next, muted, tone }: { completed: boolean; next: boolean; muted: boolean; tone: MapTone }) {
   const className = completed
-    ? "bg-brand"
+    ? tone.connector
     : next
       ? "bg-accent-gold"
       : muted
         ? "bg-ink-muted/40"
         : "bg-cream-dark";
   return <span aria-hidden="true" className={`mt-1 h-3 w-3 shrink-0 rounded-full ${className}`} />;
+}
+
+function toneForStage(stage: Stage): MapTone {
+  const label = stage.label.toLowerCase();
+  if (/(money|value|consumer|budget|price|credit|debt|spend|cost|argent|prix)/.test(label)) return MAP_TONES.gold;
+  if (/(travel|trip|train|tourism|transport|journey|voyage|city|cities|housing|ville|logement)/.test(label)) return MAP_TONES.sky;
+  if (/(technology|media|learning|language|work|career|attention|justice|thought|information|school|education|digital|ai)/.test(label)) return MAP_TONES.violet;
+  if (/(food|culture|art|music|history|tradition|relationship|social|generation|volunteer|memory|story|meal)/.test(label)) return MAP_TONES.pink;
+  if (/(health|science|environment|nature|body|climate|wildlife|medicine|mind|water|energy)/.test(label)) return MAP_TONES.mint;
+
+  switch (dominantCategory(stage)) {
+    case "science":
+      return MAP_TONES.mint;
+    case "sport":
+      return MAP_TONES.sky;
+    case "culture":
+      return MAP_TONES.pink;
+    case "news-style":
+      return MAP_TONES.violet;
+    default:
+      return MAP_TONES.mint;
+  }
+}
+
+function dominantCategory(stage: Stage): Category | null {
+  const counts = new Map<Category, number>();
+  for (const textId of stage.textIds) {
+    const text = getJourneyText(textId);
+    if (text) counts.set(text.category, (counts.get(text.category) ?? 0) + 1);
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
 }
 
 function mapNodeAlign(index: number): PathAlign {
@@ -419,19 +568,21 @@ function StageStatusIcon({
   current,
   locked,
   number,
+  tone,
 }: {
   cleared: boolean;
   current: boolean;
   locked: boolean;
   number: number;
+  tone: MapTone;
 }) {
   const className = cleared
-    ? "bg-brand text-white shadow-raised"
+    ? `${tone.node} shadow-raised`
     : current
       ? "bg-cream-card text-brand shadow-raised"
       : locked
         ? "bg-cream-card text-ink-muted ring-1 ring-cream-dark"
-        : "bg-cream-card text-ink ring-1 ring-cream-dark shadow-card";
+        : `${tone.panel} ${tone.text} ring-1 ring-cream-dark shadow-card`;
 
   return (
     <span aria-hidden="true" className={`flex h-16 w-16 items-center justify-center rounded-full ${className}`}>

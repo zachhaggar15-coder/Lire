@@ -93,7 +93,8 @@ function isStageCleared(stage: Stage, skippedIds: Set<string>, progressById?: Re
 
 function firstStageIndexForBand(level: Difficulty): number {
   const ladder = buildLadder();
-  return Math.max(0, ladder.stages.findIndex((stage) => stage.band === level));
+  const index = ladder.stages.findIndex((stage) => stage.band === level);
+  return index >= 0 ? index : ladder.stages.length;
 }
 
 function readFeedbackMap(options?: JourneyStateOptions): Record<string, ArticleDifficultyFeedback> {

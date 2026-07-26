@@ -66,8 +66,9 @@ The main screens now share a stronger learning-app language:
 - `LessonScene` artwork is no longer only a tiny thumbnail. It appears at
   hero scale on onboarding, the Today lesson card, the journey header, reader
   lesson frames, and the completion screen.
-- `JourneyMap` renders guided readings as a connected path with check, lock,
-  current-location, and chevron icons instead of letter placeholders.
+- `JourneyMap` renders guided readings as a connected, colour-tinted path with
+  check, lock, current-location, and chevron icons. Full guided levels are
+  grouped into ten themed route stages.
 - The reader keeps the article body quiet, but the title/help area is framed
   with a category tint and a thin scroll-progress rail.
 - Review cards use a stacked-card treatment and a small answer reveal motion,
@@ -1777,7 +1778,7 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   credentials configured, everything behaves exactly as before.
 - **Category and difficulty filters** on the home page — filter chips for
   category (All/News/Sport/Culture/Science/Everyday life) and CEFR
-  difficulty (All/A1/A2/B1/B2).
+  difficulty (All/A1/A2/B1/B2/C1/C2).
 - **Real PNG app icons** — 192×192, 512×512, and a 512×512 maskable variant
   (`scripts/generate-icons.mjs`, via `sharp`), wired into
   `public/manifest.json` and `layout.tsx`'s Apple touch icon.

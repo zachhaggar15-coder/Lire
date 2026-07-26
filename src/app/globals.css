@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -127,6 +128,11 @@ h3 {
 
   .review-answer-reveal {
     animation: review-answer-reveal 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .journey-next-glow {
+    animation: journey-next-glow 2.35s ease-in-out infinite;
+    box-shadow: 0 0.55rem 1.4rem rgb(47 93 70 / 0.16), 0 0 0 0.18rem rgb(47 93 70 / 0.1);
   }
 
   .reward-progress-fill {
@@ -365,6 +371,16 @@ h3 {
   }
 }
 
+@keyframes journey-next-glow {
+  0%,
+  100% {
+    box-shadow: 0 0.55rem 1.4rem rgb(47 93 70 / 0.14), 0 0 0 0.16rem rgb(47 93 70 / 0.1);
+  }
+  50% {
+    box-shadow: 0 0.8rem 1.8rem rgb(47 93 70 / 0.22), 0 0 0 0.32rem rgb(47 93 70 / 0.14);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reward-word-save,
   .app-route-shell,
@@ -379,6 +395,7 @@ h3 {
   .lesson-complete-flame,
   .lesson-scene-float,
   .review-answer-reveal,
+  .journey-next-glow,
   .reward-progress-fill::after,
   .reward-completion-ring,
   .reward-ember::before,

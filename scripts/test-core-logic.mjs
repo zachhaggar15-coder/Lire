@@ -40,7 +40,7 @@ import { texts as readingTexts } from "../src/data/texts.ts";
 import { starterTexts } from "../src/data/starterTexts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts, getDailyExtraReadingTexts } from "../src/lib/publicDomainBank.ts";
-import { buildLadder, JOURNEY_BANDS, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
+import { buildLadder, JOURNEY_BANDS, ROUTE_STAGES_PER_BAND, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
 import { JOURNEY_SECTIONS, sectionedTextIds } from "../src/lib/journey/sections.ts";
 import { getJourneyState, getNextTextForReader, STAGE_CLEAR_RATIO } from "../src/lib/journey/state.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
@@ -312,10 +312,22 @@ console.log("\n--- Public-domain reading bank ---");
 
   const ladder = buildLadder();
   const guidedStarterTexts = starterTexts.filter((text) => JOURNEY_BANDS.includes(text.difficulty));
+  check("journey bands are ready for C1 and C2", JOURNEY_BANDS.includes("C1") && JOURNEY_BANDS.includes("C2"));
   check("journey ladder contains the guided starter set", ladder.texts.length === guidedStarterTexts.length);
   check(
-    "journey stages group at most five texts",
-    ladder.stages.every((stage) => stage.textIds.length > 0 && stage.textIds.length <= TEXTS_PER_STAGE)
+    "dense guided bands are split into ten route stages",
+    ["A1", "A2", "B1", "B2"].every((band) => ladder.stages.filter((stage) => stage.band === band).length === ROUTE_STAGES_PER_BAND),
+    JOURNEY_BANDS.map((band) => `${band}:${ladder.stages.filter((stage) => stage.band === band).length}`).join(",")
+  );
+  check(
+    "journey stages preserve themed groups inside each route stage",
+    ladder.stages.every(
+      (stage) =>
+        stage.textIds.length > 0 &&
+        stage.themes.length > 0 &&
+        stage.themes.every((theme) => theme.textIds.length > 0 && theme.textIds.length <= TEXTS_PER_STAGE) &&
+        stage.themes.flatMap((theme) => theme.textIds).join(",") === stage.textIds.join(",")
+    )
   );
   check(
     "journey stages use themed labels instead of numbered stage labels",
@@ -330,22 +342,25 @@ console.log("\n--- Public-domain reading bank ---");
       return entries.every((entry, index) => index === 0 || entry.intrinsicDifficulty >= entries[index - 1].intrinsicDifficulty);
     })
   );
-  // Themed sections must lead their band, in authored order and authored reading
-  // order (this is what carries the vocabulary progression).
+  // Themed sections must lead their band as route themes, in authored order and
+  // authored reading order (this is what carries the vocabulary progression).
   check(
-    "each themed section is a stage with its exact texts in authored order",
+    "each themed section stays grouped with its exact texts in authored order",
     JOURNEY_SECTIONS.every((section) => {
-      const found = ladder.stages.find((stage) => stage.band === section.band && stage.label === section.title);
-      return !!found && found.textIds.join(",") === section.textIds.join(",");
+      const found = ladder.stages
+        .filter((stage) => stage.band === section.band)
+        .flatMap((stage) => stage.themes)
+        .find((theme) => theme.id === section.id);
+      return !!found && found.title === section.title && found.textIds.join(",") === section.textIds.join(",");
     })
   );
   check(
-    "each themed section leads its band before the difficulty-sorted stages",
-    JOURNEY_SECTIONS.every((section) => {
-      const bandStages = ladder.stages.filter((stage) => stage.band === section.band);
-      const sectionCount = JOURNEY_SECTIONS.filter((s) => s.band === section.band).length;
-      const sectionStageIndex = bandStages.findIndex((s) => s.label === section.title);
-      return sectionStageIndex >= 0 && sectionStageIndex < sectionCount;
+    "authored route themes lead each band before practice themes",
+    JOURNEY_BANDS.every((band) => {
+      const authored = JOURNEY_SECTIONS.filter((section) => section.band === band);
+      const bandThemes = ladder.stages.filter((stage) => stage.band === band).flatMap((stage) => stage.themes);
+      const firstPracticeIndex = bandThemes.findIndex((theme) => theme.id.includes("-practice-"));
+      return authored.every((section, index) => bandThemes[index]?.id === section.id) && (firstPracticeIndex === -1 || firstPracticeIndex >= authored.length);
     })
   );
 
@@ -356,6 +371,15 @@ console.log("\n--- Public-domain reading bank ---");
     !!a2StartStage &&
       a2State.currentStageIndex === a2StartStage.globalIndex &&
       a2State.stages.filter((stage) => stage.stage.band === "A1").every((stage) => stage.optional && stage.status === "cleared")
+  );
+  const c1Stages = ladder.stages.filter((stage) => stage.band === "C1");
+  const c1State = getJourneyState({ selectedLevel: "C1", progressById: {}, skippedTextIds: [] });
+  check(
+    "advanced bands can be selected before or after content lands",
+    c1Stages.length === 0
+      ? c1State.currentStageIndex === null
+      : c1State.currentStageIndex === c1Stages[0].globalIndex,
+    `C1 stages=${c1Stages.length}, current=${c1State.currentStageIndex}`
   );
 
   const firstA1Stage = ladder.stages.find((stage) => stage.band === "A1");
