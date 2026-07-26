@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { getSavedWords, deleteWord, clearWords } from "@/lib/storage";
+import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate } from "@/lib/format";
@@ -17,9 +17,6 @@ const FILTERS: { value: WordsFilter; label: string }[] = [
   { value: "known", label: "Known" },
   { value: "missing", label: "Untranslated" },
 ];
-
-/** Cycled by row index purely for visual rhythm — matches the multi-colored word list in the design template. */
-const WORD_ACCENTS = ["border-sky-400", "border-orange-400", "border-violet-400", "border-emerald-400", "border-rose-400"];
 
 function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
   if (filter === "missing") return !!word.missingFromDictionary;
@@ -60,37 +57,34 @@ export default function WordsPage() {
   }
 
   const counts: Record<WordsFilter, number> = {
-    learning: words.filter((w) => w.status === "learning").length,
-    unsure: words.filter((w) => w.status === "unsure").length,
-    known: words.filter((w) => w.status === "known").length,
-    missing: words.filter((w) => w.missingFromDictionary).length,
+    learning: words.filter((word) => word.status === "learning").length,
+    unsure: words.filter((word) => word.status === "unsure").length,
+    known: words.filter((word) => word.status === "known").length,
+    missing: words.filter((word) => word.missingFromDictionary).length,
   };
 
-  const filtered = words.filter((w) => matchesFilter(w, filter));
+  const filtered = words.filter((word) => matchesFilter(word, filter));
   const learningPhrases = phrases.filter((phrase) => phrase.status !== "known");
   const knownPhrases = phrases.filter((phrase) => phrase.status === "known");
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-4 flex items-end justify-between">
+    <div className="ligne-screen">
+      <header className="mb-5 flex items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-ink">Vocabulary</h1>
-          <p className="text-sm text-ink-muted">
-            {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length}{" "}
-            {phrases.length === 1 ? "phrase" : "phrases"}
+          <p className="ligne-label">Saved from your texts</p>
+          <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Vocabulary</h1>
+          <p className="mt-2 text-sm text-ink-muted">
+            {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length} {phrases.length === 1 ? "phrase" : "phrases"}
           </p>
         </div>
         {tab === "words" && words.length > 0 && (
-          <button
-            onClick={handleClear}
-            className="rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
-          >
+          <button type="button" onClick={handleClear} className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-rose-ink">
             Clear all
           </button>
         )}
       </header>
 
-      <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-dark p-1">
+      <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-cream-fill p-1">
         {[
           { id: "words" as const, label: `Words (${words.length})` },
           { id: "phrases" as const, label: `Phrases (${phrases.length})` },
@@ -99,143 +93,47 @@ export default function WordsPage() {
             key={item.id}
             type="button"
             onClick={() => setTab(item.id)}
-            className={`rounded-xl px-3 py-2 text-sm font-bold active:scale-95 ${
-              tab === item.id ? "bg-cream-card text-brand shadow-card" : "text-ink-muted"
-            }`}
+            aria-pressed={tab === item.id}
+            className={`rounded-full px-3 py-2 text-sm font-semibold ${tab === item.id ? "bg-brand text-cream" : "text-ink-muted"}`}
           >
             {item.label}
           </button>
         ))}
       </div>
 
-      {ready && tab === "words" && words.length === 0 && (
-        <div className="mt-16 text-center">
-          <p className="text-ink-muted">No saved words yet.</p>
-          <Link
-            href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
-          >
-            Start reading
-          </Link>
-        </div>
-      )}
+      {ready && tab === "words" && words.length === 0 && <EmptyState copy="No saved words yet." />}
 
       {tab === "words" && words.length > 0 && (
         <>
-          <div className="mb-4 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-            {FILTERS.map((f) => (
+          <div className="-mx-[22px] mb-4 flex gap-2 overflow-x-auto px-[22px] pb-1">
+            {FILTERS.map((item) => (
               <button
-                key={f.value}
-                onClick={() => setFilter(f.value)}
-                className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
-                  filter === f.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                key={item.value}
+                type="button"
+                onClick={() => setFilter(item.value)}
+                aria-pressed={filter === item.value}
+                className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold ${
+                  filter === item.value ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
                 }`}
               >
-                {f.label} ({counts[f.value]})
+                {item.label} ({counts[item.value]})
               </button>
             ))}
           </div>
 
-          {filtered.length === 0 && (
-            <p className="mt-10 text-center text-sm text-ink-muted">
-              No words in this list yet.
-            </p>
+          {filtered.length === 0 ? (
+            <p className="mt-10 text-center text-sm text-ink-muted">No words in this list yet.</p>
+          ) : (
+            <ul className="space-y-3">
+              {filtered.map((word) => (
+                <WordCard key={word.word} word={word} onDelete={handleDelete} />
+              ))}
+            </ul>
           )}
-
-          <ul className="space-y-3">
-            {filtered.map((w, i) => (
-              <li
-                key={w.word}
-                className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${WORD_ACCENTS[i % WORD_ACCENTS.length]}`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-baseline gap-x-2">
-                      <p className="text-lg font-bold text-ink">{w.word}</p>
-                      {w.lemma && w.lemma !== w.word && (
-                        <span className="text-xs text-ink-muted">({w.lemma})</span>
-                      )}
-                      {w.partOfSpeech && (
-                        <span className="text-xs font-medium text-ink-muted">
-                          {w.partOfSpeech}
-                          {w.gender && ` · ${w.gender}`}
-                        </span>
-                      )}
-                      {w.cefr && (
-                        <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
-                          {w.cefr}
-                        </span>
-                      )}
-                    </div>
-
-                    <p
-                      className={`text-sm ${
-                        w.primaryTranslation === NOT_TRANSLATED_YET
-                          ? "italic text-ink-muted"
-                          : "text-ink-muted"
-                      }`}
-                    >
-                      {w.primaryTranslation}
-                    </p>
-                    {w.translations.length > 1 && (
-                      <p className="text-xs text-ink-muted">
-                        Also: {w.translations.slice(1).join(", ")}
-                      </p>
-                    )}
-
-                    {w.exampleSentenceFr && (
-                      <p className="mt-1 text-xs italic text-ink-muted">
-                        {w.exampleSentenceFr}
-                        <span className="not-italic text-ink-muted"> — {w.exampleSentenceEn}</span>
-                      </p>
-                    )}
-                    {w.articleContextSentence && (
-                      <p className="mt-1 line-clamp-2 text-xs text-ink-muted">
-                        <span className="font-semibold uppercase tracking-wide">Original article context: </span>
-                        “{w.articleContextSentence}”
-                      </p>
-                    )}
-
-                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-muted">
-                      {w.sourceTextTitle && (
-                        <span className="rounded-full bg-cream-dark px-2 py-0.5 font-medium text-ink-muted">
-                          {w.sourceTextTitle}
-                        </span>
-                      )}
-                      {w.savedAt && <span>Saved {formatDate(w.savedAt)}</span>}
-                      {w.reviewCount > 0 && <span>· Reviewed {w.reviewCount}×</span>}
-                    </div>
-                  </div>
-
-                  <div className="flex shrink-0 flex-col items-end gap-2">
-                    <button
-                      onClick={() => handleDelete(w.word)}
-                      aria-label={`Delete ${w.word}`}
-                      className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
-                    >
-                      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
         </>
       )}
 
-      {ready && tab === "phrases" && phrases.length === 0 && (
-        <div className="mt-16 text-center">
-          <p className="text-ink-muted">No saved phrases yet.</p>
-          <Link
-            href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
-          >
-            Start reading
-          </Link>
-        </div>
-      )}
+      {ready && tab === "phrases" && phrases.length === 0 && <EmptyState copy="No saved phrases yet." />}
 
       {tab === "phrases" && phrases.length > 0 && (
         <div className="space-y-5">
@@ -248,40 +146,113 @@ export default function WordsPage() {
   );
 }
 
+function EmptyState({ copy }: { copy: string }) {
+  return (
+    <div className="mt-16 text-center">
+      <p className="text-ink-muted">{copy}</p>
+      <Link href="/" className="ligne-pill mt-3 inline-block bg-brand text-cream">
+        Start reading
+      </Link>
+    </div>
+  );
+}
+
+function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string) => void }) {
+  return (
+    <li className="rounded-card border border-cream-dark bg-cream-card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <p className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
+            {word.lemma && word.lemma !== word.word && (
+              <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">({word.lemma})</span>
+            )}
+            {word.partOfSpeech && (
+              <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
+                {word.partOfSpeech}
+                {word.gender && ` - ${word.gender}`}
+              </span>
+            )}
+            {word.cefr && (
+              <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
+                {word.cefr}
+              </span>
+            )}
+          </div>
+
+          <p className={`mt-1 text-sm ${word.primaryTranslation === NOT_TRANSLATED_YET ? "italic text-ink-muted" : "font-semibold text-ink"}`}>
+            {word.primaryTranslation}
+          </p>
+          {word.translations.length > 1 && <p className="text-xs text-ink-muted">Also: {word.translations.slice(1).join(", ")}</p>}
+
+          {word.exampleSentenceFr && (
+            <p className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
+              {word.exampleSentenceFr}
+              <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>
+            </p>
+          )}
+          {word.articleContextSentence && (
+            <p className="mt-2 line-clamp-2 text-xs text-ink-muted">
+              <span className="font-mono text-[9px] uppercase tracking-[0.1em]">Original context: </span>
+              "{word.articleContextSentence}"
+            </p>
+          )}
+
+          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-cream-fill pt-3 text-xs text-ink-muted">
+            {word.sourceTextTitle && (
+              <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-muted">
+                {word.sourceTextTitle}
+              </span>
+            )}
+            {word.savedAt && <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
+            {word.reviewCount > 0 && <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onDelete(word.word)}
+          aria-label={`Delete ${word.word}`}
+          className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-cream-fill text-rose-ink"
+        >
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+    </li>
+  );
+}
+
 function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
   const known = phrases.filter((phrase) => phrase.status === "known").length;
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
   const progress = phrases.length === 0 ? 0 : Math.round((known / phrases.length) * 100);
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-card">
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Phrase mastery</h2>
-          <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the whole chunk feels automatic.</p>
+          <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Phrase mastery</h2>
+          <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the chunk feels automatic.</p>
         </div>
         <span className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{progress}%</span>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-2xl bg-cream px-2 py-2">
-          <p className="text-lg font-extrabold text-ink">{phrases.length}</p>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Saved</p>
-        </div>
-        <div className="rounded-2xl bg-cream px-2 py-2">
-          <p className="text-lg font-extrabold text-ink">{known}</p>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Known</p>
-        </div>
-        <div className="rounded-2xl bg-cream px-2 py-2">
-          <p className="text-lg font-extrabold text-ink">{contexts}</p>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Contexts</p>
-        </div>
+        <StatBox value={phrases.length} label="Saved" />
+        <StatBox value={known} label="Known" />
+        <StatBox value={contexts} label="Contexts" />
       </div>
-      <Link
-        href="/review"
-        className="mt-3 block rounded-full bg-cream-dark px-4 py-2 text-center text-sm font-semibold text-ink active:scale-95"
-      >
+      <Link href="/review" className="ligne-pill mt-3 block bg-cream-fill text-center text-ink-muted">
         Review phrases
       </Link>
     </section>
+  );
+}
+
+function StatBox({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="rounded-2xl bg-cream-sunken px-2 py-2">
+      <p className="font-numeral text-2xl leading-none text-ink">{value}</p>
+      <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{label}</p>
+    </div>
   );
 }
 
@@ -300,20 +271,24 @@ function PhraseList({
 
   return (
     <section>
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="mb-2 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
       <ul className="space-y-3">
-        {phrases.map((phrase, index) => (
-          <li key={phrase.phrase} className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${WORD_ACCENTS[index % WORD_ACCENTS.length]}`}>
+        {phrases.map((phrase) => (
+          <li key={phrase.phrase} className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-lg font-bold text-ink">{phrase.phrase}</p>
-                <p className="text-sm text-ink-muted">{phrase.translation}</p>
+                <p className="font-french text-[22px] leading-tight text-ink">{phrase.phrase}</p>
+                <p className="mt-1 text-sm font-semibold text-ink">{phrase.translation}</p>
                 {phrase.contextSentence && (
-                  <p className="mt-1 line-clamp-2 text-xs italic text-ink-muted">"{phrase.contextSentence}"</p>
+                  <p className="mt-2 line-clamp-2 font-french text-[15px] italic leading-snug text-ink-muted">"{phrase.contextSentence}"</p>
                 )}
-                <div className="mt-2 flex flex-wrap gap-2 text-xs text-ink-muted">
-                  {phrase.sourceTextTitle && <span className="rounded-full bg-cream-dark px-2 py-0.5">{phrase.sourceTextTitle}</span>}
-                  <span>Saved {formatDate(phrase.savedAt)}</span>
+                <div className="mt-3 flex flex-wrap gap-2 border-t border-cream-fill pt-3 text-xs text-ink-muted">
+                  {phrase.sourceTextTitle && (
+                    <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.08em]">
+                      {phrase.sourceTextTitle}
+                    </span>
+                  )}
+                  <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
@@ -321,19 +296,13 @@ function PhraseList({
                   type="button"
                   onClick={() => onDelete(phrase.phrase)}
                   aria-label={`Delete ${phrase.phrase}`}
-                  className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
+                  className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-cream-fill text-rose-ink"
                 >
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
-                  </svg>
+                  <span aria-hidden="true">x</span>
                 </button>
                 {phrase.status !== "known" && (
-                  <button
-                    type="button"
-                    onClick={() => onKnown(phrase.phrase)}
-                    className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
-                  >
-                    Mark known
+                  <button type="button" onClick={() => onKnown(phrase.phrase)} className="ligne-pill bg-brand-light text-brand">
+                    Known
                   </button>
                 )}
               </div>

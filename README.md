@@ -5,10 +5,11 @@ public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
 A mobile-first Progressive Web App for reading short French texts — built to
-feel like a language-learning Kindle. The home page is a dashboard: Articles
-opens the stable daily reading bank, News opens the live French-only,
-quality-filtered RSS pool (120+ feeds; see "RSS language and content-quality
-filtering" below), and short snippets stay in their own dashboard block. Tap unknown words for an
+feel like a language-learning Kindle. The home page is now the guided Lessons
+map: one selected CEFR band at a time, ten themed stops where content exists,
+and old lessons still available for review. News is a separate bottom tab for
+the live French-only, quality-filtered RSS pool (120+ feeds; see "RSS language
+and content-quality filtering" below) plus short snippets. Tap unknown words for an
 **instant, fully offline** dictionary lookup (474 curated + ~15,000 generated
 entries), save the ones worth remembering, and come back later to **review
 words that are actually due**, on a real spaced-repetition schedule. AI word
@@ -47,34 +48,48 @@ backend, works instantly.
 
 ## Visual design system
 
-Lire uses a warm, paper-like interface with larger illustrated lesson moments
-and calm reading surfaces. The main palette lives in `tailwind.config.ts`, so
-components reference named tokens rather than raw hex values:
+Lire now follows the Ligne design direction: a warm paper phone interface,
+text-led lesson routes, restrained colour, and no decorative buttons that look
+clickable without doing anything. The main tokens live in `tailwind.config.ts`
+and `src/app/globals.css`.
 
 | Token | Value | Used for |
 | --- | --- | --- |
-| `cream` | `#F4EEE0` | Page background |
-| `cream-card` | `#FFFFFF` | Primary card and sheet surfaces |
-| `cream-dark` | `#E8DFC9` | Neutral rails, dividers, skeleton loaders, inactive pills |
-| `ink` | `#2B2A22` | Primary text |
-| `ink-muted` | `#6B6350` | Secondary text with AA contrast on cream and white |
-| `brand` / `brand-dark` / `brand-light` | `#2F5D46` / `#1F4534` / `#E3EEE7` | Primary actions, active states, path progress, streak accents |
-| `accent-pink` / `accent-sky` / `accent-violet` / `accent-gold` / `accent-mint` | soft category tones | Lesson frames, journey bands, onboarding choices, and unlock panels |
+| `cream` | `#FFFCF4` | Main app paper |
+| `cream-card` | `#FFFFFF` | Reading cards, settings panels, review cards |
+| `cream-fill` / `cream-sunken` | `#F1EBDC` / `#F8F4EA` | Switchers, inactive pills, quiet panels |
+| `cream-dark` / `cream-strong` | `#EAE2CF` / `#DED5BE` | Dividers, route rails, progress tracks |
+| `ink` / `ink-muted` / `ink-faint` | `#1B1915` / `#6E6858` / `#A79F8B` | Primary, secondary, and mono-label text |
+| `brand` / `brand-light` | `#16593C` / `#E4EFE7` | Primary actions, completed route colour, switches |
+| `yellow` / `rose` | `#F9D96B` / `#F3DCD8` | Current lesson card and soft warning/error surfaces |
 
-The main screens now share a stronger learning-app language:
+Typography is part of the product language:
 
-- `LessonScene` artwork is no longer only a tiny thumbnail. It appears at
-  hero scale on onboarding, the Today lesson card, the journey header, reader
-  lesson frames, and the completion screen.
-- `JourneyMap` renders guided readings as a connected, colour-tinted path with
-  check, lock, current-location, and chevron icons. Full guided levels are
-  grouped into ten themed route stages.
-- The reader keeps the article body quiet, but the title/help area is framed
-  with a category tint and a thin scroll-progress rail.
-- Review cards use a stacked-card treatment and a small answer reveal motion,
-  so spaced repetition feels more like working through a physical deck.
-- Headings use the Nunito display face with zero letter spacing. The reading
-  body remains on the system stack for legibility and fast rendering.
+- `Space Grotesk` for app UI.
+- `Newsreader` for French titles and reading text.
+- `Space Mono` for small route labels, metadata, and counters.
+- `Instrument Serif` for large numeric progress values.
+
+The primary app surfaces should keep these rules:
+
+- Lessons are the home screen. `JourneyMap` shows one selected CEFR band at a
+  time, split into ten themed stages where content exists. C1 and C2 are
+  first-class bands and render automatically as Claude adds sections.
+- The current stage is the only large yellow element on the route. Completed
+  progress fills the rail in green, so the map feels gradually coloured in as
+  the learner moves forward.
+- Stage dropdowns open and close in place, old/skipped lessons remain
+  reviewable, and locked stages stay simple and quiet.
+- Reader and completion screens stay compact and text-first. Decorative lesson
+  icons were removed from article titles so French text remains the focus.
+- Review auto-checks typed answers. The first correct typed pass gives a tick
+  and keeps the card in the deck; the second correct typed pass saves the word
+  as known.
+
+Content ownership note: article prose belongs in `src/data/starterTexts.ts`
+and themed registrations belong in `src/lib/journey/sections.ts`. The UI should
+not hard-code article titles or edit article content; it reads those files
+through the journey ladder.
 ## Run it locally
 
 ```bash
@@ -108,26 +123,16 @@ npm start
 ## Testing and linting
 
 ```bash
-npm test   # 163 checks across 3 scripts, no test framework
+npm test   # dependency-free logic suites, no Jest/Vitest
 npm run lint
 ```
 
-**`npm test`** runs three small, dependency-free Node scripts (Node's
-built-in TypeScript stripping — no Jest/Vitest, no build step):
-- `scripts/test-rss-filters.mjs` — language detection, content-quality
-  gating, boilerplate/paywall/bot-wall detection (14 checks).
-- `scripts/test-learning-logic.mjs` — lemma-guessing and spaced-repetition
-  scheduling (13 checks).
-- `scripts/test-core-logic.mjs` — recommendation-engine scoring signals,
-  article difficulty estimation, the full dictionary lookup chain (curated →
-  generated → custom → lemma-guess → missing, including the expanded
-  morphological analyser's irregular-verb, spelling-variant, and
-  compound-prefix guesses), the short-snippet content-quality tier,
-  recommendation preferences (hide source / save for later), onboarding, and
-  the Supabase sync module's pure merge logic (`mergeStoreValue`/
-  `itemTimestamp`), and the idiom/fixed-phrase dictionary batch — 136 checks. Run with
-  `node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs`
-  specifically (not plain `node scripts/test-core-logic.mjs`) — see below.
+**`npm test`** runs the dependency-free Node scripts in `scripts/` for RSS
+quality, learning/review logic, core recommendation/dictionary/journey logic,
+contextual translation, translation alignment, validation analytics, and
+dictionary accuracy. The larger scripts that import app modules run through
+`scripts/register-alias-loader.mjs`; use the npm script instead of calling
+those files directly unless you are debugging one suite.
 
 **Why a loader for that third script**: `signals.ts`, `difficulty.ts`, and
 `lookup.ts` all use this project's `@/` path alias internally (a
@@ -155,17 +160,19 @@ should catch.
 
 ## How the app works
 
-Bottom navigation has four tabs: **Read**, **Words**, **Review**, **Settings**.
-Reading history is available from the dashboard's **Articles Read** block.
+Bottom navigation has four tabs: **Lessons**, **News**, **Review**, and
+**You**. Lessons is the main app screen; News is the bottom-tab home for live
+articles and short snippets; saved vocabulary lives under You -> Words.
+Reading history is available from You -> Lessons read.
 
-1. **Read (home)** — `src/app/page.tsx`
-   Starts with the dashboard card, **Continue Reading banner** (if a text is
-   mid-read), **Short Snippets** (`src/components/ShortSnippetsBlock.tsx`),
-   and first-run onboarding. Full article discovery now lives behind the
-   dashboard's Articles and News blocks. Articles shows the stable daily bank;
-   News runs live RSS through the **recommendation engine**
-   (`src/lib/recommendation/`, see "Recommendation engine" below) for the
-   live news sections. Articles far above the reader's comfortable level are collapsed
+1. **Lessons (home)** - `src/app/page.tsx` +
+   `src/components/ArticleBrowserPage.tsx`
+   Starts with the ten-stop guided route in `JourneyMap`. The selected CEFR
+   level is the only band shown, while the level switcher lets learners revisit
+   lower levels or move to C1/C2 when content exists. Extra non-route readings
+   stay below the map so the first screen remains simple. Live RSS no longer
+   appears on the main lesson page; it lives at `/live-news` behind the News
+   bottom tab. Articles far above the reader's comfortable level are collapsed
    into a **Save for later** `<details>` instead of cluttering the main
    sections. Each card shows a title, an **estimated CEFR level and
    learner-facing difficulty label** (see "Article difficulty scoring"

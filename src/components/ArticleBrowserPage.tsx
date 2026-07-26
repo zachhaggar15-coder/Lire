@@ -247,20 +247,27 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const subtitle = mode === "live" ? "Current articles and short snippets for a stretch." : "Follow one guided reading path.";
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        {mode === "live" && (
-          <Link href="/" className="text-sm font-semibold text-brand">
-            Back to Lessons
+    <div className={mode === "articles" ? "bg-cream" : "ligne-screen"}>
+      {mode === "live" && (
+        <header className="mb-5">
+          <Link href="/" className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-brand">
+            Back to lessons
           </Link>
-        )}
-        <div className="mt-2 flex items-end justify-between gap-3">
-          <div>
-            <h1 className="text-2xl font-extrabold text-ink">{title}</h1>
-            <p className="text-sm text-ink-muted">{subtitle}</p>
+          <div className="mt-5 flex items-end justify-between gap-3">
+            <div>
+              <p className="ligne-label">Current French</p>
+              <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">{title}</h1>
+              <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>
+            </div>
           </div>
+        </header>
+      )}
+
+      {mode === "articles" && state === "loading" && (
+        <div className="px-[22px] pt-7">
+          <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />
         </div>
-      </header>
+      )}
 
       {liveNewsGated ? (
         <BeginnerNewsGate onContinue={() => setShowLiveNewsAnyway(true)} />
@@ -278,13 +285,15 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         />
       ) : null}
 
-      {!liveNewsGated && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
+      {!liveNewsGated && mode === "live" && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
 
       {!liveNewsGated && state === "error" && (
-        <LoadErrorCard
-          message={loadError ?? (mode === "live" ? "News is unavailable right now." : "Lessons are unavailable right now.")}
-          onRetry={() => setReloadKey((key) => key + 1)}
-        />
+        <div className={mode === "articles" ? "px-[22px]" : ""}>
+          <LoadErrorCard
+            message={loadError ?? (mode === "live" ? "News is unavailable right now." : "Lessons are unavailable right now.")}
+            onRetry={() => setReloadKey((key) => key + 1)}
+          />
+        </div>
       )}
 
       {!liveNewsGated && state === "success" && usedFallback && (
@@ -309,17 +318,19 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         ))}
 
       {!liveNewsGated && mode === "articles" && (
-        <FilterPanel
-          summaryLabel="Extra reading filters"
-          categoryItems={ARTICLE_CATEGORY_FILTERS}
-          categoryFilter={categoryFilter}
-          difficultyFilter={difficultyFilter}
-          languageFilter={languageFilter}
-          onCategory={setCategoryFilter}
-          onDifficulty={setDifficultyFilter}
-          onLanguage={setLanguageFilter}
-          onReset={resetFilters}
-        />
+        <div className="px-[22px]">
+          <FilterPanel
+            summaryLabel="Extra reading filters"
+            categoryItems={ARTICLE_CATEGORY_FILTERS}
+            categoryFilter={categoryFilter}
+            difficultyFilter={difficultyFilter}
+            languageFilter={languageFilter}
+            onCategory={setCategoryFilter}
+            onDifficulty={setDifficultyFilter}
+            onLanguage={setLanguageFilter}
+            onReset={resetFilters}
+          />
+        </div>
       )}
     </div>
   );
@@ -328,14 +339,14 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => void }) {
   return (
     <div className="space-y-3">
-      <div className="h-28 animate-pulse rounded-card bg-cream-dark" />
-      <div className="h-28 animate-pulse rounded-card bg-cream-dark" />
+      <div className="h-28 animate-pulse rounded-card bg-cream-fill" />
+      <div className="h-28 animate-pulse rounded-card bg-cream-fill" />
       {slow && (
-        <div className="rounded-2xl bg-cream-card px-3 py-2 shadow-card">
+        <div className="ligne-card px-4 py-3">
           <p className="text-sm font-semibold text-ink">Still fetching fresh articles.</p>
           <div className="mt-2 flex items-center justify-between gap-3">
             <p className="text-xs text-ink-muted">RSS sources can be slow during a refresh.</p>
-            <button type="button" onClick={onRetry} className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted">
+            <button type="button" onClick={onRetry} className="ligne-pill shrink-0 bg-cream-fill text-ink-muted">
               Retry
             </button>
           </div>
@@ -347,9 +358,9 @@ function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => 
 
 function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
+    <div className="ligne-card p-5 text-center">
       <p className="text-sm font-bold text-ink">{message}</p>
-      <button type="button" onClick={onRetry} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+      <button type="button" onClick={onRetry} className="ligne-pill mt-3 bg-brand text-cream">
         Retry
       </button>
     </div>
@@ -358,20 +369,20 @@ function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => v
 
 function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
   return (
-    <section className="rounded-card bg-cream-card p-5 shadow-card">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Stretch area</p>
-      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">Live news is harder than the starter articles.</h2>
+    <section className="ligne-card p-5">
+      <p className="ligne-label text-brand">Stretch area</p>
+      <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">Live news is harder than the starter articles.</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">
         Start with a few short readings first, then come back when tapping words feels comfortable.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/#journey-current" className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+        <Link href="/#journey-current" className="ligne-pill bg-brand text-cream">
           Start with lessons
         </Link>
         <button
           type="button"
           onClick={onContinue}
-          className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+          className="ligne-pill bg-cream-fill text-ink-muted"
         >
           Show news anyway
         </button>
@@ -402,15 +413,15 @@ function FilterPanel({
   onReset: () => void;
 }) {
   return (
-    <details className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-      <summary className="cursor-pointer list-none text-sm font-semibold uppercase tracking-wide text-ink-muted">
+    <details className="mb-5 rounded-card border border-cream-dark bg-cream-card p-4">
+      <summary className="cursor-pointer list-none font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
         {summaryLabel}
       </summary>
       <p className="mt-2 text-xs text-ink-muted">
         {summaryLabel === "Extra reading filters" ? "Find another extra topic, level, or imported text." : "Adjust the live-news list."}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
-        <button type="button" onClick={onReset} className="rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted">
+        <button type="button" onClick={onReset} className="ligne-pill bg-cream-fill text-ink-muted">
           Reset
         </button>
       </div>
@@ -434,7 +445,7 @@ function FilterRow<T extends string>({
 }) {
   return (
     <div className="mt-3">
-      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">{title}</p>
+      <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">{title}</p>
       <div className="flex flex-wrap gap-1">
         {items.map((item) => (
           <button
@@ -442,7 +453,7 @@ function FilterRow<T extends string>({
             type="button"
             onClick={() => onChange(item.value)}
             className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-              value === item.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+              value === item.value ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
             }`}
           >
             {item.label}
@@ -471,39 +482,41 @@ function LessonsContent({
   return (
     <>
       <JourneyMap selectedLevel={selectedLevel} onLevelChange={onLevelChange} />
-      <details className="mb-6 rounded-card bg-cream-card p-4 shadow-card">
-        <summary className="cursor-pointer text-sm font-semibold uppercase tracking-wide text-ink-muted">
-          Extra reading
-        </summary>
-        <div className="mt-4">
-          {hasExtraReading ? (
-            <>
-              {customArticles.length > 0 && (
-                <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
-              )}
-              <ArticleSection
-                title="Classic practice bank"
-                subtitle="Extra readings outside the guided path."
-                articles={sections.dailyBank}
-                variant="compact"
-              />
-              <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
-            </>
-          ) : (
-            <p className="mb-4 rounded-2xl bg-cream px-3 py-3 text-sm font-semibold text-ink-muted">
-              No extra readings match these filters right now.
-            </p>
-          )}
-          <div className="rounded-2xl bg-cream px-3 py-3">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
-              <Link href="/import" className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
-                Import
-              </Link>
+      <div className="px-[22px]">
+        <details className="mb-6 rounded-card border border-cream-dark bg-cream-card p-4">
+          <summary className="cursor-pointer font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+            Extra reading
+          </summary>
+          <div className="mt-4">
+            {hasExtraReading ? (
+              <>
+                {customArticles.length > 0 && (
+                  <ArticleSection title="Imported Texts" subtitle="Your saved French texts." articles={customArticles} variant="compact" />
+                )}
+                <ArticleSection
+                  title="Classic practice bank"
+                  subtitle="Extra readings outside the guided path."
+                  articles={sections.dailyBank}
+                  variant="compact"
+                />
+                <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
+              </>
+            ) : (
+              <p className="mb-4 rounded-2xl bg-cream-sunken px-3 py-3 text-sm font-semibold text-ink-muted">
+                No extra readings match these filters right now.
+              </p>
+            )}
+            <div className="rounded-2xl bg-cream-sunken px-3 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs text-ink-muted">Paste French from elsewhere and read it with the same help.</p>
+                <Link href="/import" className="ligne-pill shrink-0 bg-brand text-cream">
+                  Import
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </details>
+        </details>
+      </div>
     </>
   );
 }
@@ -514,7 +527,7 @@ function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
   if (!hasLiveContent) {
     return (
       <>
-        <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
+        <div className="ligne-card p-5 text-center">
           <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
           <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
         </div>

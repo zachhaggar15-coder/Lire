@@ -1,5 +1,4 @@
 import ReadingCard from "@/components/ReadingCard";
-import LessonScene, { sceneFor } from "@/components/LessonScene";
 import { formatCategory } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
@@ -88,23 +87,18 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
     >
       {/* The scene gives the list something to scan by: at a glance you can
           tell the market lesson from the train one without reading titles. */}
-      <div className="flex min-w-0 items-start gap-3">
-        <LessonScene name={sceneFor(text.id, text.category)} size={52} />
-        <div className="min-w-0 flex-1">
-          <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
-            <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
-              {text.difficulty}
-            </span>
-            <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold capitalize text-ink-muted">
-              {formatCategory(text.category)}
-            </span>
-            <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
-              {text.minutes} min
-            </span>
-          </div>
-          <h3 className="line-clamp-2 min-w-0 break-words text-sm font-bold leading-snug text-ink">{text.title}</h3>
-        </div>
+      <div className="mb-2 flex flex-wrap items-center gap-1.5">
+        <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
+          {text.difficulty}
+        </span>
+        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
+          {formatCategory(text.category)}
+        </span>
+        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
+          {text.minutes} min
+        </span>
       </div>
+      <h3 className="line-clamp-2 min-w-0 break-words font-french text-[17px] leading-snug text-ink">{text.title}</h3>
       <p className="mt-2 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
       <div className="mt-2 flex items-center justify-between gap-2">
         {sourceLabel && <p className="truncate text-xs font-semibold text-ink-muted">{sourceLabel}</p>}

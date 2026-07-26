@@ -11,8 +11,7 @@ import {
   type LevelScores,
 } from "@/lib/levelScore";
 import type { StreakDay } from "@/lib/habit";
-import { StreakFlame, StreakWeekStrip } from "@/components/GamificationCards";
-import LessonScene, { type SceneName } from "@/components/LessonScene";
+import { StreakWeekStrip } from "@/components/GamificationCards";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -118,63 +117,51 @@ export default function LessonCompleteScreen({
     { label: stats.wordsTapped === 1 ? "word tapped" : "words tapped", value: stats.wordsTapped },
     { label: stats.savedWords === 1 ? "word saved" : "words saved", value: stats.savedWords },
   ];
-  const celebrationScene = sceneForCompletion(level);
-
   return (
-    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-5 pb-6 pt-[calc(var(--safe-top)+1rem)]">
+    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
-        <div className="lesson-complete-pop text-center">
-          <div className="relative mx-auto h-28 w-28">
-            <LessonScene name={celebrationScene} size={112} className="lesson-scene-float rounded-[1.6rem] bg-brand-light p-1 shadow-raised" />
-            <span className="absolute -bottom-2 -right-2 flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white shadow-raised">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-            </span>
-          </div>
-          <h1 className="mt-4 text-3xl font-extrabold text-ink">
+        <div className="lesson-complete-pop">
+          <p className="ligne-label">{isLesson ? "Lesson complete" : "Reading complete"}</p>
+          <h1 className="mt-1 text-[30px] font-semibold leading-tight text-ink">
             {journeyMoment?.title ?? (isLesson ? "Lesson complete!" : "Reading complete!")}
           </h1>
-          <p className="mt-1 text-sm text-ink-muted">
+          <p className="mt-2 text-sm text-ink-muted">
             {journeyMoment?.detail ?? "Nice work - here's how this one went."}
           </p>
         </div>
 
         {journeyMoment && (
-          <div className="lesson-complete-card-enter mt-5 rounded-card bg-brand px-4 py-3 text-white shadow-raised">
-            <p className="text-xs font-bold uppercase tracking-wide text-white/75">
+          <div className="lesson-complete-card-enter mt-4 rounded-card bg-brand px-4 py-3 text-cream">
+            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-cream/75">
               {journeyMoment.kind === "band" ? "Band complete" : "Stage cleared"}
             </p>
-            <p className="mt-1 text-sm font-semibold leading-relaxed text-white/90">{journeyMoment.detail}</p>
+            <p className="mt-1 text-sm font-semibold leading-relaxed text-cream/90">{journeyMoment.detail}</p>
           </div>
         )}
 
         {/* Headline stats */}
-        <div className="mt-7 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-3 gap-3">
           {statItems.map((item, index) => (
             <div
               key={item.label}
-              className="lesson-complete-stat rounded-card bg-cream-card p-3 text-center shadow-card"
+              className="lesson-complete-stat rounded-card border border-cream-dark bg-cream-card p-3 text-center"
               style={{ animationDelay: `${180 + index * 90}ms` }}
             >
-              <p className="text-2xl font-extrabold tabular-nums text-ink">{item.value}</p>
-              <p className="mt-0.5 text-xs font-semibold uppercase tracking-wide text-ink-muted">{item.label}</p>
+              <p className="font-numeral text-3xl leading-none tabular-nums text-ink">{item.value}</p>
+              <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{item.label}</p>
             </div>
           ))}
         </div>
 
         {/* Streak — the Duolingo moment: extending it is a small celebration. */}
-        <div className="lesson-complete-card-enter mt-4 rounded-card bg-cream-card p-4 shadow-card">
+        <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
           <div className="flex items-center gap-3">
-            <div className={`lesson-complete-flame flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${streak.count > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
-              <StreakFlame active={streak.count > 0} className="h-7 w-7" />
-            </div>
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-2">
-                <span className="text-2xl font-extrabold leading-none text-ink tabular-nums">{streak.count}</span>
+                <span className="font-numeral text-3xl leading-none text-ink tabular-nums">{streak.count}</span>
                 <span className="text-sm font-bold text-ink-muted">{streak.count === 1 ? "day streak" : "day streak"}</span>
                 {streak.extended && (
-                  <span className="lesson-complete-delta rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-700">
+                  <span className="lesson-complete-delta rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
                     {streak.count === 1 ? "Streak started!" : "+1 day"}
                   </span>
                 )}
@@ -218,7 +205,7 @@ export default function LessonCompleteScreen({
         )}
 
         {/* The level bar that just moved */}
-        <div className="lesson-complete-card-enter mt-7 rounded-card bg-cream-card p-5 shadow-card">
+        <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-5">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-extrabold text-ink">
               {level} score
@@ -233,7 +220,7 @@ export default function LessonCompleteScreen({
               )}
             </p>
           </div>
-          <div className="mt-3 h-4 w-full overflow-hidden rounded-full bg-cream-dark">
+          <div className="mt-3 h-[3px] w-full overflow-hidden rounded-full bg-cream-strong">
             <div
               className="h-full rounded-full bg-brand transition-[width] duration-[700ms] ease-out"
               style={{ width: `${barPercent}%` }}
@@ -245,8 +232,8 @@ export default function LessonCompleteScreen({
         </div>
 
         {/* All four levels, so progress is legible at a glance */}
-        <div className="lesson-complete-card-enter mt-4 rounded-card bg-cream-card p-4 shadow-card">
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Your levels</p>
+        <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
+          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your levels</p>
           <div className="mt-3 space-y-2.5">
             {TAUGHT_LEVELS.map((lvl) => {
               const score = allScores[lvl] ?? 0;
@@ -256,7 +243,7 @@ export default function LessonCompleteScreen({
               return (
                 <div key={lvl} className="flex items-center gap-3">
                   <span className={`w-7 shrink-0 text-xs font-extrabold ${isCurrent ? "text-brand" : "text-ink-muted"}`}>{lvl}</span>
-                  <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-cream-dark">
+                  <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-cream-strong">
                     <div
                       className={`h-full rounded-full ${isCurrent ? "bg-brand" : "bg-ink-muted/50"}`}
                       style={{ width: `${bandProgress(shownScore) * 100}%` }}
@@ -274,28 +261,11 @@ export default function LessonCompleteScreen({
         <button
           type="button"
           onClick={onContinue}
-          className="mt-7 w-full rounded-full bg-brand px-4 py-3.5 text-base font-bold text-white shadow-raised transition-transform duration-150 ease-out active:scale-[0.98]"
+          className="ligne-pill mt-5 w-full bg-brand py-3.5 text-cream"
         >
           {journeyMoment?.actionLabel ?? "Continue"}
         </button>
       </div>
     </div>
   );
-}
-
-function sceneForCompletion(level: Difficulty): SceneName {
-  switch (level) {
-    case "A1":
-      return "coffee";
-    case "A2":
-      return "home";
-    case "B1":
-      return "book";
-    case "B2":
-      return "train";
-    case "C1":
-      return "art";
-    case "C2":
-      return "moon";
-  }
 }

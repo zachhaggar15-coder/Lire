@@ -376,9 +376,9 @@ export default function ReviewPage() {
         { label: "Not due yet", value: stats.notDueYet },
         { label: "Total", value: stats.totalLearning },
       ].map((s) => (
-        <div key={s.label} className="rounded-2xl bg-cream-card p-2.5 text-center shadow-card">
-          <p className="text-lg font-extrabold text-ink">{s.value}</p>
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{s.label}</p>
+        <div key={s.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2.5 text-center">
+          <p className="font-numeral text-2xl leading-none text-ink">{s.value}</p>
+          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{s.label}</p>
         </div>
       ))}
     </div>
@@ -404,8 +404,8 @@ export default function ReviewPage() {
   // No learning/unsure words saved at all.
   if (!done && ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
     return (
-      <div className="px-4 pt-6">
-        <h1 className="text-2xl font-extrabold text-ink">Review</h1>
+      <div className="ligne-screen">
+        <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "Typing checks itself."} />
         <div className="mt-16 text-center">
           <p className="text-ink-muted">{articleFilter ? "No saved words from this article yet." : "Nothing to review yet."}</p>
           <p className="mt-1 text-xs text-ink-muted">
@@ -415,7 +415,7 @@ export default function ReviewPage() {
           </p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
+            className="ligne-pill mt-3 inline-block bg-brand text-cream"
           >
             Start reading
           </Link>
@@ -427,11 +427,10 @@ export default function ReviewPage() {
   // Words exist, but nothing is due right now.
   if (ready && stats.totalLearning > 0 && wordQueue.length === 0 && !reviewStarted && reviewMode === "words" && sessionPhraseQueue.length === 0) {
     return (
-      <div className="px-4 pt-6">
-        <h1 className="mb-1 text-2xl font-extrabold text-ink">Review</h1>
+      <div className="ligne-screen">
+        <PageHeader title="Review" subtitle="Nothing due right now." />
         {statsBar}
-        <div className="mt-8 text-center">
-          <p className="text-4xl">✅</p>
+        <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
           <p className="mt-2 text-ink-muted">All caught up — nothing due right now.</p>
           <p className="mt-1 text-xs text-ink-muted">
             {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
@@ -444,18 +443,17 @@ export default function ReviewPage() {
   // Finished this session's queue.
   if (done) {
     return (
-      <div className="px-4 pt-6">
-        <h1 className="mb-1 text-2xl font-extrabold text-ink">Review</h1>
+      <div className="ligne-screen">
+        <PageHeader title="Review" subtitle="Session complete." />
         {statsBar}
-        <div className="mt-8 text-center">
-          <p className="text-4xl">🎉</p>
+        <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
             Known: {score.knew} - Needs another look: {score.missed}
           </p>
           <button
             onClick={restart}
-            className="mt-5 rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
+            className="ligne-pill mt-5 bg-brand text-cream"
           >
             Check for more
           </button>
@@ -465,19 +463,20 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="flex min-h-[70vh] flex-col px-4 pt-6">
-      <header className="mb-1 flex items-center justify-between">
+    <div className="ligne-screen flex min-h-[70vh] flex-col">
+      <header className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-ink">Review</h1>
+          <p className="ligne-label">Word practice</p>
+          <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Review</h1>
           {articleFilter && <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">From: {articleFilter}</p>}
         </div>
-        <span className="text-sm text-ink-muted">
+        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
           {reviewProgressLabel}
         </span>
       </header>
 
       {xpNotice && (
-        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand shadow-card">
+        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand">
           {xpNotice}
         </div>
       )}
@@ -551,13 +550,13 @@ export default function ReviewPage() {
           {/* Flashcard */}
           <div className="review-card-stack relative z-0">
             <div
-              className={`review-card-smooth relative z-10 flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-card bg-cream-card p-5 text-center shadow-card ${
+              className={`review-card-smooth relative z-10 flex max-h-[52dvh] min-h-[18rem] flex-col items-center overflow-y-auto rounded-card border border-cream-dark bg-cream-card p-5 text-center ${
                 revealed ? "justify-start" : "justify-center"
               } ${
                 cardFeedback === "correct"
-                  ? "reward-card-lock-in bg-emerald-50"
+                  ? "reward-card-lock-in bg-brand-light"
                   : cardFeedback === "repeat" || cardFeedback === "missed"
-                    ? "reward-card-still-learning ring-2 ring-amber-200"
+                    ? "reward-card-still-learning ring-2 ring-cream-strong"
                     : ""
               }`}
             >
@@ -622,7 +621,7 @@ export default function ReviewPage() {
               <button
                 type="submit"
                 disabled={!typedAnswer.trim() || cardFeedback !== null}
-                className="mt-3 w-full rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-40"
+                className="ligne-pill mt-3 w-full bg-brand text-cream disabled:opacity-40"
               >
                 {typedAnswerCorrect ? "Correct" : "Show answer"}
               </button>
@@ -631,14 +630,14 @@ export default function ReviewPage() {
                   aria-live="polite"
                   className={`mt-3 inline-flex items-center justify-center gap-2 rounded-full px-3 py-1.5 text-sm font-bold ${
                     cardFeedback === "correct"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : "bg-amber-100 text-amber-700"
+                      ? "bg-brand-light text-brand"
+                      : "bg-cream-fill text-ink-muted"
                   }`}
                 >
                   {cardFeedback === "correct" && (
                     <span
                       aria-hidden="true"
-                      className="grid h-5 w-5 place-items-center rounded-full bg-emerald-600 text-xs text-white"
+                      className="grid h-5 w-5 place-items-center rounded-full bg-brand text-xs text-cream"
                     >
                       {"\u2713"}
                     </span>
@@ -691,7 +690,7 @@ export default function ReviewPage() {
 
           {/* Answer buttons */}
           <div className="mt-4 pb-6">
-            <div className="rounded-card bg-cream-card/95 p-2 shadow-[0_-8px_24px_rgba(43,42,34,0.1)] backdrop-blur">
+            <div className="rounded-card border border-cream-dark bg-cream-card p-2">
               <div className="mb-2 flex items-center justify-between px-1 text-xs font-semibold text-ink-muted">
                 <span>Need help?</span>
                 <span>{revealed ? "Keep practicing or move on" : "Correct typing checks itself"}</span>
@@ -700,14 +699,14 @@ export default function ReviewPage() {
                 <button
                   onClick={() => answer("repeat")}
                   disabled={!revealed || cardFeedback !== null}
-                  className="rounded-2xl border border-amber-200 bg-amber-100 px-1 py-3 text-xs font-semibold text-amber-700 shadow-card active:scale-95 disabled:opacity-40"
+                  className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-xs font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
                 >
                   Keep in deck
                 </button>
                 <button
                   onClick={() => answer("missed")}
                   disabled={cardFeedback !== null}
-                  className="rounded-2xl border border-rose-200 bg-rose-100 px-1 py-3 text-xs font-semibold text-rose-700 shadow-card active:scale-95 disabled:opacity-40"
+                  className="rounded-2xl border border-cream-dark bg-rose px-1 py-3 text-xs font-semibold text-rose-ink active:scale-95 disabled:opacity-40"
                 >
                   Skip for now
                 </button>
@@ -731,6 +730,16 @@ function shouldShowReviewExample(word: SavedWord): boolean {
     return false;
   }
   return true;
+}
+
+function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <header className="mb-5">
+      <p className="ligne-label">Word practice</p>
+      <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">{title}</h1>
+      <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>
+    </header>
+  );
 }
 
 function PracticeHubCard({
@@ -774,9 +783,9 @@ function PracticeHubCard({
   const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
 
   return (
-    <section className="mb-4 rounded-card bg-cream-card p-5 shadow-card">
-      <p className="text-xs font-bold uppercase tracking-wide text-brand">Practice Hub</p>
-      <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">
+    <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-5">
+      <p className="ligne-label text-brand">Practice hub</p>
+      <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">
         {wordCount} {wordCount === 1 ? "card" : "cards"} ready
       </h2>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
@@ -788,7 +797,7 @@ function PracticeHubCard({
           {promptLabel(direction)}
         </span>
         {focusCount > 0 && (
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+          <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
             {focusCount} need care
           </span>
         )}
@@ -796,31 +805,31 @@ function PracticeHubCard({
       <button
         type="button"
         onClick={onStart}
-        className="mt-4 w-full rounded-2xl bg-brand py-3 text-sm font-bold text-white shadow-raised active:scale-95"
+        className="ligne-pill mt-4 w-full bg-brand text-cream"
       >
         Start quick review
       </button>
 
-      <details className="mt-3 rounded-2xl bg-cream px-3 py-2">
-        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+      <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Review options
         </summary>
         <div className="mt-3 space-y-3">
           {phraseCount > 0 && (
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Practice type</p>
+              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
               <PhraseModeSwitch mode="words" onChange={onModeChange} phraseCount={phraseCount} />
             </div>
           )}
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">Direction</p>
+            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
             <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
           </div>
           <div className="grid grid-cols-4 gap-2">
             {stats.map((item) => (
-              <div key={item.label} className="rounded-2xl bg-cream-card p-2 text-center shadow-card">
-                <p className="text-base font-extrabold text-ink">{item.value}</p>
-                <p className="text-[0.65rem] font-semibold uppercase tracking-wide text-ink-muted">{item.label}</p>
+              <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
+                <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
+                <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
               </div>
             ))}
           </div>
@@ -838,10 +847,10 @@ const STATE_LABELS: Record<VocabularyDecayState, string> = {
 };
 
 const STATE_STYLES: Record<VocabularyDecayState, string> = {
-  stable: "bg-emerald-100 text-emerald-700",
-  emerging: "bg-sky-100 text-sky-700",
-  fragile: "bg-amber-100 text-amber-700",
-  forgotten: "bg-rose-100 text-rose-700",
+  stable: "bg-brand-light text-brand",
+  emerging: "bg-accent-sky text-accent-skytext",
+  fragile: "bg-yellow text-yellow-ink",
+  forgotten: "bg-rose text-rose-ink",
 };
 
 function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
@@ -851,8 +860,8 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   );
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
-    <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Vocabulary health</h2>
+    <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
+      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -877,10 +886,10 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
 
 function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }) {
   return (
-    <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
+    <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Review in context</h2>
+          <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
         </div>
         <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">
@@ -892,7 +901,7 @@ function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }
           <Link
             key={article.id}
             href={`/reader/${article.id}`}
-            className="block rounded-2xl bg-cream px-3 py-2 active:bg-cream-dark/60"
+            className="block rounded-2xl bg-cream-sunken px-3 py-2 active:bg-cream-fill"
           >
             <p className="line-clamp-1 text-sm font-bold text-ink">{article.title}</p>
             <p className="mt-0.5 text-xs text-ink-muted">
@@ -917,7 +926,7 @@ function ReviewDirectionToggle({
   onChange: (direction: ReviewDirection) => void;
 }) {
   return (
-    <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-card p-1 shadow-card">
+    <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-cream-fill p-1">
       {[
         { value: "fr-en" as const, label: "French to English" },
         { value: "en-fr" as const, label: "English to French" },
@@ -926,8 +935,8 @@ function ReviewDirectionToggle({
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-xl px-2 py-2 text-xs font-bold transition-colors active:scale-95 ${
-            direction === option.value ? "bg-brand text-white" : "text-ink-muted"
+          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+            direction === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
         >
           {option.label}
@@ -947,18 +956,18 @@ function PhraseModeSwitch({
   phraseCount: number;
 }) {
   return (
-    <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-cream-card p-1 shadow-card">
+    <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-cream-fill p-1">
       <button
         type="button"
         onClick={() => onChange("words")}
-        className={`rounded-xl py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-white" : "text-ink-muted"}`}
+        className={`rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Words
       </button>
       <button
         type="button"
         onClick={() => onChange("phrases")}
-        className={`rounded-xl py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-white" : "text-ink-muted"}`}
+        className={`rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Phrases {phraseCount > 0 ? `(${phraseCount})` : ""}
       </button>
@@ -987,7 +996,7 @@ function PhraseReviewCard({
 }) {
   if (!phrase) {
     return (
-      <div className="mt-8 rounded-card bg-cream-card p-6 text-center shadow-card">
+      <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-6 text-center">
         <p className="text-sm font-semibold text-ink">No phrase cards due.</p>
         <p className="mt-1 text-xs text-ink-muted">Saved phrases you are still learning will appear here.</p>
       </div>
@@ -1000,11 +1009,11 @@ function PhraseReviewCard({
     <div className="flex flex-1 flex-col">
       <div className="review-card-stack relative z-0">
         <div
-          className={`review-card-smooth relative z-10 rounded-card bg-cream-card p-5 shadow-card ${
+          className={`review-card-smooth relative z-10 rounded-card border border-cream-dark bg-cream-card p-5 ${
             feedback === "correct"
-              ? "reward-card-lock-in bg-emerald-50"
+              ? "reward-card-lock-in bg-brand-light"
               : feedback === "repeat" || feedback === "missed"
-                ? "reward-card-still-learning ring-2 ring-amber-200"
+                ? "reward-card-still-learning ring-2 ring-cream-strong"
                 : ""
           }`}
         >
@@ -1040,7 +1049,7 @@ function PhraseReviewCard({
           <button
             type="submit"
             disabled={!typedAnswer.trim() || feedback !== null}
-            className="mt-3 w-full rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-40"
+            className="ligne-pill mt-3 w-full bg-brand text-cream disabled:opacity-40"
           >
             Check answer
           </button>
@@ -1071,16 +1080,16 @@ function PhraseReviewCard({
 
         <div className="mt-4 grid grid-cols-3 gap-2">
           {[
-            { grade: "knew" as const, label: "Knew it", className: "border-emerald-200 bg-emerald-100 text-emerald-700", disabled: !revealed },
-            { grade: "repeat" as const, label: "One more time", className: "border-amber-200 bg-amber-100 text-amber-700", disabled: !revealed },
-            { grade: "missed" as const, label: "No idea", className: "border-rose-200 bg-rose-100 text-rose-700", disabled: false },
+            { grade: "knew" as const, label: "Knew it", className: "border-brand bg-brand-light text-brand", disabled: !revealed },
+            { grade: "repeat" as const, label: "One more time", className: "border-cream-dark bg-cream-fill text-ink-muted", disabled: !revealed },
+            { grade: "missed" as const, label: "No idea", className: "border-cream-dark bg-rose text-rose-ink", disabled: false },
           ].map((option) => (
             <button
               key={option.grade}
               type="button"
               onClick={() => onGrade(option.grade, typedCorrect)}
               disabled={option.disabled || feedback !== null}
-              className={`rounded-2xl border px-1 py-3 text-xs font-semibold shadow-card active:scale-95 disabled:opacity-40 ${option.className}`}
+              className={`rounded-2xl border px-1 py-3 text-xs font-semibold active:scale-95 disabled:opacity-40 ${option.className}`}
             >
               {option.label}
             </button>

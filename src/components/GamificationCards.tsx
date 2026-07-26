@@ -92,18 +92,14 @@ export function StreakWeekStrip({ week, className = "" }: { week: StreakDay[]; c
     <div className={`flex items-end justify-between gap-1 ${className}`}>
       {week.map((day) => (
         <div key={day.dateKey} className="flex flex-1 flex-col items-center gap-1">
-          <span className={`text-[0.7rem] font-bold ${day.isToday ? "text-brand" : "text-ink-muted"}`}>{day.weekdayLabel}</span>
+          <span className={`font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${day.isToday ? "text-brand" : "text-ink-faint"}`}>{day.weekdayLabel}</span>
           <div
-            className={`flex h-8 w-8 items-center justify-center rounded-full ${
-              day.active ? "bg-amber-100" : "bg-cream-dark/60"
-            } ${day.isToday ? "ring-2 ring-brand" : ""} ${day.isFuture ? "opacity-40" : ""}`}
+            className={`flex h-8 w-8 items-center justify-center rounded-full border ${
+              day.active ? "border-brand bg-brand text-cream" : day.isToday ? "border-yellow bg-yellow text-yellow-ink" : "border-cream-strong bg-cream-card"
+            } ${day.isFuture ? "opacity-40" : ""}`}
             aria-label={`${day.weekdayLabel}${day.active ? " active" : ""}`}
           >
-            {day.active ? (
-              <StreakFlame active className="h-5 w-5" />
-            ) : (
-              <span className={`h-2 w-2 rounded-full ${day.isFuture ? "bg-transparent" : "bg-ink-muted/40"}`} />
-            )}
+            {day.active ? <span className="text-[10px] font-bold">OK</span> : <span className={`h-2 w-2 rounded-full ${day.isFuture ? "bg-transparent" : "bg-cream-strong"}`} />}
           </div>
         </div>
       ))}
@@ -137,14 +133,11 @@ export function StreakCard({
         : "Read one lesson today to keep your streak alive.";
 
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-card">
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-center gap-3">
-        <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${streak > 0 ? "bg-amber-100" : "bg-cream-dark/60"}`}>
-          <StreakFlame active={streak > 0} className="h-8 w-8" />
-        </div>
         <div className="min-w-0 flex-1">
           <p className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-extrabold leading-none text-ink tabular-nums">{streak}</span>
+            <span className="font-numeral text-[40px] leading-none text-ink tabular-nums">{streak}</span>
             <span className="text-sm font-bold text-ink-muted">{streak === 1 ? "day streak" : "day streak"}</span>
           </p>
           <p className="mt-1 text-xs text-ink-muted">{message}</p>

@@ -54,8 +54,9 @@ function Toggle({
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between gap-4 rounded-card bg-cream-card p-4 text-left shadow-card active:scale-[0.99]"
-      aria-pressed={checked}
+      className="flex w-full items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4 text-left"
+      role="switch"
+      aria-checked={checked}
     >
       <div className="min-w-0">
         <p className="font-semibold text-ink">{label}</p>
@@ -63,12 +64,12 @@ function Toggle({
       </div>
       <span
         className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
-          checked ? "bg-brand" : "bg-cream-dark"
+          checked ? "bg-brand" : "bg-cream-fill"
         }`}
         aria-hidden="true"
       >
         <span
-          className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+          className={`inline-block h-5 w-5 transform rounded-full bg-cream transition-transform ${
             checked ? "translate-x-6" : "translate-x-1"
           }`}
         />
@@ -80,7 +81,7 @@ function Toggle({
 function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div>
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">{title}</h2>
+      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
       <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
     </div>
   );
@@ -90,7 +91,7 @@ function SettingsLink({ href, title, description }: { href: string; title: strin
   return (
     <Link
       href={href}
-      className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card active:scale-[0.99]"
+      className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4"
     >
       <div className="min-w-0">
         <p className="font-semibold text-ink">{title}</p>
@@ -116,7 +117,7 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
   if (!grace.available) return null;
 
   return (
-    <div className="rounded-card bg-brand-light p-4 shadow-card">
+    <div className="rounded-card border border-cream-dark bg-brand-light p-4">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="font-semibold text-brand">Streak save available</p>
@@ -125,7 +126,7 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
         <button
           type="button"
           onClick={onUse}
-          className="shrink-0 rounded-full bg-brand px-3 py-2 text-sm font-semibold text-white shadow-raised active:scale-95"
+          className="ligne-pill shrink-0 bg-brand text-cream"
         >
           Save streak
         </button>
@@ -198,10 +199,11 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
+    <div className="ligne-screen">
       <header className="mb-5">
-        <h1 className="text-2xl font-extrabold text-ink">Profile</h1>
-        <p className="text-sm text-ink-muted">Learning, library, app setup, and advanced tools.</p>
+        <p className="ligne-label">Learning</p>
+        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Your setup</h1>
+        <p className="mt-2 text-sm text-ink-muted">Level, reader preferences, saved items, and app setup.</p>
       </header>
 
       <div className="space-y-6">
@@ -210,18 +212,19 @@ export default function SettingsPage() {
           <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
           <StreakRecoveryCard grace={grace} onUse={handleUseGraceDay} />
 
-          <div className="rounded-card bg-cream-card p-4 shadow-card">
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <p className="font-semibold text-ink">Reading level</p>
             <p className="mt-0.5 text-sm text-ink-muted">Choose the starter bank that feels closest right now.</p>
-            <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1 sm:grid-cols-6">
               {LEVEL_OPTIONS.map((level) => (
                 <button
                   key={level}
                   type="button"
                   onClick={() => changeLevel(level)}
+                  aria-label={`Set reading level to ${level}`}
                   aria-pressed={selectedLevel === level}
-                  className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
-                    selectedLevel === level ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                    selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
                   {level}
@@ -230,17 +233,17 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded-card bg-cream-card p-4 shadow-card">
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <p className="font-semibold text-ink">Font size</p>
-            <div className="mt-3 grid grid-cols-3 gap-2">
+            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1">
               {FONT_SIZE_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   type="button"
                   onClick={() => update({ fontSize: opt.value })}
                   aria-pressed={settings.fontSize === opt.value}
-                  className={`rounded-xl py-2.5 text-sm font-semibold transition-colors ${
-                    settings.fontSize === opt.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                    settings.fontSize === opt.value ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
                   {opt.label}
@@ -249,7 +252,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="rounded-card bg-cream-card p-4 shadow-card">
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <p className="font-semibold text-ink">English help</p>
             <p className="mt-0.5 text-sm text-ink-muted">Natural is best for beginners. Literal is for word-by-word checking.</p>
             <div className="mt-3 space-y-2">
@@ -260,11 +263,11 @@ export default function SettingsPage() {
                   onClick={() => update({ translationMode: opt.value })}
                   aria-pressed={settings.translationMode === opt.value}
                   className={`w-full rounded-2xl px-3 py-2.5 text-left transition-colors ${
-                    settings.translationMode === opt.value ? "bg-brand text-white" : "bg-cream-dark text-ink"
+                    settings.translationMode === opt.value ? "bg-brand text-cream" : "bg-cream-fill text-ink"
                   }`}
                 >
                   <span className="block text-sm font-semibold">{opt.label}</span>
-                  <span className={`block text-xs ${settings.translationMode === opt.value ? "text-white/80" : "text-ink-muted"}`}>
+                  <span className={`block text-xs ${settings.translationMode === opt.value ? "text-cream/80" : "text-ink-muted"}`}>
                     {opt.description}
                   </span>
                 </button>
@@ -273,7 +276,7 @@ export default function SettingsPage() {
           </div>
 
           <details>
-            <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
+            <summary className="cursor-pointer rounded-card border border-cream-dark bg-cream-card p-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
               Display and audio
             </summary>
             <div className="mt-3 space-y-3">
@@ -308,7 +311,7 @@ export default function SettingsPage() {
           <SettingsSectionTitle title="App" subtitle="Account, install options, feedback, and privacy." />
           <BetaNotice />
           <AccountCard />
-          <div className="rounded-card bg-cream-card p-4 shadow-card">
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="font-semibold text-ink">Get Lire on Android</p>
@@ -318,7 +321,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <PwaInstallCard />
-          <div className="rounded-card bg-cream-card p-4 shadow-card">
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="font-semibold text-ink">Feedback</p>
@@ -332,7 +335,7 @@ export default function SettingsPage() {
         </section>
 
         <details>
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
+          <summary className="cursor-pointer rounded-card border border-cream-dark bg-cream-card p-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             Advanced
           </summary>
           <div className="mt-3 space-y-3">
@@ -343,12 +346,12 @@ export default function SettingsPage() {
               description="Load one cached natural translation when you open a reading."
             />
 
-            <div className="rounded-card bg-cream-card p-4 shadow-card">
+            <div className="rounded-card border border-cream-dark bg-cream-card p-4">
               <p className="font-semibold text-ink">AI explanations</p>
               <p className="mt-0.5 text-sm text-ink-muted">Word and sentence AI help runs only when you ask for it.</p>
             </div>
 
-            <div className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4">
               <div className="min-w-0">
                 <p className="font-semibold text-ink">Known words</p>
                 <p className="mt-0.5 text-sm text-ink-muted">
@@ -359,14 +362,14 @@ export default function SettingsPage() {
                 <button
                   type="button"
                   onClick={handleClearKnown}
-                  className="shrink-0 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
+                  className="ligne-pill shrink-0 bg-rose text-rose-ink"
                 >
                   Clear
                 </button>
               )}
             </div>
 
-            <div className="flex items-center justify-between gap-4 rounded-card bg-cream-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4">
               <div className="min-w-0">
                 <p className="font-semibold text-ink">Offline articles</p>
                 <p className="mt-0.5 text-sm text-ink-muted">
@@ -377,7 +380,7 @@ export default function SettingsPage() {
                 <button
                   type="button"
                   onClick={handleClearOffline}
-                  className="shrink-0 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-semibold text-rose-600 active:scale-95"
+                  className="ligne-pill shrink-0 bg-rose text-rose-ink"
                 >
                   Clear
                 </button>

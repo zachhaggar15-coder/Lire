@@ -22,32 +22,24 @@ import {
 } from "@/lib/recommendation/preferences";
 
 const LABEL_STYLES: Record<DifficultyEstimate["label"], string> = {
-  Easy: "bg-emerald-100 text-emerald-700",
-  "Good level": "bg-sky-100 text-sky-700",
-  Stretch: "bg-amber-100 text-amber-700",
-  Hard: "bg-rose-100 text-rose-700",
+  Easy: "bg-brand-light text-brand",
+  "Good level": "bg-accent-sky text-accent-skytext",
+  Stretch: "bg-yellow text-yellow-ink",
+  Hard: "bg-rose text-rose-ink",
 };
 
 const CATEGORY_STYLES: Record<Category, string> = {
-  "news-style": "bg-rose-100 text-rose-700",
-  sport: "bg-orange-100 text-orange-700",
-  culture: "bg-violet-100 text-violet-700",
-  science: "bg-sky-100 text-sky-700",
-  "everyday life": "bg-emerald-100 text-emerald-700",
-};
-
-const CATEGORY_ACCENT: Record<Category, string> = {
-  "news-style": "border-rose-400",
-  sport: "border-orange-400",
-  culture: "border-violet-400",
-  science: "border-sky-400",
-  "everyday life": "border-emerald-400",
+  "news-style": "bg-rose text-rose-ink",
+  sport: "bg-accent-gold text-accent-goldtext",
+  culture: "bg-accent-violet text-accent-violettext",
+  science: "bg-accent-sky text-accent-skytext",
+  "everyday life": "bg-brand-light text-brand",
 };
 
 const STATUS_STYLES: Record<TextStatus, string> = {
-  unread: "bg-cream-dark text-ink-muted",
-  "in-progress": "bg-sky-100 text-sky-700",
-  completed: "bg-emerald-100 text-emerald-700",
+  unread: "bg-cream-fill text-ink-muted",
+  "in-progress": "bg-accent-sky text-accent-skytext",
+  completed: "bg-brand-light text-brand",
 };
 
 const STATUS_LABELS: Record<TextStatus, string> = {
@@ -155,7 +147,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
   }
 
   return (
-    <article className={`rounded-card border-l-4 bg-cream-card p-4 shadow-card ${CATEGORY_ACCENT[text.category]}`}>
+    <article className="rounded-card border border-cream-dark bg-cream-card p-4">
       <Link
         href={`/reader/${text.id}`}
         onClick={() =>
@@ -171,11 +163,11 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       >
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span
-            className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${CATEGORY_STYLES[text.category]}`}
+            className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
           >
             {formatCategory(text.category)}
           </span>
-          <span className="rounded-full bg-cream-dark px-2 py-0.5 text-xs font-semibold text-ink-muted">
+          <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
             {/* The stored level is the one source of truth for the CEFR code:
                 it's what the level filter, the reading bank and the section
                 headings ("A1 readings") all key off. The estimate below powers
@@ -185,23 +177,21 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             {text.difficulty}
           </span>
           {difficulty && (
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${LABEL_STYLES[difficulty.label]}`}>
+            <span className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${LABEL_STYLES[difficulty.label]}`}>
               {difficulty.label}
             </span>
           )}
-          <span className="ml-auto text-xs text-ink-muted">{text.minutes} min</span>
+          <span className="ml-auto font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
         </div>
 
-        <h2 className="text-lg font-bold leading-snug text-ink">{text.title}</h2>
+        <h2 className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
         {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
         <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
-        <p className="mt-2 text-xs font-semibold text-ink-muted">{learnerSourceLabel(text)}</p>
+        <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>
 
         {starRating && (
-          <p className="mt-1 text-xs font-semibold text-brand">
-            {"\u2605".repeat(starRating.stars)}
-            {"\u2606".repeat(5 - starRating.stars)}
-            <span className="ml-1 font-medium text-ink-muted">{starRating.label}</span>
+          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.08em] text-brand">
+            {starRating.label}
           </p>
         )}
 
@@ -214,7 +204,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </Link>
 
       <details className="mt-2 text-xs text-ink-muted">
-        <summary className="cursor-pointer font-semibold underline underline-offset-2">
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Article details
         </summary>
         <p className="mt-1">
@@ -231,14 +221,14 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </details>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[status]}`}>
+        <span className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${STATUS_STYLES[status]}`}>
           {STATUS_LABELS[status]}
         </span>
         <button
           type="button"
           onClick={handleSaveLater}
           className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
-            savedLater ? "bg-brand text-white" : "bg-sky-100 text-sky-700"
+            savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
           }`}
         >
           {savedLater ? "Saved" : "Save"}
@@ -246,21 +236,21 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </div>
 
       <details className="mt-2">
-        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Tune recommendations
         </summary>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "more")}
-            className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
+            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand active:scale-95"
           >
             More like this
           </button>
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "less")}
-            className="rounded-full bg-cream-dark px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-95"
+            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-95"
           >
             Less like this
           </button>
@@ -270,7 +260,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
                 type="button"
                 onClick={handlePreferSource}
                 className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
-                  preferred ? "bg-brand text-white" : "bg-amber-100 text-amber-700"
+                  preferred ? "bg-brand text-cream" : "bg-yellow text-yellow-ink"
                 }`}
               >
                 {preferred ? "Preferred source" : "Prefer source"}
@@ -278,7 +268,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
               <button
                 type="button"
                 onClick={handleHideSource}
-                className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 active:scale-95"
+                className="rounded-full bg-rose px-2.5 py-1 text-xs font-semibold text-rose-ink active:scale-95"
               >
                 Hide source
               </button>

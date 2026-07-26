@@ -75,7 +75,6 @@ import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS } from "@/lib/journey/ladder";
-import LessonScene, { sceneFor } from "@/components/LessonScene";
 import LessonCompleteScreen, { type JourneyMoment, type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -1358,7 +1357,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
 
     if (recentlySaved) {
-      return `${base} bg-amber-100/80 text-ink reward-word-save`;
+      return `${base} bg-brand-light text-ink underline decoration-brand decoration-2 underline-offset-4 reward-word-save`;
     }
 
     if (settings.showSavedHighlights) {
@@ -1366,8 +1365,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         entry.source === "missing"
           ? " underline decoration-dashed decoration-ink-muted underline-offset-2"
           : "";
-      if (wordStatus === "learning") return `${base} bg-amber-200/80 text-ink${missingUnderline}`;
-      if (wordStatus === "unsure") return `${base} bg-sky-200/70 text-ink${missingUnderline}`;
+      if (wordStatus === "learning") return `${base} bg-brand-light text-ink underline decoration-brand decoration-2 underline-offset-4${missingUnderline}`;
+      if (wordStatus === "unsure") return `${base} bg-cream-fill text-ink underline decoration-brand/60 decoration-2 underline-offset-4${missingUnderline}`;
     }
 
     return `${base} active:bg-brand/10`;
@@ -1453,7 +1452,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         }}
         aria-label={active ? "Stop this paragraph" : `Play paragraph ${paragraphIndex + 1}`}
         className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold active:scale-95 ${
-          active ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+          active ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
         }`}
       >
         <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
@@ -1582,7 +1581,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               }
               handleWordTap(sg.text, sg.tokens, ti);
             }}
-            className={`${wordClassName(tok)} ${!rereadMode && isHighlightedReference(sg.tokens, ti) ? "bg-emerald-200/80 ring-2 ring-emerald-400" : ""}`}
+            className={`${wordClassName(tok)} ${!rereadMode && isHighlightedReference(sg.tokens, ti) ? "bg-brand-light ring-2 ring-brand/40" : ""}`}
           >
             {tok.text}
           </span>
@@ -1627,17 +1626,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     return renderSentenceFrame(sg, key, renderTokenNodes(sg));
   }
 
-  const headerScene = sceneFor(text.id, text.category);
   const headerTone = readerHeaderTone(text.category);
 
   return (
-    <div className="px-4 pt-4">
+    <div className="bg-cream px-[22px] pt-5">
       {showProgressBadge && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-0 z-40 h-1 w-full max-w-md -translate-x-1/2 bg-cream-dark/70">
             <div className="h-full bg-brand transition-[width] duration-200" style={{ width: `${scrollProgressPercent}%` }} />
           </div>
-          <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full bg-cream-card/95 px-2.5 py-1 text-xs font-bold tabular-nums text-brand shadow-card ring-1 ring-cream-dark/70 backdrop-blur">
+          <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full border border-cream-dark bg-cream-card/95 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] tabular-nums text-brand backdrop-blur">
             {scrollProgressPercent}% read
           </div>
         </>
@@ -1657,27 +1655,26 @@ export default function Reader({ text }: { text: ReadingText }) {
         </button>
       </div>
 
-      <section className="overflow-hidden rounded-card bg-cream-card shadow-card">
-        <div className={`flex items-center gap-4 p-4 ${headerTone}`}>
+      <section className="overflow-hidden rounded-card border border-cream-dark bg-cream-card">
+        <div className={`p-4 ${headerTone}`}>
           <div className="min-w-0 flex-1">
-            <span className="mb-2 inline-block rounded-full bg-cream-card/75 px-2.5 py-0.5 text-xs font-semibold text-brand capitalize">
+            <span className="mb-2 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
               {formatCategory(text.category)}
             </span>
-            <h1 className="break-words text-2xl font-extrabold leading-tight text-ink">
+            <h1 className="break-words font-french text-[28px] leading-tight text-ink">
               {text.title}
             </h1>
       {/* The stored level, matching the card that led here — see the note in
           ReadingCard. The estimate only ever speaks in the "Reading help"
           note below, where it describes the fit rather than renaming it. */}
-            <p className="mt-1 text-xs font-semibold text-ink-muted">
+            <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-muted">
               {text.difficulty} - {text.minutes} min
             </p>
           </div>
-          <LessonScene name={headerScene} size={82} className="lesson-scene-float rounded-[1.25rem] bg-white/60 p-1 shadow-card" />
         </div>
         <div className="p-4">
       <details className="text-xs text-ink-muted">
-        <summary className="cursor-pointer font-semibold underline underline-offset-2">Reading help</summary>
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">Reading help</summary>
         <p className="mt-1">
           Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
           &ldquo;Explain the whole sentence&rdquo;.
@@ -1696,7 +1693,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             type="button"
             onClick={handleToggleListenToArticle}
             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
-              isSpeakingArticle ? "bg-brand text-white" : "bg-cream text-ink shadow-card"
+              isSpeakingArticle ? "bg-brand text-cream" : "border border-cream-dark bg-cream text-ink"
             }`}
           >
             {isSpeakingArticle ? (
@@ -1723,17 +1720,17 @@ export default function Reader({ text }: { text: ReadingText }) {
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex items-center gap-2 rounded-full bg-cream px-3.5 py-2 text-xs font-semibold text-ink shadow-card active:scale-95 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink active:scale-95 disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
             className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-              showEnglishTranslation ? "bg-brand" : "bg-cream-dark"
+              showEnglishTranslation ? "bg-brand" : "bg-cream-fill"
             }`}
             aria-hidden="true"
           >
             <span
-              className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+              className={`inline-block h-4 w-4 rounded-full bg-cream transition-transform ${
                 showEnglishTranslation ? "translate-x-4" : "translate-x-0.5"
               }`}
             />
@@ -1771,16 +1768,16 @@ export default function Reader({ text }: { text: ReadingText }) {
       </section>
 
       {isChunkedStarterLesson && (
-        <section className="mt-5 rounded-card bg-cream-card p-4 shadow-card">
+        <section className="mt-5 rounded-card border border-cream-dark bg-cream-card p-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-brand">Step {currentLessonStep} of {lessonStepCount}</p>
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-brand">Step {currentLessonStep} of {lessonStepCount}</p>
               <p className="mt-0.5 text-sm font-semibold text-ink">{lessonStepSentenceLabel}</p>
             </div>
             <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{lessonProgress}%</span>
           </div>
           <div
-            className="mt-3 h-2 overflow-hidden rounded-full bg-cream-dark"
+            className="mt-3 h-[3px] overflow-hidden rounded-full bg-cream-strong"
             role="progressbar"
             aria-label="Lesson progress"
             aria-valuemin={0}
@@ -1798,7 +1795,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       <article
         ref={articleRef}
-        className={`no-select mt-6 space-y-6 ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.8] text-ink`}
+        className={`no-select mt-6 space-y-6 font-french ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.62] text-ink`}
       >
         {visibleParagraphEntries.map(({ sentences, paragraphIndex }) =>
           showEnglishTranslation ? (
@@ -1852,10 +1849,10 @@ export default function Reader({ text }: { text: ReadingText }) {
         path and the exercises are there for whoever wants them.
       */}
       {!rereadMode && !isStarterLesson && (
-        <details className="mt-8 rounded-card bg-cream-card p-4 shadow-card">
+        <details className="mt-8 rounded-card border border-cream-dark bg-cream-card p-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
             <div>
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Practice this article</h2>
+              <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Practice this article</h2>
               <p className="mt-0.5 text-xs text-ink-muted">
                 Comprehension checks, words worth learning, and a summary box.
               </p>
@@ -1868,8 +1865,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           <div className="mt-4 space-y-4">
             {showInterpretationChecks && (
               <>
-                <section className="rounded-2xl bg-cream p-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Quick challenge</h3>
+                <section className="rounded-2xl bg-cream-sunken p-3">
+                  <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Quick challenge</h3>
                   <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {quickChallenge.choices.map((choice) => {
@@ -1883,9 +1880,9 @@ export default function Reader({ text }: { text: ReadingText }) {
                           onClick={() => setQuickChallengeAnswer(choice)}
                           className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
                             answered && correct
-                              ? "bg-emerald-100 text-emerald-800"
+                              ? "bg-brand-light text-brand"
                               : selected
-                                ? "bg-rose-100 text-rose-800"
+                                ? "bg-rose text-rose-ink"
                                 : "bg-cream-card text-ink-muted"
                           }`}
                         >
@@ -1906,7 +1903,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
                 {toneQuestions.length > 0 && (
                 <section className="space-y-3">
-                  <h3 className="px-1 text-sm font-semibold uppercase tracking-wide text-ink-muted">Tone check</h3>
+                <h3 className="px-1 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Tone check</h3>
                   {toneQuestions.map((question) => (
                     <ComprehensionQuestion
                       key={question.id}
@@ -1929,14 +1926,14 @@ export default function Reader({ text }: { text: ReadingText }) {
             )}
 
             {showInterpretationChecks && (
-              <div className="rounded-2xl bg-cream p-3">
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Summarise it</h3>
+              <div className="rounded-2xl bg-cream-sunken p-3">
+                <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Summarise it</h3>
                 <textarea
                   value={summaryDraft}
                   onChange={(event) => setSummaryDraft(event.target.value)}
                   rows={4}
                   placeholder="Write the article's main point in English or French."
-                  className="mt-3 w-full resize-none rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+                  className="mt-3 w-full resize-none rounded-2xl border border-cream-dark bg-cream-card px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
                 />
                 <p className="mt-2 text-xs text-ink-muted">
                   Aim for one sentence about what happened and one sentence about why it matters.
@@ -1964,7 +1961,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 isLesson={isStarterLesson}
               />
             ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-2.5 text-sm font-semibold text-emerald-700">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-light px-4 py-2.5 text-sm font-semibold text-brand">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
@@ -1975,18 +1972,18 @@ export default function Reader({ text }: { text: ReadingText }) {
               <button
                 type="button"
                 onClick={handleFinishSecondPass}
-                className="block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
+                className="ligne-pill block bg-brand text-cream"
               >
                 Finish second pass
               </button>
             )}
             {!rereadMode && !isStarterLesson && (
-              <details className="rounded-card bg-cream-card p-3 text-left shadow-card">
-                <summary className="cursor-pointer text-center text-xs font-semibold text-ink-muted underline underline-offset-2">
+              <details className="rounded-card border border-cream-dark bg-cream-card p-3 text-left">
+                <summary className="cursor-pointer text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
                   More options
                 </summary>
-                <div className="mt-3 rounded-2xl bg-cream p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">How did this level feel?</p>
+                <div className="mt-3 rounded-2xl bg-cream-sunken p-3">
+                  <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">How did this level feel?</p>
                   <div className="mt-2 grid grid-cols-3 gap-2">
                     {(
                       [
@@ -2000,7 +1997,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                         type="button"
                         onClick={() => handleArticleFeedback(option.value)}
                         className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
-                          articleFeedback === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                          articleFeedback === option.value ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
                         }`}
                       >
                         {option.label}
@@ -2011,7 +2008,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                 {!completionResult && articleSavedWordCount > 0 && (
                   <Link
                     href={`/review?article=${encodeURIComponent(text.title)}`}
-                    className="mt-3 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95"
+                    className="ligne-pill mt-3 block bg-brand text-center text-cream"
                   >
                     Review {articleSavedWordCount} {articleSavedWordCount === 1 ? "word" : "words"} from this article
                   </Link>
@@ -2020,7 +2017,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   <button
                     type="button"
                     onClick={handleStartSecondPass}
-                    className="mt-3 block w-full rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
+                    className="ligne-pill mt-3 block w-full bg-cream-fill text-ink-muted"
                   >
                     Read again without English
                   </button>
@@ -2029,7 +2026,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   <PostSessionResearchPrompt articleId={text.id} />
                 </div>
                 <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <AndroidBetaButton source="article_completion" className="rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95" />
+                  <AndroidBetaButton source="article_completion" className="ligne-pill bg-brand text-cream" />
                   <FeedbackButton feature="reader_completion" articleId={text.id} label="Give reader feedback" />
                 </div>
               </details>
@@ -2038,14 +2035,14 @@ export default function Reader({ text }: { text: ReadingText }) {
         ) : isChunkedStarterLesson && !isLastLessonStep ? (
           <button
             onClick={handleContinueLesson}
-            className="rounded-full bg-brand px-5 py-3 shadow-raised text-sm font-semibold text-white active:scale-95"
+            className="ligne-pill bg-brand text-cream"
           >
             Continue
           </button>
         ) : (
           <button
             onClick={handleMarkCompleted}
-            className="rounded-full bg-brand px-5 py-3 shadow-raised text-sm font-semibold text-white active:scale-95"
+            className="ligne-pill bg-brand text-cream"
           >
             {isStarterLesson ? "Finish lesson" : "Finish reading"}
           </button>
@@ -2055,7 +2052,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       {/* "What to read next" belongs after finishing, not among the exercises. */}
       {status === "completed" && !rereadMode && relatedArticles.length > 0 && (
         <details className="mb-5">
-          <summary className="cursor-pointer rounded-card bg-cream-card p-4 text-sm font-semibold uppercase tracking-wide text-ink-muted shadow-card">
+          <summary className="cursor-pointer rounded-card border border-cream-dark bg-cream-card p-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             {isStarterLesson ? "More lessons" : "More articles"}
           </summary>
           <div className="mt-3">
@@ -2216,7 +2213,7 @@ function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison
   const neutral = comparison.neutralChoice === "left" ? comparison.left : comparison.right;
   const dramatic = comparison.dramaticChoice === "left" ? comparison.left : comparison.right;
   return (
-    <section className="rounded-card border border-cream-dark bg-cream-card p-4 shadow-card">
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Compare the headlines</h2>
       <div className="mt-3 grid gap-2">
         {[comparison.left, comparison.right].map((article) => (
@@ -2283,8 +2280,8 @@ function LearningCandidatesSection({
   }
 
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Words worth learning</h2>
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
+      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Words worth learning</h2>
       <p className="mt-0.5 text-xs text-ink-muted">
         Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
       </p>
@@ -2306,7 +2303,7 @@ function LearningCandidatesSection({
                 type="button"
                 onClick={() => handleSave(candidate)}
                 disabled={candidate.alreadySaved || justSaved}
-                className="shrink-0 rounded-full bg-brand px-3 py-1.5 shadow-raised text-xs font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
+                className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold text-cream disabled:bg-cream-fill disabled:text-ink-muted"
               >
                 {candidate.alreadySaved || justSaved ? "Saved" : "Save"}
               </button>
@@ -2334,7 +2331,7 @@ function ComprehensionQuestion({
   const answered = selected !== null;
   const correct = answered && selected === question.answerIndex;
   return (
-    <div className="rounded-card bg-cream-card p-4 shadow-card">
+    <div className="rounded-card border border-cream-dark bg-cream-card p-4">
       <p className="text-sm font-bold text-ink">{question.prompt}</p>
       <div className="mt-3 space-y-2">
         {question.choices.map((choice, index) => {
@@ -2347,9 +2344,9 @@ function ComprehensionQuestion({
               onClick={() => onSelect(index)}
               className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium active:scale-[0.99] ${
                 isAnswer
-                  ? "bg-emerald-100 text-emerald-800"
+                  ? "bg-brand-light text-brand"
                   : isSelected
-                    ? "bg-rose-100 text-rose-800"
+                    ? "bg-rose text-rose-ink"
                     : "bg-cream text-ink"
               }`}
             >

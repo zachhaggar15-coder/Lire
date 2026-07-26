@@ -7,13 +7,12 @@ import { getOnboardingState } from "@/lib/onboarding";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
 
 const items = [
-  { href: "/", label: "Lessons", icon: BookIcon, activePaths: ["/", "/articles"] },
-  { href: "/live-news", label: "News", icon: NewsIcon, activePaths: ["/live-news"] },
-  { href: "/review", label: "Review", icon: CardsIcon, activePaths: ["/review"] },
+  { href: "/", label: "Lessons", activePaths: ["/", "/articles"] },
+  { href: "/live-news", label: "News", activePaths: ["/live-news"] },
+  { href: "/review", label: "Review", activePaths: ["/review"] },
   {
     href: "/settings",
-    label: "Profile",
-    icon: ProfileIcon,
+    label: "You",
     activePaths: [
       "/settings",
       "/progress",
@@ -53,66 +52,28 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-md rounded-t-3xl bg-cream-card/95 shadow-[0_-4px_16px_rgba(43,42,34,0.06)] backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-md border-t border-cream-dark bg-cream-chrome"
       style={{ paddingBottom: "var(--safe-bottom)" }}
+      aria-label="Primary"
     >
-      <ul className="flex">
-        {items.map(({ href, label, icon: Icon, activePaths }) => {
+      <ul className="flex px-5 pb-[26px] pt-3">
+        {items.map(({ href, label, activePaths }) => {
           const active = activePaths.some((path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)));
           return (
             <li key={href} className="flex-1">
               <Link
                 href={href}
-                className={`flex flex-col items-center gap-1 px-1 py-3 text-xs font-medium transition-[color,transform] duration-200 ease-out active:scale-95 ${
-                  active ? "text-brand" : "text-ink-muted"
+                aria-current={active ? "page" : undefined}
+                className={`block min-h-11 px-1 py-2 text-center font-mono text-[9px] uppercase tracking-[0.12em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 ${
+                  active ? "font-bold text-brand" : "font-normal text-ink-faint"
                 }`}
               >
-                <Icon className="h-5 w-5" />
-                <span className="max-w-full truncate">{label}</span>
+                {label}
               </Link>
             </li>
           );
         })}
       </ul>
     </nav>
-  );
-}
-
-function CardsIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="6" width="14" height="12" rx="2" />
-      <path d="M8 3h9a2 2 0 0 1 2 2v11" />
-    </svg>
-  );
-}
-
-function BookIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4z" />
-      <path d="M9 8h5" />
-      <path d="M9 12h6" />
-    </svg>
-  );
-}
-
-function NewsIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="4" y="5" width="16" height="14" rx="2" />
-      <path d="M8 9h8" />
-      <path d="M8 13h5" />
-      <path d="M8 17h8" />
-    </svg>
-  );
-}
-
-function ProfileIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21a8 8 0 0 1 16 0" />
-    </svg>
   );
 }
