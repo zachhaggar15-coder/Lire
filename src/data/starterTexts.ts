@@ -16691,4 +16691,234 @@ Réhabiliter une part d'oubli, ce n'est donc pas trahir la mémoire ; c'est reco
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-021",
+    title: "Les mots ne sont jamais neutres",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nommer, c'est déjà prendre parti. Le vocabulaire d'un débat en oriente l'issue.",
+    blurbEn:
+      "To name a thing is already to take a side. A C1 essay on how the words a debate uses quietly decide its outcome. (Section: Language and power, 1/5.)",
+    body: `On imagine volontiers que les mots sont de simples étiquettes, des instruments neutres qui désigneraient les choses sans les colorer. Cette conception rassurante est fausse, et sa fausseté a des conséquences politiques considérables. Car nommer n'est jamais un acte innocent : le mot que l'on choisit pour désigner une réalité en propose déjà une interprétation, oriente la manière dont on la perçoit, incline le jugement avant même que l'argument commence. Dans tout débat, celui qui impose son vocabulaire a déjà, pour une part, gagné.
+
+Considérons une même réalité désignée par des mots différents. Selon qu'on parle de « charges » ou de « cotisations », de « demandeurs d'asile » ou de « clandestins », d'« interruption de grossesse » ou de « suppression d'un enfant à naître », ce n'est pas seulement le ton qui change : c'est la réalité elle-même qui apparaît sous un jour différent, appelant une réaction différente. Chaque mot charrie des connotations, active des associations, suggère une évaluation. Le choix du terme n'est pas un habillage de la pensée ; il en est le premier acte, celui qui dispose le terrain sur lequel tout le reste se jouera.
+
+Ce pouvoir du vocabulaire explique l'âpreté des luttes qui portent, en apparence, sur de simples mots. Quand un camp impose sa terminologie, il impose du même coup sa manière de voir, et contraint l'adversaire à débattre dans un langage qui lui est défavorable. Accepter les mots de l'autre, c'est déjà entrer dans son cadre, raisonner selon ses présupposés, se battre sur un terrain qu'il a choisi. C'est pourquoi les débats les plus importants commencent souvent par une bataille sur les mots eux-mêmes : comment nommer la chose dont on va discuter. Cette bataille préliminaire, en apparence secondaire, est souvent décisive.
+
+Il y a plus subtil encore. Certains mots ont le pouvoir de rendre pensables, ou impensables, certaines réalités. Tant qu'un phénomène n'a pas de nom, il reste difficile à saisir, à dénoncer, à combattre ; le doter d'un mot, c'est le faire exister dans le débat, lui donner une consistance, permettre qu'on s'en empare. Bien des combats ont commencé par la forge d'un mot qui nommait enfin ce que chacun éprouvait sans pouvoir le dire. Inversement, l'absence de mot, ou l'euphémisme qui voile, peut maintenir dans l'ombre ce qu'on préfère ne pas voir. Le langage ne se contente pas de décrire le monde ; il décide, pour une part, de ce qui, dans ce monde, sera visible et dicible.
+
+De ce pouvoir découle une manipulation courante : l'euphémisme, qui adoucit ce qu'il nomme pour le rendre acceptable. On parle de « dommages collatéraux » pour ne pas dire des morts, de « plan social » pour ne pas dire des licenciements, de « frappes » pour ne pas dire des bombardements. Ces mots ne mentent pas tout à fait, mais ils anesthésient, ils mettent à distance, ils empêchent de ressentir ce que la chose nue provoquerait. L'euphémisme est une arme précisément parce que le langage n'est pas neutre : il exploite le pouvoir des mots de colorer la réalité, pour la rendre supportable ou invisible.
+
+Prendre conscience que les mots ne sont jamais neutres, ce n'est pas sombrer dans un soupçon généralisé où tout langage serait manipulation. C'est acquérir une vigilance : se demander, devant les mots qu'on nous propose, ce qu'ils suggèrent, ce qu'ils cachent, quel cadre ils installent, à quelle interprétation ils inclinent. C'est aussi refuser de laisser à d'autres le monopole de nommer, revendiquer le droit de choisir ses propres mots plutôt que de subir ceux qu'on nous impose. Car dans une large mesure, celui qui contrôle les mots contrôle la pensée — et reconquérir le langage est la première des libertés.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-022",
+    title: "La langue de bois",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Un langage qui parle beaucoup pour ne rien dire, et rassure en n'engageant à rien.",
+    blurbEn:
+      "A language that says much and means nothing, reassuring precisely because it commits to nothing. A C1 essay on the political art of empty speech. (Section: Language and power, 2/5.)",
+    body: `Il existe une manière de parler qui a fait de l'absence de contenu un art : la langue de bois. Elle se reconnaît à ce qu'elle produit beaucoup de mots pour ne rien dire, aligne des formules creuses, enchaîne des évidences et des généralités qui n'engagent à rien et qu'on ne saurait contredire parce qu'elles ne signifient presque rien. Ce langage, longtemps associé aux régimes autoritaires et à leur propagande, a essaimé bien au-delà, jusqu'à imprégner le discours politique, managérial et institutionnel ordinaire. Il mérite qu'on l'examine, car son succès révèle une fonction précise, et redoutable.
+
+La langue de bois se caractérise d'abord par le flou. Elle préfère les mots vagues aux termes précis, les abstractions aux réalités concrètes, les formules toutes faites aux affirmations vérifiables. On y parle de « dynamiques », de « synergies », de « mise en œuvre de dispositifs », d'« accompagnement des transitions » — expressions qui donnent l'impression de dire quelque chose tout en se gardant de rien affirmer qui puisse être discuté ou démenti. Ce flou n'est pas maladresse ; il est fonction. Il permet de parler sans s'engager, d'occuper l'espace sans prendre de risque, de paraître répondre sans répondre.
+
+Car telle est la première utilité de la langue de bois : éviter de se compromettre. Dire quelque chose de précis, c'est s'exposer — à la contradiction, au reproche, à la vérification. La langue de bois, en restant dans le vague, échappe à ces risques. On ne peut pas prendre en défaut celui qui n'a rien dit de vérifiable ; on ne peut pas reprocher un manquement à celui qui n'a rien promis de précis. Ce langage est une armure : il protège celui qui le manie de toute prise, au prix d'un vide qu'il masque sous l'abondance des mots.
+
+Sa seconde utilité est d'anesthésier. La langue de bois endort la vigilance ; à force de formules attendues, de tournures convenues, elle produit une sorte de ronronnement qui décourage l'attention. On cesse d'écouter vraiment, on laisse glisser ces mots qui n'accrochent rien, on renonce à y chercher un sens qu'ils n'ont pas. Ce faisant, elle désarme l'esprit critique : on ne conteste pas un discours qu'on n'écoute plus, on ne s'indigne pas de ce qu'on n'a pas saisi. La langue de bois fait passer, sous le couvert d'un verbiage inoffensif, l'absence de tout contenu réel — et parfois, l'escamotage de ce qu'on ne veut pas dire.
+
+Il faut se garder, ici, d'une confusion. Toute prudence dans le langage n'est pas langue de bois ; il est des sujets délicats où la nuance et la réserve sont légitimes, où l'on doit peser ses mots. La langue de bois se distingue de cette prudence honnête par son intention : elle ne pèse pas ses mots pour dire juste, mais les vide pour ne rien dire. La prudence cherche la justesse ; la langue de bois cherche l'esquive. L'une affine la pensée, l'autre la dissout. Savoir les distinguer est nécessaire pour ne pas confondre la rigueur avec le vide.
+
+Résister à la langue de bois suppose une exigence : celle de demander, derrière les mots, ce qui est réellement dit. Que signifie concrètement cette formule ? Qu'affirme-t-elle qui puisse être vrai ou faux ? Qu'engage-t-elle ? Ces questions, adressées à tout discours, font apparaître le vide là où il est, et forcent, parfois, ceux qui parlent à sortir de leur armure verbale. Dans une démocratie, cette exigence est un devoir civique, car la langue de bois n'est pas seulement une paresse du langage : c'est une manière de gouverner sans rendre de comptes, de parler pour ne pas être compris, de noyer sous les mots ce qui devrait être clairement dit et clairement débattu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-023",
+    title: "Qui a le droit de parler ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La parole publique n'est pas également accessible à tous. Elle a ses gardiens.",
+    blurbEn:
+      "Public speech is not equally open to all; it has gatekeepers and unspoken rules about who is heard. A C1 essay on voice, authority and exclusion. (Section: Language and power, 3/5.)",
+    body: `Nous vivons dans des sociétés qui proclament l'égale liberté de parole de tous les citoyens. Chacun, en droit, peut s'exprimer, donner son avis, participer au débat. Mais cette égalité de principe masque une réalité plus complexe : la parole publique, celle qui porte, qui est entendue, qui pèse, n'est pas également accessible à tous. Elle a ses conditions, ses gardiens, ses hiérarchies implicites. Interroger qui a réellement le droit de parler — non en droit, mais en fait — c'est mettre au jour l'une des inégalités les plus profondes et les moins visibles de nos sociétés.
+
+La première inégalité tient à l'accès aux moyens de la parole. Pouvoir s'exprimer publiquement suppose d'avoir accès à des tribunes, des médias, des réseaux, des relais qui donnent à la parole une portée. Or ces moyens sont inégalement distribués. Certains disposent, par leur position, leur métier, leur réseau, d'un accès aisé à l'espace public ; d'autres, quoi qu'ils aient à dire, peinent à se faire entendre au-delà de leur cercle immédiat. La liberté de parole formelle, égale pour tous, se double ainsi d'une inégalité réelle des moyens de la faire porter, qui fait qu'une même parole n'a pas le même écho selon qui la prononce.
+
+La deuxième inégalité, plus subtile, tient à la légitimité reconnue à celui qui parle. Nous n'accordons pas la même attention, le même crédit, à toutes les paroles ; nous les hiérarchisons selon qui les émet. La parole de l'expert, du diplômé, du notable est écoutée ; celle de l'ignorant supposé, du subalterne, de celui qui n'a pas les codes est facilement disqualifiée, quelle qu'en soit la justesse. Cette hiérarchie de la légitimité a sa part de raison — il est sensé d'accorder plus de crédit à qui sait —, mais elle déborde largement ce qui la justifierait, excluant du débat des voix au motif qu'elles ne parlent pas la bonne langue, n'ont pas les bons titres, ne maîtrisent pas les codes de la parole légitime.
+
+Ces codes, précisément, constituent une troisième barrière. La parole publique obéit à des règles implicites — un certain vocabulaire, un certain ton, une certaine manière d'argumenter — dont la maîtrise s'acquiert par l'éducation et le milieu. Celui qui ne les possède pas est disqualifié non pour ce qu'il dit, mais pour la manière dont il le dit, jugée maladroite, inappropriée, illégitime. Ainsi la forme même de la parole légitime opère un tri social, réservant de fait l'accès au débat à ceux qui en ont acquis les codes, et excluant les autres au nom d'une exigence formelle qui masque une exclusion sociale.
+
+Reconnaître ces inégalités ne conduit pas à nier toute hiérarchie des paroles, comme si toutes se valaient, comme si l'ignorant et le savant devaient être également écoutés sur ce qu'ils ignorent. Il y a une légitimité fondée de l'expertise, et prétendre l'abolir serait tomber dans un populisme qui n'écoute plus personne parce qu'il refuse toute autorité du savoir. Le problème n'est pas qu'il existe des hiérarchies de la parole, mais qu'elles soient injustes : qu'elles excluent au nom de la forme ce qui mériterait d'être entendu, qu'elles confondent la légitimité du savoir avec les privilèges d'un milieu, qu'elles fassent taire des voix pour de mauvaises raisons.
+
+La question « qui a le droit de parler ? » n'appelle donc pas la réponse simpliste « tout le monde également », qui ignore les légitimes différences de compétence, ni la réponse élitiste « seuls les habilités », qui masque des exclusions injustes sous couvert d'exigence. Elle appelle un travail : rendre l'accès à la parole plus juste, écouter des voix qu'on disqualifie trop vite, distinguer la légitimité réelle du savoir des barrières purement sociales, ouvrir le débat à ceux qu'on en exclut sans raison valable. Une démocratie ne se mesure pas seulement à la liberté de parole qu'elle proclame, mais à l'égalité réelle de la parole qu'elle permet — et sur ce terrain, il reste beaucoup à faire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-024",
+    title: "Les limites de la liberté d'expression",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Faut-il pouvoir tout dire ? La question divise, et les réponses simples trompent.",
+    blurbEn:
+      "Should everything be sayable? A C1 essay weighing free expression against its limits, past the slogans of both camps. (Section: Language and power, 4/5.)",
+    body: `La liberté d'expression est un principe cardinal des sociétés libres, et l'un des plus précieux qu'elles aient conquis. Pourtant, dès qu'on cherche à en préciser la portée, les difficultés surgissent. Faut-il pouvoir tout dire ? Existe-t-il des paroles qu'une société a le droit, ou le devoir, d'interdire ? La question divise profondément, et les réponses simples, qu'elles viennent des partisans d'une liberté sans limite ou de ceux qui multiplient les interdits, échouent également à saisir la complexité du problème.
+
+Commençons par ce qui fonde la liberté d'expression, car on l'invoque souvent sans en rappeler les raisons. Elle repose sur plusieurs justifications : la recherche de la vérité, qui suppose que les idées puissent être librement confrontées ; l'autonomie de l'individu, qui a le droit de former et d'exprimer ses opinions ; le fonctionnement démocratique, qui exige un libre débat. Ces justifications sont puissantes, et elles expliquent pourquoi la liberté d'expression mérite une protection particulière, plus forte que celle d'autres libertés. On ne saurait la restreindre à la légère, car chaque restriction touche à ces biens fondamentaux.
+
+Mais ces justifications mêmes indiquent des limites. Si la liberté d'expression vaut parce qu'elle sert la vérité, l'autonomie et la démocratie, alors les paroles qui ne servent aucun de ces biens, et qui leur nuisent, ne bénéficient pas au même titre de sa protection. L'appel explicite au meurtre, la diffamation qui détruit une réputation par le mensonge, l'incitation à la violence contre un groupe, ne contribuent en rien à la recherche de la vérité ni au débat démocratique ; elles causent des torts réels sans les bénéfices qui justifient la liberté d'expression. Reconnaître certaines limites n'est donc pas trahir le principe, mais le comprendre : la liberté d'expression protège l'échange des idées, non tout usage de la parole quel qu'en soit l'effet.
+
+Mais cette reconnaissance de limites ouvre aussitôt un péril, car il est terriblement difficile de tracer la frontière, et tentant de l'étendre indéfiniment. Une fois admis qu'on peut interdire certaines paroles nuisibles, où s'arrête-t-on ? Le nuisible est une notion élastique, que chacun étend volontiers à ce qui le heurte ou le dérange. Sous prétexte de protéger, on peut en venir à interdire toute parole gênante, toute critique déplaisante, toute idée hétérodoxe, au nom du tort qu'elles causeraient. La pente est réelle : de restriction légitime en restriction abusive, on peut vider la liberté d'expression de sa substance, ne laissant subsister que la liberté de dire ce qui ne dérange personne — c'est-à-dire pas de liberté du tout.
+
+C'est pourquoi la sagesse, en cette matière, consiste à tenir fermement deux exigences en tension. D'une part, reconnaître que la liberté d'expression n'est pas absolue, qu'elle connaît des limites justifiées quand la parole cause des torts graves sans servir les biens qui la fondent. D'autre part, se méfier extrêmement de l'extension de ces limites, poser la barre très haut, ne restreindre qu'à contrecœur et pour des motifs impérieux, en gardant toujours à l'esprit que le remède peut être pire que le mal. La liberté d'expression doit être défendue jusque dans son inconfort : elle n'a de sens que si elle protège aussi la parole qui déplaît, qui choque, qui dérange, car la parole consensuelle n'a jamais eu besoin d'être protégée.
+
+Il n'existe donc pas de réponse simple à la question de savoir si l'on peut tout dire. Ni le « tout est permis » qui nierait les torts réels que la parole peut causer, ni le « on ne peut plus rien dire » qui multiplierait les interdits jusqu'à étouffer le débat, ne rendent justice à la complexité du problème. La liberté d'expression est un équilibre difficile, toujours à réajuster, entre la protection d'un bien fondamental et la reconnaissance de ses limites. Cet équilibre ne se règle pas par une formule, mais par un jugement toujours renouvelé, exercé avec le souci constant de ne pas sacrifier, sous prétexte de protéger, ce qui fait le prix d'une société libre : la possibilité de dire, aussi, ce qui dérange.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-025",
+    title: "Nommer, c'est faire exister",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Donner un nom à ce qui n'en avait pas peut changer le monde. Pour le meilleur et le pire.",
+    blurbEn:
+      "Giving a name to what had none can change the world — empowering the silenced, but also conjuring divisions that did not exist. A closing C1 essay on the power to name. (Section: Language and power, 5/5.)",
+    body: `Nous avons vu que les mots ne sont pas neutres, qu'ils orientent la pensée et servent le pouvoir. Il reste à explorer l'un de leurs pouvoirs les plus profonds : celui de faire exister. Car nommer n'est pas seulement décrire ce qui est déjà là ; c'est parfois faire venir à l'existence ce qui, sans le mot, n'aurait pas de consistance. Ce pouvoir créateur du langage, à la fois libérateur et périlleux, mérite qu'on médite sur ses ambivalences.
+
+Commençons par son versant libérateur. Bien des réalités humaines n'existent vraiment, dans l'espace public, qu'une fois nommées. Une souffrance sans nom reste diffuse, incommunicable, isolée ; celui qui l'éprouve croit être seul, ne peut la partager, ni la dénoncer, ni la combattre. Lui donner un nom, c'est la faire exister comme réalité reconnue, permettre à ceux qui la subissent de se reconnaître, de se rassembler, de la nommer aux autres. Des combats entiers ont commencé par la forge d'un mot qui nommait enfin une réalité que chacun éprouvait sans pouvoir la dire. Le mot a donné forme à l'informe, visibilité à l'invisible, existence publique à ce qui n'existait que dans le silence des consciences isolées.
+
+Ce pouvoir de nommer est donc une arme des dominés autant que des dominants. Ceux qui subissent une injustice sans nom sont désarmés ; leur donner le mot qui la nomme, c'est leur donner un instrument de lutte, la possibilité de désigner ce qu'ils subissent, de le porter dans le débat, d'exiger qu'on y remédie. En ce sens, la conquête du langage, le droit de nommer sa propre expérience plutôt que de la laisser nommer par d'autres, est une dimension essentielle de toute émancipation. Se réapproprier les mots, forger ceux qui manquent, refuser ceux qu'on nous impose, c'est reconquérir une part de pouvoir sur sa propre condition.
+
+Mais ce pouvoir créateur a un revers, qu'il serait imprudent d'ignorer. Car nommer peut aussi faire exister des divisions, des catégories, des oppositions qui, sans le mot, n'auraient pas la même réalité. Désigner un groupe, lui donner un nom, c'est le constituer comme groupe, parfois le dresser contre un autre, créer des frontières là où il n'y avait que des différences fluides. Le langage qui libère en nommant les souffrances peut aussi enfermer en nommant les identités, figer dans des catégories ce qui était mouvant, opposer ce qui coexistait. Le même pouvoir qui donne forme aux justes causes peut donner corps aux pires divisions.
+
+Il y a plus troublant. Nommer peut créer la chose nommée par un effet en retour. Désigner des gens d'un certain terme, les enfermer dans une catégorie, peut finir par les faire devenir ce qu'on les dit être, tant les mots dont on use pour désigner les êtres influencent ce qu'ils deviennent. L'étiquette qu'on appose n'est pas toujours un simple constat ; elle peut être une prophétie qui contribue à se réaliser, façonnant les perceptions, les attentes, les comportements, jusqu'à produire la réalité qu'elle prétendait décrire. Le pouvoir de nommer est aussi, en ce sens, un pouvoir de façonner les êtres.
+
+Ce double pouvoir — libérateur et créateur de divisions — commande une responsabilité dans l'usage des mots. Nommer n'est jamais anodin : c'est faire exister, pour le meilleur et pour le pire. Le même acte qui peut donner voix aux sans-voix peut aussi dresser les groupes les uns contre les autres ; le même mot qui libère peut enfermer. Il n'y a pas de règle simple pour distinguer le bon usage du mauvais, sinon la conscience de ce que l'on fait quand on nomme, et le souci de ses effets. Car les mots, qui semblent si légers, sont parmi les forces les plus puissantes qui façonnent le monde humain — et en manier le pouvoir de faire exister exige qu'on mesure ce qu'on appelle à l'existence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-026",
+    title: "Le doute n'est pas l'ignorance",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Reconnaître ce qu'on ne sait pas est le contraire de l'ignorance : c'est un savoir.",
+    blurbEn:
+      "Admitting what we do not know is not ignorance but a form of knowledge. A C1 essay on scientific uncertainty and why it is so often misunderstood. (Section: Science and uncertainty, 1/5.)",
+    body: `Il existe un malentendu tenace sur le doute et l'incertitude en science, qui nourrit une bonne part de la défiance contemporaine à son égard. Beaucoup confondent l'incertitude avec l'ignorance, et concluent que si les scientifiques « ne sont pas sûrs », c'est qu'ils ne savent pas, et que leur parole ne vaut donc pas mieux qu'une autre. Ce raisonnement repose sur une méprise profonde. Car reconnaître une incertitude n'est pas avouer une ignorance ; c'est, au contraire, une forme élaborée de savoir, celle qui connaît les limites de ce qu'elle affirme.
+
+Il faut d'abord distinguer deux sens du mot « incertitude ». Il y a l'incertitude de celui qui ne sait rien, qui n'a aucune idée, qui est dans le noir complet : c'est l'ignorance. Et il y a l'incertitude de celui qui sait beaucoup, mais connaît précisément la marge de ce qu'il ignore, qui peut dire non seulement ce qu'il tient pour établi, mais avec quel degré de confiance, et où commencent les zones d'ombre. Cette seconde incertitude n'est pas l'envers du savoir ; elle en est une composante avancée. Le savant qui dit « nous savons ceci avec une grande confiance, cela avec moins, et nous ignorons encore ceci » en sait infiniment plus que celui qui affirme tout avec une égale assurance.
+
+Cette incertitude mesurée est même le propre de la démarche scientifique rigoureuse. La science ne procède pas par certitudes absolues, mais par degrés de confiance, sans cesse ajustés à mesure des preuves. Une affirmation scientifique s'accompagne toujours, implicitement ou explicitement, d'une évaluation de sa solidité : est-elle solidement établie, probable, hypothétique ? Cette gradation n'est pas une faiblesse ; c'est une honnêteté, et une précision. Là où l'idéologie ou la croyance affirment tout avec la même assurance, la science distingue ce qu'elle sait de ce qu'elle suppose, et cette distinction est une supériorité, non un défaut.
+
+C'est pourquoi il est trompeur, et souvent malhonnête, d'exploiter l'incertitude scientifique pour disqualifier ce que la science établit. « Les scientifiques ne sont pas d'accord », « ce n'est qu'une théorie », « rien n'est certain » : ces formules jouent sur la confusion entre l'incertitude qui accompagne tout savoir rigoureux et l'absence de savoir. Qu'une théorie comporte des zones d'incertitude ne signifie pas qu'elle ne repose sur rien ; qu'un désaccord subsiste sur des points fins ne signifie pas que l'essentiel soit en débat. Utiliser l'existence d'une marge d'incertitude pour rejeter un savoir solidement établi, c'est exploiter cyniquement la probité même de la science contre elle.
+
+Cette stratégie a été délibérément employée, l'histoire le montre, par ceux qui avaient intérêt à retarder l'action : entretenir le doute, exagérer l'incertitude, faire passer un consensus solide pour une controverse ouverte, afin de paralyser sous prétexte qu'on « ne serait pas sûr ». Cette fabrique du doute exploite précisément notre méprise sur l'incertitude scientifique : en la présentant comme une ignorance, elle transforme la vertu de la science — son honnêteté sur ses limites — en argument contre elle. Il n'y a pas de défense plus efficace de l'inaction que de réclamer une certitude absolue qu'aucune science ne peut jamais offrir.
+
+Comprendre que le doute n'est pas l'ignorance, c'est donc se prémunir contre cette manipulation. C'est reconnaître qu'un savoir qui connaît ses limites vaut mieux qu'une certitude aveugle, que l'incertitude mesurée est une forme de rigueur, et qu'exiger une certitude totale avant d'agir est souvent une manière déguisée de refuser d'agir. La science ne nous offre pas des certitudes absolues, parce qu'elle est honnête ; mais elle nous offre les meilleurs savoirs disponibles, avec l'indication de leur fiabilité. S'en détourner sous prétexte qu'ils ne sont pas absolument certains, c'est préférer l'illusion de la certitude à la réalité du savoir — et se condamner, au nom d'un doute mal compris, à ne plus rien pouvoir croire ni décider.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-027",
+    title: "Corrélation et causalité",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Deux choses varient ensemble : l'une cause-t-elle l'autre ? Le piège est partout.",
+    blurbEn:
+      "Two things rise and fall together — does one cause the other? A C1 essay on one of the most common and consequential errors in reasoning. (Section: Science and uncertainty, 2/5.)",
+    body: `Parmi les erreurs de raisonnement les plus répandues, et les plus lourdes de conséquences, figure la confusion entre corrélation et causalité. Constater que deux phénomènes varient ensemble — qu'ils augmentent ou diminuent de concert — et en conclure que l'un cause l'autre : ce raccourci, si tentant, est à la source d'innombrables croyances fausses, de décisions erronées, de manipulations réussies. Comprendre pourquoi la corrélation n'est pas la causalité est l'un des acquis les plus précieux de la pensée rigoureuse, et l'un des plus utiles dans la vie ordinaire.
+
+Le principe est simple à énoncer. Que deux choses soient corrélées — qu'elles se produisent ensemble, varient dans le même sens — n'établit nullement que l'une soit la cause de l'autre. Trois autres explications sont toujours possibles. La relation causale peut être inversée : ce n'est pas A qui cause B, mais B qui cause A. Un troisième facteur peut causer les deux à la fois, sans qu'ils soient liés directement. Ou la corrélation peut être un pur hasard, une coïncidence sans signification. Face à toute corrélation, ces possibilités doivent être écartées avant qu'on puisse conclure à une causalité, et ce travail est souvent difficile.
+
+Les exemples abondent, parfois cocasses, parfois graves. On peut constater que, dans les villes, le nombre de crimes augmente avec le nombre de policiers, et en conclure absurdement que la police cause la criminalité, alors que c'est évidemment la criminalité qui appelle plus de policiers : la causalité est inversée. On peut observer que les enfants qui ont un vocabulaire riche ont de plus grands pieds, et imaginer un lien, alors qu'un troisième facteur — l'âge — explique les deux. Ces exemples paraissent évidents une fois énoncés, mais la même erreur, dans des cas moins clairs, trompe constamment.
+
+Car dans la plupart des situations réelles, le piège est bien plus subtil. Lorsqu'on nous présente que tel comportement est corrélé à tel résultat — que ceux qui font ceci vivent plus longtemps, que tel produit est associé à telle maladie —, la tentation est forte de conclure aussitôt à une cause, alors que la corrélation pourrait s'expliquer par mille facteurs cachés. Ceux qui adoptent tel comportement bénéfique diffèrent peut-être, par bien d'autres aspects, de ceux qui ne l'adoptent pas, et ce sont ces autres différences qui expliquent le résultat. Démêler la vraie causalité de la simple corrélation exige des méthodes rigoureuses, et une prudence que le raisonnement spontané ignore.
+
+Cette confusion est d'autant plus dangereuse qu'elle est exploitée. Ceux qui veulent nous vendre un produit, nous convaincre d'une idée, nous faire adopter un comportement, brandissent volontiers des corrélations en les présentant comme des causalités. « Les gens qui utilisent ce produit sont en meilleure santé » : la formule suggère un lien causal que la corrélation ne prouve pas, et que d'autres facteurs pourraient entièrement expliquer. Savoir résister à ces suggestions, se demander systématiquement si une corrélation présentée établit vraiment une cause, est une protection essentielle contre la manipulation par les chiffres et les études mal interprétées.
+
+Retenir que la corrélation n'est pas la causalité, ce n'est pas verser dans un scepticisme qui refuserait tout lien causal, comme si l'on ne pouvait jamais rien conclure. C'est acquérir une exigence : avant de conclure qu'une chose en cause une autre, écarter les explications alternatives, se demander si le lien est réel ou apparent, exiger mieux qu'une simple concomitance. Cette exigence, que la science a érigée en méthode, est l'un des outils les plus puissants de la pensée critique. Dans un monde saturé d'études, de statistiques et de chiffres brandis pour nous convaincre, savoir distinguer ce qui varie ensemble de ce qui se cause vraiment est devenu une compétence indispensable — et l'une des plus sûres protections contre la crédulité.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-028",
+    title: "Le principe de précaution",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Faut-il attendre la certitude d'un danger pour agir, ou agir dans le doute ?",
+    blurbEn:
+      "Should we wait for proof of a danger before acting, or act under uncertainty? A C1 essay on the precautionary principle and its double edge. (Section: Science and uncertainty, 3/5.)",
+    body: `Face à un risque possible mais incertain — un produit qui pourrait être nocif, une technologie aux effets mal connus, une menace dont l'ampleur n'est pas établie —, faut-il attendre la certitude scientifique avant d'agir, ou prendre des mesures dès lors que le danger est plausible, sans en avoir la preuve ? Cette question, que l'on désigne par le nom de « principe de précaution », est l'une des plus délicates de notre époque, car elle engage notre rapport à l'incertitude, au risque et à l'action. Et les réponses tranchées, dans un sens comme dans l'autre, se révèlent également insuffisantes.
+
+Le principe de précaution, dans sa formulation courante, invite à agir face à un risque grave même en l'absence de certitude scientifique sur sa réalité. Son intuition est puissante : attendre la preuve certaine d'un danger peut signifier attendre qu'il soit trop tard, que le mal soit fait, irréversible. Certains dommages — écologiques, sanitaires — sont tels qu'on ne peut se permettre de les subir pour avoir la confirmation qu'ils étaient possibles. Dans ces cas, exiger la certitude avant d'agir revient à parier sur l'absence de danger, pari dont les conséquences, en cas d'erreur, seraient catastrophiques et sans retour.
+
+Cette prudence a sa légitimité, et l'histoire lui donne raison dans bien des cas où l'on a trop tardé à agir, attendant des preuves définitives pendant que le mal s'installait. Face à des risques graves et potentiellement irréversibles, l'exigence de certitude absolue peut être une déraison déguisée en rigueur : elle privilégie l'inaction, qui n'est pourtant pas neutre, puisqu'elle laisse le risque se réaliser. Agir dans le doute, quand l'enjeu est majeur, peut être plus sage qu'attendre une certitude qui viendra trop tard.
+
+Mais le principe de précaution, poussé à l'absolu, se retourne en son contraire et devient déraisonnable. Car toute action, toute innovation, tout produit comporte des risques possibles qu'on ne peut jamais entièrement exclure. Si l'on exigeait la preuve de l'absence totale de danger avant d'autoriser quoi que ce soit, on ne ferait plus rien : aucune technologie, aucun médicament, aucun progrès ne verrait le jour, car aucun ne peut garantir l'absence absolue de risque. Un principe de précaution absolu paralyserait toute action, et cette paralysie a elle-même un coût : les bénéfices qu'on se prive d'obtenir, les vies qu'on ne sauve pas, les progrès qu'on empêche, sont aussi des dommages, quoique invisibles.
+
+Il y a plus. L'inaction que prône une précaution excessive n'est pas sans risque ; elle a ses propres dangers, souvent ignorés. Refuser une technologie par précaution, c'est aussi se priver de ses bénéfices et subir les risques qu'elle aurait évités. La précaution qui se focalise sur les risques de l'action, en oubliant les risques de l'inaction, n'est pas une vraie prudence : elle est un biais, qui traite comme neutre ce qui ne l'est pas. Ne rien faire est aussi une décision, qui engage aussi une responsabilité.
+
+La sagesse, en cette matière, ne réside donc ni dans le refus d'agir sans certitude, ni dans l'exigence de certitude avant d'agir, mais dans une évaluation nuancée : peser la gravité et la probabilité du risque, son caractère réversible ou non, les coûts de l'action comme ceux de l'inaction, les bénéfices attendus comme les dangers possibles. Face à un risque grave, irréversible et plausible, la précaution s'impose ; face à un risque mineur, incertain et réversible, exiger d'agir dans le doute paralyserait sans raison. Le principe de précaution n'est un bon guide que tempéré par la proportion : appliqué mécaniquement, dans un sens ou dans l'autre, il conduit soit à l'imprudence, soit à la paralysie. Décider dans l'incertitude est un art difficile, qui ne se réduit à aucune formule — et prétendre qu'une règle simple pourrait nous en dispenser est l'illusion qu'il faut d'abord écarter.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-029",
+    title: "La science et l'opinion",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Sur les faits, tous les avis ne se valent pas. Cette idée dérange une époque égalitaire.",
+    blurbEn:
+      "On matters of fact, not all opinions are equal — an idea that unsettles an egalitarian age. A C1 essay on expertise, democracy and the authority of knowledge. (Section: Science and uncertainty, 4/5.)",
+    body: `Notre époque est égalitaire, et c'est à bien des égards un progrès. Elle refuse les hiérarchies imposées, tient chacun pour l'égal de chacun, valorise le droit de tous à donner leur avis. Mais cet esprit égalitaire, admirable en matière de droits et de dignité, se transporte parfois là où il n'a pas sa place : sur le terrain des faits et du savoir. On glisse ainsi de l'idée juste que tous les citoyens sont égaux en dignité à l'idée fausse que tous les avis se valent, y compris sur des questions de fait où la compétence existe. Ce glissement, qui flatte notre sensibilité démocratique, mérite d'être interrogé, car il a des conséquences graves.
+
+Il faut d'abord affirmer une évidence que l'époque tend à obscurcir : sur les questions de fait, tous les avis ne se valent pas. L'opinion de celui qui a étudié un sujet pendant des années, qui en maîtrise les données, les méthodes, les débats, ne vaut pas la même chose que celle de qui n'y a jamais réfléchi. Cela ne fait pas de l'un un être supérieur à l'autre ; cela signifie simplement que, sur ce sujet précis, l'un sait et l'autre non. Nier cette différence au nom de l'égalité, c'est confondre l'égalité des personnes avec une prétendue égalité des savoirs, qui n'existe pas. Que chacun ait le droit de donner son avis ne signifie pas que tous les avis soient également fondés.
+
+Cette confusion est aggravée par un phénomène propre à notre temps : l'accès universel à l'information donne à chacun l'illusion de la compétence. Ayant consulté quelques sources, lu quelques articles, chacun peut se croire en mesure de juger de questions qui exigent en réalité des années d'étude. Cette illusion est d'autant plus tenace que celui qui sait peu ne mesure pas l'étendue de ce qu'il ignore : il faut déjà un certain savoir pour percevoir la complexité d'un domaine, et l'ignorant, précisément parce qu'il ignore, surestime sa propre compétence. Ainsi se répand une défiance envers les experts, au nom d'un « je me fais ma propre opinion » qui confond l'autonomie du jugement avec la présomption de l'ignorance.
+
+Faut-il alors en conclure qu'il faudrait s'en remettre aveuglément aux experts, et que le citoyen ordinaire n'aurait qu'à se taire ? Ce serait tomber dans l'excès inverse, tout aussi dangereux. Car reconnaître l'autorité du savoir n'est pas abdiquer tout jugement. Les experts peuvent se tromper, être influencés par des intérêts, sortir de leur domaine de compétence ; leur parole mérite le respect, non la soumission. De plus, si la science établit les faits, elle ne décide pas de ce qu'il faut en faire : les choix qui engagent des valeurs — que faire de ce que la science établit — relèvent du débat démocratique, où l'avis de chacun compte légitimement. L'expertise a autorité sur les faits, non sur les fins.
+
+C'est cette distinction qui permet de sortir du faux dilemme entre le mépris des experts et la soumission aveugle. Sur les questions de fait, la compétence a une autorité légitime, et la nier au nom de l'égalité est une déraison. Sur les questions de valeurs et de choix collectifs, en revanche, nul expert ne saurait décider à la place des citoyens, et l'égalité des voix reprend ses droits. Confondre ces deux plans — vouloir que les experts décident des fins, ou que les citoyens tranchent les faits par leur seule opinion — conduit aux deux impasses : la technocratie qui dépossède les citoyens, ou le populisme qui méprise le savoir.
+
+Défendre l'idée que, sur les faits, tous les avis ne se valent pas, ce n'est donc pas trahir l'esprit démocratique ; c'est le préserver de sa propre dérive. Une démocratie n'a pas besoin de citoyens qui se croient tous experts, mais de citoyens capables de reconnaître ce qu'ils savent et ce qu'ils ignorent, de faire confiance au savoir là où il est fondé, tout en gardant leur pleine autorité sur les choix qui relèvent des valeurs. L'égalité des personnes n'exige pas l'égalité des savoirs ; elle exige au contraire qu'on distingue, pour que le débat démocratique se fonde sur les faits les mieux établis, et non sur la confusion de toutes les opinions. Respecter le savoir n'est pas renoncer à sa liberté de citoyen ; c'est en faire un usage éclairé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-030",
+    title: "Ce que la science ne dira jamais",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La science établit ce qui est. Elle ne peut dire ce qui doit être. La frontière est décisive.",
+    blurbEn:
+      "Science establishes what is; it cannot tell us what ought to be. A closing C1 essay on the boundary between fact and value, and why confusing them is dangerous. (Section: Science and uncertainty, 5/5.)",
+    body: `Il est une frontière que la pensée rigoureuse doit sans cesse rappeler, tant elle est constamment franchie : celle qui sépare ce qui est de ce qui doit être, les faits des valeurs, la science de la morale. La science, si puissante soit-elle, établit ce qui est le cas ; elle est par nature incapable de dire, à elle seule, ce qui doit être fait. De ce constat qu'une chose est, on ne peut jamais déduire, par la seule logique, qu'elle doit ou ne doit pas être. Cette frontière, souvent méconnue, est pourtant décisive, et sa confusion est à la source de graves égarements.
+
+Comprenons bien ce que signifie cette limite. La science peut nous dire quels sont les effets d'une action, quels moyens permettent d'atteindre une fin, ce qui se produira si nous faisons ceci ou cela. Mais elle ne peut nous dire quelle fin nous devons poursuivre, ce qui vaut la peine d'être recherché, ce qui est juste ou bon. Elle peut établir qu'une politique aura tel résultat ; elle ne peut établir que ce résultat est désirable. Elle peut décrire ce qu'est la nature humaine ; elle ne peut en déduire comment nous devrions vivre. Entre le constat de ce qui est et le jugement sur ce qui doit être, il y a un saut que nulle observation, nulle mesure, ne peut franchir.
+
+Cette limite n'est pas une faiblesse de la science, mais une caractéristique de la nature des questions. Les questions de valeur ne sont pas des questions de fait mal résolues, qu'un surcroît de science finirait par trancher ; elles sont d'un autre ordre. Aucune expérience ne dira si la liberté vaut mieux que la sécurité, si l'égalité doit primer sur le mérite, si une vie humaine a une valeur infinie. Ces questions engagent ce que nous tenons pour important, ce que nous choisissons de valoriser, et relèvent de la délibération morale et politique, non de la démonstration scientifique. La science informe ces choix, elle ne les remplace pas.
+
+Méconnaître cette frontière conduit à deux erreurs symétriques et également dangereuses. La première consiste à faire dire à la science ce qu'elle ne peut dire, à lui demander de trancher des questions de valeur, à présenter des choix politiques ou moraux comme des conclusions scientifiques. « La science montre qu'il faut faire ceci » : cette formule, très répandue, masque presque toujours un saut du fait à la valeur, fait passer pour une nécessité objective ce qui est un choix. Cette confusion est d'autant plus pernicieuse qu'elle habille des préférences en vérités, et soustrait au débat, sous couvert de science, ce qui devrait y être discuté.
+
+La seconde erreur, inverse, consiste à disqualifier la science au motif qu'elle ne dit pas tout, à rejeter ce qu'elle établit parce qu'elle ne tranche pas les questions de valeur. « La science ne peut pas nous dire comment vivre, donc son autorité n'est pas supérieure » : ce raisonnement confond les deux plans en sens inverse, et sert souvent à récuser des faits gênants au nom de ce que la science ne prétend pas faire. Que la science ne dise pas ce qui doit être n'affaiblit en rien ce qu'elle établit sur ce qui est ; c'est même en respectant sa limite qu'on reconnaît le mieux son autorité dans son domaine propre.
+
+Tenir fermement la frontière entre le fait et la valeur, c'est donc rendre justice à la fois à la science et à la morale, en assignant à chacune son domaine. À la science, l'établissement rigoureux de ce qui est, avec l'autorité qui s'y attache ; à la délibération humaine, le jugement sur ce qui doit être, que nul savoir ne saurait dispenser d'assumer. Cette répartition n'abaisse pas la science ; elle la préserve des usages qui la dévoient, et préserve la liberté humaine de la tentation de se décharger de ses choix sur une prétendue nécessité scientifique. Car décider de ce que nous devons faire, de ce vers quoi nous voulons tendre, restera toujours notre tâche et notre responsabilité — une tâche que la science peut éclairer, mais qu'elle ne nous ôtera jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

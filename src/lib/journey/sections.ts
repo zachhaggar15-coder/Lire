@@ -1169,6 +1169,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-020", // L'oubli est-il nécessaire ? (hardest)
     ],
   },
+  {
+    id: "c1-language-power",
+    band: "C1",
+    title: "Language and power",
+    goal: "Words are never neutral, wooden language, who may speak, limits of free expression, naming as bringing into being.",
+    textIds: [
+      "starter-c1-021", // Les mots ne sont jamais neutres
+      "starter-c1-022", // La langue de bois
+      "starter-c1-023", // Qui a le droit de parler ?
+      "starter-c1-024", // Les limites de la liberté d'expression
+      "starter-c1-025", // Nommer, c'est faire exister (hardest)
+    ],
+  },
+  {
+    id: "c1-science-uncertainty",
+    band: "C1",
+    title: "Science and uncertainty",
+    goal: "Doubt is not ignorance, correlation vs causation, the precautionary principle, science and opinion, fact vs value.",
+    textIds: [
+      "starter-c1-026", // Le doute n'est pas l'ignorance
+      "starter-c1-027", // Corrélation et causalité
+      "starter-c1-028", // Le principe de précaution
+      "starter-c1-029", // La science et l'opinion
+      "starter-c1-030", // Ce que la science ne dira jamais (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
