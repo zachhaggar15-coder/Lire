@@ -12911,4 +12911,340 @@ C'est simplement ce qui marche.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b1-171",
+    title: "Chaque génération critique la suivante",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "« Les jeunes d'aujourd'hui... » est une phrase très ancienne.",
+    blurbEn:
+      "Every generation complains about the next in almost identical words. Understanding why is a useful cure for a tired argument. (Section: Generations, 1/5.)",
+    body: `« Les jeunes d'aujourd'hui ne respectent plus rien. » « Ils sont paresseux, individualistes, accros à leurs écrans. » Ces phrases semblent décrire notre époque. On en trouve pourtant des équivalents dans des textes vieux de plusieurs siècles, parfois de l'Antiquité.
+
+Cette continuité est frappante, et elle mérite réflexion. Si chaque génération dégénérait vraiment, comme le prétendent ces plaintes, l'humanité serait depuis longtemps au fond du gouffre. Ce n'est manifestement pas le cas.
+
+Alors pourquoi cette critique se répète-t-elle, presque à l'identique ?
+
+Plusieurs mécanismes se combinent.
+
+Le premier est un effet de mémoire. En vieillissant, on se souvient de sa propre jeunesse de façon sélective, en oubliant ses excès. On compare donc une jeunesse idéalisée à une jeunesse réelle, ce qui est injuste par construction.
+
+Le deuxième est le malentendu des nouveaux usages. Chaque génération grandit avec des outils que la précédente ne maîtrise pas. Ces outils paraissent futiles ou dangereux à ceux qui ne les ont pas intégrés. On a dit du roman, puis du cinéma, puis de la télévision qu'ils abrutiraient la jeunesse.
+
+Le troisième est plus profond : la difficulté d'accepter que le monde change et nous échappe. Critiquer les jeunes, c'est parfois refuser de vieillir.
+
+Rien de tout cela ne signifie qu'aucune évolution n'est préoccupante. Certaines le sont réellement, et il faut pouvoir en parler. Mais il faut les distinguer de la plainte automatique.
+
+Le bon réflexe, face à un « c'était mieux avant », est de se demander : est-ce un vrai problème observé, ou le refrain que chaque génération chante en vieillissant ?
+
+Souvent, c'est le refrain.
+
+Et un jour, ce sont les jeunes critiqués qui le chanteront à leur tour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-172",
+    title: "Quand les grands-parents gardent les enfants",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Beaucoup de familles reposent sur l'aide des grands-parents.",
+    blurbEn:
+      "Grandparents provide an enormous, unpaid share of childcare. It benefits everyone — and works best when its limits are agreed. (Section: Generations, 2/5.)",
+    body: `Dans de nombreuses familles, les grands-parents jouent un rôle essentiel dans la garde des enfants. Aller chercher à l'école, garder le mercredi, dépanner quand un enfant est malade : cette aide, largement invisible, représente une contribution énorme, non rémunérée.
+
+Sans elle, beaucoup de parents ne pourraient tout simplement pas travailler, tant les modes de garde sont chers ou rares.
+
+Cette solidarité entre générations a des bénéfices pour tout le monde.
+
+Pour les parents, c'est un soutien matériel et une tranquillité : confier son enfant à quelqu'un de confiance n'a pas de prix. Pour les enfants, c'est une relation supplémentaire, différente de celle des parents, souvent plus patiente, porteuse de récits et de mémoire familiale. Pour les grands-parents eux-mêmes, c'est un rôle, un lien, une utilité — trois choses qui protègent contre l'isolement de l'âge.
+
+Mais cette aide connaît aussi des tensions, généralement tues.
+
+Les méthodes d'éducation ont changé d'une génération à l'autre : le sucre, les écrans, les règles, la discipline. Les grands-parents appliquent parfois leurs habitudes, les parents s'en agacent, et personne n'ose en parler franchement pour ne pas blesser.
+
+Il y a aussi la question des limites. Certains grands-parents se sentent obligés, au point d'y sacrifier leur propre repos ou leurs projets. La retraite tant attendue se remplit d'obligations. Là encore, le non-dit domine.
+
+Les familles qui vivent bien cette organisation partagent une chose : elles en parlent explicitement. Combien de jours, quelles règles, comment dire non sans culpabilité.
+
+Cette aide n'est pas un dû.
+
+C'est un cadeau, immense, qui mérite d'être nommé comme tel — et discuté comme tel.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-173",
+    title: "Le fossé numérique entre les âges",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Les plus jeunes et les plus âgés n'habitent pas le même monde numérique.",
+    blurbEn:
+      "The digital gap between generations is real but more nuanced than the stereotype. Skill and comfort do not always follow age. (Section: Generations, 3/5.)",
+    body: `On oppose souvent deux figures : les jeunes, à l'aise avec le numérique, et les personnes âgées, dépassées. Cette image contient une part de vérité, mais elle est plus nuancée qu'il n'y paraît.
+
+Il est exact que les personnes âgées rencontrent davantage de difficultés avec les démarches en ligne, les applications, les nouveaux appareils. Une part importante d'entre elles renoncent à des services devenus exclusivement numériques. C'est un vrai problème d'accès aux droits.
+
+Mais deux idées reçues doivent être corrigées.
+
+La première est que les jeunes maîtriseraient naturellement le numérique. Ils savent utiliser des applications avec aisance, c'est vrai. Mais utiliser n'est pas comprendre. Beaucoup de jeunes ne savent pas évaluer la fiabilité d'une source, protéger leurs données, ou remplir un dossier administratif complexe — qui suppose de la lecture attentive plus que de la dextérité. Leur aisance est réelle sur le divertissement, plus fragile sur le reste.
+
+La seconde est que l'âge expliquerait tout. En réalité, le facteur décisif n'est pas seulement l'âge, mais l'exposition et la nécessité. Un retraité qui utilise l'ordinateur pour son travail toute sa vie reste souvent à l'aise ; un jeune sans équipement à la maison peut être en difficulté.
+
+Ce qui aide vraiment à réduire ce fossé n'est pas de fournir des appareils, mais de l'accompagnement humain : quelqu'un de patient, disponible, qui montre sans juger.
+
+Les dispositifs qui fonctionnent le mieux reposent d'ailleurs souvent sur les liens entre générations : des jeunes qui aident des personnes âgées, ou l'inverse pour d'autres compétences.
+
+Le fossé numérique n'est donc pas une fatalité liée à l'âge.
+
+C'est surtout un manque d'accompagnement.
+
+Et l'accompagnement, contrairement à la technologie, ne se périme jamais.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-174",
+    title: "Habiter ensemble, jeunes et âgés",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Des habitats mêlent volontairement les générations.",
+    blurbEn:
+      "New forms of housing deliberately mix ages, against a long trend of separating them. Early results are promising, and instructive. (Section: Generations, 4/5.)",
+    body: `Depuis quelques décennies, nos sociétés ont eu tendance à séparer les âges. Les enfants à l'école, les actifs au travail, les personnes âgées dans des résidences dédiées. Chacun vit de plus en plus entre semblables.
+
+À rebours de cette tendance, des projets d'habitat intergénérationnel se développent : des lieux conçus pour que différentes générations vivent au même endroit, non par hasard, mais volontairement.
+
+Les formes varient. Il y a la cohabitation, où un étudiant loge chez une personne âgée. Il y a aussi des immeubles ou des quartiers pensés pour mélanger les âges, avec des logements adaptés, des espaces communs, parfois une crèche et une résidence pour seniors sur le même site.
+
+L'idée repose sur un constat simple : les besoins des uns rencontrent les ressources des autres.
+
+Les personnes âgées disposent de temps, d'expérience, et souffrent souvent d'isolement. Les jeunes familles manquent de temps, de soutien, parfois de repères. Les enfants bénéficient de la présence d'adultes disponibles. En mettant ces groupes en présence, on crée des échanges naturels : un coup de main, une histoire racontée, une conversation.
+
+Les premiers résultats sont encourageants, mais les organisateurs soulignent une condition essentielle, la même que pour toute cohabitation : le cadre.
+
+Sans espaces partagés bien pensés, sans occasions de rencontre organisées au début, sans règles claires, les générations peuvent vivre côte à côte sans jamais se croiser. La proximité géographique ne crée pas le lien à elle seule.
+
+Ces projets restent minoritaires, limités par le foncier et par la difficulté à les monter.
+
+Mais ils rappellent une évidence oubliée.
+
+Séparer les âges est récent dans l'histoire humaine.
+
+Pendant très longtemps, les générations ont simplement vécu ensemble.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-175",
+    title: "Transmettre un savoir-faire",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Certains savoirs ne s'apprennent pas dans les livres.",
+    blurbEn:
+      "Some knowledge lives only in hands and habits, and dies when it is not passed on. Why transmission matters, and why it is fragile. (Section: Generations, 5/5.)",
+    body: `Il existe des savoirs qui ne figurent dans aucun livre, et qui pourtant représentent une richesse considérable : les savoir-faire. Tailler la pierre, réparer un moteur ancien, cuisiner un plat régional, cultiver une variété locale, jouer un répertoire musical.
+
+Ces savoirs ont une particularité : ils vivent dans des gestes, des habitudes, une expérience accumulée. On ne les transmet pas seulement en expliquant, mais en montrant, en faisant faire, en corrigeant.
+
+C'est ce qui les rend fragiles.
+
+Un savoir écrit se conserve dans une bibliothèque, même si personne ne le lit pendant un siècle. Un savoir-faire, lui, disparaît dès qu'une génération cesse de le pratiquer. Il n'existe que tant qu'il est transmis.
+
+L'histoire regorge de techniques perdues, que l'on a mis longtemps à retrouver, ou qu'on n'a jamais retrouvées. Non parce qu'elles étaient secrètes, mais parce que le dernier qui les maîtrisait est mort sans les avoir transmises.
+
+Cette transmission est aujourd'hui menacée pour plusieurs raisons. La rapidité des changements techniques rend certains savoirs obsolètes avant même d'être transmis. La séparation des générations réduit les occasions de côtoyer ceux qui savent. Et une certaine dévalorisation des métiers manuels a détourné les jeunes de ces apprentissages.
+
+Des efforts existent pour préserver ces savoirs : formations, apprentissage, documentation vidéo, reconnaissance de « maîtres d'art ».
+
+Mais aucun enregistrement ne remplace tout à fait la présence. Beaucoup de gestes ne se comprennent qu'en les faisant, corrigés par quelqu'un qui les a faits mille fois.
+
+C'est pourquoi la transmission reste un acte profondément humain, et un peu urgent.
+
+Un savoir-faire non transmis ne se perd pas lentement.
+
+Il se perd d'un coup, avec la personne qui le portait.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-176",
+    title: "Pourquoi les gens donnent de leur temps",
+    category: "science",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Des millions de personnes sont bénévoles. Qu'est-ce qui les motive ?",
+    blurbEn:
+      "Millions volunteer for no pay. The reasons are less selfless and more interesting than 'kindness' — and that is good news. (Section: Volunteering, 1/5.)",
+    body: `En France, des millions de personnes donnent régulièrement de leur temps, sans être payées, dans des associations : sport, aide alimentaire, soutien scolaire, secours, culture, environnement.
+
+Ce phénomène pose une question intéressante. Pourquoi consacrer un temps précieux à des inconnus, sans rémunération ?
+
+La réponse « par gentillesse » est trop simple, et un peu fausse. Les recherches sur le bénévolat montrent des motivations multiples, souvent mélangées, et pas toujours désintéressées — ce qui n'a rien de choquant.
+
+Il y a bien sûr le désir d'être utile, de contribuer à quelque chose qui dépasse soi. C'est réel, et c'est important.
+
+Mais il y a aussi des motivations plus personnelles, que les bénévoles reconnaissent volontiers.
+
+Le lien social, d'abord. Beaucoup de gens deviennent bénévoles à un moment de solitude : après une retraite, un déménagement, un deuil. L'association leur offre un cadre, des rencontres, un rôle.
+
+Le sens ensuite. Un travail salarié n'apporte pas toujours le sentiment d'être utile. Le bénévolat comble parfois ce manque.
+
+L'apprentissage également. On y développe des compétences, on rencontre des milieux différents, on sort de sa routine.
+
+Fait intéressant, les études montrent que le bénévolat régulier est associé à un meilleur bien-être et même à une meilleure santé. Donner de son temps profite aussi à celui qui donne.
+
+Comprendre ces motivations n'enlève rien à la valeur du geste. Au contraire.
+
+Cela signifie que le bénévolat n'est pas réservé aux saints.
+
+C'est une activité humaine ordinaire, qui répond à des besoins de part et d'autre.
+
+Ce qui est plutôt une bonne nouvelle.
+
+Ce qui profite à celui qui aide dure plus longtemps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-177",
+    title: "Les banques alimentaires",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Elles nourrissent des millions de personnes, et posent question.",
+    blurbEn:
+      "Food banks feed millions and are widely admired. They also raise an uncomfortable question about why they are needed at all. (Section: Volunteering, 2/5.)",
+    body: `Les banques alimentaires et les associations de distribution nourrissent chaque année des millions de personnes en France. Elles reposent presque entièrement sur des bénévoles et sur des dons.
+
+Leur fonctionnement est un bel exemple d'organisation. Elles récupèrent les invendus des supermarchés, les surplus agricoles, les dons des particuliers, et redistribuent le tout à des personnes en difficulté. Ce système évite du gaspillage tout en apportant une aide vitale.
+
+Le travail des bénévoles y est considérable : trier, transporter, ranger, distribuer, accueillir. Beaucoup y consacrent plusieurs jours par semaine.
+
+Ces associations méritent une admiration sincère.
+
+Elles posent pourtant une question inconfortable, que leurs responsables sont souvent les premiers à soulever.
+
+Le nombre de personnes qui y ont recours augmente, y compris des personnes qui travaillent. On y voit désormais des étudiants, des retraités, des salariés dont le revenu ne suffit plus à se nourrir correctement.
+
+Or l'aide alimentaire, aussi précieuse soit-elle, traite une conséquence, pas une cause. Si autant de gens ne peuvent pas se nourrir, c'est que quelque chose, en amont, ne fonctionne pas : salaires trop bas, loyers trop élevés, protection sociale insuffisante.
+
+Le risque, souligné par certains, est que l'existence de ces associations rende ce problème plus supportable, donc moins urgent à résoudre. La générosité privée peut, involontairement, masquer une défaillance collective.
+
+Cela ne remet nullement en cause l'utilité de ces structures, qui répondent à une détresse immédiate et réelle.
+
+Mais cela rappelle une distinction essentielle.
+
+Une société généreuse aide ceux qui ont faim.
+
+Une société juste cherche à ce qu'ils n'aient plus faim.
+
+Les deux sont nécessaires. La première ne dispense pas de la seconde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-178",
+    title: "Aider sans écraser",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "Une aide mal pensée peut humilier ou rendre dépendant.",
+    blurbEn:
+      "Helping well is harder than helping. Aid that ignores dignity or autonomy can do as much harm as good. (Section: Volunteering, 3/5.)",
+    body: `Vouloir aider est une bonne intention. Aider bien est plus difficile qu'il n'y paraît, et une aide mal pensée peut faire autant de mal que de bien.
+
+Les personnes qui travaillent depuis longtemps dans l'action sociale connaissent bien ce paradoxe. Elles ont vu des aides généreuses produire de la honte, de la dépendance, ou du ressentiment.
+
+Plusieurs pièges reviennent.
+
+Le premier est l'oubli de la dignité. Recevoir de l'aide expose à une position basse : on est celui qui reçoit, face à celui qui donne. Une aide qui souligne cette différence, même sans le vouloir, humilie. Les dispositifs les plus respectueux sont ceux qui traitent les personnes aidées comme des adultes capables de choisir, et non comme des cas à gérer.
+
+Le deuxième est de faire à la place. Aider quelqu'un en accomplissant tout pour lui peut soulager sur le moment, mais entretient une dépendance. La bonne aide vise souvent à rendre l'autre plus autonome, quitte à être moins visible et moins gratifiante pour celui qui aide.
+
+Le troisième est de décider pour l'autre ce dont il a besoin. On apporte ce qu'on croit utile, sans écouter la personne concernée, qui connaît sa situation mieux que quiconque.
+
+Ce constat vaut à toutes les échelles : entre voisins, dans une association, entre pays.
+
+Il ne doit pas décourager d'aider — l'inaction n'a jamais rien résolu.
+
+Mais il invite à une aide plus humble, qui écoute avant d'agir, et qui se demande non pas « qu'est-ce que je peux donner ? », mais « de quoi cette personne a-t-elle réellement besoin, selon elle ? ».
+
+La meilleure aide, souvent, ne se remarque pas.
+
+Elle laisse l'autre debout.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-179",
+    title: "Le monde associatif, un pilier discret",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "La France compte plus d'un million d'associations.",
+    blurbEn:
+      "France has over a million associations doing work the state and market do not. This quiet sector holds much of daily life together. (Section: Volunteering, 4/5.)",
+    body: `La France compte plus d'un million d'associations actives, et une part importante de la population y adhère ou y participe. Ce tissu associatif est un pilier de la vie sociale, souvent invisible parce qu'il fonctionne bien.
+
+Ces associations couvrent des domaines immenses : le sport de proximité, la culture, l'aide sociale, l'environnement, la défense de causes, les loisirs, l'éducation populaire.
+
+Elles occupent un espace particulier, entre l'État et le marché.
+
+L'État agit selon des règles générales, égales pour tous, mais parfois lourdes et lointaines. Le marché produit ce qui est rentable. Or beaucoup de besoins ne relèvent ni de l'un ni de l'autre : ils sont trop locaux, trop spécifiques, ou pas assez lucratifs.
+
+C'est là que les associations interviennent. Un club de sport dans un village, un atelier de théâtre, une aide aux devoirs, une association de quartier : autant d'activités qu'aucune administration ne piloterait aussi finement, et qu'aucune entreprise ne trouverait rentables.
+
+Ce secteur repose sur une combinaison fragile : des bénévoles, quelques salariés, des subventions publiques, des cotisations, des dons.
+
+Cette fragilité est réelle. Le bénévolat vieillit dans certaines associations, qui peinent à renouveler leurs équipes. Les financements publics, sous contrainte budgétaire, se réduisent parfois. Les démarches administratives découragent les petites structures.
+
+Pourtant, ce que ce secteur produit est difficile à remplacer : du lien, de l'engagement, une capacité à réponder vite et près du terrain.
+
+On mesure mal ce qu'il apporte, précisément parce qu'il fonctionne sans bruit.
+
+On le mesurerait immédiatement s'il disparaissait.
+
+Une grande partie de ce qui rend une vie locale vivable passe par lui.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-180",
+    title: "Commencer petit",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 3,
+    preview: "On attend souvent le grand geste. Le petit suffit à commencer.",
+    blurbEn:
+      "People wait for the perfect way to help and never start. A quiet argument for beginning small — and for the value of just showing up. (Section: Volunteering, 5/5.)",
+    body: `Beaucoup de gens aimeraient s'engager, aider, contribuer. Peu le font. Entre l'intention et l'action, un obstacle revient : l'idée qu'il faudrait un grand geste, du temps qu'on n'a pas, une compétence qu'on ne possède pas.
+
+Cette exigence, en apparence louable, est souvent ce qui empêche de commencer.
+
+Car l'immense majorité de ce qui se fait dans les associations ne demande aucune compétence rare. Trier des vêtements, accompagner une sortie, tenir une table lors d'un événement, passer un coup de fil à une personne isolée. Ce sont des actions simples, à la portée de presque tout le monde.
+
+Et surtout, ce qui compte le plus n'est pas l'ampleur du geste, mais la régularité et la fiabilité. Une personne qui vient deux heures chaque semaine, sur laquelle on peut compter, vaut mieux qu'un grand élan qui s'éteint au bout d'un mois.
+
+Ceux qui s'engagent racontent souvent le même parcours. Ils ont commencé par très peu, presque par hasard, sans grande conviction. Puis ils y ont trouvé du sens, des rencontres, une place. L'engagement a grandi ensuite, mais il est parti d'un petit pas.
+
+Il y a une leçon plus générale dans cette observation, valable au-delà du bénévolat.
+
+Attendre les bonnes conditions, le bon moment, la bonne cause, conduit souvent à ne jamais commencer. Les grandes choses naissent presque toujours d'un début modeste.
+
+Le contraire est vrai aussi : rien de collectif n'existe si personne ne fait le premier petit pas.
+
+La question n'est donc pas « puis-je changer les choses ? ».
+
+C'est : « puis-je donner deux heures, cette semaine, à quelque chose de plus grand que moi ? »
+
+Cette question-là a presque toujours une réponse.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

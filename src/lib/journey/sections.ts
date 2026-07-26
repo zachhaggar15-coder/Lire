@@ -702,6 +702,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-generations",
+    band: "B1",
+    title: "Generations",
+    goal: "Why each generation criticises the next, grandparents' childcare, the digital gap, mixed-age housing, passing on skills.",
+    textIds: [
+      "starter-b1-171", // Chaque génération critique la suivante
+      "starter-b1-172", // Quand les grands-parents gardent les enfants
+      "starter-b1-173", // Le fossé numérique entre les âges
+      "starter-b1-174", // Habiter ensemble, jeunes et âgés
+      "starter-b1-175", // Transmettre un savoir-faire
+    ],
+  },
+  {
+    id: "b1-volunteering",
+    band: "B1",
+    title: "Volunteering",
+    goal: "Why people give their time, food banks, helping without crushing, the associative sector, starting small.",
+    textIds: [
+      "starter-b1-176", // Pourquoi les gens donnent de leur temps
+      "starter-b1-177", // Les banques alimentaires
+      "starter-b1-178", // Aider sans écraser
+      "starter-b1-179", // Le monde associatif, un pilier discret
+      "starter-b1-180", // Commencer petit
+    ],
+  },
+  {
     id: "b1-work",
     band: "B1",
     title: "Work & careers",
