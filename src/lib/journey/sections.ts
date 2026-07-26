@@ -1040,6 +1040,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-truth",
+    band: "B2",
+    title: "Truth in a noisy world",
+    goal: "Truth amid information overload, why falsehood spreads, verifying, believing nothing, the courage to change your mind.",
+    textIds: [
+      "starter-b2-161", // La vérité à l'épreuve du bruit (introduces the core words)
+      "starter-b2-162", // Pourquoi le faux se propage si vite
+      "starter-b2-163", // Vérifier, un art qui s'apprend
+      "starter-b2-164", // Quand plus personne ne croit rien
+      "starter-b2-165", // Le courage de changer d'avis (hardest)
+    ],
+  },
+  {
+    id: "b2-belief",
+    band: "B2",
+    title: "Belief and persuasion",
+    goal: "Believing vs knowing, the art of convincing, cognitive biases, arguing with those who differ, thinking for yourself.",
+    textIds: [
+      "starter-b2-166", // Croire et savoir (introduces the core words)
+      "starter-b2-167", // L'art de convaincre
+      "starter-b2-168", // Nos biais, ces angles morts
+      "starter-b2-169", // Discuter avec ceux qui pensent autrement
+      "starter-b2-170", // Penser par soi-même (hardest)
+    ],
+  },
+  {
     id: "b2-money",
     band: "B2",
     title: "Money & everyday life",

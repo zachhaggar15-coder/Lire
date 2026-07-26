@@ -15771,4 +15771,234 @@ Ce que le temps nous apprend, c'est peut-être, au fond, à vivre — trop tard 
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-b2-161",
+    title: "La vérité à l'épreuve du bruit",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le problème n'est plus le manque d'informations, mais leur excès.",
+    blurbEn:
+      "For most of history the problem was too little information; now it is too much. How the sheer noise of our age makes truth harder, not easier, to find. (Section: Truth in a noisy world, 1/5.)",
+    body: `Pendant la plus grande partie de l'histoire, le problème de la vérité fut celui de la rareté : l'information était difficile d'accès, réservée à quelques-uns, coûteuse à obtenir. On pouvait croire, dès lors, qu'en rendant l'information abondante et accessible à tous, on rapprocherait chacun de la vérité. Cette espérance a nourri l'enthousiasme des débuts d'internet : enfin, le savoir serait à portée de tous. Or l'expérience a déçu cette attente. Le problème n'est plus le manque d'informations, mais leur excès — et cet excès, loin de nous rapprocher de la vérité, semble parfois nous en éloigner.
+
+Comment l'abondance peut-elle nuire à la vérité ? D'abord parce qu'elle noie le vrai dans une masse indistincte. Quand l'information était rare, on pouvait espérer en vérifier la source, en peser la valeur. Aujourd'hui, le vrai côtoie le faux dans un flot ininterrompu, sans que rien ne les distingue au premier regard. Dans ce déluge, le mensonge le plus grossier peut avoir la même apparence que l'information la plus rigoureuse. L'abondance ne trie pas ; elle mélange, et ce mélange rend le discernement plus difficile, non plus facile.
+
+Ensuite, cette abondance sature notre capacité d'attention et de jugement. Vérifier une information demande du temps, de l'effort, des compétences ; on ne peut le faire pour la masse d'informations qui nous parvient chaque jour. Débordés, nous renonçons à vérifier, nous nous fions à des impressions, nous acceptons ce qui nous parvient sans examen. Le trop-plein produit ainsi une forme de paresse cognitive : plus il y a à trier, moins on trie. L'excès d'information mène, paradoxalement, à moins de vigilance.
+
+Il y a plus grave. Dans ce bruit, ce qui surnage n'est pas nécessairement le vrai, mais ce qui capte l'attention : le sensationnel, le scandaleux, ce qui flatte nos convictions ou attise nos émotions. Le faux a souvent, sur le vrai, un avantage : il peut être conçu pour plaire, pour choquer, pour se propager, quand la vérité, plus complexe et moins spectaculaire, se diffuse mal. Dans la compétition pour l'attention, la vérité part désavantagée, car elle n'a pas été fabriquée pour gagner cette compétition.
+
+Faut-il en conclure que l'abondance d'information serait un mal, et regretter la rareté d'autrefois ? Ce serait excessif. L'accès élargi au savoir reste un progrès considérable, et bien des vérités autrefois inaccessibles sont désormais à portée. Le problème n'est pas l'abondance en soi, mais l'absence des filtres, des repères, des compétences qui permettraient d'y trouver le vrai. Nous avons gagné l'accès à tout, sans acquérir l'art de trier — et c'est cet art qu'il nous faut désormais développer.
+
+La vérité, à l'épreuve du bruit, ne se donne donc plus toute seule ; elle exige un travail, une méthode, une vigilance. Dans un monde de rareté, s'informer suffisait presque ; dans un monde d'abondance, il faut apprendre à discerner. C'est le défi propre de notre époque : non plus accéder à l'information, mais savoir, dans le vacarme, reconnaître ce qui mérite d'être cru.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-162",
+    title: "Pourquoi le faux se propage si vite",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Une fausse nouvelle voyage souvent plus vite et plus loin que la vraie.",
+    blurbEn:
+      "Studies show falsehood often spreads faster and further than truth. Why lies have a built-in advantage — and what that means for how we should react. (Section: Truth in a noisy world, 2/5.)",
+    body: `Un fait troublant ressort des études sur la circulation de l'information : le faux se propage souvent plus vite, plus loin et plus largement que le vrai. Une fausse nouvelle peut faire le tour du monde avant qu'une information exacte n'ait commencé à se répandre. Ce constat, contraire à l'idée rassurante que la vérité finirait toujours par triompher, mérite qu'on en comprenne les raisons, car elles éclairent beaucoup de notre rapport à l'information.
+
+La première raison tient à la nature même du faux. Contrairement au vrai, qui est contraint par la réalité, le faux est libre : il peut être façonné pour être exactement ce qui se propage le mieux. Une fausse nouvelle peut être plus surprenante, plus indignante, plus conforme à ce que les gens ont envie de croire, parce que rien ne l'oblige à respecter les faits. La vérité, elle, est ce qu'elle est, souvent complexe, nuancée, décevante. Dans la compétition pour l'attention, le faux dispose d'un avantage structurel : il peut être optimisé pour plaire et pour choquer, quand le vrai ne le peut pas.
+
+La deuxième raison tient à nos émotions. Ce qui se propage le mieux, ce n'est pas ce qui est vrai, mais ce qui suscite une émotion forte : la surprise, la colère, la peur, l'indignation. Or les fausses nouvelles sont souvent précisément conçues pour provoquer ces émotions, qui poussent à partager sans réfléchir. Nous relayons ce qui nous émeut, avant même d'en avoir vérifié la véracité ; et le faux, calibré pour émouvoir, exploite ce réflexe. L'émotion court-circuite le jugement, et c'est sur ce court-circuit que prospère la fausse information.
+
+La troisième raison tient à nos biais. Nous sommes naturellement enclins à croire ce qui conforte nos convictions, et à rejeter ce qui les contredit. Une fausse nouvelle qui va dans le sens de ce que nous pensons déjà sera accueillie sans méfiance, partagée avec enthousiasme, tandis qu'une vérité gênante sera accueillie avec scepticisme. Le faux qui flatte nos préjugés se propage ainsi dans les groupes qui partagent ces préjugés, chacun le relayant d'autant plus volontiers qu'il conforte ce qu'il croyait déjà.
+
+Comprendre ces mécanismes ne suffit pas à s'en prémunir, mais c'est un premier pas indispensable. Car ils suggèrent une règle de prudence : se méfier précisément de ce qui nous fait le plus réagir. Une information qui nous indigne, qui nous réjouit de voir nos adversaires pris en faute, qui confirme trop bien ce que nous pensions, mérite un surcroît de méfiance, non de confiance. C'est quand nous sommes le plus prompts à croire et à partager qu'il faudrait, au contraire, nous arrêter et vérifier.
+
+Le faux se propage vite parce qu'il exploite ce qu'il y a en nous de plus prompt : nos émotions, nos préjugés, notre paresse. Résister à sa propagation suppose donc de résister à nous-mêmes, de ralentir là où tout nous pousse à réagir vite. Dans un monde où le mensonge a pris de l'avance, la vérité a besoin, pour se défendre, de notre vigilance — et cette vigilance commence par la défiance envers nos propres emballements.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-163",
+    title: "Vérifier, un art qui s'apprend",
+    category: "news-style",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Face à une information douteuse, quelques réflexes simples font la différence.",
+    blurbEn:
+      "Sorting true from false is a skill, not an instinct — and it can be learned. A few practical habits that make the difference between being informed and being fooled. (Section: Truth in a noisy world, 3/5.)",
+    body: `Face au flot d'informations, souvent douteuses, qui nous parvient, on pourrait se sentir désarmé. Comment démêler le vrai du faux quand on n'est pas soi-même un spécialiste ? La bonne nouvelle est que vérifier une information n'exige pas une expertise inaccessible ; c'est un art qui s'apprend, fait de quelques réflexes simples que chacun peut acquérir. Ces réflexes ne garantissent pas l'infaillibilité, mais ils suffisent à éviter la plupart des pièges les plus grossiers.
+
+Le premier réflexe est de s'interroger sur la source. D'où vient cette information ? Qui la diffuse, et quelle est sa fiabilité ? Une information sérieuse provient généralement d'une source identifiable, qui engage sa responsabilité et peut être tenue pour comptable de ce qu'elle publie. Se méfier des sources anonymes, des origines invérifiables, des sites dont on ne sait rien : ce simple réflexe écarte déjà beaucoup de fausses nouvelles. Et lorsque plusieurs sources fiables et indépendantes confirment une information, la confiance qu'on peut lui accorder augmente.
+
+Le deuxième réflexe est de distinguer les types de contenus. Une information n'est pas un commentaire ; un fait n'est pas une opinion ; un témoignage n'est pas une preuve. Beaucoup de confusions naissent de ce qu'on prend pour un fait établi ce qui n'est qu'une interprétation, une hypothèse, une prise de position. Apprendre à repérer si l'on a affaire à un fait vérifiable ou à une opinion, à une information brute ou à son commentaire, est essentiel pour ne pas confondre ce qui est démontré avec ce qui est seulement affirmé.
+
+Le troisième réflexe est de se méfier de sa propre réaction. On l'a vu : ce qui nous émeut le plus fort est précisément ce dont il faut le plus se méfier. Une information qui provoque en nous une émotion vive — indignation, joie mauvaise, peur — devrait déclencher non le partage immédiat, mais un temps d'arrêt. Se demander « pourquoi ai-je envie d'y croire ? » est souvent plus utile que de se demander « est-ce vrai ? », car nos emballements sont le meilleur allié du faux. Le doute doit porter d'abord sur ce qui nous plaît trop.
+
+Le quatrième réflexe est de recouper et de remonter à la source première. Une information reprise de main en main se déforme, s'amplifie, perd son contexte. Chercher d'où elle vient à l'origine, ce qui a réellement été dit ou trouvé, permet souvent de découvrir qu'une nouvelle spectaculaire reposait sur un malentendu, une citation tronquée, une image sortie de son contexte. Ce travail de remontée demande un peu d'effort, mais il déjoue quantité de manipulations.
+
+Ces réflexes ne transforment personne en expert infaillible, et il restera toujours des cas difficiles où le vrai se distingue mal du faux. Mais ils suffisent à éviter d'être la proie des tromperies les plus courantes, et à distinguer une information sérieuse d'une rumeur sans fondement. Surtout, ils reposent moins sur un savoir que sur une attitude : celle du doute méthodique, de la lenteur, de la vigilance. Vérifier, au fond, c'est refuser de croire trop vite — et cela, chacun peut l'apprendre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-164",
+    title: "Quand plus personne ne croit rien",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Le danger n'est pas seulement de croire au faux, mais de ne plus rien croire.",
+    blurbEn:
+      "The real danger of a world full of lies may not be that we believe falsehoods, but that we stop believing anything at all. A look at the corrosion of trust. (Section: Truth in a noisy world, 4/5.)",
+    body: `On croit souvent que le principal danger de la désinformation est de nous faire croire au faux. C'est un danger réel, mais il en existe un autre, plus insidieux et peut-être plus grave : celui de nous faire douter de tout, au point de ne plus rien croire du tout. Car à force de découvrir que telle information était fausse, que telle source mentait, que telle autorité s'était trompée, on peut glisser vers un scepticisme généralisé où plus rien ne mérite confiance. Et ce scepticisme total est, à sa manière, aussi dangereux que la crédulité.
+
+Ce glissement a une logique. Trompés à plusieurs reprises, nous devenons méfiants, ce qui est sain. Mais cette méfiance, si elle ne s'arrête pas, se mue en défiance envers tout : les médias mentiraient tous, les experts seraient tous vendus, aucune institution ne serait fiable, toute information serait suspecte. À ce stade, on ne distingue plus le fiable du douteux ; on rejette tout en bloc, persuadé qu'on ne peut se fier à rien ni à personne. Le doute légitime a viré au cynisme absolu.
+
+Or ce cynisme, loin de protéger de la manipulation, y expose davantage. Car celui qui ne croit plus rien ne croit pas pour autant à rien : il finit par croire n'importe quoi, ou plutôt ce qui lui convient, ce qui flatte ses préjugés, ce qui vient de son propre camp. Ayant rejeté toutes les sources fiables au nom de la défiance, il se retrouve sans repère, à la merci du premier discours qui saura exploiter son ressentiment. Le scepticisme total ne mène pas à la lucidité, mais à une nouvelle crédulité, plus dangereuse car elle se croit critique.
+
+Il y a plus. Une société où plus personne ne croit rien devient ingouvernable au sens le plus profond : elle perd la possibilité même de s'entendre sur des faits communs. Or une démocratie, un débat, une décision collective supposent qu'on puisse partir de faits partagés, reconnus par tous. Si chacun a ses « faits », si aucune vérité n'est plus commune, il n'y a plus de débat possible, seulement des camps qui s'affrontent sans terrain d'entente. La destruction de la confiance dans toute vérité partagée mine les fondements mêmes de la vie commune.
+
+C'est pourquoi ceux qui cherchent à manipuler ont parfois moins intérêt à nous faire croire une chose précise qu'à détruire notre confiance en toute vérité. Semer le doute partout, brouiller le vrai et le faux, faire croire que « de toute façon, on ne peut rien savoir » : cette stratégie du doute généralisé est redoutable, car elle désarme la résistance. Un peuple qui ne croit plus rien ne peut plus s'indigner de rien, ni s'unir autour de rien. Le cynisme est le meilleur allié du mensonge.
+
+La juste attitude n'est donc ni la crédulité, qui croit tout, ni le cynisme, qui ne croit rien, mais un scepticisme mesuré, qui sait distinguer. Douter, oui, mais avec discernement ; se méfier, mais sans rejeter en bloc ; reconnaître qu'on peut être trompé, sans conclure qu'on ne peut jamais rien savoir. Préserver la capacité de croire ce qui le mérite, tout en se méfiant de ce qui ne le mérite pas : tel est l'équilibre difficile, mais vital, qu'exige un monde saturé de faux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-165",
+    title: "Le courage de changer d'avis",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Reconnaître qu'on s'est trompé passe pour une faiblesse. C'est une force.",
+    blurbEn:
+      "Admitting you were wrong is treated as weakness, so we cling to opinions long after we should. A closing reflection on why changing your mind is a rare virtue. (Section: Truth in a noisy world, 5/5.)",
+    body: `Nous avons vu combien il est difficile, dans un monde saturé d'informations, de distinguer le vrai du faux. Mais il est une difficulté plus intime encore, qui tient non aux informations, mais à nous-mêmes : celle de reconnaître que nous nous sommes trompés, et de changer d'avis. Car nous pouvons disposer de toutes les méthodes de vérification, si nous sommes incapables d'admettre nos erreurs, elles ne nous serviront de rien. Le courage de changer d'avis est peut-être la vertu la plus rare, et la plus nécessaire, du rapport à la vérité.
+
+Changer d'avis passe, dans notre culture, pour une faiblesse. On admire la constance, la fermeté des convictions ; on méprise celui qui « retourne sa veste », qui ne « sait pas ce qu'il veut ». En politique, reconnaître qu'on s'est trompé est presque un aveu de disqualification. Cette valorisation de la constance a quelque chose de pervers : elle nous incite à défendre nos positions bien après que les faits les ont démenties, à nous entêter par crainte de paraître faibles. Nous confondons la fermeté avec l'obstination, et la cohérence avec le refus d'apprendre.
+
+Or changer d'avis devant des raisons meilleures n'est pas une faiblesse ; c'est le contraire. C'est le signe qu'on préfère la vérité à son amour-propre, qu'on est capable d'apprendre, qu'on ne tient pas ses opinions pour des possessions à défendre coûte que coûte, mais pour des hypothèses révisables. Celui qui change d'avis quand les faits l'exigent fait preuve d'une force rare : celle de dominer son orgueil, de reconnaître ses torts, de se soumettre à ce qui est vrai plutôt qu'à ce qui l'arrange. Cette souplesse est une conquête, non un défaut.
+
+Pourquoi est-ce si difficile ? Parce que nos opinions finissent par faire partie de nous. Reconnaître qu'on s'est trompé, c'est admettre une faille, prendre le risque de perdre la face, remettre en cause une part de son identité. Nous nous attachons à nos convictions comme à des possessions, et les abandonner nous semble une défaite. À cela s'ajoute la pression du groupe : changer d'avis, c'est parfois s'écarter de son camp, décevoir les siens, se retrouver isolé. Il faut du courage pour affronter tout cela, et c'est bien de courage qu'il s'agit.
+
+Ce courage est d'autant plus nécessaire aujourd'hui que tout nous pousse à l'entêtement. Enfermés dans nos bulles, entourés de gens qui pensent comme nous, exposés à ce qui conforte nos vues, nous sommes plus que jamais tentés de nous arc-bouter sur nos convictions. Dans ce contexte, la capacité à écouter l'autre, à reconnaître qu'il peut avoir raison, à réviser ses positions, devient un acte presque héroïque, et une condition de tout débat possible. Sans elle, il ne reste que des camps retranchés, incapables de se parler.
+
+Le courage de changer d'avis est donc au cœur d'un rapport sain à la vérité. Il suppose l'humilité de reconnaître qu'on peut se tromper, la souplesse de réviser ses positions, la force de résister à l'orgueil et à la pression. Loin d'être une girouette, celui qui sait changer d'avis pour de bonnes raisons est celui qui prend la vérité au sérieux. Dans un monde qui valorise la certitude bruyante, oser dire « je me suis trompé » est peut-être l'une des formes les plus hautes, et les plus rares, de la lucidité.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-166",
+    title: "Croire et savoir",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Croire quelque chose et le savoir, est-ce la même chose ?",
+    blurbEn:
+      "We often say 'I believe' and 'I know' as if they were the same. But the difference between belief and knowledge matters more than we think. (Section: Belief and persuasion, 1/5.)",
+    body: `Nous employons souvent, presque comme des synonymes, deux mots pourtant très différents : croire et savoir. « Je crois qu'il va pleuvoir », « je sais qu'il va pleuvoir » : les deux expriment une conviction, mais pas de la même manière ni avec la même force. Distinguer croire et savoir, loin d'être un jeu sur les mots, éclaire quelque chose d'essentiel sur notre rapport à la vérité, et sur la modestie qu'il devrait nous inspirer.
+
+Savoir, au sens fort, suppose davantage que croire. On peut croire quelque chose de faux, mais on ne peut pas savoir quelque chose de faux : si je « savais » une chose qui se révèle fausse, c'est que je ne la savais pas, je le croyais seulement. Le savoir implique la vérité, et de plus une justification : je ne sais vraiment que ce que je peux fonder sur des raisons solides. Croire, en revanche, n'exige ni la vérité ni la justification : je peux croire sur une simple impression, un ouï-dire, un désir. Toute la distance entre les deux tient dans ces exigences.
+
+Cette distinction a des conséquences importantes. Elle nous invite d'abord à la modestie, car une grande part de ce que nous tenons pour du savoir n'est, en réalité, que de la croyance. Nous « savons » une foule de choses que nous n'avons jamais vérifiées, que nous tenons de sources que nous n'avons pas examinées, que nous croyons parce que tout le monde les croit ou parce qu'elles nous arrangent. Prendre conscience que beaucoup de nos certitudes sont des croyances déguisées en savoirs, c'est déjà gagner en lucidité sur soi-même.
+
+Elle nous invite ensuite à ne pas confondre la force d'une conviction avec sa validité. On peut croire très fort à quelque chose de faux, être absolument certain et se tromper entièrement. L'intensité d'une croyance ne dit rien de sa vérité ; elle dit seulement notre attachement à cette croyance. Or nous avons tendance à prendre la force de notre conviction pour une preuve de sa justesse : « j'en suis sûr, donc c'est vrai ». Ce raisonnement est trompeur, car la certitude est un sentiment, non une garantie. Les plus grandes erreurs ont été commises avec la plus grande certitude.
+
+Faut-il en conclure que la croyance serait méprisable, et qu'il ne faudrait s'en tenir qu'au savoir prouvé ? Ce serait excessif, et d'ailleurs impossible. Nous ne pouvons pas tout savoir au sens fort ; nous devons, pour vivre, croire une foule de choses que nous ne pouvons vérifier nous-mêmes. La croyance n'est pas un défaut à éliminer, mais une nécessité de la condition humaine. Ce qui importe, ce n'est pas de ne jamais croire, mais de savoir que l'on croit, de ne pas prendre ses croyances pour des savoirs, et de rester prêt à les réviser.
+
+Distinguer croire et savoir, c'est donc apprendre à hiérarchiser ses convictions selon leur solidité : tenir fermement ce qui est bien fondé, plus souplement ce qui l'est moins, reconnaître ce qu'on ignore. C'est refuser la fausse assurance qui prend toute conviction pour une certitude, et cultiver une confiance proportionnée aux raisons. Cette lucidité sur la nature de nos convictions est le fondement de toute pensée honnête — et la meilleure protection contre le dogmatisme, qui commence toujours par confondre ce qu'on croit avec ce qu'on sait.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-167",
+    title: "L'art de convaincre",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Convaincre par la raison ou séduire par l'émotion : deux voies bien différentes.",
+    blurbEn:
+      "There are two ways to change a mind: convince it with reasons, or move it with feeling. A look at the ancient difference between persuasion and manipulation. (Section: Belief and persuasion, 2/5.)",
+    body: `Comment amène-t-on quelqu'un à changer d'avis, à adopter une opinion, à agir d'une certaine façon ? Depuis l'Antiquité, on distingue deux grandes voies : convaincre, en s'adressant à la raison par des arguments ; et persuader, en s'adressant aux émotions, aux désirs, à ce qui, en nous, précède ou déborde la raison. Cette distinction, ancienne, reste éclairante, car elle touche à une question morale : toutes les manières d'agir sur les esprits se valent-elles ?
+
+Convaincre par la raison, c'est présenter des arguments, des preuves, des raisonnements, et laisser l'interlocuteur juger par lui-même. Celui qu'on a convaincu adhère parce qu'il a compris, parce que les raisons lui ont paru bonnes ; son adhésion est libre, éclairée, et il pourrait la défendre lui-même. Cette voie respecte la personne comme un être raisonnable, capable de juger. Elle est exigeante, souvent lente, et incertaine, car la raison peut résister ; mais elle a une dignité propre : elle traite l'autre en égal, non en objet à manipuler.
+
+Persuader par l'émotion est tout autre. Il s'agit alors d'agir non sur le jugement, mais sur ce qui l'influence à son insu : la peur, le désir, l'amour-propre, l'appartenance à un groupe. On ne cherche pas à faire comprendre, mais à faire ressentir ; on ne donne pas des raisons de penser, mais des motifs de vouloir. Cette voie est souvent plus efficace que la première, car les émotions meuvent plus sûrement que les arguments. Mais elle pose un problème : celui qu'on a persuadé sans le convaincre adhère sans comprendre, mû par des ressorts qu'il ne maîtrise pas.
+
+Là est le nœud moral. Car agir sur les émotions de quelqu'un pour lui faire adopter une opinion ou une action, en court-circuitant son jugement, c'est le traiter comme un objet à manipuler plutôt que comme un esprit à éclairer. La frontière est ici entre la persuasion légitime et la manipulation : manipuler, c'est obtenir l'adhésion en contournant la raison, en exploitant les faiblesses, en trompant. Le manipulateur ne cherche pas à ce que l'autre juge bien, mais à ce qu'il fasse ce qu'on attend de lui, peu importe comment.
+
+Faut-il pour autant condamner tout recours à l'émotion, et n'admettre que la froide argumentation ? Ce serait naïf et même appauvrissant. Les émotions ne sont pas l'ennemi de la vérité ; une cause juste peut légitimement émouvoir, et l'émotion peut ouvrir à des raisons qu'on n'aurait pas entendues. Le grand orateur qui défend une cause juste en touchant les cœurs ne manipule pas ; il mobilise. Ce qui distingue la persuasion légitime de la manipulation, ce n'est pas le recours à l'émotion, mais le respect ou le mépris du jugement de l'autre : émeut-on pour éclairer, ou pour aveugler ?
+
+Comprendre cette distinction est essentiel, car nous sommes en permanence l'objet de tentatives de persuasion, dont beaucoup relèvent de la manipulation. Publicité, propagande, discours qui jouent sur nos peurs et nos désirs : partout, on cherche à agir sur nous en contournant notre jugement. Savoir reconnaître quand on s'adresse à notre raison et quand on cherche à la court-circuiter, c'est se donner les moyens de résister à la seconde tout en restant ouvert à la première. Convaincre honore ; manipuler abaisse — et distinguer l'un de l'autre est une compétence vitale pour un esprit libre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-168",
+    title: "Nos biais, ces angles morts",
+    category: "science",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Notre esprit se trompe de façons régulières et prévisibles.",
+    blurbEn:
+      "Our minds make errors in regular, predictable ways — biases that operate without our noticing. A look at the blind spots built into human thinking. (Section: Belief and persuasion, 3/5.)",
+    body: `Nous aimons nous croire rationnels, jugeant les choses avec objectivité. La réalité est plus humble : notre esprit se trompe de façons régulières, systématiques, prévisibles. Ces erreurs récurrentes, que la recherche a patiemment identifiées, portent le nom de biais. Elles ne sont pas des fautes occasionnelles, mais des tendances profondes de notre pensée, qui opèrent le plus souvent à notre insu. En prendre conscience, c'est découvrir les angles morts de notre propre jugement.
+
+L'un des biais les plus puissants est celui qui nous fait rechercher et retenir ce qui confirme nos convictions, tout en négligeant ce qui les contredit. Nous ne pesons pas les preuves de manière impartiale ; nous accueillons volontiers celles qui nous donnent raison, et écartons celles qui nous dérangent. Ainsi, plus nous croyons une chose, plus nous trouvons de raisons de la croire, non parce qu'elles sont plus nombreuses, mais parce que nous ne voyons qu'elles. Ce biais explique pourquoi il est si difficile de faire changer quelqu'un d'avis par des faits : les faits contraires, il ne les voit pas, ou les rejette.
+
+Un autre biais nous fait juger d'après ce qui nous vient facilement à l'esprit. Un événement marquant, récent, spectaculaire, nous paraît plus fréquent qu'il n'est, simplement parce qu'il nous vient aisément en mémoire. Ainsi surestimons-nous les dangers dont on parle beaucoup, et sous-estimons-nous ceux, plus grands parfois, dont on parle peu. Notre perception du monde est déformée par ce qui frappe l'imagination, non par ce qui est réellement probable. Ce biais nous rend mauvais juges des risques, et manipulables par qui sait quoi mettre en avant.
+
+D'autres biais encore nous font surestimer nos propres capacités, juger après coup que nous avions « tout prévu », suivre l'opinion du groupe, accorder trop de poids à la première information reçue. La liste est longue, et ce qui frappe, c'est leur caractère systématique : ce ne sont pas des erreurs aléatoires, mais des déformations régulières, qui vont toutes dans le même sens et qu'on retrouve chez presque tout le monde. Notre esprit n'est pas un instrument neutre ; il est équipé de tendances qui l'inclinent, à notre insu, dans des directions prévisibles.
+
+Ce qui rend ces biais redoutables, c'est justement qu'ils opèrent sans que nous en ayons conscience. Nous ne sentons pas que nous sommes biaisés ; nous avons l'impression de juger objectivement, alors même que nos biais font leur œuvre. Pire, nous repérons bien plus facilement les biais des autres que les nôtres : chacun voit l'aveuglement du voisin et reste aveugle au sien. Cette asymétrie est elle-même un biais, et l'un des plus tenaces. Croire qu'on est, soi, à l'abri des biais est la meilleure façon d'en être la victime.
+
+Peut-on se corriger ? Pas entièrement, car ces biais sont trop profondément ancrés pour être supprimés par la seule volonté. Mais on peut en atténuer les effets : connaître leur existence, se méfier de ses jugements trop assurés, rechercher délibérément ce qui contredit ses vues, écouter ceux qui pensent autrement. Surtout, on peut renoncer à l'illusion de sa propre objectivité, qui est le premier pas vers un jugement plus juste. Reconnaître qu'on a des angles morts ne les supprime pas, mais permet de conduire avec plus de prudence — et c'est déjà beaucoup.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-169",
+    title: "Discuter avec ceux qui pensent autrement",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "Parler avec un contradicteur est devenu rare, et difficile. Pourtant nécessaire.",
+    blurbEn:
+      "Real conversation with people who disagree has become rare and hard. Why it matters, why it fails, and how it might still be possible. (Section: Belief and persuasion, 4/5.)",
+    body: `Discuter vraiment avec quelqu'un qui pense autrement est devenu rare, et difficile. Nous vivons de plus en plus entourés de gens qui partagent nos vues, dans des cercles où nos opinions sont confortées plutôt que contestées. Et quand nous rencontrons la contradiction, l'échange tourne souvent court : on se braque, on s'invective, chacun repart plus convaincu qu'avant. Or cette incapacité à discuter avec ses contradicteurs est un appauvrissement, et même un danger, dont il vaut la peine de comprendre les causes.
+
+Pourquoi ces discussions échouent-elles si souvent ? D'abord parce que nous n'y cherchons généralement pas à comprendre, mais à vaincre. Nous abordons le désaccord comme un combat où il s'agit de l'emporter, non comme une occasion d'apprendre. Dès lors, nous n'écoutons pas vraiment l'autre : nous attendons qu'il se taise pour placer notre argument, nous guettons ses failles, nous caricaturons sa position pour mieux la réfuter. Une discussion menée ainsi ne peut qu'échouer, car aucun des deux n'écoute réellement l'autre ; chacun parle pour son camp, non à son interlocuteur.
+
+Ensuite, ces échanges échouent parce que nous prêtons à nos contradicteurs les pires intentions. Nous supposons volontiers que celui qui pense autrement est de mauvaise foi, mal informé, ou animé de motifs inavouables. Cette présomption interdit toute discussion véritable : comment échanger avec quelqu'un qu'on tient d'emblée pour malhonnête ou stupide ? Or, le plus souvent, notre contradicteur croit sincèrement à ce qu'il dit, pour des raisons qui lui paraissent bonnes, exactement comme nous. Lui prêter la mauvaise foi, c'est se dispenser de le comprendre, et rendre l'échange impossible.
+
+Que faudrait-il pour que ces discussions redeviennent possibles ? D'abord, aborder l'autre avec l'hypothèse de sa bonne foi : supposer qu'il a, pour penser ce qu'il pense, des raisons qu'il croit valables, et chercher à les comprendre avant de les juger. Ensuite, écouter vraiment, non pour répliquer, mais pour saisir ce que l'autre veut dire, quitte à lui demander de préciser. Enfin, accepter l'idée qu'on pourrait avoir quelque chose à apprendre, que l'autre pourrait avoir raison sur certains points — disposition sans laquelle il n'y a pas de dialogue, mais seulement deux monologues.
+
+Cela ne signifie pas qu'il faille tout accepter, renoncer à ses convictions, ou traiter toutes les opinions comme également valables. On peut écouter avec respect une position et la juger fausse ; comprendre les raisons de quelqu'un et lui montrer, calmement, pourquoi on les croit erronées. Discuter avec un contradicteur n'est pas céder ; c'est chercher ensemble, dans le respect, ce qui pourrait être vrai. On peut sortir d'une telle discussion sans avoir changé d'avis, mais en ayant mieux compris l'autre, et parfois soi-même.
+
+L'enjeu dépasse le confort de conversations plus civiles. Une démocratie, une société, ne tiennent que si ceux qui pensent différemment peuvent encore se parler. Quand la discussion devient impossible, il ne reste que l'affrontement des camps, la haine, la violence parfois. Réapprendre à discuter avec ceux qui pensent autrement — à les écouter, à leur prêter la bonne foi, à accepter de pouvoir se tromper — n'est donc pas une simple politesse ; c'est une condition de la vie commune. Et cela commence par un renoncement modeste mais difficile : celui de vouloir toujours avoir le dernier mot.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-170",
+    title: "Penser par soi-même",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 4,
+    preview: "On le recommande à tous. Mais que veut dire, au juste, penser par soi-même ?",
+    blurbEn:
+      "'Think for yourself' is universal advice — but what does it actually mean, and is it even fully possible? A closing reflection on intellectual autonomy. (Section: Belief and persuasion, 5/5.)",
+    body: `« Pense par toi-même » : voilà un conseil que tout le monde approuve, et que chacun croit suivre. Rien ne paraît plus désirable que l'autonomie de la pensée, cette capacité à juger par soi-même plutôt qu'à suivre aveuglément les autres. Mais dès qu'on y réfléchit, la formule se révèle plus obscure qu'elle n'en a l'air. Que signifie, au juste, penser par soi-même ? Et cela est-il seulement possible ? Cette question, qui clôt notre parcours sur la croyance et le jugement, en rassemble les fils.
+
+Une première conception, naïve, entend par « penser par soi-même » ne rien devoir à personne, forger seul ses opinions, à partir de sa seule tête, sans se fier à autrui. Mais cette conception est intenable. Nul ne pense à partir de rien : nous héritons d'une langue, de savoirs, de concepts, sans lesquels nous ne pourrions pas même commencer à penser. La quasi-totalité de ce que nous savons, nous le tenons d'autrui, et prétendre tout vérifier soi-même serait absurde et impossible. Celui qui refuserait tout ce qu'il n'a pas découvert seul ne penserait pas mieux ; il ne penserait presque rien.
+
+Penser par soi-même ne peut donc pas signifier penser sans les autres. Cela signifie plutôt penser avec les autres, mais sans leur abdiquer son jugement. La différence est capitale. Il ne s'agit pas de refuser tout ce qui vient d'autrui, mais de ne pas l'accepter aveuglément ; de s'appuyer sur les savoirs et les opinions des autres, tout en gardant la capacité de les examiner, de les peser, de les mettre en question. L'autonomie de la pensée n'est pas l'isolement, mais une manière de recevoir : critique, active, jamais entièrement soumise.
+
+Cette autonomie a des ennemis. Le premier est le conformisme, qui nous fait adopter les opinions de notre entourage sans les examiner, par simple désir d'appartenir, de ne pas déranger. Le deuxième est l'autorité mal comprise, qui nous fait croire une chose parce qu'une figure prestigieuse l'affirme, sans nous demander si ses raisons valent. Le troisième est la paresse, qui préfère les opinions toutes faites à l'effort de juger. Penser par soi-même, c'est résister à ces trois pentes : oser s'écarter du groupe, questionner l'autorité, faire l'effort de juger plutôt que de recevoir.
+
+Mais cette autonomie a aussi ses illusions, contre lesquelles il faut se garder. La première est de confondre penser par soi-même avec penser contre tout le monde, comme si l'originalité était en elle-même une preuve de lucidité. Or rejeter systématiquement ce que pensent les autres est une autre forme de dépendance, en négatif : on se laisse encore déterminer par eux, en pensant toujours l'inverse. La seconde illusion est de croire qu'on pense par soi-même alors qu'on ne fait que suivre un autre troupeau, celui qui se croit précisément indépendant. L'autonomie véritable n'est ni le conformisme ni la contradiction systématique ; c'est le jugement.
+
+Penser par soi-même, au fond, ce n'est donc pas produire seul ses opinions, ni s'opposer à tous, mais exercer son jugement sur ce qu'on reçoit : accueillir les savoirs et les idées des autres, mais les passer au crible de la raison ; se fier à ceux qui savent, mais sans renoncer à comprendre ; changer d'avis quand il le faut, sans céder à toutes les pressions. C'est un idéal jamais pleinement atteint, un effort toujours à reprendre. Mais c'est aussi ce qui fait la dignité d'un esprit libre : non de tout savoir seul, mais de ne jamais abdiquer sa faculté de juger.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];
