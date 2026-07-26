@@ -236,7 +236,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
         </div>
 
         {hasVisibleStages ? (
-          <ol className="relative mx-auto max-w-[28rem] py-3 before:absolute before:bottom-8 before:left-1/2 before:top-10 before:w-1.5 before:-translate-x-1/2 before:rounded-full before:bg-cream-dark/80">
+          <ol className="relative mx-auto max-w-[28rem] py-3">
             {visibleStages.map((stageProgress, index) => {
               const tone = toneForStage(stageProgress.stage);
               return (
@@ -354,6 +354,7 @@ function StageMapNode({
   const canJump = !!stageNext?.canJumpAhead && stageProgress.completedCount > 0;
   const panelId = `journey-stage-${stage.globalIndex}`;
   const reached = cleared || current;
+  const verticalConnectorClass = expanded ? "top-8 h-24" : "bottom-0 top-8";
   const nodeClass = current
     ? "journey-next-glow ring-4 ring-brand/30"
     : cleared
@@ -372,7 +373,7 @@ function StageMapNode({
       {hasNextStage && (
         <span
           aria-hidden="true"
-          className={`absolute bottom-0 left-1/2 top-8 z-0 w-1.5 -translate-x-1/2 rounded-full ${cleared ? tone.connector : "bg-transparent"}`}
+          className={`absolute left-1/2 z-0 w-1.5 -translate-x-1/2 rounded-full ${verticalConnectorClass} ${cleared ? tone.connector : MUTED_CONNECTOR}`}
         />
       )}
       <span aria-hidden="true" className={`absolute top-8 z-0 h-1.5 rounded-full ${reached ? tone.connector : MUTED_CONNECTOR} ${pathStemClass(pathAlign)}`} />
