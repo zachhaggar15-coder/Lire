@@ -1377,6 +1377,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-020", // Ce qui tient une société (hardest)
     ],
   },
+  {
+    id: "c2-beauty",
+    band: "C2",
+    title: "Beauty and the sublime",
+    goal: "Whether beauty saves the world, the sublime, whether art makes us better, genius and rule, why beauty moves us.",
+    textIds: [
+      "starter-c2-021", // La beauté sauvera-t-elle le monde ?
+      "starter-c2-022", // Le sublime, ou le plaisir de ce qui nous dépasse
+      "starter-c2-023", // L'art nous rend-il meilleurs ?
+      "starter-c2-024", // Le génie et la règle
+      "starter-c2-025", // Pourquoi la beauté nous émeut (hardest)
+    ],
+  },
+  {
+    id: "c2-science-unknowable",
+    band: "C2",
+    title: "Science and the unknowable",
+    goal: "The limits of reason, what we can never know, wonder as the root of knowledge, whether truth should always be told, knowing that one does not know.",
+    textIds: [
+      "starter-c2-026", // Les limites de la raison
+      "starter-c2-027", // Ce que nous ne saurons jamais
+      "starter-c2-028", // L'émerveillement, commencement du savoir
+      "starter-c2-029", // La vérité est-elle toujours bonne à dire ?
+      "starter-c2-030", // Savoir qu'on ne sait pas (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
