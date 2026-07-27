@@ -1325,6 +1325,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-080", // Donner forme à sa vie (hardest — closes C1)
     ],
   },
+  {
+    id: "c2-language-thought",
+    band: "C2",
+    title: "Language and the limits of thought",
+    goal: "Highest register: the limits of language, the untranslatable, the power of metaphor, the silence of the unnamed, the ethics of naming.",
+    textIds: [
+      "starter-c2-001", // Les frontières de ma langue
+      "starter-c2-002", // L'intraduisible
+      "starter-c2-003", // Le pouvoir des métaphores
+      "starter-c2-004", // Le silence de ce qui n'a pas de nom
+      "starter-c2-005", // Bien nommer les choses (hardest)
+    ],
+  },
+  {
+    id: "c2-time-self",
+    band: "C2",
+    title: "Time and the self",
+    goal: "The unreality of the present, memory as reconstruction, forgetting as a grace, narrative identity, loving what passes.",
+    textIds: [
+      "starter-c2-006", // Le présent n'existe pas
+      "starter-c2-007", // Ce que la mémoire invente
+      "starter-c2-008", // L'oubli, condition de la vie
+      "starter-c2-009", // Le fil d'une vie
+      "starter-c2-010", // Retenir ce qui passe (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
