@@ -1351,6 +1351,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-010", // Retenir ce qui passe (hardest)
     ],
   },
+  {
+    id: "c2-tragic",
+    band: "C2",
+    title: "The tragic and the human condition",
+    goal: "The tragic vs misfortune, the absurd and revolt, the sense of suffering, the greatness of the defeated, consenting to the human condition.",
+    textIds: [
+      "starter-c2-011", // Le tragique n'est pas le malheur
+      "starter-c2-012", // L'absurde et la révolte
+      "starter-c2-013", // La souffrance a-t-elle un sens ?
+      "starter-c2-014", // La grandeur des vaincus
+      "starter-c2-015", // Consentir à la condition humaine (hardest)
+    ],
+  },
+  {
+    id: "c2-power-myth",
+    band: "C2",
+    title: "Power, myth and society",
+    goal: "Power needs narratives, voluntary servitude, ideology as the air we breathe, the crowd and the individual, what holds a society together.",
+    textIds: [
+      "starter-c2-016", // Le pouvoir a besoin de récits
+      "starter-c2-017", // Servitude volontaire
+      "starter-c2-018", // L'idéologie, cet air qu'on respire
+      "starter-c2-019", // La foule et l'individu
+      "starter-c2-020", // Ce qui tient une société (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
