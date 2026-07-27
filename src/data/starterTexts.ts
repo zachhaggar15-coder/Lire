@@ -17151,4 +17151,234 @@ Rester humain parmi les machines, ce n'est donc pas s'accrocher à une supérior
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-041",
+    title: "L'inégalité est-elle injuste ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Toute inégalité n'est pas une injustice. Mais où passe la frontière ?",
+    blurbEn:
+      "Not every inequality is an injustice — but which ones are? A C1 essay untangling a question our politics constantly confuses. (Section: Money, value and inequality, 1/5.)",
+    body: `L'inégalité est au cœur de nos débats politiques, et pourtant nous confondons souvent deux questions qu'il faudrait distinguer : celle de savoir s'il existe des inégalités, et celle de savoir si elles sont justes. Car toute inégalité n'est pas nécessairement une injustice, et toute réduction des inégalités n'est pas nécessairement un progrès de la justice. Démêler ces questions est indispensable pour penser clairement un sujet que la passion politique tend à brouiller, où chacun tient sa position pour évidente et celle de l'adversaire pour scandaleuse.
+
+Commençons par reconnaître qu'il existe des inégalités qui ne choquent guère notre sens de la justice. Que celui qui travaille davantage, qui prend plus de risques, qui apporte plus, reçoive davantage, ne paraît pas en soi injuste ; beaucoup y voient au contraire une exigence de justice, celle qui récompense l'effort et le mérite. Une égalité stricte qui traiterait identiquement celui qui se dévoue et celui qui ne fait rien heurterait, elle, notre sens de l'équité. Il y a donc des inégalités qui semblent justes, ou du moins acceptables, parce qu'elles reflètent des différences que nous jugeons pertinentes.
+
+Mais cette justification a des limites que l'examen révèle vite. Car les inégalités réelles ne reflètent que très partiellement le mérite ou l'effort. Une large part des inégalités tient à ce dont nul n'est responsable : la naissance, le milieu, l'héritage, les talents reçus, la chance. Celui qui naît dans un milieu favorisé bénéficie d'avantages qu'il n'a pas mérités ; celui qui naît dans le dénuement subit des désavantages dont il n'est pas coupable. Les inégalités qui résultent non des choix des individus, mais de la loterie de la naissance, sont bien plus difficiles à justifier : en quoi serait-il juste que le hasard de la naissance détermine le sort de toute une vie ?
+
+Ainsi apparaît un premier critère pour distinguer les inégalités justes des injustes : celui de la responsabilité. Une inégalité qui résulte des choix libres des individus, de leurs efforts, de ce dont ils sont responsables, peut être tenue pour juste, ou du moins légitime ; une inégalité qui résulte de circonstances dont ils ne sont pas responsables — la naissance, la chance — appelle davantage la correction. Ce critère, séduisant, ne résout pourtant pas tout, car il est terriblement difficile de démêler, dans une trajectoire, la part des choix et celle des circonstances : celui qui a « fait des efforts » ne le doit-il pas, en partie, à une éducation qui lui a inculqué le goût de l'effort ? La frontière entre ce dont on est responsable et ce qu'on a reçu est floue, et le mérite, à l'examen, se dissout en partie dans les circonstances.
+
+Un second critère concerne les effets de l'inégalité sur les plus défavorisés. On peut soutenir qu'une inégalité est acceptable si elle profite, in fine, à tous, y compris aux plus démunis — si, par exemple, en récompensant les plus productifs, elle stimule une activité dont les plus pauvres bénéficient aussi. Mais qu'une inégalité aggrave le sort des plus défavorisés, qu'elle enferme les uns dans la misère pour permettre aux autres l'opulence, la rend difficile à justifier. Selon ce critère, l'inégalité n'est acceptable que dans la mesure où elle sert l'intérêt de tous, non celui des seuls avantagés au détriment des autres.
+
+Ces critères ne fournissent pas de réponse simple, et le débat sur la justice des inégalités reste ouvert, car il engage des valeurs qui se hiérarchisent différemment selon les convictions. Mais ils permettent de dépasser deux positions également simplistes : celle qui tient toute inégalité pour juste, au motif qu'elle refléterait le mérite, alors qu'elle tient largement à des circonstances non méritées ; et celle qui tient toute inégalité pour injuste, au nom d'un égalitarisme qui ignorerait les différences légitimes. La vérité est plus nuancée : certaines inégalités sont justes, d'autres non, et tout l'enjeu est de les distinguer. Refuser cette distinction, dans un sens ou dans l'autre, c'est se dispenser de penser la justice au profit d'un slogan.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-042",
+    title: "L'argent peut-il tout acheter ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Certaines choses devraient-elles échapper au marché ? La question n'est pas économique.",
+    blurbEn:
+      "Should some things be beyond the reach of money? A C1 essay on the moral limits of markets, and what is lost when everything is for sale. (Section: Money, value and inequality, 2/5.)",
+    body: `Il est des choses qui s'achètent, et d'autres dont nous jugeons qu'elles ne devraient pas s'acheter. On peut acheter une maison, mais devrait-on pouvoir acheter une voix aux élections ? On peut payer un service, mais devrait-on pouvoir payer pour qu'un autre purge notre peine de prison, porte notre enfant, nous cède un organe ? Ces questions ne sont pas économiques, mais morales : elles portent sur les limites que nous devrions assigner au marché, sur ce qui devrait rester hors de son emprise. Et elles sont d'autant plus pressantes que le marché tend, aujourd'hui, à s'étendre à des domaines qui lui échappaient.
+
+Le premier argument contre l'extension illimitée du marché tient à l'inégalité. Là où tout s'achète, ceux qui ont de l'argent obtiennent ce que les autres ne peuvent avoir ; l'inégalité de richesse se traduit alors en inégalité d'accès à tout ce qui compte. Tant que le marché se limite aux biens de consommation, cette inégalité est supportable ; mais s'il s'étend à la santé, à la justice, à l'éducation, à l'influence politique, il transforme l'inégalité économique en inégalité devant les biens les plus essentiels. Plus le marché s'étend, plus l'argent devient déterminant, et plus les inégalités de fortune pèsent sur l'ensemble de l'existence. Limiter le marché, c'est empêcher que la richesse achète tout.
+
+Mais il y a un second argument, plus profond, qui ne tient pas à l'inégalité mais à la nature même de certains biens. Car mettre une chose sur le marché, lui donner un prix, peut la corrompre, la dénaturer, lui faire perdre sa valeur propre. Certaines choses valent précisément parce qu'elles ne s'achètent pas : l'amitié qui s'achèterait ne serait plus de l'amitié, l'honneur qui se vendrait ne serait plus l'honneur, le prix d'une récompense qu'on pourrait acheter la viderait de son sens. Il y a des biens dont la valeur tient à ce qu'ils sont donnés, mérités, reçus, et non achetés ; les soumettre au marché, ce n'est pas les rendre accessibles, c'est les détruire en tant que ce qu'ils étaient.
+
+Ce second argument est décisif, car il montre que la question des limites du marché n'est pas seulement une question de justice distributive, mais une question sur le sens et la valeur des choses. Quand nous refusons que certaines choses s'achètent, ce n'est pas seulement parce que ce serait inégalitaire ; c'est parce que les acheter les dénaturerait, en substituant à leur valeur propre la seule mesure de l'argent. Une société où tout s'achèterait ne serait pas seulement plus inégalitaire ; elle serait une société où plus rien n'aurait de valeur au-delà de son prix, où toute chose serait ramenée à sa valeur marchande, où le sens même de biens irréductibles à l'argent se serait perdu.
+
+C'est pourquoi la question des limites du marché est l'une des plus importantes de notre temps, où le marché tend précisément à déborder ses frontières traditionnelles, à mettre un prix sur ce qui n'en avait pas, à traiter comme des marchandises des choses qui ne l'étaient pas. Cette extension se présente souvent comme un progrès, une efficacité, une liberté ; mais elle opère, en silence, une transformation de nos valeurs, en faisant du marché la mesure de toute chose. Résister à cette extension, ce n'est pas s'opposer au marché dans son domaine légitime, où il rend d'immenses services ; c'est refuser qu'il devienne le principe unique d'organisation de toute la vie humaine.
+
+Tracer les limites du marché n'est pas une tâche que l'économie pourrait accomplir, car c'est une tâche morale, qui engage notre conception de ce qui a du prix et de ce qui a une valeur au-delà de tout prix. Elle exige de nous demander, pour chaque bien, s'il peut sans dommage être acheté et vendu, ou si sa nature exige qu'il échappe au marché. Cette délibération, jamais close, est l'une des responsabilités d'une société qui ne veut pas se laisser entièrement gouverner par l'argent. Car la vraie question n'est pas de savoir si l'argent peut, en fait, tout acheter — il le peut de plus en plus —, mais de savoir ce qu'il ne devrait pas pouvoir acheter, si nous voulons préserver ce qui, dans l'existence humaine, vaut mieux que son prix.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-043",
+    title: "La pauvreté est-elle une fatalité ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La pauvreté a-t-elle toujours existé et existera-t-elle toujours ? Rien n'est moins sûr.",
+    blurbEn:
+      "Is poverty an unchangeable feature of the human condition, or a solvable problem we tolerate? A C1 essay challenging a convenient fatalism. (Section: Money, value and inequality, 3/5.)",
+    body: `« Il y a toujours eu des pauvres, il y en aura toujours. » Cette phrase, souvent prononcée avec l'air de la sagesse, exprime un fatalisme qui traite la pauvreté comme une donnée inévitable de la condition humaine, un fait de nature contre lequel il serait vain de lutter. Ce fatalisme est commode : il dispense d'agir, il apaise la conscience, il fait de l'inaction une forme de lucidité. Mais il repose sur une confusion et une erreur qu'il faut mettre au jour, car la pauvreté n'est pas la fatalité qu'on prétend.
+
+Il faut d'abord distinguer deux notions que le fatalisme confond : la pauvreté absolue et la pauvreté relative. La pauvreté absolue est le manque du nécessaire vital — de quoi se nourrir, se loger, se soigner, survivre. La pauvreté relative est le fait d'avoir beaucoup moins que les autres dans une société donnée, sans nécessairement manquer du vital. Ces deux réalités sont bien différentes, et le fatalisme les mêle pour paraître plus fondé : « on ne supprimera jamais toute pauvreté » est plausible s'il s'agit de la pauvreté relative, qui suppose des écarts toujours possibles ; mais c'est faux s'il s'agit de la pauvreté absolue, celle du manque vital, qui n'a rien d'inévitable.
+
+Car la pauvreté absolue, loin d'être une fatalité, a considérablement reculé dans l'histoire récente, et rien n'interdit de penser qu'elle pourrait être éradiquée. Nous produisons aujourd'hui de quoi nourrir, loger, soigner l'humanité entière ; la persistance de la misère n'est pas due à une pénurie de ressources, mais à leur répartition. Que des êtres humains manquent du nécessaire, dans un monde qui produit largement de quoi couvrir les besoins de tous, n'est pas une fatalité naturelle, mais le résultat d'une organisation, de choix, de rapports de force. La misère absolue n'est pas inscrite dans la nature des choses ; elle est un problème que nous pourrions résoudre, et que nous tolérons.
+
+Le fatalisme sur la pauvreté remplit donc une fonction : il transforme un problème soluble en fatalité insurmontable, et légitime ainsi l'inaction. En présentant la pauvreté comme inévitable, il décourage tout effort pour la combattre, il fait passer la résignation pour de la sagesse, il disculpe une société qui pourrait faire beaucoup plus. C'est pourquoi ce fatalisme, sous ses airs de réalisme, est en réalité une idéologie : il sert les intérêts de ceux qui n'ont pas envie de changer l'ordre existant, en persuadant chacun qu'il n'y a rien à faire. « On n'y peut rien » est le meilleur allié de « je ne veux rien faire ».
+
+Reconnaître que la pauvreté absolue n'est pas une fatalité ne signifie pas prétendre qu'il serait facile de l'éradiquer, ni ignorer la complexité des obstacles. La répartition des ressources se heurte à des intérêts puissants, à des difficultés réelles, à des effets pervers qu'il faut anticiper ; combattre la pauvreté n'est pas simple, et les solutions naïves peuvent aggraver les maux qu'elles prétendent guérir. Mais la difficulté n'est pas l'impossibilité, et reconnaître qu'une chose est difficile est tout autre que la déclarer fatale. On peut débattre des moyens de réduire la pauvreté ; on ne peut pas se réfugier dans l'idée qu'elle serait inévitable pour ne rien tenter.
+
+Quant à la pauvreté relative, aux écarts de richesse, la question est différente et plus complexe, car une certaine inégalité peut être inévitable, voire, dans certaines limites, acceptable. Mais même là, l'ampleur des écarts n'a rien de fatal : ils ont beaucoup varié selon les époques et les sociétés, ce qui prouve qu'ils dépendent de choix et non d'une nature immuable. Que la pauvreté, absolue ou relative, persiste, n'est jamais une simple fatalité ; c'est toujours, pour une part, le résultat de ce que nous faisons et ne faisons pas. Le fatalisme qui la naturalise est la première chose à combattre, car tant qu'on tient un mal pour inévitable, on ne cherche même pas à le guérir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-044",
+    title: "Hériter, est-ce mériter ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Transmettre à ses enfants semble naturel. Mais l'héritage heurte l'égalité des chances.",
+    blurbEn:
+      "Passing wealth to one's children feels natural, yet inheritance sits in deep tension with equality of opportunity. A C1 essay on a quiet contradiction. (Section: Money, value and inequality, 4/5.)",
+    body: `Peu de choses semblent aussi naturelles que de transmettre à ses enfants ce que l'on a acquis. Travailler pour les siens, leur laisser un patrimoine, leur assurer un avenir : cette aspiration paraît si évidente qu'on hésite à la questionner. Et pourtant, l'héritage recèle une contradiction profonde avec un autre principe que nous chérissons, celui de l'égalité des chances. Car ce que l'héritage transmet, ce ne sont pas seulement des biens : ce sont des avantages non mérités, qui font que les enfants ne partent pas égaux dans la vie. Cette tension mérite d'être regardée en face, si inconfortable soit-elle.
+
+Le principe de l'égalité des chances veut que la réussite dépende du mérite, de l'effort, des qualités personnelles, et non des circonstances de la naissance. Or l'héritage contredit directement ce principe. L'enfant qui hérite d'une fortune, d'un patrimoine, d'un réseau, dispose d'avantages considérables qu'il n'a nullement mérités, qui ne doivent rien à ses efforts ni à ses qualités, mais au seul hasard d'être né dans telle famille. Deux enfants d'égale valeur, l'un né riche, l'autre pauvre, n'auront pas les mêmes chances, et cette différence tient entièrement à l'héritage. Celui-ci perpétue ainsi, de génération en génération, des inégalités que rien ne justifie du point de vue du mérite.
+
+On objectera que celui qui a acquis un bien a le droit d'en disposer comme il l'entend, donc de le transmettre à ses enfants ; interdire l'héritage serait une atteinte à la liberté et à la propriété. Cet argument a sa force, mais il se heurte à une difficulté : le droit de celui qui transmet entre en conflit avec le droit de tous les autres enfants à une égalité des chances. La liberté de léguer des uns crée l'inégalité de départ des autres. Il n'est pas évident que le premier droit doive primer absolument sur le second ; on peut soutenir que la société a un intérêt légitime à limiter la transmission des privilèges, pour préserver une certaine égalité des chances entre les nouveaux venus.
+
+Il y a plus troublant encore. L'héritage ne transmet pas seulement des biens matériels, mais tout un ensemble d'avantages plus subtils et plus déterminants : l'éducation, la culture, les manières, les relations, les codes, les aspirations. Ces avantages-là, plus encore que la fortune, se transmettent et se perpétuent, reproduisant les positions sociales de génération en génération. Même si l'on abolissait l'héritage matériel, ces héritages immatériels continueraient de creuser l'inégalité des chances. L'héritage, au sens large, est le mécanisme par lequel une société reproduit ses hiérarchies, en faisant que les enfants héritent, pour l'essentiel, de la position de leurs parents.
+
+Faut-il en conclure qu'il faudrait abolir l'héritage ? La question est plus complexe que ce que suggèrent les positions tranchées. D'un côté, l'héritage illimité perpétue des inégalités injustes et contredit l'égalité des chances ; de l'autre, l'interdire entièrement serait à la fois irréaliste, attentatoire à des attachements légitimes, et impuissant à supprimer les héritages immatériels qui pèsent le plus. Entre l'héritage illimité et son abolition, il existe des positions intermédiaires : encadrer, taxer, limiter la transmission des grandes fortunes, tout en préservant la transmission ordinaire ; investir dans l'éducation pour compenser les héritages immatériels. Ces mesures ne suppriment pas la tension, mais elles l'atténuent.
+
+L'essentiel est peut-être de ne pas escamoter la contradiction sous la fausse évidence du « c'est naturel ». Reconnaître que l'héritage, si compréhensible soit-il, contredit l'égalité des chances, que ce que nous transmettons à nos enfants avantage indûment les uns au détriment des autres, c'est refuser de tenir pour juste ce qui est seulement habituel. On peut, en connaissance de cause, choisir de maintenir une part d'héritage, en pesant les valeurs en jeu ; mais on ne devrait pas le faire en feignant qu'il n'y a là aucun problème. Car derrière l'apparente évidence de transmettre aux siens se cache l'un des mécanismes les plus puissants de perpétuation des inégalités — et le regarder en face est la condition de tout jugement honnête sur la justice de nos sociétés.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-045",
+    title: "Le mythe du self-made-man",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "« Il s'est fait tout seul. » Cette formule flatteuse cache une illusion tenace.",
+    blurbEn:
+      "'He built it all himself' — a flattering story that obscures how much every success owes to others. A closing C1 essay on merit, luck and the debts we deny. (Section: Money, value and inequality, 5/5.)",
+    body: `« Il s'est fait tout seul. » Cette formule, prononcée avec admiration, célèbre celui qui, parti de rien, aurait bâti sa réussite par ses seuls mérites, sans rien devoir à personne. Le mythe du self-made-man, de l'homme qui se fait lui-même, occupe une place centrale dans l'imaginaire de nos sociétés, où il sert de modèle et de justification. Mais ce mythe, si séduisant soit-il, repose sur une illusion qu'il faut dissiper, car elle a des conséquences importantes sur notre manière de penser le mérite, la réussite et la justice.
+
+L'illusion consiste à croire qu'une réussite puisse être entièrement l'œuvre de celui qui la connaît, sans rien devoir aux autres ni aux circonstances. Or aucune réussite n'est jamais purement individuelle. Celui qui réussit a bénéficié d'innombrables conditions qu'il n'a pas créées : une éducation reçue, une langue apprise, des savoirs accumulés par d'autres, des institutions qui ont rendu son activité possible, une société qui a fourni le cadre de sa réussite, des personnes qui l'ont aidé, formé, soutenu. Même le plus autodidacte des entrepreneurs a utilisé des routes qu'il n'a pas construites, des savoirs qu'il n'a pas inventés, un ordre social qu'il n'a pas établi. Nul ne se fait vraiment tout seul ; toute réussite est portée par une multitude de contributions invisibles.
+
+À cela s'ajoute la part, considérable et déniée, de la chance. Celui qui réussit doit beaucoup à des circonstances favorables dont il n'est pas responsable : être né avec certains talents, dans un certain milieu, à une certaine époque, avoir rencontré les bonnes personnes, saisi les bonnes occasions, échappé aux malheurs qui ont brisé d'autres trajectoires. Cette part de chance, le mythe du self-made-man l'efface entièrement, attribuant au seul mérite ce qui doit tant au hasard. Or pour un qui a réussi grâce à ses efforts et à la chance, combien ont fourni les mêmes efforts sans connaître la même fortune, faute d'avoir bénéficié des mêmes circonstances ?
+
+Pourquoi ce mythe est-il si tenace, malgré son évidente fragilité ? Parce qu'il est flatteur et rassurant, pour ceux qui ont réussi comme pour l'ordre social. Pour ceux qui ont réussi, il est gratifiant d'attribuer sa réussite à son seul mérite, plutôt que de reconnaître ce qu'on doit aux autres et à la chance ; cela justifie qu'on jouisse pleinement des fruits de sa réussite, sans dette envers quiconque. Pour l'ordre social, le mythe justifie les inégalités : si chacun est l'artisan de son sort, alors les riches méritent leur richesse et les pauvres leur pauvreté, et l'ordre existant est juste. Le mythe du self-made-man est ainsi une idéologie qui légitime les inégalités en les présentant comme le juste reflet des mérites.
+
+Dissiper ce mythe a des conséquences importantes. Reconnaître que nulle réussite n'est purement individuelle, qu'elle doit beaucoup aux autres, à la société, à la chance, c'est reconnaître une dette. Celui qui a réussi n'a pas seulement des droits sur ce qu'il a acquis ; il a aussi des obligations envers cette société et ces autres sans lesquels il n'aurait rien pu. La réussite n'est pas un dû qu'on aurait entièrement mérité, mais un fruit partagé, qui appelle en retour une contribution. C'est saper le mythe du self-made-man qui permet de fonder l'idée que ceux qui ont le plus reçu doivent aussi le plus rendre.
+
+Il ne s'agit pas de nier tout mérite, de prétendre que les efforts et les qualités ne comptent pour rien, que tout ne serait que chance et circonstances. Celui qui réussit a souvent, en effet, travaillé, persévéré, fait preuve de qualités réelles, et il serait injuste de le nier. Il s'agit de refuser l'illusion inverse, celle qui attribue tout au seul individu, en oubliant tout ce qui l'a porté. La vérité est entre les deux : la réussite mêle le mérite, la contribution des autres et la chance, et l'honnêteté consiste à reconnaître les trois. « Je me suis fait tout seul » est un mensonge, non parce que celui qui le dit n'aurait rien fait, mais parce qu'il oublie tout ce sans quoi ce qu'il a fait n'aurait servi à rien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-046",
+    title: "La nature n'existe pas",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Ce que nous appelons « la nature » est peut-être une idée plus qu'une réalité.",
+    blurbEn:
+      "What we call 'nature' may be more a cultural idea than a thing in the world. A provocative C1 essay on how the concept shapes — and distorts — our ecology. (Section: Nature and civilisation, 1/5.)",
+    body: `Nous parlons de « la nature » comme d'une réalité évidente : ce qui existe indépendamment de l'homme, le monde sauvage opposé au monde civilisé, l'ordre des choses par opposition à l'artifice humain. Cette notion nous paraît si naturelle, précisément, qu'on ne songe guère à l'interroger. Pourtant, ce que nous appelons « la nature » est peut-être moins une réalité qu'une idée, une construction de notre esprit qui, loin d'être neutre, oriente notre rapport au monde de manières parfois trompeuses. Interroger ce concept n'est pas un jeu intellectuel : il commande notre écologie même.
+
+Considérons d'abord l'opposition entre la nature et l'homme, qui structure toute la notion. Cette opposition suppose que l'homme serait, en quelque sorte, hors de la nature, que ses productions — les villes, les techniques, les cultures — ne seraient pas naturelles, tandis que le reste du vivant le serait. Mais cette séparation résiste mal à l'examen. L'homme est un être vivant parmi d'autres, produit de l'évolution comme toutes les espèces ; ses productions, si complexes soient-elles, sont l'œuvre d'un animal, au même titre que la ruche est l'œuvre de l'abeille. Où tracer la frontière entre le naturel et l'artificiel, si l'artificiel est lui-même produit par un être naturel ? L'opposition, à la réflexion, se brouille.
+
+Considérons ensuite l'idée d'une nature « sauvage », vierge de toute présence humaine, que nous chérissons comme un idéal à préserver. Cette nature intacte, à laquelle nous rêvons, n'existe pour ainsi dire nulle part, et n'a peut-être jamais existé. Les paysages que nous croyons naturels sont souvent le produit d'une longue interaction avec les humains, façonnés par des millénaires de présence, de culture, de transformation. La forêt, la campagne, les espaces que nous tenons pour naturels portent la marque de l'action humaine ; la nature vierge est un mythe, une projection de notre imagination plus qu'une réalité à protéger. Ce que nous voulons préserver n'est pas un état originel, mais un certain équilibre que nous avons appris à valoriser.
+
+Pourquoi importe-t-il de reconnaître que « la nature » est une construction ? Parce que cette idée, prise pour une réalité, fausse notre écologie de deux manières opposées. D'un côté, elle peut nous faire croire qu'il existerait une nature idéale, un état originel pur qu'il faudrait restaurer, ce qui est illusoire et parfois nuisible ; on peut détruire des équilibres réels au nom d'une nature idéalisée qui n'a jamais existé. De l'autre, l'opposition entre l'homme et la nature peut nous faire penser que nous serions extérieurs à elle, autorisés à la traiter comme un simple décor, alors que nous en faisons partie et que la détruire, c'est nous détruire. L'idée fausse d'une nature séparée nourrit à la fois un rêve de pureté impossible et une illusion de séparation dangereuse.
+
+Que faudrait-il mettre à la place de cette idée trompeuse ? Non pas nier qu'il existe un monde vivant, des écosystèmes, des équilibres à préserver — tout cela est bien réel et vital. Mais renoncer à l'opposition entre l'homme et la nature, pour penser l'homme comme partie d'un monde vivant dont il est à la fois issu et responsable. Non pas rêver de restaurer une nature vierge qui n'a jamais existé, mais chercher à préserver et à cultiver des équilibres viables entre l'humanité et le reste du vivant. L'écologie n'a pas besoin du mythe d'une nature pure et séparée ; elle a besoin de la conscience que nous sommes des êtres vivants parmi d'autres, dont le sort est lié à celui de l'ensemble.
+
+Dire que « la nature n'existe pas » n'est donc pas nier la réalité du monde vivant ni la gravité de sa destruction ; c'est refuser une idée qui, sous couvert de le défendre, le pense mal. C'est troquer le mythe d'une nature idéale et séparée contre la reconnaissance plus juste, et plus exigeante, d'une communauté du vivant dont nous faisons partie. Cette reconnaissance ne nous donne pas la commodité d'un idéal simple à restaurer ; elle nous impose la responsabilité plus complexe d'habiter un monde dont nous sommes à la fois membres et gardiens. Renoncer à « la nature » comme mythe, c'est peut-être la condition pour prendre enfin au sérieux le monde vivant comme réalité.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-047",
+    title: "Le confort contre la planète ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Préserver la planète semble exiger de renoncer à notre confort. Ce dilemme est-il inévitable ?",
+    blurbEn:
+      "Saving the planet seems to demand sacrificing our comfort — a framing that guarantees paralysis. A C1 essay questioning the terms of the ecological dilemma. (Section: Nature and civilisation, 2/5.)",
+    body: `Le débat écologique est souvent présenté sous la forme d'un dilemme déchirant : pour préserver la planète, il faudrait renoncer à notre confort, à notre mode de vie, à ce qui rend nos existences agréables. D'un côté, la survie de notre milieu ; de l'autre, le confort auquel nous tenons. Ainsi posé, le dilemme paraît insoluble, car il oppose deux choses auxquelles nous tenons également, et il conduit le plus souvent à la paralysie : entre la planète et le confort, la plupart choisissent, dans les faits, le confort immédiat, tout en s'inquiétant vaguement de la planète. Mais ce cadrage lui-même mérite d'être questionné, car il n'est peut-être pas aussi inévitable qu'il le paraît.
+
+Reconnaissons d'abord la part de vérité du dilemme. Il serait malhonnête de prétendre que la préservation de notre milieu n'exigera aucun changement, aucun renoncement, aucune remise en cause de certaines habitudes. Notre mode de vie, dans les sociétés riches, pèse lourdement sur les équilibres écologiques, et le maintenir tel quel n'est pas tenable. Ceux qui promettent qu'on pourra tout préserver sans rien changer, que la technique résoudra tout sans effort, entretiennent une illusion confortable mais fausse. Un certain renoncement à des formes de confort insoutenables sera nécessaire, et le nier serait se mentir.
+
+Mais le dilemme, tel qu'il est posé, comporte plusieurs pièges qu'il faut débusquer. Le premier est de confondre le confort avec un mode de vie particulier, historiquement situé, qui n'en est qu'une forme. Ce que nous appelons « confort » — la consommation abondante, la vitesse, l'accumulation — n'est pas le seul confort possible, ni peut-être le plus grand. D'autres formes de bien-être existent, qui pèsent moins sur la planète : le confort de la lenteur, des relations, du temps libre, d'un environnement sain. Opposer la planète au confort suppose qu'il n'y aurait qu'une forme de confort, celle qui détruit ; c'est oublier que renoncer à ce confort-là pourrait ouvrir à d'autres formes de bien-être, non moins réelles.
+
+Le deuxième piège est d'ignorer que le mode de vie qu'on présente comme un confort à préserver a aussi ses coûts, ses nuisances, ses insatisfactions. La consommation effrénée n'apporte pas le bonheur qu'elle promet ; la vitesse épuise ; l'accumulation ne comble pas. Une part de ce que nous appelons confort est en réalité une course fatigante, une insatisfaction entretenue, une forme d'aliénation. Renoncer à ce faux confort ne serait pas seulement un sacrifice pour la planète ; ce pourrait être, aussi, une libération pour nous-mêmes. Le dilemme suppose que notre mode de vie actuel serait un pur bien qu'on ne renoncerait qu'à regret ; c'est oublier tout ce qu'il a de pesant.
+
+Le troisième piège, enfin, est d'ignorer les coûts de l'inaction, qui rendent le dilemme trompeur. Car ne rien changer pour préserver notre confort n'est pas préserver notre confort : c'est le condamner, à terme, aux conséquences de la destruction écologique, qui menacent précisément ce mode de vie et bien plus encore. Le vrai dilemme n'est pas entre le confort et la planète, mais entre un changement choisi maintenant et un effondrement subi plus tard. Présenter l'inaction comme le maintien du confort, c'est ignorer que l'inaction mène, elle aussi, et bien plus sûrement, à la perte du confort qu'elle prétend préserver.
+
+Sortir du faux dilemme, ce n'est donc pas nier tout renoncement, mais refuser le cadrage qui oppose simplement la planète au confort. C'est reconnaître que certains renoncements sont nécessaires, mais qu'ils peuvent ouvrir à d'autres formes de bien-être ; que le mode de vie à préserver a lui-même ses coûts ; et que l'inaction ne préserve rien, mais mène à la perte de tout. La question n'est pas « faut-il sacrifier notre confort à la planète ? », mais « quel mode de vie voulons-nous, qui soit à la fois soutenable et désirable ? ». Ainsi reformulée, la question n'appelle plus la paralysie du dilemme, mais l'invention d'une vie bonne qui ne détruise pas ses propres conditions. C'est une tâche plus difficile qu'un simple sacrifice, mais aussi plus féconde : non renoncer au bonheur pour sauver la planète, mais repenser le bonheur pour qu'il soit compatible avec elle.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-048",
+    title: "Ce que nous devons aux générations futures",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Avons-nous des devoirs envers ceux qui ne sont pas encore nés ?",
+    blurbEn:
+      "Do we owe anything to people who do not yet exist? A C1 essay on obligations to the future — and why they are so hard to feel. (Section: Nature and civilisation, 3/5.)",
+    body: `La crise écologique pose une question morale d'un genre nouveau : avons-nous des devoirs envers les générations futures, envers ceux qui ne sont pas encore nés ? Nos actions présentes — ce que nous consommons, détruisons, léguons — affecteront profondément le monde dont hériteront ceux qui viendront après nous. Mais ces personnes futures n'existent pas encore ; elles ne peuvent rien nous demander, ni protester, ni négocier. Pouvons-nous avoir des obligations envers des êtres qui n'existent pas, et si oui, sur quoi ces obligations se fondent-elles ? Cette question, en apparence abstraite, commande notre rapport à l'avenir.
+
+Une première difficulté tient à ce que les générations futures ne peuvent revendiquer aucun droit, puisqu'elles n'existent pas. On a des devoirs, dit-on, envers ceux qui ont des droits ; mais un être qui n'existe pas peut-il avoir des droits ? Cette objection a une force logique, mais elle heurte une intuition puissante : il nous semble bien que léguer aux générations futures un monde dévasté serait une faute, que nous n'avons pas le droit de jouir du présent en ruinant leur avenir. Cette intuition résiste à l'objection logique, et suggère que nos devoirs envers l'avenir ne se réduisent pas à la logique des droits et des revendications.
+
+Sur quoi, alors, fonder ces devoirs ? On peut d'abord remarquer que, si les personnes futures n'existent pas encore individuellement, il est certain qu'il y aura des générations futures, et que leur sort dépend de nous. Nous savons qu'elles existeront, qu'elles auront des besoins, qu'elles souffriront ou prospéreront selon le monde que nous leur laisserons. Cette certitude suffit peut-être à fonder une obligation : non envers tel individu déterminé, mais envers ceux, quels qu'ils soient, qui hériteront de nos actes. Nous sommes dans la position de qui poserait un piège sur un chemin où il sait que d'autres passeront : peu importe qu'il ignore qui ; il sait que quelqu'un souffrira de son acte, et cela suffit à le rendre responsable.
+
+On peut aussi fonder ces devoirs sur l'idée d'une continuité entre les générations, d'une chaîne dont nous ne sommes qu'un maillon. Nous avons reçu de nos prédécesseurs un monde, des savoirs, des institutions, un patrimoine ; nous en jouissons sans les avoir créés. Cette dette envers le passé appelle un devoir symétrique envers l'avenir : transmettre à notre tour, ne pas rompre la chaîne, ne pas dilapider un héritage que nous ne faisons que détenir provisoirement. Nous ne sommes pas propriétaires absolus du monde, libres d'en jouir jusqu'à l'épuisement ; nous en sommes les dépositaires, chargés de le transmettre. Cette conception, présente dans bien des traditions, fonde nos devoirs envers l'avenir sur notre place dans une continuité qui nous dépasse.
+
+La véritable difficulté n'est peut-être pas tant de fonder ces devoirs que de les ressentir. Car nos obligations envers l'avenir se heurtent à un obstacle psychologique majeur : l'avenir lointain nous est abstrait, les générations futures nous sont étrangères, et nous accordons spontanément bien plus de poids au présent qu'à un futur qui ne nous concernera plus. Nous savons intellectuellement que nous devrions nous soucier de l'avenir, mais nous le sentons mal, et ce défaut de sentiment paralyse l'action. Le problème n'est pas que nous ignorions nos devoirs envers l'avenir, mais que nous peinions à les éprouver avec assez de force pour agir en conséquence.
+
+Surmonter cet obstacle est l'un des grands défis moraux de notre temps. Il ne suffit pas d'établir en théorie nos devoirs envers les générations futures ; il faut apprendre à les ressentir, à nous soucier concrètement d'un avenir que nous ne verrons pas, à élargir notre horizon moral au-delà de notre propre existence. Cela suppose une forme d'imagination et de générosité : se soucier de ceux qu'on ne connaîtra jamais, agir pour un monde dont on ne jouira pas, planter des arbres à l'ombre desquels on ne s'assoira pas. Cette capacité à se soucier de l'avenir lointain n'est pas naturelle ; elle est une conquête, presque une vertu. Mais c'est de cette vertu que dépend, peut-être, le sort de ceux qui nous succéderont — et la dignité de ce que nous leur laisserons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-049",
+    title: "La technique nous sauvera-t-elle ?",
+    category: "science",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Faut-il compter sur l'innovation pour résoudre la crise écologique, ou changer de vie ?",
+    blurbEn:
+      "Will technological innovation solve the ecological crisis, letting us keep our way of life? A C1 essay on techno-optimism and its seductions. (Section: Nature and civilisation, 4/5.)",
+    body: `Face à la crise écologique, un espoir revient sans cesse, séduisant par sa commodité : la technique nous sauvera. L'innovation, dit-on, trouvera des solutions — des énergies propres, des procédés efficaces, des inventions qui nous permettront de préserver la planète sans renoncer à notre mode de vie. Cet espoir techno-optimiste est puissant, car il dispense des changements douloureux : point n'est besoin de transformer nos vies, il suffit d'attendre que le génie humain résolve le problème. Mais cet espoir mérite un examen critique, car il mêle une part de vérité à une illusion dangereuse.
+
+Commençons par la part de vérité, car il serait absurde de mépriser la technique. L'innovation a un rôle essentiel à jouer dans la réponse à la crise écologique, et prétendre le contraire serait une posture. Des techniques nouvelles — dans l'énergie, l'agriculture, l'industrie — peuvent réduire considérablement notre empreinte, permettre de faire mieux avec moins, ouvrir des possibilités qu'aucun renoncement seul ne procurerait. Refuser par principe le recours à la technique, au nom d'un retour à un état antérieur idéalisé, serait à la fois irréaliste et contre-productif. La technique fait partie de la solution, et il faut la développer.
+
+Mais l'espoir techno-optimiste devient une illusion dès lors qu'il se fait attente passive d'une solution miraculeuse qui nous dispenserait de tout changement. Cette illusion comporte plusieurs erreurs. La première est de tenir pour acquis que la technique trouvera à temps les solutions nécessaires, alors que rien ne le garantit : parier tout notre avenir sur des innovations hypothétiques, qui pourraient ne pas venir, ou venir trop tard, est un pari imprudent. Espérer que la technique nous sauve n'est pas une stratégie ; c'est un vœu, qui dispense d'agir en attendant un salut incertain.
+
+La deuxième erreur est d'ignorer que la technique, tout en résolvant certains problèmes, en crée souvent d'autres. L'histoire montre que les solutions techniques ont fréquemment des effets pervers imprévus, déplaçant les problèmes plutôt que les supprimant, engendrant de nouvelles difficultés à mesure qu'elles en résolvent d'anciennes. Compter sur la technique pour tout résoudre, c'est oublier qu'elle est elle-même, pour une part, à l'origine des problèmes qu'on lui demande de régler, et qu'elle pourrait en créer de nouveaux. La foi aveugle dans la technique méconnaît cette ambivalence.
+
+La troisième erreur, la plus subtile, est que l'espoir techno-optimiste sert souvent d'alibi à l'inaction et au maintien de l'ordre existant. En promettant que la technique préservera notre mode de vie sans que nous ayons à le changer, il rassure, endort, dispense de remettre en question ce qui devrait l'être. Il permet à ceux qui profitent de l'ordre actuel de le défendre, en repoussant indéfiniment le changement au nom d'un salut technique à venir. « La technique résoudra le problème » devient ainsi une manière de ne rien faire, de continuer comme avant, de refuser les transformations nécessaires. L'optimisme technique, sous ses dehors dynamiques, peut être le plus efficace des conservatismes.
+
+La position juste n'est donc ni le techno-optimisme qui attend tout de la technique, ni le rejet technophobe qui n'en attend rien. C'est de reconnaître que la technique est un moyen indispensable, mais un moyen parmi d'autres, qui ne dispensera pas des changements de comportement, d'organisation, de mode de vie. Développer les techniques utiles, oui ; mais sans en faire un prétexte pour ne rien changer d'autre, sans parier notre avenir sur des solutions hypothétiques, sans oublier que la technique elle-même doit être orientée par des choix. La technique ne nous sauvera pas toute seule ; elle peut nous y aider, si nous faisons aussi le reste. Et c'est précisément ce « reste » — les changements que l'espoir techno-optimiste nous invite à esquiver — qui est le plus difficile, et le plus nécessaire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-050",
+    title: "Habiter la Terre",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Peut-être faut-il moins « protéger la nature » qu'apprendre à habiter notre monde.",
+    blurbEn:
+      "Perhaps the task is less to 'protect nature' than to learn to inhabit our shared world well. A closing C1 essay on dwelling, responsibility and belonging. (Section: Nature and civilisation, 5/5.)",
+    body: `Au terme de cette réflexion sur notre rapport au monde vivant, une reformulation s'impose peut-être. Nous parlons de « protéger la nature », comme s'il s'agissait de défendre une réalité extérieure, un objet distinct de nous. Mais nous avons vu que cette séparation entre l'homme et la nature était trompeuse, que nous faisions partie du monde vivant, que notre sort était lié au sien. Dès lors, la question n'est peut-être pas tant de protéger une nature dont nous serions les gardiens extérieurs, que d'apprendre à habiter le monde qui est le nôtre — le seul que nous ayons, celui dont nous sommes à la fois issus et responsables.
+
+Habiter, ce n'est pas seulement occuper un lieu, en user, l'exploiter ; c'est y demeurer, en prendre soin, s'y inscrire dans la durée, s'y sentir chez soi tout en respectant ce qui nous y précède et nous y dépasse. Celui qui habite vraiment un lieu ne le traite pas comme une ressource à épuiser, mais comme une demeure à entretenir, dont il est solidaire, à laquelle il appartient autant qu'elle lui appartient. Passer de l'idée de protéger la nature à celle d'habiter la Terre, c'est passer d'un rapport d'extériorité à un rapport d'appartenance, d'une logique de gestion à une logique de soin.
+
+Ce déplacement a des conséquences profondes. Si nous ne faisons que « protéger la nature », nous restons dans une posture de surplomb, où l'homme, extérieur, décide de préserver ou d'exploiter un objet qui lui est étranger ; la nature demeure une chose face à nous, que nous gérons selon nos intérêts. Si nous apprenons à « habiter la Terre », nous nous reconnaissons partie prenante d'un monde commun, dont nous dépendons et dont nous sommes responsables, non en surplomb mais en son sein. La destruction du monde vivant n'est plus alors la dégradation d'un objet extérieur, mais l'atteinte à notre propre demeure, à ce qui nous fait vivre et nous constitue. On ne saccage pas la maison qu'on habite.
+
+Cette manière d'habiter suppose une transformation de notre rapport aux choses et aux êtres. Habiter, c'est établir des liens, non seulement d'usage, mais d'attachement, de connaissance, de soin, avec les lieux, les vivants, les équilibres qui nous entourent. C'est connaître son milieu, s'y attacher, en prendre soin comme d'une chose qui compte pour elle-même et pas seulement pour l'usage qu'on en tire. Cette disposition, que les sociétés anciennes cultivaient souvent dans leur rapport à leur territoire, s'est perdue dans un monde qui traite l'espace comme un simple support d'activités, interchangeable et exploitable. La réapprendre serait retrouver un rapport au monde plus profond que la seule exploitation.
+
+Il ne s'agit pas de tomber dans une mystique de la Terre, ni de renoncer à toute transformation du monde, car habiter, c'est aussi transformer, cultiver, bâtir. L'homme ne peut habiter sans agir sur son milieu, et il serait absurde de rêver d'une présence humaine sans effet. La différence n'est pas entre transformer et ne pas transformer, mais entre deux manières de transformer : celle qui épuise et détruit, traitant le monde en réserve à piller, et celle qui entretient et cultive, transformant le monde en prenant soin de sa pérennité. Habiter, c'est transformer en demeurant, agir en préservant les conditions de la vie, bâtir sans détruire ce qui rend le bâtir possible.
+
+Apprendre à habiter la Terre est peut-être le nom le plus juste de la tâche écologique. Non pas protéger une nature extérieure au nom d'une pureté imaginaire, ni gérer des ressources au mieux de nos intérêts, mais réapprendre à demeurer dans notre monde comme dans une demeure dont nous sommes solidaires. Cette tâche est plus exigeante qu'une simple gestion, car elle engage notre manière d'être au monde, notre rapport aux choses et aux vivants, notre conception de notre place. Mais elle est aussi plus féconde, car elle ne nous demande pas seulement de sauver un objet menacé ; elle nous invite à retrouver un rapport au monde où nous serions enfin chez nous, non en maîtres qui exploitent, mais en habitants qui prennent soin de la seule demeure que nous ayons.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

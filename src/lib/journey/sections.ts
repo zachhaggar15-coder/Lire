@@ -1221,6 +1221,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-040", // Rester humain parmi les machines (hardest)
     ],
   },
+  {
+    id: "c1-inequality",
+    band: "C1",
+    title: "Money, value and inequality",
+    goal: "Whether inequality is unjust, the moral limits of markets, poverty as no fatality, inheritance vs merit, the self-made myth.",
+    textIds: [
+      "starter-c1-041", // L'inégalité est-elle injuste ?
+      "starter-c1-042", // L'argent peut-il tout acheter ?
+      "starter-c1-043", // La pauvreté est-elle une fatalité ?
+      "starter-c1-044", // Hériter, est-ce mériter ?
+      "starter-c1-045", // Le mythe du self-made-man (hardest)
+    ],
+  },
+  {
+    id: "c1-nature-civilisation",
+    band: "C1",
+    title: "Nature and civilisation",
+    goal: "Nature as a construct, comfort vs the planet, duties to future generations, techno-optimism, learning to inhabit the Earth.",
+    textIds: [
+      "starter-c1-046", // La nature n'existe pas
+      "starter-c1-047", // Le confort contre la planète ?
+      "starter-c1-048", // Ce que nous devons aux générations futures
+      "starter-c1-049", // La technique nous sauvera-t-elle ?
+      "starter-c1-050", // Habiter la Terre (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
