@@ -264,21 +264,11 @@ export function getNextTextForReader(options: JourneyStateOptions = {}): NextTex
 
   if (candidates.length === 0) return null;
 
-  const comfortMiddle = (COMFORT_MIN + COMFORT_MAX) / 2;
-  const comfortCandidates = candidates.filter(
-    (candidate) => candidate.estimate!.unknownWordRatio >= COMFORT_MIN && candidate.estimate!.unknownWordRatio <= COMFORT_MAX
-  );
-
-  const ordered =
-    pace === "hold"
-      ? [...candidates].sort((a, b) => a.estimate!.unknownWordRatio - b.estimate!.unknownWordRatio || a.order - b.order)
-      : [...(comfortCandidates.length > 0 ? comfortCandidates : candidates)].sort(
-          (a, b) =>
-            Math.abs(a.estimate!.unknownWordRatio - comfortMiddle) - Math.abs(b.estimate!.unknownWordRatio - comfortMiddle) ||
-            a.order - b.order
-        );
-
-  const picked = ordered[0];
+  // Each node is a single authored theme whose texts are ordered to build
+  // vocabulary deliberately (see sections.ts). Always advance to the first
+  // unfinished text in that authored order — never reorder by difficulty —
+  // so the guided sequence, and the map's per-lesson locking, stay in step.
+  const picked = [...candidates].sort((a, b) => a.order - b.order)[0];
   const nextStage = ladder.stages[state.currentStageIndex + 1] ?? null;
   const currentProgress = state.stages.find((stageProgress) => stageProgress.stage.globalIndex === state.currentStageIndex);
   const canJumpAhead = pace === "flying" && nextStage !== null && (currentProgress?.completedCount ?? 0) > 0;
