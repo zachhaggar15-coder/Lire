@@ -1299,6 +1299,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-070", // Ce que chaque peuple apprend de l'autre (hardest)
     ],
   },
+  {
+    id: "c1-education",
+    band: "C1",
+    title: "Education and knowledge",
+    goal: "Instructing vs educating, whether knowledge frees, school and inequality, learning in the information age, curiosity as virtue or vice.",
+    textIds: [
+      "starter-c1-071", // Instruire ou éduquer ?
+      "starter-c1-072", // Le savoir rend-il libre ?
+      "starter-c1-073", // L'école reproduit-elle les inégalités ?
+      "starter-c1-074", // Apprendre à l'ère de l'information
+      "starter-c1-075", // La curiosité, vertu ou vice ? (hardest)
+    ],
+  },
+  {
+    id: "c1-good-life",
+    band: "C1",
+    title: "The good life and modernity",
+    goal: "Capstone: living fast, abundance and emptiness, the pursuit of happiness, freedom and limits, giving shape to one's life.",
+    textIds: [
+      "starter-c1-076", // Vivre vite
+      "starter-c1-077", // L'abondance et le vide
+      "starter-c1-078", // La quête du bonheur nous rend-elle malheureux ?
+      "starter-c1-079", // Être libre, est-ce n'avoir aucune limite ?
+      "starter-c1-080", // Donner forme à sa vie (hardest — closes C1)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
