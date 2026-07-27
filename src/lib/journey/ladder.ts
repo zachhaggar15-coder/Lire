@@ -110,11 +110,14 @@ function autoStageLabel(texts: ReadingText[], stageNumber: number): string {
 }
 
 function compactThemeTitle(title: string): string {
-  return title
+  const compact = title
     .replace(/\s*&\s*/g, " and ")
     .replace(/\s+in daily life$/i, "")
     .replace(/^The\s+/i, "")
     .trim();
+  // Stripping a leading "The " can expose a lower-case word ("The environment"
+  // → "environment"), so restore the capital now these are standalone node titles.
+  return compact.charAt(0).toUpperCase() + compact.slice(1);
 }
 
 function groupedStageLabel(themes: StageTheme[]): string {
@@ -219,6 +222,19 @@ export function buildLadder(): BuiltLadder {
     for (const theme of stageThemes) {
       pushStage([theme]);
     }
+  }
+
+  // Auto practice labels are drawn from a small pool, so a band can repeat a
+  // node title (e.g. two "Short readings" on one map). Make every node label
+  // unique within its band by numbering the repeats.
+  const labelCountByBand = new Map<Difficulty, Map<string, number>>();
+  for (const stage of stages) {
+    const seen = labelCountByBand.get(stage.band) ?? new Map<string, number>();
+    const base = stage.label;
+    const used = seen.get(base) ?? 0;
+    if (used > 0) stage.label = `${base} ${used + 1}`;
+    seen.set(base, used + 1);
+    labelCountByBand.set(stage.band, seen);
   }
 
   cached = { stages, texts, textToStage, textById };
