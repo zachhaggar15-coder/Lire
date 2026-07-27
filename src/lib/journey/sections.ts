@@ -1273,6 +1273,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-060", // Le bien commun existe-t-il ? (hardest)
     ],
   },
+  {
+    id: "c1-belief-secular",
+    band: "C1",
+    title: "Belief and the secular",
+    goal: "Believing and unbelieving, the sacred without religion, misunderstood secularism, the need for transcendence, tolerating what one disapproves of.",
+    textIds: [
+      "starter-c1-061", // Croire et ne pas croire
+      "starter-c1-062", // Le sacré sans la religion
+      "starter-c1-063", // La laïcité, une idée mal comprise
+      "starter-c1-064", // Le besoin de transcendance
+      "starter-c1-065", // Tolérer ce que l'on désapprouve (hardest)
+    ],
+  },
+  {
+    id: "c1-france-britain",
+    band: "C1",
+    title: "France and Britain",
+    goal: "C1 cultural contrast: two relationships to rules, the universal vs the particular, food and pleasure, island vs continent, what each learns from the other.",
+    textIds: [
+      "starter-c1-066", // Deux rapports à la règle
+      "starter-c1-067", // L'universel et le particulier
+      "starter-c1-068", // La cuisine et l'idée qu'on s'en fait
+      "starter-c1-069", // L'insularité et le continent
+      "starter-c1-070", // Ce que chaque peuple apprend de l'autre (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
