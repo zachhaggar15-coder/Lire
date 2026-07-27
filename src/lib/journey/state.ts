@@ -49,6 +49,8 @@ export interface NextTextRecommendation {
 export interface JourneyStore {
   lastSeenStageIndex: number | null;
   skippedTextIds: string[];
+  /** Maps whose "Complete section" capstone has been activated, keyed `${band}:${page}`. */
+  celebratedMaps: string[];
   bandHoldAckAt?: string | null;
   updatedAt?: string;
 }
@@ -61,7 +63,12 @@ interface JourneyStateOptions {
   feedbackByTextId?: Record<string, ArticleDifficultyFeedback>;
 }
 
-const EMPTY_STORE: JourneyStore = { lastSeenStageIndex: null, skippedTextIds: [] };
+const EMPTY_STORE: JourneyStore = { lastSeenStageIndex: null, skippedTextIds: [], celebratedMaps: [] };
+
+/** Key identifying one map (page of nodes) within a band. */
+export function mapKey(band: Difficulty, page: number): string {
+  return `${band}:${page}`;
+}
 const UNREAD_PROGRESS: Partial<TextProgress> = { status: "unread" };
 
 function hasStorage(): boolean {
@@ -111,6 +118,7 @@ export function getJourneyStore(): JourneyStore {
     return {
       lastSeenStageIndex: typeof parsed.lastSeenStageIndex === "number" ? parsed.lastSeenStageIndex : null,
       skippedTextIds: Array.isArray(parsed.skippedTextIds) ? parsed.skippedTextIds.filter((id: unknown): id is string => typeof id === "string") : [],
+      celebratedMaps: Array.isArray(parsed.celebratedMaps) ? parsed.celebratedMaps.filter((key: unknown): key is string => typeof key === "string") : [],
       bandHoldAckAt: typeof parsed.bandHoldAckAt === "string" ? parsed.bandHoldAckAt : null,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : undefined,
     };
@@ -128,6 +136,17 @@ function persistJourneyStore(next: JourneyStore): void {
 export function markJourneyStageSeen(stageIndex: number | null): void {
   const current = getJourneyStore();
   persistJourneyStore({ ...current, lastSeenStageIndex: stageIndex });
+}
+
+export function isMapCelebrated(band: Difficulty, page: number): boolean {
+  return getJourneyStore().celebratedMaps.includes(mapKey(band, page));
+}
+
+export function markMapCelebrated(band: Difficulty, page: number): void {
+  const current = getJourneyStore();
+  const key = mapKey(band, page);
+  if (current.celebratedMaps.includes(key)) return;
+  persistJourneyStore({ ...current, celebratedMaps: [...current.celebratedMaps, key] });
 }
 
 export function skipJourneyText(textId: string): void {

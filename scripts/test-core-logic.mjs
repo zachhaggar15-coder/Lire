@@ -40,7 +40,7 @@ import { texts as readingTexts } from "../src/data/texts.ts";
 import { starterTexts } from "../src/data/starterTexts.ts";
 import { publicDomainTexts } from "../src/data/publicDomainTexts.ts";
 import { DAILY_BANK_ARTICLE_LIMIT, getDailyBankTexts, getDailyExtraReadingTexts } from "../src/lib/publicDomainBank.ts";
-import { buildLadder, JOURNEY_BANDS, ROUTE_STAGES_PER_BAND, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
+import { buildLadder, JOURNEY_BANDS, NODES_PER_MAP, TEXTS_PER_STAGE } from "../src/lib/journey/ladder.ts";
 import { JOURNEY_SECTIONS, sectionedTextIds } from "../src/lib/journey/sections.ts";
 import { getJourneyState, getNextTextForReader, STAGE_CLEAR_RATIO } from "../src/lib/journey/state.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
@@ -315,16 +315,20 @@ console.log("\n--- Public-domain reading bank ---");
   check("journey bands are ready for C1 and C2", JOURNEY_BANDS.includes("C1") && JOURNEY_BANDS.includes("C2"));
   check("journey ladder contains the guided starter set", ladder.texts.length === guidedStarterTexts.length);
   check(
-    "dense guided bands are split into ten route stages",
-    ["A1", "A2", "B1", "B2"].every((band) => ladder.stages.filter((stage) => stage.band === band).length === ROUTE_STAGES_PER_BAND),
+    "guided bands split into one-theme nodes, paged by NODES_PER_MAP",
+    ["A1", "A2", "B1", "B2"].every((band) => {
+      const bandStages = ladder.stages.filter((stage) => stage.band === band);
+      const pages = Math.ceil(bandStages.length / NODES_PER_MAP);
+      return bandStages.length > 0 && pages >= 1 && bandStages.every((stage) => stage.themes.length === 1);
+    }),
     JOURNEY_BANDS.map((band) => `${band}:${ladder.stages.filter((stage) => stage.band === band).length}`).join(",")
   );
   check(
-    "journey stages preserve themed groups inside each route stage",
+    "each route node holds exactly one theme with its exact texts",
     ladder.stages.every(
       (stage) =>
         stage.textIds.length > 0 &&
-        stage.themes.length > 0 &&
+        stage.themes.length === 1 &&
         stage.themes.every((theme) => theme.textIds.length > 0 && theme.textIds.length <= TEXTS_PER_STAGE) &&
         stage.themes.flatMap((theme) => theme.textIds).join(",") === stage.textIds.join(",")
     )

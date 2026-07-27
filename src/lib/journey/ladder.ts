@@ -5,7 +5,8 @@ import { tokenize } from "@/lib/words";
 import { JOURNEY_SECTIONS, sectionedTextIds } from "@/lib/journey/sections";
 
 export const TEXTS_PER_STAGE = 5;
-export const ROUTE_STAGES_PER_BAND = 10;
+/** How many theme nodes make up a single map (page) of the route. */
+export const NODES_PER_MAP = 10;
 export const JOURNEY_BANDS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const INTRINSIC_WEIGHTS = {
@@ -122,16 +123,6 @@ function groupedStageLabel(themes: StageTheme[]): string {
   return `${titles[0]} + ${titles[titles.length - 1]}`;
 }
 
-function groupThemesForRoute(themes: StageTheme[]): StageTheme[][] {
-  if (themes.length <= ROUTE_STAGES_PER_BAND) return themes.map((theme) => [theme]);
-
-  return Array.from({ length: ROUTE_STAGES_PER_BAND }, (_, index) => {
-    const start = Math.floor((index * themes.length) / ROUTE_STAGES_PER_BAND);
-    const end = Math.floor(((index + 1) * themes.length) / ROUTE_STAGES_PER_BAND);
-    return themes.slice(start, Math.max(start + 1, end));
-  });
-}
-
 function scoreBand(texts: ReadingText[]): Array<{ text: ReadingText; intrinsicDifficulty: number }> {
   const raw = texts.map(rawScore);
   const ranges = {
@@ -222,8 +213,11 @@ export function buildLadder(): BuiltLadder {
       stageNumber += 1;
     }
 
-    for (const themes of groupThemesForRoute(stageThemes)) {
-      pushStage(themes);
+    // One theme per node: every authored section and every practice chunk
+    // becomes its own route node. The component paginates these into maps of
+    // NODES_PER_MAP.
+    for (const theme of stageThemes) {
+      pushStage([theme]);
     }
   }
 
