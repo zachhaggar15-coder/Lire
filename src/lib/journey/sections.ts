@@ -1429,6 +1429,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-040", // Deux solitudes qui se saluent (hardest)
     ],
   },
+  {
+    id: "c2-civilisation",
+    band: "C2",
+    title: "Civilisation and its fragility",
+    goal: "The thinness of the civilised veneer, ordinary evil, power vs wisdom, transmission, hope beyond optimism.",
+    textIds: [
+      "starter-c2-041", // La civilisation, un vernis fragile
+      "starter-c2-042", // Le mal ordinaire
+      "starter-c2-043", // Progrès technique, régression humaine ?
+      "starter-c2-044", // Transmettre
+      "starter-c2-045", // L'espérance par-delà l'optimisme (hardest)
+    ],
+  },
+  {
+    id: "c2-france-world",
+    band: "C2",
+    title: "France and the world",
+    goal: "C2 cultural capstone: the French exception, a language as a world, universalism vs diversity, the foreign, rooted vs citizen of the world.",
+    textIds: [
+      "starter-c2-046", // L'exception française
+      "starter-c2-047", // Une langue et un monde
+      "starter-c2-048", // Universalisme et diversité
+      "starter-c2-049", // Étranger, étrange, étrangeté
+      "starter-c2-050", // Citoyen du monde ou enraciné ? (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
