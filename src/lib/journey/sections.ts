@@ -1403,6 +1403,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-030", // Savoir qu'on ne sait pas (hardest)
     ],
   },
+  {
+    id: "c2-ethics",
+    band: "C2",
+    title: "Ethics beyond rules",
+    goal: "Whether morality reduces to rules, ends and means, the possibility of forgiveness, conscience, being good with or without effort.",
+    textIds: [
+      "starter-c2-031", // La morale se réduit-elle à des règles ?
+      "starter-c2-032", // La fin justifie-t-elle les moyens ?
+      "starter-c2-033", // Le pardon est-il toujours possible ?
+      "starter-c2-034", // La conscience morale
+      "starter-c2-035", // Peut-on être bon sans effort ? (hardest)
+    ],
+  },
+  {
+    id: "c2-solitude-love",
+    band: "C2",
+    title: "Solitude, others and love",
+    goal: "Essential solitude, knowing another, whether love sees or invents, desire and lack, two solitudes that greet each other.",
+    textIds: [
+      "starter-c2-036", // La solitude essentielle
+      "starter-c2-037", // Connaître autrui
+      "starter-c2-038", // Aimer, est-ce connaître ou méconnaître ?
+      "starter-c2-039", // Le désir et le manque
+      "starter-c2-040", // Deux solitudes qui se saluent (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
