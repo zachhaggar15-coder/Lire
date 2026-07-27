@@ -17381,4 +17381,234 @@ Apprendre à habiter la Terre est peut-être le nom le plus juste de la tâche �
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-c1-051",
+    title: "Qui suis-je ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La question paraît simple. Elle est peut-être sans réponse fixe.",
+    blurbEn:
+      "'Who am I?' seems a simple question, yet the self it asks about may have no fixed answer. A C1 essay on the puzzle of personal identity. (Section: The self and identity, 1/5.)",
+    body: `« Qui suis-je ? » La question paraît si simple qu'on la croit résolue d'avance : je suis moi, une personne identique à elle-même, qui persiste à travers le temps. Pourtant, dès qu'on y réfléchit, cette évidence se dérobe. Car qu'est-ce qui fait que je suis « moi », le même aujourd'hui qu'hier et que dans vingt ans, alors que mon corps se renouvelle, que mes pensées changent, que je ne suis plus l'enfant que j'étais ? Sur quoi repose cette identité que je m'attribue si spontanément ? La question, à l'examen, se révèle l'une des plus profondes et des plus déroutantes qui soient.
+
+Cherchons d'abord ce qui pourrait fonder l'identité personnelle. Serait-ce le corps ? Mais le corps change continuellement ; ses cellules se renouvellent, il vieillit, se transforme, au point que le corps de l'enfant et celui du vieillard n'ont presque rien de matériellement commun. Si je suis mon corps, alors je ne suis pas le même qu'il y a trente ans, ce qui heurte l'intuition d'une continuité. Le corps, en perpétuel renouvellement, fait un fondement fragile pour une identité censée persister.
+
+Serait-ce alors la conscience, la mémoire, ce fil de souvenirs qui relie les moments de ma vie ? Cette réponse est plus séduisante : je suis le même parce que je me souviens d'avoir été, parce qu'une continuité de conscience relie mon présent à mon passé. Mais elle a ses failles. Ma mémoire est lacunaire, sélective, parfois trompeuse ; j'ai oublié la quasi-totalité de mon existence, et des pans entiers de mon passé me sont aussi étrangers que ceux d'un autre. Si je suis mes souvenirs, que devient mon identité pour tout ce que j'ai oublié, ou si je perdais la mémoire ? La conscience, elle aussi, fait un fondement incertain.
+
+Peut-être l'erreur est-elle de chercher une chose fixe, un noyau permanent, un « moi » substantiel qui demeurerait identique sous le changement. Certaines traditions de pensée suggèrent qu'il n'existe pas de tel noyau, que le « moi » n'est pas une chose, mais un processus, un flux continuellement changeant de perceptions, de pensées, de sensations, sans substrat permanent. Le « moi » ne serait pas ce qui reste identique sous le changement, mais le nom que nous donnons à ce flux lui-même, à cette continuité dynamique qui n'a rien de fixe. Cette conception, déroutante, dissout l'identité en la faisant coïncider avec le changement même.
+
+Faut-il en conclure que le « moi » est une illusion, que je ne suis personne, qu'il n'y a pas de sujet stable ? Ce serait tirer une conclusion excessive d'une difficulté réelle. Car même si le « moi » n'est pas une chose fixe, il y a bien une continuité, un point de vue unique sur le monde, une histoire qui est la mienne et non celle d'un autre. Cette continuité n'est peut-être pas celle d'une substance immuable, mais celle d'un récit, d'un projet, d'une perspective qui se maintient à travers le changement en l'intégrant. Je ne suis pas une chose fixe ; je suis une histoire qui se poursuit, une identité qui se construit plutôt qu'elle ne se trouve.
+
+Cette conception a des conséquences libératrices. Si le « moi » n'est pas un noyau fixe qu'il faudrait découvrir, mais une histoire qui se construit, alors je ne suis pas condamné à être ce que j'ai été ; je peux changer, devenir autre, réécrire mon récit. L'identité n'est pas une donnée à laquelle il faudrait être fidèle, mais une œuvre à laquelle je travaille. « Qui suis-je ? » n'appelle donc pas la découverte d'une essence cachée, mais l'invention continuée de soi-même. Nous ne sommes pas des choses qui ont une identité ; nous sommes des êtres qui se font, et cette absence de noyau fixe, loin d'être une perte, est la condition de notre liberté de devenir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-052",
+    title: "Le regard des autres",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nous nous construisons sous le regard d'autrui. Bénédiction ou aliénation ?",
+    blurbEn:
+      "We become ourselves partly through the eyes of others — a source of both recognition and alienation. A C1 essay on the self and the gaze. (Section: The self and identity, 2/5.)",
+    body: `Nous ne nous construisons pas seuls. L'idée que nous serions un « moi » autonome, se formant indépendamment des autres, est une illusion : dès l'enfance, et tout au long de la vie, nous nous construisons sous le regard d'autrui, à travers la manière dont les autres nous voient, nous jugent, nous reconnaissent. Ce regard des autres est constitutif de ce que nous sommes, et cette dépendance est ambivalente : elle peut être une bénédiction, source de reconnaissance et d'existence, ou une aliénation, prison où l'on se perd. Comprendre ce rapport est essentiel pour penser l'identité.
+
+Considérons d'abord ce que le regard d'autrui a de constitutif. Nous prenons conscience de nous-mêmes largement à travers les autres : c'est en étant vus, nommés, jugés que nous nous formons une image de nous-mêmes. L'enfant se construit dans le regard de ses parents ; l'adulte se définit en partie par la manière dont son entourage le perçoit. Nous avons besoin d'être reconnus, vus, confirmés dans notre existence par le regard des autres ; sans cette reconnaissance, notre identité même vacille. Le regard d'autrui n'est donc pas un simple ajout extérieur ; il participe à nous faire ce que nous sommes.
+
+Cette dépendance peut être une bénédiction. Être reconnu, aimé, apprécié par les autres nous confirme dans notre valeur, nous donne une place, nourrit notre estime de nous-mêmes. Le regard bienveillant d'autrui nous fait exister, nous soutient, nous permet de nous déployer. Nous avons besoin d'être vus pour nous sentir réels, reconnus pour nous sentir dignes. En ce sens, le regard des autres n'est pas une contrainte, mais une source : nous nous construisons dans et par la reconnaissance mutuelle, et cette interdépendance est le tissu même de notre existence sociale et de notre identité.
+
+Mais ce même regard peut devenir une aliénation. Car à trop dépendre du regard des autres, on risque de se perdre en lui, de n'exister plus que par lui, de conformer son être à ce que les autres attendent ou approuvent. Celui qui se soucie excessivement de l'image qu'il donne, qui règle sa conduite sur le jugement d'autrui, qui n'existe que dans l'approbation, celui-là est prisonnier du regard des autres, aliéné à une image qui n'est plus la sienne. Le regard qui pouvait confirmer devient alors une geôle, où l'on se déguise pour plaire, où l'on s'oublie soi-même pour correspondre à l'attente. La reconnaissance recherchée à tout prix se retourne en servitude.
+
+Cette aliénation est aggravée par notre époque, qui a fait de l'exposition de soi une pratique permanente. Dans un monde où chacun se donne sans cesse à voir, où l'on quête l'approbation à travers des images de soi soigneusement mises en scène, la dépendance au regard d'autrui atteint une intensité inédite. On vit sous le regard supposé des autres, on règle son existence sur l'image qu'on en donne, on mesure sa valeur à l'approbation reçue. Cette exposition permanente, loin de libérer, peut enfermer dans une quête anxieuse de reconnaissance, où l'on se perd à force de vouloir être vu.
+
+L'enjeu n'est donc pas de se libérer du regard des autres — ce qui est impossible et ne serait pas souhaitable, car nous avons besoin de reconnaissance —, mais de trouver un juste rapport à lui. Cela suppose d'accueillir la reconnaissance d'autrui sans en devenir esclave, de tenir compte du regard des autres sans lui abandonner son être, de garder, sous le regard, un rapport à soi qui ne dépende pas entièrement de lui. Il s'agit d'exister par les autres sans se perdre en eux, d'être reconnu sans se renier. Cet équilibre difficile — accueillir le regard sans s'y aliéner — est l'une des conditions d'une identité à la fois reliée aux autres et fidèle à elle-même. Car nous nous construisons dans le regard d'autrui, mais nous ne devons pas nous y dissoudre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-053",
+    title: "Être fidèle à soi-même",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "« Sois toi-même » : le conseil est partout. Mais suppose-t-il un « soi » déjà donné ?",
+    blurbEn:
+      "'Be yourself' is everywhere as advice — but it assumes a true self already there to be faithful to. A C1 essay questioning the ideal of authenticity. (Section: The self and identity, 3/5.)",
+    body: `« Sois toi-même », « reste fidèle à toi-même », « sois authentique » : ces injonctions sont devenues des évidences de notre époque, des idéaux que nul ne songe à contester. Être authentique, fidèle à son moi profond, opposé à la conformité et au mensonge social, passe pour la marque d'une vie réussie. Pourtant, cet idéal, si séduisant soit-il, repose sur des présupposés qu'il faut examiner, car il suppose résolu ce qui fait précisément problème : l'existence d'un « soi » authentique, déjà donné, auquel il s'agirait d'être fidèle.
+
+L'idéal d'authenticité suppose en effet qu'il existe, au fond de chacun, un moi véritable, une nature propre, une identité authentique qui serait notre vérité, par opposition aux masques que nous portons en société. Être fidèle à soi-même, ce serait alors découvrir ce moi profond et s'y conformer, contre les pressions qui nous en détournent. Mais cette image suppose que le moi authentique préexiste, qu'il est là, à découvrir, comme un trésor enfoui. Or nous avons vu que le « moi » n'est peut-être pas une chose fixe, donnée d'avance, mais quelque chose qui se construit. S'il en est ainsi, à quel « soi » déjà là faudrait-il être fidèle ?
+
+Il y a plus troublant. L'idéal d'authenticité oppose le moi profond, authentique, aux influences extérieures, sociales, qui nous en détourneraient. Mais cette opposition est-elle tenable ? Ce que nous appelons notre moi profond n'est-il pas, lui aussi, largement le produit d'influences — notre éducation, notre culture, notre milieu, les autres ? Ce que je prends pour ma nature authentique est peut-être ce que j'ai reçu sans le savoir, intériorisé au point de le croire mien. L'idée d'un moi authentique, pur de toute influence sociale, est peut-être une illusion : il n'y a pas de « soi » qui préexisterait aux influences, car nous sommes tissés d'elles. Vouloir être fidèle à un moi antérieur à toute influence, c'est poursuivre un fantôme.
+
+Faut-il pour autant rejeter l'idéal d'authenticité, y voir une pure illusion ? Ce serait aller trop vite, car il exprime une aspiration réelle et légitime. Ce qu'il vise, sous une formulation contestable, c'est le refus de l'aliénation, de la vie fausse, de la soumission au regard d'autrui que nous avons évoquée. Être authentique, bien compris, ce n'est peut-être pas être fidèle à un moi déjà donné, mais refuser de vivre en contradiction avec ce qu'on croit, ce qu'on veut, ce qu'on juge bon ; c'est ne pas se renier, ne pas se trahir, ne pas vivre une vie qui ne serait pas la sienne. L'authenticité comme cohérence, comme refus du mensonge à soi-même, garde tout son sens même si le « moi authentique » comme chose fixe est une illusion.
+
+Cette reformulation change tout. Si l'authenticité n'est pas fidélité à un moi donné, mais cohérence entre ce qu'on fait et ce qu'on croit, alors elle n'est pas la découverte d'une nature, mais une exigence morale, une manière de se conduire. Être fidèle à soi-même, ce n'est pas exhumer un trésor enfoui ; c'est construire une existence cohérente, assumer ses choix, ne pas vivre en contradiction avec ses valeurs. Le « soi » auquel on est fidèle n'est pas un donné antérieur, mais une œuvre en cours, que la fidélité même contribue à façonner. On ne trouve pas son moi ; on le fait, en tâchant de ne pas le trahir.
+
+L'idéal d'authenticité, ainsi compris, cesse d'être l'injonction impossible de découvrir un moi caché, pour devenir l'exigence, difficile mais sensée, de mener une vie cohérente et non aliénée. Il ne s'agit pas de creuser en soi pour trouver sa vérité, mais de vivre de telle sorte qu'on puisse se reconnaître dans ce qu'on fait, ne pas se mentir, ne pas se trahir. Cette authenticité-là n'est pas donnée ; elle se conquiert, dans l'effort de faire concorder sa vie et ses convictions. « Sois toi-même » ne signifie donc pas « conforme-toi à ce que tu es déjà », mais plutôt « fais en sorte de devenir quelqu'un dont tu ne rougisses pas » — ce qui est une tâche, non une découverte.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-054",
+    title: "Les identités multiples",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Nous appartenons à plusieurs groupes, plusieurs cultures. Faut-il choisir ?",
+    blurbEn:
+      "We belong to many groups, cultures and roles at once. A C1 essay on whether identity must be single, and the dangers of forcing it to be. (Section: The self and identity, 4/5.)",
+    body: `Chacun de nous appartient à une multitude de groupes, de cultures, de catégories : une nation, une région, une famille, une profession, une génération, parfois plusieurs origines, plusieurs langues, plusieurs cultures. Notre identité est faite de ces appartenances multiples, qui se superposent et se croisent. Pourtant, une pression s'exerce souvent pour réduire cette multiplicité à une identité unique, pour sommer chacun de choisir « ce qu'il est » vraiment, comme si l'on ne pouvait être qu'une seule chose. Cette réduction de l'identité à une appartenance unique est l'une des sources de bien des conflits, et il faut en interroger la logique.
+
+Reconnaissons d'abord la richesse des identités multiples. Être à la fois de telle nation et de telle origine, parler plusieurs langues, appartenir à plusieurs cultures, n'est pas une confusion ni un manque ; c'est une richesse, une ouverture, la possibilité d'habiter plusieurs mondes, de comprendre plusieurs perspectives. Celui qui a des appartenances multiples dispose d'une largeur d'expérience que n'a pas celui qui n'en a qu'une ; il peut faire le pont entre des univers, traduire l'un dans l'autre, échapper à l'enfermement dans une seule vision. La multiplicité des appartenances n'est pas un problème à résoudre, mais une richesse à cultiver.
+
+Or cette richesse est constamment menacée par la sommation de choisir. On demande à celui qui a plusieurs appartenances de dire laquelle est la « vraie », de choisir son camp, de se ranger. Cette sommation procède d'une conception appauvrie de l'identité, selon laquelle on ne pourrait être qu'une seule chose, appartenir qu'à un seul groupe, sous peine de trahison ou d'inauthenticité. « Tu es ceci ou cela, il faut choisir » : cette injonction nie la réalité des identités multiples, force à mutiler ce qu'on est, à renier une part de soi. Elle transforme une richesse en dilemme déchirant.
+
+Cette réduction identitaire est particulièrement dangereuse parce qu'elle est au cœur de nombreux conflits. Quand on somme chacun de se définir par une seule appartenance — une nation, une religion, une origine —, on divise le monde en groupes exclusifs, opposés, on efface tout ce qui relie, tout ce qui traverse les frontières, toutes les appartenances partagées. L'identité réduite à une seule dimension devient un principe de division et d'affrontement : je suis ceci contre ceux qui sont cela. Les identités meurtrières, comme les a nommées un écrivain, naissent précisément de cette réduction, qui fait d'une appartenance parmi d'autres l'identité tout entière, et dresse les hommes les uns contre les autres au nom de cette appartenance unique.
+
+À cette logique de la réduction, il faut opposer la reconnaissance de la complexité. Nul n'est réductible à une seule de ses appartenances ; chacun est fait d'un entrelacs unique d'appartenances multiples, qui le distingue de tous les autres membres de chacun de ses groupes. Deux personnes de même nation diffèrent par mille autres appartenances ; ce qui les rassemble sous une étiquette n'épuise pas ce qu'elles sont. Reconnaître cela, c'est refuser d'enfermer autrui, comme soi-même, dans une identité unique ; c'est voir en chacun la complexité irréductible de ses appartenances, plutôt que de le réduire à celle qui, dans un contexte donné, sert à l'opposer.
+
+Défendre les identités multiples contre la sommation de choisir, ce n'est donc pas prôner une identité floue, sans attaches, mais reconnaître que l'attachement peut être pluriel, que l'on peut appartenir à plusieurs mondes sans être infidèle à aucun. C'est refuser que l'identité devienne un principe d'exclusion et d'affrontement, pour en faire ce qu'elle peut être : une richesse faite de multiples fidélités, un pont plutôt qu'un mur. Dans un monde où les logiques identitaires meurtrières se réveillent, où l'on somme à nouveau chacun de choisir son camp, affirmer la légitimité et la richesse des identités multiples n'est pas seulement une vérité sur ce que nous sommes ; c'est aussi, peut-être, une condition de la paix.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-055",
+    title: "Changer sans se trahir",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Peut-on changer profondément tout en restant soi-même ? La contradiction n'est qu'apparente.",
+    blurbEn:
+      "Can we change deeply and still remain ourselves? A closing C1 essay on how transformation and continuity of self can be reconciled. (Section: The self and identity, 5/5.)",
+    body: `Nous voulons deux choses qui semblent se contredire : rester nous-mêmes, et pouvoir changer. D'un côté, nous tenons à une continuité, à être la même personne à travers le temps, et nous nous méfions de qui « change du tout au tout » comme d'un traître à lui-même. De l'autre, nous aspirons à évoluer, à nous corriger, à devenir meilleurs, et une vie sans changement nous paraîtrait une stagnation. Comment concilier ces deux exigences ? Peut-on changer profondément tout en restant soi-même, ou changer, c'est nécessairement cesser d'être qui l'on était ? Cette question, qui clôt notre réflexion sur l'identité, en rassemble les fils.
+
+La contradiction n'est apparente que si l'on conçoit l'identité comme une chose fixe, un noyau immuable qu'il faudrait préserver intact. Dans cette conception, en effet, changer serait trahir, altérer cette essence qu'on devrait garder identique. Mais nous avons vu que l'identité n'est peut-être pas une chose fixe, plutôt une histoire, un processus, une continuité dynamique. Or une histoire, précisément, se caractérise par le fait qu'elle change tout en restant la même histoire : le récit d'une vie intègre les transformations, les évolutions, les ruptures même, sans cesser d'être le récit d'une seule vie. Le changement n'est pas le contraire de l'identité ; il en est le mouvement même, pourvu qu'il s'inscrive dans une continuité.
+
+Car ce qui fait la continuité d'une identité à travers le changement, ce n'est pas l'absence de changement, mais la manière dont les changements s'enchaînent et s'intègrent. Je reste moi-même non parce que je ne change pas, mais parce que mes changements sont les miens, qu'ils procèdent de mon histoire, qu'ils s'y rattachent, qu'ils la prolongent même en la transformant. Le enfant que j'étais, l'adulte que je suis, le vieillard que je serai, diffèrent profondément, et pourtant une continuité les relie : celle d'une histoire qui se poursuit, où chaque étape naît de la précédente. Changer sans se trahir, c'est changer dans la continuité de son histoire, non par ruptures arbitraires qui la briseraient.
+
+Cette conception permet de distinguer deux sortes de changements. Il y a le changement qui prolonge et accomplit, où l'on devient davantage soi-même en évoluant, où la transformation réalise une continuité plutôt qu'elle ne la rompt : ainsi de celui qui mûrit, s'approfondit, corrige ses erreurs tout en restant reconnaissable dans ce qu'il devient. Et il y a le changement qui trahit, où l'on renie ce qu'on était, où l'on rompt avec ses valeurs, où la transformation est reniement plutôt qu'accomplissement. La différence ne tient pas à l'ampleur du changement, mais à son rapport à la continuité : le premier s'inscrit dans une histoire et la poursuit, le second la brise.
+
+Il y a d'ailleurs des changements profonds qui, loin de trahir, sont exigés par la fidélité à soi. Celui qui reconnaît son erreur et se corrige, qui abandonne une conviction devenue intenable, qui se transforme pour rester fidèle à ce qu'il tient pour vrai, celui-là change par fidélité, non par trahison. La vraie fidélité à soi-même n'est pas l'immobilité, le refus de tout changement ; c'est parfois la capacité de changer pour rester fidèle à l'essentiel, de transformer ce qu'on est pour ne pas trahir ce qu'on croit. S'entêter dans l'erreur par crainte de changer serait une fausse fidélité ; changer pour être plus juste peut être la vraie.
+
+Changer sans se trahir est donc non seulement possible, mais nécessaire à une vie vivante. Une identité qui refuserait tout changement se figerait, se dessécherait, cesserait d'être vivante ; une identité qui changerait sans continuité se dissoudrait, se perdrait. Entre la stagnation qui refuse d'évoluer et la dissolution qui perd tout fil, il y a la voie d'une identité vivante : celle qui change en restant fidèle à son histoire, qui évolue sans se renier, qui devient autre en demeurant elle-même. Être soi-même, en définitive, ce n'est pas rester identique ; c'est demeurer l'auteur cohérent d'une histoire qui, pour rester vivante, ne cesse de se transformer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-056",
+    title: "La démocratie est-elle le meilleur régime ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "On la dit le pire des régimes à l'exception de tous les autres. Que vaut cet éloge paradoxal ?",
+    blurbEn:
+      "Democracy is often called the worst system except for all the others. A C1 essay examining that paradoxical praise and what democracy really rests on. (Section: Democracy and its discontents, 1/5.)",
+    body: `La démocratie jouit aujourd'hui d'un prestige tel qu'il paraît presque scandaleux de la questionner : elle est tenue pour le meilleur régime, l'horizon indépassable de toute organisation politique légitime. Pourtant, cette évidence est récente, et l'éloge le plus célèbre qu'on en fait est étrangement paradoxal : la démocratie serait le pire des régimes, à l'exception de tous les autres. Cette formule, mi-figue mi-raisin, mérite qu'on la prenne au sérieux, car elle dit quelque chose de juste sur la nature d'un régime que nous célébrons souvent sans bien le comprendre.
+
+Commençons par les critiques que la démocratie a toujours suscitées, et qui ne sont pas sans force. On lui reproche de confier le pouvoir au grand nombre, c'est-à-dire à une majorité qui n'est pas nécessairement la plus compétente ni la plus sage ; de faire dépendre les décisions de l'opinion, versatile et manipulable ; de favoriser la démagogie, où l'on flatte le peuple plutôt que de le servir ; de privilégier le court terme, puisque les gouvernants dépendent d'élections proches. Ces critiques, formulées depuis l'Antiquité, ne sont pas absurdes : la démocratie a bien ces faiblesses, et prétendre le contraire serait aveugle. Le gouvernement du grand nombre n'est pas le gouvernement des meilleurs, et il peut se tromper gravement.
+
+Pourquoi, alors, préférer malgré tout la démocratie ? La réponse ne tient pas à ce qu'elle garantirait les meilleures décisions — elle ne le garantit pas —, mais à d'autres vertus qui compensent ses faiblesses. La première est qu'elle permet de changer de gouvernants sans violence. Dans les régimes non démocratiques, se débarrasser d'un mauvais dirigeant exige souvent la révolte ou le coup de force, avec leur cortège de violences ; la démocratie offre un moyen pacifique de renvoyer ceux qui gouvernent mal. Cette capacité à corriger ses erreurs sans effusion de sang est une vertu immense, que l'on sous-estime tant qu'on en jouit.
+
+La deuxième vertu est que la démocratie, en associant les gouvernés aux décisions, leur reconnaît une dignité que les autres régimes leur refusent. Dans une démocratie, le citoyen n'est pas un simple sujet qui obéit, mais un participant, dont la voix compte, qui a part au pouvoir qui le gouverne. Cette participation, si imparfaite soit-elle, reconnaît en chacun un être capable de juger, de décider, de se gouverner, plutôt qu'un mineur qu'il faudrait diriger. La démocratie repose sur un pari sur la capacité des hommes ordinaires à se gouverner eux-mêmes — pari risqué, mais qui les traite en adultes plutôt qu'en enfants.
+
+La troisième vertu, liée aux précédentes, est que la démocratie permet la contestation, la critique, le débat, et donc la correction de ses propres erreurs. Un régime qui interdit la critique s'enferme dans ses fautes, car nul ne peut les signaler ; la démocratie, en autorisant l'opposition et le débat, se donne les moyens de reconnaître et de corriger ses erreurs. Elle n'est pas infaillible, mais elle est corrigible, ce qui vaut mieux qu'une infaillibilité prétendue qui interdit toute remise en question. Sa force n'est pas de ne pas se tromper, mais de pouvoir se corriger.
+
+L'éloge paradoxal de la démocratie prend alors son sens. Elle n'est pas le meilleur régime au sens où elle garantirait les décisions les plus sages ; à cet égard, elle a de réelles faiblesses. Mais elle est le meilleur au sens où elle offre ce qu'aucun autre n'offre : le changement pacifique, la dignité du citoyen, la capacité de se corriger. Ces vertus ne tiennent pas à sa perfection, mais à sa modestie même : la démocratie est le régime qui ne prétend pas détenir la vérité ni la sagesse, et qui, sachant qu'il peut se tromper, se donne les moyens de rectifier. C'est pourquoi il faut la défendre non comme un régime parfait, mais comme le moins mauvais — ce qui, en matière politique où la perfection n'existe pas, est le plus haut éloge qu'on puisse faire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-057",
+    title: "La tyrannie de la majorité",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Le pouvoir du plus grand nombre peut opprimer autant qu'un tyran. Comment s'en garder ?",
+    blurbEn:
+      "The rule of the majority can oppress as surely as a tyrant. A C1 essay on why democracy needs limits on the very majority that legitimises it. (Section: Democracy and its discontents, 2/5.)",
+    body: `On associe spontanément la démocratie au pouvoir de la majorité : est démocratique ce que décide le plus grand nombre. Cette équation, en apparence évidente, cache pourtant un danger que les penseurs de la démocratie ont très tôt identifié : la tyrannie de la majorité. Car le pouvoir du plus grand nombre, s'il n'est pas limité, peut opprimer les minorités et les individus aussi sûrement qu'un tyran, au nom même du principe démocratique. Comprendre ce danger, et les moyens de s'en garder, est essentiel pour ne pas confondre la démocratie avec la simple loi du nombre.
+
+Le danger tient à ce qu'une majorité peut, en toute légalité démocratique, opprimer une minorité. Si la démocratie se réduisait à la règle selon laquelle la majorité décide de tout, alors rien n'empêcherait cette majorité de priver une minorité de ses droits, de la persécuter, de lui imposer sa volonté sans limite. La légitimité du nombre ne garantit nullement la justice de la décision : une majorité peut vouloir des choses injustes, oppressives, cruelles, et le fait qu'elle soit majoritaire ne les rend pas justes. Réduire la démocratie au pouvoir absolu de la majorité, c'est ouvrir la voie à une oppression qui se pare des couleurs de la légitimité.
+
+Il y a plus insidieux que l'oppression légale : la tyrannie de la majorité peut aussi s'exercer sur les esprits, par la pression de l'opinion dominante. Dans une société démocratique, l'opinion majoritaire exerce une force considérable ; elle définit ce qui est acceptable de penser et de dire, et fait peser sur ceux qui s'en écartent une pression au conformisme. Cette tyrannie-là ne passe pas par la loi, mais par le poids du regard collectif, par la crainte de la désapprobation générale, par le silence qu'elle impose aux opinions minoritaires. Elle peut étouffer la liberté de pensée plus efficacement qu'aucune censure, car elle s'exerce à travers chacun, dans le for intérieur de ceux qui n'osent plus s'écarter de ce que pense le grand nombre.
+
+Comment se garder de cette double tyrannie ? La réponse a façonné les démocraties véritables, qui ne se réduisent jamais au pur pouvoir de la majorité, mais l'encadrent de limites. La première limite est celle des droits fondamentaux, soustraits au vote : certaines choses — les libertés essentielles, la dignité des personnes, les droits des minorités — ne peuvent être supprimées par aucune majorité, si large soit-elle. Ces droits inviolables marquent une frontière que le nombre ne peut franchir ; ils protègent l'individu et la minorité contre la volonté de la majorité elle-même. Une démocratie n'est pas seulement le pouvoir du nombre ; c'est le pouvoir du nombre limité par des droits qui lui échappent.
+
+La deuxième limite tient à la séparation des pouvoirs et à l'existence de contre-pouvoirs. Pour qu'une majorité ne puisse pas tout, il faut que le pouvoir soit divisé, que des institutions indépendantes puissent faire contrepoids, qu'une justice puisse censurer les décisions injustes même majoritaires. Ces mécanismes, qui limitent le pouvoir de la majorité, ne sont pas des entraves à la démocratie, mais ses conditions : sans eux, la démocratie dégénérerait en tyrannie du nombre. Une véritable démocratie est un équilibre entre le pouvoir de la majorité et les limites qui l'empêchent d'opprimer.
+
+Reconnaître le danger de la tyrannie de la majorité, c'est donc comprendre que la démocratie ne se réduit pas à la règle du nombre, mais suppose des limites qui protègent contre le nombre lui-même. C'est refuser l'idée simpliste selon laquelle serait démocratique tout ce que veut la majorité, pour affirmer qu'une démocratie digne de ce nom protège les droits et les libertés contre la volonté majoritaire elle-même. Cette exigence est aujourd'hui d'une brûlante actualité, où l'on invoque parfois la légitimité du nombre pour justifier des atteintes aux droits des minorités ou aux libertés. Rappeler que la majorité n'a pas tous les droits, que la démocratie est aussi la protection contre elle, n'est pas antidémocratique : c'est défendre ce qui distingue la démocratie de la simple tyrannie du plus grand nombre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-058",
+    title: "Peut-on gouverner sans mentir ?",
+    category: "news-style",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La politique semble inséparable du mensonge. Est-ce une fatalité, ou une corruption ?",
+    blurbEn:
+      "Politics seems inseparable from lying. A C1 essay asking whether deception is a necessary feature of governing or a corruption of it. (Section: Democracy and its discontents, 3/5.)",
+    body: `La politique et le mensonge semblent inséparables. On tient pour naïf celui qui croirait ses gouvernants sincères, et l'expérience paraît donner raison au cynisme : promesses non tenues, vérités dissimulées, présentations trompeuses sont le lot commun de la vie politique. Cette association entre gouverner et mentir est si ancrée qu'on la tient pour une fatalité : la politique serait par nature le domaine du mensonge. Mais cette résignation mérite d'être interrogée. Le mensonge est-il vraiment consubstantiel à l'exercice du pouvoir, ou en est-il une corruption qu'on aurait tort de tenir pour inévitable ?
+
+Il faut d'abord reconnaître ce qui, dans l'exercice du pouvoir, rend la sincérité difficile, voire parfois problématique. Gouverner suppose de composer avec des contraintes que le citoyen ordinaire ignore ; le dirigeant sait des choses qu'il ne peut divulguer sans nuire, doit ménager des intérêts contradictoires, ne peut pas toujours tout dire sans compromettre l'action même. Il y a une différence entre le mensonge et la réserve légitime : un gouvernant ne peut pas tout révéler, et l'exiger serait naïf. Certaines vérités, divulguées à contretemps, feraient plus de mal que de bien ; le secret, en certaines matières, n'est pas un mensonge mais une nécessité de l'action.
+
+De plus, la vie démocratique elle-même exerce une pression vers une forme de dissimulation. Le dirigeant qui dirait toute la vérité — les difficultés réelles, les compromis nécessaires, les sacrifices inévitables — se heurterait à un électorat qui préfère souvent les promesses agréables aux vérités désagréables. La démocratie, en soumettant les gouvernants au verdict populaire, les incite à flatter plutôt qu'à dire vrai, à promettre plus qu'ils ne peuvent tenir, à masquer ce qui déplairait. En un sens, le mensonge politique répond aussi à une demande : celle d'un public qui n'aime pas entendre les vérités difficiles. Nous avons, comme électeurs, notre part dans le mensonge que nous reprochons aux gouvernants.
+
+Faut-il en conclure que le mensonge serait une nécessité de la politique, qu'on aurait tort de s'en indigner ? Ce serait aller trop loin, et confondre la réserve légitime avec le mensonge proprement dit. Car il y a une différence essentielle entre ne pas tout dire et affirmer le faux, entre le secret nécessaire et la tromperie délibérée, entre taire ce qui doit l'être et mentir sur ce qui devrait être connu. Le premier peut être légitime ; le second corrompt le lien de confiance sans lequel aucune démocratie ne peut fonctionner. Une chose est de ne pas révéler un secret d'État ; autre chose est de tromper les citoyens sur ce qui fonde leur choix, de leur mentir pour obtenir ou conserver le pouvoir.
+
+Car le mensonge politique, au sens fort, n'est pas seulement une faute morale ; il est une atteinte au fondement même de la démocratie. La démocratie suppose que les citoyens décident en connaissance de cause ; les tromper, c'est vicier leur décision, leur faire choisir sur la base de fausses informations, donc corrompre le processus démocratique lui-même. Un peuple systématiquement trompé ne se gouverne pas vraiment ; il croit décider alors qu'on décide pour lui en manipulant ce qu'il sait. Le mensonge politique n'est donc pas un péché véniel de la vie publique ; c'est une corruption de la démocratie, qui prive les citoyens de la vérité dont ils ont besoin pour se gouverner.
+
+La réponse à la question n'est donc ni le cynisme qui tient le mensonge pour inévitable, ni la naïveté qui exigerait une transparence totale. C'est de distinguer ce qui, dans le pouvoir, relève de la réserve légitime et ce qui relève de la tromperie corruptrice, et de tenir la seconde pour inacceptable même si la première est nécessaire. On peut gouverner sans mentir, au sens où l'on peut gouverner sans tromper délibérément les citoyens sur ce qui fonde leurs choix, même si l'on ne peut pas gouverner en disant tout. Le cynisme qui confond les deux, qui absout le mensonge au nom de la nécessité du secret, rend un mauvais service à la démocratie : il désarme l'exigence de vérité sans laquelle le pouvoir n'est plus tenu à rien. Exiger la vérité de ceux qui nous gouvernent n'est pas naïf ; c'est défendre la condition même de notre pouvoir de citoyens.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-059",
+    title: "L'apathie des citoyens",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "Le désintérêt pour la politique menace la démocratie autant que ses ennemis déclarés.",
+    blurbEn:
+      "Widespread indifference to politics may threaten democracy as much as its open enemies. A C1 essay on civic apathy, its causes and its cost. (Section: Democracy and its discontents, 4/5.)",
+    body: `On imagine volontiers que les menaces contre la démocratie viennent de ses ennemis déclarés : les tyrans, les extrémistes, ceux qui veulent la renverser. On oublie une menace plus discrète, mais peut-être aussi grave : l'apathie des citoyens, ce désintérêt croissant pour la chose publique, cette abstention, ce sentiment que la politique ne nous concerne pas ou ne changera rien. Car une démocratie ne peut vivre sans la participation de ses citoyens ; leur retrait la vide de sa substance, la livre à d'autres, la laisse dépérir. L'apathie n'attaque pas la démocratie de front ; elle la mine de l'intérieur.
+
+Il faut d'abord comprendre les causes de cette apathie, car elle n'est pas une simple paresse qu'on pourrait reprocher aux citoyens. Elle procède souvent d'un sentiment d'impuissance : à quoi bon s'engager, voter, se mobiliser, si l'on a le sentiment que rien ne change, que les décisions se prennent ailleurs, que notre voix ne pèse rien ? Ce sentiment n'est pas sans fondement : la complexité croissante des enjeux, la distance entre les citoyens et les lieux de décision, le poids des forces qui échappent au vote, peuvent donner l'impression que la participation démocratique est vaine. L'apathie est souvent moins de l'indifférence que du découragement, le fruit d'un sentiment d'impuissance.
+
+Elle procède aussi d'une déception. Bien des citoyens se sont détournés de la politique après avoir été déçus par elle : promesses non tenues, corruption, sentiment que les gouvernants servent leurs intérêts plutôt que le bien commun. Cette déception nourrit une défiance qui se mue en retrait : puisqu'on ne peut leur faire confiance, à quoi bon s'en mêler ? L'apathie est alors la conséquence d'une perte de confiance dans les gouvernants et les institutions, un désengagement de dépit. Elle n'est pas la cause première du mal, mais son symptôme : elle traduit une crise du lien entre les citoyens et leur démocratie.
+
+Or, quelles qu'en soient les causes, l'apathie a des conséquences graves pour la démocratie. D'abord, elle la prive de la participation dont elle vit : une démocratie où les citoyens ne s'engagent plus n'est plus qu'une coquille, un rituel électoral vidé de sens. Ensuite, elle laisse le champ libre à ceux qui, eux, restent mobilisés : les intérêts organisés, les minorités actives, ceux qui ont les moyens de peser. Quand la majorité se retire, ce n'est pas le vide qui règne, mais le pouvoir de ceux qui ne se retirent pas ; l'apathie des uns fait le pouvoir des autres. Enfin, elle affaiblit la démocratie face à ses ennemis : un peuple désengagé, désabusé, indifférent, est un terrain propice pour ceux qui voudraient lui substituer d'autres régimes, car il ne défendra pas ce qui ne l'intéresse plus.
+
+Il y a là un cercle vicieux qu'il faut nommer. L'impuissance et la déception engendrent l'apathie ; l'apathie affaiblit la démocratie et livre le pouvoir à des intérêts particuliers ; cet affaiblissement accroît le sentiment d'impuissance et de déception, qui nourrit à son tour l'apathie. Comment briser ce cercle ? Non par le reproche adressé aux citoyens désengagés, qui ne ferait qu'aggraver leur défiance, mais par la restauration de ce qui a été perdu : le sentiment que la participation compte, que la voix des citoyens pèse, que la politique peut changer les choses. Cela suppose des institutions qui redonnent du pouvoir aux citoyens, une vie politique qui mérite la confiance, des dirigeants qui servent le bien commun plutôt que de le trahir.
+
+Lutter contre l'apathie n'est donc pas seulement affaire de civisme individuel, mais de restauration collective du sens de la démocratie. Chacun peut, certes, refuser le découragement, s'engager malgré tout, exercer sa part de citoyenneté ; et cet engagement individuel a sa valeur. Mais l'apathie ne se dissipera durablement que si la démocratie redonne à ses citoyens des raisons de croire que leur participation compte. Car on ne s'engage que si l'on pense que cela peut changer quelque chose, et le désengagement massif est d'abord le signe que trop de citoyens ont cessé de le croire. Rendre à la démocratie sa capacité de changer les choses est le seul remède durable à l'apathie qui la menace.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-060",
+    title: "Le bien commun existe-t-il ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "On invoque le bien commun. Mais dans une société divisée, a-t-il encore un sens ?",
+    blurbEn:
+      "Politicians invoke the 'common good', but in a divided society does it still mean anything? A closing C1 essay on whether a shared good is possible. (Section: Democracy and its discontents, 5/5.)",
+    body: `Le « bien commun » est l'une de ces notions que chacun invoque et que nul ne définit. Les responsables politiques s'en réclament, les débats s'y réfèrent, il sert de justification à toutes les causes. Mais dans une société divisée, faite d'intérêts contradictoires et de conceptions du bien incompatibles, cette notion a-t-elle encore un sens ? Existe-t-il vraiment un bien qui serait commun à tous, ou n'est-ce qu'un mot creux, un habillage flatteur pour des intérêts particuliers qui se présentent comme universels ? Cette question, qui clôt notre réflexion sur la démocratie, en touche le fondement.
+
+Le scepticisme à l'égard du bien commun a ses raisons. Nos sociétés sont profondément divisées : les intérêts des uns s'opposent à ceux des autres, les conceptions de ce qui est bon divergent, et ce qui profite à certains nuit à d'autres. Dans ces conditions, parler d'un « bien commun » semble ignorer les conflits réels, masquer les oppositions d'intérêts sous une fiction d'harmonie. Pis, l'invocation du bien commun sert souvent à faire passer un intérêt particulier pour l'intérêt général : ceux qui défendent leurs avantages les présentent comme le bien de tous, et le « bien commun » devient l'arme rhétorique du plus fort ou du plus habile. Le scepticisme n'a donc pas tort de se méfier d'une notion si aisément dévoyée.
+
+Et pourtant, renoncer entièrement à l'idée de bien commun aurait des conséquences redoutables. Car si l'on admet qu'il n'existe aucun bien commun, que la société n'est qu'un champ de bataille entre intérêts particuliers irréconciliables, alors la politique n'est plus que le rapport de force, où chacun cherche à imposer son intérêt aux autres, et où la seule question est de savoir qui l'emportera. Il n'y a plus de délibération sur ce qui serait juste, seulement une lutte pour le pouvoir ; plus de raison, seulement la force. Nier le bien commun, c'est réduire la vie politique à la guerre de tous contre tous, où il n'est plus question de justice, mais seulement de domination.
+
+Comment sortir de cette alternative entre une notion dévoyée et un cynisme destructeur ? Peut-être en concevant le bien commun autrement que comme une harmonie donnée, une entente préétablie sur ce qui est bon. Le bien commun n'est pas quelque chose qui existerait tout fait, qu'il suffirait de découvrir ; c'est quelque chose à construire, à chercher ensemble, à travers la délibération et le compromis. Il n'est pas la négation des intérêts particuliers et des divisions, mais l'effort pour trouver, malgré eux, ce qui peut être partagé, ce qui sert l'ensemble par-delà les intérêts de chacun. Le bien commun, en ce sens, n'est pas un fait, mais une tâche, un horizon vers lequel on tend sans jamais l'atteindre pleinement.
+
+Cette conception permet de reconnaître les divisions sans renoncer à l'idée d'un bien partagé. Oui, les intérêts s'opposent, les conceptions du bien divergent ; mais il existe aussi des choses qui profitent à tous, ou du moins qui peuvent être reconnues par tous comme justes après délibération : la paix, la justice, des institutions équitables, la préservation de ce dont tous dépendent. Le bien commun n'est pas ce sur quoi tous seraient spontanément d'accord, mais ce qu'une délibération honnête peut faire reconnaître comme dépassant les intérêts particuliers. Il ne supprime pas les conflits, mais il offre un horizon qui les dépasse, un critère au nom duquel on peut juger les prétentions de chacun.
+
+Affirmer que le bien commun existe, non comme un donné mais comme une tâche, est donc essentiel à la démocratie. Car la démocratie n'est pas seulement la gestion pacifique des conflits d'intérêts ; elle est aussi la recherche en commun de ce qui est juste, la délibération sur ce qui sert l'ensemble. Sans l'idée d'un bien qui dépasse les intérêts particuliers, elle se réduirait à un marchandage entre égoïsmes, à une lutte où le nombre ou la force l'emportent. Avec elle, elle devient ce qu'elle prétend être : la recherche collective, par des citoyens libres, de ce qui est bon pour tous. Le bien commun n'est peut-être jamais pleinement atteint, ni même définissable une fois pour toutes ; mais y renoncer, ce serait renoncer à ce qui distingue la politique de la simple guerre — et la démocratie de la simple domination du plus grand nombre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

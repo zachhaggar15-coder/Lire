@@ -1247,6 +1247,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c1-050", // Habiter la Terre (hardest)
     ],
   },
+  {
+    id: "c1-self",
+    band: "C1",
+    title: "The self and identity",
+    goal: "Who am I, the gaze of others, being true to oneself, multiple identities, changing without betraying oneself.",
+    textIds: [
+      "starter-c1-051", // Qui suis-je ?
+      "starter-c1-052", // Le regard des autres
+      "starter-c1-053", // Être fidèle à soi-même
+      "starter-c1-054", // Les identités multiples
+      "starter-c1-055", // Changer sans se trahir (hardest)
+    ],
+  },
+  {
+    id: "c1-democracy",
+    band: "C1",
+    title: "Democracy and its discontents",
+    goal: "Is democracy the best regime, tyranny of the majority, governing without lying, civic apathy, the common good.",
+    textIds: [
+      "starter-c1-056", // La démocratie est-elle le meilleur régime ?
+      "starter-c1-057", // La tyrannie de la majorité
+      "starter-c1-058", // Peut-on gouverner sans mentir ?
+      "starter-c1-059", // L'apathie des citoyens
+      "starter-c1-060", // Le bien commun existe-t-il ? (hardest)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
