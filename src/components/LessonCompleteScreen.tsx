@@ -35,17 +35,26 @@ interface LessonCompleteScreenProps {
   streak: { count: number; extended: boolean; week: StreakDay[] };
   journeyMoment?: JourneyMoment | null;
   isLesson: boolean;
-  onContinue: () => void;
+  /** Label for the main next-step button — destination-specific, e.g. "Read the next text". */
+  primaryActionLabel: string;
+  onPrimaryAction: () => void;
+  /** Quiet secondary action that always returns to the relevant map/overview. */
+  mapActionLabel: string;
+  onReturnToMap: () => void;
 }
 
 /**
  * Full-screen "lesson complete" moment, shown when a reader finishes a text.
  *
  * The bar for the level they just read at animates from its old fill to the
- * new one, and the level's running score counts up. When the added points push
- * the score into a new 100-point band, the bar fills to the end, then wraps and
- * fills the remainder — so crossing a milestone reads as a milestone rather
- * than the bar jumping backwards. "Continue" returns to the article tab.
+ * new one, and the level's running reading-progress count ticks up. When the
+ * added points push it into a new 100-point tier, the bar fills to the end,
+ * then wraps and fills the remainder — so crossing a milestone reads as a
+ * milestone rather than the bar jumping backwards.
+ *
+ * Two actions at the bottom: a primary, destination-specific next step
+ * (read the next text in this section, or the map if nothing is queued up),
+ * and a quieter secondary action that always returns to the relevant map.
  */
 export default function LessonCompleteScreen({
   level,
@@ -55,7 +64,10 @@ export default function LessonCompleteScreen({
   streak,
   journeyMoment,
   isLesson,
-  onContinue,
+  primaryActionLabel,
+  onPrimaryAction,
+  mapActionLabel,
+  onReturnToMap,
 }: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
@@ -112,11 +124,24 @@ export default function LessonCompleteScreen({
 
   const currentBand = wrapped ? bandNumber(scoreChange.after) : bandNumber(scoreChange.before);
 
+  const percentRead = Math.min(100, Math.max(0, Math.round(stats.percentRead)));
   const statItems = [
-    { label: "read", value: `${Math.min(100, Math.max(0, Math.round(stats.percentRead)))}%` },
+    { label: "read", value: `${percentRead}%` },
     { label: stats.wordsTapped === 1 ? "word tapped" : "words tapped", value: stats.wordsTapped },
     { label: stats.savedWords === 1 ? "word saved" : "words saved", value: stats.savedWords },
   ];
+
+  // A truthful, one-line summary of what actually happened — grounded only in
+  // data the app really tracks (percent scrolled/read, words saved), never a
+  // claim about comprehension or accuracy we haven't measured.
+  const achievementLine = (() => {
+    if (percentRead >= 100 && stats.savedWords > 0) {
+      return `You read the whole text and saved ${stats.savedWords} ${stats.savedWords === 1 ? "word" : "words"}.`;
+    }
+    if (percentRead >= 100) return "You read the whole text.";
+    return `You read ${percentRead}% of the text.`;
+  })();
+
   return (
     <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
@@ -125,9 +150,7 @@ export default function LessonCompleteScreen({
           <h1 className="mt-1 text-[30px] font-semibold leading-tight text-ink">
             {journeyMoment?.title ?? (isLesson ? "Lesson complete!" : "Reading complete!")}
           </h1>
-          <p className="mt-2 text-sm text-ink-muted">
-            {journeyMoment?.detail ?? "Nice work - here's how this one went."}
-          </p>
+          <p className="mt-2 text-sm text-ink-muted">{journeyMoment?.detail ?? achievementLine}</p>
         </div>
 
         {journeyMoment && (
@@ -206,14 +229,16 @@ export default function LessonCompleteScreen({
         <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-5">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-extrabold text-ink">
-              {level} score
+              {level} reading progress
               {currentBand > 1 && <span className="ml-1.5 text-xs font-semibold text-ink-muted">· tier {currentBand}</span>}
             </p>
             <p className="flex items-center gap-1 text-sm font-extrabold text-brand">
-              <span className="tabular-nums">{displayScore}</span>
+              <span className="tabular-nums">
+                {scoreChange.before} → {displayScore}
+              </span>
               {scoreChange.delta > 0 && (
                 <span className="lesson-complete-delta rounded-full bg-brand-light px-1.5 py-0.5 text-xs font-bold text-brand">
-                  +{scoreChange.delta} ↑
+                  +{scoreChange.delta} this lesson
                 </span>
               )}
             </p>
@@ -224,9 +249,20 @@ export default function LessonCompleteScreen({
               style={{ width: `${barPercent}%` }}
             />
           </div>
+          <p className="mt-1 text-right text-[10px] font-semibold text-ink-faint">{Math.round(bandProgress(wrapped ? scoreChange.after : scoreChange.before) * 100)}/100 to next tier</p>
           {scoreChange.delta === 0 && (
             <p className="mt-2 text-xs text-ink-muted">Already completed earlier — no new points this time.</p>
           )}
+          <details className="mt-3">
+            <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline decoration-dotted underline-offset-2">
+              What counts toward this?
+            </summary>
+            <p className="mt-1.5 text-xs leading-relaxed text-ink-muted">
+              Reading progress tracks how much you complete at this level, not accuracy or fluency. Finishing a new
+              text adds points; saving words and tapping a word for help add a little more; a perfect comprehension
+              check adds a bit extra. Re-reading something you already finished doesn&apos;t add more.
+            </p>
+          </details>
         </div>
 
         {/* All four levels, so progress is legible at a glance */}
@@ -258,10 +294,17 @@ export default function LessonCompleteScreen({
 
         <button
           type="button"
-          onClick={onContinue}
+          onClick={onPrimaryAction}
           className="ligne-pill mt-5 w-full bg-brand py-3.5 text-cream"
         >
-          {journeyMoment?.actionLabel ?? "Continue"}
+          {primaryActionLabel}
+        </button>
+        <button
+          type="button"
+          onClick={onReturnToMap}
+          className="ligne-pill mt-2 w-full bg-transparent py-3 text-ink-muted"
+        >
+          {mapActionLabel}
         </button>
       </div>
     </div>

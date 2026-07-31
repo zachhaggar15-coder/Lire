@@ -73,8 +73,8 @@ import {
 } from "@/lib/comprehensionCache";
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
-import { getJourneyState, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
-import { JOURNEY_BANDS } from "@/lib/journey/ladder";
+import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
+import { JOURNEY_BANDS, getStageForText } from "@/lib/journey/ladder";
 import LessonCompleteScreen, { type JourneyMoment, type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -265,6 +265,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     reviewItems: LessonMiniReviewItem[];
     streak: { count: number; extended: boolean; week: StreakDay[] };
     journeyMoment: JourneyMoment | null;
+    nextAction: { label: string; textId: string } | null;
+    mapLabel: string;
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -348,6 +350,8 @@ export default function Reader({ text }: { text: ReadingText }) {
         : paragraphs.map((sentences, paragraphIndex) => ({ sentences, paragraphIndex })),
     [isChunkedStarterLesson, lessonStep, paragraphs]
   );
+  // "Part" = one paragraph-sized chunk of the reading. Kept as a single,
+  // coherent progress hierarchy: PART x OF y · N sentences, one bar.
   const lessonStepCount = Math.max(1, paragraphs.length);
   const currentLessonStep = Math.min(lessonStep + 1, lessonStepCount);
   const isLastLessonStep = currentLessonStep >= lessonStepCount;
@@ -355,11 +359,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const lessonStepSentenceCount = isChunkedStarterLesson
     ? visibleParagraphEntries.reduce((total, entry) => total + entry.sentences.length, 0)
     : 0;
-  const lessonStepSentenceLabel = `${lessonStepSentenceCount} ${lessonStepSentenceCount === 1 ? "sentence" : "sentences"} left`;
-  const remainingLessonSteps = Math.max(0, lessonStepCount - currentLessonStep);
-  const remainingLessonStepLabel = isLastLessonStep
-    ? "Final step"
-    : `${remainingLessonSteps} ${remainingLessonSteps === 1 ? "step" : "steps"} after this`;
+  const lessonStepSentenceLabel = `${lessonStepSentenceCount} ${lessonStepSentenceCount === 1 ? "sentence" : "sentences"}`;
 
   /**
    * The first difficulty estimate may have run against curated-only coverage,
@@ -1266,6 +1266,26 @@ export default function Reader({ text }: { text: ReadingText }) {
       alreadyCompleted: wasAlreadyCompleted,
     });
     const scoreChange = addLevelScore(text.difficulty, points);
+
+    // Figure out a destination-specific "what's next" for the primary button,
+    // instead of a generic "Continue" that just bounces back to the map.
+    // Only meaningful for the guided starter/journey lessons; regular
+    // imported articles have no ladder position to advance along.
+    const nextRecommendation = isStarterLesson ? getNextTextForReader() : null;
+    const nextStage = nextRecommendation ? getStageForText(nextRecommendation.textId) : null;
+    const currentStage = getStageForText(text.id);
+    const nextAction = nextRecommendation
+      ? {
+          label:
+            nextStage && (!currentStage || nextStage.globalIndex !== currentStage.globalIndex)
+              ? `Continue ${nextStage.label}`
+              : "Read the next text",
+          textId: nextRecommendation.textId,
+        }
+      : null;
+    const band = difficulty?.cefr ?? text.difficulty;
+    const mapLabel = `Return to the ${band} map`;
+
     setLessonComplete({
       scoreChange,
       // A short lesson that fits on one screen never fires a scroll event, so
@@ -1276,10 +1296,12 @@ export default function Reader({ text }: { text: ReadingText }) {
       reviewItems: buildLessonMiniReviewItems(),
       streak: { count: getCurrentStreak(), extended: streakExtendedByThis, week: getStreakWeek() },
       journeyMoment,
+      nextAction,
+      mapLabel,
     });
   }
 
-  function handleLessonCompleteContinue() {
+  function handleLessonCompleteReturnToMap() {
     // Return to where the lesson was opened from — the article tab by default,
     // or home if that's where the reader was entered from.
     let target = isStarterLesson ? "/#journey-current" : "/";
@@ -1294,6 +1316,17 @@ export default function Reader({ text }: { text: ReadingText }) {
     }
     setLessonComplete(null);
     router.push(target);
+  }
+
+  function handleLessonCompletePrimaryAction() {
+    const nextTextId = lessonComplete?.nextAction?.textId;
+    if (nextTextId) {
+      setLessonComplete(null);
+      router.push(`/reader/${encodeURIComponent(nextTextId)}`);
+      return;
+    }
+    // Terminal state (nothing left to read right now) — fall back to the map.
+    handleLessonCompleteReturnToMap();
   }
 
   function handleContinueLesson() {
@@ -1769,26 +1802,18 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       {isChunkedStarterLesson && (
         <section className="mt-5 rounded-card border border-cream-dark bg-cream-card p-4">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-brand">Step {currentLessonStep} of {lessonStepCount}</p>
-              <p className="mt-0.5 text-sm font-semibold text-ink">{lessonStepSentenceLabel}</p>
-            </div>
-            <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">{lessonProgress}%</span>
-          </div>
+          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-brand">
+            Part {currentLessonStep} of {lessonStepCount} · {lessonStepSentenceLabel}
+          </p>
           <div
-            className="mt-3 h-[3px] overflow-hidden rounded-full bg-cream-strong"
+            className="mt-2 h-[3px] overflow-hidden rounded-full bg-cream-strong"
             role="progressbar"
-            aria-label="Lesson progress"
+            aria-label={`Reading progress: part ${currentLessonStep} of ${lessonStepCount}`}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={lessonProgress}
           >
             <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${lessonProgress}%` }} />
-          </div>
-          <div className="mt-3 flex items-center justify-between gap-3 border-t border-cream-dark pt-3 text-xs font-semibold text-ink-muted">
-            <span>{remainingLessonStepLabel}</span>
-            <span>{isLastLessonStep ? "Finish when ready" : "Continue unlocks the next part"}</span>
           </div>
         </section>
       )}
@@ -2037,7 +2062,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             onClick={handleContinueLesson}
             className="ligne-pill bg-brand text-cream"
           >
-            Continue
+            Continue reading
           </button>
         ) : (
           <button
@@ -2128,7 +2153,10 @@ export default function Reader({ text }: { text: ReadingText }) {
           streak={lessonComplete.streak}
           journeyMoment={lessonComplete.journeyMoment}
           isLesson={isStarterLesson}
-          onContinue={handleLessonCompleteContinue}
+          primaryActionLabel={lessonComplete.nextAction?.label ?? lessonComplete.mapLabel}
+          onPrimaryAction={handleLessonCompletePrimaryAction}
+          mapActionLabel={lessonComplete.mapLabel}
+          onReturnToMap={handleLessonCompleteReturnToMap}
         />
       )}
       <Toast message={toastMessage} />
