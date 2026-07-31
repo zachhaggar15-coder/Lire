@@ -1455,6 +1455,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-050", // Citoyen du monde ou enraciné ? (hardest)
     ],
   },
+  {
+    id: "c2-death-meaning",
+    band: "C2",
+    title: "Death, finitude and meaning",
+    goal: "Philosophy as learning to die, whether death gives life meaning, what we leave behind, grief and fidelity, the immortality we seek.",
+    textIds: [
+      "starter-c2-051", // Philosopher, c'est apprendre à mourir
+      "starter-c2-052", // La mort donne-t-elle un sens à la vie ?
+      "starter-c2-053", // Ce que nous laissons
+      "starter-c2-054", // Le deuil et la fidélité
+      "starter-c2-055", // L'immortalité que nous cherchons (hardest)
+    ],
+  },
+  {
+    id: "c2-wisdom",
+    band: "C2",
+    title: "Wisdom and the examined life",
+    goal: "Final capstone of the entire A1-C2 curriculum: what wisdom is, measure in all things, the courage to be oneself, gratitude, the examined life.",
+    textIds: [
+      "starter-c2-056", // Qu'est-ce que la sagesse ?
+      "starter-c2-057", // La mesure en toute chose
+      "starter-c2-058", // Le courage d'être soi
+      "starter-c2-059", // La gratitude
+      "starter-c2-060", // Une vie examinée (hardest — closes the entire curriculum)
+    ],
+  },
 ];
 
 /** Every text id that belongs to an explicit themed section (so the difficulty-sorted grouping can skip them). */
