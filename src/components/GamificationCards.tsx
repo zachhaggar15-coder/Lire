@@ -99,7 +99,7 @@ export function StreakWeekStrip({ week, className = "" }: { week: StreakDay[]; c
             } ${day.isFuture ? "opacity-40" : ""}`}
             aria-label={`${day.weekdayLabel}${day.active ? " active" : ""}`}
           >
-            {day.active ? <span className="text-[10px] font-bold">OK</span> : <span className={`h-2 w-2 rounded-full ${day.isFuture ? "bg-transparent" : "bg-cream-strong"}`} />}
+            {!day.active && <span className={`h-2 w-2 rounded-full ${day.isFuture ? "bg-transparent" : "bg-cream-strong"}`} />}
           </div>
         </div>
       ))}

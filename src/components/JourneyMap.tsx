@@ -471,7 +471,9 @@ function LessonPreviewRow({
   const progress = getProgress(textId).status;
   const completed = progress === "completed";
   const reviewableSkipped = skipped && !completed;
-  const actionLabel = completed || reviewableSkipped ? "Review" : progress === "in-progress" ? "Continue" : next ? "Read" : "Open";
+  // Only a genuinely completed lesson is a "Review" — a skipped-but-unread lesson
+  // (e.g. from "Jump ahead") still just opens the reading for the first time.
+  const actionLabel = completed ? "Review" : reviewableSkipped ? "Read" : progress === "in-progress" ? "Continue" : next ? "Read" : "Open";
   const meta = locked ? "Locked · finish the lesson above first" : lessonMeta(text, next, completed, reviewableSkipped);
 
   return (

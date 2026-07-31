@@ -35,7 +35,7 @@ function normalizeAnswer(value: string): string {
     .toLowerCase()
     .replace(/[’']/g, "")
     .replace(/[^a-z0-9\s-]/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/[\s-]+/g, " ") // treat hyphens and whitespace as interchangeable ("rock-climbing" == "rock climbing")
     .trim();
 }
 
@@ -693,7 +693,7 @@ export default function ReviewPage() {
             <div className="rounded-card border border-cream-dark bg-cream-card p-2">
               <div className="mb-2 flex items-center justify-between px-1 text-xs font-semibold text-ink-muted">
                 <span>Need help?</span>
-                <span>{revealed ? "Keep practicing or move on" : "Correct typing checks itself"}</span>
+                <span>{revealed ? "Both count as a miss for spaced repetition" : "Correct typing checks itself"}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button
@@ -701,14 +701,14 @@ export default function ReviewPage() {
                   disabled={!revealed || cardFeedback !== null}
                   className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-xs font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
                 >
-                  Keep in deck
+                  Show again this session
                 </button>
                 <button
                   onClick={() => answer("missed")}
                   disabled={cardFeedback !== null}
                   className="rounded-2xl border border-cream-dark bg-rose px-1 py-3 text-xs font-semibold text-rose-ink active:scale-95 disabled:opacity-40"
                 >
-                  Skip for now
+                  Review next time
                 </button>
               </div>
             </div>

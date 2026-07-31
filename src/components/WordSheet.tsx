@@ -105,7 +105,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word the reader is curious about.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onSave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -479,26 +479,20 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
             </button>
           </div>
         ) : (
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <button
-              onClick={onKnow}
-              className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
-            >
-              I know this
-            </button>
+          <div className="mt-3">
             {state?.existingStatus ? (
               <button
                 onClick={onClose}
-                className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+                className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
                 {existingActionLabel}
               </button>
             ) : (
               <button
                 onClick={onSave}
-                className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+                className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
               >
-                Add to review
+                Save
               </button>
             )}
           </div>

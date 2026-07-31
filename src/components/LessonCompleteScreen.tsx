@@ -166,9 +166,7 @@ export default function LessonCompleteScreen({
                   </span>
                 )}
               </p>
-              <p className="mt-0.5 text-xs text-ink-muted">
-                {streak.extended ? "You kept the fire going today." : "You'd already read today — nice."}
-              </p>
+              {streak.extended && <p className="mt-0.5 text-xs text-ink-muted">You kept the fire going today.</p>}
             </div>
           </div>
           <StreakWeekStrip week={streak.week} className="mt-4" />
