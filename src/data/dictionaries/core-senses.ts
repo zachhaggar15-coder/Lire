@@ -153,4 +153,5 @@ export const coreSenseDictionary: DictionaryEntry[] = [
   { lemma: "sembler", forms: ["semble", "semblent", "semblait", "semblé"], translations: ["to seem", "to appear"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "craindre", forms: ["crains", "craint", "craignons", "craignez", "craignent", "craignait"], translations: ["to fear", "to be afraid of"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "voici", translations: ["here is", "here are"], partOfSpeech: "presentative", cefr: "A2" },
+  { lemma: "démarche", forms: ["démarches"], translations: ["step", "procedure", "approach"], partOfSpeech: "noun", gender: "feminine", cefr: "B1", notes: "Almost always administrative or practical steps, e.g. \"faire des démarches\" — to go through the procedures. The literal sense (a person's gait/walk) is rare outside literary writing." },
 ];
