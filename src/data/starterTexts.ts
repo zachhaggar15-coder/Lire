@@ -1880,21 +1880,19 @@ Aujourd'hui, le parc est en fête. L'automne est un artiste.`,
     preview: "Ce matin-là, j'étais en retard. Mon réveil n'a pas sonné.",
     blurbEn:
       "A silent alarm, a mad dash across town, and a train pulling away without its passenger. The story of a ruined morning saved by a stranger's coffee and a good conversation.",
-    body: `Ce matin-là, tout a mal commencé. Mon réveil n'a pas sonné. Quand j'ai ouvert les yeux, il était déjà sept heures et demie. Mon train partait à huit heures, et j'avais un rendez-vous de travail important à Lyon, à dix heures.
+    body: `Ce matin-là, tout a mal commencé. Mon réveil n'a pas sonné. Quand j'ai ouvert les yeux, il était sept heures et demie. Mon train partait à huit heures, pour un rendez-vous important à Lyon.
 
-Je me suis levé d'un bond. Pas de douche, pas de petit-déjeuner. Je me suis habillé en trois minutes et j'ai attrapé mon sac. Dans la rue, j'ai couru comme un sportif olympique. Les gens me regardaient, étonnés.
+Je me suis levé d'un bond. Pas de douche, pas de petit-déjeuner. Je me suis habillé en trois minutes. Dans la rue, j'ai couru comme un sportif.
 
-Je suis arrivé à la gare à huit heures et une minute. Une minute ! Sur le quai, j'ai vu mon train qui partait doucement. J'ai crié, j'ai agité les bras. Le train est parti quand même. Évidemment : un train n'attend personne.
+Je suis arrivé à la gare à huit heures et une minute. Une minute ! J'ai vu mon train qui partait. J'ai crié, j'ai agité les bras. Il est parti quand même.
 
-Je me suis assis sur un banc, furieux contre mon réveil, contre le train, contre moi-même. Le prochain train partait dans une heure. J'ai téléphoné à mon client pour décaler le rendez-vous. Heureusement, il a été très compréhensif.
+Je me suis assis sur un banc, furieux. Le prochain train partait dans une heure. J'ai téléphoné à mon client pour décaler le rendez-vous. Il a été très compréhensif.
 
-À côté de moi, une vieille dame attendait aussi. Elle a vu ma tête et elle a souri. « Vous avez raté votre train ? Moi aussi. Venez, je vous offre un café. » Nous sommes allés au petit café de la gare.
+À côté de moi, une vieille dame attendait aussi. Elle a souri : « Vous avez raté votre train ? Moi aussi. Venez, je vous offre un café. »
 
-Cette dame s'appelait Jeanne. Elle allait voir sa petite-fille à Lyon. Nous avons parlé de tout : des voyages, de la ville, de sa jeunesse. Elle racontait des histoires drôles, et l'heure est passée très vite.
+Cette dame s'appelait Jeanne. Elle allait voir sa petite-fille à Lyon. Nous avons parlé de tout, et l'heure est passée très vite. Dans le train, nous avons voyagé ensemble.
 
-Dans le train, nous avons voyagé ensemble. Mon rendez-vous s'est très bien passé, finalement.
-
-Depuis ce jour, je prépare mes affaires la veille et je mets deux réveils. Mais je pense parfois à Jeanne, et je me dis qu'un train raté, ce n'est pas toujours une catastrophe. Parfois, c'est une rencontre.`,
+Mon rendez-vous s'est bien passé. Depuis ce jour, je prépare mes affaires la veille. Mais je pense parfois à Jeanne : un train raté n'est pas toujours une catastrophe. Parfois, c'est une rencontre.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -1907,19 +1905,17 @@ Depuis ce jour, je prépare mes affaires la veille et je mets deux réveils. Mai
     preview: "Le mois dernier, j'ai adopté un chat au refuge.",
     blurbEn:
       "From a cage at the shelter to the best spot on the sofa: adopting Gribouille the shy grey cat, the difficult first week under the bed, and the slow victory of patience.",
-    body: `Le mois dernier, j'ai pris une grande décision : j'ai adopté un chat. J'y pensais depuis longtemps. Mon appartement était trop calme, trop vide. Un samedi matin, je suis enfin allé au refuge des animaux.
+    body: `Le mois dernier, j'ai pris une grande décision : j'ai adopté un chat. Mon appartement était trop calme, trop vide. Un samedi matin, je suis enfin allé au refuge des animaux.
 
-Là-bas, il y avait beaucoup de chats : des jeunes, des vieux, des joueurs, des timides. Une bénévole m'a guidé entre les cages. Et puis je l'ai vu. Un petit chat gris, assis au fond de sa cage. Il ne miaulait pas, il ne bougeait pas. Il me regardait seulement, avec de grands yeux verts. La bénévole m'a expliqué son histoire : il avait été trouvé dans la rue, il avait peur des gens. « Il lui faut quelqu'un de patient », a-t-elle dit.
+Là-bas, il y avait beaucoup de chats. Une bénévole m'a guidé entre les cages. Et puis je l'ai vu : un petit chat gris, assis au fond de sa cage. Il ne bougeait pas. Il me regardait seulement, avec de grands yeux verts. Il avait été trouvé dans la rue et il avait peur des gens. « Il lui faut quelqu'un de patient », a dit la bénévole.
 
-Je l'ai choisi. Ou peut-être qu'il m'a choisi, je ne sais pas.
-
-À la maison, je l'ai appelé Gribouille. La première semaine a été difficile. Gribouille se cachait sous le lit toute la journée. Il ne mangeait presque rien. La nuit, j'entendais ses petits pas dans le salon, mais le matin, il était de nouveau sous le lit.
+Je l'ai choisi. À la maison, je l'ai appelé Gribouille. La première semaine a été difficile. Il se cachait sous le lit toute la journée et il ne mangeait presque rien.
 
 J'ai suivi les conseils de la bénévole. Je ne l'ai jamais forcé. Je lui parlais doucement, je laissais sa nourriture près du lit, et j'attendais.
 
-Le huitième jour, une surprise : Gribouille est monté sur le canapé, à côté de moi. J'ai continué à lire, sans bouger. Après dix minutes, il a fermé les yeux et il a ronronné. Une petite victoire qui m'a rendu tellement heureux.
+Le huitième jour, une surprise : Gribouille est monté sur le canapé, à côté de moi. Je n'ai pas bougé. Après dix minutes, il a fermé les yeux et il a ronronné. Une petite victoire qui m'a rendu très heureux.
 
-Aujourd'hui, un mois plus tard, Gribouille est un autre chat. Il dort sur mon lit, il joue avec ses jouets, il m'attend derrière la porte le soir. Quand je rentre du travail, il court vers moi en miaulant.
+Aujourd'hui, un mois plus tard, Gribouille dort sur mon lit et il m'attend derrière la porte le soir. Quand je rentre du travail, il court vers moi en miaulant.
 
 Mon appartement n'est plus calme et vide. Il est vivant. Merci, Gribouille.`,
     sourceName: "Written for Lire",
@@ -1934,21 +1930,19 @@ Mon appartement n'est plus calme et vide. Il est vivant. Merci, Gribouille.`,
     preview: "Hier soir, il y a eu une panne de courant.",
     blurbEn:
       "When the lights went out across the whole neighbourhood, one family rediscovered candles, board games and conversation — and was almost disappointed when the power came back.",
-    body: `Hier soir, vers huit heures, tout s'est éteint d'un coup. La télévision, les lampes, le frigo : plus rien. Une panne de courant ! J'ai regardé par la fenêtre : tout le quartier était dans le noir. Ce n'était pas seulement chez nous.
+    body: `Hier soir, vers huit heures, tout s'est éteint d'un coup. La télévision, les lampes, le frigo : plus rien. Une panne de courant ! Tout le quartier était dans le noir.
 
-Au début, c'était la panique. Ma fille a crié : « Mon film ! » Mon fils a crié : « Le wifi ! » Ma femme a cherché son téléphone pour faire de la lumière, et moi, je me suis cogné le pied contre la table du salon. Aïe.
+Au début, c'était la panique. Ma fille a crié : « Mon film ! » Mon fils a crié : « Le wifi ! » Moi, je me suis cogné le pied contre la table.
 
-Puis nous nous sommes organisés. J'ai trouvé les bougies dans le placard de la cuisine, celles qu'on garde « au cas où » depuis des années. Nous en avons allumé six et nous les avons posées sur la table. Petit à petit, le salon est devenu joli, avec cette lumière douce et dansante.
+Puis nous nous sommes organisés. J'ai trouvé les bougies dans le placard de la cuisine. Nous en avons allumé six et le salon est devenu joli, avec cette lumière douce.
 
-« On fait quoi maintenant ? » a demandé mon fils. Sans télévision, sans internet, sans musique, la question était sérieuse. Ma femme a eu l'idée : « Un jeu de société ! »
+« On fait quoi maintenant ? » a demandé mon fils. Ma femme a eu l'idée : « Un jeu de société ! » Nous avons sorti un vieux jeu de cartes. Au début, les enfants n'étaient pas motivés. Mais après trois tours, tout le monde criait et riait. Ma fille a gagné deux fois et elle était très fière.
 
-Nous avons sorti un vieux jeu de cartes. Au début, les enfants n'étaient pas motivés. Mais après trois tours, tout le monde criait, riait et trichait un peu. Ma fille a gagné deux fois. Elle était très fière.
+Ensuite, nous avons parlé de l'école, du travail, des vacances d'été. À la lumière des bougies, même les histoires ordinaires devenaient spéciales.
 
-Ensuite, nous avons parlé. De l'école, du travail, des vacances d'été. Mon fils a raconté des histoires drôles de sa classe. À la lumière des bougies, même les histoires ordinaires devenaient spéciales.
+Vers dix heures, la lumière est revenue d'un coup. Et vous savez quoi ? Nous avons été presque déçus. Nous avons fini notre partie de cartes avant d'éteindre la télévision.
 
-Vers dix heures, la lumière est revenue d'un coup. Le frigo a redémarré, la télévision s'est rallumée. Et vous savez quoi ? Nous avons été presque déçus. Ma fille a éteint la télévision et nous avons fini notre partie de cartes.
-
-Depuis hier, nous avons décidé une chose : une soirée sans écrans par semaine. Une panne de courant volontaire. C'est peut-être la meilleure panne de notre vie.`,
+Depuis hier, nous avons décidé une chose : une soirée sans écrans par semaine. C'est peut-être la meilleure panne de notre vie.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -1961,21 +1955,21 @@ Depuis hier, nous avons décidé une chose : une soirée sans écrans par semain
     preview: "Chaque année, en juin, il y a la fête des voisins.",
     blurbEn:
       "One evening a year, a whole apartment building meets in the courtyard with home-made food. This year the writer brought an apple tart — and finally learned the neighbours' names.",
-    body: `Dans mon immeuble, nous sommes une trentaine d'habitants. Pendant des années, je ne connaissais personne. On se croisait dans l'escalier, on se disait bonjour, et c'était tout. Je ne connaissais même pas le nom de ma voisine de palier.
+    body: `Dans mon immeuble, nous sommes une trentaine d'habitants. Pendant des années, je ne connaissais personne. On se croisait dans l'escalier, on se disait bonjour, et c'était tout.
 
-Mais chaque année, au mois de juin, il y a la fête des voisins. C'est une tradition dans toute la France : un soir, les voisins se retrouvent pour manger ensemble. Cette année, j'ai enfin décidé de participer.
+Mais chaque année, en juin, il y a la fête des voisins. C'est une tradition en France : un soir, les voisins se retrouvent pour manger ensemble. Cette année, j'ai enfin décidé de participer.
 
-Chacun devait apporter quelque chose. Moi, j'ai fait une tarte aux pommes, avec la recette de ma mère. J'étais un peu nerveux : et si ma tarte n'était pas bonne ? Et si je ne savais pas quoi dire ?
+Chacun devait apporter quelque chose. Moi, j'ai fait une tarte aux pommes, avec la recette de ma mère. J'étais un peu nerveux.
 
-À sept heures, je suis descendu dans la cour avec ma tarte. Il y avait déjà des tables, des chaises et des guirlandes de lumières. Une dame m'a accueilli avec un grand sourire : « Ah, vous êtes le monsieur du troisième ! Moi, c'est Yvonne, du premier. » Yvonne habite dans l'immeuble depuis trente ans. Elle connaît toutes les histoires du quartier.
+À sept heures, je suis descendu dans la cour avec ma tarte. Il y avait déjà des tables et des guirlandes de lumières. Une dame m'a accueilli : « Ah, vous êtes le monsieur du troisième ! Moi, c'est Yvonne, du premier. » Yvonne habite dans l'immeuble depuis trente ans.
 
-La table était pleine de bonnes choses : une salade de riz, un couscous, des quiches, des gâteaux. Le jeune couple du cinquième a apporté des plats de leur pays, épicés et délicieux. Un étudiant a joué de la guitare.
+La table était pleine de bonnes choses : une salade de riz, un couscous, des quiches, des gâteaux. Un étudiant a joué de la guitare.
 
-Et ma tarte ? Un succès total ! « C'est la meilleure tarte de la soirée », a dit Yvonne. Trois personnes m'ont demandé la recette.
+Et ma tarte ? Un succès total ! « C'est la meilleure tarte de la soirée », a dit Yvonne.
 
 Nous avons mangé, parlé et ri jusqu'à minuit. J'ai appris que mon voisin de palier s'appelle Karim et qu'il adore le football, comme moi. Nous allons regarder le prochain match ensemble.
 
-Avant, je disais juste bonjour à mes voisins. Maintenant, je connais leurs prénoms, leurs histoires et leurs recettes. Il a suffi d'une soirée, d'une table dans la cour et d'une tarte aux pommes.`,
+Avant, je disais juste bonjour à mes voisins. Maintenant, je connais leurs prénoms et leurs histoires. Il a suffi d'une soirée et d'une tarte aux pommes.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -1988,19 +1982,19 @@ Avant, je disais juste bonjour à mes voisins. Maintenant, je connais leurs pré
     preview: "Dimanche dernier, je suis allé à un vide-grenier.",
     blurbEn:
       "Treasure hunting at the Sunday flea market: haggling lessons, an old radio that still works, a childhood book found again, and a three-euro lamp with a story.",
-    body: `Dimanche dernier, il y avait un vide-grenier dans mon quartier. Toute la grande rue était fermée aux voitures. Les habitants vendaient leurs vieux objets devant chez eux, sur des tables ou sur des couvertures. J'adore les vide-greniers : on ne sait jamais ce qu'on va trouver.
+    body: `Dimanche dernier, il y avait un vide-grenier dans mon quartier. Toute la grande rue était fermée aux voitures. Les habitants vendaient leurs vieux objets devant chez eux. J'adore les vide-greniers : on ne sait jamais ce qu'on va trouver.
 
-Je suis arrivé tôt, vers neuf heures. Les vrais chercheurs de trésors arrivent toujours tôt ! Il y avait déjà beaucoup de monde. On trouvait de tout : des vêtements, des livres, des jouets, de la vaisselle, des vélos, des disques.
+Je suis arrivé tôt, vers neuf heures. On trouvait de tout : des vêtements, des livres, des jouets, des vélos, des disques.
 
-D'abord, j'ai regardé les livres. Un monsieur vendait toute sa bibliothèque. Et là, surprise : j'ai trouvé un livre de mon enfance ! Le même livre d'aventures que je lisais quand j'avais dix ans. Je l'ai acheté pour un euro, avec un grand sourire.
+D'abord, j'ai regardé les livres. Un monsieur vendait toute sa bibliothèque. Et là, surprise : j'ai trouvé un livre de mon enfance, le même que je lisais à dix ans. Je l'ai acheté pour un euro.
 
-Plus loin, une dame vendait une vieille radio des années soixante. « Elle marche encore ? » j'ai demandé. La dame l'a branchée chez elle, et la radio s'est allumée avec un joli son ancien. J'ai hésité, mais elle était un peu chère pour moi.
+Plus loin, une dame vendait une vieille radio. « Elle marche encore ? » j'ai demandé. Elle l'a branchée, et la radio s'est allumée avec un joli son ancien. J'ai hésité, mais elle était un peu chère pour moi.
 
-Au vide-grenier, il faut négocier. C'est le jeu ! Un vendeur demandait dix euros pour une lampe ancienne. « Cinq euros ? » j'ai proposé. « Huit », a-t-il répondu. « Six ? » « D'accord, sept, et je vous raconte son histoire. » Vendu ! La lampe venait du café de son grand-père. Elle a éclairé des parties de cartes pendant quarante ans.
+Au vide-grenier, il faut négocier. C'est le jeu ! Un vendeur demandait dix euros pour une lampe ancienne. « Cinq euros ? » j'ai proposé. « Huit », a-t-il répondu. « Sept, et je vous raconte son histoire. » Vendu ! La lampe venait du café de son grand-père.
 
-À midi, je suis rentré avec mes trésors : le livre de mon enfance, la lampe du café, et un pull presque neuf pour deux euros.
+À midi, je suis rentré avec mes trésors : le livre, la lampe, et un pull presque neuf pour deux euros.
 
-Ce soir, la lampe est sur mon bureau. Sa lumière est chaude et douce. Un objet neuf n'a pas d'histoire. Un objet ancien en a mille. C'est pour ça que j'aime les vide-greniers.`,
+Ce soir, la lampe est sur mon bureau. Un objet neuf n'a pas d'histoire. Un objet ancien en a mille. C'est pour ça que j'aime les vide-greniers.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2013,19 +2007,19 @@ Ce soir, la lampe est sur mon bureau. Sa lumière est chaude et douce. Un objet 
     preview: "L'été dernier, je suis allé à un concert en plein air.",
     blurbEn:
       "A free concert in the park on a warm summer night: a blanket on the grass, dancing strangers, a magical hour of music under the stars, and the walk home with a song in your head.",
-    body: `L'été dernier, mes amis m'ont proposé une sortie : un concert gratuit en plein air, dans le grand parc de la ville. Un groupe de musique du monde jouait à neuf heures du soir. Je n'étais jamais allé à un concert en plein air. J'ai dit oui tout de suite.
+    body: `L'été dernier, mes amis m'ont proposé une sortie : un concert gratuit en plein air, dans le grand parc de la ville. J'ai dit oui tout de suite.
 
-Nous sommes arrivés vers sept heures pour trouver une bonne place. Le parc était déjà plein de monde : des familles avec des enfants, des groupes de jeunes, des couples âgés. Nous avons posé notre couverture sur l'herbe, ni trop près de la scène, ni trop loin.
+Nous sommes arrivés vers sept heures pour trouver une bonne place. Le parc était déjà plein de monde. Nous avons posé notre couverture sur l'herbe.
 
-En attendant, nous avons pique-niqué. Chacun avait apporté quelque chose : du pain, du fromage, des fruits, un gâteau au citron. Autour de nous, l'ambiance était joyeuse et détendue. Des enfants couraient partout, un vieux monsieur dansait déjà, tout seul, avant même la musique.
+En attendant, nous avons pique-niqué. Chacun avait apporté quelque chose : du pain, du fromage, des fruits, un gâteau au citron. Des enfants couraient partout, et un vieux monsieur dansait déjà, tout seul, avant même la musique.
 
 Le soleil est descendu lentement derrière les arbres. Le ciel est devenu orange, puis rose, puis violet. Et quand la nuit est tombée, les musiciens sont montés sur scène.
 
-Dès la première chanson, j'ai compris pourquoi les gens aiment tant les concerts en plein air. La musique montait dans le ciel avec les lumières. Les gens chantaient, dansaient sur l'herbe, tapaient dans les mains. Ma meilleure amie, qui ne danse jamais, a dansé toute la soirée !
+Dès la première chanson, j'ai compris pourquoi les gens aiment les concerts en plein air. La musique montait dans le ciel avec les lumières. Les gens chantaient et dansaient sur l'herbe. Ma meilleure amie, qui ne danse jamais, a dansé toute la soirée !
 
-Pendant une chanson douce, je me suis allongé sur la couverture. Au-dessus de moi, il y avait les étoiles. Autour de moi, la musique et les voix. J'ai pensé : c'est ça, le bonheur d'été.
+Pendant une chanson douce, je me suis allongé sur la couverture, les étoiles au-dessus de moi. J'ai pensé : c'est ça, le bonheur d'été.
 
-Le concert a fini vers onze heures. Nous avons plié la couverture et nous sommes rentrés à pied dans la ville chaude, la tête pleine de musique.
+Le concert a fini vers onze heures. Nous sommes rentrés à pied, la tête pleine de musique.
 
 Cet été, le groupe revient. Cette fois, c'est moi qui apporte le gâteau au citron.`,
     sourceName: "Written for Lire",
@@ -2040,21 +2034,21 @@ Cet été, le groupe revient. Cette fois, c'est moi qui apporte le gâteau au ci
     preview: "En automne, les feuilles tombent. Mais savez-vous pourquoi ?",
     blurbEn:
       "A grandfather explains to his granddaughter why leaves change colour and fall: the tree's summer factories, the autumn signal, and the promise hidden in every bare branch.",
-    body: `Dimanche, au parc, ma petite-fille Chloé m'a posé une question : « Papi, pourquoi les feuilles tombent ? » Bonne question ! Beaucoup d'adultes ne connaissent pas la réponse. Alors, nous nous sommes assis sur un banc, sous un grand arbre doré, et je lui ai expliqué.
+    body: `Dimanche, au parc, ma petite-fille Chloé m'a posé une question : « Papi, pourquoi les feuilles tombent ? » Bonne question ! Nous nous sommes assis sur un banc, sous un grand arbre doré, et je lui ai expliqué.
 
-En été, les feuilles sont vertes et elles travaillent beaucoup. Chaque feuille est comme une petite usine. Avec la lumière du soleil, l'eau et l'air, elle fabrique de la nourriture pour l'arbre. C'est pour cela que les arbres ont besoin de soleil.
+En été, les feuilles sont vertes et elles travaillent beaucoup. Chaque feuille est comme une petite usine. Avec la lumière du soleil, l'eau et l'air, elle fabrique de la nourriture pour l'arbre.
 
 « Et en automne ? » a demandé Chloé.
 
-En automne, les jours deviennent plus courts. Il y a moins de lumière et il fait plus froid. Les petites usines vertes ne peuvent plus bien travailler. Alors l'arbre prend une décision : il ferme ses usines pour l'hiver.
+En automne, les jours deviennent plus courts et il fait plus froid. Les petites usines vertes ne peuvent plus bien travailler. Alors l'arbre ferme ses usines pour l'hiver.
 
-L'arbre arrête de nourrir ses feuilles. La couleur verte disparaît doucement, et d'autres couleurs apparaissent : le jaune, l'orange, le rouge. Ces couleurs étaient déjà dans la feuille, mais le vert les cachait. « Comme un secret ? » a dit Chloé. Exactement, comme un secret.
+La couleur verte disparaît doucement, et d'autres couleurs apparaissent : le jaune, l'orange, le rouge. Ces couleurs étaient déjà dans la feuille, mais le vert les cachait. « Comme un secret ? » a dit Chloé. Exactement.
 
-Ensuite, les feuilles tombent. L'arbre reste nu tout l'hiver. Il ne travaille plus, il se repose. Il dort, comme certains animaux.
+Ensuite, les feuilles tombent et l'arbre reste nu tout l'hiver.
 
-« Mais Papi, l'arbre est mort ? » Chloé était inquiète. Non, ma chérie ! L'arbre est bien vivant. Regarde les branches : il y a déjà de tout petits bourgeons. Dans ces bourgeons, les feuilles du printemps attendent. Tout est déjà prêt pour l'année prochaine.
+« Mais Papi, l'arbre est mort ? » Non, ma chérie ! Regarde les branches : il y a déjà de tout petits bourgeons. Les feuilles du printemps attendent dedans.
 
-Chloé a ramassé une feuille rouge et une feuille jaune pour sa collection. « Alors l'automne, ce n'est pas triste, a-t-elle dit. C'est l'arbre qui va dormir. »
+Chloé a ramassé une feuille rouge et une feuille jaune. « Alors l'automne, ce n'est pas triste, a-t-elle dit. C'est l'arbre qui va dormir. »
 
 C'est exactement ça. Et au printemps, le réveil sera magnifique.`,
     sourceName: "Written for Lire",
@@ -2069,17 +2063,15 @@ C'est exactement ça. Et au printemps, le réveil sera magnifique.`,
     preview: "La pluie tombe souvent, mais d'où vient-elle vraiment ?",
     blurbEn:
       "A rainy afternoon, a curious son, and the great journey of water: from the sea to the clouds to the puddles in the street — and round again, for millions of years.",
-    body: `Mercredi après-midi, il pleuvait fort. Mon fils Léo regardait la pluie par la fenêtre, un peu déçu : pas de football aujourd'hui. Soudain, il m'a demandé : « Papa, d'où vient toute cette eau ? » Je lui ai proposé un marché : je t'explique, et après, on fait des crêpes. Marché conclu.
+    body: `Mercredi après-midi, il pleuvait fort. Mon fils Léo regardait la pluie par la fenêtre, un peu déçu : pas de football aujourd'hui. Soudain, il m'a demandé : « Papa, d'où vient toute cette eau ? » Je lui ai proposé un marché : je t'explique, et après, on fait des crêpes.
 
-L'histoire de la pluie est un grand voyage, j'ai commencé. Elle commence loin d'ici, à la mer.
+L'histoire de la pluie est un grand voyage. Elle commence loin d'ici, à la mer. Le soleil chauffe l'eau de la mer, des lacs et des rivières. Quand l'eau devient chaude, une partie monte dans l'air, invisible. Cette eau invisible s'appelle la vapeur. « Comme au-dessus de la casserole ? » a demandé Léo. Exactement !
 
-Le soleil chauffe l'eau de la mer, des lacs et des rivières. Quand l'eau devient chaude, une partie monte dans l'air. On ne la voit pas : elle est invisible, comme un souffle. Cette eau invisible s'appelle la vapeur. « Comme au-dessus de la casserole ? » a demandé Léo. Exactement ! Quand maman fait des pâtes, tu vois la vapeur monter. C'est pareil, mais en très grand.
-
-La vapeur monte haut dans le ciel. Et là-haut, il fait froid. Alors la vapeur se transforme en gouttes minuscules. Des millions de gouttes se rassemblent et forment… « Un nuage ! » a crié Léo. Bravo ! Un nuage, c'est de l'eau qui flotte dans le ciel.
+La vapeur monte haut dans le ciel. Là-haut, il fait froid. Alors la vapeur se transforme en gouttes minuscules. Des millions de gouttes se rassemblent et forment… « Un nuage ! » a crié Léo. Bravo !
 
 Le vent pousse les nuages au-dessus des villes et des montagnes. Les gouttes grossissent, le nuage devient gris et lourd. Et quand il est trop lourd, les gouttes tombent. C'est la pluie.
 
-Ensuite, l'eau de pluie entre dans la terre, retrouve les rivières, et les rivières retournent à la mer. Et tout recommence ! Ce voyage s'appelle le cycle de l'eau. Il tourne depuis des millions d'années. La goutte sur la fenêtre est peut-être déjà passée par l'océan, par un nuage du bout du monde, ou par le verre d'un pharaon !
+Ensuite, l'eau de pluie entre dans la terre, retrouve les rivières, et les rivières retournent à la mer. Et tout recommence ! Ce voyage s'appelle le cycle de l'eau.
 
 Léo a regardé la pluie avec d'autres yeux. « Alors la pluie, c'est de la mer qui voyage. »
 
@@ -2096,19 +2088,17 @@ Et maintenant, les crêpes. Promis, c'est promis.`,
     preview: "Chaque automne, certains oiseaux partent vers le sud.",
     blurbEn:
       "In October the swallows gather on the wires, and then one morning they're gone. The amazing story of bird migration: why they leave, how far they fly, and how they find their way back.",
-    body: `En octobre, devant chez moi, les hirondelles se rassemblent sur les fils électriques. Elles sont des dizaines, puis des centaines, alignées comme des notes de musique. Et puis, un matin, elles ne sont plus là. Parties. Toutes en même temps.
+    body: `En octobre, devant chez moi, les hirondelles se rassemblent sur les fils électriques. Elles sont des dizaines, puis des centaines. Et puis, un matin, elles ne sont plus là. Parties.
 
 Où vont-elles ? Très loin : en Afrique, de l'autre côté de la mer. Chaque automne, des millions d'oiseaux quittent l'Europe et volent vers le sud. Ce grand voyage s'appelle la migration.
 
-Pourquoi partent-ils ? À cause de la nourriture. Les hirondelles mangent des insectes. En hiver, chez nous, il fait froid et les insectes disparaissent. Pas d'insectes, pas de repas. Alors les oiseaux vont là où il fait chaud et où la nourriture les attend.
+Pourquoi partent-ils ? À cause de la nourriture. Les hirondelles mangent des insectes, et en hiver, chez nous, les insectes disparaissent. Alors les oiseaux vont là où il fait chaud.
 
-Le voyage est incroyable et dangereux. Certains oiseaux volent des milliers de kilomètres. Ils traversent la mer, les montagnes, parfois le désert. Ils volent le jour et souvent la nuit. Beaucoup voyagent en groupe : c'est plus sûr, et les jeunes apprennent la route avec les adultes. Les oies volent en forme de V, pour économiser leurs forces. L'oiseau devant fatigue plus, alors elles changent de place, chacune son tour. Belle organisation, non ?
+Le voyage est incroyable et dangereux. Certains oiseaux volent des milliers de kilomètres, au-dessus de la mer et des montagnes. Beaucoup voyagent en groupe : c'est plus sûr, et les jeunes apprennent la route avec les adultes.
 
-Mais le plus étonnant, c'est le retour. Au printemps, les hirondelles reviennent. Et souvent, elles retrouvent exactement le même toit, le même nid que l'année d'avant ! Sans carte, sans téléphone. Comment font-elles ? Les scientifiques pensent qu'elles utilisent le soleil, les étoiles et même le champ magnétique de la Terre, comme une boussole invisible. Mais tout le mystère n'est pas encore expliqué.
+Mais le plus étonnant, c'est le retour. Au printemps, les hirondelles reviennent, et souvent elles retrouvent exactement le même nid que l'année d'avant ! Sans carte, sans téléphone. Les scientifiques pensent qu'elles utilisent le soleil, les étoiles et le champ magnétique de la Terre.
 
-Alors au printemps, quand les premières hirondelles arrivent dans votre ciel, pensez à leur voyage. Ces petits oiseaux de vingt grammes reviennent d'Afrique.
-
-Et ils sont peut-être nés sous votre toit.`,
+Alors au printemps, quand les premières hirondelles arrivent dans votre ciel, pensez à leur voyage. Ces petits oiseaux de vingt grammes reviennent d'Afrique, et ils sont peut-être nés sous votre toit.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2121,19 +2111,19 @@ Et ils sont peut-être nés sous votre toit.`,
     preview: "Cette année, j'ai décidé d'apprendre à faire du skate.",
     blurbEn:
       "At thirty-four, the writer buys a skateboard: the falls, the doubts, a ten-year-old coach called Théo, and the glorious afternoon of the first real ride across the park.",
-    body: `Pour mes trente-quatre ans, je me suis offert un cadeau surprenant : un skateboard. Mes amis ont ri. « Un skate ? À ton âge ? » Oui, à mon âge. Quand j'étais ado, je rêvais d'en faire, mais je n'ai jamais osé. Cette année, j'ai décidé : c'est maintenant ou jamais.
+    body: `Pour mes trente-quatre ans, je me suis offert un cadeau surprenant : un skateboard. Mes amis ont ri. « Un skate ? À ton âge ? » Quand j'étais ado, je rêvais d'en faire, mais je n'ai jamais osé. Cette année, c'est maintenant ou jamais.
 
-Le premier jour, au parc, j'étais très nerveux. J'ai posé un pied sur la planche. Elle a bougé. J'ai posé le deuxième pied. Je suis tombé. Directement, comme un sac de pommes de terre. Une dame m'a demandé si j'allais bien. Mon honneur était plus blessé que mon dos.
+Le premier jour, au parc, j'étais très nerveux. J'ai posé un pied sur la planche. Elle a bougé. J'ai posé le deuxième pied, et je suis tombé, comme un sac de pommes de terre.
 
-Pendant deux semaines, ça a été difficile. Je tombais tous les jours. J'avais des bleus sur les genoux et sur les mains. Le soir, j'avais mal partout. Plusieurs fois, j'ai pensé arrêter. Le skate restait dans l'entrée, et il me regardait avec reproche.
+Pendant deux semaines, ça a été difficile. Je tombais tous les jours et j'avais des bleus. Plusieurs fois, j'ai pensé arrêter.
 
-Et puis j'ai rencontré Théo. Théo a dix ans. Il fait du skate comme un champion, avec une facilité incroyable. Un jour, il m'a observé, puis il s'est approché : « Monsieur, vous regardez vos pieds. Il faut regarder loin devant. Et pliez les genoux, sinon vous tombez. »
+Et puis j'ai rencontré Théo, dix ans, qui fait du skate comme un champion. Un jour, il s'est approché : « Monsieur, vous regardez vos pieds. Il faut regarder loin devant. Et pliez les genoux, sinon vous tombez. »
 
-Les conseils de Théo ont tout changé. Regarder devant. Plier les genoux. Ne pas avoir peur de la vitesse. Chaque samedi, mon petit professeur me donnait une nouvelle leçon. En échange, je lui achetais un jus d'orange. C'était notre contrat.
+Les conseils de Théo ont tout changé. Chaque samedi, mon petit professeur me donnait une nouvelle leçon. En échange, je lui achetais un jus d'orange.
 
-Le mois dernier, le grand moment est arrivé : j'ai traversé tout le parc sur ma planche, sans tomber, avec le vent sur le visage. À l'arrivée, Théo a applaudi. J'étais fier comme un enfant.
+Le mois dernier, le grand moment est arrivé : j'ai traversé tout le parc sans tomber, avec le vent sur le visage. Théo a applaudi. J'étais fier comme un enfant.
 
-Je ne serai jamais un champion. Je tombe encore, et mes virages sont lents. Mais chaque samedi, je progresse un peu.
+Je ne serai jamais un champion. Je tombe encore, mais chaque samedi, je progresse un peu.
 
 Il n'y a pas d'âge pour apprendre. Il y a juste des genoux à plier et un peu de courage à trouver.`,
     sourceName: "Written for Lire",
@@ -2148,17 +2138,17 @@ Il n'y a pas d'âge pour apprendre. Il y a juste des genoux à plier et un peu d
     preview: "Depuis septembre, je vais à un cours de danse le mardi soir.",
     blurbEn:
       "Dragged to a dance class by a friend, the writer starts out with two left feet and a red face — and ends up finding the best evening of the week, and a bit of confidence too.",
-    body: `Tout est arrivé à cause de ma collègue Nadia. En septembre, elle m'a dit : « Je commence un cours de danse le mardi soir. Viens avec moi ! » J'ai répondu non. Elle a insisté. J'ai encore dit non. Elle a promis de m'offrir un restaurant. J'ai dit oui. Voilà comment, à quarante ans, je me suis retrouvé dans une salle de danse.
+    body: `Tout est arrivé à cause de ma collègue Nadia. En septembre, elle m'a dit : « Je commence un cours de danse le mardi soir. Viens avec moi ! » J'ai dit non, elle a insisté, et j'ai encore dit non. Puis elle a promis de m'offrir un restaurant. J'ai dit oui.
 
-Le premier cours a été une catastrophe. Nous étions quinze débutants, et j'étais le pire. La professeure, madame Elena, montrait les pas : un, deux, trois. Facile ? Pas pour moi. Mes pieds ne m'écoutaient pas. Je tournais à gauche quand tout le monde tournait à droite. J'ai marché sur les pieds de Nadia deux fois. J'étais rouge de honte.
+Le premier cours a été une catastrophe. Nous étions quinze débutants, et j'étais le pire. Je tournais à gauche quand tout le monde tournait à droite. J'ai marché sur les pieds de Nadia deux fois. J'étais rouge de honte.
 
-« Ce n'est pas grave ! disait madame Elena avec son accent chantant. Tout le monde débute. Le corps apprend lentement, mais il apprend. »
+« Ce n'est pas grave ! disait madame Elena, la professeure. Tout le monde débute. Le corps apprend lentement, mais il apprend. »
 
-Elle avait raison. Semaine après semaine, quelque chose a changé. En octobre, je connaissais les pas de base. En novembre, je ne regardais plus mes pieds tout le temps. En décembre, pendant une danse rapide, c'est arrivé : mon corps a bougé tout seul, avec la musique, sans réfléchir. Trois minutes de magie. Nadia m'a regardé, étonnée : « Mais tu danses ! »
+Elle avait raison. Semaine après semaine, quelque chose a changé. En octobre, je connaissais les pas de base. En décembre, mon corps a bougé tout seul, avec la musique, sans réfléchir. Nadia m'a regardé, étonnée : « Mais tu danses ! »
 
-Maintenant, le mardi soir est mon moment préféré de la semaine. Au bureau, je regarde ma montre à partir de cinq heures. Dans la salle de danse, j'oublie tout : le travail, les factures, les soucis. Il y a juste la musique, les pas et les rires du groupe.
+Maintenant, le mardi soir est mon moment préféré de la semaine. Dans la salle de danse, j'oublie tout : le travail, les factures, les soucis.
 
-La danse m'a aussi changé ailleurs. Je me tiens plus droit. J'ose un peu plus. Au mariage de mon cousin, le mois dernier, j'ai dansé toute la soirée. Avant, je restais assis près du buffet.
+La danse m'a aussi changé ailleurs. Je me tiens plus droit et j'ose un peu plus. Au mariage de mon cousin, le mois dernier, j'ai dansé toute la soirée. Avant, je restais assis près du buffet.
 
 Merci, Nadia. Au fait, je te dois toujours un restaurant. C'est moi qui invite.`,
     sourceName: "Written for Lire",
@@ -2175,19 +2165,19 @@ Merci, Nadia. Au fait, je te dois toujours un restaurant. C'est moi qui invite.`
       "A family bike ride along the river: proud kids in front, ducks and herons, a flat tyre at the worst moment, and the picnic that turned a breakdown into the best part of the day.",
     body: `Dimanche matin, le soleil brillait et le ciel était tout bleu. Mon mari a proposé : « Et si on sortait les vélos ? » Une heure après, toute la famille roulait sur la piste cyclable, le long de la rivière.
 
-Nous étions quatre : mon mari devant, les enfants au milieu, et moi derrière. Lucas, notre fils de neuf ans, venait de recevoir un nouveau vélo rouge. Il roulait fièrement, le dos bien droit, comme un coureur du Tour de France. Sa petite sœur Emma pédalait fort pour le suivre.
+Nous étions quatre : mon mari devant, les enfants au milieu, et moi derrière. Lucas, notre fils de neuf ans, venait de recevoir un nouveau vélo rouge et roulait fièrement. Emma, sa petite sœur, pédalait fort pour le suivre.
 
-La piste au bord de la rivière est magnifique. Nous sommes passés sous les grands arbres, devant les pêcheurs et les péniches. Emma s'arrêtait tout le temps : pour les canards, pour un héron gris, pour des fleurs jaunes. « Maman, regarde ! » Nous avancions lentement, mais c'était le but : prendre le temps.
+Nous sommes passés sous les grands arbres, devant les pêcheurs. Emma s'arrêtait tout le temps, pour les canards ou pour un héron gris.
 
-Après une heure, le drame. Mon vélo est devenu difficile, puis impossible. Un pneu à plat ! Nous nous sommes arrêtés au bord du chemin. Lucas était déçu : « Alors, la balade est finie ? »
+Après une heure, le drame. Mon vélo est devenu difficile, puis impossible. Un pneu à plat ! Lucas était déçu : « Alors, la balade est finie ? »
 
-« Pas du tout », a dit mon mari. Il avait tout prévu : les outils et une chambre à air dans son sac. Il a retourné le vélo et il a commencé la réparation, avec Lucas comme assistant. « Passe-moi le démonte-pneu ! » Lucas était ravi d'avoir un rôle important.
+« Pas du tout », a dit mon mari, qui avait pris les outils. Il a commencé la réparation, avec Lucas comme assistant. « Passe-moi le démonte-pneu ! » Lucas était ravi d'avoir un rôle important.
 
-Pendant ce temps, Emma et moi, nous avons ouvert le sac du pique-nique, un peu en avance. Des sandwichs, des tomates cerises, un gâteau au yaourt. Nous nous sommes installés dans l'herbe, face à la rivière. Les garçons nous ont rejointes, les mains noires et le sourire fier.
+Pendant ce temps, Emma et moi avons ouvert le sac du pique-nique en avance. Les garçons nous ont rejointes, les mains noires et le sourire fier.
 
 Ce pneu à plat nous a offert la plus belle pause de la journée : une heure au bord de l'eau, sans horaire et sans écran.
 
-Sur le chemin du retour, Lucas a déclaré : « La prochaine fois, on va jusqu'au pont ! » D'accord, champion. Dimanche prochain, le pont.`,
+Sur le chemin du retour, Lucas a déclaré : « La prochaine fois, on va jusqu'au pont ! » D'accord, champion.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2200,15 +2190,15 @@ Sur le chemin du retour, Lucas a déclaré : « La prochaine fois, on va jusqu'a
     preview: "Il y a six mois, j'ai trouvé un nouveau colocataire.",
     blurbEn:
       "Living with a stranger: the early-riser versus the night owl, the kitchen wars, one honest conversation with written rules — and the surprising friendship that followed.",
-    body: `Il y a six mois, mon loyer est devenu trop cher pour moi tout seul. La solution : trouver un colocataire. J'ai mis une annonce, et après quelques rencontres, j'ai choisi Marc, un infirmier de trente ans, calme et souriant. Nous ne nous connaissions pas du tout. J'étais un peu inquiet : vivre avec un inconnu, ce n'est pas rien.
+    body: `Il y a six mois, mon loyer est devenu trop cher pour moi tout seul. La solution : trouver un colocataire. J'ai mis une annonce, et j'ai choisi Marc, un infirmier de trente ans, calme et souriant. Nous ne nous connaissions pas du tout, et j'étais un peu inquiet.
 
-Les premières semaines ont été compliquées. Marc travaille tôt à l'hôpital : il se lève à cinq heures et demie. Moi, je travaille tard : je me couche à une heure du matin. Résultat : il faisait du bruit le matin quand je dormais, et je faisais du bruit le soir quand il dormait. Dans la cuisine, c'était pareil. Il aime tout ranger tout de suite ; moi, je laissais ma vaisselle « pour plus tard ». Sa patience diminuait, je le voyais bien.
+Les premières semaines ont été compliquées. Marc travaille tôt à l'hôpital : il se lève à cinq heures et demie. Moi, je me couche à une heure du matin. Dans la cuisine, c'était pareil : il aime tout ranger tout de suite, et moi, je laissais ma vaisselle « pour plus tard ».
 
-Un soir, Marc m'a proposé : « On boit un café et on parle ? » Nous avons discuté honnêtement, sans dispute. Chacun a dit ce qui le dérangeait. Puis nous avons écrit quelques règles simples sur une feuille, collée sur le frigo : silence après vingt-deux heures et avant sept heures, vaisselle faite le jour même, ménage le samedi, chacun son étage dans le frigo.
+Un soir, Marc m'a proposé : « On boit un café et on parle ? » Nous avons discuté honnêtement. Puis nous avons écrit quelques règles simples sur une feuille collée sur le frigo : silence après vingt-deux heures, vaisselle faite le jour même, ménage le samedi.
 
-Une feuille de papier a tout changé. Fini les petites tensions. Et petit à petit, autre chose est arrivé : nous sommes devenus amis. Le dimanche, nous cuisinons ensemble. Marc m'a appris sa recette de lasagnes ; je lui ai montré mon poulet au citron. Nous regardons les matchs de foot ensemble, et il m'a même accompagné chez le médecin quand j'étais malade.
+Une feuille de papier a tout changé. Et petit à petit, nous sommes devenus amis. Le dimanche, nous cuisinons ensemble. Marc m'a appris sa recette de lasagnes, et il m'a même accompagné chez le médecin quand j'étais malade.
 
-Le mois dernier, ma mère est venue dîner. Elle a observé notre appartement, nos habitudes, nos blagues. En partant, elle m'a dit : « Tu as trouvé un bon colocataire. » Non, maman. J'ai trouvé mieux : un ami, avec un contrat de location.`,
+Le mois dernier, ma mère est venue dîner. En partant, elle m'a dit : « Tu as trouvé un bon colocataire. » Non, maman. J'ai trouvé mieux : un ami.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2221,21 +2211,21 @@ Le mois dernier, ma mère est venue dîner. Elle a observé notre appartement, n
     preview: "Le week-end dernier, j'ai passé une journée sans téléphone.",
     blurbEn:
       "A self-imposed challenge: one full Saturday without a phone. The phantom reaches for a missing pocket, the surprisingly long hours, a real phone call to grandma — and what came after.",
-    body: `Samedi dernier, j'ai fait une expérience : une journée entière sans téléphone. Pas de messages, pas de photos, pas de vidéos. Rien. L'idée est venue d'un chiffre : mon téléphone m'a montré mon temps d'écran de la semaine. Quatre heures par jour. Quatre heures ! J'ai eu un choc.
+    body: `Samedi dernier, j'ai fait une expérience : une journée entière sans téléphone. Pas de messages, pas de photos, pas de vidéos. Rien. L'idée est venue d'un chiffre : mon téléphone m'a montré mon temps d'écran de la semaine. Quatre heures par jour ! J'ai eu un choc.
 
-Vendredi soir, j'ai éteint le téléphone et je l'ai mis dans un tiroir. Bonne nuit, petit écran. À demain. Non : à après-demain.
+Vendredi soir, j'ai éteint le téléphone et je l'ai mis dans un tiroir.
 
-Le samedi matin a été étrange. Au petit-déjeuner, ma main cherchait le téléphone à côté du bol. Une habitude automatique. Dans le bus, tout le monde regardait son écran ; moi, je regardais la ville. J'ai vu des choses nouvelles dans ma propre rue : une jolie porte bleue, un vieux monsieur qui nourrissait les moineaux, une plaque avec un nom d'histoire.
+Le samedi matin a été étrange. Au petit-déjeuner, ma main cherchait le téléphone, par habitude. Dans le bus, tout le monde regardait son écran ; moi, je regardais la ville. J'ai vu des choses nouvelles dans ma propre rue.
 
-Le plus difficile ? Les petits moments vides. La file d'attente à la boulangerie. Les cinq minutes avant le rendez-vous avec mon ami. D'habitude, je remplis ces moments avec l'écran. Samedi, je les ai juste… vécus. Au début, c'était inconfortable. Ensuite, c'est devenu reposant.
+Le plus difficile ? Les petits moments vides, comme la file d'attente à la boulangerie. D'habitude, je remplis ces moments avec l'écran. Samedi, je les ai juste vécus. Au début, c'était inconfortable. Ensuite, c'est devenu reposant.
 
-L'après-midi, j'ai fait des choses oubliées. J'ai lu quarante pages d'un roman, d'un coup. J'ai appelé ma grand-mère depuis le vieux téléphone fixe ; nous avons parlé une heure, et elle était si contente. J'ai cuisiné lentement, sans recette sur écran, avec le vieux livre de cuisine de maman.
+L'après-midi, j'ai fait des choses oubliées. J'ai lu quarante pages d'un roman, d'un coup. J'ai appelé ma grand-mère depuis le vieux téléphone fixe ; nous avons parlé une heure, et elle était si contente.
 
-Le soir, j'ai remarqué une chose bizarre : la journée m'a semblé longue. Longue et pleine. D'habitude, mes samedis passent à toute vitesse.
+Le soir, j'ai remarqué une chose bizarre : la journée m'a semblé longue et pleine. D'habitude, mes samedis passent à toute vitesse.
 
-Dimanche matin, j'ai rallumé le téléphone. Verdict : vingt-trois messages, et aucun n'était urgent ni important.
+Dimanche matin, j'ai rallumé le téléphone. Verdict : vingt-trois messages, et aucun n'était urgent.
 
-Depuis, j'ai gardé une règle : le samedi matin, le téléphone reste dans le tiroir jusqu'à midi. Quatre heures de vraie vie. C'est un bon début.`,
+Depuis, j'ai gardé une règle : le samedi matin, le téléphone reste dans le tiroir jusqu'à midi. C'est un bon début.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2248,19 +2238,19 @@ Depuis, j'ai gardé une règle : le samedi matin, le téléphone reste dans le t
     preview: "Samedi, il faisait beau. Nous avons fait un pique-nique.",
     blurbEn:
       "A spontaneous Saturday picnic that grew from three friends to eight: everyone brings a dish, nobody brings a corkscrew, a dog steals the show, and the afternoon melts into evening.",
-    body: `Samedi matin, Sophie a envoyé un message au groupe : « Il fait super beau. Pique-nique au parc à midi ? » En dix minutes, tout était organisé. C'est ça, la magie des beaux jours : les plans se font tout seuls.
+    body: `Samedi matin, Sophie a envoyé un message au groupe : « Il fait super beau. Pique-nique au parc à midi ? » En dix minutes, tout était organisé.
 
-Chacun devait apporter quelque chose. Sophie a préparé sa fameuse salade de pâtes. Marc a pris du pain, trois fromages et du saucisson. Léa a fait un cake aux olives. Moi, j'ai apporté les fruits : des fraises, des cerises et un melon. Karim est arrivé avec une bouteille de jus et une bouteille de vin.
+Chacun devait apporter quelque chose. Sophie a préparé sa fameuse salade de pâtes. Marc a pris du pain, trois fromages et du saucisson. Léa a fait un cake aux olives. Moi, j'ai apporté les fruits.
 
-Nous avons trouvé le coin parfait : un grand arbre, de l'ombre, une vue sur le lac. Nous avons étalé deux couvertures et sorti les trésors de nos sacs. La table était magnifique. Un détail manquait : le tire-bouchon. Personne n'y avait pensé ! Karim a essayé d'ouvrir la bouteille avec sa chaussure — une technique vue sur internet. Échec total et fou rire général. Tant pis, jus de fruits pour tout le monde.
+Nous avons trouvé le coin parfait : un grand arbre, de l'ombre, une vue sur le lac. Un détail manquait : le tire-bouchon. Karim a essayé d'ouvrir la bouteille avec sa chaussure. Échec total et fou rire général.
 
 Pendant le repas, d'autres amis nous ont rejoints. De trois, nous sommes passés à huit. Un pique-nique, c'est élastique : il y a toujours de la place pour une personne de plus.
 
-Après le repas, chacun a trouvé son bonheur. Marc et Karim ont joué aux cartes. Léa a dormi au soleil, un livre ouvert sur le ventre. Sophie et moi, nous avons parlé de tout et de rien, les pieds dans l'herbe. Un chien est venu nous voir ; il a reçu du saucisson et beaucoup de caresses, puis il est reparti, très content de sa journée.
+Après le repas, chacun a trouvé son bonheur. Marc et Karim ont joué aux cartes. Léa a dormi au soleil, un livre ouvert sur le ventre. Sophie et moi, nous avons parlé de tout et de rien, les pieds dans l'herbe.
 
-L'après-midi a glissé doucement vers le soir. Vers sept heures, l'air est devenu frais. Nous avons rangé les affaires, secoué les couvertures, dit au revoir au lac.
+L'après-midi a glissé doucement vers le soir. Vers sept heures, l'air est devenu frais et nous avons rangé les affaires.
 
-Coût de cette journée parfaite : quelques euros chacun. Le bonheur n'est vraiment pas une question d'argent. C'est une question de couverture, d'amis et de soleil.`,
+Coût de cette journée parfaite : quelques euros chacun. Le bonheur n'est pas une question d'argent. C'est une question de couverture, d'amis et de soleil.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2273,17 +2263,17 @@ Coût de cette journée parfaite : quelques euros chacun. Le bonheur n'est vraim
     preview: "Pendant les vacances, nous avons visité un vieux château.",
     blurbEn:
       "A family visit to a Loire château: five hundred years of history, a guide with great stories, a spiral staircase race, royal gardens — and a girl who hated history changing her mind.",
-    body: `Pendant les vacances de printemps, mes parents ont annoncé le programme du jour : la visite d'un château au bord de la Loire. Ma sœur Inès a soupiré très fort. « Un château ? Encore de l'histoire ? » Inès déteste l'histoire à l'école. Papa a souri : « Attends de voir. »
+    body: `Pendant les vacances de printemps, mes parents ont annoncé le programme du jour : la visite d'un château au bord de la Loire. Ma sœur Inès a soupiré très fort. « Un château ? Encore de l'histoire ? » Papa a souri : « Attends de voir. »
 
-Le château est apparu au bout d'une allée d'arbres. Même Inès a dit « waouh ». Des tours rondes, des toits pointus, des murs blancs qui se reflétaient dans la rivière. Une carte postale, mais en vrai.
+Le château est apparu au bout d'une allée d'arbres. Même Inès a dit « waouh ». Des tours rondes, des toits pointus, des murs blancs qui se reflétaient dans la rivière.
 
-Notre guide s'appelait monsieur Perrin. Un petit homme passionné, avec une moustache et mille histoires. Grâce à lui, les pierres se sont mises à parler. Dans la grande salle, il nous a montré la cheminée immense : « Ici, on faisait rôtir un bœuf entier pour les fêtes du roi. » Dans la chambre royale, il a raconté les visites secrètes, les trahisons, les lettres cachées. Inès écoutait, les yeux grands ouverts. Elle a même posé trois questions. Trois !
+Notre guide, monsieur Perrin, connaissait mille histoires. Dans la grande salle, il nous a montré la cheminée immense : « Ici, on faisait rôtir un bœuf entier pour les fêtes du roi. » Inès écoutait, les yeux grands ouverts. Elle a même posé trois questions !
 
-Le moment préféré de tout le monde : l'escalier en colimaçon de la grande tour. Cent trente-sept marches ! Nous les avons comptées en montant. En haut, la vue était incroyable : la Loire, les vignes, les petits villages. On se sentait comme le roi, il y a cinq cents ans.
+Le moment préféré de tout le monde : l'escalier en colimaçon de la grande tour. Cent trente-sept marches ! En haut, la vue était incroyable : la Loire, les vignes, les petits villages.
 
-Après le château, nous avons visité les jardins. Des fleurs partout, dessinées comme un tapis. Des allées parfaites. Maman a pris cent photos. Papa a fait la sieste sur un banc, « pour admirer le ciel du château ».
+Après le château, nous avons visité les jardins. Maman a pris cent photos. Papa a fait la sieste sur un banc, « pour admirer le ciel du château ».
 
-À la boutique, Inès a acheté un livre. Un livre sur les châteaux de la Loire ! Notre Inès, qui déteste l'histoire. Dans la voiture, elle a lu tout le trajet.
+À la boutique, Inès a acheté un livre sur les châteaux de la Loire. Notre Inès, qui déteste l'histoire ! Dans la voiture, elle a lu tout le trajet.
 
 Ce soir-là, papa m'a fait un clin d'œil. L'histoire n'est pas ennuyeuse. Elle est mal racontée, parfois. Merci, monsieur Perrin.`,
     sourceName: "Written for Lire",
@@ -2298,19 +2288,17 @@ Ce soir-là, papa m'a fait un clin d'œil. L'histoire n'est pas ennuyeuse. Elle 
     preview: "L'année dernière, j'ai commencé à faire du compost.",
     blurbEn:
       "From sceptic to convert: a year of home composting, the fear of bad smells, the worms doing invisible work, a lighter bin — and the black gold that made the tomatoes happy.",
-    body: `Tout a commencé par une remarque de ma fille Camille, huit ans, en pleine leçon d'écologie à l'école : « Papa, pourquoi on jette les épluchures à la poubelle ? La maîtresse dit qu'on peut faire du compost. » Bonne question. Je n'avais pas de bonne réponse.
+    body: `Tout a commencé par une remarque de ma fille Camille, huit ans, en pleine leçon d'écologie : « Papa, pourquoi on jette les épluchures à la poubelle ? La maîtresse dit qu'on peut faire du compost. » Bonne question. Je n'avais pas de bonne réponse.
 
-Alors, l'année dernière, nous avons commencé. J'ai installé un bac à compost au fond du jardin. Honnêtement, j'avais des doutes. J'imaginais des odeurs terribles et des nuages de mouches. Mes voisins allaient adorer…
+Alors, l'année dernière, nous avons commencé. J'ai installé un bac à compost au fond du jardin. Honnêtement, j'avais des doutes : j'imaginais des odeurs terribles.
 
-La règle est simple, et Camille la connaît par cœur. Dans le compost, on met : les épluchures de fruits et de légumes, le marc de café, les coquilles d'œufs, les feuilles mortes. On ne met pas : la viande, le poisson, le fromage. Camille est la chef du compost. Chaque soir, elle vide le petit seau de la cuisine dans le grand bac, très sérieusement.
+La règle est simple. Dans le compost, on met les épluchures, le marc de café, les coquilles d'œufs et les feuilles mortes. On ne met pas de viande, de poisson, ni de fromage. Camille est la chef du compost et vide le petit seau chaque soir.
 
-Et les mauvaises odeurs ? Surprise : il n'y en a pas. Un compost bien fait sent la forêt, pas la poubelle. Le secret, c'est le mélange : un peu de déchets de cuisine, un peu de feuilles sèches, et on remue de temps en temps.
+Et les mauvaises odeurs ? Surprise : il n'y en a pas. Un compost bien fait sent la forêt, pas la poubelle. Le secret, c'est le mélange, et il faut remuer de temps en temps.
 
-Dans le bac, une armée invisible travaille pour nous : des vers de terre, des insectes minuscules, des champignons microscopiques. Ils mangent nos déchets et les transforment lentement. Camille les appelle « nos petits ouvriers ». Quand on ouvre le bac, elle les salue.
+Dans le bac, une armée invisible travaille : des vers de terre, des insectes, des champignons microscopiques. Camille les appelle « nos petits ouvriers ».
 
-Après plusieurs mois, la magie était là : au fond du bac, une belle terre noire, douce et riche. Les jardiniers l'appellent « l'or noir ». Au printemps, nous l'avons donnée à nos tomates et à nos fleurs. Résultat : un jardin en pleine forme et des tomates délicieuses.
-
-Autre victoire : notre poubelle a maigri. Presque un tiers de déchets en moins !
+Après plusieurs mois, la magie était là : une belle terre noire, douce et riche. Les jardiniers l'appellent « l'or noir ». Au printemps, nous l'avons donnée à nos tomates. Résultat : des tomates délicieuses, et une poubelle qui a maigri d'un tiers !
 
 Nos épluchures nourrissent le jardin, et le jardin nous nourrit. La boucle est bouclée, comme dit la maîtresse de Camille.`,
     sourceName: "Written for Lire",
@@ -2325,21 +2313,19 @@ Nos épluchures nourrissent le jardin, et le jardin nous nourrit. La boucle est 
     preview: "Hier, en rentrant, j'ai cherché mes clés. Elles n'étaient pas là.",
     blurbEn:
       "The evening the keys vanished: an emptied bag on the doorstep, a mental replay of the whole day, phone calls around town, one kind waiter — and a lesson learned about hooks by the door.",
-    body: `Hier soir, dix-neuf heures. Je rentre du travail, fatigué, avec une seule envie : mon canapé. Devant ma porte, je mets la main dans ma poche droite. Pas de clés. Poche gauche. Rien. Les poches du manteau. Vides.
+    body: `Hier soir, dix-neuf heures. Je rentre du travail, fatigué. Devant ma porte, je mets la main dans ma poche droite. Pas de clés. Poche gauche. Rien. Les poches du manteau. Vides.
 
-Le petit moment de panique commence. Je pose mon sac par terre et je le vide complètement sur le palier : portefeuille, chargeur, un livre, trois stylos, un vieux ticket de cinéma, des miettes mystérieuses. Mais pas de clés. Ma voisine passe et me regarde, assise au milieu de mes affaires. « Tout va bien ? » Très bien, madame Morel, très bien.
+Le petit moment de panique commence. Je pose mon sac par terre et je le vide complètement sur le palier. Mais pas de clés. Ma voisine passe et me regarde, assise au milieu de mes affaires. « Tout va bien ? » Très bien, madame Morel.
 
-Réfléchissons. La technique du détective : refaire la journée à l'envers. Ce matin, j'ai fermé la porte à clé, donc j'avais mes clés. Ensuite : le bus, le bureau, la boulangerie à midi, le café avec Julien à seize heures, le bus du retour. Les clés sont quelque part sur ce chemin.
+Réfléchissons. Je refais la journée à l'envers. Ce matin, j'ai fermé la porte à clé, donc j'avais mes clés. Ensuite : le bus, le bureau, la boulangerie à midi, le café avec Julien.
 
-Premier appel : le bureau. Mon collègue Samir fait le tour de mon poste. Rien sur la table, rien sous les papiers. Deuxième appel : la boulangerie. « Des clés ? Non, désolée, rien aujourd'hui. » Mon espoir diminue. Troisième appel : le café.
+Premier appel : le bureau. Rien. Deuxième appel : la boulangerie. « Des clés ? Non, désolée. » Mon espoir diminue. Troisième appel : le café.
 
-« Le Petit Zinc, bonsoir ! » Je décris mes clés : un porte-clés rouge, en forme de poisson. Le serveur rit : « Le poisson rouge ! Oui, il est là ! Vous les avez laissées sur la table, près de la fenêtre. » Je crois que j'ai crié de joie dans le téléphone.
+« Le Petit Zinc, bonsoir ! » Je décris mes clés : un porte-clés rouge, en forme de poisson. Le serveur rit : « Oui, il est là, sur la table près de la fenêtre ! » Je crois que j'ai crié de joie.
 
-Vingt minutes plus tard, le serveur me donne mes clés avec un grand sourire. « Ça arrive tous les jours, vous savez. Les téléphones, les parapluies, les clés… La table près de la fenêtre est une spécialiste. » Je lui laisse un bon pourboire. Il l'a mérité.
+Vingt minutes plus tard, le serveur me donne mes clés avec un grand sourire. « Ça arrive tous les jours, vous savez. » Je lui laisse un bon pourboire.
 
-Aujourd'hui, j'ai installé un crochet près de ma porte. Un beau crochet rouge. Maintenant, les clés ont une maison.
-
-Le poisson rouge ne voyagera plus.`,
+Aujourd'hui, j'ai installé un crochet rouge près de ma porte. Maintenant, les clés ont une maison.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -2352,17 +2338,17 @@ Le poisson rouge ne voyagera plus.`,
     preview: "Il y a un an, j'ai décidé d'apprendre une nouvelle langue.",
     blurbEn:
       "One year of learning Spanish: the humbling start, the ten-minute daily rule, songs and cartoons as teachers, the magic café moment in Seville — and why mistakes are part of the deal.",
-    body: `Il y a un an, jour pour jour, j'ai téléchargé une application et j'ai écrit dans mon carnet : « Objectif : parler espagnol. » Pourquoi l'espagnol ? Un rêve de voyage en Andalousie, et une collègue madrilène, Carmen, avec qui je voulais parler autrement qu'en anglais.
+    body: `Il y a un an, j'ai téléchargé une application et j'ai écrit dans mon carnet : « Objectif : parler espagnol. » Pourquoi l'espagnol ? Un rêve de voyage en Andalousie, et une collègue madrilène, Carmen.
 
-Le début a été une leçon de modestie. Les premières semaines, je confondais tout. Je disais « je suis fatigué » à la place de « je suis content ». Carmen riait gentiment. Les verbes espagnols ont des formes partout, comme en français, et ma mémoire refusait de coopérer. Un soir de novembre, découragé, j'ai failli tout arrêter.
+Le début a été une leçon de modestie. Les premières semaines, je confondais tout. Je disais « je suis fatigué » à la place de « je suis content ». Un soir de novembre, découragé, j'ai failli tout arrêter.
 
-C'est Carmen qui m'a sauvé, avec un conseil simple : « Arrête les grandes sessions du dimanche. Fais dix minutes par jour. Tous les jours. » Elle avait raison. Dix minutes le matin avec le café, c'est facile à tenir. Un an plus tard, je n'ai presque jamais raté un jour.
+C'est Carmen qui m'a sauvé, avec un conseil simple : « Arrête les grandes sessions du dimanche. Fais dix minutes par jour. » Elle avait raison. Un an plus tard, je n'ai presque jamais raté un jour.
 
-J'ai aussi trouvé mes propres méthodes, les plus agréables. J'écoute des chansons espagnoles et je cherche les paroles. Je regarde des dessins animés — oui, des dessins animés : ils parlent lentement et simplement, c'est parfait. Et le vendredi, à la pause déjeuner, Carmen et moi parlons uniquement en espagnol. Nos collègues nous appellent « la petite Espagne ».
+J'ai aussi trouvé mes propres méthodes. J'écoute des chansons espagnoles et je cherche les paroles. Je regarde des dessins animés : ils parlent lentement, c'est parfait. Et le vendredi, Carmen et moi parlons uniquement en espagnol.
 
-Et puis, en mai, le voyage. Séville, enfin. Dans un café, j'ai commandé en espagnol, discuté avec le serveur du temps et du football, compris ses blagues. En sortant, j'avais un sourire immense. Un an de petits efforts pour ce moment précis. Ça valait tout.
+Et puis, en mai, le voyage. Séville, enfin. Dans un café, j'ai commandé en espagnol, discuté avec le serveur du football, compris ses blagues. En sortant, j'avais un sourire immense.
 
-Je fais encore beaucoup d'erreurs. La semaine dernière, j'ai dit à Carmen que j'avais « mangé une porte » au lieu d'une soupe. Elle en rit encore. Mais j'ai compris une chose : les erreurs ne sont pas l'ennemi. Le silence, oui.
+Je fais encore beaucoup d'erreurs. La semaine dernière, j'ai dit à Carmen que j'avais « mangé une porte » au lieu d'une soupe. Elle en rit encore. Mais les erreurs ne sont pas l'ennemi. Le silence, oui.
 
 Année deux : objectif Andalousie, version longue. Et peut-être, après, l'italien ?`,
     sourceName: "Written for Lire",
@@ -2377,21 +2363,21 @@ Année deux : objectif Andalousie, version longue. Et peut-être, après, l'ital
     preview: "Le jeudi soir, je joue au basket avec des amis.",
     blurbEn:
       "Thursday-night basketball with colleagues in an old gym: an unlikely team, a legendary comeback attempt, two baskets scored, one defeat — and the real victory at the café afterwards.",
-    body: `Le jeudi soir, à dix-neuf heures, une chose sacrée m'attend : le basket. Nous jouons dans un vieux gymnase, derrière la mairie. Le sol grince, un panneau est un peu tordu, et le chauffage fonctionne un jour sur deux. Nous adorons cet endroit.
+    body: `Le jeudi soir, à dix-neuf heures, une chose sacrée m'attend : le basket. Nous jouons dans un vieux gymnase, derrière la mairie. Le sol grince et le chauffage fonctionne un jour sur deux.
 
-L'équipe, c'est un mélange improbable. Il y a Paul, deux mètres de haut, qui n'a jamais fait de sport avant ses quarante ans. Il y a Sonia, petite et rapide comme l'éclair, la meilleure d'entre nous. Il y a Ahmed, qui commente le match comme à la télévision pendant qu'il joue. Et il y a moi, ni grand ni rapide, mais motivé.
+L'équipe, c'est un mélange improbable. Il y a Paul, deux mètres de haut, qui n'a jamais fait de sport avant ses quarante ans. Il y a Sonia, petite et rapide comme l'éclair, la meilleure d'entre nous. Et il y a moi, ni grand ni rapide, mais motivé.
 
-Hier soir, match important : les « Renards » contre les « Aigles ». Enfin, important… Nous avons inventé les noms des équipes et il n'y a pas de trophée. Mais sur le terrain, tout le monde joue comme en finale.
+Hier soir, match important : les « Renards » contre les « Aigles ». Nous avons inventé les noms, mais sur le terrain, tout le monde joue comme en finale.
 
-La première mi-temps a été difficile pour mes Renards. Les Aigles menaient de dix points. Sonia nous a rassemblés : « On défend mieux, on passe plus vite, et on y croit ! » Une vraie capitaine.
+La première mi-temps a été difficile. Les Aigles menaient de dix points. Sonia nous a rassemblés : « On défend mieux, on passe plus vite, et on y croit ! »
 
-La deuxième mi-temps a été folle. Paul a bloqué trois tirs avec ses grands bras. Sonia volait des ballons partout. Ahmed criait : « Incroyable retournement de situation, mesdames et messieurs ! » Et moi, j'ai marqué deux paniers. Deux ! Mon record de la saison.
+La deuxième mi-temps a été folle. Paul a bloqué trois tirs. Sonia volait des ballons partout. Et moi, j'ai marqué deux paniers ! Mon record de la saison.
 
-Nous avons perdu de trois points. Au dernier moment, mon tir de la victoire a tourné sur le cercle… et il est sorti. Les Aigles ont crié de joie. J'ai regardé le plafond du vieux gymnase avec désespoir. Ahmed a commenté : « Quelle tragédie sportive ! »
+Nous avons perdu de trois points. Mon tir de la victoire a tourné sur le cercle et il est sorti. Les Aigles ont crié de joie.
 
-Et puis, comme tous les jeudis, vainqueurs et vaincus sont allés au café d'en face. Une heure de rires, de mauvaise foi et de « la semaine prochaine, on vous détruit ».
+Et puis, comme tous les jeudis, vainqueurs et vaincus sont allés au café d'en face. Une heure de rires et de « la semaine prochaine, on vous détruit ».
 
-Nous jouons au basket, officiellement. En vérité, nous entretenons une amitié. Le score final ne compte pas beaucoup. Le jeudi soir, si.`,
+Nous jouons au basket, officiellement. En vérité, nous entretenons une amitié. Le jeudi soir, ça compte plus que le score.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -6213,21 +6199,21 @@ Chez moi, maintenant, il y a les deux. Et quand Tom vient, je fais du thé. Avec
       "Camille recounts a very long day in the past tense: an early meeting, a lost document, and a small victory at six o'clock. (Section: Telling the past, 1/5.)",
     body: `Hier, j'ai eu une journée très longue. Je m'en souviendrai longtemps !
 
-Tout a commencé à cinq heures et demie du matin. J'avais une réunion importante à huit heures, alors je me suis levée très tôt. Dehors, il faisait encore nuit.
+Tout a commencé à cinq heures et demie du matin. J'avais une réunion importante à huit heures. Alors je me suis levée très tôt. Dehors, il faisait encore nuit.
 
-J'ai pris un café rapidement, puis je suis partie. Pendant le trajet, j'ai relu mes documents dans le train.
+J'ai pris un café rapidement, puis je suis partie. Dans le train, j'ai relu mes documents.
 
-Quand je suis arrivée au bureau, il y avait déjà du monde. Mon collègue Samir m'a dit : « Tu es prête ? »
+Au bureau, il y avait déjà du monde. Mon collègue Samir m'a dit : « Tu es prête ? »
 
 « Je crois », j'ai répondu.
 
-La réunion a bien commencé. J'ai présenté mon projet et les clients ont posé beaucoup de questions. Mais soudain, j'ai cherché un document important... et il n'était pas là ! Je l'avais oublié chez moi.
+La réunion a bien commencé. J'ai présenté mon projet. Les clients ont posé beaucoup de questions. Mais soudain, j'ai cherché un document important. Il n'était pas là ! Je l'avais oublié chez moi.
 
-J'ai eu très chaud. Alors j'ai expliqué le problème avec des mots simples, sans le papier. Et finalement, ça a marché.
+J'ai eu très chaud. Alors j'ai expliqué le problème avec des mots simples, sans le papier. Finalement, ça a marché.
 
-À midi, j'étais épuisée. J'ai mangé un sandwich devant mon ordinateur parce que j'avais encore beaucoup de travail.
+À midi, j'étais épuisée. J'ai mangé un sandwich devant mon ordinateur, parce que j'avais encore beaucoup de travail.
 
-L'après-midi est passé très vite. J'ai répondu à quarante messages et j'ai téléphoné à six personnes.
+L'après-midi est passé très vite. J'ai répondu à quarante messages.
 
 À six heures, mon patron est venu me voir. Il a souri.
 
@@ -6250,21 +6236,21 @@ Ce soir-là, je me suis couchée à neuf heures.`,
       "An ordinary weekend told simply: a long lie-in, a walk by the river, a film, and Sunday lunch with friends. (Section: Telling the past, 2/5.)",
     body: `Le week-end dernier, je n'ai rien fait d'extraordinaire. Et c'était parfait.
 
-Samedi matin, je me suis réveillée tard, vers dix heures. Je n'avais pas mis de réveil parce que je voulais dormir. Quand j'ai ouvert les rideaux, il faisait beau.
+Samedi matin, je me suis réveillée tard, vers dix heures. Je n'avais pas mis de réveil. Quand j'ai ouvert les rideaux, il faisait beau.
 
 J'ai pris un petit déjeuner tranquille : du pain, de la confiture et un grand café. J'ai lu pendant une heure, encore en pyjama.
 
-L'après-midi, je suis sortie marcher au bord de la rivière. Il y avait beaucoup de gens : des familles, des cyclistes, un homme qui jouait de la guitare. Je me suis assise sur un banc et je suis restée là vingt minutes, sans rien faire.
+L'après-midi, je suis sortie marcher au bord de la rivière. Il y avait beaucoup de gens : des familles, des cyclistes, un homme qui jouait de la guitare. Je me suis assise sur un banc pendant vingt minutes, sans rien faire.
 
-Le soir, j'ai regardé un film chez moi. Je voulais aller au cinéma, mais finalement j'étais trop bien sur mon canapé.
+Le soir, j'ai regardé un film chez moi. Je voulais aller au cinéma, mais j'étais trop bien sur mon canapé.
 
-Dimanche, mes amis Léa et Karim sont venus déjeuner. J'ai préparé des pâtes et une salade, et Léa a apporté une tarte aux pommes.
+Dimanche, mes amis Léa et Karim sont venus déjeuner. J'ai préparé des pâtes et une salade. Léa a apporté une tarte aux pommes.
 
 Nous avons mangé pendant deux heures, puis nous avons parlé jusqu'à cinq heures. Nous avons beaucoup ri.
 
 Quand ils sont partis, j'ai fait la vaisselle et j'ai rangé un peu.
 
-Dimanche soir, j'ai préparé mes affaires pour lundi. J'étais un peu triste : le week-end était fini.
+Le soir, j'ai préparé mes affaires pour lundi. J'étais un peu triste : le week-end était fini.
 
 Mais j'étais reposée. Et ça, c'est le plus important.`,
     sourceName: "Written for Lire",
@@ -6281,11 +6267,11 @@ Mais j'étais reposée. Et ça, c'est le plus important.`,
       "Arriving alone in a new city five years ago: an empty flat, a wrong bus, and a neighbour who knocked on the door. (Section: Telling the past, 3/5.)",
     body: `Je suis arrivée dans cette ville il y a cinq ans, au mois de septembre. Je me souviens très bien de ce jour.
 
-J'avais vingt-quatre ans et je ne connaissais personne ici. J'avais trouvé un travail, alors j'ai déménagé seule, avec deux valises et quelques cartons.
+J'avais vingt-quatre ans et je ne connaissais personne ici. J'avais trouvé un travail. Alors j'ai déménagé seule, avec deux valises et quelques cartons.
 
-Quand je suis entrée dans mon nouvel appartement, il était complètement vide. Il n'y avait pas de rideaux, pas de meubles, rien. Le sol était froid et l'appartement sentait la peinture.
+Mon nouvel appartement était complètement vide. Il n'y avait pas de rideaux, pas de meubles, rien. Le sol était froid et l'appartement sentait la peinture.
 
-Je me suis assise par terre au milieu de la pièce et j'ai pensé : « Qu'est-ce que je fais ici ? »
+Je me suis assise par terre et j'ai pensé : « Qu'est-ce que je fais ici ? »
 
 L'après-midi, je suis sortie acheter des choses pour manger. Mais je ne connaissais pas le quartier et je me suis perdue. J'ai pris le bus dans le mauvais sens ! Je suis arrivée à l'autre bout de la ville.
 
@@ -6299,7 +6285,7 @@ J'ai dit non. Alors elle m'a invitée à dîner chez elle.
 
 Nous avons mangé une soupe et nous avons parlé pendant deux heures.
 
-Cinq ans plus tard, cette dame est toujours ma voisine. Et nous dînons encore ensemble, une fois par mois.`,
+Cinq ans plus tard, cette dame est toujours ma voisine. Nous dînons encore ensemble, une fois par mois.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -6318,13 +6304,13 @@ Sa maison était vieille et un peu sombre. Il y avait un grand jardin derrière,
 
 Chaque matin, je me réveillais avec le bruit des oiseaux. Ma grand-mère était déjà dans la cuisine. Elle préparait toujours du chocolat chaud, même en été.
 
-Après le petit déjeuner, je sortais dans le jardin et je jouais pendant des heures. Je n'avais pas de jouets, mais ça ne me manquait pas. Je construisais des maisons avec des pierres et des feuilles.
+Après le petit déjeuner, je sortais dans le jardin. Je jouais pendant des heures. Je n'avais pas de jouets, mais ça ne me manquait pas. Je construisais des maisons avec des pierres et des feuilles.
 
 L'après-midi, quand il faisait trop chaud, nous restions à l'intérieur. Ma grand-mère cousait et moi, je dessinais à côté d'elle. Nous ne parlions pas beaucoup. C'était très calme.
 
-Mais je me souviens surtout d'un après-midi. J'avais peut-être sept ans. Il y avait un grand orage : le ciel est devenu noir et la pluie est tombée très fort.
+Mais je me souviens surtout d'un après-midi. J'avais peut-être sept ans. Il y a eu un grand orage : le ciel est devenu noir et la pluie est tombée très fort.
 
-J'avais peur, alors ma grand-mère m'a prise sur ses genoux. Nous avons regardé la pluie par la fenêtre et elle m'a raconté une histoire de son enfance.
+J'avais peur. Ma grand-mère m'a prise sur ses genoux. Nous avons regardé la pluie par la fenêtre et elle m'a raconté une histoire de son enfance.
 
 L'orage a duré une heure. Après, le jardin sentait la terre mouillée.
 
@@ -6345,13 +6331,13 @@ Ma grand-mère est morte il y a dix ans. Mais quand il pleut très fort, je pens
 
 À cette époque, j'étais malheureuse. Je travaillais beaucoup, mais je ne voyais pas le résultat. Mon équipe était petite et nous avions trop de projets. Chaque soir, je rentrais épuisée.
 
-Un lundi matin, j'ai pris ma décision. J'ai écrit une lettre de démission sur mon ordinateur et je l'ai imprimée. Je voulais la donner à ma patronne l'après-midi.
+Un lundi matin, j'ai pris ma décision. J'ai écrit une lettre de démission et je l'ai imprimée. Je voulais la donner à ma patronne l'après-midi.
 
 Mais pendant le déjeuner, j'ai parlé avec une collègue, Aïcha. Elle travaillait dans l'entreprise depuis douze ans.
 
 Je lui ai tout expliqué. Elle a écouté sans m'interrompre.
 
-Puis elle m'a dit : « Je comprends. Mais avant de partir, est-ce que tu as parlé à ta patronne du problème ? »
+Puis elle m'a dit : « Je comprends. Mais est-ce que tu as parlé à ta patronne du problème ? »
 
 J'ai réfléchi. Non. Je n'avais jamais rien dit. Je pensais que c'était inutile.
 
@@ -6380,11 +6366,11 @@ J'ai gardé la lettre dans un tiroir. Elle me rappelle une leçon : il faut parl
 
 Ma collègue Aïcha m'avait donné la recette d'un tajine, un plat marocain. Elle m'avait dit : « C'est facile, mais il faut du temps. »
 
-D'abord, je suis allée faire les courses. Il me fallait du poulet, des oignons, des citrons, des olives et beaucoup d'épices. Je ne connaissais pas certaines épices, alors j'ai demandé au vendeur. Il m'a bien expliqué.
+D'abord, je suis allée faire les courses. Il me fallait du poulet, des oignons, des citrons, des olives et beaucoup d'épices. Je ne connaissais pas certaines épices. J'ai demandé au vendeur, et il m'a bien expliqué.
 
 À la maison, j'ai commencé à quatre heures. J'ai coupé les oignons et j'ai pleuré, comme toujours ! Puis j'ai mis le poulet dans une grande casserole avec un peu d'huile.
 
-Ensuite, j'ai ajouté les épices. La cuisine sentait merveilleusement bon. C'était une odeur complètement nouvelle pour moi.
+Ensuite, j'ai ajouté les épices. La cuisine sentait très bon. C'était une odeur complètement nouvelle pour moi.
 
 J'ai ajouté les citrons, les olives et un peu d'eau. Puis j'ai baissé le feu et j'ai attendu.
 
@@ -6409,15 +6395,15 @@ Elle a répondu : « La prochaine fois, viens le manger chez moi. »`,
     preview: "Il y a un petit restaurant en bas de ma rue.",
     blurbEn:
       "The lunchtime 'formule' at a tiny neighbourhood restaurant: no printed menu, a blackboard, and whatever the owner cooked that morning. (Section: Cooking and eating out, 2/5.)",
-    body: `Il y a un petit restaurant en bas de ma rue. Il n'est pas beau et il n'est pas célèbre. Mais j'y vais souvent, et je vais vous expliquer pourquoi.
+    body: `Il y a un petit restaurant en bas de ma rue. Il n'est pas beau et il n'est pas célèbre. Mais j'y vais souvent.
 
 Le restaurant a seulement huit tables. Le patron s'appelle Bruno et il cuisine lui-même. Sa femme sert les clients.
 
-Il n'y a pas de carte imprimée. Sur le mur, il y a un tableau noir et Bruno écrit le menu du jour à la craie, chaque matin. Il y a deux entrées, deux plats et deux desserts. C'est tout.
+Il n'y a pas de carte imprimée. Sur le mur, il y a un tableau noir. Bruno écrit le menu du jour à la craie, chaque matin. Il y a deux entrées, deux plats et deux desserts. C'est tout.
 
 Pourquoi si peu de choix ? Parce que Bruno achète les produits au marché le matin. Il cuisine ce qu'il a trouvé de bon et de frais.
 
-À midi, il propose une « formule » : une entrée et un plat pour quinze euros. Beaucoup de gens qui travaillent dans le quartier viennent manger ici.
+À midi, il propose une « formule » : une entrée et un plat pour quinze euros. Beaucoup de gens du quartier viennent manger ici.
 
 La première fois, j'y suis allée seule. J'étais un peu gênée, mais la femme de Bruno m'a mise à l'aise tout de suite.
 
@@ -6444,7 +6430,7 @@ Dans un grand restaurant, ça n'arrive jamais.`,
       "Dinner at friends' place: arriving a little late on purpose, bringing something, and a table that nobody leaves before midnight. (Section: Cooking and eating out, 3/5.)",
     body: `Samedi soir, nous étions invités chez nos amis Léa et Karim. Ils nous avaient invités pour huit heures.
 
-En France, il y a une petite règle amusante : il ne faut pas arriver exactement à l'heure. Si on arrive à huit heures pile, les hôtes ne sont peut-être pas prêts. Alors nous sommes arrivés à huit heures et quart.
+En France, il y a une petite règle amusante : il ne faut pas arriver exactement à l'heure. Si on arrive à huit heures pile, les hôtes ne sont peut-être pas prêts. Nous sommes arrivés à huit heures et quart.
 
 Nous n'arrivons jamais les mains vides. J'avais apporté une bouteille de vin et mon mari avait acheté des fleurs.
 
@@ -6464,7 +6450,7 @@ Quand nous sommes partis, il était minuit et demi.
 
 Dans la voiture, mon mari a dit : « Nous devons les inviter chez nous maintenant. »
 
-Il avait raison. C'est notre tour.`,
+Il avait raison.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -6477,7 +6463,7 @@ Il avait raison. C'est notre tour.`,
     preview: "Je ne savais pas cuisiner le poisson. Alors j'ai demandé.",
     blurbEn:
       "Learning to cook fish by asking the man who sells it — and discovering that a good stallholder will teach you for free. (Section: Cooking and eating out, 4/5.)",
-    body: `Pendant longtemps, je n'ai jamais cuisiné de poisson. J'avais peur : je ne savais pas comment le choisir ni comment le préparer. Alors j'achetais toujours de la viande.
+    body: `Pendant longtemps, je n'ai jamais cuisiné de poisson. J'avais peur : je ne savais pas comment le choisir ni comment le préparer. J'achetais toujours de la viande.
 
 Un samedi, au marché, je me suis arrêtée devant le poissonnier. Il y avait beaucoup de poissons sur la glace. Je les regardais sans comprendre.
 
@@ -6489,7 +6475,7 @@ Il a souri. « Alors je vais vous expliquer. »
 
 Il m'a montré comment choisir un poisson frais. « Regardez les yeux : ils doivent être clairs, pas gris. Et sentez : un poisson frais ne sent presque rien. »
 
-Ensuite, il m'a conseillé un poisson simple pour débuter. « Prenez celui-ci. Vous le mettez au four vingt minutes avec du citron, de l'huile et un peu de sel. C'est tout. Ne faites rien de compliqué. »
+Ensuite, il m'a conseillé un poisson simple pour débuter. « Prenez celui-ci. Vous le mettez au four vingt minutes avec du citron, de l'huile et un peu de sel. Ne faites rien de compliqué. »
 
 Il l'a préparé pour moi et il l'a emballé.
 
@@ -6514,25 +6500,23 @@ La semaine dernière, il m'a dit : « Vous voyez ? Ce n'était pas difficile. »
       "A birthday cake goes badly wrong — flat, burnt at the edges — and a seven-year-old saves the day with a bag of sweets. (Section: Cooking and eating out, 5/5.)",
     body: `Pour l'anniversaire de ma nièce Chloé, j'ai voulu faire un gâteau au chocolat moi-même. C'était une mauvaise idée.
 
-J'avais trouvé une recette sur internet. Sur la photo, le gâteau était magnifique : haut, brillant, parfait.
+J'avais trouvé une recette sur internet. Sur la photo, le gâteau était magnifique.
 
 J'ai commencé à deux heures. J'ai cassé les œufs, j'ai fait fondre le chocolat, j'ai ajouté la farine et le sucre. Tout allait bien.
 
-Mais je n'avais pas de balance. Alors j'ai deviné les quantités. « Deux cents grammes de farine ? Ça doit être à peu près comme ça. »
-
-Première erreur.
+Mais je n'avais pas de balance. Alors j'ai deviné les quantités. « Deux cents grammes de farine ? Ça doit être à peu près comme ça. » Première erreur.
 
 J'ai mis le gâteau au four. La recette disait trente minutes à cent quatre-vingts degrés. Mais mon four est vieux et il chauffe trop.
 
-Deuxième erreur : je ne l'ai pas surveillé. Pendant ce temps, je répondais à des messages.
+Deuxième erreur : je ne l'ai pas surveillé. Je répondais à des messages.
 
 Après vingt-cinq minutes, j'ai senti quelque chose. J'ai ouvert le four : le gâteau était noir sur les bords et complètement plat au milieu.
 
 Il ne ressemblait pas du tout à la photo.
 
-J'ai eu envie de pleurer. Puis j'ai eu envie de rire.
+J'ai eu envie de pleurer, puis envie de rire.
 
-Alors j'ai coupé les bords noirs et j'ai mis du sucre dessus pour cacher le reste.
+J'ai coupé les bords noirs et j'ai mis du sucre dessus pour cacher le reste.
 
 Quand Chloé est arrivée, elle a regardé le gâteau. Elle a sept ans, alors elle est honnête.
 
@@ -6540,7 +6524,7 @@ Quand Chloé est arrivée, elle a regardé le gâteau. Elle a sept ans, alors el
 
 « Je sais. »
 
-Puis elle a sorti des bonbons de sa poche et elle les a posés dessus.
+Elle a sorti des bonbons de sa poche et elle les a posés dessus.
 
 « Voilà ! Maintenant il est beau. »
 
@@ -6567,13 +6551,13 @@ J'avais tout écrit sur un papier :
 - prendre un médicament à la pharmacie
 - acheter un cadeau pour Chloé
 
-Avant de partir, j'ai réfléchi à l'ordre. C'est important : sinon, on marche deux fois dans la même rue. La poste et la banque sont sur la même place, alors j'ai commencé par là.
+Avant de partir, j'ai réfléchi à l'ordre. C'est important : sinon, on marche deux fois dans la même rue. La poste et la banque sont sur la même place. J'ai commencé par là.
 
 Je suis partie à neuf heures. Il faisait frais, mais le soleil brillait.
 
 D'abord, la poste. Il y avait une queue de sept personnes ! J'ai attendu vingt minutes. Ensuite, la banque, juste en face : c'était plus rapide.
 
-Après, je suis allée chez le cordonnier. Mes chaussures étaient prêtes et il ne m'a pris que douze euros. J'étais contente.
+Après, je suis allée chez le cordonnier. Mes chaussures étaient prêtes et il ne m'a pris que douze euros.
 
 Puis la pharmacie, où la pharmacienne m'a bien expliqué le médicament.
 
@@ -6602,7 +6586,7 @@ J'avais mis dans une boîte un livre, une écharpe et des biscuits français, pa
 
 À la poste, j'ai pris un ticket : numéro 34. Sur l'écran, il y avait le numéro 27. J'ai attendu.
 
-Pendant ce temps, j'ai regardé autour de moi. Une dame envoyait des lettres. Un homme retirait de l'argent. Un jeune homme achetait des timbres.
+Pendant ce temps, j'ai regardé autour de moi. Une dame envoyait des lettres. Un homme retirait de l'argent.
 
 Quand mon tour est arrivé, l'employée m'a demandé : « Bonjour, c'est pour quoi ? »
 
@@ -6641,7 +6625,7 @@ Samedi, je suis arrivée un peu en avance. Le salon était plein et il y avait d
 
 Une jeune femme m'a installée devant un miroir. « Alors, qu'est-ce qu'on fait aujourd'hui ? »
 
-Et là, j'ai fait une erreur. Je ne savais pas exactement ce que je voulais, alors j'ai répondu : « Juste un peu plus court, s'il vous plaît. »
+Là, j'ai fait une erreur. Je ne savais pas exactement ce que je voulais. J'ai répondu : « Juste un peu plus court, s'il vous plaît. »
 
 « Un peu plus court », c'est très vague. Cinq centimètres ? Quinze ?
 
@@ -6657,7 +6641,7 @@ J'ai dit : « C'est... très bien, merci. »
 
 Dans la rue, j'étais un peu triste. Mais le soir, mon mari a dit : « Tu as l'air plus jeune ! »
 
-Et le lundi, deux collègues m'ont fait des compliments.
+Le lundi, deux collègues m'ont fait des compliments.
 
 Finalement, j'aime beaucoup. Mais la prochaine fois, j'apporterai une photo.`,
     sourceName: "Written for Lire",
@@ -6676,7 +6660,7 @@ Finalement, j'aime beaucoup. Mais la prochaine fois, j'apporterai une photo.`,
 
 J'avais un chariot plein et il y avait quatre personnes derrière moi. La caissière a essayé deux fois. « Carte refusée », disait la machine.
 
-J'étais très gênée. Heureusement, j'avais un peu d'argent liquide dans mon sac, alors j'ai pu payer.
+J'étais très gênée. Heureusement, j'avais un peu d'argent liquide dans mon sac. J'ai pu payer.
 
 Mais je ne comprenais pas pourquoi. J'étais sûre d'avoir de l'argent sur mon compte.
 
@@ -6694,7 +6678,7 @@ Je lui ai expliqué le problème. Il a regardé son ordinateur pendant une minut
 
 Une nouvelle carte ? Je n'avais rien reçu.
 
-Puis j'ai réfléchi... et j'ai compris. Il y avait une enveloppe de la banque sur mon bureau, à la maison. Je ne l'avais jamais ouverte.
+Puis j'ai réfléchi et j'ai compris. Il y avait une enveloppe de la banque sur mon bureau, à la maison. Je ne l'avais jamais ouverte.
 
 Le conseiller a souri. « Ça arrive souvent, vous savez. »
 
@@ -6715,7 +6699,7 @@ Le soir, j'ai ouvert l'enveloppe. Ma nouvelle carte était dedans.`,
 
 Le soir, j'ai cherché sur internet et j'ai trouvé l'adresse du bureau des objets trouvés. Il était ouvert du lundi au vendredi, de neuf heures à midi.
 
-Jeudi matin, j'y suis allé. Le bureau était petit et il n'y avait personne, sauf un employé derrière un comptoir.
+Jeudi matin, j'y suis allé. Le bureau était petit. Il n'y avait personne, sauf un employé derrière un comptoir.
 
 « Bonjour, j'ai perdu un parapluie dans le tram lundi soir. »
 
@@ -6725,7 +6709,7 @@ Jeudi matin, j'y suis allé. Le bureau était petit et il n'y avait personne, sa
 
 Il a écrit quelque chose, puis il a disparu dans une pièce derrière lui.
 
-Pendant qu'il cherchait, j'ai regardé par la porte ouverte. Cette pièce était incroyable ! Il y avait des étagères du sol au plafond, remplies d'objets : des sacs, des manteaux, des livres, des lunettes, des jouets. Il y avait même une guitare et un vélo d'enfant.
+Pendant qu'il cherchait, j'ai regardé par la porte ouverte. Cette pièce était incroyable ! Il y avait des étagères du sol au plafond, remplies d'objets : des sacs, des manteaux, des livres, des lunettes, des jouets. Il y avait même une guitare.
 
 L'employé est revenu avec trois parapluies. « C'est l'un de ceux-là ? »
 
@@ -6752,9 +6736,9 @@ Toutes ces choses attendent quelqu'un.`,
       "A first summer job at a campsite: cleaning, tired feet, difficult customers — and a first pay slip that felt enormous. (Section: First jobs, 1/5.)",
     body: `L'été de mes dix-huit ans, j'ai travaillé dans un camping au bord de la mer. C'était mon premier vrai travail.
 
-J'avais envoyé mon CV à dix endroits différents. Un seul m'a répondu : le camping « Les Pins ». Le patron m'a téléphoné et il m'a embauché pour deux mois, en juillet et en août.
+J'avais envoyé mon CV à dix endroits. Un seul m'a répondu : le camping « Les Pins ». Le patron m'a téléphoné et il m'a embauché pour deux mois, en juillet et en août.
 
-Mon travail n'était pas très intéressant. Le matin, je nettoyais les sanitaires. L'après-midi, je ramassais les poubelles et je balayais les allées. Le soir, j'aidais à l'accueil.
+Mon travail n'était pas très intéressant. Le matin, je nettoyais les sanitaires. L'après-midi, je ramassais les poubelles et je balayais les allées.
 
 Je commençais à sept heures et je finissais à seize heures, six jours par semaine.
 
@@ -6768,7 +6752,7 @@ Il avait raison, et ça m'a beaucoup aidé.
 
 À la fin du mois de juillet, j'ai reçu mon premier salaire : mille deux cents euros. J'ai regardé le papier pendant cinq minutes. C'était mon argent, gagné par mon travail.
 
-Ce job n'était pas mon rêve. Mais il m'a appris deux choses : la valeur de l'argent, et le respect pour les gens qui font ces métiers toute leur vie.`,
+Ce job n'était pas mon rêve. Mais il m'a appris deux choses : la valeur de l'argent, et le respect pour ceux qui font ces métiers toute leur vie.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -6803,7 +6787,7 @@ Elle a fait un petit signe de la tête.
 
 À la fin, elle m'a demandé si j'avais des questions. J'en avais préparé une : « Comment se passe une journée typique ici ? »
 
-Elle a parlé pendant cinq minutes, avec plaisir.
+Elle a parlé pendant cinq minutes.
 
 Deux jours après, elle m'a appelé. Je commençais le samedi suivant.`,
     sourceName: "Written for Lire",
@@ -6830,7 +6814,7 @@ Au début, je me sentais bizarre. Les autres parlaient de choses que je ne conna
 
 Et j'avais oublié comment étudier ! Pendant dix ans, je n'avais pas ouvert un cahier. Les premiers examens ont été durs.
 
-Mais peu à peu, j'ai trouvé ma place. J'avais aussi des avantages : j'étais organisée, j'avais l'habitude de travailler avec le public, et je savais pourquoi j'étais là.
+Mais peu à peu, j'ai trouvé ma place. J'avais aussi des avantages : j'étais organisée et je savais pourquoi j'étais là.
 
 Deux jeunes étudiantes ont commencé à travailler avec moi. Elles m'appelaient « la sage ». Ça me faisait rire.
 
@@ -6857,7 +6841,7 @@ La première semaine a été ennuyeuse. Je n'avais presque rien à faire. Je cla
 
 Le soir, je rentrais un peu déçue. Ce n'était pas ce que j'avais imaginé.
 
-Mais je ne voulais pas rester assise à ne rien faire. Alors j'ai commencé à poser des questions. Je demandais aux gens ce qu'ils faisaient et comment ça marchait. Certains n'avaient pas le temps, mais d'autres m'expliquaient volontiers.
+Mais je ne voulais pas rester assise à ne rien faire. J'ai commencé à poser des questions. Je demandais aux gens ce qu'ils faisaient et comment ça marchait. Certains n'avaient pas le temps, mais d'autres m'expliquaient volontiers.
 
 Après deux semaines, une collègue, Nathalie, m'a proposé quelque chose. « Tu veux m'aider à préparer un document pour un client ? »
 
@@ -6886,13 +6870,13 @@ Deux ans plus tard, je l'ai fait.`,
       "A patient older colleague makes the difference in a difficult first month — and years later, the favour gets passed on. (Section: First jobs, 5/5.)",
     body: `Quand j'ai commencé mon travail actuel, il y a six ans, je ne comprenais presque rien.
 
-L'entreprise utilisait des logiciels que je ne connaissais pas. Il y avait des règles, des habitudes, des mots que tout le monde comprenait sauf moi.
+L'entreprise utilisait des logiciels que je ne connaissais pas. Il y avait des règles, des mots que tout le monde comprenait sauf moi.
 
 Pendant les réunions, je notais tout, mais je ne posais pas de questions. J'avais peur de paraître bête.
 
-Le soir, je rentrais chez moi épuisée et inquiète. Je pensais : « Ils ont fait une erreur en m'embauchant. »
+Le soir, je rentrais chez moi inquiète. Je pensais : « Ils ont fait une erreur en m'embauchant. »
 
-Après deux semaines, un collègue est venu me parler. Il s'appelait Bernard et il travaillait là depuis vingt-deux ans. Il avait presque soixante ans.
+Après deux semaines, un collègue est venu me parler. Il s'appelait Bernard. Il travaillait là depuis vingt-deux ans et il avait presque soixante ans.
 
 « Ça va ? » m'a-t-il demandé. « Tu as l'air perdue. »
 
@@ -6900,7 +6884,7 @@ J'ai hésité, puis j'ai dit la vérité : « Je ne comprends pas la moitié de 
 
 Il a ri gentiment. « Bien sûr ! Personne ne comprend au début. Moi non plus, en 2002. »
 
-À partir de ce jour, Bernard a pris quinze minutes chaque matin pour m'expliquer les choses. Il ne se moquait jamais de mes questions.
+À partir de ce jour, Bernard a pris quinze minutes chaque matin pour m'expliquer les choses.
 
 Il m'a dit une phrase que je n'ai pas oubliée : « La question bête, c'est celle qu'on ne pose pas. »
 
@@ -6908,7 +6892,7 @@ Bernard est parti à la retraite l'année dernière.
 
 Le mois dernier, une jeune femme a rejoint mon équipe. Elle avait l'air perdue en réunion.
 
-Alors je suis allée la voir. « Ça va ? Tu veux qu'on prenne quinze minutes demain matin ? »`,
+Je suis allée la voir. « Ça va ? Tu veux qu'on prenne quinze minutes demain matin ? »`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -6931,11 +6915,11 @@ Au début, c'était pénible. Puis c'est devenu une habitude, comme se brosser l
 
 À la fin du mois, j'ai additionné. Les résultats m'ont surprise.
 
-Le loyer et les factures, je les connaissais : c'était la moitié de mon salaire, mais je ne pouvais rien changer. Les courses, c'était normal aussi.
+Le loyer et les factures, je les connaissais : c'était la moitié de mon salaire. Les courses, c'était normal aussi.
 
 Mais il y avait une troisième catégorie : les petites dépenses. Un café par-ci, un sandwich par-là, des achats sur internet. Ensemble, cela faisait deux cent quarante euros !
 
-Deux cent quarante euros. Je n'avais rien remarqué, parce que chaque dépense était petite.
+Je n'avais rien remarqué, parce que chaque dépense était petite.
 
 Ce mois-ci, j'ai décidé de changer deux choses seulement. J'apporte mon déjeuner trois fois par semaine, et je prends un café au bureau au lieu de l'acheter dehors.
 
@@ -6964,7 +6948,7 @@ Samedi dernier, j'y suis allée avec mon amie Léa. Nous avions besoin de mantea
 
 Dans le premier magasin, c'était impossible : il y avait trop de gens. Les vêtements étaient partout, même par terre. Les cabines d'essayage avaient une queue de vingt minutes.
 
-Léa a trouvé un manteau à moins cinquante pour cent. Il était bleu, chaud, et il lui allait très bien. Prix d'origine : cent quarante euros. Prix soldé : soixante-dix euros. Une vraie bonne affaire !
+Léa a trouvé un manteau à moins cinquante pour cent. Il était bleu, chaud, et il lui allait très bien. Prix d'origine : cent quarante euros. Prix soldé : soixante-dix euros.
 
 Moi, je n'ai rien trouvé dans ma taille. Les tailles moyennes partent toujours en premier.
 
@@ -7001,7 +6985,7 @@ Avec du neuf, tout cela m'aurait coûté plus de mille euros.
 
 J'ai découvert deux autres avantages.
 
-D'abord, c'est meilleur pour l'environnement. Quand j'achète un objet qui existe déjà, on ne fabrique rien de nouveau. On ne jette rien non plus.
+D'abord, c'est meilleur pour l'environnement. Quand j'achète un objet qui existe déjà, on ne fabrique rien de nouveau.
 
 Ensuite — et c'est ce que je préfère — chaque objet a une histoire. Ma table vient d'une vieille dame qui déménageait à la campagne. Elle m'a raconté que sa famille avait mangé autour de cette table pendant trente ans.
 
@@ -7030,11 +7014,11 @@ Je vais vous expliquer comment c'est arrivé.
 
 Un samedi, je suis entré dans un magasin d'électroménager pour acheter une bouilloire. Une bouilloire coûte vingt euros.
 
-Mais près de l'entrée, il y avait une démonstration. Un vendeur préparait des cafés avec une machine magnifique. Les cafés sentaient délicieusement bon.
+Mais près de l'entrée, il y avait une démonstration. Un vendeur préparait des cafés avec une machine magnifique. Les cafés sentaient très bon.
 
 Il m'a proposé de goûter. C'était le meilleur café de ma vie.
 
-Puis il m'a expliqué tout ce que la machine pouvait faire : des expressos, des cappuccinos, du lait chaud. Il y avait dix boutons.
+Puis il m'a expliqué tout ce que la machine pouvait faire : des expressos, des cappuccinos, du lait chaud.
 
 « Vous économiserez de l'argent », m'a-t-il dit. « Un café dehors coûte deux euros cinquante. »
 
@@ -7071,7 +7055,7 @@ Prêter de l'argent, ce n'est jamais seulement une question d'argent. C'est auss
 
 Finalement, j'ai dit oui. Mais nous avons fait quelque chose d'important : nous avons parlé clairement, avant.
 
-Nous avons décidé ensemble : trois cents euros, remboursés en trois fois, cent euros par mois. Karim l'a même écrit dans un message, pour que nous ayons tous les deux la même information.
+Nous avons décidé ensemble : trois cents euros, remboursés en trois fois, cent euros par mois. Karim l'a même écrit dans un message.
 
 Certains trouvent ça froid entre amis. Moi, je pense le contraire. Le malaise vient toujours du flou : quand personne ne sait quand ni comment l'argent sera rendu.
 
@@ -7102,7 +7086,7 @@ Un soir, après le dîner, nous avons ouvert l'ordinateur.
 
 Nous avions trois conditions : pas trop loin, pas trop cher, et une ville que nous ne connaissions pas.
 
-Nous avons regardé plusieurs possibilités et nous avons comparé les prix des trains et des hôtels pendant une heure.
+Nous avons regardé plusieurs possibilités. Nous avons comparé les prix des trains et des hôtels pendant une heure.
 
 Finalement, nous avons choisi une petite ville à deux heures de chez nous. Personne ne nous en avait jamais parlé, mais les photos étaient jolies : une rivière, des maisons anciennes, un marché le samedi.
 
@@ -7137,11 +7121,11 @@ L'hôtel était exactement comme sur les photos : un vieux bâtiment avec une po
 
 « Oui, au nom de Martin, pour deux nuits. »
 
-Elle a vérifié sur son ordinateur. « C'est parfait. Mais je suis désolée : la chambre n'est pas encore prête. Le check-in est à quinze heures. »
+Elle a vérifié sur son ordinateur. « C'est parfait. Mais la chambre n'est pas encore prête. Le check-in est à quinze heures. »
 
 Il était midi et quart. Nous devions attendre presque trois heures !
 
-Mais elle a proposé une solution. « Vous pouvez laisser vos valises ici. Elles seront en sécurité. »
+Mais elle a proposé une solution. « Vous pouvez laisser vos valises ici. »
 
 Nous avons accepté et nous avons laissé nos bagages derrière le comptoir.
 
@@ -7174,7 +7158,7 @@ Nous avons acheté des fraises et nous les avons mangées en marchant. Elles ét
 
 Ensuite, nous sommes entrés dans une vieille église. À l'intérieur, il faisait frais et sombre. Il n'y avait presque personne. Nous sommes restés assis dix minutes, en silence.
 
-Puis nous avons marché dans les petites rues autour du centre. C'est là que j'ai préféré la ville. Il y avait du linge aux fenêtres, des chats sur les murs, des enfants qui jouaient. Ce n'était pas un quartier touristique : c'était la vraie vie.
+Puis nous avons marché dans les petites rues autour du centre. C'est là que j'ai préféré la ville. Il y avait du linge aux fenêtres, des chats sur les murs, des enfants qui jouaient. Ce n'était pas un quartier touristique.
 
 L'après-midi, nous sommes montés sur une colline, au-dessus de la ville. La montée a duré vingt-cinq minutes et il faisait chaud.
 
@@ -7207,7 +7191,7 @@ Nous sommes allés au guichet. Il y avait déjà une queue de trente personnes. 
 
 Nous avons attendu quarante minutes. Devant nous, une dame âgée était très inquiète : sa fille l'attendait à la gare d'arrivée.
 
-Quand notre tour est arrivé, l'employé nous a expliqué qu'il y avait un problème technique sur la ligne. Le train suivant partait à vingt et une heures quinze — presque trois heures plus tard.
+Quand notre tour est arrivé, l'employé nous a expliqué qu'il y avait un problème technique sur la ligne. Le train suivant partait presque trois heures plus tard.
 
 Il nous a donné de nouveaux billets, sans supplément, et un papier pour demander un remboursement partiel.
 
@@ -7234,9 +7218,9 @@ Mais ce matin, je repense surtout à cette conversation dans la gare.`,
       "Two hundred and forty holiday photos, and the discovery that the best one wasn't of a monument at all. (Section: A short trip, 5/5.)",
     body: `Quand nous sommes rentrés de notre week-end, j'ai regardé mes photos sur mon téléphone. J'en avais pris deux cent quarante en deux jours !
 
-Deux cent quarante photos pour deux jours. C'est énorme.
+C'est énorme.
 
-J'ai commencé à les regarder une par une, et j'ai vite compris quelque chose : la plupart n'étaient pas intéressantes.
+J'ai commencé à les regarder une par une. J'ai vite compris quelque chose : la plupart n'étaient pas intéressantes.
 
 Il y avait quinze photos de la même église, presque identiques. Il y avait des photos floues, prises en marchant. Il y avait aussi beaucoup de photos de bâtiments sans personne dessus.
 
@@ -7273,15 +7257,15 @@ Les autres soixante photos, je ne les ai jamais rouvertes.`,
       "Three close friendships, all of them accidents: a queue, a broken-down car, and a wrong seat in a lecture hall. (Section: Friends and feelings, 1/5.)",
     body: `Mes trois meilleurs amis, je ne les ai pas choisis. Je les ai rencontrés par hasard.
 
-Léa, je l'ai rencontrée dans une queue. C'était à la préfecture, il y a six ans. Nous attendions depuis deux heures pour un papier administratif. À un moment, elle s'est tournée vers moi et elle a dit : « Vous croyez qu'on va y arriver aujourd'hui ? »
+Léa, je l'ai rencontrée dans une queue, à la préfecture, il y a six ans. Nous attendions depuis deux heures pour un papier. Elle s'est tournée vers moi et elle a dit : « Vous croyez qu'on va y arriver aujourd'hui ? »
 
-Nous avons parlé pendant une heure et demie. À la fin, nous avons échangé nos numéros. Le lendemain, elle m'a envoyé un message.
+Nous avons parlé pendant une heure. À la fin, nous avons échangé nos numéros. Le lendemain, elle m'a envoyé un message.
 
-Karim, je l'ai rencontré à cause d'une voiture. Un matin d'hiver, ma voiture ne démarrait pas. Il passait dans la rue et il s'est arrêté. Il a regardé le moteur, il a essayé quelque chose, et la voiture a démarré.
+Karim, je l'ai rencontré à cause d'une voiture. Un matin d'hiver, ma voiture ne démarrait pas. Il passait dans la rue et il s'est arrêté. Il a regardé le moteur, et la voiture a démarré.
 
-Je voulais lui donner de l'argent, mais il a refusé. Alors je lui ai offert un café. Nous sommes restés deux heures au café.
+Je voulais lui donner de l'argent, mais il a refusé. Alors je lui ai offert un café. Nous sommes restés deux heures à parler.
 
-Nathalie, je l'ai rencontrée parce que je m'étais assise à la mauvaise place. C'était pendant une formation. Je me suis installée à côté d'elle, et à la pause, nous avons découvert que nous venions de la même petite ville.
+Nathalie, je l'ai rencontrée parce que je m'étais assise à la mauvaise place, pendant une formation. À la pause, nous avons découvert que nous venions de la même petite ville.
 
 Aucune de ces rencontres n'était prévue.
 
@@ -7300,29 +7284,29 @@ C'est un peu effrayant. Et c'est aussi très beau.`,
     preview: "Le mois dernier, je me suis disputée avec ma meilleure amie.",
     blurbEn:
       "An argument with a best friend over something small, three weeks of silence, and who finally sent the first message. (Section: Friends and feelings, 2/5.)",
-    body: `Le mois dernier, je me suis disputée avec Léa, ma meilleure amie. C'était la première vraie dispute en six ans.
+    body: `Le mois dernier, je me suis disputée avec Léa, ma meilleure amie. C'était notre première vraie dispute en six ans.
 
-Tout a commencé pour une petite chose. Nous devions organiser un week-end ensemble. J'avais tout préparé : les dates, l'endroit, le logement. Puis, trois jours avant, Léa m'a annoncé qu'elle ne pouvait plus venir.
+Tout a commencé pour une petite chose. Nous devions organiser un week-end ensemble. J'avais tout préparé. Trois jours avant, Léa m'a annoncé qu'elle ne pouvait plus venir.
 
-J'étais déçue, mais ce n'était pas grave. Ce qui m'a blessée, c'est la raison : elle avait accepté une invitation à une fête.
+J'étais déçue. Ce qui m'a blessée, c'est la raison : elle avait accepté une invitation à une fête.
 
-Je le lui ai dit au téléphone, et j'ai parlé trop fort. Elle a répondu que je n'écoutais jamais ses envies et que je décidais toujours de tout.
+Je le lui ai dit au téléphone, et j'ai parlé trop fort. Elle a répondu que je décidais toujours de tout, sans demander son avis.
 
 Nous avons raccroché toutes les deux en colère.
 
-Ensuite, il y a eu trois semaines de silence. Trois semaines, c'est long. Chaque jour, je pensais lui écrire, puis je ne le faisais pas. J'attendais qu'elle commence.
+Ensuite, il y a eu trois semaines de silence. Chaque jour, je pensais lui écrire, puis je ne le faisais pas. J'attendais qu'elle commence.
 
-Je crois qu'elle faisait exactement la même chose.
+Je crois qu'elle faisait la même chose.
 
-Finalement, un dimanche soir, je lui ai envoyé un message très simple : « Tu me manques. On peut se voir ? »
+Finalement, un dimanche soir, je lui ai envoyé un message simple : « Tu me manques. On peut se voir ? »
 
-Elle a répondu en dix minutes : « Oui. Moi aussi je voulais t'écrire depuis deux semaines. »
+Elle a répondu en dix minutes : « Oui. Moi aussi je voulais t'écrire. »
 
-Nous nous sommes vues le mardi. Nous avons parlé pendant trois heures.
+Nous nous sommes vues le mardi et nous avons parlé pendant trois heures.
 
 Elle avait raison sur une chose : j'organise trop, sans demander. Et moi, j'avais raison aussi.
 
-Nous avons appris quelque chose : il ne faut pas laisser passer trois semaines.`,
+Nous avons appris qu'il ne faut pas laisser passer trois semaines.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7339,11 +7323,9 @@ Nous avons appris quelque chose : il ne faut pas laisser passer trois semaines.`
 
 J'étais content pour lui, bien sûr. Mais j'étais aussi triste, et je ne l'ai pas dit tout de suite.
 
-Nous nous voyions deux ou trois fois par semaine. Nous jouions au foot le jeudi, nous prenions un café le week-end. Il habitait à dix minutes de chez moi.
+Nous nous voyions deux ou trois fois par semaine. Nous jouions au foot le jeudi et nous prenions un café le week-end. Il habitait à dix minutes de chez moi.
 
-Le jour de son départ, je l'ai accompagné à l'aéroport. Nous n'avons pas beaucoup parlé dans la voiture.
-
-Devant la porte d'embarquement, il m'a dit : « On s'appelle. »
+Le jour de son départ, je l'ai accompagné à l'aéroport. Devant la porte d'embarquement, il m'a dit : « On s'appelle. »
 
 « Oui, bien sûr », j'ai répondu.
 
@@ -7351,15 +7333,13 @@ Mais je savais que ce n'était pas si simple. J'avais déjà vu des amitiés dis
 
 Les premières semaines, nous nous sommes écrit tous les jours. Puis les messages sont devenus moins fréquents.
 
-Le problème, c'est aussi le décalage horaire : il y a six heures de différence. Quand je finis ma journée, il est encore au travail. Quand il est libre, je dors.
+Il y a aussi le décalage horaire : six heures de différence. Quand je finis ma journée, il est encore au travail. Quand il est libre, je dors.
 
-Alors nous avons décidé quelque chose. Le dimanche matin, à dix heures pour moi et quatre heures pour lui — c'est tôt, mais il accepte —, nous nous appelons pendant une heure.
+Alors nous avons décidé quelque chose. Le dimanche matin, à dix heures pour moi et quatre heures pour lui, nous nous appelons pendant une heure.
 
 Nous le faisons depuis huit mois, presque chaque dimanche.
 
-Ce n'est pas comme avant. Mais notre amitié n'a pas disparu.
-
-Elle demande simplement plus d'efforts.`,
+Ce n'est pas comme avant. Mais notre amitié n'a pas disparu. Elle demande simplement plus d'efforts.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7376,7 +7356,7 @@ Elle demande simplement plus d'efforts.`,
 
 Au début, je ne savais pas quoi faire. J'avais peur de dire quelque chose de bête.
 
-Alors j'ai fait ce que beaucoup de gens font : j'ai donné des conseils. « Tu devrais chercher un travail dans une autre ville. » « Tu devrais sortir plus. » « Il faut positiver. »
+Alors j'ai fait ce que beaucoup de gens font : j'ai donné des conseils. « Tu devrais chercher un travail ailleurs. » « Tu devrais sortir plus. »
 
 Un soir, Bruno m'a interrompu. Il n'était pas en colère, mais il était fatigué.
 
@@ -7384,9 +7364,9 @@ Un soir, Bruno m'a interrompu. Il n'était pas en colère, mais il était fatigu
 
 Ça m'a fait réfléchir pendant plusieurs jours.
 
-Alors j'ai changé de méthode. J'ai arrêté de proposer des solutions. À la place, j'ai posé des questions simples : « Comment tu te sens aujourd'hui ? » Et surtout, je l'ai laissé parler sans l'interrompre.
+Alors j'ai changé de méthode. J'ai posé des questions simples, et je l'ai laissé parler sans l'interrompre.
 
-J'ai aussi fait des choses concrètes, sans demander. Je passais chez lui avec un plat le mardi soir. Nous marchions le dimanche, parfois sans parler beaucoup.
+J'ai aussi fait des choses concrètes. Je passais chez lui avec un plat le mardi soir. Nous marchions le dimanche, parfois sans parler beaucoup.
 
 Ces mois ont été longs. Il n'y a pas eu de moment magique.
 
@@ -7394,9 +7374,7 @@ Puis, doucement, il a trouvé un travail. Et il a recommencé à rire.
 
 Un jour, il m'a dit : « Merci d'être resté. Beaucoup de gens ont disparu. »
 
-Je n'avais rien résolu. J'étais simplement là.
-
-C'était suffisant.`,
+Je n'avais rien résolu. J'étais simplement là. C'était suffisant.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7411,21 +7389,21 @@ C'était suffisant.`,
       "Growing up in a family that never discussed feelings, and learning as an adult to say the simple, difficult sentences. (Section: Friends and feelings, 5/5.)",
     body: `Dans ma famille, on ne parlait jamais de ses sentiments. Ce n'était pas de la méchanceté : c'était simplement l'habitude.
 
-Quand j'étais triste, mon père disait : « Ça va passer. » Quand quelqu'un était en colère, on attendait que ça se calme. On ne disait pas « je suis blessé » ou « j'ai besoin d'aide ».
+Quand j'étais triste, mon père disait : « Ça va passer. » On ne disait jamais « je suis blessé » ou « j'ai besoin d'aide ».
 
 J'ai grandi comme ça, et j'ai fait la même chose pendant longtemps.
 
-Le problème, c'est que les sentiments ne disparaissent pas quand on ne les dit pas. Ils restent quelque part, et ils sortent plus tard, souvent au mauvais moment.
+Le problème, c'est que les sentiments ne disparaissent pas quand on ne les dit pas. Ils sortent plus tard, souvent au mauvais moment.
 
-Il y a trois ans, j'ai commencé à changer. Ce n'était pas facile, et je ne suis pas devenue une autre personne. Mais j'ai appris quelques phrases simples.
+Il y a trois ans, j'ai commencé à changer. Ce n'était pas facile. Mais j'ai appris quelques phrases simples.
 
 « Ça m'a fait de la peine quand tu as dit ça. »
-« Je suis fatiguée en ce moment, je ne suis pas contre toi. »
+« Je suis fatiguée, je ne suis pas contre toi. »
 « J'ai besoin d'être un peu seule ce soir. »
 
 Ces phrases paraissent faciles. Mais la première fois, ma voix tremblait.
 
-Ce qui m'a surprise, c'est la réaction des autres. Personne ne s'est moqué de moi. Au contraire : mes amis ont commencé à parler plus honnêtement aussi.
+Ce qui m'a surprise, c'est la réaction des autres. Personne ne s'est moqué de moi.
 
 L'année dernière, j'ai même eu une conversation avec mon père. Je lui ai dit que j'aurais aimé parler davantage quand j'étais petite.
 
@@ -7452,17 +7430,17 @@ Les premiers jours, tout le monde en parlait avec le sourire : « Quelle chaleur
 
 Le plus dur, c'était la nuit. La température ne descendait pas sous vingt-huit degrés. Je dormais très mal. J'ouvrais les fenêtres, mais l'air était chaud aussi.
 
-La ville a changé complètement. Pendant la journée, les rues étaient vides. Les gens fermaient les volets dès neuf heures du matin pour garder un peu de fraîcheur.
+La ville a changé complètement. Le jour, les rues étaient vides. Les gens fermaient les volets dès neuf heures du matin pour garder un peu de fraîcheur.
 
-Ma voisine, qui a quatre-vingt-deux ans, ne sortait plus du tout. Ma mère l'appelait deux fois par jour pour vérifier qu'elle buvait de l'eau. Les personnes âgées sont les plus en danger pendant une canicule.
+Ma voisine, qui a quatre-vingt-deux ans, ne sortait plus. Ma mère l'appelait deux fois par jour pour vérifier qu'elle buvait de l'eau. Les personnes âgées sont les plus en danger pendant une canicule.
 
-La mairie a ouvert une salle climatisée près de la mairie. Beaucoup de gens y passaient l'après-midi.
+La mairie a ouvert une salle climatisée. Beaucoup de gens y passaient l'après-midi.
 
 À partir de neuf heures du soir, tout le monde sortait en même temps. Les rues se remplissaient. C'était étrange : la vie commençait la nuit.
 
 Le septième jour, un orage est arrivé. La température est descendue de douze degrés en une heure.
 
-Je me souviens que les gens sont sortis sous la pluie. Certains applaudissaient.`,
+Les gens sont sortis sous la pluie. Certains applaudissaient.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7477,7 +7455,7 @@ Je me souviens que les gens sont sortis sous la pluie. Certains applaudissaient.
       "A November storm brings down a tree, cuts the power for eighteen hours, and reveals how much a street can help itself. (Section: Weather and seasons, 2/5.)",
     body: `En novembre dernier, une grosse tempête est passée sur notre région. La météo avait prévenu deux jours avant : « Vents de cent trente kilomètres par heure. »
 
-Nous avons préparé la maison. Nous avons rentré les chaises du jardin, fermé tous les volets et acheté des bougies et des piles.
+Nous avons préparé la maison. Nous avons rentré les chaises du jardin, fermé les volets et acheté des bougies et des piles.
 
 La tempête est arrivée vers vingt-deux heures. Le bruit était impressionnant : le vent sifflait et faisait trembler les fenêtres.
 
@@ -7487,9 +7465,9 @@ Nous avons allumé les bougies et nous sommes restés dans le salon. Les enfants
 
 Vers deux heures du matin, nous avons entendu un craquement très fort, puis un choc.
 
-Le matin, nous avons compris : un grand arbre était tombé dans la rue. Il avait cassé une clôture, mais heureusement, il n'avait touché aucune maison et personne n'était blessé.
+Le matin, nous avons compris : un grand arbre était tombé dans la rue. Il avait cassé une clôture, mais il n'avait touché aucune maison. Personne n'était blessé.
 
-Toute la rue est sortie. Un voisin avait une tronçonneuse, un autre avait une remorque. Nous avons travaillé ensemble pendant quatre heures pour dégager la route.
+Toute la rue est sortie. Un voisin avait une tronçonneuse, un autre une remorque. Nous avons travaillé ensemble pendant quatre heures pour dégager la route.
 
 Je ne connaissais pas la moitié de ces gens.
 
@@ -7512,27 +7490,21 @@ Depuis cette tempête, nous nous disons tous bonjour dans la rue.`,
 
 En décembre, en janvier, en février : il a fait gris et humide, avec des températures de huit ou dix degrés. Il a beaucoup plu, mais l'eau est restée de l'eau.
 
-Mes enfants étaient déçus. Ma fille m'a demandé : « On va faire un bonhomme de neige cette année ? » J'ai répondu : « On va voir. »
+Mes enfants étaient déçus. Ma fille m'a demandé : « On va faire un bonhomme de neige cette année ? » J'ai répondu : « On va voir. » Nous n'en avons pas fait.
 
-Nous n'en avons pas fait.
-
-Ce n'est pas la première fois. L'hiver d'avant, il a neigé une journée seulement, et la neige a fondu avant le soir.
+Ce n'est pas la première fois. L'hiver d'avant, il a neigé un seul jour, et la neige a fondu avant le soir.
 
 Un dimanche, nous avons déjeuné chez ma grand-mère. Ma fille lui a parlé de la neige.
 
-Ma grand-mère a souri, puis elle a raconté son enfance dans ce même village, dans les années cinquante.
+Ma grand-mère a souri, puis elle a raconté son enfance dans ce même village.
 
-« Chaque hiver, il y avait de la neige pendant des semaines. Parfois quarante centimètres. Mon frère et moi, nous allions à l'école avec des skis, parce que la route était fermée. »
+« Chaque hiver, il y avait de la neige pendant des semaines. Mon frère et moi, nous allions à l'école avec des skis, parce que la route était fermée. »
 
 Ma fille l'a regardée avec de grands yeux. « Des skis ? Pour aller à l'école ? »
 
-« Tous les hivers », a répondu ma grand-mère.
+« Tous les hivers », a répondu ma grand-mère. Puis elle a ajouté : « Ici, la neige, c'était normal. Maintenant, c'est un événement. »
 
-Puis elle a ajouté quelque chose de plus sérieux : « Ici, la neige, c'était normal. Maintenant, c'est un événement. »
-
-Dans la voiture, ma fille était silencieuse.
-
-Puis elle a demandé : « Est-ce qu'il neigera encore quand je serai grande ? »
+Dans la voiture, ma fille était silencieuse. Puis elle a demandé : « Est-ce qu'il neigera encore quand je serai grande ? »
 
 Je n'ai pas su quoi répondre.`,
     sourceName: "Written for Lire",
@@ -7549,19 +7521,19 @@ Je n'ai pas su quoi répondre.`,
       "Blossom in February looks lovely — until the frost returns in April and the fruit harvest is lost. (Section: Weather and seasons, 4/5.)",
     body: `Cette année, le printemps est arrivé très tôt. Au mois de février, les arbres du jardin avaient déjà des fleurs.
 
-Au début, c'était magnifique. Il faisait dix-huit degrés en plein février ! Nous avons déjeuné dehors le vingt-deux, en tee-shirt. Les gens souriaient dans la rue et les terrasses des cafés étaient pleines.
+Au début, c'était magnifique. Il faisait dix-huit degrés en plein février ! Nous avons déjeuné dehors, en tee-shirt. Les gens souriaient dans la rue et les terrasses des cafés étaient pleines.
 
 Mais mon voisin, qui a un verger, n'était pas content du tout.
 
 « C'est beau, mais c'est mauvais », m'a-t-il dit. « Beaucoup trop tôt. »
 
-Je n'ai pas compris tout de suite. Il m'a expliqué.
+Je n'ai pas compris. Il m'a expliqué.
 
-Quand les arbres fleurissent, ils deviennent fragiles. Si le froid revient après, les fleurs meurent — et sans fleurs, il n'y a pas de fruits.
+Quand les arbres fleurissent, ils deviennent fragiles. Si le froid revient après, les fleurs meurent, et sans fleurs, il n'y a pas de fruits.
 
 « Et le froid revient presque toujours », a-t-il ajouté.
 
-Il avait raison. Le sept avril, il y a eu une gelée pendant deux nuits : moins trois degrés.
+Il avait raison. Début avril, il y a eu une gelée pendant deux nuits.
 
 Le matin, les fleurs de ses abricotiers étaient brunes. Elles étaient mortes.
 
@@ -7569,9 +7541,7 @@ Il a perdu presque toute sa récolte d'abricots. C'était la troisième fois en 
 
 Les agriculteurs essaient des solutions : des bougies entre les arbres, de grands ventilateurs, parfois de l'eau. Mais tout cela coûte cher et ne marche pas toujours.
 
-Cet été, les abricots ont été rares et chers au marché.
-
-Quand j'ai vu le prix, j'ai pensé à ces deux nuits d'avril.`,
+Cet été, les abricots ont été rares et chers au marché. Quand j'ai vu le prix, j'ai pensé à ces deux nuits d'avril.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7588,21 +7558,19 @@ Quand j'ai vu le prix, j'ai pensé à ces deux nuits d'avril.`,
 
 Comme beaucoup de jardiniers, je note tout dans un cahier : les dates des semis, la première tomate, le premier gel, la dernière pluie de l'été.
 
-Au début, je faisais ça pour mieux organiser mon jardin. Mais avec le temps, ce cahier est devenu autre chose : une petite histoire du climat de mon village.
+Au début, je faisais ça pour mieux organiser mon jardin. Avec le temps, ce cahier est devenu autre chose : une petite histoire du climat de mon village.
 
 Hier soir, j'ai comparé les années. Ce que j'ai vu est très clair.
 
-Dans les années quatre-vingt, je plantais mes tomates vers le quinze mai. Aujourd'hui, je les plante fin avril, deux semaines plus tôt.
+Dans les années quatre-vingt, je plantais mes tomates vers le quinze mai. Aujourd'hui, je les plante fin avril.
 
 Le premier gel de l'automne arrivait autour du vingt octobre. Maintenant, il arrive souvent en novembre.
 
-Les été sont plus secs. Avant, j'arrosais deux fois par semaine en juillet. Depuis cinq ans, j'arrose presque chaque jour, et parfois la mairie interdit l'arrosage.
+Les étés sont plus secs. Avant, j'arrosais deux fois par semaine en juillet. Depuis cinq ans, j'arrose presque chaque jour.
 
-Certaines plantes ne poussent plus bien ici : elles souffrent de la chaleur. D'autres, qui venaient du sud, poussent maintenant très bien dans mon jardin.
+Certaines plantes ne poussent plus bien ici. D'autres, qui venaient du sud, poussent maintenant très bien.
 
-Je ne suis pas scientifique. Je ne parle pas de la planète entière : je parle seulement de mon jardin, dans mon village.
-
-Mais je note ces dates depuis quarante ans, et les chiffres ne mentent pas.
+Je ne suis pas scientifique. Je parle seulement de mon jardin. Mais je note ces dates depuis quarante ans, et les chiffres ne mentent pas.
 
 Mon petit-fils m'a demandé pourquoi je gardais ce vieux cahier.
 
@@ -7621,27 +7589,23 @@ Je lui ai répondu : « Pour me souvenir de ce qui était normal avant. »`,
       "Moving from a house into a block of flats: thinner walls, shared stairs, and learning who everyone is. (Section: Home and neighbours, 1/5.)",
     body: `Après huit ans dans une petite maison, j'ai emménagé dans un immeuble, au troisième étage. C'était un grand changement.
 
-L'appartement lui-même me plaisait tout de suite : il était lumineux, avec un balcon et une vue sur les toits.
+L'appartement me plaisait tout de suite : il était lumineux, avec un balcon et une vue sur les toits.
 
-Mais la vie en immeuble est différente. Dans une maison, on est seul. Dans un immeuble, on partage : l'entrée, l'escalier, l'ascenseur, les poubelles, parfois le jardin.
+Mais la vie en immeuble est différente. Dans une maison, on est seul. Dans un immeuble, on partage : l'entrée, l'escalier, l'ascenseur, les poubelles.
 
-La première semaine, j'ai découvert les bruits. J'entendais l'eau dans les tuyaux, les pas au-dessus de moi, une porte qui claquait au rez-de-chaussée. Au début, cela me dérangeait beaucoup. Puis je m'y suis habituée.
+La première semaine, j'ai découvert les bruits : l'eau dans les tuyaux, les pas au-dessus de moi, une porte qui claquait en bas. Au début, cela me dérangeait. Puis je m'y suis habituée.
 
-J'ai aussi rencontré les voisins, petit à petit, dans l'escalier.
+J'ai aussi rencontré les voisins, dans l'escalier.
 
-Au premier étage, il y a un couple âgé, très gentil. Ils m'ont apporté un gâteau le deuxième jour.
+Au premier étage, il y a un couple âgé, très gentil, qui m'a apporté un gâteau le deuxième jour.
 
-Au deuxième, il y a une jeune famille avec un bébé. Le bébé pleure parfois la nuit, mais les parents s'excusent toujours.
+Au deuxième, il y a une jeune famille avec un bébé qui pleure parfois la nuit, mais les parents s'excusent toujours.
 
 Au-dessus de moi, il y a un homme d'une trentaine d'années. Je l'ai croisé trois fois en deux mois et je ne connais pas encore son nom.
 
 Il y a aussi madame Renard, qui habite ici depuis vingt-huit ans et qui sait absolument tout.
 
-Ce qui m'a surprise, c'est que je me sens moins seule qu'avant.
-
-Dans ma maison, je pouvais passer une semaine sans parler à personne.
-
-Ici, c'est impossible.`,
+Ce qui m'a surprise, c'est que je me sens moins seule qu'avant. Dans ma maison, je pouvais passer une semaine sans parler à personne. Ici, c'est impossible.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7660,11 +7624,11 @@ Je dormais mal. Le matin, j'étais fatiguée au travail.
 
 Au début, je n'ai rien dit. J'espérais que ça s'arrêterait tout seul.
 
-Puis j'ai commencé à être vraiment en colère. J'ai pensé écrire un mot anonyme, ou même appeler la police.
+Puis je suis devenue vraiment en colère. J'ai pensé écrire un mot anonyme, ou même appeler la police.
 
 Ma collègue Aïcha m'a donné un conseil : « Va lui parler d'abord. La plupart des gens ne savent pas qu'ils dérangent. »
 
-Elle avait probablement raison, mais j'avais peur. Et s'il devenait agressif ?
+Elle avait sûrement raison, mais j'avais peur.
 
 Un samedi matin, j'ai pris mon courage et je suis montée frapper à sa porte.
 
@@ -7674,13 +7638,11 @@ J'ai expliqué calmement : « Bonjour, j'habite juste en dessous. J'entends beau
 
 Sa réaction m'a étonnée. Il est devenu tout rouge.
 
-« Je suis vraiment désolé ! Je ne savais pas. Je viens d'emménager et je fais du sport le soir, après le travail. Je ne pensais pas qu'on entendait. »
+« Je suis vraiment désolé ! Je viens d'emménager et je fais du sport le soir, après le travail. Je ne pensais pas qu'on entendait. »
 
-Nous avons parlé dix minutes. Il a proposé d'acheter un tapis épais et de finir avant vingt-deux heures.
+Nous avons parlé dix minutes. Il a proposé un tapis épais et de finir avant vingt-deux heures.
 
-Depuis, presque plus de bruit.
-
-Trois semaines de colère, et il a suffi d'une conversation de dix minutes.`,
+Depuis, presque plus de bruit. Trois semaines de colère, et il a suffi de dix minutes.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7695,25 +7657,23 @@ Trois semaines de colère, et il a suffi d'une conversation de dix minutes.`,
       "The annual residents' meeting: a broken lift, a long argument about the entrance paint, and how decisions actually get made. (Section: Home and neighbours, 3/5.)",
     body: `Une fois par an, tous les propriétaires de l'immeuble se réunissent. On appelle cela l'assemblée générale. C'est là qu'on décide des travaux et du budget.
 
-Ma première réunion a eu lieu en mars. Elle a duré deux heures et demie. Je ne savais pas du tout à quoi m'attendre.
+Ma première réunion a eu lieu en mars. Elle a duré deux heures et demie. Je ne savais pas à quoi m'attendre.
 
-Nous étions quinze personnes dans une petite salle. Le gestionnaire de l'immeuble dirigeait la réunion avec un ordre du jour.
+Nous étions quinze personnes. Le gestionnaire de l'immeuble dirigeait la réunion avec un ordre du jour.
 
-Le premier sujet était sérieux : l'ascenseur. Il tombe en panne trois ou quatre fois par an et il a trente ans. Le réparer coûterait cher ; le remplacer coûterait beaucoup plus cher.
+Le premier sujet était sérieux : l'ascenseur. Il tombe en panne plusieurs fois par an et il a trente ans. Le réparer coûterait cher ; le remplacer coûterait beaucoup plus cher.
 
-Nous avons discuté quarante minutes. Le couple du premier étage ne voulait pas payer : ils n'utilisent jamais l'ascenseur. Les habitants du quatrième et du cinquième insistaient, ce qui est compréhensible.
+Nous avons discuté quarante minutes. Le couple du premier étage ne voulait pas payer : ils n'utilisent jamais l'ascenseur. Les habitants du quatrième et du cinquième insistaient.
 
 Finalement, nous avons voté pour un remplacement, payé sur trois ans.
 
-Le deuxième sujet était la peinture de l'entrée. Et là, la discussion a duré cinquante minutes ! Cinquante minutes pour choisir entre le beige et le gris clair.
+Le deuxième sujet était la peinture de l'entrée. La discussion a duré cinquante minutes, pour choisir entre le beige et le gris clair.
 
-Madame Renard voulait absolument le beige. Un autre voisin trouvait le beige « triste ».
+Madame Renard voulait absolument le beige. Un autre voisin trouvait ça « triste ».
 
 À la fin, nous avons choisi le gris clair, par huit voix contre sept.
 
-En sortant, j'étais épuisée. Mais j'ai compris quelque chose : dans un immeuble, personne ne décide seul.
-
-Même pour une couleur de mur.`,
+En sortant, j'étais épuisée. Mais j'ai compris : dans un immeuble, personne ne décide seul, même pour une couleur de mur.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7730,9 +7690,9 @@ Même pour une couleur de mur.`,
 
 « Je ne veux pas le mettre en pension », m'a-t-elle expliqué. « Il est vieux et il serait malheureux. »
 
-J'ai accepté tout de suite. Ce n'était pas compliqué : il fallait monter deux fois par jour pour lui donner à manger, changer son eau et nettoyer sa litière.
+J'ai accepté tout de suite. Ce n'était pas compliqué : il fallait monter deux fois par jour pour lui donner à manger et nettoyer sa litière.
 
-Elle m'a donné ses clés et beaucoup d'instructions, écrites sur une feuille. Il y avait même l'heure exacte des repas.
+Elle m'a donné ses clés et ses instructions, écrites sur une feuille.
 
 Le chat s'appelait Gaston. Les deux premiers jours, il s'est caché sous le lit. Il ne mangeait presque rien et il ne voulait pas me voir.
 
@@ -7742,13 +7702,11 @@ Elle a répondu : « C'est normal, il boude. Parlez-lui doucement, il aime ça. 
 
 Alors, chaque soir, je restais dix minutes dans son appartement et je lui parlais.
 
-Le quatrième jour, il est sorti de sous le lit. Le sixième jour, il est venu contre ma jambe. Le neuvième jour, il a dormi sur mes genoux pendant vingt minutes.
+Le quatrième jour, il est sorti de sous le lit. Le sixième jour, il est venu contre ma jambe. Le neuvième jour, il a dormi sur mes genoux.
 
-Quand madame Lambert est rentrée, elle m'a apporté un cadeau de la région où elle était partie.
+Quand madame Lambert est rentrée, elle m'a apporté un cadeau.
 
-Depuis, nous prenons un café ensemble presque chaque semaine.
-
-Un chat a créé une amitié.`,
+Depuis, nous prenons un café ensemble presque chaque semaine. Un chat a créé une amitié.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7765,9 +7723,9 @@ Un chat a créé une amitié.`,
 
 Un jour, le jeune homme du quatrième étage a eu une idée. Pendant la réunion des voisins, il a proposé de transformer ce terrain en jardin partagé.
 
-Au début, beaucoup de gens étaient contre. « Qui va s'en occuper ? » « Et si personne ne le fait ? » « Ça va coûter de l'argent. »
+Au début, beaucoup de gens étaient contre. « Qui va s'en occuper ? » « Ça va coûter de l'argent. »
 
-Mais il avait bien préparé son projet. Il a expliqué que la mairie donnait une aide pour ce type de jardin, et il a proposé de commencer petit : six carrés de légumes seulement.
+Mais il avait bien préparé son projet. Il a expliqué que la mairie donnait une aide, et il a proposé de commencer petit : six carrés de légumes.
 
 Après une longue discussion, nous avons voté oui, de justesse.
 
@@ -7775,15 +7733,11 @@ Nous avons commencé en avril. Nous étions sept au début : le jeune homme, moi
 
 Nous avons nettoyé le terrain, apporté de la terre et construit les carrés en bois.
 
-Chaque famille s'occupe d'un carré, mais nous arrosons tous ensemble : il y a un tableau dans l'entrée avec les semaines.
+Chaque famille s'occupe d'un carré, mais nous arrosons tous ensemble.
 
 Cet été, nous avons récolté des tomates, des courgettes, des salades et beaucoup d'herbes.
 
-Mais le plus intéressant n'est pas les légumes.
-
-Avant, je connaissais trois voisins. Maintenant, j'en connais douze.
-
-Et madame Renard ne râle presque plus.`,
+Mais le plus intéressant n'est pas les légumes. Avant, je connaissais trois voisins. Maintenant, j'en connais douze. Et madame Renard ne râle presque plus.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7800,25 +7754,23 @@ Et madame Renard ne râle presque plus.`,
 
 J'ai pris ma température : trente-huit degrés huit. J'avais de la fièvre.
 
-Ma première réaction a été de me préparer quand même pour aller travailler. J'avais une réunion importante, et je pensais : « Ça va passer dans la journée. »
+Ma première réaction a été de me préparer quand même pour aller travailler. J'avais une réunion importante.
 
 Je me suis levée, puis j'ai dû m'asseoir. J'avais la tête qui tournait.
 
-Alors j'ai fait quelque chose que je fais rarement : j'ai téléphoné au bureau et j'ai dit que je ne venais pas.
+Alors j'ai téléphoné au bureau pour dire que je ne venais pas.
 
 L'après-midi, j'ai appelé mon médecin. Il m'a reçue à dix-sept heures.
 
-Il m'a examinée : la gorge, les oreilles, la respiration. Puis il a dit : « C'est une grippe. Il n'y a pas de traitement magique. Vous devez vous reposer, boire beaucoup et attendre. »
+Il m'a examinée, puis il a dit : « C'est une grippe. Il n'y a pas de traitement magique. Vous devez vous reposer, boire beaucoup et attendre. »
 
 Il m'a donné un médicament pour la fièvre et un arrêt de travail de trois jours.
 
-Ces trois jours ont été longs. J'ai dormi énormément — parfois douze heures par nuit et deux heures l'après-midi. Je n'avais pas faim. Je regardais des séries sans vraiment les suivre.
+Ces trois jours ont été longs. J'ai dormi énormément, parfois douze heures par nuit. Je n'avais pas faim. Je regardais des séries sans vraiment les suivre.
 
 Le vendredi, je me sentais un peu mieux. Le lundi, j'ai pu retourner travailler.
 
-Ma collègue m'a dit : « Tu as bien fait de rester chez toi. La dernière fois, tu es venue malade et la moitié du bureau a été malade aussi. »
-
-Elle avait raison.`,
+Ma collègue m'a dit : « Tu as bien fait de rester chez toi. La dernière fois, tu es venue malade et la moitié du bureau a été malade aussi. » Elle avait raison.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7833,7 +7785,7 @@ Elle avait raison.`,
       "Two weeks of putting off the dentist makes a small problem bigger — and the appointment is far less frightening than the waiting. (Section: Health, 2/5.)",
     body: `J'avais mal à une dent depuis deux semaines. Au début, c'était une petite douleur, seulement quand je buvais quelque chose de froid.
 
-Je savais qu'il fallait aller chez le dentiste. Mais je n'aime pas le dentiste. Personne n'aime le dentiste.
+Je savais qu'il fallait aller chez le dentiste. Mais je n'aime pas le dentiste.
 
 Alors j'ai attendu. J'ai pris des médicaments contre la douleur et j'ai évité les boissons froides.
 
@@ -7843,15 +7795,15 @@ Le lendemain matin, j'ai téléphoné. La secrétaire m'a proposé un rendez-vou
 
 « Trois semaines ? Mais j'ai très mal ! »
 
-« Attendez... Il y a une annulation demain à huit heures. Ça vous convient ? »
+« Il y a une annulation demain à huit heures. Ça vous convient ? »
 
 J'ai dit oui immédiatement.
 
-Dans la salle d'attente, j'étais nerveuse comme un enfant. J'entendais le bruit des instruments dans l'autre pièce.
+Dans la salle d'attente, j'étais nerveuse comme un enfant.
 
 Le dentiste a regardé ma dent pendant deux minutes, puis il a fait une radio.
 
-« Vous avez une carie assez profonde. Si vous étiez venue il y a deux semaines, c'était simple. Maintenant, c'est un peu plus de travail, mais ça reste réparable. »
+« Vous avez une carie assez profonde. Si vous étiez venue plus tôt, c'était simple. Maintenant, c'est un peu plus de travail, mais ça reste réparable. »
 
 Il m'a fait une piqûre, puis il a travaillé pendant quarante minutes. Ce n'était pas agréable, mais je n'ai presque rien senti.
 
@@ -7880,19 +7832,17 @@ Mon médecin m'a examinée et m'a rassurée : ce n'était pas grave. « Vous ave
 
 Il m'a donné des médicaments et un conseil surprenant : « Ne restez pas au lit. Bougez doucement. »
 
-Je pensais qu'il fallait se reposer complètement. Il m'a expliqué que rester allongé trop longtemps rendait le problème plus long.
+Je pensais qu'il fallait se reposer complètement. Il m'a expliqué le contraire : rester allongé trop longtemps rendait le problème plus long.
 
-Il m'a aussi envoyée chez un kinésithérapeute. J'y suis allée six fois.
+Il m'a aussi envoyée chez un kinésithérapeute.
 
-Le kiné m'a montré des exercices simples, à faire chaque matin pendant dix minutes.
+Le kiné m'a montré des exercices simples, à faire chaque matin.
 
 Mais surtout, il m'a posé des questions sur ma vie quotidienne. Combien d'heures est-ce que je passais assise ? Environ neuf heures par jour.
 
 « Voilà le vrai problème », a-t-il dit. « Le carton était seulement la goutte d'eau. Votre dos est fragile parce qu'il ne bouge jamais. »
 
-Depuis, j'ai changé deux choses. Je me lève toutes les heures au bureau, et je marche vingt minutes chaque jour.
-
-Je n'ai plus mal au dos.`,
+Depuis, j'ai changé deux choses. Je me lève toutes les heures au bureau, et je marche vingt minutes chaque jour. Je n'ai plus mal au dos.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -7909,19 +7859,19 @@ Je n'ai plus mal au dos.`,
 
 Il avait déjà essayé d'arrêter quatre fois. Chaque fois, il tenait deux ou trois semaines, puis il recommençait.
 
-L'année dernière, quelque chose a changé. Notre père a eu un problème cardiaque. Il a passé une semaine à l'hôpital.
+L'année dernière, quelque chose a changé. Notre père a eu un problème cardiaque et il a passé une semaine à l'hôpital.
 
 Thomas est resté longtemps silencieux après cette visite. Puis il m'a dit : « Cette fois, j'arrête pour de bon. »
 
 Mais il a fait une chose différente : il a demandé de l'aide. Avant, il essayait toujours seul.
 
-Il est allé voir son médecin, qui lui a proposé des patchs et un suivi. Il a aussi rejoint un petit groupe de personnes qui arrêtaient en même temps.
+Il est allé voir son médecin, qui lui a proposé des patchs. Il a aussi rejoint un groupe de personnes qui arrêtaient en même temps.
 
-Les premières semaines ont été très dures. Il était nerveux, il dormait mal, il s'énervait pour rien. Il m'a téléphoné plusieurs fois le soir, simplement pour parler et ne pas fumer.
+Les premières semaines ont été très dures. Il était nerveux, il dormait mal. Il m'a téléphoné plusieurs fois le soir, simplement pour parler.
 
-Il a aussi changé ses habitudes. Avant, il fumait toujours avec son café du matin. Alors il a arrêté de prendre son café à la même place.
+Il a aussi changé ses habitudes. Avant, il fumait toujours avec son café du matin, alors il a arrêté de prendre son café à la même place.
 
-Après un mois, c'était plus facile. Après trois mois, il a remarqué qu'il montait les escaliers sans être essoufflé.
+Après un mois, c'était plus facile. Après trois mois, il montait les escaliers sans être essoufflé.
 
 Cela fait maintenant quatorze mois.
 
@@ -7942,9 +7892,9 @@ Il m'a dit récemment : « Les quatre premières fois, j'ai essayé tout seul. L
 
 En février, c'était mon tour. J'y suis allée sans y penser, entre deux réunions.
 
-L'infirmière a d'abord fait les mesures habituelles : le poids, la taille, la vue, l'audition.
+L'infirmière a d'abord fait les mesures habituelles : le poids, la taille, la vue.
 
-Puis elle a pris ma tension. Elle a noté le chiffre, puis elle a recommencé cinq minutes plus tard. Elle ne disait rien.
+Puis elle a pris ma tension. Elle a noté le chiffre, puis elle a recommencé cinq minutes plus tard, sans rien dire.
 
 « Il y a un problème ? » j'ai demandé.
 
@@ -7952,17 +7902,15 @@ Puis elle a pris ma tension. Elle a noté le chiffre, puis elle a recommencé ci
 
 J'ai été surprise. J'ai quarante-deux ans, je ne suis pas en mauvaise santé, je ne fume pas.
 
-Ensuite, le médecin du travail m'a posé beaucoup de questions. Est-ce que je dormais bien ? Combien de café est-ce que je buvais ? Est-ce que je me sentais stressée ?
+Ensuite, le médecin du travail m'a posé beaucoup de questions. Est-ce que je dormais bien ? Combien de café est-ce que je buvais ?
 
-Mes réponses ont été honnêtes : je dormais six heures par nuit, je buvais cinq ou six cafés par jour, et oui, j'étais stressée depuis six mois.
+Mes réponses ont été honnêtes : six heures de sommeil, cinq ou six cafés par jour, et oui, j'étais stressée depuis six mois.
 
 Il m'a dit : « Rien de tout cela n'est dramatique. Mais tout cela ensemble, sur des années, peut devenir un problème. »
 
 Il ne m'a pas donné de médicament. Il m'a conseillé de voir mon médecin dans trois mois et de commencer par une chose : réduire le café.
 
-Je suis passée de six cafés à deux.
-
-Trois mois plus tard, ma tension était normale.
+Je suis passée de six cafés à deux. Trois mois plus tard, ma tension était normale.
 
 Maintenant, je ne trouve plus cette visite inutile.`,
     sourceName: "Written for Lire",
@@ -7979,7 +7927,7 @@ Maintenant, je ne trouve plus cette visite inutile.`,
       "Joining a volleyball club as a complete beginner at thirty-five: the first terrible training session, and why she went back. (Section: Sport and hobbies, 1/5.)",
     body: `En septembre dernier, je me suis inscrite à un club de volley. Je n'avais pas joué depuis le lycée, il y a vingt ans.
 
-Tout a commencé au forum des associations, en ville. C'est un événement organisé chaque année en septembre : tous les clubs de la ville installent un stand et présentent leurs activités.
+Tout a commencé au forum des associations, en ville. Chaque année en septembre, tous les clubs installent un stand.
 
 Je suis passée devant le stand du volley presque par hasard. Une femme m'a souri et m'a demandé : « Vous jouez ? »
 
@@ -7989,7 +7937,7 @@ Je suis passée devant le stand du volley presque par hasard. Une femme m'a sour
 
 J'ai hésité toute la semaine. Puis je suis allée au premier entraînement.
 
-Ce fut une catastrophe. Je ratais presque toutes les balles. Je ne me souvenais d'aucune règle. Après vingt minutes, j'étais essoufflée et j'avais mal partout.
+Ce fut une catastrophe. Je ratais presque toutes les balles. Après vingt minutes, j'étais essoufflée et j'avais mal partout.
 
 Pendant la pause, j'ai pensé : « Je ne reviendrai pas. »
 
@@ -7999,9 +7947,7 @@ Mais une joueuse est venue me parler. Elle m'a dit qu'elle avait commencé deux 
 
 Je suis revenue la semaine suivante. Puis la suivante.
 
-Aujourd'hui, huit mois plus tard, je joue toujours mal. Mais je rate moins de balles, et je connais les règles.
-
-Et le mardi soir est devenu un rendez-vous que je ne manque jamais.`,
+Aujourd'hui, huit mois plus tard, je joue toujours mal. Mais je rate moins de balles, et le mardi soir est devenu un rendez-vous que je ne manque jamais.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8016,11 +7962,11 @@ Et le mardi soir est devenu un rendez-vous que je ne manque jamais.`,
       "Watching a nine-year-old's football match from the touchline — and the parents who shout too much. (Section: Sport and hobbies, 2/5.)",
     body: `Chaque samedi matin, je vais voir mon fils Léo jouer au football. Il a neuf ans et il joue dans le club de notre quartier.
 
-Le match commence à dix heures. Il faut être là à neuf heures et quart pour l'échauffement, alors nous partons tôt.
+Le match commence à dix heures. Il faut être là à neuf heures et quart, alors nous partons tôt.
 
-Sur le bord du terrain, il y a une vingtaine de parents. Certains apportent un thermos de café. En hiver, il fait vraiment froid et nous restons debout pendant une heure et demie.
+Sur le bord du terrain, il y a une vingtaine de parents. En hiver, il fait vraiment froid et nous restons debout longtemps.
 
-J'aime beaucoup ces matins. Les enfants jouent avec beaucoup d'énergie et parfois très peu d'organisation. Ils courent tous vers le ballon en même temps.
+J'aime beaucoup ces matins. Les enfants jouent avec beaucoup d'énergie et peu d'organisation. Ils courent tous vers le ballon en même temps.
 
 Mais il y a un problème sur le bord du terrain : certains parents crient trop.
 
@@ -8030,9 +7976,7 @@ Samedi dernier, l'entraîneur a arrêté le match pendant une minute. Il s'est t
 
 « Ce sont des enfants. Ils jouent pour s'amuser. Laissez-les jouer, s'il vous plaît. »
 
-Il y a eu un grand silence.
-
-Après, le match a continué, et c'était beaucoup plus agréable.
+Il y a eu un grand silence. Après, le match a continué, et c'était beaucoup plus agréable.
 
 Léo a marqué un but. Son équipe a perdu quatre à deux.
 
@@ -8051,23 +7995,21 @@ Dans la voiture, il m'a dit : « C'était bien aujourd'hui. »`,
       "Collecting vinyl records: the hunt in flea markets, the ritual of listening, and why a slower format can be a pleasure. (Section: Sport and hobbies, 3/5.)",
     body: `J'ai commencé à collectionner les disques vinyles il y a cinq ans. Aujourd'hui, j'en ai environ deux cents.
 
-Tout a commencé chez mes parents. En vidant le grenier, j'ai trouvé un carton avec les disques de mon père : du jazz et de la chanson française des années soixante-dix.
+Tout a commencé chez mes parents. En vidant le grenier, j'ai trouvé un carton avec les disques de mon père : du jazz et de la chanson française.
 
-J'ai acheté un vieux tourne-disque d'occasion pour quarante euros, et j'ai écouté ces disques un dimanche après-midi.
+J'ai acheté un vieux tourne-disque d'occasion, et j'ai écouté ces disques un dimanche après-midi.
 
-Ça m'a surpris. Le son n'était pas parfait — il y avait des petits bruits — mais l'écoute était différente.
+Ça m'a surpris. Le son n'était pas parfait, il y avait des petits bruits, mais l'écoute était différente.
 
-Avec un vinyle, on ne peut pas passer d'une chanson à l'autre en une seconde. Il faut se lever, retourner le disque, faire attention à l'aiguille. On écoute l'album entier, dans l'ordre, comme l'artiste l'avait prévu.
+Avec un vinyle, on ne peut pas passer d'une chanson à l'autre en une seconde. Il faut se lever, retourner le disque. On écoute l'album entier, dans l'ordre.
 
-Depuis, je cherche des disques partout : dans les vide-greniers, les brocantes, les petits magasins d'occasion.
+Depuis, je cherche des disques partout : vide-greniers, brocantes, petits magasins d'occasion.
 
-C'est un plaisir en deux parties. Il y a d'abord la recherche : on regarde des centaines de pochettes, souvent pour ne rien trouver. Puis, parfois, il y a la découverte.
+C'est un plaisir en deux parties. D'abord la recherche : on regarde des centaines de pochettes, souvent pour ne rien trouver. Puis, parfois, la découverte.
 
 Le mois dernier, dans une brocante, j'ai trouvé un album que je cherchais depuis deux ans. Il coûtait trois euros. J'étais si content que le vendeur a ri.
 
-Mes amis me disent parfois : « Tu peux tout écouter gratuitement sur internet. »
-
-C'est vrai. Mais ce n'est pas la même chose.
+Mes amis me disent parfois : « Tu peux tout écouter gratuitement sur internet. » C'est vrai. Mais ce n'est pas la même chose.
 
 Le dimanche soir, je mets un disque, et je ne fais rien d'autre.`,
     sourceName: "Written for Lire",
@@ -8084,7 +8026,7 @@ Le dimanche soir, je mets un disque, et je ne fais rien d'autre.`,
       "Starting to run again after two years off: one minute running, two walking — and the slow method that finally stuck. (Section: Sport and hobbies, 4/5.)",
     body: `Après deux ans sans sport, j'ai recommencé à courir au mois de mars.
 
-Ma première tentative, l'année dernière, avait été un échec. J'étais parti trop vite et trop longtemps. J'avais couru trente minutes le premier jour, et j'avais eu mal aux jambes pendant une semaine. Je n'avais jamais recommencé.
+Ma première tentative, l'année dernière, avait été un échec. J'étais parti trop vite et trop longtemps. J'avais couru trente minutes le premier jour, et j'avais eu mal aux jambes pendant une semaine.
 
 Cette fois, j'ai lu quelques conseils avant de commencer. Tous disaient la même chose : commencer beaucoup plus doucement qu'on ne le pense.
 
@@ -8096,15 +8038,13 @@ Mais je n'avais pas mal, et je suis revenu trois jours plus tard.
 
 La deuxième semaine : deux minutes de course, deux de marche.
 
-Chaque semaine, j'augmentais un peu. Certaines semaines, je ne progressais pas du tout, et ce n'était pas grave.
+Chaque semaine, j'augmentais un peu. Certaines semaines, je ne progressais pas, et ce n'était pas grave.
 
 Après huit semaines, j'ai couru vingt minutes sans m'arrêter. Après quatre mois, quarante minutes.
 
-Aujourd'hui, je cours trois fois par semaine, le lundi, le mercredi et le samedi.
+Aujourd'hui, je cours trois fois par semaine.
 
-Je ne suis pas rapide. Je ne fais pas de compétition. Mais je dors mieux et je suis plus calme.
-
-Ce qui a changé, ce n'est pas ma motivation : c'est ma patience.`,
+Je ne suis pas rapide. Je ne fais pas de compétition. Mais je dors mieux et je suis plus calme. Ce qui a changé, ce n'est pas ma motivation : c'est ma patience.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8119,23 +8059,21 @@ Ce qui a changé, ce n'est pas ma motivation : c'est ma patience.`,
       "A monthly book club at the library: one book, eight readers, and eight completely different opinions. (Section: Sport and hobbies, 5/5.)",
     body: `Depuis deux ans, je fais partie d'un club de lecture. Nous nous réunissons une fois par mois, le premier jeudi, à la bibliothèque de la ville.
 
-Nous sommes huit personnes. La plus jeune a vingt-trois ans, la plus âgée en a soixante-dix-huit. En dehors du club, nous n'avons presque rien en commun.
+Nous sommes huit personnes. La plus jeune a vingt-trois ans, la plus âgée soixante-dix-huit. En dehors du club, nous n'avons presque rien en commun.
 
-Le principe est simple : nous choisissons un livre ensemble, tout le monde le lit pendant le mois, et nous en parlons pendant une heure et demie.
+Le principe est simple : nous choisissons un livre ensemble, tout le monde le lit pendant le mois, et nous en parlons.
 
-Ce qui me plaît le plus, c'est de lire des livres que je n'aurais jamais choisis moi-même. Avant, je lisais toujours le même genre de romans. Depuis deux ans, j'ai lu de la science-fiction, de la poésie, une biographie et même un livre d'histoire.
+Ce qui me plaît le plus, c'est de lire des livres que je n'aurais jamais choisis moi-même. Depuis deux ans, j'ai lu de la science-fiction, de la poésie et même un livre d'histoire.
 
 Certains livres ne m'ont pas plu du tout. Mais même ceux-là étaient intéressants à discuter.
 
 Le plus surprenant, c'est la différence entre nous. Nous lisons le même livre, et nous ne lisons pas le même livre.
 
-Le mois dernier, par exemple, nous avons lu un roman sur une famille. Pour moi, le personnage principal était égoïste. Pour Sylvie, il était courageux. Nous avons discuté pendant quarante minutes.
+Le mois dernier, nous avons lu un roman sur une famille. Pour moi, le personnage principal était égoïste. Pour Sylvie, il était courageux. Nous avons discuté pendant quarante minutes.
 
 Personne n'a changé d'avis, et ce n'était pas le but.
 
-À la fin, la bibliothécaire nous dit toujours : « Il faut fermer ! »
-
-Alors nous continuons dehors, sur le trottoir, encore dix minutes.`,
+À la fin, la bibliothécaire nous dit toujours : « Il faut fermer ! » Alors nous continuons dehors, sur le trottoir, encore dix minutes.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8154,23 +8092,21 @@ Depuis quelques mois, il avait des problèmes : la batterie ne tenait plus que q
 
 Je ne voulais pas en acheter un neuf. J'ai d'abord essayé de le faire réparer.
 
-Je suis allé dans un magasin de réparation près de chez moi. Le technicien a regardé mon téléphone pendant dix minutes.
+Je suis allé dans un magasin de réparation. Le technicien a regardé mon téléphone pendant dix minutes.
 
-« La batterie, je peux la changer : soixante-dix euros. Mais le problème principal, c'est le système. Ce modèle ne reçoit plus les mises à jour depuis un an. »
+« La batterie, je peux la changer : soixante-dix euros. Mais le vrai problème, c'est le système. Ce modèle ne reçoit plus les mises à jour depuis un an. »
 
 Il m'a expliqué que sans mises à jour, le téléphone devient moins sûr, et certaines applications s'arrêtent de fonctionner.
 
 « Vous pouvez le garder encore quelques mois, mais pas des années. »
 
-J'ai trouvé cela absurde. L'appareil fonctionnait — pas parfaitement, mais il fonctionnait. Ce n'est pas la machine qui était morte : c'est le logiciel qui l'avait abandonnée.
+J'ai trouvé cela absurde. L'appareil fonctionnait, pas parfaitement, mais il fonctionnait. Ce n'est pas la machine qui était morte : c'est le logiciel qui l'avait abandonnée.
 
 J'ai finalement acheté un téléphone reconditionné, c'est-à-dire un téléphone d'occasion réparé et vérifié. Il m'a coûté deux cent trente euros au lieu de six cents pour un neuf.
 
 Il a deux ans, mais il reçoit encore les mises à jour pendant trois ans.
 
-Mon ancien téléphone, je l'ai déposé dans un bac de recyclage au magasin.
-
-J'espère garder celui-ci six ans aussi.`,
+Mon ancien téléphone, je l'ai déposé dans un bac de recyclage. J'espère garder celui-ci six ans aussi.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8187,11 +8123,11 @@ J'espère garder celui-ci six ans aussi.`,
 
 J'ai proposé de lui apprendre. Je pensais que ce serait rapide. Je me trompais complètement.
 
-Le premier jour, nous avons passé deux heures sur des choses que je croyais évidentes. Comment allumer l'appareil. Comment toucher l'écran — ni trop fort, ni trop longtemps. Comment revenir en arrière.
+Le premier jour, nous avons passé deux heures sur des choses que je croyais évidentes. Comment allumer l'appareil. Comment toucher l'écran, ni trop fort, ni trop longtemps.
 
-J'ai compris que je n'expliquais pas bien. Je disais des mots comme « application », « icône », « menu » sans jamais les définir. Pour moi, c'était naturel ; pour elle, c'était une langue étrangère.
+J'ai compris que je n'expliquais pas bien. Je disais des mots comme « application » ou « menu » sans les définir. Pour moi, c'était naturel ; pour elle, c'était une langue étrangère.
 
-J'ai aussi remarqué autre chose : elle avait peur. Peur d'appuyer au mauvais endroit, de tout casser, de supprimer quelque chose d'important.
+J'ai aussi remarqué autre chose : elle avait peur. Peur d'appuyer au mauvais endroit, de tout casser.
 
 Alors je lui ai dit une phrase qui a beaucoup aidé : « Tu ne peux rien casser. Si tu te trompes, on répare en trente secondes. »
 
@@ -8222,7 +8158,7 @@ Deux cents ! Cela fait une interruption toutes les cinq minutes environ, pendant
 
 Il y avait de tout : des messages, des e-mails, des applications de magasins, des jeux, des informations. Beaucoup d'entre elles ne servaient à rien.
 
-Le problème n'était pas seulement le bruit. C'était l'attention. Chaque fois que mon téléphone vibrait, je perdais le fil de ce que je faisais. Et même quand je le remettais dans ma poche, je pensais encore au message.
+Le problème n'était pas seulement le bruit. C'était l'attention. Chaque fois que mon téléphone vibrait, je perdais le fil de ce que je faisais.
 
 Un soir, pendant le dîner, ma fille m'a dit : « Maman, tu regardes ton téléphone tout le temps. »
 
@@ -8232,13 +8168,11 @@ Alors j'ai fait quelque chose de simple. J'ai ouvert les paramètres et j'ai dé
 
 J'ai gardé seulement les appels, les messages de ma famille et l'application de mon travail.
 
-Les premiers jours ont été bizarres. Je regardais mon téléphone sans raison, comme par réflexe, pour vérifier que je n'avais rien manqué.
+Les premiers jours ont été bizarres. Je regardais mon téléphone sans raison, comme par réflexe.
 
 Puis, après une semaine, quelque chose a changé. J'étais plus calme. Je lisais des pages entières sans m'arrêter.
 
-Je n'ai rien manqué d'important en six mois.
-
-Les nouvelles arrivent quand même. Elles attendent simplement que je vienne les chercher.`,
+Je n'ai rien manqué d'important en six mois. Les nouvelles arrivent quand même. Elles attendent simplement que je vienne les chercher.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8257,21 +8191,19 @@ Un homme l'a appelé un mardi après-midi. Il a dit qu'il travaillait à la banq
 
 Il connaissait le nom de mon père, le nom de sa banque et même son adresse. Il parlait poliment et calmement.
 
-Il a expliqué qu'une opération suspecte venait d'être détectée sur le compte : quelqu'un essayait de retirer mille huit cents euros. Pour bloquer l'opération, il fallait agir tout de suite.
+Il a expliqué qu'une opération suspecte venait d'être détectée : quelqu'un essayait de retirer mille huit cents euros. Il fallait agir tout de suite.
 
 Il a demandé à mon père de confirmer son numéro de carte et de donner le code reçu par SMS.
 
 Mon père était inquiet. L'homme parlait vite et répétait que c'était urgent.
 
-Mais juste avant de donner le code, mon père s'est souvenu d'une chose que je lui avais répétée plusieurs fois : une vraie banque ne demande jamais un code par téléphone.
+Mais juste avant de donner le code, mon père s'est souvenu d'une chose : une vraie banque ne demande jamais un code par téléphone.
 
 Alors il a dit : « Je vais raccrocher et rappeler ma banque moi-même. »
 
-L'homme a immédiatement changé de ton. Il est devenu agressif et il a dit que ce serait trop tard.
+L'homme a tout de suite changé de ton et il est devenu agressif.
 
-Mon père a raccroché.
-
-Il a appelé sa banque avec le numéro écrit sur sa carte. Il n'y avait aucune opération suspecte, bien sûr.
+Mon père a raccroché. Il a appelé sa banque avec le numéro écrit sur sa carte. Il n'y avait aucune opération suspecte, bien sûr.
 
 L'urgence, c'est l'arme principale de ces escrocs. Ils ne veulent pas qu'on réfléchisse.
 
@@ -8290,21 +8222,19 @@ Depuis, mon père a une règle : il raccroche toujours, et il rappelle lui-même
       "Two years of working from home: no commute and more focus, but a table that is also a desk and a day that never quite ends. (Section: Technology, 5/5.)",
     body: `Depuis deux ans, je travaille chez moi trois jours par semaine. Le mardi et le jeudi, je vais au bureau.
 
-Au début, j'étais très content. Plus de transport : j'économisais une heure et demie par jour. Je pouvais dormir un peu plus longtemps et déjeuner tranquillement chez moi.
+Au début, j'étais très content. Plus de transport : j'économisais une heure et demie par jour. Je pouvais dormir un peu plus longtemps.
 
-J'ai aussi remarqué que je travaillais mieux sur certaines tâches. Au bureau, les gens m'interrompaient sans arrêt. Chez moi, je pouvais me concentrer pendant deux heures sans être dérangé.
+J'ai aussi remarqué que je travaillais mieux sur certaines tâches. Au bureau, les gens m'interrompaient sans arrêt. Chez moi, je pouvais me concentrer sans être dérangé.
 
 Mais après quelques mois, les problèmes sont apparus.
 
-Le premier problème était l'espace. Mon appartement est petit. Je travaillais sur la table de la cuisine, la même table où je mangeais le soir. Le travail et la maison se mélangeaient.
+Le premier problème était l'espace. Mon appartement est petit. Je travaillais sur la table de la cuisine, la même table où je mangeais le soir.
 
 Le deuxième problème était le temps. Sans trajet, il n'y avait plus de limite claire. Je commençais à huit heures et je regardais encore mes messages à vingt et une heures.
 
 Le troisième problème était la solitude. Certains jours, je ne parlais à personne en face à face.
 
 Alors j'ai changé plusieurs choses. J'ai acheté un petit bureau d'occasion pour séparer le travail du repas. Je fais maintenant une « fausse sortie » : je marche vingt minutes avant de commencer et vingt minutes à la fin.
-
-Et je ferme complètement mon ordinateur à dix-huit heures.
 
 Le télétravail n'est ni bon ni mauvais. Tout dépend des règles qu'on se donne.`,
     sourceName: "Written for Lire",
@@ -8321,25 +8251,23 @@ Le télétravail n'est ni bon ni mauvais. Tout dépend des règles qu'on se donn
       "Discovering hedgehogs in the garden, and the small changes that turned a tidy lawn into a place where wildlife can live. (Section: Nature and animals, 1/5.)",
     body: `Un soir de mai, vers vingt-deux heures, j'ai entendu un bruit dans le jardin. J'ai pris une lampe et je suis sorti.
 
-Sous la haie, il y avait un hérisson. Il s'est immédiatement mis en boule et il n'a plus bougé.
+Sous la haie, il y avait un hérisson. Il s'est mis en boule tout de suite et il n'a plus bougé.
 
-Je suis rentré tout de suite pour ne pas le déranger, mais j'étais content. Je n'avais jamais vu de hérisson chez moi.
+Je suis rentré vite pour ne pas le déranger, mais j'étais content. Je n'avais jamais vu de hérisson chez moi.
 
-Le lendemain, j'ai cherché des informations. J'ai appris que les hérissons sont de plus en plus rares en France. Leur nombre a beaucoup baissé depuis trente ans.
+Le lendemain, j'ai cherché des informations. Les hérissons sont de plus en plus rares en France. Leur nombre a beaucoup baissé depuis trente ans.
 
-Les raisons sont nombreuses : les routes, les produits chimiques dans les jardins, et surtout les jardins trop propres. Un hérisson a besoin de feuilles mortes, de bois, de coins sauvages pour dormir et manger.
+Les raisons sont nombreuses : les routes, les produits chimiques, et surtout les jardins trop propres. Un hérisson a besoin de feuilles mortes et de coins sauvages pour dormir et manger.
 
 Alors j'ai changé quelques habitudes.
 
-D'abord, j'ai arrêté d'utiliser des produits contre les limaces. Ces produits tuent aussi les animaux qui les mangent. De toute façon, le hérisson mange les limaces : c'est un jardinier gratuit.
+D'abord, j'ai arrêté les produits contre les limaces. Ces produits tuent aussi les animaux qui les mangent. Et le hérisson mange les limaces : c'est un jardinier gratuit.
 
-Ensuite, j'ai laissé un coin du jardin sans le toucher, avec un tas de feuilles et de branches.
+Ensuite, j'ai laissé un coin du jardin sans le toucher, avec des feuilles et des branches.
 
-Enfin, j'ai fait un petit trou en bas de ma clôture, de treize centimètres. Cela peut paraître étrange, mais les hérissons parcourent un ou deux kilomètres par nuit. Si tous les jardins sont fermés, ils ne peuvent plus circuler.
+Enfin, j'ai fait un petit trou en bas de ma clôture. Cela peut sembler étrange, mais les hérissons marchent un ou deux kilomètres par nuit. Si tous les jardins sont fermés, ils ne peuvent plus circuler.
 
-Cet été, j'ai vu le hérisson quatre fois.
-
-Un soir, il y en avait deux.`,
+Cet été, j'ai vu le hérisson quatre fois. Un soir, il y en avait deux.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8356,21 +8284,19 @@ Un soir, il y en avait deux.`,
 
 C'est une forêt ordinaire, à vingt minutes de la maison. Il y a des chênes, des hêtres, quelques pins, et un petit ruisseau.
 
-Cette forêt a beaucoup changé, et il faut du temps pour le remarquer.
+Cette forêt a beaucoup changé, mais il faut du temps pour le remarquer.
 
-Le ruisseau, d'abord. Quand j'étais petit, il y avait de l'eau toute l'année. Nous jouions dedans en été. Depuis six ou sept ans, il est complètement sec de juillet à septembre.
+Le ruisseau, d'abord. Quand j'étais petit, il y avait de l'eau toute l'année. Nous jouions dedans en été. Depuis six ou sept ans, il est sec de juillet à septembre.
 
-Ensuite, les arbres. Beaucoup de hêtres sont malades. Leurs feuilles brunissent trop tôt, dès le mois d'août. Un garde forestier m'a expliqué que les hêtres n'aiment pas les étés secs et chauds : leurs racines ne descendent pas assez profond.
+Ensuite, les arbres. Beaucoup de hêtres sont malades. Leurs feuilles brunissent trop tôt, dès le mois d'août. Un garde forestier m'a expliqué que les hêtres n'aiment pas les étés secs : leurs racines ne descendent pas assez profond.
 
-« Dans cinquante ans, m'a-t-il dit, il n'y aura probablement plus de hêtres ici. On plante déjà d'autres espèces, qui viennent du sud. »
+« Dans cinquante ans, m'a-t-il dit, il n'y aura plus de hêtres ici. On plante déjà d'autres arbres, qui viennent du sud. »
 
-Il y a aussi des choses nouvelles. Certains oiseaux et insectes qui vivaient plus au sud sont arrivés dans notre région.
+Il y a aussi des choses nouvelles. Des oiseaux et des insectes qui vivaient plus au sud sont arrivés dans notre région.
 
-Mes enfants, eux, ne voient rien de tout cela. Pour eux, cette forêt est simplement la forêt. Elle est normale.
+Mes enfants, eux, ne voient rien de tout cela. Pour eux, cette forêt est normale.
 
-C'est ce qui me trouble le plus.
-
-Chaque génération pense que le monde qu'elle découvre est le monde normal.
+C'est ce qui me trouble le plus : chaque génération pense que le monde qu'elle découvre est normal.
 
 Alors je leur raconte le ruisseau.`,
     sourceName: "Written for Lire",
@@ -8389,13 +8315,13 @@ Alors je leur raconte le ruisseau.`,
 
 L'année dernière, j'ai décidé de le transformer pour aider les insectes.
 
-L'idée est venue d'un article que j'avais lu : le nombre d'insectes a chuté de façon spectaculaire en Europe. Or, sans insectes, il n'y a pas de pollinisation, et sans pollinisation, il n'y a presque plus de fruits ni de légumes.
+L'idée est venue d'un article : le nombre d'insectes a beaucoup baissé en Europe. Sans insectes, il n'y a pas de pollinisation, et sans pollinisation, il n'y a presque plus de fruits ni de légumes.
 
-Je pensais qu'un balcon serait inutile. Une voisine, qui travaille dans une association de nature, m'a dit le contraire : en ville, chaque balcon fleuri est une petite étape pour les insectes qui traversent la ville.
+Je pensais qu'un balcon serait inutile. Une voisine, qui travaille dans une association de nature, m'a dit le contraire : en ville, chaque balcon fleuri aide les insectes qui traversent la ville.
 
 J'ai commencé par changer mes plantes. Avant, j'achetais des fleurs jolies mais sans intérêt pour les abeilles. Certaines fleurs modernes ne produisent presque pas de nectar.
 
-Ma voisine m'a conseillé des plantes simples : de la lavande, du thym, de la sauge, des soucis. Ce sont aussi des plantes faciles, qui demandent peu d'eau.
+Ma voisine m'a conseillé des plantes simples : de la lavande, du thym, de la sauge, des soucis. Ce sont des plantes faciles, qui demandent peu d'eau.
 
 Ensuite, j'ai arrêté tout produit chimique.
 
@@ -8418,27 +8344,23 @@ Ce n'est pas grand-chose. Mais le matin, avec mon café, je regarde mon balcon t
       "Adopting an older dog nobody wanted: less work than a puppy, a difficult first month, and a companion who was already grateful. (Section: Nature and animals, 4/5.)",
     body: `Il y a deux ans, nous avons décidé d'adopter un chien. Mes enfants voulaient un chiot, bien sûr.
 
-Mais au refuge, la bénévole nous a expliqué quelque chose d'important. Les chiots trouvent une famille en quelques jours. Les chiens âgés, eux, restent parfois des années.
+Mais au refuge, la bénévole nous a expliqué une chose importante. Les chiots trouvent une famille en quelques jours. Les chiens âgés, eux, restent parfois des années.
 
-« Les gens veulent tous des chiots », a-t-elle dit. « Pourtant, un chien de sept ans est souvent plus facile : il est calme, il est propre, et il connaît déjà les règles. »
+« Les gens veulent tous des chiots », a-t-elle dit. « Pourtant, un chien de sept ans est souvent plus facile : il est calme et il connaît déjà les règles. »
 
-Nous avons rencontré Oscar, un chien de sept ans, noir et blanc. Son maître était entré en maison de retraite et ne pouvait plus le garder.
-
-Oscar était au refuge depuis onze mois.
+Nous avons rencontré Oscar, un chien de sept ans. Son maître était entré en maison de retraite et ne pouvait plus le garder. Oscar était au refuge depuis onze mois.
 
 Il ne courait pas vers nous comme les jeunes chiens. Il est resté assis et il nous a regardés calmement.
 
 Nous l'avons choisi.
 
-Le premier mois a été difficile. Il ne mangeait pas beaucoup et il dormait près de la porte, comme s'il attendait quelqu'un. Une nuit, il a hurlé pendant une heure.
+Le premier mois a été difficile. Il ne mangeait pas beaucoup et il dormait près de la porte, comme s'il attendait quelqu'un.
 
 Le vétérinaire nous a dit d'être patients : un chien âgé a une histoire, et il lui faut du temps.
 
 Petit à petit, Oscar a changé de place. Il a quitté la porte pour le tapis du salon, puis pour le canapé.
 
-Aujourd'hui, il a neuf ans. Il marche lentement et il dort beaucoup.
-
-Mais chaque soir, il vient poser sa tête sur les genoux de ma fille.`,
+Aujourd'hui, il a neuf ans. Il marche lentement et il dort beaucoup. Mais chaque soir, il vient poser sa tête sur les genoux de ma fille.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8455,19 +8377,17 @@ Mais chaque soir, il vient poser sa tête sur les genoux de ma fille.`,
 
 Nous sommes arrivés vers onze heures. Il faisait six degrés et il y avait beaucoup de vent.
 
-La plage était complètement vide. En août, il y a des milliers de personnes ici, des parasols partout et il faut arriver à neuf heures pour trouver une place.
+La plage était complètement vide. En août, il y a des milliers de personnes ici, et il faut arriver à neuf heures pour trouver une place.
 
 Ce jour-là, nous avons vu quatre personnes en trois heures : un couple âgé, un homme avec un chien, et un pêcheur.
 
-La ville aussi était différente. La moitié des restaurants et des magasins étaient fermés jusqu'en avril. Sur les portes, il y avait des papiers : « Réouverture le 1er avril ».
+La ville aussi était différente. La moitié des restaurants et des magasins étaient fermés jusqu'en avril, avec des papiers sur les portes : « Réouverture le 1er avril ».
 
-Nous avons marché sur la plage pendant une heure. Le vent était fort et froid ; il fallait parler très fort pour s'entendre. Mes enfants ont ramassé des coquillages et ont couru devant les vagues.
+Nous avons marché sur la plage pendant une heure. Le vent était fort et froid ; il fallait parler fort pour s'entendre. Mes enfants ont ramassé des coquillages et ont couru devant les vagues.
 
-La mer était grise et agitée. Les vagues étaient hautes et faisaient beaucoup de bruit.
+La mer était grise et agitée, avec de hautes vagues bruyantes. Ce n'était pas la mer des cartes postales. C'était plus sauvage, et je l'ai trouvée plus belle.
 
-Ce n'était pas la mer des cartes postales. C'était plus sauvage, et je l'ai trouvée plus belle.
-
-À midi, nous avons trouvé le seul restaurant ouvert. Il n'y avait que des habitants de la ville à l'intérieur.
+À midi, nous avons trouvé le seul restaurant ouvert, avec seulement des habitants de la ville à l'intérieur.
 
 La patronne nous a dit : « Vous avez raison de venir maintenant. L'hiver, la mer est à nous. »`,
     sourceName: "Written for Lire",
@@ -8482,25 +8402,25 @@ La patronne nous a dit : « Vous avez raison de venir maintenant. L'hiver, la me
     preview: "L'année prochaine, je vais changer plusieurs choses.",
     blurbEn:
       "Plans for next year, in the near future tense: a course, a trip, and a promise to stop putting off the dentist. (Section: Plans and the future, 1/5.)",
-    body: `Nous sommes en décembre, et comme chaque année à cette période, je pense à l'année prochaine.
+    body: `Nous sommes en décembre, et comme chaque année, je pense à l'année prochaine.
 
-Cette fois, j'ai décidé de faire les choses différemment. D'habitude, je fais une longue liste de résolutions en janvier : faire du sport, manger mieux, lire plus, apprendre l'espagnol, ranger la maison, économiser.
+Cette fois, je veux faire les choses différemment. D'habitude, je fais une longue liste en janvier : faire du sport, manger mieux, lire plus, apprendre l'espagnol, ranger la maison, économiser.
 
-Résultat : au mois de mars, je n'ai rien fait du tout. Trop de projets en même temps, c'est comme n'avoir aucun projet.
+Résultat : en mars, je n'ai rien fait du tout. Trop de projets en même temps, c'est comme n'avoir aucun projet.
 
 Alors cette année, j'ai choisi trois choses seulement.
 
-D'abord, je vais m'inscrire à une formation de comptabilité. Mon travail va changer l'année prochaine et j'aurai besoin de ces connaissances. Les cours commencent en février, le mardi soir, pendant quatre mois.
+D'abord, je vais m'inscrire à une formation de comptabilité. Mon travail va changer et j'aurai besoin de ces connaissances. Les cours commencent en février, le mardi soir, pendant quatre mois.
 
-Ensuite, je vais partir en voyage avec ma sœur. Nous en parlons depuis six ans et nous ne l'avons jamais fait. Cette fois, nous avons déjà choisi les dates : la première semaine de septembre. Nous allons réserver en janvier, pour que ce soit vraiment décidé.
+Ensuite, je vais partir en voyage avec ma sœur. Nous en parlons depuis six ans, sans jamais le faire. Cette fois, nous avons déjà choisi les dates : la première semaine de septembre. Nous allons réserver en janvier, pour que ce soit décidé.
 
-Enfin — et c'est le plus petit projet — je vais aller chez le dentiste. Je repousse ce rendez-vous depuis deux ans.
+Enfin, et c'est le plus petit projet, je vais aller chez le dentiste. Je repousse ce rendez-vous depuis deux ans.
 
 Trois projets, c'est peu. Mais chacun a une date, et c'est nouveau pour moi.
 
-Ma sœur m'a demandé pourquoi je ne mettais pas « faire du sport » sur la liste.
+Ma sœur m'a demandé pourquoi « faire du sport » n'était pas sur la liste.
 
-J'ai répondu : « Parce que je le mets tous les ans depuis dix ans. »`,
+J'ai répondu : « Parce que je le mets depuis dix ans. »`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8523,7 +8443,7 @@ La deuxième raison, ce sont les enfants. Ils grandissent, et notre appartement 
 
 Mais il y a aussi des inquiétudes.
 
-Mon mari va garder son travail en ville. Il va donc prendre le train chaque matin : quarante minutes à l'aller, quarante minutes au retour. C'est presque une heure et demie par jour.
+Mon mari va garder son travail en ville. Il va donc prendre le train chaque matin : quarante minutes à l'aller, quarante minutes au retour.
 
 Moi, je vais devoir chercher un nouveau travail. Ce n'est pas simple, et j'ai un peu peur.
 
@@ -8550,23 +8470,21 @@ Nous sommes contents et inquiets en même temps. Je crois que c'est normal.`,
 
 Depuis un an, il en parle beaucoup. Il compte les mois, puis les semaines.
 
-Il a plein de projets. Il va enfin refaire le jardin, qu'il a négligé pendant des années. Il va apprendre à faire du pain — il a déjà acheté deux livres. Il va aussi voyager avec ma mère : ils veulent visiter l'Italie au printemps.
+Il a plein de projets. Il va enfin refaire le jardin. Il va apprendre à faire du pain. Il va aussi voyager avec ma mère : ils veulent visiter l'Italie au printemps.
 
 Mais la semaine dernière, pendant un déjeuner, il m'a dit quelque chose de plus sérieux.
 
-Nous étions seuls dans la cuisine. Il a posé sa tasse et il a dit : « Tu sais, j'ai un peu peur aussi. »
-
-J'ai été surpris.
+Il a posé sa tasse et il a dit : « Tu sais, j'ai un peu peur aussi. »
 
 Il a expliqué : « Pendant quarante ans, je me suis levé à six heures avec une raison. Les gens me demandaient des choses. J'étais utile. Dans huit mois, plus rien. »
 
-Il m'a raconté l'histoire d'un ancien collègue, parti à la retraite il y a trois ans. Les six premiers mois, cet homme était ravi. Puis il est devenu triste et il ne sortait presque plus.
+Il m'a raconté l'histoire d'un collègue parti à la retraite. Les six premiers mois, cet homme était ravi. Puis il est devenu triste et il ne sortait presque plus.
 
 « Je ne veux pas ça », m'a dit mon père.
 
-Alors il a déjà pris une décision : il va faire du bénévolat deux matins par semaine, dans une association qui aide les enfants à faire leurs devoirs.
+Alors il a déjà pris une décision : il va faire du bénévolat deux matins par semaine, pour aider des enfants avec leurs devoirs.
 
-« Le jardin, c'est bien », m'a-t-il dit. « Mais il ne me dira jamais merci. »`,
+« Le jardin, c'est bien », m'a-t-il dit. « Mais il ne me dit jamais merci. »`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8583,13 +8501,11 @@ Alors il a déjà pris une décision : il va faire du bénévolat deux matins pa
 
 Ce n'est pas une idée nouvelle. Elle en parle depuis l'âge de neuf ans, et son idée n'a jamais changé.
 
-Elle adore les animaux. Elle a lu des dizaines de livres sur le sujet. L'été dernier, elle a passé deux semaines chez un vétérinaire de campagne, comme observatrice.
+Elle adore les animaux. Elle a lu des dizaines de livres sur le sujet. L'été dernier, elle a passé deux semaines chez un vétérinaire de campagne.
 
 Mais ce métier est très difficile à obtenir. Il faut d'excellentes notes, surtout en sciences, et les études durent six ans après le lycée. Il y a beaucoup plus de candidats que de places.
 
-Mon mari et moi, nous avons hésité sur l'attitude à prendre.
-
-Fallait-il l'avertir ? Lui dire que c'était très dur, que peu de gens réussissaient ?
+Mon mari et moi, nous avons hésité sur l'attitude à prendre. Fallait-il l'avertir que c'était très dur ?
 
 Nous avons finalement choisi d'être honnêtes, mais sans casser son rêve.
 
@@ -8601,9 +8517,7 @@ Cette année, elle a dix-sept de moyenne en sciences.
 
 Nous lui avons aussi dit une chose importante : si elle n'y arrive pas, ce ne sera pas un échec. Il existe d'autres métiers avec les animaux.
 
-Elle a répondu : « D'accord. Mais d'abord, j'essaie. »
-
-Je crois que c'est exactement la bonne réponse.`,
+Elle a répondu : « D'accord. Mais d'abord, j'essaie. »`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8627,23 +8541,15 @@ Les résultats étaient clairs.
 
 Le travail et les transports : neuf heures par jour. Le sommeil : sept heures. Les repas, la douche, les courses, le ménage : environ deux heures et demie.
 
-Il restait donc environ cinq heures par jour.
+Il restait donc environ cinq heures par jour. Je pensais n'avoir aucun temps libre.
 
-Cinq heures ! Je pensais n'avoir aucun temps libre, et j'avais cinq heures.
-
-Alors où allaient-elles ?
-
-D'après mon téléphone, j'utilisais les écrans presque trois heures par jour : les réseaux sociaux, les vidéos, les informations que je relisais dix fois.
+Alors où allaient-elles ? D'après mon téléphone, j'utilisais les écrans presque trois heures par jour : les réseaux sociaux, les vidéos, les informations relues plusieurs fois.
 
 Le reste partait dans des choses que je ne me rappelais même pas le soir.
 
 Cette découverte m'a mise mal à l'aise. Je n'avais pas un problème de temps : j'avais un problème de choix.
 
-Je n'ai pas tout changé, parce que se reposer est nécessaire aussi. On ne peut pas remplir chaque minute.
-
-Mais j'ai pris une petite décision : deux soirs par semaine, je laisse mon téléphone dans une autre pièce après vingt heures.
-
-En trois mois, j'ai lu quatre livres.
+Je n'ai pas tout changé, parce que se reposer est nécessaire aussi. Mais j'ai pris une petite décision : deux soirs par semaine, je laisse mon téléphone dans une autre pièce après vingt heures.
 
 Je n'ai toujours pas commencé le piano. Mais maintenant, je sais que ce n'est pas le temps qui manque.`,
     sourceName: "Written for Lire",
@@ -8658,25 +8564,23 @@ Je n'ai toujours pas commencé le piano. Mais maintenant, je sais que ce n'est p
     preview: "La ville va construire une nouvelle ligne de tram.",
     blurbEn:
       "The city announces a new tram line: two years of roadworks, divided opinions, and a public meeting that fills the room. (Section: Local news, 1/5.)",
-    body: `La mairie a annoncé la semaine dernière la construction d'une nouvelle ligne de tram. Elle traversera la ville de l'est à l'ouest et devrait ouvrir dans quatre ans.
+    body: `La mairie a annoncé la semaine dernière la construction d'une nouvelle ligne de tram. Elle traversera la ville d'est en ouest et devrait ouvrir dans quatre ans.
 
-Le projet coûtera environ trois cent millions d'euros. Il comprend quatorze stations et permettra de relier deux quartiers qui sont aujourd'hui mal desservis.
+Le projet coûtera environ trois cents millions d'euros. Il comprend quatorze stations et reliera deux quartiers mal desservis aujourd'hui.
 
 La nouvelle a divisé les habitants.
 
-Beaucoup de gens sont contents. Dans le quartier est, il n'y a qu'une ligne de bus, souvent en retard. Une habitante interrogée par le journal local a expliqué qu'elle mettait cinquante minutes pour aller travailler, contre vingt minutes en voiture.
+Beaucoup de gens sont contents. Dans le quartier est, il n'y a qu'une ligne de bus, souvent en retard. Une habitante a expliqué qu'elle mettait cinquante minutes pour aller travailler, contre vingt minutes en voiture.
 
 Mais d'autres sont inquiets, surtout les commerçants du centre.
 
-Les travaux vont durer plus de deux ans. Pendant cette période, plusieurs rues seront fermées à la circulation, et les places de stationnement disparaîtront.
+Les travaux vont durer plus de deux ans. Pendant cette période, plusieurs rues seront fermées, et les places de stationnement disparaîtront.
 
 « Mes clients viennent en voiture », a déclaré un boulanger de la rue principale. « Deux ans sans stationnement, c'est très long pour un petit commerce. »
 
 La mairie a organisé une réunion publique mardi soir. La salle était pleine : plus de deux cents personnes sont venues.
 
-L'adjoint au maire a présenté le projet pendant quarante minutes, puis il a répondu aux questions pendant plus d'une heure.
-
-Il a promis des aides financières pour les commerçants pendant les travaux.
+L'adjoint au maire a présenté le projet pendant quarante minutes, puis il a répondu aux questions pendant plus d'une heure. Il a promis des aides financières pour les commerçants pendant les travaux.
 
 Une deuxième réunion aura lieu en mars, quartier par quartier.
 
@@ -8695,11 +8599,11 @@ Les travaux devraient commencer en septembre prochain.`,
       "A village school with too few pupils is set to close, and the parents organise to stop it. (Section: Local news, 2/5.)",
     body: `L'école de Saint-Martin, un village de six cents habitants, pourrait fermer à la fin de l'année scolaire.
 
-La raison est simple : le nombre d'élèves diminue. Il y a dix ans, l'école accueillait soixante-huit enfants. Aujourd'hui, ils ne sont plus que vingt-trois, répartis dans deux classes.
+La raison est simple : le nombre d'élèves diminue. Il y a dix ans, l'école accueillait soixante-huit enfants. Aujourd'hui, ils ne sont plus que vingt-trois, dans deux classes.
 
-Selon les règles, il faut un minimum d'élèves pour maintenir une classe. Si la fermeture est confirmée, les enfants devront aller à l'école du bourg voisin, à onze kilomètres.
+Il faut un minimum d'élèves pour garder une classe. Si la fermeture est confirmée, les enfants devront aller à l'école du bourg voisin, à onze kilomètres.
 
-Pour les familles, cela signifie trente minutes de bus le matin et trente minutes le soir, pour des enfants de cinq à dix ans.
+Pour les familles, cela veut dire trente minutes de bus le matin et trente minutes le soir, pour des enfants de cinq à dix ans.
 
 Les parents se sont organisés rapidement. Ils ont créé une association et ils ont récolté quatre cent cinquante signatures en deux semaines — presque tout le village.
 
@@ -8707,9 +8611,7 @@ Samedi dernier, ils ont organisé une manifestation devant la mairie. Environ ce
 
 « Ce n'est pas seulement une école », a expliqué une mère de famille. « Quand l'école ferme, les jeunes familles ne viennent plus s'installer. Ensuite, c'est la boulangerie qui ferme. »
 
-Le maire soutient les parents. Il a proposé une solution : accueillir les enfants d'un village voisin, qui n'a plus d'école depuis trois ans.
-
-Cette proposition permettrait d'atteindre trente et un élèves.
+Le maire soutient les parents. Il a proposé une solution : accueillir les enfants d'un village voisin, qui n'a plus d'école depuis trois ans. Cette proposition permettrait d'atteindre trente et un élèves.
 
 La décision sera prise au mois de mai.`,
     sourceName: "Written for Lire",
@@ -8726,15 +8628,15 @@ La décision sera prise au mois de mai.`,
       "A new Thursday-evening farmers' market gives local producers a direct outlet — and gives shoppers a reason to linger. (Section: Local news, 3/5.)",
     body: `Depuis le mois d'avril, un nouveau marché a lieu chaque jeudi soir sur la place de la République, de dix-sept heures à vingt et une heures.
 
-Ce marché est différent des marchés habituels : tous les vendeurs sont des producteurs de la région. Ils vendent uniquement ce qu'ils produisent eux-mêmes, dans un rayon de quarante kilomètres.
+Ce marché est différent des marchés habituels : tous les vendeurs sont des producteurs de la région, dans un rayon de quarante kilomètres.
 
-Il y a quatorze stands : des légumes, des fruits, du fromage, du miel, du pain, de la viande et même de la bière fabriquée dans un village voisin.
+Il y a quatorze stands : des légumes, des fruits, du fromage, du miel, du pain, de la viande et même de la bière d'un village voisin.
 
 L'idée vient d'un groupe d'agriculteurs. Ils voulaient vendre directement aux habitants, sans intermédiaire.
 
 « Quand je vends à un supermarché, je reçois environ trente pour cent du prix final », a expliqué un producteur de légumes. « Ici, je reçois tout, et je peux discuter avec les gens qui mangent mes produits. »
 
-Le choix de l'horaire n'est pas un hasard. Le marché ouvre à dix-sept heures pour que les personnes qui travaillent puissent venir après le bureau.
+Le marché ouvre à dix-sept heures pour que les gens qui travaillent puissent venir après le bureau.
 
 Le succès a été rapide. Le premier jeudi, il y avait environ deux cents visiteurs. Au mois de juin, ils étaient plus de huit cents.
 
@@ -8759,21 +8661,19 @@ Le marché continuera tout l'hiver.`,
 
 Le service s'appelle la « bibliothèque d'objets ». Il compte aujourd'hui environ cent quatre-vingts articles.
 
-L'idée est simple. Beaucoup d'objets sont utilisés très rarement. Une perceuse, par exemple, sert en moyenne quelques minutes par an dans une maison. Pourtant, presque chaque foyer en possède une.
+L'idée est simple. Beaucoup d'objets sont utilisés très rarement. Une perceuse, par exemple, sert quelques minutes par an. Pourtant, presque chaque foyer en possède une.
 
 « Nous achetons tous les mêmes objets, nous les utilisons deux fois, puis ils dorment dans un placard », explique la responsable du projet.
 
-Le fonctionnement ressemble à celui des livres. Il faut être inscrit à la bibliothèque, ce qui est gratuit pour les habitants de la commune. On peut emprunter un objet pendant une semaine, et les outils les plus demandés pendant trois jours seulement.
+Le fonctionnement ressemble à celui des livres. Il faut être inscrit, ce qui est gratuit pour les habitants de la commune. On peut emprunter un objet pendant une semaine, et les outils les plus demandés pendant trois jours seulement.
 
-Le prêt est gratuit, mais il faut laisser une caution pour certains appareils.
-
-Les objets ont été donnés par des habitants ou achetés grâce à une subvention.
+Le prêt est gratuit, mais il faut laisser une caution pour certains appareils. Les objets ont été donnés par des habitants ou achetés grâce à une subvention.
 
 Après huit mois, le bilan est positif : plus de mille deux cents emprunts. Les outils de bricolage sont les plus demandés, suivis par les appareils de cuisine.
 
 Un utilisateur raconte : « J'avais besoin d'une ponceuse pour un week-end. En acheter une coûtait quatre-vingts euros. »
 
-Trois autres villes de la région étudient maintenant le même projet.`,
+Trois autres villes étudient maintenant le même projet.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8788,13 +8688,11 @@ Trois autres villes de la région étudient maintenant le même projet.`,
       "The old bridge closes for three months of essential repairs, and the town works out how to cope. (Section: Local news, 5/5.)",
     body: `Le pont Saint-Jacques sera complètement fermé du 1er juillet au 30 septembre. La mairie a annoncé cette décision lundi.
 
-Le pont, construit en 1911, a besoin de travaux importants. Lors d'une inspection en février, les ingénieurs ont constaté que la structure était fragilisée. Depuis mars, les camions de plus de trois tonnes y sont déjà interdits.
+Le pont, construit en 1911, a besoin de travaux importants. Lors d'une inspection en février, les ingénieurs ont vu que la structure était fragilisée. Depuis mars, les camions de plus de trois tonnes y sont déjà interdits.
 
 « Ces travaux ne peuvent pas attendre », a déclaré le maire. « Il s'agit de sécurité. »
 
-La fermeture posera des difficultés, car le pont est très utilisé : environ douze mille véhicules par jour. C'est le seul passage direct entre le nord et le sud de la ville.
-
-Pendant les travaux, les automobilistes devront faire un détour de six kilomètres par le pont de l'Europe.
+La fermeture posera des difficultés, car le pont est très utilisé : environ douze mille véhicules par jour. C'est le seul passage direct entre le nord et le sud de la ville. Pendant les travaux, les automobilistes devront faire un détour de six kilomètres par le pont de l'Europe.
 
 Plusieurs mesures ont été prévues pour limiter les problèmes.
 
@@ -8804,9 +8702,7 @@ Ensuite, une navette fluviale gratuite transportera les piétons et les cycliste
 
 Enfin, la mairie a choisi la période des vacances scolaires, quand la circulation est plus faible.
 
-Les commerçants des deux rives s'inquiètent malgré tout.
-
-Le coût total des travaux est estimé à quatre millions d'euros.
+Les commerçants des deux rives s'inquiètent malgré tout. Le coût total des travaux est estimé à quatre millions d'euros.
 
 Le pont rouvrira le 1er octobre, avec une piste cyclable en plus.`,
     sourceName: "Written for Lire",
@@ -8823,23 +8719,19 @@ Le pont rouvrira le 1er octobre, avec une piste cyclable en plus.`,
       "French makes you choose between 'tu' and 'vous' — a decision English speakers never have to make, and often get wrong. (Section: France and Britain, 1/5.)",
     body: `En anglais, il n'y a qu'un seul mot : « you ». En français, il faut choisir entre « tu » et « vous ». Pour mon ami anglais Tom, c'est l'une des choses les plus difficiles.
 
-La règle générale semble simple. On dit « tu » à la famille, aux amis, aux enfants et aux collègues proches. On dit « vous » aux inconnus, aux personnes plus âgées, aux clients et dans les situations officielles.
+La règle générale semble simple. On dit « tu » à la famille, aux amis et aux collègues proches. On dit « vous » aux inconnus et dans les situations officielles.
 
-Mais dans la vraie vie, c'est beaucoup plus compliqué.
+Mais dans la vraie vie, c'est beaucoup plus compliqué. Tom m'a raconté plusieurs erreurs.
 
-Tom m'a raconté plusieurs erreurs.
+Un jour, il a tutoyé un homme de soixante ans dans un magasin. L'homme a paru surpris et froid. En France, tutoyer un inconnu plus âgé peut sembler impoli.
 
-Un jour, il a tutoyé un homme de soixante ans dans un magasin. L'homme a paru surpris et un peu froid. En France, tutoyer un inconnu plus âgé peut sembler impoli.
-
-Une autre fois, c'était l'inverse. Dans une soirée, il a vouvoyé un ami de son âge pendant deux heures. À la fin, l'autre lui a dit en riant : « On peut se tutoyer, tu sais ! »
+Une autre fois, c'était l'inverse. Il a vouvoyé un ami de son âge pendant deux heures. À la fin, l'autre lui a dit en riant : « On peut se tutoyer, tu sais ! »
 
 Les règles changent aussi selon les milieux. Dans certaines entreprises, tout le monde se tutoie, même le directeur. Dans d'autres, on vouvoie son chef pendant vingt ans.
 
-J'ai donné un conseil simple à Tom : quand tu ne sais pas, commence par « vous ». C'est la solution la plus sûre.
+J'ai donné un conseil simple à Tom : quand tu ne sais pas, commence par « vous ».
 
-Et il existe une phrase magique pour changer : « On peut se tutoyer ? »
-
-Le plus souvent, c'est la personne la plus âgée qui la propose.
+Il existe une phrase magique : « On peut se tutoyer ? » C'est souvent la personne la plus âgée qui la propose.
 
 Tom l'a apprise par cœur.`,
     sourceName: "Written for Lire",
@@ -8858,17 +8750,15 @@ Tom l'a apprise par cœur.`,
 
 La première, ce sont les vacances. En France, tous les salariés ont au minimum cinq semaines de congés payés par an. Beaucoup d'entreprises en donnent même un peu plus.
 
-Au Royaume-Uni, le minimum légal est d'environ quatre semaines, jours fériés compris. La différence n'est pas énorme sur le papier, mais elle est réelle dans la pratique.
+Au Royaume-Uni, le minimum légal est d'environ quatre semaines, jours fériés compris.
 
-La deuxième surprise, c'est la durée légale du travail : trente-cinq heures par semaine. Cela ne veut pas dire que personne ne travaille plus — beaucoup de gens font plus. Mais au-delà, ce sont des heures supplémentaires, qui doivent être payées ou récupérées.
+La deuxième surprise, c'est la durée légale du travail : trente-cinq heures par semaine. Cela ne veut pas dire que personne ne travaille plus. Mais au-delà, ce sont des heures supplémentaires, qui doivent être payées ou récupérées.
 
-La troisième surprise concerne les e-mails du soir.
-
-Dans son ancien travail à Londres, Tom recevait des messages à vingt-deux heures et il y répondait. C'était normal.
+La troisième surprise concerne les e-mails du soir. Dans son ancien travail à Londres, Tom recevait des messages à vingt-deux heures et il y répondait. C'était normal.
 
 En France, il existe depuis 2017 un « droit à la déconnexion ». Les entreprises doivent respecter le temps de repos de leurs salariés en dehors des heures de travail.
 
-La première fois que Tom a envoyé un message professionnel un dimanche, un collègue lui a répondu le lundi matin : « Le dimanche, je ne lis pas mes messages. »
+La première fois que Tom a envoyé un message un dimanche, un collègue lui a répondu le lundi matin : « Le dimanche, je ne lis pas mes messages. »
 
 Tom l'a mal pris au début. Puis il a compris que ce n'était pas une critique.
 
@@ -8893,17 +8783,13 @@ Au Royaume-Uni, avec le NHS, on ne paie pas la consultation. On prend rendez-vou
 
 En France, le système est différent. À la fin de la consultation, le médecin demande le paiement : environ trente euros pour un généraliste.
 
-Tom a été très surpris. Il pensait que la santé était gratuite en France aussi.
+Tom a été très surpris. Il pensait que la santé était gratuite en France aussi. En réalité, elle n'est pas gratuite : elle est remboursée.
 
-En réalité, elle n'est pas gratuite : elle est remboursée.
-
-Après la consultation, la Sécurité sociale rembourse environ soixante-dix pour cent du prix. Ensuite, une assurance complémentaire — la « mutuelle » — rembourse souvent le reste.
-
-Avec la carte Vitale, tout se fait automatiquement, en quelques jours.
+Après la consultation, la Sécurité sociale rembourse environ soixante-dix pour cent du prix. Une assurance complémentaire, la « mutuelle », rembourse souvent le reste. Avec la carte Vitale, tout se fait automatiquement.
 
 Tom trouvait ce système compliqué. Mais il a remarqué un avantage.
 
-En France, on peut prendre rendez-vous rapidement, souvent en deux ou trois jours. On peut aussi choisir librement son médecin, et même consulter directement certains spécialistes.
+En France, on peut prendre rendez-vous rapidement, souvent en deux ou trois jours. On peut aussi choisir librement son médecin.
 
 « Chez moi, dit-il, j'attendais parfois trois semaines pour un rendez-vous. »
 
@@ -8926,27 +8812,21 @@ Tom a maintenant une carte Vitale et une mutuelle.
       "British irony delivered with a straight face confuses French listeners — and French wordplay confuses Tom. (Section: France and Britain, 4/5.)",
     body: `Tom dit souvent une chose amusante : « En Angleterre, j'étais quelqu'un de drôle. En France, je suis quelqu'un de bizarre. »
 
-L'humour voyage mal. Ce n'est pas une question de langue seulement : c'est une question de style.
+L'humour voyage mal. Ce n'est pas seulement une question de langue : c'est une question de style.
 
-L'humour britannique utilise beaucoup l'ironie et l'auto-dérision. On dit le contraire de ce qu'on pense, avec un visage sérieux, et l'autre doit comprendre.
+L'humour britannique utilise beaucoup l'ironie. On dit le contraire de ce qu'on pense, avec un visage sérieux, et l'autre doit comprendre.
 
 Par exemple, sous une pluie terrible, un Britannique dira : « Quel temps magnifique ! » En Angleterre, tout le monde sourit.
 
-La première fois que Tom a fait cette blague en France, un collègue lui a répondu très sérieusement : « Non, il pleut beaucoup aujourd'hui. »
+La première fois que Tom a fait cette blague en France, un collègue lui a répondu sérieusement : « Non, il pleut beaucoup aujourd'hui. » Tom ne savait pas quoi dire.
 
-Tom ne savait pas quoi dire.
+Le problème n'est pas que les Français n'aiment pas l'ironie. Mais elle est souvent accompagnée d'un signe : un sourire, un ton particulier. Le visage neutre des Britanniques peut être déroutant.
 
-Le problème n'est pas que les Français n'aiment pas l'ironie. Ils l'utilisent aussi. Mais elle est souvent accompagnée d'un signe : un sourire, un ton particulier. Le visage complètement neutre des Britanniques peut être déroutant.
-
-De son côté, Tom ne comprend pas toujours l'humour français. Il y a beaucoup de jeux de mots, et les jeux de mots sont presque impossibles à traduire.
+De son côté, Tom ne comprend pas toujours l'humour français. Il y a beaucoup de jeux de mots, presque impossibles à traduire.
 
 « Quand tout le monde rit et que je dois demander l'explication, ce n'est plus drôle », dit-il.
 
-Il progresse quand même. La semaine dernière, il a fait un jeu de mots en français.
-
-Il était mauvais. Mais tout le monde a ri.
-
-Et cette fois, c'était pour la bonne raison.`,
+Il progresse quand même. La semaine dernière, il a fait un jeu de mots en français. Il était mauvais. Mais tout le monde a ri, et cette fois, c'était pour la bonne raison.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -8961,27 +8841,21 @@ Et cette fois, c'était pour la bonne raison.`,
       "Queueing is almost sacred in Britain and rather more flexible in France — a small difference that reveals a lot. (Section: France and Britain, 5/5.)",
     body: `Il existe une différence culturelle dont Tom parle souvent : la façon de faire la queue.
 
-Au Royaume-Uni, la file d'attente est presque sacrée. Les gens se placent naturellement les uns derrière les autres, en ligne droite, même à un arrêt de bus. Passer devant quelqu'un est considéré comme très grave.
+Au Royaume-Uni, la file d'attente est presque sacrée. Les gens se placent naturellement les uns derrière les autres. Passer devant quelqu'un est considéré comme très grave.
 
 En France, la queue existe aussi, bien sûr. Mais elle est souvent moins droite et moins stricte. À la boulangerie, par exemple, les gens forment plutôt un petit groupe.
 
-La première fois, Tom a trouvé cela chaotique. Il pensait que personne ne savait qui était arrivé le premier.
-
-Puis il a observé, et il a compris qu'il se trompait.
+La première fois, Tom a trouvé cela chaotique. Il pensait que personne ne savait qui était arrivé le premier. Puis il a observé, et il a compris qu'il se trompait.
 
 Les gens savent parfaitement à qui c'est le tour. Ils s'observent, et souvent quelqu'un dit : « C'est à vous, madame, je crois. »
 
-Il y a une règle importante à connaître. Quand on entre dans une petite boutique, il faut demander : « C'est qui le dernier ? » ou « Vous êtes la dernière ? »
+Il y a une règle importante à connaître. Dans une petite boutique, il faut demander : « C'est qui le dernier ? » Cette question résout tout, sans ligne droite.
 
-Cette question résout tout, sans ligne droite.
-
-Tom a mis du temps à l'apprendre. Au début, il restait poliment près de la porte, et les gens entraient après lui et passaient devant. Il attendait quinze minutes sans être servi.
+Tom a mis du temps à l'apprendre. Au début, il restait poliment près de la porte, et les gens entraient après lui et passaient devant. Il attendait sans être servi.
 
 « Personne n'était malhonnête », dit-il maintenant. « Simplement, je n'avais pas dit que j'étais là. »
 
-Deux cultures, deux méthodes.
-
-Dans les deux cas, l'idée est la même : chacun son tour.`,
+Deux cultures, deux méthodes. Dans les deux cas, l'idée est la même : chacun son tour.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
