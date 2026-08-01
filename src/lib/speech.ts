@@ -76,3 +76,25 @@ export function speakFrenchParagraphs(paragraphs: string[], rate: SpeechRate = "
 export function stopSpeaking(): void {
   if (canSpeak()) window.speechSynthesis.cancel();
 }
+
+/**
+ * Speaks a single paragraph at an exact rate multiplier (not the slow/normal
+ * preset pair) — used by the listening-practice player, which needs its own
+ * speed slider independent of the reader's global speech-rate setting.
+ */
+export function speakParagraphAtRate(text: string, rateMultiplier: number, onEnd?: () => void): boolean {
+  const clean = text.trim();
+  if (!canSpeak() || !clean) return false;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(clean);
+  utterance.lang = "fr-FR";
+  utterance.rate = rateMultiplier;
+  const voice = getPreferredVoice();
+  if (voice) utterance.voice = voice;
+  if (onEnd) {
+    utterance.onend = onEnd;
+    utterance.onerror = onEnd;
+  }
+  window.speechSynthesis.speak(utterance);
+  return true;
+}

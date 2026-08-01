@@ -1,26 +1,39 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReadingText } from "@/types";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
-import { speakFrenchParagraphs, stopSpeaking, canSpeak } from "@/lib/speech";
+import { speakParagraphAtRate, stopSpeaking, canSpeak } from "@/lib/speech";
 import { markListeningPracticeCompleted } from "@/lib/practice/practiceProgress";
+import { getSettings } from "@/lib/settings";
 
 interface ListeningPracticeProps {
   text: ReadingText;
   onClose: () => void;
 }
 
+const MIN_RATE = 0.6;
+const MAX_RATE = 1.6;
+
 /**
- * Listening-only rereading mode: plays the article with the transcript
- * hidden by default. Browser speech synthesis has no seek/duration API, so
- * "completion" here honestly means "played through to the end without being
- * stopped early" (the onEnd callback firing) — not a comprehension check.
+ * Listening-only rereading mode: plays the article paragraph by paragraph,
+ * with the transcript hidden by default. Browser speech synthesis has no
+ * seek/duration API, so "back 10 seconds" and "skip to end" are honest
+ * approximations at paragraph granularity (step back one paragraph / jump
+ * straight to the last one) rather than a literal time seek.
  */
 export default function ListeningPractice({ text, onClose }: ListeningPracticeProps) {
   const [revealed, setRevealed] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [index, setIndex] = useState(0);
+  // Starts from the reader's global speaking-speed preference (same one the
+  // article "Listen" controls use) so the two stay in sync by default.
+  const [rate, setRate] = useState(() => getSettings().speechRate);
+  const rateRef = useRef(rate);
+  useEffect(() => {
+    rateRef.current = rate;
+  }, [rate]);
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body).map((p) => p.map((s) => s.text).join(" ")), [text.body]);
   const available = canSpeak();
 
@@ -28,15 +41,29 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
     return () => stopSpeaking();
   }, []);
 
-  function play() {
+  function playFrom(startIndex: number, rateOverride?: number) {
     if (!available) return;
-    setPlaying(true);
+    const clamped = Math.max(0, Math.min(startIndex, paragraphs.length - 1));
+    setIndex(clamped);
     setFinished(false);
-    speakFrenchParagraphs(paragraphs, "normal", () => {
+    setPlaying(true);
+    speakParagraphAtRate(paragraphs[clamped], rateOverride ?? rateRef.current, () => advance(clamped));
+  }
+
+  function advance(fromIndex: number) {
+    const next = fromIndex + 1;
+    if (next < paragraphs.length) {
+      setIndex(next);
+      speakParagraphAtRate(paragraphs[next], rateRef.current, () => advance(next));
+    } else {
       setPlaying(false);
       setFinished(true);
       markListeningPracticeCompleted(text.id);
-    });
+    }
+  }
+
+  function play() {
+    playFrom(finished ? 0 : index);
   }
 
   function stop() {
@@ -45,9 +72,16 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
   }
 
   function restart() {
-    stop();
-    setFinished(false);
-    play();
+    playFrom(0);
+  }
+
+  function backTenSeconds() {
+    // Paragraph-granularity approximation — see file header.
+    playFrom(Math.max(0, index - 1));
+  }
+
+  function skipToEnd() {
+    playFrom(paragraphs.length - 1);
   }
 
   return (
@@ -68,8 +102,23 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
           <p className="mt-6 text-sm text-ink-muted">The text is hidden. Listen, then reveal it whenever you&apos;re ready.</p>
         )}
 
+        {available && paragraphs.length > 0 && (
+          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+            Paragraph {Math.min(index + 1, paragraphs.length)} of {paragraphs.length}
+          </p>
+        )}
+
         {available && (
-          <div className="mt-6 flex items-center justify-center gap-3">
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={backTenSeconds}
+              disabled={index === 0 && !playing && !finished}
+              aria-label="Back 10 seconds"
+              className="ligne-pill border border-cream-dark bg-cream-card px-3 py-2.5 text-ink disabled:opacity-40"
+            >
+              <BackIcon className="h-4 w-4" />
+            </button>
             {!playing ? (
               <button type="button" onClick={finished ? restart : play} className="ligne-pill bg-brand px-6 py-3 text-cream" aria-label={finished ? "Play again" : "Play"}>
                 {finished ? "Play again" : "Play"}
@@ -79,11 +128,42 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
                 Stop
               </button>
             )}
-            {playing && (
-              <button type="button" onClick={restart} className="ligne-pill border border-cream-dark bg-cream-card px-4 py-3 text-ink" aria-label="Restart from the beginning">
-                Restart
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={skipToEnd}
+              disabled={finished}
+              aria-label="Skip to end"
+              className="ligne-pill border border-cream-dark bg-cream-card px-3 py-2.5 text-ink disabled:opacity-40"
+            >
+              <SkipEndIcon className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+
+        {available && (
+          <div className="mt-5">
+            <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+              <span>Speed</span>
+              <span>{rate.toFixed(2)}x</span>
+            </div>
+            <input
+              type="range"
+              min={MIN_RATE}
+              max={MAX_RATE}
+              step={0.05}
+              value={rate}
+              onChange={(event) => {
+                const next = Number(event.target.value);
+                setRate(next);
+                // Applies live: if something is already playing, restart the
+                // current paragraph at the new rate rather than waiting for
+                // the next one to pick it up. Passed explicitly since the
+                // rate-ref sync effect hasn't run yet at this point.
+                if (playing) playFrom(index, next);
+              }}
+              aria-label="Playback speed"
+              className="mt-2 w-full accent-brand"
+            />
           </div>
         )}
 
@@ -100,7 +180,7 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
         ) : (
           <div className="mt-8 max-h-[45vh] overflow-y-auto rounded-card border border-cream-dark bg-cream-card p-4 text-left">
             {paragraphs.map((p, i) => (
-              <p key={i} className="mb-3 font-french text-[15px] leading-relaxed text-ink last:mb-0">
+              <p key={i} className={`mb-3 font-french text-[15px] leading-relaxed last:mb-0 ${i === index ? "text-ink" : "text-ink-muted"}`}>
                 {p}
               </p>
             ))}
@@ -115,6 +195,24 @@ function CloseIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function BackIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polygon points="12,5 3,12 12,19" fill="currentColor" stroke="none" />
+      <path d="M19 5v14" />
+    </svg>
+  );
+}
+
+function SkipEndIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polygon points="5,5 14,12 5,19" fill="currentColor" stroke="none" />
+      <path d="M19 5v14" />
     </svg>
   );
 }

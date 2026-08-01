@@ -20,50 +20,62 @@ export interface PracticePlan {
   listeningAvailable: boolean;
 }
 
-/** Builds a short practice session from a completed reading. Degrades gracefully — a very
- * short or unusual text may only yield one or two activities, never a broken/empty screen
- * unless truly nothing is eligible (in which case activities is empty and the caller should
- * hide the "Practice this text" entry point entirely). */
+/** Up to this many distinct sentences get turned into an activity per session. */
+const MAX_ACTIVITIES = 5;
+
+/** Builds a short practice session from a completed reading, targeting up to
+ * MAX_ACTIVITIES activities drawn from distinct sentences. Degrades gracefully — a
+ * short or unusual text may only yield one or two activities, never a broken/empty
+ * screen unless truly nothing is eligible (in which case activities is empty and the
+ * caller should hide the "Practice this text" entry point entirely). */
 export function buildPracticePlan(text: ReadingText): PracticePlan {
   const sentences = allSentencesInText(text);
-  const eligible = sentences.filter(isEligibleForReconstruction);
+  const eligibleForReconstruction = shuffle(sentences.filter(isEligibleForReconstruction));
+  const clozeEligible = (used: Set<number>) =>
+    shuffle(sentences.filter((s) => !used.has(s.index) && s.tokens.some((t) => t.isWord && t.clean.length >= 3)));
+
   const activities: PracticeActivity[] = [];
-  const usedForCloze = new Set<number>();
+  const used = new Set<number>();
 
-  // 1) Sentence reconstruction, from the eligible pool.
-  let reconstructionSentence: TextSentence | null = null;
-  if (eligible.length > 0) {
-    reconstructionSentence = eligible[Math.floor(Math.random() * eligible.length)];
-    activities.push({ kind: "reconstruction", exercise: buildReconstructionExercise(reconstructionSentence) });
-    usedForCloze.add(reconstructionSentence.index);
-  }
+  // Round-robin between reconstruction, word cloze, and phrase cloze so a longer
+  // article's practice set isn't dominated by one activity type, each drawn from a
+  // sentence not already used elsewhere in this session.
+  const builders: Array<(sentence: TextSentence) => PracticeActivity | null> = [
+    (sentence) => ({ kind: "reconstruction", exercise: buildReconstructionExercise(sentence) }),
+    (sentence) => {
+      const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
+      const cloze = buildWordCloze(sentence, pool);
+      return cloze ? { kind: "cloze", exercise: cloze } : null;
+    },
+    (sentence) => {
+      const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
+      const cloze = buildPhraseCloze(sentence, pool);
+      return cloze ? { kind: "cloze", exercise: cloze } : null;
+    },
+  ];
 
-  // 2) Word cloze + 3) phrase cloze, from sentences with real content words, excluding the
-  // one already used for reconstruction so the same sentence isn't reused three times.
-  const clozeCandidates = sentences.filter((s) => !usedForCloze.has(s.index) && s.tokens.some((t) => t.isWord && t.clean.length >= 3));
-  const shuffledCandidates = [...clozeCandidates].sort(() => Math.random() - 0.5);
-
-  for (const sentence of shuffledCandidates) {
-    if (activities.filter((a) => a.kind === "cloze" && a.exercise.kind === "word").length >= 1) break;
-    const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
-    const cloze = buildWordCloze(sentence, pool);
-    if (cloze) {
-      activities.push({ kind: "cloze", exercise: cloze });
-      usedForCloze.add(sentence.index);
-      break;
+  let reconstructionPoolIndex = 0;
+  let builderIndex = 0;
+  let stalePasses = 0;
+  while (activities.length < MAX_ACTIVITIES && stalePasses < builders.length) {
+    const builder = builders[builderIndex % builders.length];
+    builderIndex++;
+    const isReconstruction = builder === builders[0];
+    const candidates = isReconstruction ? eligibleForReconstruction.slice(reconstructionPoolIndex) : clozeEligible(used);
+    const sentence = candidates.find((s) => !used.has(s.index));
+    if (!sentence) {
+      stalePasses++;
+      continue;
     }
-  }
-
-  for (const sentence of shuffledCandidates) {
-    if (usedForCloze.has(sentence.index)) continue;
-    if (activities.filter((a) => a.kind === "cloze" && a.exercise.kind === "phrase").length >= 1) break;
-    const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
-    const cloze = buildPhraseCloze(sentence, pool);
-    if (cloze) {
-      activities.push({ kind: "cloze", exercise: cloze });
-      usedForCloze.add(sentence.index);
-      break;
+    const activity = builder(sentence);
+    if (!activity) {
+      stalePasses++;
+      continue;
     }
+    activities.push(activity);
+    used.add(sentence.index);
+    if (isReconstruction) reconstructionPoolIndex = eligibleForReconstruction.indexOf(sentence) + 1;
+    stalePasses = 0;
   }
 
   return {
@@ -71,6 +83,15 @@ export function buildPracticePlan(text: ReadingText): PracticePlan {
     grammarNotes: buildGrammarNotes(sentences),
     listeningAvailable: canSpeak(),
   };
+}
+
+function shuffle<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
 
 /** Prepares a shuffled copy of a reconstruction exercise's chips for display — call once per attempt. */
