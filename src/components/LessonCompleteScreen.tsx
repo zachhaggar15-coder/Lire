@@ -134,16 +134,6 @@ export default function LessonCompleteScreen({
     return () => timers.forEach(clearTimeout);
   }, [crosses, scoreChange.after, scoreChange.before]);
 
-  // This is a full-screen takeover — the reader page behind it must not
-  // remain independently scrollable while it's up.
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, []);
-
   const currentBand = wrapped ? bandNumber(scoreChange.after) : bandNumber(scoreChange.before);
 
   const percentRead = Math.min(100, Math.max(0, Math.round(stats.percentRead)));
