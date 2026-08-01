@@ -72,6 +72,8 @@ import {
   type ComprehensionQuestionBundle,
 } from "@/lib/comprehensionCache";
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
+import { buildPracticePlan, type PracticePlan } from "@/lib/practice/session";
+import { recordLookupStat, summarizeLookupRate, type LookupRateSummary } from "@/lib/practice/lookupStats";
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS, getStageForText } from "@/lib/journey/ladder";
@@ -267,6 +269,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     journeyMoment: JourneyMoment | null;
     nextAction: { label: string; textId: string } | null;
     mapLabel: string;
+    practicePlan: PracticePlan;
+    lookupRate: LookupRateSummary;
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -1283,8 +1287,22 @@ export default function Reader({ text }: { text: ReadingText }) {
           textId: nextRecommendation.textId,
         }
       : null;
-    const band = difficulty?.cefr ?? text.difficulty;
+    const band = text.difficulty;
     const mapLabel = `Return to the ${band} map`;
+
+    // Lookups-per-100-words: a support-use signal, not a comprehension score.
+    // wordLookupCount is this session's own count (reset when the article changed),
+    // so a re-read's lookups don't get folded into an earlier completion's total.
+    const wordTotal = countFrenchWords(text);
+    recordLookupStat({
+      textId: text.id,
+      wordCount: wordTotal,
+      lookupEvents: wordLookupCount.current,
+      completedAt,
+      level: band,
+    });
+    const lookupRate = summarizeLookupRate(text.id, wordTotal, wordLookupCount.current);
+    const practicePlan = buildPracticePlan(text);
 
     setLessonComplete({
       scoreChange,
@@ -1298,6 +1316,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       journeyMoment,
       nextAction,
       mapLabel,
+      practicePlan,
+      lookupRate,
     });
   }
 
@@ -2157,6 +2177,9 @@ export default function Reader({ text }: { text: ReadingText }) {
           onPrimaryAction={handleLessonCompletePrimaryAction}
           mapActionLabel={lessonComplete.mapLabel}
           onReturnToMap={handleLessonCompleteReturnToMap}
+          practiceText={text}
+          practicePlan={lessonComplete.practicePlan}
+          lookupRate={lessonComplete.lookupRate}
         />
       )}
       <Toast message={toastMessage} />

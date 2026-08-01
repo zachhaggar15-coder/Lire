@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
 import {
   bandNumber,
@@ -12,6 +13,10 @@ import {
 } from "@/lib/levelScore";
 import type { StreakDay } from "@/lib/habit";
 import { StreakWeekStrip } from "@/components/GamificationCards";
+import type { ReadingText } from "@/types";
+import type { PracticePlan } from "@/lib/practice/session";
+import type { LookupRateSummary } from "@/lib/practice/lookupStats";
+import PracticeSection from "@/components/practice/PracticeSection";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -41,6 +46,10 @@ interface LessonCompleteScreenProps {
   /** Quiet secondary action that always returns to the relevant map/overview. */
   mapActionLabel: string;
   onReturnToMap: () => void;
+  /** Optional so older call sites / tests aren't forced to wire the practice feature. */
+  practiceText?: ReadingText | null;
+  practicePlan?: PracticePlan | null;
+  lookupRate?: LookupRateSummary | null;
 }
 
 /**
@@ -68,6 +77,9 @@ export default function LessonCompleteScreen({
   onPrimaryAction,
   mapActionLabel,
   onReturnToMap,
+  practiceText,
+  practicePlan,
+  lookupRate,
 }: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
@@ -122,6 +134,16 @@ export default function LessonCompleteScreen({
     return () => timers.forEach(clearTimeout);
   }, [crosses, scoreChange.after, scoreChange.before]);
 
+  // This is a full-screen takeover — the reader page behind it must not
+  // remain independently scrollable while it's up.
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   const currentBand = wrapped ? bandNumber(scoreChange.after) : bandNumber(scoreChange.before);
 
   const percentRead = Math.min(100, Math.max(0, Math.round(stats.percentRead)));
@@ -142,7 +164,7 @@ export default function LessonCompleteScreen({
     return `You read ${percentRead}% of the text.`;
   })();
 
-  return (
+  return createPortal(
     <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop">
@@ -292,6 +314,10 @@ export default function LessonCompleteScreen({
           </div>
         </div>
 
+        {practiceText && practicePlan && lookupRate && (
+          <PracticeSection text={practiceText} plan={practicePlan} lookupRate={lookupRate} />
+        )}
+
         <button
           type="button"
           onClick={onPrimaryAction}
@@ -307,6 +333,7 @@ export default function LessonCompleteScreen({
           {mapActionLabel}
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
