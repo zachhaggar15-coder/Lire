@@ -77,8 +77,13 @@ function articleLanguage(text: ReadingText): NonNullable<ReadingText["language"]
   return text.language ?? "fr";
 }
 
-function defaultCategoryForMode(mode: Mode): CategoryFilter {
-  return mode === "live" ? "news-style" : "all";
+function defaultCategoryForMode(): CategoryFilter {
+  // Both modes default to "all" — the live-news page used to default to
+  // "news-style" only, which silently narrowed the daily pool down to
+  // whichever news-specific feeds happened to be healthy that day and made
+  // "no live news matches these filters" a common, confusing empty state
+  // for something meant to just be a daily bank of texts.
+  return "all";
 }
 
 function isEligibleArticleModeText(text: ReadingText): boolean {
@@ -94,7 +99,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A2");
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>(() => defaultCategoryForMode(mode));
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>(() => defaultCategoryForMode());
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
   const [prefVersion, setPrefVersion] = useState(0);
@@ -233,7 +238,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, rssTexts, selectedLevel, state]);
 
   function resetFilters() {
-    setCategoryFilter(defaultCategoryForMode(mode));
+    setCategoryFilter(defaultCategoryForMode());
     setDifficultyFilter("all");
     setLanguageFilter("all");
   }
