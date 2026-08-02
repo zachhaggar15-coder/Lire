@@ -139,6 +139,44 @@ export function findNaturalTranslationForToken(
   return resolveTranslationAlignments(tokens, alignments).find((alignment) => tokenIndex >= alignment.startIndex && tokenIndex <= alignment.endIndex) ?? null;
 }
 
+/**
+ * The long-press phrase counterpart to findNaturalTranslationForToken: rather
+ * than a single word, resolves a natural, fluent English rendering for a
+ * whole held span by stitching together every alignment segment that
+ * overlaps it (in order). This is what should back "hold to see this
+ * phrase's meaning" whenever a fluent translation is loaded for the
+ * sentence — the alternative, composing a translation by running each word
+ * through the dictionary in isolation, reliably produces literal
+ * word-salad ("je me suis réveillée tard" -> "i me to be wake late") for
+ * anything involving a reflexive verb, an idiom, or non-English word order.
+ * Returns null when no fluent translation is loaded for this sentence yet,
+ * so the caller can fall back to the phrasebank/composed path.
+ */
+export function naturalTranslationForRange(
+  tokens: Token[],
+  startIndex: number,
+  endIndex: number,
+  alignments: ArticleTranslationAlignmentSegment[] | null | undefined
+): { french: string; english: string } | null {
+  const resolved = resolveTranslationAlignments(tokens, alignments);
+  const overlapping = resolved
+    .filter((alignment) => alignment.startIndex <= endIndex && alignment.endIndex >= startIndex)
+    .sort((a, b) => a.startIndex - b.startIndex);
+  if (overlapping.length === 0) return null;
+
+  const english = overlapping
+    .map((alignment) => alignment.english)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!english) return null;
+
+  const spanStart = Math.min(startIndex, overlapping[0].startIndex);
+  const spanEnd = Math.max(endIndex, overlapping[overlapping.length - 1].endIndex);
+  const french = tokenText(tokens, spanStart, spanEnd).trim();
+  return { french, english };
+}
+
 export function buildInterlinearTranslationChunks(
   tokens: Token[],
   alignments: ArticleTranslationAlignmentSegment[] | null | undefined,

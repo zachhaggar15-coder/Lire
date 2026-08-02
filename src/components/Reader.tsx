@@ -16,6 +16,7 @@ import {
   findPhraseTranslationMatch,
   translateSentencesWithDictionaryCache,
   type DictionaryArticleTranslationMode,
+  type PhraseTranslationMatch,
 } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
 import { getPrecomputedTranslation } from "@/lib/ai/precomputedTranslations";
@@ -26,6 +27,7 @@ import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import {
   findNaturalTranslationForToken,
   isWordScopedAlignment,
+  naturalTranslationForRange,
   type ResolvedTranslationAlignment,
 } from "@/lib/translationAlignment";
 import { getKnownWords, markKnown } from "@/lib/knownWords";
@@ -1051,7 +1053,33 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handlePhraseHold(sentenceText: string, tokens: Token[], tokenIndex: number) {
     if (rereadMode) return;
-    const phrase = findContainingPhraseTranslationMatch(tokens, tokenIndex) ?? buildComposedPhraseTranslationMatch(tokens, tokenIndex);
+    let phrase: PhraseTranslationMatch | null = findContainingPhraseTranslationMatch(tokens, tokenIndex);
+    if (!phrase) {
+      // Composing a translation word-by-word from the dictionary reliably
+      // produces literal nonsense for reflexive verbs, idioms, and anything
+      // with non-English word order ("je me suis réveillée tard" -> "i me
+      // to be wake late"). Whenever a fluent translation is loaded for this
+      // sentence, use its natural alignment for the held span instead —
+      // the same source the accurate "English help" text already comes
+      // from — and only fall back to the literal composition when no
+      // fluent translation is available yet.
+      const composedWindow = buildComposedPhraseTranslationMatch(tokens, tokenIndex);
+      if (composedWindow) {
+        const sentenceIndex = flatSentences.indexOf(sentenceText);
+        const alignments = sentenceIndex !== -1 ? fluentAlignments?.[sentenceIndex] : null;
+        const natural = naturalTranslationForRange(tokens, composedWindow.startIndex, composedWindow.endIndex, alignments);
+        phrase = natural
+          ? {
+              ...composedWindow,
+              phrase: natural.french.toLowerCase(),
+              lemma: natural.french.toLowerCase(),
+              translation: natural.english,
+              partOfSpeech: null,
+              source: "natural",
+            }
+          : composedWindow;
+      }
+    }
     if (!phrase) {
       showToast("No phrase found here");
       return;

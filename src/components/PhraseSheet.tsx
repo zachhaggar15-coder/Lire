@@ -13,7 +13,7 @@ export interface ActivePhraseState {
   translation: string;
   partOfSpeech: string | null;
   contextSentence: string;
-  source?: "phrasebank" | "composed";
+  source?: "phrasebank" | "composed" | "natural";
 }
 
 interface PhraseSheetProps {
@@ -158,7 +158,9 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
           <p className="mt-2 text-xs text-ink-muted">
             {state.source === "phrasebank"
               ? "Matched from the offline phrasebank."
-              : "Composed offline from nearby words. Use AI only if this still feels unclear."}
+              : state.source === "natural"
+                ? "Taken from this sentence's natural English translation."
+                : "Composed offline from nearby words — this article's natural translation isn't loaded yet, so this may read literally. Try turning on English help for a more natural meaning, or use AI below."}
           </p>
         )}
 

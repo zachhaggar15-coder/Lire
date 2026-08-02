@@ -15,7 +15,7 @@ export interface PhraseTranslationMatch {
   lemma: string;
   translation: string;
   partOfSpeech: string | null;
-  source: "phrasebank" | "composed";
+  source: "phrasebank" | "composed" | "natural";
 }
 
 function isCapitalized(text: string): boolean {
