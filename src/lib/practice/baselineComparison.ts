@@ -68,7 +68,8 @@ function toleranceBandFor(current: number, baseline: number): "below" | "within"
   return "within";
 }
 
-function computeTrend(history: SessionRecord[]): TrendLabel {
+/** Exposed directly for the progress page's overall trend (not tied to one specific reading's comparison). */
+export function computeTrend(history: SessionRecord[]): TrendLabel {
   const sorted = completedSortedByRecency(history);
   const recentWindow = sorted.slice(0, 5);
   const priorWindow = sorted.slice(5, 10);
@@ -109,4 +110,19 @@ export function compareToPersonalBaseline(current: SessionRecord, history: Sessi
 /** Compares against the learner's own recent history at the same estimated CEFR band. */
 export function compareToLevelBand(current: SessionRecord, sameLevelHistory: SessionRecord[]): BaselineComparison {
   return compareToHistory(current, sameLevelHistory, "levelBand");
+}
+
+/**
+ * Short learner-facing comparison line. Only ever says "your average" — no
+ * cohort/other-learner wording exists anywhere, since baselineSource never
+ * actually produces "cohort" today (see the module doc comment above).
+ */
+export function formatBaselineComparisonLabel(comparison: BaselineComparison, levelLabel?: string): string {
+  if (!comparison.minimumSampleMet || comparison.toleranceBand == null) {
+    return "Not enough data yet to compare.";
+  }
+  const suffix = comparison.baselineSource === "levelBand" && levelLabel ? ` for ${levelLabel} texts` : "";
+  if (comparison.toleranceBand === "below") return `Below your average${suffix}.`;
+  if (comparison.toleranceBand === "above") return `Above your average${suffix}.`;
+  return `Around your average${suffix}.`;
 }

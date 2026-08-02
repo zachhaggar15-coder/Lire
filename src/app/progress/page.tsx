@@ -19,6 +19,9 @@ import {
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
+import { getSessionRecords } from "@/lib/sessionRecord";
+import { computeRollingLookupRate, computeTrend, BASELINE_THRESHOLDS } from "@/lib/practice/baselineComparison";
+import { trackEvent } from "@/lib/analytics/client";
 
 type Tab = "overview" | "missions" | "vocabulary" | "achievements" | "passport";
 
@@ -53,7 +56,23 @@ export default function ProgressPage() {
     const requested = params.get("tab");
     if (requested && TABS.some((item) => item.id === requested)) setTab(requested as Tab);
     refresh(true);
+    trackEvent("progress_page_viewed", {});
   }, []);
+
+  const sessionRecords = useMemo(() => getSessionRecords(), []);
+  const readingTrend = useMemo(() => computeTrend(sessionRecords), [sessionRecords]);
+  const rollingRates = useMemo(
+    () => ({
+      last5: computeRollingLookupRate(sessionRecords, 5),
+      last10: computeRollingLookupRate(sessionRecords, 10),
+      allTime: computeRollingLookupRate(sessionRecords, "all-time"),
+    }),
+    [sessionRecords]
+  );
+  const hasEnoughForTrend = sessionRecords.length >= BASELINE_THRESHOLDS.minimumSampleForTrend;
+  useEffect(() => {
+    if (hasEnoughForTrend) trackEvent("progress_comparison_displayed", { trend: readingTrend });
+  }, [hasEnoughForTrend, readingTrend]);
 
   const weeklyArticles = useMemo(
     () => snapshot?.completions.filter((item) => weekStart !== null && new Date(item.completedAt).getTime() >= weekStart).length ?? 0,
@@ -113,6 +132,7 @@ export default function ProgressPage() {
 
       {tab === "overview" && (
         <div className="space-y-5">
+          <ReadingIndependenceTrendCard trend={readingTrend} rollingRates={rollingRates} hasEnoughData={hasEnoughForTrend} />
           <CurrentLevelCard level={snapshot.level} />
           <section className="rounded-card bg-cream-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
@@ -258,6 +278,55 @@ export default function ProgressPage() {
         </>
       )}
     </div>
+  );
+}
+
+const TREND_HEADLINE: Record<string, string> = {
+  Improving: "Your lookup rate is falling.",
+  Stable: "Your lookup rate is holding steady.",
+  "Increasing support needed": "You've been leaning on lookups a bit more lately.",
+  "Not enough data": "Not enough readings yet to show a trend.",
+};
+
+/**
+ * The progress page's leading insight — a trend, not a generic total, per
+ * the reading-independence diagnostics spec. Reuses the exact same rolling-
+ * rate/trend logic (baselineComparison.ts) the lesson-completion screen's
+ * ReadingDiagnosticsCard uses, so the two screens never disagree.
+ */
+function ReadingIndependenceTrendCard({
+  trend,
+  rollingRates,
+  hasEnoughData,
+}: {
+  trend: string;
+  rollingRates: { last5: { rate: number | null; sampleSize: number }; last10: { rate: number | null; sampleSize: number }; allTime: { rate: number | null; sampleSize: number } };
+  hasEnoughData: boolean;
+}) {
+  if (!hasEnoughData) {
+    return (
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+        <p className="mt-1 text-base font-bold text-ink">Not enough readings yet to show a trend.</p>
+        <p className="mt-1 text-xs text-ink-muted">Finish a few more texts and this will start comparing your lookup rate over time.</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="rounded-card bg-cream-card p-4 shadow-card">
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+      <p className="mt-1 text-lg font-extrabold text-ink">{TREND_HEADLINE[trend] ?? TREND_HEADLINE["Not enough data"]}</p>
+      {rollingRates.last5.rate != null && (
+        <p className="mt-1 text-sm text-ink-muted">
+          {rollingRates.last5.rate} lookups per 100 words across your last {rollingRates.last5.sampleSize} texts
+          {rollingRates.last10.rate != null && `, ${rollingRates.last10.rate} over your last ${rollingRates.last10.sampleSize}`}.
+        </p>
+      )}
+      {rollingRates.allTime.rate != null && (
+        <p className="mt-0.5 text-xs text-ink-muted">All-time: {rollingRates.allTime.rate} lookups per 100 words across {rollingRates.allTime.sampleSize} texts.</p>
+      )}
+    </section>
   );
 }
 

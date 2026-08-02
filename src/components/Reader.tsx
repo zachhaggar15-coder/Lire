@@ -78,6 +78,11 @@ import {
 import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
 import { buildPracticePlan, type PracticePlan } from "@/lib/practice/session";
 import { recordLookupStat, summarizeLookupRate, type LookupRateSummary } from "@/lib/practice/lookupStats";
+import { getSessionRecords, getSessionRecordsForLevel, recordReadingSession } from "@/lib/sessionRecord";
+import { computeReadingPerformance, averagePracticeAccuracy, type ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
+import { compareToLevelBand, compareToPersonalBaseline, type BaselineComparison, type TrendLabel } from "@/lib/practice/baselineComparison";
+import { estimatePersonalChallenge } from "@/lib/practice/personalChallenge";
+import { selectDiagnosticMessage, type DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS, getStageForText } from "@/lib/journey/ladder";
@@ -277,6 +282,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     mapLabel: string;
     practicePlan: PracticePlan;
     lookupRate: LookupRateSummary;
+    diagnostics: {
+      performance: ReadingPerformanceMetrics;
+      baseline: BaselineComparison;
+      message: DiagnosticMessage;
+      trend: TrendLabel;
+    } | null;
   } | null>(null);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
@@ -313,6 +324,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const finalizedSessionRef = useRef(false);
   const learningActionCount = useRef(0);
   const wordLookupCount = useRef(0);
+  /** Lemma-deduplicated lookups this session, for sessionRecord.ts's uniqueWordsLookedUp — looking up the same word five times still counts once here, unlike wordLookupCount above. */
+  const wordLookupLemmas = useRef<Set<string>>(new Set());
   const wordsSavedThisSession = useRef(0);
   const phraseInteractionCount = useRef(0);
   const sentenceInteractionCount = useRef(0);
@@ -433,6 +446,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     finalizedSessionRef.current = false;
     learningActionCount.current = 0;
     wordLookupCount.current = 0;
+    wordLookupLemmas.current = new Set();
     wordsSavedThisSession.current = 0;
     phraseInteractionCount.current = 0;
     sentenceInteractionCount.current = 0;
@@ -799,12 +813,14 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function rememberWordSaved(source: "tap_lookup" | "candidate") {
     const savedAt = new Date().toISOString();
+    const wasFirstWordEver = getValidationState().firstWordSavedAt == null;
     wordsSavedThisSession.current += 1;
     updateValidationState((state) => ({
       ...state,
       firstWordSavedAt: state.firstWordSavedAt ?? savedAt,
       totalWordsSaved: state.totalWordsSaved + 1,
     }));
+    if (wasFirstWordEver) trackEvent("first_word_saved", { articleId: text.id });
     trackEvent("word_saved", { articleId: text.id, source });
   }
 
@@ -984,7 +1000,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     setArticleTapRecords(updatedTaps.filter((tap) => tap.articleId === text.id).map((tap) => ({ word: tap.word, lemma: tap.lemma, count: tap.count })));
     setTranslationUses((count) => count + 1);
     recordLearningAction();
+    const wasFirstLookupEver = wordLookupCount.current === 0;
     wordLookupCount.current += 1;
+    wordLookupLemmas.current.add(lemma ?? clean);
+    if (wasFirstLookupEver) trackEvent("first_word_lookup", { articleId: text.id });
     trackEvent("word_lookup_opened", {
       articleId: text.id,
       knownBeforeTap: existingStatus === "known",
@@ -1401,6 +1420,58 @@ export default function Reader({ text }: { text: ReadingText }) {
     const lookupRate = summarizeLookupRate(text.id, wordTotal, wordLookupCount.current);
     const practicePlan = buildPracticePlan(text);
 
+    const wordsForThisArticle = getSavedWords().filter((word) => word.sourceTextTitle === text.title);
+    recordReadingSession({
+      textId: text.id,
+      sourceType: isImportedText ? "imported" : text.id.startsWith("rss-") ? "rss" : "curriculum",
+      estimatedLevel: difficulty?.cefr ?? text.difficulty,
+      wordCount: wordTotal,
+      totalLookupActions: wordLookupCount.current,
+      uniqueWordsLookedUp: wordLookupLemmas.current.size,
+      wordsSaved: wordsForThisArticle.filter((word) => word.status === "learning").length,
+      wordsUnsure: wordsForThisArticle.filter((word) => word.status === "unsure").length,
+      wordsKnown: wordsForThisArticle.filter((word) => word.status === "known").length,
+      openedAt: getProgress(text.id).openedAt ?? completedAt,
+      completedAt,
+      activeReadingTimeMs: activeTimeTracker.current?.activeMs() ?? 0,
+      completionStatus: "completed",
+      audioUsed: speechUsedThisSession.current,
+    });
+    trackEvent("lesson_completed", { articleId: text.id, estimatedLevel: difficulty?.cefr ?? text.difficulty });
+
+    // Diagnostics bundle for the new completion-screen section — reads the
+    // record straight back out of sessionRecord.ts so it reflects exactly
+    // what was just persisted (including any practice stats merged in from
+    // an earlier practice-page visit).
+    const estimatedLevel = difficulty?.cefr ?? text.difficulty;
+    const allSessionRecords = getSessionRecords();
+    const thisSessionRecord = allSessionRecords.find((r) => r.textId === text.id) ?? null;
+    const diagnostics = (() => {
+      if (!thisSessionRecord) return null;
+      const performance = computeReadingPerformance(thisSessionRecord);
+      const levelBandHistory = getSessionRecordsForLevel(estimatedLevel);
+      const levelBandComparison = compareToLevelBand(thisSessionRecord, levelBandHistory);
+      const baseline = levelBandComparison.minimumSampleMet
+        ? levelBandComparison
+        : compareToPersonalBaseline(thisSessionRecord, allSessionRecords);
+      const articleWords = new Set(tokenize(text.body).filter((t) => t.isWord && t.clean).map((t) => t.clean));
+      const savedWordSet = new Set(savedWordsSnapshot.map((w) => w.word.toLowerCase()));
+      let previouslySavedCount = 0;
+      articleWords.forEach((w) => {
+        if (savedWordSet.has(w)) previouslySavedCount++;
+      });
+      const percentPreviouslySaved = articleWords.size > 0 ? previouslySavedCount / articleWords.size : 0;
+      const challenge = estimatePersonalChallenge({
+        unknownWordRatio: difficulty?.unknownWordRatio ?? 0,
+        percentPreviouslySaved,
+        recentLookupRateAtLevel: baseline.baselineRate,
+        recentPracticeAccuracy: averagePracticeAccuracy(performance),
+        recentAbandonRate: null,
+      });
+      const message = selectDiagnosticMessage({ challenge, performance, baseline });
+      return { performance, baseline, message, trend: baseline.trend };
+    })();
+
     setLessonComplete({
       scoreChange,
       // A short lesson that fits on one screen never fires a scroll event, so
@@ -1415,6 +1486,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       mapLabel,
       practicePlan,
       lookupRate,
+      diagnostics,
     });
   }
 
@@ -2317,6 +2389,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           practiceText={text}
           practicePlan={lessonComplete.practicePlan}
           lookupRate={lessonComplete.lookupRate}
+          diagnostics={lessonComplete.diagnostics}
+          levelLabel={text.difficulty}
         />
       )}
       <Toast message={toastMessage} />

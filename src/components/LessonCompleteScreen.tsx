@@ -17,6 +17,10 @@ import type { ReadingText } from "@/types";
 import type { PracticePlan } from "@/lib/practice/session";
 import type { LookupRateSummary } from "@/lib/practice/lookupStats";
 import PracticeSection from "@/components/practice/PracticeSection";
+import ReadingDiagnosticsCard from "@/components/diagnostics/ReadingDiagnosticsCard";
+import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
+import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
+import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -50,6 +54,14 @@ interface LessonCompleteScreenProps {
   practiceText?: ReadingText | null;
   practicePlan?: PracticePlan | null;
   lookupRate?: LookupRateSummary | null;
+  /** Null when there's no session record yet to derive diagnostics from (shouldn't normally happen — see Reader.tsx's handleMarkCompleted). */
+  diagnostics?: {
+    performance: ReadingPerformanceMetrics;
+    baseline: BaselineComparison;
+    message: DiagnosticMessage;
+    trend: TrendLabel;
+  } | null;
+  levelLabel?: string;
 }
 
 /**
@@ -80,6 +92,8 @@ export default function LessonCompleteScreen({
   practiceText,
   practicePlan,
   lookupRate,
+  diagnostics,
+  levelLabel,
 }: LessonCompleteScreenProps) {
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
@@ -172,6 +186,17 @@ export default function LessonCompleteScreen({
             </p>
             <p className="mt-1 text-sm font-semibold leading-relaxed text-cream/90">{journeyMoment.detail}</p>
           </div>
+        )}
+
+        {diagnostics && (
+          <ReadingDiagnosticsCard
+            className="lesson-complete-card-enter mt-4"
+            performance={diagnostics.performance}
+            baseline={diagnostics.baseline}
+            message={diagnostics.message}
+            trend={diagnostics.trend}
+            levelLabel={levelLabel}
+          />
         )}
 
         {/* Headline stats */}

@@ -1,5 +1,5 @@
 import type { ChallengeResult } from "@/lib/practice/personalChallenge";
-import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
+import { averagePracticeAccuracy, type ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
 import type { BaselineComparison } from "@/lib/practice/baselineComparison";
 
 /**
@@ -22,19 +22,13 @@ export interface DiagnosticMessage {
   detail: string | null;
 }
 
-function averageAccuracy(performance: ReadingPerformanceMetrics): number | null {
-  const values = Object.values(performance.practiceAccuracyByType).filter((v): v is number => v != null);
-  if (values.length === 0) return null;
-  return values.reduce((sum, v) => sum + v, 0) / values.length;
-}
-
 const RECURRING_WORDS_MIN_ACTIONS = 4;
 const RECURRING_WORDS_UNIQUE_RATIO = 0.5;
 const BROAD_VOCABULARY_UNIQUE_LOOKUPS_PER_100 = 8;
 
 export function selectDiagnosticMessage(ctx: DiagnosticContext): DiagnosticMessage {
   const { challenge, performance, baseline } = ctx;
-  const accuracy = averageAccuracy(performance);
+  const accuracy = averagePracticeAccuracy(performance);
   const lowAccuracy = accuracy != null && accuracy < 0.6;
   const highAccuracy = accuracy != null && accuracy >= 0.8;
   const aboveBaseline = baseline.toleranceBand === "above";

@@ -21,6 +21,13 @@ export interface ReadingPerformanceMetrics {
   audioUsed: boolean;
 }
 
+/** Average accuracy across whichever exercise types the learner has actually attempted, ignoring untried types. Null if none attempted yet. */
+export function averagePracticeAccuracy(performance: ReadingPerformanceMetrics): number | null {
+  const values = Object.values(performance.practiceAccuracyByType).filter((v): v is number => v != null);
+  if (values.length === 0) return null;
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
+}
+
 export function computeReadingPerformance(record: SessionRecord): ReadingPerformanceMetrics {
   const practiceAccuracyByType = Object.fromEntries(
     (Object.entries(record.practice) as [PracticeExerciseType, { attempted: number; correct: number }][]).map(
