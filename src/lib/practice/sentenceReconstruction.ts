@@ -116,14 +116,35 @@ export function shuffleChips(chips: ReconstructionChip[]): ReconstructionChip[] 
   return attempt;
 }
 
-/** Normalises punctuation spacing so "va ?" and "va?" compare equal — chip attachment is
- * a display choice, not a meaningful difference for grading. */
+/**
+ * Normalises punctuation spacing so "va ?" and "va?" compare equal — chip
+ * attachment is a display choice, not a meaningful difference for grading.
+ *
+ * Strips whitespace on BOTH sides of punctuation (not just before it) —
+ * buildReconstructionChips folds any run of consecutive punctuation-only
+ * "words" onto a single preceding chip (e.g. a dialogue line's "changement
+ * : « Ils" collapses the space-colon-space-guillemet run into one
+ * "changement:«" chip). The canonical sentence text still has its original
+ * French typographic spacing around ":"/"«"/"»", so comparing without also
+ * normalising space *after* punctuation made the exercise's own correct
+ * answer fail its own check for any dialogue-heavy sentence — found via a
+ * full-corpus sweep (scripts/test-practice-corpus-coverage.mjs) that
+ * exercised every real sentence in the curriculum rather than a handful of
+ * hand-picked examples.
+ */
 function normalizeForCompare(text: string): string {
   return text
     .normalize("NFC")
     .trim()
     .replace(/\s+/g, " ")
-    .replace(/\s+([?!;:.,])/g, "$1");
+    // Strip whitespace on both sides of any punctuation or symbol character
+    // (Unicode \p{P}/\p{S} — covers ?!;:.,»«—, currency symbols, etc.), not
+    // just a hand-enumerated list: any non-letter/non-digit "word" is what
+    // buildReconstructionChips folds onto a neighbouring chip without
+    // preserving its original spacing, so comparison needs to be blind to
+    // spacing around ALL of them, not just the ones a first pass happened
+    // to test against.
+    .replace(/\s*([\p{P}\p{S}])\s*/gu, "$1");
 }
 
 /** Whether an ordered arrangement of chip ids reconstructs the canonical sentence. */
