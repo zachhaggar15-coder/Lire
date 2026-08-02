@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { AppSettings, Difficulty, FontSize, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
-import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
+import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
+import { trackEvent } from "@/lib/analytics/client";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import {
@@ -136,6 +138,7 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
 }
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
   const [knownCount, setKnownCount] = useState(0);
@@ -311,6 +314,25 @@ export default function SettingsPage() {
           <SettingsSectionTitle title="App" subtitle="Account, install options, feedback, and privacy." />
           <BetaNotice />
           <AccountCard />
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-semibold text-ink">Replay the tutorial</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Redo the short interactive walkthrough. Your saved words and progress stay exactly as they are.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  trackEvent("tutorial_restarted", {});
+                  resetWalkthrough();
+                  router.push("/");
+                }}
+                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink active:scale-95"
+              >
+                Restart
+              </button>
+            </div>
+          </div>
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div>

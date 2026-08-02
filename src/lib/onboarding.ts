@@ -15,6 +15,10 @@ export interface OnboardingState {
   estimatedKnownWords: number;
   seededKnownWords: number;
   updatedAt: string;
+  /** Whether the interactive walkthrough (tap/save/audio/practice demo) has been finished or explicitly skipped — separate from `completed`, which only covers the level/topic/goal picker. */
+  walkthroughCompleted: boolean;
+  /** Which walkthrough step to resume at if the app was closed mid-walkthrough. Null once completed/skipped, or if never started. */
+  walkthroughStep: number | null;
 }
 
 const DEFAULT_LEVEL: Difficulty = "A1";
@@ -59,6 +63,8 @@ export function getOnboardingState(): OnboardingState | null {
           : knownWordEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
       seededKnownWords: typeof parsed.seededKnownWords === "number" ? parsed.seededKnownWords : 0,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
+      walkthroughCompleted: parsed.walkthroughCompleted === true,
+      walkthroughStep: typeof parsed.walkthroughStep === "number" ? parsed.walkthroughStep : null,
     };
   } catch {
     return null;
@@ -113,6 +119,8 @@ export function saveOnboarding(
     estimatedKnownWords: knownWordEstimateForLevel(level),
     seededKnownWords: 0,
     updatedAt: new Date().toISOString(),
+    walkthroughCompleted: false,
+    walkthroughStep: null,
   };
 
   if (hasStorage()) {
@@ -147,6 +155,8 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
     estimatedKnownWords: knownWordEstimateForLevel(level),
     seededKnownWords: current?.seededKnownWords ?? 0,
     updatedAt: new Date().toISOString(),
+    walkthroughCompleted: current?.walkthroughCompleted ?? false,
+    walkthroughStep: current?.walkthroughStep ?? null,
   };
 
   if (hasStorage()) {
@@ -159,4 +169,39 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
 
 export function skipOnboarding(): OnboardingState {
   return saveOnboarding("A2", [], undefined, { seedKnownWords: false });
+}
+
+/** Persists which walkthrough step to resume at — called on every step transition so closing the app mid-walkthrough resumes rather than restarting. Touches only the walkthrough fields. */
+export function saveWalkthroughStep(step: number | null): void {
+  const current = getOnboardingState();
+  if (!current || !hasStorage()) return;
+  window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
+  void pushStore(ONBOARDING_KEY);
+}
+
+/** Marks the walkthrough finished (naturally, or via skip) — never shown again until resetWalkthrough is called. */
+export function completeWalkthrough(): void {
+  const current = getOnboardingState();
+  if (!current || !hasStorage()) return;
+  window.localStorage.setItem(
+    ONBOARDING_KEY,
+    JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
+  );
+  void pushStore(ONBOARDING_KEY);
+}
+
+/**
+ * Restarts the tutorial from Settings. Touches ONLY the walkthrough flag —
+ * critically, never resets `completed` (the level/topic/goal picker) and
+ * never touches any other store (saved words, progress, session history).
+ * Restarting the tutorial must never erase learning data.
+ */
+export function resetWalkthrough(): void {
+  const current = getOnboardingState();
+  if (!current || !hasStorage()) return;
+  window.localStorage.setItem(
+    ONBOARDING_KEY,
+    JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
+  );
+  void pushStore(ONBOARDING_KEY);
 }

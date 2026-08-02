@@ -64,6 +64,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
 
   function finish(nextLevel = level) {
     saveOnboarding(nextLevel, topics, goal);
+    trackEvent("initial_level_selected", { level: nextLevel });
     trackEvent("onboarding_completed", {
       level: nextLevel,
       topicCount: topics.length,
