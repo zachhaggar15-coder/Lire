@@ -39,6 +39,7 @@ import { recordArticleCompleted } from "@/lib/recommendation/interests";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getCustomTexts } from "@/lib/customTexts";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
+import { markAudioTipSeen, recordAudioPlayAndCheckTip } from "@/lib/audioTip";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { getArticleSummary, saveArticleSummary } from "@/lib/articleSummaries";
 import { findPronounReference } from "@/lib/pronounReferences";
@@ -293,6 +294,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [showProgressBadge, setShowProgressBadge] = useState(false);
   /** Auto-expanded the very first time anyone opens an article, so the tap/hold gestures below aren't buried behind a collapsed <details> nobody thinks to open. Stays collapsed by default afterwards. */
   const [readingHelpOpen, setReadingHelpOpen] = useState(false);
+  /** Shown once, after a few audio plays across the app — see lib/audioTip.ts. */
+  const [showAudioTip, setShowAudioTip] = useState(false);
   const articleRef = useRef<HTMLElement | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rewardTimeouts = useRef<number[]>([]);
@@ -667,6 +670,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       speechUsedThisSession.current = true;
       recordLearningAction();
       trackEvent("speech_playback_used", { articleId: text.id, scope: "article" });
+      trackEvent("full_text_audio_played", { articleId: text.id });
+      if (recordAudioPlayAndCheckTip()) setShowAudioTip(true);
     }
   }
 
@@ -755,6 +760,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     speechUsedThisSession.current = true;
     recordLearningAction();
     trackEvent("speech_playback_used", { articleId: text.id, scope: "paragraph" });
+    trackEvent("audio_played", { scope: "paragraph" });
+    if (recordAudioPlayAndCheckTip()) setShowAudioTip(true);
   }
 
   function shouldUseFluentTranslation(): boolean {
@@ -1905,6 +1912,22 @@ export default function Reader({ text }: { text: ReadingText }) {
           className="inline-flex items-center gap-1.5 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink-muted active:scale-95"
         />
       </div>
+
+      {showAudioTip && (
+        <p className="mt-2 rounded-2xl bg-brand-light px-3 py-2 text-xs text-brand">
+          Try listening once before reading the sentence.{" "}
+          <button
+            type="button"
+            onClick={() => {
+              markAudioTipSeen();
+              setShowAudioTip(false);
+            }}
+            className="font-semibold underline underline-offset-2"
+          >
+            Got it
+          </button>
+        </p>
+      )}
 
       {rereadMode && (
         <div className="mt-3 rounded-2xl bg-brand-light px-3 py-2 text-xs font-semibold text-brand">

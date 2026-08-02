@@ -444,7 +444,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
                       <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
                       <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
                       <div className="mt-2">
-                        <PronounceButton text={firstExample.fr} label="Play example sentence" className="bg-white" />
+                        <PronounceButton text={firstExample.fr} label="Play example sentence" className="bg-white" scope="sentence" />
                       </div>
                     </div>
                   )}
@@ -622,7 +622,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
                 <p className="text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
                 <p className="text-xs text-ink-muted">{aiResult.simpleExampleEn}</p>
                 <div className="mt-2">
-                  <PronounceButton text={aiResult.simpleExampleFr} label="Play AI example sentence" className="bg-white" />
+                  <PronounceButton text={aiResult.simpleExampleFr} label="Play AI example sentence" className="bg-white" scope="sentence" />
                 </div>
               </div>
               {aiResult.grammarOrUsageNote && (

@@ -86,8 +86,8 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
             <p className="mt-1 text-base font-semibold leading-snug text-ink">{state?.sentence}</p>
             {state?.sentence && (
               <div className="mt-2 flex flex-wrap gap-2">
-                <PronounceButton text={state.sentence} label="Play sentence" className="bg-cream-dark" />
-                <PronounceButton text={state.sentence} label="Play sentence slowly" rate="slow" className="bg-cream-dark" />
+                <PronounceButton text={state.sentence} label="Play sentence" className="bg-cream-dark" scope="sentence" />
+                <PronounceButton text={state.sentence} label="Play sentence slowly" rate="slow" className="bg-cream-dark" scope="sentence" />
               </div>
             )}
           </div>
@@ -155,7 +155,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
                 </p>
                 <p className="mt-1 text-sm italic text-ink">{aiResult.simplifiedFrench}</p>
                 <div className="mt-2">
-                  <PronounceButton text={aiResult.simplifiedFrench} label="Play simplified French" className="bg-cream-card" />
+                  <PronounceButton text={aiResult.simplifiedFrench} label="Play simplified French" className="bg-cream-card" scope="sentence" />
                 </div>
               </div>
 

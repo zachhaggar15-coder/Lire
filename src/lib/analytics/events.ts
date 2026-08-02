@@ -27,6 +27,8 @@ export const ANALYTICS_EVENT_NAMES = [
   "ai_word_explanation_requested",
   "ai_sentence_explanation_requested",
   "speech_playback_used",
+  "audio_played",
+  "full_text_audio_played",
   "review_session_started",
   "review_answer_submitted",
   "review_session_completed",
