@@ -85,6 +85,17 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
           </div>
           <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-white/15 p-1 shadow-raised" />
         </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {[
+            "A guided path from your first words to fluent reading",
+            "A few minutes of daily practice and review",
+            "Real French news once you're ready for it",
+          ].map((line) => (
+            <span key={line} className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold leading-snug text-white/90">
+              {line}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div className="p-5">

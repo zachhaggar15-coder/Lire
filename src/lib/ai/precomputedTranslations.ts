@@ -10,27 +10,41 @@ import type { ArticleTranslationResult } from "@/lib/ai/types";
  * RSS/imported articles are never in this store — they're genuinely dynamic
  * and always go through the live AI path in ai/client.ts.
  *
- * LOAD IT WITH `loadPrecomputedTranslations()`, NOT A STATIC IMPORT — same
- * reasoning as fr-en-generated.ts: keeping the (multi-MB) JSON behind a
- * dynamic import keeps it out of the shared client bundle, so pages that
- * never open a reader (Settings, Words, Review) don't pay to download and
- * parse it.
+ * Split into NUM_SHARDS files (src/data/precomputed/shard-N.json) rather than
+ * one ~9MB blob — see scripts/shard-precomputed-translations.mjs. A reader
+ * only ever needs one article's translation, so sharding cuts what a single
+ * article open has to fetch and JSON.parse from ~9MB to roughly 1/16th of
+ * that. Each shard is still loaded via dynamic import, same reasoning as
+ * fr-en-generated.ts: keeps it out of the shared client bundle so pages that
+ * never open a reader (Settings, Words, Review) don't pay for it at all.
  */
-let cached: Promise<Record<string, ArticleTranslationResult>> | null = null;
+const NUM_SHARDS = 16;
 
-function loadPrecomputedTranslations(): Promise<Record<string, ArticleTranslationResult>> {
-  if (!cached) {
-    cached = import("@/data/precomputedTranslations.json").then(
+function shardForId(articleId: string): number {
+  let hash = 0;
+  for (let i = 0; i < articleId.length; i++) {
+    hash = (hash * 31 + articleId.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash) % NUM_SHARDS;
+}
+
+const shardCache = new Map<number, Promise<Record<string, ArticleTranslationResult>>>();
+
+function loadShard(shard: number): Promise<Record<string, ArticleTranslationResult>> {
+  let promise = shardCache.get(shard);
+  if (!promise) {
+    promise = import(`@/data/precomputed/shard-${shard}.json`).then(
       (module) => (module.default ?? module) as unknown as Record<string, ArticleTranslationResult>
     );
+    shardCache.set(shard, promise);
   }
-  return cached;
+  return promise;
 }
 
 /** Returns the precomputed translation for this article id, or null if it isn't in the store (RSS/imported text, or the precompute script hasn't covered it yet). */
 export async function getPrecomputedTranslation(articleId: string): Promise<ArticleTranslationResult | null> {
   try {
-    const store = await loadPrecomputedTranslations();
+    const store = await loadShard(shardForId(articleId));
     return store[articleId] ?? null;
   } catch {
     return null;

@@ -12,7 +12,8 @@
 // Usage:
 //   node --import ./scripts/register-alias-loader.mjs scripts/precompute-fluent-translations.mjs [--limit N] [--concurrency N]
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "fs";
+import { shardForId, NUM_SHARDS } from "./shard-precomputed-translations.mjs";
 
 // Plain node doesn't auto-load .env.local the way `next dev`/`next build` do.
 function loadDotEnvLocal() {
@@ -29,7 +30,7 @@ const { texts } = await import("../src/data/texts.ts");
 const { tokenizeParagraphsToSentences } = await import("../src/lib/words.ts");
 const { translateArticleSentences } = await import("../src/lib/ai/openai.ts");
 
-const OUTPUT_PATH = new URL("../src/data/precomputedTranslations.json", import.meta.url);
+const OUTPUT_DIR = new URL("../src/data/precomputed/", import.meta.url);
 
 function parseArg(name, fallback) {
   const idx = process.argv.indexOf(`--${name}`);
@@ -52,16 +53,28 @@ const MAX_SENTENCES = 200; // matches the API route's own cap
 const MAX_SENTENCES_PER_REQUEST = 12;
 
 function loadExisting() {
-  if (!existsSync(OUTPUT_PATH)) return {};
-  try {
-    return JSON.parse(readFileSync(OUTPUT_PATH, "utf8"));
-  } catch {
-    return {};
+  if (!existsSync(OUTPUT_DIR)) return {};
+  const store = {};
+  for (const file of readdirSync(OUTPUT_DIR)) {
+    if (!file.endsWith(".json")) continue;
+    try {
+      Object.assign(store, JSON.parse(readFileSync(new URL(file, OUTPUT_DIR), "utf8")));
+    } catch {
+      // Corrupt shard — treated as empty; re-translated ids will overwrite it on save.
+    }
   }
+  return store;
 }
 
 function save(store) {
-  writeFileSync(OUTPUT_PATH, JSON.stringify(store));
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+  const shards = Array.from({ length: NUM_SHARDS }, () => ({}));
+  for (const [id, translation] of Object.entries(store)) {
+    shards[shardForId(id)][id] = translation;
+  }
+  for (let i = 0; i < NUM_SHARDS; i++) {
+    writeFileSync(new URL(`shard-${i}.json`, OUTPUT_DIR), JSON.stringify(shards[i]));
+  }
 }
 
 /** Paragraph-sentence groups plus the flat sentence array, so both a single whole-article

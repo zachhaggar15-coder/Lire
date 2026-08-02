@@ -90,6 +90,8 @@ import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 
+const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
+
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   small: "text-base",
   medium: "text-[1.15rem]",
@@ -289,6 +291,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [scrollProgressPercent, setScrollProgressPercent] = useState(0);
   /** False when the whole article already fits on screen — a scroll percentage would be noise. */
   const [showProgressBadge, setShowProgressBadge] = useState(false);
+  /** Auto-expanded the very first time anyone opens an article, so the tap/hold gestures below aren't buried behind a collapsed <details> nobody thinks to open. Stays collapsed by default afterwards. */
+  const [readingHelpOpen, setReadingHelpOpen] = useState(false);
   const articleRef = useRef<HTMLElement | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rewardTimeouts = useRef<number[]>([]);
@@ -377,6 +381,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (dictionaryRevision === 0 || text.language === "en") return;
     setDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
   }, [dictionaryRevision, text.body, text.language]);
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(READING_HELP_SEEN_KEY)) return;
+      setReadingHelpOpen(true);
+      window.localStorage.setItem(READING_HELP_SEEN_KEY, "1");
+    } catch {
+      // Best-effort — worst case the hint just doesn't auto-expand.
+    }
+  }, []);
 
   useEffect(() => {
     cacheDictionarySentenceTranslations(text.id, text.body, offlineSentences, offlineTranslationMode);
@@ -1802,7 +1816,11 @@ export default function Reader({ text }: { text: ReadingText }) {
           </div>
         </div>
         <div className="p-4">
-      <details className="text-xs text-ink-muted">
+      <details
+        className="text-xs text-ink-muted"
+        open={readingHelpOpen}
+        onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
+      >
         <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">Reading help</summary>
         <p className="mt-1">
           Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
@@ -1880,6 +1898,12 @@ export default function Reader({ text }: { text: ReadingText }) {
           </span>
           {showEnglishTranslation ? "Hide English" : "English help"}
         </button>
+        <FeedbackButton
+          feature="reader"
+          articleId={text.id}
+          label="Report a problem"
+          className="inline-flex items-center gap-1.5 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink-muted active:scale-95"
+        />
       </div>
 
       {rereadMode && (
