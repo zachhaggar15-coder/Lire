@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
+    "@sentry/nextjs": "^10.69.0",
     "@supabase/supabase-js": "^2.110.2",
     "@upstash/redis": "^1.38.0",
     "jsdom": "^29.1.1",
