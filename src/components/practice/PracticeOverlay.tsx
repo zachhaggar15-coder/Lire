@@ -58,17 +58,32 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
   useEffect(() => {
     if (paraphraseStartedRef.current) return;
     paraphraseStartedRef.current = true;
-    const usedIndices = new Set(activities.map((a) => a.exercise.sentenceIndex));
-    const candidate = pickParaphraseCandidateSentence(allSentencesInText(text), usedIndices);
-    if (!candidate) {
+    // Paraphrase generation is explicitly a nice-to-have addition on top of
+    // the reconstruction/cloze activities that are already ready and
+    // showing — nothing here, sync or async, may ever be allowed to crash
+    // the practice session. An uncaught throw inside a passive effect
+    // unmounts the whole page (the nearest error boundary takes over), which
+    // is a much worse outcome than simply not offering a paraphrase activity
+    // this time.
+    try {
+      const usedIndices = new Set(activities.map((a) => a.exercise.sentenceIndex));
+      const candidate = pickParaphraseCandidateSentence(allSentencesInText(text), usedIndices);
+      if (!candidate) {
+        setParaphraseChecked(true);
+        return;
+      }
+      buildParaphraseExercise(candidate, text.title, `${text.difficulty} French learner`)
+        .then((exercise) => {
+          if (!mountedRef.current) return;
+          if (exercise) setActivities((prev) => [...prev, { kind: "paraphrase", exercise }]);
+          setParaphraseChecked(true);
+        })
+        .catch(() => {
+          if (mountedRef.current) setParaphraseChecked(true);
+        });
+    } catch {
       setParaphraseChecked(true);
-      return;
     }
-    void buildParaphraseExercise(candidate, text.title, `${text.difficulty} French learner`).then((exercise) => {
-      if (!mountedRef.current) return;
-      if (exercise) setActivities((prev) => [...prev, { kind: "paraphrase", exercise }]);
-      setParaphraseChecked(true);
-    });
     // Deliberately mount-only: this is a one-shot addition per practice session, not something that re-runs as activities change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
