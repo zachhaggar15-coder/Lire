@@ -4,6 +4,10 @@ import type {
   ArticleTranslationAlignmentSegment,
   ArticleTranslationRequest,
   ArticleTranslationResult,
+  ParaphraseDistinctionKind,
+  ParaphraseGenerationOption,
+  ParaphraseGenerationRequest,
+  ParaphraseGenerationResult,
   SentenceExplanation,
   SentenceStructure,
   SentenceExplanationRequest,
@@ -208,6 +212,36 @@ function normaliseArticleAlignments(raw: unknown, expectedCount: number): Articl
   });
 }
 
+const VALID_DISTINCTIONS = new Set<string>([
+  "reversed-agent",
+  "changed-time",
+  "changed-quantity",
+  "cause-effect-swap",
+  "polarity-flip",
+  "certainty-to-possibility",
+  "related-topic",
+]);
+
+function assertParaphraseGenerationResult(raw: unknown): ParaphraseGenerationResult {
+  const r = raw as Record<string, unknown>;
+  if (!r || !Array.isArray(r.options)) {
+    throw new Error("OpenAI paraphrase response had an unexpected shape.");
+  }
+  const options: ParaphraseGenerationOption[] = r.options
+    .filter((o): o is Record<string, unknown> => !!o && typeof o === "object")
+    .map((o) => ({
+      text: typeof o.text === "string" ? o.text.trim() : "",
+      isCorrect: o.isCorrect === true,
+      distinction:
+        typeof o.distinction === "string" && VALID_DISTINCTIONS.has(o.distinction)
+          ? (o.distinction as ParaphraseDistinctionKind)
+          : null,
+      feedback: typeof o.feedback === "string" ? o.feedback.trim() : "",
+    }))
+    .filter((o) => o.text);
+  return { options };
+}
+
 function assertArticleBlurbResults(raw: unknown): ArticleBlurbResult[] {
   const r = raw as Record<string, unknown>;
   if (!r || !Array.isArray(r.summaries)) {
@@ -283,6 +317,33 @@ const ARTICLE_BLURB_SCHEMA = `Respond with a single valid JSON object, no markdo
   ]
 }
 One entry per article given, same id. blurbEn: exactly 2-3 short, plain English sentences summarizing what the article is actually about (the real subject/events), for someone who doesn't read French yet and is deciding whether to open it. Neutral tone, no clickbait, no "this article discusses..." framing, and do not mention excerpt length, word count, reading level, or app metadata — just state what it's about.`;
+
+const PARAPHRASE_SCHEMA = `Respond with a single valid JSON object, no markdown, no commentary, matching exactly this shape:
+{
+  "options": [
+    { "text": string, "isCorrect": true, "distinction": null, "feedback": "" },
+    { "text": string, "isCorrect": false, "distinction": string, "feedback": string },
+    { "text": string, "isCorrect": false, "distinction": string, "feedback": string }
+  ]
+}
+Exactly 3 options, exactly one with isCorrect true. "distinction" for each incorrect option must be exactly one of: "reversed-agent", "changed-time", "changed-quantity", "cause-effect-swap", "polarity-flip", "certainty-to-possibility", "related-topic". "feedback" for each incorrect option: one short sentence naming the specific word or phrase that changes the meaning and why it's wrong (e.g. "\`Pourtant\` introduces a contrast, whereas this option describes a cause.").`;
+
+export async function generateParaphraseOptions(req: ParaphraseGenerationRequest): Promise<ParaphraseGenerationResult> {
+  const englishAllowed = /^A1/i.test(req.level);
+  const system = `You write paraphrase-recognition exercises for a ${req.level} learning French. Given one sentence from a French text, write one correct paraphrase (same meaning, different wording/structure, same language as the source unless told otherwise, no new information) and two incorrect-but-plausible paraphrases, each wrong for one specific, identifiable reason. Never write a distractor that is simply nonsensical or obviously unrelated. ${
+    englishAllowed
+      ? "This is an absolute-beginner (A1) exercise — options may be simple French or, if that keeps them natural, English."
+      : "Write all three options in French only."
+  } ${PARAPHRASE_SCHEMA}`;
+  const user = [
+    req.articleTitle ? `Article title (context only): ${req.articleTitle}` : null,
+    `Sentence: ${req.sentence}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+  const raw = await callOpenAiJson(system, user);
+  return assertParaphraseGenerationResult(raw);
+}
 
 export async function explainWord(req: WordExplanationRequest): Promise<WordExplanation> {
   const system = `You are a French tutor helping a ${req.level}. ${WORD_SCHEMA}`;

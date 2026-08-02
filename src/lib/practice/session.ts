@@ -9,10 +9,15 @@ import {
 import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
 import { buildGrammarNotes, type GrammarNote } from "@/lib/practice/grammarNotes";
 import { canSpeak } from "@/lib/speech";
+import type { ParaphraseExercise } from "@/lib/practice/paraphrase";
 
 export type PracticeActivity =
   | { kind: "reconstruction"; exercise: SentenceReconstructionExercise }
-  | { kind: "cloze"; exercise: ClozeExercise };
+  | { kind: "cloze"; exercise: ClozeExercise }
+  // Generated asynchronously (LLM-backed) — never produced by buildPracticePlan
+  // itself (which stays fully synchronous); PracticeOverlay appends this kind
+  // after the fact if generation succeeds. See paraphrase.ts.
+  | { kind: "paraphrase"; exercise: ParaphraseExercise };
 
 export interface PracticePlan {
   activities: PracticeActivity[];

@@ -1,12 +1,14 @@
 import type {
   ArticleTranslationRequest,
   ArticleTranslationResult,
+  ParaphraseGenerationRequest,
+  ParaphraseGenerationResult,
   SentenceExplanation,
   SentenceExplanationRequest,
   WordExplanation,
   WordExplanationRequest,
 } from "@/lib/ai/types";
-import { articleTranslationCacheKey, cacheStore, sentenceCacheKey, wordCacheKey } from "@/lib/ai/cache";
+import { articleTranslationCacheKey, cacheStore, paraphraseCacheKey, sentenceCacheKey, wordCacheKey } from "@/lib/ai/cache";
 
 export type AiResult<T> = { data: T; error?: undefined } | { data?: undefined; error: string };
 
@@ -65,6 +67,37 @@ export async function getSentenceExplanation(
     return { data: body as SentenceExplanation };
   } catch {
     return { error: GENERIC_ERROR };
+  }
+}
+
+const PARAPHRASE_GENERIC_ERROR = "Couldn't generate a paraphrase exercise.";
+
+/**
+ * Calls POST /api/ai/paraphrase, cache-first (keyed on the sentence text —
+ * same sentence never regenerates, matching the amortization already proven
+ * by explain-word/explain-sentence). Callers must still validate the result
+ * (see paraphraseValidation.ts) before showing it — this only handles
+ * fetch/cache, not correctness.
+ */
+export async function getParaphraseOptions(req: ParaphraseGenerationRequest): Promise<AiResult<ParaphraseGenerationResult>> {
+  const key = paraphraseCacheKey(req.sentence);
+  const cached = cacheStore.get<ParaphraseGenerationResult>(key);
+  if (cached) return { data: cached };
+
+  try {
+    const res = await fetch("/api/ai/paraphrase", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req),
+    });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) {
+      return { error: (body && typeof body.error === "string" && body.error) || PARAPHRASE_GENERIC_ERROR };
+    }
+    cacheStore.set(key, body as ParaphraseGenerationResult);
+    return { data: body as ParaphraseGenerationResult };
+  } catch {
+    return { error: PARAPHRASE_GENERIC_ERROR };
   }
 }
 

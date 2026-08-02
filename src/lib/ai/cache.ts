@@ -53,3 +53,7 @@ export function sentenceCacheKey(sentence: string): string {
 export function articleTranslationCacheKey(articleId: string, sentences: string[]): string {
   return `articleTranslation:v2:${hashString(`${articleId}::${sentences.join("\n")}`)}`;
 }
+
+export function paraphraseCacheKey(sentence: string): string {
+  return `paraphrase:${hashString(sentence)}`;
+}

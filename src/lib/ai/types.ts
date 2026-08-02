@@ -150,3 +150,42 @@ export interface ArticleBlurbResult {
   /** 2-3 short English sentences describing what the article is about. */
   blurbEn: string;
 }
+
+/**
+ * Generates paraphrase-recognition options for one sentence from a
+ * completed reading — src/lib/practice/paraphrase.ts's exercise-generation
+ * entry point. Rule-based generation (like reconstruction/cloze) can't
+ * reliably produce a *specific-reason* wrong answer (reversed agent, changed
+ * time, cause/effect swap, etc.), so this is the one practice-exercise type
+ * that calls the AI layer — cached per sentence afterward, same as
+ * explain-word/explain-sentence, so a given sentence never regenerates.
+ */
+export interface ParaphraseGenerationRequest {
+  sentence: string;
+  articleTitle?: string | null;
+  /** e.g. "A2/B1 French learner" — also shapes whether distractors may lean on limited English support at A1. */
+  level: string;
+}
+
+export type ParaphraseDistinctionKind =
+  | "reversed-agent"
+  | "changed-time"
+  | "changed-quantity"
+  | "cause-effect-swap"
+  | "polarity-flip"
+  | "certainty-to-possibility"
+  | "related-topic";
+
+export interface ParaphraseGenerationOption {
+  text: string;
+  isCorrect: boolean;
+  /** Required (non-null) for every incorrect option; omitted/null for the correct one. */
+  distinction: ParaphraseDistinctionKind | null;
+  /** Learner-facing feedback shown after answering, naming the key semantic distinction. Required for incorrect options. */
+  feedback: string;
+}
+
+export interface ParaphraseGenerationResult {
+  /** Exactly 3 options, exactly one with isCorrect: true — validated by paraphraseValidation.ts before ever being shown. */
+  options: ParaphraseGenerationOption[];
+}

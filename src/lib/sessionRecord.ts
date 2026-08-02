@@ -98,10 +98,22 @@ function isSessionRecord(value: unknown): value is SessionRecord {
   ) {
     return false;
   }
-  const practice = v.practice as Record<string, unknown>;
-  return (["reconstruction", "clozeWord", "clozePhrase", "paraphrase"] as const).every((key) =>
-    isPracticeTypeStats(practice[key])
-  );
+  // Deliberately NOT requiring every practice-kind key to be present here —
+  // a record written by an earlier schema (missing a since-added exercise
+  // kind, e.g. a hypothetical pre-paraphrase record) is still a valid,
+  // usable record; normalizeRecord below backfills any missing kinds with
+  // zeroed stats rather than this guard discarding the whole row.
+  return true;
+}
+
+/** Backfills any missing per-exercise-type practice stats with zeroed values, so a record from an earlier schema version (missing a since-added kind) stays usable instead of being dropped. */
+function normalizeRecord(record: SessionRecord): SessionRecord {
+  const practice = record.practice as Partial<Record<PracticeExerciseType, PracticeTypeStats>>;
+  const kinds: PracticeExerciseType[] = ["reconstruction", "clozeWord", "clozePhrase", "paraphrase"];
+  const normalizedPractice = Object.fromEntries(
+    kinds.map((kind) => [kind, isPracticeTypeStats(practice[kind]) ? practice[kind] : { attempted: 0, correct: 0 }])
+  ) as Record<PracticeExerciseType, PracticeTypeStats>;
+  return { ...record, practice: normalizedPractice };
 }
 
 function readAll(): SessionRecord[] {
@@ -109,7 +121,7 @@ function readAll(): SessionRecord[] {
   try {
     const raw = window.localStorage.getItem(SESSION_RECORDS_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
-    return Array.isArray(parsed) ? parsed.filter(isSessionRecord) : [];
+    return Array.isArray(parsed) ? parsed.filter(isSessionRecord).map(normalizeRecord) : [];
   } catch {
     return [];
   }

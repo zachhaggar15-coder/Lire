@@ -1,12 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReadingText } from "@/types";
 import type { PracticeActivity, PracticePlan } from "@/lib/practice/session";
 import { shuffledChipsFor, buildPracticePlan } from "@/lib/practice/session";
 import { checkReconstruction, type ReconstructionChip, type SentenceReconstructionExercise } from "@/lib/practice/sentenceReconstruction";
 import type { ClozeExercise } from "@/lib/practice/cloze";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
+import { allSentencesInText } from "@/lib/practice/textSentences";
+import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
+import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -16,23 +19,66 @@ interface PracticeOverlayProps {
 
 type ActivityResult = "correct" | "incorrect" | null;
 
+function statKindFor(activity: PracticeActivity): PracticeExerciseType {
+  if (activity.kind === "reconstruction") return "reconstruction";
+  if (activity.kind === "paraphrase") return "paraphrase";
+  return activity.exercise.kind === "word" ? "clozeWord" : "clozePhrase";
+}
+
 /**
- * Full-screen "Practice this text" session: walks through up to three short
- * exercises built from the reading just finished, then a brief summary.
- * Regenerating the plan on mount (rather than reusing a stale one) means a
- * repeat practice session pulls different sentences where possible.
+ * Full-screen "Practice this text" session: walks through the exercises
+ * built from the reading just finished, then a brief summary. Regenerating
+ * the plan on mount (rather than reusing a stale one) means a repeat
+ * practice session pulls different sentences where possible.
+ *
+ * The reconstruction/cloze activities in `plan` are ready synchronously;
+ * a paraphrase activity (LLM-backed, so necessarily async) is fetched here
+ * after mount and appended to the list if generation succeeds — this keeps
+ * buildPracticePlan itself synchronous and means a slow/failed paraphrase
+ * generation never delays or blocks starting practice with what's already
+ * ready.
  */
 export default function PracticeOverlay({ text, plan: initialPlan, onClose }: PracticeOverlayProps) {
-  const [plan] = useState<PracticePlan>(initialPlan);
+  const [activities, setActivities] = useState<PracticeActivity[]>(initialPlan.activities);
+  const [paraphraseChecked, setParaphraseChecked] = useState(false);
   const [index, setIndex] = useState(0);
   const [done, setDone] = useState(false);
   const [completedKinds, setCompletedKinds] = useState<string[]>([]);
+  const mountedRef = useRef(true);
+  /** Guards against React StrictMode's dev-only double-invoke of effects starting two generations (and appending the activity twice) — this must run at most once per overlay instance regardless of how many times the effect body fires. */
+  const paraphraseStartedRef = useRef(false);
 
-  const activity = plan.activities[index];
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
-  function handleActivityDone(kind: string) {
+  useEffect(() => {
+    if (paraphraseStartedRef.current) return;
+    paraphraseStartedRef.current = true;
+    const usedIndices = new Set(activities.map((a) => a.exercise.sentenceIndex));
+    const candidate = pickParaphraseCandidateSentence(allSentencesInText(text), usedIndices);
+    if (!candidate) {
+      setParaphraseChecked(true);
+      return;
+    }
+    void buildParaphraseExercise(candidate, text.title, `${text.difficulty} French learner`).then((exercise) => {
+      if (!mountedRef.current) return;
+      if (exercise) setActivities((prev) => [...prev, { kind: "paraphrase", exercise }]);
+      setParaphraseChecked(true);
+    });
+    // Deliberately mount-only: this is a one-shot addition per practice session, not something that re-runs as activities change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const activity = activities[index];
+
+  function handleActivityDone(kind: string, activityForStats: PracticeActivity, correct: boolean) {
+    updateSessionPracticeStats(text.id, statKindFor(activityForStats), correct);
     setCompletedKinds((prev) => [...prev, kind]);
-    if (index + 1 < plan.activities.length) {
+    if (index + 1 < activities.length) {
       setIndex((i) => i + 1);
     } else {
       markPracticeCompleted(text.id);
@@ -40,7 +86,15 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
     }
   }
 
-  if (plan.activities.length === 0) {
+  if (activities.length === 0 && !paraphraseChecked) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
+        <p className="text-sm text-ink-muted">Preparing practice…</p>
+      </div>
+    );
+  }
+
+  if (activities.length === 0 && paraphraseChecked) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
         <div className="max-w-sm text-center">
@@ -63,7 +117,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
           </button>
           {!done && (
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-faint">
-              Practising {index + 1} of {plan.activities.length}
+              Practising {index + 1} of {activities.length}
             </p>
           )}
         </div>
@@ -71,12 +125,22 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
         {!done && activity && (
           <div className="mt-4">
             {activity.kind === "reconstruction" ? (
-              <ReconstructionActivity key={`recon-${index}`} exercise={activity.exercise} onDone={() => handleActivityDone("Sentence reconstructed")} />
-            ) : (
+              <ReconstructionActivity
+                key={`recon-${index}`}
+                exercise={activity.exercise}
+                onDone={(correct) => handleActivityDone("Sentence reconstructed", activity, correct)}
+              />
+            ) : activity.kind === "cloze" ? (
               <ClozeActivity
                 key={`cloze-${index}-${activity.exercise.kind}`}
                 exercise={activity.exercise}
-                onDone={() => handleActivityDone(activity.exercise.kind === "word" ? "Word completed" : "Phrase completed")}
+                onDone={(correct) => handleActivityDone(activity.exercise.kind === "word" ? "Word completed" : "Phrase completed", activity, correct)}
+              />
+            ) : (
+              <ParaphraseActivity
+                key={`paraphrase-${index}`}
+                exercise={activity.exercise}
+                onDone={(correct) => handleActivityDone("Paraphrase identified", activity, correct)}
               />
             )}
           </div>
@@ -88,7 +152,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
   );
 }
 
-function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceReconstructionExercise; onDone: () => void }) {
+function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceReconstructionExercise; onDone: (correct: boolean) => void }) {
   const shuffled = useMemo(() => shuffledChipsFor(exercise), [exercise]);
   const [bank, setBank] = useState<ReconstructionChip[]>(shuffled);
   const [placed, setPlaced] = useState<ReconstructionChip[]>([]);
@@ -169,7 +233,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             Check
           </button>
         ) : result === "correct" ? (
-          <button type="button" onClick={onDone} className="ligne-pill flex-1 bg-brand text-cream">
+          <button type="button" onClick={() => onDone(true)} className="ligne-pill flex-1 bg-brand text-cream">
             Continue
           </button>
         ) : (
@@ -177,7 +241,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
               Try again
             </button>
-            <button type="button" onClick={onDone} className="ligne-pill flex-1 bg-brand text-cream">
+            <button type="button" onClick={() => onDone(false)} className="ligne-pill flex-1 bg-brand text-cream">
               Continue
             </button>
           </>
@@ -187,7 +251,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
   );
 }
 
-function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: () => void }) {
+function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: (correct: boolean) => void }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [result, setResult] = useState<ActivityResult>(null);
 
@@ -252,7 +316,7 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
             Check
           </button>
         ) : result === "correct" ? (
-          <button type="button" onClick={onDone} className="ligne-pill flex-1 bg-brand text-cream">
+          <button type="button" onClick={() => onDone(true)} className="ligne-pill flex-1 bg-brand text-cream">
             Continue
           </button>
         ) : (
@@ -260,10 +324,84 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
             <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
               Try again
             </button>
-            <button type="button" onClick={onDone} className="ligne-pill flex-1 bg-brand text-cream">
+            <button type="button" onClick={() => onDone(false)} className="ligne-pill flex-1 bg-brand text-cream">
               Continue
             </button>
           </>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise; onDone: (correct: boolean) => void }) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  const selectedOption = exercise.options.find((o) => o.id === selectedId) ?? null;
+  const correct = selectedId ? checkParaphraseAnswer(exercise, selectedId) : false;
+
+  function choose(option: ParaphraseOption) {
+    if (revealed) return;
+    setSelectedId(option.id);
+  }
+
+  function check() {
+    if (!selectedId) return;
+    setRevealed(true);
+  }
+
+  return (
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
+      <p className="ligne-label">Closest meaning</p>
+      <p className="mt-1 text-sm font-semibold text-ink">Which option means the same thing as this sentence?</p>
+      <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-base italic leading-relaxed text-ink">{exercise.sourceSentence}</p>
+
+      <div className="mt-4 space-y-2" role="radiogroup" aria-label="Paraphrase options">
+        {exercise.options.map((option) => {
+          const isSelected = selectedId === option.id;
+          const showAsCorrect = revealed && option.isCorrect;
+          const showAsWrongPick = revealed && isSelected && !option.isCorrect;
+          return (
+            <button
+              key={option.id}
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              onClick={() => choose(option)}
+              disabled={revealed}
+              className={`w-full rounded-2xl border px-3 py-2.5 text-left text-sm font-semibold active:scale-[0.99] disabled:opacity-90 ${
+                showAsCorrect
+                  ? "border-brand bg-brand-light text-brand"
+                  : showAsWrongPick
+                    ? "border-rose bg-rose text-rose-ink"
+                    : isSelected
+                      ? "border-brand bg-brand text-cream"
+                      : "border-cream-dark bg-cream text-ink"
+              }`}
+            >
+              {option.text}
+            </button>
+          );
+        })}
+      </div>
+
+      {revealed && (
+        <div className={`mt-4 rounded-2xl p-3 text-sm ${correct ? "bg-brand-light text-brand" : "bg-rose text-rose-ink"}`} role="status">
+          <p className="font-bold">{correct ? "Correct." : "Not quite."}</p>
+          {!correct && selectedOption?.feedback && <p className="mt-1">{selectedOption.feedback}</p>}
+        </div>
+      )}
+
+      <div className="mt-4 flex gap-2">
+        {!revealed ? (
+          <button type="button" onClick={check} disabled={!selectedId} className="ligne-pill flex-1 bg-brand text-cream disabled:opacity-40">
+            Check
+          </button>
+        ) : (
+          <button type="button" onClick={() => onDone(correct)} className="ligne-pill flex-1 bg-brand text-cream">
+            Continue
+          </button>
         )}
       </div>
     </section>

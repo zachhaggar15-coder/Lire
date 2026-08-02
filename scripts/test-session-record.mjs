@@ -97,6 +97,31 @@ console.log("--- malformed/old rows never crash new code ---");
 store.set("lire.sessionRecords.v1", JSON.stringify([{ garbage: true }, "not an object", null, 42]));
 check("malformed rows are dropped, not thrown", getSessionRecords().length === 0);
 
+console.log("--- old-schema records (missing a since-added exercise kind) stay usable ---");
+{
+  const legacyRecord = {
+    ...baseInput({ textId: "legacy-text" }),
+    schemaVersion: 1,
+    lookupsPer100: 5,
+    uniqueLookupsPer100: 3,
+    practice: {
+      // Simulates a record written before "paraphrase" existed as a kind.
+      reconstruction: { attempted: 1, correct: 1 },
+      clozeWord: { attempted: 0, correct: 0 },
+      clozePhrase: { attempted: 0, correct: 0 },
+    },
+  };
+  store.set("lire.sessionRecords.v1", JSON.stringify([legacyRecord]));
+  const records = getSessionRecords();
+  check("legacy record is kept, not dropped", records.length === 1, JSON.stringify(records));
+  check(
+    "missing practice kind is backfilled with zeroed stats, not crashing",
+    records[0]?.practice?.paraphrase?.attempted === 0 && records[0]?.practice?.paraphrase?.correct === 0,
+    JSON.stringify(records[0]?.practice)
+  );
+  check("existing practice kinds on the legacy record are preserved", records[0]?.practice?.reconstruction?.correct === 1);
+}
+
 console.log("--- level filtering ---");
 store.clear();
 recordReadingSession(baseInput({ textId: "a", estimatedLevel: "A2" }));
