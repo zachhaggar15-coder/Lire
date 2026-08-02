@@ -18,6 +18,7 @@ import {
   type DictionaryArticleTranslationMode,
 } from "@/lib/dictionary/articleTranslation";
 import { getArticleTranslation } from "@/lib/ai/client";
+import { getPrecomputedTranslation } from "@/lib/ai/precomputedTranslations";
 import type { ArticleTranslationAlignmentSegment } from "@/lib/ai/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildContextualTranslation } from "@/lib/dictionary/contextualTranslation";
@@ -668,6 +669,19 @@ export default function Reader({ text }: { text: ReadingText }) {
     setTranslationError(null);
     setFluentSentences(new Array<string | null>(flatSentences.length).fill(null));
     setFluentAlignments(new Array<ArticleTranslationAlignmentSegment[] | null>(flatSentences.length).fill(null));
+
+    // Static curriculum/bank texts never change, so their fluent translation
+    // is baked in ahead of time (see scripts/precompute-fluent-translations.mjs)
+    // — this is the only branch that ever needs a live AI round trip for RSS
+    // or imported articles, which genuinely can't be precomputed.
+    const precomputed = await getPrecomputedTranslation(text.id);
+    if (precomputed && precomputed.sentences.length === flatSentences.length) {
+      setFluentSentences(precomputed.sentences);
+      setFluentAlignments(precomputed.alignments ?? new Array(flatSentences.length).fill(null));
+      setTranslationError(null);
+      setTranslationState("ready");
+      return;
+    }
 
     let lastError: string | null = null;
     for (const chunk of translationChunks) {

@@ -54,10 +54,22 @@ export function tokenize(text: string): Token[] {
   return tokens;
 }
 
-/** Split a paragraph into sentences, keeping trailing punctuation. */
+/**
+ * Split a paragraph into sentences, keeping trailing punctuation.
+ *
+ * French dialogue closes with a guillemet after a space (« ... . »), and
+ * the terminal punctuation sits *before* that space and the closing mark —
+ * e.g. "il dit : « on gagne. »". Splitting on any [.!?…] followed by
+ * whitespace, with no other guard, cut right after "gagne." and left the
+ * closing "»" behind as its own bare "sentence" (no letters at all — which
+ * then made a following AI translation request come back with one fewer
+ * real sentence than requested, since there's nothing to translate). The
+ * negative lookahead keeps the terminal punctuation and its closing quote
+ * mark together as one sentence.
+ */
 export function splitSentences(paragraph: string): string[] {
   return paragraph
-    .split(/(?<=[.!?…])\s+/)
+    .split(/(?<=[.!?…])\s+(?!["'»”])/)
     .map((s) => s.trim())
     .filter(Boolean);
 }

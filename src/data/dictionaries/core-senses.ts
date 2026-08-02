@@ -154,4 +154,26 @@ export const coreSenseDictionary: DictionaryEntry[] = [
   { lemma: "craindre", forms: ["crains", "craint", "craignons", "craignez", "craignent", "craignait"], translations: ["to fear", "to be afraid of"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "voici", translations: ["here is", "here are"], partOfSpeech: "presentative", cefr: "A2" },
   { lemma: "démarche", forms: ["démarches"], translations: ["step", "procedure", "approach"], partOfSpeech: "noun", gender: "feminine", cefr: "B1", notes: "Almost always administrative or practical steps, e.g. \"faire des démarches\" — to go through the procedures. The literal sense (a person's gait/walk) is rare outside literary writing." },
+
+  // --- Frequency-audit fixes (round 2) ---------------------------------------
+  // A follow-up audit ranked every word in the app's reading texts by how
+  // often a reader actually meets it and inspected the resulting first gloss.
+  // These are words with no existing curated entry (they resolve through the
+  // generated WikDict layer) where that layer's first sense would mislead a
+  // learner: a rarer/technical sense outranking the everyday one, a false
+  // friend, or plain bad data (a stray non-English gloss).
+  { lemma: "langue", forms: ["langues"], translations: ["language", "tongue"], partOfSpeech: "noun", gender: "feminine", cefr: "A2", notes: "\"Apprendre une langue\" — to learn a language. The body-part sense (tongue) is real but less common in running text." },
+  { lemma: "nom", forms: ["noms"], translations: ["name", "noun"], partOfSpeech: "noun", gender: "masculine", cefr: "A1", notes: "\"Quel est ton nom ?\" — what is your name. The grammar-term sense (noun) is far rarer." },
+  { lemma: "juste", translations: ["just", "fair", "right", "exactly", "only"], partOfSpeech: "adjective/adverb", cefr: "A2", notes: "\"C'est juste\" — that's fair/right; \"juste avant\" — just before. The capitalized noun sense (\"the Just/Righteous one\") is a rare, mostly biblical/literary usage." },
+  { lemma: "or", translations: ["now", "however", "yet", "gold"], partOfSpeech: "conjunction", cefr: "B1", notes: "As a connector introducing a new point in an argument (\"Or, il faut noter que...\"), very common in essays and articles. The noun \"gold\" is a separate, less frequent sense in general reading." },
+  { lemma: "forme", forms: ["formes"], translations: ["shape", "form", "fitness"], partOfSpeech: "noun", gender: "feminine", cefr: "A2", notes: "\"Être en forme\" — to be fit; \"la forme de la lune\" — the shape of the moon. \"Configuration\" is a rare technical sense." },
+  { lemma: "sagesse", translations: ["wisdom", "good sense"], partOfSpeech: "noun", gender: "feminine", cefr: "B1", notes: "The generated entry's first gloss was a stray non-English term; \"wisdom\" is the normal everyday meaning." },
+  { lemma: "fin", forms: ["fins"], translations: ["end", "fine", "subtle"], partOfSpeech: "noun/adjective", gender: "feminine", cefr: "A1", notes: "As the common noun \"la fin\" — the end (\"à la fin\", \"fin de semaine\"). As an adjective it means fine/thin/subtle. \"Far\" is not a real translation." },
+  { lemma: "milieu", forms: ["milieux"], translations: ["middle", "environment", "surroundings"], partOfSpeech: "noun", gender: "masculine", cefr: "A2", notes: "\"Au milieu de\" — in the middle of; \"milieu social\" — social environment. \"Ambiance\" is not a real translation." },
+  { lemma: "tour", forms: ["tours"], translations: ["tower", "turn", "trick"], partOfSpeech: "noun", cefr: "A2", notes: "\"La tour\" (feminine) — a tower; \"le tour\" (masculine) — a turn, trip, or trick, as in \"faire le tour\" or \"un tour de magie\". \"Turret\" is an unnecessarily narrow first gloss." },
+  { lemma: "fond", forms: ["fonds"], translations: ["bottom", "background", "depth"], partOfSpeech: "noun", gender: "masculine", cefr: "B1", notes: "\"Au fond\" — basically/deep down; \"le fond du problème\" — the crux of the issue. \"Cap\" is not a real translation." },
+  { lemma: "droit", forms: ["droits"], translations: ["right", "law", "straight"], partOfSpeech: "noun/adverb", gender: "masculine", cefr: "A2", notes: "\"Le droit à la déconnexion\", \"les droits de l'homme\" — a right/entitlement, or the law as a field. As an adverb it means straight (\"tout droit\")." },
+  { lemma: "histoire", forms: ["histoires"], translations: ["story", "history", "tale"], partOfSpeech: "noun", gender: "feminine", cefr: "A1", notes: "\"Raconter une histoire\" — to tell a story. Also means history (the subject/discipline)." },
+  { lemma: "longtemps", translations: ["for a long time", "a long time"], partOfSpeech: "adverb", cefr: "A2", notes: "\"Depuis longtemps\" — for a long time. A bare \"long\" reads as the English adjective, which this word isn't." },
+  { lemma: "nature", translations: ["nature", "plain"], partOfSpeech: "noun", gender: "feminine", cefr: "A2", notes: "\"La nature\", \"en pleine nature\" — nature/the outdoors, the common sense. As an invariable adjective after a noun (\"un café nature\", \"un yaourt nature\") it means plain/unsweetened." },
 ];

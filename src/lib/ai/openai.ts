@@ -13,8 +13,16 @@ import type {
 
 const DEFAULT_MODEL = "gpt-4o-mini";
 const REQUEST_TIMEOUT_MS = 20000;
-/** A full-article translation sends much more text than a single word/sentence explanation and can take longer to generate — same timeout budget as one round-trip, just more generous. */
-const ARTICLE_TRANSLATION_TIMEOUT_MS = 45000;
+/**
+ * A full-article translation sends much more text than a single word/sentence
+ * explanation and can take longer to generate — a longer, denser article
+ * (C1/C2-level curriculum texts routinely run 25-30 sentences plus their
+ * word/phrase alignments) was found to reliably exceed 45s. The API route
+ * that calls this (/api/ai/translate-article) sets `maxDuration = 60`, so
+ * this stays a few seconds under that ceiling rather than matching it
+ * exactly, leaving room for the surrounding request/response overhead.
+ */
+const ARTICLE_TRANSLATION_TIMEOUT_MS = 55000;
 
 /** Thrown when OPENAI_API_KEY isn't set — callers show a friendly "not configured" message instead of a generic error. */
 export class AiNotConfiguredError extends Error {}

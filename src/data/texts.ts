@@ -71,7 +71,7 @@ Pour le club, cette victoire est aussi importante sur le plan financier. Gagner 
     title: "La nuit des musées",
     category: "culture",
     difficulty: "B1",
-    minutes: 4,
+    minutes: 3,
     preview:
       "Chaque printemps, les musées ouvrent leurs portes gratuitement pendant toute une nuit spéciale.",
     blurbEn:
@@ -97,7 +97,7 @@ Pour les musées eux-mêmes, cette soirée représente aussi une occasion unique
     title: "Pourquoi dormir est essentiel",
     category: "science",
     difficulty: "B1",
-    minutes: 4,
+    minutes: 3,
     preview:
       "Des chercheurs expliquent comment le sommeil aide le cerveau à mémoriser et à se réparer.",
     blurbEn:

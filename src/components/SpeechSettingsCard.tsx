@@ -56,8 +56,11 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
 
       {voices.length > 0 && (
         <div className="mt-3">
-          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">Voice</label>
+          <label htmlFor="speech-voice-select" className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+            Voice
+          </label>
           <select
+            id="speech-voice-select"
             value={settings.speechVoiceURI ?? ""}
             onChange={(e) => onChange({ speechVoiceURI: e.target.value || null })}
             className="w-full rounded-xl bg-cream-dark px-3 py-2 text-sm text-ink"

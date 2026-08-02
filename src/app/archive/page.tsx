@@ -210,13 +210,16 @@ export default function ArchivePage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by title or source…"
+              aria-label="Search articles read"
               className="w-full rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink shadow-card"
             />
             <div className="flex flex-wrap gap-1.5">
               {SORT_OPTIONS.map((opt) => (
                 <button
                   key={opt.key}
+                  type="button"
                   onClick={() => setSortKey(opt.key)}
+                  aria-pressed={sortKey === opt.key}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
                     sortKey === opt.key ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
                   }`}

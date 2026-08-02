@@ -23,12 +23,31 @@ function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
   return word.status === filter;
 }
 
+function matchesQuery(word: SavedWord, q: string): boolean {
+  return (
+    word.word.toLowerCase().includes(q) ||
+    (word.lemma ?? "").toLowerCase().includes(q) ||
+    word.primaryTranslation.toLowerCase().includes(q) ||
+    word.translations.some((t) => t.toLowerCase().includes(q)) ||
+    (word.sourceTextTitle ?? "").toLowerCase().includes(q)
+  );
+}
+
+function matchesPhraseQuery(phrase: SavedPhrase, q: string): boolean {
+  return (
+    phrase.phrase.toLowerCase().includes(q) ||
+    phrase.translation.toLowerCase().includes(q) ||
+    (phrase.sourceTextTitle ?? "").toLowerCase().includes(q)
+  );
+}
+
 export default function WordsPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<WordsFilter>("learning");
   const [tab, setTab] = useState<VocabTab>("words");
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     setWords(getSavedWords());
@@ -63,9 +82,11 @@ export default function WordsPage() {
     missing: words.filter((word) => word.missingFromDictionary).length,
   };
 
-  const filtered = words.filter((word) => matchesFilter(word, filter));
-  const learningPhrases = phrases.filter((phrase) => phrase.status !== "known");
-  const knownPhrases = phrases.filter((phrase) => phrase.status === "known");
+  const q = query.trim().toLowerCase();
+  const filtered = words.filter((word) => matchesFilter(word, filter) && (!q || matchesQuery(word, q)));
+  const queriedPhrases = q ? phrases.filter((phrase) => matchesPhraseQuery(phrase, q)) : phrases;
+  const learningPhrases = queriedPhrases.filter((phrase) => phrase.status !== "known");
+  const knownPhrases = queriedPhrases.filter((phrase) => phrase.status === "known");
 
   return (
     <div className="ligne-screen">
@@ -83,6 +104,17 @@ export default function WordsPage() {
           </button>
         )}
       </header>
+
+      {(words.length > 0 || phrases.length > 0) && (
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search your words and phrases…"
+          aria-label="Search saved words and phrases"
+          className="mb-4 w-full rounded-2xl border border-cream-dark bg-cream-card px-3.5 py-2.5 text-sm text-ink"
+        />
+      )}
 
       <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-cream-fill p-1">
         {[
@@ -122,7 +154,9 @@ export default function WordsPage() {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="mt-10 text-center text-sm text-ink-muted">No words in this list yet.</p>
+            <p className="mt-10 text-center text-sm text-ink-muted">
+              {q ? `No words match "${query}".` : "No words in this list yet."}
+            </p>
           ) : (
             <ul className="space-y-3">
               {filtered.map((word) => (
@@ -138,8 +172,14 @@ export default function WordsPage() {
       {tab === "phrases" && phrases.length > 0 && (
         <div className="space-y-5">
           <PhraseMasterySummary phrases={phrases} />
-          <PhraseList title="Learning" phrases={learningPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
-          <PhraseList title="Known" phrases={knownPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
+          {q && queriedPhrases.length === 0 ? (
+            <p className="mt-10 text-center text-sm text-ink-muted">No phrases match &quot;{query}&quot;.</p>
+          ) : (
+            <>
+              <PhraseList title="Learning" phrases={learningPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
+              <PhraseList title="Known" phrases={knownPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
+            </>
+          )}
         </div>
       )}
     </div>

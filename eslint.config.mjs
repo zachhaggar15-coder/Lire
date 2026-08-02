@@ -14,7 +14,22 @@ import tseslint from "typescript-eslint";
  * format.
  */
 const eslintConfig = [
-  { ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "src/data/dictionaries/generated/**", "public/**"] },
+  {
+    // `**/.next/**` (not just `.next/**`) matters here specifically: agent
+    // worktrees live at `.claude/worktrees/<name>/` and can have their own
+    // built `.next` output, which isn't excluded by a root-relative-only
+    // pattern and was previously getting linted as if it were real,
+    // hand-written source (thousands of bogus errors from minified code).
+    ignores: [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/out/**",
+      "**/build/**",
+      "src/data/dictionaries/generated/**",
+      "public/**",
+      ".claude/worktrees/**",
+    ],
+  },
   ...tseslint.configs.recommended,
   {
     plugins: { "@next/next": nextPlugin },

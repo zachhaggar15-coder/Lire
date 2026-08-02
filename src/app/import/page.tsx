@@ -72,6 +72,7 @@ export default function ImportPage() {
                   key={item.value}
                   type="button"
                   onClick={() => setCategory(item.value)}
+                  aria-pressed={category === item.value}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-95 ${
                     category === item.value ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}
@@ -89,6 +90,7 @@ export default function ImportPage() {
                   key={level}
                   type="button"
                   onClick={() => setDifficulty(level)}
+                  aria-pressed={difficulty === level}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-95 ${
                     difficulty === level ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}

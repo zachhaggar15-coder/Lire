@@ -159,6 +159,7 @@ export default function GrammarPage() {
             key={item.id}
             type="button"
             onClick={() => setTab(item.id)}
+            aria-pressed={tab === item.id}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
               tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}

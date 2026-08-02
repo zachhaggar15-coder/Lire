@@ -960,6 +960,7 @@ function PhraseModeSwitch({
       <button
         type="button"
         onClick={() => onChange("words")}
+        aria-pressed={mode === "words"}
         className={`rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Words
@@ -967,6 +968,7 @@ function PhraseModeSwitch({
       <button
         type="button"
         onClick={() => onChange("phrases")}
+        aria-pressed={mode === "phrases"}
         className={`rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Phrases {phraseCount > 0 ? `(${phraseCount})` : ""}

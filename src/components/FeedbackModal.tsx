@@ -140,6 +140,7 @@ export default function FeedbackModal({
               key={item}
               type="button"
               onClick={() => setCategory(item)}
+              aria-pressed={category === item}
               className={`rounded-2xl px-3 py-2 text-left text-xs font-semibold active:scale-95 ${
                 category === item ? "bg-brand text-white" : "bg-cream text-ink-muted"
               }`}
@@ -154,6 +155,7 @@ export default function FeedbackModal({
           onChange={(event) => setComment(event.target.value)}
           rows={4}
           placeholder="Optional comment"
+          aria-label="Optional comment"
           className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-3 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
         />
 
