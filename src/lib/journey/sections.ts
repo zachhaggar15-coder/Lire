@@ -201,7 +201,7 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     goal: "Describe feeling unwell, visiting a doctor or dentist, and simple healthy habits.",
     textIds: [
       "starter-a1-104", // Julien est malade (introduces mal à/rhume/se reposer)
-      "starter-a1-105", // Chez le médecin
+      "starter-a1-105", // Le rendez-vous chez le médecin
       "starter-a1-106", // Yanis a mal aux dents
       "starter-a1-107", // Bien dormir, bien manger
       "starter-a1-108", // Grand-mère et ses remèdes (hardest)
@@ -424,7 +424,7 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-a2-118", // L'anniversaire de ma fille (introduces fête/cadeau/inviter)
       "starter-a2-119", // Un mariage à la campagne
       "starter-a2-120", // Noël en famille
-      "starter-a2-121", // La fête des voisins
+      "starter-a2-121", // Une soirée avec les voisins
       "starter-a2-122", // Un anniversaire surprise (hardest)
     ],
   },
@@ -516,7 +516,7 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-a2-154", // Une étagère qui n'a pas tenu
       "starter-a2-155", // Mon premier meuble en bois
       "starter-a2-156", // Réparer une fuite d'eau
-      "starter-a2-157", // Rénover une vieille maison (hardest)
+      "starter-a2-157", // Acheter une vieille maison à rénover (hardest)
     ],
   },
   {

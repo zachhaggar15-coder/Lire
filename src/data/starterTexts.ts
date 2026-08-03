@@ -20375,7 +20375,7 @@ Ce n'est pas toujours facile à respecter, mais au moins, je dors mieux maintena
 
 C'était un cinéma indépendant, avec seulement deux salles. J'y allais depuis mon enfance.
 
-Le propriétaire, Monsieur Lenoir, l'avait ouvert avec son père en 1985. Toute sa vie était liée à ce cinéma.
+Le propriétaire, Monsieur Lenoir, l'avait ouvert avec son père en mille neuf cent quatre-vingt-cinq. Toute sa vie était liée à ce cinéma.
 
 Ces dernières années, de moins en moins de gens venaient. Beaucoup préféraient regarder des films chez eux, sur une plateforme de streaming.
 
@@ -20521,10 +20521,10 @@ Ils ont été compréhensifs et ont décalé l'entretien d'une heure. Tout s'est
     category: "everyday life",
     difficulty: "A2",
     minutes: 2,
-    preview: "Il y a six mois, j'ai décidé d'arrêter de prendre la voiture pour aller travailler.",
+    preview: "Depuis six mois, je ne prends plus la voiture pour aller travailler.",
     blurbEn:
       "Giving up the daily car commute for public transport — the money saved, the extra reading time, and the one thing that's genuinely harder without a car. (Section: Public transport, 3/5.)",
-    body: `Il y a six mois, j'ai décidé d'arrêter de prendre la voiture pour aller travailler.
+    body: `Depuis six mois, je ne prends plus la voiture pour aller travailler. J'ai pris cette décision après une semaine particulièrement pénible dans les embouteillages.
 
 Plusieurs raisons m'ont poussé à ce changement : le prix de l'essence, le stress des embouteillages, et l'envie de faire un geste pour l'environnement.
 
@@ -21114,6 +21114,8 @@ En observant les gens autour de moi, j'ai remarqué la même chose. Mon collègu
 
 On dit souvent qu'il ne faut pas juger les gens sur leur apparence. C'est vrai, sans doute. Mais on ne peut pas nier que nos choix vestimentaires envoient toujours un message, volontaire ou non.
 
+Depuis cette conversation, mon armoire me semble différente. Ces couleurs sombres, ces coupes simples, sans motif : tout cela raconte peut-être une envie de ne pas se faire remarquer, de rester dans une zone familière plutôt que d'expérimenter. Un collègue plus audacieux, lui, change de style presque chaque semaine ; il dit que ça l'amuse, et que ça ne demande aucun courage particulier.
+
 Je ne suis pas devenu passionné de mode du jour au lendemain. Mais je fais maintenant des choix un peu plus conscients, en sachant que même le gris a quelque chose à dire.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21136,6 +21138,8 @@ Ce système présente un avantage évident : on peut s'habiller à la dernière 
 Mais ce prix bas cache souvent une réalité moins agréable. Pour produire aussi vite et aussi bon marché, il faut réduire les coûts quelque part : les salaires des ouvriers, les conditions de travail, ou la qualité des matériaux.
 
 J'ai commencé à m'informer sur ce sujet après avoir vu un reportage sur les usines textiles en Asie. Certaines images m'ont marqué durablement.
+
+Certaines marques répondent désormais à ces critiques en proposant des lignes dites plus responsables, matériaux recyclés et traçabilité affichée en tête de gondole. Reste à savoir ce que ces annonces valent réellement : la même entreprise continue, à côté, de sortir de nouvelles collections chaque semaine, ce qui rend la promesse difficile à prendre tout à fait au sérieux.
 
 Depuis, j'essaie d'acheter moins, mais mieux. Je choisis des vêtements que je porterai plusieurs années, plutôt que des pièces qui suivent une tendance éphémère.
 
@@ -21162,6 +21166,8 @@ Cette différence m'a fait comprendre que l'habillement n'est jamais tout à fai
 
 Ma sœur, elle, affirme s'habiller uniquement pour son propre plaisir, sans se soucier des autres. Je la crois en partie. Mais je pense aussi qu'aucun de nous n'échappe complètement à ce regard extérieur, même imaginaire.
 
+Cette pression change d'ailleurs selon les groupes : un dîner de famille et une soirée entre amis n'appellent pas la même tenue, sans que je sache toujours dire pourquoi. Chaque cercle semble porter en moi des attentes légèrement différentes, presque satisfaites d'instinct, sans que j'y réfléchisse vraiment.
+
 Peut-être que la vraie liberté n'est pas d'ignorer totalement ce regard, ce qui semble presque impossible, mais de choisir consciemment jusqu'où on le laisse influencer nos choix.
 
 Je continue, pour ma part, à m'habiller différemment selon les situations. Et je ne suis plus sûr que ce soit un problème.`,
@@ -21187,6 +21193,8 @@ En cherchant à comprendre, j'ai découvert une chaîne complexe : le coton cult
 
 Il y a aussi un coût environnemental important, rarement visible sur l'étiquette : l'eau nécessaire à la culture du coton, les produits chimiques utilisés pour la teinture, et enfin, les millions de vêtements jetés chaque année après quelques utilisations seulement.
 
+Certaines certifications, censées garantir des conditions de travail décentes, restent en pratique difficiles à vérifier : les marques communiquent volontiers sur leurs efforts, beaucoup moins sur leurs fournisseurs exacts. Un ami travaillant dans l'audit textile m'a avoué, un soir, ne faire lui-même confiance qu'à une poignée de labels sur toute une étagère.
+
 Face à ces chiffres, difficile de continuer à acheter sans y penser, du moins pour moi. Je ne dis pas qu'il faut arrêter d'acheter des vêtements neufs, ce serait naïf et peu réaliste pour la plupart des gens.
 
 Mais peut-être devrions-nous nous demander, avant chaque achat très bon marché, qui a réellement payé la différence.`,
@@ -21211,6 +21219,8 @@ J'ai commencé par éliminer ce que je ne portais jamais : des cadeaux qui ne me
 Ce tri m'a forcé à me poser une question inconfortable : pourquoi avais-je accumulé autant de choses dont je n'avais pas besoin ?
 
 Avec seulement trente pièces, s'habiller le matin est devenu paradoxalement plus simple. Tout se marie avec tout, puisque j'ai choisi des couleurs et des styles cohérents entre eux.
+
+Un effet secondaire inattendu s'est ajouté à ce calme retrouvé : le matin, choisir une tenue prend désormais deux minutes, pas vingt. Sur une année entière, cela représente des heures entières regagnées sur une décision qui, avant, m'épuisait sans même que je m'en aperçoive.
 
 Certains proches trouvent cette démarche extrême, presque absurde. « Tu ne t'ennuies pas, à porter toujours les mêmes choses ? » me demande-t-on souvent.
 
@@ -21239,6 +21249,8 @@ J'ai remarqué que je continue d'écouter, encore aujourd'hui, presque exclusive
 
 Mon fils, lui, a maintenant l'âge que j'avais alors, et il écoute une musique complètement différente, que je ne comprends pas toujours.
 
+Un soir, je lui ai demandé d'expliquer ce qu'il trouvait à l'un de ses morceaux préférés. Il a haussé les épaules : « C'est juste bien, papa, je ne sais pas comment l'expliquer. » Cette réponse m'a fait sourire ; c'est exactement ce que je répondais moi-même, à son âge, quand mes propres parents me posaient la même question.
+
 Je me demande parfois si, dans vingt ans, ces chansons actuelles lui rappelleront cette période de sa vie, exactement comme les miennes me ramènent à la mienne.
 
 Il y a quelque chose de rassurant dans cette idée : la musique qu'on aime à quinze ans ne nous quitte peut-être jamais vraiment, même quand tout le reste change.`,
@@ -21266,6 +21278,8 @@ Un phénomène encore plus étonnant concerne les personnes atteintes de trouble
 
 Cela suggère que la mémoire musicale serait en quelque sorte plus profondément ancrée que d'autres types de souvenirs, peut-être parce qu'elle mobilise autant de parties du cerveau simultanément.
 
+Certains enseignants exploitent déjà ce mécanisme en classe : associer une information complexe à une mélodie simple en facilite étonnamment la mémorisation, y compris chez des élèves qui peinent autrement à retenir la même leçon présentée sous une forme purement verbale.
+
 Ces recherches ouvrent aujourd'hui des pistes intéressantes, notamment pour utiliser la musique dans le traitement de certaines maladies liées à la mémoire.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21290,6 +21304,8 @@ Un jour, une amie a découvert par hasard cette liste sur mon téléphone. Au li
 Nous avons ri de cette découverte partagée. Pourquoi cacher un plaisir aussi simple ? Personne ne nous jugerait vraiment pour ça, ou du moins, pas autant qu'on l'imagine.
 
 Depuis cette conversation, j'assume un peu plus ouvertement ces goûts musicaux "populaires". Je pense que beaucoup de gens vivent la même chose : une distance entre ce qu'ils écoutent réellement et ce qu'ils prétendent écouter, par peur du jugement.
+
+Mes enfants, eux, n'ont jamais connu ce genre de gêne. Ils écoutent à voix haute ce qui leur plaît, sans filtrer selon l'image que cela projette. Peut-être qu'une génération habituée aux plateformes de streaming personnalisées développe naturellement un rapport plus libre à ses propres goûts que la mienne n'a jamais eu.
 
 Peut-être que le vrai plaisir musical commence quand on arrête de choisir sa musique en fonction du regard des autres.`,
     sourceName: "Written for Lire",
@@ -21316,6 +21332,8 @@ Aujourd'hui, la plupart de mes nouvelles découvertes musicales viennent directe
 
 Cette efficacité a un revers : je découvre peut-être moins de choses qui me sortent vraiment de ma zone de confort musicale.
 
+Un ami m'a recommandé récemment un groupe qu'aucun algorithme ne m'aurait proposé, simplement parce qu'il connaissait une anecdote liée à leur histoire. Cette découverte, chargée d'un récit humain, m'a marqué bien davantage que la plupart des suggestions automatiques que je reçois chaque semaine, aussi pertinentes soient-elles statistiquement.
+
 Je ne rejette pas complètement ces recommandations, qui m'ont fait découvrir de vrais coups de cœur. Mais j'essaie, de temps en temps, de chercher volontairement en dehors de ce que l'algorithme me propose.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21340,6 +21358,8 @@ En observant cette évolution, j'ai compris que ma musique fonctionnait comme un
 Un ami psychologue, à qui j'ai raconté cette découverte, m'a expliqué que ce phénomène était bien documenté. La musique que nous choisissons refléterait souvent notre état émotionnel, parfois même avant que nous en ayons pleinement conscience nous-mêmes.
 
 Cette idée m'a fait réfléchir différemment à mes propres habitudes d'écoute. Peut-être devrais-je prêter plus attention à ce que je choisis d'écouter, non pas seulement comme un divertissement, mais comme un indicateur discret de mon propre état intérieur.
+
+Une amie, à qui j'ai raconté cette découverte, a vérifié son propre historique et constaté exactement le même schéma : une musique plus douce pendant ses périodes difficiles, plus rythmée dès que tout allait mieux. Depuis, nous plaisantons à moitié en nous demandant, de temps en temps, comment va notre playlist du moment.
 
 Aujourd'hui, quand je remarque que je reviens vers une musique particulièrement mélancolique pendant plusieurs jours d'affilée, je me pose la question : qu'est-ce qui, dans ma vie en ce moment, mérite peut-être un peu plus d'attention ?
 
@@ -21368,6 +21388,8 @@ Enfin, un film culte se construit souvent autour d'une communauté de fans qui s
 
 J'ai moi-même découvert plusieurs de mes films préférés bien après leur sortie officielle, grâce à des recommandations d'amis convaincus.
 
+Le même phénomène touche la musique : un album ignoré à sa sortie peut, vingt ans plus tard, devenir une référence pour toute une scène. Ce décalage entre l'accueil immédiat et la reconnaissance tardive en dit peut-être davantage sur la difficulté du public à apprécier ce qui s'écarte trop de ses attentes du moment que sur la qualité réelle de l'œuvre elle-même.
+
 Ce phénomène montre bien que la valeur d'une œuvre ne se mesure pas uniquement à son succès immédiat. Parfois, il faut simplement le bon moment, et le bon public, pour qu'un film trouve enfin sa place.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21391,6 +21413,8 @@ Pourtant, quelque chose me manque dans cette nouvelle façon de consommer les fi
 
 Au cinéma, l'attention est différente, presque obligée par le lieu lui-même. Impossible de faire autre chose en même temps, ce qui change complètement la manière de recevoir une histoire.
 
+Le simple fait de sortir de chez moi pour aller m'installer dans un lieu dédié à cela change déjà quelque chose, avant même que le film ne commence. Ce petit rituel du déplacement, que je prenais autrefois pour une contrainte, participe peut-être davantage à la qualité de l'expérience que je ne le pensais.
+
 Certains cinémas, conscients de cette évolution, misent aujourd'hui sur une expérience que le streaming ne peut pas offrir : des salles plus confortables, des événements spéciaux, des rencontres avec des réalisateurs.
 
 Je continue d'aller au cinéma de temps en temps, précisément pour retrouver cette attention particulière que je ne parviens plus à recréer chez moi.`,
@@ -21413,6 +21437,8 @@ Cette tendance suscite des réactions très partagées. Certains y voient un man
 D'autres défendent au contraire l'idée qu'un remake peut apporter un regard neuf sur une histoire, en profitant des avancées techniques ou en abordant des thèmes différemment.
 
 Personnellement, je reste partagé sur la question. J'ai vu des remakes réussis, qui ajoutaient réellement quelque chose à l'histoire originale. Mais j'en ai vu bien plus qui semblaient exister uniquement pour des raisons commerciales, sans réelle vision artistique.
+
+Certains remakes réussis parviennent d'ailleurs à toucher un public qui n'a jamais connu l'original, sans jamais chercher à remplacer le souvenir des spectateurs plus âgés. Cette coexistence entre deux versions, chacune destinée à un public différent, me paraît finalement plus intéressante que l'opposition frontale dans laquelle ce débat s'enferme trop souvent.
 
 Cette multiplication des remakes reflète peut-être aussi une époque plus prudente, où les grandes entreprises de production préfèrent limiter les risques financiers en misant sur des marques déjà reconnues du public.
 
@@ -21443,6 +21469,8 @@ Mais d'autres arguments jouent en leur défaveur. Les notes du public, bien que 
 
 De plus, certains critiques professionnels ont parfois des goûts très éloignés du grand public, ce qui rend leurs avis moins utiles pour quelqu'un cherchant simplement un bon moment de détente.
 
+Avant un billet coûteux, je croise désormais les deux sources : l'avis d'un critique reconnu et la moyenne des notes du public. Cette double vérification, un peu plus longue qu'une décision impulsive, m'évite au moins les déceptions les plus prévisibles, sans pour autant m'ôter le plaisir d'une découverte personnelle.
+
 Je pense, pour ma part, que les deux approches ont leur utilité, selon ce qu'on cherche. Pour un film d'auteur exigeant, l'avis d'un critique reste précieux. Pour une comédie familiale, l'avis du public me semble suffisant.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21468,6 +21496,8 @@ Cette expérience m'a fait réfléchir à la manière dont chaque génération a
 
 Ce n'est donc pas simplement une question de goût, mais aussi une question d'habitude perceptive, forgée par ce que chaque génération a le plus regardé.
 
+Depuis cette soirée manquée, nous avons pris l'habitude d'échanger nos rôles : je choisis un film que mes parents auraient aimé au même âge, pendant qu'ils tentent, de leur côté, de comprendre ce qui m'attire dans mes propres choix. Le résultat reste maladroit la plupart du temps, mais quelque chose s'en trouve un peu rapproché.
+
 Cette découverte m'a rendu plus indulgent envers les deux générations : ni mes parents ni moi n'avons "tort" dans notre manière de regarder un film. Nous avons simplement appris, chacun à notre époque, un langage visuel différent.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21492,6 +21522,8 @@ D'un autre côté, je remarque que je passe parfois vingt minutes à faire défi
 Cette contradiction m'intéresse : je critique volontiers ces applications, tout en continuant à les utiliser très régulièrement. Je ne suis clairement pas le seul dans cette situation.
 
 J'ai essayé plusieurs fois de réduire mon temps d'écran, avec un succès mitigé. Les premiers jours sont toujours plus difficiles que je ne l'imagine.
+
+Les moments où je consulte le plus ces applications correspondent presque toujours à une pointe de stress ou d'ennui, comme si mon téléphone servait de réflexe automatique face à un inconfort que je préfère éviter plutôt qu'affronter directement. Une fois cette observation faite, au moins, je sais reconnaître le signal.
 
 Je ne pense pas que la solution soit de tout supprimer complètement, ce serait sans doute excessif pour ma vie sociale et professionnelle. Mais je cherche encore un équilibre satisfaisant, entre l'utilité réelle de ces outils et le temps qu'ils m'absorbent malgré moi.`,
     sourceName: "Written for Lire",
@@ -21520,6 +21552,8 @@ Une amie m'a confié récemment qu'elle vivait une période très difficile, alo
 
 Cette confidence m'a rappelé une chose simple : personne ne publie sa vie entière en ligne, seulement les moments qu'il choisit de partager.
 
+Curieusement, je me montre parfois plus honnête sur un sujet précis avec des inconnus croisés en ligne qu'avec mes propres abonnés sur mon quotidien général. L'anonymat relatif de ces échanges ponctuels retire peut-être une partie de la pression que je ressens sur mon profil principal, où je sais que des proches me lisent.
+
 Je continue de publier, moi aussi, principalement mes bons moments. Mais j'essaie désormais de me souvenir que c'est également le cas pour tout le monde autour de moi.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21544,6 +21578,8 @@ Puis, progressivement, quelque chose a changé. Sans le défilement infini des p
 Vers la troisième semaine, j'ai remarqué que je dormais mieux, sans doute parce que je ne regardais plus mon téléphone juste avant de fermer les yeux.
 
 Quand j'ai réactivé mes comptes, à la fin du mois, j'ai été surpris de constater à quel point j'avais peu manqué, en réalité, des mois entiers d'actualités et de publications diverses.
+
+Deux amis, inquiets de ne plus avoir de nouvelles, m'ont appelé directement pendant cette pause, un mode de communication que nous avions presque abandonné. Ces conversations, plus longues et plus profondes que nos échanges habituels en ligne, m'ont rappelé une forme d'amitié que les réseaux avaient, sans que je m'en rende vraiment compte, discrètement remplacée.
 
 Je n'ai pas supprimé mes comptes définitivement. Mais je m'accorde désormais régulièrement des pauses, en me souvenant de ce que ce mois m'avait rendu.`,
     sourceName: "Written for Lire",
@@ -21570,6 +21606,8 @@ Des chercheurs qui étudient ce phénomène expliquent que notre cerveau n'a pas
 
 Cette explication me rassure un peu, sans résoudre complètement le problème. Je continue de ressentir ces comparaisons, même en connaissant leur origine.
 
+Depuis, je publie de temps en temps un moment moins parfait de ma propre vie, en partie pour équilibrer un peu cette image collective trop lissée. Plusieurs abonnés m'ont remerciée pour cette honnêteté, ce qui laisse penser que d'autres, eux aussi, se sentent soulagés de voir une existence qui n'a rien d'uniformément réussie.
+
 J'essaie, quand je remarque cette sensation d'insatisfaction, de me rappeler consciemment que je ne vois qu'un fragment soigneusement choisi de la vie des autres, et non leur réalité complète.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21587,11 +21625,13 @@ J'essaie, quand je remarque cette sensation d'insatisfaction, de me rappeler con
 
 Contrairement à moi, elle n'a jamais vécu de moment sans ces applications. Pour elle, publier une photo, recevoir des commentaires, comparer le nombre de mentions "j'aime", tout cela fait partie de la vie normale depuis toujours.
 
-Je m'inquiète parfois pour elle, en pensant à la pression que représente cette exposition constante au regard des autres, à un âge où l'identité se construit encore.
+Je m'inquiète parfois pour elle, en pensant à la pression que représente cette exposition constante au regard des autres, alors qu'elle est encore en train de découvrir qui elle est.
 
 En discutant avec elle, cependant, je découvre une relation à ces outils plus nuancée que je ne l'imaginais. Elle sait, par exemple, identifier facilement les photos retouchées ou les mises en scène artificielles, avec une facilité que je n'avais pas à son âge.
 
 « On sait bien que tout le monde ne montre que le meilleur », m'a-t-elle dit un jour, presque avec détachement.
+
+Sans que je le lui demande, elle a elle-même désactivé certaines notifications et s'impose des pauses régulières, une discipline que je n'aurais probablement pas su instaurer à sa place.
 
 Cette lucidité me rassure en partie, sans effacer complètement mon inquiétude. Grandir avec ces outils depuis l'enfance a peut-être développé chez sa génération une forme de recul que la mienne a dû apprendre plus tard, parfois difficilement.
 
@@ -21622,6 +21662,8 @@ En en parlant ensuite avec un nutritionniste, j'ai appris que ce type de régime
 
 Cette expérience m'a appris quelque chose d'important : la solution miracle qu'on nous vend souvent en janvier ressemble rarement à une vraie solution durable.
 
+En discutant plus tard avec d'autres personnes ayant vécu la même mésaventure, j'ai découvert que ce sentiment d'échec personnel était étrangement répandu. Beaucoup se reprochaient leur manque de volonté, alors que le problème venait peut-être davantage de la conception même du régime que d'un défaut de caractère quelconque.
+
 Aujourd'hui, j'essaie plutôt de manger un peu plus équilibré, sans interdiction totale, ce qui me semble bien plus simple à tenir dans la durée.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21649,6 +21691,8 @@ Avec le temps, la situation s'est apaisée. Ma grand-mère a même appris quelqu
 
 Mon frère continue de trouver ça un peu contraignant, mais il a fini par accepter cette différence sans plus la commenter à chaque repas.
 
+Un de mes neveux, sans que je le lui demande jamais, a fini par suivre le même chemin, simplement en observant mes choix au fil des repas partagés. Cette influence discrète, jamais revendiquée, m'a semblé finalement plus efficace que n'importe quel argument que j'aurais pu avancer directement à table.
+
 Cette expérience m'a montré qu'un choix alimentaire personnel peut toucher, bien plus qu'on ne l'imagine, des questions familiales sensibles autour de la tradition et de l'appartenance.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21673,6 +21717,8 @@ De plus, le sucre se cache aujourd'hui dans énormément de produits qu'on ne so
 J'ai essayé, à plusieurs reprises, de réduire drastiquement ma consommation. Les premiers jours sont souvent les plus difficiles, avec une irritabilité et une fatigue notables.
 
 Puis, progressivement, mes envies diminuent, sans disparaître complètement. Un simple carré de chocolat me satisfait alors bien plus qu'auparavant, quand j'en mangeais une tablette entière sans même vraiment y prêter attention.
+
+J'ai pris l'habitude, depuis, de lire les étiquettes plus attentivement, découvrant avec surprise la quantité de sucre ajouté dans des produits qui ne me semblaient pourtant pas sucrés au goût. Cette vigilance, fastidieuse les premières semaines, est devenue un réflexe qui a discrètement changé mes choix au supermarché.
 
 Je ne pense pas qu'il faille bannir totalement le sucre, ce qui semble d'ailleurs presque impossible dans notre alimentation actuelle. Mais apprendre à mieux le doser, plutôt que de le consommer par automatisme, change beaucoup de choses.`,
     sourceName: "Written for Lire",
@@ -21699,6 +21745,8 @@ Mais cette même assiette raconte aussi une autre histoire, moins positive : cel
 
 Ma grand-mère, quand je lui montre mes propres repas, reste souvent perplexe devant certains ingrédients qu'elle ne reconnaît pas, ou devant la rapidité avec laquelle je prépare un repas complet.
 
+Mes propres enfants grandissent avec une familiarité pour ces cuisines mélangées que je n'avais absolument pas au même âge. Pour eux, un plat asiatique ou une recette mexicaine n'a rien d'exotique : c'est une option ordinaire, aussi normale que le plat traditionnel que préparait leur arrière-grand-mère chaque dimanche.
+
 Nos assiettes changent avec notre époque, portant les traces de nos modes de vie, de nos échanges culturels, et parfois aussi de nos contraintes de temps.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21723,6 +21771,8 @@ Elle m'a proposé un exercice qui m'a semblé, au départ, presque étrange : av
 Les premières semaines, j'ai découvert avec surprise que je mangeais très souvent sans faim réelle, poussé par l'heure, l'odeur d'un plat, ou simplement l'envie de faire une pause dans ma journée.
 
 Progressivement, j'ai appris à mieux distinguer ces différentes sensations, et à manger davantage selon mes besoins réels plutôt que selon des habitudes anciennes.
+
+Cette attention nouvelle à mes propres sensations s'est étendue, presque sans que je le décide, à d'autres domaines de ma vie : je perçois mieux, désormais, la différence entre une vraie fatigue et un simple manque de stimulation, ou entre un besoin de pause et une envie passagère de procrastiner.
 
 Ce changement n'a rien d'un régime au sens classique. Il ne s'agit pas de manger moins, mais de manger plus consciemment, en réapprenant un signal que des années d'habitudes avaient fini par brouiller.
 
@@ -21749,6 +21799,8 @@ Vers onze heures, j'ai réalisé que je n'avais parlé à personne de vive voix 
 
 J'ai aussi remarqué que je travaillais, sans m'en rendre compte, bien plus tard que d'habitude. Sans le rituel du départ du bureau, difficile de savoir quand vraiment s'arrêter.
 
+Les jours suivants m'ont appris qu'il fallait réapprendre à structurer ma propre journée, sans les repères qu'offrait autrefois le bureau : la pause déjeuner collective, les allers-retours entre deux réunions, les petites interruptions qui ponctuaient naturellement le temps. Tout cela, il fallait désormais le recréer volontairement, sans qu'aucune contrainte extérieure ne m'y pousse.
+
 Ce premier jour ne s'est pas déroulé comme je l'imaginais : ni la liberté rêvée, ni la catastrophe redoutée par certains. Simplement une nouvelle façon de travailler, avec ses propres règles à inventer.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21773,6 +21825,8 @@ Cette disponibilité constante s'est installée progressivement, sans que je dé
 Un ami, également en télétravail, m'a raconté qu'il avait dû instaurer une règle stricte : ranger complètement son ordinateur dans un placard chaque soir, pour marquer physiquement la fin de sa journée de travail.
 
 J'ai essayé cette méthode, avec un certain succès. Ce simple geste, presque symbolique, m'aide à recréer artificiellement la frontière que le trajet quotidien créait autrefois naturellement.
+
+Un collègue confronté à la même difficulté a trouvé sa propre parade, presque comique : il change littéralement de vêtements en fin de journée, comme s'il rentrait du bureau, uniquement pour marquer une transition que l'absence de trajet ne fournit plus.
 
 Le télétravail nous offre une vraie liberté d'organisation. Mais cette liberté demande, paradoxalement, une discipline nouvelle pour ne pas laisser le travail envahir chaque moment de notre vie.`,
     sourceName: "Written for Lire",
@@ -21799,6 +21853,8 @@ Même les réunions que je jugeais inutiles avaient parfois une fonction que je 
 
 En télétravail, je suis certainement plus efficace sur certaines tâches précises, demandant de la concentration. Mais je perds probablement quelque chose du côté humain du travail.
 
+J'ai essayé de recréer artificiellement certains de ces instants informels, en proposant des appels vidéo sans ordre du jour précis, juste pour discuter. Le résultat varie : certaines conversations restent maladroites derrière un écran, d'autres retrouvent, avec le temps, un peu de la spontanéité que je croyais perdue pour de bon.
+
 Cette expérience m'a appris qu'il ne faut jamais juger totalement une situation avant de vivre son contraire. Le bureau avait ses défauts réels, mais aussi des qualités que je n'avais jamais réellement remarquées.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21823,6 +21879,8 @@ J'ai dû apprendre à instaurer de nouvelles habitudes pour compenser cette pert
 Au début, certains membres de l'équipe trouvaient ces échanges un peu artificiels, presque forcés. Avec le temps, la plupart ont fini par apprécier cet espace, où ils peuvent aborder autre chose que les tâches en cours.
 
 J'ai aussi appris à faire davantage confiance, en me concentrant sur les résultats plutôt que sur le contrôle direct des horaires ou de la présence.
+
+Je repère désormais des signaux plus discrets que je n'aurais jamais remarqués auparavant : un ton légèrement différent, un délai de réponse inhabituel, une caméra qui reste éteinte plus souvent que d'habitude. Ces indices ténus sont devenus mes nouveaux outils, là où un simple coup d'œil dans un couloir suffisait autrefois.
 
 Ce changement de posture, difficile au début, m'a finalement rendu meilleur manager, je crois, en m'obligeant à me concentrer sur l'essentiel : la confiance et la communication réelle, plutôt que sur la simple surveillance.`,
     sourceName: "Written for Lire",
@@ -21849,6 +21907,8 @@ D'autres s'inquiètent des conséquences économiques pour tous les commerces qu
 
 Dans les transports en commun aussi, la fréquentation a changé de rythme, avec des pics moins marqués aux heures traditionnelles de pointe.
 
+En me promenant récemment dans ce même quartier un lundi, j'ai remarqué que certains commerces commençaient à s'adapter, en proposant des services tournés vers les habitants plutôt que vers les seuls employés de bureau. Cette réinvention encore incertaine illustre peut-être la capacité de nos villes à se transformer plutôt qu'à simplement décliner.
+
 Je me demande souvent à quoi ressembleront nos villes dans dix ans, si cette tendance continue de s'installer durablement. Peut-être verrons-nous des centres-villes réinventés, moins centrés uniquement sur le travail de bureau, et davantage mêlant logements, commerces et loisirs.
 
 Une chose semble certaine : la manière dont nous travaillons continue de redessiner, discrètement mais profondément, l'espace même de nos villes.`,
@@ -21873,6 +21933,8 @@ Plusieurs refuges pour animaux confirment d'ailleurs cette tendance : les demand
 Un animal apporte une présence rassurante, sans les complications parfois difficiles d'une relation humaine. Il attend son repas à heure fixe, il a besoin qu'on s'occupe de lui, ce qui donne une structure à des journées qui pourraient sembler vides autrement.
 
 Mon chat, que j'ai appelé Léon, m'a effectivement aidé pendant cette période difficile. Sa présence physique, même silencieuse, atténuait un peu la sensation de solitude dans l'appartement.
+
+D'autres personnes ayant vécu une rupture similaire décrivent exactement le même réflexe : l'impression qu'un animal, sans jamais poser de question ni exiger d'explication, offre une présence rassurante précisément au moment où l'on se sent le moins capable de raconter ce qui nous arrive à quelqu'un d'autre.
 
 Je ne prétends pas qu'un animal remplace une relation humaine, ce serait exagéré. Mais je comprends aujourd'hui pourquoi tant de personnes, dans une période de vulnérabilité, cherchent ce type de compagnie simple et inconditionnelle.`,
     sourceName: "Written for Lire",
@@ -21899,6 +21961,8 @@ Cette industrie soulève aussi des critiques. Certains observateurs s'interrogen
 
 D'autres, au contraire, défendent ces dépenses comme légitimes, considérant que le bien-être animal mérite le même soin que celui accordé aux autres membres de la famille.
 
+Je dois avouer avoir moi-même cédé à certains de ces achats superflus pour mon propre chat, sans être pleinement convaincue de leur utilité. Cette contradiction, entre ma lucidité de principe et mon comportement réel de consommatrice, illustre peut-être la difficulté générale à résister à ce marché, même quand on en connaît les mécanismes.
+
 Ce marché, qui ne cesse de croître, illustre en tout cas à quel point notre relation aux animaux de compagnie a profondément évolué.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21923,6 +21987,8 @@ Un ami avocat m'a expliqué que la loi, dans mon pays, protège en réalité les
 Cette découverte m'a poussé à mieux me renseigner sur mes droits avant ma prochaine recherche.
 
 J'ai finalement trouvé un appartement accueillant mon chien, après plusieurs semaines de recherche décourageantes.
+
+Certaines associations proposent désormais des labels signalant les logements réellement ouverts aux animaux, ce qui facilite la recherche pour d'autres locataires dans ma situation. Ce type d'initiative, encore peu connu, mériterait davantage de visibilité tant la difficulté que j'ai rencontrée semble largement partagée autour de moi.
 
 Cette expérience m'a fait réfléchir à une question plus large : dans une société où de plus en plus de gens vivent seuls avec un animal pour compagnie, ne devrions-nous pas repenser certaines règles de logement devenues, à mon avis, dépassées ?`,
     sourceName: "Written for Lire",
@@ -21949,6 +22015,8 @@ Un dresseur professionnel, consulté après plusieurs semaines difficiles, m'a e
 
 Cette remarque m'a obligé à changer d'attitude, pas seulement envers mon chien, mais aussi dans d'autres domaines de ma vie. J'ai commencé à appliquer, presque malgré moi, cette même patience avec mes collègues, mes proches, moi-même.
 
+Cette patience nouvellement acquise s'étend désormais à des situations où je ne l'aurais jamais appliquée auparavant : une file d'attente interminable, un collègue qui explique lentement quelque chose que j'ai déjà compris. Mon chien, sans le savoir, m'a rendu un peu plus supportable pour les gens qui m'entourent.
+
 Aujourd'hui, mon chien obéit bien mieux, mais je pense avoir moi-même changé davantage que lui pendant cet apprentissage. Il m'a, sans le savoir, enseigné une leçon que je n'avais jamais réussi à apprendre autrement.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -21968,11 +22036,13 @@ Il avait partagé mon quotidien pendant quinze ans, présent dans les moments di
 
 Pourtant, aucune option de congé ne semblait exister pour ce type de deuil. J'ai simplement pris une journée de congé personnel, sans oser vraiment expliquer la raison à mes collègues, de peur de paraître exagérée.
 
-Ce silence m'a fait réfléchir à une question plus large, qui divise actuellement plusieurs entreprises : le deuil d'un animal de compagnie mérite-t-il, comme celui d'un proche humain, un temps de repos officiellement reconnu ?
+Ce silence en dit long sur une question qui divise actuellement plusieurs entreprises : le deuil d'un animal de compagnie mérite-t-il, comme celui d'un proche humain, un temps de repos officiellement reconnu ?
 
 Certaines entreprises, notamment aux États-Unis et au Royaume-Uni, commencent à proposer ce type de congé, reconnaissant que la perte d'un animal peut affecter profondément la concentration et le bien-être d'un employé.
 
 D'autres restent sceptiques, estimant qu'on ne peut mettre sur un même plan la perte d'un animal et celle d'un être humain.
+
+En racontant cette journée à des collègues, j'ai découvert que plusieurs d'entre eux avaient vécu un silence identique à la mort de leur propre animal, sans jamais oser en parler ouvertement au travail non plus. Ce silence partagé, révélé seulement après coup, suggère qu'un vrai besoin existe, même s'il reste largement tu.
 
 Je comprends cette réserve, sans la partager complètement. Le lien créé sur quinze années avec un compagnon fidèle représente, à mes yeux, une perte réelle, méritant peut-être davantage de reconnaissance que le simple silence poli que j'ai reçu ce jour-là.`,
     sourceName: "Written for Lire",
@@ -21999,6 +22069,8 @@ J'ai remarqué que certains habitants, lassés de cette agitation estivale, pré
 
 D'autres, comme mon voisin qui tient un petit restaurant, attendent au contraire cette saison avec impatience, sachant qu'elle représente une part essentielle de leurs revenus.
 
+Certains habitants ont trouvé leurs propres parades pour composer avec cette période : décaler leurs horaires de courses, éviter certaines rues aux heures les plus fréquentées, adopter, le temps de l'été, un rythme légèrement différent, comme si la ville elle-même devenait un lieu qu'il fallait réapprendre à habiter.
+
 Cette situation m'inspire des sentiments partagés. Je comprends l'importance économique de ce tourisme pour ma ville. Mais je ressens aussi, chaque année, un léger soulagement quand septembre arrive et que ma ville retrouve, progressivement, son calme habituel.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22024,6 +22096,8 @@ Ma grand-mère, qui a longtemps regretté le déclin de son village natal, recon
 
 « Ce n'est plus le même village qu'avant, me dit-elle souvent, mais au moins, il existe encore. »
 
+Lors de ma dernière visite, j'ai croisé plusieurs jeunes revenus s'installer au village, attirés par ces emplois liés au tourisme, après être partis en ville chercher du travail quelques années plus tôt. Ce retour modeste redonne au village une population plus jeune qu'il n'en avait connu depuis des décennies.
+
 Cette histoire illustre bien une réalité complexe : le tourisme, souvent critiqué pour ses effets négatifs sur certains lieux, peut aussi représenter, pour d'autres endroits menacés de disparition, une véritable planche de salut économique.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22046,6 +22120,8 @@ Cette scène m'a fait réfléchir à ma propre manière de voyager. Combien de f
 Je me souviens d'un voyage récent où j'ai passé presque vingt minutes à essayer d'obtenir la photo idéale d'un coucher de soleil, plutôt que de simplement le regarder, présent, sans écran entre nous.
 
 Certains chercheurs qui étudient le tourisme moderne évoquent un phénomène qu'ils appellent le "tourisme de validation" : voyager davantage pour prouver aux autres, sur les réseaux sociaux, qu'on est allé quelque part, plutôt que pour l'expérience elle-même.
+
+Certains sites touristiques commencent eux-mêmes à limiter cette pratique, en interdisant les perches à selfie ou en resserrant les créneaux de visite, précisément pour encourager une observation plus directe des lieux. Ces mesures, encore rares, traduisent peut-être une prise de conscience institutionnelle du même travers que j'avais observé chez moi.
 
 Depuis cette prise de conscience, j'essaie de limiter mes photos pendant les voyages, en me forçant parfois à ranger mon téléphone complètement pendant quelques heures.
 
@@ -22074,6 +22150,8 @@ Face à cette situation, plusieurs villes européennes ont commencé à limiter 
 
 Ma propre ville envisage actuellement des mesures similaires, sans avoir encore tranché la question, tant les intérêts économiques et sociaux semblent difficiles à concilier.
 
+Plusieurs habitants du quartier envisagent sérieusement de déménager, non par choix mais par nécessité, faute de pouvoir continuer à payer un loyer désormais calé sur les revenus touristiques plutôt que sur les salaires locaux. Cette pression, difficile à chiffrer précisément, transforme peu à peu la composition sociale du quartier lui-même.
+
 Cette situation illustre une tension croissante dans de nombreuses villes touristiques : comment profiter des bénéfices économiques du tourisme sans sacrifier la possibilité, pour les habitants eux-mêmes, de continuer à vivre dans leur propre ville.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22099,6 +22177,8 @@ Puis, progressivement, j'ai découvert une autre manière de voyager. J'ai appri
 
 Ce mode de voyage, plus lent, correspond aussi à ce qu'on appelle aujourd'hui le tourisme durable, qui limite les déplacements fréquents et privilégie un impact réduit sur les lieux visités.
 
+Étrangement, je me souviens beaucoup mieux de ce mois passé dans ce village que de nombreux voyages plus courts et plus chargés faits les années précédentes. La lenteur, contrairement à ce que je redoutais, a produit des souvenirs plus riches et plus précis que l'accumulation rapide de visites que je pratiquais avant.
+
 Je ne renie pas totalement mes anciens voyages, qui m'ont fait découvrir de nombreux endroits magnifiques. Mais cette nouvelle approche, plus lente et plus profonde, m'a offert quelque chose que mes voyages précédents n'avaient jamais réussi à me donner : un vrai sentiment d'avoir vécu quelque part, ne serait-ce que pour un mois.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22121,6 +22201,8 @@ Un jour, lors d'une visite médicale de routine, mon médecin m'a posé une simp
 Son regard m'a fait comprendre que ma réponse n'était pas aussi rassurante que je le pensais. Il m'a expliqué calmement que ce manque chronique de sommeil affectait probablement bien plus de choses que je ne l'imaginais : ma concentration, mon humeur, ma santé à long terme.
 
 Cette conversation m'a poussé à réfléchir sérieusement, pour la première fois, à mes habitudes de sommeil. Je réalisais que j'avais normalisé quelque chose qui, en réalité, ne l'était pas du tout.
+
+En en parlant autour de moi, j'ai découvert que plusieurs collègues vivaient exactement la même situation, sans jamais l'avoir vraiment questionnée eux non plus. Cette découverte partagée m'a un peu rassuré, tout en confirmant à quel point ce déni du manque de sommeil semble répandu dans mon entourage professionnel.
 
 Depuis ce jour, j'essaie, avec plus ou moins de succès, de me coucher plus tôt. Ce n'est pas encore parfait, mais au moins, je ne considère plus ma fatigue permanente comme une fatalité inévitable.`,
     sourceName: "Written for Lire",
@@ -22147,6 +22229,8 @@ Ces informations m'ont fait réfléchir à mes propres années de sommeil rédui
 
 Je repense maintenant à des erreurs commises au travail, des décisions prises trop rapidement, des tensions inutiles avec des proches, que j'attribue peut-être, au moins en partie, à cette fatigue chronique jamais vraiment prise au sérieux.
 
+Depuis, je surveille de plus près mon propre comportement au lendemain d'une mauvaise nuit, et je reconnais effectivement une irritabilité, une distraction que j'attribuais autrefois à d'autres causes. Cette observation directe, faite sur moi-même, m'a convaincu bien plus qu'aucune statistique de la réalité concrète de ces effets.
+
 Cette prise de conscience, bien que tardive, change ma manière de considérer le sommeil aujourd'hui. Ce n'est plus, à mes yeux, un luxe optionnel qu'on peut sacrifier sans conséquence, mais un besoin fondamental, aussi important que l'alimentation ou l'exercice physique.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22169,6 +22253,8 @@ En m'intéressant de plus près à ce sujet, j'ai découvert que cette croyance 
 Les rares personnes capables de bien fonctionner avec très peu de sommeil possèdent en réalité une particularité génétique extrêmement rare, présente chez moins d'un pour cent de la population.
 
 Autrement dit, la plupart des gens qui affirment dormir quatre heures et "s'en sortir très bien" fonctionnent probablement, sans le savoir, avec des capacités réduites, sans même s'en rendre compte, tant la fatigue chronique devient une nouvelle normalité pour eux.
+
+Certains collègues qui revendiquaient fièrement dormir peu commettaient pourtant des erreurs qu'un peu plus de repos leur aurait sans doute épargnées. Cette contradiction, entre le prestige affiché du sacrifice et son coût réel sur la qualité du travail, reste pourtant rarement questionnée dans ces mêmes environnements professionnels.
 
 Cette découverte a changé mon regard sur ce mythe de la réussite par le manque de sommeil. Ce n'est pas un signe de force, mais bien souvent un signe d'épuisement non reconnu, présenté à tort comme une qualité admirable.`,
     sourceName: "Written for Lire",
@@ -22197,6 +22283,8 @@ Cette explication m'a soulagé, d'une certaine manière. Après des mois à me s
 
 Le médecin m'a proposé un traitement adapté, qui a progressivement amélioré la qualité de mes nuits.
 
+En salle d'attente, ce matin-là, j'avais discuté avec d'autres patients qui décrivaient des années de difficultés similaires avant de se décider enfin à consulter, souvent freinés par l'idée que leur problème n'était pas assez grave pour justifier une telle démarche.
+
 Cette expérience étrange, presque scientifique, m'a permis de comprendre que certains problèmes de sommeil ont des causes physiologiques précises, qui méritent d'être identifiées plutôt que simplement subies en silence.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22219,6 +22307,8 @@ Le spécialiste m'a expliqué une idée qui m'a d'abord surpris : le sommeil, co
 Il m'a proposé un programme structuré, appelé thérapie cognitivo-comportementale pour l'insomnie, consistant à revoir entièrement mes habitudes : heure fixe de coucher et de lever, suppression des écrans avant de dormir, chambre réservée uniquement au sommeil.
 
 Les premières semaines furent frustrantes. J'avais l'impression de "perdre du temps", couché sans dormir, en attendant patiemment que mon corps réapprenne un rythme naturel perdu depuis longtemps.
+
+Renoncer à certaines habitudes du soir — un film tardif, une lecture au lit sur mon téléphone — m'a demandé plus de résistance que prévu au début. Ce sacrifice, modeste en apparence, s'est révélé finalement bien moins difficile à tenir une fois les premiers bénéfices concrets ressentis.
 
 Progressivement, cependant, les résultats sont apparus. Mon endormissement est devenu plus rapide, mes réveils nocturnes moins fréquents.
 
@@ -22247,6 +22337,8 @@ Progressivement, ce tri est devenu un réflexe presque automatique. Je regarde d
 
 À ma grande surprise, cette habitude, que j'imaginais contraignante, m'a aussi rendu plus attentif à ma consommation en général. En manipulant chaque jour mes déchets, j'ai pris conscience de la quantité d'emballages inutiles que j'achetais sans même m'en rendre compte auparavant.
 
+Mes enfants, en me voyant faire ce tri chaque jour, ont fini par le reproduire spontanément, sans que j'aie eu besoin de le leur enseigner. Cette transmission presque silencieuse, par le simple exemple répété, a fonctionné bien mieux que n'importe quel discours que j'aurais pu leur tenir sur le sujet.
+
 Ce simple geste, imposé au départ par mon immeuble, a fini par changer ma manière de consommer bien plus largement que je ne l'aurais imaginé.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22271,6 +22363,8 @@ Le vendeur, habitué visiblement à ce genre de situation, m'a patiemment expliq
 Après quelques visites, j'ai fini par organiser un petit sac de bocaux réutilisables, toujours prêt dans mon coffre pour mes courses hebdomadaires.
 
 Ce changement d'habitude a eu plusieurs effets inattendus. D'abord, j'achète désormais des quantités plus précises, ce qui réduit le gaspillage alimentaire. Ensuite, ma poubelle d'emballages plastiques a considérablement diminué.
+
+Le gaspillage, lui aussi, a nettement reculé : j'achète désormais des quantités précises, adaptées à mes besoins réels, plutôt que des emballages standardisés souvent trop grands. Ce changement discret mais constant a fini par modifier durablement mon rapport à ce que je conserve chez moi.
 
 Je continue de faire une partie de mes courses dans des magasins classiques, pour certains produits non disponibles en vrac. Mais cette nouvelle habitude, adoptée progressivement, a changé ma manière de considérer chaque achat alimentaire, désormais plus réfléchi qu'auparavant.`,
     sourceName: "Written for Lire",
@@ -22299,6 +22393,8 @@ Progressivement, j'ai développé de nouveaux réflexes : remplir systématiquem
 
 Aujourd'hui, presque un an après cette décision, j'estime avoir réduit ma consommation de bouteilles en plastique de plus de quatre-vingt-dix pour cent.
 
+Compter, semaine après semaine, le nombre de bouteilles que je ne rachète plus procure une satisfaction presque comptable : un chiffre concret, qui rend visible un changement qui, autrement, serait resté abstrait et facile à oublier dans le tourbillon du quotidien.
+
 Ce changement, qui semblait simple sur le papier, m'a rappelé qu'une habitude ancienne demande du temps et de la patience pour être réellement transformée.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22324,6 +22420,8 @@ Les premières semaines, une odeur légèrement désagréable s'est installée, 
 
 Après plusieurs ajustements, le système a fini par bien fonctionner, sans odeur notable, produisant un compost de bonne qualité que je donne désormais à ma voisine, qui possède un petit jardin.
 
+Mes voisins, curieux de voir ce petit composteur posé sur mon plan de travail, m'ont posé de nombreuses questions ; certains ont fini par essayer à leur tour. Ce geste au départ purement personnel a fini par essaimer discrètement dans l'immeuble, sans que je l'aie jamais recherché.
+
 Cette expérience, qui semblait impossible au départ dans mon petit appartement, m'a montré qu'avec un peu de recherche et de patience, presque n'importe quel geste écologique peut s'adapter, même aux conditions de vie les plus contraignantes.`,
     sourceName: "Written for Lire",
     language: "fr",
@@ -22346,6 +22444,8 @@ Certains experts en environnement soulignent en effet que l'essentiel des émiss
 Selon cette perspective, se concentrer uniquement sur nos petits gestes personnels risquerait presque de détourner l'attention des véritables responsables, en donnant une fausse impression de contrôle individuel sur un problème essentiellement collectif et structurel.
 
 D'autres experts, cependant, défendent une vision complémentaire : les habitudes individuelles, en se multipliant chez des millions de personnes, finissent par influencer les entreprises elles-mêmes, les poussant à adapter leur offre face à une demande de consommateurs plus exigeants.
+
+En parler ouvertement autour de moi, sans le présenter comme une solution miracle, encourage souvent d'autres personnes à adopter les mêmes habitudes — un effet d'entraînement modeste mais réel, difficile à mesurer statistiquement, que j'observe pourtant très concrètement dans mon entourage proche.
 
 Je continue, pour ma part, à croire en l'utilité de mes propres gestes quotidiens, sans me faire d'illusions excessives sur leur portée individuelle.
 
@@ -22672,7 +22772,7 @@ L'intention initiale de ces outils paraît louable : aider les individus à mieu
 
 Un effet paradoxal, cependant, mérite d'être signalé. Plusieurs spécialistes du sommeil observent l'émergence d'un phénomène qu'ils nomment "l'orthosomnie" : une anxiété nouvelle, provoquée précisément par l'obsession de bien dormir selon les critères mesurés par ces appareils, au point que la préoccupation excessive du score nocturne finit par nuire elle-même à l'endormissement naturel.
 
-Cette situation illustre un paradoxe plus large de notre époque : la logique de quantification et d'optimisation permanente, initialement pensée pour améliorer notre bien-être, risque parfois de coloniser jusqu'aux derniers espaces de notre existence encore relativement préservés de cette pression, transformant même le repos, censé nous libérer de la performance, en un nouveau terrain de performance à part entière. Peut-être le sommeil restera-t-il, malgré tout, l'un des rares domaines où l'abandon du contrôle demeure, paradoxalement, la seule véritable stratégie efficace.`,
+On touche ici à un paradoxe plus large de notre époque : la logique de quantification et d'optimisation permanente, initialement pensée pour améliorer notre bien-être, risque de coloniser jusqu'aux derniers espaces de notre existence encore relativement préservés de cette pression, transformant même le repos, censé nous libérer de la performance, en un nouveau terrain de performance à part entière. Peut-être le sommeil restera-t-il, malgré tout, l'un des rares domaines où l'abandon du contrôle demeure, paradoxalement, la seule véritable stratégie efficace.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
@@ -22930,7 +23030,7 @@ Cette évolution inquiète certains chercheurs en sciences cognitives, qui souli
 
 D'autres observateurs nuancent cependant ce constat pessimiste, rappelant que chaque nouvelle technologie de communication a historiquement suscité des inquiétudes similaires quant à la disparition supposée de la lecture, sans que ces prédictions ne se soient toujours révélées exactes. Le livre a survécu à l'apparition de la radio, de la télévision, puis d'internet, en trouvant chaque fois une place, certes différente, mais bien réelle, dans l'écosystème culturel contemporain.
 
-Peut-être la question la plus pertinente n'est-elle donc pas de savoir si la lecture va disparaître, ce qui semble peu probable au vu de sa résilience historique, mais plutôt de se demander comment préserver, individuellement et collectivement, des espaces de temps suffisamment protégés des sollicitations permanentes pour permettre à cette pratique exigeante mais précieuse de continuer à occuper une place significative dans nos existences.`,
+La lecture ne va sans doute pas disparaître, tant elle a déjà survécu à plusieurs révolutions médiatiques annoncées comme fatales. Le véritable enjeu semble ailleurs : préserver, individuellement et collectivement, des espaces de temps suffisamment protégés des sollicitations permanentes pour que cette pratique exigeante mais précieuse continue d'occuper une place significative dans nos existences.`,
     sourceName: "Written for Lire",
     language: "fr",
   },
