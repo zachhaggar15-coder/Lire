@@ -19197,4 +19197,4054 @@ Et pour qui a parcouru tout ce chemin — d'une langue apprise mot à mot jusqu'
     sourceName: "Written for Lire",
     language: "fr",
   },
+  {
+    id: "starter-a1-099",
+    title: "Julien fait du sport",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Julien aime le sport. Il fait du sport trois fois par semaine.",
+    blurbEn:
+      "Julien's weekly sport routine — football with friends, a run in the park, and why moving his body makes him happy. (Section: Sport, 1/5.)",
+    body: `Julien aime le sport. Il fait du sport trois fois par semaine.
+
+Le lundi, il joue au foot avec ses amis. Ils jouent dans le parc, près de chez lui.
+
+Julien est dans une équipe. Son équipe s'appelle « Les Lions ». Ils jouent bien ensemble.
+
+Le mercredi, Julien court. Il court dans le parc, le matin, avant le travail.
+
+Courir n'est pas facile pour lui. Mais il aime ça. Il se sent bien après.
+
+Le week-end, Julien joue au foot avec son équipe. C'est un vrai match !
+
+Avant le match, l'équipe s'entraîne. Ils s'entraînent pendant une heure.
+
+Julien aime son équipe. Ses amis sont gentils et drôles.
+
+« Le sport, c'est bon pour le corps et pour la tête », dit Julien.
+
+Le sport rend Julien heureux. Il continue chaque semaine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-100",
+    title: "Le match de foot",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Aujourd'hui, c'est un grand match pour l'équipe de Julien.",
+    blurbEn:
+      "Match day for Julien's team — nerves before kickoff, a tense first half, and a last-minute goal. (Section: Sport, 2/5.)",
+    body: `Aujourd'hui, c'est un grand match pour l'équipe de Julien.
+
+L'équipe s'appelle « Les Lions ». Ils jouent contre « Les Aigles ».
+
+Julien est un peu nerveux avant le match. Ses amis aussi.
+
+Le match commence à quinze heures. Il y a beaucoup de monde pour regarder.
+
+Dans la première partie du match, personne ne marque de but. C'est zéro à zéro.
+
+Julien court beaucoup. Il passe le ballon à ses amis.
+
+Dans la deuxième partie, un joueur des Aigles marque un but. Un à zéro.
+
+Les Lions sont tristes. Mais ils continuent à jouer.
+
+À la fin du match, Julien reçoit le ballon. Il court vers le but... et il marque !
+
+Un à un ! Match nul, mais tout le monde est content.
+
+Après le match, l'équipe va manger une pizza ensemble. « Bravo, Julien ! » disent ses amis.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-101",
+    title: "Yanis apprend à nager",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Yanis ne sait pas très bien nager. Il prend des cours à la piscine.",
+    blurbEn:
+      "Yanis learns to swim — a patient teacher, some early fear of the water, and the pride of finally crossing the pool alone. (Section: Sport, 3/5.)",
+    body: `Yanis ne sait pas très bien nager. Il prend des cours à la piscine.
+
+Le cours a lieu le mardi soir. Yanis y va après le travail.
+
+Le professeur s'appelle Marc. Marc est patient et gentil.
+
+Au début, Yanis a peur de l'eau. Il n'aime pas mettre la tête sous l'eau.
+
+Marc l'aide. « Ce n'est pas dangereux, dit Marc. Respire bien. »
+
+Petit à petit, Yanis apprend. Il apprend à bouger les bras. Il apprend à bouger les jambes.
+
+Après quelques semaines, Yanis nage un peu mieux. Il n'a plus peur.
+
+Un soir, Marc dit : « Aujourd'hui, tu traverses la piscine tout seul ! »
+
+Yanis est un peu nerveux. Mais il essaie.
+
+Il nage doucement, d'un côté à l'autre. Il y arrive !
+
+Yanis est très fier. « Je sais nager maintenant ! » dit-il à Julien, son ami.
+
+Julien est content pour lui. « Bravo, Yanis ! Maintenant, on nage ensemble le week-end ? »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-102",
+    title: "Le tournoi de tennis",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Chaque été, il y a un tournoi de tennis dans le quartier de Julien.",
+    blurbEn:
+      "A neighbourhood tennis tournament — Julien signs up for the first time, loses his first match, and discovers he doesn't mind. (Section: Sport, 4/5.)",
+    body: `Chaque été, il y a un tournoi de tennis dans le quartier de Julien.
+
+Cette année, Julien décide de participer. C'est la première fois pour lui.
+
+Il ne joue pas très souvent au tennis. Mais il aime essayer de nouvelles choses.
+
+Le tournoi commence un samedi matin. Il y a vingt joueurs.
+
+Julien joue contre un homme plus âgé que lui. L'homme s'appelle Marc.
+
+Marc joue très bien. Il gagne facilement le premier set.
+
+Julien essaie, mais il perd le match. Trois sets à zéro.
+
+« Ce n'est pas grave, dit Marc après le match. Tu as bien joué pour un débutant. »
+
+Julien n'est pas triste. Il a passé un bon moment.
+
+« L'important, ce n'est pas de gagner, dit-il à Yanis. C'est de jouer et de s'amuser. »
+
+L'année prochaine, Julien veut participer encore. Peut-être qu'il gagnera un match, cette fois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-103",
+    title: "Une compétition importante",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "L'équipe de Julien joue une compétition très importante ce dimanche.",
+    blurbEn:
+      "The biggest match of the year for Julien's team — a whole neighbourhood turns up, and a nervous captain learns what really matters. (Section: Sport, 5/5 — hardest.)",
+    body: `L'équipe de Julien joue une compétition très importante ce dimanche.
+
+Si l'équipe gagne, elle passe au tour suivant. Si elle perd, la saison est finie.
+
+Toute la semaine, l'équipe s'entraîne plus que d'habitude. Julien est un peu stressé.
+
+« On peut gagner, dit le capitaine de l'équipe. Mais il faut jouer ensemble. »
+
+Le dimanche, beaucoup de monde vient regarder. Les familles des joueurs sont là. Yanis est là aussi, pour soutenir Julien.
+
+Le match est difficile. Les deux équipes jouent très bien.
+
+À la fin du match, le score est serré : deux buts partout.
+
+Il faut jouer des prolongations. Tout le monde est nerveux.
+
+Pendant les prolongations, un joueur de l'équipe de Julien marque un dernier but.
+
+Trois à deux ! L'équipe de Julien gagne !
+
+Tout le monde crie de joie. Julien est très fier de son équipe.
+
+« On a gagné ensemble, dit-il à Yanis après le match. C'est ça, le plus beau, dans le sport : jouer ensemble. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-104",
+    title: "Julien est malade",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Aujourd'hui, Julien ne se sent pas bien.",
+    blurbEn:
+      "Julien wakes up with a cold — a sore throat, a headache, and a day spent resting instead of going to work. (Section: Health, 1/5.)",
+    body: `Aujourd'hui, Julien ne se sent pas bien.
+
+Il a mal à la tête. Il a aussi mal à la gorge.
+
+« Je crois que j'ai un rhume », pense Julien.
+
+Il ne va pas au travail. Il reste à la maison.
+
+Il boit du thé chaud avec du miel. C'est bon pour la gorge.
+
+Il se repose sur le canapé. Il regarde un film.
+
+Le soir, il a un peu de fièvre. Il va se coucher tôt.
+
+Le lendemain, Julien se sent un peu mieux. Sa tête ne fait plus mal.
+
+Mais il a encore mal à la gorge. Il reste encore un jour à la maison.
+
+Après deux jours de repos, Julien va beaucoup mieux. Il retourne au travail.
+
+« Il faut se reposer quand on est malade », dit Julien à Yanis.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-105",
+    title: "Le rendez-vous chez le médecin",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Yanis a mal au ventre depuis deux jours. Il va chez le médecin.",
+    blurbEn:
+      "Yanis visits the doctor with a stomach ache — a simple exam, a few questions, and reassurance that it's nothing serious. (Section: Health, 2/5.)",
+    body: `Yanis a mal au ventre depuis deux jours. Il va chez le médecin.
+
+Dans la salle d'attente, il y a trois autres personnes. Yanis attend son tour.
+
+Le médecin s'appelle Docteur Petit. Elle est gentille.
+
+« Où avez-vous mal ? » demande-t-elle.
+
+« J'ai mal au ventre, ici », dit Yanis.
+
+Le docteur Petit pose des questions. « Depuis quand ? Avez-vous de la fièvre ? »
+
+« Depuis deux jours. Non, je n'ai pas de fièvre. »
+
+Le docteur examine Yanis. Elle regarde, elle touche doucement son ventre.
+
+« Ce n'est pas grave, dit-elle. C'est peut-être quelque chose que vous avez mangé. »
+
+Elle donne une ordonnance à Yanis. Il doit prendre un médicament pendant trois jours.
+
+« Reposez-vous, et mangez simplement pendant deux jours », dit le docteur.
+
+Yanis remercie le docteur Petit. Il va à la pharmacie chercher son médicament.
+
+Après trois jours, Yanis va beaucoup mieux. Il n'a plus mal au ventre.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-106",
+    title: "Yanis a mal aux dents",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Depuis hier, Yanis a très mal à une dent.",
+    blurbEn:
+      "A toothache sends Yanis to the dentist for the first time in years — nerves in the waiting room, and relief once it's over. (Section: Health, 3/5.)",
+    body: `Depuis hier, Yanis a très mal à une dent.
+
+La douleur est forte, surtout quand il mange quelque chose de froid.
+
+Yanis n'aime pas aller chez le dentiste. Il a un peu peur.
+
+Mais la douleur est trop forte. Il prend rendez-vous.
+
+Le dentiste s'appelle Docteur Roux. Son cabinet est près de chez Yanis.
+
+Dans la salle d'attente, Yanis est nerveux. Il attend depuis dix minutes.
+
+« Yanis ? C'est à vous », dit l'assistante.
+
+Le dentiste regarde la dent de Yanis. « Ah, je vois le problème », dit-il.
+
+« Il y a une petite carie. Ce n'est pas grave, mais il faut la soigner maintenant. »
+
+Le dentiste soigne la dent de Yanis. Ça prend vingt minutes.
+
+Après, Yanis n'a plus mal du tout ! Il est très soulagé.
+
+« Merci docteur, dit Yanis. Ce n'était pas si terrible, finalement. »
+
+En sortant, il pense : « La prochaine fois, j'irai chez le dentiste plus tôt. »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-107",
+    title: "Bien dormir, bien manger",
+    category: "everyday life",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Julien veut être en meilleure santé. Il change quelques habitudes.",
+    blurbEn:
+      "Julien tries to build healthier habits — more sleep, more vegetables, less phone before bed — and notices the difference within weeks. (Section: Health, 4/5.)",
+    body: `Julien veut être en meilleure santé. Il change quelques habitudes.
+
+D'abord, il essaie de mieux dormir. Il se couche maintenant vers vingt-deux heures trente, pas après minuit comme avant.
+
+Il dort environ huit heures chaque nuit.
+
+Il arrête aussi de regarder son téléphone juste avant de dormir. C'est difficile au début.
+
+Ensuite, Julien change son alimentation. Il mange plus de légumes et de fruits.
+
+Il cuisine plus souvent, le soir, après le travail. Ce n'est pas très long à préparer.
+
+Il boit aussi plus d'eau pendant la journée. Moins de café, plus d'eau.
+
+Après quelques semaines, Julien se sent différent. Il est moins fatigué le matin.
+
+Il a aussi plus d'énergie pendant la journée.
+
+« Ce ne sont pas de grands changements, dit-il à Yanis. Mais ça change beaucoup de choses. »
+
+Yanis décide d'essayer, lui aussi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a1-108",
+    title: "Grand-mère et ses remèdes",
+    category: "culture",
+    difficulty: "A1",
+    minutes: 1,
+    preview: "Quand Julien est malade, sa grand-mère a toujours un remède.",
+    blurbEn:
+      "Julien's grandmother swears by old home remedies — honey, herbal tea, garlic soup — and Julien finally tries one instead of arguing. (Section: Health, 5/5 — hardest.)",
+    body: `Quand Julien est malade, sa grand-mère a toujours un remède.
+
+« Un rhume ? dit-elle. Il faut du miel et du citron chaud ! »
+
+Sa grand-mère connaît beaucoup de vieux remèdes de famille.
+
+Pour la gorge : du miel. Pour le ventre : de la tisane. Pour la fatigue : du repos et une bonne soupe.
+
+Julien sourit toujours un peu. « Grand-mère, la médecine moderne existe aussi ! »
+
+Mais il essaie souvent ses remèdes. Et parfois, ça marche vraiment bien.
+
+Un jour, Julien a un gros rhume. Sa grand-mère vient chez lui.
+
+Elle prépare une soupe à l'ail. « C'est mauvais pour l'odeur, dit-elle, mais bon pour le rhume ! »
+
+Julien mange la soupe, un peu inquiet. Elle a un goût fort, mais pas mauvais.
+
+Le lendemain, il se sent vraiment mieux.
+
+« Alors, ça marche, tes remèdes de grand-mère ? » demande Yanis.
+
+« Peut-être, répond Julien en riant. Ou peut-être que le repos suffit. Mais la soupe était bonne ! »`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-118",
+    title: "L'anniversaire de ma fille",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Ma fille a eu huit ans le mois dernier. Nous avons organisé une fête.",
+    blurbEn:
+      "Planning an eight-year-old's birthday party — the guest list, the cake, and a small disaster with the candles. (Section: Celebrations, 1/5.)",
+    body: `Ma fille a eu huit ans le mois dernier. Nous avons organisé une fête pour elle et ses amis.
+
+D'abord, nous avons fait une liste d'invités. Ma fille voulait inviter toute sa classe ! Nous avons choisi dix enfants, pas trente.
+
+Ensuite, nous avons acheté des décorations : des ballons, des guirlandes, et une belle nappe colorée.
+
+Le jour de la fête, nous avons préparé un gâteau au chocolat. Ma fille a choisi elle-même la décoration : des fraises et des étoiles en sucre.
+
+Les invités sont arrivés vers quatorze heures, chacun avec un petit cadeau.
+
+Nous avons joué à plusieurs jeux dans le jardin. Les enfants ont beaucoup ri.
+
+À seize heures, nous avons apporté le gâteau. Il y avait huit bougies dessus.
+
+Ma fille a soufflé les bougies... mais elle a mis le feu à sa manche par accident ! Heureusement, ce n'était rien de grave. Nous avons vite éteint le petit feu avec un verre d'eau.
+
+Tout le monde a ri, y compris ma fille. « Une fête qu'on n'oubliera pas ! » a dit mon mari.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-119",
+    title: "Un mariage à la campagne",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le mariage de ma cousine a eu lieu dans une ferme, à la campagne.",
+    blurbEn:
+      "A countryside wedding in an old farmhouse — a nervous bride, a long outdoor ceremony, and dancing until two in the morning. (Section: Celebrations, 2/5.)",
+    body: `Le mariage de ma cousine a eu lieu dans une ferme, à la campagne, au mois de juin.
+
+Nous sommes arrivés vers treize heures. La ferme était magnifique, entourée de champs et de vieux arbres.
+
+La cérémonie s'est déroulée dehors, sous une grande tente blanche. Ma cousine portait une robe simple et élégante.
+
+Elle était très nerveuse avant la cérémonie. Sa mère lui a dit : « Respire, tout va bien se passer. »
+
+Le marié l'attendait devant tous les invités. Quand elle est arrivée, tout le monde s'est levé.
+
+Après la cérémonie, nous avons mangé dans une grande salle décorée de fleurs. Le repas a duré presque trois heures !
+
+Le soir, il y a eu de la musique et de la danse. Les enfants dansaient devant tout le monde, sans timidité.
+
+Nous avons dansé jusqu'à deux heures du matin. C'était une des plus belles fêtes de ma vie.
+
+Le lendemain, tout le monde était fatigué, mais heureux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-120",
+    title: "Noël en famille",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Chaque année, toute ma famille se retrouve pour Noël.",
+    blurbEn:
+      "The whole family gathering for Christmas — the same traditions every year, a chaotic kitchen, and why nobody minds the repetition. (Section: Celebrations, 3/5.)",
+    body: `Chaque année, toute ma famille se retrouve pour Noël, chez mes parents.
+
+Nous sommes quinze personnes en tout : mes parents, mes frères et sœurs, leurs enfants, et moi.
+
+Le vingt-quatre décembre au soir, nous décorons ensemble le sapin. C'est une tradition depuis toujours.
+
+Ma mère cuisine depuis le matin. La cuisine est toujours pleine de monde et un peu chaotique !
+
+Cette année, mon frère a préparé la dinde, et ma sœur s'est occupée des desserts.
+
+Après le repas, nous ouvrons les cadeaux tous ensemble, devant le sapin. Les plus jeunes n'arrivent jamais à attendre !
+
+Mon neveu de cinq ans a ouvert son cadeau avant tout le monde. Il était trop impatient.
+
+Nous avons ri de bon cœur. Ce n'est pas grave, c'est Noël.
+
+Après le dîner, nous jouons à des jeux de société jusqu'à minuit.
+
+Ce ne sont jamais des vacances très reposantes. Mais je ne changerais ça pour rien au monde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-121",
+    title: "Une soirée avec les voisins",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Une fois par an, notre rue organise la fête des voisins.",
+    blurbEn:
+      "The annual neighbours' street party — everyone brings a dish, and a shy new arrival finally meets the people next door. (Section: Celebrations, 4/5.)",
+    body: `Une fois par an, notre rue organise la fête des voisins, en général au mois de mai.
+
+Ce jour-là, on ferme la rue à la circulation. Chacun apporte une table et des chaises.
+
+Tout le monde apporte aussi un plat à partager : une salade, une tarte, du fromage, ou du vin.
+
+Quand j'ai emménagé dans cette rue, je ne connaissais personne. J'étais un peu timide à l'idée d'y aller.
+
+Ma voisine, Sylvie, m'a invité. « Viens, tu vas rencontrer tout le monde », m'a-t-elle dit.
+
+Ce soir-là, j'ai découvert des gens formidables. Un couple de retraités, une famille avec trois enfants, un jeune couple qui venait d'arriver comme moi.
+
+Nous avons mangé et parlé jusqu'à onze heures du soir.
+
+Depuis cette fête, je connais mes voisins. Nous nous saluons dans la rue, nous nous aidons parfois.
+
+Cette année, j'ai décidé d'apporter une tarte aux pommes. Elle a eu beaucoup de succès !
+
+La fête des voisins a changé ma manière de vivre dans cette rue.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-122",
+    title: "Un anniversaire surprise",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Pour les quarante ans de mon mari, j'ai organisé une fête surprise.",
+    blurbEn:
+      "Planning a surprise fortieth birthday party in total secrecy — a suspicious husband, a last-minute panic, and a perfect reaction. (Section: Celebrations, 5/5 — hardest.)",
+    body: `Pour les quarante ans de mon mari, j'ai organisé une fête surprise. Personne ne devait rien savoir, surtout pas lui !
+
+J'ai commencé à préparer la fête deux mois à l'avance. J'ai contacté ses amis et sa famille en secret.
+
+Le plus difficile, c'était de trouver une raison pour qu'il ne soit pas là pendant les préparatifs. Je lui ai dit que nous allions dîner chez ses parents.
+
+Pendant ce temps, ses amis ont décoré notre jardin avec des lumières et des ballons.
+
+Trois jours avant la fête, mon mari a commencé à se douter de quelque chose. « Tu es bizarre en ce moment », m'a-t-il dit.
+
+J'ai dû mentir plusieurs fois pour qu'il ne comprenne pas. Ce n'était pas facile !
+
+Le jour J, je l'ai emmené « chez ses parents ». En réalité, tout le monde nous attendait chez nous.
+
+Quand nous sommes entrés, trente personnes ont crié « Surprise ! »
+
+Mon mari est resté sans voix pendant une bonne minute. Puis il a ri et il a pleuré en même temps.
+
+« Comment as-tu réussi à me cacher tout ça ? » m'a-t-il demandé plus tard.
+
+Cette fête restera un des meilleurs souvenirs de notre vie ensemble.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-123",
+    title: "Je me suis mis à la course à pied",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Il y a six mois, j'ai décidé de me mettre à la course à pied.",
+    blurbEn:
+      "Taking up running from zero — the painful first weeks, a bit of embarrassment, and the moment it finally got easier. (Section: Sport and fitness, 1/5.)",
+    body: `Il y a six mois, j'ai décidé de me mettre à la course à pied. Je n'avais jamais couru régulièrement avant.
+
+Le premier jour, j'ai couru pendant cinq minutes seulement. J'étais complètement essoufflé !
+
+Je me suis dit : « Ce n'est vraiment pas pour moi. » Mais j'ai décidé de continuer quand même.
+
+Chaque semaine, j'ai couru un petit peu plus longtemps. Cinq minutes, puis dix, puis quinze.
+
+Au début, je courais tôt le matin, pour que personne ne me voie. J'avais un peu honte de courir si lentement.
+
+Après deux mois, j'ai enfin réussi à courir trente minutes sans m'arrêter. J'étais très fier de moi !
+
+Ma femme a remarqué le changement. « Tu as l'air différent, plus en forme », m'a-t-elle dit.
+
+Maintenant, je cours trois fois par semaine, dans le parc près de chez moi.
+
+Je ne cours plus en cachette. Et je vais même parfois courir avec mon voisin, qui a commencé grâce à moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-124",
+    title: "Mon premier cours de yoga",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Ma sœur m'a convaincu d'essayer un cours de yoga.",
+    blurbEn:
+      "A first, awkward yoga class — stiff limbs, an unexpectedly demanding relaxation exercise, and a surprising sense of calm afterward. (Section: Sport and fitness, 2/5.)",
+    body: `Ma sœur m'a convaincu d'essayer un cours de yoga avec elle. Je n'y croyais pas vraiment.
+
+« Ce n'est pas du vrai sport », lui ai-je dit. Elle a ri et m'a répondu : « Viens voir. »
+
+Le cours avait lieu dans une petite salle calme, avec de la musique douce.
+
+Le professeur nous a demandé de nous asseoir en tailleur. J'ai tout de suite eu mal aux jambes !
+
+Pendant une heure, nous avons fait des postures différentes. Certaines étaient faciles, d'autres presque impossibles pour moi.
+
+À la fin du cours, le professeur nous a demandé de nous allonger et de fermer les yeux, sans bouger, pendant dix minutes.
+
+Je pensais que ce serait facile. En réalité, c'était très difficile de ne penser à rien !
+
+Après le cours, je me sentais étrangement calme et détendu.
+
+« Alors, toujours pas du vrai sport ? » m'a demandé ma sœur en souriant.
+
+J'ai dû admettre que j'avais eu tort. Je suis retourné au cours la semaine suivante.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-125",
+    title: "Un club de sport près de chez moi",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "L'année dernière, je me suis inscrit dans un club de sport près de chez moi.",
+    blurbEn:
+      "Joining the local gym — an intimidating first week, a helpful coach, and the surprise of actually making friends there. (Section: Sport and fitness, 3/5.)",
+    body: `L'année dernière, je me suis inscrit dans un club de sport près de chez moi.
+
+La première semaine, j'étais un peu intimidé. Tout le monde semblait savoir exactement quoi faire.
+
+Un entraîneur, Karim, m'a remarqué. « C'est ta première fois ici ? » m'a-t-il demandé.
+
+Il m'a montré comment utiliser les machines correctement, sans me faire mal.
+
+Petit à petit, j'ai pris confiance. Je suis venu deux fois par semaine, puis trois fois.
+
+Après quelques mois, j'ai commencé à reconnaître d'autres membres du club. Nous nous disions bonjour, puis nous avons commencé à discuter.
+
+Un groupe de quatre personnes m'a proposé de m'entraîner avec eux le samedi matin.
+
+Maintenant, ce n'est plus seulement du sport pour moi. C'est aussi devenu un moment social important dans ma semaine.
+
+Karim dit toujours : « Le plus dur, c'est de venir la première fois. Après, ça devient une habitude. »
+
+Il avait raison.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-126",
+    title: "Ma première course de dix kilomètres",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Après un an de course à pied, j'ai décidé de participer à une course de dix kilomètres.",
+    blurbEn:
+      "Signing up for a 10k after a year of casual running — training nerves, race-day chaos, and crossing the finish line exhausted but proud. (Section: Sport and fitness, 4/5.)",
+    body: `Après un an de course à pied, j'ai décidé de participer à une course de dix kilomètres dans ma ville.
+
+Je me suis entraîné pendant deux mois avant la course. J'ai augmenté la distance petit à petit, chaque semaine.
+
+La veille de la course, j'ai eu beaucoup de mal à dormir. J'étais très nerveux.
+
+Le matin de la course, il y avait plus de mille participants. Certains avaient l'air très expérimentés, d'autres semblaient aussi débutants que moi.
+
+Au départ, j'ai couru trop vite, poussé par l'excitation. Après quatre kilomètres, j'étais déjà fatigué.
+
+Vers le sixième kilomètre, j'ai eu envie d'abandonner. Mes jambes me faisaient très mal.
+
+Mais un homme à côté de moi m'a encouragé : « Allez, on est presque arrivés ! »
+
+J'ai continué, un pied devant l'autre, jusqu'à la ligne d'arrivée.
+
+Quand j'ai fini la course, après une heure et huit minutes, j'étais épuisé mais tellement fier.
+
+Ma famille m'attendait à l'arrivée avec une médaille et un grand sourire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-127",
+    title: "Le marathon de ma vie",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Cette année, j'ai réalisé un rêve : courir un marathon complet.",
+    blurbEn:
+      "Two years after starting to run, finally attempting a full marathon — the wall at kilometre thirty, and finishing anyway. (Section: Sport and fitness, 5/5 — hardest.)",
+    body: `Cette année, j'ai réalisé un rêve : courir un marathon complet, quarante-deux kilomètres.
+
+Deux ans plus tôt, je ne pouvais même pas courir cinq minutes sans m'arrêter. Le chemin a été long.
+
+Pour me préparer, je me suis entraîné pendant six mois, avec un plan très précis. J'ai couru quatre fois par semaine, parfois même sous la pluie.
+
+Le jour du marathon, plus de dix mille coureurs étaient rassemblés dans les rues de la ville.
+
+Les vingt premiers kilomètres se sont bien passés. Je me sentais fort, presque léger.
+
+Puis, vers le trentième kilomètre, tout a changé. Mes jambes sont devenues très lourdes. On appelle ça « le mur », et je comprends pourquoi maintenant.
+
+Je voulais abandonner. Mais je pensais à tous ces mois d'entraînement, à toutes ces heures difficiles.
+
+Alors j'ai ralenti, mais je n'ai pas arrêté. Kilomètre après kilomètre, j'ai continué.
+
+Les cinq derniers kilomètres ont été les plus longs de ma vie.
+
+Quand j'ai enfin franchi la ligne d'arrivée, après quatre heures et vingt minutes, j'ai pleuré de fatigue et de fierté.
+
+Je ne referai peut-être jamais un marathon. Mais je suis heureux de savoir que j'en ai fini un.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-128",
+    title: "Je fais du tri dans mon armoire",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le week-end dernier, j'ai décidé de faire du tri dans mon armoire.",
+    blurbEn:
+      "A weekend spent sorting through a closet full of clothes — reluctant goodbyes to old favourites, and a surprising sense of relief. (Section: Fashion and clothes, 1/5.)",
+    body: `Le week-end dernier, j'ai décidé de faire du tri dans mon armoire. Elle était pleine de vêtements que je ne portais plus.
+
+J'ai sorti tous mes vêtements et je les ai posés sur mon lit. Il y en avait beaucoup plus que je pensais !
+
+J'ai fait trois piles : à garder, à donner, à jeter.
+
+Certains vêtements étaient faciles à trier. Un vieux pull troué ? À jeter, sans hésiter.
+
+D'autres étaient plus difficiles. J'avais une robe que je n'avais pas portée depuis cinq ans, mais qui me rappelait de bons souvenirs.
+
+Ma sœur m'a aidé. « Si tu ne l'as pas portée depuis un an, donne-la », m'a-t-elle conseillé.
+
+À la fin, j'ai donné deux grands sacs de vêtements à une association.
+
+Mon armoire est maintenant bien plus légère. Je vois enfin tout ce que j'ai.
+
+Et je me sens un peu plus léger moi aussi, étrangement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-129",
+    title: "Un cadeau qui ne me plaisait pas",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Pour mon anniversaire, ma belle-mère m'a offert un pull qui ne me plaisait pas du tout.",
+    blurbEn:
+      "A birthday gift you don't like — how to smile politely, and what to do with a sweater you'll never wear. (Section: Fashion and clothes, 2/5.)",
+    body: `Pour mon anniversaire, ma belle-mère m'a offert un pull qui ne me plaisait pas du tout.
+
+Il était de couleur orange vif, avec un motif de fleurs. Ce n'est absolument pas mon style.
+
+Quand je l'ai ouvert, j'ai essayé de cacher ma surprise. « Merci beaucoup, c'est très gentil ! » ai-je dit.
+
+Ma belle-mère avait l'air si contente. « Je savais que tu aimerais les couleurs vives ! » a-t-elle dit.
+
+Mon mari a vu mon visage et il a compris tout de suite. Il m'a fait un petit sourire complice.
+
+Ce soir-là, j'ai porté le pull pendant le dîner de famille, pour lui faire plaisir.
+
+Après, j'ai mis le pull dans un tiroir, sans vraiment savoir quoi en faire.
+
+Quelques mois plus tard, j'ai finalement donné le pull à une association caritative.
+
+Je n'ai jamais dit la vérité à ma belle-mère. Certains mensonges valent la peine, non ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-130",
+    title: "Les soldes d'hiver",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Chaque année, je me promets de ne pas aller aux soldes. Et chaque année, j'y vais quand même.",
+    blurbEn:
+      "The winter sales rush — crowded shops, an impulsive purchase, and the usual promise to never do it again. (Section: Fashion and clothes, 3/5.)",
+    body: `Chaque année, je me promets de ne pas aller aux soldes. Et chaque année, j'y vais quand même.
+
+Cette année, les soldes ont commencé un mercredi. Je suis arrivée en ville dès l'ouverture des magasins.
+
+Il y avait déjà beaucoup de monde. Les gens se pressaient devant les vitrines, cherchant les meilleures affaires.
+
+Dans le premier magasin, j'ai trouvé un manteau à moitié prix. Je ne l'avais pas prévu, mais je l'ai acheté.
+
+Dans le deuxième magasin, j'ai vu une paire de chaussures parfaite. Encore un achat non prévu !
+
+Après trois heures, j'avais dépensé bien plus que ce que j'avais prévu.
+
+En rentrant chez moi, j'ai regardé tous mes achats. J'étais contente, mais un peu coupable.
+
+Mon mari a regardé les sacs et a souri. « Encore les soldes... » a-t-il dit, sans surprise.
+
+L'année prochaine, je me le promets encore : je n'irai pas aux soldes.
+
+Mais je sais déjà que je n'y arriverai pas.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-131",
+    title: "Ma fille et son style",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Depuis quelques mois, ma fille de quatorze ans a un style très différent du mien.",
+    blurbEn:
+      "A teenage daughter's sudden new style — clashing tastes, a tense shopping trip, and a parent learning to let go a little. (Section: Fashion and clothes, 4/5.)",
+    body: `Depuis quelques mois, ma fille de quatorze ans a un style très différent du mien.
+
+Elle porte des vêtements très larges, des couleurs sombres, et beaucoup de bijoux différents.
+
+Au début, j'avais du mal à comprendre ses choix. « Pourquoi tu ne portes pas quelque chose de plus simple ? » lui demandais-je souvent.
+
+Elle me répondait toujours : « C'est mon style, maman. Tu ne comprends pas. »
+
+Un jour, nous sommes allées faire les magasins ensemble. J'ai proposé des vêtements que je trouvais jolis. Elle a fait la grimace à chaque fois.
+
+Nous avons fini par nous disputer un peu, devant tout le monde dans le magasin.
+
+Ce soir-là, j'ai réfléchi. À son âge, j'avais moi aussi un style que mes parents ne comprenaient pas.
+
+Le week-end suivant, je l'ai laissée choisir seule ses vêtements, sans commentaire.
+
+Elle est revenue avec des choix surprenants, mais elle souriait, vraiment fière d'elle-même.
+
+J'ai compris que le style, à cet âge, c'est surtout une façon de dire qui on est.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-132",
+    title: "Acheter des vêtements d'occasion",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Cette année, j'ai décidé de changer mes habitudes et d'acheter surtout des vêtements d'occasion.",
+    blurbEn:
+      "Switching to secondhand clothes for a year — the search takes longer, but the finds feel more personal, and the wallet notices the difference. (Section: Fashion and clothes, 5/5 — hardest.)",
+    body: `Cette année, j'ai décidé de changer mes habitudes et d'acheter surtout des vêtements d'occasion.
+
+Avant, j'achetais souvent des vêtements neufs, sans trop réfléchir. Je les portais quelques fois, puis je les oubliais.
+
+Une amie m'a parlé des friperies de son quartier, où l'on trouve des vêtements de seconde main en bon état.
+
+La première fois, j'ai passé presque deux heures dans un petit magasin. Il fallait chercher, essayer, comparer.
+
+J'ai trouvé une veste en cuir magnifique, à un prix bien plus bas que dans un magasin neuf.
+
+Depuis, j'y retourne régulièrement. Chaque visite est différente : on ne sait jamais ce qu'on va trouver.
+
+Mes amis me demandent parfois : « Ça ne te dérange pas de porter les vêtements de quelqu'un d'autre ? »
+
+Je réponds que non, au contraire. Chaque vêtement a une petite histoire, même si je ne la connais pas.
+
+En plus, j'ai dépensé beaucoup moins d'argent cette année, tout en ayant une garde-robe plus intéressante.
+
+Je ne pense pas revenir en arrière. Ce nouveau mode de consommation me convient parfaitement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-133",
+    title: "J'ai recommencé le piano à quarante ans",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "J'ai appris le piano enfant, puis j'ai arrêté pendant vingt ans.",
+    blurbEn:
+      "Returning to piano lessons at forty after two decades away — stiff fingers, forgotten notes, and the pleasure of starting again. (Section: Music, 1/5.)",
+    body: `J'ai appris le piano enfant, puis j'ai arrêté pendant vingt ans. Cette année, j'ai décidé de recommencer.
+
+Ma professeure de piano, quand j'étais enfant, s'appelait Madame Blanc. Je me souviens encore de son salon, avec le grand piano noir.
+
+À quarante ans, j'ai trouvé un nouveau professeur, plus jeune. Au début, j'avais un peu honte de recommencer depuis le début.
+
+Mes doigts ne bougeaient plus comme avant. Les notes que je connaissais par cœur enfant, je les avais complètement oubliées.
+
+« C'est normal, m'a dit mon professeur. La mémoire des doigts revient, mais ça prend du temps. »
+
+J'ai pratiqué vingt minutes chaque soir, après le travail. Au début, c'était frustrant.
+
+Après trois mois, j'ai enfin réussi à jouer un morceau entier sans erreur. J'étais fier comme un enfant.
+
+Mes propres enfants me regardent maintenant jouer, un peu surpris. « Je ne savais pas que tu savais jouer, papa ! »
+
+Le piano m'a redonné quelque chose que j'avais perdu depuis longtemps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-134",
+    title: "Le concert de mes rêves",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Depuis quinze ans, j'attendais de voir mon groupe préféré en concert.",
+    blurbEn:
+      "Finally seeing a favourite band live after fifteen years of waiting — the long queue, the nerves, and a night that lived up to the wait. (Section: Music, 2/5.)",
+    body: `Depuis quinze ans, j'attendais de voir mon groupe préféré en concert. Cette année, c'est enfin arrivé.
+
+J'ai découvert ce groupe quand j'avais dix-sept ans. Depuis, j'ai écouté leurs chansons des centaines de fois.
+
+Quand j'ai vu l'annonce d'un concert dans ma ville, j'ai acheté mon billet en dix minutes, avant qu'ils soient tous vendus.
+
+Le jour du concert, je suis arrivé trois heures avant l'ouverture des portes, pour être proche de la scène.
+
+La file d'attente était déjà très longue. J'ai discuté avec d'autres fans, aussi excités que moi.
+
+Quand les portes se sont enfin ouvertes, tout le monde s'est précipité vers la scène.
+
+Le concert a commencé à vingt heures. Dès les premières notes, j'ai eu des frissons.
+
+Pendant deux heures, j'ai chanté chaque parole, avec des milliers d'autres personnes autour de moi.
+
+À la fin, le chanteur a dit : « Merci d'avoir attendu si longtemps avec nous. » J'ai eu les larmes aux yeux.
+
+Ce concert restera un des plus beaux moments de ma vie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-135",
+    title: "Ma playlist de voiture",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Chaque matin, je passe quarante minutes dans les embouteillages pour aller au travail.",
+    blurbEn:
+      "Building the perfect commute playlist — one song for waking up, another for the traffic jam, and the ritual that makes the drive bearable. (Section: Music, 3/5.)",
+    body: `Chaque matin, je passe quarante minutes dans les embouteillages pour aller au travail. La musique rend ce trajet supportable.
+
+J'ai créé une playlist spéciale pour la voiture, différente de celle que j'écoute chez moi.
+
+La première chanson est toujours la même : une chanson énergique, pour me réveiller vraiment.
+
+Ensuite viennent des chansons plus calmes, pour ne pas m'énerver dans les embouteillages.
+
+Certains matins, quand je suis en retard et stressé, je change complètement la playlist pour de la musique classique. Ça me calme.
+
+Mon collègue, qui fait le même trajet, m'a demandé un jour de lui envoyer ma playlist.
+
+Il l'a écoutée pendant une semaine, puis il m'a dit : « Elle est trop calme pour moi, j'ai failli m'endormir ! »
+
+Chacun sa playlist, chacun son trajet. Mais pour moi, ces chansons sont devenues une vraie habitude du matin.
+
+Sans musique, je pense que je détesterais vraiment ce trajet quotidien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-136",
+    title: "Apprendre la guitare avec mon fils",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Mon fils de douze ans voulait apprendre la guitare. J'ai décidé d'apprendre avec lui.",
+    blurbEn:
+      "Learning guitar alongside a twelve-year-old son — an unexpected role reversal when the child learns faster than the parent. (Section: Music, 4/5.)",
+    body: `Mon fils de douze ans voulait apprendre la guitare. J'ai décidé d'apprendre avec lui, pour l'encourager.
+
+Nous avons acheté deux guitares, une petite pour lui et une normale pour moi.
+
+Nous avons pris des cours ensemble, une fois par semaine, avec un jeune professeur très patient.
+
+Les premières semaines, mes doigts me faisaient très mal. Les cordes de la guitare sont dures au début.
+
+Mon fils, lui, ne se plaignait jamais. Il pratiquait tous les jours, sans qu'on ait besoin de le lui demander.
+
+Après deux mois, j'ai remarqué quelque chose : mon fils jouait déjà mieux que moi !
+
+Ses doigts étaient plus rapides, sa mémoire des accords bien meilleure.
+
+Un soir, il m'a montré un accord difficile que je n'arrivais pas à faire. « Comme ça, papa, regarde », m'a-t-il dit, patiemment.
+
+Les rôles s'étaient inversés : c'était lui qui m'apprenait maintenant.
+
+Nous jouons encore ensemble chaque dimanche. Il est devenu bien meilleur que moi, mais ça ne me dérange pas du tout.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-137",
+    title: "Un festival de musique sous la pluie",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "L'année dernière, je suis allé à un festival de musique qui a eu lieu sous une pluie battante.",
+    blurbEn:
+      "A music festival hit by three days of relentless rain — mud, soaked tents, and a memory that somehow became a favourite anyway. (Section: Music, 5/5 — hardest.)",
+    body: `L'année dernière, je suis allé à un festival de musique qui a eu lieu sous une pluie battante pendant trois jours entiers.
+
+Nous avions réservé nos billets six mois à l'avance, sans savoir quel temps il ferait.
+
+Le premier jour, il a plu dès notre arrivée. Nous avons monté nos tentes dans la boue, trempés jusqu'aux os.
+
+Beaucoup de festivaliers sont repartis dès le premier soir. Ils en avaient assez du froid et de la boue.
+
+Mes amis et moi avons hésité à partir aussi. Mais nous avions attendu ce festival depuis si longtemps.
+
+Nous avons décidé de rester. Nous avons acheté des ponchos en plastique et nous avons continué à profiter des concerts.
+
+Étrangement, la pluie a créé une ambiance particulière. Les gens qui étaient restés dansaient dans la boue, en riant.
+
+Le dernier soir, pendant le concert final, la pluie s'est enfin arrêtée. Un arc-en-ciel est apparu au-dessus de la scène.
+
+Toute la foule a applaudi, autant pour le groupe que pour le ciel.
+
+En rentrant chez nous, épuisés et sales, nous étions tous d'accord : c'était le meilleur festival de notre vie, malgré la pluie. Ou peut-être justement à cause d'elle.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-138",
+    title: "Notre nouveau chaton",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le mois dernier, nous avons adopté un chaton de trois mois.",
+    blurbEn:
+      "Bringing home a three-month-old kitten — sleepless nights, shredded furniture, and falling completely in love anyway. (Section: Pets, 1/5.)",
+    body: `Le mois dernier, nous avons adopté un chaton de trois mois. Nous l'avons appelé Simba.
+
+Les premiers jours ont été difficiles. Simba miaulait beaucoup la nuit, surtout la première semaine.
+
+Il a aussi commencé à griffer notre canapé. Nous avons dû acheter un griffoir rapidement, pour le protéger un peu.
+
+Malgré tout ça, Simba est devenu très vite le centre de notre maison.
+
+Mes enfants passent des heures à jouer avec lui. Il adore courir après une petite balle en papier.
+
+Le soir, Simba dort maintenant dans son panier, près du radiateur.
+
+Il a aussi pris l'habitude de venir dormir sur mes genoux, quand je regarde la télévision.
+
+Notre vétérinaire dit qu'il est en très bonne santé, et qu'il grandit bien.
+
+En quelques semaines, Simba est devenu un vrai membre de la famille. Nous ne pouvons plus imaginer la maison sans lui.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-139",
+    title: "Le poisson rouge de mon fils",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Mon fils a gagné un poisson rouge dans une fête foraine.",
+    blurbEn:
+      "A goldfish won at a funfair turns into a surprisingly long-lived family pet, and a lesson in unexpected responsibility. (Section: Pets, 2/5.)",
+    body: `Mon fils a gagné un poisson rouge dans une fête foraine, il y a maintenant trois ans.
+
+Au début, je pensais que ce poisson ne vivrait pas longtemps. Beaucoup de poissons gagnés comme ça meurent en quelques semaines.
+
+Mon fils, qui avait alors six ans, l'a appelé Bulle. Il a insisté pour s'occuper de lui tout seul.
+
+Chaque matin, avant l'école, il donnait à manger à Bulle. Chaque semaine, il nettoyait un peu son bocal, avec mon aide.
+
+Bulle a survécu bien plus longtemps que prévu. Un an, puis deux, puis trois.
+
+Mon fils a beaucoup grandi pendant ce temps, mais sa relation avec Bulle n'a pas changé.
+
+L'année dernière, nous avons acheté un plus grand aquarium, avec des plantes et des cailloux colorés.
+
+Mon fils dit souvent : « Bulle est mon animal préféré, même s'il ne peut pas jouer avec moi. »
+
+Ce petit poisson, gagné presque par hasard, a appris à mon fils ce que veut dire s'occuper de quelqu'un.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-140",
+    title: "Un hamster qui s'est échappé",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Un soir, le hamster de ma fille a réussi à s'échapper de sa cage.",
+    blurbEn:
+      "A hamster escapes its cage one evening, sending the whole family on a frantic, furniture-moving search through the night. (Section: Pets, 3/5.)",
+    body: `Un soir, le hamster de ma fille, Nono, a réussi à s'échapper de sa cage.
+
+Ma fille est venue me voir, en larmes. « Papa, Nono a disparu ! La cage est ouverte ! »
+
+Nous avons cherché partout dans sa chambre : sous le lit, derrière l'armoire, dans les tiroirs.
+
+Après une heure, toujours aucune trace de Nono. Toute la famille s'est mise à chercher.
+
+Nous avons déplacé les meubles du salon, pensant qu'il avait pu se cacher là.
+
+Vers vingt-trois heures, mon mari a entendu un petit bruit venant de la cuisine.
+
+Nous avons trouvé Nono derrière le réfrigérateur, en train de manger une miette de pain tombée par terre.
+
+Ma fille était tellement soulagée qu'elle a pleuré de joie cette fois.
+
+Depuis cette aventure, nous vérifions deux fois que la cage est bien fermée avant de dormir.
+
+Nono, lui, ne semble se souvenir de rien. Il continue de courir dans sa roue comme si de rien n'était.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-141",
+    title: "Voyager avec son chien",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Cet été, nous avons décidé d'emmener notre chien en vacances avec nous, pour la première fois.",
+    blurbEn:
+      "First holiday with the family dog — a long car journey, a nervous first swim in the sea, and a pet who clearly preferred travelling to staying home. (Section: Pets, 4/5.)",
+    body: `Cet été, nous avons décidé d'emmener notre chien, Rex, en vacances avec nous, pour la première fois.
+
+Avant, nous le laissions toujours chez mes parents pendant nos voyages. Mais cette année, nous voulions essayer autrement.
+
+Le trajet en voiture a duré six heures. Rex n'avait jamais fait un si long voyage.
+
+Il a dormi la moitié du trajet, et il a regardé par la fenêtre le reste du temps, l'air très intéressé.
+
+Une fois arrivés, nous avons trouvé une location qui acceptait les chiens, près de la mer.
+
+Le premier jour, Rex a découvert la plage. Il courait dans tous les sens, complètement excité.
+
+Il a hésité longtemps avant d'entrer dans l'eau. Puis, petit à petit, il s'est approché des vagues.
+
+Finalement, il a adoré nager, encore plus que nous ne l'imaginions.
+
+Chaque matin des vacances, Rex nous attendait devant la porte, prêt à retourner à la plage.
+
+De retour à la maison, nous avons décidé que ce ne serait plus jamais des vacances sans lui.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-142",
+    title: "La perte de notre vieux chat",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Notre chat, Minou, est mort le mois dernier, après dix-huit ans passés avec nous.",
+    blurbEn:
+      "Saying goodbye to an eighteen-year-old family cat — a quiet last week, a hard decision, and the strange emptiness of a house without him. (Section: Pets, 5/5 — hardest.)",
+    body: `Notre chat, Minou, est mort le mois dernier, après dix-huit ans passés avec nous.
+
+Il était arrivé chez nous avant même la naissance de mes enfants. Ils ne connaissaient pas la maison sans lui.
+
+Ces dernières années, Minou avait beaucoup vieilli. Il dormait presque toute la journée et mangeait de moins en moins.
+
+La dernière semaine, notre vétérinaire nous a expliqué que Minou souffrait, et qu'il ne guérirait pas.
+
+Ce fut une des décisions les plus difficiles de notre vie de famille : décider du bon moment pour le laisser partir.
+
+Nous avons passé une dernière soirée tous ensemble avec lui, dans le salon, chacun le caressant à son tour.
+
+Le lendemain matin, nous sommes allés chez le vétérinaire. Mes enfants ont pu lui dire au revoir.
+
+La maison, depuis, semble étrangement silencieuse. Nous cherchons encore parfois Minou du regard, par habitude.
+
+Ma fille a dit : « Dix-huit ans, c'est presque toute ma vie avec lui. »
+
+Nous savons qu'un jour, peut-être, un autre chat viendra. Mais pour l'instant, nous avons simplement besoin de nous souvenir de Minou.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-143",
+    title: "Une soirée cinéma entre amis",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Vendredi dernier, je suis allé au cinéma avec trois amis.",
+    blurbEn:
+      "A Friday night at the cinema with friends — a long queue, a disappointing film, and a debate afterward that lasted longer than the movie. (Section: Film and TV, 1/5.)",
+    body: `Vendredi dernier, je suis allé au cinéma avec trois amis.
+
+Nous avons choisi un film très populaire, dont tout le monde parlait depuis des semaines.
+
+Nous sommes arrivés vingt minutes avant la séance, mais il y avait déjà une longue file d'attente.
+
+Nous avons acheté du pop-corn et des boissons, comme toujours avant un film.
+
+La salle était presque pleine. Nous avons trouvé quatre places ensemble, au milieu.
+
+Le film a commencé à vingt heures. Il durait presque deux heures et demie.
+
+Malheureusement, le film ne nous a pas beaucoup plu. L'histoire était confuse, et la fin n'expliquait pas grand-chose.
+
+En sortant du cinéma, nous avons discuté pendant une heure entière du film, pour essayer de comprendre la fin.
+
+Finalement, personne n'était vraiment d'accord sur ce qui s'était passé !
+
+« Au moins, on aura de quoi parler toute la soirée », a dit un de mes amis en riant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-144",
+    title: "Je regarde trop de séries",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le mois dernier, j'ai commencé une nouvelle série sur une plateforme de streaming.",
+    blurbEn:
+      "Binge-watching a new series until 2am on a work night — the guilt, the excuses, and finally deciding to set a real limit. (Section: Film and TV, 2/5.)",
+    body: `Le mois dernier, j'ai commencé une nouvelle série sur une plateforme de streaming.
+
+Au début, je pensais regarder juste un épisode le soir, avant de dormir.
+
+Mais chaque épisode se terminait par une scène qui donnait envie de voir la suite immédiatement.
+
+« Encore un épisode, et j'arrête », me disais-je chaque soir. Ce n'était presque jamais vrai.
+
+Un soir de semaine, j'ai regardé quatre épisodes d'affilée, jusqu'à deux heures du matin.
+
+Le lendemain, j'étais épuisé au travail. Ma collègue m'a demandé si j'allais bien.
+
+« J'ai juste un peu trop regardé de télévision cette nuit », lui ai-je expliqué, un peu gêné.
+
+Elle a ri. « Cette série rend tout le monde fou en ce moment, apparemment. »
+
+Après cette nuit difficile, j'ai décidé de me fixer une règle : un seul épisode par soir, pas plus.
+
+Ce n'est pas toujours facile à respecter, mais au moins, je dors mieux maintenant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-145",
+    title: "Le cinéma de mon quartier a fermé",
+    category: "culture",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le petit cinéma de mon quartier a fermé ses portes le mois dernier, après quarante ans.",
+    blurbEn:
+      "The neighbourhood's small independent cinema closes after forty years, unable to compete with streaming, and a community loses something it didn't realise it valued. (Section: Film and TV, 3/5.)",
+    body: `Le petit cinéma de mon quartier a fermé ses portes le mois dernier, après quarante ans.
+
+C'était un cinéma indépendant, avec seulement deux salles. J'y allais depuis mon enfance.
+
+Le propriétaire, Monsieur Lenoir, l'avait ouvert avec son père en 1985. Toute sa vie était liée à ce cinéma.
+
+Ces dernières années, de moins en moins de gens venaient. Beaucoup préféraient regarder des films chez eux, sur une plateforme de streaming.
+
+« Nous ne pouvons plus payer le loyer avec si peu de spectateurs », a expliqué Monsieur Lenoir dans une interview.
+
+La dernière séance a eu lieu un dimanche soir. Presque tout le quartier était venu, une dernière fois.
+
+Après le film, les habitants ont applaudi longuement, pas seulement pour le film, mais pour tout ce que ce cinéma avait représenté.
+
+Un grand supermarché va peut-être ouvrir à sa place.
+
+Beaucoup d'habitants sont tristes de cette fermeture. Le quartier perd un endroit où les gens se retrouvaient, discutaient, partageaient une même histoire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-146",
+    title: "Un film qui m'a fait pleurer",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "L'autre soir, j'ai regardé un film qui m'a fait pleurer, alors que je ne pleure presque jamais devant un écran.",
+    blurbEn:
+      "An unexpectedly emotional film brings a viewer who never cries at movies to tears, and a shared laugh with a partner who noticed. (Section: Film and TV, 4/5.)",
+    body: `L'autre soir, j'ai regardé un film qui m'a fait pleurer, alors que je ne pleure presque jamais devant un écran.
+
+C'était un film simple, sur une famille qui traversait une période difficile. Rien de spectaculaire, aucun effet spécial.
+
+Mais l'histoire était tellement bien racontée que je me suis reconnu dans les personnages.
+
+Il y avait une scène, vers la fin, où le père disait au revoir à son fils. Je ne m'attendais pas à être touché à ce point.
+
+Mon mari, assis à côté de moi, m'a regardé avec surprise. « Tu pleures vraiment ? » m'a-t-il demandé, un peu amusé.
+
+« Je ne sais pas pourquoi, mais oui », lui ai-je répondu en essuyant mes larmes.
+
+Après le film, nous avons parlé pendant longtemps de nos propres familles, de nos propres souvenirs.
+
+Ce film, que je pensais oublier facilement, m'a fait réfléchir pendant plusieurs jours.
+
+Certains films semblent simples, mais ils touchent quelque chose de profond en nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-147",
+    title: "Ma fille veut devenir actrice",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Ma fille de seize ans m'a annoncé qu'elle voulait devenir actrice.",
+    blurbEn:
+      "A sixteen-year-old daughter announces she wants to become an actress — parental worry about a difficult career, and a compromise everyone can live with. (Section: Film and TV, 5/5 — hardest.)",
+    body: `Ma fille de seize ans m'a annoncé, un soir au dîner, qu'elle voulait devenir actrice.
+
+Ma première réaction n'a pas été très positive. « C'est un métier très difficile, tu sais », lui ai-je dit.
+
+Elle a insisté : elle avait déjà joué dans deux pièces de théâtre au lycée, et elle adorait ça.
+
+Son professeur de théâtre m'a contactée quelques jours plus tard. Elle m'a dit que ma fille avait vraiment du talent.
+
+« Bien sûr, ce métier est difficile, m'a-t-elle expliqué. Mais elle a quelque chose de particulier sur scène. »
+
+Cette conversation a changé un peu ma manière de voir les choses.
+
+Nous avons discuté en famille, mon mari, ma fille et moi. Nous avons cherché un compromis ensemble.
+
+Ma fille continuera ses études normalement, tout en prenant des cours de théâtre le week-end.
+
+Si, dans quelques années, elle veut vraiment essayer ce métier, nous la soutiendrons.
+
+« Merci de m'écouter, maman », m'a-t-elle dit après cette discussion. « Je sais que ce n'est pas le chemin le plus simple. »
+
+Je ne sais pas ce que l'avenir lui réserve. Mais je sais qu'elle a une vraie passion, et ça, ça compte beaucoup.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-148",
+    title: "Mon nouveau trajet en bus",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Depuis que j'ai changé de travail, je prends le bus tous les matins.",
+    blurbEn:
+      "Switching from car to bus for the daily commute — learning a new route, an unexpected friendly regular, and a slower but calmer start to the day. (Section: Public transport, 1/5.)",
+    body: `Depuis que j'ai changé de travail, je prends le bus tous les matins.
+
+Avant, j'y allais toujours en voiture. Mais mon nouveau bureau n'a pas beaucoup de places de parking.
+
+Le premier jour, j'ai eu du mal à comprendre quel bus prendre. Il y avait plusieurs lignes possibles.
+
+Un homme, à l'arrêt de bus, a vu que j'étais perdu. « Vous cherchez quelle ligne ? » m'a-t-il demandé gentiment.
+
+Il m'a expliqué qu'il fallait prendre la ligne douze, puis changer à la place principale.
+
+J'ai acheté un abonnement mensuel, ce qui coûte moins cher que des billets à l'unité.
+
+Maintenant, je vois souvent les mêmes personnes chaque matin, dans le même bus.
+
+Il y a une dame âgée, toujours assise à la même place, qui me sourit chaque matin.
+
+Le trajet dure vingt-cinq minutes, un peu plus long qu'en voiture, mais je peux lire pendant le trajet.
+
+Je ne pensais pas dire ça un jour, mais je préfère finalement le bus à la voiture.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-149",
+    title: "Une panne de métro",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Hier matin, le métro est resté bloqué entre deux stations pendant presque une heure.",
+    blurbEn:
+      "Stuck on a stalled metro train for nearly an hour with hundreds of strangers — the panic, the patience, and the small kindnesses that emerge. (Section: Public transport, 2/5.)",
+    body: `Hier matin, le métro est resté bloqué entre deux stations pendant presque une heure.
+
+J'étais en route pour un entretien d'embauche très important. J'étais déjà un peu nerveux avant même cette panne.
+
+Le train s'est arrêté brusquement. Une voix a annoncé : « Nous sommes désolés pour ce désagrément, un problème technique est en cours. »
+
+Au début, personne n'a paniqué. Les gens ont continué à lire ou à regarder leur téléphone.
+
+Mais après vingt minutes sans aucune information supplémentaire, l'ambiance a changé. Certains passagers ont commencé à s'inquiéter à voix haute.
+
+Une femme à côté de moi m'a proposé son chargeur de téléphone, en voyant que ma batterie était presque vide.
+
+« Vous devez appeler quelqu'un ? » m'a-t-elle demandé. Je lui ai expliqué la situation de mon entretien.
+
+« Ne vous inquiétez pas, m'a-t-elle rassuré. Ces choses-là arrivent, les gens comprennent en général. »
+
+Finalement, le métro est reparti après cinquante-cinq minutes. J'ai appelé l'entreprise pour expliquer mon retard.
+
+Ils ont été compréhensifs et ont décalé l'entretien d'une heure. Tout s'est bien terminé, malgré cette matinée stressante.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-150",
+    title: "J'ai arrêté de prendre la voiture",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Il y a six mois, j'ai décidé d'arrêter de prendre la voiture pour aller travailler.",
+    blurbEn:
+      "Giving up the daily car commute for public transport — the money saved, the extra reading time, and the one thing that's genuinely harder without a car. (Section: Public transport, 3/5.)",
+    body: `Il y a six mois, j'ai décidé d'arrêter de prendre la voiture pour aller travailler.
+
+Plusieurs raisons m'ont poussé à ce changement : le prix de l'essence, le stress des embouteillages, et l'envie de faire un geste pour l'environnement.
+
+Maintenant, je prends le tramway, puis un bus, pour arriver au bureau.
+
+Le trajet total dure environ quarante minutes, contre vingt-cinq minutes en voiture avant.
+
+Au début, cette différence de temps m'agaçait un peu. Je perdais quinze minutes chaque jour.
+
+Mais j'ai vite compris que je pouvais utiliser ce temps autrement. Je lis maintenant un livre pendant le trajet.
+
+En six mois, j'ai lu plus de livres que pendant les trois années précédentes !
+
+J'ai aussi économisé beaucoup d'argent : plus d'essence, plus de parking à payer chaque mois.
+
+La seule chose vraiment plus difficile, c'est de faire les grosses courses sans voiture. Je dois maintenant les faire à pied, avec un sac, ou demander de l'aide à un ami.
+
+Dans l'ensemble, je ne regrette absolument pas ce changement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-151",
+    title: "Le tramway de ma ville",
+    category: "news-style",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Un nouveau tramway a ouvert dans ma ville le mois dernier, après quatre ans de travaux.",
+    blurbEn:
+      "A new tram line opens after four years of construction — early enthusiasm, some inevitable teething problems, and a city rethinking how it gets around. (Section: Public transport, 4/5.)",
+    body: `Un nouveau tramway a ouvert dans ma ville le mois dernier, après quatre ans de travaux.
+
+La nouvelle ligne relie le centre-ville à la banlieue nord, sur une distance de quinze kilomètres.
+
+Le premier jour, des milliers d'habitants sont venus essayer le tramway, gratuitement pendant tout le week-end.
+
+Beaucoup étaient curieux de voir ce qui avait changé leur rue pendant si longtemps.
+
+« Enfin, plus besoin de prendre la voiture pour aller travailler », a déclaré une habitante interrogée par un journal local.
+
+Mais tout ne s'est pas passé parfaitement. Pendant les premières semaines, plusieurs pannes ont retardé les usagers.
+
+La mairie a présenté ses excuses et promis d'améliorer rapidement le service.
+
+Certains commerçants du centre-ville se plaignent aussi : les travaux ont fermé leur rue pendant quatre ans, et beaucoup de clients sont partis ailleurs.
+
+D'autres, au contraire, espèrent que le tramway attirera de nouveaux clients dans les mois qui viennent.
+
+La mairie affirme que le nombre de voitures en centre-ville a déjà commencé à baisser.
+
+Dans un an, une deuxième ligne devrait ouvrir vers l'est de la ville.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-152",
+    title: "Un long trajet en train",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le mois dernier, j'ai pris un train de nuit pour aller voir ma famille, à plus de mille kilomètres de chez moi.",
+    blurbEn:
+      "An overnight train journey across the country — a cramped shared cabin, unexpected conversation with a stranger, and arriving more rested than expected. (Section: Public transport, 5/5 — hardest.)",
+    body: `Le mois dernier, j'ai pris un train de nuit pour aller voir ma famille, à plus de mille kilomètres de chez moi.
+
+D'habitude, je prends l'avion, mais cette fois, j'ai voulu essayer quelque chose de différent.
+
+J'avais réservé une couchette dans un compartiment de quatre personnes.
+
+Quand je suis monté dans le train, deux autres passagers étaient déjà installés : un étudiant et une femme d'affaires.
+
+Le quatrième passager, un homme âgé, est arrivé juste avant le départ, un peu essoufflé.
+
+Au début, personne ne parlait vraiment. Chacun regardait son téléphone ou lisait un livre.
+
+Vers vingt-trois heures, l'homme âgé a proposé de partager les biscuits qu'il avait apportés. La conversation a commencé naturellement.
+
+Il nous a raconté qu'il faisait ce même trajet chaque année, depuis trente ans, pour rendre visite à son fils.
+
+Nous avons discuté pendant presque deux heures, avant que chacun s'endorme dans sa couchette.
+
+Le train a roulé toute la nuit, avec un léger bruit régulier, presque apaisant.
+
+Le lendemain matin, je suis arrivé reposé, avec l'impression étrange d'avoir vécu un petit moment suspendu dans le temps.
+
+Je referai sans doute ce voyage en train, même si c'est plus long que l'avion.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-153",
+    title: "Je repeins ma cuisine",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Ce week-end, j'ai décidé de repeindre ma cuisine moi-même, sans faire venir un professionnel.",
+    blurbEn:
+      "Painting the kitchen alone for the first time — the wrong colour on the first wall, a lot of newspaper, and real pride in the finished result. (Section: DIY and home, 1/5.)",
+    body: `Ce week-end, j'ai décidé de repeindre ma cuisine moi-même, sans faire venir un professionnel.
+
+J'ai acheté de la peinture, des pinceaux, et du ruban adhésif pour protéger les bords.
+
+Vendredi soir, j'ai déplacé tous les meubles et couvert le sol avec de vieux journaux.
+
+Samedi matin, j'ai commencé par le premier mur. J'avais choisi un vert clair, censé être apaisant.
+
+Après une heure, j'ai reculé pour regarder mon travail. La couleur était bien plus foncée sur le mur que sur l'échantillon !
+
+J'ai hésité un moment, un peu déçu. Puis j'ai décidé de continuer quand même, en me disant que ça sécherait peut-être plus clair.
+
+Une fois sec, la couleur était en effet plus douce que prévu, à mon grand soulagement.
+
+Il m'a fallu tout le week-end pour finir les quatre murs.
+
+Le dimanche soir, j'étais épuisé, couvert de peinture, mais très fier du résultat.
+
+Ma cuisine a maintenant un look complètement différent, et je l'ai fait moi-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-154",
+    title: "Une étagère qui n'a pas tenu",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "J'ai voulu installer une étagère dans le salon, pour ranger mes livres.",
+    blurbEn:
+      "Installing a bookshelf that seemed simple enough — a rushed job, a dramatic collapse, and doing it properly the second time around. (Section: DIY and home, 2/5.)",
+    body: `J'ai voulu installer une étagère dans le salon, pour ranger mes livres.
+
+Sur la vidéo que j'avais regardée en ligne, cela semblait très simple. « Vingt minutes maximum », disait la personne dans la vidéo.
+
+J'ai percé deux trous dans le mur et j'ai fixé l'étagère avec les vis fournies.
+
+Content de mon travail, j'ai posé mes livres dessus, une bonne trentaine.
+
+Deux jours plus tard, en pleine nuit, j'ai entendu un grand bruit venant du salon.
+
+L'étagère était tombée par terre, avec tous mes livres autour, sur le sol.
+
+Le lendemain, j'ai regardé de nouveau la vidéo, plus attentivement cette fois.
+
+J'avais oublié une étape importante : il fallait utiliser des chevilles adaptées au type de mur, pas simplement des vis.
+
+Cette fois, j'ai demandé conseil à mon voisin, qui bricole souvent.
+
+Il m'a aidé à refaire l'installation correctement, avec les bons outils.
+
+Cette deuxième étagère, elle, tient parfaitement, même avec tous mes livres dessus.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-155",
+    title: "Mon premier meuble en bois",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Cet hiver, j'ai décidé d'apprendre à fabriquer un meuble en bois, une petite table basse.",
+    blurbEn:
+      "Building a small wooden coffee table from scratch over a winter — sawdust everywhere, a wobbly first attempt, and unexpected patience discovered along the way. (Section: DIY and home, 3/5.)",
+    body: `Cet hiver, j'ai décidé d'apprendre à fabriquer un meuble en bois, une petite table basse.
+
+Je n'avais jamais fait de menuiserie avant. J'ai regardé plusieurs vidéos et j'ai acheté du bois dans un magasin de bricolage.
+
+J'ai installé un petit atelier dans mon garage, avec les outils nécessaires : une scie, du papier de verre, de la colle à bois.
+
+La première semaine, j'ai coupé les planches selon les mesures prévues. Certaines coupes n'étaient pas parfaitement droites.
+
+J'ai dû recommencer deux planches, un peu frustré, mais j'ai continué patiemment.
+
+Après avoir assemblé les pieds de la table, j'ai remarqué qu'elle n'était pas complètement stable. Elle bougeait légèrement.
+
+J'ai passé une soirée entière à corriger ce problème, en ajustant chaque pied.
+
+Enfin, j'ai poncé toute la surface pour qu'elle soit bien lisse, puis j'ai appliqué du vernis.
+
+Après trois semaines de travail, ma table basse était enfin terminée.
+
+Elle n'est pas parfaite, on voit quelques petits défauts si on regarde de près. Mais elle est dans mon salon maintenant, et j'en suis très fier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-156",
+    title: "Réparer une fuite d'eau",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Un dimanche matin, j'ai découvert une fuite d'eau sous mon évier de cuisine.",
+    blurbEn:
+      "Discovering a leaking pipe on a Sunday morning — a frantic YouTube search, a botched first attempt, and finally calling in a professional. (Section: DIY and home, 4/5.)",
+    body: `Un dimanche matin, j'ai découvert une fuite d'eau sous mon évier de cuisine.
+
+Il y avait une petite flaque d'eau dans le placard, sous le tuyau.
+
+Comme c'était dimanche, j'ai pensé qu'il serait difficile de trouver un plombier rapidement. J'ai décidé d'essayer de réparer ça moi-même.
+
+J'ai regardé plusieurs vidéos en ligne qui expliquaient comment resserrer un joint qui fuit.
+
+Muni d'une clé, j'ai essayé de resserrer le tuyau, comme dans la vidéo.
+
+Malheureusement, j'ai un peu trop serré, et le tuyau s'est fissuré. La fuite est devenue bien pire !
+
+De l'eau coulait maintenant beaucoup plus vite dans le placard.
+
+J'ai coupé l'arrivée d'eau générale, un peu paniqué, et j'ai finalement appelé un plombier en urgence.
+
+Le plombier est arrivé une heure plus tard. Il a réparé le tuyau en vingt minutes seulement, avec le bon matériel.
+
+« Ce n'est pas grave, m'a-t-il dit en souriant. Beaucoup de gens font la même erreur en voulant bien faire. »
+
+La prochaine fois, je crois que j'appellerai directement un professionnel, sans essayer moi-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-157",
+    title: "Acheter une vieille maison à rénover",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Il y a deux ans, nous avons acheté une vieille maison à rénover entièrement.",
+    blurbEn:
+      "Buying an old house that needs a total renovation — years of work, budget overruns, and finally understanding why people warned them. (Section: DIY and home, 5/5 — hardest.)",
+    body: `Il y a deux ans, nous avons acheté une vieille maison à rénover entièrement.
+
+Nos amis nous avaient prévenus : « Rénover une vieille maison prend toujours plus de temps et d'argent que prévu. »
+
+Nous ne les avons pas vraiment crus, au début. Nous pensions finir les travaux en six mois.
+
+La première surprise est arrivée rapidement : l'électricité de la maison, installée dans les années soixante, devait être entièrement refaite.
+
+Puis nous avons découvert des problèmes d'humidité dans les murs, invisibles au moment de l'achat.
+
+Chaque mois apportait son lot de nouvelles découvertes, souvent coûteuses.
+
+Nous avons dû revoir notre budget plusieurs fois, en économisant sur d'autres projets.
+
+Certains soirs, fatigués par la poussière et les travaux sans fin, nous avons douté de notre décision.
+
+Mais petit à petit, pièce par pièce, la maison a commencé à ressembler à ce que nous avions imaginé.
+
+Après deux ans de travaux, la maison est enfin presque terminée.
+
+Nos amis avaient raison sur le temps et l'argent. Mais aujourd'hui, en regardant cette maison que nous avons transformée nous-mêmes, nous ne regrettons rien.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-158",
+    title: "Ma première semaine à l'université",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "La semaine dernière, j'ai commencé mes études à l'université, loin de chez mes parents pour la première fois.",
+    blurbEn:
+      "The first week of university life away from home — a confusing timetable, a huge campus, and the slow start of new friendships. (Section: University life, 1/5.)",
+    body: `La semaine dernière, j'ai commencé mes études à l'université, loin de chez mes parents pour la première fois.
+
+Le campus est immense, bien plus grand que mon ancien lycée. Le premier jour, je me suis perdu deux fois.
+
+J'ai dû trouver mes salles de cours parmi des dizaines de bâtiments différents.
+
+Les cours à l'université sont très différents du lycée. Il y a beaucoup moins de contrôle, et les professeurs attendent qu'on travaille seul.
+
+Le premier cours, un cours d'histoire, avait lieu dans un amphithéâtre avec plus de deux cents étudiants.
+
+J'ai trouvé ça impressionnant, mais aussi un peu impersonnel après les petites classes du lycée.
+
+À la bibliothèque, j'ai découvert des étages entiers de livres sur mon sujet d'études.
+
+Le soir, dans mon petit studio étudiant, j'ai un peu pensé à mes parents et à ma maison.
+
+Mais dès le deuxième jour, j'ai commencé à parler à d'autres étudiants dans mon cours.
+
+Une fille de ma classe, Léa, m'a proposé de déjeuner ensemble. Ce petit geste a beaucoup changé ma semaine.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-159",
+    title: "Vivre en colocation",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Depuis septembre, je vis en colocation avec deux autres étudiants que je ne connaissais pas avant.",
+    blurbEn:
+      "Sharing a flat with two strangers found online — awkward first weeks, a chore-rota disaster, and unlikely friendship. (Section: University life, 2/5.)",
+    body: `Depuis septembre, je vis en colocation avec deux autres étudiants que je ne connaissais pas avant.
+
+Nous nous sommes trouvés grâce à un site internet pour étudiants cherchant une colocation.
+
+Les deux premières semaines ont été un peu étranges. Nous ne savions pas grand-chose les uns des autres.
+
+Nous avons essayé d'organiser le ménage avec un tableau : qui fait la vaisselle, qui passe l'aspirateur, chaque semaine.
+
+Ce système n'a pas très bien fonctionné. Personne ne suivait vraiment le tableau, et des disputes ont commencé sur la propreté de la cuisine.
+
+Un soir, nous avons décidé d'en parler calmement, tous les trois ensemble.
+
+Chacun a expliqué ce qui le dérangeait vraiment. Cette conversation a beaucoup aidé.
+
+Depuis, nous nous entendons bien mieux. Nous cuisinons même parfois ensemble, le dimanche soir.
+
+L'un de mes colocataires, Hugo, est devenu un très bon ami. Nous étudions souvent ensemble à la bibliothèque.
+
+Je ne pensais pas qu'une colocation avec des inconnus deviendrait si agréable.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-160",
+    title: "Un examen que j'ai raté",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "En décembre, j'ai raté mon premier examen à l'université.",
+    blurbEn:
+      "Failing a first university exam — the shock of a low grade, an honest conversation with a professor, and learning to actually study. (Section: University life, 3/5.)",
+    body: `En décembre, j'ai raté mon premier examen à l'université, un examen de mathématiques.
+
+Je pensais avoir bien travaillé, mais je n'avais pas compris comment étudier efficacement à ce niveau.
+
+Quand j'ai vu ma note, j'étais choqué. Je n'avais jamais raté un examen au lycée.
+
+Ma première réaction a été de me sentir nul, incapable de réussir mes études.
+
+Le lendemain, j'ai décidé d'aller parler à mon professeur, malgré ma gêne.
+
+Il a été très compréhensif. « Beaucoup d'étudiants échouent à leur premier examen ici, m'a-t-il dit. C'est un nouveau système, il faut du temps pour s'adapter. »
+
+Il m'a expliqué que la méthode de travail au lycée ne suffisait pas à l'université. Il fallait travailler régulièrement, pas seulement avant l'examen.
+
+Il m'a conseillé de rejoindre un groupe d'étude avec d'autres étudiants.
+
+J'ai suivi son conseil, et j'ai changé complètement ma façon de travailler.
+
+Au deuxième examen, en mai, j'ai obtenu une bien meilleure note.
+
+Cet échec, aussi difficile soit-il sur le moment, m'a appris à mieux étudier.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-161",
+    title: "Trouver un stage",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Cette année, je devais trouver un stage obligatoire pour valider mes études.",
+    blurbEn:
+      "The stressful hunt for a mandatory internship — dozens of rejections, one unexpected reply, and finally a chance to prove herself. (Section: University life, 4/5.)",
+    body: `Cette année, je devais trouver un stage obligatoire pour valider mes études.
+
+J'ai envoyé plus de trente candidatures à des entreprises différentes, dans mon domaine.
+
+Les premières semaines, j'ai reçu beaucoup de réponses négatives, ou souvent aucune réponse du tout.
+
+Je commençais à m'inquiéter sérieusement, car la date limite approchait rapidement.
+
+Un matin, alors que je n'y croyais presque plus, j'ai reçu un appel d'une petite entreprise que j'avais presque oubliée.
+
+Ils m'ont proposé un entretien pour la semaine suivante. J'étais à la fois excitée et très nerveuse.
+
+L'entretien s'est bien passé. La responsable, Madame Girard, m'a posé des questions sur mes études et mes projets.
+
+Une semaine plus tard, elle m'a rappelée pour me proposer le stage.
+
+J'ai accepté immédiatement, soulagée après tant de recherches difficiles.
+
+Le stage a duré trois mois, et j'y ai beaucoup appris, bien plus que je ne l'imaginais.
+
+À la fin, Madame Girard m'a même proposé un emploi à temps partiel pour continuer avec eux.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-162",
+    title: "La fin de mes études",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Après cinq années d'études, j'ai obtenu mon diplôme le mois dernier.",
+    blurbEn:
+      "Graduating after five years of study — the pride, the strange sadness of leaving student life behind, and facing an uncertain job market. (Section: University life, 5/5 — hardest.)",
+    body: `Après cinq années d'études, j'ai obtenu mon diplôme le mois dernier.
+
+La cérémonie de remise des diplômes a eu lieu dans un grand amphithéâtre, devant toutes les familles.
+
+Quand mon nom a été appelé, j'ai ressenti une fierté immense, en pensant à toutes ces années de travail.
+
+Mes parents étaient dans le public, et j'ai vu ma mère essuyer une larme quand je suis monté sur scène.
+
+Après la cérémonie, j'ai retrouvé mes amis de promotion pour une dernière photo tous ensemble.
+
+Nous savions que cette photo marquait aussi une séparation : chacun allait maintenant partir de son côté, vers un nouvel emploi ou une nouvelle ville.
+
+En rentrant chez moi ce soir-là, j'ai ressenti un mélange étrange de joie et de tristesse.
+
+Ces cinq années avaient été difficiles, mais elles avaient aussi été parmi les plus riches de ma vie.
+
+Maintenant, je dois trouver un emploi, dans un marché du travail qui n'est pas toujours facile pour les jeunes diplômés.
+
+Je ne sais pas encore exactement ce que l'avenir me réserve.
+
+Mais je pars avec un diplôme, des amis précieux, et la conviction d'avoir bien utilisé ces années.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-163",
+    title: "Ma première commande en ligne",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Il y a dix ans, j'ai passé ma toute première commande sur internet.",
+    blurbEn:
+      "A first-ever online order a decade ago — genuine nervousness about entering card details, and the small thrill of a package arriving at the door. (Section: Online shopping, 1/5.)",
+    body: `Il y a dix ans, j'ai passé ma toute première commande sur internet.
+
+À cette époque, j'avais un peu peur d'acheter en ligne. Beaucoup de gens autour de moi disaient que ce n'était pas sûr.
+
+J'avais besoin d'un livre, difficile à trouver dans les magasins de ma ville.
+
+J'ai créé un compte sur un site de vente en ligne, avec beaucoup d'hésitation.
+
+Au moment de rentrer mes informations bancaires, mon cœur battait plus vite que d'habitude.
+
+J'ai finalement validé ma commande, en espérant ne pas avoir fait d'erreur.
+
+Les jours suivants, j'ai suivi le colis presque tous les jours, curieux et un peu inquiet.
+
+Quatre jours plus tard, le livreur a sonné à ma porte avec mon colis.
+
+J'ai ouvert le paquet avec une excitation presque enfantine. Le livre était exactement celui que j'avais commandé.
+
+Depuis ce jour, j'achète régulièrement en ligne, sans plus aucune peur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-164",
+    title: "Un colis jamais arrivé",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Le mois dernier, j'ai commandé un cadeau important, mais le colis n'est jamais arrivé.",
+    blurbEn:
+      "An important gift ordered online simply never arrives — a frustrating hunt through customer service, and a happy resolution just in time. (Section: Online shopping, 2/5.)",
+    body: `Le mois dernier, j'ai commandé un cadeau important, mais le colis n'est jamais arrivé.
+
+C'était un cadeau pour l'anniversaire de mon père, commandé deux semaines à l'avance pour être sûr.
+
+Le site indiquait une livraison en cinq jours. Après une semaine, toujours rien.
+
+J'ai vérifié le suivi du colis en ligne. Il indiquait simplement « en cours de livraison », sans plus de détails.
+
+Inquiète, j'ai contacté le service client par message. La réponse a mis trois jours à arriver.
+
+L'entreprise m'a expliqué qu'il y avait eu un problème avec le transporteur, sans donner plus d'explications précises.
+
+L'anniversaire de mon père approchait rapidement, et je commençais vraiment à paniquer.
+
+J'ai appelé le service client par téléphone cette fois, plus déterminée à obtenir une réponse claire.
+
+Après une longue attente, une employée m'a proposé de renvoyer immédiatement un nouveau colis en livraison rapide.
+
+Le nouveau colis est arrivé deux jours plus tard, juste à temps pour l'anniversaire.
+
+J'ai eu de la chance, mais cette expérience m'a rendue plus prudente pour mes futures commandes importantes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-165",
+    title: "Comparer les prix avant d'acheter",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Avant chaque achat important, je passe maintenant du temps à comparer les prix sur plusieurs sites.",
+    blurbEn:
+      "The habit of comparing prices across sites before every purchase — the hours it saves in money, and the discipline it takes not to buy on impulse. (Section: Online shopping, 3/5.)",
+    body: `Avant chaque achat important, je passe maintenant du temps à comparer les prix sur plusieurs sites.
+
+Cette habitude a commencé après un achat que je regrette encore : un ordinateur acheté trop vite, sans comparer.
+
+Deux semaines plus tard, j'ai vu le même ordinateur, moins cher de deux cents euros, sur un autre site.
+
+Depuis ce jour, je prends toujours le temps de vérifier plusieurs sites avant d'acheter quelque chose de cher.
+
+J'utilise un site qui compare automatiquement les prix de différents magasins en ligne.
+
+Cela me prend parfois vingt minutes de plus, mais ça m'a fait économiser beaucoup d'argent au fil des années.
+
+Ma sœur trouve que je perds trop de temps avec ça. « Achète et voilà », me dit-elle souvent.
+
+Mais pour moi, ces quelques minutes valent vraiment la peine, surtout pour les achats importants comme l'électroménager ou les vêtements chers.
+
+Le plus difficile, c'est de résister à l'envie d'acheter tout de suite, avant même d'avoir comparé.
+
+J'ai appris à être patiente, et cette patience a un vrai prix : celui de l'argent économisé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-166",
+    title: "Renvoyer un vêtement qui ne va pas",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "J'ai commandé une robe en ligne pour un mariage, mais elle ne m'allait pas du tout.",
+    blurbEn:
+      "Ordering a dress online for a wedding that turns out completely the wrong size — the confusing returns process, and cutting it uncomfortably close to the deadline. (Section: Online shopping, 4/5.)",
+    body: `J'ai commandé une robe en ligne pour un mariage, mais elle ne m'allait pas du tout.
+
+J'avais choisi ma taille habituelle, mais la robe était clairement trop petite, presque impossible à fermer.
+
+Le mariage avait lieu dans trois semaines. Je devais agir rapidement.
+
+J'ai cherché comment renvoyer la robe sur le site internet. Les instructions n'étaient pas très claires.
+
+Il fallait imprimer une étiquette de retour, remettre la robe dans son emballage d'origine, puis la déposer dans un point relais.
+
+J'ai trouvé un point relais près de chez moi, dans une petite épicerie.
+
+Le remboursement a mis dix jours à arriver sur mon compte, un peu plus long que je ne l'espérais.
+
+Pendant ce temps, j'ai commandé une taille au-dessus, dans une autre couleur, pour être plus sûre.
+
+Cette deuxième robe est arrivée quatre jours avant le mariage, et elle m'allait parfaitement, cette fois.
+
+J'ai porté cette robe avec plaisir, mais j'ai bien retenu la leçon : toujours vérifier attentivement les tailles avant de commander en ligne pour une occasion importante.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-a2-167",
+    title: "Les dangers des achats impulsifs en ligne",
+    category: "everyday life",
+    difficulty: "A2",
+    minutes: 2,
+    preview: "Depuis quelques mois, j'ai remarqué que je dépensais beaucoup plus d'argent qu'avant en achats en ligne.",
+    blurbEn:
+      "Noticing a growing habit of impulsive online spending — endless notifications, one-click ordering, and a deliberate effort to slow the whole process down. (Section: Online shopping, 5/5 — hardest.)",
+    body: `Depuis quelques mois, j'ai remarqué que je dépensais beaucoup plus d'argent qu'avant en achats en ligne.
+
+Le soir, en regardant mon téléphone avant de dormir, je recevais souvent des notifications de promotions.
+
+Ces messages annonçaient toujours une offre limitée : « Plus que trois heures pour profiter de cette réduction ! »
+
+Sans vraiment réfléchir, je cliquais et j'achetais, presque par réflexe.
+
+En regardant mon relevé bancaire à la fin du mois, j'ai découvert que j'avais dépensé bien plus que je ne le pensais, en petits achats presque oubliés.
+
+Une amie m'a expliqué que ces sites étaient conçus exactement pour créer cette impression d'urgence.
+
+« Ils veulent que tu achètes sans réfléchir, avant de changer d'avis », m'a-t-elle dit.
+
+J'ai décidé de changer mes habitudes. Maintenant, quand je vois quelque chose que je veux acheter, j'attends vingt-quatre heures avant de valider ma commande.
+
+La plupart du temps, après ce délai, je n'ai plus vraiment envie de cet objet.
+
+J'ai aussi désactivé les notifications de ces sites sur mon téléphone.
+
+Ce petit changement m'a permis d'économiser beaucoup d'argent, et de reprendre le contrôle sur mes achats.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-181",
+    title: "Ce que mes vêtements disent de moi",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Je n'ai jamais pensé être quelqu'un qui s'intéresse à la mode.",
+    blurbEn:
+      "A reluctant reflection on what our clothing choices reveal about us, whether we admit to caring about fashion or not. (Section: Fashion and self-image, 1/5.)",
+    body: `Je n'ai jamais pensé être quelqu'un qui s'intéresse à la mode. Pendant longtemps, j'achetais mes vêtements sans vraiment réfléchir, simplement pour être habillé correctement.
+
+Un jour, une amie m'a fait remarquer que je portais presque toujours les mêmes couleurs : du gris, du noir, du bleu marine. « Tu as un style, en fait, m'a-t-elle dit en riant. Tu ne t'en rends juste pas compte. »
+
+Cette remarque m'a fait réfléchir. J'ai regardé mon armoire différemment. Ces couleurs sombres, discrètes, disaient peut-être quelque chose de moi : une envie de passer inaperçu, de ne pas trop attirer l'attention.
+
+En observant les gens autour de moi, j'ai remarqué la même chose. Mon collègue, toujours en costume impeccable, projette une image de sérieux. Ma voisine, avec ses vêtements colorés et originaux, semble vouloir montrer sa créativité.
+
+On dit souvent qu'il ne faut pas juger les gens sur leur apparence. C'est vrai, sans doute. Mais on ne peut pas nier que nos choix vestimentaires envoient toujours un message, volontaire ou non.
+
+Je ne suis pas devenu passionné de mode du jour au lendemain. Mais je fais maintenant des choix un peu plus conscients, en sachant que même le gris a quelque chose à dire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-182",
+    title: "L'industrie de la mode rapide",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Les vêtements coûtent de moins en moins cher, et changent de plus en plus vite.",
+    blurbEn:
+      "Fast fashion has made clothes cheaper and trends faster than ever — an honest look at the real cost behind the low prices. (Section: Fashion and self-image, 2/5.)",
+    body: `Les vêtements coûtent de moins en moins cher, et changent de plus en plus vite. On appelle ça la mode rapide.
+
+Il y a vingt ans, les collections changeaient deux fois par an, au printemps et à l'automne. Aujourd'hui, certaines marques proposent de nouveaux modèles chaque semaine.
+
+Ce système présente un avantage évident : on peut s'habiller à la dernière mode pour très peu d'argent. J'ai moi-même profité de ces prix bas pendant des années, sans trop me poser de questions.
+
+Mais ce prix bas cache souvent une réalité moins agréable. Pour produire aussi vite et aussi bon marché, il faut réduire les coûts quelque part : les salaires des ouvriers, les conditions de travail, ou la qualité des matériaux.
+
+J'ai commencé à m'informer sur ce sujet après avoir vu un reportage sur les usines textiles en Asie. Certaines images m'ont marqué durablement.
+
+Depuis, j'essaie d'acheter moins, mais mieux. Je choisis des vêtements que je porterai plusieurs années, plutôt que des pièces qui suivent une tendance éphémère.
+
+Je ne prétends pas avoir complètement changé mes habitudes. Mais je réfléchis maintenant un peu plus avant chaque achat, en me demandant ce que ce prix bas signifie vraiment.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-183",
+    title: "S'habiller pour les autres ou pour soi",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Une question me revient souvent : est-ce que je m'habille pour moi, ou pour le regard des autres ?",
+    blurbEn:
+      "A question worth asking honestly: do we really dress for ourselves, or mostly for how others will see us? (Section: Fashion and self-image, 3/5.)",
+    body: `Une question me revient souvent : est-ce que je m'habille pour moi, ou pour le regard des autres ?
+
+Le matin, avant un rendez-vous important, je choisis mes vêtements avec soin. Je me demande ce que la personne en face pensera de moi. Ce n'est pas seulement une question de confort.
+
+Certains jours, au contraire, chez moi, seul, je m'habille sans réfléchir. Un vieux pull, un pantalon confortable. Personne ne me regarde, alors pourquoi faire attention ?
+
+Cette différence m'a fait comprendre que l'habillement n'est jamais tout à fait neutre. Même quand on pense s'habiller "pour soi", on porte en réalité le regard des autres en nous, comme une habitude intériorisée.
+
+Ma sœur, elle, affirme s'habiller uniquement pour son propre plaisir, sans se soucier des autres. Je la crois en partie. Mais je pense aussi qu'aucun de nous n'échappe complètement à ce regard extérieur, même imaginaire.
+
+Peut-être que la vraie liberté n'est pas d'ignorer totalement ce regard, ce qui semble presque impossible, mais de choisir consciemment jusqu'où on le laisse influencer nos choix.
+
+Je continue, pour ma part, à m'habiller différemment selon les situations. Et je ne suis plus sûr que ce soit un problème.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-184",
+    title: "Le prix caché des vêtements bon marché",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Un tee-shirt à trois euros : comment est-ce seulement possible ?",
+    blurbEn:
+      "How can a t-shirt possibly cost three euros? Following the true price of ultra-cheap clothing, from cotton field to landfill. (Section: Fashion and self-image, 4/5.)",
+    body: `Un tee-shirt à trois euros : comment est-ce seulement possible ?
+
+Cette question, je me la suis posée récemment, dans un magasin où les prix semblaient presque irréels. Trois euros ne couvrent normalement même pas le coût du tissu, du transport, et de la fabrication.
+
+En cherchant à comprendre, j'ai découvert une chaîne complexe : le coton cultivé dans un pays, tissé dans un autre, cousu dans un troisième, avant d'arriver enfin dans nos magasins.
+
+À chaque étape, quelqu'un est payé, mais souvent très peu. Les ouvrières qui cousent ces vêtements gagnent parfois l'équivalent de quelques centimes par pièce.
+
+Il y a aussi un coût environnemental important, rarement visible sur l'étiquette : l'eau nécessaire à la culture du coton, les produits chimiques utilisés pour la teinture, et enfin, les millions de vêtements jetés chaque année après quelques utilisations seulement.
+
+Face à ces chiffres, difficile de continuer à acheter sans y penser, du moins pour moi. Je ne dis pas qu'il faut arrêter d'acheter des vêtements neufs, ce serait naïf et peu réaliste pour la plupart des gens.
+
+Mais peut-être devrions-nous nous demander, avant chaque achat très bon marché, qui a réellement payé la différence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-185",
+    title: "Ma garde-robe minimaliste",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Il y a deux ans, j'ai décidé de réduire ma garde-robe à trente pièces, pas une de plus.",
+    blurbEn:
+      "Reducing a wardrobe to just thirty items — what it revealed about real needs versus imagined ones, and why the experiment stuck. (Section: Fashion and self-image, 5/5 — hardest.)",
+    body: `Il y a deux ans, j'ai décidé de réduire ma garde-robe à trente pièces, pas une de plus. J'avais lu un article sur ce qu'on appelle la garde-robe capsule, et l'idée m'avait immédiatement séduit.
+
+Au début, l'exercice semblait presque impossible. Comment choisir seulement trente vêtements parmi les cent cinquante que je possédais ?
+
+J'ai commencé par éliminer ce que je ne portais jamais : des cadeaux qui ne me plaisaient pas vraiment, des achats impulsifs regrettés, des vêtements qui appartenaient à une autre version de moi-même.
+
+Ce tri m'a forcé à me poser une question inconfortable : pourquoi avais-je accumulé autant de choses dont je n'avais pas besoin ?
+
+Avec seulement trente pièces, s'habiller le matin est devenu paradoxalement plus simple. Tout se marie avec tout, puisque j'ai choisi des couleurs et des styles cohérents entre eux.
+
+Certains proches trouvent cette démarche extrême, presque absurde. « Tu ne t'ennuies pas, à porter toujours les mêmes choses ? » me demande-t-on souvent.
+
+En réalité, c'est l'inverse qui s'est produit. Libéré du choix permanent et de l'accumulation, j'accorde aujourd'hui plus d'attention à la qualité de chaque pièce, et moins à la quantité.
+
+Cette expérience, qui semblait au départ une simple contrainte, est devenue une vraie façon de repenser ma relation aux objets en général.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-186",
+    title: "La musique de mon adolescence",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Certaines chansons me ramènent instantanément à mes quinze ans, comme par magie.",
+    blurbEn:
+      "Some songs transport us straight back to adolescence — why the music we loved as teenagers keeps such a powerful hold on us. (Section: Music and identity, 1/5.)",
+    body: `Certaines chansons me ramènent instantanément à mes quinze ans, comme par magie.
+
+Il suffit d'entendre les premières notes d'un morceau que j'écoutais à cet âge pour revivre des sensations précises : l'odeur de ma chambre d'adolescent, l'excitation avant une soirée, une peine de cœur oubliée depuis longtemps.
+
+Les chercheurs expliquent ce phénomène par le fait que l'adolescence est une période où le cerveau forme des souvenirs particulièrement marquants. La musique qu'on écoute à ce moment-là devient donc liée à des émotions très fortes.
+
+J'ai remarqué que je continue d'écouter, encore aujourd'hui, presque exclusivement les groupes que j'aimais à seize ans. Mes goûts musicaux se sont finalement peu renouvelés depuis.
+
+Mon fils, lui, a maintenant l'âge que j'avais alors, et il écoute une musique complètement différente, que je ne comprends pas toujours.
+
+Je me demande parfois si, dans vingt ans, ces chansons actuelles lui rappelleront cette période de sa vie, exactement comme les miennes me ramènent à la mienne.
+
+Il y a quelque chose de rassurant dans cette idée : la musique qu'on aime à quinze ans ne nous quitte peut-être jamais vraiment, même quand tout le reste change.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-187",
+    title: "Pourquoi certaines chansons nous marquent pour toujours",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pourquoi une chanson entendue une seule fois, il y a vingt ans, reste-t-elle gravée dans notre mémoire ?",
+    blurbEn:
+      "Why does a song heard just once, decades ago, sometimes stay lodged in memory forever? A look at what neuroscience says about music and memory. (Section: Music and identity, 2/5.)",
+    body: `Pourquoi une chanson entendue une seule fois, il y a vingt ans, reste-t-elle gravée dans notre mémoire ?
+
+Les neuroscientifiques qui étudient ce phénomène ont trouvé des explications intéressantes. La musique active plusieurs zones du cerveau en même temps : celles qui gèrent les émotions, la mémoire, et même le mouvement.
+
+Cette activation multiple expliquerait pourquoi une chanson liée à un moment marquant de notre vie devient presque impossible à oublier. Le cerveau associe la mélodie à l'émotion vécue à ce moment précis.
+
+C'est ce qui explique, par exemple, qu'une chanson entendue lors d'un premier amour, d'un enterrement ou d'un voyage important reste souvent liée à jamais à cet événement.
+
+Un phénomène encore plus étonnant concerne les personnes atteintes de troubles graves de la mémoire, comme certaines formes de démence. Beaucoup d'entre elles, incapables de reconnaître leurs propres proches, se souviennent pourtant des paroles de chansons apprises dans leur jeunesse.
+
+Cela suggère que la mémoire musicale serait en quelque sorte plus profondément ancrée que d'autres types de souvenirs, peut-être parce qu'elle mobilise autant de parties du cerveau simultanément.
+
+Ces recherches ouvrent aujourd'hui des pistes intéressantes, notamment pour utiliser la musique dans le traitement de certaines maladies liées à la mémoire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-188",
+    title: "La musique que je n'ose pas assumer",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "J'ai une liste de chansons que j'écoute uniquement quand je suis seul dans ma voiture.",
+    blurbEn:
+      "A confession about a secret playlist of songs too embarrassing to admit liking — and why we all seem to have one. (Section: Music and identity, 3/5.)",
+    body: `J'ai une liste de chansons que j'écoute uniquement quand je suis seul dans ma voiture.
+
+Ce ne sont pas des chansons dont j'ai honte exactement, mais elles ne correspondent pas à l'image que je souhaite donner de moi. Des chansons trop sentimentales, trop populaires, jugées "sans intérêt" par mes amis qui s'y connaissent en musique.
+
+Pendant des années, j'ai caché ces goûts, préférant citer des artistes plus "sérieux" quand on me demandait ce que j'écoutais.
+
+Un jour, une amie a découvert par hasard cette liste sur mon téléphone. Au lieu de se moquer, elle a avoué avoir exactement le même genre de liste secrète, avec des chansons tout aussi "honteuses".
+
+Nous avons ri de cette découverte partagée. Pourquoi cacher un plaisir aussi simple ? Personne ne nous jugerait vraiment pour ça, ou du moins, pas autant qu'on l'imagine.
+
+Depuis cette conversation, j'assume un peu plus ouvertement ces goûts musicaux "populaires". Je pense que beaucoup de gens vivent la même chose : une distance entre ce qu'ils écoutent réellement et ce qu'ils prétendent écouter, par peur du jugement.
+
+Peut-être que le vrai plaisir musical commence quand on arrête de choisir sa musique en fonction du regard des autres.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-189",
+    title: "Les algorithmes et nos goûts musicaux",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Les plateformes de streaming musical connaissent mes goûts mieux que la plupart de mes amis.",
+    blurbEn:
+      "Streaming algorithms know our musical taste better than our friends do — a look at how much they shape what we listen to, and what we might lose. (Section: Music and identity, 4/5.)",
+    body: `Les plateformes de streaming musical connaissent mes goûts mieux que la plupart de mes amis.
+
+Chaque semaine, je reçois une liste de nouvelles chansons choisies spécialement pour moi, selon un algorithme qui analyse mes habitudes d'écoute. Je dois admettre que ces suggestions sont souvent surprenantes de justesse.
+
+Cette efficacité pose aussi une question intéressante : est-ce que ces algorithmes élargissent réellement nos goûts musicaux, ou nous enferment-ils au contraire dans une sorte de bulle, en nous proposant toujours des variations de ce que nous aimons déjà ?
+
+Avant, je découvrais de la nouvelle musique par des amis, par la radio, ou par hasard, en tombant sur un morceau inconnu. Ces découvertes n'étaient pas toujours dans mon "style" habituel, et c'est justement ce qui rendait certaines d'entre elles marquantes.
+
+Aujourd'hui, la plupart de mes nouvelles découvertes musicales viennent directement d'un algorithme, conçu pour me plaire à coup sûr.
+
+Cette efficacité a un revers : je découvre peut-être moins de choses qui me sortent vraiment de ma zone de confort musicale.
+
+Je ne rejette pas complètement ces recommandations, qui m'ont fait découvrir de vrais coups de cœur. Mais j'essaie, de temps en temps, de chercher volontairement en dehors de ce que l'algorithme me propose.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-190",
+    title: "Ce que ma playlist dit de mon état d'esprit",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En regardant mon historique d'écoute des derniers mois, j'ai remarqué quelque chose d'étrange.",
+    blurbEn:
+      "Looking back at months of listening history reveals an unexpected emotional diary — how music choices track mood more honestly than we realise. (Section: Music and identity, 5/5 — hardest.)",
+    body: `En regardant mon historique d'écoute des derniers mois, j'ai remarqué quelque chose d'étrange.
+
+Pendant une période stressante au travail, en février, j'avais écouté presque exclusivement une musique très calme, presque méditative. Je ne m'en étais pas rendu compte sur le moment.
+
+Puis, au printemps, quand tout allait mieux, mes écoutes étaient devenues bien plus énergiques, avec des rythmes rapides et des paroles optimistes.
+
+En observant cette évolution, j'ai compris que ma musique fonctionnait comme une sorte de journal intime, sans que je l'aie décidé consciemment.
+
+Un ami psychologue, à qui j'ai raconté cette découverte, m'a expliqué que ce phénomène était bien documenté. La musique que nous choisissons refléterait souvent notre état émotionnel, parfois même avant que nous en ayons pleinement conscience nous-mêmes.
+
+Cette idée m'a fait réfléchir différemment à mes propres habitudes d'écoute. Peut-être devrais-je prêter plus attention à ce que je choisis d'écouter, non pas seulement comme un divertissement, mais comme un indicateur discret de mon propre état intérieur.
+
+Aujourd'hui, quand je remarque que je reviens vers une musique particulièrement mélancolique pendant plusieurs jours d'affilée, je me pose la question : qu'est-ce qui, dans ma vie en ce moment, mérite peut-être un peu plus d'attention ?
+
+La musique, sans qu'on s'en aperçoive toujours, en dit peut-être plus long sur nous que nos propres mots.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-191",
+    title: "Pourquoi certains films deviennent cultes",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Certains films, à leur sortie, passent presque inaperçus, avant de devenir, des années plus tard, de véritables films cultes.",
+    blurbEn:
+      "Some films flop on release only to become beloved classics years later — what actually turns a movie into a cult favourite. (Section: Film and pop culture, 1/5.)",
+    body: `Certains films, à leur sortie, passent presque inaperçus, avant de devenir, des années plus tard, de véritables films cultes.
+
+Ce phénomène m'a toujours intrigué. Comment un film peut-il échouer commercialement à sa sortie, puis devenir, dix ou vingt ans plus tard, une référence incontournable pour toute une génération ?
+
+Plusieurs facteurs semblent expliquer ce retournement. D'abord, le public n'était parfois simplement pas prêt pour ce type d'histoire ou de ton, en avance sur son époque.
+
+Ensuite, la découverte à la télévision ou, aujourd'hui, sur une plateforme de streaming, permet à un film oublié de trouver un public complètement nouveau, sans la pression des attentes du box-office.
+
+Enfin, un film culte se construit souvent autour d'une communauté de fans qui se transmettent leur passion, se citent des répliques entre eux, organisent des projections spéciales.
+
+J'ai moi-même découvert plusieurs de mes films préférés bien après leur sortie officielle, grâce à des recommandations d'amis convaincus.
+
+Ce phénomène montre bien que la valeur d'une œuvre ne se mesure pas uniquement à son succès immédiat. Parfois, il faut simplement le bon moment, et le bon public, pour qu'un film trouve enfin sa place.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-192",
+    title: "Le cinéma en salle face au streaming",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Je me souviens d'une époque où aller au cinéma était presque un rituel hebdomadaire.",
+    blurbEn:
+      "Weekly cinema trips have given way to streaming at home — weighing what's gained in convenience against what's lost in shared experience. (Section: Film and pop culture, 2/5.)",
+    body: `Je me souviens d'une époque où aller au cinéma était presque un rituel hebdomadaire. Aujourd'hui, je regarde la plupart des films chez moi, confortablement installé dans mon canapé.
+
+Cette évolution s'explique facilement : les plateformes de streaming proposent un catalogue immense, à un prix bien inférieur à celui des places de cinéma, sans compter le temps de trajet.
+
+Pourtant, quelque chose me manque dans cette nouvelle façon de consommer les films. L'expérience collective d'une salle obscure, le silence partagé avec des inconnus, l'écran immense qui occupe tout notre champ de vision.
+
+À la maison, je mets facilement le film en pause, je regarde mon téléphone en même temps, je perds parfois le fil de l'histoire sans vraiment m'en rendre compte.
+
+Au cinéma, l'attention est différente, presque obligée par le lieu lui-même. Impossible de faire autre chose en même temps, ce qui change complètement la manière de recevoir une histoire.
+
+Certains cinémas, conscients de cette évolution, misent aujourd'hui sur une expérience que le streaming ne peut pas offrir : des salles plus confortables, des événements spéciaux, des rencontres avec des réalisateurs.
+
+Je continue d'aller au cinéma de temps en temps, précisément pour retrouver cette attention particulière que je ne parviens plus à recréer chez moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-193",
+    title: "Ce que les remakes disent de notre époque",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Les remakes de films connus se multiplient depuis quelques années.",
+    blurbEn:
+      "Remakes of familiar films keep multiplying — what our appetite for reworked classics reveals about an industry playing it safe. (Section: Film and pop culture, 3/5.)",
+    body: `Les remakes de films connus se multiplient depuis quelques années. Chaque mois, semble-t-il, un classique de mon enfance ressort dans une nouvelle version.
+
+Cette tendance suscite des réactions très partagées. Certains y voient un manque d'idées nouvelles de la part des studios, qui préféreraient parier sur des histoires déjà connues du public plutôt que de prendre des risques créatifs.
+
+D'autres défendent au contraire l'idée qu'un remake peut apporter un regard neuf sur une histoire, en profitant des avancées techniques ou en abordant des thèmes différemment.
+
+Personnellement, je reste partagé sur la question. J'ai vu des remakes réussis, qui ajoutaient réellement quelque chose à l'histoire originale. Mais j'en ai vu bien plus qui semblaient exister uniquement pour des raisons commerciales, sans réelle vision artistique.
+
+Cette multiplication des remakes reflète peut-être aussi une époque plus prudente, où les grandes entreprises de production préfèrent limiter les risques financiers en misant sur des marques déjà reconnues du public.
+
+Le résultat, c'est que le cinéma grand public semble parfois tourner en boucle sur lui-même, recyclant les mêmes histoires plutôt que d'en inventer de nouvelles.
+
+Je continue d'espérer, malgré tout, que les studios prendront à nouveau davantage de risques créatifs à l'avenir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-194",
+    title: "Les critiques de cinéma ont-elles encore un rôle ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Avant de choisir un film, je consultais toujours les critiques professionnelles.",
+    blurbEn:
+      "Professional film critics used to shape what we chose to watch — do they still matter now that anyone can post a review online? (Section: Film and pop culture, 4/5.)",
+    body: `Avant de choisir un film, je consultais toujours les critiques professionnelles, publiées dans les journaux ou les magazines spécialisés.
+
+Aujourd'hui, cette habitude a presque disparu chez moi, remplacée par les notes données par d'autres spectateurs sur des sites internet, ou simplement par les recommandations d'un algorithme.
+
+Cette évolution soulève une question intéressante : les critiques professionnels ont-ils encore un rôle dans notre manière de choisir un film ?
+
+Certains arguments plaident en leur faveur. Un critique expérimenté possède une connaissance approfondie du cinéma, une capacité d'analyse que le spectateur moyen n'a pas forcément.
+
+Mais d'autres arguments jouent en leur défaveur. Les notes du public, bien que moins expertes individuellement, représentent la moyenne de milliers d'avis, ce qui peut donner une image plus fidèle de l'accueil réel d'un film.
+
+De plus, certains critiques professionnels ont parfois des goûts très éloignés du grand public, ce qui rend leurs avis moins utiles pour quelqu'un cherchant simplement un bon moment de détente.
+
+Je pense, pour ma part, que les deux approches ont leur utilité, selon ce qu'on cherche. Pour un film d'auteur exigeant, l'avis d'un critique reste précieux. Pour une comédie familiale, l'avis du public me semble suffisant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-195",
+    title: "Le cinéma qui divise les générations",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Un dimanche, j'ai proposé à mes parents de regarder ensemble un film que j'adorais.",
+    blurbEn:
+      "Watching a beloved film with parents who found it baffling — what generational gaps in cinema taste reveal about how we each learned to watch. (Section: Film and pop culture, 5/5 — hardest.)",
+    body: `Un dimanche, j'ai proposé à mes parents de regarder ensemble un film que j'adorais, une œuvre récente au montage rapide et à la narration non linéaire.
+
+Après vingt minutes, mon père a mis en pause. « Je ne comprends rien à cette histoire, a-t-il avoué. Ça va trop vite, et ça saute d'un moment à l'autre sans prévenir. »
+
+Ma mère, elle, trouvait le film "stressant", tant les images changeaient rapidement à l'écran.
+
+Cette expérience m'a fait réfléchir à la manière dont chaque génération apprend, presque inconsciemment, un certain langage cinématographique. Habitués depuis l'enfance à des montages rapides, à des récits non chronologiques, les spectateurs plus jeunes déchiffrent naturellement ce que mes parents trouvaient confus.
+
+À l'inverse, quand mes parents me font découvrir un film plus ancien, au rythme lent et posé, j'ai parfois du mal à rester concentré, habitué à une narration plus dynamique.
+
+Ce n'est donc pas simplement une question de goût, mais aussi une question d'habitude perceptive, forgée par ce que chaque génération a le plus regardé.
+
+Cette découverte m'a rendu plus indulgent envers les deux générations : ni mes parents ni moi n'avons "tort" dans notre manière de regarder un film. Nous avons simplement appris, chacun à notre époque, un langage visuel différent.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-196",
+    title: "Ma relation compliquée avec les réseaux sociaux",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Je vérifie mon téléphone en moyenne, selon une application qui compte pour moi, plus de cent fois par jour.",
+    blurbEn:
+      "Checking a phone over a hundred times a day — an honest reckoning with a relationship to social media that feels both essential and unhealthy. (Section: Social media, 1/5.)",
+    body: `Je vérifie mon téléphone en moyenne, selon une application qui compte pour moi, plus de cent fois par jour.
+
+Ce chiffre, que j'ai découvert récemment, m'a un peu choqué. Je n'avais pas conscience de vérifier mes réseaux sociaux aussi souvent, presque sans réfléchir, comme un geste automatique.
+
+D'un côté, ces applications me permettent de rester en contact avec des amis éloignés, de découvrir des idées intéressantes, de me divertir pendant les moments d'attente.
+
+D'un autre côté, je remarque que je passe parfois vingt minutes à faire défiler des publications sans but précis, sans même me souvenir ensuite de ce que j'ai vu.
+
+Cette contradiction m'intéresse : je critique volontiers ces applications, tout en continuant à les utiliser très régulièrement. Je ne suis clairement pas le seul dans cette situation.
+
+J'ai essayé plusieurs fois de réduire mon temps d'écran, avec un succès mitigé. Les premiers jours sont toujours plus difficiles que je ne l'imagine.
+
+Je ne pense pas que la solution soit de tout supprimer complètement, ce serait sans doute excessif pour ma vie sociale et professionnelle. Mais je cherche encore un équilibre satisfaisant, entre l'utilité réelle de ces outils et le temps qu'ils m'absorbent malgré moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-197",
+    title: "Ce que je montre et ce que je cache en ligne",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Sur mon compte, on voit des vacances réussies, des repas soignés, des sourires.",
+    blurbEn:
+      "A social media profile shows the highlights — good holidays, nice meals, smiles — while quietly hiding everything ordinary or difficult. (Section: Social media, 2/5.)",
+    body: `Sur mon compte, on voit des vacances réussies, des repas soignés, des sourires.
+
+On ne voit pas les disputes avec mon conjoint, les factures en retard, les journées où je reste au lit plus longtemps que je ne le devrais.
+
+Ce n'est pas que je mente délibérément sur ma vie. Simplement, personne ne publie une photo de sa cuisine en désordre ou de sa fatigue du lundi matin.
+
+Le problème, c'est que cette sélection naturelle, faite par des millions de personnes en même temps, crée une image collective légèrement fausse de la réalité.
+
+Je le sais intellectuellement. Pourtant, en regardant les publications des autres, j'oublie parfois cette évidence, et je me compare à une version idéalisée de leur vie, que je sais pourtant partielle.
+
+Une amie m'a confié récemment qu'elle vivait une période très difficile, alors même que ses publications, les mêmes semaines, montraient une vie apparemment sereine.
+
+Cette confidence m'a rappelé une chose simple : personne ne publie sa vie entière en ligne, seulement les moments qu'il choisit de partager.
+
+Je continue de publier, moi aussi, principalement mes bons moments. Mais j'essaie désormais de me souvenir que c'est également le cas pour tout le monde autour de moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-198",
+    title: "Pourquoi j'ai supprimé mes comptes pendant un mois",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Il y a six mois, j'ai désactivé tous mes comptes sur les réseaux sociaux pendant un mois entier.",
+    blurbEn:
+      "Deactivating every social media account for a full month — the withdrawal-like first week, and what actually came back to fill the silence. (Section: Social media, 3/5.)",
+    body: `Il y a six mois, j'ai désactivé tous mes comptes sur les réseaux sociaux pendant un mois entier.
+
+L'idée m'est venue après une semaine particulièrement épuisante, où j'avais l'impression de passer plus de temps à regarder mon téléphone qu'à vivre réellement ma propre vie.
+
+La première semaine sans ces applications a été plus difficile que prévu. Je sentais un manque presque physique, une envie de vérifier une notification qui n'existait plus.
+
+Puis, progressivement, quelque chose a changé. Sans le défilement infini des publications, j'ai retrouvé du temps que je ne savais même plus avoir : pour lire, pour cuisiner plus longuement, pour appeler des amis au téléphone plutôt que de simplement liker leurs photos.
+
+Vers la troisième semaine, j'ai remarqué que je dormais mieux, sans doute parce que je ne regardais plus mon téléphone juste avant de fermer les yeux.
+
+Quand j'ai réactivé mes comptes, à la fin du mois, j'ai été surpris de constater à quel point j'avais peu manqué, en réalité, des mois entiers d'actualités et de publications diverses.
+
+Je n'ai pas supprimé mes comptes définitivement. Mais je m'accorde désormais régulièrement des pauses, en me souvenant de ce que ce mois m'avait rendu.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-199",
+    title: "Comparer sa vie à celle des autres en ligne",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En faisant défiler mon fil d'actualité, je me surprends souvent à comparer ma vie à celle des autres.",
+    blurbEn:
+      "Scrolling through a feed inevitably leads to comparing our lives to others' — recognising the trap, even when we can't quite escape it. (Section: Social media, 4/5.)",
+    body: `En faisant défiler mon fil d'actualité, je me surprends souvent à comparer ma vie à celle des autres.
+
+Cette collègue en voyage dans un endroit magnifique. Cet ancien camarade de classe qui vient d'acheter une maison. Cette connaissance qui semble avoir une vie sociale bien plus riche que la mienne.
+
+Rationnellement, je sais que ces comparaisons ne veulent pas dire grand-chose. Je ne connais pas les difficultés de ces personnes, leurs doutes, leurs propres insatisfactions.
+
+Pourtant, émotionnellement, ces comparaisons m'affectent, parfois plus que je ne voudrais l'admettre. Après avoir passé du temps sur ces applications, je me sens parfois vaguement insatisfait de ma propre existence, sans raison précise.
+
+Des chercheurs qui étudient ce phénomène expliquent que notre cerveau n'a pas évolué pour se comparer à des milliers de personnes simultanément, comme le permettent aujourd'hui ces plateformes. Autrefois, on se comparait principalement à son entourage immédiat, un cercle bien plus restreint.
+
+Cette explication me rassure un peu, sans résoudre complètement le problème. Je continue de ressentir ces comparaisons, même en connaissant leur origine.
+
+J'essaie, quand je remarque cette sensation d'insatisfaction, de me rappeler consciemment que je ne vois qu'un fragment soigneusement choisi de la vie des autres, et non leur réalité complète.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-200",
+    title: "Grandir avec les réseaux sociaux",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Ma fille de treize ans a grandi avec les réseaux sociaux d'une manière que je n'ai jamais connue moi-même.",
+    blurbEn:
+      "A thirteen-year-old growing up entirely immersed in social media, in ways her parent never experienced — the anxieties, and the surprising resilience. (Section: Social media, 5/5 — hardest.)",
+    body: `Ma fille de treize ans a grandi avec les réseaux sociaux d'une manière que je n'ai jamais connue moi-même à son âge.
+
+Contrairement à moi, elle n'a jamais vécu de moment sans ces applications. Pour elle, publier une photo, recevoir des commentaires, comparer le nombre de mentions "j'aime", tout cela fait partie de la vie normale depuis toujours.
+
+Je m'inquiète parfois pour elle, en pensant à la pression que représente cette exposition constante au regard des autres, à un âge où l'identité se construit encore.
+
+En discutant avec elle, cependant, je découvre une relation à ces outils plus nuancée que je ne l'imaginais. Elle sait, par exemple, identifier facilement les photos retouchées ou les mises en scène artificielles, avec une facilité que je n'avais pas à son âge.
+
+« On sait bien que tout le monde ne montre que le meilleur », m'a-t-elle dit un jour, presque avec détachement.
+
+Cette lucidité me rassure en partie, sans effacer complètement mon inquiétude. Grandir avec ces outils depuis l'enfance a peut-être développé chez sa génération une forme de recul que la mienne a dû apprendre plus tard, parfois difficilement.
+
+Je continue de surveiller son usage, tout en essayant de faire confiance à cette lucidité qu'elle semble avoir développée bien plus tôt que moi.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-201",
+    title: "Le régime que j'ai arrêté après une semaine",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En janvier dernier, j'ai commencé un régime très strict, recommandé par une amie.",
+    blurbEn:
+      "A strict January diet abandoned after just a week — what it revealed about the difference between quick fixes and lasting change. (Section: Food and diets, 1/5.)",
+    body: `En janvier dernier, j'ai commencé un régime très strict, recommandé par une amie qui en vantait les résultats impressionnants.
+
+Le principe était simple sur le papier : supprimer presque entièrement les glucides, manger surtout des protéines et des légumes, pendant deux semaines minimum.
+
+Les trois premiers jours se sont plutôt bien passés, portée par une motivation encore fraîche. Puis, dès le quatrième jour, une fatigue inhabituelle s'est installée, accompagnée de maux de tête réguliers.
+
+Au travail, je peinais à me concentrer, irritable pour des broutilles qui, normalement, ne me dérangeaient pas.
+
+Le septième jour, épuisée et frustrée, j'ai abandonné le régime, en me sentant presque coupable de mon manque de volonté.
+
+En en parlant ensuite avec un nutritionniste, j'ai appris que ce type de régime très restrictif convient rarement sur la durée, et qu'un changement plus progressif donne généralement de meilleurs résultats, même s'ils sont moins spectaculaires au début.
+
+Cette expérience m'a appris quelque chose d'important : la solution miracle qu'on nous vend souvent en janvier ressemble rarement à une vraie solution durable.
+
+Aujourd'hui, j'essaie plutôt de manger un peu plus équilibré, sans interdiction totale, ce qui me semble bien plus simple à tenir dans la durée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-202",
+    title: "Manger sans viande, un choix qui divise ma famille",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis deux ans, j'ai arrêté de manger de la viande. Ma famille n'a pas toujours bien accepté ce choix.",
+    blurbEn:
+      "Going vegetarian two years ago sparked more family tension than expected — navigating everyone's opinions at the same dinner table. (Section: Food and diets, 2/5.)",
+    body: `Depuis deux ans, j'ai arrêté de manger de la viande. Ma famille n'a pas toujours bien accepté ce choix.
+
+Ma décision venait principalement de préoccupations environnementales, après avoir lu plusieurs articles sur l'impact de l'élevage sur le climat.
+
+Au premier repas de famille après mon changement, ma grand-mère a semblé presque vexée. « Tu n'aimes plus ma cuisine ? » m'a-t-elle demandé, un peu blessée par ce qu'elle percevait comme un rejet.
+
+J'ai dû expliquer, patiemment et à plusieurs reprises, que ce choix n'avait rien à voir avec sa cuisine, que j'adorais toujours autant, mais simplement avec mes propres convictions personnelles.
+
+Mon frère, lui, a réagi différemment, presque avec agacement. Il trouve que je complique inutilement les repas de famille, en obligeant tout le monde à prévoir une alternative pour moi.
+
+Avec le temps, la situation s'est apaisée. Ma grand-mère a même appris quelques recettes végétariennes qu'elle prépare désormais volontiers pour moi.
+
+Mon frère continue de trouver ça un peu contraignant, mais il a fini par accepter cette différence sans plus la commenter à chaque repas.
+
+Cette expérience m'a montré qu'un choix alimentaire personnel peut toucher, bien plus qu'on ne l'imagine, des questions familiales sensibles autour de la tradition et de l'appartenance.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-203",
+    title: "Le sucre, ce plaisir qu'on nous dit d'éviter",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "On nous répète partout qu'il faut réduire notre consommation de sucre.",
+    blurbEn:
+      "Sugar is everywhere on the list of things to cut back on — an honest look at why that advice is so hard to follow in practice. (Section: Food and diets, 3/5.)",
+    body: `On nous répète partout qu'il faut réduire notre consommation de sucre. Les médecins, les magazines, même les publicités des produits soi-disant plus sains.
+
+Cette recommandation, je la connais par cœur. Pourtant, je continue de céder régulièrement à cette envie de sucre, surtout en fin de journée, quand la fatigue se fait sentir.
+
+Les spécialistes expliquent que cette envie n'est pas seulement une question de volonté personnelle. Le sucre active dans notre cerveau des circuits liés au plaisir, un peu comme certaines substances plus problématiques.
+
+De plus, le sucre se cache aujourd'hui dans énormément de produits qu'on ne soupçonnerait pas : des sauces, du pain industriel, des plats préparés présentés comme équilibrés.
+
+J'ai essayé, à plusieurs reprises, de réduire drastiquement ma consommation. Les premiers jours sont souvent les plus difficiles, avec une irritabilité et une fatigue notables.
+
+Puis, progressivement, mes envies diminuent, sans disparaître complètement. Un simple carré de chocolat me satisfait alors bien plus qu'auparavant, quand j'en mangeais une tablette entière sans même vraiment y prêter attention.
+
+Je ne pense pas qu'il faille bannir totalement le sucre, ce qui semble d'ailleurs presque impossible dans notre alimentation actuelle. Mais apprendre à mieux le doser, plutôt que de le consommer par automatisme, change beaucoup de choses.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-204",
+    title: "Ce que mon assiette dit de mon époque",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En regardant une photo de l'assiette de mes grands-parents, dans les années soixante, je remarque à quel point notre alimentation a changé.",
+    blurbEn:
+      "Comparing a grandparent's plate from the 1960s with a plate today reveals just how much eating habits have quietly transformed across one generation. (Section: Food and diets, 4/5.)",
+    body: `En regardant une photo de l'assiette de mes grands-parents, dans les années soixante, je remarque à quel point notre alimentation a changé.
+
+Sur cette photo, un plat simple : de la viande, des pommes de terre, quelques légumes de saison. Peu d'ingrédients, mais préparés à la maison, presque chaque jour.
+
+Aujourd'hui, mon assiette ressemble rarement à celle-là. Elle mélange souvent des influences très diverses : un plat asiatique un soir, une recette italienne le lendemain, un burger le week-end.
+
+Cette diversité alimentaire reflète, à mon avis, une époque plus ouverte sur le monde, où voyager et goûter des cuisines différentes est devenu accessible à beaucoup plus de gens qu'auparavant.
+
+Mais cette même assiette raconte aussi une autre histoire, moins positive : celle des plats préparés industriels, consommés bien plus souvent qu'à l'époque de mes grands-parents, faute de temps pour cuisiner longuement chaque soir.
+
+Ma grand-mère, quand je lui montre mes propres repas, reste souvent perplexe devant certains ingrédients qu'elle ne reconnaît pas, ou devant la rapidité avec laquelle je prépare un repas complet.
+
+Nos assiettes changent avec notre époque, portant les traces de nos modes de vie, de nos échanges culturels, et parfois aussi de nos contraintes de temps.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-205",
+    title: "Apprendre à écouter ma faim",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pendant des années, j'ai mangé selon l'horloge, pas selon ma faim réelle.",
+    blurbEn:
+      "Years of eating by the clock instead of by real hunger — relearning a signal the body sends that habit had long since drowned out. (Section: Food and diets, 5/5 — hardest.)",
+    body: `Pendant des années, j'ai mangé selon l'horloge, pas selon ma faim réelle. Midi sonnait, je mangeais, que j'aie faim ou non.
+
+Cette habitude, prise depuis l'enfance à l'école, m'avait déconnecté d'un signal pourtant naturel : celui de ma propre faim.
+
+J'ai commencé à m'interroger sur ce sujet après une conversation avec une nutritionniste, qui m'expliquait que beaucoup de gens avaient perdu cette capacité pourtant simple à écouter leur corps.
+
+Elle m'a proposé un exercice qui m'a semblé, au départ, presque étrange : avant chaque repas, m'arrêter une minute et me demander honnêtement si j'avais vraiment faim, ou si je mangeais par habitude, par ennui, ou par simple horaire.
+
+Les premières semaines, j'ai découvert avec surprise que je mangeais très souvent sans faim réelle, poussé par l'heure, l'odeur d'un plat, ou simplement l'envie de faire une pause dans ma journée.
+
+Progressivement, j'ai appris à mieux distinguer ces différentes sensations, et à manger davantage selon mes besoins réels plutôt que selon des habitudes anciennes.
+
+Ce changement n'a rien d'un régime au sens classique. Il ne s'agit pas de manger moins, mais de manger plus consciemment, en réapprenant un signal que des années d'habitudes avaient fini par brouiller.
+
+Cette démarche demande de la patience, mais elle m'a réconciliée avec une relation à la nourriture plus simple, et finalement plus apaisée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-206",
+    title: "Mon premier jour en télétravail",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Le jour où mon entreprise m'a annoncé que je pouvais travailler depuis chez moi, j'ai ressenti un vrai soulagement.",
+    blurbEn:
+      "The first day of working from home, imagined as freedom, turns out to require its own discipline and its own adjustments. (Section: Remote work, 1/5.)",
+    body: `Le jour où mon entreprise m'a annoncé que je pouvais travailler depuis chez moi, j'ai ressenti un vrai soulagement. Plus de trajet quotidien, plus de réveil à six heures, plus de bureau bruyant.
+
+Le premier matin, j'ai savouré ce changement : petit-déjeuner tranquille, café en terrasse improvisée sur mon balcon, puis ouverture de mon ordinateur à neuf heures précises.
+
+Rapidement, cependant, j'ai découvert des difficultés que je n'avais pas anticipées. Sans les collègues autour de moi, certaines questions simples prenaient bien plus de temps à résoudre, par message écrit plutôt qu'en se tournant vers quelqu'un.
+
+Vers onze heures, j'ai réalisé que je n'avais parlé à personne de vive voix depuis la veille au soir. Ce silence, que j'imaginais reposant, m'a semblé étrangement pesant.
+
+J'ai aussi remarqué que je travaillais, sans m'en rendre compte, bien plus tard que d'habitude. Sans le rituel du départ du bureau, difficile de savoir quand vraiment s'arrêter.
+
+Ce premier jour ne s'est pas déroulé comme je l'imaginais : ni la liberté rêvée, ni la catastrophe redoutée par certains. Simplement une nouvelle façon de travailler, avec ses propres règles à inventer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-207",
+    title: "Les frontières floues entre vie pro et vie perso",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis que je travaille depuis chez moi, la limite entre mon travail et ma vie personnelle est devenue floue.",
+    blurbEn:
+      "When the office is the kitchen table, the line between work and everything else quietly disappears — a look at what that costs. (Section: Remote work, 2/5.)",
+    body: `Depuis que je travaille depuis chez moi, la limite entre mon travail et ma vie personnelle est devenue floue.
+
+Avant, quitter le bureau signifiait vraiment quitter le travail. Le trajet du retour marquait une transition claire entre les deux mondes.
+
+Maintenant, mon ordinateur reste posé sur la table de la cuisine, visible en permanence. Le soir, en préparant le dîner, je jette parfois un œil aux nouveaux messages professionnels, "juste pour vérifier".
+
+Cette disponibilité constante s'est installée progressivement, sans que je décide consciemment de travailler plus. Un message le dimanche soir, une réponse rapide pendant le week-end, une habitude qui s'accumule sans qu'on la remarque vraiment.
+
+Un ami, également en télétravail, m'a raconté qu'il avait dû instaurer une règle stricte : ranger complètement son ordinateur dans un placard chaque soir, pour marquer physiquement la fin de sa journée de travail.
+
+J'ai essayé cette méthode, avec un certain succès. Ce simple geste, presque symbolique, m'aide à recréer artificiellement la frontière que le trajet quotidien créait autrefois naturellement.
+
+Le télétravail nous offre une vraie liberté d'organisation. Mais cette liberté demande, paradoxalement, une discipline nouvelle pour ne pas laisser le travail envahir chaque moment de notre vie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-208",
+    title: "Ce que je ne savais pas apprécier au bureau",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Avant de travailler depuis chez moi, je me plaignais souvent du bureau : le bruit, les réunions inutiles, les interruptions constantes.",
+    blurbEn:
+      "Complaining about noisy offices and pointless meetings until working from home reveals what was quietly valuable about them all along. (Section: Remote work, 3/5.)",
+    body: `Avant de travailler depuis chez moi, je me plaignais souvent du bureau : le bruit, les réunions inutiles, les interruptions constantes.
+
+Aujourd'hui, seul chez moi depuis plusieurs mois, je réalise que certaines de ces choses me manquent, à ma grande surprise.
+
+Ces petites conversations informelles à la machine à café, que je trouvais souvent une perte de temps, créaient en réalité des liens précieux entre collègues, sans que je le remarque vraiment.
+
+Les interruptions, aussi agaçantes soient-elles parfois, apportaient une dimension humaine et sociale à ma journée, un rythme différent que le silence complet de chez moi ne remplace pas.
+
+Même les réunions que je jugeais inutiles avaient parfois une fonction que je sous-estimais : celle de créer un moment collectif, une occasion de sentir qu'on faisait partie d'une équipe.
+
+En télétravail, je suis certainement plus efficace sur certaines tâches précises, demandant de la concentration. Mais je perds probablement quelque chose du côté humain du travail.
+
+Cette expérience m'a appris qu'il ne faut jamais juger totalement une situation avant de vivre son contraire. Le bureau avait ses défauts réels, mais aussi des qualités que je n'avais jamais réellement remarquées.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-209",
+    title: "Manager une équipe à distance",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis que mon équipe travaille entièrement à distance, mon rôle de manager a beaucoup changé.",
+    blurbEn:
+      "Managing a fully remote team means rethinking how to spot problems, build trust, and stay connected without the usual office cues. (Section: Remote work, 4/5.)",
+    body: `Depuis que mon équipe travaille entièrement à distance, mon rôle de manager a beaucoup changé.
+
+Avant, je remarquais facilement quand un membre de mon équipe semblait fatigué ou préoccupé, simplement en le croisant dans les couloirs ou pendant une pause déjeuner.
+
+À distance, ces signaux discrets disparaissent presque complètement. Une personne peut traverser une période difficile sans que je m'en rende compte immédiatement, cachée derrière un écran et des messages professionnels neutres.
+
+J'ai dû apprendre à instaurer de nouvelles habitudes pour compenser cette perte de visibilité. Des points individuels réguliers, pas seulement pour parler du travail, mais aussi pour prendre des nouvelles, sincèrement.
+
+Au début, certains membres de l'équipe trouvaient ces échanges un peu artificiels, presque forcés. Avec le temps, la plupart ont fini par apprécier cet espace, où ils peuvent aborder autre chose que les tâches en cours.
+
+J'ai aussi appris à faire davantage confiance, en me concentrant sur les résultats plutôt que sur le contrôle direct des horaires ou de la présence.
+
+Ce changement de posture, difficile au début, m'a finalement rendu meilleur manager, je crois, en m'obligeant à me concentrer sur l'essentiel : la confiance et la communication réelle, plutôt que sur la simple surveillance.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-210",
+    title: "Le télétravail a-t-il changé nos villes ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis que le télétravail s'est généralisé, le centre-ville de ma ville a un visage différent en semaine.",
+    blurbEn:
+      "Widespread remote work has quietly reshaped city centres — emptier commuter trains, struggling lunch spots, and a debate about what urban life should look like next. (Section: Remote work, 5/5 — hardest.)",
+    body: `Depuis que le télétravail s'est généralisé, le centre-ville de ma ville a un visage différent en semaine.
+
+Le mardi et le jeudi, jours où beaucoup de gens vont encore au bureau, les rues du quartier d'affaires sont animées, presque comme avant.
+
+Le lundi et le vendredi, en revanche, les mêmes rues semblent étrangement calmes. Plusieurs restaurants qui vivaient principalement de la clientèle des employés de bureau ont dû fermer, faute de clients suffisants ces jours-là.
+
+Cette transformation, encore récente, soulève des questions plus larges sur l'avenir de nos centres-villes. Certains urbanistes y voient une opportunité : transformer d'anciens bureaux vides en logements, redonner de la vie à ces quartiers autrement qu'à travers le travail.
+
+D'autres s'inquiètent des conséquences économiques pour tous les commerces qui dépendaient de cette présence quotidienne de travailleurs.
+
+Dans les transports en commun aussi, la fréquentation a changé de rythme, avec des pics moins marqués aux heures traditionnelles de pointe.
+
+Je me demande souvent à quoi ressembleront nos villes dans dix ans, si cette tendance continue de s'installer durablement. Peut-être verrons-nous des centres-villes réinventés, moins centrés uniquement sur le travail de bureau, et davantage mêlant logements, commerces et loisirs.
+
+Une chose semble certaine : la manière dont nous travaillons continue de redessiner, discrètement mais profondément, l'espace même de nos villes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-211",
+    title: "Pourquoi tant de gens adoptent un animal après une rupture",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Après ma séparation, l'année dernière, j'ai adopté un chat, presque sans réfléchir.",
+    blurbEn:
+      "Adopting a cat almost impulsively after a breakup — a common pattern that reveals something real about what pets quietly provide. (Section: Pets and society, 1/5.)",
+    body: `Après ma séparation, l'année dernière, j'ai adopté un chat, presque sans réfléchir.
+
+Sur le moment, je pensais simplement vouloir de la compagnie dans un appartement devenu soudainement trop silencieux. Ce n'est qu'en en parlant avec des amis que j'ai réalisé que ce comportement était très commun.
+
+Plusieurs refuges pour animaux confirment d'ailleurs cette tendance : les demandes d'adoption augmentent souvent après des ruptures amoureuses, particulièrement chez les personnes vivant seules pour la première fois depuis longtemps.
+
+Un animal apporte une présence rassurante, sans les complications parfois difficiles d'une relation humaine. Il attend son repas à heure fixe, il a besoin qu'on s'occupe de lui, ce qui donne une structure à des journées qui pourraient sembler vides autrement.
+
+Mon chat, que j'ai appelé Léon, m'a effectivement aidé pendant cette période difficile. Sa présence physique, même silencieuse, atténuait un peu la sensation de solitude dans l'appartement.
+
+Je ne prétends pas qu'un animal remplace une relation humaine, ce serait exagéré. Mais je comprends aujourd'hui pourquoi tant de personnes, dans une période de vulnérabilité, cherchent ce type de compagnie simple et inconditionnelle.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-212",
+    title: "Le business des animaux de compagnie",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Le marché des produits pour animaux de compagnie connaît une croissance impressionnante depuis quelques années.",
+    blurbEn:
+      "The pet industry has exploded into big business — designer accessories, pet insurance, even pet therapists — and a look at where all that spending really goes. (Section: Pets and society, 2/5.)",
+    body: `Le marché des produits pour animaux de compagnie connaît une croissance impressionnante depuis quelques années.
+
+On trouve aujourd'hui des vêtements de designer pour chiens, des assurances santé pour chats, et même des services de "psychologie animale" pour aider les animaux les plus anxieux.
+
+Cette évolution reflète, selon plusieurs experts, un changement dans la place que les animaux occupent dans nos foyers. Autrefois considérés principalement comme des animaux de garde ou de compagnie simple, ils sont désormais traités par beaucoup de propriétaires comme de véritables membres de la famille.
+
+Certaines entreprises ont bien compris cette évolution et proposent désormais des produits toujours plus spécialisés : croquettes personnalisées selon la race, chambres d'hôtel de luxe pour animaux, gâteaux d'anniversaire spécialement conçus pour chiens.
+
+Cette industrie soulève aussi des critiques. Certains observateurs s'interrogent sur la pertinence de dépenser autant d'argent pour des produits parfois superflus, alors que de nombreux refuges peinent encore à trouver des fonds suffisants.
+
+D'autres, au contraire, défendent ces dépenses comme légitimes, considérant que le bien-être animal mérite le même soin que celui accordé aux autres membres de la famille.
+
+Ce marché, qui ne cesse de croître, illustre en tout cas à quel point notre relation aux animaux de compagnie a profondément évolué.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-213",
+    title: "Ces immeubles qui refusent les animaux",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Quand j'ai cherché un nouvel appartement l'année dernière, j'ai découvert à quel point il était difficile de trouver un logement acceptant mon chien.",
+    blurbEn:
+      "Finding an apartment that actually accepts pets turns out to be surprisingly hard — a frustrating search that raises real questions about housing policy. (Section: Pets and society, 3/5.)",
+    body: `Quand j'ai cherché un nouvel appartement l'année dernière, j'ai découvert à quel point il était difficile de trouver un logement acceptant mon chien.
+
+Sur une vingtaine d'annonces qui m'intéressaient, presque la moitié précisait clairement : "animaux non acceptés". Certains propriétaires, contactés directement, refusaient catégoriquement d'en discuter, malgré mes explications sur le comportement calme de mon chien.
+
+Cette situation m'a semblé injuste. Mon chien, un labrador de huit ans, n'a jamais causé le moindre dégât dans mon ancien appartement, où j'ai vécu cinq ans sans le moindre problème.
+
+Un ami avocat m'a expliqué que la loi, dans mon pays, protège en réalité les locataires possédant de petits animaux, mais que beaucoup de propriétaires continuent malgré tout d'appliquer leurs propres règles, en toute illégalité.
+
+Cette découverte m'a poussé à mieux me renseigner sur mes droits avant ma prochaine recherche.
+
+J'ai finalement trouvé un appartement accueillant mon chien, après plusieurs semaines de recherche décourageantes.
+
+Cette expérience m'a fait réfléchir à une question plus large : dans une société où de plus en plus de gens vivent seuls avec un animal pour compagnie, ne devrions-nous pas repenser certaines règles de logement devenues, à mon avis, dépassées ?`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-214",
+    title: "Ce que mon chien m'a appris sur la patience",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Mon chien, que j'ai adopté encore chiot, m'a appris quelque chose que je ne m'attendais pas à apprendre d'un animal : la patience.",
+    blurbEn:
+      "An impatient owner learns real patience from training an unruly puppy — an unexpected lesson that changed more than just the dog's behaviour. (Section: Pets and society, 4/5.)",
+    body: `Mon chien, que j'ai adopté encore chiot, m'a appris quelque chose que je ne m'attendais pas à apprendre d'un animal : la patience.
+
+Je me considérais, avant, comme quelqu'un d'assez impatient, agacé rapidement par les contretemps ou les répétitions inutiles.
+
+Éduquer un chiot m'a forcé à revoir complètement cette tendance. Les premières semaines, il fallait répéter les mêmes ordres, encore et encore, sans résultat immédiat.
+
+Ma première réaction, souvent, était la frustration. Je m'énervais quand il ne comprenait pas ce que je lui demandais, oubliant qu'un jeune chien apprend à son propre rythme, sans intention de me contrarier.
+
+Un dresseur professionnel, consulté après plusieurs semaines difficiles, m'a expliqué une chose simple mais éclairante : la frustration du maître ralentit toujours l'apprentissage de l'animal, qui ressent cette tension sans la comprendre.
+
+Cette remarque m'a obligé à changer d'attitude, pas seulement envers mon chien, mais aussi dans d'autres domaines de ma vie. J'ai commencé à appliquer, presque malgré moi, cette même patience avec mes collègues, mes proches, moi-même.
+
+Aujourd'hui, mon chien obéit bien mieux, mais je pense avoir moi-même changé davantage que lui pendant cet apprentissage. Il m'a, sans le savoir, enseigné une leçon que je n'avais jamais réussi à apprendre autrement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-215",
+    title: "Faut-il des congés pour deuil animalier ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Quand mon chat est mort, j'ai dû aller travailler le lendemain, comme si de rien n'était.",
+    blurbEn:
+      "Having to show up at work the day after a pet dies raises a genuine question some companies are starting to take seriously: does grief for an animal deserve real time off? (Section: Pets and society, 5/5 — hardest.)",
+    body: `Quand mon chat est mort, j'ai dû aller travailler le lendemain, comme si de rien n'était.
+
+Il avait partagé mon quotidien pendant quinze ans, présent dans les moments difficiles comme dans les plus heureux. Sa disparition m'a affecté bien plus profondément que je ne l'aurais imaginé.
+
+Pourtant, aucune option de congé ne semblait exister pour ce type de deuil. J'ai simplement pris une journée de congé personnel, sans oser vraiment expliquer la raison à mes collègues, de peur de paraître exagérée.
+
+Ce silence m'a fait réfléchir à une question plus large, qui divise actuellement plusieurs entreprises : le deuil d'un animal de compagnie mérite-t-il, comme celui d'un proche humain, un temps de repos officiellement reconnu ?
+
+Certaines entreprises, notamment aux États-Unis et au Royaume-Uni, commencent à proposer ce type de congé, reconnaissant que la perte d'un animal peut affecter profondément la concentration et le bien-être d'un employé.
+
+D'autres restent sceptiques, estimant qu'on ne peut mettre sur un même plan la perte d'un animal et celle d'un être humain.
+
+Je comprends cette réserve, sans la partager complètement. Le lien créé sur quinze années avec un compagnon fidèle représente, à mes yeux, une perte réelle, méritant peut-être davantage de reconnaissance que le simple silence poli que j'ai reçu ce jour-là.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-216",
+    title: "Ma ville envahie par les touristes l'été",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Chaque été, ma ville, habituellement tranquille, se transforme complètement.",
+    blurbEn:
+      "A quiet town transforms every summer under a flood of tourists — mixed feelings about the noise, the money, and the changed streets. (Section: Tourism and its effects, 1/5.)",
+    body: `Chaque été, ma ville, habituellement tranquille, se transforme complètement.
+
+Les rues, généralement calmes, se remplissent de visiteurs venus admirer notre vieux centre historique. Les terrasses de café, à moitié vides en hiver, débordent de touristes prenant des photos.
+
+Cette affluence apporte des bénéfices économiques évidents. De nombreux commerçants réalisent l'essentiel de leur chiffre d'affaires annuel pendant ces quelques mois d'été.
+
+Mais cette même affluence transforme aussi notre vie quotidienne, pas toujours positivement. Les files d'attente s'allongent partout, même à la boulangerie du coin. Le prix des loyers augmente également, poussé par la multiplication des locations de courte durée destinées aux touristes.
+
+J'ai remarqué que certains habitants, lassés de cette agitation estivale, préfèrent partir en vacances ailleurs pendant cette période, fuyant paradoxalement leur propre ville.
+
+D'autres, comme mon voisin qui tient un petit restaurant, attendent au contraire cette saison avec impatience, sachant qu'elle représente une part essentielle de leurs revenus.
+
+Cette situation m'inspire des sentiments partagés. Je comprends l'importance économique de ce tourisme pour ma ville. Mais je ressens aussi, chaque année, un léger soulagement quand septembre arrive et que ma ville retrouve, progressivement, son calme habituel.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-217",
+    title: "Le tourisme qui fait vivre un village",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Le village où mes grands-parents ont grandi comptait, il y a cinquante ans, plus de mille habitants.",
+    blurbEn:
+      "A dwindling rural village finds an unlikely second life through tourism — and the complicated gratitude of a community that needed saving this way. (Section: Tourism and its effects, 2/5.)",
+    body: `Le village où mes grands-parents ont grandi comptait, il y a cinquante ans, plus de mille habitants. Aujourd'hui, à peine deux cents personnes y vivent encore à l'année.
+
+L'agriculture, autrefois activité principale du village, a progressivement disparu, poussant de nombreux habitants à partir chercher du travail ailleurs, dans les grandes villes.
+
+Ce qui a permis au village de ne pas disparaître complètement, c'est paradoxalement le tourisme, développé grâce à un vieux château médiéval situé sur les hauteurs.
+
+Depuis une quinzaine d'années, ce château attire chaque été des milliers de visiteurs, ce qui a permis l'ouverture de plusieurs commerces : un restaurant, deux hôtels, une petite boutique de produits locaux.
+
+Ma grand-mère, qui a longtemps regretté le déclin de son village natal, reconnaît malgré tout que ce tourisme lui a rendu, indirectement, une forme de vie qu'elle croyait perdue.
+
+« Ce n'est plus le même village qu'avant, me dit-elle souvent, mais au moins, il existe encore. »
+
+Cette histoire illustre bien une réalité complexe : le tourisme, souvent critiqué pour ses effets négatifs sur certains lieux, peut aussi représenter, pour d'autres endroits menacés de disparition, une véritable planche de salut économique.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-218",
+    title: "Voyager pour de vrai ou pour la photo ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En visitant un monument célèbre l'été dernier, j'ai observé un comportement qui m'a interrogé.",
+    blurbEn:
+      "Watching tourists rush past a famous monument just to snap a photo raises a question worth asking about how we actually experience travel now. (Section: Tourism and its effects, 3/5.)",
+    body: `En visitant un monument célèbre l'été dernier, j'ai observé un comportement qui m'a interrogé.
+
+Devant moi, une file de visiteurs attendait leur tour pour prendre une photo précise, souvent la même que celle vue mille fois sur les réseaux sociaux. Une fois la photo prise, la plupart repartaient presque immédiatement, sans vraiment regarder le monument lui-même.
+
+Cette scène m'a fait réfléchir à ma propre manière de voyager. Combien de fois ai-je moi-même privilégié la photo parfaite plutôt que l'expérience réelle du moment ?
+
+Je me souviens d'un voyage récent où j'ai passé presque vingt minutes à essayer d'obtenir la photo idéale d'un coucher de soleil, plutôt que de simplement le regarder, présent, sans écran entre nous.
+
+Certains chercheurs qui étudient le tourisme moderne évoquent un phénomène qu'ils appellent le "tourisme de validation" : voyager davantage pour prouver aux autres, sur les réseaux sociaux, qu'on est allé quelque part, plutôt que pour l'expérience elle-même.
+
+Depuis cette prise de conscience, j'essaie de limiter mes photos pendant les voyages, en me forçant parfois à ranger mon téléphone complètement pendant quelques heures.
+
+Ce n'est pas toujours facile, tant l'habitude de photographier chaque instant est devenue automatique. Mais je ressens, quand j'y parviens, une présence différente, plus réelle, à ce que je suis venu voir.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-219",
+    title: "Les habitants qui ne peuvent plus se loger à cause du tourisme",
+    category: "news-style",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Dans le centre historique de ma ville, de plus en plus d'appartements sont désormais loués aux touristes plutôt qu'à des habitants permanents.",
+    blurbEn:
+      "As more and more apartments convert to short-term tourist rentals, longtime residents find themselves priced out of the neighbourhoods they grew up in. (Section: Tourism and its effects, 4/5.)",
+    body: `Dans le centre historique de ma ville, de plus en plus d'appartements sont désormais loués aux touristes plutôt qu'à des habitants permanents.
+
+Cette transformation, encouragée par la rentabilité des locations de courte durée, a des conséquences directes sur les habitants souhaitant vivre dans ce quartier.
+
+Une étude récente, menée par la mairie, montre que le nombre de résidents permanents dans le centre historique a diminué de près de trente pour cent en dix ans, remplacé progressivement par des logements touristiques.
+
+Les habitants restants se plaignent de plusieurs changements : la disparition des commerces de proximité, remplacés par des boutiques de souvenirs, ainsi que la hausse générale des loyers, désormais calqués sur la rentabilité touristique plutôt que sur les revenus locaux.
+
+Face à cette situation, plusieurs villes européennes ont commencé à limiter légalement le nombre de jours autorisés pour les locations touristiques par appartement, ou à imposer des autorisations spéciales.
+
+Ma propre ville envisage actuellement des mesures similaires, sans avoir encore tranché la question, tant les intérêts économiques et sociaux semblent difficiles à concilier.
+
+Cette situation illustre une tension croissante dans de nombreuses villes touristiques : comment profiter des bénéfices économiques du tourisme sans sacrifier la possibilité, pour les habitants eux-mêmes, de continuer à vivre dans leur propre ville.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-220",
+    title: "Voyager autrement, pour voyager mieux",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Après des années de voyages classiques, j'ai décidé, l'an dernier, de changer complètement ma manière de voyager.",
+    blurbEn:
+      "After years of conventional tourism, a decision to travel completely differently — slower, longer, and rooted in one place instead of many. (Section: Tourism and its effects, 5/5 — hardest.)",
+    body: `Après des années de voyages classiques, j'ai décidé, l'an dernier, de changer complètement ma manière de voyager.
+
+Auparavant, mes vacances suivaient toujours le même schéma : visiter un maximum de monuments en un minimum de temps, cocher une liste de lieux incontournables, puis rentrer épuisé, avec l'impression paradoxale d'avoir besoin de vacances après mes vacances.
+
+L'année dernière, j'ai choisi une approche différente : rester un mois entier dans un seul village, sans itinéraire précis, sans liste de choses à voir absolument.
+
+Ce changement m'a d'abord un peu déstabilisé. Les premiers jours, je ressentais une sorte de culpabilité à "ne rien faire", habitué à remplir chaque journée de visites.
+
+Puis, progressivement, j'ai découvert une autre manière de voyager. J'ai appris à connaître les commerçants du village, à comprendre les habitudes locales, à ralentir suffisamment pour vraiment observer ce qui m'entourait plutôt que de simplement le traverser.
+
+Ce mode de voyage, plus lent, correspond aussi à ce qu'on appelle aujourd'hui le tourisme durable, qui limite les déplacements fréquents et privilégie un impact réduit sur les lieux visités.
+
+Je ne renie pas totalement mes anciens voyages, qui m'ont fait découvrir de nombreux endroits magnifiques. Mais cette nouvelle approche, plus lente et plus profonde, m'a offert quelque chose que mes voyages précédents n'avaient jamais réussi à me donner : un vrai sentiment d'avoir vécu quelque part, ne serait-ce que pour un mois.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-221",
+    title: "Je dormais mal depuis des années, sans m'en inquiéter",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pendant longtemps, je me suis couché tard et réveillé fatigué, sans jamais vraiment m'en inquiéter.",
+    blurbEn:
+      "Years of going to bed late and waking up exhausted, treated as completely normal, until a simple question forced a reckoning. (Section: Sleep and tiredness, 1/5.)",
+    body: `Pendant longtemps, je me suis couché tard et réveillé fatigué, sans jamais vraiment m'en inquiéter.
+
+Je pensais que cette fatigue était normale, simplement le prix à payer pour une vie professionnelle bien remplie. Beaucoup de gens autour de moi semblaient vivre la même chose, ce qui me rassurait, en quelque sorte.
+
+Un jour, lors d'une visite médicale de routine, mon médecin m'a posé une simple question : « Combien d'heures dormez-vous en moyenne ? » J'ai répondu, presque fièrement, « Environ cinq heures, mais je m'en sors très bien. »
+
+Son regard m'a fait comprendre que ma réponse n'était pas aussi rassurante que je le pensais. Il m'a expliqué calmement que ce manque chronique de sommeil affectait probablement bien plus de choses que je ne l'imaginais : ma concentration, mon humeur, ma santé à long terme.
+
+Cette conversation m'a poussé à réfléchir sérieusement, pour la première fois, à mes habitudes de sommeil. Je réalisais que j'avais normalisé quelque chose qui, en réalité, ne l'était pas du tout.
+
+Depuis ce jour, j'essaie, avec plus ou moins de succès, de me coucher plus tôt. Ce n'est pas encore parfait, mais au moins, je ne considère plus ma fatigue permanente comme une fatalité inévitable.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-222",
+    title: "Ce que des années de mauvais sommeil m'ont coûté",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "En me renseignant sur les effets du manque de sommeil, j'ai découvert des conséquences que je n'imaginais pas.",
+    blurbEn:
+      "Digging into the real effects of chronic sleep deprivation reveals consequences far beyond simple tiredness — and a sobering personal reckoning. (Section: Sleep and tiredness, 2/5.)",
+    body: `En me renseignant sur les effets du manque de sommeil, j'ai découvert des conséquences que je n'imaginais pas.
+
+Je pensais, naïvement, que dormir peu affectait principalement l'humeur et la fatigue générale. Les recherches que j'ai lues montrent une réalité bien plus large.
+
+Le manque chronique de sommeil affecterait notamment la mémoire, la capacité à prendre de bonnes décisions, et même le système immunitaire, rendant le corps plus vulnérable aux maladies.
+
+Certaines études évoquent également un lien entre un sommeil insuffisant sur de nombreuses années et un risque accru de plusieurs problèmes de santé plus sérieux, notamment cardiovasculaires.
+
+Ces informations m'ont fait réfléchir à mes propres années de sommeil réduit, considérées à l'époque comme un simple signe de dévouement professionnel.
+
+Je repense maintenant à des erreurs commises au travail, des décisions prises trop rapidement, des tensions inutiles avec des proches, que j'attribue peut-être, au moins en partie, à cette fatigue chronique jamais vraiment prise au sérieux.
+
+Cette prise de conscience, bien que tardive, change ma manière de considérer le sommeil aujourd'hui. Ce n'est plus, à mes yeux, un luxe optionnel qu'on peut sacrifier sans conséquence, mais un besoin fondamental, aussi important que l'alimentation ou l'exercice physique.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-223",
+    title: "Le mythe de dormir peu pour réussir",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pendant longtemps, j'ai admiré ces personnalités connues pour dormir seulement quatre ou cinq heures par nuit.",
+    blurbEn:
+      "The cultural myth of the successful person who barely sleeps — and why the evidence suggests we've been admiring the wrong thing entirely. (Section: Sleep and tiredness, 3/5.)",
+    body: `Pendant longtemps, j'ai admiré ces personnalités connues pour dormir seulement quatre ou cinq heures par nuit, présentées souvent comme des modèles de réussite et de discipline.
+
+Cette idée, très répandue dans le monde professionnel, associe le sommeil réduit à une forme de supériorité : ceux qui dorment peu travailleraient plus, réussiraient davantage, seraient plus déterminés que les autres.
+
+En m'intéressant de plus près à ce sujet, j'ai découvert que cette croyance repose sur des bases scientifiques très fragiles. La grande majorité des adultes ont réellement besoin de sept à neuf heures de sommeil pour fonctionner correctement.
+
+Les rares personnes capables de bien fonctionner avec très peu de sommeil possèdent en réalité une particularité génétique extrêmement rare, présente chez moins d'un pour cent de la population.
+
+Autrement dit, la plupart des gens qui affirment dormir quatre heures et "s'en sortir très bien" fonctionnent probablement, sans le savoir, avec des capacités réduites, sans même s'en rendre compte, tant la fatigue chronique devient une nouvelle normalité pour eux.
+
+Cette découverte a changé mon regard sur ce mythe de la réussite par le manque de sommeil. Ce n'est pas un signe de force, mais bien souvent un signe d'épuisement non reconnu, présenté à tort comme une qualité admirable.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-224",
+    title: "Une nuit dans un laboratoire du sommeil",
+    category: "science",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Après des mois d'insomnie inexpliquée, mon médecin m'a envoyé passer une nuit dans un laboratoire du sommeil.",
+    blurbEn:
+      "Spending a night wired up in a sleep lab to finally understand months of unexplained insomnia — an unusual, illuminating experience. (Section: Sleep and tiredness, 4/5.)",
+    body: `Après des mois d'insomnie inexpliquée, mon médecin m'a envoyé passer une nuit dans un laboratoire du sommeil.
+
+L'idée m'inquiétait un peu : comment dormir normalement, couvert de capteurs, dans une chambre inconnue, sous la surveillance d'une caméra ?
+
+En arrivant le soir, une infirmière m'a expliqué le déroulement de la nuit, avant de fixer sur mon corps une vingtaine de petits capteurs, mesurant mon activité cérébrale, mes mouvements oculaires, ma respiration.
+
+Contre toute attente, malgré cet équipement inhabituel, j'ai fini par m'endormir, sans doute épuisé par des semaines de sommeil difficile.
+
+Le lendemain matin, le médecin spécialiste a analysé les résultats avec moi. Il a identifié un trouble précis : de fréquents micro-réveils, trop brefs pour que j'en garde le souvenir, mais suffisants pour empêcher un sommeil réellement réparateur.
+
+Cette explication m'a soulagé, d'une certaine manière. Après des mois à me sentir incompris, presque coupable de ne pas réussir à "bien dormir", j'avais enfin une explication concrète à mes difficultés.
+
+Le médecin m'a proposé un traitement adapté, qui a progressivement amélioré la qualité de mes nuits.
+
+Cette expérience étrange, presque scientifique, m'a permis de comprendre que certains problèmes de sommeil ont des causes physiologiques précises, qui méritent d'être identifiées plutôt que simplement subies en silence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-225",
+    title: "Réapprendre à dormir, à quarante ans",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "À quarante ans, j'ai dû réapprendre quelque chose que je pensais acquis depuis l'enfance : dormir.",
+    blurbEn:
+      "At forty, relearning something taken for granted since childhood — how to actually fall asleep — through slow, deliberate changes rather than a quick fix. (Section: Sleep and tiredness, 5/5 — hardest.)",
+    body: `À quarante ans, j'ai dû réapprendre quelque chose que je pensais acquis depuis l'enfance : dormir.
+
+Après des années de sommeil dégradé, accumulées silencieusement sans que j'y prête vraiment attention, j'ai finalement décidé de consulter un spécialiste, lassé de me sentir constamment épuisé.
+
+Le spécialiste m'a expliqué une idée qui m'a d'abord surpris : le sommeil, contrairement à ce que je pensais, n'est pas simplement un état passif qu'on subit, mais une compétence qui se cultive, avec des habitudes précises à respecter.
+
+Il m'a proposé un programme structuré, appelé thérapie cognitivo-comportementale pour l'insomnie, consistant à revoir entièrement mes habitudes : heure fixe de coucher et de lever, suppression des écrans avant de dormir, chambre réservée uniquement au sommeil.
+
+Les premières semaines furent frustrantes. J'avais l'impression de "perdre du temps", couché sans dormir, en attendant patiemment que mon corps réapprenne un rythme naturel perdu depuis longtemps.
+
+Progressivement, cependant, les résultats sont apparus. Mon endormissement est devenu plus rapide, mes réveils nocturnes moins fréquents.
+
+Cette expérience m'a appris une leçon plus large que le simple sommeil : certaines compétences que nous croyons acquises pour toujours peuvent en réalité se perdre avec le temps, et méritent parfois d'être réapprises, patiemment, à n'importe quel âge de la vie.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-226",
+    title: "J'ai commencé à trier mes déchets sérieusement",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Pendant des années, je jetais tout dans la même poubelle, sans vraiment me poser de questions.",
+    blurbEn:
+      "Years of throwing everything in one bin, until a simple new sorting system slowly became second nature. (Section: Everyday eco habits, 1/5.)",
+    body: `Pendant des années, je jetais tout dans la même poubelle, sans vraiment me poser de questions.
+
+Le tri sélectif me semblait compliqué, avec ses différentes catégories parfois confuses : quel plastique va où, faut-il laver les emballages avant de les jeter, que faire du carton souillé ?
+
+L'année dernière, après avoir déménagé dans un immeuble où le tri était devenu obligatoire, j'ai dû m'y mettre sérieusement, sans vraiment avoir le choix au début.
+
+Les premières semaines, j'ai commis plusieurs erreurs, jetant parfois les mauvais objets dans les mauvaises poubelles. Ma voisine, plus expérimentée, m'a gentiment expliqué les règles précises, sans jugement.
+
+Progressivement, ce tri est devenu un réflexe presque automatique. Je regarde désormais chaque emballage avant de le jeter, presque sans y penser consciemment.
+
+À ma grande surprise, cette habitude, que j'imaginais contraignante, m'a aussi rendu plus attentif à ma consommation en général. En manipulant chaque jour mes déchets, j'ai pris conscience de la quantité d'emballages inutiles que j'achetais sans même m'en rendre compte auparavant.
+
+Ce simple geste, imposé au départ par mon immeuble, a fini par changer ma manière de consommer bien plus largement que je ne l'aurais imaginé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-227",
+    title: "Le vrac, une habitude qui change tout",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Il y a un an, un magasin en vrac a ouvert dans mon quartier, sans emballages plastiques.",
+    blurbEn:
+      "A zero-waste bulk shop opens in the neighbourhood — the awkward first visit with mismatched containers, and how it quietly reshaped a weekly routine. (Section: Everyday eco habits, 2/5.)",
+    body: `Il y a un an, un magasin en vrac a ouvert dans mon quartier, sans emballages plastiques.
+
+Le principe est simple : on apporte ses propres contenants, qu'on remplit soi-même avec la quantité exacte souhaitée de riz, de pâtes, de céréales ou de produits ménagers.
+
+Ma première visite fut un peu chaotique. Je n'avais pas apporté suffisamment de contenants adaptés, et j'ai dû improviser avec de vieux bocaux qui traînaient dans ma voiture.
+
+Le vendeur, habitué visiblement à ce genre de situation, m'a patiemment expliqué le fonctionnement des balances, comment peser mes contenants vides avant de les remplir.
+
+Après quelques visites, j'ai fini par organiser un petit sac de bocaux réutilisables, toujours prêt dans mon coffre pour mes courses hebdomadaires.
+
+Ce changement d'habitude a eu plusieurs effets inattendus. D'abord, j'achète désormais des quantités plus précises, ce qui réduit le gaspillage alimentaire. Ensuite, ma poubelle d'emballages plastiques a considérablement diminué.
+
+Je continue de faire une partie de mes courses dans des magasins classiques, pour certains produits non disponibles en vrac. Mais cette nouvelle habitude, adoptée progressivement, a changé ma manière de considérer chaque achat alimentaire, désormais plus réfléchi qu'auparavant.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-228",
+    title: "Pourquoi j'ai arrêté d'acheter des bouteilles en plastique",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "J'ai calculé, un jour, le nombre de bouteilles en plastique que j'achetais chaque année.",
+    blurbEn:
+      "Doing the maths on a year's worth of plastic water bottles was enough to trigger a real change — and a surprisingly stubborn habit to shake. (Section: Everyday eco habits, 3/5.)",
+    body: `J'ai calculé, un jour, le nombre de bouteilles en plastique que j'achetais chaque année, presque par curiosité.
+
+Le résultat m'a surpris : environ trois bouteilles par jour, ce qui représentait plus de mille bouteilles annuelles, uniquement pour moi.
+
+Ce chiffre, une fois posé noir sur blanc, m'a semblé difficile à ignorer. J'ai décidé d'investir dans une gourde réutilisable, résolu à changer cette habitude ancrée depuis des années.
+
+Le changement, cependant, ne s'est pas fait aussi facilement que je l'imaginais. Habitué à acheter une bouteille dès que j'avais soif, en sortant, au travail, en voiture, j'oubliais régulièrement de remplir ma gourde à l'avance.
+
+Les premières semaines, je me suis retrouvé plusieurs fois sans eau, forcé malgré moi de racheter une bouteille en plastique, un peu déçu de mon manque de constance.
+
+Progressivement, j'ai développé de nouveaux réflexes : remplir systématiquement ma gourde avant de sortir, en garder toujours une dans mon sac et une autre dans ma voiture.
+
+Aujourd'hui, presque un an après cette décision, j'estime avoir réduit ma consommation de bouteilles en plastique de plus de quatre-vingt-dix pour cent.
+
+Ce changement, qui semblait simple sur le papier, m'a rappelé qu'une habitude ancienne demande du temps et de la patience pour être réellement transformée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-229",
+    title: "Composter en appartement, un défi inattendu",
+    category: "everyday life",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Vivant en appartement, sans jardin, je pensais que le compostage m'était totalement inaccessible.",
+    blurbEn:
+      "Composting seemed impossible without a garden, until a small countertop bin and a shared building system proved otherwise — with a few smelly setbacks along the way. (Section: Everyday eco habits, 4/5.)",
+    body: `Vivant en appartement, sans jardin, je pensais que le compostage m'était totalement inaccessible.
+
+En me renseignant, j'ai découvert un petit composteur d'intérieur, conçu spécialement pour les appartements, utilisant des vers de terre pour transformer les déchets alimentaires.
+
+L'idée m'a d'abord un peu répugnée, j'avoue. L'idée d'avoir des vers de terre dans ma cuisine ne me semblait pas particulièrement attirante.
+
+Malgré cette hésitation initiale, j'ai décidé de tenter l'expérience, curieux de voir si cela fonctionnerait vraiment dans un espace aussi réduit.
+
+Les premières semaines, une odeur légèrement désagréable s'est installée, signe que je nourrissais mal mon composteur, avec trop de déchets d'un coup. J'ai dû apprendre, par tâtonnements, le bon équilibre entre déchets humides et matières sèches, comme du carton déchiré.
+
+Après plusieurs ajustements, le système a fini par bien fonctionner, sans odeur notable, produisant un compost de bonne qualité que je donne désormais à ma voisine, qui possède un petit jardin.
+
+Cette expérience, qui semblait impossible au départ dans mon petit appartement, m'a montré qu'avec un peu de recherche et de patience, presque n'importe quel geste écologique peut s'adapter, même aux conditions de vie les plus contraignantes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b1-230",
+    title: "Les petits gestes suffisent-ils vraiment ?",
+    category: "culture",
+    difficulty: "B1",
+    minutes: 2,
+    preview: "Depuis plusieurs années, je trie mes déchets, je réduis ma consommation de plastique, j'essaie de limiter le gaspillage.",
+    blurbEn:
+      "After years of diligent recycling and small eco-habits, a nagging question: do individual actions actually matter against a much bigger, systemic problem? (Section: Everyday eco habits, 5/5 — hardest.)",
+    body: `Depuis plusieurs années, je trie mes déchets, je réduis ma consommation de plastique, j'essaie de limiter le gaspillage alimentaire.
+
+Malgré ces efforts, une question me traverse régulièrement l'esprit : ces petits gestes individuels ont-ils réellement un impact significatif, face à des problèmes environnementaux d'une ampleur si immense ?
+
+Certains experts en environnement soulignent en effet que l'essentiel des émissions polluantes vient de grandes industries et de choix politiques globaux, bien plus que des habitudes individuelles de consommation.
+
+Selon cette perspective, se concentrer uniquement sur nos petits gestes personnels risquerait presque de détourner l'attention des véritables responsables, en donnant une fausse impression de contrôle individuel sur un problème essentiellement collectif et structurel.
+
+D'autres experts, cependant, défendent une vision complémentaire : les habitudes individuelles, en se multipliant chez des millions de personnes, finissent par influencer les entreprises elles-mêmes, les poussant à adapter leur offre face à une demande de consommateurs plus exigeants.
+
+Je continue, pour ma part, à croire en l'utilité de mes propres gestes quotidiens, sans me faire d'illusions excessives sur leur portée individuelle.
+
+Je pense simplement qu'agir à mon échelle, tout en soutenant également des changements plus larges, politiques et industriels, reste la position la plus cohérente, plutôt que d'attendre passivement que d'autres résolvent seuls un problème qui nous concerne tous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-181",
+    title: "Le sport professionnel est-il devenu un spectacle avant d'être un sport ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Les plus grandes compétitions sportives ressemblent de plus en plus à des spectacles télévisés qu'à de simples rencontres athlétiques.",
+    blurbEn:
+      "Major sporting events increasingly resemble television spectacles more than athletic contests — weighing what's gained in entertainment against what's lost in the sport itself. (Section: Sport and society, 1/5.)",
+    body: `Les plus grandes compétitions sportives ressemblent de plus en plus à des spectacles télévisés qu'à de simples rencontres athlétiques. Entre les pauses publicitaires savamment calculées, les cérémonies d'ouverture dignes de grands shows, et des commentateurs formés à construire du suspense minute par minute, la performance sportive elle-même semble parfois reléguée au second plan derrière l'événement médiatique qu'elle est devenue.
+
+Cette évolution n'est pas un accident, mais le résultat logique d'une industrie qui dépend désormais massivement des droits de diffusion télévisée et du sponsoring. Un match ne se vend plus seulement comme une confrontation sportive entre deux équipes, mais comme un divertissement total, pensé et calibré pour retenir l'attention du téléspectateur le plus longtemps possible, quitte à multiplier les interruptions et les effets de mise en scène.
+
+Faut-il pour autant regretter cette transformation ? Certains y voient une véritable trahison de l'esprit sportif originel, réduit selon eux à un simple produit commercial parmi d'autres. L'argument mérite d'être entendu : quand un athlète devient avant tout une marque personnelle, quand une équipe change de nom selon son sponsor principal, ou quand le calendrier d'une compétition se plie aux exigences des chaînes de télévision plutôt qu'à la logique sportive elle-même, quelque chose de l'authenticité originelle semble effectivement s'effacer.
+
+D'autres observateurs soulignent, à l'inverse, que cette dimension spectaculaire a toujours accompagné le sport, sous une forme ou une autre, depuis les jeux antiques jusqu'aux premiers matchs radiodiffusés du siècle dernier. Le sport, rappellent-ils, a toujours été en partie un spectacle collectif, rassemblant des foules avides d'émotion autant que de performance pure ; et cette dimension n'a jamais empêché, en parallèle, l'existence d'une véritable exigence athlétique, ni la possibilité d'exploits sincères et imprévisibles.
+
+Peut-être la question la plus juste n'est-elle donc pas de savoir si le sport est devenu un spectacle, ce qu'il a toujours été en partie, mais de se demander si cette dimension spectaculaire, aujourd'hui démultipliée par les impératifs commerciaux, laisse encore suffisamment de place à ce qui faisait, à l'origine, la valeur profonde du sport : l'incertitude réelle du résultat, l'effort authentique des corps engagés, et la possibilité, toujours vivante malgré tout, qu'un simple outsider vienne renverser tous les pronostics établis.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-182",
+    title: "La pression de la performance, du stade à l'école",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'exigence de performance, longtemps associée au sport de haut niveau, s'est progressivement étendue à des domaines bien plus larges de nos existences.",
+    blurbEn:
+      "The demand for peak performance, once confined to elite sport, has quietly spread into classrooms, offices, and daily life — with a cost worth examining. (Section: Sport and society, 2/5.)",
+    body: `L'exigence de performance, longtemps associée au sport de haut niveau, s'est progressivement étendue à des domaines bien plus larges de nos existences. L'école évalue désormais ses élèves selon des indicateurs chiffrés de plus en plus précis ; les entreprises mesurent la productivité de leurs employés avec des outils dignes du suivi d'un athlète professionnel ; même nos loisirs se voient parfois transformés en défis à optimiser, comptabilisés par une application sur notre téléphone.
+
+Cette diffusion du vocabulaire et des méthodes sportives dans la vie quotidienne mérite qu'on s'y arrête. D'où vient cette fascination collective pour la mesure permanente de nos performances, jusque dans des domaines qui, historiquement, n'avaient jamais été pensés selon cette logique compétitive ?
+
+Une explication possible réside dans l'attrait rassurant de la mesure elle-même : un chiffre paraît objectif, incontestable, plus facile à communiquer qu'une appréciation nuancée et complexe. Il est plus simple d'annoncer qu'un élève obtient quinze sur vingt que d'expliquer, en détail, sa progression réelle, ses difficultés spécifiques, ses qualités moins mesurables.
+
+Cette quantification généralisée n'est pourtant pas sans conséquences. Des chercheurs en psychologie du travail et de l'éducation observent une augmentation significative de l'anxiété liée à la performance chez les jeunes générations, confrontées dès l'enfance à une évaluation permanente de leurs résultats, comparés sans cesse à ceux des autres.
+
+Faut-il alors rejeter entièrement cette culture de la performance, héritée en partie du monde sportif ? Ce serait sans doute excessif : la mesure permet aussi de progresser objectivement, d'identifier de vraies faiblesses à corriger. Mais peut-être conviendrait-il de retrouver, aussi dans le sport lui-même, une place plus importante pour ce qui échappe au chiffre : le plaisir simple de l'effort, l'apprentissage patient, la persévérance qui ne se traduit pas immédiatement par un résultat mesurable. Sans cet équilibre, la performance risque de devenir, à l'école comme ailleurs, une source d'épuisement plutôt qu'un véritable moteur de progrès.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-183",
+    title: "Le dopage, un problème plus vieux que le sport moderne",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Le dopage sportif est souvent présenté comme un problème récent, lié aux excès du sport professionnel contemporain.",
+    blurbEn:
+      "Doping is usually framed as a modern scandal, but the temptation to enhance performance artificially is almost as old as competitive sport itself. (Section: Sport and society, 3/5.)",
+    body: `Le dopage sportif est souvent présenté comme un problème récent, lié aux excès du sport professionnel contemporain et à la pression financière qui l'accompagne. L'histoire, pourtant, raconte une réalité bien différente : la tentation d'améliorer artificiellement ses performances accompagne la compétition sportive depuis ses origines les plus anciennes.
+
+Dès l'Antiquité, certains athlètes grecs consommaient déjà des préparations à base de plantes ou de champignons, dans l'espoir d'accroître leur force ou leur endurance avant une épreuve. Ces pratiques, bien que rudimentaires par rapport aux substances chimiques modernes, procédaient exactement de la même logique : chercher un avantage compétitif au-delà des limites naturelles du corps.
+
+Ce qui a véritablement changé au fil du temps, c'est la sophistication croissante des méthodes, ainsi que la capacité, bien plus récente, à les détecter scientifiquement. Les grands scandales du vingtième siècle n'ont pas révélé l'apparition du dopage, mais plutôt les moyens nouveaux de le mettre au jour, dans un contexte où les enjeux économiques du sport professionnel s'étaient considérablement accrus.
+
+Cette perspective historique invite à nuancer un discours parfois trop moralisateur, qui présenterait le dopage comme une simple déviance individuelle propre à notre époque. Le phénomène semble plutôt indissociable de la compétition elle-même, dès lors que la victoire procure un avantage suffisamment important, matériel ou symbolique, pour justifier une prise de risque.
+
+Cela ne signifie évidemment pas qu'il faille renoncer à lutter contre le dopage, dont les conséquences sanitaires et l'atteinte à l'équité sportive restent bien réelles. Mais comprendre sa profondeur historique permet peut-être d'aborder ce combat avec plus de lucidité : non comme l'éradication d'un mal moderne isolé, mais comme la régulation constante d'une tentation vieille comme la compétition humaine elle-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-184",
+    title: "Pourquoi admirons-nous tant les athlètes ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Peu de figures publiques suscitent une admiration aussi immédiate et intense que les grands athlètes.",
+    blurbEn:
+      "Few public figures inspire such instant, intense admiration as great athletes — what exactly are we admiring, and why does it move us so deeply? (Section: Sport and society, 4/5.)",
+    body: `Peu de figures publiques suscitent une admiration aussi immédiate et intense que les grands athlètes. Un sprinteur franchissant la ligne d'arrivée en un temps record, un nageur battant un record du monde par quelques centièmes de seconde : ces instants génèrent une émotion collective que peu d'autres accomplissements humains parviennent à provoquer aussi directement.
+
+Cette admiration mérite d'être interrogée. Pourquoi ces performances physiques, souvent difficiles à comprendre dans leur complexité technique par le grand public, touchent-elles autant, alors que des réalisations intellectuelles ou artistiques considérables passent parfois presque inaperçues ?
+
+Une première explication tient sans doute à la lisibilité immédiate de la performance sportive. Contrairement à une découverte scientifique complexe, qui demande des explications pour être appréciée, une victoire sportive se comprend instantanément : quelqu'un a couru plus vite, sauté plus haut, résisté plus longtemps que tous les autres. Cette clarté du résultat facilite une identification immédiate du public.
+
+Une seconde explication réside dans la dimension corporelle de l'exploit. L'athlète incarne, littéralement, dans son propre corps, les limites que nous imaginons pour nous-mêmes. Le voir les dépasser produit une sorte de dépassement par procuration, une célébration collective de ce que le corps humain peut accomplir, y compris pour ceux qui ne pratiquent aucun sport eux-mêmes.
+
+Enfin, l'aspect éphémère et incertain de la compétition sportive joue également un rôle. Contrairement à d'autres formes de réussite, construites sur des années sans instant décisif visible, la performance sportive se joue souvent en quelques secondes, sur un plan clairement défini, avec un vainqueur et des vaincus immédiatement désignés. Cette intensité dramatique, concentrée dans un temps très court, explique en grande partie pourquoi le sport continue de fasciner autant de sociétés à travers le monde, bien au-delà de la simple appréciation technique de la performance elle-même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-185",
+    title: "Le sport peut-il vraiment unir une nation ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "On entend souvent dire qu'une grande compétition sportive internationale a le pouvoir d'unir un pays tout entier, au-delà de ses divisions habituelles.",
+    blurbEn:
+      "The claim that a major sporting tournament can unite a divided nation is common — but does that unity actually last, or does it simply mask the divisions underneath? (Section: Sport and society, 5/5 — hardest.)",
+    body: `On entend souvent dire qu'une grande compétition sportive internationale a le pouvoir d'unir un pays tout entier, au-delà de ses divisions habituelles. Pendant quelques semaines, des inconnus se retrouvent devant un même écran, partagent la même joie ou la même déception, semblent oublier, le temps d'un match, leurs désaccords politiques ou sociaux les plus profonds.
+
+Cette image, séduisante, mérite pourtant d'être examinée avec attention. L'unité produite par le sport est-elle réellement durable, ou s'agit-il d'une parenthèse émotionnelle qui se referme aussitôt la compétition terminée, sans laisser de trace concrète sur les tensions réelles qui traversent une société ?
+
+Plusieurs exemples historiques suggèrent que cette unité, bien réelle sur le moment, reste souvent superficielle et temporaire. Des pays ayant vécu des moments de liesse collective autour d'une victoire sportive majeure ont vu, quelques mois plus tard, leurs divisions internes ressurgir intactes, comme si cette parenthèse n'avait rien changé aux causes profondes de ces tensions.
+
+D'autres analyses, cependant, nuancent ce constat pessimiste. Certains chercheurs en sociologie soulignent que ces moments collectifs, même éphémères, ne sont pas pour autant sans valeur : ils créent une expérience partagée, un souvenir commun auquel des citoyens très différents peuvent se référer par la suite, ce qui contribue, modestement mais réellement, à une forme de sentiment national partagé, même s'il ne résout aucun problème structurel.
+
+Le sport ne peut donc probablement pas, à lui seul, réconcilier une société profondément divisée, ni remplacer un travail politique et social de long terme. Mais réduire ces moments d'unité collective à une simple illusion sans conséquence serait également excessif. Peut-être faut-il accepter cette réalité plus modeste : le sport n'unit pas durablement une nation, mais il lui offre, de temps à autre, l'occasion rare de se voir, brièvement, comme un tout, avant de retrouver ses complexités habituelles.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-186",
+    title: "La mode est-elle un art ou une industrie ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "La mode occupe une position étrange dans notre culture : célébrée dans les musées, mais aussi critiquée comme une industrie purement commerciale.",
+    blurbEn:
+      "Fashion occupies a strange cultural position — celebrated in museums, yet dismissed as purely commercial. What does that tension actually reveal? (Section: Fashion and identity, 1/5.)",
+    body: `La mode occupe une position étrange dans notre culture : célébrée dans les musées comme une forme d'expression artistique à part entière, mais aussi critiquée, dans le même temps, comme une industrie purement commerciale, tournée vers le profit plutôt que vers la création véritable.
+
+Cette ambiguïté n'est pas nouvelle. Depuis les débuts de la haute couture, certains créateurs ont toujours revendiqué un statut d'artiste, tandis que d'autres acteurs du secteur assumaient pleinement leur logique commerciale, sans prétention artistique particulière.
+
+L'argument en faveur du statut artistique de la mode repose sur des éléments solides : une collection de haute couture demande souvent des centaines d'heures de travail manuel, une créativité formelle indéniable, une capacité à traduire des idées abstraites en formes concrètes. À ce titre, elle ne semble pas fondamentalement différente d'autres formes artistiques reconnues comme telles.
+
+L'argument inverse souligne, à raison, la dimension éminemment commerciale de l'industrie : contrairement à une œuvre d'art traditionnelle, un vêtement de mode est conçu, dès l'origine, pour être vendu en quantité, produit selon des logiques industrielles, souvent dans des conditions de fabrication éloignées de tout idéal artistique.
+
+Peut-être la réponse la plus honnête consiste-t-elle à refuser cette opposition trop binaire. La mode contemporaine mêle, de façon inextricable, une dimension créative authentique et une logique commerciale assumée, sans que l'une annule nécessairement l'autre. Certains vêtements relèvent clairement de l'un ou l'autre pôle ; la plupart, en réalité, se situent quelque part entre les deux, portant à la fois la marque d'une vision esthétique et les contraintes d'un marché mondial.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-187",
+    title: "Ce que l'uniforme scolaire révèle sur l'égalité",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Le débat sur l'uniforme scolaire revient régulièrement dans plusieurs pays, souvent présenté comme une question purement pratique.",
+    blurbEn:
+      "The debate over school uniforms keeps resurfacing, framed as purely practical — but it's really a debate about equality, conformity, and what school is for. (Section: Fashion and identity, 2/5.)",
+    body: `Le débat sur l'uniforme scolaire revient régulièrement dans plusieurs pays, souvent présenté comme une question purement pratique : simplifier le choix des vêtements le matin, réduire les tensions liées aux marques de luxe entre élèves, faciliter la vie des familles aux revenus modestes.
+
+Derrière cette apparente simplicité se cache pourtant une question bien plus profonde : celle du rôle de l'école dans la construction, ou la limitation, de l'identité individuelle des jeunes.
+
+Les partisans de l'uniforme avancent un argument d'égalité assez convaincant : sans distinction vestimentaire visible, les inégalités économiques entre élèves deviendraient moins immédiatement perceptibles, réduisant ainsi certaines formes de discrimination sociale précoce, avant même que ne s'installent des différences plus difficiles à corriger.
+
+Les opposants rétorquent que cette égalité imposée reste largement superficielle, puisque les inégalités réelles entre élèves — logement, accès à la culture, soutien familial — persistent bien au-delà du simple vêtement porté en classe. Selon eux, l'uniforme masquerait le problème sans le résoudre, tout en supprimant un espace d'expression personnelle légitime à un âge où l'identité se construit précisément à travers ce type de choix.
+
+Cette tension révèle finalement un désaccord plus fondamental sur la mission même de l'école : doit-elle privilégier une égalité de façade, quitte à uniformiser certains aspects de l'expression individuelle, ou accepter une diversité visible, au risque de rendre plus criantes certaines inégalités sociales déjà existantes ? Aucune des deux positions ne semble emporter une adhésion totale, ce qui explique sans doute pourquoi ce débat, en apparence anodin, continue de diviser aussi durablement les opinions.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-188",
+    title: "La mode rapide et ses coûts invisibles",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "La mode rapide a démocratisé l'accès à des vêtements tendance à des prix très bas, transformant profondément nos habitudes de consommation vestimentaire.",
+    blurbEn:
+      "Fast fashion democratised access to trendy clothes at rock-bottom prices — but that low sticker price hides costs the consumer never sees directly. (Section: Fashion and identity, 3/5.)",
+    body: `La mode rapide a démocratisé l'accès à des vêtements tendance à des prix très bas, transformant profondément nos habitudes de consommation vestimentaire au cours des vingt dernières années. Là où une génération précédente achetait relativement peu de vêtements, mais les conservait longtemps, beaucoup de consommateurs actuels renouvellent aujourd'hui leur garde-robe à un rythme bien plus rapide.
+
+Ce modèle économique repose sur une équation simple : produire vite, produire beaucoup, vendre à bas prix. Cette équation, cependant, dissimule des coûts qui n'apparaissent jamais directement sur l'étiquette, mais qui n'en sont pas moins réels.
+
+Le coût environnemental constitue le premier de ces coûts invisibles. L'industrie textile figure aujourd'hui parmi les secteurs les plus polluants au monde, en raison notamment de la consommation d'eau nécessaire à la culture du coton et des rejets chimiques liés à la teinture des tissus.
+
+Le coût social représente le second, plus directement lié aux conditions de travail dans les pays où ces vêtements sont fabriqués. Des salaires très bas, des conditions de sécurité parfois insuffisantes, des journées de travail excessives : ces réalités, largement documentées depuis plusieurs catastrophes industrielles médiatisées, restent pourtant peu visibles pour le consommateur final, éloigné géographiquement de la chaîne de production.
+
+Enfin, un coût plus diffus concerne la valeur symbolique même du vêtement, désormais perçu comme un objet presque jetable plutôt que comme un bien durable à entretenir et à réparer. Cette évolution culturelle, peut-être plus difficile à quantifier que les précédentes, n'en modifie pas moins profondément notre rapport aux objets et à leur véritable valeur.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-189",
+    title: "S'habiller comme une déclaration politique",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Le vêtement n'a jamais été un choix purement esthétique ou pratique ; il porte aussi, souvent, une dimension politique explicite ou implicite.",
+    blurbEn:
+      "Clothing has never been a purely aesthetic or practical choice — it has always carried, explicitly or not, a political dimension worth examining. (Section: Fashion and identity, 4/5.)",
+    body: `Le vêtement n'a jamais été un choix purement esthétique ou pratique ; il porte aussi, souvent, une dimension politique explicite ou implicite, que les sociétés ont exploitée à travers l'histoire pour affirmer des appartenances ou des revendications.
+
+Certains exemples historiques illustrent clairement cette fonction. Le pantalon, longtemps réservé aux hommes dans de nombreuses sociétés occidentales, est devenu, quand des femmes ont commencé à le porter publiquement, un véritable acte de contestation des normes de genre établies, bien avant de se banaliser complètement.
+
+De même, certains vêtements traditionnels, portés fièrement par des minorités culturelles au sein de sociétés qui cherchaient à les assimiler, ont fonctionné comme des actes de résistance identitaire, revendiquant une appartenance que la majorité aurait préféré voir disparaître.
+
+Aujourd'hui encore, cette dimension politique du vêtement demeure bien vivante, bien que sous des formes parfois plus subtiles. Le choix de porter, ou de refuser de porter, certains symboles religieux dans l'espace public continue de susciter des débats juridiques et sociaux intenses dans plusieurs pays, précisément parce que le vêtement y est perçu comme porteur d'un message qui dépasse la simple apparence.
+
+Cette dimension politique n'est cependant pas toujours consciente ou revendiquée par celui qui la porte. Beaucoup de choix vestimentaires, en apparence neutres, s'inscrivent malgré tout dans des logiques sociales et culturelles plus larges, sans que la personne qui les fait en ait pleinement conscience.
+
+Reconnaître cette dimension politique du vêtement, loin d'être anecdotique, permet peut-être de mieux comprendre pourquoi certains débats vestimentaires, en apparence superficiels, suscitent en réalité des passions et des tensions bien plus profondes que leur objet immédiat ne le laisserait supposer.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-190",
+    title: "Le retour du vêtement fait pour durer",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Face aux critiques croissantes adressées à la mode rapide, un mouvement inverse gagne du terrain : celui du vêtement conçu pour durer plusieurs décennies plutôt que quelques saisons.",
+    blurbEn:
+      "As criticism of fast fashion mounts, a countertrend gains ground: clothes deliberately made to last decades rather than a few seasons — and what it would take to make that the norm again. (Section: Fashion and identity, 5/5 — hardest.)",
+    body: `Face aux critiques croissantes adressées à la mode rapide, un mouvement inverse gagne du terrain : celui du vêtement conçu pour durer plusieurs décennies plutôt que quelques saisons, retrouvant ainsi une philosophie longtemps dominante avant l'avènement de la production industrielle de masse.
+
+Ce mouvement s'appuie sur un constat historique instructif. Jusqu'au milieu du vingtième siècle, l'achat d'un vêtement représentait un investissement réfléchi, justifiant qu'on privilégie la qualité des matériaux et la solidité de la fabrication, quitte à payer davantage à l'achat initial.
+
+Les partisans de ce retour à la durabilité vestimentaire mettent en avant plusieurs arguments convergents : un coût réel par usage souvent inférieur à long terme, malgré un prix d'achat plus élevé ; un impact environnemental considérablement réduit ; et une relation plus riche à l'objet lui-même, entretenu et parfois réparé plutôt que simplement remplacé.
+
+Cette philosophie se heurte cependant à des obstacles structurels importants. Le prix d'achat initial, souvent nettement supérieur à celui de la mode rapide, reste inaccessible pour de nombreux consommateurs aux revenus modestes, ce qui limite la portée sociale réelle de ce mouvement, encore largement associé à une clientèle plus aisée.
+
+De plus, la culture du renouvellement rapide, désormais profondément ancrée dans nos habitudes de consommation et alimentée par les réseaux sociaux, ne disparaît pas facilement, même chez des consommateurs pourtant convaincus intellectuellement par les arguments de la durabilité.
+
+Réconcilier ces deux exigences, apparemment contradictoires, représente peut-être le véritable défi des années à venir pour l'industrie de la mode : rendre la qualité durable suffisamment accessible pour qu'elle cesse d'être un luxe réservé à quelques-uns, sans pour autant sacrifier les emplois d'une industrie qui, aujourd'hui encore, fait vivre des millions de travailleurs à travers le monde.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-191",
+    title: "Sommes-nous une civilisation en manque de sommeil ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Plusieurs études convergent depuis quelques décennies vers un même constat : les sociétés industrialisées dormiraient en moyenne bien moins qu'il y a un siècle.",
+    blurbEn:
+      "Multiple studies converge on the same finding: industrialised societies sleep significantly less than a century ago — what changed, and what it's costing us. (Section: Sleep and modern life, 1/5.)",
+    body: `Plusieurs études convergent depuis quelques décennies vers un même constat : les sociétés industrialisées dormiraient en moyenne bien moins qu'il y a un siècle, une évolution qui inquiète de plus en plus de chercheurs en santé publique.
+
+Cette diminution ne s'explique pas par un seul facteur, mais par la convergence de plusieurs transformations profondes de nos modes de vie. L'apparition de l'éclairage électrique généralisé a d'abord repoussé, dans de nombreux foyers, l'heure naturelle du coucher, autrefois davantage dictée par l'obscurité elle-même.
+
+Plus récemment, la diffusion massive des écrans et des divertissements disponibles à toute heure a ajouté une nouvelle pression sur nos nuits, en offrant des alternatives constamment accessibles à l'ennui du soir qui, historiquement, poussait davantage les individus vers le sommeil.
+
+Enfin, l'intensification du rythme professionnel dans de nombreux secteurs a contribué à valoriser culturellement le sacrifice du sommeil comme preuve de dévouement, renforçant l'idée que dormir peu constituerait une forme de vertu plutôt qu'un risque pour la santé.
+
+Les conséquences de cette évolution collective ne se limitent pas à la simple fatigue individuelle. Des recherches en santé publique établissent des liens de plus en plus solides entre le manque chronique de sommeil à l'échelle d'une population et l'augmentation de certaines pathologies, ainsi qu'une baisse générale de la productivité réelle, paradoxalement inverse à l'objectif initialement recherché en sacrifiant le repos.
+
+Face à ce constat, certains chercheurs appellent à une véritable prise de conscience collective, comparable à celle qui a progressivement transformé notre rapport à l'alimentation ou à l'exercice physique. Reconnaître le sommeil comme un pilier de santé publique à part entière, et non comme une simple préférence individuelle négociable, constituerait selon eux une étape nécessaire pour inverser cette tendance inquiétante.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-192",
+    title: "Le mythe du sommeil comme perte de temps",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Une croyance tenace continue de circuler dans de nombreux milieux professionnels : le sommeil constituerait, d'une certaine manière, du temps perdu.",
+    blurbEn:
+      "A stubborn belief persists in many professional circles: that sleep is, in some sense, wasted time — an idea worth confronting directly. (Section: Sleep and modern life, 2/5.)",
+    body: `Une croyance tenace continue de circuler dans de nombreux milieux professionnels : le sommeil constituerait, d'une certaine manière, du temps perdu, une parenthèse improductive qu'il conviendrait de réduire au strict minimum pour accomplir davantage.
+
+Cette croyance trouve un écho particulier dans certaines cultures d'entreprise qui valorisent explicitement les employés dormant peu, présentés comme des modèles de dévouement et d'ambition. Des personnalités publiques revendiquant fièrement quatre ou cinq heures de sommeil par nuit renforcent, par leur exemple médiatisé, cette association entre réussite et privation de repos.
+
+Or, les recherches en neurosciences contredisent frontalement cette croyance populaire. Loin d'être un temps mort, le sommeil accomplit un travail biologique et cognitif considérable : consolidation de la mémoire, réparation cellulaire, régulation émotionnelle, élimination de certaines toxines accumulées dans le cerveau pendant la journée.
+
+Plus troublant encore, plusieurs études démontrent qu'un déficit de sommeil, même modéré mais répété sur plusieurs semaines, dégrade significativement les capacités cognitives, la créativité et la prise de décision, produisant paradoxalement l'effet inverse de celui recherché par ceux qui sacrifient leur repos pour "gagner du temps".
+
+Cette dissonance entre croyance populaire et réalité scientifique illustre un phénomène plus large : certaines idées reçues, une fois ancrées culturellement, résistent remarquablement bien aux preuves qui les contredisent, notamment lorsqu'elles flattent des valeurs valorisées par ailleurs, comme le dévouement ou l'ambition professionnelle.
+
+Déconstruire ce mythe demanderait sans doute un changement culturel plus large que la simple diffusion d'informations scientifiques, tant l'association entre sommeil réduit et réussite semble aujourd'hui profondément ancrée dans l'imaginaire collectif de nombreuses sociétés contemporaines.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-193",
+    title: "La lumière artificielle a-t-elle changé notre rapport à la nuit ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Avant la généralisation de l'éclairage artificiel, la nuit représentait, pour l'essentiel de l'humanité, une période de repos imposée par l'obscurité elle-même.",
+    blurbEn:
+      "Before artificial lighting, night meant enforced rest — a look at how electric light quietly rewired humanity's relationship with darkness itself. (Section: Sleep and modern life, 3/5.)",
+    body: `Avant la généralisation de l'éclairage artificiel, la nuit représentait, pour l'essentiel de l'humanité, une période de repos largement imposée par l'obscurité elle-même, qui limitait naturellement les activités possibles une fois le soleil couché.
+
+L'arrivée progressive de l'éclairage électrique, à partir de la fin du dix-neuvième siècle, a bouleversé cette organisation millénaire du temps humain. Pour la première fois dans l'histoire, il devenait possible de prolonger indéfiniment les activités diurnes bien après la tombée de la nuit, sans dépendre de sources de lumière coûteuses et limitées comme les bougies ou les lampes à huile.
+
+Cette transformation, souvent célébrée comme un progrès indéniable, a eu des conséquences moins visibles sur notre physiologie. Le corps humain, façonné par des millénaires d'évolution en synchronisation avec le cycle naturel du jour et de la nuit, ne s'est pas adapté aussi rapidement que notre environnement technologique.
+
+Des chercheurs en chronobiologie ont notamment montré que l'exposition à la lumière artificielle en soirée, particulièrement celle émise par les écrans modernes, perturbe la sécrétion naturelle de mélatonine, l'hormone qui signale à notre organisme qu'il est temps de se préparer au sommeil. Cette perturbation retarderait ainsi, chez de nombreuses personnes, l'endormissement naturel de plusieurs dizaines de minutes, voire davantage.
+
+Cette situation illustre un décalage plus large entre notre biologie, restée fondamentalement ancienne, et un environnement technologique en constante évolution, capable de modifier profondément des rythmes que l'humanité avait pourtant respectés, sans même y penser consciemment, pendant l'essentiel de son histoire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-194",
+    title: "Faut-il repenser les horaires scolaires autour du sommeil ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "De nombreuses études démontrent aujourd'hui que les adolescents ont un rythme biologique naturellement décalé par rapport aux adultes, les poussant à s'endormir et à se réveiller plus tardivement.",
+    blurbEn:
+      "Teenagers are biologically wired to sleep and wake later than adults — so why do most schools still start early enough to fight against that clock? (Section: Sleep and modern life, 4/5.)",
+    body: `De nombreuses études démontrent aujourd'hui que les adolescents ont un rythme biologique naturellement décalé par rapport aux adultes, les poussant à s'endormir et à se réveiller plus tardivement, un phénomène directement lié aux changements hormonaux propres à cette période de la vie.
+
+Malgré ces découvertes scientifiques bien établies, la majorité des établissements scolaires continuent d'imposer des horaires de début de cours matinaux, conçus historiquement selon les contraintes des adultes plutôt que selon les besoins biologiques réels des adolescents eux-mêmes.
+
+Cette contradiction produit des conséquences concrètes largement documentées : somnolence en classe, difficultés de concentration lors des premiers cours de la journée, et un déficit chronique de sommeil qui s'accumule tout au long de la semaine scolaire, rarement compensé de manière suffisante le week-end.
+
+Face à ce constat, plusieurs établissements, notamment aux États-Unis et dans certains pays scandinaves, ont commencé à expérimenter des horaires de début de cours retardés d'une heure environ. Les premiers résultats de ces expérimentations montrent des améliorations mesurables : meilleure concentration, réduction de l'absentéisme, et même une baisse des accidents de la route chez les jeunes conducteurs se rendant en cours.
+
+Les obstacles à une généralisation de ces mesures restent cependant nombreux : organisation des transports scolaires, contraintes des parents travaillant selon des horaires fixes, activités extrascolaires programmées en fin de journée. Ces difficultés pratiques, bien réelles, expliquent en grande partie la lenteur avec laquelle les systèmes éducatifs adaptent leurs horaires à des connaissances scientifiques pourtant solidement établies depuis plusieurs années déjà.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-195",
+    title: "Le sommeil, dernière frontière de la productivité ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Après avoir optimisé presque tous les aspects mesurables de nos journées, une partie du monde professionnel semble désormais se tourner vers un dernier territoire à conquérir : le sommeil lui-même.",
+    blurbEn:
+      "Having optimised nearly every measurable part of the day, a corner of the professional world now turns its attention to sleep itself — the last frontier of productivity culture. (Section: Sleep and modern life, 5/5 — hardest.)",
+    body: `Après avoir optimisé presque tous les aspects mesurables de nos journées, une partie du monde professionnel semble désormais se tourner vers un dernier territoire à conquérir : le sommeil lui-même, transformé progressivement en un nouveau champ d'application de la logique de performance.
+
+Cette évolution se manifeste concrètement à travers la multiplication d'objets connectés destinés à mesurer précisément la qualité de nos nuits : durée exacte des différentes phases de sommeil, fréquence cardiaque nocturne, taux d'oxygène dans le sang, le tout synthétisé en un score quotidien censé refléter, chiffres à l'appui, la qualité objective de notre repos.
+
+L'intention initiale de ces outils paraît louable : aider les individus à mieux comprendre leurs propres cycles de sommeil, identifier d'éventuels problèmes, ajuster leurs habitudes en conséquence. Pour certains utilisateurs, ces informations ont effectivement permis des améliorations concrètes et bienvenues.
+
+Un effet paradoxal, cependant, mérite d'être signalé. Plusieurs spécialistes du sommeil observent l'émergence d'un phénomène qu'ils nomment "l'orthosomnie" : une anxiété nouvelle, provoquée précisément par l'obsession de bien dormir selon les critères mesurés par ces appareils, au point que la préoccupation excessive du score nocturne finit par nuire elle-même à l'endormissement naturel.
+
+Cette situation illustre un paradoxe plus large de notre époque : la logique de quantification et d'optimisation permanente, initialement pensée pour améliorer notre bien-être, risque parfois de coloniser jusqu'aux derniers espaces de notre existence encore relativement préservés de cette pression, transformant même le repos, censé nous libérer de la performance, en un nouveau terrain de performance à part entière. Peut-être le sommeil restera-t-il, malgré tout, l'un des rares domaines où l'abandon du contrôle demeure, paradoxalement, la seule véritable stratégie efficace.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-196",
+    title: "Peut-on rire de tout ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "La question revient régulièrement dans le débat public : existe-t-il des sujets sur lesquels l'humour n'aurait tout simplement pas sa place ?",
+    blurbEn:
+      "The question keeps resurfacing in public debate: are there subjects humour simply has no business touching? A look at both sides of an old argument. (Section: Humour and culture, 1/5.)",
+    body: `La question revient régulièrement dans le débat public : existe-t-il des sujets sur lesquels l'humour n'aurait tout simplement pas sa place, ou peut-on, comme le proclament certains humoristes, littéralement rire de tout ?
+
+Les défenseurs d'un humour sans limites avancent un argument de principe : instaurer des sujets officiellement interdits reviendrait à accorder à l'humour un pouvoir qu'il n'a pas réellement, celui de blesser à lui seul, indépendamment de l'intention et du contexte dans lequel il s'exprime. Selon cette perspective, ce n'est jamais le sujet lui-même qui pose problème, mais la manière dont il est traité.
+
+Cette position se heurte cependant à une objection sérieuse : la manière dont un sujet est traité ne peut pas toujours être séparée du sujet lui-même, surtout lorsque ce sujet touche directement des groupes ayant historiquement subi des discriminations ou des violences bien réelles. Rire de la souffrance d'un groupe minoritaire, même avec l'intention affichée de dénoncer une injustice, produit rarement le même effet que rire, par exemple, des travers universels de la condition humaine.
+
+Une distinction utile pourrait résider dans la différence entre rire avec et rire de : le premier crée une complicité, une reconnaissance partagée d'une réalité commune ; le second installe une distance, une supériorité implicite du rieur sur celui dont on se moque.
+
+Peut-être la véritable question n'est-elle donc pas de savoir si l'on peut rire de tout, ce qui reste techniquement toujours possible, mais de se demander pourquoi on choisit de rire de telle chose plutôt que d'une autre, et ce que cette moquerie révèle, finalement, du rapport de pouvoir entre celui qui rit et celui dont on rit.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-197",
+    title: "Pourquoi l'humour ne voyage pas toujours bien",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Rares sont les expériences aussi révélatrices des différences culturelles qu'assister à un spectacle comique dans un pays étranger.",
+    blurbEn:
+      "Few experiences reveal cultural difference as sharply as watching a comedy show in a foreign country — why jokes translate so badly across borders. (Section: Humour and culture, 2/5.)",
+    body: `Rares sont les expériences aussi révélatrices des différences culturelles qu'assister à un spectacle comique dans un pays étranger, où l'on comprend parfaitement chaque mot prononcé, sans pour autant en saisir toujours la drôlerie.
+
+Ce phénomène s'explique par la nature profondément contextuelle de l'humour, qui repose rarement sur le simple sens littéral des mots. Une bonne partie des blagues réussies s'appuient sur des références culturelles précises, des habitudes sociales partagées, ou des sous-entendus qui demandent une connaissance implicite du contexte pour être perçus comme comiques.
+
+Certaines formes d'humour, comme l'ironie ou l'autodérision, varient également considérablement d'une culture à l'autre dans leur acceptabilité sociale. Ce qui constitue, dans une culture, une marque d'humilité sympathique peut être perçu, dans une autre, comme un signe préoccupant de manque de confiance en soi, ce qui change radicalement la réception de la blague elle-même.
+
+La structure narrative de l'humour diffère également selon les traditions culturelles : certaines cultures privilégient une chute rapide et explicite, tandis que d'autres apprécient davantage un humour plus subtil, fondé sur l'implicite et le sous-entendu, difficile à percevoir pour quelqu'un habitué à un style plus direct.
+
+Cette difficulté de traduction culturelle de l'humour explique pourquoi tant de comédies, pourtant très populaires dans leur pays d'origine, échouent souvent à rencontrer le même succès une fois exportées, malgré une traduction techniquement fidèle des dialogues. L'humour, en définitive, ne se traduit jamais vraiment mot à mot ; il exige une véritable transposition culturelle, bien plus exigeante qu'une simple traduction linguistique.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-198",
+    title: "Le rire comme signe d'intelligence sociale",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Les chercheurs qui étudient le rire s'accordent sur un point : il s'agit d'un comportement social bien plus complexe qu'il n'y paraît.",
+    blurbEn:
+      "Researchers who study laughter agree on one thing: it's a far more socially complex behaviour than it first appears — and a genuine marker of social intelligence. (Section: Humour and culture, 3/5.)",
+    body: `Les chercheurs qui étudient le rire s'accordent sur un point : il s'agit d'un comportement social bien plus complexe qu'il n'y paraît, bien loin de la simple réaction mécanique à une blague réussie.
+
+Des études en psychologie sociale ont notamment montré que la grande majorité des rires quotidiens ne surviennent pas en réponse à une plaisanterie explicite, mais plutôt au cours de conversations ordinaires, comme un signal social destiné à renforcer un lien, apaiser une tension, ou signifier une complicité partagée.
+
+Cette dimension sociale du rire expliquerait pourquoi les personnes considérées comme socialement habiles rient généralement davantage, et de manière plus adaptée au contexte, que celles éprouvant des difficultés relationnelles. Le rire fonctionnerait ainsi comme un véritable outil de navigation sociale, permettant d'ajuster en temps réel la tonalité d'un échange.
+
+Plus surprenant encore, des chercheurs ont observé que produire spontanément de l'humour adapté à une situation nécessite des capacités cognitives sophistiquées : comprendre les attentes de son interlocuteur, anticiper sa réaction probable, choisir le bon moment pour introduire une remarque comique. Cette complexité expliquerait, selon certaines études, une corrélation observée entre un sens de l'humour développé et certaines formes d'intelligence sociale et émotionnelle.
+
+Cette perspective invite à reconsidérer l'humour non comme un simple divertissement superficiel, mais comme une compétence sociale à part entière, révélatrice de la capacité d'un individu à percevoir finement les dynamiques relationnelles qui l'entourent, et à s'y adapter avec justesse et à propos.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-199",
+    title: "L'humour noir, thérapie ou provocation ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'humour noir, qui traite avec légèreté des sujets graves comme la maladie, la mort ou la souffrance, suscite depuis toujours des réactions contrastées.",
+    blurbEn:
+      "Dark humour, which treats grave subjects like illness, death and suffering with levity, has always split opinion — genuine coping mechanism or reckless provocation? (Section: Humour and culture, 4/5.)",
+    body: `L'humour noir, qui traite avec légèreté des sujets graves comme la maladie, la mort ou la souffrance, suscite depuis toujours des réactions contrastées, entre ceux qui le trouvent nécessaire et ceux qui le jugent profondément déplacé.
+
+Les défenseurs de l'humour noir avancent souvent un argument thérapeutique bien documenté : plusieurs études en psychologie ont montré que certaines formes d'humour, appliquées à des situations difficiles, permettent de créer une distance émotionnelle salutaire face à des réalités autrement insupportables à affronter directement.
+
+Ce mécanisme expliquerait, par exemple, pourquoi certaines professions confrontées quotidiennement à la souffrance humaine, comme le personnel médical ou les services d'urgence, développent fréquemment un humour noir interne, considéré par les intéressés eux-mêmes comme un outil précieux de résilience psychologique face à des situations autrement difficiles à supporter.
+
+Les critiques de cet humour soulignent cependant un risque réel : la banalisation potentielle de souffrances bien réelles, particulièrement lorsque cet humour s'exerce publiquement plutôt que dans un cadre privé et consenti entre personnes directement concernées par la situation évoquée.
+
+La distinction cruciale semble résider précisément dans ce contexte de réception : un humour noir partagé entre personnes vivant une même épreuve fonctionne différemment d'un même humour imposé publiquement à des personnes n'ayant pas choisi d'y être exposées, ni nécessairement concernées par la situation tournée en dérision.
+
+Cette tension entre fonction thérapeutique légitime et risque réel de blessure explique pourquoi l'humour noir continue de diviser aussi profondément, sans qu'aucune position tranchée ne puisse honnêtement prétendre couvrir l'ensemble des situations dans lesquelles il s'exprime.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-200",
+    title: "Ce que nos générations trouvent drôle en dit long sur elles",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Chaque génération semble rire de choses sensiblement différentes, au point que des blagues jugées hilarantes par les uns laissent parfois les autres complètement indifférents.",
+    blurbEn:
+      "Every generation seems to laugh at slightly different things — what generational shifts in comedic taste actually reveal about deeper changes in values and anxieties. (Section: Humour and culture, 5/5 — hardest.)",
+    body: `Chaque génération semble rire de choses sensiblement différentes, au point que des blagues jugées hilarantes par les uns laissent parfois les autres complètement indifférents, voire perplexes face à ce qui suscite un tel enthousiasme comique.
+
+Cette évolution générationnelle de l'humour ne relève pas d'un simple changement de goût arbitraire, mais reflète souvent des transformations plus profondes dans les préoccupations, les valeurs et les anxiétés propres à chaque génération.
+
+L'humour des générations ayant grandi avec une exposition constante aux réseaux sociaux, par exemple, se caractérise fréquemment par un usage intensif de l'ironie superposée, du second, voire du troisième degré, reflétant peut-être une méfiance générale envers toute affirmation prise au premier degré, dans un environnement médiatique saturé d'informations contradictoires.
+
+Les générations précédentes, formées dans un paysage médiatique plus centralisé et unifié, ont souvent développé un humour reposant davantage sur des références culturelles largement partagées par l'ensemble de la population, une communauté de références aujourd'hui bien plus fragmentée par la diversité des contenus disponibles en ligne.
+
+Ces différences ne signifient pas nécessairement qu'une génération possède un humour supérieur à une autre, mais plutôt que chaque génération développe des codes comiques adaptés à son propre contexte historique, technologique et social, souvent difficiles à décoder pleinement pour ceux qui n'ont pas partagé ce même contexte formateur.
+
+Observer attentivement ce que chaque génération trouve drôle constitue ainsi, pour les sociologues qui étudient ces phénomènes, un indicateur précieux et souvent négligé des transformations culturelles plus larges qui traversent une société à un moment donné de son histoire, révélant à travers le rire des vérités que le discours sérieux peine parfois à exprimer aussi directement.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-201",
+    title: "Le jeu vidéo est-il enfin reconnu comme un art ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Pendant longtemps, le jeu vidéo a été considéré comme un simple divertissement mineur, indigne d'être comparé aux formes d'art traditionnellement reconnues.",
+    blurbEn:
+      "Video games spent decades dismissed as minor entertainment, unworthy of comparison to traditional art forms — a status now genuinely being contested. (Section: Video games and digital culture, 1/5.)",
+    body: `Pendant longtemps, le jeu vidéo a été considéré comme un simple divertissement mineur, indigne d'être comparé aux formes d'art traditionnellement reconnues comme la littérature, le cinéma ou la peinture.
+
+Cette hiérarchie culturelle semble aujourd'hui de plus en plus contestée. Plusieurs grands musées à travers le monde ont récemment consacré des expositions entières à l'histoire et à l'esthétique du jeu vidéo, reconnaissant explicitement sa valeur artistique et sa place légitime dans l'histoire culturelle contemporaine.
+
+Les arguments en faveur de cette reconnaissance s'appuient sur des éléments substantiels : certains jeux modernes déploient des récits d'une complexité narrative comparable aux meilleures œuvres littéraires, une direction artistique visuelle d'une sophistication remarquable, et surtout une dimension interactive propre à ce médium, permettant au joueur de participer activement à la construction du sens de l'œuvre, une possibilité qu'aucune autre forme artistique traditionnelle ne propose de la même manière.
+
+Les sceptiques rétorquent que cette reconnaissance récente concerne surtout une minorité de productions particulièrement ambitieuses, tandis que la grande majorité des jeux vidéo commerciaux demeure avant tout conçue pour maximiser le divertissement et le profit, sans réelle prétention artistique.
+
+Cette objection n'est pas sans fondement, mais elle pourrait s'appliquer identiquement à d'autres formes artistiques : le cinéma compte lui aussi une majorité de productions purement commerciales, sans que cela remette en question le statut artistique du médium dans son ensemble.
+
+Le jeu vidéo semble ainsi traverser aujourd'hui une transition comparable à celle qu'a connue le cinéma au vingtième siècle : d'un divertissement populaire méprisé par l'establishment culturel vers une reconnaissance progressive de son potentiel artistique propre, spécifique, irréductible à celui des médiums qui l'ont précédé.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-202",
+    title: "L'addiction aux jeux vidéo, réalité ou fantasme moral ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'idée que les jeux vidéo puissent créer une véritable dépendance suscite un débat scientifique et médical loin d'être tranché.",
+    blurbEn:
+      "The idea that video games can create genuine addiction remains a contested scientific and medical debate — one worth examining without the moral panic. (Section: Video games and digital culture, 2/5.)",
+    body: `L'idée que les jeux vidéo puissent créer une véritable dépendance suscite un débat scientifique et médical loin d'être tranché, malgré l'inclusion récente de ce trouble dans certaines classifications médicales internationales.
+
+Les partisans de la reconnaissance de cette addiction s'appuient sur des observations cliniques préoccupantes : certains joueurs développent effectivement des comportements compulsifs, négligeant leur sommeil, leurs relations sociales ou leurs obligations professionnelles au profit d'un temps de jeu excessif, avec des conséquences réelles et documentées sur leur vie quotidienne.
+
+Les critiques de cette classification soulignent, à l'inverse, un risque de confusion méthodologique important : distinguer un usage intense mais choisi, source de plaisir légitime, d'une véritable pathologie compulsive relève d'un exercice bien plus délicat que ne le suggèrent certains discours alarmistes relayés dans les médias.
+
+Ces critiques rappellent également un précédent historique instructif : des paniques morales similaires ont accompagné, par le passé, l'apparition d'autres médiums de divertissement, de la télévision aux romans populaires, souvent accusés à leur époque de corrompre la jeunesse, sans que ces craintes se soient toujours révélées scientifiquement fondées à long terme.
+
+Un consensus semble néanmoins émerger progressivement parmi les chercheurs : si une minorité de joueurs développe effectivement des comportements problématiques méritant une attention clinique sérieuse, la généralisation hâtive de cette réalité à l'ensemble des pratiquants de jeux vidéo relève probablement d'une simplification excessive, davantage motivée par une inquiétude culturelle générationnelle que par une évaluation rigoureuse et nuancée des données scientifiques réellement disponibles sur la question.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-203",
+    title: "Ce que le sport électronique a changé dans notre définition du sport",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'émergence du sport électronique, ou e-sport, comme discipline compétitive suivie par des millions de spectateurs, bouscule notre définition traditionnelle du sport.",
+    blurbEn:
+      "The rise of competitive esports, watched by millions, forces an uncomfortable question: what actually makes something a sport in the first place? (Section: Video games and digital culture, 3/5.)",
+    body: `L'émergence du sport électronique, ou e-sport, comme discipline compétitive suivie par des millions de spectateurs à travers le monde, bouscule notre définition traditionnelle du sport, historiquement associée à l'effort physique et à la performance corporelle.
+
+Les défenseurs du statut sportif de l'e-sport avancent des arguments qui méritent d'être considérés sérieusement : ces compétitions exigent des réflexes exceptionnels, une coordination œil-main d'un niveau comparable à certains sports traditionnels, une préparation stratégique intense, et un entraînement quotidien rigoureux, souvent encadré par des équipes professionnelles complètes, comprenant entraîneurs et préparateurs mentaux.
+
+Les sceptiques rétorquent que l'absence d'effort physique intense, critère historiquement central de la définition du sport, empêche fondamentalement toute assimilation légitime entre une compétition de jeu vidéo et une discipline sportive traditionnelle, quelle que soit par ailleurs l'intensité de l'engagement mental requis.
+
+Cette opposition révèle en réalité un désaccord plus profond sur ce qui constitue véritablement l'essence du sport : est-ce l'effort physique lui-même, ou plutôt la structure compétitive organisée, l'entraînement rigoureux et la performance mesurable qui caractérisent fondamentalement une activité sportive, indépendamment du support sur lequel elle s'exerce ?
+
+Certaines fédérations sportives internationales ont d'ailleurs commencé à reconnaître partiellement l'e-sport, sans pour autant trancher définitivement cette question conceptuelle. Cette évolution progressive suggère peut-être que notre définition du sport, loin d'être figée une fois pour toutes, continue d'évoluer avec les transformations technologiques et culturelles de chaque époque, comme elle l'a d'ailleurs toujours fait au fil de l'histoire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-204",
+    title: "Les jeux vidéo peuvent-ils vraiment éduquer ?",
+    category: "science",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'idée d'utiliser les jeux vidéo comme véritable outil pédagogique séduit de plus en plus d'enseignants et de chercheurs en éducation.",
+    blurbEn:
+      "Using video games as genuine teaching tools appeals to a growing number of educators — but does the evidence actually support the enthusiasm? (Section: Video games and digital culture, 4/5.)",
+    body: `L'idée d'utiliser les jeux vidéo comme véritable outil pédagogique séduit de plus en plus d'enseignants et de chercheurs en éducation, convaincus que ce médium possède un potentiel d'apprentissage largement sous-exploité par les systèmes éducatifs traditionnels.
+
+Cette conviction s'appuie sur des caractéristiques propres aux jeux vidéo bien conçus : un retour immédiat sur les erreurs commises, une progression graduelle adaptée au niveau du joueur, et surtout une motivation intrinsèque souvent bien supérieure à celle observée dans un cadre scolaire classique, où l'apprentissage reste fréquemment perçu comme une contrainte plutôt que comme un plaisir choisi.
+
+Plusieurs études ont effectivement démontré des résultats prometteurs dans des domaines précis : certains jeux de stratégie amélioreraient la capacité de résolution de problèmes complexes, tandis que des jeux spécifiquement conçus pour l'apprentissage des langues montrent des résultats comparables, voire supérieurs, à certaines méthodes d'enseignement plus traditionnelles.
+
+Ces résultats encourageants méritent cependant d'être nuancés par plusieurs limites importantes. La conception d'un jeu véritablement éducatif, alliant rigueur pédagogique et plaisir ludique authentique, demeure un exercice complexe : de nombreux jeux commercialisés comme "éducatifs" échouent en réalité à combiner ces deux exigences, produisant soit un contenu pédagogiquement solide mais ennuyeux, soit un divertissement réussi mais pédagogiquement superficiel.
+
+L'enjeu véritable ne consiste donc probablement pas à se demander si les jeux vidéo peuvent éduquer en général, une question trop vaste pour recevoir une réponse simple, mais plutôt à identifier précisément dans quelles conditions spécifiques, pour quels contenus et selon quelle conception pédagogique rigoureuse, ce médium parvient effectivement à remplir cette promesse éducative encore largement expérimentale à ce jour.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-205",
+    title: "Grandir dans des mondes qui n'existent pas",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Une génération entière a désormais grandi en passant une part significative de son enfance et de son adolescence dans des mondes virtuels n'existant que sous forme numérique.",
+    blurbEn:
+      "An entire generation has grown up spending significant portions of childhood inside worlds that exist only as code — and questions worth asking about what that experience actually shapes. (Section: Video games and digital culture, 5/5 — hardest.)",
+    body: `Une génération entière a désormais grandi en passant une part significative de son enfance et de son adolescence dans des mondes virtuels n'existant que sous forme numérique, une expérience formatrice radicalement différente de celle de toutes les générations précédentes.
+
+Cette réalité soulève des questions inédites, encore largement inexplorées par la recherche : quel effet produit, sur le développement psychologique et social d'un individu, le fait d'avoir noué certaines de ses premières amitiés, vécu certaines de ses premières émotions fortes, ou construit une partie de son identité personnelle au sein d'environnements entièrement virtuels plutôt que physiques ?
+
+Certains chercheurs en psychologie du développement soulignent des inquiétudes légitimes : les interactions virtuelles, aussi riches soient-elles, pourraient priver les jeunes de certains apprentissages sociaux fondamentaux, normalement acquis à travers la présence physique et les signaux corporels subtils d'une interaction en face à face.
+
+D'autres chercheurs adoptent une perspective plus nuancée, rappelant que chaque génération a toujours dû s'adapter à des environnements technologiques nouveaux, sans que cela signifie nécessairement une dégradation de ses capacités relationnelles fondamentales, mais plutôt le développement de compétences sociales adaptées à ces nouveaux contextes, différentes mais pas nécessairement inférieures à celles des générations précédentes.
+
+Il est probablement trop tôt pour trancher définitivement ce débat, tant les premières générations ayant grandi presque entièrement immergées dans ces mondes numériques n'ont pas encore atteint un âge suffisant pour permettre une évaluation complète et rigoureuse des effets à long terme de cette expérience formatrice inédite dans l'histoire humaine, dont nous ne mesurons peut-être encore qu'une fraction des conséquences réelles.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-206",
+    title: "Pourquoi lit-on des romans qu'on sait irréalistes ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Des millions de lecteurs se plongent chaque année dans des romans dont ils savent pertinemment que l'intrigue ne reflète en rien la réalité.",
+    blurbEn:
+      "Millions of readers dive every year into novels they know perfectly well aren't realistic — what that willing suspension of disbelief actually gives us. (Section: Reading and escapism, 1/5.)",
+    body: `Des millions de lecteurs se plongent chaque année dans des romans dont ils savent pertinemment que l'intrigue ne reflète en rien la réalité, qu'il s'agisse de récits fantastiques, de romances improbables ou d'aventures épiques peuplées de créatures imaginaires.
+
+Cette pratique, en apparence paradoxale, mérite qu'on s'y attarde : pourquoi consacrer autant de temps et d'attention à des histoires dont on connaît, dès la première page, l'irréalisme fondamental ?
+
+Une première explication réside dans la fonction d'évasion que remplit précisément cette fiction assumée. Contrairement à un récit prétendument réaliste, qui pourrait rappeler douloureusement les difficultés du quotidien, un monde ouvertement fictif offre un espace mental clairement délimité, où le lecteur peut se réfugier temporairement sans confusion possible avec sa propre existence.
+
+Une seconde explication, plus subtile, concerne la capacité de ces récits irréalistes à exprimer, sous une forme symbolique et distanciée, des vérités psychologiques ou morales bien réelles. Un monde imaginaire, précisément parce qu'il s'éloigne du réel, permet parfois d'aborder des questions universelles — le pouvoir, la loyauté, le sacrifice — avec une clarté que la complexité du monde réel rendrait plus difficile à percevoir directement.
+
+Cette fonction de la fiction irréaliste n'est d'ailleurs pas nouvelle : les mythes anciens, les contes populaires transmis depuis des siècles remplissaient déjà une fonction similaire, bien avant l'apparition du roman moderne. Lire des histoires qu'on sait fausses ne relève donc probablement pas d'un simple divertissement superficiel, mais répond à un besoin humain ancien et profond, celui de comprendre sa propre condition à travers le détour rassurant de l'imaginaire.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-207",
+    title: "La lecture, un luxe menacé par la vitesse du monde moderne ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "La lecture prolongée d'un livre exige une disponibilité mentale de plus en plus rare dans un monde saturé de sollicitations permanentes.",
+    blurbEn:
+      "Sustained reading demands a kind of mental availability increasingly rare in a world of constant notifications — is deep reading becoming an endangered luxury? (Section: Reading and escapism, 2/5.)",
+    body: `La lecture prolongée d'un livre exige une disponibilité mentale de plus en plus rare dans un monde saturé de sollicitations permanentes, où chaque instant d'attention se voit disputé par de multiples notifications concurrentes.
+
+Plusieurs enquêtes récentes constatent une diminution mesurable du temps consacré à la lecture de livres, particulièrement chez les jeunes générations ayant grandi avec un accès constant à des contenus numériques courts et immédiatement gratifiants, structurellement différents de l'engagement long que réclame un roman.
+
+Cette évolution inquiète certains chercheurs en sciences cognitives, qui soulignent que la lecture prolongée entraîne des capacités mentales spécifiques — concentration soutenue, capacité à suivre un raisonnement complexe sur la durée, patience face à une gratification différée — qui pourraient s'atrophier faute d'exercice régulier, à mesure que nos habitudes de consommation médiatique privilégient des formats toujours plus courts et immédiats.
+
+D'autres observateurs nuancent cependant ce constat pessimiste, rappelant que chaque nouvelle technologie de communication a historiquement suscité des inquiétudes similaires quant à la disparition supposée de la lecture, sans que ces prédictions ne se soient toujours révélées exactes. Le livre a survécu à l'apparition de la radio, de la télévision, puis d'internet, en trouvant chaque fois une place, certes différente, mais bien réelle, dans l'écosystème culturel contemporain.
+
+Peut-être la question la plus pertinente n'est-elle donc pas de savoir si la lecture va disparaître, ce qui semble peu probable au vu de sa résilience historique, mais plutôt de se demander comment préserver, individuellement et collectivement, des espaces de temps suffisamment protégés des sollicitations permanentes pour permettre à cette pratique exigeante mais précieuse de continuer à occuper une place significative dans nos existences.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-208",
+    title: "Ce que perdent les histoires en passant du livre à l'écran",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "L'adaptation cinématographique d'un roman apprécié suscite presque toujours, chez ses lecteurs les plus fidèles, un mélange d'excitation et d'appréhension.",
+    blurbEn:
+      "A beloved novel's film adaptation always stirs the same mix of excitement and dread in its most devoted readers — what exactly gets lost when a story moves from page to screen? (Section: Reading and escapism, 3/5.)",
+    body: `L'adaptation cinématographique d'un roman apprécié suscite presque toujours, chez ses lecteurs les plus fidèles, un mélange d'excitation et d'appréhension, tant l'écart entre les deux expériences peut s'avérer significatif, même lorsque l'adaptation respecte scrupuleusement l'intrigue originale.
+
+Cette différence d'expérience s'explique d'abord par la nature fondamentalement différente de l'imagination sollicitée par chaque médium. La lecture d'un roman construit, dans l'esprit du lecteur, une représentation mentale entièrement personnelle des personnages et des lieux décrits, façonnée par sa propre sensibilité, ses propres références visuelles. Le film, à l'inverse, impose une vision unique et définitive, celle du réalisateur, qui vient nécessairement remplacer, souvent de manière décevante, l'image intime que le lecteur s'était forgée par lui-même.
+
+Une seconde différence concerne le rythme narratif imposé par chaque médium. Un roman peut s'attarder longuement sur les pensées intérieures d'un personnage, explorer ses hésitations morales avec une précision psychologique que le langage cinématographique, davantage tourné vers l'action visible et le dialogue, parvient plus difficilement à restituer avec la même finesse.
+
+Certains défenseurs de l'adaptation cinématographique rappellent cependant que le cinéma dispose de ses propres outils narratifs, différents mais tout aussi puissants : la musique, le cadrage, le montage, capables de créer des effets émotionnels que l'écrit seul ne pourrait jamais produire de la même manière.
+
+Plutôt que de considérer systématiquement l'adaptation comme une trahison nécessaire de l'œuvre originale, peut-être conviendrait-il de l'envisager comme une œuvre distincte, dialoguant avec le roman sans prétendre s'y substituer, chaque médium offrant finalement une expérience irréductible à l'autre, ni supérieure ni inférieure, simplement différente dans sa nature même.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-209",
+    title: "Faut-il avoir honte de ne lire que des romans faciles ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "Un certain snobisme littéraire continue de hiérarchiser les lectures, plaçant la littérature dite exigeante bien au-dessus des romans populaires plus accessibles.",
+    blurbEn:
+      "A persistent literary snobbery ranks demanding literature far above accessible popular fiction — a hierarchy worth questioning rather than simply accepting. (Section: Reading and escapism, 4/5.)",
+    body: `Un certain snobisme littéraire continue de hiérarchiser les lectures, plaçant la littérature dite exigeante bien au-dessus des romans populaires plus accessibles, considérés par certains comme une lecture presque honteuse, tout juste tolérable en vacances.
+
+Cette hiérarchie mérite d'être questionnée plutôt que simplement acceptée comme une évidence culturelle. Elle repose implicitement sur l'idée qu'une lecture n'aurait de valeur que si elle exige un effort intellectuel important, reléguant le simple plaisir de la lecture au rang d'activité mineure, presque coupable.
+
+Cette conception néglige pourtant une réalité importante : la lecture, quelle que soit sa complexité formelle, remplit des fonctions multiples et légitimes, qui ne se limitent pas à l'exercice intellectuel. Le plaisir narratif pur, l'évasion temporaire, la détente procurée par une intrigue prévisible mais réconfortante constituent des bénéfices tout aussi réels que l'enrichissement intellectuel offert par une œuvre plus exigeante.
+
+De plus, plusieurs études en sciences de l'éducation suggèrent que le plaisir de lecture, quel que soit le niveau de complexité du texte concerné, constitue souvent la porte d'entrée nécessaire vers une pratique de lecture plus régulière et, éventuellement, vers des lectures ultérieures plus exigeantes. Imposer prématurément une littérature jugée "sérieuse" à quelqu'un découvrant à peine le plaisir de lire risquerait, paradoxalement, de le décourager durablement de cette pratique.
+
+Peut-être conviendrait-il donc d'abandonner cette hiérarchie culpabilisante entre lectures nobles et lectures honteuses, pour reconnaître simplement la diversité légitime des fonctions que peut remplir la lecture, chacune répondant à des besoins différents mais également respectables, selon les moments et les personnes concernées.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-b2-210",
+    title: "La lecture peut-elle encore nous transformer ?",
+    category: "culture",
+    difficulty: "B2",
+    minutes: 2,
+    preview: "On prête traditionnellement à la lecture un pouvoir presque mystique : celui de transformer durablement celui qui s'y adonne, d'élargir sa compréhension du monde et de lui-même.",
+    blurbEn:
+      "Reading is traditionally credited with an almost mystical power to transform us — but does that claim still hold up in an age of infinite, easily consumed content? (Section: Reading and escapism, 5/5 — hardest.)",
+    body: `On prête traditionnellement à la lecture un pouvoir presque mystique : celui de transformer durablement celui qui s'y adonne, d'élargir sa compréhension du monde et de lui-même, d'une manière que peu d'autres activités humaines revendiquent avec autant d'assurance.
+
+Cette croyance mérite d'être examinée à la lumière de notre époque contemporaine, caractérisée par une abondance inédite de contenus écrits, disponibles instantanément et consommés souvent avec une attention plus fragmentée que ne le supposait cette conception traditionnelle de la lecture transformatrice.
+
+Certains observateurs estiment que cette dilution de l'attention, à force de lectures nombreuses mais superficielles, aurait progressivement affaibli le pouvoir transformateur autrefois attribué à la lecture, réduite désormais à une simple consommation rapide d'informations plutôt qu'à une véritable immersion contemplative dans une œuvre.
+
+D'autres, plus optimistes, rappellent que le pouvoir transformateur de la lecture n'a jamais résidé dans la quantité de texte parcouru, mais dans la qualité de l'engagement du lecteur avec ce qu'il lit, une qualité qui demeure, aujourd'hui comme hier, entièrement dépendante du choix individuel de ralentir, de s'arrêter, de vraiment habiter un texte plutôt que de simplement le traverser.
+
+Selon cette perspective, la lecture véritablement transformatrice n'a jamais été menacée par l'abondance de contenus disponibles, mais seulement par notre propre disposition, toujours possible à cultiver malgré les distractions ambiantes, à accorder à un texte l'attention profonde qu'il mérite véritablement.
+
+La question n'est donc peut-être pas de savoir si la lecture peut encore nous transformer, ce qui reste toujours possible en principe, mais de savoir si nous sommes encore collectivement disposés, dans un monde qui valorise la vitesse et la quantité, à lui accorder les conditions patientes et attentives que cette transformation a toujours exigées.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-081",
+    title: "Les réseaux sociaux et la fragmentation de l'espace public",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 4,
+    preview: "L'espace public, autrefois unifié par quelques médias communs, se fragmente aujourd'hui en une multitude de bulles numériques.",
+    blurbEn:
+      "The public sphere, once unified by a handful of shared media, now fragments into countless digital bubbles — an essay on what that fragmentation costs a democracy. (Section: Social media and the public sphere, 1/5.)",
+    body: `L'espace public, tel que l'ont pensé les théoriciens de la démocratie moderne, supposait un lieu commun où des citoyens, informés par les mêmes sources, pouvaient confronter leurs opinions sur un fond partagé de faits et de références. Les réseaux sociaux, en promettant de démocratiser la parole en la rendant accessible à tous, ont paradoxalement précipité l'effritement de ce lieu commun, en substituant à l'unité relative d'autrefois une multiplication de bulles numériques largement étanches les unes aux autres.
+
+Cette fragmentation ne résulte pas d'une intention délibérée de diviser, mais d'une logique technique presque anodine en apparence : les algorithmes qui organisent nos fils d'actualité sont conçus pour maximiser l'engagement, et rien n'engage davantage un utilisateur que le contenu qui confirme ce qu'il croit déjà. Il s'ensuit une sélection continue, invisible et cumulative, qui expose chacun à une réalité informationnelle de plus en plus conforme à ses préférences préexistantes, et de plus en plus étrangère à celle que perçoivent les autres.
+
+Le résultat de ce processus n'est pas seulement un désaccord accru sur les opinions, ce qui serait somme toute banal et même sain dans une démocratie vivante, mais un désaccord de plus en plus radical sur les faits eux-mêmes. Deux citoyens, exposés à des environnements informationnels suffisamment divergents, ne discutent plus des mêmes événements interprétés différemment ; ils habitent, au sens propre, des réalités distinctes, bâties sur des sources, des récits et parfois des faits contradictoires. Or, un débat suppose un terrain commun : sans lui, l'échange dégénère en un dialogue de sourds, où chacun parle depuis son monde sans jamais véritablement rencontrer celui de l'autre.
+
+Certains objecteront que cette fragmentation n'a rien de nouveau, que les sociétés ont toujours connu des divisions d'opinion, des journaux partisans, des cercles fermés sur eux-mêmes. L'objection n'est pas sans fondement, mais elle néglige une différence de degré qui devient, à un certain seuil, une différence de nature : jamais auparavant la personnalisation de l'information n'avait atteint une granularité aussi fine, ni opéré à une échelle aussi massive, touchant simultanément des milliards d'individus selon des critères optimisés en temps réel par des systèmes dont la logique échappe largement à la compréhension, et même au contrôle, de leurs propres concepteurs.
+
+Il serait cependant excessif d'attribuer aux seuls algorithmes la responsabilité entière de cette fragmentation. Ils exploitent, après tout, des penchants cognitifs préexistants et profondément humains : la préférence pour ce qui nous conforte, la défiance instinctive envers ce qui nous contredit, le plaisir de l'appartenance à une communauté de pensée homogène. Les réseaux sociaux n'ont pas inventé ces tendances ; ils les ont démultipliées, industrialisées, en leur offrant un terrain d'expression sans précédent dans son échelle et son efficacité.
+
+Certains chercheurs ont d'ailleurs tenté de chiffrer précisément cette fragmentation, en mesurant le recoupement effectif des sources d'information consultées par des groupes politiquement opposés au sein d'une même société. Les résultats, convergents d'une étude à l'autre, montrent un recoupement de plus en plus réduit au fil des années, corroborant empiriquement ce que l'observation quotidienne suggérait déjà : deux citoyens d'un même pays, d'une même ville parfois, en viennent à s'informer auprès de sources presque entièrement disjointes, sans le moindre point de contact informationnel commun sur lequel fonder un dialogue véritable.
+
+Face à ce constat, les remèdes proposés restent d'une portée incertaine. Réguler les algorithmes, exiger davantage de transparence, encourager une plus grande diversité d'exposition : ces pistes, si elles ne sont pas sans mérite, se heurtent à un obstacle plus profond, presque anthropologique. Car il ne suffit pas de modifier les outils techniques pour restaurer un espace public unifié ; il faudrait aussi convaincre des individus, structurellement enclins à préférer le confort de la confirmation à l'inconfort de la contradiction, de rechercher activement ce qui les dérange. Cette exigence, qui suppose une discipline intellectuelle rare, ne se décrète pas par la seule ingénierie logicielle ; elle relève d'une culture à cultiver, patiemment, contre la pente naturelle de nos esprits.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-082",
+    title: "L'algorithme, nouvel arbitre du débat public",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 4,
+    preview: "Ce qui accède à la visibilité dans le débat public dépend de moins en moins d'un jugement éditorial humain, et de plus en plus d'un calcul algorithmique opaque.",
+    blurbEn:
+      "What gains visibility in public debate increasingly depends not on human editorial judgment but on an opaque algorithmic calculation — an essay on what we lose when a machine decides what deserves attention. (Section: Social media and the public sphere, 2/5.)",
+    body: `Ce qui accède à la visibilité dans le débat public dépend de moins en moins d'un jugement éditorial humain, assumé et responsable, et de plus en plus d'un calcul algorithmique opaque, dont la logique demeure largement inaccessible même à ceux qui en subissent quotidiennement les effets. Cette substitution, presque silencieuse, mérite qu'on s'y arrête, tant elle modifie en profondeur les conditions mêmes de la délibération collective.
+
+Le journalisme traditionnel, quelles que soient ses limites et ses biais bien réels, reposait sur un principe de responsabilité identifiable : un rédacteur en chef choisissait, selon des critères qu'il pouvait en principe expliquer et défendre publiquement, ce qui méritait d'être porté à la connaissance du public. Cette médiation humaine, faillible mais assumée, offrait au moins une prise critique : on pouvait contester une ligne éditoriale, en identifier les partis pris, en réclamer la justification.
+
+L'algorithme qui hiérarchise aujourd'hui nos fils d'actualité ne répond à aucune de ces exigences. Il ne sélectionne pas selon une conception explicite de l'intérêt public, mais selon un objectif purement quantitatif : maximiser le temps d'attention retenu, l'engagement mesuré en clics, en partages, en commentaires. Que ce contenu informe, désinforme, apaise ou exacerbe les tensions sociales lui est, en un sens, parfaitement indifférent, sauf dans la mesure où ces effets affectent l'engagement qu'il cherche à optimiser.
+
+Cette indifférence structurelle produit un effet pervers largement documenté : les contenus qui suscitent l'indignation, la peur ou l'outrage se propagent généralement plus efficacement que les analyses nuancées, précisément parce que l'émotion intense favorise le partage impulsif, quand la nuance invite plutôt à la réflexion silencieuse. L'algorithme, sans intention malveillante identifiable, favorise ainsi structurellement une forme de débat public plus polarisé, plus simplifié, plus propice à l'affrontement qu'à la délibération authentique.
+
+On objectera que les plateformes ne sont pas seules responsables de ce résultat : elles ne font, après tout, qu'exploiter des penchants humains bien antérieurs à leur existence, notre attirance ancienne pour le scandale, la controverse, l'anecdote saisissante. L'objection est recevable, mais elle ne dissout pas la question de la responsabilité qui incombe spécifiquement à ceux qui conçoivent ces systèmes, en connaissance de cause, pour exploiter ces penchants à une échelle et avec une efficacité sans précédent dans l'histoire de la communication humaine.
+
+Cette opacité algorithmique pose en outre un problème d'imputabilité inédit : lorsqu'un contenu manifestement problématique se propage massivement, à qui revient la responsabilité de cette propagation ? Ni à l'auteur du contenu, qui n'a fait qu'exercer une liberté d'expression par ailleurs légitime, ni tout à fait à la plateforme, qui se retranche derrière la neutralité prétendue de son algorithme, comme s'il s'agissait d'un phénomène purement mécanique, dénué de toute intention identifiable et donc de toute faute véritablement imputable.
+
+La difficulté centrale que pose cette nouvelle configuration tient à son opacité même : contrairement au rédacteur en chef qu'on pouvait interpeller, contester, ou dont on pouvait au moins nommer les choix, l'algorithme demeure un arbitre sans visage, dont les critères exacts restent protégés par le secret commercial, et dont l'évolution constante rend d'ailleurs toute analyse rapidement obsolète. Réclamer sa régulation, comme le proposent de nombreux observateurs, suppose de résoudre une tension difficile : comment exiger la transparence d'un mécanisme dont l'opacité relative constitue précisément, aux yeux de ceux qui l'exploitent, l'un des principaux avantages compétitifs ? Cette question, encore largement sans réponse satisfaisante, définit peut-être l'un des défis démocratiques majeurs de notre époque.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-083",
+    title: "La viralité comme substitut du jugement",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 4,
+    preview: "Une idée circule aujourd'hui d'autant plus largement qu'elle est virale, et sa viralité même finit par tenir lieu, aux yeux de beaucoup, de validation.",
+    blurbEn:
+      "An idea today circulates all the more widely for being viral — and that virality itself has quietly come to substitute, for many, as a form of validation. An essay on a dangerous conflation. (Section: Social media and the public sphere, 3/5.)",
+    body: `Une idée circule aujourd'hui d'autant plus largement qu'elle est virale, et sa viralité même finit par tenir lieu, aux yeux de beaucoup, de validation : ce que des millions de personnes partagent, commentent, reprennent, semble par cela même mériter d'être cru, ou du moins pris au sérieux. Cette confusion, aussi discrète que répandue, entre la diffusion d'un contenu et sa vérité, mérite d'être examinée pour ce qu'elle est : un glissement épistémologique aux conséquences considérables.
+
+La viralité, en tant que phénomène, ne mesure strictement rien d'autre que sa propre propagation. Un contenu devient viral parce qu'il possède certaines propriétés qui favorisent son partage — simplicité, intensité émotionnelle, confirmation de croyances préexistantes, format facilement transmissible — et ces propriétés n'entretiennent aucun rapport nécessaire avec sa véracité ou sa pertinence intellectuelle. Une information fausse, si elle est formulée avec suffisamment d'efficacité rhétorique, se propage souvent plus vite et plus loin qu'une vérité complexe et nuancée, précisément parce que la simplicité facilite la transmission quand la nuance la ralentit.
+
+Pourtant, un mécanisme cognitif ancien, que la psychologie sociale documente depuis longtemps sous le nom de conformisme informationnel, nous pousse à accorder une crédibilité accrue à ce qu'une majorité apparente semble croire ou partager. Ce mécanisme, sans doute adaptatif dans des contextes où l'information circulait lentement et où le nombre de personnes partageant une croyance offrait une indication raisonnable de sa fiabilité, devient trompeur dans un environnement où la viralité obéit à une logique technique et psychologique largement indépendante de la vérité du contenu diffusé.
+
+Le résultat de cette conjonction entre un biais cognitif ancien et une technologie de diffusion nouvelle produit une situation paradoxale : plus une information circule vite et largement, plus elle semble crédible aux yeux du plus grand nombre, alors même que sa vitesse de propagation ne garantit en rien sa validité, et pourrait même, dans certains cas, en constituer un indice inverse, tant les contenus les plus outranciers ou simplificateurs se prêtent structurellement mieux à une diffusion rapide que les analyses les plus rigoureuses.
+
+Un exemple révélateur de ce mécanisme concerne la vitesse comparée de circulation entre un démenti officiel et la rumeur qu'il cherche à corriger : plusieurs études convergent pour montrer qu'une fausse information initiale se propage généralement bien plus vite, et touche un public bien plus large, que le démenti qui lui succède, souvent des heures ou des jours plus tard, alors même que ce public a déjà, pour une large part, intégré la première version comme un fait établi, indépendamment de sa véracité réelle.
+
+Face à ce constat, certains proposent de développer, chez les individus, un réflexe critique systématique face à tout contenu viral, une forme de scepticisme méthodique appliqué précisément aux informations qui circulent le plus largement. Cette proposition, louable dans son principe, se heurte cependant à une difficulté pratique considérable : elle exige un effort cognitif soutenu, contraire à la rapidité même de la consommation d'information sur les réseaux sociaux, où l'utilisateur moyen consacre à chaque contenu une attention de quelques secondes à peine, insuffisante pour exercer le discernement requis.
+
+Peut-être faut-il alors chercher la solution non pas seulement du côté de l'individu, sommé d'exercer une vigilance qu'aucune plateforme ne l'encourage réellement à cultiver, mais aussi du côté des architectures techniques elles-mêmes, qui pourraient, si la volonté politique et commerciale s'y prêtait, ralentir délibérément certaines formes de diffusion, introduire des frictions salutaires, redonner au temps de la réflexion l'espace que la vitesse de la viralité lui a largement confisqué.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-084",
+    title: "Le silence numérique, une liberté en voie de disparition ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 4,
+    preview: "Ne pas s'exprimer, ne pas réagir, laisser passer sans commenter : cette possibilité, autrefois si naturelle qu'elle ne portait même pas de nom, est devenue une liberté qu'il faut désormais défendre.",
+    blurbEn:
+      "Simply not reacting, not commenting, letting something pass unremarked — once so natural it needed no name, this has become, in the social media age, a freedom that now requires active defence. (Section: Social media and the public sphere, 4/5.)",
+    body: `Ne pas s'exprimer, ne pas réagir, laisser passer sans commenter : cette possibilité, autrefois si naturelle qu'elle ne portait même pas de nom, est devenue, à l'ère des réseaux sociaux, une forme de liberté qu'il faut désormais défendre explicitement, tant les pressions structurelles qui s'exercent aujourd'hui poussent, presque irrésistiblement, vers la prise de parole permanente.
+
+Cette pression ne relève pas seulement d'une injonction sociale diffuse, quoiqu'elle en emprunte souvent la forme : face à un événement marquant, l'absence de réaction publique en vient parfois à être interprétée comme une indifférence coupable, voire comme une prise de position implicite par défaut. Le silence, qui pouvait autrefois signifier la réflexion, la prudence ou simplement l'indifférence légitime à un sujet qui ne nous concernait pas directement, se voit désormais chargé d'une signification qu'il n'a pas nécessairement choisie, interprété comme un aveu, une lâcheté, voire une complicité tacite.
+
+Cette dynamique s'accompagne d'une seconde pression, plus insidieuse encore, de nature architecturale : les plateformes elles-mêmes sont conçues pour solliciter continuellement une réaction, un commentaire, un partage, transformant chaque instant de consultation en une invitation implicite à produire du contenu plutôt qu'à simplement l'observer. Le silence numérique, dans un tel environnement, exige un effort actif de résistance à des sollicitations omniprésentes, quand il constituait autrefois l'état par défaut, ne nécessitant aucun effort particulier pour être maintenu.
+
+Les conséquences de cette érosion du silence légitime ne sont pas anodines. Une parole produite sous la pression sociale plutôt que par un désir authentique de s'exprimer tend structurellement vers la superficialité, la répétition de positions attendues, l'alignement sur des opinions majoritaires plutôt que l'élaboration patiente d'une réflexion véritablement personnelle. Le philosophe qui affirmait que la pensée a besoin de retrait, de temps, d'une distance protégée à l'égard de l'agitation sociale immédiate, trouverait dans cet environnement contemporain un défi radical à cette exigence, tant l'espace numérique semble structurellement hostile à toute forme de retrait prolongé.
+
+Il existe pourtant des signes, encore timides, d'une résistance à cette pression : certains choisissent délibérément de limiter leur présence numérique, de désactiver certaines notifications, de s'accorder des périodes de retrait volontaire, redécouvrant ainsi, par un effort conscient, ce qui relevait autrefois d'un état par défaut. Cette démarche, minoritaire mais croissante, suggère que la liberté de silence, pour érodée qu'elle soit structurellement, demeure reconquérable, à condition d'en faire l'objet d'un choix assumé plutôt que d'un renoncement silencieux face aux sollicitations ambiantes.
+
+On pourrait objecter que rien n'oblige, en droit, quiconque à s'exprimer sur les réseaux sociaux, que la liberté de se taire demeure techniquement intacte, disponible à qui souhaite simplement fermer une application ou s'abstenir de commenter. Cette objection, juridiquement exacte, néglige cependant la dimension sociale et professionnelle que ces plateformes ont progressivement acquise : pour beaucoup, s'abstenir totalement de toute présence numérique revient désormais à s'exclure de pans entiers de la vie sociale, professionnelle, voire civique contemporaine, rendant la liberté théorique du silence de plus en plus coûteuse à exercer concrètement.
+
+Restaurer une véritable liberté de silence, dans un tel contexte, ne relève donc pas simplement d'un choix individuel qu'il suffirait de vouloir exercer, mais suppose une transformation plus large de nos attentes collectives à l'égard de la parole publique : accepter, à nouveau, que le silence d'autrui puisse signifier autre chose qu'une absence coupable, et que la réflexion silencieuse conserve sa place légitime face à l'injonction permanente de réagir, de commenter, de prendre position sur tout, immédiatement et sans délai.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c1-085",
+    title: "Peut-on encore délibérer à l'ère des réseaux sociaux ?",
+    category: "culture",
+    difficulty: "C1",
+    minutes: 5,
+    preview: "La délibération démocratique, telle que l'ont conçue les philosophes politiques, suppose un ensemble de conditions que l'espace numérique contemporain semble, à bien des égards, systématiquement défaire.",
+    blurbEn:
+      "Democratic deliberation, as political philosophers conceived it, requires a set of conditions that today's digital public sphere seems, in many ways, to systematically undo. A synthesis essay closing the section. (Section: Social media and the public sphere, 5/5 — hardest.)",
+    body: `La délibération démocratique, telle que l'ont conçue les philosophes politiques depuis les Lumières jusqu'aux théoriciens contemporains de la démocratie délibérative, suppose un ensemble de conditions précises que l'espace numérique contemporain semble, à bien des égards, systématiquement défaire, sans qu'il soit certain qu'une reconstruction de ces conditions demeure encore possible dans le cadre technologique actuel.
+
+La première de ces conditions, on l'a vu, est l'existence d'un espace commun où des citoyens, exposés aux mêmes informations, peuvent confronter leurs interprétations divergentes d'une réalité partagée. La fragmentation algorithmique de nos environnements informationnels a considérablement affaibli cette condition, en substituant à l'unité relative d'autrefois une pluralité de mondes informationnels de plus en plus étanches, où le désaccord ne porte plus seulement sur l'interprétation des faits, mais sur les faits eux-mêmes.
+
+La deuxième condition tient à la reconnaissance d'une légitimité égale entre interlocuteurs, condition d'autant plus fragile que l'anonymat relatif offert par de nombreuses plateformes, combiné à l'absence de conséquences sociales immédiates pour l'incivilité, favorise une brutalité rhétorique rarement tolérée dans une conversation en face à face. Cette érosion de la civilité, loin d'être anecdotique, sape directement la présomption de bonne foi sans laquelle aucune délibération authentique ne peut véritablement s'engager.
+
+La troisième condition, plus subtile, concerne le temps nécessaire à toute réflexion sérieuse : délibérer suppose de pouvoir suspendre son jugement, examiner des arguments contradictoires, parfois changer d'avis après mûre réflexion. L'architecture même des réseaux sociaux, organisée autour de l'instantanéité de la réaction et de la brièveté du format, semble structurellement inhospitalière à ce temps long de la délibération, favorisant au contraire l'expression rapide d'une opinion déjà formée plutôt que sa remise en question patiente.
+
+Faut-il, de ce constat accumulé, conclure que la délibération démocratique authentique est devenue proprement impossible à l'ère numérique ? Une telle conclusion, aussi tentante soit-elle dans sa radicalité, mériterait d'être nuancée par au moins deux considérations. D'abord, les mêmes outils qui fragmentent et polarisent ont aussi permis, dans certains contextes bien documentés, l'émergence de mobilisations citoyennes informées et de débats publics d'une ampleur et d'une diversité de participants sans précédent historique, suggérant que le problème réside moins dans la technologie elle-même que dans les choix de conception qui la façonnent actuellement. Ensuite, aucune des conditions défaites n'est irrémédiablement perdue : elles pourraient, en principe, être restaurées par des choix techniques, réglementaires et culturels différents, si la volonté collective de les restaurer venait à se former suffisamment largement.
+
+Cette reformulation invite également à reconsidérer le rôle du citoyen ordinaire, trop souvent réduit, dans ce débat, à la position d'utilisateur passif subissant des architectures qu'il n'a pas conçues. Rien n'empêche, en principe, l'émergence d'une exigence citoyenne collective, portée par une masse suffisante d'utilisateurs, réclamant des plateformes différentes, des algorithmes différemment orientés, une régulation à la hauteur des enjeux démocratiques réellement en jeu — à condition que cette exigence elle-même parvienne à se frayer un chemin dans un espace numérique dont nous avons vu qu'il favorise structurellement l'immédiateté sur la réflexion de long terme.
+
+La question posée par ce titre appelle donc moins une réponse tranchée qu'une reformulation : non pas « peut-on encore délibérer », comme si la réponse dépendait d'une fatalité technologique déjà scellée, mais « voulons-nous encore, collectivement, créer les conditions d'une délibération authentique », ce qui déplace la question du terrain de la technologie vers celui, plus inconfortable mais aussi plus fécond, de la volonté politique et culturelle. Car les plateformes actuelles ne sont pas des lois de la nature, mais des artefacts construits, façonnés par des choix qui pourraient, en principe, être défaits ou refaits autrement — à condition que suffisamment de citoyens en viennent à exiger, pour l'espace public numérique, les mêmes exigences de qualité délibérative qu'ils réclament, par ailleurs, pour leurs institutions politiques les plus anciennes.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c2-061",
+    title: "La mémoire est-elle un dépôt ou une construction ?",
+    category: "culture",
+    difficulty: "C2",
+    minutes: 5,
+    preview: "On se représente volontiers la mémoire comme un vaste dépôt où s'entasseraient, intacts, les souvenirs de toute une vie, prêts à être retrouvés tels qu'ils furent déposés.",
+    blurbEn:
+      "We like to picture memory as a vast storehouse where a lifetime's memories sit intact, ready to be retrieved exactly as they were laid down. A C2 essay on why this comforting image is almost entirely false. (Section: Memory, forgetting and the digital self, 1/5.)",
+    body: `On se représente volontiers la mémoire comme un vaste dépôt où s'entasseraient, intacts, les souvenirs de toute une vie, prêts à être retrouvés, à volonté, tels qu'ils furent déposés au moment même où l'événement se produisit. Cette image, aussi rassurante que répandue, se heurte pourtant à ce que les sciences cognitives établissent depuis plusieurs décennies avec une constance troublante : la mémoire ne conserve rien à l'identique ; elle reconstruit, à chaque rappel, quelque chose qui n'est jamais tout à fait ce qui fut vécu.
+
+Cette découverte, aussi contre-intuitive soit-elle pour qui a toujours pensé ses souvenirs comme des archives fidèles, repose sur des expériences désormais classiques : des témoins d'un même événement, interrogés séparément peu après les faits, en livrent des versions déjà divergentes ; interrogés à nouveau des années plus tard, ils rapportent des souvenirs qui se sont enrichis, appauvris, déformés, parfois jusqu'à intégrer des détails qui n'ont jamais existé, sans que le sujet perçoive la moindre différence entre ce vécu reconstruit et un souvenir authentique. Le souvenir, loin d'être relu à l'identique comme on rouvrirait un livre resté fermé, est chaque fois réécrit, à la lumière de ce que nous savons désormais, de ce que nous sommes devenus, de ce que le présent exige que le passé signifie.
+
+Cette instabilité fondamentale de la mémoire ne relève pas d'un dysfonctionnement occasionnel, d'une simple défaillance qu'une mémoire plus attentive ou plus exercée pourrait éviter ; elle constitue le mode de fonctionnement normal, structurel, de toute mémoire humaine. Se souvenir, au sens propre, n'est jamais rouvrir un dossier scellé, mais reconstruire, chaque fois à neuf, à partir de traces fragmentaires et d'un présent qui infléchit inévitablement cette reconstruction. Le souvenir d'hier n'est donc jamais tout à fait celui d'aujourd'hui, même s'il nous semble, dans l'instant du rappel, d'une stabilité et d'une fidélité absolues.
+
+Cette découverte a des implications concrètes considérables, notamment dans le domaine judiciaire, où le témoignage oculaire a longtemps constitué une preuve considérée comme quasiment irréfutable. Des recherches menées sur des personnes condamnées à tort, puis innocentées grâce à des preuves génétiques ultérieures, ont montré que l'erreur d'identification par un témoin, pourtant sincèrement convaincu de la fiabilité de son souvenir, figurait parmi les causes les plus fréquentes de ces erreurs judiciaires. Le témoin ne mentait pas ; sa mémoire, reconstruite au fil du temps et des interrogatoires successifs, avait simplement fini par intégrer, avec la même vivacité subjective qu'un souvenir authentique, des éléments suggérés, déformés ou tout simplement erronés, sans qu'aucun signal interne ne lui permette de distinguer cette reconstruction fautive d'un souvenir fidèle.
+
+Faut-il, de cette instabilité constitutive, conclure à une forme de scepticisme généralisé quant à la fiabilité de nos souvenirs, à l'impossibilité de jamais savoir ce qui s'est réellement passé ? Une telle conclusion, si elle a sa part de vérité, mériterait d'être nuancée. Car cette reconstruction permanente, loin d'être une simple déficience, remplit une fonction adaptative précise : elle permet à la mémoire de rester vivante, de continuer à signifier quelque chose pour le sujet qu'elle habite, plutôt que de demeurer une collection figée d'informations mortes, sans lien avec ce que nous devenons. Une mémoire parfaitement fidèle, littéralement immuable, produirait un sujet incapable d'évoluer, prisonnier d'un passé qui ne cesserait jamais de signifier exactement ce qu'il signifiait au moment des faits, quelles que soient les transformations ultérieures de celui qui se souvient.
+
+Cette conception reconstructive de la mémoire éclaire aussi d'un jour nouveau la question de l'identité personnelle elle-même. Si nous sommes, comme le veut une intuition répandue, faits de nos souvenirs, et que ces souvenirs sont constamment reconstruits plutôt que simplement conservés, alors l'identité elle-même n'est jamais un donné stable qu'on découvrirait en fouillant assez profondément dans un passé immuable, mais une construction continuée, toujours en cours, jamais achevée. Nous ne sommes pas, à proprement parler, ce que nous avons été ; nous sommes, à chaque instant, ce que nous reconstruisons avoir été, à la lumière de qui nous sommes devenus.
+
+Cette conclusion, loin d'être un motif d'inquiétude sur la fiabilité de notre rapport au passé, pourrait au contraire se lire comme une forme de liberté insoupçonnée : si la mémoire n'était qu'un dépôt fixe, notre passé nous enchaînerait à jamais à ce qu'il fut littéralement ; parce qu'elle est reconstruction vivante, notre passé demeure, dans une certaine mesure, toujours réinterprétable, toujours susceptible d'être compris autrement, à la lumière de ce que nous devenons — sans que cette plasticité n'équivaille pour autant à une licence de tout réinventer arbitrairement, la reconstruction mémorielle demeurant contrainte par des traces réelles, aussi fragmentaires soient-elles, qui résistent à une falsification complète.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c2-062",
+    title: "L'oubli, ennemi ou allié de la mémoire ?",
+    category: "culture",
+    difficulty: "C2",
+    minutes: 5,
+    preview: "On tient spontanément l'oubli pour l'ennemi de la mémoire, sa défaite, l'échec d'une faculté qui, bien exercée, devrait tout retenir.",
+    blurbEn:
+      "We instinctively treat forgetting as memory's enemy, its failure — but a wealth of evidence suggests forgetting is not a bug in memory but one of its most essential functions. (Section: Memory, forgetting and the digital self, 2/5.)",
+    body: `On tient spontanément l'oubli pour l'ennemi de la mémoire, sa défaite, l'échec d'une faculté qui, bien exercée, devrait tout retenir. Cette conception, profondément ancrée dans le sens commun, imprègne jusqu'à notre vocabulaire : on parle de « perdre » un souvenir, de mémoire « défaillante », comme si l'oubli n'était jamais qu'une soustraction regrettable à un fonds qui, par défaut, devrait demeurer complet.
+
+Or les neurosciences contemporaines invitent à renverser presque entièrement cette intuition. Loin d'être un simple accident, une fuite involontaire d'informations qu'un mécanisme mieux conçu aurait dû empêcher, l'oubli constitue un processus actif, régulé, aux fonctions multiples et largement bénéfiques pour l'organisme qui l'exerce. Le cerveau ne se contente pas de laisser filer, passivement, ce qu'il ne parvient pas à retenir ; il opère, à chaque instant, une sélection active, effaçant délibérément une quantité considérable d'informations pour préserver la capacité de traiter efficacement ce qui demeure.
+
+Cette fonction sélective de l'oubli répond à une nécessité computationnelle élémentaire : un système qui retiendrait tout, sans discrimination, sans jamais rien effacer, se retrouverait rapidement submergé sous un déluge de détails sans hiérarchie, incapable de distinguer l'essentiel de l'accessoire, l'information pertinente du bruit accumulé. On a pu observer, chez de très rares individus atteints d'une mémoire dite hypermnésique, capables de se souvenir avec une précision extraordinaire de presque chaque journée vécue, non pas un don enviable, mais souvent un fardeau : l'incapacité à distinguer, dans ce flot ininterrompu de souvenirs également vifs, ce qui mérite véritablement l'attention de ce qui n'était qu'anecdote insignifiante, produisant paradoxalement une pensée moins fluide, moins capable de généraliser, d'abstraire, de tirer des leçons synthétiques d'une expérience accumulée.
+
+L'oubli remplit également une fonction moins souvent reconnue, mais tout aussi essentielle : celle de permettre le pardon, la réconciliation, la possibilité même de continuer à vivre auprès de ceux qui nous ont blessés, ou de nous-mêmes tels que nous fûmes en des moments dont nous ne sommes plus fiers. Une mémoire absolue, qui retiendrait avec une égale intensité chaque offense, chaque humiliation, chaque échec, rendrait sans doute la vie sociale, et la vie intérieure elle-même, considérablement plus difficile à supporter. L'estompement progressif de la charge émotionnelle attachée à un souvenir douloureux, phénomène que la psychologie nomme parfois l'oubli thérapeutique, ne constitue pas un déni de ce qui fut vécu, mais une condition nécessaire pour que la vie continue sans être écrasée par le poids cumulatif de tout ce qu'elle a comporté de pénible.
+
+Cette dynamique individuelle trouve un écho frappant à l'échelle collective : les sociétés elles-mêmes pratiquent un oubli sélectif de leur propre histoire, mettant en avant certains épisodes tout en laissant s'estomper d'autres, dans un processus qui n'est pas sans rappeler, à une échelle différente, les mécanismes de la mémoire individuelle. Certains historiens y voient une nécessité comparable à celle qui opère chez l'individu : une nation qui retiendrait avec une égale intensité chaque conflit, chaque division, chaque blessure de son passé pourrait difficilement se projeter collectivement vers l'avenir. D'autres, à l'inverse, dénoncent dans cet oubli collectif sélectif un danger réel, celui de répéter des erreurs précisément parce qu'on a cessé de s'en souvenir suffisamment vivement pour en tirer une leçon durable.
+
+Faut-il, dès lors, renoncer entièrement à l'idéal ancien d'une mémoire fidèle, cultivée, entretenue contre l'érosion naturelle du temps ? Certainement pas : il existe une différence de nature entre l'oubli sélectif et bienvenu de ce qui n'a pas besoin d'être retenu, et la perte regrettable de ce qui, au contraire, mériterait d'être préservé — un souvenir précieux, un savoir durement acquis, une leçon dont l'oubli nous exposerait à répéter les mêmes erreurs. La sagesse, en matière de mémoire, ne consiste donc probablement pas à combattre l'oubli en général, ce qui serait à la fois vain et contre-productif, mais à apprendre à distinguer ce qui mérite d'être cultivé activement de ce que l'oubli, laissé à son cours naturel, se charge fort heureusement d'effacer pour nous, nous libérant ainsi d'un poids que nulle mémoire humaine ne pourrait indéfiniment porter sans en être écrasée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c2-063",
+    title: "Qui sommes-nous quand la mémoire numérique se souvient de tout à notre place ?",
+    category: "culture",
+    difficulty: "C2",
+    minutes: 5,
+    preview: "Pour la première fois dans l'histoire humaine, une part considérable de ce que nous vivons se trouve enregistrée, non par notre mémoire biologique faillible, mais par des dispositifs numériques d'une fidélité redoutable.",
+    blurbEn:
+      "For the first time in human history, a considerable share of what we live gets recorded not by fallible biological memory but by digital devices of frightening fidelity. A C2 essay on what that outsourcing does to the self. (Section: Memory, forgetting and the digital self, 3/5.)",
+    body: `Pour la première fois dans l'histoire humaine, une part considérable de ce que nous vivons se trouve enregistrée, non par notre mémoire biologique faillible et sélective, mais par des dispositifs numériques d'une fidélité redoutable, qui conservent, sans effort ni sélection, des photographies, des messages, des localisations, des conversations entières, dans une exhaustivité qu'aucune mémoire humaine n'a jamais pu approcher.
+
+Cette externalisation massive de la mémoire, qui semble à première vue une prothèse bienvenue palliant les insuffisances bien réelles de notre mémoire biologique, mérite un examen plus attentif de ses conséquences sur la construction même de l'identité personnelle. Car si l'on admet, comme le suggère l'analyse contemporaine de la mémoire, que le souvenir n'est jamais un simple rappel fidèle mais une reconstruction active, façonnée par ce que nous devenons, alors une mémoire numérique parfaitement fidèle, refusant tout oubli et toute reconstruction, entre en tension directe avec ce processus par lequel un individu, précisément, se construit et se réinvente à travers le temps.
+
+Considérons ce qui se produit lorsqu'une photographie numérique, prise dix ans plus tôt, ressurgit dans une notification automatique, montrant une version de nous-mêmes que notre propre mémoire, plus clémente, avait depuis longtemps réinterprétée, adoucie, ou simplement laissée s'estomper. Cette confrontation entre le souvenir vécu, subjectif et évolutif, et l'enregistrement numérique, littéral et figé, produit une dissonance particulière : nous nous trouvons soudain confrontés, non à notre propre reconstruction du passé, mais à une version de ce passé que nous n'avons pas choisi de conserver ainsi, et qui nous est pourtant restituée avec l'autorité indiscutable d'un document.
+
+Cette situation inédite pose une question philosophique dont la portée dépasse la simple nostalgie technologique : qui, de la mémoire biologique reconstructive et vivante, ou de l'archive numérique fidèle et figée, détient l'autorité légitime sur ce que nous fûmes ? Traditionnellement, l'individu demeurait seul dépositaire, et seul juge, de ce qu'il choisissait de retenir de son propre passé, opérant cette sélection, largement inconsciente, qui lui permettait de construire un récit de soi cohérent, supportable, évolutif. La mémoire numérique, en imposant sa propre version, littérale et sans compromis, du passé, prive potentiellement l'individu de cette prérogative ancienne : celle de décider, au moins en partie, de ce que son propre passé doit signifier pour lui aujourd'hui.
+
+Cette situation affecte de manière inégale les différentes générations actuellement vivantes. Ceux qui ont atteint l'âge adulte avant l'avènement de cette mémoire numérique généralisée connaissent un rapport radicalement différent à leur propre passé de celui que connaîtront les générations nées dans un monde où chaque instant, dès la naissance, se trouve potentiellement documenté, indexé, conservé indéfiniment par des tiers. Nul ne sait encore précisément ce qu'implique, pour la construction de l'identité personnelle, le fait de grandir en sachant que son enfance entière demeure accessible, dans le moindre détail, à soi-même comme aux autres, sans la protection relative qu'offrait autrefois l'oubli naturel et progressif de ces années lointaines.
+
+On objectera que rien n'oblige à consulter ces archives numériques, que leur simple existence, quelque part sur un serveur distant, ne constitue pas en soi une contrainte imposée à l'individu qui pourrait, en principe, les ignorer complètement. L'objection néglige cependant la réalité concrète de l'exposition contemporaine à ces dispositifs, dont les notifications automatiques, les rappels algorithmiques, les résurgences non sollicitées s'imposent bien souvent sans que l'utilisateur les ait activement recherchés, ni même anticipés.
+
+Peut-être faut-il alors envisager, face à cette nouvelle configuration, une forme de discipline volontaire à cultiver : non pas rejeter en bloc ces technologies mémorielles, dont l'utilité pratique demeure par ailleurs considérable, mais reconquérir, au moins partiellement, cette prérogative ancienne de sélection et de reconstruction qui a toujours caractérisé la mémoire humaine vivante, en résistant à la tentation de laisser l'archive numérique, dans sa fidélité aveugle et sans nuance, dicter seule ce que notre propre passé doit désormais signifier pour nous.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c2-064",
+    title: "Le droit à l'oubli face à la mémoire absolue d'internet",
+    category: "culture",
+    difficulty: "C2",
+    minutes: 5,
+    preview: "Certaines juridictions ont récemment consacré un principe juridique inédit, connu sous le nom de droit à l'oubli, permettant à un individu d'exiger le retrait de certaines informations le concernant.",
+    blurbEn:
+      "Some jurisdictions have recently enshrined a novel legal principle, the 'right to be forgotten', letting individuals demand the removal of certain information about themselves online. A C2 essay on what this reveals about memory as a social, not just personal, phenomenon. (Section: Memory, forgetting and the digital self, 4/5.)",
+    body: `Certaines juridictions ont récemment consacré un principe juridique inédit, connu sous le nom de droit à l'oubli, permettant à un individu d'exiger, sous certaines conditions, le retrait d'informations le concernant, devenues obsolètes ou disproportionnellement préjudiciables au regard du temps écoulé depuis leur publication initiale. Ce principe, aussi novateur que juridiquement délicat à appliquer, mérite qu'on interroge ce qu'il révèle sur la transformation profonde qu'internet a fait subir à la nature même de la mémoire collective.
+
+Avant l'avènement de la mémoire numérique généralisée, l'oubli social opérait de façon largement spontanée, sans qu'il soit besoin d'y consacrer un droit spécifique : les journaux d'hier finissaient jaunis dans des archives que peu consultaient, les rumeurs locales s'éteignaient avec le temps et le renouvellement des générations, les erreurs de jeunesse d'un individu s'effaçaient progressivement de la mémoire collective de son entourage, à mesure que de nouveaux événements venaient occuper l'attention commune. Cet oubli social, sans être jamais parfait ni garanti, offrait néanmoins à chacun une possibilité réelle de recommencer, de n'être plus indéfiniment défini par une faute ou une erreur ancienne.
+
+Internet a bouleversé cet équilibre ancien en instaurant ce qu'on pourrait nommer une mémoire sociale quasi permanente : une information publiée en ligne, aussi mineure fût-elle à l'origine, demeure indéfiniment accessible, indexée par des moteurs de recherche, susceptible de ressurgir à tout moment, des années après que son intérêt initial se soit dissipé, associant durablement un individu à un moment de sa vie qu'il aurait, dans le monde d'avant, eu toute chance de voir s'effacer naturellement de la mémoire collective.
+
+Le droit à l'oubli tente précisément de recréer artificiellement, par la voie juridique, ce que l'oubli social spontané accomplissait autrefois sans intervention extérieure. Cette tentative, si elle répond à une préoccupation légitime, se heurte cependant à des tensions difficiles à résoudre entièrement. D'un côté, l'intérêt individuel à ne pas rester prisonnier indéfiniment d'un passé révolu paraît difficilement contestable ; de l'autre, la liberté d'information et le droit du public à accéder à une histoire complète et non expurgée constituent des principes tout aussi fondamentaux, dont le sacrifice, même partiel, comporte ses propres risques, notamment celui de permettre à des personnalités publiques d'effacer commodément des informations légitimement d'intérêt général.
+
+La mise en œuvre pratique de ce droit se heurte, par ailleurs, à des difficultés considérables liées à la nature intrinsèquement transnationale d'internet. Une information retirée dans une juridiction reconnaissant le droit à l'oubli peut fort bien demeurer accessible depuis un autre pays, via un autre nom de domaine, rendant l'effacement recherché largement illusoire à l'échelle globale, quand bien même il aurait été juridiquement obtenu au niveau local. Cette limite territoriale du droit, conçu à une époque où l'information circulait encore largement selon des frontières nationales, peine à s'adapter à une réalité numérique qui, par nature, ignore ces mêmes frontières.
+
+Cette tension révèle, plus profondément, que la mémoire n'a jamais été une simple affaire individuelle, mais toujours aussi un phénomène irréductiblement social et collectif, dont les règles implicites — ce qu'il convient de retenir, de pardonner, d'oublier — se négociaient autrefois de façon informelle, à travers les usages sociaux ordinaires, et se retrouvent aujourd'hui codifiées, imparfaitement, dans des textes juridiques qui peinent à traduire en règles précises ce que la pratique sociale accomplissait autrefois avec souplesse.
+
+Le défi que pose cette nouvelle configuration ne consiste donc probablement pas à trancher définitivement, une fois pour toutes, entre le droit à l'oubli et le droit à l'information, deux principes également légitimes et pourtant structurellement en tension, mais à accepter que cette tension demeure permanente, à négocier au cas par cas, à mesure que la société apprend, non sans tâtonnements, à vivre avec cette mémoire numérique d'une permanence à laquelle rien, dans toute l'histoire humaine antérieure, ne l'avait jamais préparée.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
+  {
+    id: "starter-c2-065",
+    title: "Sommes-nous ce que nous nous souvenons avoir été ?",
+    category: "culture",
+    difficulty: "C2",
+    minutes: 6,
+    preview: "L'intuition selon laquelle notre identité repose sur la continuité de notre mémoire, cette conviction d'être aujourd'hui le même individu qu'hier parce que nous nous en souvenons, gouverne discrètement notre rapport ordinaire à nous-mêmes.",
+    blurbEn:
+      "The intuition that our identity rests on memory's continuity — that we are today the same person as yesterday because we remember being them — quietly governs our ordinary sense of self. A closing C2 essay asking whether that foundation actually holds. (Section: Memory, forgetting and the digital self, 5/5 — hardest.)",
+    body: `L'intuition selon laquelle notre identité repose sur la continuité de notre mémoire, cette conviction d'être aujourd'hui le même individu qu'hier parce que nous nous en souvenons, gouverne discrètement notre rapport ordinaire à nous-mêmes, sans que nous ayons souvent l'occasion de l'examiner explicitement. C'est pourtant sur cette intuition, formulée avec une netteté philosophique dès les débuts de la modernité, que repose l'une des théories les plus influentes, et les plus contestées, de l'identité personnelle : celle qui fait de la mémoire le critère même de ce qui nous constitue à travers le temps.
+
+Selon cette théorie, ce qui fait de moi, aujourd'hui, la même personne que celui qui vivait tel événement il y a vingt ans, ce n'est ni la continuité de mon corps, qui a pourtant intégralement renouvelé la quasi-totalité de ses cellules depuis lors, ni même une âme immatérielle dont l'existence demeure philosophiquement invérifiable, mais la chaîne continue des souvenirs qui me relient à cet événement passé : je suis celui qui se souvient avoir vécu cela, et c'est cette relation mémorielle, plutôt que toute autre continuité matérielle ou spirituelle, qui fonderait mon identité à travers le temps.
+
+Cette théorie, séduisante dans sa simplicité, se heurte pourtant à des objections redoutables, dont la première concerne précisément ce que nous avons établi : la mémoire n'étant jamais un simple dépôt fidèle mais une reconstruction perpétuellement remaniée, le critère mémoriel de l'identité personnelle repose sur un fondement lui-même instable, mouvant, jamais tout à fait le même d'un rappel à l'autre. Si je suis constitué par mes souvenirs, et que ces souvenirs se transforment continuellement, en quel sens précis puis-je encore affirmer être resté, à travers ces reconstructions successives, une seule et même personne ?
+
+Une seconde objection, plus radicale encore, souligne que la chaîne mémorielle censée assurer la continuité de l'identité personnelle comporte, chez tout individu, des lacunes considérables : nul ne se souvient de la totalité de sa vie passée, et les moments oubliés, parfois par milliers, ne cessent pourtant pas, de ce fait, d'avoir été vécus par celui que nous sommes devenus. Si la mémoire seule fondait l'identité, ces lacunes mémorielles massives devraient logiquement fragmenter notre identité en une multitude de segments discontinus, séparés par les trous de notre mémoire défaillante ; or nous continuons, malgré ces lacunes innombrables, à nous percevoir comme un individu unique et continu, ce qui suggère qu'un autre principe, distinct de la simple mémoire consciente, doit intervenir pour assurer cette continuité ressentie.
+
+D'autres traditions philosophiques, plus anciennes, avaient proposé des réponses alternatives à cette même question, fondant l'identité non sur la mémoire mais sur la continuité d'une substance, corporelle ou spirituelle, censée demeurer identique à travers le temps indépendamment de ce dont le sujet se souvient consciemment. Ces théories rivales, aujourd'hui largement délaissées par la philosophie contemporaine de l'identité personnelle, avaient au moins le mérite d'éviter l'instabilité du critère mémoriel ; mais elles achoppaient sur une autre difficulté, tout aussi sérieuse : expliquer pourquoi cette continuité substantielle, purement matérielle ou métaphysique, devrait compter comme identité personnelle au sens qui nous importe réellement, celui d'un sujet conscient de sa propre continuité, et non comme la simple persistance d'un objet parmi d'autres.
+
+Ces difficultés n'invalident pas entièrement l'intuition initiale, mais invitent à la reformuler avec davantage de nuance : peut-être n'est-ce pas la mémoire elle-même, dans son contenu précis et sa fidélité toujours partielle, qui fonde notre identité, mais la capacité même à se raconter, à tisser, malgré les lacunes et les reconstructions, un récit continu de soi, suffisamment cohérent pour qu'il se donne, à celui qui l'élabore, l'apparence rassurante d'une continuité ininterrompue. Ce récit, jamais achevé, toujours révisé, n'est peut-être pas moins réel pour autant : il constitue, sinon la preuve objective d'une identité stable sous-jacente, du moins la condition psychologique nécessaire pour qu'un individu puisse continuer à agir, à décider, à se projeter dans l'avenir comme le même sujet qui s'est engagé, hier, dans telle promesse ou tel projet.
+
+Sommes-nous, alors, ce que nous nous souvenons avoir été ? La réponse la plus honnête est peut-être la suivante : nous sommes moins ce dont nous nous souvenons fidèlement — une exigence que la nature reconstructive de la mémoire rend de toute façon inatteignable — que ce que nous parvenons, à chaque instant, à raconter de nous-mêmes de façon suffisamment cohérente pour continuer d'habiter, sans déchirement insupportable, la même vie que celle que nous avons commencé de vivre. L'identité n'est peut-être pas un fait à découvrir dans les replis d'une mémoire fidèle, mais une œuvre à poursuivre, sans cesse, dans le récit toujours recommencé que chacun fait de sa propre existence.`,
+    sourceName: "Written for Lire",
+    language: "fr",
+  },
 ];

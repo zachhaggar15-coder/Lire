@@ -182,6 +182,32 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "a1-sport",
+    band: "A1",
+    title: "Sport",
+    goal: "Talk about playing sport, teams, and simple wins and losses.",
+    textIds: [
+      "starter-a1-099", // Julien fait du sport (introduces sport/équipe/jouer/courir)
+      "starter-a1-100", // Le match de foot
+      "starter-a1-101", // Yanis apprend à nager
+      "starter-a1-102", // Le tournoi de tennis
+      "starter-a1-103", // Une compétition importante (hardest)
+    ],
+  },
+  {
+    id: "a1-health",
+    band: "A1",
+    title: "Health",
+    goal: "Describe feeling unwell, visiting a doctor or dentist, and simple healthy habits.",
+    textIds: [
+      "starter-a1-104", // Julien est malade (introduces mal à/rhume/se reposer)
+      "starter-a1-105", // Chez le médecin
+      "starter-a1-106", // Yanis a mal aux dents
+      "starter-a1-107", // Bien dormir, bien manger
+      "starter-a1-108", // Grand-mère et ses remèdes (hardest)
+    ],
+  },
+  {
     id: "a2-past",
     band: "A2",
     title: "Telling the past",
@@ -387,6 +413,136 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-a2-115", // Aller chez le médecin en France
       "starter-a2-116", // L'humour français et l'humour anglais
       "starter-a2-117", // Deux façons de faire la queue
+    ],
+  },
+  {
+    id: "a2-celebrations",
+    band: "A2",
+    title: "Celebrations",
+    goal: "Talk about birthdays, weddings, Christmas and neighbourhood parties.",
+    textIds: [
+      "starter-a2-118", // L'anniversaire de ma fille (introduces fête/cadeau/inviter)
+      "starter-a2-119", // Un mariage à la campagne
+      "starter-a2-120", // Noël en famille
+      "starter-a2-121", // La fête des voisins
+      "starter-a2-122", // Un anniversaire surprise (hardest)
+    ],
+  },
+  {
+    id: "a2-sport",
+    band: "A2",
+    title: "Sport and fitness",
+    goal: "Talk about taking up a sport, training, and personal fitness goals.",
+    textIds: [
+      "starter-a2-123", // Je me suis mis à la course à pied (introduces s'entraîner/la forme)
+      "starter-a2-124", // Mon premier cours de yoga
+      "starter-a2-125", // Un club de sport près de chez moi
+      "starter-a2-126", // Ma première course de dix kilomètres
+      "starter-a2-127", // Le marathon de ma vie (hardest)
+    ],
+  },
+  {
+    id: "a2-fashion",
+    band: "A2",
+    title: "Fashion and clothes",
+    goal: "Talk about clothes, personal style, gifts and shopping habits.",
+    textIds: [
+      "starter-a2-128", // Je fais du tri dans mon armoire (introduces vêtements/porter)
+      "starter-a2-129", // Un cadeau qui ne me plaisait pas
+      "starter-a2-130", // Les soldes d'hiver
+      "starter-a2-131", // Ma fille et son style
+      "starter-a2-132", // Acheter des vêtements d'occasion (hardest)
+    ],
+  },
+  {
+    id: "a2-music",
+    band: "A2",
+    title: "Music",
+    goal: "Talk about instruments, concerts and everyday listening habits.",
+    textIds: [
+      "starter-a2-133", // J'ai recommencé le piano à quarante ans (introduces un instrument/jouer)
+      "starter-a2-134", // Le concert de mes rêves
+      "starter-a2-135", // Ma playlist de voiture
+      "starter-a2-136", // Apprendre la guitare avec mon fils
+      "starter-a2-137", // Un festival de musique sous la pluie (hardest)
+    ],
+  },
+  {
+    id: "a2-pets",
+    band: "A2",
+    title: "Pets",
+    goal: "Talk about pets, caring for animals, and saying goodbye to them.",
+    textIds: [
+      "starter-a2-138", // Notre nouveau chaton (introduces adopter/s'occuper de)
+      "starter-a2-139", // Le poisson rouge de mon fils
+      "starter-a2-140", // Un hamster qui s'est échappé
+      "starter-a2-141", // Voyager avec son chien
+      "starter-a2-142", // La perte de notre vieux chat (hardest)
+    ],
+  },
+  {
+    id: "a2-cinema",
+    band: "A2",
+    title: "Film and TV",
+    goal: "Talk about cinema outings, streaming habits, and screen time.",
+    textIds: [
+      "starter-a2-143", // Une soirée cinéma entre amis (introduces un film/une séance)
+      "starter-a2-144", // Je regarde trop de séries
+      "starter-a2-145", // Le cinéma de mon quartier a fermé
+      "starter-a2-146", // Un film qui m'a fait pleurer
+      "starter-a2-147", // Ma fille veut devenir actrice (hardest)
+    ],
+  },
+  {
+    id: "a2-transport",
+    band: "A2",
+    title: "Public transport",
+    goal: "Talk about buses, metros, trams and trains, and the small dramas of commuting.",
+    textIds: [
+      "starter-a2-148", // Mon nouveau trajet en bus (introduces un abonnement/une ligne)
+      "starter-a2-149", // Une panne de métro
+      "starter-a2-150", // J'ai arrêté de prendre la voiture
+      "starter-a2-151", // Le tramway de ma ville
+      "starter-a2-152", // Un long trajet en train (hardest)
+    ],
+  },
+  {
+    id: "a2-diy",
+    band: "A2",
+    title: "DIY and home",
+    goal: "Talk about home projects, small repairs and renovation.",
+    textIds: [
+      "starter-a2-153", // Je repeins ma cuisine (introduces bricoler/réparer)
+      "starter-a2-154", // Une étagère qui n'a pas tenu
+      "starter-a2-155", // Mon premier meuble en bois
+      "starter-a2-156", // Réparer une fuite d'eau
+      "starter-a2-157", // Rénover une vieille maison (hardest)
+    ],
+  },
+  {
+    id: "a2-university",
+    band: "A2",
+    title: "University life",
+    goal: "Talk about starting university, exams, internships and graduating.",
+    textIds: [
+      "starter-a2-158", // Ma première semaine à l'université (introduces un cours/un examen)
+      "starter-a2-159", // Vivre en colocation
+      "starter-a2-160", // Un examen que j'ai raté
+      "starter-a2-161", // Trouver un stage
+      "starter-a2-162", // La fin de mes études (hardest)
+    ],
+  },
+  {
+    id: "a2-onlineshopping",
+    band: "A2",
+    title: "Online shopping",
+    goal: "Talk about ordering online, deliveries, returns and impulse buying.",
+    textIds: [
+      "starter-a2-163", // Ma première commande en ligne (introduces commander/livrer)
+      "starter-a2-164", // Un colis jamais arrivé
+      "starter-a2-165", // Comparer les prix avant d'acheter
+      "starter-a2-166", // Renvoyer un vêtement qui ne va pas
+      "starter-a2-167", // Les dangers des achats impulsifs en ligne (hardest)
     ],
   },
   {
@@ -754,6 +910,136 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b1-fashion",
+    band: "B1",
+    title: "Fashion and self-image",
+    goal: "Reflect on clothing choices, fast fashion, and what we dress for.",
+    textIds: [
+      "starter-b1-181", // Ce que mes vêtements disent de moi
+      "starter-b1-182", // L'industrie de la mode rapide
+      "starter-b1-183", // S'habiller pour les autres ou pour soi
+      "starter-b1-184", // Le prix caché des vêtements bon marché
+      "starter-b1-185", // Ma garde-robe minimaliste (hardest)
+    ],
+  },
+  {
+    id: "b1-music",
+    band: "B1",
+    title: "Music and identity",
+    goal: "Reflect on music, memory, and what our listening habits reveal.",
+    textIds: [
+      "starter-b1-186", // La musique de mon adolescence
+      "starter-b1-187", // Pourquoi certaines chansons nous marquent pour toujours
+      "starter-b1-188", // La musique que je n'ose pas assumer
+      "starter-b1-189", // Les algorithmes et nos goûts musicaux
+      "starter-b1-190", // Ce que ma playlist dit de mon état d'esprit (hardest)
+    ],
+  },
+  {
+    id: "b1-cinema",
+    band: "B1",
+    title: "Film and pop culture",
+    goal: "Reflect on cinema, streaming, remakes and generational taste in film.",
+    textIds: [
+      "starter-b1-191", // Pourquoi certains films deviennent cultes
+      "starter-b1-192", // Le cinéma en salle face au streaming
+      "starter-b1-193", // Ce que les remakes disent de notre époque
+      "starter-b1-194", // Les critiques de cinéma ont-elles encore un rôle ?
+      "starter-b1-195", // Le cinéma qui divise les générations (hardest)
+    ],
+  },
+  {
+    id: "b1-socialmedia",
+    band: "B1",
+    title: "Social media",
+    goal: "Reflect on phone habits, comparison, and growing up online.",
+    textIds: [
+      "starter-b1-196", // Ma relation compliquée avec les réseaux sociaux
+      "starter-b1-197", // Ce que je montre et ce que je cache en ligne
+      "starter-b1-198", // Pourquoi j'ai supprimé mes comptes pendant un mois
+      "starter-b1-199", // Comparer sa vie à celle des autres en ligne
+      "starter-b1-200", // Grandir avec les réseaux sociaux (hardest)
+    ],
+  },
+  {
+    id: "b1-nutrition",
+    band: "B1",
+    title: "Food and diets",
+    goal: "Reflect on diets, sugar, vegetarianism and eating habits.",
+    textIds: [
+      "starter-b1-201", // Le régime que j'ai arrêté après une semaine
+      "starter-b1-202", // Manger sans viande, un choix qui divise ma famille
+      "starter-b1-203", // Le sucre, ce plaisir qu'on nous dit d'éviter
+      "starter-b1-204", // Ce que mon assiette dit de mon époque
+      "starter-b1-205", // Apprendre à écouter ma faim (hardest)
+    ],
+  },
+  {
+    id: "b1-remotework",
+    band: "B1",
+    title: "Remote work",
+    goal: "Reflect on working from home, management, and its effect on cities.",
+    textIds: [
+      "starter-b1-206", // Mon premier jour en télétravail
+      "starter-b1-207", // Les frontières floues entre vie pro et vie perso
+      "starter-b1-208", // Ce que je ne savais pas apprécier au bureau
+      "starter-b1-209", // Manager une équipe à distance
+      "starter-b1-210", // Le télétravail a-t-il changé nos villes ? (hardest)
+    ],
+  },
+  {
+    id: "b1-petsociety",
+    band: "B1",
+    title: "Pets and society",
+    goal: "Reflect on pet ownership, the pet industry, housing rules and grief.",
+    textIds: [
+      "starter-b1-211", // Pourquoi tant de gens adoptent un animal après une rupture
+      "starter-b1-212", // Le business des animaux de compagnie
+      "starter-b1-213", // Ces immeubles qui refusent les animaux
+      "starter-b1-214", // Ce que mon chien m'a appris sur la patience
+      "starter-b1-215", // Faut-il des congés pour deuil animalier ? (hardest)
+    ],
+  },
+  {
+    id: "b1-tourism",
+    band: "B1",
+    title: "Tourism and its effects",
+    goal: "Reflect on mass tourism, its costs and benefits, and travelling differently.",
+    textIds: [
+      "starter-b1-216", // Ma ville envahie par les touristes l'été
+      "starter-b1-217", // Le tourisme qui fait vivre un village
+      "starter-b1-218", // Voyager pour de vrai ou pour la photo ?
+      "starter-b1-219", // Les habitants qui ne peuvent plus se loger à cause du tourisme
+      "starter-b1-220", // Voyager autrement, pour voyager mieux (hardest)
+    ],
+  },
+  {
+    id: "b1-sleep",
+    band: "B1",
+    title: "Sleep and tiredness",
+    goal: "Reflect on sleep habits, chronic tiredness, and relearning to rest well.",
+    textIds: [
+      "starter-b1-221", // Je dormais mal depuis des années, sans m'en inquiéter
+      "starter-b1-222", // Ce que des années de mauvais sommeil m'ont coûté
+      "starter-b1-223", // Le mythe de dormir peu pour réussir
+      "starter-b1-224", // Une nuit dans un laboratoire du sommeil
+      "starter-b1-225", // Réapprendre à dormir, à quarante ans (hardest)
+    ],
+  },
+  {
+    id: "b1-ecohabits",
+    band: "B1",
+    title: "Everyday eco habits",
+    goal: "Reflect on recycling, bulk shopping, composting and their real impact.",
+    textIds: [
+      "starter-b1-226", // J'ai commencé à trier mes déchets sérieusement
+      "starter-b1-227", // Le vrac, une habitude qui change tout
+      "starter-b1-228", // Pourquoi j'ai arrêté d'acheter des bouteilles en plastique
+      "starter-b1-229", // Composter en appartement, un défi inattendu
+      "starter-b1-230", // Les petits gestes suffisent-ils vraiment ? (hardest)
+    ],
+  },
+  {
     id: "b2-work-identity",
     band: "B2",
     title: "Work and identity",
@@ -1118,6 +1404,84 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "b2-sport",
+    band: "B2",
+    title: "Sport and society",
+    goal: "Argue about sport as spectacle, performance culture, doping, and national unity.",
+    textIds: [
+      "starter-b2-181", // Le sport professionnel est-il devenu un spectacle avant d'être un sport ?
+      "starter-b2-182", // La pression de la performance, du stade à l'école
+      "starter-b2-183", // Le dopage, un problème plus vieux que le sport moderne
+      "starter-b2-184", // Pourquoi admirons-nous tant les athlètes ?
+      "starter-b2-185", // Le sport peut-il vraiment unir une nation ? (hardest)
+    ],
+  },
+  {
+    id: "b2-fashion",
+    band: "B2",
+    title: "Fashion and identity",
+    goal: "Argue about fashion as art vs industry, uniforms, fast fashion, and durability.",
+    textIds: [
+      "starter-b2-186", // La mode est-elle un art ou une industrie ?
+      "starter-b2-187", // Ce que l'uniforme scolaire révèle sur l'égalité
+      "starter-b2-188", // La mode rapide et ses coûts invisibles
+      "starter-b2-189", // S'habiller comme une déclaration politique
+      "starter-b2-190", // Le retour du vêtement fait pour durer (hardest)
+    ],
+  },
+  {
+    id: "b2-sleep",
+    band: "B2",
+    title: "Sleep and modern life",
+    goal: "Argue about sleep deprivation, productivity culture, artificial light and school hours.",
+    textIds: [
+      "starter-b2-191", // Sommes-nous une civilisation en manque de sommeil ?
+      "starter-b2-192", // Le mythe du sommeil comme perte de temps
+      "starter-b2-193", // La lumière artificielle a-t-elle changé notre rapport à la nuit ?
+      "starter-b2-194", // Faut-il repenser les horaires scolaires autour du sommeil ?
+      "starter-b2-195", // Le sommeil, dernière frontière de la productivité ? (hardest)
+    ],
+  },
+  {
+    id: "b2-humour",
+    band: "B2",
+    title: "Humour and culture",
+    goal: "Argue about the limits of comedy, cultural translation, and generational taste.",
+    textIds: [
+      "starter-b2-196", // Peut-on rire de tout ?
+      "starter-b2-197", // Pourquoi l'humour ne voyage pas toujours bien
+      "starter-b2-198", // Le rire comme signe d'intelligence sociale
+      "starter-b2-199", // L'humour noir, thérapie ou provocation ?
+      "starter-b2-200", // Ce que nos générations trouvent drôle en dit long sur elles (hardest)
+    ],
+  },
+  {
+    id: "b2-gaming",
+    band: "B2",
+    title: "Video games and digital culture",
+    goal: "Argue about games as art, addiction claims, esports, and growing up online.",
+    textIds: [
+      "starter-b2-201", // Le jeu vidéo est-il enfin reconnu comme un art ?
+      "starter-b2-202", // L'addiction aux jeux vidéo, réalité ou fantasme moral ?
+      "starter-b2-203", // Ce que le sport électronique a changé dans notre définition du sport
+      "starter-b2-204", // Les jeux vidéo peuvent-ils vraiment éduquer ?
+      "starter-b2-205", // Grandir dans des mondes qui n'existent pas (hardest)
+    ],
+  },
+  {
+    id: "b2-reading",
+    band: "B2",
+    title: "Reading and escapism",
+    goal: "Argue about fiction, adaptation, literary snobbery and reading's transformative power.",
+    textIds: [
+      "starter-b2-206", // Pourquoi lit-on des romans qu'on sait irréalistes ?
+      "starter-b2-207", // La lecture, un luxe menacé par la vitesse du monde moderne ?
+      "starter-b2-208", // Ce que perdent les histoires en passant du livre à l'écran
+      "starter-b2-209", // Faut-il avoir honte de ne lire que des romans faciles ?
+      "starter-b2-210", // La lecture peut-elle encore nous transformer ? (hardest)
+    ],
+  },
+  {
     id: "c1-public-debate",
     band: "C1",
     title: "Public debate",
@@ -1313,6 +1677,19 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
     ],
   },
   {
+    id: "c1-socialmedia",
+    band: "C1",
+    title: "Social media and the public sphere",
+    goal: "Essay-register argument: algorithmic fragmentation, virality vs judgment, digital silence, and whether deliberation survives social media.",
+    textIds: [
+      "starter-c1-081", // Les réseaux sociaux et la fragmentation de l'espace public
+      "starter-c1-082", // L'algorithme, nouvel arbitre du débat public
+      "starter-c1-083", // La viralité comme substitut du jugement
+      "starter-c1-084", // Le silence numérique, une liberté en voie de disparition ?
+      "starter-c1-085", // Peut-on encore délibérer à l'ère des réseaux sociaux ? (hardest)
+    ],
+  },
+  {
     id: "c1-good-life",
     band: "C1",
     title: "The good life and modernity",
@@ -1453,6 +1830,19 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-c2-048", // Universalisme et diversité
       "starter-c2-049", // Étranger, étrange, étrangeté
       "starter-c2-050", // Citoyen du monde ou enraciné ? (hardest)
+    ],
+  },
+  {
+    id: "c2-memory-digital",
+    band: "C2",
+    title: "Memory, forgetting and the digital self",
+    goal: "Highest-register essays: memory as reconstruction, forgetting as function, digital memory vs the living self, the right to be forgotten, and whether identity survives on memory alone.",
+    textIds: [
+      "starter-c2-061", // La mémoire est-elle un dépôt ou une construction ?
+      "starter-c2-062", // L'oubli, ennemi ou allié de la mémoire ?
+      "starter-c2-063", // Qui sommes-nous quand la mémoire numérique se souvient de tout à notre place ?
+      "starter-c2-064", // Le droit à l'oubli face à la mémoire absolue d'internet
+      "starter-c2-065", // Sommes-nous ce que nous nous souvenons avoir été ? (hardest)
     ],
   },
   {
