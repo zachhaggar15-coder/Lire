@@ -5,7 +5,6 @@ import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import AuthSync from "@/components/AuthSync";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
-import AppRouteTransition from "@/components/AppRouteTransition";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -77,10 +76,7 @@ export default function RootLayout({
     <html lang="en" className={`${ui.variable} ${french.variable} ${micro.variable} ${numeral.variable}`} data-scroll-behavior="smooth">
       <body>
         <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream">
-          <main data-app-route-shell className="flex-1 pb-24">
-            <AppRouteTransition />
-            {children}
-          </main>
+          <main className="flex-1 pb-24">{children}</main>
           <BottomNav />
         </div>
         <ServiceWorker />
