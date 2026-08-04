@@ -6,7 +6,7 @@ import {
   type MultipleChoiceQuestion,
   type ToneQuestion,
 } from "@/lib/comprehension";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 
 const KEY = "lire.comprehensionQuestions.v1";
 const CACHE_VERSION = 2;
@@ -140,5 +140,6 @@ export function getOrCreateComprehensionQuestionBundle(
 }
 
 export function clearComprehensionQuestionCache(): void {
+  recordStoreClear(KEY);
   persist([]);
 }

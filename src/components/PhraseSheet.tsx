@@ -6,6 +6,7 @@ import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { isPhraseSaved, markPhraseKnown, savePhrase } from "@/lib/phrases";
+import { useModalFocus } from "@/lib/useModalFocus";
 
 export interface ActivePhraseState {
   phrase: string;
@@ -33,6 +34,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
+  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
 
   useEffect(() => {
     setCorrection("");
@@ -120,8 +122,12 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
       />
 
       <div
+        ref={modalRef}
         role="dialog"
+        aria-modal="true"
+        aria-label={state ? `Phrase meaning for ${state.phrase}` : "Phrase meaning"}
         aria-hidden={!open}
+        tabIndex={-1}
         className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-brand-light p-5 shadow-2xl transition-transform duration-200 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}

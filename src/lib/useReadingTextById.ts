@@ -37,19 +37,23 @@ export function useReadingTextById(id: string, initialText: ReadingText | null):
     }
 
     let cancelled = false;
-    fetch(`/api/rss-texts/${id}`)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: { text: ReadingText } | null) => {
-        if (cancelled) return;
-        setText(data?.text ?? null);
-        setChecked(true);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setText(null);
-          setChecked(true);
-        }
-      });
+    async function loadRemoteText() {
+      try {
+        const encodedId = encodeURIComponent(id);
+        let response = await fetch(`/api/rss-texts/${encodedId}`);
+        // Redis is optional. If it has not been configured or this entry has
+        // expired, ask today's candidate pool for the exact id instead of
+        // declaring a freshly shared article unavailable.
+        if (!response.ok) response = await fetch(`/api/rss-texts?id=${encodedId}`);
+        const data = response.ok ? ((await response.json()) as { text?: ReadingText }) : null;
+        if (!cancelled) setText(data?.text ?? null);
+      } catch {
+        if (!cancelled) setText(null);
+      } finally {
+        if (!cancelled) setChecked(true);
+      }
+    }
+    void loadRemoteText();
 
     return () => {
       cancelled = true;

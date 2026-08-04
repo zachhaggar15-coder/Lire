@@ -154,6 +154,21 @@ console.log("\n--- Content quality ---");
   check("RSS cleaner keeps real article prose after media metadata", cleaned.includes("Le gouvernement a présenté"), true);
 }
 {
+  const currentPublisherChrome = [
+    "Aujourd'hui à 19:16",
+    "- 1 min Temps de lecture",
+    "Lire aussi : Une autre actualité locale",
+    "Tous les matins, recevez notre newsletter dans votre boîte mail",
+    "Le conseil municipal a voté la mesure. Elle entrera en vigueur demain.",
+  ].join("\n");
+  const cleaned = cleanRssText(currentPublisherChrome);
+  check("RSS cleaner removes a publisher's current timestamp line", cleaned.includes("19:16"), false);
+  check("RSS cleaner removes compact minute/read-time chrome", cleaned.includes("Temps de lecture"), false);
+  check("RSS cleaner removes related-reading promos", cleaned.includes("Lire aussi"), false);
+  check("RSS cleaner removes newsletter promos", cleaned.includes("newsletter"), false);
+  check("RSS cleaner preserves prose beneath current publisher chrome", cleaned.includes("conseil municipal"), true);
+}
+{
   const isPaywall = looksLikePaywallOrBotWall(PAYWALL_TEXT);
   const isBotWall = looksLikePaywallOrBotWall(BOTWALL_TEXT);
   console.log(`  Paywall prompt -> looksLikePaywallOrBotWall=${isPaywall}; bot-protection page -> ${isBotWall}`);
@@ -166,6 +181,15 @@ console.log("\n--- Content quality ---");
   check("French source footer removes the source token", cleaned.includes("chutmonsecret"), false);
   check("French source footer keeps the real preceding text", cleaned.includes("floraison est rare"), true);
   check("RSS cleaner removes inline French source footer", cleanRssText(CHUT_SOURCE_FOOTER).includes("chutmonsecret"), false);
+}
+{
+  const cleaned = stripSourceBoilerplate(
+    "Les Dernières Nouvelles d'Alsace -\n\nLe village ouvre une nouvelle bibliothèque.",
+    "Dernières Nouvelles d'Alsace",
+    "https://www.dna.fr/culture/article",
+  );
+  check("standalone configured publisher attribution is removed", cleaned.includes("Dernières Nouvelles"), false);
+  check("publisher-attribution cleanup preserves the article paragraph", cleaned.includes("nouvelle bibliothèque"), true);
 }
 {
   check(

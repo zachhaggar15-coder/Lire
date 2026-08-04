@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 
 const TAP_KEY = "lire.wordTapStats.v1";
 const INFERENCE_KEY = "lire.inferredWords.v1";
@@ -103,6 +103,8 @@ export function getAllInferenceResults(): StoredInference[] {
 }
 
 export function clearWordLearningStores(): void {
+  recordStoreClear(TAP_KEY);
+  recordStoreClear(INFERENCE_KEY);
   persist(TAP_KEY, []);
   persist(INFERENCE_KEY, []);
 }

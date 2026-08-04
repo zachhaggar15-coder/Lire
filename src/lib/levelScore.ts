@@ -1,5 +1,5 @@
 import type { Difficulty } from "@/types";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 
 /**
  * Per-CEFR-level proficiency score.
@@ -134,6 +134,7 @@ export function levelPointsForCompletion(input: LevelPointsInput): number {
 export function clearLevelScores(): void {
   if (!hasStorage()) return;
   try {
+    recordStoreClear(LEVEL_SCORE_KEY);
     window.localStorage.removeItem(LEVEL_SCORE_KEY);
     void pushStore(LEVEL_SCORE_KEY);
   } catch {

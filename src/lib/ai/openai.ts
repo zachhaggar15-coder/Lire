@@ -330,7 +330,7 @@ Exactly 3 options, exactly one with isCorrect true. "distinction" for each incor
 
 export async function generateParaphraseOptions(req: ParaphraseGenerationRequest): Promise<ParaphraseGenerationResult> {
   const englishAllowed = /^A1/i.test(req.level);
-  const system = `You write paraphrase-recognition exercises for a ${req.level} learning French. Given one sentence from a French text, write one correct paraphrase (same meaning, different wording/structure, same language as the source unless told otherwise, no new information) and two incorrect-but-plausible paraphrases, each wrong for one specific, identifiable reason. Never write a distractor that is simply nonsensical or obviously unrelated. ${
+  const system = `You write paraphrase-recognition exercises for a ${req.level} learning French. Given one sentence from a French text, write one correct paraphrase (same meaning, genuinely different wording and structure, same language as the source unless told otherwise, no new information) and two incorrect-but-plausible paraphrases, each wrong for one specific, identifiable reason. The correct answer must not simply reverse or rearrange the source words; replace enough vocabulary that the learner has to understand the meaning. Never write a distractor that is simply nonsensical or obviously unrelated. ${
     englishAllowed
       ? "This is an absolute-beginner (A1) exercise — options may be simple French or, if that keeps them natural, English."
       : "Write all three options in French only."

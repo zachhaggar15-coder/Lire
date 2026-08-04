@@ -10,6 +10,7 @@ import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
+import { useModalFocus } from "@/lib/useModalFocus";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -47,6 +48,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
   const mountedRef = useRef(true);
   /** Guards against React StrictMode's dev-only double-invoke of effects starting two generations (and appending the activity twice) — this must run at most once per overlay instance regardless of how many times the effect body fires. */
   const paraphraseStartedRef = useRef(false);
+  const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -103,7 +105,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
 
   if (activities.length === 0 && !paraphraseChecked) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Preparing text practice" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
         <p className="text-sm text-ink-muted">Preparing practice…</p>
       </div>
     );
@@ -111,7 +113,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
 
   if (activities.length === 0 && paraphraseChecked) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Text practice unavailable" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-cream px-6">
         <div className="max-w-sm text-center">
           <p className="text-lg font-semibold text-ink">Not enough material to practise yet</p>
           <p className="mt-2 text-sm text-ink-muted">This reading is too short for these exercises. Try practising a longer text.</p>
@@ -124,7 +126,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
+    <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Practice this text" tabIndex={-1} className="fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="flex items-center justify-between">
           <button type="button" onClick={onClose} aria-label="Close practice" className="rounded-full bg-cream-card p-2 text-ink-muted">
@@ -172,6 +174,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
   const [bank, setBank] = useState<ReconstructionChip[]>(shuffled);
   const [placed, setPlaced] = useState<ReconstructionChip[]>([]);
   const [result, setResult] = useState<ActivityResult>(null);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
 
   function moveToPlaced(chip: ReconstructionChip) {
     if (result) return;
@@ -189,11 +192,18 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
     setBank(shuffledChipsFor(exercise));
     setPlaced([]);
     setResult(null);
+    setAnswerRevealed(false);
   }
 
   function check() {
     const ok = checkReconstruction(exercise, placed.map((c) => c.id));
     setResult(ok ? "correct" : "incorrect");
+  }
+
+  function revealAnswer() {
+    setPlaced(exercise.chips);
+    setBank([]);
+    setAnswerRevealed(true);
   }
 
   return (
@@ -237,8 +247,10 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
 
       {result && (
         <div className={`mt-4 rounded-2xl p-3 text-sm ${result === "correct" ? "bg-brand-light text-brand" : "bg-rose text-rose-ink"}`} role="status">
-          <p className="font-bold">{result === "correct" ? "Correct." : "Not quite."}</p>
-          <p className="mt-1 italic">{exercise.canonicalText}</p>
+          <p className="font-bold">
+            {result === "correct" ? "Correct." : answerRevealed ? "Answer revealed." : "Not quite. Try once more or reveal the answer."}
+          </p>
+          {(result === "correct" || answerRevealed) && <p className="mt-1 italic">{exercise.canonicalText}</p>}
         </div>
       )}
 
@@ -247,8 +259,8 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
           <button type="button" onClick={check} disabled={placed.length === 0} className="ligne-pill flex-1 bg-brand text-cream disabled:opacity-40">
             Check
           </button>
-        ) : result === "correct" ? (
-          <button type="button" onClick={() => onDone(true)} className="ligne-pill flex-1 bg-brand text-cream">
+        ) : result === "correct" || answerRevealed ? (
+          <button type="button" onClick={() => onDone(result === "correct")} className="ligne-pill flex-1 bg-brand text-cream">
             Continue
           </button>
         ) : (
@@ -256,8 +268,8 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
               Try again
             </button>
-            <button type="button" onClick={() => onDone(false)} className="ligne-pill flex-1 bg-brand text-cream">
-              Continue
+            <button type="button" onClick={revealAnswer} className="ligne-pill flex-1 bg-brand text-cream">
+              Reveal answer
             </button>
           </>
         )}
@@ -269,6 +281,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
 function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: (correct: boolean) => void }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [result, setResult] = useState<ActivityResult>(null);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
 
   function choose(option: string) {
     if (result) return;
@@ -283,6 +296,7 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
   function retry() {
     setSelected(null);
     setResult(null);
+    setAnswerRevealed(false);
   }
 
   const [before, after] = exercise.prompt.split("___");
@@ -302,26 +316,36 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2" role="radiogroup" aria-label="Answer options">
-        {exercise.options.map((option) => (
-          <button
-            key={option}
-            type="button"
-            role="radio"
-            aria-checked={selected === option}
-            onClick={() => choose(option)}
-            disabled={!!result}
-            className={`rounded-full border px-3 py-1.5 text-sm font-semibold active:scale-95 disabled:opacity-60 ${
-              selected === option ? "border-brand bg-brand text-cream" : "border-cream-dark bg-cream text-ink"
-            }`}
-          >
-            {option}
-          </button>
-        ))}
+        {exercise.options.map((option) => {
+          const selectedOption = selected === option;
+          const revealedCorrect = answerRevealed && option.trim().toLowerCase() === exercise.answer.trim().toLowerCase();
+          return (
+            <button
+              key={option}
+              type="button"
+              role="radio"
+              aria-checked={selectedOption}
+              onClick={() => choose(option)}
+              disabled={!!result}
+              className={`rounded-full border px-3 py-1.5 text-sm font-semibold active:scale-95 disabled:opacity-90 ${
+                revealedCorrect
+                  ? "border-brand bg-brand-light text-brand"
+                  : selectedOption
+                    ? "border-brand bg-brand text-cream"
+                    : "border-cream-dark bg-cream text-ink"
+              }`}
+            >
+              {option}
+            </button>
+          );
+        })}
       </div>
 
       {result && (
         <div className={`mt-4 rounded-2xl p-3 text-sm ${result === "correct" ? "bg-brand-light text-brand" : "bg-rose text-rose-ink"}`} role="status">
-          <p className="font-bold">{result === "correct" ? "Correct." : `Not quite — the answer is "${exercise.answer}".`}</p>
+          <p className="font-bold">
+            {result === "correct" ? "Correct." : answerRevealed ? `The answer is "${exercise.answer}".` : "Not quite. Try once more or reveal the answer."}
+          </p>
         </div>
       )}
 
@@ -330,8 +354,8 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
           <button type="button" onClick={check} disabled={!selected} className="ligne-pill flex-1 bg-brand text-cream disabled:opacity-40">
             Check
           </button>
-        ) : result === "correct" ? (
-          <button type="button" onClick={() => onDone(true)} className="ligne-pill flex-1 bg-brand text-cream">
+        ) : result === "correct" || answerRevealed ? (
+          <button type="button" onClick={() => onDone(result === "correct")} className="ligne-pill flex-1 bg-brand text-cream">
             Continue
           </button>
         ) : (
@@ -339,8 +363,8 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
             <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
               Try again
             </button>
-            <button type="button" onClick={() => onDone(false)} className="ligne-pill flex-1 bg-brand text-cream">
-              Continue
+            <button type="button" onClick={() => setAnswerRevealed(true)} className="ligne-pill flex-1 bg-brand text-cream">
+              Reveal answer
             </button>
           </>
         )}
@@ -351,19 +375,26 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
 
 function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise; onDone: (correct: boolean) => void }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [revealed, setRevealed] = useState(false);
+  const [result, setResult] = useState<ActivityResult>(null);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
 
   const selectedOption = exercise.options.find((o) => o.id === selectedId) ?? null;
   const correct = selectedId ? checkParaphraseAnswer(exercise, selectedId) : false;
 
   function choose(option: ParaphraseOption) {
-    if (revealed) return;
+    if (result) return;
     setSelectedId(option.id);
   }
 
   function check() {
     if (!selectedId) return;
-    setRevealed(true);
+    setResult(correct ? "correct" : "incorrect");
+  }
+
+  function retry() {
+    setSelectedId(null);
+    setResult(null);
+    setAnswerRevealed(false);
   }
 
   return (
@@ -375,8 +406,8 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
       <div className="mt-4 space-y-2" role="radiogroup" aria-label="Paraphrase options">
         {exercise.options.map((option) => {
           const isSelected = selectedId === option.id;
-          const showAsCorrect = revealed && option.isCorrect;
-          const showAsWrongPick = revealed && isSelected && !option.isCorrect;
+          const showAsCorrect = (result === "correct" || answerRevealed) && option.isCorrect;
+          const showAsWrongPick = result === "incorrect" && isSelected && !option.isCorrect;
           return (
             <button
               key={option.id}
@@ -384,7 +415,7 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
               role="radio"
               aria-checked={isSelected}
               onClick={() => choose(option)}
-              disabled={revealed}
+              disabled={!!result}
               className={`w-full rounded-2xl border px-3 py-2.5 text-left text-sm font-semibold active:scale-[0.99] disabled:opacity-90 ${
                 showAsCorrect
                   ? "border-brand bg-brand-light text-brand"
@@ -401,22 +432,33 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
         })}
       </div>
 
-      {revealed && (
+      {result && (
         <div className={`mt-4 rounded-2xl p-3 text-sm ${correct ? "bg-brand-light text-brand" : "bg-rose text-rose-ink"}`} role="status">
-          <p className="font-bold">{correct ? "Correct." : "Not quite."}</p>
-          {!correct && selectedOption?.feedback && <p className="mt-1">{selectedOption.feedback}</p>}
+          <p className="font-bold">
+            {correct ? "Correct." : answerRevealed ? "Answer revealed." : "Not quite. Try once more or reveal the answer."}
+          </p>
+          {!correct && answerRevealed && selectedOption?.feedback && <p className="mt-1">{selectedOption.feedback}</p>}
         </div>
       )}
 
       <div className="mt-4 flex gap-2">
-        {!revealed ? (
+        {!result ? (
           <button type="button" onClick={check} disabled={!selectedId} className="ligne-pill flex-1 bg-brand text-cream disabled:opacity-40">
             Check
           </button>
-        ) : (
+        ) : correct || answerRevealed ? (
           <button type="button" onClick={() => onDone(correct)} className="ligne-pill flex-1 bg-brand text-cream">
             Continue
           </button>
+        ) : (
+          <>
+            <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
+              Try again
+            </button>
+            <button type="button" onClick={() => setAnswerRevealed(true)} className="ligne-pill flex-1 bg-brand text-cream">
+              Reveal answer
+            </button>
+          </>
         )}
       </div>
     </section>

@@ -6,7 +6,7 @@ import { markKnown } from "@/lib/knownWords";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear, recordStoreDeletion } from "@/lib/supabase/sync";
 import { isSourceFooterText } from "@/lib/rss/sourceNoise";
 
 /**
@@ -324,11 +324,15 @@ export function markWordAsKnown(word: string): SavedWord[] {
 export function deleteWord(word: string): SavedWord[] {
   const lookup = lookupWord(word);
   const lemma = lookup.lemma?.toLowerCase();
-  const next = getSavedWords().filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
+  const current = getSavedWords();
+  const removed = current.filter((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
+  for (const entry of removed) recordStoreDeletion(KEY, entry.word);
+  const next = current.filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
   persist(next);
   return next;
 }
 
 export function clearWords(): void {
+  recordStoreClear(KEY);
   persist([]);
 }

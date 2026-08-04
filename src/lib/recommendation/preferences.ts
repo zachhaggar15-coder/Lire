@@ -1,6 +1,6 @@
 import type { ReadingText } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
 
 const HIDDEN_SOURCES_KEY = "lire.recommendation.hiddenSources.v1";
 const PREFERRED_SOURCES_KEY = "lire.recommendation.preferredSources.v1";
@@ -62,6 +62,7 @@ export function hideSource(sourceName: string): void {
 }
 
 export function unhideSource(sourceName: string): void {
+  recordStoreDeletion(HIDDEN_SOURCES_KEY, sourceName);
   writeStringList(
     HIDDEN_SOURCES_KEY,
     getHiddenSources().filter((savedSource) => savedSource !== sourceName)
@@ -81,6 +82,7 @@ export function preferSource(sourceName: string): void {
 }
 
 export function unpreferSource(sourceName: string): void {
+  recordStoreDeletion(PREFERRED_SOURCES_KEY, sourceName);
   writeStringList(
     PREFERRED_SOURCES_KEY,
     getPreferredSources().filter((savedSource) => savedSource !== sourceName)
@@ -100,6 +102,7 @@ export function saveForLater(id: string): void {
 }
 
 export function removeFromSavedLater(id: string): void {
+  recordStoreDeletion(SAVED_LATER_KEY, id);
   writeStringList(
     SAVED_LATER_KEY,
     getSavedLaterIds().filter((savedId) => savedId !== id)

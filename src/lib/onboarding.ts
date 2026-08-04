@@ -126,6 +126,7 @@ export function saveOnboarding(
   if (hasStorage()) {
     window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
     void pushStore(ONBOARDING_KEY);
+    notifyRecommendationPreferencesChanged();
   }
 
   if (shouldSeedKnownWords) {
@@ -162,6 +163,7 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
   if (hasStorage()) {
     window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
     void pushStore(ONBOARDING_KEY);
+    notifyRecommendationPreferencesChanged();
   }
 
   return next;
@@ -188,6 +190,7 @@ export function completeWalkthrough(): void {
     JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );
   void pushStore(ONBOARDING_KEY);
+  notifyRecommendationPreferencesChanged();
 }
 
 /**
@@ -204,4 +207,5 @@ export function resetWalkthrough(): void {
     JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );
   void pushStore(ONBOARDING_KEY);
+  notifyRecommendationPreferencesChanged();
 }

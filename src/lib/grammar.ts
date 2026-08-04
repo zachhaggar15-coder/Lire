@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 
 export type GrammarDomain = "verbs";
 export type GrammarLevel = "A1" | "A2" | "B1" | "B2";
@@ -879,6 +879,8 @@ export function referenceForVerb(infinitive: string): VerbReference | null {
 }
 
 export function clearGrammarStores(): void {
+  recordStoreClear(PROGRESS_KEY);
+  recordStoreClear(EVENTS_KEY);
   persist(PROGRESS_KEY, []);
   persist(EVENTS_KEY, []);
 }

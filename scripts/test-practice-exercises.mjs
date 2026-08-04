@@ -59,6 +59,11 @@ test("duplicate visible chips get distinct stable ids", () => {
   assert.equal(new Set(ids).size, ids.length, "chip ids must be unique even when display text repeats");
 });
 
+test("the final word chip does not include the sentence full stop", () => {
+  const chips = buildReconstructionChips("Il se sent très fatigué.");
+  assert.equal(chips.at(-1)?.display, "fatigué");
+});
+
 console.log("\n--- Sentence eligibility filter ---");
 
 test("a well-formed 6-8 word sentence is eligible", () => {
@@ -90,6 +95,15 @@ test("shuffle changes the order for 2+ chips", () => {
   assert.equal(sameOrder, false, "shuffle should reorder a 7+ chip sentence");
 });
 
+test("shuffle is not just the original sentence backwards", () => {
+  const exercise = buildReconstructionExercise(sentenceFromText("Léa se lève à sept heures ce matin."));
+  for (let attempt = 0; attempt < 20; attempt++) {
+    const shuffled = shuffleChips(exercise.chips);
+    const reversed = shuffled.every((chip, index) => chip.id === exercise.chips[exercise.chips.length - 1 - index].id);
+    assert.equal(reversed, false, `shuffle ${attempt + 1} was a simple reversal`);
+  }
+});
+
 test("correct order validates as correct", () => {
   const exercise = buildReconstructionExercise(sentenceFromText("Léa se lève à sept heures ce matin."));
   const ok = checkReconstruction(exercise, exercise.chips.map((c) => c.id));
@@ -107,6 +121,12 @@ test("punctuation spacing differences don't break a correct answer", () => {
   const exercise = buildReconstructionExercise(sentenceFromText("Ça va bien, merci beaucoup !"));
   const ok = checkReconstruction(exercise, exercise.chips.map((c) => c.id));
   assert.equal(ok, true);
+});
+
+test("removing a final full stop preserves an ellipsis inside closing dialogue punctuation", () => {
+  const exercise = buildReconstructionExercise(sentenceFromText("La première ramène à soi : « Ah, moi aussi, la dernière fois... »."));
+  assert.ok(exercise.chips.some((chip) => chip.display.includes("...")), "the meaningful ellipsis should remain visible");
+  assert.equal(checkReconstruction(exercise, exercise.chips.map((chip) => chip.id)), true);
 });
 
 console.log("\n--- Cloze exercises ---");

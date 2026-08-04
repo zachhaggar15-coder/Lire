@@ -37,6 +37,12 @@ function isPureDigits(piece: string): boolean {
   return /^[\d.,]+$/.test(piece);
 }
 
+/** Removes one ordinary sentence-ending full stop, while preserving an
+ * ellipsis such as `fois...` (including before a closing quote). */
+function stripTerminalFullStop(text: string): string {
+  return text.replace(/(^|[^.])\.(?:(["'’»\)\]]*))$/u, "$1$2");
+}
+
 /** Splits a sentence into chips, folding stray punctuation-only pieces onto a neighbour. */
 export function buildReconstructionChips(sentenceText: string): ReconstructionChip[] {
   const pieces = sentenceText.trim().split(/\s+/).filter(Boolean);
@@ -48,6 +54,12 @@ export function buildReconstructionChips(sentenceText: string): ReconstructionCh
       continue;
     }
     raw.push(piece);
+  }
+  // Sentence punctuation belongs to the sentence, not to the final word the
+  // learner is trying to order. Keep commas/quotes that affect reading, but
+  // do not render a full stop as part of a selectable word chip.
+  if (raw.length > 0) {
+    raw[raw.length - 1] = stripTerminalFullStop(raw[raw.length - 1]);
   }
   return raw.map((display, i) => ({ id: `chip-${i}`, display }));
 }
@@ -112,8 +124,24 @@ export function shuffleChips(chips: ReconstructionChip[]): ReconstructionChip[] 
     }
     attempt = arr;
     tries += 1;
-  } while (tries < 8 && attempt.every((chip, i) => chip.id === chips[i].id));
-  return attempt;
+  } while (tries < 24 && !isUsefulShuffle(chips, attempt));
+
+  if (isUsefulShuffle(chips, attempt)) return attempt;
+  // Extremely unlikely deterministic fallback: rotate by roughly half. It
+  // cannot be the original order or the simple backwards-order puzzle that
+  // was too easy to solve by visual pattern alone.
+  const offset = Math.max(1, Math.floor(chips.length / 2));
+  return [...chips.slice(offset), ...chips.slice(0, offset)];
+}
+
+function isUsefulShuffle(original: ReconstructionChip[], shuffled: ReconstructionChip[]): boolean {
+  const unchanged = shuffled.every((chip, index) => chip.id === original[index]?.id);
+  if (unchanged) return false;
+  if (original.length < 4) return true;
+  const simplyReversed = shuffled.every((chip, index) => chip.id === original[original.length - 1 - index]?.id);
+  if (simplyReversed) return false;
+  const displaced = shuffled.filter((chip, index) => chip.id !== original[index]?.id).length;
+  return displaced >= Math.ceil(original.length / 2);
 }
 
 /**
@@ -136,6 +164,7 @@ function normalizeForCompare(text: string): string {
   return text
     .normalize("NFC")
     .trim()
+    .replace(/(^|[^.])\.(?:(["'’»\)\]]*))$/u, "$1$2")
     .replace(/\s+/g, " ")
     // Strip whitespace on both sides of any punctuation or symbol character
     // (Unicode \p{P}/\p{S} — covers ?!;:.,»«—, currency symbols, etc.), not

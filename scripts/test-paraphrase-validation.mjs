@@ -86,6 +86,15 @@ console.log("--- correct answer too close to the source sentence ---");
   const result = validateParaphraseSet(SOURCE, echoesSource);
   check("correct option identical to the source sentence is rejected", result.ok === false, JSON.stringify(result));
 }
+{
+  const reorderedSource = goodOptions();
+  reorderedSource[0] = {
+    ...reorderedSource[0],
+    text: "À cause de la tempête, ce matin-là elle s'est réveillée tard.",
+  };
+  const result = validateParaphraseSet(SOURCE, reorderedSource);
+  check("correct option made from the same words in a different order is rejected", result.ok === false, JSON.stringify(result));
+}
 
 console.log("--- degenerate short options ---");
 {

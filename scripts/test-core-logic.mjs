@@ -93,7 +93,7 @@ import {
   updateSelectedReadingLevel,
 } from "../src/lib/onboarding.ts";
 import { getGoals } from "../src/lib/goals.ts";
-import { itemTimestamp, mergeStoreValue } from "../src/lib/supabase/sync.ts";
+import { itemTimestamp, mergeStoreValue, mergeStoreValueWithMetadata } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/levelScore.ts";
@@ -1581,6 +1581,58 @@ console.log("\n--- Supabase sync merge logic ---");
 {
   check("mergeStoreValue returns local as-is when remote is null", mergeStoreValue({ key: "k", kind: "object" }, { a: 1 }, null).a === 1);
   check("mergeStoreValue returns remote as-is when local is null", mergeStoreValue({ key: "k", kind: "object" }, null, { a: 1 }).a === 1);
+}
+{
+  const config = { key: "lire.onboarding.v1", kind: "object" };
+  const local = { completed: true, walkthroughCompleted: true, level: "B1", updatedAt: "2026-06-01T00:00:00Z" };
+  const remote = { completed: true, walkthroughCompleted: false, level: "A1", updatedAt: "2025-01-01T00:00:00Z" };
+  const merged = mergeStoreValueWithMetadata(
+    config,
+    local,
+    remote,
+    { updatedAt: "2026-06-01T00:00:00Z" },
+    { updatedAt: "2025-01-01T00:00:00Z" },
+    "2025-01-01T00:00:00Z",
+  );
+  check(
+    "timestamp-aware object merge does not let stale remote onboarding reset newer local progress",
+    merged.value.level === "B1" && merged.value.walkthroughCompleted === true,
+    JSON.stringify(merged.value),
+  );
+}
+{
+  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
+  const merged = mergeStoreValueWithMetadata(
+    config,
+    [],
+    [{ word: "chat", savedAt: "2025-01-01T00:00:00Z" }],
+    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { chat: "2026-01-01T00:00:00Z" } },
+    { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { chat: "2025-01-01T00:00:00Z" } },
+    "2025-01-01T00:00:00Z",
+  );
+  check("a saved-word tombstone prevents an older remote copy from being resurrected", merged.value.length === 0, JSON.stringify(merged.value));
+}
+{
+  const config = { key: "lire.recommendation.savedLater.v1", kind: "list-of-strings" };
+  const merged = mergeStoreValueWithMetadata(
+    config,
+    [],
+    ["article-1"],
+    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { "article-1": "2026-01-01T00:00:00Z" } },
+    { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { "article-1": "2025-01-01T00:00:00Z" } },
+  );
+  check("saved-for-later removals survive cross-device union merges", merged.value.length === 0, JSON.stringify(merged.value));
+}
+{
+  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
+  const merged = mergeStoreValueWithMetadata(
+    config,
+    [{ word: "chat", savedAt: "2026-06-01T00:00:00Z" }],
+    [],
+    { updatedAt: "2026-06-01T00:00:00Z", itemUpdatedAt: { chat: "2026-06-01T00:00:00Z" } },
+    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { chat: "2026-01-01T00:00:00Z" } },
+  );
+  check("a deliberate newer re-save wins over an older deletion tombstone", merged.value.length === 1, JSON.stringify(merged.value));
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

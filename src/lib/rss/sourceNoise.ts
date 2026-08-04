@@ -53,10 +53,25 @@ export function isStandaloneSourceFooterLine(text: string): boolean {
   );
 }
 
-export function stripSourceBoilerplate(text: string): string {
+function isStandaloneSourceAttribution(text: string, sourceName?: string | null, sourceUrl?: string | null): boolean {
+  const lineKey = compact(text.replace(/[-–—|]+\s*$/u, ""));
+  if (!lineKey) return false;
+  for (const alias of sourceAliases(sourceName, sourceUrl)) {
+    if (lineKey === alias) return true;
+    // Publishers sometimes prefix their configured name with a short French
+    // article (for example "Les Dernières Nouvelles d'Alsace -").
+    if (lineKey.endsWith(alias) && lineKey.length - alias.length <= 3) return true;
+  }
+  return false;
+}
+
+export function stripSourceBoilerplate(text: string, sourceName?: string | null, sourceUrl?: string | null): string {
   let current = text
     .split("\n")
-    .filter((line) => !isStandaloneSourceFooterLine(line.trim()))
+    .filter((line) => {
+      const trimmed = line.trim();
+      return !isStandaloneSourceFooterLine(trimmed) && !isStandaloneSourceAttribution(trimmed, sourceName, sourceUrl);
+    })
     .join("\n");
 
   let previous: string;
@@ -97,7 +112,7 @@ export function isLikelySourceBoilerplateToken({
 }
 
 export function cleanReadingTextSourceNoise(text: ReadingText): ReadingText {
-  const body = stripSourceBoilerplate(text.body);
+  const body = stripSourceBoilerplate(text.body, text.sourceName, text.sourceUrl);
   if (body === text.body) return text;
   return {
     ...text,

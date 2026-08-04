@@ -35,7 +35,8 @@ export default function BottomNav() {
 
   useEffect(() => {
     function syncOnboardingState() {
-      setOnboardingComplete(getOnboardingState()?.completed === true);
+      const state = getOnboardingState();
+      setOnboardingComplete(state?.completed === true && state.walkthroughCompleted === true);
     }
 
     syncOnboardingState();
@@ -48,6 +49,7 @@ export default function BottomNav() {
   }, []);
 
   if (pathname.startsWith("/admin")) return null;
+  if (/^\/reader\/[^/]+\/(practice|listen)$/.test(pathname)) return null;
   if (onboardingComplete !== true) return null;
 
   return (

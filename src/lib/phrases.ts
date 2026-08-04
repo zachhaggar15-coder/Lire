@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
 
 export type SavedPhraseStatus = "learning" | "known";
 
@@ -94,6 +94,7 @@ export function markPhraseKnown(phrase: string): SavedPhrase[] {
 
 export function deletePhrase(phrase: string): SavedPhrase[] {
   const key = clean(phrase);
+  recordStoreDeletion(KEY, key);
   const next = getSavedPhrases().filter((saved) => saved.phrase !== key);
   persist(next);
   return next;

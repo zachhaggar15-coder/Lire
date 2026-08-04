@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { SentenceExplanation } from "@/lib/ai/types";
 import { getSentenceExplanation } from "@/lib/ai/client";
 import PronounceButton from "@/components/PronounceButton";
+import { useModalFocus } from "@/lib/useModalFocus";
 
 export interface ActiveSentenceState {
   sentence: string;
@@ -31,6 +32,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
   const [aiResult, setAiResult] = useState<SentenceExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
+  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
 
   // Reset whenever a different sentence is shown.
   useEffect(() => {
@@ -71,8 +73,12 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
       />
 
       <div
+        ref={modalRef}
         role="dialog"
+        aria-modal="true"
+        aria-label="Sentence explanation"
         aria-hidden={!open}
+        tabIndex={-1}
         className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-cream-card p-5 shadow-2xl transition-transform duration-200 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}

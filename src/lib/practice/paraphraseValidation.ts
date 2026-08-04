@@ -28,6 +28,20 @@ function areNearDuplicates(a: string, b: string): boolean {
   return longer.length - shorter.length <= 3 && longer.startsWith(shorter.slice(0, Math.max(1, shorter.length - 2)));
 }
 
+/** Rejects an "easy paraphrase" that merely rearranges almost all the same
+ * words. Character-prefix checks miss this completely even though a learner
+ * can solve it without understanding the sentence. */
+function isReorderedEcho(a: string, b: string): boolean {
+  const aTokens = normalizeForCompare(a).split(" ").filter(Boolean);
+  const bTokens = normalizeForCompare(b).split(" ").filter(Boolean);
+  if (Math.min(aTokens.length, bTokens.length) < 5) return false;
+  const aSet = new Set(aTokens);
+  const bSet = new Set(bTokens);
+  const shared = [...aSet].filter((token) => bSet.has(token)).length;
+  const overlap = shared / Math.min(aSet.size, bSet.size);
+  return overlap >= 0.85 && Math.abs(aTokens.length - bTokens.length) <= 2;
+}
+
 export function validateParaphraseSet(sourceSentence: string, options: ParaphraseGenerationOption[]): ParaphraseValidationResult {
   if (options.length !== 3) {
     return { ok: false, reason: `expected exactly 3 options, got ${options.length}` };
@@ -56,8 +70,8 @@ export function validateParaphraseSet(sourceSentence: string, options: Paraphras
   }
 
   const correctText = correctOptions[0].text.trim();
-  if (areNearDuplicates(correctText, sourceSentence)) {
-    return { ok: false, reason: "the correct option is almost identical to the original sentence" };
+  if (areNearDuplicates(correctText, sourceSentence) || isReorderedEcho(correctText, sourceSentence)) {
+    return { ok: false, reason: "the correct option is almost identical to or only reorders the original sentence" };
   }
 
   return { ok: true };

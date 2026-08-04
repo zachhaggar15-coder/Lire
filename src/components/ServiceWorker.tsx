@@ -36,6 +36,10 @@ export default function ServiceWorker() {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
 
+    // The guard only protects the page that is about to reload. sessionStorage
+    // survives reloads, so clear the previous page's marker now; otherwise a
+    // second deployment in the same long-running PWA session never reloads.
+    sessionStorage.removeItem(RELOAD_GUARD_KEY);
     const hadController = !!navigator.serviceWorker.controller;
     let registration: ServiceWorkerRegistration | null = null;
 

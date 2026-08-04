@@ -7,7 +7,7 @@ const PREVIEW_LENGTH = 160;
 
 /** Maps the API's RssReadingText DTO onto the app's canonical ReadingText shape. */
 export function rssReadingTextToReadingText(rss: RssReadingText): ReadingText {
-  const body = stripSourceBoilerplate(rss.originalText);
+  const body = stripSourceBoilerplate(rss.originalText, rss.sourceName, rss.sourceUrl);
   return {
     id: rss.id,
     title: rss.title,

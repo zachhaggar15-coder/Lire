@@ -1,5 +1,5 @@
 import type { ReadingText } from "@/types";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 import { estimateReadingMinutes, truncateAtSentence } from "@/lib/rss/cleanContent";
 import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
 
@@ -35,7 +35,7 @@ function readOfflineTexts(): ReadingText[] {
 }
 
 function sanitizeRssText(text: ReadingText): ReadingText {
-  const body = stripSourceBoilerplate(text.body);
+  const body = stripSourceBoilerplate(text.body, text.sourceName, text.sourceUrl);
   if (body === text.body) return text;
   return {
     ...text,
@@ -116,6 +116,7 @@ export function getOfflineRssTextCount(): number {
 
 export function clearOfflineRssTexts(): void {
   if (!hasLocalStorage()) return;
+  recordStoreClear(OFFLINE_KEY);
   window.localStorage.setItem(OFFLINE_KEY, JSON.stringify([]));
   void pushStore(OFFLINE_KEY);
 }

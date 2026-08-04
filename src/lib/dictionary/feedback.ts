@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
 
 export type DictionaryFeedbackType = "correction" | "missing" | "phrase";
 
@@ -80,6 +80,7 @@ export function recordDictionaryFeedback(entry: Omit<DictionaryFeedback, "id" | 
 }
 
 export function deleteDictionaryFeedback(id: string): DictionaryFeedback[] {
+  recordStoreDeletion(KEY, id);
   const next = getDictionaryFeedback().filter((entry) => entry.id !== id);
   persist(next);
   return next;

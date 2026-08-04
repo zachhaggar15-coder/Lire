@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 
 const TRANSLATION_BUDGET_KEY = "lire.translationBudget.v1";
 const SECOND_PASS_KEY = "lire.secondPass.v1";
@@ -97,6 +97,8 @@ export function recordSecondPass(record: Omit<SecondPassRecord, "id">): SecondPa
 }
 
 export function clearReadingInsightStores(): void {
+  recordStoreClear(TRANSLATION_BUDGET_KEY);
+  recordStoreClear(SECOND_PASS_KEY);
   persist(TRANSLATION_BUDGET_KEY, []);
   persist(SECOND_PASS_KEY, []);
 }

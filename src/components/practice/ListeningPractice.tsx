@@ -6,6 +6,7 @@ import { tokenizeParagraphsToSentences } from "@/lib/words";
 import { speakParagraphAtRate, stopSpeaking, canSpeak } from "@/lib/speech";
 import { markListeningPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { getSettings } from "@/lib/settings";
+import { useModalFocus } from "@/lib/useModalFocus";
 
 interface ListeningPracticeProps {
   text: ReadingText;
@@ -27,17 +28,20 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
   const [index, setIndex] = useState(0);
-  // Starts from the reader's global speaking-speed preference (same one the
-  // article "Listen" controls use) so the two stay in sync by default.
-  const [rate, setRate] = useState(() => getSettings().speechRate);
+  const [available, setAvailable] = useState(false);
+  // Server and first client render must agree. Browser-only speech support
+  // and the stored preference are loaded immediately after hydration.
+  const [rate, setRate] = useState(1);
+  const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
   const rateRef = useRef(rate);
   useEffect(() => {
     rateRef.current = rate;
   }, [rate]);
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body).map((p) => p.map((s) => s.text).join(" ")), [text.body]);
-  const available = canSpeak();
 
   useEffect(() => {
+    setAvailable(canSpeak());
+    setRate(getSettings().speechRate);
     return () => stopSpeaking();
   }, []);
 
@@ -85,7 +89,7 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cream px-6">
+    <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Listening practice" tabIndex={-1} className="fixed inset-0 z-50 flex flex-col items-center justify-start overflow-y-auto bg-cream px-6 pb-8 pt-[calc(var(--safe-top)+3.5rem)] sm:justify-center sm:py-8">
       <button type="button" onClick={onClose} aria-label="Close listening practice" className="absolute right-4 top-[calc(var(--safe-top)+1rem)] rounded-full bg-cream-card p-2 text-ink-muted">
         <CloseIcon className="h-4 w-4" />
       </button>

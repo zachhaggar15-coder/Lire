@@ -299,8 +299,16 @@ async function handleGet(request: Request) {
   const snippetParam = isKnownSnippetFilter(rawSnippetParam) ? rawSnippetParam : "all";
   const refresh = url.searchParams.get("refresh") === "true";
   const includeHealth = url.searchParams.get("health") === "true";
+  const requestedId = url.searchParams.get("id")?.trim() || null;
 
   const pool = await getCandidatePool(refresh);
+  if (requestedId) {
+    const match = pool.items.find((item) => item.id === requestedId);
+    if (!match) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const text = rssReadingTextToReadingText(match);
+    await putPersistedRssTexts([text]);
+    return NextResponse.json({ text });
+  }
   const todayK = todayKey();
 
   const isPlainDefaultQuery =

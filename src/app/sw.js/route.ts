@@ -62,14 +62,42 @@ self.addEventListener("fetch", (event) => {
   // the network so third-party requests aren't silently mirrored.
   if (new URL(request.url).origin !== self.location.origin) return;
 
+  const url = new URL(request.url);
+  const isNavigation = request.mode === "navigate";
+
   event.respondWith(
     fetch(request)
       .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(request, copy)).catch(() => {});
+        const cacheControl = res.headers.get("cache-control") || "";
+        const cacheableDestination = isNavigation || ["style", "script", "image", "font", "manifest"].includes(request.destination);
+        const mayCache =
+          res.ok &&
+          res.status === 200 &&
+          cacheableDestination &&
+          !url.pathname.startsWith("/api/") &&
+          url.pathname !== "/sw.js" &&
+          !request.headers.has("authorization") &&
+          !/(?:no-store|private)/i.test(cacheControl);
+
+        if (mayCache) {
+          const copy = res.clone();
+          return caches
+            .open(CACHE)
+            .then((cache) => cache.put(request, copy))
+            .catch(() => {})
+            .then(() => res);
+        }
         return res;
       })
-      .catch(() => caches.match(request).then((r) => r || caches.match("/")))
+      .catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        // Only a document navigation may fall back to the offline shell.
+        // APIs and missing JS/CSS/assets must fail as their own response type,
+        // never receive homepage HTML that callers then try to parse/execute.
+        if (isNavigation) return (await caches.match("/")) || Response.error();
+        return Response.error();
+      })
   );
 });
 `;

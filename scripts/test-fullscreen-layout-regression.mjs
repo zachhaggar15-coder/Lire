@@ -9,6 +9,14 @@ const files = {
   template: readFileSync(new URL("../src/app/template.tsx", import.meta.url), "utf8"),
   tutorial: readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8"),
   practice: readFileSync(new URL("../src/components/practice/PracticeOverlay.tsx", import.meta.url), "utf8"),
+  listening: readFileSync(new URL("../src/components/practice/ListeningPractice.tsx", import.meta.url), "utf8"),
+  wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
+  wordActions: readFileSync(new URL("../src/components/WordLearningActions.tsx", import.meta.url), "utf8"),
+  bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
+  modalFocus: readFileSync(new URL("../src/lib/useModalFocus.ts", import.meta.url), "utf8"),
+  swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
+  swClient: readFileSync(new URL("../src/components/ServiceWorker.tsx", import.meta.url), "utf8"),
+  readingTextHook: readFileSync(new URL("../src/lib/useReadingTextById.ts", import.meta.url), "utf8"),
 };
 
 let passed = 0;
@@ -76,6 +84,36 @@ check(
   "practice remains a viewport-fixed, scrollable screen",
   files.practice.includes("fixed inset-0") && files.practice.includes("overflow-y-auto")
 );
+
+console.log("--- tutorial and practice interaction regressions ---");
+check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
+check("the tutorial explicitly teaches holding a phrase", files.tutorial.includes("Hold for a phrase") && files.tutorial.includes("onPointerDown={startDemoPhraseHold}"));
+check("tutorial and real word cards share the same learning actions", files.tutorial.includes("<WordLearningActions") && files.wordSheet.includes("<WordLearningActions"));
+check("the shared action explanation keeps explicit JSX spaces", (files.wordActions.match(/\{\" \"\}/g) ?? []).length >= 3);
+check("the real word card supports unsaving", files.wordSheet.includes("onUnsave={onUnsave}") && files.wordActions.includes('"Unsave"'));
+check("the real word card is viewport-bounded on mobile and web", files.wordSheet.includes("100dvh") && files.wordSheet.includes("sm:items-center"));
+check(
+  "mobile word-card actions stay pinned outside the scrolling definition body",
+  files.wordSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") &&
+    files.wordSheet.includes("shrink-0 border-t") &&
+    files.wordSheet.includes("showExplanation={false}")
+);
+check("mobile word-card actions share one compact row", files.wordActions.includes("grid grid-cols-3"));
+check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));
+check("the canonical reconstruction is hidden until correct or revealed", files.practice.includes('(result === "correct" || answerRevealed) &&'));
+
+console.log("--- hydration and modal isolation regressions ---");
+check("listening support starts hydration-safe", files.listening.includes("useState(false)") && !files.listening.includes("useState(canSpeak())"));
+check("full-screen practice declares modal semantics", files.practice.includes('aria-modal="true"'));
+check("modal focus isolation makes background branches inert", files.modalFocus.includes("sibling.inert = true") && files.modalFocus.includes("handleKeyDown"));
+check("bottom navigation stays hidden until the tutorial is complete", files.bottomNav.includes("state.walkthroughCompleted === true"));
+check("bottom navigation is absent on dedicated practice/listen routes", files.bottomNav.includes("(practice|listen)"));
+
+console.log("--- offline and fresh-link regressions ---");
+check("the service worker only caches successful suitable responses", files.swRoute.includes("res.ok") && files.swRoute.includes('!url.pathname.startsWith("/api/")'));
+check("homepage fallback is restricted to document navigation", files.swRoute.includes("if (isNavigation) return (await caches.match(\"/\"))"));
+check("the auto-reload guard is cleared for a later deployment", files.swClient.includes("sessionStorage.removeItem(RELOAD_GUARD_KEY)"));
+check("fresh RSS links fall back to exact-id candidate lookup", files.readingTextHook.includes("/api/rss-texts?id=${encodedId}"));
 
 console.log(`\n${passed} passed, ${failed} failed.`);
 if (failed > 0) process.exit(1);

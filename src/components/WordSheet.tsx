@@ -15,6 +15,8 @@ import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import type { InferenceChallenge } from "@/lib/inference";
 import PronounceButton from "@/components/PronounceButton";
+import WordLearningActions from "@/components/WordLearningActions";
+import { useModalFocus } from "@/lib/useModalFocus";
 
 export interface ActiveWordState {
   word: string;
@@ -43,7 +45,8 @@ interface WordSheetProps {
    * auto-saving every curiosity filled the review queue with words the
    * reader never chose to study.
    */
-  onSave?: () => void;
+  onSave?: (status: Exclude<WordStatus, "known">) => void;
+  onUnsave?: () => void;
   inferenceChallenge?: InferenceChallenge | null;
   onInferenceAnswer?: (word: string, lemma: string | null, correct: boolean) => void;
   onAiRequested?: () => void;
@@ -105,7 +108,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word the reader is curious about.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onSave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave, onUnsave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -119,6 +122,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
   const dragOffsetRef = useRef(0);
   const activePointerId = useRef<number | null>(null);
   const open = state !== null;
+  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
   const lookup = state?.lookup;
   const contextual = state?.contextualTranslation;
   const found = lookup?.source === "local";
@@ -126,7 +130,6 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
   const [primary, ...rest] = lookup?.translations ?? [];
   const firstExample = lookup?.examples[0];
   const wordFamily = state ? getWordFamily(state.lookup.lemma ?? state.word) : null;
-  const existingActionLabel = state?.existingStatus === "known" ? "Marked known" : "In review";
   const hasWordFamily =
     !!wordFamily &&
     [
@@ -241,19 +244,29 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
         aria-hidden
       />
 
-      {/* Sheet */}
+      {/* Responsive sheet: edge-to-edge at the bottom on phones, centred and
+          fully bounded by the viewport on wider web layouts. */}
       <div
-        role="dialog"
+        className={`fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
         aria-hidden={!open}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-accent-pink p-5 shadow-2xl transition-transform ${
-          open ? "translate-y-0" : "translate-y-full"
-        }`}
-        style={{
-          paddingBottom: "calc(1.25rem + var(--safe-bottom))",
-          transform: open ? `translateY(${dragOffset}px)` : undefined,
-          transitionDuration: dragOffset > 0 ? "0ms" : "200ms",
-        }}
+        onClick={onClose}
       >
+        <div
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={state ? `Meaning and learning options for ${state.word}` : "Word meaning"}
+          tabIndex={-1}
+          onClick={(event) => event.stopPropagation()}
+          className={`relative flex max-h-[calc(100dvh-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark bg-cream-card shadow-2xl transition-all sm:max-h-[calc(100dvh-3rem)] sm:rounded-3xl ${
+            open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 sm:translate-y-4"
+          }`}
+          style={{
+            transform: dragOffset > 0 ? `translateY(${dragOffset}px)` : undefined,
+            transitionDuration: dragOffset > 0 ? "0ms" : "200ms",
+          }}
+        >
+        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 pb-4 pt-3 sm:pt-5">
         <button
           type="button"
           aria-label="Swipe down to close"
@@ -469,35 +482,6 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
           </div>
         )}
 
-        {isProperNoun ? (
-          <div className="mt-3">
-            <button
-              onClick={onClose}
-              className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-            >
-              Done
-            </button>
-          </div>
-        ) : (
-          <div className="mt-3">
-            {state?.existingStatus ? (
-              <button
-                onClick={onClose}
-                className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-              >
-                {existingActionLabel}
-              </button>
-            ) : (
-              <button
-                onClick={onSave}
-                className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-              >
-                Save
-              </button>
-            )}
-          </div>
-        )}
-
         <details className="mt-4 rounded-2xl bg-white/60 p-3">
           <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
             More details
@@ -655,6 +639,32 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, infere
         )}
           </div>
         </details>
+        </div>
+        <div
+          className="shrink-0 border-t border-cream-dark bg-cream-card px-4 pt-3 sm:px-5"
+          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
+        >
+          {isProperNoun ? (
+            <button
+              onClick={onClose}
+              className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+            >
+              Done
+            </button>
+          ) : (
+            <div className="rounded-card border border-cream-dark bg-white/75 p-3">
+              <WordLearningActions
+                status={state?.existingStatus}
+                onKnow={onKnow}
+                onUnsure={() => onSave?.("unsure")}
+                onSave={() => onSave?.("learning")}
+                onUnsave={onUnsave}
+                showExplanation={false}
+              />
+            </div>
+          )}
+        </div>
+        </div>
       </div>
     </>
   );

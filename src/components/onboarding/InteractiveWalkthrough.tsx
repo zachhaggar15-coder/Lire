@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { tokenize, type Token } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { saveWord, markWordAsKnown } from "@/lib/storage";
@@ -14,6 +14,9 @@ import { saveWalkthroughStep, completeWalkthrough } from "@/lib/onboarding";
 import { trackEvent } from "@/lib/analytics/client";
 import PronounceButton from "@/components/PronounceButton";
 import CoachMark from "@/components/onboarding/CoachMark";
+import WordLearningActions from "@/components/WordLearningActions";
+import { findContainingPhraseTranslationMatch, type PhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
+import { useModalFocus } from "@/lib/useModalFocus";
 import type { SavedWord } from "@/types";
 
 /**
@@ -30,9 +33,10 @@ import type { SavedWord } from "@/types";
  */
 
 const DEMO_TITLE = "Getting started";
-const DEMO_SENTENCES = ["Léa aime le café.", "Elle lit un livre chaque matin."];
+const DEMO_SENTENCES = ["Léa aime le café.", "De temps en temps, Léa lit un livre."];
+const DEMO_PHRASE = "De temps en temps";
 
-const STEP_COUNT = 4; // welcome, read+tap, audio, practice — then a summary screen (not itself a numbered step)
+const STEP_COUNT = 5; // welcome, read+tap, phrase hold, audio, practice — then the summary
 
 interface InteractiveWalkthroughProps {
   startStep: number | null;
@@ -46,11 +50,18 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [tapCount, setTapCount] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
   const [activeWord, setActiveWord] = useState<{ token: Token; lookup: ReturnType<typeof lookupWord> } | null>(null);
+  const [activePhrase, setActivePhrase] = useState<PhraseTranslationMatch | null>(null);
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
+  const phraseHoldTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const modalRef = useModalFocus<HTMLDivElement>(true);
 
   useEffect(() => {
     if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
   }, [step]);
+
+  useEffect(() => () => {
+    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
+  }, []);
 
   function goToStep(next: number) {
     setStep(next);
@@ -107,6 +118,34 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
     setActiveWord(null);
   }
 
+  function revealDemoPhrase() {
+    phraseHoldTimer.current = null;
+    const tokens = tokenize(DEMO_SENTENCES[1]);
+    const phraseTokenIndex = tokens.findIndex((token) => token.isWord);
+    const match = findContainingPhraseTranslationMatch(tokens, phraseTokenIndex);
+    setActivePhrase(
+      match ?? {
+        startIndex: 0,
+        endIndex: 6,
+        phrase: DEMO_PHRASE.toLowerCase(),
+        lemma: DEMO_PHRASE.toLowerCase(),
+        translation: "from time to time",
+        partOfSpeech: "adverb phrase",
+        source: "phrasebank",
+      }
+    );
+  }
+
+  function startDemoPhraseHold() {
+    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
+    phraseHoldTimer.current = setTimeout(revealDemoPhrase, 450);
+  }
+
+  function cancelDemoPhraseHold() {
+    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
+    phraseHoldTimer.current = null;
+  }
+
   const clozeExercise = useMemo<ClozeExercise | null>(() => {
     const sentenceTokens = tokenize(DEMO_SENTENCES[1]);
     const sentence = { index: 1, text: DEMO_SENTENCES[1], tokens: sentenceTokens };
@@ -143,7 +182,14 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
 
   if (showSummary) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+1rem)]">
+      <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Tutorial complete"
+        tabIndex={-1}
+        className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+1rem)]"
+      >
         <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center text-center">
           <p className="ligne-label">All set</p>
           <h1 className="mt-1 text-2xl font-extrabold text-ink">Nice work — that's how Lire works.</h1>
@@ -172,7 +218,14 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+1rem)]">
+    <div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Interactive Lire tutorial"
+      tabIndex={-1}
+      className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+1rem)]"
+    >
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
         <div className="flex items-center justify-between">
           {step > 0 ? (
@@ -232,20 +285,12 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
               <div className="mt-3 rounded-card border border-cream-dark bg-cream-card p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning</p>
                 <p className="mt-1 text-xl font-bold text-ink">{activeWord.lookup.translations[0] ?? "Not in the dictionary"}</p>
-                <p className="mt-3 text-xs leading-relaxed text-ink-muted">
-                  <span className="font-semibold text-ink">Known</span> means this won&apos;t enter your review queue. <span className="font-semibold text-ink">Unsure</span> means you recognise it but want to
-                  strengthen recall. <span className="font-semibold text-ink">Save</span> means it&apos;s a word you&apos;re currently learning.
-                </p>
-                <div className="mt-3 grid grid-cols-3 gap-2">
-                  <button type="button" onClick={() => handleWordAction("known")} className="rounded-full bg-cream px-2 py-2 text-xs font-semibold text-ink active:scale-95">
-                    Known
-                  </button>
-                  <button type="button" onClick={() => handleWordAction("unsure")} className="rounded-full bg-cream px-2 py-2 text-xs font-semibold text-ink active:scale-95">
-                    Unsure
-                  </button>
-                  <button type="button" onClick={() => handleWordAction("save")} className="rounded-full bg-brand px-2 py-2 text-xs font-semibold text-cream active:scale-95">
-                    Save
-                  </button>
+                <div className="mt-3">
+                  <WordLearningActions
+                    onKnow={() => handleWordAction("known")}
+                    onUnsure={() => handleWordAction("unsure")}
+                    onSave={() => handleWordAction("save")}
+                  />
                 </div>
               </div>
             )}
@@ -265,6 +310,52 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
 
         {step === 2 && (
           <div className="flex-1">
+            <p className="ligne-label">Hold for a phrase</p>
+            <p className="mt-2 text-sm text-ink-muted">
+              Some meanings belong to several words together. Press and hold the underlined phrase, just as you can in a real text.
+            </p>
+            <div className="mt-4 rounded-card border border-cream-dark bg-cream-card p-4 text-lg leading-relaxed text-ink">
+              <button
+                type="button"
+                onPointerDown={startDemoPhraseHold}
+                onPointerUp={cancelDemoPhraseHold}
+                onPointerCancel={cancelDemoPhraseHold}
+                onPointerLeave={cancelDemoPhraseHold}
+                onContextMenu={(event) => {
+                  event.preventDefault();
+                  cancelDemoPhraseHold();
+                  revealDemoPhrase();
+                }}
+                className="touch-none rounded bg-brand-light px-1 font-semibold text-brand underline decoration-dotted decoration-2 underline-offset-4"
+              >
+                {DEMO_PHRASE}
+              </button>
+              <span>, Léa lit un livre.</span>
+            </div>
+            {!activePhrase ? (
+              <div className="mt-3">
+                <CoachMark text={`Hold “${DEMO_PHRASE}” until its phrase meaning appears.`} />
+              </div>
+            ) : (
+              <div className="mt-3 rounded-card border border-cream-dark bg-cream-card p-4" role="status">
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand">Phrase meaning</p>
+                <p className="mt-1 text-lg font-bold text-ink">{activePhrase.translation}</p>
+                <p className="mt-1 text-xs text-ink-muted">Lire recognised the whole phrase, not three unrelated words.</p>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => goToStep(3)}
+              disabled={!activePhrase}
+              className="ligne-pill mt-4 w-full bg-brand text-cream disabled:opacity-40"
+            >
+              Continue
+            </button>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="flex-1">
             <p className="ligne-label">Listen</p>
             <p className="mt-2 text-sm text-ink-muted">Audio connects the written French with how it actually sounds. Try it below.</p>
             <div className="mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
@@ -277,7 +368,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
               type="button"
               onClick={() => {
                 trackEvent("audio_played", { scope: "onboarding" });
-                goToStep(3);
+                goToStep(4);
               }}
               className="ligne-pill mt-4 w-full bg-brand text-cream"
             >
@@ -286,15 +377,15 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
           </div>
         )}
 
-        {step === 3 && (
+        {step === 4 && (
           <div className="flex-1">
             <p className="ligne-label">One quick exercise</p>
             {clozeExercise ? (
-              <WalkthroughCloze exercise={clozeExercise} onDone={() => goToStep(4)} />
+              <WalkthroughCloze exercise={clozeExercise} onDone={() => goToStep(5)} />
             ) : (
               <div className="mt-3">
                 <p className="text-sm text-ink-muted">Almost done.</p>
-                <button type="button" onClick={() => goToStep(4)} className="ligne-pill mt-4 w-full bg-brand text-cream">
+                <button type="button" onClick={() => goToStep(5)} className="ligne-pill mt-4 w-full bg-brand text-cream">
                   Continue
                 </button>
               </div>
@@ -309,8 +400,15 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
 function WalkthroughCloze({ exercise, onDone }: { exercise: ClozeExercise; onDone: () => void }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
   const [before, after] = exercise.prompt.split("___");
   const correct = selected?.trim().toLowerCase() === exercise.answer.trim().toLowerCase();
+
+  function retry() {
+    setSelected(null);
+    setChecked(false);
+    setAnswerRevealed(false);
+  }
 
   return (
     <div className="mt-3 rounded-card border border-cream-dark bg-cream-card p-4">
@@ -336,17 +434,34 @@ function WalkthroughCloze({ exercise, onDone }: { exercise: ClozeExercise; onDon
       </div>
       {checked && (
         <p className={`mt-3 text-sm font-bold ${correct ? "text-brand" : "text-ink-muted"}`}>
-          {correct ? "Correct." : `The answer is "${exercise.answer}".`}
+          {correct ? "Correct." : answerRevealed ? `The answer is "${exercise.answer}".` : "Not quite. Try once more or reveal the answer."}
         </p>
       )}
-      <button
-        type="button"
-        onClick={() => (checked ? onDone() : setChecked(true))}
-        disabled={!selected}
-        className="ligne-pill mt-4 w-full bg-brand text-cream disabled:opacity-40"
-      >
-        {checked ? "Continue" : "Check"}
-      </button>
+      <div className="mt-4 flex gap-2">
+        {!checked ? (
+          <button
+            type="button"
+            onClick={() => setChecked(true)}
+            disabled={!selected}
+            className="ligne-pill w-full bg-brand text-cream disabled:opacity-40"
+          >
+            Check
+          </button>
+        ) : correct || answerRevealed ? (
+          <button type="button" onClick={onDone} className="ligne-pill w-full bg-brand text-cream">
+            Continue
+          </button>
+        ) : (
+          <>
+            <button type="button" onClick={retry} className="ligne-pill flex-1 border border-cream-dark bg-cream text-ink">
+              Try again
+            </button>
+            <button type="button" onClick={() => setAnswerRevealed(true)} className="ligne-pill flex-1 bg-brand text-cream">
+              Reveal answer
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

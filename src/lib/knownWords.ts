@@ -6,7 +6,7 @@
  * the Review page's "Mark as known"), which adds it here too.
  */
 
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear, recordStoreDeletion } from "@/lib/supabase/sync";
 
 const KEY = "lire.knownWords.v1";
 
@@ -65,11 +65,13 @@ export function markKnownBatch(wordsOrLemmas: string[]): string[] {
 
 export function removeKnown(wordOrLemma: string): string[] {
   const key = clean(wordOrLemma);
+  recordStoreDeletion(KEY, key);
   const next = getKnownWords().filter((w) => w !== key);
   persist(next);
   return next;
 }
 
 export function clearKnownWords(): void {
+  recordStoreClear(KEY);
   persist([]);
 }

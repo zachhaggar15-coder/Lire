@@ -1,6 +1,6 @@
 import type { Category, ReadingText, SavedWord } from "@/types";
 import type { ArchiveEntry } from "@/lib/archive";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 import { getAllInferenceResults, getAllWordTaps, type StoredInference, type StoredWordTap } from "@/lib/wordLearning";
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
 import { tokenize } from "@/lib/words";
@@ -887,6 +887,9 @@ export function translationRecordsForToday(): number {
 }
 
 export function clearGamificationStores(): void {
+  for (const key of [XP_EVENTS_KEY, COMPLETIONS_KEY, ACHIEVEMENTS_KEY, PASSPORT_KEY, MASTERY_KEY]) {
+    recordStoreClear(key);
+  }
   persist(XP_EVENTS_KEY, []);
   persist(COMPLETIONS_KEY, []);
   persist(ACHIEVEMENTS_KEY, []);
