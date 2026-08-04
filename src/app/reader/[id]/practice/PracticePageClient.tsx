@@ -42,6 +42,10 @@ export default function PracticePageClient({ id, initialText }: PracticePageClie
     router.push(`/reader/${id}`);
   }
 
+  function returnToMap() {
+    router.replace("/");
+  }
+
   if (!checked) {
     return <div className="px-4 pt-10 text-center text-sm text-ink-muted">Loading…</div>;
   }
@@ -61,5 +65,5 @@ export default function PracticePageClient({ id, initialText }: PracticePageClie
     return <div className="px-4 pt-10 text-center text-sm text-ink-muted">Loading…</div>;
   }
 
-  return <PracticeOverlay text={text} plan={plan} onClose={returnToLesson} />;
+  return <PracticeOverlay text={text} plan={plan} onClose={returnToLesson} onReturnToMap={returnToMap} />;
 }

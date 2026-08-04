@@ -64,6 +64,13 @@ test("the final word chip does not include the sentence full stop", () => {
   assert.equal(chips.at(-1)?.display, "fatigué");
 });
 
+test("the displayed reconstruction answer does not include the sentence full stop", () => {
+  const exercise = buildReconstructionExercise(sentenceFromText("Il se sent très fatigué aujourd'hui."));
+  assert.equal(exercise.canonicalText, "Il se sent très fatigué aujourd'hui");
+  const question = buildReconstructionExercise(sentenceFromText("Est-ce que tu viens avec nous ?"));
+  assert.equal(question.canonicalText, "Est-ce que tu viens avec nous ?", "question marks should remain");
+});
+
 console.log("\n--- Sentence eligibility filter ---");
 
 test("a well-formed 6-8 word sentence is eligible", () => {

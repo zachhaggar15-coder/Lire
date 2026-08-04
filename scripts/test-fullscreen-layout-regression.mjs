@@ -9,6 +9,7 @@ const files = {
   template: readFileSync(new URL("../src/app/template.tsx", import.meta.url), "utf8"),
   tutorial: readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8"),
   practice: readFileSync(new URL("../src/components/practice/PracticeOverlay.tsx", import.meta.url), "utf8"),
+  practicePage: readFileSync(new URL("../src/app/reader/[id]/practice/PracticePageClient.tsx", import.meta.url), "utf8"),
   listening: readFileSync(new URL("../src/components/practice/ListeningPractice.tsx", import.meta.url), "utf8"),
   wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
   wordActions: readFileSync(new URL("../src/components/WordLearningActions.tsx", import.meta.url), "utf8"),
@@ -101,6 +102,13 @@ check(
 check("mobile word-card actions share one compact row", files.wordActions.includes("grid grid-cols-3"));
 check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));
 check("the canonical reconstruction is hidden until correct or revealed", files.practice.includes('(result === "correct" || answerRevealed) &&'));
+check(
+  "completed practice returns directly to the map",
+  files.practice.includes("Return to map") &&
+    files.practice.includes("onReturnToMap={onReturnToMap}") &&
+    files.practicePage.includes('router.replace("/")') &&
+    files.practicePage.includes("onReturnToMap={returnToMap}")
+);
 
 console.log("--- hydration and modal isolation regressions ---");
 check("listening support starts hydration-safe", files.listening.includes("useState(false)") && !files.listening.includes("useState(canSpeak())"));

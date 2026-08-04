@@ -16,6 +16,7 @@ interface PracticeOverlayProps {
   text: ReadingText;
   plan: PracticePlan;
   onClose: () => void;
+  onReturnToMap: () => void;
 }
 
 type ActivityResult = "correct" | "incorrect" | null;
@@ -39,7 +40,7 @@ function statKindFor(activity: PracticeActivity): PracticeExerciseType {
  * generation never delays or blocks starting practice with what's already
  * ready.
  */
-export default function PracticeOverlay({ text, plan: initialPlan, onClose }: PracticeOverlayProps) {
+export default function PracticeOverlay({ text, plan: initialPlan, onClose, onReturnToMap }: PracticeOverlayProps) {
   const [activities, setActivities] = useState<PracticeActivity[]>(initialPlan.activities);
   const [paraphraseChecked, setParaphraseChecked] = useState(false);
   const [index, setIndex] = useState(0);
@@ -163,7 +164,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose }: Pr
           </div>
         )}
 
-        {done && <PracticeSummary completedKinds={completedKinds} onClose={onClose} />}
+        {done && <PracticeSummary completedKinds={completedKinds} onReturnToMap={onReturnToMap} />}
       </div>
     </div>
   );
@@ -465,7 +466,7 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
   );
 }
 
-function PracticeSummary({ completedKinds, onClose }: { completedKinds: string[]; onClose: () => void }) {
+function PracticeSummary({ completedKinds, onReturnToMap }: { completedKinds: string[]; onReturnToMap: () => void }) {
   return (
     <section className="mt-6 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
       <p className="ligne-label">Text practised</p>
@@ -480,8 +481,8 @@ function PracticeSummary({ completedKinds, onClose }: { completedKinds: string[]
           </li>
         ))}
       </ul>
-      <button type="button" onClick={onClose} className="ligne-pill mt-5 w-full bg-brand text-cream">
-        Return to lesson summary
+      <button type="button" onClick={onReturnToMap} className="ligne-pill mt-5 w-full bg-brand text-cream">
+        Return to map
       </button>
     </section>
   );

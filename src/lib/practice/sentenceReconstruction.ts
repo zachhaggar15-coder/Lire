@@ -20,7 +20,7 @@ export interface ReconstructionChip {
 
 export interface SentenceReconstructionExercise {
   sentenceIndex: number;
-  /** The exact original sentence, used for validation and for showing the answer. */
+  /** The sentence used for validation and answer display, without an ordinary terminal full stop. */
   canonicalText: string;
   /** Chips in their correct (unshuffled) order — callers shuffle a copy for display. */
   chips: ReconstructionChip[];
@@ -105,7 +105,7 @@ export function isEligibleForReconstruction(sentence: TextSentence): boolean {
 export function buildReconstructionExercise(sentence: TextSentence): SentenceReconstructionExercise {
   return {
     sentenceIndex: sentence.index,
-    canonicalText: sentence.text.trim(),
+    canonicalText: stripTerminalFullStop(sentence.text.trim()),
     chips: buildReconstructionChips(sentence.text),
   };
 }
