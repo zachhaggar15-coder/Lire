@@ -15,12 +15,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Too many responses. Please try again later." }, { status: 429 });
   }
 
-  let body: Record<string, unknown>;
+  let rawBody: unknown;
   try {
-    body = await request.json();
+    rawBody = await request.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid JSON body." }, { status: 400 });
   }
+  const body = (rawBody ?? {}) as Record<string, unknown>;
 
   const promptType = clean(body.promptType, 80);
   const response = clean(body.response, 500);

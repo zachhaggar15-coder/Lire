@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const event = body as Partial<AnalyticsEvent>;
+  const event = (body ?? {}) as Partial<AnalyticsEvent>;
   if (typeof event.name !== "string" || !isAnalyticsEventName(event.name)) {
     return NextResponse.json({ ok: false, error: "Unknown analytics event." }, { status: 400 });
   }

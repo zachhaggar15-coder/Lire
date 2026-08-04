@@ -1030,7 +1030,7 @@ export default function Reader({ text }: { text: ReadingText }) {
    * word. Auto-saving on every tap meant a reader who was merely curious
    * ended up with a review queue full of words they never chose.
    */
-  function handleSaveActiveWord() {
+  function handleSaveActiveWord(status: Exclude<WordStatus, "known"> = "learning") {
     if (!activeWord || activeWord.existingStatus) return;
     // Names and places aren't vocabulary worth reviewing. This guard used to
     // sit on the auto-save in handleWordTap; it belongs wherever the save is.
@@ -1046,7 +1046,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       ? activeWord.naturalTranslation!.english
       : null;
     const { words: nextWords, persisted } = saveWord(
-      buildSavedWord(activeWord.word, activeWord.lookup, activeWord.contextSentence, "learning", naturalTranslation)
+      buildSavedWord(activeWord.word, activeWord.lookup, activeWord.contextSentence, status, naturalTranslation)
     );
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
@@ -1063,11 +1063,30 @@ export default function Reader({ text }: { text: ReadingText }) {
       prev
         ? {
             ...prev,
-            existingStatus: lookupWordStatus(nextStatusMap, prev.word, prev.lookup.lemma) ?? "learning",
+            existingStatus: lookupWordStatus(nextStatusMap, prev.word, prev.lookup.lemma) ?? status,
           }
         : prev
     );
-    showToast("Saved");
+    showToast(status === "unsure" ? "Saved as unsure" : "Saved");
+  }
+
+  function handleUnsaveActiveWord() {
+    if (!activeWord || activeWord.existingStatus === null || activeWord.existingStatus === "known") return;
+    const nextWords = deleteWord(activeWord.word);
+    const nextStatusMap = buildWordStatusMap(nextWords);
+    const keys = [activeWord.word.toLowerCase(), activeWord.lookup.lemma?.toLowerCase()].filter(
+      (value): value is string => !!value
+    );
+    setRecentSavedWords((current) => {
+      const next = new Set(current);
+      keys.forEach((key) => next.delete(key));
+      return next;
+    });
+    setWordStatusMap(nextStatusMap);
+    setSavedWordsSnapshot(nextWords);
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    setActiveWord((previous) => (previous ? { ...previous, existingStatus: null } : previous));
+    showToast("Removed from review");
   }
 
   function handleSentenceTap(sentenceText: string) {
@@ -1355,7 +1374,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     finalizeReadingSession(true, completedAt);
     const result = recordGamifiedArticleCompletion({
       text,
-      difficulty: difficulty?.cefr ?? text.difficulty,
+      // The article's own assigned CEFR band, not the personalized per-reader
+      // estimate (`difficulty` state, computed from this reader's known-words
+      // set) — completion records feed durable, cross-article stats like
+      // "highest level article reached," which need a stable value that
+      // means the same thing for every article, not one that can drift with
+      // a single reader's vocabulary at the moment they happened to finish it.
+      difficulty: text.difficulty,
       openedAt: getProgress(text.id).openedAt,
       completedAt,
       wordsRead: countFrenchWords(text),
@@ -2336,6 +2361,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           onClose={() => setActiveWord(null)}
           onKnow={handleKnow}
           onSave={handleSaveActiveWord}
+          onUnsave={handleUnsaveActiveWord}
           inferenceChallenge={activeInference}
           onInferenceAnswer={handleInferenceAnswer}
           onAiRequested={() => markAiSupportUsed("word")}

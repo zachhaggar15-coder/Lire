@@ -16,14 +16,21 @@
  * components/ServiceWorker.tsx appear for people already running the app.
  */
 
+// A per-process fallback stamp, not per-request: computed once when this
+// module first loads, so every request in the same running process (dev
+// server or a self-hosted instance with no NEXT_BUILD_ID) shares one cache
+// name, but a restart always gets a fresh one — the same "every new instance
+// gets a genuinely new worker" guarantee VERCEL_GIT_COMMIT_SHA gives on
+// Vercel, just without a fixed commit id to key it on.
+const devInstanceStamp = Date.now().toString(36);
+
 /** Read at request time so the value tracks the running deployment rather than whenever this module was first evaluated. */
 function deploymentVersion(): string {
   const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   if (sha) return sha.slice(0, 12);
   // Local dev/self-hosted: no deployment id, so fall back to the build stamp
-  // Next generates. Worst case this is stable for the process, which is the
-  // behaviour we had before, only without the manual version bump.
-  return process.env.NEXT_BUILD_ID || "dev";
+  // Next generates, then to this process's own start time.
+  return process.env.NEXT_BUILD_ID || devInstanceStamp;
 }
 
 function serviceWorkerSource(version: string): string {

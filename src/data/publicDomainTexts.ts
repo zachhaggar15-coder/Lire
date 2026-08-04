@@ -7,7 +7,7 @@ import type { ReadingText } from "@/types";
  * metadata (level, category, reading time, preview, and source URL). Regenerate
  * with: node scripts/generate-public-domain-texts.mjs
  */
-export const publicDomainTexts: ReadingText[] = [
+const generatedPublicDomainTexts: ReadingText[] = [
   {
     "id": "pd-a1-001",
     "title": "Contes du jour et de la nuit: extrait 1",
@@ -9369,3 +9369,15 @@ export const publicDomainTexts: ReadingText[] = [
     "language": "fr"
   }
 ];
+
+/**
+ * A1/A2-tagged excerpts are excluded here rather than left available as a
+ * same-level fallback: they're real 19th-century prose grabbed mid-scene —
+ * unintroduced characters, archaic vocabulary, dialogue with no context —
+ * which reads far above a genuine beginner regardless of word count. B1 and
+ * up keep the full pool since a learner at that level can reasonably handle
+ * an authentic literary excerpt.
+ */
+export const publicDomainTexts: ReadingText[] = generatedPublicDomainTexts.filter(
+  (text) => text.difficulty !== "A1" && text.difficulty !== "A2"
+);

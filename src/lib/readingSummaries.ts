@@ -6,7 +6,7 @@ const METADATA_BLURB_PATTERNS = [
   /\bimported by you\b/i,
   /\bclose reading with liree'?s\b/i,
 ];
-const GENERATED_EXCERPT_TITLE_SUFFIX = /:\s*extrait\s+\d+\s*$/i;
+const GENERATED_EXCERPT_TITLE_SUFFIX = /:\s*(extrait\s+\d+)\s*$/i;
 
 function collapseWhitespace(text: string): string {
   return text.replace(/\s+/g, " ").trim();
@@ -45,7 +45,13 @@ export function isMetadataOnlyBlurb(blurb: string | null | undefined): boolean {
 }
 
 export function stripMetadataOnlyBlurb<T extends ReadingText>(text: T): T {
-  const title = text.id.startsWith("pd-") ? text.title.replace(GENERATED_EXCERPT_TITLE_SUFFIX, "").trim() : text.title;
+  // Reformat "Work: extrait N" into "Work (extrait N)" rather than dropping
+  // the excerpt number entirely — every excerpt of the same work shares a
+  // title, so stripping the number collapses e.g. all 235 Monte-Cristo
+  // excerpts down to a single visible title anywhere titles are listed.
+  const title = text.id.startsWith("pd-")
+    ? text.title.replace(GENERATED_EXCERPT_TITLE_SUFFIX, (_match, label: string) => ` (${label})`).trim()
+    : text.title;
   const blurbEn = isMetadataOnlyBlurb(text.blurbEn) ? null : text.blurbEn;
   if (title === text.title && blurbEn === text.blurbEn) return text;
   return { ...text, title, blurbEn };

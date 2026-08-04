@@ -78,11 +78,21 @@ console.log("--- First gloss for high-frequency words ---");
     ["chien", "dog"],
     ["monsieur", "sir"],
     ["madame", "madam"],
+    // "réveil" was CEFR B2/frequencyRank 6742 despite being the subject of the
+    // very first A1 lesson, and its senses were ordered ["awakening", "waking
+    // up", "alarm clock", ...] — so a sentence like "Le réveil sonne" (the
+    // alarm clock rings) surfaced "awakening" as the contextual meaning.
+    ["réveil", "alarm clock"],
   ];
   for (const [word, want] of expected) {
     const got = lookupWord(word).translations[0];
     check(`"${word}" translates first as "${want}"`, got === want, `got "${got}"`);
   }
+
+  // The CEFR tag drives difficulty estimation and the "% new words" figure
+  // shown to learners — a basic household noun tagged B2 skews both.
+  const gotCefr = lookupWord("réveil").cefr;
+  check(`"réveil" is tagged a beginner CEFR level, not B2`, gotCefr === "A1" || gotCefr === "A2", `got "${gotCefr}"`);
 }
 
 console.log("\n--- Inflected forms reach the right entry ---");

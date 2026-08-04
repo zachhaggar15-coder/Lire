@@ -12,7 +12,7 @@ import { pruneStaleRssProgress } from "@/lib/progress";
 import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
-import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
 import {
   DAILY_BANK_ARTICLE_LIMIT,
   DAILY_RSS_ARTICLE_LIMIT,
@@ -243,8 +243,13 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     setLanguageFilter("all");
   }
 
+  // Session-local only: switching the map's band tab changes what you're
+  // browsing right now, not your committed reading level. That level only
+  // ever changes via the Settings page's own explicit "Set reading level"
+  // action — otherwise, peeking at a harder/easier band to see what it looks
+  // like would silently overwrite the level used for home-page
+  // recommendations and defaults elsewhere in the app.
   function changeSelectedLevel(level: Difficulty) {
-    updateSelectedReadingLevel(level);
     setSelectedLevel(level);
   }
 

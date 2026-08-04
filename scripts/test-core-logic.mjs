@@ -284,14 +284,22 @@ console.log("\n--- Difficulty estimation ---");
 
 console.log("\n--- Public-domain reading bank ---");
 {
-  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  check("public-domain bank has at least 700 excerpts", publicDomainTexts.length >= 700, `${publicDomainTexts.length}`);
-  check("public-domain bank covers A1 through C2", levels.every((level) => publicDomainTexts.some((text) => text.difficulty === level)));
+  const levels = ["B1", "B2", "C1", "C2"];
+  check("public-domain bank has at least 480 excerpts", publicDomainTexts.length >= 480, `${publicDomainTexts.length}`);
+  check("public-domain bank covers B1 through C2", levels.every((level) => publicDomainTexts.some((text) => text.difficulty === level)));
+  // A1/A2 excerpts are real 19th-century prose grabbed mid-scene — unintroduced
+  // characters, archaic vocabulary — which reads far above a genuine beginner
+  // regardless of word count, so they're excluded at the source entirely.
+  check(
+    "public-domain bank excludes A1/A2 excerpts",
+    !publicDomainTexts.some((text) => text.difficulty === "A1" || text.difficulty === "A2")
+  );
   check("public-domain excerpts keep Project Gutenberg source URLs", publicDomainTexts.every((text) => text.sourceUrl?.startsWith("https://www.gutenberg.org/ebooks/")));
   check("public-domain ids are unique", new Set(publicDomainTexts.map((text) => text.id)).size === publicDomainTexts.length);
   const dailyB1 = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
   const dailyB1Repeat = getDailyBankTexts({ level: "B1", limit: 8, date: new Date("2026-07-14T12:00:00Z") });
   const generatedExcerptSuffix = /:\s*extrait\s+\d+$/i;
+  const excerptNumberSuffix = /\(extrait\s+\d+\)$/i;
   check("daily bank returns eight stable level-matched picks", dailyB1.length === 8 && dailyB1.map((text) => text.id).join(",") === dailyB1Repeat.map((text) => text.id).join(","));
   check("daily bank favours the selected CEFR level first", dailyB1.every((text) => ["B1", "A2", "B2", "A1", "C1"].includes(text.difficulty)));
   // Regression: the browser applies a strict per-level filter on top of the
@@ -456,10 +464,23 @@ console.log("\n--- Public-domain reading bank ---");
   else window.localStorage.setItem("lire.activityDates.v1", previousActivityDates);
   if (previousGraceDay === null) window.localStorage.removeItem("lire.streakGrace.v1");
   else window.localStorage.setItem("lire.streakGrace.v1", previousGraceDay);
-  check("daily bank strips generated extrait numbers from titles", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
+  check("daily bank reformats generated extrait numbers, not the raw colon form", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
+  const pdReadingTexts = readingTexts.filter((text) => text.id.startsWith("pd-"));
   check(
-    "exported public-domain articles strip generated extrait numbers from titles",
-    readingTexts.filter((text) => text.id.startsWith("pd-")).every((text) => !generatedExcerptSuffix.test(text.title))
+    "exported public-domain articles reformat generated extrait numbers, not the raw colon form",
+    pdReadingTexts.every((text) => !generatedExcerptSuffix.test(text.title))
+  );
+  // Regression guard: every excerpt of the same work (e.g. all Monte-Cristo
+  // excerpts) used to share one collapsed title once the excerpt number was
+  // stripped outright. The number must stay present, just reformatted.
+  check(
+    "public-domain titles keep a distinguishing excerpt number",
+    pdReadingTexts.every((text) => excerptNumberSuffix.test(text.title)),
+    pdReadingTexts.find((text) => !excerptNumberSuffix.test(text.title))?.title
+  );
+  check(
+    "public-domain titles are not collapsed to a shared title per work",
+    new Set(pdReadingTexts.map((text) => text.title)).size === pdReadingTexts.length
   );
   const articleTabDaily = getDailyExtraReadingTexts({
     level: "A2",

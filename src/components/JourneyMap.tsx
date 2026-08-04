@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
-import type { Category, Difficulty, ReadingText } from "@/types";
+import type { Difficulty, ReadingText } from "@/types";
 import { getProgress } from "@/lib/progress";
 import { formatCategory } from "@/lib/format";
-import { getSelectedReadingLevel, updateSelectedReadingLevel } from "@/lib/onboarding";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import { getCurrentStreak, isActiveToday } from "@/lib/habit";
 import { getGoals, getGoalsProgress } from "@/lib/goals";
@@ -131,11 +131,14 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
     setVersion((value) => value + 1);
   }
 
+  // Switching the band tab only changes what map you're viewing — never the
+  // learner's committed reading level. That's a deliberate action taken only
+  // on the Settings page, so browsing ahead to a harder/easier band never
+  // silently overwrites the level used for recommendations elsewhere.
   function handleLevelChange(level: Difficulty) {
     setLocalLevel(level);
     setOpenStageIndex(null);
     if (onLevelChange) onLevelChange(level);
-    else updateSelectedReadingLevel(level);
     refresh();
   }
 
@@ -785,30 +788,3 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-function dominantCategory(stage: Stage): Category | null {
-  const counts = new Map<Category, number>();
-  for (const textId of stage.textIds) {
-    const text = getJourneyText(textId);
-    if (text) counts.set(text.category, (counts.get(text.category) ?? 0) + 1);
-  }
-  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
-}
-
-export function bandHeaderTone(band: Difficulty): string {
-  return BAND_TONES[band].soft;
-}
-
-export function toneForStage(stage: Stage): BandTone {
-  switch (dominantCategory(stage)) {
-    case "science":
-      return BAND_TONES.A1;
-    case "sport":
-      return BAND_TONES.A2;
-    case "culture":
-      return BAND_TONES.C1;
-    case "news-style":
-      return BAND_TONES.B2;
-    default:
-      return BAND_TONES.B1;
-  }
-}
