@@ -128,11 +128,11 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
         aria-label={state ? `Phrase meaning for ${state.phrase}` : "Phrase meaning"}
         aria-hidden={!open}
         tabIndex={-1}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[85vh] max-w-md overflow-y-auto rounded-t-3xl bg-brand-light p-5 shadow-2xl transition-transform duration-200 ${
+        className={`fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[calc(100dvh-0.5rem)] max-w-md flex-col overflow-hidden rounded-t-3xl bg-brand-light shadow-2xl transition-transform duration-200 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
-        style={{ paddingBottom: "calc(1.25rem + var(--safe-bottom))" }}
       >
+        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain p-5">
         <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-white/70" />
 
         <div className="flex items-start justify-between gap-3">
@@ -176,21 +176,6 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
             <p className="mt-1 text-sm italic text-ink">"{state.contextSentence}"</p>
           </div>
         )}
-
-        <div className="mt-5 grid grid-cols-2 gap-2">
-          <button
-            onClick={handleMarkKnown}
-            className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
-          >
-            {savedKnown ? "Known" : "Got it"}
-          </button>
-          <button
-            onClick={handleSavePhrase}
-            className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-          >
-            {saved ? "Saved" : "Save"}
-          </button>
-        </div>
 
         <details className="mt-4 rounded-2xl bg-white/70 p-3">
           <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-ink-muted">
@@ -247,6 +232,24 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
             </div>
           </div>
         </details>
+        </div>
+        <div
+          className="shrink-0 grid grid-cols-2 gap-2 border-t border-white/40 px-5 pt-3"
+          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
+        >
+          <button
+            onClick={handleMarkKnown}
+            className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
+          >
+            {savedKnown ? "Known" : "Got it"}
+          </button>
+          <button
+            onClick={handleSavePhrase}
+            className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+          >
+            {saved ? "Saved" : "Save"}
+          </button>
+        </div>
       </div>
     </>
   );
