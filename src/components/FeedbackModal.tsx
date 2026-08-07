@@ -123,7 +123,11 @@ export default function FeedbackModal({
 
   return (
     <div className="fixed inset-0 z-50 mx-auto flex max-w-md items-end bg-black/35 px-3 pb-[var(--safe-bottom)] pt-[var(--safe-top)]">
-      <form onSubmit={handleSubmit} className="w-full rounded-t-3xl bg-cream-card p-5 shadow-2xl">
+      {/* No max-height/scroll here previously: on a short mobile viewport
+          (especially with the on-screen keyboard open while typing the
+          comment) the card could render taller than the visible screen with
+          no way to scroll down and reach "Submit feedback". */}
+      <form onSubmit={handleSubmit} className="max-h-[calc(100dvh-1rem)] w-full overflow-y-auto touch-pan-y overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Feedback</p>
