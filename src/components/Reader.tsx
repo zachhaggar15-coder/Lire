@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { deleteWord, getSavedWords, saveWord } from "@/lib/storage";
-import { getSavedPhrases } from "@/lib/phrases";
+import { deletePhrase, getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import {
@@ -1194,6 +1194,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           french: phrase.phrase,
           english: phrase.translation,
           context: phrase.contextSentence || null,
+          saved: true,
         })
       );
 
@@ -1206,6 +1207,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           french: word.lemma ?? word.word,
           english: word.primaryTranslation,
           context: word.articleContextSentence || null,
+          saved: true,
         })
       );
 
@@ -1222,10 +1224,50 @@ export default function Reader({ text }: { text: ReadingText }) {
           french: lookup.lemma ?? tap.lemma ?? tap.word,
           english,
           context: null,
+          saved: false,
         });
       });
 
     return items.slice(0, 5);
+  }
+
+  /**
+   * Toggles an item's saved status right from the mini review card. Phrase
+   * items on this screen are always already-saved (buildLessonMiniReviewItems
+   * only ever surfaces saved phrases), so only the unsave path applies there;
+   * word items can go either way since the third source is raw taps that
+   * were never saved.
+   */
+  function handleToggleMiniReviewSave(item: LessonMiniReviewItem) {
+    if (item.kind === "phrase") {
+      if (!item.saved) return;
+      deletePhrase(item.french);
+      showToast("Removed from review");
+    } else if (item.saved) {
+      deleteWord(item.french);
+      setWordStatusMap(buildWordStatusMap(getSavedWords()));
+      showToast("Removed from review");
+    } else {
+      const lookup = lookupWord(item.french);
+      const { persisted } = saveWord(buildSavedWord(item.french, lookup, item.context ?? item.french, "learning", null));
+      if (!persisted) {
+        showToast("Couldn't save — device storage is full");
+        return;
+      }
+      recordLearningAction();
+      setWordStatusMap(buildWordStatusMap(getSavedWords()));
+      showToast("Saved for review");
+    }
+    setLessonComplete((current) =>
+      current
+        ? {
+            ...current,
+            reviewItems: current.reviewItems.map((existing) =>
+              existing === item ? { ...existing, saved: !existing.saved } : existing
+            ),
+          }
+        : current
+    );
   }
 
   function startSentenceHold(sentenceText: string) {
@@ -2405,6 +2447,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             savedWords: lessonComplete.savedWords,
           }}
           reviewItems={lessonComplete.reviewItems}
+          onToggleSave={handleToggleMiniReviewSave}
           streak={lessonComplete.streak}
           journeyMoment={lessonComplete.journeyMoment}
           isLesson={isStarterLesson}

@@ -27,6 +27,8 @@ export interface LessonMiniReviewItem {
   french: string;
   english: string;
   context: string | null;
+  /** Whether this item is currently in the learner's saved review deck. */
+  saved: boolean;
 }
 
 export interface JourneyMoment {
@@ -41,6 +43,8 @@ interface LessonCompleteScreenProps {
   scoreChange: LevelScoreChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
+  /** Toggles an item's saved status from the mini review card. Optional so older call sites / tests aren't forced to wire it. */
+  onToggleSave?: (item: LessonMiniReviewItem) => void;
   streak: { count: number; extended: boolean; week: StreakDay[] };
   journeyMoment?: JourneyMoment | null;
   isLesson: boolean;
@@ -82,6 +86,7 @@ export default function LessonCompleteScreen({
   scoreChange,
   stats,
   reviewItems,
+  onToggleSave,
   streak,
   journeyMoment,
   isLesson,
@@ -251,9 +256,18 @@ export default function LessonCompleteScreen({
                       <p className="truncate text-sm font-extrabold text-ink">{item.french}</p>
                       <p className="mt-0.5 text-xs font-semibold text-ink-muted">{item.english}</p>
                     </div>
-                    <span className="shrink-0 rounded-full bg-cream-card px-2 py-0.5 text-xs font-bold capitalize text-ink-muted">
-                      {item.kind}
-                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onToggleSave?.(item)}
+                      disabled={!onToggleSave}
+                      aria-pressed={item.saved}
+                      aria-label={item.saved ? `Remove ${item.french} from review` : `Save ${item.french} for review`}
+                      className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold active:scale-95 ${
+                        item.saved ? "bg-brand text-white" : "bg-cream-card text-ink-muted"
+                      }`}
+                    >
+                      {item.saved ? "Saved" : "Save"}
+                    </button>
                   </div>
                   {item.context && <p className="mt-1 line-clamp-2 text-xs italic leading-relaxed text-ink-muted">{item.context}</p>}
                 </div>
