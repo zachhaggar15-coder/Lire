@@ -124,7 +124,7 @@ export default function AndroidBetaModal({
           viewport. max-h + overflow-y-auto (rather than an unconstrained card)
           keeps the submit button reachable by scrolling instead of letting it
           render off the top of the screen with no way back to it. */}
-      <div className="max-h-[calc(100dvh-1rem)] w-full overflow-y-auto touch-pan-y overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl">
+      <div className="max-h-[calc(var(--vvh,100dvh)-1rem)] w-full overflow-y-auto touch-pan-y overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Android beta</p>

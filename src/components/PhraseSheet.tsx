@@ -128,7 +128,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
         aria-label={state ? `Phrase meaning for ${state.phrase}` : "Phrase meaning"}
         aria-hidden={!open}
         tabIndex={-1}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[calc(100dvh-0.5rem)] max-w-md flex-col overflow-hidden rounded-t-3xl bg-brand-light shadow-2xl transition-transform duration-200 ${
+        className={`fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] max-w-md flex-col overflow-hidden rounded-t-3xl bg-brand-light shadow-2xl transition-transform duration-200 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >

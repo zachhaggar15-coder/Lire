@@ -258,7 +258,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           aria-label={state ? `Meaning and learning options for ${state.word}` : "Word meaning"}
           tabIndex={-1}
           onClick={(event) => event.stopPropagation()}
-          className={`relative flex max-h-[calc(100dvh-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark bg-cream-card shadow-2xl transition-all sm:max-h-[calc(100dvh-3rem)] sm:rounded-3xl ${
+          className={`relative flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark bg-cream-card shadow-2xl transition-all sm:max-h-[calc(var(--vvh,100dvh)-3rem)] sm:rounded-3xl ${
             open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 sm:translate-y-4"
           }`}
           style={{
@@ -266,7 +266,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
             transitionDuration: dragOffset > 0 ? "0ms" : "200ms",
           }}
         >
-        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 pb-4 pt-3 sm:pt-5">
+        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 pb-3 pt-2 sm:pt-4">
         <button
           type="button"
           aria-label="Swipe down to close"
@@ -274,7 +274,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           onPointerMove={handleDragMove}
           onPointerUp={handleDragEnd}
           onPointerCancel={handleDragEnd}
-          className="mx-auto mb-3 flex h-7 w-24 touch-none items-center justify-center rounded-full active:cursor-grabbing"
+          className="mx-auto mb-1.5 flex h-6 w-24 touch-none items-center justify-center rounded-full active:cursor-grabbing"
         >
           <span className="h-1.5 w-10 rounded-full bg-white/60" />
         </button>
@@ -332,7 +332,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         )}
 
         {isProperNoun && (
-          <div className="mt-3 rounded-2xl bg-white/70 p-3">
+          <div className="mt-2 rounded-2xl bg-white/70 p-2.5">
             <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Proper noun protected</p>
             <p className="mt-1 text-sm text-ink-muted">
               This looks like a person, place, organisation, or acronym, so Lire does not add it to your vocabulary cards unless it has wider language value.
@@ -341,7 +341,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         )}
 
         {inferenceChallenge && (
-          <div className="mt-4 rounded-2xl bg-white/70 p-3">
+          <div className="mt-3 rounded-2xl bg-white/70 p-2.5">
             <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Can you infer it first?</p>
             <p className="mt-1 text-sm text-ink-muted">Try the context before leaning on the direct definition.</p>
             <div className="mt-3 space-y-2">
@@ -403,13 +403,13 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           </div>
         )}
 
-        <div className="mt-3 space-y-3">
+        <div className="mt-2.5 space-y-2.5">
           {!definitionRevealed ? (
             <p className="text-sm italic text-accent-pinktext">Definition hidden until you try or reveal it.</p>
           ) : (
             <>
               {state?.naturalTranslation && (
-                <div className="rounded-2xl bg-brand-light/80 p-3">
+                <div className="rounded-2xl bg-brand-light/80 p-2.5">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning</p>
                     <span className="hidden rounded-full bg-white/70 px-2 py-0.5 text-xs font-semibold text-brand">
@@ -421,7 +421,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               )}
 
               {contextual && (
-                <div className="rounded-2xl bg-white/75 p-3">
+                <div className="rounded-2xl bg-white/75 p-2.5">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
                     <span className="hidden rounded-full bg-brand-light px-2 py-0.5 text-xs font-semibold text-brand">
@@ -441,7 +441,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               )}
 
               {found ? (
-                <details className="rounded-2xl bg-white/60 p-3">
+                <details className="rounded-2xl bg-white/60 p-2.5">
                   <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
                     More meanings
                   </summary>
@@ -450,7 +450,7 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
                     <p className="text-sm text-accent-pinktext">Also: {rest.join(", ")}</p>
                   )}
                   {firstExample && (
-                    <div className="mt-3 rounded-xl bg-white/60 p-3">
+                    <div className="mt-2 rounded-xl bg-white/60 p-2.5">
                       <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
                         Example
                       </p>
@@ -475,18 +475,18 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         </div>
 
         {definitionRevealed && firstExample && !isProperNoun && (
-          <div className="mt-3 rounded-2xl bg-white/70 p-3">
+          <div className="mt-2 rounded-2xl bg-white/70 p-2.5">
             <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">Example</p>
             <p className="mt-1 text-sm italic text-ink">{firstExample.fr}</p>
             <p className="mt-0.5 text-sm text-ink-muted">{firstExample.en}</p>
           </div>
         )}
 
-        <details className="mt-4 rounded-2xl bg-white/60 p-3">
+        <details className="mt-2.5 rounded-2xl bg-white/60 p-2.5">
           <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
             More details
           </summary>
-          <div className="mt-3 space-y-3">
+          <div className="mt-2.5 space-y-2.5">
 
         {state?.contextSentence && (
           <div className="rounded-2xl bg-white/60 p-3">
@@ -641,8 +641,8 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
         </details>
         </div>
         <div
-          className="shrink-0 border-t border-cream-dark bg-cream-card px-4 pt-3 sm:px-5"
-          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
+          className="shrink-0 border-t border-cream-dark bg-cream-card px-4 pt-2.5 sm:px-5"
+          style={{ paddingBottom: "calc(0.625rem + var(--safe-bottom))" }}
         >
           {isProperNoun ? (
             <button
