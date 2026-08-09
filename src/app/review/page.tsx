@@ -10,12 +10,7 @@ import { getCustomTexts } from "@/lib/customTexts";
 import { getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
-import {
-  applyTypedWordCorrectPass,
-  clearTypedWordCorrectPass,
-  getTypedWordCorrectPasses,
-  type WordReviewConfirmationPasses,
-} from "@/lib/reviewSession";
+import { getReviewPreferences, saveReviewPreferences } from "@/lib/reviewPreferences";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
@@ -23,63 +18,18 @@ import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
 
 type ReviewDirection = "fr-en" | "en-fr";
-type ReviewGrade = "knew" | "repeat" | "missed";
-type CardFeedback = "correct" | "repeat" | "missed" | null;
+type WordGrade = "knew" | "learning";
+type CardFeedback = "correct" | "learning" | null;
 
 const REVIEW_FEEDBACK_DELAY_MS = 760;
-
-function normalizeAnswer(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[’']/g, "")
-    .replace(/[^a-z0-9\s-]/g, " ")
-    .replace(/[\s-]+/g, " ") // treat hyphens and whitespace as interchangeable ("rock-climbing" == "rock climbing")
-    .trim();
-}
-
-function candidateVariants(value: string): string[] {
-  const pieces = value
-    .split(/[,;/]|\bor\b|\(|\)/i)
-    .map((part) => part.trim())
-    .filter(Boolean);
-  const values = pieces.length > 0 ? pieces : [value];
-  return values.flatMap((part) => {
-    const withoutTo = part.replace(/^to\s+/i, "");
-    const withoutArticle = part.replace(/^(a|an|the)\s+/i, "");
-    return [part, withoutTo, withoutArticle];
-  });
-}
-
-function answerMatches(input: string, candidates: string[]): boolean {
-  const normalizedInput = normalizeAnswer(input);
-  if (!normalizedInput) return false;
-  const compactInput = normalizedInput.replace(/\s+/g, "");
-
-  return candidates
-    .flatMap(candidateVariants)
-    .some((candidate) => {
-      const normalizedCandidate = normalizeAnswer(candidate);
-      if (!normalizedCandidate) return false;
-      return normalizedInput === normalizedCandidate || compactInput === normalizedCandidate.replace(/\s+/g, "");
-    });
-}
-
-function wordAnswerCandidates(word: SavedWord, direction: ReviewDirection): string[] {
-  if (direction === "en-fr") {
-    return [word.word, word.lemma ?? ""].filter(Boolean);
-  }
-  return [word.primaryTranslation, ...word.translations].filter(
-    (translation) => translation && translation !== NOT_TRANSLATED_YET
-  );
-}
-
-function phraseAnswerCandidates(phrase: SavedPhrase, direction: ReviewDirection): string[] {
-  return direction === "en-fr"
-    ? [phrase.phrase, phrase.lemma].filter(Boolean)
-    : [phrase.translation].filter(Boolean);
-}
+/**
+ * A word graduates out of the active review deck once it's been graded
+ * "Knew it" this many times in a row — matches the length of the SRS
+ * interval ladder (spacedRepetition.ts): by the top rung, an unprompted
+ * self-report of "I knew it" five times running is a fair bar for calling
+ * a word learned, without needing a separate typed-confirmation pass.
+ */
+const GRADUATE_AFTER_CORRECT_STREAK = 5;
 
 function promptLabel(direction: ReviewDirection): string {
   return direction === "en-fr" ? "English to French" : "French to English";
@@ -90,20 +40,26 @@ export default function ReviewPage() {
   const [ready, setReady] = useState(false);
   const [wordQueue, setWordQueue] = useState<SavedWord[]>([]);
   const [revealed, setRevealed] = useState(false);
-  const [typedAnswer, setTypedAnswer] = useState("");
   const [score, setScore] = useState({ knew: 0, missed: 0 });
   const [articleFilter, setArticleFilter] = useState<string | null>(null);
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [sessionPhraseQueue, setSessionPhraseQueue] = useState<SavedPhrase[]>([]);
-  const [reviewMode, setReviewMode] = useState<"words" | "phrases">("words");
-  const [reviewDirection, setReviewDirection] = useState<ReviewDirection>("fr-en");
+  const [reviewMode, setReviewModeState] = useState<"words" | "phrases">(() => getReviewPreferences().mode);
+  const [reviewDirection, setReviewDirectionState] = useState<ReviewDirection>(() => getReviewPreferences().direction);
+
+  function setReviewMode(mode: "words" | "phrases") {
+    setReviewModeState(mode);
+    saveReviewPreferences({ mode });
+  }
+
+  function setReviewDirection(direction: ReviewDirection) {
+    setReviewDirectionState(direction);
+    saveReviewPreferences({ direction });
+  }
   const [reviewStarted, setReviewStarted] = useState(false);
-  const [phraseTypedAnswer, setPhraseTypedAnswer] = useState("");
   const [phraseRevealed, setPhraseRevealed] = useState(false);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
   const [cardFeedback, setCardFeedback] = useState<CardFeedback>(null);
-  const [wordConfirmationPasses, setWordConfirmationPasses] = useState<WordReviewConfirmationPasses>({});
-  const [wordFeedbackMessage, setWordFeedbackMessage] = useState<string | null>(null);
   const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
@@ -139,7 +95,9 @@ export default function ReviewPage() {
       )
     );
     if (visibleSavedWords.length === 0 && visibleSavedPhrases.length > 0) {
-      setReviewMode("phrases");
+      // Circumstantial (nothing to review as words right now), not a
+      // deliberate choice — don't persist this as the remembered preference.
+      setReviewModeState("phrases");
     }
     if (initialWordQueue.length > 0) {
       setReviewStarted(true);
@@ -169,8 +127,6 @@ export default function ReviewPage() {
   const currentPhrase = sessionPhraseQueue[0];
   const done = reviewMode === "words" && ready && reviewStarted && wordSessionTotal > 0 && wordQueue.length === 0;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
-  const typedAnswerCorrect = current ? answerMatches(typedAnswer, wordAnswerCandidates(current, reviewDirection)) : false;
-  const currentWordCorrectPasses = current ? getTypedWordCorrectPasses(wordConfirmationPasses, current.word) : 0;
 
   useEffect(() => {
     if (!ready || reviewSessionStarted.current) return;
@@ -216,74 +172,20 @@ export default function ReviewPage() {
   }
 
   function resetWordCard() {
-    setTypedAnswer("");
     setRevealed(false);
-    setWordFeedbackMessage(null);
   }
 
-  function submitCorrectWordAnswer(answerValue = typedAnswer) {
+  function gradeWord(grade: WordGrade) {
     if (!current || cardFeedback) return;
-    if (!answerMatches(answerValue, wordAnswerCandidates(current, reviewDirection))) return;
-
-    const passResult = applyTypedWordCorrectPass(wordConfirmationPasses, current.word);
-    const savedAsKnown = passResult.outcome === "known";
+    const correct = grade === "knew";
     const nextScore = {
-      knew: score.knew + (savedAsKnown ? 1 : 0),
-      missed: score.missed,
+      knew: score.knew + (correct ? 1 : 0),
+      missed: score.missed + (correct ? 0 : 1),
     };
-    setWordConfirmationPasses(passResult.confirmationPasses);
-    setRevealed(true);
-    setCardFeedback("correct");
-    setWordFeedbackMessage(savedAsKnown ? "Saved as known" : "Correct. One more time.");
+    setCardFeedback(correct ? "correct" : "learning");
     trackEvent("review_answer_submitted", {
       mode: "words",
-      correct: true,
-      typedCorrect: true,
-      grade: savedAsKnown ? "knew" : "repeat",
-      typedPass: savedAsKnown ? 2 : 1,
-      cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
-      totalCards: wordSessionTotal || wordQueue.length,
-      articleFiltered: !!articleFilter,
-    });
-    if (savedAsKnown) {
-      const xp = recordReviewSuccessXp(current.word);
-      if (xp > 0) {
-        setXpNotice(`+${xp} XP`);
-        window.setTimeout(() => setXpNotice(null), 1600);
-      }
-    }
-    if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
-    cardFeedbackTimeout.current = setTimeout(() => {
-      const remainingQueue = wordQueue.slice(1);
-      const nextQueue = savedAsKnown ? remainingQueue : [...remainingQueue, current];
-      if (savedAsKnown) recordReviewResult(current.word, "correct");
-      const nextWords = savedAsKnown
-        ? visibleWords(markWordAsKnown(current.word))
-        : visibleWords(getSavedWords());
-      setWords(nextWords);
-      setWordQueue(nextQueue);
-      setScore(nextScore);
-      resetWordCard();
-      if (nextQueue.length === 0) completeReviewSession("words", wordSessionTotal, nextScore.knew);
-      setCardFeedback(null);
-      cardFeedbackTimeout.current = null;
-    }, REVIEW_FEEDBACK_DELAY_MS);
-  }
-
-  function answer(grade: Exclude<ReviewGrade, "knew">) {
-    if (!current || cardFeedback) return;
-    const nextScore = {
-      knew: score.knew,
-      missed: score.missed + 1,
-    };
-    setRevealed(true);
-    setWordConfirmationPasses((passes) => clearTypedWordCorrectPass(passes, current.word));
-    setWordFeedbackMessage(grade === "repeat" ? "Still in the deck" : "Needs review later");
-    setCardFeedback(grade === "repeat" ? "repeat" : "missed");
-    trackEvent("review_answer_submitted", {
-      mode: "words",
-      correct: false,
-      typedCorrect: typedAnswerCorrect,
+      correct,
       grade,
       cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
       totalCards: wordSessionTotal || wordQueue.length,
@@ -291,9 +193,19 @@ export default function ReviewPage() {
     });
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const nextWords = visibleWords(recordReviewResult(current.word, "incorrect"));
+      const updatedWords = recordReviewResult(current.word, correct ? "correct" : "incorrect");
+      const updatedWord = updatedWords.find((w) => w.word === current.word);
+      const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
+      const nextWords = visibleWords(graduated ? markWordAsKnown(current.word) : updatedWords);
+      if (graduated) {
+        const xp = recordReviewSuccessXp(current.word);
+        if (xp > 0) {
+          setXpNotice(`+${xp} XP`);
+          window.setTimeout(() => setXpNotice(null), 1600);
+        }
+      }
       const remainingQueue = wordQueue.slice(1);
-      const nextQueue = grade === "repeat" ? [...remainingQueue, current] : remainingQueue;
+      const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
       setWords(nextWords);
       setWordQueue(nextQueue);
       setScore(nextScore);
@@ -320,31 +232,26 @@ export default function ReviewPage() {
     setWordSessionTotal(nextWordQueue.length);
     setPhraseSessionTotal(nextPhraseQueue.length);
     resetWordCard();
-    setPhraseTypedAnswer("");
     setPhraseRevealed(false);
     setReviewStarted(nextWordQueue.length > 0 && reviewMode === "words");
     setScore({ knew: 0, missed: 0 });
     setCardFeedback(null);
-    setWordConfirmationPasses({});
-    setWordFeedbackMessage(null);
     phraseScore.current = { correct: 0, total: 0 };
     reviewSessionStarted.current = false;
     reviewSessionCompleted.current = false;
   }
 
-  function answerPhrase(grade: ReviewGrade, typedCorrect: boolean) {
+  function gradePhrase(grade: WordGrade) {
     if (!currentPhrase || cardFeedback) return;
     const correct = grade === "knew";
     phraseScore.current = {
       correct: phraseScore.current.correct + (correct ? 1 : 0),
       total: phraseScore.current.total + 1,
     };
-    setPhraseRevealed(true);
-    setCardFeedback(grade === "knew" ? "correct" : grade === "repeat" ? "repeat" : "missed");
+    setCardFeedback(correct ? "correct" : "learning");
     trackEvent("review_answer_submitted", {
       mode: "phrases",
       correct,
-      typedCorrect,
       grade,
       cardIndex: Math.min(phraseScore.current.total, Math.max(1, phraseSessionTotal)),
       totalCards: phraseSessionTotal || sessionPhraseQueue.length,
@@ -358,9 +265,8 @@ export default function ReviewPage() {
         setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
       }
       const remainingQueue = sessionPhraseQueue.slice(1);
-      const nextQueue = grade === "repeat" ? [...remainingQueue, currentPhrase] : remainingQueue;
+      const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
       setSessionPhraseQueue(nextQueue);
-      setPhraseTypedAnswer("");
       setPhraseRevealed(false);
       if (nextQueue.length === 0) completeReviewSession("phrases", phraseSessionTotal, phraseScore.current.correct);
       setCardFeedback(null);
@@ -405,7 +311,7 @@ export default function ReviewPage() {
   if (!done && ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
     return (
       <div className="ligne-screen">
-        <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "Typing checks itself."} />
+        <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "Flip, then grade yourself."} />
         <div className="mt-16 text-center">
           <p className="text-ink-muted">{articleFilter ? "No saved words from this article yet." : "Nothing to review yet."}</p>
           <p className="mt-1 text-xs text-ink-muted">
@@ -451,12 +357,17 @@ export default function ReviewPage() {
           <p className="mt-1 text-sm text-ink-muted">
             Known: {score.knew} - Needs another look: {score.missed}
           </p>
-          <button
-            onClick={restart}
-            className="ligne-pill mt-5 bg-brand text-cream"
-          >
-            Check for more
-          </button>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            <button
+              onClick={restart}
+              className="ligne-pill bg-brand text-cream"
+            >
+              Check for more
+            </button>
+            <Link href="/words" className="ligne-pill bg-cream-fill text-ink-muted">
+              Manage saved words
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -495,11 +406,11 @@ export default function ReviewPage() {
           totalLearning={stats.totalLearning}
           phraseCount={sessionPhraseQueue.length}
           vocabularyStates={vocabularyStates}
+          mode={reviewMode}
           direction={reviewDirection}
           onDirectionChange={(direction) => {
             setReviewDirection(direction);
             resetWordCard();
-            setPhraseTypedAnswer("");
             setPhraseRevealed(false);
           }}
           onModeChange={setReviewMode}
@@ -523,7 +434,6 @@ export default function ReviewPage() {
           onChange={(direction) => {
             setReviewDirection(direction);
             resetWordCard();
-            setPhraseTypedAnswer("");
             setPhraseRevealed(false);
           }}
         />
@@ -533,15 +443,10 @@ export default function ReviewPage() {
         <PhraseReviewCard
           phrase={currentPhrase}
           direction={reviewDirection}
-          typedAnswer={phraseTypedAnswer}
           revealed={phraseRevealed}
           feedback={cardFeedback}
-          onAnswerChange={(value) => {
-            setPhraseTypedAnswer(value);
-            setPhraseRevealed(false);
-          }}
-          onCheck={() => setPhraseRevealed(true)}
-          onGrade={answerPhrase}
+          onReveal={() => setPhraseRevealed(true)}
+          onGrade={gradePhrase}
         />
       )}
 
@@ -555,7 +460,7 @@ export default function ReviewPage() {
               } ${
                 cardFeedback === "correct"
                   ? "reward-card-lock-in bg-brand-light"
-                  : cardFeedback === "repeat" || cardFeedback === "missed"
+                  : cardFeedback === "learning"
                     ? "reward-card-still-learning ring-2 ring-cream-strong"
                     : ""
               }`}
@@ -566,9 +471,9 @@ export default function ReviewPage() {
                 </span>
                 <span className="rounded-full bg-cream px-2.5 py-1 text-xs font-semibold text-ink-muted">
                   {cardFeedback === "correct"
-                    ? "Correct"
-                    : currentWordCorrectPasses > 0
-                      ? "1 tick earned"
+                    ? "Knew it"
+                    : cardFeedback === "learning"
+                      ? "Still learning"
                       : revealed
                         ? "Answer side"
                         : "Prompt side"}
@@ -584,75 +489,17 @@ export default function ReviewPage() {
               <p className="text-xs text-ink-muted">from "{current.lemma}"</p>
             )}
 
-            <form
-              className="mt-6 w-full"
-              onSubmit={(event) => {
-                event.preventDefault();
-                if (!typedAnswer.trim()) return;
-                if (typedAnswerCorrect) {
-                  submitCorrectWordAnswer();
-                } else {
-                  setRevealed(true);
-                }
-              }}
-            >
-              <label htmlFor="word-review-answer" className="sr-only">
-                {reviewDirection === "en-fr" ? "Type the French" : "Type the English"}
-              </label>
-              <input
-                id="word-review-answer"
-                type="text"
-                value={typedAnswer}
-                onChange={(event) => {
-                  const nextAnswer = event.target.value;
-                  setTypedAnswer(nextAnswer);
-                  setRevealed(false);
-                  setWordFeedbackMessage(null);
-                  if (current && answerMatches(nextAnswer, wordAnswerCandidates(current, reviewDirection))) {
-                    submitCorrectWordAnswer(nextAnswer);
-                  }
-                }}
-                placeholder={reviewDirection === "en-fr" ? "Type the French" : "Type the English"}
-                autoCapitalize="none"
-                autoCorrect="off"
-                disabled={cardFeedback !== null}
-                className="w-full rounded-2xl bg-cream px-4 py-3 text-center text-base font-semibold text-ink outline-none ring-1 ring-cream-dark transition-shadow focus:ring-2 focus:ring-brand/30 disabled:opacity-60"
-              />
+            {!revealed ? (
               <button
-                type="submit"
-                disabled={!typedAnswer.trim() || cardFeedback !== null}
-                className="ligne-pill mt-3 w-full bg-brand text-cream disabled:opacity-40"
+                type="button"
+                onClick={() => setRevealed(true)}
+                className="ligne-pill mt-6 w-full bg-brand text-cream"
               >
-                {typedAnswerCorrect ? "Correct" : "Show answer"}
+                Show answer
               </button>
-              {wordFeedbackMessage && (
-                <div
-                  aria-live="polite"
-                  className={`mt-3 inline-flex items-center justify-center gap-2 rounded-full px-3 py-1.5 text-sm font-bold ${
-                    cardFeedback === "correct"
-                      ? "bg-brand-light text-brand"
-                      : "bg-cream-fill text-ink-muted"
-                  }`}
-                >
-                  {cardFeedback === "correct" && (
-                    <span
-                      aria-hidden="true"
-                      className="grid h-5 w-5 place-items-center rounded-full bg-brand text-xs text-cream"
-                    >
-                      {"\u2713"}
-                    </span>
-                  )}
-                  <span>{wordFeedbackMessage}</span>
-                </div>
-              )}
-            </form>
-
-              {revealed && (
+            ) : (
               <div className="review-answer-reveal mt-5 w-full border-t border-cream-dark pt-5">
-                <p className={`text-sm font-bold ${typedAnswerCorrect ? "text-emerald-700" : "text-amber-700"}`}>
-                  {typedAnswerCorrect ? "Looks right." : "Check it against the answer."}
-                </p>
-                <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-brand">Answer</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand">Answer</p>
                 <p className={`mt-1 text-xl ${hasTranslation ? "text-ink" : "italic text-ink-muted"}`}>
                   {reviewDirection === "en-fr" ? current.word : current.primaryTranslation}
                 </p>
@@ -684,33 +531,29 @@ export default function ReviewPage() {
                   </p>
                 )}
               </div>
-              )}
+            )}
             </div>
           </div>
 
-          {/* Answer buttons */}
+          {/* Grade buttons */}
           <div className="mt-4 pb-6">
-            <div className="rounded-card border border-cream-dark bg-cream-card p-2">
-              <div className="mb-2 flex items-center justify-between px-1 text-xs font-semibold text-ink-muted">
-                <span>Need help?</span>
-                <span>{revealed ? "Both count as a miss for spaced repetition" : "Correct typing checks itself"}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => answer("repeat")}
-                  disabled={!revealed || cardFeedback !== null}
-                  className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-xs font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
-                >
-                  Show again this session
-                </button>
-                <button
-                  onClick={() => answer("missed")}
-                  disabled={cardFeedback !== null}
-                  className="rounded-2xl border border-cream-dark bg-rose px-1 py-3 text-xs font-semibold text-rose-ink active:scale-95 disabled:opacity-40"
-                >
-                  Review next time
-                </button>
-              </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => gradeWord("learning")}
+                disabled={!revealed || cardFeedback !== null}
+                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+              >
+                Still learning
+              </button>
+              <button
+                type="button"
+                onClick={() => gradeWord("knew")}
+                disabled={!revealed || cardFeedback !== null}
+                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+              >
+                Knew it
+              </button>
             </div>
           </div>
         </div>
@@ -750,6 +593,7 @@ function PracticeHubCard({
   totalLearning,
   phraseCount,
   vocabularyStates,
+  mode,
   direction,
   onDirectionChange,
   onModeChange,
@@ -762,6 +606,7 @@ function PracticeHubCard({
   totalLearning: number;
   phraseCount: number;
   vocabularyStates: VocabularyStateItem[];
+  mode: "words" | "phrases";
   direction: ReviewDirection;
   onDirectionChange: (direction: ReviewDirection) => void;
   onModeChange: (mode: "words" | "phrases") => void;
@@ -789,19 +634,28 @@ function PracticeHubCard({
         {wordCount} {wordCount === 1 ? "card" : "cards"} ready
       </h2>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        Start with a quick {directionCopy} review. No setup needed; options are here if you want them.
+        Start with a quick {directionCopy} review.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
-        <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-ink-muted">
-          {promptLabel(direction)}
-        </span>
         {focusCount > 0 && (
           <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
             {focusCount} need care
           </span>
         )}
       </div>
+
+      {phraseCount > 0 && (
+        <div className="mt-4">
+          <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
+          <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
+        </div>
+      )}
+      <div className="mt-4">
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
+        <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
+      </div>
+
       <button
         type="button"
         onClick={onStart}
@@ -809,30 +663,21 @@ function PracticeHubCard({
       >
         Start quick review
       </button>
+      <Link href="/words" className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
+        Manage saved words
+      </Link>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
         <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Review options
+          Stats
         </summary>
-        <div className="mt-3 space-y-3">
-          {phraseCount > 0 && (
-            <div>
-              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
-              <PhraseModeSwitch mode="words" onChange={onModeChange} phraseCount={phraseCount} />
+        <div className="mt-3 grid grid-cols-4 gap-2">
+          {stats.map((item) => (
+            <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
+              <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
+              <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
             </div>
-          )}
-          <div>
-            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
-            <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
-          </div>
-          <div className="grid grid-cols-4 gap-2">
-            {stats.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
-                <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
-                <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </details>
     </section>
@@ -980,21 +825,17 @@ function PhraseModeSwitch({
 function PhraseReviewCard({
   phrase,
   direction,
-  typedAnswer,
   revealed,
   feedback,
-  onAnswerChange,
-  onCheck,
+  onReveal,
   onGrade,
 }: {
   phrase: SavedPhrase | undefined;
   direction: ReviewDirection;
-  typedAnswer: string;
   revealed: boolean;
   feedback: CardFeedback;
-  onAnswerChange: (value: string) => void;
-  onCheck: () => void;
-  onGrade: (grade: ReviewGrade, typedCorrect: boolean) => void;
+  onReveal: () => void;
+  onGrade: (grade: WordGrade) => void;
 }) {
   if (!phrase) {
     return (
@@ -1005,7 +846,6 @@ function PhraseReviewCard({
     );
   }
 
-  const typedCorrect = answerMatches(typedAnswer, phraseAnswerCandidates(phrase, direction));
   const prompt = direction === "en-fr" ? phrase.translation : phrase.phrase;
   return (
     <div className="flex flex-1 flex-col">
@@ -1014,7 +854,7 @@ function PhraseReviewCard({
           className={`review-card-smooth relative z-10 rounded-card border border-cream-dark bg-cream-card p-5 ${
             feedback === "correct"
               ? "reward-card-lock-in bg-brand-light"
-              : feedback === "repeat" || feedback === "missed"
+              : feedback === "learning"
                 ? "reward-card-still-learning ring-2 ring-cream-strong"
                 : ""
           }`}
@@ -1027,41 +867,17 @@ function PhraseReviewCard({
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
         <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
-        <form
-          className="mt-4"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (typedAnswer.trim()) onCheck();
-          }}
-        >
-          <label htmlFor="phrase-review-answer" className="sr-only">
-            {direction === "en-fr" ? "Type the French phrase" : "Type the English meaning"}
-          </label>
-          <input
-            id="phrase-review-answer"
-            type="text"
-            value={typedAnswer}
-            onChange={(event) => onAnswerChange(event.target.value)}
-            placeholder={direction === "en-fr" ? "Type the French phrase" : "Type the English meaning"}
-            autoCapitalize="none"
-            autoCorrect="off"
-            disabled={feedback !== null}
-            className="w-full rounded-2xl bg-cream px-4 py-3 text-center text-base font-semibold text-ink outline-none ring-1 ring-cream-dark transition-shadow focus:ring-2 focus:ring-brand/30 disabled:opacity-60"
-          />
-          <button
-            type="submit"
-            disabled={!typedAnswer.trim() || feedback !== null}
-            className="ligne-pill mt-3 w-full bg-brand text-cream disabled:opacity-40"
-          >
-            Check answer
-          </button>
-        </form>
 
-        {revealed && (
+        {!revealed ? (
+          <button
+            type="button"
+            onClick={onReveal}
+            className="ligne-pill mt-4 w-full bg-brand text-cream"
+          >
+            Show answer
+          </button>
+        ) : (
           <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
-            <p className={`text-sm font-semibold ${typedCorrect ? "text-emerald-700" : "text-amber-700"}`}>
-              {typedCorrect ? "Looks right." : "Check it against the answer."}
-            </p>
             <p className="text-sm font-semibold text-ink">
               {phrase.phrase} = {phrase.translation}
             </p>
@@ -1080,22 +896,23 @@ function PhraseReviewCard({
           </div>
         )}
 
-        <div className="mt-4 grid grid-cols-3 gap-2">
-          {[
-            { grade: "knew" as const, label: "Knew it", className: "border-brand bg-brand-light text-brand", disabled: !revealed },
-            { grade: "repeat" as const, label: "One more time", className: "border-cream-dark bg-cream-fill text-ink-muted", disabled: !revealed },
-            { grade: "missed" as const, label: "No idea", className: "border-cream-dark bg-rose text-rose-ink", disabled: false },
-          ].map((option) => (
-            <button
-              key={option.grade}
-              type="button"
-              onClick={() => onGrade(option.grade, typedCorrect)}
-              disabled={option.disabled || feedback !== null}
-              className={`rounded-2xl border px-1 py-3 text-xs font-semibold active:scale-95 disabled:opacity-40 ${option.className}`}
-            >
-              {option.label}
-            </button>
-          ))}
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => onGrade("learning")}
+            disabled={!revealed || feedback !== null}
+            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+          >
+            Still learning
+          </button>
+          <button
+            type="button"
+            onClick={() => onGrade("knew")}
+            disabled={!revealed || feedback !== null}
+            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+          >
+            Knew it
+          </button>
         </div>
         </div>
       </div>

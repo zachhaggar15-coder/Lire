@@ -11,8 +11,8 @@ export interface RecommendationSections {
 }
 
 const DAILY_BANK_SECTION_SIZE = 8;
-const LIVE_NEWS_SECTION_SIZE = 2;
-const LATEST_NEWS_SECTION_SIZE = 4;
+const LIVE_NEWS_SECTION_SIZE = 6;
+const LATEST_NEWS_SECTION_SIZE = 15;
 
 /**
  * Everything that comes from the offline reading bank rather than a live

@@ -9,8 +9,9 @@ import {
   putPersistedCandidatePool,
   putPersistedRssTexts,
 } from "@/lib/rss/rssTextStore";
-import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
-import type { Category } from "@/types";
+import { previousDateKey, seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
+import { getDailyExtraReadingTexts } from "@/lib/publicDomainBank";
+import type { Category, ReadingText } from "@/types";
 
 /**
  * Rebuilding the candidate pool now sometimes scrapes full articles
@@ -269,6 +270,92 @@ function isKnownSnippetFilter(value: string): value is "all" | "only" | "exclude
 }
 
 /**
+ * Floor for the unfiltered "generic news" selection, guaranteed even on a
+ * genuinely bad day (several feeds down/rate-limited at once) — see
+ * backfillIfShort below. Not the same as DAILY_RSS_ARTICLE_LIMIT (the
+ * client's requested count): this is the minimum the server tops up to,
+ * the client's `limit` is the ceiling.
+ */
+const MIN_GUARANTEED_ARTICLES = 10;
+
+/**
+ * Adapts a local reading-bank text into the RssReadingText DTO shape so it
+ * can share the same response/dedupe path as real feed items. Used only as
+ * the last-resort tier of backfillIfShort — a synthetic sourceUrl
+ * (`internal:<id>`) keeps it out of the way of dedupe-by-URL against real
+ * fetched articles.
+ */
+function bankTextToRssReadingText(text: ReadingText, builtAt: number): RssReadingText {
+  return {
+    id: text.id,
+    title: text.title,
+    category: text.category,
+    difficulty: "B1",
+    readingTimeMinutes: text.minutes,
+    language: text.language ?? "fr",
+    originalText: text.body,
+    sourceName: text.sourceName ?? "Lire reading bank",
+    sourceUrl: text.sourceUrl ?? `internal:${text.id}`,
+    publishedAt: text.publishedAt ?? new Date(builtAt).toISOString(),
+    blurbEn: text.blurbEn ?? null,
+    isShortSnippet: text.isShortSnippet ?? false,
+  };
+}
+
+/**
+ * Guarantees a minimum-size, unfiltered daily selection even when live RSS
+ * genuinely underdelivers. Two fallback tiers, in order: yesterday's
+ * persisted candidate pool (still real, dated French news, just not from
+ * today — see rssTextStore.ts), then the local extra-reading bank (always
+ * available, no network dependency). Only called for the unfiltered
+ * "generic news" request — see the guard at the call site — so a
+ * deliberately narrowed query is left exactly as narrow as requested.
+ */
+async function backfillIfShort(
+  selected: RssReadingText[],
+  pool: CandidatePool,
+  snippetParam: "all" | "only" | "exclude",
+  todayK: string
+): Promise<RssReadingText[]> {
+  if (selected.length >= MIN_GUARANTEED_ARTICLES) return selected;
+
+  const seenIds = new Set(selected.map((item) => item.id));
+  const seenUrls = new Set(selected.map((item) => item.sourceUrl.trim().toLowerCase()));
+  const seenTitles = new Set(selected.map((item) => item.title.trim().toLowerCase()));
+  const result = [...selected];
+
+  function tryAdd(item: RssReadingText) {
+    if (result.length >= MIN_GUARANTEED_ARTICLES) return;
+    const urlKey = item.sourceUrl.trim().toLowerCase();
+    const titleKey = item.title.trim().toLowerCase();
+    if (seenIds.has(item.id) || seenUrls.has(urlKey) || seenTitles.has(titleKey)) return;
+    if (snippetParam === "exclude" && item.isShortSnippet) return;
+    seenIds.add(item.id);
+    seenUrls.add(urlKey);
+    seenTitles.add(titleKey);
+    result.push(item);
+  }
+
+  const yesterday = await getPersistedCandidatePool<CandidatePool>(previousDateKey(todayK));
+  if (yesterday) {
+    for (const item of seededShuffle(yesterday.items, `${todayK}::backfill::yesterday`)) {
+      if (result.length >= MIN_GUARANTEED_ARTICLES) break;
+      tryAdd(item);
+    }
+  }
+
+  if (result.length < MIN_GUARANTEED_ARTICLES) {
+    const bankTexts = getDailyExtraReadingTexts({ level: "B1", category: "all", limit: MIN_GUARANTEED_ARTICLES * 2 });
+    for (const text of bankTexts) {
+      if (result.length >= MIN_GUARANTEED_ARTICLES) break;
+      tryAdd(bankTextToRssReadingText(text, pool.builtAt));
+    }
+  }
+
+  return result;
+}
+
+/**
  * Wraps the whole handler so an unexpected error anywhere in the pipeline
  * (a bad feed, a broken dependency, anything not already handled per-source
  * in fetchFromSource/buildCandidatePool) degrades to an empty-but-valid
@@ -340,6 +427,13 @@ async function handleGet(request: Request) {
     if (isPlainDefaultQuery) {
       dailySelectionCache = { dateKey: todayK, items: selected };
     }
+  }
+
+  // Only the unfiltered "generic news" request gets topped up — a
+  // deliberately narrowed category/language query is left exactly as
+  // narrow as requested rather than diluted with backfill.
+  if (categoryParam === "all" && languageParam === "all" && snippetParam !== "only") {
+    selected = await backfillIfShort(selected, pool, snippetParam, todayK);
   }
 
   // Best-effort, optional persistence so a direct link to one of these

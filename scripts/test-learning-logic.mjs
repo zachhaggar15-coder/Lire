@@ -6,11 +6,6 @@ import {
   computeNextSchedule,
   getReviewStats,
 } from "../src/lib/spacedRepetition.ts";
-import {
-  applyTypedWordCorrectPass,
-  clearTypedWordCorrectPass,
-  getTypedWordCorrectPasses,
-} from "../src/lib/reviewSession.ts";
 
 let passed = 0;
 let failed = 0;
@@ -88,20 +83,6 @@ console.log("\n--- Spaced repetition ---");
   check("review stats exclude known words", stats.totalLearning === 3);
   check("review queue puts overdue before new cards", queue[0]?.word === "overdue", `first was ${queue[0]?.word}`);
   check("future scheduled cards are not due", !queue.some((item) => item.word === "later"));
-}
-
-console.log("\n--- Typed review confirmations ---");
-{
-  const first = applyTypedWordCorrectPass({}, "bonjour");
-  check("first typed-correct pass keeps the word in review", first.outcome === "repeat");
-  check("first typed-correct pass stores one tick", getTypedWordCorrectPasses(first.confirmationPasses, "bonjour") === 1);
-
-  const second = applyTypedWordCorrectPass(first.confirmationPasses, "bonjour");
-  check("second typed-correct pass graduates the word", second.outcome === "known");
-  check("graduated word clears its review tick", getTypedWordCorrectPasses(second.confirmationPasses, "bonjour") === 0);
-
-  const missed = clearTypedWordCorrectPass(first.confirmationPasses, "bonjour");
-  check("a miss clears the first tick", getTypedWordCorrectPasses(missed, "bonjour") === 0);
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

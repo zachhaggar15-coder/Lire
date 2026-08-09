@@ -209,4 +209,14 @@ export const rssSources: RssSource[] = [
   { id: "le-figaro", name: "Le Figaro", category: "news-style", feedUrl: "https://www.lefigaro.fr/rss/figaro_actualites.xml", language: "fr", enabled: true },
   { id: "numerama", name: "Numerama", category: "science", feedUrl: "https://www.numerama.com/feed/", language: "fr", enabled: true },
   { id: "ouest-france-continu", name: "Ouest-France (Continu)", category: "everyday life", feedUrl: "https://www.ouest-france.fr/rss-en-continu.xml", language: "fr", enabled: true },
+
+  // Added to widen daily redundancy for generic French news (verified live
+  // 200 + valid RSS/Atom XML via a direct curl check before adding).
+  { id: "bfmtv", name: "BFMTV", category: "news-style", feedUrl: "https://www.bfmtv.com/rss/news-24-7/", language: "fr", enabled: true },
+  { id: "lexpress", name: "L'Express", category: "news-style", feedUrl: "https://www.lexpress.fr/arc/outboundfeeds/rss/alaune.xml", language: "fr", enabled: true },
+  { id: "courrier-international", name: "Courrier International", category: "news-style", feedUrl: "https://www.courrierinternational.com/feed/all/rss.xml", language: "fr", enabled: true },
+  { id: "challenges", name: "Challenges", category: "news-style", feedUrl: "https://www.challenges.fr/rss.xml", language: "fr", enabled: true },
+  { id: "france-bleu", name: "France Bleu", category: "news-style", feedUrl: "https://www.francebleu.fr/rss/a-la-une.xml", language: "fr", enabled: true },
+  { id: "france-culture", name: "France Culture", category: "culture", feedUrl: "https://www.radiofrance.fr/franceculture/rss", language: "fr", enabled: true },
+  { id: "slate-fr", name: "Slate.fr", category: "culture", feedUrl: "https://www.slate.fr/rss.xml", language: "fr", enabled: true },
 ];

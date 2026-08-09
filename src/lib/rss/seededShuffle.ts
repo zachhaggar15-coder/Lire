@@ -40,3 +40,10 @@ export function seededShuffle<T>(items: T[], seed: string): T[] {
 export function todayKey(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
+
+/** The calendar day (YYYY-MM-DD, UTC) immediately before the given dateKey — used to look up yesterday's persisted candidate pool as a backfill source. */
+export function previousDateKey(dateKey: string): string {
+  const date = new Date(`${dateKey}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() - 1);
+  return todayKey(date);
+}

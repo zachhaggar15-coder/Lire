@@ -9,7 +9,6 @@ import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
-import { getArchive } from "@/lib/archive";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
@@ -90,11 +89,6 @@ function isEligibleArticleModeText(text: ReadingText): boolean {
   return !isStarterText(text);
 }
 
-function shouldGateLiveNews(level: Difficulty, completedArticleCount: number, showAnyway: boolean): boolean {
-  if (showAnyway) return false;
-  return (level === "A1" || level === "A2") && completedArticleCount < 3;
-}
-
 export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [state, setState] = useState<LoadState>("loading");
   const [sections, setSections] = useState<RecommendationSections | null>(null);
@@ -110,10 +104,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [reloadKey, setReloadKey] = useState(0);
   const [customArticles, setCustomArticles] = useState<ScoredArticle[]>([]);
   const [savedLaterArticles, setSavedLaterArticles] = useState<ScoredArticle[]>([]);
-  const [completedArticleCount, setCompletedArticleCount] = useState(0);
-  const [showLiveNewsAnyway, setShowLiveNewsAnyway] = useState(false);
   const dictionaryRevision = useGeneratedDictionary();
-  const liveNewsGated = mode === "live" && shouldGateLiveNews(selectedLevel, completedArticleCount, showLiveNewsAnyway);
 
   useEffect(() => subscribeToRecommendationPreferences(() => setPrefVersion((version) => version + 1)), []);
 
@@ -123,7 +114,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
   useEffect(() => {
     setSelectedLevel(getSelectedReadingLevel());
-    setCompletedArticleCount(getArchive().length);
   }, [prefVersion]);
 
   useEffect(() => {
@@ -138,12 +128,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setUsedFallback(false);
       setState("loading");
       setSections(null);
-
-      if (mode === "live" && liveNewsGated) {
-        setRssTexts([]);
-        setState("success");
-        return;
-      }
 
       if (mode === "articles") {
         setRssTexts([]);
@@ -198,7 +182,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       if (slowTimer) clearTimeout(slowTimer);
       if (timeoutTimer) clearTimeout(timeoutTimer);
     };
-  }, [categoryFilter, languageFilter, liveNewsGated, mode, reloadKey]);
+  }, [categoryFilter, languageFilter, mode, reloadKey]);
 
   useEffect(() => {
     if (state === "loading" || state === "error") return;
@@ -279,25 +263,9 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         </div>
       )}
 
-      {liveNewsGated ? (
-        <BeginnerNewsGate onContinue={() => setShowLiveNewsAnyway(true)} />
-      ) : mode === "live" ? (
-        <FilterPanel
-          summaryLabel="Filters"
-          categoryItems={CATEGORY_FILTERS}
-          categoryFilter={categoryFilter}
-          difficultyFilter={difficultyFilter}
-          languageFilter={languageFilter}
-          onCategory={setCategoryFilter}
-          onDifficulty={setDifficultyFilter}
-          onLanguage={setLanguageFilter}
-          onReset={resetFilters}
-        />
-      ) : null}
+      {mode === "live" && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
 
-      {!liveNewsGated && mode === "live" && state === "loading" && <ArticleLoadingState slow={isSlowLoading} onRetry={() => setReloadKey((key) => key + 1)} />}
-
-      {!liveNewsGated && state === "error" && (
+      {state === "error" && (
         <div className={mode === "articles" ? "px-[22px]" : ""}>
           <LoadErrorCard
             message={loadError ?? (mode === "live" ? "News is unavailable right now." : "Lessons are unavailable right now.")}
@@ -306,14 +274,13 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         </div>
       )}
 
-      {!liveNewsGated && state === "success" && usedFallback && (
+      {state === "success" && usedFallback && (
         <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Live RSS returned fewer articles than usual for these filters.
+          Live RSS returned fewer articles than usual today.
         </p>
       )}
 
-      {!liveNewsGated &&
-        state === "success" &&
+      {state === "success" &&
         sections &&
         (mode === "live" ? (
           <LiveNewsContent sections={sections} />
@@ -327,7 +294,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           />
         ))}
 
-      {!liveNewsGated && mode === "articles" && (
+      {mode === "articles" && (
         <div className="px-[22px]">
           <FilterPanel
             summaryLabel="Extra reading filters"
@@ -374,30 +341,6 @@ function LoadErrorCard({ message, onRetry }: { message: string; onRetry: () => v
         Retry
       </button>
     </div>
-  );
-}
-
-function BeginnerNewsGate({ onContinue }: { onContinue: () => void }) {
-  return (
-    <section className="ligne-card p-5">
-      <p className="ligne-label text-brand">Stretch area</p>
-      <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">Live news is harder than the starter articles.</h2>
-      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-        Start with a few short readings first, then come back when tapping words feels comfortable.
-      </p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Link href="/#journey-current" className="ligne-pill bg-brand text-cream">
-          Start with lessons
-        </Link>
-        <button
-          type="button"
-          onClick={onContinue}
-          className="ligne-pill bg-cream-fill text-ink-muted"
-        >
-          Show news anyway
-        </button>
-      </div>
-    </section>
   );
 }
 
