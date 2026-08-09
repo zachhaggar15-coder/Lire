@@ -5,7 +5,7 @@ import type { WordExplanation } from "@/lib/ai/types";
 import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
-import { isPhraseSaved, markPhraseKnown, savePhrase } from "@/lib/phrases";
+import { deletePhrase, isPhraseSaved, savePhrase } from "@/lib/phrases";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useModalPresence } from "@/lib/modalPresence";
 
@@ -23,14 +23,13 @@ interface PhraseSheetProps {
   articleTitle: string;
   onClose: () => void;
   onSaved: () => void;
-  onKnown: () => void;
+  onUnsaved: () => void;
   onAiRequested?: () => void;
 }
 
-export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onKnown, onAiRequested }: PhraseSheetProps) {
+export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onUnsaved, onAiRequested }: PhraseSheetProps) {
   const [correction, setCorrection] = useState("");
   const [saved, setSaved] = useState(false);
-  const [savedKnown, setSavedKnown] = useState(false);
   const [aiState, setAiState] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -41,7 +40,6 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
   useEffect(() => {
     setCorrection("");
     setSaved(state ? isPhraseSaved(state.phrase) : false);
-    setSavedKnown(false);
     setAiState("idle");
     setAiResult(null);
     setAiError(null);
@@ -61,12 +59,11 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
     onSaved();
   }
 
-  function handleMarkKnown() {
+  function handleUnsavePhrase() {
     if (!state) return;
-    if (!saved) handleSavePhrase();
-    markPhraseKnown(state.phrase);
-    setSavedKnown(true);
-    onKnown();
+    deletePhrase(state.phrase);
+    setSaved(false);
+    onUnsaved();
   }
 
   function handleSaveCorrection() {
@@ -147,9 +144,10 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 rounded-full bg-white/70 px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+            aria-label="Close"
+            className="shrink-0 rounded-full bg-white/70 p-2 text-ink active:scale-95"
           >
-            Done
+            <CloseIcon className="h-5 w-5" />
           </button>
         </div>
 
@@ -236,23 +234,28 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
         </details>
         </div>
         <div
-          className="shrink-0 grid grid-cols-2 gap-2 border-t border-white/40 px-5 pt-3"
+          className="shrink-0 border-t border-white/40 px-5 pt-3"
           style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
         >
           <button
-            onClick={handleMarkKnown}
-            className="rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
-          >
-            {savedKnown ? "Known" : "Got it"}
-          </button>
-          <button
-            onClick={handleSavePhrase}
-            className="rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+            onClick={() => (saved ? handleUnsavePhrase() : handleSavePhrase())}
+            aria-pressed={saved}
+            className={`w-full rounded-2xl py-3 text-sm font-semibold active:scale-95 ${
+              saved ? "bg-brand-light text-brand" : "bg-brand text-white"
+            }`}
           >
             {saved ? "Saved" : "Save"}
           </button>
         </div>
       </div>
     </>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
   );
 }

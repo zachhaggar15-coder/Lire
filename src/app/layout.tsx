@@ -6,6 +6,7 @@ import ServiceWorker from "@/components/ServiceWorker";
 import AuthSync from "@/components/AuthSync";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 import ViewportHeightVar from "@/components/ViewportHeightVar";
+import StorageMigrations from "@/components/StorageMigrations";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -84,6 +85,7 @@ export default function RootLayout({
         <AuthSync />
         <AppLifecycleTracker />
         <ViewportHeightVar />
+        <StorageMigrations />
       </body>
     </html>
   );

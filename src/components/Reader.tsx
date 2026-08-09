@@ -2407,9 +2407,8 @@ export default function Reader({ text }: { text: ReadingText }) {
             recordLearningAction();
             showToast("Saved phrase");
           }}
-          onKnown={() => {
-            recordLearningAction();
-            showToast("Marked phrase as known");
+          onUnsaved={() => {
+            showToast("Removed from review");
           }}
           onAiRequested={() => markAiSupportUsed("phrase")}
         />
