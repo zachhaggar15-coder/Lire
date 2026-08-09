@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getOnboardingState } from "@/lib/onboarding";
 import { subscribeToRecommendationPreferences } from "@/lib/recommendation/preferences";
+import { useAnyModalOpen } from "@/lib/modalPresence";
 
 const items = [
   { href: "/", label: "Lessons", activePaths: ["/", "/articles"] },
@@ -31,6 +32,7 @@ const items = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const modalOpen = useAnyModalOpen();
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export default function BottomNav() {
   if (pathname.startsWith("/admin")) return null;
   if (/^\/reader\/[^/]+\/(practice|listen)$/.test(pathname)) return null;
   if (onboardingComplete !== true) return null;
+  if (modalOpen) return null;
 
   return (
     <nav

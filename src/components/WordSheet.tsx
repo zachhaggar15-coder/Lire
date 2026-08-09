@@ -15,8 +15,8 @@ import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import type { InferenceChallenge } from "@/lib/inference";
 import PronounceButton from "@/components/PronounceButton";
-import WordLearningActions from "@/components/WordLearningActions";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useModalPresence } from "@/lib/modalPresence";
 
 export interface ActiveWordState {
   word: string;
@@ -38,7 +38,6 @@ interface WordSheetProps {
   state: ActiveWordState | null;
   articleTitle: string;
   onClose: () => void;
-  onKnow: () => void;
   /**
    * Adds the word to the review deck. Saving is an explicit choice rather
    * than a side effect of tapping: a tap usually means "what's this?", and
@@ -108,7 +107,7 @@ const STATUS_LABEL: Record<WordStatus, string> = {
  * dictionary lookup for the word the reader is curious about.
  * "Ask AI for nuance" is on-demand only — it never runs unless tapped.
  */
-export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave, onUnsave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
+export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsave, inferenceChallenge, onInferenceAnswer, onAiRequested, onExplainSentence }: WordSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -123,9 +122,13 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
   const activePointerId = useRef<number | null>(null);
   const open = state !== null;
   const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
+  useModalPresence(open);
   const lookup = state?.lookup;
   const contextual = state?.contextualTranslation;
   const found = lookup?.source === "local";
+  // "known" is a separate historical state that this sheet no longer sets; it
+  // still counts as saved so the toggle can remove it.
+  const saved = state?.existingStatus != null;
   const isProperNoun = (lookup?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
   const [primary, ...rest] = lookup?.translations ?? [];
   const firstExample = lookup?.examples[0];
@@ -319,9 +322,10 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 rounded-full bg-white/70 px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+            aria-label="Close"
+            className="shrink-0 rounded-full bg-white/70 p-2 text-ink active:scale-95"
           >
-            Done
+            <CloseIcon className="h-5 w-5" />
           </button>
         </div>
 
@@ -649,24 +653,31 @@ export default function WordSheet({ state, articleTitle, onClose, onKnow, onSave
               onClick={onClose}
               className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
             >
-              Done
+              Close
             </button>
           ) : (
-            <div className="rounded-card border border-cream-dark bg-white/75 p-3">
-              <WordLearningActions
-                status={state?.existingStatus}
-                onKnow={onKnow}
-                onUnsure={() => onSave?.("unsure")}
-                onSave={() => onSave?.("learning")}
-                onUnsave={onUnsave}
-                showExplanation={false}
-              />
-            </div>
+            <button
+              onClick={() => (saved ? onUnsave?.() : onSave?.("learning"))}
+              aria-pressed={saved}
+              className={`w-full rounded-2xl py-3 text-sm font-semibold active:scale-95 ${
+                saved ? "bg-brand-light text-brand" : "bg-brand text-white"
+              }`}
+            >
+              {saved ? "Saved" : "Save"}
+            </button>
           )}
         </div>
         </div>
       </div>
     </>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
   );
 }
 

@@ -5,6 +5,7 @@ import type { SentenceExplanation } from "@/lib/ai/types";
 import { getSentenceExplanation } from "@/lib/ai/client";
 import PronounceButton from "@/components/PronounceButton";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useModalPresence } from "@/lib/modalPresence";
 
 export interface ActiveSentenceState {
   sentence: string;
@@ -33,6 +34,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
   const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
+  useModalPresence(open);
 
   // Reset whenever a different sentence is shown.
   useEffect(() => {

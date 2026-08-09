@@ -12,7 +12,8 @@ const files = {
   practicePage: readFileSync(new URL("../src/app/reader/[id]/practice/PracticePageClient.tsx", import.meta.url), "utf8"),
   listening: readFileSync(new URL("../src/components/practice/ListeningPractice.tsx", import.meta.url), "utf8"),
   wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
-  wordActions: readFileSync(new URL("../src/components/WordLearningActions.tsx", import.meta.url), "utf8"),
+  phraseSheet: readFileSync(new URL("../src/components/PhraseSheet.tsx", import.meta.url), "utf8"),
+  sentenceSheet: readFileSync(new URL("../src/components/SentenceSheet.tsx", import.meta.url), "utf8"),
   bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
   modalFocus: readFileSync(new URL("../src/lib/useModalFocus.ts", import.meta.url), "utf8"),
   swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
@@ -89,17 +90,30 @@ check(
 console.log("--- tutorial and practice interaction regressions ---");
 check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
 check("the tutorial explicitly teaches holding a phrase", files.tutorial.includes("Hold for a phrase") && files.tutorial.includes("onPointerDown={startDemoPhraseHold}"));
-check("tutorial and real word cards share the same learning actions", files.tutorial.includes("<WordLearningActions") && files.wordSheet.includes("<WordLearningActions"));
-check("the shared action explanation keeps explicit JSX spaces", (files.wordActions.match(/\{\" \"\}/g) ?? []).length >= 3);
-check("the real word card supports unsaving", files.wordSheet.includes("onUnsave={onUnsave}") && files.wordActions.includes('"Unsave"'));
+check(
+  "tutorial and real word cards both offer a single Save action",
+  !files.tutorial.includes("<WordLearningActions") && !files.wordSheet.includes("<WordLearningActions")
+);
+check(
+  "the real word card's Save button toggles back off",
+  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") && files.wordSheet.includes('saved ? "Saved" : "Save"')
+);
+check("the real word card closes with an X, not a Done label", files.wordSheet.includes('aria-label="Close"'));
 check("the real word card is viewport-bounded on mobile and web", files.wordSheet.includes("100dvh") && files.wordSheet.includes("sm:items-center"));
 check(
   "mobile word-card actions stay pinned outside the scrolling definition body",
-  files.wordSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") &&
-    files.wordSheet.includes("shrink-0 border-t") &&
-    files.wordSheet.includes("showExplanation={false}")
+  files.wordSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") && files.wordSheet.includes("shrink-0 border-t")
 );
-check("mobile word-card actions share one compact row", files.wordActions.includes("grid grid-cols-3"));
+// The nav is a sibling of <main>, so a sheet's z-index can be trapped by any
+// ancestor stacking context and lose to it, covering the sheet's actions.
+check(
+  "the bottom nav yields to open sheets instead of racing them on z-index",
+  files.bottomNav.includes("useAnyModalOpen") && files.bottomNav.includes("if (modalOpen) return null;")
+);
+check(
+  "every bottom sheet registers itself so the nav knows to yield",
+  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("useModalPresence(open)"))
+);
 check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));
 check("the canonical reconstruction is hidden until correct or revealed", files.practice.includes('(result === "correct" || answerRevealed) &&'));
 check(

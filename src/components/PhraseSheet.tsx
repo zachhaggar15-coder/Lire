@@ -7,6 +7,7 @@ import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { isPhraseSaved, markPhraseKnown, savePhrase } from "@/lib/phrases";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useModalPresence } from "@/lib/modalPresence";
 
 export interface ActivePhraseState {
   phrase: string;
@@ -35,6 +36,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onK
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
   const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
+  useModalPresence(open);
 
   useEffect(() => {
     setCorrection("");

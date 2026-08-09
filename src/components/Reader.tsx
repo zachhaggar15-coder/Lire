@@ -30,7 +30,7 @@ import {
   naturalTranslationForRange,
   type ResolvedTranslationAlignment,
 } from "@/lib/translationAlignment";
-import { getKnownWords, markKnown } from "@/lib/knownWords";
+import { getKnownWords } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
@@ -1151,28 +1151,6 @@ export default function Reader({ text }: { text: ReadingText }) {
       contextSentence: sentenceText,
       source: phrase.source,
     });
-  }
-
-  function handleKnow() {
-    if (!activeWord) return;
-    const lemma = activeWord.lookup.lemma;
-    recordLearningAction();
-    trackEvent("word_marked_known", { articleId: text.id });
-    markKnown(activeWord.word);
-    if (lemma) markKnown(lemma);
-    const nextWords = deleteWord(activeWord.word);
-    setSavedWordsSnapshot(nextWords);
-    setKnownSet((prev) => {
-      const next = new Set(prev);
-      next.add(activeWord.word);
-      if (lemma) next.add(lemma.toLowerCase());
-      return next;
-    });
-    setWordStatusMap(buildWordStatusMap(nextWords));
-    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-    pulseRewardWords("known", [activeWord.word, lemma]);
-    setActiveWord(null);
-    showToast("Marked as known");
   }
 
   function buildLessonMiniReviewItems(): LessonMiniReviewItem[] {
@@ -2401,7 +2379,6 @@ export default function Reader({ text }: { text: ReadingText }) {
           state={activeWord}
           articleTitle={text.title}
           onClose={() => setActiveWord(null)}
-          onKnow={handleKnow}
           onSave={handleSaveActiveWord}
           onUnsave={handleUnsaveActiveWord}
           inferenceChallenge={activeInference}

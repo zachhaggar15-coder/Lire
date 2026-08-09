@@ -21,6 +21,7 @@ import ReadingDiagnosticsCard from "@/components/diagnostics/ReadingDiagnosticsC
 import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
 import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
 import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
+import { useModalPresence } from "@/lib/modalPresence";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -100,6 +101,7 @@ export default function LessonCompleteScreen({
   diagnostics,
   levelLabel,
 }: LessonCompleteScreenProps) {
+  useModalPresence(true);
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);

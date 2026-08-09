@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { tokenize, type Token } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { saveWord, markWordAsKnown } from "@/lib/storage";
+import { saveWord } from "@/lib/storage";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildWordCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
@@ -14,7 +14,6 @@ import { saveWalkthroughStep, completeWalkthrough } from "@/lib/onboarding";
 import { trackEvent } from "@/lib/analytics/client";
 import PronounceButton from "@/components/PronounceButton";
 import CoachMark from "@/components/onboarding/CoachMark";
-import WordLearningActions from "@/components/WordLearningActions";
 import { findContainingPhraseTranslationMatch, type PhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
 import { useModalFocus } from "@/lib/useModalFocus";
 import type { SavedWord } from "@/types";
@@ -104,15 +103,9 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
     };
   }
 
-  function handleWordAction(action: "known" | "unsure" | "save") {
+  function handleWordAction() {
     if (!activeWord) return;
-    const word = activeWord.token.clean;
-    if (action === "known") {
-      const { persisted } = saveWord(buildDemoSavedWord(word, "learning"));
-      if (persisted) markWordAsKnown(word);
-    } else {
-      saveWord(buildDemoSavedWord(word, action === "unsure" ? "unsure" : "learning"));
-    }
+    saveWord(buildDemoSavedWord(activeWord.token.clean, "learning"));
     setSavedCount((c) => c + 1);
     trackEvent("first_word_saved", { articleId: "onboarding-demo" });
     setActiveWord(null);
@@ -286,11 +279,13 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning</p>
                 <p className="mt-1 text-xl font-bold text-ink">{activeWord.lookup.translations[0] ?? "Not in the dictionary"}</p>
                 <div className="mt-3">
-                  <WordLearningActions
-                    onKnow={() => handleWordAction("known")}
-                    onUnsure={() => handleWordAction("unsure")}
-                    onSave={() => handleWordAction("save")}
-                  />
+                  <button
+                    type="button"
+                    onClick={handleWordAction}
+                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
             )}
