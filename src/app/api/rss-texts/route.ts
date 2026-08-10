@@ -10,6 +10,7 @@ import {
   putPersistedRssTexts,
 } from "@/lib/rss/rssTextStore";
 import { previousDateKey, seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
+import { areNearDuplicateTitles } from "@/lib/rss/titleSimilarity";
 import { getDailyExtraReadingTexts } from "@/lib/publicDomainBank";
 import type { Category, ReadingText } from "@/types";
 
@@ -165,7 +166,13 @@ async function fetchFromSource(
   }
 }
 
-/** Removes items that share a source URL or a (trimmed, lowercased) title with an earlier item. */
+/**
+ * Removes items that share a source URL or a (trimmed, lowercased) title
+ * with an earlier item, then also removes items that are a different-
+ * outlet retelling of a story already kept (see titleSimilarity.ts) — a
+ * regional-press wire story otherwise shows up 3-4 times in the same
+ * day's pool under slightly different headlines.
+ */
 function dedupe(items: RssReadingText[]): RssReadingText[] {
   const seenUrls = new Set<string>();
   const seenTitles = new Set<string>();
@@ -174,6 +181,7 @@ function dedupe(items: RssReadingText[]): RssReadingText[] {
     const urlKey = item.sourceUrl.trim().toLowerCase();
     const titleKey = item.title.trim().toLowerCase();
     if (seenUrls.has(urlKey) || seenTitles.has(titleKey)) continue;
+    if (out.some((existing) => areNearDuplicateTitles(existing.title, item.title))) continue;
     seenUrls.add(urlKey);
     seenTitles.add(titleKey);
     out.push(item);
@@ -274,9 +282,12 @@ function isKnownSnippetFilter(value: string): value is "all" | "only" | "exclude
  * genuinely bad day (several feeds down/rate-limited at once) — see
  * backfillIfShort below. Not the same as DAILY_RSS_ARTICLE_LIMIT (the
  * client's requested count): this is the minimum the server tops up to,
- * the client's `limit` is the ceiling.
+ * the client's `limit` is the ceiling. Set close to that ceiling rather
+ * than a token minimum — the hardened source list comfortably clears it
+ * on an ordinary day (39/40 feeds healthy in testing), so this should
+ * read as "the real target," not just a rarely-hit emergency floor.
  */
-const MIN_GUARANTEED_ARTICLES = 10;
+const MIN_GUARANTEED_ARTICLES = 20;
 
 /**
  * Adapts a local reading-bank text into the RssReadingText DTO shape so it
@@ -330,6 +341,7 @@ async function backfillIfShort(
     const titleKey = item.title.trim().toLowerCase();
     if (seenIds.has(item.id) || seenUrls.has(urlKey) || seenTitles.has(titleKey)) return;
     if (snippetParam === "exclude" && item.isShortSnippet) return;
+    if (result.some((existing) => areNearDuplicateTitles(existing.title, item.title))) return;
     seenIds.add(item.id);
     seenUrls.add(urlKey);
     seenTitles.add(titleKey);
@@ -444,6 +456,10 @@ async function handleGet(request: Request) {
   return NextResponse.json({
     texts: selected,
     fetchedAt: new Date().toISOString(),
+    // When the underlying candidate pool was actually built/refreshed —
+    // distinct from fetchedAt (which is just "now"). Lets the News page
+    // show a real "Updated HH:MM" instead of implying constant freshness.
+    poolBuiltAt: new Date(pool.builtAt).toISOString(),
     // Lets the home page show "fewer than 5" as an intentional quality
     // decision rather than a bug — see UI fallback behaviour in the README.
     fewerThanRequested: selected.length < limit,

@@ -76,6 +76,13 @@ function articleLanguage(text: ReadingText): NonNullable<ReadingText["language"]
   return text.language ?? "fr";
 }
 
+/** "Updated HH:MM" chip on the News header — when the candidate pool behind today's list was actually built, not just "now." */
+function formatUpdatedTime(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+}
+
 function defaultCategoryForMode(): CategoryFilter {
   // Both modes default to "all" — the live-news page used to default to
   // "news-style" only, which silently narrowed the daily pool down to
@@ -99,6 +106,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [prefVersion, setPrefVersion] = useState(0);
   const [usedFallback, setUsedFallback] = useState(false);
   const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
+  const [poolBuiltAt, setPoolBuiltAt] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isSlowLoading, setIsSlowLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
@@ -147,7 +155,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
         const res = await fetch(`/api/rss-texts?${params.toString()}`, { signal: controller.signal });
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
-        const data: { texts: RssReadingText[] } = await res.json();
+        const data: { texts: RssReadingText[]; poolBuiltAt?: string } = await res.json();
         if (cancelled) return;
 
         const nextRssTexts = data.texts.map(rssReadingTextToReadingText);
@@ -155,6 +163,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         pruneStaleRssProgress(nextRssTexts.map((text) => text.id));
         detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
         setRssTexts(nextRssTexts);
+        setPoolBuiltAt(data.poolBuiltAt ?? null);
         setUsedFallback(nextRssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
         setState("success");
       } catch (error) {
@@ -253,6 +262,11 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
               <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">{title}</h1>
               <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>
             </div>
+            {poolBuiltAt && (
+              <span className="shrink-0 rounded-full bg-cream-fill px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-muted">
+                Updated {formatUpdatedTime(poolBuiltAt)}
+              </span>
+            )}
           </div>
         </header>
       )}

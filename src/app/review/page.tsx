@@ -5,13 +5,14 @@ import Link from "next/link";
 import { texts as hardcodedTexts } from "@/data/texts";
 import type { SavedWord } from "@/types";
 import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
-import { getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
+import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
 import { getCustomTexts } from "@/lib/customTexts";
 import { getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 import { getReviewPreferences, saveReviewPreferences } from "@/lib/reviewPreferences";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
+import { canSpeak, speakFrench } from "@/lib/speech";
 import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
@@ -24,15 +25,44 @@ type CardFeedback = "correct" | "learning" | null;
 const REVIEW_FEEDBACK_DELAY_MS = 760;
 /**
  * A word graduates out of the active review deck once it's been graded
- * "Knew it" this many times in a row — matches the length of the SRS
- * interval ladder (spacedRepetition.ts): by the top rung, an unprompted
- * self-report of "I knew it" five times running is a fair bar for calling
- * a word learned, without needing a separate typed-confirmation pass.
+ * "Knew it" this many times in a row — an unprompted self-report of "I
+ * knew it" three times running is a fair bar for calling a word learned,
+ * without needing a separate typed-confirmation pass. Phrases use the
+ * same threshold — see PHRASE_GRADUATE_AFTER_CORRECT_STREAK in phrases.ts.
  */
-const GRADUATE_AFTER_CORRECT_STREAK = 5;
+const GRADUATE_AFTER_CORRECT_STREAK = 3;
 
 function promptLabel(direction: ReviewDirection): string {
   return direction === "en-fr" ? "English to French" : "French to English";
+}
+
+/** Caps a freshly-built due queue at the remembered session-length preference (reviewPreferences.ts) — null means "no cap, review everything due." */
+function capToSessionLength<T>(queue: T[]): T[] {
+  const { sessionLength } = getReviewPreferences();
+  if (typeof sessionLength !== "number") return queue;
+  return queue.slice(0, sessionLength);
+}
+
+/** Hear the French word/phrase aloud, reusing the same browser TTS every other speech control in the app already reads (speech.ts) — hidden entirely when the browser has no speechSynthesis support. */
+function SpeakButton({ text }: { text: string }) {
+  if (!canSpeak()) return null;
+  return (
+    <button
+      type="button"
+      onClick={(event) => {
+        event.stopPropagation();
+        speakFrench(text);
+      }}
+      aria-label={`Listen to "${text}"`}
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream text-ink-muted active:scale-95"
+    >
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M11 5 6 9H3v6h3l5 4z" />
+        <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+        <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+      </svg>
+    </button>
+  );
 }
 
 export default function ReviewPage() {
@@ -46,6 +76,7 @@ export default function ReviewPage() {
   const [sessionPhraseQueue, setSessionPhraseQueue] = useState<SavedPhrase[]>([]);
   const [reviewMode, setReviewModeState] = useState<"words" | "phrases">(() => getReviewPreferences().mode);
   const [reviewDirection, setReviewDirectionState] = useState<ReviewDirection>(() => getReviewPreferences().direction);
+  const [sessionLength, setSessionLengthState] = useState<number | null>(() => getReviewPreferences().sessionLength);
 
   function setReviewMode(mode: "words" | "phrases") {
     setReviewModeState(mode);
@@ -55,6 +86,11 @@ export default function ReviewPage() {
   function setReviewDirection(direction: ReviewDirection) {
     setReviewDirectionState(direction);
     saveReviewPreferences({ direction });
+  }
+
+  function setSessionLength(value: number | null) {
+    setSessionLengthState(value);
+    saveReviewPreferences({ sessionLength: value });
   }
   const [reviewStarted, setReviewStarted] = useState(false);
   const [phraseRevealed, setPhraseRevealed] = useState(false);
@@ -77,8 +113,12 @@ export default function ReviewPage() {
     const savedPhrases = getSavedPhrases();
     const visibleSavedWords = article ? savedWords.filter((word) => word.sourceTextTitle === article) : savedWords;
     const visibleSavedPhrases = article ? savedPhrases.filter((phrase) => phrase.sourceTextTitle === article) : savedPhrases;
+    // Word queue is intentionally NOT capped here — the hub shows the true
+    // due count before you start, and the session-length cap only applies
+    // once you actually start (see startWordReview). Phrases have no
+    // separate start gate, so their cap has to apply up front instead.
     const initialWordQueue = buildReviewQueue(visibleSavedWords);
-    const initialPhraseQueue = visibleSavedPhrases.filter((phrase) => phrase.status !== "known");
+    const initialPhraseQueue = capToSessionLength(visibleSavedPhrases.filter((phrase) => phrase.status !== "known"));
     setArticleFilter(article);
     setWords(visibleSavedWords);
     setPhrases(visibleSavedPhrases);
@@ -99,7 +139,12 @@ export default function ReviewPage() {
       // deliberate choice — don't persist this as the remembered preference.
       setReviewModeState("phrases");
     }
-    if (initialWordQueue.length > 0) {
+    // A direct "review this article's words" deep link already IS the
+    // start decision — jump straight in. The general /review entry point
+    // (no article filter) shows the practice hub first instead, so
+    // direction/mode/session-length are visible and chosen deliberately
+    // rather than always being skipped straight past.
+    if (article && initialWordQueue.length > 0) {
       setReviewStarted(true);
     }
     setReady(true);
@@ -167,6 +212,11 @@ export default function ReviewPage() {
 
   function startWordReview() {
     if (!current) return;
+    const capped = capToSessionLength(wordQueue);
+    if (capped.length !== wordQueue.length) {
+      setWordQueue(capped);
+      setWordSessionTotal(capped.length);
+    }
     shouldScrollToReviewCard.current = true;
     setReviewStarted(true);
   }
@@ -223,8 +273,8 @@ export default function ReviewPage() {
     }
     const nextWords = visibleWords(getSavedWords());
     const nextPhrases = articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases();
-    const nextWordQueue = buildReviewQueue(nextWords);
-    const nextPhraseQueue = nextPhrases.filter((phrase) => phrase.status !== "known");
+    const nextWordQueue = capToSessionLength(buildReviewQueue(nextWords));
+    const nextPhraseQueue = capToSessionLength(nextPhrases.filter((phrase) => phrase.status !== "known"));
     setWords(nextWords);
     setPhrases(nextPhrases);
     setWordQueue(nextWordQueue);
@@ -260,10 +310,8 @@ export default function ReviewPage() {
 
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      if (correct) {
-        markPhraseKnown(currentPhrase.phrase);
-        setPhrases(articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases());
-      }
+      const updatedPhrases = recordPhraseReview(currentPhrase.phrase, correct);
+      setPhrases(articleFilter ? updatedPhrases.filter((phrase) => phrase.sourceTextTitle === articleFilter) : updatedPhrases);
       const remainingQueue = sessionPhraseQueue.slice(1);
       const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
       setSessionPhraseQueue(nextQueue);
@@ -408,12 +456,14 @@ export default function ReviewPage() {
           vocabularyStates={vocabularyStates}
           mode={reviewMode}
           direction={reviewDirection}
+          sessionLength={sessionLength}
           onDirectionChange={(direction) => {
             setReviewDirection(direction);
             resetWordCard();
             setPhraseRevealed(false);
           }}
           onModeChange={setReviewMode}
+          onSessionLengthChange={setSessionLength}
           onStart={startWordReview}
         />
       )}
@@ -482,9 +532,12 @@ export default function ReviewPage() {
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                 {promptLabel(reviewDirection)}
               </p>
-              <p className="mt-2 text-3xl font-bold text-ink">
-                {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
-              </p>
+              <div className="mt-2 flex items-center justify-center gap-2">
+                <p className="text-3xl font-bold text-ink">
+                  {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
+                </p>
+                {reviewDirection === "fr-en" && <SpeakButton text={current.word} />}
+              </div>
             {reviewDirection === "fr-en" && current.lemma && current.lemma !== current.word && (
               <p className="text-xs text-ink-muted">from "{current.lemma}"</p>
             )}
@@ -500,9 +553,12 @@ export default function ReviewPage() {
             ) : (
               <div className="review-answer-reveal mt-5 w-full border-t border-cream-dark pt-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">Answer</p>
-                <p className={`mt-1 text-xl ${hasTranslation ? "text-ink" : "italic text-ink-muted"}`}>
-                  {reviewDirection === "en-fr" ? current.word : current.primaryTranslation}
-                </p>
+                <div className="mt-1 flex items-center justify-center gap-2">
+                  <p className={`text-xl ${hasTranslation ? "text-ink" : "italic text-ink-muted"}`}>
+                    {reviewDirection === "en-fr" ? current.word : current.primaryTranslation}
+                  </p>
+                  {reviewDirection === "en-fr" && <SpeakButton text={current.word} />}
+                </div>
                 {reviewDirection === "en-fr" && current.lemma && current.lemma !== current.word && (
                   <p className="mt-1 text-sm text-ink-muted">Lemma: {current.lemma}</p>
                 )}
@@ -595,8 +651,10 @@ function PracticeHubCard({
   vocabularyStates,
   mode,
   direction,
+  sessionLength,
   onDirectionChange,
   onModeChange,
+  onSessionLengthChange,
   onStart,
 }: {
   wordCount: number;
@@ -608,8 +666,10 @@ function PracticeHubCard({
   vocabularyStates: VocabularyStateItem[];
   mode: "words" | "phrases";
   direction: ReviewDirection;
+  sessionLength: number | null;
   onDirectionChange: (direction: ReviewDirection) => void;
   onModeChange: (mode: "words" | "phrases") => void;
+  onSessionLengthChange: (value: number | null) => void;
   onStart: () => void;
 }) {
   const focusCount = vocabularyStates.filter((item) => item.state === "fragile" || item.state === "forgotten").length;
@@ -654,6 +714,10 @@ function PracticeHubCard({
       <div className="mt-4">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
         <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
+      </div>
+      <div className="mt-4">
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
+        <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
       </div>
 
       <button
@@ -791,6 +855,38 @@ function ReviewDirectionToggle({
   );
 }
 
+const SESSION_LENGTH_OPTIONS: { value: number | null; label: string }[] = [
+  { value: 10, label: "10" },
+  { value: 20, label: "20" },
+  { value: null, label: "All" },
+];
+
+/** Optional cap on how many cards a sitting runs before stopping — lowers the barrier to starting on a day with a big due pile. Persisted via reviewPreferences.ts. */
+function SessionLengthToggle({
+  value,
+  onChange,
+}: {
+  value: number | null;
+  onChange: (value: number | null) => void;
+}) {
+  return (
+    <div className="grid grid-cols-3 gap-1 rounded-full bg-cream-fill p-1">
+      {SESSION_LENGTH_OPTIONS.map((option) => (
+        <button
+          key={option.label}
+          type="button"
+          onClick={() => onChange(option.value)}
+          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+            value === option.value ? "bg-brand text-cream" : "text-ink-muted"
+          }`}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function PhraseModeSwitch({
   mode,
   onChange,
@@ -866,7 +962,10 @@ function PhraseReviewCard({
           </span>
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
-        <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
+        <div className="mt-3 flex items-center gap-2">
+          <p className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
+          {direction === "fr-en" && <SpeakButton text={phrase.phrase} />}
+        </div>
 
         {!revealed ? (
           <button
@@ -878,9 +977,12 @@ function PhraseReviewCard({
           </button>
         ) : (
           <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
-            <p className="text-sm font-semibold text-ink">
-              {phrase.phrase} = {phrase.translation}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold text-ink">
+                {phrase.phrase} = {phrase.translation}
+              </p>
+              {direction === "en-fr" && <SpeakButton text={phrase.phrase} />}
+            </div>
             <div className="rounded-2xl bg-cream p-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
               <p className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>

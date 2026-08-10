@@ -1,18 +1,21 @@
 import { pushStore } from "@/lib/supabase/sync";
 
 /**
- * Remembers the last-used Review setup (direction, words vs phrases) so the
- * practice hub opens to what you actually used last time instead of always
- * resetting to French-to-English/words.
+ * Remembers the last-used Review setup (direction, words vs phrases,
+ * session length) so the practice hub opens to what you actually used
+ * last time instead of always resetting to defaults.
  */
 export interface ReviewPreferences {
   direction: "fr-en" | "en-fr";
   mode: "words" | "phrases";
+  /** Cards per sitting before stopping, or null for "review everything due." */
+  sessionLength: number | null;
 }
 
 export const DEFAULT_REVIEW_PREFERENCES: ReviewPreferences = {
   direction: "fr-en",
   mode: "words",
+  sessionLength: null,
 };
 
 const KEY = "lire.reviewPrefs.v1";
