@@ -102,6 +102,16 @@ export default function ReviewPage() {
   const [wordSessionTotal, setWordSessionTotal] = useState(0);
   const [phraseSessionTotal, setPhraseSessionTotal] = useState(0);
   const phraseScore = useRef({ correct: 0, total: 0 });
+  // Tracks distinct words missed at least once this session, not miss events —
+  // a missed card is requeued and must eventually be graded "Knew it" to leave
+  // the queue, so by the time the session is done every card has a correct
+  // grade. Counting events would double up on the "Session complete" screen
+  // (a card missed once then learned still reads as one word needing a retry,
+  // not one known and one still outstanding). The Set lives in a ref (dedup
+  // logic runs in an event handler); missedCount mirrors its size into state
+  // since refs can't be read during render.
+  const missedWordKeys = useRef<Set<string>>(new Set());
+  const [missedCount, setMissedCount] = useState(0);
   const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reviewCardRef = useRef<HTMLDivElement | null>(null);
   const shouldScrollToReviewCard = useRef(false);
@@ -228,6 +238,10 @@ export default function ReviewPage() {
   function gradeWord(grade: WordGrade) {
     if (!current || cardFeedback) return;
     const correct = grade === "knew";
+    if (!correct) {
+      missedWordKeys.current.add(current.word);
+      setMissedCount(missedWordKeys.current.size);
+    }
     const nextScore = {
       knew: score.knew + (correct ? 1 : 0),
       missed: score.missed + (correct ? 0 : 1),
@@ -285,6 +299,8 @@ export default function ReviewPage() {
     setPhraseRevealed(false);
     setReviewStarted(nextWordQueue.length > 0 && reviewMode === "words");
     setScore({ knew: 0, missed: 0 });
+    missedWordKeys.current = new Set();
+    setMissedCount(0);
     setCardFeedback(null);
     phraseScore.current = { correct: 0, total: 0 };
     reviewSessionStarted.current = false;
@@ -403,7 +419,8 @@ export default function ReviewPage() {
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
-            Known: {score.knew} - Needs another look: {score.missed}
+            Known: {wordSessionTotal}
+            {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             <button
