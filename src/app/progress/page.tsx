@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import BackButton from "@/components/BackButton";
 import { getArchive } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
 import { awardCompletedMissions, buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
@@ -17,6 +16,7 @@ import {
   TodaysMissionsPanel,
   TopicProgressCard,
 } from "@/components/GamificationCards";
+import AppBar from "@/components/AppBar";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
@@ -96,12 +96,9 @@ export default function ProgressPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        <BackButton fallbackHref="/" />
-        <h1 className="mt-2 text-2xl font-extrabold text-ink">Progress</h1>
-        <p className="text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
 
       {rewardNotice && (
         <div className="mb-4 rounded-2xl bg-brand-light px-3 py-2 text-sm font-semibold text-brand shadow-card">
@@ -120,7 +117,7 @@ export default function ProgressPage() {
             type="button"
             onClick={() => setTab(item.id)}
             aria-pressed={tab === item.id}
-            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
               tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
@@ -174,7 +171,7 @@ export default function ProgressPage() {
                     style={{ height: `${Math.max(10, Math.min(54, day.words / 18))}px` }}
                     title={`${day.date}: ${day.words} words`}
                   />
-                  <span className="text-[9px] text-ink-muted">{new Date(`${day.date}T12:00:00`).toLocaleDateString(undefined, { weekday: "narrow" })}</span>
+                  <span className="text-[11px] text-ink-muted">{new Date(`${day.date}T12:00:00`).toLocaleDateString(undefined, { weekday: "narrow" })}</span>
                 </div>
               ))}
             </div>
@@ -348,7 +345,7 @@ function FirstStepsProgressCard() {
           </div>
         ))}
       </div>
-      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-95">
+      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white">
         Start reading
       </Link>
     </section>

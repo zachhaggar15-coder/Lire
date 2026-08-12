@@ -16,13 +16,14 @@ import PronounceButton from "@/components/PronounceButton";
 import CoachMark from "@/components/onboarding/CoachMark";
 import { findContainingPhraseTranslationMatch, type PhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import type { SavedWord } from "@/types";
 
 /**
  * A short (1-3 minute), interactive walkthrough that teaches Lire by using
- * it, not by reading about it — shown once, right after the level/topic/
- * goal picker (FirstRunOnboarding), before the learner ever reaches the
- * main app. Reuses real domain logic throughout (the actual dictionary
+ * it, not by reading about it. First use now goes straight to a real lesson;
+ * this fuller tutorial remains available from Library for anyone who wants
+ * to replay it. Reuses real domain logic throughout (the actual dictionary
  * lookup, the actual saveWord/markWordAsKnown storage functions, the actual
  * cloze-exercise builder, the actual PronounceButton) against a small,
  * purpose-built demo text — not a fake mockup, and not the full Reader
@@ -52,7 +53,8 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [activePhrase, setActivePhrase] = useState<PhraseTranslationMatch | null>(null);
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
   const phraseHoldTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const modalRef = useModalFocus<HTMLDivElement>(true);
+  const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
+  useDismissibleHistory(true, handleSkip);
 
   useEffect(() => {
     if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
@@ -222,13 +224,13 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
         <div className="flex items-center justify-between">
           {step > 0 ? (
-            <button type="button" onClick={() => goToStep(step - 1)} className="text-sm font-semibold text-ink-muted">
+            <button type="button" onClick={() => goToStep(step - 1)} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
               Back
             </button>
           ) : (
             <span />
           )}
-          <button type="button" onClick={handleSkip} className="text-sm font-semibold text-ink-muted">
+          <button type="button" onClick={handleSkip} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
             Skip tutorial
           </button>
         </div>
@@ -282,7 +284,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   <button
                     type="button"
                     onClick={handleWordAction}
-                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white"
                   >
                     Save
                   </button>

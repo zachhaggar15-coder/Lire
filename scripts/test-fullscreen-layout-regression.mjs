@@ -14,7 +14,15 @@ const files = {
   wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
   phraseSheet: readFileSync(new URL("../src/components/PhraseSheet.tsx", import.meta.url), "utf8"),
   sentenceSheet: readFileSync(new URL("../src/components/SentenceSheet.tsx", import.meta.url), "utf8"),
+  bottomSheet: readFileSync(new URL("../src/components/BottomSheet.tsx", import.meta.url), "utf8"),
   bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
+  appIcon: readFileSync(new URL("../src/components/AppIcon.tsx", import.meta.url), "utf8"),
+  navigationPolish: readFileSync(new URL("../src/components/AppNavigationPolish.tsx", import.meta.url), "utf8"),
+  routeLoading: readFileSync(new URL("../src/components/RouteLoading.tsx", import.meta.url), "utf8"),
+  settingsLoading: readFileSync(new URL("../src/app/settings/loading.tsx", import.meta.url), "utf8"),
+  viewportHeight: readFileSync(new URL("../src/components/ViewportHeightVar.tsx", import.meta.url), "utf8"),
+  reader: readFileSync(new URL("../src/components/Reader.tsx", import.meta.url), "utf8"),
+  review: readFileSync(new URL("../src/app/review/page.tsx", import.meta.url), "utf8"),
   modalFocus: readFileSync(new URL("../src/lib/useModalFocus.ts", import.meta.url), "utf8"),
   swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
   swClient: readFileSync(new URL("../src/components/ServiceWorker.tsx", import.meta.url), "utf8"),
@@ -52,6 +60,8 @@ function blockAfter(source, marker) {
 
 const routeRule = blockAfter(files.css, ".app-route-shell");
 const routeKeyframes = blockAfter(files.css, "@keyframes app-route-enter");
+const forwardRouteKeyframes = blockAfter(files.css, "@keyframes app-route-forward");
+const backRouteKeyframes = blockAfter(files.css, "@keyframes app-route-back");
 const containingBlockProperties =
   /\b(transform|filter|perspective|backdrop-filter|will-change|contain|container-type|content-visibility)\s*:/i;
 
@@ -73,9 +83,20 @@ check(
 );
 check(
   "the route animation never applies a fixed-position containing-block property",
-  !containingBlockProperties.test(routeKeyframes),
-  routeKeyframes.trim()
+  [routeKeyframes, forwardRouteKeyframes, backRouteKeyframes].every((rule) => !containingBlockProperties.test(rule)),
+  [routeKeyframes, forwardRouteKeyframes, backRouteKeyframes].join("\n").trim()
 );
+
+console.log("--- Android quality polish contract ---");
+check("primary navigation uses a moving indicator", files.bottomNav.includes("activeIndex * 100") && files.bottomNav.includes("transition-transform"));
+check("primary navigation icons have filled active variants", files.bottomNav.includes("active={active}") && files.appIcon.includes("active && name"));
+check("route motion distinguishes drill-in, back, and crossfade", ["forward", "back", "crossfade"].every((motion) => files.navigationPolish.includes(`\"${motion}\"`)));
+check("route skeletons are delayed and destination-shaped", files.css.includes(".route-loading-delayed") && ["LessonsSkeleton", "ReaderSkeleton", "ReviewSkeleton", "LibrarySkeleton"].every((name) => files.routeLoading.includes(name)));
+check("Library owns its route-specific loading state", files.settingsLoading.includes('variant="library"'));
+check("keyboard geometry is exposed to app chrome and sheets", files.viewportHeight.includes("--keyboard-inset") && files.css.includes("html.keyboard-open .bottom-nav") && files.bottomSheet.includes("var(--keyboard-inset)"));
+check("the reader uses aligned controls and a content boundary", files.reader.includes('canUseSpeech ? "grid-cols-2"') && files.reader.includes("border-t border-cream-dark/90 pt-5"));
+check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("Your review deck is ready when you are"));
+check("changing review counts retain a stable slot", files.review.includes("ligne-state-slot") && files.review.includes("ligne-value-change"));
 
 console.log("--- full-screen overlay contract ---");
 check(
@@ -91,18 +112,24 @@ console.log("--- tutorial and practice interaction regressions ---");
 check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
 check("the tutorial explicitly teaches holding a phrase", files.tutorial.includes("Hold for a phrase") && files.tutorial.includes("onPointerDown={startDemoPhraseHold}"));
 check(
-  "tutorial and real word cards both offer a single Save action",
+  "tutorial and real word cards both offer a single primary review action",
   !files.tutorial.includes("<WordLearningActions") && !files.wordSheet.includes("<WordLearningActions")
 );
 check(
-  "the real word card's Save button toggles back off",
-  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") && files.wordSheet.includes('saved ? "Saved" : "Save"')
+  "the real word card's review button toggles back off",
+  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") &&
+    files.wordSheet.includes('saved ? "Remove from review" : "Add to review"')
 );
 check("the real word card closes with an X, not a Done label", files.wordSheet.includes('aria-label="Close"'));
-check("the real word card is viewport-bounded on mobile and web", files.wordSheet.includes("100dvh") && files.wordSheet.includes("sm:items-center"));
+check(
+  "the real word card is viewport-bounded on mobile and web",
+  files.wordSheet.includes("<BottomSheet") && files.bottomSheet.includes("100dvh") && files.bottomSheet.includes("sm:items-center")
+);
 check(
   "mobile word-card actions stay pinned outside the scrolling definition body",
-  files.wordSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") && files.wordSheet.includes("shrink-0 border-t")
+  files.wordSheet.includes("footer={footer}") &&
+    files.bottomSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") &&
+    files.bottomSheet.includes("shrink-0 border-t")
 );
 // The nav is a sibling of <main>, so a sheet's z-index can be trapped by any
 // ancestor stacking context and lose to it, covering the sheet's actions.
@@ -112,7 +139,8 @@ check(
 );
 check(
   "every bottom sheet registers itself so the nav knows to yield",
-  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("useModalPresence(open)"))
+  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("<BottomSheet")) &&
+    files.bottomSheet.includes("useModalPresence(open)")
 );
 check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));
 check("the canonical reconstruction is hidden until correct or revealed", files.practice.includes('(result === "correct" || answerRevealed) &&'));

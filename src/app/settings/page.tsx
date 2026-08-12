@@ -83,7 +83,7 @@ function Toggle({
 function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div>
-      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
       <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
     </div>
   );
@@ -204,9 +204,9 @@ export default function SettingsPage() {
   return (
     <div className="ligne-screen">
       <header className="mb-5">
-        <p className="ligne-label">Learning</p>
-        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Your setup</h1>
-        <p className="mt-2 text-sm text-ink-muted">Level, reader preferences, saved items, and app setup.</p>
+        <p className="ligne-label">You</p>
+        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Library</h1>
+        <p className="mt-2 text-sm text-ink-muted">Learning setup, saved items, progress, and app settings.</p>
       </header>
 
       <div className="space-y-6">
@@ -226,7 +226,7 @@ export default function SettingsPage() {
                   onClick={() => changeLevel(level)}
                   aria-label={`Set reading level to ${level}`}
                   aria-pressed={selectedLevel === level}
-                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
                     selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
@@ -245,7 +245,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => update({ fontSize: opt.value })}
                   aria-pressed={settings.fontSize === opt.value}
-                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
                     settings.fontSize === opt.value ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
@@ -265,7 +265,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => update({ translationMode: opt.value })}
                   aria-pressed={settings.translationMode === opt.value}
-                  className={`w-full rounded-2xl px-3 py-2.5 text-left transition-colors ${
+                  className={`ligne-segmented-button w-full rounded-2xl px-3 py-2.5 text-left ${
                     settings.translationMode === opt.value ? "bg-brand text-cream" : "bg-cream-fill text-ink"
                   }`}
                 >
@@ -302,7 +302,6 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <SettingsLink href="/live-news" title="News" description="Read current French articles." />
           <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
           <SettingsLink href="/words?tab=phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
           <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
@@ -327,7 +326,7 @@ export default function SettingsPage() {
                   resetWalkthrough();
                   router.push("/");
                 }}
-                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink active:scale-95"
+                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink"
               >
                 Restart
               </button>

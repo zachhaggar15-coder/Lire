@@ -17,6 +17,8 @@ import { buildContextualReviewArticles, classifyVocabularyStates, type Contextua
 import { recordReviewSuccessXp } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
+import { triggerHaptic } from "@/lib/haptics";
+import AppIcon from "@/components/AppIcon";
 
 type ReviewDirection = "fr-en" | "en-fr";
 type WordGrade = "knew" | "learning";
@@ -54,13 +56,9 @@ function SpeakButton({ text }: { text: string }) {
         speakFrench(text);
       }}
       aria-label={`Listen to "${text}"`}
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream text-ink-muted active:scale-95"
+      className="ligne-icon-button ligne-pressable bg-cream text-ink-muted"
     >
-      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 5 6 9H3v6h3l5 4z" />
-        <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-        <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-      </svg>
+      <AppIcon name="volume" className="h-4 w-4" />
     </button>
   );
 }
@@ -238,6 +236,7 @@ export default function ReviewPage() {
   function gradeWord(grade: WordGrade) {
     if (!current || cardFeedback) return;
     const correct = grade === "knew";
+    triggerHaptic(correct ? "confirm" : "selection");
     if (!correct) {
       missedWordKeys.current.add(current.word);
       setMissedCount(missedWordKeys.current.size);
@@ -310,6 +309,7 @@ export default function ReviewPage() {
   function gradePhrase(grade: WordGrade) {
     if (!currentPhrase || cardFeedback) return;
     const correct = grade === "knew";
+    triggerHaptic(correct ? "confirm" : "selection");
     phraseScore.current = {
       correct: phraseScore.current.correct + (correct ? 1 : 0),
       total: phraseScore.current.total + 1,
@@ -347,8 +347,10 @@ export default function ReviewPage() {
         { label: "Total", value: stats.totalLearning },
       ].map((s) => (
         <div key={s.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2.5 text-center">
-          <p className="font-numeral text-2xl leading-none text-ink">{s.value}</p>
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{s.label}</p>
+          <p className="flex min-h-6 items-center justify-center font-numeral text-2xl leading-none text-ink">
+            <span key={s.value} className="ligne-state-slot ligne-value-change">{s.value}</span>
+          </p>
+          <p className="ligne-meta mt-1">{s.label}</p>
         </div>
       ))}
     </div>
@@ -375,17 +377,33 @@ export default function ReviewPage() {
   if (!done && ready && stats.totalLearning === 0 && sessionPhraseQueue.length === 0) {
     return (
       <div className="ligne-screen">
-        <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "Flip, then grade yourself."} />
-        <div className="mt-16 text-center">
-          <p className="text-ink-muted">{articleFilter ? "No saved words from this article yet." : "Nothing to review yet."}</p>
-          <p className="mt-1 text-xs text-ink-muted">
+        <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "A quiet place for the words you are learning."} />
+        <div className="flex items-center justify-center gap-10 border-y border-cream-dark/80 py-3 text-center">
+          <div className="min-w-16">
+            <p className="font-numeral text-2xl leading-none text-ink">0</p>
+            <p className="ligne-meta mt-1">Due</p>
+          </div>
+          <div className="h-8 w-px bg-cream-dark" aria-hidden="true" />
+          <div className="min-w-16">
+            <p className="font-numeral text-2xl leading-none text-ink">0</p>
+            <p className="ligne-meta mt-1">Saved</p>
+          </div>
+        </div>
+        <div className="mx-auto flex min-h-[48vh] max-w-xs flex-col items-center justify-center pb-16 text-center">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-brand-light text-brand" aria-hidden="true">
+            <AppIcon name="book" active className="h-11 w-11" />
+          </div>
+          <h2 className="mt-5 text-xl font-semibold leading-tight text-ink">
+            {articleFilter ? "No words saved from this text" : "Your review deck is ready when you are"}
+          </h2>
+          <p className="ligne-body mt-2 max-w-[17rem]">
             {articleFilter
               ? "Add words to review while reading, then come back here."
               : "Words you add to review while reading show up here."}
           </p>
           <Link
             href="/"
-            className="ligne-pill mt-3 inline-block bg-brand text-cream"
+            className="ligne-pill ligne-pressable mt-5 bg-brand text-cream"
           >
             Start reading
           </Link>
@@ -443,11 +461,11 @@ export default function ReviewPage() {
       <header className="mb-3 flex items-end justify-between gap-3">
         <div>
           <p className="ligne-label">Word practice</p>
-          <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Review</h1>
+          <h1 className="ligne-title mt-1 text-[30px]">Review</h1>
           {articleFilter && <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">From: {articleFilter}</p>}
         </div>
-        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
-          {reviewProgressLabel}
+        <span className="ligne-meta min-w-[8.5rem] text-right">
+          <span key={reviewProgressLabel} className="ligne-value-change inline-block">{reviewProgressLabel}</span>
         </span>
       </header>
 
@@ -615,7 +633,7 @@ export default function ReviewPage() {
                 type="button"
                 onClick={() => gradeWord("learning")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
               >
                 Still learning
               </button>
@@ -623,7 +641,7 @@ export default function ReviewPage() {
                 type="button"
                 onClick={() => gradeWord("knew")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
               >
                 Knew it
               </button>
@@ -652,8 +670,8 @@ function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <header className="mb-5">
       <p className="ligne-label">Word practice</p>
-      <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">{title}</h1>
-      <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>
+      <h1 className="ligne-title mt-1 text-[30px]">{title}</h1>
+      <p className="ligne-body mt-2">{subtitle}</p>
     </header>
   );
 }
@@ -722,34 +740,41 @@ function PracticeHubCard({
         )}
       </div>
 
-      {phraseCount > 0 && (
-        <div className="mt-4">
-          <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
-          <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
-        </div>
-      )}
-      <div className="mt-4">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
-        <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
-      </div>
-      <div className="mt-4">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
-        <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
-      </div>
-
       <button
         type="button"
         onClick={onStart}
-        className="ligne-pill mt-4 w-full bg-brand text-cream"
+        className="ligne-pill mt-4 min-h-12 w-full bg-brand text-cream"
       >
-        Start quick review
+        Review {wordCount} {wordCount === 1 ? "card" : "cards"}
       </button>
+
+      <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
+        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          Review options
+        </summary>
+        <div className="pb-1">
+          {phraseCount > 0 && (
+            <div className="mt-4">
+              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
+              <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
+            </div>
+          )}
+          <div className="mt-4">
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
+            <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
+          </div>
+          <div className="mt-4">
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
+            <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
+          </div>
+        </div>
+      </details>
       <Link href="/words" className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
         Manage saved words
       </Link>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Stats
         </summary>
         <div className="mt-3 grid grid-cols-4 gap-2">
@@ -787,7 +812,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
-      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -815,7 +840,7 @@ function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
+          <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
         </div>
         <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">
@@ -861,7 +886,7 @@ function ReviewDirectionToggle({
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+          className={`ligne-segmented-button min-h-12 rounded-full px-2 py-2 text-xs font-bold ${
             direction === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
         >
@@ -893,7 +918,7 @@ function SessionLengthToggle({
           key={option.label}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+          className={`ligne-segmented-button min-h-12 rounded-full px-2 py-2 text-xs font-bold ${
             value === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
         >
@@ -919,7 +944,7 @@ function PhraseModeSwitch({
         type="button"
         onClick={() => onChange("words")}
         aria-pressed={mode === "words"}
-        className={`rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
+        className={`ligne-segmented-button min-h-12 rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Words
       </button>
@@ -927,7 +952,7 @@ function PhraseModeSwitch({
         type="button"
         onClick={() => onChange("phrases")}
         aria-pressed={mode === "phrases"}
-        className={`rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
+        className={`ligne-segmented-button min-h-12 rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Phrases {phraseCount > 0 ? `(${phraseCount})` : ""}
       </button>
@@ -1020,7 +1045,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("learning")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
           >
             Still learning
           </button>
@@ -1028,7 +1053,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("knew")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
           >
             Knew it
           </button>

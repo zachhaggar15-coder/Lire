@@ -57,7 +57,7 @@ export default function PracticeSection({ text, plan, lookupRate }: PracticeSect
 
       {plan.grammarNotes.length > 0 && (
         <div className="mt-4 space-y-2 border-t border-cream-dark pt-3">
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Grammar in this text</p>
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Grammar in this text</p>
           {plan.grammarNotes.map((note) => (
             <details key={note.title} className="rounded-2xl bg-cream p-3">
               <summary className="cursor-pointer text-sm font-semibold text-ink">{note.title}</summary>
@@ -77,7 +77,7 @@ export default function PracticeSection({ text, plan, lookupRate }: PracticeSect
       )}
 
       <div className="mt-4 border-t border-cream-dark pt-3">
-        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">This text</p>
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">This text</p>
         <p className="mt-1 text-sm font-semibold text-ink">{lookupRate.thisText} lookups per 100 words</p>
         {lookupRate.recentAverage !== null ? (
           <p className="mt-0.5 text-xs text-ink-muted">

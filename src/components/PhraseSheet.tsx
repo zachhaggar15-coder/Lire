@@ -6,8 +6,8 @@ import { getWordExplanation } from "@/lib/ai/client";
 import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { deletePhrase, isPhraseSaved, savePhrase } from "@/lib/phrases";
-import { useModalFocus } from "@/lib/useModalFocus";
-import { useModalPresence } from "@/lib/modalPresence";
+import BottomSheet from "@/components/BottomSheet";
+import AppIcon from "@/components/AppIcon";
 
 export interface ActivePhraseState {
   phrase: string;
@@ -34,8 +34,6 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
-  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
-  useModalPresence(open);
 
   useEffect(() => {
     setCorrection("");
@@ -110,30 +108,29 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
     setAiState("error");
   }
 
+  const footer = (
+    <button
+      onClick={() => (saved ? handleUnsavePhrase() : handleSavePhrase())}
+      aria-pressed={saved}
+      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
+        saved ? "bg-cream text-brand" : "bg-brand text-white"
+      }`}
+    >
+      {saved ? "Saved" : "Save"}
+    </button>
+  );
+
   return (
-    <>
-      <div
-        className={`fixed inset-0 z-40 bg-black/30 transition-opacity ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={onClose}
-        aria-hidden
-      />
-
-      <div
-        ref={modalRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label={state ? `Phrase meaning for ${state.phrase}` : "Phrase meaning"}
-        aria-hidden={!open}
-        tabIndex={-1}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] max-w-md flex-col overflow-hidden rounded-t-3xl bg-brand-light shadow-2xl transition-transform duration-200 ${
-          open ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain p-5">
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-white/70" />
-
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      ariaLabel={state ? `Phrase meaning for ${state.phrase}` : "Phrase meaning"}
+      footer={footer}
+      surfaceClassName="bg-brand-light"
+      footerClassName="border-white/40 bg-brand-light"
+      handleClassName="bg-white/70"
+      contentClassName="px-5 pb-4"
+    >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand">Phrase</p>
@@ -145,7 +142,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
           <button
             onClick={onClose}
             aria-label="Close"
-            className="shrink-0 rounded-full bg-white/70 p-2 text-ink active:scale-95"
+            className="ligne-icon-button shrink-0 bg-white/70 text-ink"
           >
             <CloseIcon className="h-5 w-5" />
           </button>
@@ -198,7 +195,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
                 type="button"
                 onClick={handleSaveCorrection}
                 disabled={!correction.trim()}
-                className="mt-2 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-40"
+                className="mt-2 min-h-12 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-40"
               >
                 Save correction
               </button>
@@ -214,7 +211,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
                   type="button"
                   onClick={handleAskAi}
                   disabled={!state || aiState === "loading"}
-                  className="shrink-0 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-50"
+                  className="min-h-12 shrink-0 rounded-full bg-brand px-3 py-2 shadow-raised text-xs font-semibold text-white disabled:opacity-50"
                 >
                   {aiState === "loading" ? "Asking..." : "Ask AI"}
                 </button>
@@ -232,30 +229,10 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
             </div>
           </div>
         </details>
-        </div>
-        <div
-          className="shrink-0 border-t border-white/40 px-5 pt-3"
-          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
-        >
-          <button
-            onClick={() => (saved ? handleUnsavePhrase() : handleSavePhrase())}
-            aria-pressed={saved}
-            className={`w-full rounded-2xl py-3 text-sm font-semibold active:scale-95 ${
-              saved ? "bg-brand-light text-brand" : "bg-brand text-white"
-            }`}
-          >
-            {saved ? "Saved" : "Save"}
-          </button>
-        </div>
-      </div>
-    </>
+    </BottomSheet>
   );
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }

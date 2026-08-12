@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useState } from "react";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import type { ContextualTranslationResult } from "@/lib/dictionary/contextualTranslation";
 import type { ResolvedTranslationAlignment } from "@/lib/translationAlignment";
@@ -15,8 +15,8 @@ import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import type { InferenceChallenge } from "@/lib/inference";
 import PronounceButton from "@/components/PronounceButton";
-import { useModalFocus } from "@/lib/useModalFocus";
-import { useModalPresence } from "@/lib/modalPresence";
+import BottomSheet from "@/components/BottomSheet";
+import AppIcon from "@/components/AppIcon";
 
 export interface ActiveWordState {
   word: string;
@@ -116,13 +116,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
   const [definitionRevealed, setDefinitionRevealed] = useState(true);
   const [sentenceTranslationRevealed, setSentenceTranslationRevealed] = useState(false);
   const [inferenceAnswer, setInferenceAnswer] = useState<number | null>(null);
-  const [dragOffset, setDragOffset] = useState(0);
-  const dragStartY = useRef<number | null>(null);
-  const dragOffsetRef = useRef(0);
-  const activePointerId = useRef<number | null>(null);
   const open = state !== null;
-  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
-  useModalPresence(open);
   const lookup = state?.lookup;
   const contextual = state?.contextualTranslation;
   const found = lookup?.source === "local";
@@ -156,36 +150,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
     setDefinitionRevealed(!inferenceChallenge);
     setSentenceTranslationRevealed(false);
     setInferenceAnswer(null);
-    setDragOffset(0);
-    dragOffsetRef.current = 0;
   }, [state?.word, state?.contextSentence, inferenceChallenge]);
-
-  function handleDragStart(event: PointerEvent<HTMLElement>) {
-    if (event.pointerType === "mouse" && event.button !== 0) return;
-    dragStartY.current = event.clientY;
-    activePointerId.current = event.pointerId;
-    event.currentTarget.setPointerCapture(event.pointerId);
-  }
-
-  function handleDragMove(event: PointerEvent<HTMLElement>) {
-    if (activePointerId.current !== event.pointerId || dragStartY.current === null) return;
-    const nextOffset = Math.max(0, event.clientY - dragStartY.current);
-    dragOffsetRef.current = nextOffset;
-    setDragOffset(nextOffset);
-  }
-
-  function handleDragEnd(event: PointerEvent<HTMLElement>) {
-    if (activePointerId.current !== event.pointerId) return;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-    const shouldDismiss = dragOffsetRef.current > 95;
-    dragStartY.current = null;
-    activePointerId.current = null;
-    dragOffsetRef.current = 0;
-    setDragOffset(0);
-    if (shouldDismiss) onClose();
-  }
 
   function handleSaveCorrection() {
     if (!state || !lookup || !correction.trim()) return;
@@ -236,52 +201,30 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
     }
   }
 
+  const footer = isProperNoun ? (
+    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white">
+      Close
+    </button>
+  ) : (
+    <button
+      onClick={() => (saved ? onUnsave?.() : onSave?.("learning"))}
+      aria-pressed={saved}
+      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
+        saved ? "bg-brand-light text-brand" : "bg-brand text-white"
+      }`}
+    >
+      {saved ? "Remove from review" : "Add to review"}
+    </button>
+  );
+
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/30 transition-opacity ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={onClose}
-        aria-hidden
-      />
-
-      {/* Responsive sheet: edge-to-edge at the bottom on phones, centred and
-          fully bounded by the viewport on wider web layouts. */}
-      <div
-        className={`fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
-        aria-hidden={!open}
-        onClick={onClose}
-      >
-        <div
-          ref={modalRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label={state ? `Meaning and learning options for ${state.word}` : "Word meaning"}
-          tabIndex={-1}
-          onClick={(event) => event.stopPropagation()}
-          className={`relative flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark bg-cream-card shadow-2xl transition-all sm:max-h-[calc(var(--vvh,100dvh)-3rem)] sm:rounded-3xl ${
-            open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 sm:translate-y-4"
-          }`}
-          style={{
-            transform: dragOffset > 0 ? `translateY(${dragOffset}px)` : undefined,
-            transitionDuration: dragOffset > 0 ? "0ms" : "200ms",
-          }}
-        >
-        <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 pb-3 pt-2 sm:pt-4">
-        <button
-          type="button"
-          aria-label="Swipe down to close"
-          onPointerDown={handleDragStart}
-          onPointerMove={handleDragMove}
-          onPointerUp={handleDragEnd}
-          onPointerCancel={handleDragEnd}
-          className="mx-auto mb-1.5 flex h-6 w-24 touch-none items-center justify-center rounded-full active:cursor-grabbing"
-        >
-          <span className="h-1.5 w-10 rounded-full bg-white/60" />
-        </button>
-
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      ariaLabel={state ? `Meaning and learning options for ${state.word}` : "Word meaning"}
+      footer={footer}
+      contentClassName="px-5 pb-3"
+    >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="text-2xl font-bold text-ink">{state?.word}</h3>
@@ -323,7 +266,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
           <button
             onClick={onClose}
             aria-label="Close"
-            className="shrink-0 rounded-full bg-white/70 p-2 text-ink active:scale-95"
+            className="ligne-icon-button shrink-0 bg-white/70 text-ink"
           >
             <CloseIcon className="h-5 w-5" />
           </button>
@@ -362,7 +305,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
                       setDefinitionRevealed(true);
                       onInferenceAnswer?.(inferenceChallenge.word, inferenceChallenge.lemma, correct);
                     }}
-                    className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold ${
+                    className={`min-h-12 w-full rounded-xl px-3 py-2 text-left text-sm font-semibold ${
                       answered && correct
                         ? "bg-emerald-100 text-emerald-800"
                         : answered && selected
@@ -384,14 +327,14 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
               <button
                 type="button"
                 onClick={() => setSentenceTranslationRevealed((value) => !value)}
-                className="rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-95"
+                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink"
               >
                 Reveal sentence translation
               </button>
               <button
                 type="button"
                 onClick={() => setDefinitionRevealed(true)}
-                className="rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-95"
+                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink"
               >
                 Reveal direct definition
               </button>
@@ -561,7 +504,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
               type="button"
               onClick={handleSaveCorrection}
               disabled={!correction.trim()}
-              className="shrink-0 rounded-xl bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
+              className="min-h-12 shrink-0 rounded-xl bg-brand px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
             >
               Save
             </button>
@@ -574,14 +517,14 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
         </details>
 
         <details>
-          <summary className="cursor-pointer text-xs font-semibold text-accent-pinktext underline underline-offset-2">
+          <summary className="flex min-h-12 cursor-pointer items-center text-xs font-semibold text-accent-pinktext underline underline-offset-2">
             More help
           </summary>
           <div className="mt-2">
           {aiState === "idle" && (
             <button
               onClick={handleAskAi}
-              className="text-xs font-semibold text-accent-pinktext underline underline-offset-2"
+              className="min-h-12 text-xs font-semibold text-accent-pinktext underline underline-offset-2"
             >
               Ask AI for nuance
             </button>
@@ -594,7 +537,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
           {aiState === "error" && (
             <p className="text-xs text-rose-700">
               {aiError}{" "}
-              <button onClick={handleAskAi} className="underline">
+              <button onClick={handleAskAi} className="inline-flex min-h-12 items-center underline">
                 Try again
               </button>
             </p>
@@ -636,49 +579,19 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
         {onExplainSentence && state && (
           <button
             onClick={() => onExplainSentence(state.contextSentence)}
-            className="w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-95"
+            className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink"
           >
             Explain the whole sentence
           </button>
         )}
           </div>
         </details>
-        </div>
-        <div
-          className="shrink-0 border-t border-cream-dark bg-cream-card px-4 pt-2.5 sm:px-5"
-          style={{ paddingBottom: "calc(0.625rem + var(--safe-bottom))" }}
-        >
-          {isProperNoun ? (
-            <button
-              onClick={onClose}
-              className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
-            >
-              Close
-            </button>
-          ) : (
-            <button
-              onClick={() => (saved ? onUnsave?.() : onSave?.("learning"))}
-              aria-pressed={saved}
-              className={`w-full rounded-2xl py-3 text-sm font-semibold active:scale-95 ${
-                saved ? "bg-brand-light text-brand" : "bg-brand text-white"
-              }`}
-            >
-              {saved ? "Saved" : "Save"}
-            </button>
-          )}
-        </div>
-        </div>
-      </div>
-    </>
+    </BottomSheet>
   );
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }
 
 function WordFamilyRow({ label, values }: { label: string; values: string[] }) {

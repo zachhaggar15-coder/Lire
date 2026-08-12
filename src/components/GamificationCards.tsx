@@ -93,7 +93,7 @@ export function StreakWeekStrip({ week, className = "" }: { week: StreakDay[]; c
     <div className={`flex items-end justify-between gap-1 ${className}`}>
       {week.map((day) => (
         <div key={day.dateKey} className="flex flex-1 flex-col items-center gap-1">
-          <span className={`font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${day.isToday ? "text-brand" : "text-ink-faint"}`}>{day.weekdayLabel}</span>
+          <span className={`font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${day.isToday ? "text-brand" : "text-ink-faint"}`}>{day.weekdayLabel}</span>
           <div
             className={`flex h-8 w-8 items-center justify-center rounded-full border ${
               day.active ? "border-brand bg-brand text-cream" : day.isToday ? "border-yellow bg-yellow text-yellow-ink" : "border-cream-strong bg-cream-card"
@@ -412,7 +412,7 @@ export function CompletionSummary({
       <p className="mt-1 text-sm font-bold text-brand">+{completion.xpEarned} XP</p>
       <p className="mx-auto mt-2 max-w-xs text-sm text-ink-muted">{nextCopy}</p>
 
-      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
+      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white">
         {nextLabel}
       </Link>
 
@@ -450,7 +450,7 @@ export function CompletionSummary({
         <button
           type="button"
           onClick={onSecondPass}
-          className="mt-3 w-full rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+          className="mt-3 w-full rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink"
         >
           Reread without English
         </button>

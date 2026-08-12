@@ -91,11 +91,13 @@ import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCom
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
+import { triggerHaptic } from "@/lib/haptics";
 import Toast from "@/components/Toast";
 import { CompletionSummary } from "@/components/GamificationCards";
 import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
+import AppIcon from "@/components/AppIcon";
 
 const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
 
@@ -1080,6 +1082,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setSavedWordsSnapshot(nextWords);
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     rememberWordSaved("tap_lookup");
+    triggerHaptic("confirm");
     pulseRewardWords("saved", [activeWord.word, activeWord.lookup.lemma]);
     setActiveWord((prev) =>
       prev
@@ -1725,8 +1728,8 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   /** The clickable, word-tappable French sentence used inside each paragraph, so tap targets stay consistent in normal and translated reading. */
   function phraseClassName(): string {
-    if (rereadMode) return "rounded px-0.5 py-0.5";
-    return "cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
+    if (rereadMode) return "reader-tap-target rounded px-0.5 py-0.5";
+    return "reader-tap-target cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
   }
 
   function paragraphAudioButton(paragraph: string, paragraphIndex: number): ReactNode {
@@ -1740,15 +1743,11 @@ export default function Reader({ text }: { text: ReadingText }) {
           handlePlayParagraph(paragraph, paragraphIndex);
         }}
         aria-label={active ? "Stop this paragraph" : `Play paragraph ${paragraphIndex + 1}`}
-        className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold active:scale-95 ${
+        className={`mt-[-0.35rem] inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
           active ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
         }`}
       >
-        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M11 5 6 9H3v6h3l5 4z" />
-          <path d="M15 9.5a4 4 0 0 1 0 5" />
-          <path d="M18 7a8 8 0 0 1 0 10" />
-        </svg>
+        <AppIcon name="volume" className="h-3.5 w-3.5" />
       </button>
     );
   }
@@ -1918,13 +1917,16 @@ export default function Reader({ text }: { text: ReadingText }) {
   const headerTone = readerHeaderTone(text.category);
 
   return (
-    <div className="bg-cream px-[22px] pt-5">
+    <div className="min-h-[var(--vvh,100dvh)] bg-cream px-[22px] pb-[calc(var(--safe-bottom)+1rem)] pt-[calc(var(--safe-top)+1.25rem)]">
       {showProgressBadge && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-0 z-40 h-1 w-full max-w-md -translate-x-1/2 bg-cream-dark/70">
             <div className="h-full bg-brand transition-[width] duration-200" style={{ width: `${scrollProgressPercent}%` }} />
           </div>
-          <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full border border-cream-dark bg-cream-card/95 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] tabular-nums text-brand backdrop-blur">
+          <div
+            className="pointer-events-none fixed right-3 z-40 rounded-full border border-cream-dark bg-cream-card/95 px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-brand backdrop-blur"
+            style={{ top: "calc(var(--safe-top) + 0.75rem)" }}
+          >
             {scrollProgressPercent}% read
           </div>
         </>
@@ -1935,99 +1937,58 @@ export default function Reader({ text }: { text: ReadingText }) {
         <button
           type="button"
           onClick={handleBack}
-          className="-ml-2 flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-brand active:scale-95"
+          className="ligne-pressable -ml-2 flex min-h-12 items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-brand"
         >
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
+          <AppIcon name="back" />
           Back
         </button>
       </div>
 
       <section className="overflow-hidden rounded-card border border-cream-dark bg-cream-card">
-        <div className={`p-4 ${headerTone}`}>
+        <div className={`px-4 py-3.5 ${headerTone}`}>
           <div className="min-w-0 flex-1">
-            <span className="mb-2 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
+            <span className="mb-1.5 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-brand">
               {formatCategory(text.category)}
             </span>
-            <h1 className="break-words font-french text-[28px] leading-tight text-ink">
+            <h1 className="break-words font-french text-[26px] leading-[1.12] text-ink">
               {text.title}
             </h1>
       {/* The stored level, matching the card that led here — see the note in
-          ReadingCard. The estimate only ever speaks in the "Reading help"
+          ReadingCard. The estimate only ever speaks in the "Reading options"
           note below, where it describes the fit rather than renaming it. */}
-            <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-muted">
+            <p className="ligne-meta mt-1.5 text-ink-muted">
               {text.difficulty} - {text.minutes} min
             </p>
           </div>
         </div>
-        <div className="p-4">
-      <details
-        className="text-xs text-ink-muted"
-        open={readingHelpOpen}
-        onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
-      >
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">Reading help</summary>
-        <p className="mt-1">
-          Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
-          &ldquo;Explain the whole sentence&rdquo;.
-        </p>
-        {difficulty && (
-          <p className="mt-1">
-            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
-            {toPercent(difficulty.unknownWordRatio)}% of the words may be new.
-          </p>
-        )}
-      </details>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div className="p-3.5">
+      <div className={`grid gap-2 ${canUseSpeech ? "grid-cols-2" : "grid-cols-1"}`}>
         {canUseSpeech && (
           <button
             type="button"
             onClick={handleToggleListenToArticle}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
+            className={`ligne-pressable inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold ${
               isSpeakingArticle ? "bg-brand text-cream" : "border border-cream-dark bg-cream text-ink"
             }`}
           >
             {isSpeakingArticle ? (
               <>
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
+                <AppIcon name="pause" className="h-4 w-4" />
                 Stop listening
               </>
             ) : (
               <>
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 5 6 9H3v6h3l5 4z" />
-                  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-                  <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-                </svg>
+                <AppIcon name="volume" className="h-4 w-4" />
                 Listen to article
               </>
             )}
-          </button>
-        )}
-        {canUseSpeech && (
-          <button
-            type="button"
-            onClick={cycleSpeechRate}
-            aria-label="Change speaking speed"
-            className="inline-flex items-center gap-1 rounded-full border border-cream-dark bg-cream px-3 py-2 text-xs font-semibold text-ink active:scale-95"
-          >
-            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 14h4l5 5V5l-5 5H4v4Z" />
-              <path d="M17 8a5 5 0 0 1 0 8" />
-            </svg>
-            {settings.speechRate.toFixed(2)}x
           </button>
         )}
         <button
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex items-center gap-2 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink active:scale-95 disabled:opacity-50"
+          className="ligne-pressable inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-cream-dark bg-cream px-3 text-xs font-semibold text-ink disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -2044,13 +2005,49 @@ export default function Reader({ text }: { text: ReadingText }) {
           </span>
           {showEnglishTranslation ? "Hide English" : "English help"}
         </button>
-        <FeedbackButton
-          feature="reader"
-          articleId={text.id}
-          label="Report a problem"
-          className="inline-flex items-center gap-1.5 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink-muted active:scale-95"
-        />
       </div>
+
+      <details
+        className="mt-2.5 rounded-2xl bg-cream-sunken px-3 py-2 text-xs leading-relaxed text-ink-muted"
+        open={readingHelpOpen}
+        onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
+      >
+        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          Reading options
+        </summary>
+        <p className="mt-2">
+          Tap a word for its meaning. Hold a word for its phrase. For a confusing line, tap a word and choose
+          &ldquo;Explain the whole sentence&rdquo;.
+        </p>
+        {difficulty && (
+          <p className="mt-1">
+            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
+            {toPercent(difficulty.unknownWordRatio)}% of the words may be new.
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {canUseSpeech && (
+            <button
+              type="button"
+              onClick={cycleSpeechRate}
+              aria-label="Change speaking speed"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-cream-dark bg-cream-card px-3 text-xs font-semibold text-ink"
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 14h4l5 5V5l-5 5H4v4Z" />
+                <path d="M17 8a5 5 0 0 1 0 8" />
+              </svg>
+              Speed {settings.speechRate.toFixed(2)}x
+            </button>
+          )}
+          <FeedbackButton
+            feature="reader"
+            articleId={text.id}
+            label="Report a problem"
+            className="inline-flex min-h-11 items-center rounded-full border border-cream-dark bg-cream-card px-3.5 text-xs font-semibold text-ink-muted"
+          />
+        </div>
+      </details>
 
       {showAudioTip && (
         <p className="mt-2 rounded-2xl bg-brand-light px-3 py-2 text-xs text-brand">
@@ -2097,8 +2094,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       </section>
 
       {isChunkedStarterLesson && (
-        <section className="mt-5 rounded-card border border-cream-dark bg-cream-card p-4">
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-brand">
+        <section className="mt-4 px-0.5">
+          <p className="ligne-meta text-brand">
             Part {currentLessonStep} of {lessonStepCount} · {lessonStepSentenceLabel}
           </p>
           <div
@@ -2116,7 +2113,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       <article
         ref={articleRef}
-        className={`no-select mt-6 space-y-6 font-french ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.62] text-ink`}
+        className={`no-select mt-5 space-y-6 border-t border-cream-dark/90 pt-5 font-french ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.62] text-ink`}
       >
         {visibleParagraphEntries.map(({ sentences, paragraphIndex }) =>
           showEnglishTranslation ? (
@@ -2173,7 +2170,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         <details className="mt-8 rounded-card border border-cream-dark bg-cream-card p-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
             <div>
-              <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Practice this article</h2>
+              <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Practice this article</h2>
               <p className="mt-0.5 text-xs text-ink-muted">
                 Comprehension checks, words worth learning, and a summary box.
               </p>
@@ -2187,7 +2184,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             {showInterpretationChecks && (
               <>
                 <section className="rounded-2xl bg-cream-sunken p-3">
-                  <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Quick challenge</h3>
+                  <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Quick challenge</h3>
                   <p className="mt-1 text-sm font-semibold text-ink">{quickChallenge.prompt}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {quickChallenge.choices.map((choice) => {
@@ -2199,7 +2196,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                           key={choice}
                           type="button"
                           onClick={() => setQuickChallengeAnswer(choice)}
-                          className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                          className={`rounded-full px-3 py-2 text-xs font-semibold ${
                             answered && correct
                               ? "bg-brand-light text-brand"
                               : selected
@@ -2224,7 +2221,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
                 {toneQuestions.length > 0 && (
                 <section className="space-y-3">
-                <h3 className="px-1 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Tone check</h3>
+                <h3 className="px-1 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Tone check</h3>
                   {toneQuestions.map((question) => (
                     <ComprehensionQuestion
                       key={question.id}
@@ -2248,7 +2245,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
             {showInterpretationChecks && (
               <div className="rounded-2xl bg-cream-sunken p-3">
-                <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Summarise it</h3>
+                <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Summarise it</h3>
                 <textarea
                   value={summaryDraft}
                   onChange={(event) => setSummaryDraft(event.target.value)}
@@ -2300,11 +2297,11 @@ export default function Reader({ text }: { text: ReadingText }) {
             )}
             {!rereadMode && !isStarterLesson && (
               <details className="rounded-card border border-cream-dark bg-cream-card p-3 text-left">
-                <summary className="cursor-pointer text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+                <summary className="cursor-pointer text-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
                   More options
                 </summary>
                 <div className="mt-3 rounded-2xl bg-cream-sunken p-3">
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">How did this level feel?</p>
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">How did this level feel?</p>
                   <div className="mt-2 grid grid-cols-3 gap-2">
                     {(
                       [
@@ -2317,7 +2314,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                         key={option.value}
                         type="button"
                         onClick={() => handleArticleFeedback(option.value)}
-                        className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                        className={`rounded-full px-3 py-2 text-xs font-semibold ${
                           articleFeedback === option.value ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
                         }`}
                       >
@@ -2396,8 +2393,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         </div>
       )}
 
-      {activeWord && (
-        <WordSheet
+      <WordSheet
           state={activeWord}
           articleTitle={text.title}
           onClose={() => setActiveWord(null)}
@@ -2411,17 +2407,13 @@ export default function Reader({ text }: { text: ReadingText }) {
             handleSentenceTap(sentence);
           }}
         />
-      )}
-      {activeSentence && (
-        <SentenceSheet
+      <SentenceSheet
           state={activeSentence}
           articleTitle={text.title}
           onClose={() => setActiveSentence(null)}
           onAiRequested={() => markAiSupportUsed("sentence")}
         />
-      )}
-      {activePhrase && (
-        <PhraseSheet
+      <PhraseSheet
           state={activePhrase}
           articleTitle={text.title}
           onClose={() => setActivePhrase(null)}
@@ -2434,7 +2426,6 @@ export default function Reader({ text }: { text: ReadingText }) {
           }}
           onAiRequested={() => markAiSupportUsed("phrase")}
         />
-      )}
       {lessonComplete && (
         <LessonCompleteScreen
           level={text.difficulty}
@@ -2575,7 +2566,7 @@ function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison
         <button
           type="button"
           onClick={() => setRevealed(true)}
-          className="mt-3 rounded-full bg-cream-dark px-4 py-2 text-xs font-semibold text-ink active:scale-95"
+          className="mt-3 rounded-full bg-cream-dark px-4 py-2 text-xs font-semibold text-ink"
         >
           Reveal framing notes
         </button>
@@ -2610,7 +2601,7 @@ function LearningCandidatesSection({
 
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Words worth learning</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Words worth learning</h2>
       <p className="mt-0.5 text-xs text-ink-muted">
         Ranked from this article so you do not have to decide which every unfamiliar word deserves review.
       </p>
@@ -2671,7 +2662,7 @@ function ComprehensionQuestion({
               key={`${question.id}-${index}-${choice}`}
               type="button"
               onClick={() => onSelect(index)}
-              className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium active:scale-[0.99] ${
+              className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium ${
                 isAnswer
                   ? "bg-brand-light text-brand"
                   : isSelected

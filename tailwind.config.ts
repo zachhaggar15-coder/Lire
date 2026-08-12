@@ -22,7 +22,7 @@ const config: Config = {
         ink: {
           DEFAULT: "#1B1915",
           muted: "#6E6858",
-          faint: "#A79F8B",
+          faint: "#817968",
         },
         accent: {
           pink: "#F3DCD8",

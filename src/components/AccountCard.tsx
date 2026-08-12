@@ -83,13 +83,13 @@ export default function AccountCard() {
             <button
               onClick={handleSyncNow}
               disabled={syncStatus.phase === "syncing"}
-              className="rounded-full bg-brand px-3 py-1.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+              className="rounded-full bg-brand px-3 py-1.5 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
             >
               {syncStatus.phase === "syncing" ? "Syncing..." : "Sync now"}
             </button>
             <button
               onClick={handleSignOut}
-              className="rounded-full bg-cream-dark px-3 py-1.5 text-sm font-semibold text-ink-muted active:scale-95"
+              className="rounded-full bg-cream-dark px-3 py-1.5 text-sm font-semibold text-ink-muted"
             >
               Sign out
             </button>
@@ -117,7 +117,7 @@ export default function AccountCard() {
               <button
                 onClick={handleSend}
                 disabled={!email.trim() || sendState === "sending"}
-                className="shrink-0 rounded-xl bg-brand px-4 py-2 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+                className="shrink-0 rounded-xl bg-brand px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
               >
                 {sendState === "sending" ? "Sending…" : "Send link"}
               </button>

@@ -1,13 +1,10 @@
-import BackButton from "@/components/BackButton";
+import AppBar from "@/components/AppBar";
 
 export default function PrivacyPage() {
   return (
-    <div className="px-4 pt-6">
-      <BackButton fallbackHref="/settings" />
-      <header className="mb-5 mt-2">
-        <h1 className="text-2xl font-extrabold text-ink">Privacy</h1>
-        <p className="text-sm text-ink-muted">How Lire handles app, learning, and validation data.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Privacy" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">How Lire handles app, learning, and validation data.</p>
 
       <div className="space-y-3 text-sm leading-relaxed text-ink-muted">
         <section className="rounded-card bg-cream-card p-4 shadow-card">

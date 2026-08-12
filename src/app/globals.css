@@ -5,6 +5,9 @@
 :root {
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --app-surface: #fffcf4;
+  --keyboard-inset: 0px;
+  --visual-offset-top: 0px;
 }
 
 html,
@@ -14,13 +17,23 @@ body {
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+  background: var(--app-surface);
 }
 
 body {
-  @apply bg-[#D8D1C0] text-ink antialiased;
+  @apply bg-cream text-ink antialiased;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+@media (min-width: 449px) {
+  body {
+    @apply bg-[#D8D1C0];
+  }
 }
 
 h1,
@@ -31,8 +44,45 @@ h3 {
 }
 
 button,
-a {
+a,
+summary,
+[role="button"] {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition-property: background-color, border-color, color, filter;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+button:not(:disabled):active,
+a:active,
+summary:active,
+[role="button"]:active {
+  filter: brightness(0.94) saturate(0.96);
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid rgb(22 89 60 / 0.55);
+  outline-offset: 2px;
+}
+
+button,
+[role="button"] {
+  min-width: 3rem !important;
+  min-height: 3rem !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  min-height: 3rem;
+}
+
+summary {
+  min-height: 3rem !important;
 }
 
 .no-select {
@@ -42,7 +92,8 @@ a {
 
 @layer components {
   .ligne-screen {
-    @apply min-h-[100dvh] bg-cream px-[22px] pb-8 pt-7 text-ink;
+    @apply min-h-[100dvh] bg-cream px-[22px] pb-8 text-ink;
+    padding-top: calc(var(--safe-top) + 1.75rem);
   }
 
   .ligne-card {
@@ -50,11 +101,45 @@ a {
   }
 
   .ligne-label {
-    @apply font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint;
+    @apply font-mono text-xs font-bold uppercase leading-4 tracking-[0.09em] text-ink-faint;
+  }
+
+  .ligne-title {
+    @apply text-[1.65rem] font-semibold leading-[1.12] text-ink;
+  }
+
+  .ligne-body {
+    @apply text-sm leading-5 text-ink-muted;
+  }
+
+  .ligne-meta {
+    @apply font-mono text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-ink-faint;
   }
 
   .ligne-pill {
-    @apply rounded-full px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.12em];
+    @apply inline-flex min-h-12 items-center justify-center rounded-full px-4 py-2 font-sans text-xs font-bold tracking-[0.01em];
+    min-height: 3rem !important;
+  }
+
+  .ligne-icon-button {
+    @apply inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-[background-color,filter] duration-200 active:bg-cream-fill;
+  }
+
+  .ligne-pressable {
+    @apply transition-[background-color,border-color,color,filter] duration-200;
+  }
+
+  .ligne-segmented-button {
+    @apply transition-[background-color,color,box-shadow] duration-200 ease-out;
+  }
+
+  .ligne-touch-target {
+    @apply min-h-12 min-w-12;
+  }
+
+  .app-bar {
+    @apply sticky z-30 -mx-[22px] border-b border-cream-dark/70 bg-cream/95 px-[22px] backdrop-blur;
+    top: var(--safe-top);
   }
 
   .ligne-progress-track {
@@ -64,6 +149,10 @@ a {
   .ligne-progress-fill {
     @apply h-full rounded-full bg-brand transition-[width] duration-500 ease-out;
   }
+
+  .ligne-state-slot {
+    @apply inline-flex min-w-[2ch] justify-center tabular-nums;
+  }
 }
 
 @layer utilities {
@@ -71,8 +160,31 @@ a {
      viewport-fixed route children use this wrapper as their containing block;
      fixed-only routes leave the wrapper at zero height and get clipped. */
   .app-route-shell {
-    animation: app-route-enter 260ms cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: app-route-enter 180ms cubic-bezier(0.2, 0, 0, 1) both;
     min-height: 100%;
+    position: relative;
+  }
+
+  html[data-navigation-motion="forward"] .app-route-shell {
+    animation-name: app-route-forward;
+    animation-duration: 240ms;
+  }
+
+  html[data-navigation-motion="back"] .app-route-shell {
+    animation-name: app-route-back;
+    animation-duration: 220ms;
+  }
+
+  html[data-navigation-motion="crossfade"] .app-route-shell {
+    animation-name: app-route-enter;
+  }
+
+  .route-loading-delayed {
+    animation: route-loading-reveal 160ms ease-out 120ms both;
+  }
+
+  .ligne-value-change {
+    animation: ligne-value-change 220ms cubic-bezier(0.2, 0, 0, 1) both;
   }
 
   .review-card-smooth,
@@ -122,12 +234,57 @@ a {
   }
 }
 
+@media (pointer: coarse) {
+  .reader-tap-target {
+    padding-block: 0.42rem;
+    margin-block: -0.42rem;
+  }
+}
+
 @keyframes app-route-enter {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes app-route-forward {
+  from {
+    left: 0.9rem;
+    opacity: 0;
+  }
+  to {
+    left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes app-route-back {
+  from {
+    left: -0.7rem;
+    opacity: 0;
+  }
+  to {
+    left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes route-loading-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ligne-value-change {
+  from {
+    opacity: 0.35;
+    translate: 0 0.2rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
@@ -155,4 +312,9 @@ a {
     transition-delay: 0ms !important;
     transition-duration: 0ms !important;
   }
+}
+
+html.keyboard-open .bottom-nav {
+  pointer-events: none;
+  transform: translateY(110%);
 }

@@ -72,7 +72,7 @@ export default function HomeNewsSection() {
           aria-expanded={isOpen}
           aria-controls="home-news-list"
           onClick={() => setIsOpen((open) => !open)}
-          className="flex w-full items-center gap-3 p-4 text-left active:scale-[0.99]"
+          className="flex w-full items-center gap-3 p-4 text-left"
         >
           <span className="min-w-0 flex-1">
             <span className="block text-sm font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s News</span>

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import BackButton from "@/components/BackButton";
 import { changelogEntries } from "@/data/changelog";
+import AppBar from "@/components/AppBar";
 
 const TYPE_STYLE = {
   new: "bg-brand-light text-brand",
@@ -10,12 +10,9 @@ const TYPE_STYLE = {
 
 export default function ChangelogPage() {
   return (
-    <div className="px-4 pt-6">
-      <BackButton fallbackHref="/" />
-      <header className="mb-5 mt-2">
-        <h1 className="text-2xl font-extrabold text-ink">What&apos;s new</h1>
-        <p className="text-sm text-ink-muted">A short record of visible Lire improvements.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="What’s new" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">A short record of visible Lire improvements.</p>
 
       <div className="space-y-3">
         {changelogEntries.map((entry) => (

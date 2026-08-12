@@ -434,7 +434,7 @@ function FilterRow<T extends string>({
 }) {
   return (
     <div className="mt-3">
-      <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">{title}</p>
+      <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">{title}</p>
       <div className="flex flex-wrap gap-1">
         {items.map((item) => (
           <button

@@ -8,6 +8,7 @@ import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 import ViewportHeightVar from "@/components/ViewportHeightVar";
 import StorageMigrations from "@/components/StorageMigrations";
 import RssPrefetch from "@/components/RssPrefetch";
+import AppNavigationPolish from "@/components/AppNavigationPolish";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
       { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon-monochrome.svg", type: "image/svg+xml" },
     ],
     apple: "/icon-192.png",
   },
@@ -68,6 +70,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({
@@ -78,14 +81,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ui.variable} ${french.variable} ${micro.variable} ${numeral.variable}`} data-scroll-behavior="smooth">
       <body>
-        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream">
-          <main className="flex-1 pb-24">{children}</main>
+        <div className="mx-auto flex max-w-md flex-col bg-cream" style={{ minHeight: "var(--vvh, 100dvh)" }}>
+          <main className="flex-1 pb-[calc(6rem+var(--safe-bottom))]">{children}</main>
           <BottomNav />
         </div>
         <ServiceWorker />
         <AuthSync />
         <AppLifecycleTracker />
         <ViewportHeightVar />
+        <AppNavigationPolish />
         <StorageMigrations />
         <RssPrefetch />
       </body>
