@@ -8,11 +8,20 @@ export interface RecommendationSections {
   liveNews: ScoredArticle[];
   /** The newest news-style articles, freshest first, excluding already-claimed live lead cards. */
   latestNews: ScoredArticle[];
+  /**
+   * The News tab's whole content: exactly up to 3 picks a day, real news
+   * first (freshest first), only reaching into level-matched reading-bank
+   * texts to fill remaining slots on a day live RSS genuinely comes up
+   * short. Deterministic per calendar day, same as the rest of the daily
+   * selection pipeline.
+   */
+  dailyThree: ScoredArticle[];
 }
 
 const DAILY_BANK_SECTION_SIZE = 8;
 const LIVE_NEWS_SECTION_SIZE = 6;
 const LATEST_NEWS_SECTION_SIZE = 15;
+const DAILY_THREE_SECTION_SIZE = 3;
 
 /**
  * Everything that comes from the offline reading bank rather than a live
@@ -69,5 +78,25 @@ export function buildSections(ranked: ScoredArticle[]): RecommendationSections {
     LATEST_NEWS_SECTION_SIZE
   );
 
-  return { dailyBank, liveNews, latestNews };
+  const dailyThreeIds = new Set<string>();
+  const dailyThree = take(
+    [...withoutSnippets].filter((article) => !isReadingBankArticle(article)).sort(newestFirst),
+    dailyThreeIds,
+    DAILY_THREE_SECTION_SIZE
+  );
+  if (dailyThree.length < DAILY_THREE_SECTION_SIZE) {
+    // A day RSS genuinely comes up short (see backfillIfShort server-side) —
+    // fill the rest from level-matched reading-bank texts, longest first,
+    // so the fallback reads as a real "everyday French" article rather than
+    // a tiny excerpt.
+    dailyThree.push(
+      ...take(
+        [...withoutSnippets].filter(isReadingBankArticle).sort((a, b) => b.text.minutes - a.text.minutes),
+        dailyThreeIds,
+        DAILY_THREE_SECTION_SIZE - dailyThree.length
+      )
+    );
+  }
+
+  return { dailyBank, liveNews, latestNews, dailyThree };
 }

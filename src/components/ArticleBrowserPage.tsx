@@ -275,7 +275,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   }
 
   const title = mode === "live" ? "News" : "Lessons";
-  const subtitle = mode === "live" ? "Current articles and short snippets for a stretch." : "Follow one guided reading path.";
+  const subtitle = mode === "live" ? "Three fresh picks a day, plus short snippets for a stretch." : "Follow one guided reading path.";
 
   return (
     <div className={mode === "articles" ? "bg-cream" : "ligne-screen"}>
@@ -511,14 +511,12 @@ function LessonsContent({
 }
 
 function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
-  const hasLiveContent = sections.liveNews.length > 0 || sections.latestNews.length > 0;
-
-  if (!hasLiveContent) {
+  if (sections.dailyThree.length === 0) {
     return (
       <>
         <div className="ligne-card p-5 text-center">
-          <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
-          <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
+          <p className="text-sm font-bold text-ink">Today's picks aren't ready yet.</p>
+          <p className="mt-1 text-xs text-ink-muted">Check back in a moment while the next refresh finishes.</p>
         </div>
         <div className="mt-4">
           <ShortSnippetsBlock defaultOpen />
@@ -529,9 +527,8 @@ function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
 
   return (
     <>
-      <ArticleSection title="Current News" subtitle="Fresh articles for real-world French." articles={sections.liveNews} variant="cards" />
+      <ArticleSection title="Today's 3" subtitle="Real news when it's there, everyday French when it's not." articles={sections.dailyThree} variant="cards" />
       <ShortSnippetsBlock defaultOpen />
-      <ArticleSection title="More News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" />
     </>
   );
 }
