@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
@@ -86,7 +87,7 @@ import { selectDiagnosticMessage, type DiagnosticMessage } from "@/lib/practice/
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS, getStageForText } from "@/lib/journey/ladder";
-import LessonCompleteScreen, { type JourneyMoment, type LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
+import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
@@ -97,6 +98,15 @@ import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 
 const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
+
+/**
+ * The lesson-complete celebration screen is only ever needed once a reading
+ * session actually finishes, so it's split out of the core reader's bundle
+ * (which every article open pays for) rather than imported directly. See the
+ * mount effect below that prefetches its chunk during idle time, so it's
+ * already warm by the time a session actually completes.
+ */
+const LessonCompleteScreen = dynamic(() => import("@/components/LessonCompleteScreen"), { ssr: false });
 
 const FONT_SIZE_CLASSES: Record<FontSize, string> = {
   small: "text-base",
@@ -406,6 +416,18 @@ export default function Reader({ text }: { text: ReadingText }) {
     } catch {
       // Best-effort — worst case the hint just doesn't auto-expand.
     }
+  }, []);
+
+  // Warms the lesson-complete screen's chunk during idle time so it's
+  // already cached by the time a session actually finishes, instead of a
+  // visible gap while that chunk downloads right at the celebratory moment.
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1000));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const handle = idle(() => {
+      void import("@/components/LessonCompleteScreen");
+    });
+    return () => cancelIdle(handle);
   }, []);
 
   useEffect(() => {
