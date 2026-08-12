@@ -7,7 +7,7 @@ import JourneyMap from "@/components/JourneyMap";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
-import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool } from "@/lib/rss/rssTextCache";
+import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
@@ -150,10 +150,22 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const isDefaultView = categoryFilter === "all" && languageFilter === "all";
       const cachedDefaultPool = isDefaultView ? getCachedDefaultLiveNewsPool() : null;
       const hasCachedTexts = !!cachedDefaultPool && cachedDefaultPool.texts.length > 0;
+      // sessionStorage (above) is empty on every fresh app open, so the first
+      // News visit of a session would otherwise always wait on the network,
+      // racing the app-open prefetch. The offline cache (localStorage)
+      // survives app restarts, so it can render something real immediately
+      // while the fetch below silently upgrades it once it lands.
+      const offlineFallback = !hasCachedTexts && isDefaultView ? getOfflineRssTexts() : [];
+      const hasOfflineFallback = offlineFallback.length > 0;
       if (hasCachedTexts && cachedDefaultPool) {
         setRssTexts(cachedDefaultPool.texts);
         setPoolBuiltAt(cachedDefaultPool.poolBuiltAt);
         setUsedFallback(cachedDefaultPool.texts.length < DAILY_RSS_ARTICLE_LIMIT);
+        setState("success");
+      } else if (hasOfflineFallback) {
+        setRssTexts(offlineFallback);
+        setPoolBuiltAt(null);
+        setUsedFallback(false);
         setState("success");
       } else {
         setUsedFallback(false);
@@ -187,9 +199,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         setState("success");
       } catch (error) {
         if (!cancelled) {
-          // Already showing a cached list — a failed background refresh
-          // shouldn't blank the screen out from under the reader.
-          if (hasCachedTexts) return;
+          // Already showing a cached (or offline-fallback) list — a failed
+          // background refresh shouldn't blank the screen out from under
+          // the reader.
+          if (hasCachedTexts || hasOfflineFallback) return;
           const timedOut = error instanceof DOMException && error.name === "AbortError";
           setRssTexts([]);
           setLoadError(
