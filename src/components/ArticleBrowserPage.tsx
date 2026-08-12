@@ -7,7 +7,7 @@ import JourneyMap from "@/components/JourneyMap";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
-import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool } from "@/lib/rss/rssTextCache";
+import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
@@ -104,7 +104,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
   const [prefVersion, setPrefVersion] = useState(0);
-  const [usedFallback, setUsedFallback] = useState(false);
   const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
   const [poolBuiltAt, setPoolBuiltAt] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -135,7 +134,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setIsSlowLoading(false);
 
       if (mode === "articles") {
-        setUsedFallback(false);
         setState("loading");
         setSections(null);
         setRssTexts([]);
@@ -150,13 +148,22 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const isDefaultView = categoryFilter === "all" && languageFilter === "all";
       const cachedDefaultPool = isDefaultView ? getCachedDefaultLiveNewsPool() : null;
       const hasCachedTexts = !!cachedDefaultPool && cachedDefaultPool.texts.length > 0;
+      // sessionStorage (above) is empty on every fresh app open, so the first
+      // News visit of a session would otherwise always wait on the network,
+      // racing the app-open prefetch. The offline cache (localStorage)
+      // survives app restarts, so it can render something real immediately
+      // while the fetch below silently upgrades it once it lands.
+      const offlineFallback = !hasCachedTexts && isDefaultView ? getOfflineRssTexts() : [];
+      const hasOfflineFallback = offlineFallback.length > 0;
       if (hasCachedTexts && cachedDefaultPool) {
         setRssTexts(cachedDefaultPool.texts);
         setPoolBuiltAt(cachedDefaultPool.poolBuiltAt);
-        setUsedFallback(cachedDefaultPool.texts.length < DAILY_RSS_ARTICLE_LIMIT);
+        setState("success");
+      } else if (hasOfflineFallback) {
+        setRssTexts(offlineFallback);
+        setPoolBuiltAt(null);
         setState("success");
       } else {
-        setUsedFallback(false);
         setState("loading");
         setSections(null);
       }
@@ -183,13 +190,13 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
         setRssTexts(nextRssTexts);
         setPoolBuiltAt(data.poolBuiltAt ?? null);
-        setUsedFallback(nextRssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
         setState("success");
       } catch (error) {
         if (!cancelled) {
-          // Already showing a cached list — a failed background refresh
-          // shouldn't blank the screen out from under the reader.
-          if (hasCachedTexts) return;
+          // Already showing a cached (or offline-fallback) list — a failed
+          // background refresh shouldn't blank the screen out from under
+          // the reader.
+          if (hasCachedTexts || hasOfflineFallback) return;
           const timedOut = error instanceof DOMException && error.name === "AbortError";
           setRssTexts([]);
           setLoadError(
@@ -218,7 +225,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   useEffect(() => {
     if (state === "loading" || state === "error") return;
 
-    function buildAndSetSections(rssTexts: ReadingText[], fallback: boolean) {
+    function buildAndSetSections(rssTexts: ReadingText[]) {
       const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
       const extraReadingTexts =
         mode === "articles"
@@ -245,11 +252,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setSections(buildSections(ranked.filter((article) => mode === "live" || !importedIds.has(article.text.id))));
       setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
       setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
-      setUsedFallback(fallback);
       setState("success");
     }
 
-    buildAndSetSections(rssTexts, mode === "live" && rssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
+    buildAndSetSections(rssTexts);
   }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, rssTexts, selectedLevel, state]);
 
   function resetFilters() {
@@ -269,7 +275,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   }
 
   const title = mode === "live" ? "News" : "Lessons";
-  const subtitle = mode === "live" ? "Current articles and short snippets for a stretch." : "Follow one guided reading path.";
+  const subtitle = mode === "live" ? "Three fresh picks a day, plus short snippets for a stretch." : "Follow one guided reading path.";
 
   return (
     <div className={mode === "articles" ? "bg-cream" : "ligne-screen"}>
@@ -308,12 +314,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
             onRetry={() => setReloadKey((key) => key + 1)}
           />
         </div>
-      )}
-
-      {state === "success" && usedFallback && (
-        <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Live RSS returned fewer articles than usual today.
-        </p>
       )}
 
       {state === "success" &&
@@ -511,14 +511,12 @@ function LessonsContent({
 }
 
 function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
-  const hasLiveContent = sections.liveNews.length > 0 || sections.latestNews.length > 0;
-
-  if (!hasLiveContent) {
+  if (sections.dailyThree.length === 0) {
     return (
       <>
         <div className="ligne-card p-5 text-center">
-          <p className="text-sm font-bold text-ink">No live news matches these filters right now.</p>
-          <p className="mt-1 text-xs text-ink-muted">Try resetting filters or check back after the next scheduled refresh.</p>
+          <p className="text-sm font-bold text-ink">Today's picks aren't ready yet.</p>
+          <p className="mt-1 text-xs text-ink-muted">Check back in a moment while the next refresh finishes.</p>
         </div>
         <div className="mt-4">
           <ShortSnippetsBlock defaultOpen />
@@ -529,9 +527,8 @@ function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
 
   return (
     <>
-      <ArticleSection title="Current News" subtitle="Fresh articles for real-world French." articles={sections.liveNews} variant="cards" />
+      <ArticleSection title="Today's 3" subtitle="Real news when it's there, everyday French when it's not." articles={sections.dailyThree} variant="cards" />
       <ShortSnippetsBlock defaultOpen />
-      <ArticleSection title="More News" subtitle="Freshest first." articles={sections.latestNews} variant="compact" />
     </>
   );
 }
