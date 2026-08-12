@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { AiNotConfiguredError, translateArticleSentences } from "@/lib/ai/openai";
 
-/** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI. */
-export const maxDuration = 60;
+/** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI, and translateArticleSentences now retries up to 3 times internally — sized to cover 3 back-to-back 45s attempts with headroom. */
+export const maxDuration = 150;
 
 const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable fluent translation.";
 /** A generous cap — a genuinely huge sentence count would mean something upstream (tokenizeParagraphsToSentences) already misbehaved. */

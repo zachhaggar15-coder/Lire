@@ -15,6 +15,15 @@ const DEFAULT_MODEL = "gpt-4o-mini";
 const REQUEST_TIMEOUT_MS = 20000;
 /** A full-article translation sends much more text than a single word/sentence explanation and can take longer to generate — same timeout budget as one round-trip, just more generous. */
 const ARTICLE_TRANSLATION_TIMEOUT_MS = 45000;
+/**
+ * The model occasionally returns a different sentence count than requested
+ * despite the prompt asking for a 1:1 array (assertArticleTranslation below
+ * strictly rejects any mismatch) — non-deterministic, so a couple of retries
+ * clears the large majority of these without weakening that validation. Same
+ * fix as scripts/precompute-fluent-translations.mjs used at build time;
+ * applying it here too means live readers stop seeing it as a failure.
+ */
+const ARTICLE_TRANSLATION_MAX_ATTEMPTS = 3;
 
 /** Thrown when OPENAI_API_KEY isn't set — callers show a friendly "not configured" message instead of a generic error. */
 export class AiNotConfiguredError extends Error {}
@@ -339,8 +348,17 @@ export async function translateArticleSentences(req: ArticleTranslationRequest):
   ]
     .filter(Boolean)
     .join("\n");
-  const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
-  return assertArticleTranslation(raw, req.sentences.length, req.sentences);
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= ARTICLE_TRANSLATION_MAX_ATTEMPTS; attempt++) {
+    try {
+      const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
+      return assertArticleTranslation(raw, req.sentences.length, req.sentences);
+    } catch (err) {
+      if (err instanceof AiNotConfiguredError) throw err;
+      lastError = err;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 
 /**
