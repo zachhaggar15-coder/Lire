@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import BackButton from "@/components/BackButton";
 import { lookupEnglishWord } from "@/lib/dictionary/lookup";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 
@@ -16,9 +16,7 @@ export default function LookupPage() {
 
   return (
     <div className="px-4 pt-6">
-      <Link href="/settings" className="text-sm font-semibold text-brand">
-        ← Settings
-      </Link>
+      <BackButton fallbackHref="/settings" />
 
       <header className="mb-5 mt-2">
         <h1 className="text-2xl font-extrabold text-ink">English → French</h1>

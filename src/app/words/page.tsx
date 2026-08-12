@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 import type { SavedWord } from "@/types";
 import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
@@ -90,7 +91,8 @@ export default function WordsPage() {
 
   return (
     <div className="ligne-screen">
-      <header className="mb-5 flex items-end justify-between gap-3">
+      <BackButton fallbackHref="/settings" />
+      <header className="mb-5 mt-2 flex items-end justify-between gap-3">
         <div>
           <p className="ligne-label">Saved from your texts</p>
           <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Vocabulary</h1>

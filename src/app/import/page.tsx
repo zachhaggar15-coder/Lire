@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/BackButton";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
 
@@ -44,9 +45,7 @@ export default function ImportPage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <Link href="/" className="text-sm font-semibold text-brand">
-          Back to home
-        </Link>
+        <BackButton fallbackHref="/" />
         <h1 className="mt-2 text-2xl font-extrabold text-ink">Import Text</h1>
         <p className="text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
       </header>

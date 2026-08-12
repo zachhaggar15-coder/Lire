@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 import { getArchive } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
 import { awardCompletedMissions, buildProgressSnapshot, type ProgressSnapshot } from "@/lib/gamification";
@@ -97,9 +98,7 @@ export default function ProgressPage() {
   return (
     <div className="px-4 pt-6">
       <header className="mb-5">
-        <Link href="/" className="text-sm font-semibold text-brand">
-          Back to reading
-        </Link>
+        <BackButton fallbackHref="/" />
         <h1 className="mt-2 text-2xl font-extrabold text-ink">Progress</h1>
         <p className="text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
       </header>
