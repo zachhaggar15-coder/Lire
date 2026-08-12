@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Category, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
-import { formatCategory, formatDate } from "@/lib/format";
+import { formatCategory, formatDate, toPercent } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
@@ -195,9 +195,9 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           </p>
         )}
 
-        {difficulty && Math.round(difficulty.unknownWordRatio * 100) >= 8 && (
+        {difficulty && toPercent(difficulty.unknownWordRatio) >= 8 && (
           <p className="mt-1 text-xs text-ink-muted">
-            ~{Math.round(difficulty.unknownWordRatio * 100)}% of words may be unfamiliar
+            ~{toPercent(difficulty.unknownWordRatio)}% of words may be unfamiliar
           </p>
         )}
 
@@ -209,7 +209,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         </summary>
         <p className="mt-1">
           {sourceTrustLabel(text)}
-          {difficulty ? ` - ${Math.round(difficulty.dictionaryCoverage * 100)}% dictionary coverage` : ""}
+          {difficulty ? ` - ${toPercent(difficulty.dictionaryCoverage)}% dictionary coverage` : ""}
         </p>
         {reasons.length > 0 && <p className="mt-1">Why: {reasons.join(" - ")}</p>}
         {text.sourceName && (

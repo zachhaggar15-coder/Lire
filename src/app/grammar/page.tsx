@@ -34,6 +34,7 @@ import {
 } from "@/lib/grammar";
 import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
+import { toPercent } from "@/lib/format";
 import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
@@ -130,7 +131,7 @@ export default function GrammarPage() {
   }, []);
 
   const pathProgress = useMemo(
-    () => Math.round((dashboard.completedLessons / Math.max(1, dashboard.totalLessons)) * 100),
+    () => toPercent(dashboard.completedLessons / Math.max(1, dashboard.totalLessons)),
     [dashboard.completedLessons, dashboard.totalLessons]
   );
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
 import type { Difficulty, ReadingText } from "@/types";
 import { getProgress } from "@/lib/progress";
-import { formatCategory } from "@/lib/format";
+import { formatCategory, toPercent } from "@/lib/format";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import { getCurrentStreak, isActiveToday } from "@/lib/habit";
@@ -205,7 +205,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
 
         <div className="mt-5">
           <div className="ligne-progress-track" aria-hidden="true">
-            <div className="ligne-progress-fill" style={{ width: `${Math.round(pageProgress * 100)}%` }} />
+            <div className="ligne-progress-fill" style={{ width: `${toPercent(pageProgress)}%` }} />
           </div>
           <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
             Goal today · {Math.min(textsToday, dailyTextGoal)} of {dailyTextGoal} texts
@@ -772,7 +772,7 @@ function lessonMeta(text: ReadingText, next: NextTextRecommendation | null, comp
   if (completed) return "Finished";
   if (skipped) return "Skipped · review anytime";
   const pieces = [formatCategory(text.category), `${text.minutes} min`, `${wordCount(text.body)} words`];
-  if (next) pieces.push(`${Math.round(next.unknownWordRatio * 100)}% new`);
+  if (next) pieces.push(`${toPercent(next.unknownWordRatio)}% new`);
   return pieces.join(" · ");
 }
 

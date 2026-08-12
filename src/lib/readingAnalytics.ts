@@ -2,7 +2,7 @@ import type { Category, ReadingText, SavedWord } from "@/types";
 import type { ArchiveEntry } from "@/lib/archive";
 import { estimateDifficulty } from "@/lib/difficulty";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { formatCategory } from "@/lib/format";
+import { formatCategory, toPercent } from "@/lib/format";
 import { isDue } from "@/lib/spacedRepetition";
 import type { StoredInference, StoredWordTap } from "@/lib/wordLearning";
 import type { TranslationBudgetRecord } from "@/lib/readingInsights";
@@ -277,7 +277,7 @@ function estimateArchiveWordCount(entry: ArchiveEntry): number {
 
 function coveragePercent(knownCount: number, learningCount: number): number {
   if (knownCount + learningCount === 0) return 0;
-  return Math.round((knownCount / (knownCount + learningCount)) * 100);
+  return toPercent(knownCount / (knownCount + learningCount));
 }
 
 export function buildWeeklyReadingReport(
@@ -356,5 +356,5 @@ export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: st
 }
 
 export function estimateArticleCoverage(text: ReadingText, knownWords: Set<string>): number {
-  return Math.round(estimateDifficulty(text.body, knownWords).dictionaryCoverage * 100);
+  return toPercent(estimateDifficulty(text.body, knownWords).dictionaryCoverage);
 }

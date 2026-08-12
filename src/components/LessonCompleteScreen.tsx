@@ -12,6 +12,7 @@ import {
   type LevelScores,
 } from "@/lib/levelScore";
 import type { StreakDay } from "@/lib/habit";
+import { toPercent } from "@/lib/format";
 import { StreakWeekStrip } from "@/components/GamificationCards";
 import type { ReadingText } from "@/types";
 import type { PracticePlan } from "@/lib/practice/session";
@@ -226,7 +227,7 @@ export default function LessonCompleteScreen({
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-2">
                 <span className="font-numeral text-3xl leading-none text-ink tabular-nums">{streak.count}</span>
-                <span className="text-sm font-bold text-ink-muted">{streak.count === 1 ? "day streak" : "day streak"}</span>
+                <span className="text-sm font-bold text-ink-muted">day streak</span>
                 {streak.extended && (
                   <span className="lesson-complete-delta rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
                     {streak.count === 1 ? "Streak started!" : "+1 day"}
@@ -302,7 +303,7 @@ export default function LessonCompleteScreen({
               style={{ width: `${barPercent}%` }}
             />
           </div>
-          <p className="mt-1 text-right text-[10px] font-semibold text-ink-faint">{Math.round(bandProgress(wrapped ? scoreChange.after : scoreChange.before) * 100)}/100 to next tier</p>
+          <p className="mt-1 text-right text-[10px] font-semibold text-ink-faint">{toPercent(bandProgress(wrapped ? scoreChange.after : scoreChange.before))}/100 to next tier</p>
           {scoreChange.delta === 0 && (
             <p className="mt-2 text-xs text-ink-muted">Already completed earlier — no new points this time.</p>
           )}
