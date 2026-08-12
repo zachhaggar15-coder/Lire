@@ -7,7 +7,7 @@ import JourneyMap from "@/components/JourneyMap";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
-import { cacheRssTexts } from "@/lib/rss/rssTextCache";
+import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getKnownWords } from "@/lib/knownWords";
 import { getCustomTexts } from "@/lib/customTexts";
@@ -133,14 +133,32 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     async function load() {
       setLoadError(null);
       setIsSlowLoading(false);
-      setUsedFallback(false);
-      setState("loading");
-      setSections(null);
 
       if (mode === "articles") {
+        setUsedFallback(false);
+        setState("loading");
+        setSections(null);
         setRssTexts([]);
         setState("success");
         return;
+      }
+
+      // The default (unfiltered) view can render instantly from the pool the
+      // app-open prefetch (or a prior visit this session) already warmed,
+      // instead of showing a loading skeleton every time the News tab opens.
+      // A background refresh still runs to keep the list current.
+      const isDefaultView = categoryFilter === "all" && languageFilter === "all";
+      const cachedDefaultPool = isDefaultView ? getCachedDefaultLiveNewsPool() : null;
+      const hasCachedTexts = !!cachedDefaultPool && cachedDefaultPool.texts.length > 0;
+      if (hasCachedTexts && cachedDefaultPool) {
+        setRssTexts(cachedDefaultPool.texts);
+        setPoolBuiltAt(cachedDefaultPool.poolBuiltAt);
+        setUsedFallback(cachedDefaultPool.texts.length < DAILY_RSS_ARTICLE_LIMIT);
+        setState("success");
+      } else {
+        setUsedFallback(false);
+        setState("loading");
+        setSections(null);
       }
 
       try {
@@ -160,6 +178,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
         const nextRssTexts = data.texts.map(rssReadingTextToReadingText);
         cacheRssTexts(nextRssTexts);
+        if (isDefaultView) cacheDefaultLiveNewsPool(nextRssTexts, data.poolBuiltAt ?? null);
         pruneStaleRssProgress(nextRssTexts.map((text) => text.id));
         detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
         setRssTexts(nextRssTexts);
@@ -168,6 +187,9 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         setState("success");
       } catch (error) {
         if (!cancelled) {
+          // Already showing a cached list — a failed background refresh
+          // shouldn't blank the screen out from under the reader.
+          if (hasCachedTexts) return;
           const timedOut = error instanceof DOMException && error.name === "AbortError";
           setRssTexts([]);
           setLoadError(

@@ -12,6 +12,7 @@ import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
 
 const KEY = "lire.rssTexts.session";
 const OFFLINE_KEY = "lire.rssTexts.offline";
+const DEFAULT_POOL_KEY = "lire.rssTexts.defaultPool.session";
 const MAX_OFFLINE_TEXTS = 80;
 const PREVIEW_LENGTH = 160;
 
@@ -90,6 +91,35 @@ export function getCachedRssTexts(): ReadingText[] {
 
 export function getCachedRssTextById(id: string): ReadingText | undefined {
   return getCachedRssTexts().find((t) => t.id === id) ?? getOfflineRssTextById(id);
+}
+
+/**
+ * Separate from the general session cache above (which gets overwritten by
+ * whatever filtered fetch last ran, e.g. a category filter on the News tab)
+ * — this key holds specifically the unfiltered "all categories, all
+ * languages" pool, so an app-open prefetch and the News tab's default view
+ * can render instantly from it without risking a stale filtered subset.
+ */
+export function cacheDefaultLiveNewsPool(texts: ReadingText[], poolBuiltAt: string | null): void {
+  if (!hasSessionStorage()) return;
+  try {
+    window.sessionStorage.setItem(DEFAULT_POOL_KEY, JSON.stringify({ texts: sanitizeRssTexts(texts), poolBuiltAt }));
+  } catch {
+    // Best-effort only; the News tab falls back to a normal fetch.
+  }
+}
+
+export function getCachedDefaultLiveNewsPool(): { texts: ReadingText[]; poolBuiltAt: string | null } | null {
+  if (!hasSessionStorage()) return null;
+  try {
+    const raw = window.sessionStorage.getItem(DEFAULT_POOL_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { texts?: unknown; poolBuiltAt?: unknown };
+    if (!Array.isArray(parsed.texts)) return null;
+    return { texts: sanitizeRssTexts(parsed.texts), poolBuiltAt: typeof parsed.poolBuiltAt === "string" ? parsed.poolBuiltAt : null };
+  } catch {
+    return null;
+  }
 }
 
 export function cacheOfflineTexts(texts: ReadingText[]): void {
