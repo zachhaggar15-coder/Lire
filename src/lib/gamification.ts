@@ -1,4 +1,5 @@
 import type { Category, ReadingText, SavedWord } from "@/types";
+import { toPercent } from "@/lib/format";
 import type { ArchiveEntry } from "@/lib/archive";
 import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 import { getAllInferenceResults, getAllWordTaps, type StoredInference, type StoredWordTap } from "@/lib/wordLearning";
@@ -388,7 +389,7 @@ export function calculateArticleScore(input: {
   parts.push({ key: "summary", earned: input.summaryCompleted ? 10 : 0, possible: 10 });
   const earned = parts.reduce((sum, part) => sum + part.earned, 0);
   const possible = parts.reduce((sum, part) => sum + part.possible, 0);
-  const total = possible === 0 ? 0 : Math.round((earned / possible) * 100);
+  const total = possible === 0 ? 0 : toPercent(earned / possible);
   return {
     completion: parts.find((part) => part.key === "completion")?.earned ?? null,
     comprehension: parts.find((part) => part.key === "comprehension")?.earned ?? null,
@@ -798,7 +799,7 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
       discovered: discoveredWords.length,
       total: collection.total,
       mastered: masteredCount,
-      percent: Math.round((discoveredWords.length / collection.total) * 100),
+      percent: toPercent(discoveredWords.length / collection.total),
       nextSuggestion: discoveredWords[0]?.lemma ?? "Read a fresh article in this area",
     };
   });

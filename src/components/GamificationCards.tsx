@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { toPercent } from "@/lib/format";
 import type { StreakDay } from "@/lib/habit";
 import type {
   AchievementStatus,
@@ -23,7 +24,7 @@ export function XPProgressBar({
   label: string;
   className?: string;
 }) {
-  const percent = Math.max(0, Math.min(100, Math.round(value * 100)));
+  const percent = toPercent(value);
   return (
     <div className={className}>
       <div className="flex items-center justify-between text-xs font-semibold text-ink-muted">
@@ -138,7 +139,7 @@ export function StreakCard({
         <div className="min-w-0 flex-1">
           <p className="flex items-baseline gap-1.5">
             <span className="font-numeral text-[40px] leading-none text-ink tabular-nums">{streak}</span>
-            <span className="text-sm font-bold text-ink-muted">{streak === 1 ? "day streak" : "day streak"}</span>
+            <span className="text-sm font-bold text-ink-muted">day streak</span>
           </p>
           <p className="mt-1 text-xs text-ink-muted">{message}</p>
         </div>

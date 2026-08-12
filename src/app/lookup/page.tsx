@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import BackButton from "@/components/BackButton";
 import { lookupEnglishWord } from "@/lib/dictionary/lookup";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
@@ -74,9 +75,14 @@ export default function LookupPage() {
             )}
           </div>
         ) : (
-          <p className="mt-8 text-center text-sm italic text-ink-muted">
-            No local dictionary entry yet for “{result.input}”.
-          </p>
+          <div className="mt-8 text-center">
+            <p className="text-sm italic text-ink-muted">
+              No local dictionary entry yet for “{result.input}”.
+            </p>
+            <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
+              Start reading
+            </Link>
+          </div>
         ))}
     </div>
   );

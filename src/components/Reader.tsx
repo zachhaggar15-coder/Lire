@@ -51,7 +51,7 @@ import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, t
 import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
-import { formatCategory } from "@/lib/format";
+import { formatCategory, toPercent } from "@/lib/format";
 import { trackEvent } from "@/lib/analytics/client";
 import { createActiveTimeTracker, type ActiveTimeTracker } from "@/lib/analytics/session";
 import { applyReadingSessionToState, isMeaningfulReadingSession } from "@/lib/validation/definitions";
@@ -392,7 +392,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const lessonStepCount = Math.max(1, paragraphs.length);
   const currentLessonStep = Math.min(lessonStep + 1, lessonStepCount);
   const isLastLessonStep = currentLessonStep >= lessonStepCount;
-  const lessonProgress = isChunkedStarterLesson ? Math.round((currentLessonStep / lessonStepCount) * 100) : 100;
+  const lessonProgress = isChunkedStarterLesson ? toPercent(currentLessonStep / lessonStepCount) : 100;
   const lessonStepSentenceCount = isChunkedStarterLesson
     ? visibleParagraphEntries.reduce((total, entry) => total + entry.sentences.length, 0)
     : 0;
@@ -515,11 +515,11 @@ export default function Reader({ text }: { text: ReadingText }) {
         // The whole article already fits on screen: there's no scrolling to
         // measure, so treat it as fully in view rather than inventing a number.
         if (scrollNeeded <= 0) return 100;
-        return Math.max(0, Math.min(100, Math.round((window.scrollY / scrollNeeded) * 100)));
+        return toPercent(window.scrollY / scrollNeeded);
       }
       const doc = document.documentElement;
       const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-      return Math.max(0, Math.min(100, Math.round((window.scrollY / maxScroll) * 100)));
+      return toPercent(window.scrollY / maxScroll);
     }
     function updateScrollProgress(markAsInteraction: boolean) {
       if (markAsInteraction) markInteraction();
@@ -1975,7 +1975,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         {difficulty && (
           <p className="mt-1">
             For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
-            {Math.round(difficulty.unknownWordRatio * 100)}% of the words may be new.
+            {toPercent(difficulty.unknownWordRatio)}% of the words may be new.
           </p>
         )}
       </details>

@@ -1,5 +1,10 @@
 import type { Category } from "@/types";
 
+/** Rounds a 0-1 ratio to a whole-number percent for display, clamped to 0-100. Callers append their own "%". */
+export function toPercent(ratio: number): number {
+  return Math.max(0, Math.min(100, Math.round(ratio * 100)));
+}
+
 export function formatDate(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";

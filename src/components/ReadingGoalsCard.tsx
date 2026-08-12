@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_GOALS, getGoals, getGoalsProgress, saveGoals, type ReadingGoals } from "@/lib/goals";
+import { toPercent } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
 import { StreakEmber } from "@/components/GamificationCards";
 
@@ -75,7 +76,7 @@ export default function ReadingGoalsCard() {
           </div>
           {rows.map((row) => {
             const target = goals[row.key] ?? 0;
-            const pct = target > 0 ? Math.min(100, Math.round((row.progress / target) * 100)) : 0;
+            const pct = target > 0 ? toPercent(row.progress / target) : 0;
             return (
               <div key={row.key}>
                 <div className="flex items-center justify-between text-xs text-ink-muted">

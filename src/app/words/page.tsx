@@ -7,7 +7,7 @@ import type { SavedWord } from "@/types";
 import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { formatDate } from "@/lib/format";
+import { formatDate, toPercent } from "@/lib/format";
 
 type WordsFilter = "learning" | "unsure" | "known" | "missing";
 type VocabTab = "words" | "phrases";
@@ -270,7 +270,7 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
 function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
   const known = phrases.filter((phrase) => phrase.status === "known").length;
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
-  const progress = phrases.length === 0 ? 0 : Math.round((known / phrases.length) * 100);
+  const progress = phrases.length === 0 ? 0 : toPercent(known / phrases.length);
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
