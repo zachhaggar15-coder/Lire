@@ -52,6 +52,9 @@ export default function WordsPage() {
   useEffect(() => {
     setWords(getSavedWords());
     setPhrases(getSavedPhrases());
+    if (new URLSearchParams(window.location.search).get("tab") === "phrases") {
+      setTab("phrases");
+    }
     setReady(true);
   }, []);
 

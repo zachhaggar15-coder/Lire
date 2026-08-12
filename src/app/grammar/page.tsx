@@ -489,12 +489,13 @@ function PracticeCard({
               key={choice}
               type="button"
               onClick={() => onAnswer(question, choice)}
-              className={`w-full rounded-2xl px-3 py-3 text-left text-sm font-semibold active:scale-[0.99] ${
+              disabled={answered}
+              className={`w-full rounded-2xl px-3 py-3 text-left text-sm font-semibold active:scale-[0.99] disabled:active:scale-100 ${
                 isAnswer
                   ? "bg-emerald-100 text-emerald-800"
                   : isSelected
                     ? "bg-rose-100 text-rose-800"
-                    : "bg-cream text-ink"
+                    : "bg-cream text-ink disabled:opacity-40"
               }`}
             >
               {choice}

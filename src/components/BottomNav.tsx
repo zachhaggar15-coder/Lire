@@ -33,7 +33,10 @@ const items = [
 export default function BottomNav() {
   const pathname = usePathname();
   const modalOpen = useAnyModalOpen();
-  const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
+  // Assume visible on first paint (matches the common case: onboarding already
+  // complete) so the nav doesn't pop in after mount on every load. It's
+  // corrected to false, if needed, once the effect below reads real state.
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean>(true);
 
   useEffect(() => {
     function syncOnboardingState() {
