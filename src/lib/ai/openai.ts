@@ -21,12 +21,24 @@ const REQUEST_TIMEOUT_MS = 20000;
  * A full-article translation sends much more text than a single word/sentence
  * explanation and can take longer to generate — a longer, denser article
  * (C1/C2-level curriculum texts routinely run 25-30 sentences plus their
- * word/phrase alignments) was found to reliably exceed 45s. The API route
- * that calls this (/api/ai/translate-article) sets `maxDuration = 60`, so
- * this stays a few seconds under that ceiling rather than matching it
- * exactly, leaving room for the surrounding request/response overhead.
+ * word/phrase alignments) was found to reliably exceed 45s on a single
+ * attempt. Retrying (below) now absorbs most of that risk across multiple
+ * shorter attempts instead of one long one, so this stays at the
+ * one-round-trip budget rather than the 55s ceiling a single-attempt design
+ * needed; the API route that calls this (/api/ai/translate-article) sizes
+ * `maxDuration` for 3 back-to-back attempts at this budget, not 1 at a
+ * larger one.
  */
-const ARTICLE_TRANSLATION_TIMEOUT_MS = 55000;
+const ARTICLE_TRANSLATION_TIMEOUT_MS = 45000;
+/**
+ * The model occasionally returns a different sentence count than requested
+ * despite the prompt asking for a 1:1 array (assertArticleTranslation below
+ * strictly rejects any mismatch) — non-deterministic, so a couple of retries
+ * clears the large majority of these without weakening that validation. Same
+ * fix as scripts/precompute-fluent-translations.mjs used at build time;
+ * applying it here too means live readers stop seeing it as a failure.
+ */
+const ARTICLE_TRANSLATION_MAX_ATTEMPTS = 3;
 
 /** Thrown when OPENAI_API_KEY isn't set — callers show a friendly "not configured" message instead of a generic error. */
 export class AiNotConfiguredError extends Error {}
@@ -408,8 +420,17 @@ export async function translateArticleSentences(req: ArticleTranslationRequest):
   ]
     .filter(Boolean)
     .join("\n");
-  const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
-  return assertArticleTranslation(raw, req.sentences.length, req.sentences);
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= ARTICLE_TRANSLATION_MAX_ATTEMPTS; attempt++) {
+    try {
+      const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
+      return assertArticleTranslation(raw, req.sentences.length, req.sentences);
+    } catch (err) {
+      if (err instanceof AiNotConfiguredError) throw err;
+      lastError = err;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 
 /**
