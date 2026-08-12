@@ -304,7 +304,7 @@ export default function SettingsPage() {
           <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
           <SettingsLink href="/live-news" title="News" description="Read current French articles." />
           <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
-          <SettingsLink href="/phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
+          <SettingsLink href="/words?tab=phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
           <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
           <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
           <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
