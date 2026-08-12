@@ -104,7 +104,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
   const [languageFilter, setLanguageFilter] = useState<LanguageFilter>("all");
   const [prefVersion, setPrefVersion] = useState(0);
-  const [usedFallback, setUsedFallback] = useState(false);
   const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
   const [poolBuiltAt, setPoolBuiltAt] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -135,7 +134,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setIsSlowLoading(false);
 
       if (mode === "articles") {
-        setUsedFallback(false);
         setState("loading");
         setSections(null);
         setRssTexts([]);
@@ -160,15 +158,12 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       if (hasCachedTexts && cachedDefaultPool) {
         setRssTexts(cachedDefaultPool.texts);
         setPoolBuiltAt(cachedDefaultPool.poolBuiltAt);
-        setUsedFallback(cachedDefaultPool.texts.length < DAILY_RSS_ARTICLE_LIMIT);
         setState("success");
       } else if (hasOfflineFallback) {
         setRssTexts(offlineFallback);
         setPoolBuiltAt(null);
-        setUsedFallback(false);
         setState("success");
       } else {
-        setUsedFallback(false);
         setState("loading");
         setSections(null);
       }
@@ -195,7 +190,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
         setRssTexts(nextRssTexts);
         setPoolBuiltAt(data.poolBuiltAt ?? null);
-        setUsedFallback(nextRssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
         setState("success");
       } catch (error) {
         if (!cancelled) {
@@ -231,7 +225,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   useEffect(() => {
     if (state === "loading" || state === "error") return;
 
-    function buildAndSetSections(rssTexts: ReadingText[], fallback: boolean) {
+    function buildAndSetSections(rssTexts: ReadingText[]) {
       const bankLevel = difficultyFilter === "all" ? selectedLevel : difficultyFilter;
       const extraReadingTexts =
         mode === "articles"
@@ -258,11 +252,10 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       setSections(buildSections(ranked.filter((article) => mode === "live" || !importedIds.has(article.text.id))));
       setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
       setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
-      setUsedFallback(fallback);
       setState("success");
     }
 
-    buildAndSetSections(rssTexts, mode === "live" && rssTexts.length < DAILY_RSS_ARTICLE_LIMIT);
+    buildAndSetSections(rssTexts);
   }, [categoryFilter, difficultyFilter, dictionaryRevision, languageFilter, mode, prefVersion, rssTexts, selectedLevel, state]);
 
   function resetFilters() {
@@ -321,12 +314,6 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
             onRetry={() => setReloadKey((key) => key + 1)}
           />
         </div>
-      )}
-
-      {state === "success" && usedFallback && (
-        <p className="mb-4 rounded-2xl bg-accent-pink px-3 py-2 text-xs font-medium text-accent-pinktext">
-          Live RSS returned fewer articles than usual today.
-        </p>
       )}
 
       {state === "success" &&
