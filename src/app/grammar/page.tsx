@@ -2,26 +2,36 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  STRUCTURE_REFERENCES,
   VERB_REFERENCES,
   buildGrammarDashboard,
+  buildStructureDashboard,
   currentUnlockedLesson,
+  currentUnlockedStructureLesson,
   getGrammarPracticeEvents,
   getGrammarProgress,
   getLessonProgress,
+  getStructureLessons,
   getVerbLessons,
   isGrammarAnswerCorrect,
   markGrammarLessonComplete,
   practiceSetForLesson,
   recordGrammarAnswer,
+  referenceForStructureTopic,
   referenceForVerb,
   tenseLabel,
   type GrammarDashboard,
+  type GrammarDomain,
+  type GrammarLesson,
   type GrammarPracticeQuestion,
   type GrammarProgressRecord,
+  type StructureLesson,
+  type StructureReference,
   type VerbLesson,
   type VerbReference,
   type VerbTense,
 } from "@/lib/grammar";
+import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
 
@@ -33,10 +43,40 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "reference", label: "Reference" },
 ];
 
-const TENSES: VerbTense[] = ["present", "passe-compose", "imparfait", "futur-simple", "conditionnel"];
+const TRACKS: { id: GrammarDomain; label: string }[] = [
+  { id: "verbs", label: "Verbs" },
+  { id: "sentence-grammar", label: "Sentence Grammar" },
+];
+
+const TRACK_META: Record<GrammarDomain, { title: string; subtitle: string; pathLabel: string }> = {
+  verbs: {
+    title: "Verb conjugation",
+    subtitle: "Practise one verb pattern at a time.",
+    pathLabel: "Verbs path",
+  },
+  "sentence-grammar": {
+    title: "Sentence grammar",
+    subtitle: "Practise one sentence pattern at a time.",
+    pathLabel: "Sentence Grammar path",
+  },
+};
+
+const ALL_TENSES: VerbTense[] = [
+  "present",
+  "passe-compose",
+  "imparfait",
+  "futur-simple",
+  "conditionnel",
+  "subjonctif-present",
+  "subjonctif-passe",
+  "plus-que-parfait",
+  "passe-simple",
+  "conditionnel-passe",
+  "futur-anterieur",
+];
 
 export default function GrammarPage() {
-  const lessons = getVerbLessons();
+  const [track, setTrack] = useState<GrammarDomain>("verbs");
   const [tab, setTab] = useState<Tab>("practice");
   const [progress, setProgress] = useState<GrammarProgressRecord[]>([]);
   const [dashboard, setDashboard] = useState<GrammarDashboard>(() => buildGrammarDashboard([], []));
@@ -44,44 +84,67 @@ export default function GrammarPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [sessionAnswered, setSessionAnswered] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [xpNotice, setXpNotice] = useState<string | null>(null);
   const [referenceVerb, setReferenceVerb] = useState(VERB_REFERENCES[0].infinitive);
   const [referenceTense, setReferenceTense] = useState<VerbTense>("present");
+  const [referenceTopicId, setReferenceTopicId] = useState(STRUCTURE_REFERENCES[0]?.id ?? "");
   const grammarSessionCompleted = useRef(false);
+  const xpNoticeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const currentLesson = currentUnlockedLesson(progress);
+  const lessons: GrammarLesson[] = track === "verbs" ? getVerbLessons() : getStructureLessons();
+  const currentLesson: GrammarLesson = track === "verbs" ? currentUnlockedLesson(progress) : currentUnlockedStructureLesson(progress);
   const currentProgress = progress.find((record) => record.lessonId === currentLesson.id) ?? getLessonProgress(currentLesson.id);
   const questions = practiceSetForLesson(currentLesson.id);
   const currentQuestion = questions[questionIndex] ?? questions[0];
-  const reference = referenceForVerb(referenceVerb) ?? VERB_REFERENCES[0];
+  const verbReference = referenceForVerb(referenceVerb) ?? VERB_REFERENCES[0];
+  const structureReference = referenceForStructureTopic(referenceTopicId) ?? STRUCTURE_REFERENCES[0] ?? null;
   const currentLessonNumber = lessons.findIndex((lesson) => lesson.id === currentLesson.id) + 1;
+  const meta = TRACK_META[track];
 
   function refresh() {
     const nextProgress = getGrammarProgress();
     setProgress(nextProgress);
-    setDashboard(buildGrammarDashboard(nextProgress, getGrammarPracticeEvents()));
+    const events = getGrammarPracticeEvents();
+    setDashboard(track === "verbs" ? buildGrammarDashboard(nextProgress, events) : buildStructureDashboard(nextProgress, events));
   }
 
   useEffect(() => {
     refresh();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [track]);
 
   useEffect(() => {
     setQuestionIndex(0);
     setSelectedAnswer(null);
     setSessionCorrect(0);
     setSessionAnswered(0);
+    setStreak(0);
   }, [currentLesson.id]);
+
+  useEffect(() => {
+    return () => {
+      if (xpNoticeTimeout.current) clearTimeout(xpNoticeTimeout.current);
+    };
+  }, []);
 
   const pathProgress = useMemo(
     () => Math.round((dashboard.completedLessons / Math.max(1, dashboard.totalLessons)) * 100),
     [dashboard.completedLessons, dashboard.totalLessons]
   );
 
+  function switchTrack(nextTrack: GrammarDomain) {
+    if (nextTrack === track) return;
+    setTrack(nextTrack);
+    setTab("practice");
+  }
+
   function openPractice() {
     grammarSessionCompleted.current = false;
     trackEvent("grammar_session_started", {
       lessonId: currentLesson.id,
       lessonLevel: currentLesson.level,
+      domain: currentLesson.domain,
       questionCount: questions.length,
     });
     setTab("practice");
@@ -96,9 +159,19 @@ export default function GrammarPage() {
     setSelectedAnswer(answer);
     setSessionAnswered((value) => value + 1);
     setSessionCorrect((value) => value + (correct ? 1 : 0));
+    setStreak((value) => (correct ? value + 1 : 0));
     recordGrammarAnswer(question.lessonId, question.id, correct);
+    if (correct) {
+      const xp = recordGrammarPracticeXp(question.id);
+      if (xp > 0) {
+        if (xpNoticeTimeout.current) clearTimeout(xpNoticeTimeout.current);
+        setXpNotice(`+${xp} XP`);
+        xpNoticeTimeout.current = setTimeout(() => setXpNotice(null), 1600);
+      }
+    }
     if (isFinalQuestion) {
       markGrammarLessonComplete(question.lessonId);
+      evaluateAndUnlockAchievements();
       if (!grammarSessionCompleted.current) {
         grammarSessionCompleted.current = true;
         const completedAt = new Date().toISOString();
@@ -108,6 +181,7 @@ export default function GrammarPage() {
         }));
         trackEvent("grammar_session_completed", {
           lessonId: question.lessonId,
+          domain: currentLesson.domain,
           correctAnswers: nextCorrect,
           totalQuestions: nextAnswered,
           completedAt,
@@ -118,6 +192,7 @@ export default function GrammarPage() {
       setSelectedAnswer(null);
       setSessionCorrect(0);
       setSessionAnswered(0);
+      setStreak(0);
     }
     refresh();
   }
@@ -131,26 +206,44 @@ export default function GrammarPage() {
     <div className="px-4 pt-6">
       <header className="mb-5">
         <p className="text-xs font-bold uppercase tracking-wide text-brand">Grammar</p>
-        <h1 className="mt-1 text-2xl font-extrabold text-ink">Verb conjugation</h1>
-        <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-          Practise one verb pattern at a time.
-        </p>
+        <h1 className="mt-1 text-2xl font-extrabold text-ink">{meta.title}</h1>
+        <p className="mt-1 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
       </header>
 
+      <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
+        {TRACKS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => switchTrack(item.id)}
+            aria-pressed={track === item.id}
+            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+              track === item.id ? "bg-ink text-white" : "bg-cream-card text-ink-muted shadow-card"
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      {xpNotice && (
+        <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand">{xpNotice}</div>
+      )}
+
       {tab !== "practice" && (
-      <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Conjugation path</p>
-            <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber}</p>
-            <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
+        <section className="mb-4 rounded-card bg-cream-card p-4 shadow-card">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{meta.pathLabel}</p>
+              <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber} of {dashboard.totalLessons}</p>
+              <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
+            </div>
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-lg font-extrabold text-white">
+              {currentProgress.mastery}%
+            </div>
           </div>
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-lg font-extrabold text-white">
-            {currentProgress.mastery}%
-          </div>
-        </div>
-        <ProgressBar value={pathProgress} label="Path progress" />
-      </section>
+          <LessonStepper lessons={lessons} progress={progress} currentLessonId={currentLesson.id} />
+        </section>
       )}
 
       <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
@@ -184,6 +277,7 @@ export default function GrammarPage() {
             selectedAnswer={selectedAnswer}
             sessionCorrect={sessionCorrect}
             sessionAnswered={sessionAnswered}
+            streak={streak}
             questionIndex={questionIndex}
             totalQuestions={questions.length}
             onAnswer={answerQuestion}
@@ -192,13 +286,21 @@ export default function GrammarPage() {
         </div>
       )}
 
-      {tab === "reference" && (
+      {tab === "reference" && track === "verbs" && (
         <ReferencePanel
-          reference={reference}
+          reference={verbReference}
           selectedVerb={referenceVerb}
           selectedTense={referenceTense}
           onVerbChange={setReferenceVerb}
           onTenseChange={setReferenceTense}
+        />
+      )}
+
+      {tab === "reference" && track === "sentence-grammar" && structureReference && (
+        <StructureReferencePanel
+          reference={structureReference}
+          selectedTopicId={referenceTopicId}
+          onTopicChange={setReferenceTopicId}
         />
       )}
     </div>
@@ -220,17 +322,49 @@ function ProgressBar({ value, label }: { value: number; label: string }) {
   );
 }
 
+function LessonStepper({
+  lessons,
+  progress,
+  currentLessonId,
+}: {
+  lessons: GrammarLesson[];
+  progress: GrammarProgressRecord[];
+  currentLessonId: string;
+}) {
+  const completed = new Set(progress.filter((record) => record.completed).map((record) => record.lessonId));
+  return (
+    <div className="mt-3 flex flex-wrap gap-1.5" role="list" aria-label="Lesson path progress">
+      {lessons.map((lesson, index) => {
+        const isCompleted = completed.has(lesson.id);
+        const isCurrent = lesson.id === currentLessonId;
+        return (
+          <span
+            key={lesson.id}
+            role="listitem"
+            aria-label={`Lesson ${index + 1}${isCompleted ? ", complete" : isCurrent ? ", current" : ", locked"}`}
+            title={lesson.shortTitle}
+            className={`h-2 w-6 shrink-0 rounded-full ${
+              isCompleted ? "bg-brand" : isCurrent ? "bg-brand/40 ring-2 ring-brand/50" : "bg-cream-dark"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 function LessonDetail({
   lesson,
   lessonNumber,
   progress,
   onPractice,
 }: {
-  lesson: VerbLesson;
+  lesson: GrammarLesson;
   lessonNumber: number;
   progress: GrammarProgressRecord;
   onPractice: () => void;
 }) {
+  const isVerb = lesson.domain === "verbs";
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
@@ -239,20 +373,22 @@ function LessonDetail({
           <h2 className="mt-1 text-xl font-extrabold leading-tight text-ink">{lesson.title}</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-muted">{lesson.purpose}</p>
         </div>
-        <span className="shrink-0 rounded-full bg-cream px-2.5 py-1 text-xs font-bold text-ink-muted">{tenseLabel(lesson.tense)}</span>
+        {isVerb && (
+          <span className="shrink-0 rounded-full bg-cream px-2.5 py-1 text-xs font-bold text-ink-muted">{tenseLabel(lesson.tense)}</span>
+        )}
       </div>
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
-        <p className="text-sm font-semibold leading-relaxed text-ink">{lesson.pattern}</p>
+        <p className="text-sm font-semibold leading-relaxed text-ink">{isVerb ? lesson.pattern : lesson.corePattern}</p>
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">{lesson.explanation}</p>
       </div>
 
       <div className="mt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Forms to notice</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{isVerb ? "Forms to notice" : "Key forms"}</p>
         <div className="mt-2 flex flex-wrap gap-2">
-          {lesson.endings.map((ending, index) => (
-            <span key={`${ending}-${index}`} className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
-              {ending}
+          {(isVerb ? lesson.endings : lesson.keyForms).map((form, index) => (
+            <span key={`${form}-${index}`} className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">
+              {form}
             </span>
           ))}
         </div>
@@ -288,7 +424,7 @@ function LockedNextCard({ completedLessons, totalLessons }: { completedLessons: 
       <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{allDone ? "Path complete" : "Next lesson locked"}</p>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
         {allDone
-          ? "You have finished the current verb-conjugation path."
+          ? "You have finished the current path."
           : "Finish this lesson to reveal the next one. The rest of the path stays hidden so this section stays simple."}
       </p>
     </article>
@@ -301,16 +437,18 @@ function PracticeCard({
   selectedAnswer,
   sessionCorrect,
   sessionAnswered,
+  streak,
   questionIndex,
   totalQuestions,
   onAnswer,
   onNext,
 }: {
-  lesson: VerbLesson;
+  lesson: GrammarLesson;
   question: GrammarPracticeQuestion;
   selectedAnswer: string | null;
   sessionCorrect: number;
   sessionAnswered: number;
+  streak: number;
   questionIndex: number;
   totalQuestions: number;
   onAnswer: (question: GrammarPracticeQuestion, answer: string) => void;
@@ -319,15 +457,24 @@ function PracticeCard({
   const answered = selectedAnswer !== null;
   const selectedCorrect = selectedAnswer ? isGrammarAnswerCorrect(question, selectedAnswer) : false;
   return (
-    <section className="rounded-card bg-cream-card p-4 shadow-card">
+    <section
+      className={`rounded-card bg-cream-card p-4 shadow-card ${
+        answered ? (selectedCorrect ? "reward-card-lock-in bg-brand-light" : "reward-card-still-learning ring-2 ring-cream-strong") : ""
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">{lesson.shortTitle}</p>
           <h2 className="mt-1 text-xl font-extrabold text-ink">Question {questionIndex + 1}/{totalQuestions}</h2>
         </div>
-        <span className="rounded-full bg-cream px-3 py-1 text-xs font-bold text-ink-muted">
-          {sessionAnswered === 0 ? "0 correct" : `${sessionCorrect} correct`}
-        </span>
+        <div className="flex flex-col items-end gap-1">
+          <span className="rounded-full bg-cream px-3 py-1 text-xs font-bold text-ink-muted">
+            {sessionAnswered === 0 ? "0 correct" : `${sessionCorrect} correct`}
+          </span>
+          {streak >= 2 && (
+            <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{streak} in a row</span>
+          )}
+        </div>
       </div>
 
       <p className="mt-4 text-sm font-bold text-ink">{question.prompt}</p>
@@ -402,7 +549,7 @@ function ReferencePanel({
           <label className="block">
             <span className="text-xs font-semibold text-ink-muted">Tense</span>
             <select value={selectedTense} onChange={(event) => onTenseChange(event.target.value as VerbTense)} className="mt-1 w-full rounded-2xl bg-cream px-3 py-2 text-sm font-semibold text-ink outline-none focus:ring-2 focus:ring-brand/30">
-              {TENSES.map((tense) => (
+              {ALL_TENSES.map((tense) => (
                 <option key={tense} value={tense}>
                   {tenseLabel(tense)}
                 </option>
@@ -423,8 +570,63 @@ function ReferencePanel({
         </div>
 
         <div className="mt-4 divide-y divide-cream-dark overflow-hidden rounded-2xl bg-cream">
-          {reference.forms[selectedTense].map((form) => (
+          {(reference.forms[selectedTense] ?? []).map((form) => (
             <p key={form} className="px-3 py-2 text-sm font-semibold text-ink">{form}</p>
+          ))}
+          {!reference.forms[selectedTense] && (
+            <p className="px-3 py-2 text-sm text-ink-muted">Not available for this verb yet.</p>
+          )}
+        </div>
+
+        <div className="mt-4 space-y-2">
+          {reference.notes.map((note) => (
+            <p key={note} className="rounded-2xl bg-brand-light px-3 py-2 text-xs font-semibold text-brand">{note}</p>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function StructureReferencePanel({
+  reference,
+  selectedTopicId,
+  onTopicChange,
+}: {
+  reference: StructureReference;
+  selectedTopicId: string;
+  onTopicChange: (id: string) => void;
+}) {
+  return (
+    <div className="space-y-4">
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Reference topic</h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {STRUCTURE_REFERENCES.map((topic) => (
+            <button
+              key={topic.id}
+              type="button"
+              onClick={() => onTopicChange(topic.id)}
+              aria-pressed={selectedTopicId === topic.id}
+              className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+                selectedTopicId === topic.id ? "bg-brand text-white" : "bg-cream text-ink-muted"
+              }`}
+            >
+              {topic.title}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-card bg-cream-card p-4 shadow-card">
+        <h2 className="text-xl font-extrabold text-ink">{reference.title}</h2>
+
+        <div className="mt-4 divide-y divide-cream-dark overflow-hidden rounded-2xl bg-cream">
+          {reference.rows.map((row) => (
+            <div key={row.label} className="px-3 py-2">
+              <p className="text-sm font-bold text-ink">{row.label}</p>
+              <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{row.detail}</p>
+            </div>
           ))}
         </div>
 

@@ -4,6 +4,7 @@ import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
 import { getAllInferenceResults, getAllWordTaps, type StoredInference, type StoredWordTap } from "@/lib/wordLearning";
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
 import { tokenize } from "@/lib/words";
+import { getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
 
 export type XpEventType =
   | "article_completed"
@@ -15,7 +16,8 @@ export type XpEventType =
   | "achievement_unlocked"
   | "translation_challenge_completed"
   | "summary_completed"
-  | "second_pass_completed";
+  | "second_pass_completed"
+  | "grammar_answer_correct";
 
 export type MissionKind =
   | "complete_article"
@@ -200,6 +202,8 @@ export const XP_RULES = {
   translationChallengeCompleted: 20,
   summaryCompleted: 15,
   secondPassCompleted: 15,
+  grammarAnswerCorrect: 2,
+  grammarAnswerDailyCap: 40,
 } as const;
 
 const CATEGORY_LABELS: Record<Category, string> = {
@@ -233,6 +237,9 @@ const ACHIEVEMENTS = [
   { id: "translation-restraint", title: "Translation Restraint", description: "Finish an article inside a translation budget.", icon: "T", requirement: 1, xp: 40 },
   { id: "three-day-streak", title: "Three-Day Streak", description: "Complete meaningful activity on three consecutive days.", icon: "3", requirement: 3, xp: 50 },
   { id: "seven-day-streak", title: "Seven-Day Streak", description: "Complete meaningful activity on seven consecutive days.", icon: "7", requirement: 7, xp: 100 },
+  { id: "subjunctive-unlocked", title: "Subjunctive Unlocked", description: "Complete the present subjunctive formation lesson.", icon: "SUB", requirement: 1, xp: 40 },
+  { id: "verbs-path-complete", title: "Verbs Path Complete", description: "Complete every lesson on the Verbs grammar track.", icon: "V", requirement: VERB_LESSONS.length, xp: 150 },
+  { id: "sentence-grammar-path-complete", title: "Sentence Grammar Path Complete", description: "Complete every lesson on the Sentence Grammar track.", icon: "SG", requirement: STRUCTURE_LESSONS.length, xp: 150 },
 ];
 
 function hasStorage(): boolean {
@@ -524,6 +531,22 @@ export function recordReviewSuccessXp(word: string): number {
   return awarded.awarded ? xp : 0;
 }
 
+export function recordGrammarPracticeXp(questionId: string): number {
+  const today = localDate();
+  const todayGrammarXp = getXpEvents()
+    .filter((event) => event.type === "grammar_answer_correct" && event.createdAt.slice(0, 10) === today)
+    .reduce((sum, event) => sum + event.xp, 0);
+  if (todayGrammarXp >= XP_RULES.grammarAnswerDailyCap) return 0;
+  const xp = Math.min(XP_RULES.grammarAnswerCorrect, XP_RULES.grammarAnswerDailyCap - todayGrammarXp);
+  const awarded = addXpEvent({
+    type: "grammar_answer_correct",
+    relatedId: questionId,
+    xp,
+    idempotencyKey: `grammar_answer:${today}:${questionId}:${todayGrammarXp}`,
+  });
+  return awarded.awarded ? xp : 0;
+}
+
 export function recordWordSavedXp(word: string): number {
   const result = addXpEvent({
     type: "word_saved",
@@ -651,7 +674,15 @@ function achievementProgress(id: string, completions: ArticleCompletionRecord[],
   if (id === "translation-restraint") return completions.some((item) => item.challengeCompleted) ? 1 : 0;
   if (id === "three-day-streak") return streak;
   if (id === "seven-day-streak") return streak;
+  if (id === "subjunctive-unlocked") return getGrammarProgress().some((record) => record.lessonId === "subjonctif-present-formation" && record.completed) ? 1 : 0;
+  if (id === "verbs-path-complete") return grammarLessonsCompletedCount(VERB_LESSONS);
+  if (id === "sentence-grammar-path-complete") return grammarLessonsCompletedCount(STRUCTURE_LESSONS);
   return words.length;
+}
+
+function grammarLessonsCompletedCount(lessons: { id: string }[]): number {
+  const completed = new Set(getGrammarProgress().filter((record) => record.completed).map((record) => record.lessonId));
+  return lessons.filter((lesson) => completed.has(lesson.id)).length;
 }
 
 export function buildMastery(words: SavedWord[], taps: StoredWordTap[] = getAllWordTaps(), inferences: StoredInference[] = getAllInferenceResults()): MasteryInfo[] {
