@@ -70,6 +70,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({
@@ -80,8 +81,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ui.variable} ${french.variable} ${micro.variable} ${numeral.variable}`} data-scroll-behavior="smooth">
       <body>
-        <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-cream">
-          <main className="flex-1 pb-24">{children}</main>
+        <div className="mx-auto flex max-w-md flex-col bg-cream" style={{ minHeight: "var(--vvh, 100dvh)" }}>
+          <main className="flex-1 pb-[calc(6rem+var(--safe-bottom))]">{children}</main>
           <BottomNav />
         </div>
         <ServiceWorker />

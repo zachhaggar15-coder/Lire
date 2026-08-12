@@ -159,7 +159,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             estimatedReadingTime: text.minutes,
           })
         }
-        className="block transition active:scale-[0.99]"
+        className="block transition"
       >
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span
@@ -227,7 +227,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         <button
           type="button"
           onClick={handleSaveLater}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-[0.98] ${
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
             savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
           }`}
         >
@@ -243,14 +243,14 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "more")}
-            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand active:scale-[0.98]"
+            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand"
           >
             More like this
           </button>
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "less")}
-            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-[0.98]"
+            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted"
           >
             Less like this
           </button>
@@ -259,7 +259,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
               <button
                 type="button"
                 onClick={handlePreferSource}
-                className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-[0.98] ${
+                className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                   preferred ? "bg-brand text-cream" : "bg-yellow text-yellow-ink"
                 }`}
               >
@@ -268,7 +268,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
               <button
                 type="button"
                 onClick={handleHideSource}
-                className="rounded-full bg-rose px-2.5 py-1 text-xs font-semibold text-rose-ink active:scale-[0.98]"
+                className="rounded-full bg-rose px-2.5 py-1 text-xs font-semibold text-rose-ink"
               >
                 Hide source
               </button>

@@ -226,7 +226,7 @@ export default function SettingsPage() {
                   onClick={() => changeLevel(level)}
                   aria-label={`Set reading level to ${level}`}
                   aria-pressed={selectedLevel === level}
-                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
                     selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
@@ -245,7 +245,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => update({ fontSize: opt.value })}
                   aria-pressed={settings.fontSize === opt.value}
-                  className={`min-h-11 rounded-full py-2.5 text-sm font-semibold transition-colors ${
+                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
                     settings.fontSize === opt.value ? "bg-brand text-cream" : "text-ink-muted"
                   }`}
                 >
@@ -265,7 +265,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => update({ translationMode: opt.value })}
                   aria-pressed={settings.translationMode === opt.value}
-                  className={`w-full rounded-2xl px-3 py-2.5 text-left transition-colors ${
+                  className={`ligne-segmented-button w-full rounded-2xl px-3 py-2.5 text-left ${
                     settings.translationMode === opt.value ? "bg-brand text-cream" : "bg-cream-fill text-ink"
                   }`}
                 >
@@ -326,7 +326,7 @@ export default function SettingsPage() {
                   resetWalkthrough();
                   router.push("/");
                 }}
-                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink active:scale-[0.98]"
+                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink"
               >
                 Restart
               </button>

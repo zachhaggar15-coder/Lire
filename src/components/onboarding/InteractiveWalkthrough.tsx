@@ -284,7 +284,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   <button
                     type="button"
                     onClick={handleWordAction}
-                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-[0.98]"
+                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white"
                   >
                     Save
                   </button>

@@ -173,7 +173,7 @@ export default function ValidationDashboard() {
             ))}
           </select>
         </label>
-        <button type="submit" disabled={state === "loading"} className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:opacity-50">
+        <button type="submit" disabled={state === "loading"} className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white disabled:opacity-50">
           {state === "loading" ? "Loading" : "Load"}
         </button>
       </form>

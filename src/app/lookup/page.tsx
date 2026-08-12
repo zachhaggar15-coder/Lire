@@ -33,7 +33,7 @@ export default function LookupPage() {
         />
         <button
           onClick={runSearch}
-          className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-white active:scale-[0.98]"
+          className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-white"
         >
           Search
         </button>

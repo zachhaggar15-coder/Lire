@@ -51,7 +51,7 @@ export default function ShortSnippetsBlock({ defaultOpen = false }: { defaultOpe
         aria-expanded={isOpen}
         aria-controls="short-snippets-list"
         onClick={() => setIsOpen((open) => !open)}
-        className="flex w-full items-center gap-3 text-left active:scale-[0.99]"
+        className="flex w-full items-center gap-3 text-left"
       >
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-semibold uppercase tracking-wide text-ink-muted">Short Snippets</span>

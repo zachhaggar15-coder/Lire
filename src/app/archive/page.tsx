@@ -190,7 +190,7 @@ export default function ArchivePage() {
           <p className="text-ink-muted">No completed articles yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white"
           >
             Start reading
           </Link>

@@ -16,6 +16,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import type { InferenceChallenge } from "@/lib/inference";
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
+import AppIcon from "@/components/AppIcon";
 
 export interface ActiveWordState {
   word: string;
@@ -201,14 +202,14 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
   }
 
   const footer = isProperNoun ? (
-    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-[0.98]">
+    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white">
       Close
     </button>
   ) : (
     <button
       onClick={() => (saved ? onUnsave?.() : onSave?.("learning"))}
       aria-pressed={saved}
-      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold active:scale-[0.98] ${
+      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
         saved ? "bg-brand-light text-brand" : "bg-brand text-white"
       }`}
     >
@@ -326,14 +327,14 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
               <button
                 type="button"
                 onClick={() => setSentenceTranslationRevealed((value) => !value)}
-                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-[0.98]"
+                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink"
               >
                 Reveal sentence translation
               </button>
               <button
                 type="button"
                 onClick={() => setDefinitionRevealed(true)}
-                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink active:scale-[0.98]"
+                className="min-h-12 rounded-full bg-cream px-3 py-1.5 text-xs font-semibold text-ink"
               >
                 Reveal direct definition
               </button>
@@ -578,7 +579,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
         {onExplainSentence && state && (
           <button
             onClick={() => onExplainSentence(state.contextSentence)}
-            className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink active:scale-[0.98]"
+            className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink"
           >
             Explain the whole sentence
           </button>
@@ -590,11 +591,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }
 
 function WordFamilyRow({ label, values }: { label: string; values: string[] }) {

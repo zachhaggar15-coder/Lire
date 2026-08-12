@@ -7,6 +7,7 @@ import { saveCustomDictionaryEntry } from "@/lib/dictionary/custom";
 import { recordDictionaryFeedback } from "@/lib/dictionary/feedback";
 import { deletePhrase, isPhraseSaved, savePhrase } from "@/lib/phrases";
 import BottomSheet from "@/components/BottomSheet";
+import AppIcon from "@/components/AppIcon";
 
 export interface ActivePhraseState {
   phrase: string;
@@ -111,7 +112,7 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
     <button
       onClick={() => (saved ? handleUnsavePhrase() : handleSavePhrase())}
       aria-pressed={saved}
-      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold active:scale-[0.98] ${
+      className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
         saved ? "bg-cream text-brand" : "bg-brand text-white"
       }`}
     >
@@ -233,9 +234,5 @@ export default function PhraseSheet({ state, articleTitle, onClose, onSaved, onU
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }

@@ -68,7 +68,7 @@ export default function BottomSheet({
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 bg-black/35 transition-opacity duration-200 ${
+        className={`fixed inset-0 z-40 bg-black/35 transition-opacity duration-200 ease-out ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={onClose}
@@ -80,6 +80,10 @@ export default function BottomSheet({
         }`}
         aria-hidden={!open}
         onClick={onClose}
+        style={{
+          paddingTop: "var(--visual-offset-top)",
+          paddingBottom: "var(--keyboard-inset)",
+        }}
       >
         <div
           ref={modalRef}
@@ -88,7 +92,7 @@ export default function BottomSheet({
           aria-label={ariaLabel}
           tabIndex={-1}
           onClick={(event) => event.stopPropagation()}
-          className={`relative flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark shadow-2xl transition-[transform,opacity] duration-200 ease-out sm:max-h-[calc(var(--vvh,100dvh)-3rem)] sm:rounded-3xl ${surfaceClassName} ${
+          className={`relative flex max-h-[calc(var(--vvh,100dvh)-0.5rem)] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-cream-dark shadow-2xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,0.8,0.3,1)] sm:max-h-[calc(var(--vvh,100dvh)-3rem)] sm:rounded-3xl ${surfaceClassName} ${
             open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 sm:translate-y-4"
           }`}
           style={{

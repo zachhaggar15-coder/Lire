@@ -8,6 +8,7 @@ import { markListeningPracticeCompleted } from "@/lib/practice/practiceProgress"
 import { getSettings } from "@/lib/settings";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
+import AppIcon from "@/components/AppIcon";
 
 interface ListeningPracticeProps {
   text: ReadingText;
@@ -198,27 +199,13 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }
 
 function BackIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polygon points="12,5 3,12 12,19" fill="currentColor" stroke="none" />
-      <path d="M19 5v14" />
-    </svg>
-  );
+  return <AppIcon name="skip-back" className={className} />;
 }
 
 function SkipEndIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polygon points="5,5 14,12 5,19" fill="currentColor" stroke="none" />
-      <path d="M19 5v14" />
-    </svg>
-  );
+  return <AppIcon name="skip-forward" className={className} />;
 }

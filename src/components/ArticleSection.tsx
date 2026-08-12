@@ -81,7 +81,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
   return (
     <a
       href={`/reader/${encodeURIComponent(text.id)}`}
-      className={`block min-w-0 rounded-card border border-cream-dark bg-cream-card p-3 shadow-card transition-shadow active:scale-[0.99] active:shadow-raised ${
+      className={`block min-w-0 rounded-card border border-cream-dark bg-cream-card p-3 shadow-card transition-shadow active:shadow-raised ${
         rail ? "w-64 shrink-0" : ""
       }`}
     >

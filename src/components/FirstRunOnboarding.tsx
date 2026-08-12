@@ -110,7 +110,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
               type="button"
               onClick={() => setLevel(option.value)}
               aria-pressed={level === option.value}
-              className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left active:scale-[0.99] ${
+              className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left ${
                 level === option.value ? "border-brand bg-brand text-white shadow-raised" : `border-transparent ${option.tone} text-ink`
               }`}
             >
@@ -202,7 +202,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
           <button
             type="button"
             onClick={() => finish()}
-            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-white active:scale-[0.99]"
+            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-white"
           >
             Start first lesson · {level}
           </button>

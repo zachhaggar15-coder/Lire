@@ -411,7 +411,7 @@ export function CompletionSummary({
       <p className="mt-1 text-sm font-bold text-brand">+{completion.xpEarned} XP</p>
       <p className="mx-auto mt-2 max-w-xs text-sm text-ink-muted">{nextCopy}</p>
 
-      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
+      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white">
         {nextLabel}
       </Link>
 
@@ -449,7 +449,7 @@ export function CompletionSummary({
         <button
           type="button"
           onClick={onSecondPass}
-          className="mt-3 w-full rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]"
+          className="mt-3 w-full rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink"
         >
           Reread without English
         </button>

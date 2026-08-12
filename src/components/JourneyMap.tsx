@@ -10,6 +10,7 @@ import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary"
 import { getCurrentStreak, isActiveToday } from "@/lib/habit";
 import { getGoals, getGoalsProgress } from "@/lib/goals";
 import ContinueReadingBanner from "@/components/ContinueReadingBanner";
+import AppIcon from "@/components/AppIcon";
 import { getJourneyText, JOURNEY_BANDS, NODES_PER_MAP, type Stage } from "@/lib/journey/ladder";
 import {
   getJourneyState,
@@ -368,7 +369,7 @@ function StageRouteStop({
             {stageNext ? (
               <Link
                 href={`/reader/${encodeURIComponent(stageNext.textId)}`}
-                className="ligne-pill flex min-h-11 items-center justify-center bg-brand text-cream active:scale-[0.99]"
+                className="ligne-pill flex min-h-11 items-center justify-center bg-brand text-cream"
               >
                 {stageActionLabel}
               </Link>
@@ -804,10 +805,6 @@ function wordCount(body: string): number {
 }
 
 function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  );
+  return <AppIcon name="check" className={className} />;
 }
 

@@ -81,7 +81,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           </div>
           <button
             onClick={onClose}
-            className="min-h-12 shrink-0 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]"
+            className="min-h-12 shrink-0 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink"
           >
             Done
           </button>
@@ -91,7 +91,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           {aiState === "idle" && (
             <button
               onClick={handleAskAi}
-                className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-[0.98]"
+                className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink"
             >
               Explain sentence
             </button>

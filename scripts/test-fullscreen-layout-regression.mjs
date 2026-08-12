@@ -16,6 +16,13 @@ const files = {
   sentenceSheet: readFileSync(new URL("../src/components/SentenceSheet.tsx", import.meta.url), "utf8"),
   bottomSheet: readFileSync(new URL("../src/components/BottomSheet.tsx", import.meta.url), "utf8"),
   bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
+  appIcon: readFileSync(new URL("../src/components/AppIcon.tsx", import.meta.url), "utf8"),
+  navigationPolish: readFileSync(new URL("../src/components/AppNavigationPolish.tsx", import.meta.url), "utf8"),
+  routeLoading: readFileSync(new URL("../src/components/RouteLoading.tsx", import.meta.url), "utf8"),
+  settingsLoading: readFileSync(new URL("../src/app/settings/loading.tsx", import.meta.url), "utf8"),
+  viewportHeight: readFileSync(new URL("../src/components/ViewportHeightVar.tsx", import.meta.url), "utf8"),
+  reader: readFileSync(new URL("../src/components/Reader.tsx", import.meta.url), "utf8"),
+  review: readFileSync(new URL("../src/app/review/page.tsx", import.meta.url), "utf8"),
   modalFocus: readFileSync(new URL("../src/lib/useModalFocus.ts", import.meta.url), "utf8"),
   swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
   swClient: readFileSync(new URL("../src/components/ServiceWorker.tsx", import.meta.url), "utf8"),
@@ -53,6 +60,8 @@ function blockAfter(source, marker) {
 
 const routeRule = blockAfter(files.css, ".app-route-shell");
 const routeKeyframes = blockAfter(files.css, "@keyframes app-route-enter");
+const forwardRouteKeyframes = blockAfter(files.css, "@keyframes app-route-forward");
+const backRouteKeyframes = blockAfter(files.css, "@keyframes app-route-back");
 const containingBlockProperties =
   /\b(transform|filter|perspective|backdrop-filter|will-change|contain|container-type|content-visibility)\s*:/i;
 
@@ -74,9 +83,20 @@ check(
 );
 check(
   "the route animation never applies a fixed-position containing-block property",
-  !containingBlockProperties.test(routeKeyframes),
-  routeKeyframes.trim()
+  [routeKeyframes, forwardRouteKeyframes, backRouteKeyframes].every((rule) => !containingBlockProperties.test(rule)),
+  [routeKeyframes, forwardRouteKeyframes, backRouteKeyframes].join("\n").trim()
 );
+
+console.log("--- Android quality polish contract ---");
+check("primary navigation uses a moving indicator", files.bottomNav.includes("activeIndex * 100") && files.bottomNav.includes("transition-transform"));
+check("primary navigation icons have filled active variants", files.bottomNav.includes("active={active}") && files.appIcon.includes("active && name"));
+check("route motion distinguishes drill-in, back, and crossfade", ["forward", "back", "crossfade"].every((motion) => files.navigationPolish.includes(`\"${motion}\"`)));
+check("route skeletons are delayed and destination-shaped", files.css.includes(".route-loading-delayed") && ["LessonsSkeleton", "ReaderSkeleton", "ReviewSkeleton", "LibrarySkeleton"].every((name) => files.routeLoading.includes(name)));
+check("Library owns its route-specific loading state", files.settingsLoading.includes('variant="library"'));
+check("keyboard geometry is exposed to app chrome and sheets", files.viewportHeight.includes("--keyboard-inset") && files.css.includes("html.keyboard-open .bottom-nav") && files.bottomSheet.includes("var(--keyboard-inset)"));
+check("the reader uses aligned controls and a content boundary", files.reader.includes('canUseSpeech ? "grid-cols-2"') && files.reader.includes("border-t border-cream-dark/90 pt-5"));
+check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("Your review deck is ready when you are"));
+check("changing review counts retain a stable slot", files.review.includes("ligne-state-slot") && files.review.includes("ligne-value-change"));
 
 console.log("--- full-screen overlay contract ---");
 check(

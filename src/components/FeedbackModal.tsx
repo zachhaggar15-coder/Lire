@@ -29,7 +29,7 @@ export function FeedbackButton({
   articleId,
   affectedTerm,
   label = "Give feedback",
-  className = "rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted active:scale-[0.98]",
+  className = "rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted",
 }: {
   feature: string;
   articleId?: string | null;
@@ -115,7 +115,7 @@ export default function FeedbackModal({
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Feedback</p>
             <h2 className="mt-1 text-xl font-extrabold text-ink">How was this session?</h2>
           </div>
-          <button type="button" onClick={onClose} className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]">
+          <button type="button" onClick={onClose} className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink">
             Close
           </button>
         </div>
@@ -127,7 +127,7 @@ export default function FeedbackModal({
               type="button"
               onClick={() => setCategory(item)}
               aria-pressed={category === item}
-              className={`min-h-12 rounded-2xl px-3 py-2 text-left text-xs font-semibold active:scale-[0.98] ${
+              className={`min-h-12 rounded-2xl px-3 py-2 text-left text-xs font-semibold ${
                 category === item ? "bg-brand text-white" : "bg-cream text-ink-muted"
               }`}
             >
@@ -154,7 +154,7 @@ export default function FeedbackModal({
         <button
           type="submit"
           disabled={state === "submitting"}
-          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:opacity-50"
+          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
         >
           {state === "submitting" ? "Sending..." : "Submit feedback"}
         </button>

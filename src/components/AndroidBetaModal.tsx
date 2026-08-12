@@ -14,7 +14,7 @@ const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 export function AndroidBetaButton({
   source,
   label = "Join Android beta",
-  className = "rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]",
+  className = "rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white",
 }: {
   source: AndroidBetaSource;
   label?: string;
@@ -122,7 +122,7 @@ export default function AndroidBetaModal({
           <button
             type="button"
             onClick={onClose}
-            className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]"
+            className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink"
           >
             Close
           </button>
@@ -205,7 +205,7 @@ export default function AndroidBetaModal({
           <button
             type="submit"
             disabled={state === "submitting" || !email.trim()}
-            className="w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:opacity-50"
+            className="w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
           >
             {state === "submitting" ? "Joining..." : state === "success" ? "Update beta details" : "Join beta list"}
           </button>

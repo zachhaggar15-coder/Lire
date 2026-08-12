@@ -12,6 +12,7 @@ import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidate
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
+import AppIcon from "@/components/AppIcon";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -226,7 +227,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             onClick={() => moveToBank(chip)}
             disabled={!!result}
             aria-pressed="true"
-            className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-cream active:scale-[0.98] disabled:opacity-70"
+            className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-cream disabled:opacity-70"
           >
             {chip.display}
           </button>
@@ -241,7 +242,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             onClick={() => moveToPlaced(chip)}
             disabled={!!result}
             aria-pressed="false"
-            className="rounded-full border border-cream-dark bg-cream px-3 py-1.5 text-sm font-semibold text-ink active:scale-[0.98] disabled:opacity-40"
+            className="rounded-full border border-cream-dark bg-cream px-3 py-1.5 text-sm font-semibold text-ink disabled:opacity-40"
           >
             {chip.display}
           </button>
@@ -330,7 +331,7 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
               aria-checked={selectedOption}
               onClick={() => choose(option)}
               disabled={!!result}
-              className={`rounded-full border px-3 py-1.5 text-sm font-semibold active:scale-[0.98] disabled:opacity-90 ${
+              className={`rounded-full border px-3 py-1.5 text-sm font-semibold disabled:opacity-90 ${
                 revealedCorrect
                   ? "border-brand bg-brand-light text-brand"
                   : selectedOption
@@ -419,7 +420,7 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
               aria-checked={isSelected}
               onClick={() => choose(option)}
               disabled={!!result}
-              className={`w-full rounded-2xl border px-3 py-2.5 text-left text-sm font-semibold active:scale-[0.99] disabled:opacity-90 ${
+              className={`w-full rounded-2xl border px-3 py-2.5 text-left text-sm font-semibold disabled:opacity-90 ${
                 showAsCorrect
                   ? "border-brand bg-brand-light text-brand"
                   : showAsWrongPick
@@ -491,19 +492,11 @@ function PracticeSummary({ completedKinds, onReturnToMap }: { completedKinds: st
 }
 
 function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  );
+  return <AppIcon name="close" className={className} />;
 }
 
 function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  );
+  return <AppIcon name="check" className={className} />;
 }
 
 export function buildFreshPracticePlan(text: ReadingText): PracticePlan {

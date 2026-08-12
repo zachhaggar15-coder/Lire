@@ -141,7 +141,7 @@ export default function SourcesPage() {
       {state === "error" && (
         <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
           <p className="text-sm font-bold text-ink">Source health is unavailable right now.</p>
-          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
+          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white">
             Retry
           </button>
         </div>
@@ -259,7 +259,7 @@ function SourceControlList({
               <button
                 type="button"
                 onClick={() => onAction(source)}
-                className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-[0.98]"
+                className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted"
               >
                 {actionLabel}
               </button>

@@ -14,8 +14,14 @@ import { useEffect } from "react";
 export default function ViewportHeightVar() {
   useEffect(() => {
     function update() {
-      const height = window.visualViewport?.height ?? window.innerHeight;
+      const viewport = window.visualViewport;
+      const height = viewport?.height ?? window.innerHeight;
+      const offsetTop = viewport?.offsetTop ?? 0;
+      const keyboardInset = Math.max(0, window.innerHeight - height - offsetTop);
       document.documentElement.style.setProperty("--vvh", `${height}px`);
+      document.documentElement.style.setProperty("--visual-offset-top", `${offsetTop}px`);
+      document.documentElement.style.setProperty("--keyboard-inset", `${keyboardInset}px`);
+      document.documentElement.classList.toggle("keyboard-open", keyboardInset > 120);
     }
     update();
     window.addEventListener("resize", update);
@@ -27,6 +33,10 @@ export default function ViewportHeightVar() {
       window.removeEventListener("orientationchange", update);
       window.visualViewport?.removeEventListener("resize", update);
       window.visualViewport?.removeEventListener("scroll", update);
+      document.documentElement.classList.remove("keyboard-open");
+      document.documentElement.style.removeProperty("--vvh");
+      document.documentElement.style.removeProperty("--visual-offset-top");
+      document.documentElement.style.removeProperty("--keyboard-inset");
     };
   }, []);
 

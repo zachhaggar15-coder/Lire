@@ -96,6 +96,7 @@ import { CompletionSummary } from "@/components/GamificationCards";
 import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
+import AppIcon from "@/components/AppIcon";
 
 const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
 
@@ -1720,15 +1721,11 @@ export default function Reader({ text }: { text: ReadingText }) {
           handlePlayParagraph(paragraph, paragraphIndex);
         }}
         aria-label={active ? "Stop this paragraph" : `Play paragraph ${paragraphIndex + 1}`}
-        className={`mt-[-0.35rem] inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xs font-bold active:scale-[0.98] ${
+        className={`mt-[-0.35rem] inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
           active ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
         }`}
       >
-        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M11 5 6 9H3v6h3l5 4z" />
-          <path d="M15 9.5a4 4 0 0 1 0 5" />
-          <path d="M18 7a8 8 0 0 1 0 10" />
-        </svg>
+        <AppIcon name="volume" className="h-3.5 w-3.5" />
       </button>
     );
   }
@@ -1898,7 +1895,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const headerTone = readerHeaderTone(text.category);
 
   return (
-    <div className="bg-cream px-[22px] pt-[calc(var(--safe-top)+1.25rem)]">
+    <div className="min-h-[var(--vvh,100dvh)] bg-cream px-[22px] pb-[calc(var(--safe-bottom)+1rem)] pt-[calc(var(--safe-top)+1.25rem)]">
       {showProgressBadge && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-0 z-40 h-1 w-full max-w-md -translate-x-1/2 bg-cream-dark/70">
@@ -1918,57 +1915,48 @@ export default function Reader({ text }: { text: ReadingText }) {
         <button
           type="button"
           onClick={handleBack}
-          className="-ml-2 flex min-h-12 items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-brand active:scale-[0.98]"
+          className="ligne-pressable -ml-2 flex min-h-12 items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-brand"
         >
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
+          <AppIcon name="back" />
           Back
         </button>
       </div>
 
       <section className="overflow-hidden rounded-card border border-cream-dark bg-cream-card">
-        <div className={`p-4 ${headerTone}`}>
+        <div className={`px-4 py-3.5 ${headerTone}`}>
           <div className="min-w-0 flex-1">
-            <span className="mb-2 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-brand">
+            <span className="mb-1.5 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-brand">
               {formatCategory(text.category)}
             </span>
-            <h1 className="break-words font-french text-[28px] leading-tight text-ink">
+            <h1 className="break-words font-french text-[26px] leading-[1.12] text-ink">
               {text.title}
             </h1>
       {/* The stored level, matching the card that led here — see the note in
           ReadingCard. The estimate only ever speaks in the "Reading options"
           note below, where it describes the fit rather than renaming it. */}
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-muted">
+            <p className="ligne-meta mt-1.5 text-ink-muted">
               {text.difficulty} - {text.minutes} min
             </p>
           </div>
         </div>
-        <div className="p-4">
-      <div className="flex flex-wrap items-center gap-2">
+        <div className="p-3.5">
+      <div className={`grid gap-2 ${canUseSpeech ? "grid-cols-2" : "grid-cols-1"}`}>
         {canUseSpeech && (
           <button
             type="button"
             onClick={handleToggleListenToArticle}
-            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold active:scale-[0.98] ${
+            className={`ligne-pressable inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold ${
               isSpeakingArticle ? "bg-brand text-cream" : "border border-cream-dark bg-cream text-ink"
             }`}
           >
             {isSpeakingArticle ? (
               <>
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
+                <AppIcon name="pause" className="h-4 w-4" />
                 Stop listening
               </>
             ) : (
               <>
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 5 6 9H3v6h3l5 4z" />
-                  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-                  <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-                </svg>
+                <AppIcon name="volume" className="h-4 w-4" />
                 Listen to article
               </>
             )}
@@ -1978,7 +1966,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-dark bg-cream px-3.5 text-xs font-semibold text-ink active:scale-[0.98] disabled:opacity-50"
+          className="ligne-pressable inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-cream-dark bg-cream px-3 text-xs font-semibold text-ink disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -1998,7 +1986,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       </div>
 
       <details
-        className="mt-3 rounded-2xl bg-cream px-3 py-2.5 text-xs text-ink-muted"
+        className="mt-2.5 rounded-2xl bg-cream-sunken px-3 py-2 text-xs leading-relaxed text-ink-muted"
         open={readingHelpOpen}
         onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
       >
@@ -2021,7 +2009,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               type="button"
               onClick={cycleSpeechRate}
               aria-label="Change speaking speed"
-              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-cream-dark bg-cream-card px-3 text-xs font-semibold text-ink active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-cream-dark bg-cream-card px-3 text-xs font-semibold text-ink"
             >
               <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 14h4l5 5V5l-5 5H4v4Z" />
@@ -2034,7 +2022,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             feature="reader"
             articleId={text.id}
             label="Report a problem"
-            className="inline-flex min-h-11 items-center rounded-full border border-cream-dark bg-cream-card px-3.5 text-xs font-semibold text-ink-muted active:scale-[0.98]"
+            className="inline-flex min-h-11 items-center rounded-full border border-cream-dark bg-cream-card px-3.5 text-xs font-semibold text-ink-muted"
           />
         </div>
       </details>
@@ -2084,8 +2072,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       </section>
 
       {isChunkedStarterLesson && (
-        <section className="mt-5 rounded-card border border-cream-dark bg-cream-card p-4">
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-brand">
+        <section className="mt-4 px-0.5">
+          <p className="ligne-meta text-brand">
             Part {currentLessonStep} of {lessonStepCount} · {lessonStepSentenceLabel}
           </p>
           <div
@@ -2103,7 +2091,7 @@ export default function Reader({ text }: { text: ReadingText }) {
 
       <article
         ref={articleRef}
-        className={`no-select mt-6 space-y-6 font-french ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.62] text-ink`}
+        className={`no-select mt-5 space-y-6 border-t border-cream-dark/90 pt-5 font-french ${FONT_SIZE_CLASSES[settings.fontSize]} leading-[1.62] text-ink`}
       >
         {visibleParagraphEntries.map(({ sentences, paragraphIndex }) =>
           showEnglishTranslation ? (
@@ -2186,7 +2174,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                           key={choice}
                           type="button"
                           onClick={() => setQuickChallengeAnswer(choice)}
-                          className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
+                          className={`rounded-full px-3 py-2 text-xs font-semibold ${
                             answered && correct
                               ? "bg-brand-light text-brand"
                               : selected
@@ -2304,7 +2292,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                         key={option.value}
                         type="button"
                         onClick={() => handleArticleFeedback(option.value)}
-                        className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
+                        className={`rounded-full px-3 py-2 text-xs font-semibold ${
                           articleFeedback === option.value ? "bg-brand text-cream" : "bg-cream-fill text-ink-muted"
                         }`}
                       >
@@ -2556,7 +2544,7 @@ function HeadlineComparisonCard({ comparison }: { comparison: HeadlineComparison
         <button
           type="button"
           onClick={() => setRevealed(true)}
-          className="mt-3 rounded-full bg-cream-dark px-4 py-2 text-xs font-semibold text-ink active:scale-[0.98]"
+          className="mt-3 rounded-full bg-cream-dark px-4 py-2 text-xs font-semibold text-ink"
         >
           Reveal framing notes
         </button>
@@ -2652,7 +2640,7 @@ function ComprehensionQuestion({
               key={`${question.id}-${index}-${choice}`}
               type="button"
               onClick={() => onSelect(index)}
-              className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium active:scale-[0.99] ${
+              className={`w-full rounded-2xl px-3 py-2 text-left text-sm font-medium ${
                 isAnswer
                   ? "bg-brand-light text-brand"
                   : isSelected

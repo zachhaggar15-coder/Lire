@@ -63,7 +63,7 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
           </p>
         </div>
         {promptEvent ? (
-          <button type="button" onClick={install} className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
+          <button type="button" onClick={install} className="shrink-0 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white">
             Install
           </button>
         ) : (

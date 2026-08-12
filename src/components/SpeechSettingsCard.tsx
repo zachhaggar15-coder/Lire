@@ -48,7 +48,7 @@ export default function SpeechSettingsCard({ settings, onChange }: SpeechSetting
         <button
           type="button"
           onClick={() => speakFrench(PREVIEW_TEXT)}
-          className="shrink-0 rounded-full bg-brand px-3 py-1.5 shadow-raised text-xs font-semibold text-white active:scale-[0.98]"
+          className="shrink-0 rounded-full bg-brand px-3 py-1.5 shadow-raised text-xs font-semibold text-white"
         >
           Preview
         </button>

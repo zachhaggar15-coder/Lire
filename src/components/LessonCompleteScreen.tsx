@@ -268,7 +268,7 @@ export default function LessonCompleteScreen({
                       disabled={!onToggleSave}
                       aria-pressed={item.saved}
                       aria-label={item.saved ? `Remove ${item.french} from review` : `Save ${item.french} for review`}
-                      className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold active:scale-[0.98] ${
+                      className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${
                         item.saved ? "bg-brand text-white" : "bg-cream-card text-ink-muted"
                       }`}
                     >

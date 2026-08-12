@@ -52,7 +52,7 @@ export default function DictionaryQualityPage() {
       {ready && feedback.length === 0 && missingWords.length === 0 && (
         <div className="mt-12 text-center">
           <p className="text-ink-muted">No dictionary issues recorded yet.</p>
-          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
+          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white">
             Start reading
           </Link>
         </div>
@@ -86,7 +86,7 @@ export default function DictionaryQualityPage() {
                     type="button"
                     onClick={() => handleDeleteFeedback(entry.id)}
                     aria-label={`Delete correction for ${entry.input}`}
-                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-[0.98]"
+                    className="rounded-full bg-cream-dark p-3 text-ink-muted"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />

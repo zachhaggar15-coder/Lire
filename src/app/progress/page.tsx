@@ -117,7 +117,7 @@ export default function ProgressPage() {
             type="button"
             onClick={() => setTab(item.id)}
             aria-pressed={tab === item.id}
-            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
+            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
               tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
@@ -345,7 +345,7 @@ function FirstStepsProgressCard() {
           </div>
         ))}
       </div>
-      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white active:scale-[0.98]">
+      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white">
         Start reading
       </Link>
     </section>

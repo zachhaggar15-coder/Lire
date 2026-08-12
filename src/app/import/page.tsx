@@ -69,7 +69,7 @@ export default function ImportPage() {
                   type="button"
                   onClick={() => setCategory(item.value)}
                   aria-pressed={category === item.value}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-[0.98] ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                     category === item.value ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}
                 >
@@ -87,7 +87,7 @@ export default function ImportPage() {
                   type="button"
                   onClick={() => setDifficulty(level)}
                   aria-pressed={difficulty === level}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-[0.98] ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                     difficulty === level ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}
                 >
@@ -119,7 +119,7 @@ export default function ImportPage() {
             type="button"
             onClick={handleSave}
             disabled={!canSave}
-            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:bg-cream-dark disabled:text-ink-muted"
+            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
           >
             Save and read
           </button>
@@ -142,7 +142,7 @@ export default function ImportPage() {
                     type="button"
                     onClick={() => handleDelete(text.id)}
                     aria-label={`Delete ${text.title}`}
-                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-[0.98]"
+                    className="rounded-full bg-cream-dark p-3 text-ink-muted"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
