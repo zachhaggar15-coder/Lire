@@ -10,6 +10,7 @@ import {
   unpreferSource,
 } from "@/lib/recommendation/preferences";
 import { formatCategory } from "@/lib/format";
+import AppBar from "@/components/AppBar";
 
 type LoadState = "loading" | "success" | "error";
 
@@ -116,13 +117,9 @@ export default function SourcesPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        <div>
-          <h1 className="text-2xl font-extrabold text-ink">Sources</h1>
-          <p className="text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
-        </div>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Sources" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
 
       {state === "loading" && (
         <div className="space-y-3">
@@ -144,7 +141,7 @@ export default function SourcesPage() {
       {state === "error" && (
         <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
           <p className="text-sm font-bold text-ink">Source health is unavailable right now.</p>
-          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
             Retry
           </button>
         </div>
@@ -262,7 +259,7 @@ function SourceControlList({
               <button
                 type="button"
                 onClick={() => onAction(source)}
-                className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-95"
+                className="shrink-0 rounded-full bg-cream-dark px-3 py-1.5 text-xs font-semibold text-ink-muted active:scale-[0.98]"
               >
                 {actionLabel}
               </button>

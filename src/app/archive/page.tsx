@@ -14,6 +14,7 @@ import {
   type CategoryProficiency,
   type WeeklyReadingReport,
 } from "@/lib/readingAnalytics";
+import AppBar from "@/components/AppBar";
 
 type SortKey = "date" | "time" | "words" | "difficulty";
 
@@ -115,15 +116,9 @@ export default function ArchivePage() {
   }, [rows, query, sortKey]);
 
   return (
-    <div className="px-4 pt-6">
-      <Link href="/" className="text-sm font-semibold text-brand">
-        Back to home
-      </Link>
-
-      <header className="mb-4 mt-2">
-        <h1 className="text-2xl font-extrabold text-ink">Articles read</h1>
-        <p className="text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
 
       {summary && (
         <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
@@ -195,7 +190,7 @@ export default function ArchivePage() {
           <p className="text-ink-muted">No completed articles yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]"
           >
             Start reading
           </Link>

@@ -11,6 +11,7 @@ import { allSentencesInText } from "@/lib/practice/textSentences";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -50,6 +51,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   /** Guards against React StrictMode's dev-only double-invoke of effects starting two generations (and appending the activity twice) — this must run at most once per overlay instance regardless of how many times the effect body fires. */
   const paraphraseStartedRef = useRef(false);
   const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
+  useDismissibleHistory(true, onClose);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -130,7 +132,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
     <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Practice this text" tabIndex={-1} className="fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="flex items-center justify-between">
-          <button type="button" onClick={onClose} aria-label="Close practice" className="rounded-full bg-cream-card p-2 text-ink-muted">
+          <button type="button" onClick={onClose} aria-label="Close practice" className="ligne-icon-button bg-cream-card text-ink-muted">
             <CloseIcon className="h-4 w-4" />
           </button>
           {!done && (
@@ -224,7 +226,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             onClick={() => moveToBank(chip)}
             disabled={!!result}
             aria-pressed="true"
-            className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-cream active:scale-95 disabled:opacity-70"
+            className="rounded-full bg-brand px-3 py-1.5 text-sm font-semibold text-cream active:scale-[0.98] disabled:opacity-70"
           >
             {chip.display}
           </button>
@@ -239,7 +241,7 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
             onClick={() => moveToPlaced(chip)}
             disabled={!!result}
             aria-pressed="false"
-            className="rounded-full border border-cream-dark bg-cream px-3 py-1.5 text-sm font-semibold text-ink active:scale-95 disabled:opacity-40"
+            className="rounded-full border border-cream-dark bg-cream px-3 py-1.5 text-sm font-semibold text-ink active:scale-[0.98] disabled:opacity-40"
           >
             {chip.display}
           </button>
@@ -328,7 +330,7 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
               aria-checked={selectedOption}
               onClick={() => choose(option)}
               disabled={!!result}
-              className={`rounded-full border px-3 py-1.5 text-sm font-semibold active:scale-95 disabled:opacity-90 ${
+              className={`rounded-full border px-3 py-1.5 text-sm font-semibold active:scale-[0.98] disabled:opacity-90 ${
                 revealedCorrect
                   ? "border-brand bg-brand-light text-brand"
                   : selectedOption

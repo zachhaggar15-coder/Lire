@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import type { AndroidBetaSource } from "@/lib/beta/android";
 import { trackEvent } from "@/lib/analytics/client";
 import { buildValidationBehaviourContext } from "@/lib/validation/context";
 import { markAndroidInterest } from "@/lib/validation/lifecycle";
-import { useModalPresence } from "@/lib/modalPresence";
+import BottomSheet from "@/components/BottomSheet";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -14,7 +14,7 @@ const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 export function AndroidBetaButton({
   source,
   label = "Join Android beta",
-  className = "rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95",
+  className = "rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]",
 }: {
   source: AndroidBetaSource;
   label?: string;
@@ -60,27 +60,10 @@ export default function AndroidBetaModal({
   const [desiredImprovement, setDesiredImprovement] = useState("");
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState<string | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const previousFocus = useRef<HTMLElement | null>(null);
-
-  useModalPresence(open);
-
   useEffect(() => {
     if (!open) return;
-    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    closeButtonRef.current?.focus();
     trackEvent("android_beta_form_started", { source });
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      window.removeEventListener("keydown", handleKey);
-      previousFocus.current?.focus();
-    };
-  }, [onClose, open, source]);
-
-  if (!open) return null;
+  }, [open, source]);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -121,13 +104,13 @@ export default function AndroidBetaModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex max-w-md items-end bg-black/35 px-3 pb-[var(--safe-bottom)] pt-[var(--safe-top)]">
+    <BottomSheet open={open} onClose={onClose} ariaLabel="Join the Android beta" contentClassName="px-5 pb-[calc(1rem+var(--safe-bottom))]">
       {/* This form has six fields plus a submit button — tall enough, especially
           with the on-screen keyboard open, that it can exceed a short mobile
           viewport. max-h + overflow-y-auto (rather than an unconstrained card)
           keeps the submit button reachable by scrolling instead of letting it
           render off the top of the screen with no way back to it. */}
-      <div className="max-h-[calc(var(--vvh,100dvh)-1rem)] w-full overflow-y-auto touch-pan-y overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl">
+      <div>
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Android beta</p>
@@ -137,10 +120,9 @@ export default function AndroidBetaModal({
             </p>
           </div>
           <button
-            ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-cream-dark px-3 py-2 text-sm font-semibold text-ink active:scale-95"
+            className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]"
           >
             Close
           </button>
@@ -223,7 +205,7 @@ export default function AndroidBetaModal({
           <button
             type="submit"
             disabled={state === "submitting" || !email.trim()}
-            className="w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+            className="w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:opacity-50"
           >
             {state === "submitting" ? "Joining..." : state === "success" ? "Update beta details" : "Join beta list"}
           </button>
@@ -232,6 +214,6 @@ export default function AndroidBetaModal({
           </p>
         </form>
       </div>
-    </div>
+    </BottomSheet>
   );
 }

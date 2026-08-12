@@ -16,6 +16,7 @@ import PronounceButton from "@/components/PronounceButton";
 import CoachMark from "@/components/onboarding/CoachMark";
 import { findContainingPhraseTranslationMatch, type PhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import type { SavedWord } from "@/types";
 
 /**
@@ -52,7 +53,8 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [activePhrase, setActivePhrase] = useState<PhraseTranslationMatch | null>(null);
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
   const phraseHoldTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const modalRef = useModalFocus<HTMLDivElement>(true);
+  const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
+  useDismissibleHistory(true, handleSkip);
 
   useEffect(() => {
     if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
@@ -222,13 +224,13 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
         <div className="flex items-center justify-between">
           {step > 0 ? (
-            <button type="button" onClick={() => goToStep(step - 1)} className="text-sm font-semibold text-ink-muted">
+            <button type="button" onClick={() => goToStep(step - 1)} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
               Back
             </button>
           ) : (
             <span />
           )}
-          <button type="button" onClick={handleSkip} className="text-sm font-semibold text-ink-muted">
+          <button type="button" onClick={handleSkip} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
             Skip tutorial
           </button>
         </div>
@@ -282,7 +284,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   <button
                     type="button"
                     onClick={handleWordAction}
-                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-95"
+                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white active:scale-[0.98]"
                   >
                     Save
                   </button>

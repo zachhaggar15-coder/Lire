@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import type { SentenceExplanation } from "@/lib/ai/types";
 import { getSentenceExplanation } from "@/lib/ai/client";
 import PronounceButton from "@/components/PronounceButton";
-import { useModalFocus } from "@/lib/useModalFocus";
-import { useModalPresence } from "@/lib/modalPresence";
+import BottomSheet from "@/components/BottomSheet";
 
 export interface ActiveSentenceState {
   sentence: string;
@@ -33,8 +32,6 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
   const [aiResult, setAiResult] = useState<SentenceExplanation | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const open = state !== null;
-  const modalRef = useModalFocus<HTMLDivElement>(open, onClose);
-  useModalPresence(open);
 
   // Reset whenever a different sentence is shown.
   useEffect(() => {
@@ -65,29 +62,12 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
   }
 
   return (
-    <>
-      <div
-        className={`fixed inset-0 z-40 bg-black/30 transition-opacity ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={onClose}
-        aria-hidden
-      />
-
-      <div
-        ref={modalRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Sentence explanation"
-        aria-hidden={!open}
-        tabIndex={-1}
-        className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[calc(var(--vvh,100dvh)-0.5rem)] max-w-md touch-pan-y overflow-y-auto overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl transition-transform duration-200 ${
-          open ? "translate-y-0" : "translate-y-full"
-        }`}
-        style={{ paddingBottom: "calc(1.25rem + var(--safe-bottom))" }}
-      >
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-cream-dark" />
-
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      ariaLabel="Sentence explanation"
+      contentClassName="px-5 pb-[calc(1.25rem+var(--safe-bottom))]"
+    >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand">Sentence</p>
@@ -101,7 +81,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-95"
+            className="min-h-12 shrink-0 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]"
           >
             Done
           </button>
@@ -111,7 +91,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           {aiState === "idle" && (
             <button
               onClick={handleAskAi}
-              className="rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-95"
+                className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink active:scale-[0.98]"
             >
               Explain sentence
             </button>
@@ -119,7 +99,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           {aiState === "loading" && (
             <button
               disabled
-              className="rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink-muted"
+              className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink-muted"
             >
               Asking the AI tutor…
             </button>
@@ -127,7 +107,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
           {aiState === "error" && (
             <p className="mt-2 text-sm text-rose-500">
               {aiError}{" "}
-              <button onClick={handleAskAi} className="underline">
+              <button onClick={handleAskAi} className="inline-flex min-h-12 items-center underline">
                 Try again
               </button>
             </p>
@@ -261,8 +241,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
             </>
           )}
         </div>
-      </div>
-    </>
+    </BottomSheet>
   );
 }
 

@@ -17,6 +17,7 @@ import { buildContextualReviewArticles, classifyVocabularyStates, type Contextua
 import { recordReviewSuccessXp } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
+import { triggerHaptic } from "@/lib/haptics";
 
 type ReviewDirection = "fr-en" | "en-fr";
 type WordGrade = "knew" | "learning";
@@ -54,7 +55,7 @@ function SpeakButton({ text }: { text: string }) {
         speakFrench(text);
       }}
       aria-label={`Listen to "${text}"`}
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream text-ink-muted active:scale-95"
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream text-ink-muted active:scale-[0.98]"
     >
       <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 5 6 9H3v6h3l5 4z" />
@@ -238,6 +239,7 @@ export default function ReviewPage() {
   function gradeWord(grade: WordGrade) {
     if (!current || cardFeedback) return;
     const correct = grade === "knew";
+    triggerHaptic(correct ? "confirm" : "selection");
     if (!correct) {
       missedWordKeys.current.add(current.word);
       setMissedCount(missedWordKeys.current.size);
@@ -310,6 +312,7 @@ export default function ReviewPage() {
   function gradePhrase(grade: WordGrade) {
     if (!currentPhrase || cardFeedback) return;
     const correct = grade === "knew";
+    triggerHaptic(correct ? "confirm" : "selection");
     phraseScore.current = {
       correct: phraseScore.current.correct + (correct ? 1 : 0),
       total: phraseScore.current.total + 1,
@@ -348,7 +351,7 @@ export default function ReviewPage() {
       ].map((s) => (
         <div key={s.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2.5 text-center">
           <p className="font-numeral text-2xl leading-none text-ink">{s.value}</p>
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{s.label}</p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{s.label}</p>
         </div>
       ))}
     </div>
@@ -446,7 +449,7 @@ export default function ReviewPage() {
           <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Review</h1>
           {articleFilter && <p className="mt-0.5 line-clamp-1 text-xs text-ink-muted">From: {articleFilter}</p>}
         </div>
-        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
+        <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
           {reviewProgressLabel}
         </span>
       </header>
@@ -615,7 +618,7 @@ export default function ReviewPage() {
                 type="button"
                 onClick={() => gradeWord("learning")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-[0.98] disabled:opacity-40"
               >
                 Still learning
               </button>
@@ -623,7 +626,7 @@ export default function ReviewPage() {
                 type="button"
                 onClick={() => gradeWord("knew")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-[0.98] disabled:opacity-40"
               >
                 Knew it
               </button>
@@ -731,22 +734,22 @@ function PracticeHubCard({
       </button>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Review options
         </summary>
         <div className="pb-1">
           {phraseCount > 0 && (
             <div className="mt-4">
-              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
+              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
               <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
             </div>
           )}
           <div className="mt-4">
-            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
             <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
           </div>
           <div className="mt-4">
-            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
             <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
           </div>
         </div>
@@ -756,7 +759,7 @@ function PracticeHubCard({
       </Link>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Stats
         </summary>
         <div className="mt-3 grid grid-cols-4 gap-2">
@@ -794,7 +797,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
-      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -822,7 +825,7 @@ function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
+          <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
           <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
         </div>
         <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">
@@ -868,7 +871,7 @@ function ReviewDirectionToggle({
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+          className={`min-h-12 rounded-full px-2 py-2 text-xs font-bold transition-colors ${
             direction === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
         >
@@ -900,7 +903,7 @@ function SessionLengthToggle({
           key={option.label}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+          className={`min-h-12 rounded-full px-2 py-2 text-xs font-bold transition-colors ${
             value === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
         >
@@ -926,7 +929,7 @@ function PhraseModeSwitch({
         type="button"
         onClick={() => onChange("words")}
         aria-pressed={mode === "words"}
-        className={`rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
+        className={`min-h-12 rounded-full py-2 text-sm font-semibold ${mode === "words" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Words
       </button>
@@ -934,7 +937,7 @@ function PhraseModeSwitch({
         type="button"
         onClick={() => onChange("phrases")}
         aria-pressed={mode === "phrases"}
-        className={`rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
+        className={`min-h-12 rounded-full py-2 text-sm font-semibold ${mode === "phrases" ? "bg-brand text-cream" : "text-ink-muted"}`}
       >
         Phrases {phraseCount > 0 ? `(${phraseCount})` : ""}
       </button>
@@ -1027,7 +1030,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("learning")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-95 disabled:opacity-40"
+            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted active:scale-[0.98] disabled:opacity-40"
           >
             Still learning
           </button>
@@ -1035,7 +1038,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("knew")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-95 disabled:opacity-40"
+            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand active:scale-[0.98] disabled:opacity-40"
           >
             Knew it
           </button>

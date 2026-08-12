@@ -14,6 +14,7 @@ const files = {
   wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
   phraseSheet: readFileSync(new URL("../src/components/PhraseSheet.tsx", import.meta.url), "utf8"),
   sentenceSheet: readFileSync(new URL("../src/components/SentenceSheet.tsx", import.meta.url), "utf8"),
+  bottomSheet: readFileSync(new URL("../src/components/BottomSheet.tsx", import.meta.url), "utf8"),
   bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
   modalFocus: readFileSync(new URL("../src/lib/useModalFocus.ts", import.meta.url), "utf8"),
   swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
@@ -100,10 +101,15 @@ check(
     files.wordSheet.includes('saved ? "Remove from review" : "Add to review"')
 );
 check("the real word card closes with an X, not a Done label", files.wordSheet.includes('aria-label="Close"'));
-check("the real word card is viewport-bounded on mobile and web", files.wordSheet.includes("100dvh") && files.wordSheet.includes("sm:items-center"));
+check(
+  "the real word card is viewport-bounded on mobile and web",
+  files.wordSheet.includes("<BottomSheet") && files.bottomSheet.includes("100dvh") && files.bottomSheet.includes("sm:items-center")
+);
 check(
   "mobile word-card actions stay pinned outside the scrolling definition body",
-  files.wordSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") && files.wordSheet.includes("shrink-0 border-t")
+  files.wordSheet.includes("footer={footer}") &&
+    files.bottomSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") &&
+    files.bottomSheet.includes("shrink-0 border-t")
 );
 // The nav is a sibling of <main>, so a sheet's z-index can be trapped by any
 // ancestor stacking context and lose to it, covering the sheet's actions.
@@ -113,7 +119,8 @@ check(
 );
 check(
   "every bottom sheet registers itself so the nav knows to yield",
-  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("useModalPresence(open)"))
+  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("<BottomSheet")) &&
+    files.bottomSheet.includes("useModalPresence(open)")
 );
 check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));
 check("the canonical reconstruction is hidden until correct or revealed", files.practice.includes('(result === "correct" || answerRevealed) &&'));

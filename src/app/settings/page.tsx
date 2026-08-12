@@ -83,7 +83,7 @@ function Toggle({
 function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div>
-      <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
       <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
     </div>
   );
@@ -326,7 +326,7 @@ export default function SettingsPage() {
                   resetWalkthrough();
                   router.push("/");
                 }}
-                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink active:scale-95"
+                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink active:scale-[0.98]"
               >
                 Restart
               </button>

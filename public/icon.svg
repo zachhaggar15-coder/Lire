@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <rect width="512" height="512" rx="112" fill="#2563eb"/>
-  <path d="M136 150h100c24 0 40 14 40 38v186a30 30 0 0 0-30-28H136z" fill="#ffffff"/>
-  <path d="M376 150H276c-24 0-40 14-40 38v186a30 30 0 0 1 30-28h110z" fill="#bfdbfe"/>
-  <text x="256" y="470" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="#ffffff" text-anchor="middle">Lire</text>
+  <rect width="512" height="512" rx="112" fill="#16593C"/>
+  <circle cx="394" cy="118" r="46" fill="#F9D96B"/>
+  <path d="M118 144h104c28 0 50 15 50 43v197c-14-17-32-25-55-25h-99z" fill="#FFFCF4"/>
+  <path d="M394 144H290c-28 0-50 15-50 43v197c14-17 32-25 55-25h99z" fill="#E4EFE7"/>
+  <path d="M240 187v197" stroke="#16593C" stroke-width="12" stroke-linecap="round"/>
 </svg>

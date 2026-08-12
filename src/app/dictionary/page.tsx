@@ -7,6 +7,7 @@ import { getSavedPhrases } from "@/lib/phrases";
 import { getSavedWords } from "@/lib/storage";
 import type { SavedWord } from "@/types";
 import { formatDate } from "@/lib/format";
+import AppBar from "@/components/AppBar";
 
 export default function DictionaryQualityPage() {
   const [feedback, setFeedback] = useState<DictionaryFeedback[]>([]);
@@ -35,11 +36,9 @@ export default function DictionaryQualityPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        <h1 className="text-2xl font-extrabold text-ink">Dictionary quality</h1>
-        <p className="text-sm text-ink-muted">Corrections and gaps from your reading.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">Corrections and gaps from your reading.</p>
 
       <section className="mb-5 grid grid-cols-3 gap-2">
         {stats.map((stat) => (
@@ -53,7 +52,7 @@ export default function DictionaryQualityPage() {
       {ready && feedback.length === 0 && missingWords.length === 0 && (
         <div className="mt-12 text-center">
           <p className="text-ink-muted">No dictionary issues recorded yet.</p>
-          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
+          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
             Start reading
           </Link>
         </div>
@@ -87,7 +86,7 @@ export default function DictionaryQualityPage() {
                     type="button"
                     onClick={() => handleDeleteFeedback(entry.id)}
                     aria-label={`Delete correction for ${entry.input}`}
-                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
+                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-[0.98]"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />

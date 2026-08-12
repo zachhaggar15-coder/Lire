@@ -54,7 +54,7 @@ export default function PracticePageClient({ id, initialText }: PracticePageClie
     return (
       <div className="px-4 pt-10 text-center">
         <p className="text-ink-muted">This article isn&apos;t available anymore.</p>
-        <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
+        <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
           Back to Read
         </Link>
       </div>

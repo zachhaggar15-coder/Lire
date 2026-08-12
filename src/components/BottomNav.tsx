@@ -112,7 +112,7 @@ export default function BottomNav() {
                 <span className={`flex h-7 w-11 items-center justify-center rounded-full ${active ? "bg-brand-light" : "bg-transparent"}`}>
                   <NavIcon name={icon} />
                 </span>
-                <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.08em]">{label}</span>
+                <span className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em]">{label}</span>
               </Link>
             </li>
           );

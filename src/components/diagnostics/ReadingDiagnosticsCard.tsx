@@ -37,7 +37,7 @@ export default function ReadingDiagnosticsCard({
 }: ReadingDiagnosticsCardProps) {
   return (
     <div className={`rounded-card border border-cream-dark bg-cream-card p-4 ${className}`}>
-      <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Reading independence</p>
+      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Reading independence</p>
       <p className="mt-1 text-2xl font-extrabold tabular-nums text-ink">
         {performance.lookupsPer100} <span className="text-sm font-semibold text-ink-muted">lookups / 100 words</span>
       </p>

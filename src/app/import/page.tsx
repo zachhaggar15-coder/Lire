@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
+import AppBar from "@/components/AppBar";
 
 const CATEGORIES: { value: Category; label: string }[] = [
   { value: "news-style", label: "News" },
@@ -42,14 +43,9 @@ export default function ImportPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        <Link href="/" className="text-sm font-semibold text-brand">
-          Back to home
-        </Link>
-        <h1 className="mt-2 text-2xl font-extrabold text-ink">Import Text</h1>
-        <p className="text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
 
       <section className="rounded-card bg-cream-card p-4 shadow-card">
         <label className="text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="custom-title">
@@ -73,7 +69,7 @@ export default function ImportPage() {
                   type="button"
                   onClick={() => setCategory(item.value)}
                   aria-pressed={category === item.value}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-95 ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-[0.98] ${
                     category === item.value ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}
                 >
@@ -91,7 +87,7 @@ export default function ImportPage() {
                   type="button"
                   onClick={() => setDifficulty(level)}
                   aria-pressed={difficulty === level}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-95 ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold active:scale-[0.98] ${
                     difficulty === level ? "bg-brand text-white" : "bg-cream text-ink-muted"
                   }`}
                 >
@@ -123,7 +119,7 @@ export default function ImportPage() {
             type="button"
             onClick={handleSave}
             disabled={!canSave}
-            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:bg-cream-dark disabled:text-ink-muted"
+            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:bg-cream-dark disabled:text-ink-muted"
           >
             Save and read
           </button>
@@ -146,7 +142,7 @@ export default function ImportPage() {
                     type="button"
                     onClick={() => handleDelete(text.id)}
                     aria-label={`Delete ${text.title}`}
-                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
+                    className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-[0.98]"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />

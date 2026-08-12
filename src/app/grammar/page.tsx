@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import AppBar from "@/components/AppBar";
 import {
   STRUCTURE_REFERENCES,
   VERB_REFERENCES,
@@ -203,12 +204,9 @@ export default function GrammarPage() {
   }
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-5">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand">Grammar</p>
-        <h1 className="mt-1 text-2xl font-extrabold text-ink">{meta.title}</h1>
-        <p className="mt-1 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
 
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {TRACKS.map((item) => (
@@ -217,7 +215,7 @@ export default function GrammarPage() {
             type="button"
             onClick={() => switchTrack(item.id)}
             aria-pressed={track === item.id}
-            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
               track === item.id ? "bg-ink text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
@@ -253,7 +251,7 @@ export default function GrammarPage() {
             type="button"
             onClick={() => setTab(item.id)}
             aria-pressed={tab === item.id}
-            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+            className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
               tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
@@ -409,7 +407,7 @@ function LessonDetail({
       <ProgressBar value={progress.mastery} label="Mastery" />
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
           Start 5-question quiz
         </button>
       </div>
@@ -509,7 +507,7 @@ function PracticeCard({
             {selectedCorrect ? "Correct" : "Not quite"}
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">{question.explanation}</p>
-          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-95">
+          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
             Next question
           </button>
         </div>
@@ -608,7 +606,7 @@ function StructureReferencePanel({
               type="button"
               onClick={() => onTopicChange(topic.id)}
               aria-pressed={selectedTopicId === topic.id}
-              className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-95 ${
+              className={`rounded-full px-3 py-2 text-xs font-semibold active:scale-[0.98] ${
                 selectedTopicId === topic.id ? "bg-brand text-white" : "bg-cream text-ink-muted"
               }`}
             >

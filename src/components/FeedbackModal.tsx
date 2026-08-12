@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { trackEvent } from "@/lib/analytics/client";
 import { getBrowserSession } from "@/lib/analytics/session";
 import { peekAnonymousId } from "@/lib/analytics/identity";
 import { FEEDBACK_CATEGORIES, type FeedbackCategory } from "@/lib/feedback/types";
-import { useModalPresence } from "@/lib/modalPresence";
+import BottomSheet from "@/components/BottomSheet";
 
 const LABELS: Record<FeedbackCategory, string> = {
   useful: "Useful",
@@ -29,7 +29,7 @@ export function FeedbackButton({
   articleId,
   affectedTerm,
   label = "Give feedback",
-  className = "rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted active:scale-95",
+  className = "rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted active:scale-[0.98]",
 }: {
   feature: string;
   articleId?: string | null;
@@ -72,27 +72,6 @@ export default function FeedbackModal({
   const [comment, setComment] = useState("");
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState<string | null>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const previousFocus = useRef<HTMLElement | null>(null);
-
-  useModalPresence(open);
-
-  useEffect(() => {
-    if (!open) return;
-    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    closeRef.current?.focus();
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      window.removeEventListener("keydown", handleKey);
-      previousFocus.current?.focus();
-    };
-  }, [onClose, open]);
-
-  if (!open) return null;
-
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setState("submitting");
@@ -125,18 +104,18 @@ export default function FeedbackModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex max-w-md items-end bg-black/35 px-3 pb-[var(--safe-bottom)] pt-[var(--safe-top)]">
+    <BottomSheet open={open} onClose={onClose} ariaLabel="Give feedback" contentClassName="px-5 pb-[calc(1rem+var(--safe-bottom))]">
       {/* No max-height/scroll here previously: on a short mobile viewport
           (especially with the on-screen keyboard open while typing the
           comment) the card could render taller than the visible screen with
           no way to scroll down and reach "Submit feedback". */}
-      <form onSubmit={handleSubmit} className="max-h-[calc(var(--vvh,100dvh)-1rem)] w-full overflow-y-auto touch-pan-y overscroll-contain rounded-t-3xl bg-cream-card p-5 shadow-2xl">
+      <form onSubmit={handleSubmit}>
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Feedback</p>
             <h2 className="mt-1 text-xl font-extrabold text-ink">How was this session?</h2>
           </div>
-          <button ref={closeRef} type="button" onClick={onClose} className="rounded-full bg-cream-dark px-3 py-2 text-sm font-semibold text-ink">
+          <button type="button" onClick={onClose} className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink active:scale-[0.98]">
             Close
           </button>
         </div>
@@ -148,7 +127,7 @@ export default function FeedbackModal({
               type="button"
               onClick={() => setCategory(item)}
               aria-pressed={category === item}
-              className={`rounded-2xl px-3 py-2 text-left text-xs font-semibold active:scale-95 ${
+              className={`min-h-12 rounded-2xl px-3 py-2 text-left text-xs font-semibold active:scale-[0.98] ${
                 category === item ? "bg-brand text-white" : "bg-cream text-ink-muted"
               }`}
             >
@@ -175,11 +154,11 @@ export default function FeedbackModal({
         <button
           type="submit"
           disabled={state === "submitting"}
-          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
+          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white active:scale-[0.98] disabled:opacity-50"
         >
           {state === "submitting" ? "Sending..." : "Submit feedback"}
         </button>
       </form>
-    </div>
+    </BottomSheet>
   );
 }

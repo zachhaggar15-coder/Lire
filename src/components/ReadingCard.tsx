@@ -163,11 +163,11 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       >
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span
-            className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
+            className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
           >
             {formatCategory(text.category)}
           </span>
-          <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
+          <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
             {/* The stored level is the one source of truth for the CEFR code:
                 it's what the level filter, the reading bank and the section
                 headings ("A1 readings") all key off. The estimate below powers
@@ -177,20 +177,20 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             {text.difficulty}
           </span>
           {difficulty && (
-            <span className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${LABEL_STYLES[difficulty.label]}`}>
+            <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${LABEL_STYLES[difficulty.label]}`}>
               {difficulty.label}
             </span>
           )}
-          <span className="ml-auto font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
+          <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
         </div>
 
         <h2 className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
         {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
         <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
-        <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>
+        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>
 
         {starRating && (
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.08em] text-brand">
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-brand">
             {starRating.label}
           </p>
         )}
@@ -204,7 +204,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </Link>
 
       <details className="mt-2 text-xs text-ink-muted">
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Article details
         </summary>
         <p className="mt-1">
@@ -221,13 +221,13 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </details>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] ${STATUS_STYLES[status]}`}>
+        <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${STATUS_STYLES[status]}`}>
           {STATUS_LABELS[status]}
         </span>
         <button
           type="button"
           onClick={handleSaveLater}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-[0.98] ${
             savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
           }`}
         >
@@ -236,21 +236,21 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
       </div>
 
       <details className="mt-2">
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Tune recommendations
         </summary>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "more")}
-            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand active:scale-95"
+            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand active:scale-[0.98]"
           >
             More like this
           </button>
           <button
             type="button"
             onClick={() => recordArticlePreference(text, "less")}
-            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-95"
+            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted active:scale-[0.98]"
           >
             Less like this
           </button>
@@ -259,7 +259,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
               <button
                 type="button"
                 onClick={handlePreferSource}
-                className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-95 ${
+                className={`rounded-full px-2.5 py-1 text-xs font-semibold active:scale-[0.98] ${
                   preferred ? "bg-brand text-cream" : "bg-yellow text-yellow-ink"
                 }`}
               >
@@ -268,7 +268,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
               <button
                 type="button"
                 onClick={handleHideSource}
-                className="rounded-full bg-rose px-2.5 py-1 text-xs font-semibold text-rose-ink active:scale-95"
+                className="rounded-full bg-rose px-2.5 py-1 text-xs font-semibold text-rose-ink active:scale-[0.98]"
               >
                 Hide source
               </button>

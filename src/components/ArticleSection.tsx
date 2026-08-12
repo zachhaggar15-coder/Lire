@@ -88,13 +88,13 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
       {/* The scene gives the list something to scan by: at a glance you can
           tell the market lesson from the train one without reading titles. */}
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
-        <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
+        <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-brand">
           {text.difficulty}
         </span>
-        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
+        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
           {formatCategory(text.category)}
         </span>
-        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-ink-muted">
+        <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
           {text.minutes} min
         </span>
       </div>

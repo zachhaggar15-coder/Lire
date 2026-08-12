@@ -7,6 +7,7 @@ import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate } from "@/lib/format";
+import AppBar from "@/components/AppBar";
 
 type WordsFilter = "learning" | "unsure" | "known" | "missing";
 type VocabTab = "words" | "phrases";
@@ -90,20 +91,20 @@ export default function WordsPage() {
 
   return (
     <div className="ligne-screen">
-      <header className="mb-5 flex items-end justify-between gap-3">
-        <div>
-          <p className="ligne-label">Saved from your texts</p>
-          <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Vocabulary</h1>
-          <p className="mt-2 text-sm text-ink-muted">
-            {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length} {phrases.length === 1 ? "phrase" : "phrases"}
-          </p>
-        </div>
-        {tab === "words" && words.length > 0 && (
-          <button type="button" onClick={handleClear} className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-rose-ink">
+      <AppBar
+        title="Vocabulary"
+        kicker="Saved from your texts"
+        backHref="/settings"
+        backLabel="Back to Library"
+        action={tab === "words" && words.length > 0 ? (
+          <button type="button" onClick={handleClear} className="min-h-12 rounded-full px-3 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-rose-ink">
             Clear all
           </button>
-        )}
-      </header>
+        ) : null}
+      />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">
+        {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length} {phrases.length === 1 ? "phrase" : "phrases"}
+      </p>
 
       {(words.length > 0 || phrases.length > 0) && (
         <input
@@ -205,16 +206,16 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
             <p className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
             {word.lemma && word.lemma !== word.word && (
-              <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">({word.lemma})</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">({word.lemma})</span>
             )}
             {word.partOfSpeech && (
-              <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
                 {word.partOfSpeech}
                 {word.gender && ` - ${word.gender}`}
               </span>
             )}
             {word.cefr && (
-              <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.08em] text-brand">
+              <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-brand">
                 {word.cefr}
               </span>
             )}
@@ -233,19 +234,19 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
           )}
           {word.articleContextSentence && (
             <p className="mt-2 line-clamp-2 text-xs text-ink-muted">
-              <span className="font-mono text-[9px] uppercase tracking-[0.1em]">Original context: </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em]">Original context: </span>
               "{word.articleContextSentence}"
             </p>
           )}
 
           <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-cream-fill pt-3 text-xs text-ink-muted">
             {word.sourceTextTitle && (
-              <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-muted">
+              <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-muted">
                 {word.sourceTextTitle}
               </span>
             )}
-            {word.savedAt && <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
-            {word.reviewCount > 0 && <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
+            {word.savedAt && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
+            {word.reviewCount > 0 && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
           </div>
         </div>
 
@@ -270,7 +271,7 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Phrase mastery</h2>
+          <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Phrase mastery</h2>
           <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the chunk feels automatic.</p>
         </div>
         <span className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{progress}%</span>
@@ -291,7 +292,7 @@ function StatBox({ value, label }: { value: number; label: string }) {
   return (
     <div className="rounded-2xl bg-cream-sunken px-2 py-2">
       <p className="font-numeral text-2xl leading-none text-ink">{value}</p>
-      <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{label}</p>
+      <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{label}</p>
     </div>
   );
 }
@@ -311,7 +312,7 @@ function PhraseList({
 
   return (
     <section>
-      <h2 className="mb-2 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
+      <h2 className="mb-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
       <ul className="space-y-3">
         {phrases.map((phrase) => (
           <li key={phrase.phrase} className="rounded-card border border-cream-dark bg-cream-card p-4">
@@ -324,11 +325,11 @@ function PhraseList({
                 )}
                 <div className="mt-3 flex flex-wrap gap-2 border-t border-cream-fill pt-3 text-xs text-ink-muted">
                   {phrase.sourceTextTitle && (
-                    <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.08em]">
+                    <span className="max-w-[190px] truncate rounded-full border border-cream-dark bg-cream-sunken px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em]">
                       {phrase.sourceTextTitle}
                     </span>
                   )}
-                  <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">

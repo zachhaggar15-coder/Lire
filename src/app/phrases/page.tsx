@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { formatDate } from "@/lib/format";
+import AppBar from "@/components/AppBar";
 
 const PHRASE_ACCENTS = ["border-sky-400", "border-orange-400", "border-violet-400", "border-emerald-400", "border-rose-400"];
 
@@ -28,18 +29,16 @@ export default function PhrasesPage() {
   const known = phrases.filter((phrase) => phrase.status === "known");
 
   return (
-    <div className="px-4 pt-6">
-      <header className="mb-4">
-        <h1 className="text-2xl font-extrabold text-ink">Phrase bank</h1>
-        <p className="text-sm text-ink-muted">
-          {phrases.length} saved {phrases.length === 1 ? "phrase" : "phrases"}
-        </p>
-      </header>
+    <div className="ligne-screen">
+      <AppBar title="Phrase bank" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">
+        {phrases.length} saved {phrases.length === 1 ? "phrase" : "phrases"}
+      </p>
 
       {ready && phrases.length === 0 && (
         <div className="mt-16 text-center">
           <p className="text-ink-muted">No phrases saved yet.</p>
-          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-95">
+          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white active:scale-[0.98]">
             Start reading
           </Link>
         </div>
@@ -91,7 +90,7 @@ function PhraseList({
                   type="button"
                   onClick={() => onDelete(phrase.phrase)}
                   aria-label={`Delete ${phrase.phrase}`}
-                  className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-95"
+                  className="rounded-full bg-cream-dark p-3 text-ink-muted active:scale-[0.98]"
                 >
                   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6" />
@@ -101,7 +100,7 @@ function PhraseList({
                   <button
                     type="button"
                     onClick={() => onKnown(phrase.phrase)}
-                    className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-95"
+                    className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 active:scale-[0.98]"
                   >
                     Mark known
                   </button>

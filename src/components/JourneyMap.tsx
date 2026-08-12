@@ -203,7 +203,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
               {pageCleared}
               <span className="text-ink-faint">/{pageStages.length || 0}</span>
             </p>
-            <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Stops clear</p>
+            <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Stops clear</p>
           </div>
         </div>
 
@@ -211,7 +211,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
           <div className="ligne-progress-track" aria-hidden="true">
             <div className="ligne-progress-fill" style={{ width: `${Math.round(pageProgress * 100)}%` }} />
           </div>
-          <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
             Goal today · {Math.min(textsToday, dailyTextGoal)} of {dailyTextGoal} texts
           </p>
         </div>
@@ -355,7 +355,7 @@ function StageRouteStop({
 
       {current ? (
         <div className="w-full rounded-card bg-yellow px-5 py-4 text-left text-yellow-ink">
-          <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-yellow-muted">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.16em] text-yellow-muted">
             Recommended next · {stage.band} · {String(stage.indexInBand + 1).padStart(2, "0")}
           </span>
           <span className="mt-2 block font-french text-[22px] leading-tight text-ink">{stage.label}</span>
@@ -407,7 +407,7 @@ function StageRouteStop({
             </span>
             <span className="shrink-0 pt-1">
               {cleared ? (
-                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-brand">Finished</span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-brand">Finished</span>
               ) : (
                 <FourTicks completed={stageProgress.completedCount} target={stageProgress.targetCount} />
               )}
@@ -427,7 +427,7 @@ function StageRouteStop({
           {stage.themes.map((theme) => (
             <div key={theme.id} className="py-2">
               {stage.themes.length > 1 && (
-                <p className="pb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">{theme.title}</p>
+                <p className="pb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">{theme.title}</p>
               )}
               <div>
                 {theme.textIds.map((textId) => {
@@ -512,7 +512,7 @@ function LessonPreviewRow({
         )}
         <div className="min-w-0 flex-1">
           <p className="font-french text-[16px] leading-snug text-ink">{text.title}</p>
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-faint">{meta}</p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{meta}</p>
         </div>
       </div>
       <div className="mt-3 flex flex-wrap gap-2 pl-6">
@@ -682,7 +682,7 @@ function CompleteSectionNode({
         onClick={celebrated ? onToggle : onCelebrate}
         className="w-full rounded-card bg-yellow px-5 py-4 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/35"
       >
-        <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-yellow-muted">
+        <span className="block font-mono text-[11px] uppercase tracking-[0.16em] text-yellow-muted">
           {celebrated ? "Section complete" : "Final stop"}
         </span>
         <span className="mt-2 block font-french text-[22px] leading-tight text-ink">
@@ -704,7 +704,7 @@ function CompleteSectionNode({
         }`}
       >
         <div className="rounded-card bg-brand px-5 py-7 text-center text-cream">
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-cream/70">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-cream/70">
             Ligne {band} · Map {page + 1} of {pageCount}
           </p>
           <p className="mt-3 font-french text-[26px] leading-tight">Congratulations!</p>
@@ -713,7 +713,7 @@ function CompleteSectionNode({
             {hasNext ? " Turn the page for a fresh set of themes." : " That was the last map of this level — superb work."}
           </p>
           {hasNext && (
-            <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.14em] text-cream/70">
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-cream/70">
               Use “Page forward ›” below to continue
             </p>
           )}
@@ -744,20 +744,20 @@ function MapPager({
         type="button"
         onClick={onBack}
         disabled={!canBack}
-        className={`min-h-9 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
+        className={`min-h-12 min-w-12 font-mono text-[11px] uppercase tracking-[0.11em] transition-colors ${
           canBack ? "text-ink-muted active:text-brand" : "cursor-default text-ink-faint/40"
         }`}
       >
         ‹ Page back
       </button>
-      <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint">
+      <span className="font-mono text-[11px] uppercase tracking-[0.11em] text-ink-faint">
         {page + 1} / {pageCount}
       </span>
       <button
         type="button"
         onClick={onForward}
         disabled={!canForward}
-        className={`min-h-9 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
+        className={`min-h-12 min-w-12 font-mono text-[11px] uppercase tracking-[0.11em] transition-colors ${
           canForward ? "text-ink-muted active:text-brand" : "cursor-default text-ink-faint/40"
         }`}
       >

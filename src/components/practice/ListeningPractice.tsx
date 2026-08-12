@@ -7,6 +7,7 @@ import { speakParagraphAtRate, stopSpeaking, canSpeak } from "@/lib/speech";
 import { markListeningPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { getSettings } from "@/lib/settings";
 import { useModalFocus } from "@/lib/useModalFocus";
+import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 
 interface ListeningPracticeProps {
   text: ReadingText;
@@ -33,6 +34,7 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
   // and the stored preference are loaded immediately after hydration.
   const [rate, setRate] = useState(1);
   const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
+  useDismissibleHistory(true, onClose);
   const rateRef = useRef(rate);
   useEffect(() => {
     rateRef.current = rate;
@@ -90,7 +92,7 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
 
   return (
     <div ref={modalRef} role="dialog" aria-modal="true" aria-label="Listening practice" tabIndex={-1} className="fixed inset-0 z-50 flex flex-col items-center justify-start overflow-y-auto bg-cream px-6 pb-8 pt-[calc(var(--safe-top)+3.5rem)] sm:justify-center sm:py-8">
-      <button type="button" onClick={onClose} aria-label="Close listening practice" className="absolute right-4 top-[calc(var(--safe-top)+1rem)] rounded-full bg-cream-card p-2 text-ink-muted">
+      <button type="button" onClick={onClose} aria-label="Close listening practice" className="ligne-icon-button absolute right-4 top-[calc(var(--safe-top)+0.5rem)] bg-cream-card text-ink-muted">
         <CloseIcon className="h-4 w-4" />
       </button>
 

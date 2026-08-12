@@ -22,6 +22,7 @@ import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformanc
 import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
 import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { useModalPresence } from "@/lib/modalPresence";
+import { triggerHaptic } from "@/lib/haptics";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -102,6 +103,9 @@ export default function LessonCompleteScreen({
   levelLabel,
 }: LessonCompleteScreenProps) {
   useModalPresence(true);
+  useEffect(() => {
+    triggerHaptic("success");
+  }, []);
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -188,7 +192,7 @@ export default function LessonCompleteScreen({
 
         {journeyMoment && (
           <div className="lesson-complete-card-enter mt-4 rounded-card bg-brand px-4 py-3 text-cream">
-            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-cream/75">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-cream/75">
               {journeyMoment.kind === "band" ? "Band complete" : "Stage cleared"}
             </p>
             <p className="mt-1 text-sm font-semibold leading-relaxed text-cream/90">{journeyMoment.detail}</p>
@@ -215,7 +219,7 @@ export default function LessonCompleteScreen({
               style={{ animationDelay: `${180 + index * 90}ms` }}
             >
               <p className="font-numeral text-3xl leading-none tabular-nums text-ink">{item.value}</p>
-              <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-faint">{item.label}</p>
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{item.label}</p>
             </div>
           ))}
         </div>
@@ -264,7 +268,7 @@ export default function LessonCompleteScreen({
                       disabled={!onToggleSave}
                       aria-pressed={item.saved}
                       aria-label={item.saved ? `Remove ${item.french} from review` : `Save ${item.french} for review`}
-                      className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold active:scale-95 ${
+                      className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold active:scale-[0.98] ${
                         item.saved ? "bg-brand text-white" : "bg-cream-card text-ink-muted"
                       }`}
                     >
@@ -320,7 +324,7 @@ export default function LessonCompleteScreen({
 
         {/* All four levels, so progress is legible at a glance */}
         <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your levels</p>
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your levels</p>
           <div className="mt-3 space-y-2.5">
             {TAUGHT_LEVELS.map((lvl) => {
               const score = allScores[lvl] ?? 0;
