@@ -204,9 +204,9 @@ export default function SettingsPage() {
   return (
     <div className="ligne-screen">
       <header className="mb-5">
-        <p className="ligne-label">Learning</p>
-        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Your setup</h1>
-        <p className="mt-2 text-sm text-ink-muted">Level, reader preferences, saved items, and app setup.</p>
+        <p className="ligne-label">You</p>
+        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Library</h1>
+        <p className="mt-2 text-sm text-ink-muted">Learning setup, saved items, progress, and app settings.</p>
       </header>
 
       <div className="space-y-6">
@@ -302,7 +302,6 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <SettingsLink href="/live-news" title="News" description="Read current French articles." />
           <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
           <SettingsLink href="/phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
           <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />

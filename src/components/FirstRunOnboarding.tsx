@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
-import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
+import { completeWalkthrough, getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 import { trackEvent } from "@/lib/analytics/client";
 import LessonScene, { type SceneName } from "@/components/LessonScene";
@@ -64,6 +64,9 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
 
   function finish(nextLevel = level) {
     saveOnboarding(nextLevel, topics, goal);
+    // The first real lesson now carries the lightweight reading guidance.
+    // Keep the full tutorial available from Library, but do not gate first use on it.
+    completeWalkthrough();
     trackEvent("initial_level_selected", { level: nextLevel });
     trackEvent("onboarding_completed", {
       level: nextLevel,
@@ -76,13 +79,13 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
   }
 
   return (
-    <section className={`${variant === "focus" ? "rounded-card bg-cream-card shadow-card" : "mb-5 rounded-card bg-cream-card shadow-card"} overflow-hidden`}>
-      <div className="bg-brand p-5 text-white">
+    <section className={variant === "focus" ? "rounded-card bg-cream-card shadow-card" : "mb-5 rounded-card bg-cream-card shadow-card"}>
+      <div className="rounded-t-card bg-brand p-5 text-white">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
             <h2 className="text-sm font-bold uppercase tracking-wide text-white/75">Start here</h2>
             <p className="mt-1 text-2xl font-extrabold leading-tight">Read your first tiny French scene.</p>
-            <p className="mt-2 text-sm leading-relaxed text-white/80">Pick the closest starting point. Lire will open a short lesson right away.</p>
+            <p className="mt-2 text-sm leading-relaxed text-white/80">Pick the closest starting point, then begin your first short lesson.</p>
           </div>
           <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-white/15 p-1 shadow-raised" />
         </div>
@@ -105,10 +108,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
             <button
               key={option.value}
               type="button"
-              onClick={() => {
-                setLevel(option.value);
-                finish(option.value);
-              }}
+              onClick={() => setLevel(option.value)}
               aria-pressed={level === option.value}
               className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left active:scale-[0.99] ${
                 level === option.value ? "border-brand bg-brand text-white shadow-raised" : `border-transparent ${option.tone} text-ink`
@@ -138,10 +138,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
               <button
                 key={option}
                 type="button"
-                onClick={() => {
-                  setLevel(option);
-                  finish(option);
-                }}
+                onClick={() => setLevel(option)}
                 aria-pressed={level === option}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                   level === option ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
@@ -196,22 +193,20 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => finish()}
-          className="mt-3 w-full rounded-full bg-brand py-2.5 text-sm font-semibold text-white active:scale-95"
-        >
-          Start with these choices
-        </button>
       </details>
 
-      <button
-        type="button"
-        onClick={() => finish("A1")}
-        className="mt-3 w-full rounded-full bg-cream-dark py-2.5 text-sm font-semibold text-ink-muted active:scale-95"
-      >
-        Start with A1
-      </button>
+        <div
+          className="sticky bottom-0 -mx-5 mt-4 border-t border-cream-dark bg-cream-card/95 px-5 pt-3 backdrop-blur"
+          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
+        >
+          <button
+            type="button"
+            onClick={() => finish()}
+            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-white active:scale-[0.99]"
+          >
+            Start first lesson · {level}
+          </button>
+        </div>
       </div>
     </section>
   );

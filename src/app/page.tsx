@@ -30,7 +30,7 @@ export default function HomePage() {
 
   if (stage === "loading") {
     return (
-      <div className="px-4 pt-6">
+      <div className="px-4 pt-[calc(var(--safe-top)+1.5rem)]">
         <div className="h-10 w-24 animate-pulse rounded-2xl bg-cream-dark" />
         <div className="mt-5 h-72 animate-pulse rounded-card bg-cream-dark" />
       </div>
@@ -39,7 +39,7 @@ export default function HomePage() {
 
   if (stage === "picker") {
     return (
-      <div className="min-h-[100dvh] px-4 pt-6">
+      <div className="min-h-[100dvh] px-4 pt-[calc(var(--safe-top)+1.5rem)]">
         <header className="mb-5">
           <h1 className="text-3xl font-extrabold text-ink">Lire</h1>
           <p className="mt-1 text-sm text-ink-muted">Set your starting point, then follow your guided lesson path.</p>

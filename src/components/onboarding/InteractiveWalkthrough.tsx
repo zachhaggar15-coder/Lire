@@ -20,9 +20,9 @@ import type { SavedWord } from "@/types";
 
 /**
  * A short (1-3 minute), interactive walkthrough that teaches Lire by using
- * it, not by reading about it — shown once, right after the level/topic/
- * goal picker (FirstRunOnboarding), before the learner ever reaches the
- * main app. Reuses real domain logic throughout (the actual dictionary
+ * it, not by reading about it. First use now goes straight to a real lesson;
+ * this fuller tutorial remains available from Library for anyone who wants
+ * to replay it. Reuses real domain logic throughout (the actual dictionary
  * lookup, the actual saveWord/markWordAsKnown storage functions, the actual
  * cloze-exercise builder, the actual PronounceButton) against a small,
  * purpose-built demo text — not a fake mockup, and not the full Reader

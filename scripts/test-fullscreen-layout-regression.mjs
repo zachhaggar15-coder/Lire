@@ -91,12 +91,13 @@ console.log("--- tutorial and practice interaction regressions ---");
 check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
 check("the tutorial explicitly teaches holding a phrase", files.tutorial.includes("Hold for a phrase") && files.tutorial.includes("onPointerDown={startDemoPhraseHold}"));
 check(
-  "tutorial and real word cards both offer a single Save action",
+  "tutorial and real word cards both offer a single primary review action",
   !files.tutorial.includes("<WordLearningActions") && !files.wordSheet.includes("<WordLearningActions")
 );
 check(
-  "the real word card's Save button toggles back off",
-  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") && files.wordSheet.includes('saved ? "Saved" : "Save"')
+  "the real word card's review button toggles back off",
+  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") &&
+    files.wordSheet.includes('saved ? "Remove from review" : "Add to review"')
 );
 check("the real word card closes with an X, not a Done label", files.wordSheet.includes('aria-label="Close"'));
 check("the real word card is viewport-bounded on mobile and web", files.wordSheet.includes("100dvh") && files.wordSheet.includes("sm:items-center"));

@@ -231,7 +231,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
           }`}
         >
-          {savedLater ? "Saved" : "Save"}
+          {savedLater ? "Saved for later" : "Save for later"}
         </button>
       </div>
 

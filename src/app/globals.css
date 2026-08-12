@@ -42,7 +42,8 @@ a {
 
 @layer components {
   .ligne-screen {
-    @apply min-h-[100dvh] bg-cream px-[22px] pb-8 pt-7 text-ink;
+    @apply min-h-[100dvh] bg-cream px-[22px] pb-8 text-ink;
+    padding-top: calc(var(--safe-top) + 1.75rem);
   }
 
   .ligne-card {

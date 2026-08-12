@@ -722,28 +722,35 @@ function PracticeHubCard({
         )}
       </div>
 
-      {phraseCount > 0 && (
-        <div className="mt-4">
-          <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
-          <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
-        </div>
-      )}
-      <div className="mt-4">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
-        <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
-      </div>
-      <div className="mt-4">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
-        <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
-      </div>
-
       <button
         type="button"
         onClick={onStart}
-        className="ligne-pill mt-4 w-full bg-brand text-cream"
+        className="ligne-pill mt-4 min-h-12 w-full bg-brand text-cream"
       >
-        Start quick review
+        Review {wordCount} {wordCount === 1 ? "card" : "cards"}
       </button>
+
+      <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          Review options
+        </summary>
+        <div className="pb-1">
+          {phraseCount > 0 && (
+            <div className="mt-4">
+              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Practice type</p>
+              <PhraseModeSwitch mode={mode} onChange={onModeChange} phraseCount={phraseCount} />
+            </div>
+          )}
+          <div className="mt-4">
+            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Direction</p>
+            <ReviewDirectionToggle direction={direction} onChange={onDirectionChange} />
+          </div>
+          <div className="mt-4">
+            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
+            <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
+          </div>
+        </div>
+      </details>
       <Link href="/words" className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
         Manage saved words
       </Link>

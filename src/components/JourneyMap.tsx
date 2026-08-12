@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
 import type { Difficulty, ReadingText } from "@/types";
-import { getProgress } from "@/lib/progress";
+import { getLastOpenedTextId, getProgress } from "@/lib/progress";
 import { formatCategory } from "@/lib/format";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import { getCurrentStreak, isActiveToday } from "@/lib/habit";
 import { getGoals, getGoalsProgress } from "@/lib/goals";
+import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import { getJourneyText, JOURNEY_BANDS, NODES_PER_MAP, type Stage } from "@/lib/journey/ladder";
 import {
   getJourneyState,
@@ -92,6 +93,8 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   const dailyTextGoal = goals?.articlesPerDay ?? 1;
   const textsToday = goalProgress?.articlesToday ?? 0;
   const bandTone = BAND_TONES[visibleBand];
+  const resumeTextId = mounted ? getLastOpenedTextId() : null;
+  const hasInProgressReading = !!resumeTextId && getProgress(resumeTextId).status === "in-progress";
 
   useEffect(() => {
     setMounted(true);
@@ -120,12 +123,12 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   }, [visibleBand, mounted]);
 
   useEffect(() => {
-    if (!mounted || !currentStageIsVisible) return;
+    if (!mounted || !currentStageIsVisible || hasInProgressReading) return;
     const timer = window.setTimeout(() => {
       currentRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
     }, 150);
     return () => window.clearTimeout(timer);
-  }, [currentStageIsVisible, journey.currentStageIndex, mounted, visibleBand]);
+  }, [currentStageIsVisible, hasInProgressReading, journey.currentStageIndex, mounted, visibleBand]);
 
   function refresh() {
     setVersion((value) => value + 1);
@@ -173,7 +176,8 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   }
 
   return (
-    <section className="bg-cream px-[22px] pb-4 pt-7 text-ink">
+    <section className="bg-cream px-[22px] pb-4 pt-[calc(var(--safe-top)+1.75rem)] text-ink">
+      <ContinueReadingBanner />
       <header>
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">Today</p>
@@ -337,6 +341,8 @@ function StageRouteStop({
   const panelId = `journey-stage-${stage.globalIndex}`;
   const stageCountLabel = `${Math.min(stageProgress.completedCount, stageProgress.targetCount)}/${stageProgress.targetCount || stage.textIds.length}`;
   const subtitle = stageSubtitle(stage);
+  const stageNextProgress = stageNext ? getProgress(stageNext.textId).status : null;
+  const stageActionLabel = stageNextProgress === "in-progress" ? "Continue lesson" : "Start lesson";
 
   return (
     <li
@@ -347,36 +353,53 @@ function StageRouteStop({
     >
       <StageRailNode cleared={cleared} current={current} locked={locked} expanded={expanded} />
 
-      <button
-        type="button"
-        aria-controls={panelId}
-        aria-expanded={expanded}
-        aria-label={locked ? `${stage.label} is locked` : expanded ? `Close ${stage.label}` : `Open ${stage.label}`}
-        disabled={locked}
-        onClick={() => onToggleStage(stage.globalIndex)}
-        className={`w-full text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/35 disabled:cursor-default ${
-          current
-            ? "rounded-card bg-yellow px-5 py-4 text-yellow-ink"
-            : cleared
-              ? "rounded-card bg-cream px-1 py-4"
-              : locked
-                ? "rounded-card bg-cream px-1 py-4 opacity-60"
-                : "rounded-card bg-cream px-1 py-4"
-        }`}
-      >
-        {current ? (
-          <span className="block">
-            <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-yellow-muted">
-              Recommended next · {stage.band} · {String(stage.indexInBand + 1).padStart(2, "0")}
-            </span>
-            <span className="mt-2 block font-french text-[22px] leading-tight text-ink">{stage.label}</span>
-            <span className="mt-1 block text-xs font-semibold text-yellow-muted">{subtitle}</span>
-            <span className="mt-4 flex items-center justify-between gap-3">
-              <FourTicks completed={stageProgress.completedCount} target={stageProgress.targetCount} current />
-              <span className="font-mono text-[10px] font-bold tracking-[0.08em] text-yellow-ink">{stageCountLabel}</span>
-            </span>
+      {current ? (
+        <div className="w-full rounded-card bg-yellow px-5 py-4 text-left text-yellow-ink">
+          <span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-yellow-muted">
+            Recommended next · {stage.band} · {String(stage.indexInBand + 1).padStart(2, "0")}
           </span>
-        ) : (
+          <span className="mt-2 block font-french text-[22px] leading-tight text-ink">{stage.label}</span>
+          <span className="mt-1 block text-xs font-semibold text-yellow-muted">{subtitle}</span>
+          <span className="mt-4 flex items-center justify-between gap-3">
+            <FourTicks completed={stageProgress.completedCount} target={stageProgress.targetCount} current />
+            <span className="font-mono text-[10px] font-bold tracking-[0.08em] text-yellow-ink">{stageCountLabel}</span>
+          </span>
+          <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
+            {stageNext ? (
+              <Link
+                href={`/reader/${encodeURIComponent(stageNext.textId)}`}
+                className="ligne-pill flex min-h-11 items-center justify-center bg-brand text-cream active:scale-[0.99]"
+              >
+                {stageActionLabel}
+              </Link>
+            ) : (
+              <span className="ligne-pill flex min-h-11 items-center justify-center bg-cream-card/70 text-yellow-muted">
+                Stage complete
+              </span>
+            )}
+            <button
+              type="button"
+              aria-controls={panelId}
+              aria-expanded={expanded}
+              onClick={() => onToggleStage(stage.globalIndex)}
+              className="ligne-pill min-h-11 border border-yellow-muted/25 bg-cream-card/55 text-yellow-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/35"
+            >
+              {expanded ? "Hide list" : "Lesson list"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          type="button"
+          aria-controls={panelId}
+          aria-expanded={expanded}
+          aria-label={locked ? `${stage.label} is locked` : expanded ? `Close ${stage.label}` : `Open ${stage.label}`}
+          disabled={locked}
+          onClick={() => onToggleStage(stage.globalIndex)}
+          className={`w-full rounded-card bg-cream px-1 py-4 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/35 disabled:cursor-default ${
+            locked ? "opacity-60" : ""
+          }`}
+        >
           <span className="flex items-start gap-3">
             <span className="min-w-0 flex-1">
               <span className={`block font-french text-[20px] leading-tight ${cleared ? "text-[#5D7A6C]" : "text-ink"}`}>{stage.label}</span>
@@ -390,8 +413,8 @@ function StageRouteStop({
               )}
             </span>
           </span>
-        )}
-      </button>
+        </button>
+      )}
 
       <div
         id={panelId}
@@ -476,7 +499,7 @@ function LessonPreviewRow({
   const reviewableSkipped = skipped && !completed;
   // Only a genuinely completed lesson is a "Review" — a skipped-but-unread lesson
   // (e.g. from "Jump ahead") still just opens the reading for the first time.
-  const actionLabel = completed ? "Review" : reviewableSkipped ? "Read" : progress === "in-progress" ? "Continue" : next ? "Read" : "Open";
+  const actionLabel = completed ? "Review again" : reviewableSkipped ? "Read" : progress === "in-progress" ? "Continue" : "Read";
   const meta = locked ? "Locked · finish the lesson above first" : lessonMeta(text, next, completed, reviewableSkipped);
 
   return (

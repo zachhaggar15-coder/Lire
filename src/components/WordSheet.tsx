@@ -663,7 +663,7 @@ export default function WordSheet({ state, articleTitle, onClose, onSave, onUnsa
                 saved ? "bg-brand-light text-brand" : "bg-brand text-white"
               }`}
             >
-              {saved ? "Saved" : "Save"}
+              {saved ? "Remove from review" : "Add to review"}
             </button>
           )}
         </div>

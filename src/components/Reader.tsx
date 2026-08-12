@@ -1896,13 +1896,16 @@ export default function Reader({ text }: { text: ReadingText }) {
   const headerTone = readerHeaderTone(text.category);
 
   return (
-    <div className="bg-cream px-[22px] pt-5">
+    <div className="bg-cream px-[22px] pt-[calc(var(--safe-top)+1.25rem)]">
       {showProgressBadge && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-0 z-40 h-1 w-full max-w-md -translate-x-1/2 bg-cream-dark/70">
             <div className="h-full bg-brand transition-[width] duration-200" style={{ width: `${scrollProgressPercent}%` }} />
           </div>
-          <div className="pointer-events-none fixed right-3 top-3 z-40 rounded-full border border-cream-dark bg-cream-card/95 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] tabular-nums text-brand backdrop-blur">
+          <div
+            className="pointer-events-none fixed right-3 z-40 rounded-full border border-cream-dark bg-cream-card/95 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.08em] tabular-nums text-brand backdrop-blur"
+            style={{ top: "calc(var(--safe-top) + 0.75rem)" }}
+          >
             {scrollProgressPercent}% read
           </div>
         </>
@@ -1932,7 +1935,7 @@ export default function Reader({ text }: { text: ReadingText }) {
               {text.title}
             </h1>
       {/* The stored level, matching the card that led here — see the note in
-          ReadingCard. The estimate only ever speaks in the "Reading help"
+          ReadingCard. The estimate only ever speaks in the "Reading options"
           note below, where it describes the fit rather than renaming it. */}
             <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink-muted">
               {text.difficulty} - {text.minutes} min
@@ -1940,30 +1943,12 @@ export default function Reader({ text }: { text: ReadingText }) {
           </div>
         </div>
         <div className="p-4">
-      <details
-        className="text-xs text-ink-muted"
-        open={readingHelpOpen}
-        onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
-      >
-        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">Reading help</summary>
-        <p className="mt-1">
-          Tap a word for its meaning. Hold a word for the phrase it belongs to. For a confusing line, tap a word and choose
-          &ldquo;Explain the whole sentence&rdquo;.
-        </p>
-        {difficulty && (
-          <p className="mt-1">
-            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
-            {Math.round(difficulty.unknownWordRatio * 100)}% of the words may be new.
-          </p>
-        )}
-      </details>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {canUseSpeech && (
           <button
             type="button"
             onClick={handleToggleListenToArticle}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold active:scale-95 ${
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold active:scale-95 ${
               isSpeakingArticle ? "bg-brand text-cream" : "border border-cream-dark bg-cream text-ink"
             }`}
           >
@@ -1987,25 +1972,11 @@ export default function Reader({ text }: { text: ReadingText }) {
             )}
           </button>
         )}
-        {canUseSpeech && (
-          <button
-            type="button"
-            onClick={cycleSpeechRate}
-            aria-label="Change speaking speed"
-            className="inline-flex items-center gap-1 rounded-full border border-cream-dark bg-cream px-3 py-2 text-xs font-semibold text-ink active:scale-95"
-          >
-            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 14h4l5 5V5l-5 5H4v4Z" />
-              <path d="M17 8a5 5 0 0 1 0 8" />
-            </svg>
-            {settings.speechRate.toFixed(2)}x
-          </button>
-        )}
         <button
           type="button"
           onClick={handleToggleEnglishTranslation}
           disabled={rereadMode}
-          className="inline-flex items-center gap-2 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink active:scale-95 disabled:opacity-50"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-dark bg-cream px-3.5 text-xs font-semibold text-ink active:scale-95 disabled:opacity-50"
           aria-pressed={showEnglishTranslation}
         >
           <span
@@ -2022,13 +1993,49 @@ export default function Reader({ text }: { text: ReadingText }) {
           </span>
           {showEnglishTranslation ? "Hide English" : "English help"}
         </button>
-        <FeedbackButton
-          feature="reader"
-          articleId={text.id}
-          label="Report a problem"
-          className="inline-flex items-center gap-1.5 rounded-full border border-cream-dark bg-cream px-3.5 py-2 text-xs font-semibold text-ink-muted active:scale-95"
-        />
       </div>
+
+      <details
+        className="mt-3 rounded-2xl bg-cream px-3 py-2.5 text-xs text-ink-muted"
+        open={readingHelpOpen}
+        onToggle={(event) => setReadingHelpOpen(event.currentTarget.open)}
+      >
+        <summary className="cursor-pointer font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          Reading options
+        </summary>
+        <p className="mt-2">
+          Tap a word for its meaning. Hold a word for its phrase. For a confusing line, tap a word and choose
+          &ldquo;Explain the whole sentence&rdquo;.
+        </p>
+        {difficulty && (
+          <p className="mt-1">
+            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
+            {Math.round(difficulty.unknownWordRatio * 100)}% of the words may be new.
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {canUseSpeech && (
+            <button
+              type="button"
+              onClick={cycleSpeechRate}
+              aria-label="Change speaking speed"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-cream-dark bg-cream-card px-3 text-xs font-semibold text-ink active:scale-95"
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 14h4l5 5V5l-5 5H4v4Z" />
+                <path d="M17 8a5 5 0 0 1 0 8" />
+              </svg>
+              Speed {settings.speechRate.toFixed(2)}x
+            </button>
+          )}
+          <FeedbackButton
+            feature="reader"
+            articleId={text.id}
+            label="Report a problem"
+            className="inline-flex min-h-11 items-center rounded-full border border-cream-dark bg-cream-card px-3.5 text-xs font-semibold text-ink-muted active:scale-95"
+          />
+        </div>
+      </details>
 
       {showAudioTip && (
         <p className="mt-2 rounded-2xl bg-brand-light px-3 py-2 text-xs text-brand">

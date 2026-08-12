@@ -176,7 +176,7 @@ export default function LessonCompleteScreen({
   })();
 
   return createPortal(
-    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+0.75rem)]">
+    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-[calc(var(--safe-bottom)+9.5rem)] pt-[calc(var(--safe-top)+0.75rem)]">
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop">
           <p className="ligne-label">{isLesson ? "Lesson complete" : "Reading complete"}</p>
@@ -268,7 +268,7 @@ export default function LessonCompleteScreen({
                         item.saved ? "bg-brand text-white" : "bg-cream-card text-ink-muted"
                       }`}
                     >
-                      {item.saved ? "Saved" : "Save"}
+                      {item.saved ? "Remove" : "Add to review"}
                     </button>
                   </div>
                   {item.context && <p className="mt-1 line-clamp-2 text-xs italic leading-relaxed text-ink-muted">{item.context}</p>}
@@ -349,17 +349,24 @@ export default function LessonCompleteScreen({
           <PracticeSection text={practiceText} plan={practicePlan} lookupRate={lookupRate} />
         )}
 
+      </div>
+      <div
+        className="fixed inset-x-0 bottom-0 z-[60] mx-auto w-full max-w-md border-t border-cream-dark bg-cream-card/95 px-[22px] pt-3 shadow-[0_-8px_24px_rgba(27,25,21,0.08)] backdrop-blur"
+        style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
+        role="group"
+        aria-label="Completion actions"
+      >
         <button
           type="button"
           onClick={onPrimaryAction}
-          className="ligne-pill mt-5 w-full bg-brand py-3.5 text-cream"
+          className="ligne-pill min-h-12 w-full bg-brand text-cream"
         >
           {primaryActionLabel}
         </button>
         <button
           type="button"
           onClick={onReturnToMap}
-          className="ligne-pill mt-2 w-full bg-transparent py-3 text-ink-muted"
+          className="ligne-pill mt-1 min-h-11 w-full bg-transparent text-ink-muted"
         >
           {mapActionLabel}
         </button>
