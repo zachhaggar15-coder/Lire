@@ -5,6 +5,7 @@ import { trackEvent } from "@/lib/analytics/client";
 import { getBrowserSession } from "@/lib/analytics/session";
 import { peekAnonymousId } from "@/lib/analytics/identity";
 import { FEEDBACK_CATEGORIES, type FeedbackCategory } from "@/lib/feedback/types";
+import { useModalPresence } from "@/lib/modalPresence";
 
 const LABELS: Record<FeedbackCategory, string> = {
   useful: "Useful",
@@ -73,6 +74,8 @@ export default function FeedbackModal({
   const [message, setMessage] = useState<string | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
+
+  useModalPresence(open);
 
   useEffect(() => {
     if (!open) return;

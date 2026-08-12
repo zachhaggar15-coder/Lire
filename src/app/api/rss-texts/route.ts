@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { rssSources, type RssSource } from "@/data/rssSources";
 import { parseRssFeed } from "@/lib/rss/parseRss";
 import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
@@ -237,6 +237,17 @@ async function buildCandidatePool(): Promise<CandidatePool> {
  * (including other cold starts) picks up that same pool instead of each
  * independently re-fetching 100+ feeds. No-ops back to today's original
  * per-instance behaviour if Redis isn't configured.
+ *
+ * Stale-while-revalidate: a full rebuild fetches 100+ feeds and has been
+ * measured at ~20s cold, which eats most of the client's 30s timeout. If
+ * there's already *some* usable pool sitting around — today's past its TTL,
+ * or (via Redis) yesterday's — that's still real French reading content, so
+ * it's served immediately while the real rebuild runs in the background via
+ * `after()` and overwrites the cache for the next request. Only a request
+ * with truly nothing available anywhere yet (a cold instance on a day no one
+ * has hit this route, and Redis has no prior day either) pays the full
+ * synchronous cost — same as `?refresh=true`, which always blocks because
+ * the caller explicitly wants the freshest possible data right now.
  */
 async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
   const todayK = todayKey();
@@ -245,15 +256,34 @@ async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
     candidatePoolCache.dateKey !== todayK ||
     Date.now() - candidatePoolCache.builtAt > CANDIDATE_POOL_TTL_MS;
 
-  if (forceRefresh || isStale) {
-    const shared = forceRefresh ? null : await getPersistedCandidatePool<CandidatePool>(todayK);
+  if (!isStale && !forceRefresh) return candidatePoolCache!;
+
+  if (!forceRefresh) {
+    const shared = await getPersistedCandidatePool<CandidatePool>(todayK);
     if (shared && shared.dateKey === todayK) {
       candidatePoolCache = shared;
-    } else {
-      candidatePoolCache = await buildCandidatePool();
-      await putPersistedCandidatePool(todayK, candidatePoolCache);
+      return candidatePoolCache;
+    }
+
+    const staleFallback = candidatePoolCache ?? (await getPersistedCandidatePool<CandidatePool>(previousDateKey(todayK)));
+    if (staleFallback) {
+      candidatePoolCache = staleFallback;
+      after(async () => {
+        try {
+          const fresh = await buildCandidatePool();
+          candidatePoolCache = fresh;
+          await putPersistedCandidatePool(todayK, fresh);
+        } catch {
+          // Best-effort background refresh — the next request just retries
+          // (and still has this same stale fallback in the meantime).
+        }
+      });
+      return staleFallback;
     }
   }
+
+  candidatePoolCache = await buildCandidatePool();
+  await putPersistedCandidatePool(todayK, candidatePoolCache);
   const pool = candidatePoolCache;
   if (!pool) throw new Error("unreachable: candidate pool was just built");
   return pool;

@@ -5,6 +5,7 @@ import type { AndroidBetaSource } from "@/lib/beta/android";
 import { trackEvent } from "@/lib/analytics/client";
 import { buildValidationBehaviourContext } from "@/lib/validation/context";
 import { markAndroidInterest } from "@/lib/validation/lifecycle";
+import { useModalPresence } from "@/lib/modalPresence";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -61,6 +62,8 @@ export default function AndroidBetaModal({
   const [message, setMessage] = useState<string | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
+
+  useModalPresence(open);
 
   useEffect(() => {
     if (!open) return;

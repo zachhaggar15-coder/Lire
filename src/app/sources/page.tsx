@@ -120,7 +120,7 @@ export default function SourcesPage() {
       <header className="mb-5">
         <div>
           <h1 className="text-2xl font-extrabold text-ink">Sources</h1>
-          <p className="text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by the 7am/7pm cron.</p>
+          <p className="text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
         </div>
       </header>
 

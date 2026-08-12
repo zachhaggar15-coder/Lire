@@ -34,6 +34,7 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.streakGrace.v1", kind: "object" },
   { key: "lire.settings.v1", kind: "object" },
   { key: "lire.goals.v1", kind: "object" },
+  { key: "lire.reviewPrefs.v1", kind: "object" },
   { key: "lire.savedPhrases.v1", kind: "list-by-id", idField: "phrase" },
   { key: "lire.dictionaryFeedback.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.articleFeedback.v1", kind: "list-by-id", idField: "textId" },
