@@ -1,11 +1,9 @@
-import Link from "next/link";
+import BackButton from "@/components/BackButton";
 
 export default function PrivacyPage() {
   return (
     <div className="px-4 pt-6">
-      <Link href="/settings" className="text-sm font-semibold text-brand">
-        Back to settings
-      </Link>
+      <BackButton fallbackHref="/settings" />
       <header className="mb-5 mt-2">
         <h1 className="text-2xl font-extrabold text-ink">Privacy</h1>
         <p className="text-sm text-ink-muted">How Lire handles app, learning, and validation data.</p>

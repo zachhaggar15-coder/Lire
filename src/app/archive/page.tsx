@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
 import { formatCategory, formatDate } from "@/lib/format";
@@ -116,9 +117,7 @@ export default function ArchivePage() {
 
   return (
     <div className="px-4 pt-6">
-      <Link href="/" className="text-sm font-semibold text-brand">
-        Back to home
-      </Link>
+      <BackButton fallbackHref="/" />
 
       <header className="mb-4 mt-2">
         <h1 className="text-2xl font-extrabold text-ink">Articles read</h1>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 import { changelogEntries } from "@/data/changelog";
 
 const TYPE_STYLE = {
@@ -10,9 +11,7 @@ const TYPE_STYLE = {
 export default function ChangelogPage() {
   return (
     <div className="px-4 pt-6">
-      <Link href="/" className="text-sm font-semibold text-brand">
-        Back to dashboard
-      </Link>
+      <BackButton fallbackHref="/" />
       <header className="mb-5 mt-2">
         <h1 className="text-2xl font-extrabold text-ink">What&apos;s new</h1>
         <p className="text-sm text-ink-muted">A short record of visible Lire improvements.</p>

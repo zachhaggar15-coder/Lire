@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import BackButton from "@/components/BackButton";
 import {
   STRUCTURE_REFERENCES,
   VERB_REFERENCES,
@@ -204,7 +205,8 @@ export default function GrammarPage() {
 
   return (
     <div className="px-4 pt-6">
-      <header className="mb-5">
+      <BackButton fallbackHref="/settings" />
+      <header className="mb-5 mt-2">
         <p className="text-xs font-bold uppercase tracking-wide text-brand">Grammar</p>
         <h1 className="mt-1 text-2xl font-extrabold text-ink">{meta.title}</h1>
         <p className="mt-1 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import BackButton from "@/components/BackButton";
 import {
   getHiddenSources,
   getPreferredSources,
@@ -117,7 +118,8 @@ export default function SourcesPage() {
 
   return (
     <div className="px-4 pt-6">
-      <header className="mb-5">
+      <BackButton fallbackHref="/settings" />
+      <header className="mb-5 mt-2">
         <div>
           <h1 className="text-2xl font-extrabold text-ink">Sources</h1>
           <p className="text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
