@@ -16,6 +16,7 @@ import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
 import { triggerHaptic } from "@/lib/haptics";
 import AppIcon from "@/components/AppIcon";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 type ReviewDirection = "fr-en" | "en-fr";
 type WordGrade = "knew" | "learning";
@@ -61,6 +62,7 @@ function SpeakButton({ text }: { text: string }) {
 }
 
 export default function ReviewPage() {
+  useDocumentTitle("Review");
   const [words, setWords] = useState<SavedWord[]>([]);
   const [ready, setReady] = useState(false);
   const [wordQueue, setWordQueue] = useState<SavedWord[]>([]);

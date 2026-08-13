@@ -323,6 +323,15 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   cancelDemoPhraseHold();
                   revealDemoPhrase();
                 }}
+                // The real reader's hold gesture has no keyboard equivalent
+                // to time out — a keyboard activation should just produce
+                // the held-long-enough outcome directly, not require
+                // pressing and releasing Enter/Space over 450ms.
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter" && event.key !== " ") return;
+                  event.preventDefault();
+                  revealDemoPhrase();
+                }}
                 className="touch-none rounded bg-brand-light px-1 font-semibold text-brand underline decoration-dotted decoration-2 underline-offset-4"
               >
                 {DEMO_PHRASE}

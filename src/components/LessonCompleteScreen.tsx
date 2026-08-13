@@ -122,7 +122,15 @@ export default function LessonCompleteScreen({
   const [trayHeight, setTrayHeight] = useState(160);
   useLayoutEffect(() => {
     const el = actionTrayRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
+    if (!el) return;
+    // ResizeObserver's own first callback doesn't fire until just before the
+    // *next* paint, which would leave the very first paint reserving the
+    // 160px guess instead of this tray's real height. Measuring directly
+    // here — synchronously, before paint — means the first paint already
+    // uses the exact value, with the observer only needed for later changes
+    // (e.g. a button label wrapping to a second line after a re-render).
+    setTrayHeight(Math.ceil(el.getBoundingClientRect().height));
+    if (typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver((entries) => {
       const height = entries[0]?.contentRect.height;
       if (height) setTrayHeight(Math.ceil(height));

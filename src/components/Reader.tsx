@@ -92,6 +92,7 @@ import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
 import { triggerHaptic } from "@/lib/haptics";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Toast from "@/components/Toast";
 import { CompletionSummary } from "@/components/GamificationCards";
 import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
@@ -167,6 +168,7 @@ function journeyMomentForCompletion(before: JourneyState | null, after: JourneyS
 }
 
 export default function Reader({ text }: { text: ReadingText }) {
+  useDocumentTitle(text.title);
   const router = useRouter();
   const isImportedText = text.id.startsWith("custom-");
   const isStarterLesson = isStarterText(text);
@@ -309,6 +311,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     } | null;
   } | null>(null);
   const lessonCompleteNavigating = useRef(false);
+  /**
+   * Guards against a mount-order race with the sessionStorage mirror below.
+   * On mount/text-id-change, the restore effect calls setLessonComplete
+   * asynchronously — but the mirror effect (declared after it) still runs
+   * once in the same effect-flush, with the *previous* render's (stale)
+   * lessonComplete closure, before that state update commits. Without this
+   * guard, that stale run sees a falsy lessonComplete and wipes the very
+   * sessionStorage entry the restore effect is about to write back,
+   * so returning from Practice/Listen would silently lose the celebration
+   * screen. Set true right before attempting a restore; consumed (and
+   * ignored forever after) by the mirror effect's very next run, which by
+   * then reflects the real, restored value.
+   */
+  const skipNextLessonCompleteMirrorClear = useRef(false);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -637,6 +653,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     // whenever lessonComplete is set back to null (see the sync effect
     // below), so this never resurfaces once the reader has actually moved
     // on (e.g. via the primary "Continue"/"Return to map" actions).
+    skipNextLessonCompleteMirrorClear.current = true;
     try {
       const raw = window.sessionStorage.getItem(`lire.lessonComplete.${text.id}`);
       setLessonComplete(raw ? JSON.parse(raw) : null);
@@ -691,6 +708,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     try {
       if (lessonComplete) {
         window.sessionStorage.setItem(key, JSON.stringify(lessonComplete));
+      } else if (skipNextLessonCompleteMirrorClear.current) {
+        // This run's lessonComplete is the stale pre-restore value from the
+        // effect above's own mount-time flush, not a real "leave this
+        // moment" transition — ignore it once, so it can't wipe out the
+        // restore that's about to land.
+        skipNextLessonCompleteMirrorClear.current = false;
       } else {
         window.sessionStorage.removeItem(key);
       }

@@ -445,6 +445,12 @@ function StageRouteStop({
       <div
         id={panelId}
         aria-hidden={!expanded || locked}
+        // aria-hidden alone hides this from assistive tech but doesn't
+        // remove its collapsed (max-h-0, invisible) contents from the tab
+        // order — a keyboard user could still Tab into clipped lesson
+        // links here. inert removes both in one step, matching the same
+        // technique useModalFocus already uses for modal backgrounds.
+        inert={!expanded || locked}
         className={`relative z-10 overflow-hidden transition-[max-height,opacity,margin-top] duration-[380ms] ease-[cubic-bezier(.4,0,.2,1)] ${
           expanded && !locked ? "mt-2 max-h-[1200px] opacity-100" : "mt-0 max-h-0 opacity-0"
         }`}

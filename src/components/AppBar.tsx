@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import AppIcon from "@/components/AppIcon";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 interface AppBarProps {
   title: string;
@@ -23,6 +24,7 @@ export default function AppBar({
   className = "",
 }: AppBarProps) {
   const router = useRouter();
+  useDocumentTitle(title);
 
   function handleBack() {
     if (backHref && typeof window !== "undefined" && window.history.length <= 1) {
