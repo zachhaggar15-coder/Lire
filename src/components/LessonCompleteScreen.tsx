@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
 import {
@@ -107,6 +107,22 @@ export default function LessonCompleteScreen({
   useEffect(() => {
     triggerHaptic("success");
   }, []);
+  // The fixed action tray's real height varies (one button vs. two, label
+  // length/wrapping, safe-area inset) — a hardcoded scroll-container padding
+  // guess previously let it overlap the last card(s) on shorter viewports.
+  // Measuring it directly keeps the reserved space always exactly right.
+  const actionTrayRef = useRef<HTMLDivElement>(null);
+  const [trayHeight, setTrayHeight] = useState(160);
+  useLayoutEffect(() => {
+    const el = actionTrayRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver((entries) => {
+      const height = entries[0]?.contentRect.height;
+      if (height) setTrayHeight(Math.ceil(height));
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -181,7 +197,10 @@ export default function LessonCompleteScreen({
   })();
 
   return createPortal(
-    <div className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pb-[calc(var(--safe-bottom)+9.5rem)] pt-[calc(var(--safe-top)+0.75rem)]">
+    <div
+      className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pt-[calc(var(--safe-top)+0.75rem)]"
+      style={{ paddingBottom: `calc(var(--safe-bottom) + ${trayHeight}px + 1rem)` }}
+    >
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop">
           <p className="ligne-label">{isLesson ? "Lesson complete" : "Reading complete"}</p>
@@ -356,6 +375,7 @@ export default function LessonCompleteScreen({
 
       </div>
       <div
+        ref={actionTrayRef}
         className="fixed inset-x-0 bottom-0 z-[60] mx-auto w-full max-w-md border-t border-cream-dark bg-cream-card/95 px-[22px] pt-3 shadow-[0_-8px_24px_rgba(27,25,21,0.08)] backdrop-blur"
         style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
         role="group"
@@ -368,13 +388,18 @@ export default function LessonCompleteScreen({
         >
           {primaryActionLabel}
         </button>
-        <button
-          type="button"
-          onClick={onReturnToMap}
-          className="ligne-pill mt-1 min-h-11 w-full bg-transparent text-ink-muted"
-        >
-          {mapActionLabel}
-        </button>
+        {/* A non-lesson completion (no distinct next text queued) falls back
+            to the same map/home label for both actions — showing it twice
+            is redundant, not a real second choice. */}
+        {mapActionLabel !== primaryActionLabel && (
+          <button
+            type="button"
+            onClick={onReturnToMap}
+            className="ligne-pill mt-1 min-h-11 w-full bg-transparent text-ink-muted"
+          >
+            {mapActionLabel}
+          </button>
+        )}
       </div>
     </div>,
     document.body,

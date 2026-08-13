@@ -98,3 +98,42 @@ export function speakParagraphAtRate(text: string, rateMultiplier: number, onEnd
   window.speechSynthesis.speak(utterance);
   return true;
 }
+
+/**
+ * Queues every paragraph from startIndex onward as separate utterances via
+ * back-to-back speak() calls (same technique speakFrenchParagraphs already
+ * uses), rather than speaking one paragraph and waiting for its onend to
+ * cancel+speak the next. The browser's own speech queue plays queued
+ * utterances back-to-back with minimal gap; reactively cancelling and
+ * re-speaking after each one (the previous approach) introduces an extra,
+ * more noticeable pause at every paragraph boundary, which reads as
+ * separate readings instead of one continuous narration.
+ */
+export function speakParagraphsFromRate(
+  paragraphs: string[],
+  startIndex: number,
+  rateMultiplier: number,
+  onParagraphStart: (index: number) => void,
+  onEnd: () => void
+): boolean {
+  if (!canSpeak() || startIndex >= paragraphs.length) return false;
+  window.speechSynthesis.cancel();
+  const voice = getPreferredVoice();
+  let queued = false;
+  for (let i = startIndex; i < paragraphs.length; i++) {
+    const clean = paragraphs[i].trim();
+    if (!clean) continue;
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.lang = "fr-FR";
+    utterance.rate = rateMultiplier;
+    if (voice) utterance.voice = voice;
+    utterance.onstart = () => onParagraphStart(i);
+    if (i === paragraphs.length - 1) {
+      utterance.onend = onEnd;
+      utterance.onerror = onEnd;
+    }
+    window.speechSynthesis.speak(utterance);
+    queued = true;
+  }
+  return queued;
+}

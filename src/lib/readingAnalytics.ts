@@ -3,7 +3,6 @@ import type { ArchiveEntry } from "@/lib/archive";
 import { estimateDifficulty } from "@/lib/difficulty";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { formatCategory, toPercent } from "@/lib/format";
-import { isDue } from "@/lib/spacedRepetition";
 import type { StoredInference, StoredWordTap } from "@/lib/wordLearning";
 import type { TranslationBudgetRecord } from "@/lib/readingInsights";
 import { findRelatedArticles } from "@/lib/comprehension";
@@ -38,13 +37,6 @@ export interface VocabularyStateItem {
   word: SavedWord;
   state: VocabularyDecayState;
   reason: string;
-}
-
-export interface ContextualReviewArticle {
-  article: ReadingText;
-  dueWords: SavedWord[];
-  fragileCount: number;
-  emergingCount: number;
 }
 
 export interface WeeklyReadingReport {
@@ -236,35 +228,6 @@ export function classifyVocabularyStates(words: SavedWord[], taps: StoredWordTap
     }
     return { word, state: "emerging", reason: "Still building recognition; context review is useful." };
   });
-}
-
-function articleContainsWord(article: ReadingText, word: SavedWord): boolean {
-  const haystack = normalise(`${article.title} ${article.preview} ${article.body}`);
-  const keys = [word.word, word.lemma ?? ""].map(normalise).filter(Boolean);
-  return keys.some((key) => new RegExp(`(^|[^\\p{L}])${escapeRegExp(key)}([^\\p{L}]|$)`, "u").test(haystack));
-}
-
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-export function buildContextualReviewArticles(articles: ReadingText[], words: SavedWord[], taps: StoredWordTap[] = [], limit = 4): ContextualReviewArticle[] {
-  const states = classifyVocabularyStates(words, taps);
-  const due = states.filter(({ word }) => word.status !== "known" && isDue(word)).map(({ word }) => word);
-  const stateByWord = new Map(states.map((item) => [item.word.word, item.state]));
-  return articles
-    .map((article) => {
-      const dueWords = due.filter((word) => articleContainsWord(article, word)).slice(0, 6);
-      return {
-        article,
-        dueWords,
-        fragileCount: dueWords.filter((word) => stateByWord.get(word.word) === "fragile" || stateByWord.get(word.word) === "forgotten").length,
-        emergingCount: dueWords.filter((word) => stateByWord.get(word.word) === "emerging").length,
-      };
-    })
-    .filter((entry) => entry.dueWords.length > 0)
-    .sort((a, b) => b.dueWords.length - a.dueWords.length || b.fragileCount - a.fragileCount)
-    .slice(0, limit);
 }
 
 function weekStartMs(now = new Date()): number {
