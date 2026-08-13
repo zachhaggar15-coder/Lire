@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AppBar from "@/components/AppBar";
 import {
   STRUCTURE_REFERENCES,
@@ -26,15 +26,12 @@ import {
   type GrammarLesson,
   type GrammarPracticeQuestion,
   type GrammarProgressRecord,
-  type StructureLesson,
   type StructureReference,
-  type VerbLesson,
   type VerbReference,
   type VerbTense,
 } from "@/lib/grammar";
 import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
-import { toPercent } from "@/lib/format";
 import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
@@ -129,11 +126,6 @@ export default function GrammarPage() {
       if (xpNoticeTimeout.current) clearTimeout(xpNoticeTimeout.current);
     };
   }, []);
-
-  const pathProgress = useMemo(
-    () => toPercent(dashboard.completedLessons / Math.max(1, dashboard.totalLessons)),
-    [dashboard.completedLessons, dashboard.totalLessons]
-  );
 
   function switchTrack(nextTrack: GrammarDomain) {
     if (nextTrack === track) return;

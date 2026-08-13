@@ -86,7 +86,7 @@ import { estimatePersonalChallenge } from "@/lib/practice/personalChallenge";
 import { selectDiagnosticMessage, type DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "@/lib/habit";
 import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
-import { JOURNEY_BANDS, getStageForText } from "@/lib/journey/ladder";
+import { JOURNEY_BANDS, getJourneyText, getStageForText } from "@/lib/journey/ladder";
 import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
 import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
@@ -1530,12 +1530,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     const nextRecommendation = isStarterLesson ? getNextTextForReader() : null;
     const nextStage = nextRecommendation ? getStageForText(nextRecommendation.textId) : null;
     const currentStage = getStageForText(text.id);
+    // Crossing into a new stage names the stage (there's no single "next
+    // lesson" to point at yet — the reader is choosing among several).
+    // Staying within the same stage names the actual next lesson, both so
+    // the button is specific rather than generic and so its destination
+    // and visible label can never disagree (both come from nextRecommendation).
+    const nextLessonTitle = nextRecommendation ? getJourneyText(nextRecommendation.textId)?.title : null;
     const nextAction = nextRecommendation
       ? {
           label:
             nextStage && (!currentStage || nextStage.globalIndex !== currentStage.globalIndex)
               ? `Continue ${nextStage.label}`
-              : "Read the next text",
+              : nextLessonTitle
+                ? `Continue: ${nextLessonTitle}`
+                : "Read the next text",
           textId: nextRecommendation.textId,
         }
       : null;

@@ -633,10 +633,13 @@ export default function ReviewPage() {
                 )}
 
                 {current.articleContextSentence && (
-                  <p className="mt-3 text-xs text-ink-muted">
-                    <span className="font-semibold uppercase tracking-wide">Original article context: </span>
-                    "{current.articleContextSentence}"
-                  </p>
+                  // Keyed on the word so <details> remounts closed for each
+                  // new card — otherwise its native open/closed state would
+                  // persist across cards instead of resetting per word.
+                  <details key={current.word} className="mt-3 text-left text-xs text-ink-muted">
+                    <summary className="cursor-pointer font-semibold uppercase tracking-wide">Show original sentence</summary>
+                    <p className="mt-1">"{current.articleContextSentence}"</p>
+                  </details>
                 )}
               </div>
             )}
