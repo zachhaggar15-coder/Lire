@@ -2,18 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { texts as hardcodedTexts } from "@/data/texts";
 import type { SavedWord } from "@/types";
 import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
 import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
-import { getCustomTexts } from "@/lib/customTexts";
-import { getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
 import { getReviewPreferences, saveReviewPreferences } from "@/lib/reviewPreferences";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { canSpeak, speakFrench } from "@/lib/speech";
-import { buildContextualReviewArticles, classifyVocabularyStates, type ContextualReviewArticle, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
+import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
 import { updateValidationState } from "@/lib/validation/state";
@@ -91,10 +88,10 @@ export default function ReviewPage() {
     saveReviewPreferences({ sessionLength: value });
   }
   const [reviewStarted, setReviewStarted] = useState(false);
+  const [phraseReviewStarted, setPhraseReviewStarted] = useState(false);
   const [phraseRevealed, setPhraseRevealed] = useState(false);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
   const [cardFeedback, setCardFeedback] = useState<CardFeedback>(null);
-  const [contextualArticles, setContextualArticles] = useState<ContextualReviewArticle[]>([]);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
   const [wordSessionTotal, setWordSessionTotal] = useState(0);
@@ -121,12 +118,11 @@ export default function ReviewPage() {
     const savedPhrases = getSavedPhrases();
     const visibleSavedWords = article ? savedWords.filter((word) => word.sourceTextTitle === article) : savedWords;
     const visibleSavedPhrases = article ? savedPhrases.filter((phrase) => phrase.sourceTextTitle === article) : savedPhrases;
-    // Word queue is intentionally NOT capped here — the hub shows the true
-    // due count before you start, and the session-length cap only applies
-    // once you actually start (see startWordReview). Phrases have no
-    // separate start gate, so their cap has to apply up front instead.
+    // Neither queue is capped here — the hub shows the true due count
+    // before you start, for both words and phrases; the session-length cap
+    // only applies once you actually start (see startWordReview/startPhraseReview).
     const initialWordQueue = buildReviewQueue(visibleSavedWords);
-    const initialPhraseQueue = capToSessionLength(visibleSavedPhrases.filter((phrase) => phrase.status !== "known"));
+    const initialPhraseQueue = visibleSavedPhrases.filter((phrase) => phrase.status !== "known");
     setArticleFilter(article);
     setWords(visibleSavedWords);
     setPhrases(visibleSavedPhrases);
@@ -134,14 +130,6 @@ export default function ReviewPage() {
     setSessionPhraseQueue(initialPhraseQueue);
     setWordSessionTotal(initialWordQueue.length);
     setPhraseSessionTotal(initialPhraseQueue.length);
-    setContextualArticles(
-      buildContextualReviewArticles(
-        [...getCustomTexts(), ...getOfflineRssTexts(), ...hardcodedTexts],
-        visibleSavedWords,
-        getAllWordTaps(),
-        3
-      )
-    );
     if (visibleSavedWords.length === 0 && visibleSavedPhrases.length > 0) {
       // Circumstantial (nothing to review as words right now), not a
       // deliberate choice — don't persist this as the remembered preference.
@@ -178,7 +166,9 @@ export default function ReviewPage() {
 
   const current = wordQueue[0];
   const currentPhrase = sessionPhraseQueue[0];
-  const done = reviewMode === "words" && ready && reviewStarted && wordSessionTotal > 0 && wordQueue.length === 0;
+  const wordsDone = reviewMode === "words" && ready && reviewStarted && wordSessionTotal > 0 && wordQueue.length === 0;
+  const phrasesDone = reviewMode === "phrases" && ready && phraseReviewStarted && phraseSessionTotal > 0 && sessionPhraseQueue.length === 0;
+  const done = wordsDone || phrasesDone;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
 
   useEffect(() => {
@@ -227,6 +217,20 @@ export default function ReviewPage() {
     }
     shouldScrollToReviewCard.current = true;
     setReviewStarted(true);
+  }
+
+  function startPhraseReview() {
+    if (!currentPhrase) return;
+    // Applying the cap here (not at page load) means changing the
+    // session-length option after landing on the hub still takes effect —
+    // it previously only ever capped once, at initial load.
+    const capped = capToSessionLength(sessionPhraseQueue);
+    if (capped.length !== sessionPhraseQueue.length) {
+      setSessionPhraseQueue(capped);
+      setPhraseSessionTotal(capped.length);
+    }
+    shouldScrollToReviewCard.current = true;
+    setPhraseReviewStarted(true);
   }
 
   function resetWordCard() {
@@ -297,6 +301,7 @@ export default function ReviewPage() {
     resetWordCard();
     setPhraseRevealed(false);
     setReviewStarted(nextWordQueue.length > 0 && reviewMode === "words");
+    setPhraseReviewStarted(nextPhraseQueue.length > 0 && reviewMode === "phrases");
     setScore({ knew: 0, missed: 0 });
     missedWordKeys.current = new Set();
     setMissedCount(0);
@@ -358,13 +363,17 @@ export default function ReviewPage() {
 
   const shouldShowWordStart = reviewMode === "words" && !!current && !reviewStarted;
   const shouldShowWordReview = reviewMode === "words" && !!current && reviewStarted;
+  const shouldShowPhraseStart = reviewMode === "phrases" && !!currentPhrase && !phraseReviewStarted;
+  const shouldShowPhraseReview = reviewMode === "phrases" && !!currentPhrase && phraseReviewStarted;
   const remainingPhraseCount = sessionPhraseQueue.length;
-  const shouldShowPracticeHub = shouldShowWordStart;
+  const shouldShowPracticeHub = shouldShowWordStart || shouldShowPhraseStart;
   const reviewProgressLabel =
     !ready
       ? ""
       : reviewMode === "phrases"
-        ? `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"}`
+        ? phraseReviewStarted
+          ? `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} left`
+          : `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} to review`
         : reviewStarted
           ? `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} left`
           // Not "due": the queue also includes never-reviewed new words, so
@@ -433,12 +442,18 @@ export default function ReviewPage() {
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle="Session complete." />
-        {statsBar}
+        {phrasesDone ? null : statsBar}
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
-            Known: {wordSessionTotal}
-            {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
+            {phrasesDone ? (
+              `Known: ${phraseSessionTotal}`
+            ) : (
+              <>
+                Known: {wordSessionTotal}
+                {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
+              </>
+            )}
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             <button
@@ -447,8 +462,8 @@ export default function ReviewPage() {
             >
               Check for more
             </button>
-            <Link href="/words" className="ligne-pill bg-cream-fill text-ink-muted">
-              Manage saved words
+            <Link href={phrasesDone ? "/words?tab=phrases" : "/words"} className="ligne-pill bg-cream-fill text-ink-muted">
+              {phrasesDone ? "Manage saved phrases" : "Manage saved words"}
             </Link>
           </div>
         </div>
@@ -499,7 +514,7 @@ export default function ReviewPage() {
           }}
           onModeChange={setReviewMode}
           onSessionLengthChange={setSessionLength}
-          onStart={startWordReview}
+          onStart={reviewMode === "words" ? startWordReview : startPhraseReview}
         />
       )}
 
@@ -513,7 +528,7 @@ export default function ReviewPage() {
         <PhraseModeSwitch mode={reviewMode} onChange={setReviewMode} phraseCount={sessionPhraseQueue.length} />
       )}
 
-      {(shouldShowWordReview || reviewMode === "phrases") && (
+      {(shouldShowWordReview || shouldShowPhraseReview) && (
         <ReviewDirectionToggle
           direction={reviewDirection}
           onChange={(direction) => {
@@ -524,7 +539,7 @@ export default function ReviewPage() {
         />
       )}
 
-      {reviewMode === "phrases" && (
+      {shouldShowPhraseReview && (
         <PhraseReviewCard
           phrase={currentPhrase}
           direction={reviewDirection}
@@ -649,10 +664,6 @@ export default function ReviewPage() {
           </div>
         </div>
       )}
-
-      {!shouldShowWordReview && contextualArticles.length > 0 && (
-        <ContextualArticleReview items={contextualArticles} />
-      )}
     </div>
   );
 }
@@ -707,6 +718,7 @@ function PracticeHubCard({
   onSessionLengthChange: (value: number | null) => void;
   onStart: () => void;
 }) {
+  const isPhrases = mode === "phrases";
   const focusCount = vocabularyStates.filter((item) => item.state === "fragile" || item.state === "forgotten").length;
   const readyCopy =
     dueToday > 0 && newWords > 0
@@ -721,22 +733,36 @@ function PracticeHubCard({
     { label: "Total", value: totalLearning },
   ];
   const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
+  // The actual session — what tapping "Review" below is about to start —
+  // respects whatever session-length cap is selected. The headline/ready
+  // chip intentionally stay uncapped: they're the true due count, giving
+  // context for why the button says a smaller number.
+  const readyCount = isPhrases ? phraseCount : wordCount;
+  const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
+  const sessionCount = sessionLength != null ? Math.min(readyCount, sessionLength) : readyCount;
+  const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
 
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-5">
       <p className="ligne-label text-brand">Practice hub</p>
       <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">
-        {wordCount} {wordCount === 1 ? "card" : "cards"} ready
+        {readyCount} {readyNoun} ready
       </h2>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        Start with a quick {directionCopy} review.
+        {isPhrases ? "Start a quick phrase review." : `Start with a quick ${directionCopy} review.`}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
-        <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
-        {focusCount > 0 && (
-          <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
-            {focusCount} need care
-          </span>
+        {isPhrases ? (
+          <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{phraseCount} to review</span>
+        ) : (
+          <>
+            <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
+            {focusCount > 0 && (
+              <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
+                {focusCount} need care
+              </span>
+            )}
+          </>
         )}
       </div>
 
@@ -745,7 +771,7 @@ function PracticeHubCard({
         onClick={onStart}
         className="ligne-pill mt-4 min-h-12 w-full bg-brand text-cream"
       >
-        Review {wordCount} {wordCount === 1 ? "card" : "cards"}
+        Review {sessionCount} {sessionNoun}
       </button>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
@@ -769,23 +795,25 @@ function PracticeHubCard({
           </div>
         </div>
       </details>
-      <Link href="/words" className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
-        Manage saved words
+      <Link href={isPhrases ? "/words?tab=phrases" : "/words"} className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
+        {isPhrases ? "Manage saved phrases" : "Manage saved words"}
       </Link>
 
-      <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
-        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Stats
-        </summary>
-        <div className="mt-3 grid grid-cols-4 gap-2">
-          {stats.map((item) => (
-            <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
-              <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
-              <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </details>
+      {!isPhrases && (
+        <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
+          <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+            Stats
+          </summary>
+          <div className="mt-3 grid grid-cols-4 gap-2">
+            {stats.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
+                <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
+                <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
     </section>
   );
 }
@@ -835,39 +863,6 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   );
 }
 
-function ContextualArticleReview({ items }: { items: ContextualReviewArticle[] }) {
-  return (
-    <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Review in context</h2>
-          <p className="mt-0.5 text-xs text-ink-muted">Articles that contain words currently due for review.</p>
-        </div>
-        <Link href="/" className="shrink-0 text-xs font-semibold text-brand underline underline-offset-2">
-          More
-        </Link>
-      </div>
-      <div className="mt-3 space-y-2">
-        {items.map(({ article, dueWords, fragileCount }) => (
-          <Link
-            key={article.id}
-            href={`/reader/${article.id}`}
-            className="block rounded-2xl bg-cream-sunken px-3 py-2 active:bg-cream-fill"
-          >
-            <p className="line-clamp-1 text-sm font-bold text-ink">{article.title}</p>
-            <p className="mt-0.5 text-xs text-ink-muted">
-              {dueWords.length} due {dueWords.length === 1 ? "word" : "words"}
-              {fragileCount > 0 ? ` - ${fragileCount} fragile` : ""}
-            </p>
-            <p className="mt-1 line-clamp-1 text-xs font-semibold text-brand">
-              {dueWords.slice(0, 4).map((word) => word.lemma ?? word.word).join(" - ")}
-            </p>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function ReviewDirectionToggle({
   direction,
@@ -886,6 +881,7 @@ function ReviewDirectionToggle({
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
+          aria-pressed={direction === option.value}
           className={`ligne-segmented-button min-h-12 rounded-full px-2 py-2 text-xs font-bold ${
             direction === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}
@@ -898,9 +894,9 @@ function ReviewDirectionToggle({
 }
 
 const SESSION_LENGTH_OPTIONS: { value: number | null; label: string }[] = [
-  { value: 10, label: "10" },
-  { value: 20, label: "20" },
-  { value: null, label: "All" },
+  { value: 10, label: "10 cards" },
+  { value: 20, label: "20 cards" },
+  { value: null, label: "All cards" },
 ];
 
 /** Optional cap on how many cards a sitting runs before stopping — lowers the barrier to starting on a day with a big due pile. Persisted via reviewPreferences.ts. */
@@ -918,6 +914,7 @@ function SessionLengthToggle({
           key={option.label}
           type="button"
           onClick={() => onChange(option.value)}
+          aria-pressed={value === option.value}
           className={`ligne-segmented-button min-h-12 rounded-full px-2 py-2 text-xs font-bold ${
             value === option.value ? "bg-brand text-cream" : "text-ink-muted"
           }`}

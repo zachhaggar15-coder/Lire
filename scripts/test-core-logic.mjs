@@ -100,7 +100,6 @@ import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/l
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
 import {
   buildCategoryProficiency,
-  buildContextualReviewArticles,
   buildHeadlineComparison,
   buildTodayNewsWords,
   buildWeeklyReadingReport,
@@ -1088,8 +1087,6 @@ console.log("\n--- Reading analytics ---");
     []
   );
   check("vocabulary state detects behavioural forgetting", states[0]?.state === "forgotten");
-  const contextual = buildContextualReviewArticles([a, b], [saved], [], 2);
-  check("contextual review recommends articles containing due vocabulary", contextual.length > 0 && contextual[0].dueWords[0].word === "selon");
   const report = buildWeeklyReadingReport(
     [{ textId: "news-a", title: a.title, sourceName: "Source A", completedAt: today, category: "news-style", cefr: "A2", minutes: 3, wordCount: 120 }],
     [{ ...saved, status: "known", correctCount: 3, lastReviewedAt: today }],

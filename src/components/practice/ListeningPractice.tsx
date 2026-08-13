@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReadingText } from "@/types";
 import { tokenizeParagraphsToSentences } from "@/lib/words";
-import { speakParagraphAtRate, stopSpeaking, canSpeak } from "@/lib/speech";
+import { speakParagraphsFromRate, stopSpeaking, canSpeak } from "@/lib/speech";
 import { markListeningPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { getSettings } from "@/lib/settings";
 import { useModalFocus } from "@/lib/useModalFocus";
@@ -54,19 +54,16 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
     setIndex(clamped);
     setFinished(false);
     setPlaying(true);
-    speakParagraphAtRate(paragraphs[clamped], rateOverride ?? rateRef.current, () => advance(clamped));
-  }
-
-  function advance(fromIndex: number) {
-    const next = fromIndex + 1;
-    if (next < paragraphs.length) {
-      setIndex(next);
-      speakParagraphAtRate(paragraphs[next], rateRef.current, () => advance(next));
-    } else {
+    // Queues every remaining paragraph as one continuous back-to-back
+    // playback (see speech.ts) instead of speaking one and reactively
+    // chaining the next — that reactive approach left an audible gap at
+    // every paragraph boundary that read as separate readings rather than
+    // one narration.
+    speakParagraphsFromRate(paragraphs, clamped, rateOverride ?? rateRef.current, setIndex, () => {
       setPlaying(false);
       setFinished(true);
       markListeningPracticeCompleted(text.id);
-    }
+    });
   }
 
   function play() {

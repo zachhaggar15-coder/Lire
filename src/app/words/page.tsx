@@ -266,36 +266,26 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
   );
 }
 
+/**
+ * Kept to roughly the same height as the Words tab's filter-pill row right
+ * below it (a single-line rounded strip, not a multi-part card) — the two
+ * tabs used to start at very different heights, which made switching
+ * between them feel like the whole page reshuffled rather than a clean tab
+ * change. All the same numbers are still here, just condensed to one line.
+ */
 function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
   const known = phrases.filter((phrase) => phrase.status === "known").length;
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
   const progress = phrases.length === 0 ? 0 : toPercent(known / phrases.length);
   return (
-    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Phrase mastery</h2>
-          <p className="mt-1 text-sm text-ink-muted">Review phrases in their original article sentence, then mark them known once the chunk feels automatic.</p>
-        </div>
-        <span className="shrink-0 rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{progress}%</span>
-      </div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-        <StatBox value={phrases.length} label="Saved" />
-        <StatBox value={known} label="Known" />
-        <StatBox value={contexts} label="Contexts" />
-      </div>
-      <Link href="/review" className="ligne-pill mt-3 block bg-cream-fill text-center text-ink-muted">
-        Review phrases
+    <div className="flex items-center gap-2 rounded-full border border-cream-dark bg-cream-card py-1.5 pl-4 pr-1.5">
+      <p className="min-w-0 flex-1 truncate text-sm text-ink-muted">
+        <span className="font-bold text-ink">{progress}% mastery</span> · {phrases.length} saved · {known} known
+        {contexts > 0 ? ` · ${contexts} ${contexts === 1 ? "context" : "contexts"}` : ""}
+      </p>
+      <Link href="/review" className="ligne-pill shrink-0 bg-brand-light px-3 py-1.5 text-xs text-brand">
+        Review
       </Link>
-    </section>
-  );
-}
-
-function StatBox({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="rounded-2xl bg-cream-sunken px-2 py-2">
-      <p className="font-numeral text-2xl leading-none text-ink">{value}</p>
-      <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{label}</p>
     </div>
   );
 }

@@ -292,6 +292,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     journeyMoment: JourneyMoment | null;
     nextAction: { label: string; textId: string } | null;
     mapLabel: string;
+    /**
+     * Computed once here (not recomputed from document.referrer at click
+     * time) so it stays accurate even after a round trip through
+     * Practice/Listen, whose own page would otherwise become the
+     * "referrer" and misdirect this action.
+     */
+    mapTarget: string;
     practicePlan: PracticePlan;
     lookupRate: LookupRateSummary;
     diagnostics: {
@@ -301,6 +308,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       trend: TrendLabel;
     } | null;
   } | null>(null);
+  const lessonCompleteNavigating = useRef(false);
   const [rereadMode, setRereadMode] = useState(false);
   const [secondPassStartedAt, setSecondPassStartedAt] = useState<string | null>(null);
   const [translationState, setTranslationState] = useState<TranslationState>("idle");
@@ -620,6 +628,21 @@ export default function Reader({ text }: { text: ReadingText }) {
     setQuickChallengeAnswer(null);
     setInferenceStats({ attempted: 0, correct: 0 });
     setCompletionResult(null);
+    lessonCompleteNavigating.current = false;
+    // Restores the full-screen completion celebration if the reader tapped
+    // into Practice/Listen from it (both are separate routes/pages, which
+    // unmount this component entirely) and then came back via their own
+    // back button — otherwise they'd land on a plain "completed" reading
+    // view instead of where they actually left off. Cleared automatically
+    // whenever lessonComplete is set back to null (see the sync effect
+    // below), so this never resurfaces once the reader has actually moved
+    // on (e.g. via the primary "Continue"/"Return to map" actions).
+    try {
+      const raw = window.sessionStorage.getItem(`lire.lessonComplete.${text.id}`);
+      setLessonComplete(raw ? JSON.parse(raw) : null);
+    } catch {
+      setLessonComplete(null);
+    }
     setRereadMode(false);
     setSecondPassStartedAt(null);
     setTranslationState("idle");
@@ -656,6 +679,26 @@ export default function Reader({ text }: { text: ReadingText }) {
     // re-running only on id change is intentional, not a missing dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text.id]);
+
+  // Single source of truth for the sessionStorage mirror the restore above
+  // reads from: persists lessonComplete (including in-place edits, like the
+  // mini-review save toggle) whenever it changes, and removes the entry the
+  // moment it's set back to null (the reader tapped a real "leave this
+  // moment" action) so it never resurfaces later.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const key = `lire.lessonComplete.${text.id}`;
+    try {
+      if (lessonComplete) {
+        window.sessionStorage.setItem(key, JSON.stringify(lessonComplete));
+      } else {
+        window.sessionStorage.removeItem(key);
+      }
+    } catch {
+      // Best-effort — worst case, returning from Practice/Listen just shows
+      // the plain completed view instead of restoring the celebration.
+    }
+  }, [lessonComplete, text.id]);
 
   /**
    * Cycles the reader's speaking speed through a fixed set of steps and
@@ -1474,7 +1517,20 @@ export default function Reader({ text }: { text: ReadingText }) {
         }
       : null;
     const band = text.difficulty;
-    const mapLabel = `Return to the ${band} map`;
+    // Only a guided starter/journey lesson was actually opened "from a map" —
+    // a News/RSS or imported article has no map to return to, so the label
+    // and destination need to say/do something that's actually true for it.
+    let mapTarget = isStarterLesson ? "/#journey-current" : "/";
+    if (typeof document !== "undefined") {
+      try {
+        const ref = new URL(document.referrer);
+        if (ref.origin === window.location.origin && (ref.pathname === "/" || ref.pathname === "/articles")) mapTarget = "/#journey-current";
+        if (ref.origin === window.location.origin && ref.pathname === "/live-news") mapTarget = "/live-news";
+      } catch {
+        // no usable referrer; keep the default
+      }
+    }
+    const mapLabel = isStarterLesson ? `Return to the ${band} map` : mapTarget === "/live-news" ? "Back to News" : "Back to home";
 
     // Lookups-per-100-words: a support-use signal, not a comprehension score.
     // wordLookupCount is this session's own count (reset when the article changed),
@@ -1554,34 +1610,33 @@ export default function Reader({ text }: { text: ReadingText }) {
       journeyMoment,
       nextAction,
       mapLabel,
+      mapTarget,
       practicePlan,
       lookupRate,
       diagnostics,
     });
   }
 
-  function handleLessonCompleteReturnToMap() {
-    // Return to where the lesson was opened from — the article tab by default,
-    // or home if that's where the reader was entered from.
-    let target = isStarterLesson ? "/#journey-current" : "/";
-    if (typeof document !== "undefined") {
-      try {
-        const ref = new URL(document.referrer);
-        if (ref.origin === window.location.origin && (ref.pathname === "/" || ref.pathname === "/articles")) target = "/#journey-current";
-        if (ref.origin === window.location.origin && ref.pathname === "/live-news") target = "/live-news";
-      } catch {
-        // no usable referrer; keep the default
-      }
-    }
+  // Guards against a double/rapid tap firing two overlapping router.push
+  // calls in the same tick (before React re-renders to hide the button) —
+  // that race could otherwise leave the router stuck mid-navigation.
+  function navigateAndClearLessonComplete(target: string) {
+    if (lessonCompleteNavigating.current) return;
+    lessonCompleteNavigating.current = true;
     setLessonComplete(null);
     router.push(target);
   }
 
+  function handleLessonCompleteReturnToMap() {
+    if (!lessonComplete) return;
+    navigateAndClearLessonComplete(lessonComplete.mapTarget);
+  }
+
   function handleLessonCompletePrimaryAction() {
-    const nextTextId = lessonComplete?.nextAction?.textId;
+    if (!lessonComplete) return;
+    const nextTextId = lessonComplete.nextAction?.textId;
     if (nextTextId) {
-      setLessonComplete(null);
-      router.push(`/reader/${encodeURIComponent(nextTextId)}`);
+      navigateAndClearLessonComplete(`/reader/${encodeURIComponent(nextTextId)}`);
       return;
     }
     // Terminal state (nothing left to read right now) — fall back to the map.

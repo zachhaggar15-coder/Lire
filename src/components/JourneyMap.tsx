@@ -48,6 +48,11 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   const [, setVersion] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [localLevel, setLocalLevel] = useState<Difficulty>("A2");
+  // Unlike localLevel (which changes as soon as you browse a different band
+  // tab), this stays fixed at whatever level was actually committed in
+  // Settings when the map mounted — the fixed point LevelSwitcher marks so
+  // browsing another band never looks identical to having changed level.
+  const [committedLevel, setCommittedLevel] = useState<Difficulty | null>(null);
   const [openStageIndex, setOpenStageIndex] = useState<number | null>(null);
   const [pageState, setPage] = useState(0);
   const [capstoneOpen, setCapstoneOpen] = useState(false);
@@ -99,7 +104,9 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
 
   useEffect(() => {
     setMounted(true);
-    setLocalLevel(getSelectedReadingLevel());
+    const level = getSelectedReadingLevel();
+    setLocalLevel(level);
+    setCommittedLevel(level);
   }, []);
 
   // On band change (and once mounted with real progress), open the first map
@@ -217,7 +224,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
           </p>
         </div>
 
-        <LevelSwitcher selectedLevel={visibleBand} onChange={handleLevelChange} />
+        <LevelSwitcher selectedLevel={visibleBand} committedLevel={committedLevel} onChange={handleLevelChange} />
       </header>
 
       {hasVisibleStages ? (
@@ -280,29 +287,47 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
 
 function LevelSwitcher({
   selectedLevel,
+  committedLevel,
   onChange,
 }: {
   selectedLevel: Difficulty;
+  /** The learner's actual set-in-Settings level — null until mounted. Marked with a dot so browsing a different band never looks the same as having changed it. */
+  committedLevel: Difficulty | null;
   onChange: (level: Difficulty) => void;
 }) {
+  const browsingAway = committedLevel !== null && selectedLevel !== committedLevel;
   return (
     <div className="mt-5" role="group" aria-label="Choose lesson level">
       <div className="grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1 sm:grid-cols-6">
-        {JOURNEY_BANDS.map((level) => (
-          <button
-            key={level}
-            type="button"
-            aria-label={`Show ${level} lessons`}
-            aria-pressed={selectedLevel === level}
-            onClick={() => onChange(level)}
-            className={`min-h-11 rounded-full px-3 py-2 text-center text-[13px] font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${
-              selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
-            }`}
-          >
-            {level}
-          </button>
-        ))}
+        {JOURNEY_BANDS.map((level) => {
+          const isYourLevel = level === committedLevel;
+          return (
+            <button
+              key={level}
+              type="button"
+              aria-label={`Show ${level} lessons${isYourLevel ? " (your level)" : ""}`}
+              aria-pressed={selectedLevel === level}
+              onClick={() => onChange(level)}
+              className={`flex min-h-11 flex-col items-center justify-center gap-0.5 rounded-full px-3 py-1.5 text-center text-[13px] font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${
+                selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
+              }`}
+            >
+              {level}
+              <span
+                aria-hidden="true"
+                className={`h-1 w-1 rounded-full ${
+                  isYourLevel ? (selectedLevel === level ? "bg-cream" : "bg-brand") : "bg-transparent"
+                }`}
+              />
+            </button>
+          );
+        })}
       </div>
+      {browsingAway && (
+        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+          Browsing {selectedLevel} · your level is {committedLevel}
+        </p>
+      )}
     </div>
   );
 }
