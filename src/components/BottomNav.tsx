@@ -9,7 +9,7 @@ import { useAnyModalOpen } from "@/lib/modalPresence";
 import AppIcon, { type AppIconName } from "@/components/AppIcon";
 
 const items = [
-  { href: "/", label: "Lessons", icon: "lessons" as AppIconName, activePaths: ["/", "/articles", "/reader"] },
+  { href: "/", label: "Lessons", icon: "lessons" as AppIconName, activePaths: ["/", "/articles", "/reader", "/import"] },
   { href: "/live-news", label: "News", icon: "news" as const, activePaths: ["/live-news"] },
   { href: "/review", label: "Review", icon: "review" as const, activePaths: ["/review"] },
   {
@@ -60,11 +60,11 @@ export default function BottomNav() {
   if (onboardingComplete !== true) return null;
   if (modalOpen) return null;
 
-  const activeIndex = Math.max(
-    0,
-    items.findIndex(({ activePaths }) =>
-      activePaths.some((path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)))
-    )
+  // -1 (no tab matches the current route) intentionally hides the pill below
+  // rather than defaulting to index 0 — a stray highlight under "Lessons"
+  // while every label reads inactive is worse than no highlight at all.
+  const activeIndex = items.findIndex(({ activePaths }) =>
+    activePaths.some((path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)))
   );
 
   return (
@@ -74,13 +74,15 @@ export default function BottomNav() {
       aria-label="Primary"
     >
       <ul className="relative grid grid-cols-4 px-3 pb-1.5 pt-2">
-        <li
-          aria-hidden="true"
-          className="pointer-events-none absolute left-3 top-2 flex h-7 w-[calc((100%_-_1.5rem)/4)] justify-center transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
-          style={{ transform: `translateX(${activeIndex * 100}%)` }}
-        >
-          <span className="h-7 w-12 rounded-full bg-brand-light" />
-        </li>
+        {activeIndex >= 0 && (
+          <li
+            aria-hidden="true"
+            className="pointer-events-none absolute left-3 top-2 flex h-7 w-[calc((100%_-_1.5rem)/4)] justify-center transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
+            style={{ transform: `translateX(${activeIndex * 100}%)` }}
+          >
+            <span className="h-7 w-12 rounded-full bg-brand-light" />
+          </li>
+        )}
         {items.map(({ href, label, icon, activePaths }) => {
           const active = activePaths.some((path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)));
           return (

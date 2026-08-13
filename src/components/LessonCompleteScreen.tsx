@@ -23,6 +23,7 @@ import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformanc
 import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
 import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { useModalPresence } from "@/lib/modalPresence";
+import { useModalFocus } from "@/lib/useModalFocus";
 import { triggerHaptic } from "@/lib/haptics";
 
 export interface LessonMiniReviewItem {
@@ -104,6 +105,12 @@ export default function LessonCompleteScreen({
   levelLabel,
 }: LessonCompleteScreenProps) {
   useModalPresence(true);
+  // This is the app's most-seen full-screen overlay — it needs the same
+  // focus trap / background-inert / Escape-to-leave treatment every
+  // BottomSheet already gets, not just the nav-hiding half of it. Escape
+  // routes to the same quiet exit as the map action, not the primary CTA,
+  // since that's the non-committal way out of a modal.
+  const modalRef = useModalFocus<HTMLDivElement>(true, onReturnToMap);
   useEffect(() => {
     triggerHaptic("success");
   }, []);
@@ -198,6 +205,11 @@ export default function LessonCompleteScreen({
 
   return createPortal(
     <div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={isLesson ? "Lesson complete" : "Reading complete"}
+      tabIndex={-1}
       className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pt-[calc(var(--safe-top)+0.75rem)]"
       style={{ paddingBottom: `calc(var(--safe-bottom) + ${trayHeight}px + 1rem)` }}
     >

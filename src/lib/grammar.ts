@@ -3183,7 +3183,6 @@ export function markGrammarLessonComplete(lessonId: string): GrammarProgressReco
     ...current,
     domain: lesson.domain,
     completed: true,
-    mastery: Math.max(current.mastery, 70),
     updatedAt: now,
   };
   persist(PROGRESS_KEY, [next, ...records.filter((record) => record.lessonId !== lessonId)]);
