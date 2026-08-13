@@ -22,7 +22,11 @@ const config: Config = {
         ink: {
           DEFAULT: "#1B1915",
           muted: "#6E6858",
-          faint: "#817968",
+          // Darkened from #817968 (4.21:1 on the cream background, 4.31:1
+          // on white — both below WCAG's 4.5:1 for normal-size text) to
+          // clear 4.5:1 on the app's two most common backgrounds while
+          // staying visibly lighter than ink-muted.
+          faint: "#756E5C",
         },
         accent: {
           pink: "#F3DCD8",

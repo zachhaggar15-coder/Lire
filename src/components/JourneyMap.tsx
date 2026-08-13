@@ -309,7 +309,15 @@ function LevelSwitcher({
               aria-pressed={selectedLevel === level}
               onClick={() => onChange(level)}
               className={`flex min-h-11 flex-col items-center justify-center gap-0.5 rounded-full px-3 py-1.5 text-center text-[13px] font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${
-                selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
+                selectedLevel === level
+                  ? "bg-brand text-cream"
+                  : // A 4px dot alone read as almost identical to every other
+                    // inactive level while browsing elsewhere — a light fill
+                    // + ring makes "this is your level" identifiable at a
+                    // glance without competing with the actual active pill.
+                    isYourLevel
+                    ? "bg-brand-light text-brand ring-1 ring-inset ring-brand/40"
+                    : "text-ink-muted"
               }`}
             >
               {level}
@@ -445,6 +453,12 @@ function StageRouteStop({
       <div
         id={panelId}
         aria-hidden={!expanded || locked}
+        // aria-hidden alone hides this from assistive tech but doesn't
+        // remove its collapsed (max-h-0, invisible) contents from the tab
+        // order — a keyboard user could still Tab into clipped lesson
+        // links here. inert removes both in one step, matching the same
+        // technique useModalFocus already uses for modal backgrounds.
+        inert={!expanded || locked}
         className={`relative z-10 overflow-hidden transition-[max-height,opacity,margin-top] duration-[380ms] ease-[cubic-bezier(.4,0,.2,1)] ${
           expanded && !locked ? "mt-2 max-h-[1200px] opacity-100" : "mt-0 max-h-0 opacity-0"
         }`}

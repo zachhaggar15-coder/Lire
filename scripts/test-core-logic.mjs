@@ -1500,9 +1500,15 @@ console.log("\n--- Grammar conjugation section ---");
 }
 {
   markGrammarLessonComplete("present-er");
+  const beforeComplete = recordGrammarAnswer("present-core-irregulars", "present-core-irregulars-1", false);
   const completed = markGrammarLessonComplete("present-core-irregulars");
   const dashboard = buildGrammarDashboard(getGrammarProgress(), getGrammarPracticeEvents());
-  check("grammar lessons can be marked complete", completed.completed && completed.mastery >= 70);
+  check("grammar lessons can be marked complete", completed.completed);
+  check(
+    "marking a lesson complete does not inflate mastery beyond real per-answer accuracy",
+    completed.mastery === beforeComplete.mastery,
+    `${completed.mastery} vs ${beforeComplete.mastery}`
+  );
   check("grammar dashboard reports completed lessons", dashboard.completedLessons >= 1);
   check("grammar dashboard recommends a next lesson", !!dashboard.nextLesson?.id);
   check("current unlocked lesson skips completed lessons", currentUnlockedLesson(getGrammarProgress()).id === "present-ir-re");

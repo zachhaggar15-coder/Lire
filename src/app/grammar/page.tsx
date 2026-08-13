@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AppBar from "@/components/AppBar";
 import {
   STRUCTURE_REFERENCES,
@@ -26,15 +26,12 @@ import {
   type GrammarLesson,
   type GrammarPracticeQuestion,
   type GrammarProgressRecord,
-  type StructureLesson,
   type StructureReference,
-  type VerbLesson,
   type VerbReference,
   type VerbTense,
 } from "@/lib/grammar";
 import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
 import { trackEvent } from "@/lib/analytics/client";
-import { toPercent } from "@/lib/format";
 import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
@@ -130,11 +127,6 @@ export default function GrammarPage() {
     };
   }, []);
 
-  const pathProgress = useMemo(
-    () => toPercent(dashboard.completedLessons / Math.max(1, dashboard.totalLessons)),
-    [dashboard.completedLessons, dashboard.totalLessons]
-  );
-
   function switchTrack(nextTrack: GrammarDomain) {
     if (nextTrack === track) return;
     setTrack(nextTrack);
@@ -155,9 +147,12 @@ export default function GrammarPage() {
   function answerQuestion(question: GrammarPracticeQuestion, answer: string) {
     if (selectedAnswer !== null) return;
     const correct = isGrammarAnswerCorrect(question, answer);
-    const isFinalQuestion = questionIndex >= questions.length - 1;
-    const nextAnswered = sessionAnswered + 1;
-    const nextCorrect = sessionCorrect + (correct ? 1 : 0);
+    // Only per-answer bookkeeping here — completing the lesson (and
+    // switching away from this question) happens in nextQuestion() once the
+    // learner has actually seen this answer's feedback and tapped through,
+    // not in the same tick as answering. Doing both here previously meant
+    // the final question's feedback banner never got a chance to paint
+    // before the tab switched to "learn" in the same batched update.
     setSelectedAnswer(answer);
     setSessionAnswered((value) => value + 1);
     setSessionCorrect((value) => value + (correct ? 1 : 0));
@@ -171,8 +166,18 @@ export default function GrammarPage() {
         xpNoticeTimeout.current = setTimeout(() => setXpNotice(null), 1600);
       }
     }
+    refresh();
+  }
+
+  function nextQuestion() {
+    const isFinalQuestion = questionIndex >= questions.length - 1;
     if (isFinalQuestion) {
-      markGrammarLessonComplete(question.lessonId);
+      // markGrammarLessonComplete only marks completion — it must not also
+      // touch mastery, which recordGrammarAnswer above already computed
+      // from real per-question accuracy. It previously floored mastery to
+      // 70% just for finishing, regardless of how the session actually
+      // went (even 0/5 correct still read as 70% "mastery").
+      markGrammarLessonComplete(currentQuestion.lessonId);
       evaluateAndUnlockAchievements();
       if (!grammarSessionCompleted.current) {
         grammarSessionCompleted.current = true;
@@ -182,10 +187,10 @@ export default function GrammarPage() {
           totalGrammarSessions: state.totalGrammarSessions + 1,
         }));
         trackEvent("grammar_session_completed", {
-          lessonId: question.lessonId,
+          lessonId: currentQuestion.lessonId,
           domain: currentLesson.domain,
-          correctAnswers: nextCorrect,
-          totalQuestions: nextAnswered,
+          correctAnswers: sessionCorrect,
+          totalQuestions: sessionAnswered,
           completedAt,
         });
       }
@@ -195,13 +200,11 @@ export default function GrammarPage() {
       setSessionCorrect(0);
       setSessionAnswered(0);
       setStreak(0);
+      refresh();
+      return;
     }
-    refresh();
-  }
-
-  function nextQuestion() {
     setSelectedAnswer(null);
-    setQuestionIndex((index) => (index + 1) % questions.length);
+    setQuestionIndex((index) => index + 1);
   }
 
   return (

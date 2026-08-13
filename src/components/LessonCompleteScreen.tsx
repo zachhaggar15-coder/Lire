@@ -23,6 +23,7 @@ import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformanc
 import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
 import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { useModalPresence } from "@/lib/modalPresence";
+import { useModalFocus } from "@/lib/useModalFocus";
 import { triggerHaptic } from "@/lib/haptics";
 
 export interface LessonMiniReviewItem {
@@ -104,6 +105,12 @@ export default function LessonCompleteScreen({
   levelLabel,
 }: LessonCompleteScreenProps) {
   useModalPresence(true);
+  // This is the app's most-seen full-screen overlay — it needs the same
+  // focus trap / background-inert / Escape-to-leave treatment every
+  // BottomSheet already gets, not just the nav-hiding half of it. Escape
+  // routes to the same quiet exit as the map action, not the primary CTA,
+  // since that's the non-committal way out of a modal.
+  const modalRef = useModalFocus<HTMLDivElement>(true, onReturnToMap);
   useEffect(() => {
     triggerHaptic("success");
   }, []);
@@ -115,7 +122,15 @@ export default function LessonCompleteScreen({
   const [trayHeight, setTrayHeight] = useState(160);
   useLayoutEffect(() => {
     const el = actionTrayRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
+    if (!el) return;
+    // ResizeObserver's own first callback doesn't fire until just before the
+    // *next* paint, which would leave the very first paint reserving the
+    // 160px guess instead of this tray's real height. Measuring directly
+    // here — synchronously, before paint — means the first paint already
+    // uses the exact value, with the observer only needed for later changes
+    // (e.g. a button label wrapping to a second line after a re-render).
+    setTrayHeight(Math.ceil(el.getBoundingClientRect().height));
+    if (typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver((entries) => {
       const height = entries[0]?.contentRect.height;
       if (height) setTrayHeight(Math.ceil(height));
@@ -198,6 +213,11 @@ export default function LessonCompleteScreen({
 
   return createPortal(
     <div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={isLesson ? "Lesson complete" : "Reading complete"}
+      tabIndex={-1}
       className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pt-[calc(var(--safe-top)+0.75rem)]"
       style={{ paddingBottom: `calc(var(--safe-bottom) + ${trayHeight}px + 1rem)` }}
     >

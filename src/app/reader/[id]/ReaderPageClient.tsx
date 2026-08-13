@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReadingText } from "@/types";
 import { useReadingTextById } from "@/lib/useReadingTextById";
 import Reader from "@/components/Reader";
+import RouteLoading from "@/components/RouteLoading";
 
 interface ReaderPageClientProps {
   id: string;
@@ -15,7 +16,11 @@ export default function ReaderPageClient({ id, initialText }: ReaderPageClientPr
   const { text, checked } = useReadingTextById(id, initialText);
 
   if (!checked) {
-    return <div className="px-4 pt-10 text-center text-sm text-ink-muted">Loading…</div>;
+    // A genuinely invalid id can spend real time here — the id-lookup path
+    // still has to wait on the RSS candidate pool being built on a cold
+    // server. Same destination-shaped skeleton + status announcement as
+    // every other route, rather than a plain, unannounced "Loading…" line.
+    return <RouteLoading variant="reader" />;
   }
 
   if (!text) {

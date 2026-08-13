@@ -26,6 +26,7 @@ import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
 import { StreakCard } from "@/components/GamificationCards";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -138,6 +139,7 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
 }
 
 export default function SettingsPage() {
+  useDocumentTitle("Library");
   const router = useRouter();
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");

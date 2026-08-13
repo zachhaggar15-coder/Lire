@@ -5,10 +5,12 @@ import ArticleBrowserPage from "@/components/ArticleBrowserPage";
 import FirstRunOnboarding from "@/components/FirstRunOnboarding";
 import InteractiveWalkthrough from "@/components/onboarding/InteractiveWalkthrough";
 import { getOnboardingState } from "@/lib/onboarding";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 type Stage = "loading" | "picker" | "walkthrough" | "app";
 
 export default function HomePage() {
+  useDocumentTitle("Lessons");
   const [stage, setStage] = useState<Stage>("loading");
   const [walkthroughStartStep, setWalkthroughStartStep] = useState<number | null>(null);
 
