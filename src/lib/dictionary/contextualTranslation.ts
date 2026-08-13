@@ -2464,7 +2464,7 @@ function selectContextSense(
         explanation: "In fiscal or budget context, recette means revenue or income, not a cooking recipe.",
       };
     }
-    if (has(["cuisine", "plat", "ingredient", "gateau", "restaurant"])) {
+    if (has(["cuisine", "cuisiner", "plat", "ingredient", "épice", "epice", "tajine", "gâteau", "gateau", "four", "farine", "restaurant"])) {
       return {
         translation: "recipe",
         source: "context-rule",

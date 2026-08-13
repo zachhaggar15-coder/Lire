@@ -140,6 +140,8 @@ export const coreSenseDictionary: DictionaryEntry[] = [
   { lemma: "comte", forms: ["comtes"], translations: ["count", "earl"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
   { lemma: "capitaine", forms: ["capitaines"], translations: ["captain"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
   { lemma: "chien", forms: ["chiens", "chienne"], translations: ["dog"], partOfSpeech: "noun", gender: "masculine", cefr: "A1" },
+  { lemma: "tajine", forms: ["tajines"], translations: ["tagine", "North African stew"], partOfSpeech: "noun", gender: "masculine", cefr: "A2" },
+  { lemma: "épice", forms: ["épices"], translations: ["spice"], partOfSpeech: "noun", gender: "feminine", cefr: "A2" },
 
   // --- Adjectives whose generated first gloss was wrong ---------------------
   { lemma: "clair", forms: ["claire", "clairs", "claires"], translations: ["bright", "light", "clear"], partOfSpeech: "adjective", cefr: "A2" },
@@ -150,6 +152,7 @@ export const coreSenseDictionary: DictionaryEntry[] = [
 
   // --- Verbs whose entry was tagged with the wrong part of speech ----------
   { lemma: "lever", forms: ["lève", "lèves", "levons", "levez", "lèvent", "levé", "levée", "levait", "levèrent"], translations: ["to raise", "to lift"], partOfSpeech: "verb (infinitive)", cefr: "A2", notes: "Reflexive \"se lever\" means to get up." },
+  { lemma: "couper", forms: ["coupe", "coupes", "coupons", "coupez", "coupent", "coupé", "coupée", "coupés", "coupées"], translations: ["to cut", "to cut up"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "sembler", forms: ["semble", "semblent", "semblait", "semblé"], translations: ["to seem", "to appear"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "craindre", forms: ["crains", "craint", "craignons", "craignez", "craignent", "craignait"], translations: ["to fear", "to be afraid of"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "voici", translations: ["here is", "here are"], partOfSpeech: "presentative", cefr: "A2" },

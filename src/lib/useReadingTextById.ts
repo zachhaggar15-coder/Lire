@@ -36,6 +36,16 @@ export function useReadingTextById(id: string, initialText: ReadingText | null):
       return;
     }
 
+    // Only live-news articles use the remote RSS lookup path. A missing
+    // bundled/custom id can be rejected immediately; asking the RSS fallback
+    // for an id it could never contain used to trigger a full cold candidate-
+    // pool build before showing the unavailable screen.
+    if (!id.startsWith("rss-")) {
+      setText(null);
+      setChecked(true);
+      return;
+    }
+
     let cancelled = false;
     async function loadRemoteText() {
       try {

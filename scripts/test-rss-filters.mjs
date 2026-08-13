@@ -99,6 +99,44 @@ Une jeune pousse a ete observee dans le jardin. Les habitants racontent que
 la floraison est rare. est apparu en premier sur chutmonsecret.
 `.trim();
 
+const FRANCE_SOIR_DONATION_PAGE = `
+Auteur(s)
+
+France-Soir
+
+Publié le 13 août 2026 - 15:38
+
+DR
+
+L'article vous a plu ? Il a mobilisé notre rédaction qui ne vit que de vos dons.
+
+L'information a un coût, d'autant plus que la concurrence des rédactions subventionnées impose un surcroît de rigueur et de professionnalisme.
+
+Avec votre soutien, France-Soir continuera à proposer ses articles gratuitement car nous pensons que tout le monde doit avoir accès à une information libre et indépendante.
+
+Vous êtes la condition sine qua non à notre existence, soutenez-nous pour que France-Soir demeure le média français qui fait s'exprimer les plus légitimes.
+
+Si vous le pouvez, soutenez-nous mensuellement, à partir de seulement 1€. Merci.
+
+Je fais un don à France-Soir
+
+Je m'inscris
+`.trim();
+
+const ARTICLE_WITH_RECOMMENDATION_RAIL = `${GOOD_FRENCH_ARTICLE}
+
+À regarder
+
+Une autre actualité sans rapport
+
+•
+2 min
+
+Encore un autre titre recommandé
+
+•
+3 min`;
+
 console.log("--- Language detection ---");
 {
   const r = analyseLanguage(FRENCH_PARAGRAPH);
@@ -167,6 +205,18 @@ console.log("\n--- Content quality ---");
   check("RSS cleaner removes related-reading promos", cleaned.includes("Lire aussi"), false);
   check("RSS cleaner removes newsletter promos", cleaned.includes("newsletter"), false);
   check("RSS cleaner preserves prose beneath current publisher chrome", cleaned.includes("conseil municipal"), true);
+}
+{
+  const cleaned = cleanRssText(FRANCE_SOIR_DONATION_PAGE);
+  check("donation-only publisher page is flagged as boilerplate", looksLikeBoilerplate(FRANCE_SOIR_DONATION_PAGE), true);
+  check("donation appeal is removed before lesson conversion", cleaned.includes("soutenez-nous"), false);
+  check("donation-only publisher page cannot pass reading quality", isAcceptableReadingContent(cleaned), false);
+}
+{
+  const cleaned = cleanRssText(ARTICLE_WITH_RECOMMENDATION_RAIL);
+  check("recommendation rail is removed after a substantive article", cleaned.includes("À regarder"), false);
+  check("unrelated recommended headlines are removed", cleaned.includes("autre titre recommandé"), false);
+  check("real article remains after recommendation cleanup", cleaned.includes("nouveau tramway"), true);
 }
 {
   const isPaywall = looksLikePaywallOrBotWall(PAYWALL_TEXT);

@@ -217,6 +217,22 @@ console.log("--- Contextual translation pipeline ---");
   check("recette in fiscal context means revenue, not recipe", hasText(result, "revenue") && result.alternativeMeanings.includes("recipe"), JSON.stringify(result));
 }
 {
+  const result = contextual("Ma collègue m'avait donné la recette d'un tajine.", "recette");
+  check("recette in the real A2 cooking lesson means recipe", hasText(result, "recipe") && !hasText(result, "revenue"), JSON.stringify(result));
+}
+{
+  const result = contextual("J'ai coupé les oignons et j'ai pleuré.", "coupé");
+  check("coupé in the real A2 cooking lesson means cut", hasText(result, "cut") && !hasText(result, "party per fess"), JSON.stringify(result));
+}
+{
+  const result = contextual("Il me fallait du poulet et beaucoup d'épices.", "d'épices");
+  check("ordinary elision resolves d'épices through the noun épice", hasText(result, "spice") && result.lemma === "épice", JSON.stringify(result));
+}
+{
+  const result = contextual("Nous avons mangé le tajine avec du pain.", "tajine");
+  check("tajine has a learner-facing food meaning", hasText(result, "tagine"), JSON.stringify(result));
+}
+{
   const result = contextual("Le parti annonce son programme.", "parti");
   check("parti in political context means political party", hasText(result, "political party"), JSON.stringify(result));
 }

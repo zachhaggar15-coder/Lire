@@ -81,11 +81,21 @@ self.addEventListener("fetch", (event) => {
 
         if (mayCache) {
           const copy = res.clone();
-          return caches
-            .open(CACHE)
-            .then((cache) => cache.put(request, copy))
-            .catch(() => {})
-            .then(() => res);
+          // Cache the copy in the background via waitUntil rather than
+          // chaining it before returning res: a streamed navigation response
+          // (this app's App Router pages all stream) isn't "complete" until
+          // its body has fully arrived, and respondWith won't hand anything
+          // back to the page until this promise settles — so awaiting the
+          // cache write first held the entire page hostage to how long its
+          // own streaming took to finish, which for some routes never
+          // resolved in practice. The page gets res immediately either way;
+          // caching it is a side effect, not a gate.
+          event.waitUntil(
+            caches
+              .open(CACHE)
+              .then((cache) => cache.put(request, copy))
+              .catch(() => {})
+          );
         }
         return res;
       })

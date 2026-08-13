@@ -1,292 +1,93 @@
 import { NextResponse, after } from "next/server";
-import { rssSources, type RssSource } from "@/data/rssSources";
-import { parseRssFeed } from "@/lib/rss/parseRss";
-import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
-import { attachEnglishBlurbs } from "@/lib/rss/articleBlurbs";
+import type { RssSource } from "@/data/rssSources";
+import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import {
+  getCurrentPersistedCandidatePool,
   getPersistedCandidatePool,
-  putPersistedCandidatePool,
+  isRssPersistenceConfigured,
   putPersistedRssTexts,
 } from "@/lib/rss/rssTextStore";
 import { previousDateKey, seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
 import { areNearDuplicateTitles } from "@/lib/rss/titleSimilarity";
 import { getDailyExtraReadingTexts } from "@/lib/publicDomainBank";
-import type { Category, ReadingText } from "@/types";
+import type { Category } from "@/types";
+import {
+  bankTextToRssReadingText,
+  createFallbackCandidatePool,
+  isCandidatePool,
+  isFreshCandidatePool,
+  type CandidatePool,
+} from "@/lib/rss/candidatePool";
+import { refreshAndPersistCandidatePool } from "@/lib/rss/candidatePoolRefresh";
+import { getRssListingCacheHeaders } from "@/lib/rss/rssDeliveryPolicy";
 
 /**
  * Rebuilding the candidate pool now sometimes scrapes full articles
  * (scrapeArticle.ts) on top of the per-feed XML fetch, which can push a
  * single feed's processing well past the platform's default serverless
- * timeout. Only the request that actually rebuilds the pool (cache miss,
- * or the cron in vercel.json) pays this cost — every other request just
- * reads the in-memory cache and returns quickly regardless.
+ * timeout. The scheduled refresh (or an authenticated manual refresh) pays
+ * this cost. User-facing requests only read a promoted pool or local fallback.
  */
 export const maxDuration = 60;
 
-/**
- * How long each upstream feed fetch is cached via Next's Data Cache (not the
- * route itself — this route is intentionally dynamic, since it needs to
- * check the calendar day on every request).
- */
-const FEED_REVALIDATE_SECONDS = 900;
-const FEED_TIMEOUT_MS = 8000;
-
-/** Default cap on usable items pulled from each working feed — overridable per-source via RssSource.maxItems. */
-const DEFAULT_MAX_PER_SOURCE = 2;
 /** How many texts a plain (unfiltered) request gets by default. */
 const DEFAULT_LIMIT = 5;
 const MAX_LIMIT = 50;
-/** The whole point: don't re-fetch 100+ feeds on every request — see buildCandidatePool. */
-const CANDIDATE_POOL_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
-
 const isDev = process.env.NODE_ENV !== "production";
 
-/** Dev-only, never spams production logs — see "how to debug rejected feeds" in the README. */
-function logRejection(source: RssSource, itemTitle: string, reason: string): void {
-  if (!isDev) return;
-  console.log(`Rejected RSS item: ${source.name} / "${itemTitle}"\nReason: ${reason}`);
-}
-
-interface CandidatePool {
-  builtAt: number;
-  /** Calendar day (todayKey()) the pool was built for — see getCandidatePool. */
-  dateKey: string;
-  items: RssReadingText[];
-  feedsSucceeded: number;
-  feedsFailed: number;
-  itemsRejected: number;
-  sourceHealth: SourceHealth[];
-}
-
-interface SourceHealth {
-  id: string;
-  name: string;
-  language: RssSource["language"];
-  category: Category;
-  ok: boolean;
-  skipped: boolean;
-  accepted: number;
-  rejected: number;
-  reason: string;
-}
-
-// Process-lifetime in-memory cache. Resets on cold start in serverless
-// environments — acceptable here; the first request after a reset just
-// re-fetches the pool once, and every request after that reuses it.
+// Process-lifetime hot cache. A cold instance reads the shared promoted pool;
+// it never makes an app-opening user wait for upstream RSS or AI work.
 let candidatePoolCache: CandidatePool | null = null;
 let dailySelectionCache: { dateKey: string; items: RssReadingText[] } | null = null;
 
-/**
- * Fetches one source's feed and returns up to its item cap of usable
- * items — those that pass the French-language and content-quality checks
- * in rssToReadingText.ts. Skips items that fail either check and tries the
- * next one in the feed, so one bad item never costs the whole source its
- * slot. Any fetch-level failure (network, timeout, non-200, bad XML)
- * resolves to `{ ok: false, items: [] }` rather than throwing, so one
- * broken feed never affects the others or the route as a whole — every
- * source goes through Promise.allSettled.
- */
-async function fetchFromSource(
-  source: RssSource
-): Promise<{ ok: boolean; items: RssReadingText[]; rejected: number; health: SourceHealth }> {
-  const baseHealth = {
-    id: source.id,
-    name: source.name,
-    language: source.language,
-    category: source.category,
-  };
-
-  // This is a French reading app — English sources are skipped entirely
-  // unless explicitly opted into for testing (see RssSource.allowEnglishForTesting).
-  if (source.language === "en" && !source.allowEnglishForTesting) {
-    return {
-      ok: true,
-      items: [],
-      rejected: 0,
-      health: { ...baseHealth, ok: true, skipped: true, accepted: 0, rejected: 0, reason: "English source disabled" },
-    };
-  }
-
-  const maxItems = source.maxItems ?? DEFAULT_MAX_PER_SOURCE;
-
-  try {
-    const res = await fetch(source.feedUrl, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
-      next: { revalidate: FEED_REVALIDATE_SECONDS },
-      signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
-    });
-    if (!res.ok) {
-      return {
-        ok: false,
-        items: [],
-        rejected: 0,
-        health: { ...baseHealth, ok: false, skipped: false, accepted: 0, rejected: 0, reason: `HTTP ${res.status}` },
-      };
+function scheduleBackgroundRefresh(): void {
+  if (!isRssPersistenceConfigured()) return;
+  after(async () => {
+    const result = await refreshAndPersistCandidatePool();
+    if (result.ok && result.status === "refreshed") {
+      candidatePoolCache = result.pool;
+      dailySelectionCache = null;
     }
-
-    const xml = await res.text();
-    const rssItems = parseRssFeed(xml);
-
-    const items: RssReadingText[] = [];
-    let rejected = 0;
-    for (const item of rssItems) {
-      if (items.length >= maxItems) break;
-      const result = await itemToRssReadingText(item, source);
-      if (result.ok) {
-        items.push(result.text);
-      } else {
-        rejected++;
-        logRejection(source, item.title || "(no title)", result.rejection.reason);
-      }
-    }
-    return {
-      ok: true,
-      items,
-      rejected,
-      health: {
-        ...baseHealth,
-        ok: true,
-        skipped: false,
-        accepted: items.length,
-        rejected,
-        reason: items.length > 0 ? "Accepted candidates" : rejected > 0 ? "All candidates rejected" : "No feed items",
-      },
-    };
-  } catch {
-    // Network error, timeout, or parsing failure (covers malformed XML,
-    // Atom/RSS/Blogger/Feedburner quirks parseRssFeed doesn't recognise,
-    // etc.) — this single source is skipped, nothing else is affected.
-    return {
-      ok: false,
-      items: [],
-      rejected: 0,
-      health: { ...baseHealth, ok: false, skipped: false, accepted: 0, rejected: 0, reason: "Fetch, timeout, or parse failure" },
-    };
-  }
+  });
 }
 
 /**
- * Removes items that share a source URL or a (trimmed, lowercased) title
- * with an earlier item, then also removes items that are a different-
- * outlet retelling of a story already kept (see titleSimilarity.ts) — a
- * regional-press wire story otherwise shows up 3-4 times in the same
- * day's pool under slightly different headlines.
+ * Resolves a prepared pool without ever doing upstream RSS or AI work in the
+ * user's request. The order is hot memory, today's Redis pool, the last
+ * successfully promoted pool, yesterday's pool, then bundled local content.
  */
-function dedupe(items: RssReadingText[]): RssReadingText[] {
-  const seenUrls = new Set<string>();
-  const seenTitles = new Set<string>();
-  const out: RssReadingText[] = [];
-  for (const item of items) {
-    const urlKey = item.sourceUrl.trim().toLowerCase();
-    const titleKey = item.title.trim().toLowerCase();
-    if (seenUrls.has(urlKey) || seenTitles.has(titleKey)) continue;
-    if (out.some((existing) => areNearDuplicateTitles(existing.title, item.title))) continue;
-    seenUrls.add(urlKey);
-    seenTitles.add(titleKey);
-    out.push(item);
-  }
-  return out;
-}
-
-/** Fetches every enabled feed concurrently and builds the deduped candidate pool. */
-async function buildCandidatePool(): Promise<CandidatePool> {
-  const enabledSources = rssSources.filter((s) => s.enabled);
-  const settled = await Promise.allSettled(enabledSources.map(fetchFromSource));
-
-  let feedsSucceeded = 0;
-  let feedsFailed = 0;
-  let itemsRejected = 0;
-  const all: RssReadingText[] = [];
-  const sourceHealth: SourceHealth[] = [];
-  for (const result of settled) {
-    if (result.status === "fulfilled" && result.value.ok) {
-      feedsSucceeded++;
-      all.push(...result.value.items);
-      itemsRejected += result.value.rejected;
-      sourceHealth.push(result.value.health);
-    } else {
-      feedsFailed++;
-      if (result.status === "fulfilled") sourceHealth.push(result.value.health);
-    }
-  }
-
-  const items = dedupe(all);
-  // Best-effort, batched, concurrent — see articleBlurbs.ts. Never throws;
-  // a failure here just leaves blurbEn null on the affected items.
-  await attachEnglishBlurbs(items);
-
-  return { builtAt: Date.now(), dateKey: todayKey(), items, feedsSucceeded, feedsFailed, itemsRejected, sourceHealth };
-}
-
-/**
- * Resolves the candidate pool for "right now," rebuilding it when needed.
- *
- * Two staleness checks, not one: the original 12h TTL alone isn't enough on
- * serverless — each cold-started instance has its own empty in-memory cache
- * (see candidatePoolCache below), so whether a given request sees a stale
- * pool used to depend entirely on how long its particular instance happened
- * to stay warm, with no guarantee any instance ever rebuilt across a
- * calendar-day boundary. Explicitly comparing dateKey against todayKey()
- * guarantees a rebuild the first time any instance sees a new day, which is
- * what "the articles update daily" actually requires.
- *
- * Before rebuilding from scratch, this also checks the shared Redis-backed
- * pool (rssTextStore.ts) keyed by the same dateKey — so the *first* instance
- * to hit a new day pays the real fetch cost, and every other instance
- * (including other cold starts) picks up that same pool instead of each
- * independently re-fetching 100+ feeds. No-ops back to today's original
- * per-instance behaviour if Redis isn't configured.
- *
- * Stale-while-revalidate: a full rebuild fetches 100+ feeds and has been
- * measured at ~20s cold, which eats most of the client's 30s timeout. If
- * there's already *some* usable pool sitting around — today's past its TTL,
- * or (via Redis) yesterday's — that's still real French reading content, so
- * it's served immediately while the real rebuild runs in the background via
- * `after()` and overwrites the cache for the next request. Only a request
- * with truly nothing available anywhere yet (a cold instance on a day no one
- * has hit this route, and Redis has no prior day either) pays the full
- * synchronous cost — same as `?refresh=true`, which always blocks because
- * the caller explicitly wants the freshest possible data right now.
- */
-async function getCandidatePool(forceRefresh: boolean): Promise<CandidatePool> {
+async function getCandidatePool(): Promise<CandidatePool> {
   const todayK = todayKey();
-  const isStale =
-    !candidatePoolCache ||
-    candidatePoolCache.dateKey !== todayK ||
-    Date.now() - candidatePoolCache.builtAt > CANDIDATE_POOL_TTL_MS;
-
-  if (!isStale && !forceRefresh) return candidatePoolCache!;
-
-  if (!forceRefresh) {
-    const shared = await getPersistedCandidatePool<CandidatePool>(todayK);
-    if (shared && shared.dateKey === todayK) {
-      candidatePoolCache = shared;
-      return candidatePoolCache;
-    }
-
-    const staleFallback = candidatePoolCache ?? (await getPersistedCandidatePool<CandidatePool>(previousDateKey(todayK)));
-    if (staleFallback) {
-      candidatePoolCache = staleFallback;
-      after(async () => {
-        try {
-          const fresh = await buildCandidatePool();
-          candidatePoolCache = fresh;
-          await putPersistedCandidatePool(todayK, fresh);
-        } catch {
-          // Best-effort background refresh — the next request just retries
-          // (and still has this same stale fallback in the meantime).
-        }
-      });
-      return staleFallback;
-    }
+  if (candidatePoolCache && isFreshCandidatePool(candidatePoolCache, Date.now(), todayK)) {
+    return candidatePoolCache;
   }
 
-  candidatePoolCache = await buildCandidatePool();
-  await putPersistedCandidatePool(todayK, candidatePoolCache);
-  const pool = candidatePoolCache;
-  if (!pool) throw new Error("unreachable: candidate pool was just built");
-  return pool;
+  const todayPool = await getPersistedCandidatePool<unknown>(todayK);
+  if (isCandidatePool(todayPool)) {
+    candidatePoolCache = todayPool;
+    if (!isFreshCandidatePool(todayPool, Date.now(), todayK)) scheduleBackgroundRefresh();
+    return todayPool;
+  }
+
+  const currentPool = await getCurrentPersistedCandidatePool<unknown>();
+  if (isCandidatePool(currentPool)) {
+    candidatePoolCache = currentPool;
+    scheduleBackgroundRefresh();
+    return currentPool;
+  }
+
+  const previousPool = await getPersistedCandidatePool<unknown>(previousDateKey(todayK));
+  if (isCandidatePool(previousPool)) {
+    candidatePoolCache = previousPool;
+    scheduleBackgroundRefresh();
+    return previousPool;
+  }
+
+  const fallback = createFallbackCandidatePool();
+  candidatePoolCache = fallback;
+  scheduleBackgroundRefresh();
+  return fallback;
 }
 
 function parseLimit(raw: string | null): number {
@@ -318,30 +119,6 @@ function isKnownSnippetFilter(value: string): value is "all" | "only" | "exclude
  * read as "the real target," not just a rarely-hit emergency floor.
  */
 const MIN_GUARANTEED_ARTICLES = 20;
-
-/**
- * Adapts a local reading-bank text into the RssReadingText DTO shape so it
- * can share the same response/dedupe path as real feed items. Used only as
- * the last-resort tier of backfillIfShort — a synthetic sourceUrl
- * (`internal:<id>`) keeps it out of the way of dedupe-by-URL against real
- * fetched articles.
- */
-function bankTextToRssReadingText(text: ReadingText, builtAt: number): RssReadingText {
-  return {
-    id: text.id,
-    title: text.title,
-    category: text.category,
-    difficulty: "B1",
-    readingTimeMinutes: text.minutes,
-    language: text.language ?? "fr",
-    originalText: text.body,
-    sourceName: text.sourceName ?? "Lire reading bank",
-    sourceUrl: text.sourceUrl ?? `internal:${text.id}`,
-    publishedAt: text.publishedAt ?? new Date(builtAt).toISOString(),
-    blurbEn: text.blurbEn ?? null,
-    isShortSnippet: text.isShortSnippet ?? false,
-  };
-}
 
 /**
  * Guarantees a minimum-size, unfiltered daily selection even when live RSS
@@ -430,12 +207,55 @@ async function handleGet(request: Request) {
   const includeHealth = url.searchParams.get("health") === "true";
   const requestedId = url.searchParams.get("id")?.trim() || null;
 
-  const pool = await getCandidatePool(refresh);
+  let pool: CandidatePool;
+  let refreshStatus: string | undefined;
+  let persistenceReason: string | undefined;
+
+  if (refresh) {
+    const cronSecret = process.env.CRON_SECRET;
+    if (!cronSecret) {
+      return NextResponse.json(
+        { ok: false, error: "CRON_SECRET is not configured" },
+        { status: 503 }
+      );
+    }
+    if (request.headers.get("authorization") !== `Bearer ${cronSecret}`) {
+      return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    }
+
+    const result = await refreshAndPersistCandidatePool();
+    refreshStatus = result.status;
+    persistenceReason = result.persistenceReason;
+    if (!result.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          refreshStatus: result.status,
+          error: result.persistenceReason,
+          poolSize: result.pool?.items.length,
+          feedsSucceeded: result.pool?.feedsSucceeded,
+          feedsFailed: result.pool?.feedsFailed,
+        },
+        { status: result.status === "not-configured" ? 503 : 502 }
+      );
+    }
+
+    if (result.status === "refreshed") {
+      pool = result.pool;
+      candidatePoolCache = result.pool;
+      dailySelectionCache = null;
+    } else {
+      pool = await getCandidatePool();
+    }
+  } else {
+    pool = await getCandidatePool();
+  }
+
   if (requestedId) {
     const match = pool.items.find((item) => item.id === requestedId);
     if (!match) return NextResponse.json({ error: "Not found" }, { status: 404 });
     const text = rssReadingTextToReadingText(match);
-    await putPersistedRssTexts([text]);
+    after(() => putPersistedRssTexts([text]));
     return NextResponse.json({ text });
   }
   const todayK = todayKey();
@@ -478,12 +298,11 @@ async function handleGet(request: Request) {
     selected = await backfillIfShort(selected, pool, snippetParam, todayK);
   }
 
-  // Best-effort, optional persistence so a direct link to one of these
-  // articles survives a new tab/app restart — no-ops if no KV/Redis store
-  // is configured (see rssTextStore.ts). Never blocks or fails the response.
-  await putPersistedRssTexts(selected.map(rssReadingTextToReadingText));
+  // Direct-link persistence runs after the response so it never delays the
+  // page. The complete promoted pool is already shared through Redis.
+  after(() => putPersistedRssTexts(selected.map(rssReadingTextToReadingText)));
 
-  return NextResponse.json({
+  const body = {
     texts: selected,
     fetchedAt: new Date().toISOString(),
     // When the underlying candidate pool was actually built/refreshed —
@@ -499,6 +318,7 @@ async function handleGet(request: Request) {
     // and say so, instead of a reader just seeing thinner variety with no
     // explanation. See the degraded-sources banner in page.tsx.
     feedHealth: { feedsSucceeded: pool.feedsSucceeded, feedsFailed: pool.feedsFailed },
+    ...(refresh && { ok: true, refreshStatus, persistenceReason }),
     ...(includeHealth && {
       sourceHealth: pool.sourceHealth,
       sourceSummary: {
@@ -507,6 +327,9 @@ async function handleGet(request: Request) {
         itemsRejected: pool.itemsRejected,
         candidatePoolSize: pool.items.length,
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
+        candidatePoolBuildDurationMs: pool.buildDurationMs ?? null,
+        servingFallback: pool.isFallback === true,
+        persistenceConfigured: isRssPersistenceConfigured(),
       },
     }),
     ...(isDev && {
@@ -521,5 +344,9 @@ async function handleGet(request: Request) {
         seed: `${todayK}::${languageParam}::${categoryParam}`,
       },
     }),
+  };
+
+  return NextResponse.json(body, {
+    headers: refresh || includeHealth ? undefined : getRssListingCacheHeaders(),
   });
 }

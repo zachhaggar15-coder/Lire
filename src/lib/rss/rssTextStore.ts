@@ -42,9 +42,11 @@ export async function putPersistedRssTexts(texts: ReadingText[]): Promise<void> 
   const redis = getClient();
   if (!redis) return;
   try {
-    await Promise.all(
-      texts.map((text) => redis.set(KEY_PREFIX + text.id, cleanReadingTextSourceNoise(text), { ex: TTL_SECONDS }))
-    );
+    const pipeline = redis.pipeline();
+    for (const text of texts) {
+      pipeline.set(KEY_PREFIX + text.id, cleanReadingTextSourceNoise(text), { ex: TTL_SECONDS });
+    }
+    if (pipeline.length() > 0) await pipeline.exec();
   } catch {
     // Redis unreachable/misconfigured — persistence is a nice-to-have, not fatal.
   }
@@ -79,12 +81,20 @@ export async function getPersistedRssText(id: string): Promise<ReadingText | nul
 }
 
 const CANDIDATE_POOL_KEY_PREFIX = "lire:candidatePool:";
-/**
- * Slightly more than a full day, so a pool built late in the day (close to
- * the UTC rollover) is still there for the first few hours of the next one
- * while it gets rebuilt.
- */
-const CANDIDATE_POOL_TTL_SECONDS = 60 * 60 * 30;
+const CURRENT_CANDIDATE_POOL_KEY = `${CANDIDATE_POOL_KEY_PREFIX}current`;
+const CANDIDATE_POOL_REFRESH_LOCK_KEY = `${CANDIDATE_POOL_KEY_PREFIX}refresh-lock`;
+const CANDIDATE_POOL_TTL_SECONDS = 60 * 60 * 24 * 7;
+const CANDIDATE_POOL_REFRESH_LOCK_SECONDS = 3 * 60;
+
+export interface CandidatePoolPersistenceResult {
+  ok: boolean;
+  configured: boolean;
+  reason: string;
+}
+
+export function isRssPersistenceConfigured(): boolean {
+  return getCredentials() !== null;
+}
 
 /**
  * Shares the built RSS candidate pool across every serverless instance, keyed
@@ -94,12 +104,10 @@ const CANDIDATE_POOL_TTL_SECONDS = 60 * 60 * 30;
  * independently — meaning different instances (and therefore different
  * requests) could serve different-looking "today" selections, and there's
  * no guarantee any of them ever notices the calendar day has changed. A
- * shared, date-keyed store fixes both: every instance converges on the same
- * pool for the day, and a new day always misses (forcing exactly one real
- * rebuild, wherever the next request happens to land) rather than serving
- * stale content indefinitely. No-ops (returns null / does nothing) if no
- * Redis credentials are configured — behaviour then matches the old
- * in-memory-only cache, just without the cross-instance sharing.
+ * shared store fixes both: every instance converges on the same promoted
+ * pool, while the dated keys retain several days of last-known-good content.
+ * Missing credentials return null; the public route then serves its bundled
+ * fallback immediately rather than rebuilding in a user's request.
  */
 export async function getPersistedCandidatePool<T>(dateKey: string): Promise<T | null> {
   const redis = getClient();
@@ -112,12 +120,106 @@ export async function getPersistedCandidatePool<T>(dateKey: string): Promise<T |
   }
 }
 
-export async function putPersistedCandidatePool(dateKey: string, pool: unknown): Promise<void> {
+/** Returns the newest successfully promoted pool, regardless of its calendar day. */
+export async function getCurrentPersistedCandidatePool<T>(): Promise<T | null> {
+  const redis = getClient();
+  if (!redis) return null;
+  try {
+    const value = await redis.get<T>(CURRENT_CANDIDATE_POOL_KEY);
+    return value ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Saves to a staging key first, verifies that it can be read back, then
+ * atomically promotes both the dated key and the shared `current` key. A
+ * failed refresh therefore never overwrites the last known-good pool.
+ */
+export async function promotePersistedCandidatePool(
+  dateKey: string,
+  pool: { builtAt: number }
+): Promise<CandidatePoolPersistenceResult> {
+  const redis = getClient();
+  if (!redis) {
+    return { ok: false, configured: false, reason: "RSS persistence is not configured" };
+  }
+
+  const stageKey = `${CANDIDATE_POOL_KEY_PREFIX}staging:${dateKey}:${pool.builtAt}`;
+
+  try {
+    await redis.set(stageKey, pool, { ex: 10 * 60 });
+    const staged = await redis.get<{ builtAt?: number }>(stageKey);
+    if (!staged || staged.builtAt !== pool.builtAt) {
+      return {
+        ok: false,
+        configured: true,
+        reason: "Redis staging readback did not match the completed pool",
+      };
+    }
+
+    await redis
+      .multi()
+      .set(CANDIDATE_POOL_KEY_PREFIX + dateKey, pool, { ex: CANDIDATE_POOL_TTL_SECONDS })
+      .set(CURRENT_CANDIDATE_POOL_KEY, pool, { ex: CANDIDATE_POOL_TTL_SECONDS })
+      .del(stageKey)
+      .exec();
+
+    const promoted = await redis.get<{ builtAt?: number }>(CURRENT_CANDIDATE_POOL_KEY);
+    if (!promoted || promoted.builtAt !== pool.builtAt) {
+      return {
+        ok: false,
+        configured: true,
+        reason: "Redis promotion readback did not match the completed pool",
+      };
+    }
+
+    return { ok: true, configured: true, reason: "Candidate pool persisted and verified" };
+  } catch (error) {
+    return {
+      ok: false,
+      configured: true,
+      reason: error instanceof Error ? error.message : "Redis persistence failed",
+    };
+  }
+}
+
+export type CandidatePoolRefreshLockResult =
+  | { status: "acquired"; token: string }
+  | { status: "busy" }
+  | { status: "failed"; reason: string };
+
+/** Acquires a cross-instance lock so only one expensive RSS rebuild runs. */
+export async function acquireCandidatePoolRefreshLock(): Promise<CandidatePoolRefreshLockResult> {
+  const redis = getClient();
+  if (!redis) return { status: "failed", reason: "RSS persistence is not configured" };
+  const token = `${Date.now()}:${crypto.randomUUID()}`;
+
+  try {
+    const result = await redis.set(CANDIDATE_POOL_REFRESH_LOCK_KEY, token, {
+      ex: CANDIDATE_POOL_REFRESH_LOCK_SECONDS,
+      nx: true,
+    });
+    return result === "OK" ? { status: "acquired", token } : { status: "busy" };
+  } catch (error) {
+    return {
+      status: "failed",
+      reason: error instanceof Error ? error.message : "Redis refresh lock failed",
+    };
+  }
+}
+
+export async function releaseCandidatePoolRefreshLock(token: string): Promise<void> {
   const redis = getClient();
   if (!redis) return;
+
   try {
-    await redis.set(CANDIDATE_POOL_KEY_PREFIX + dateKey, pool, { ex: CANDIDATE_POOL_TTL_SECONDS });
+    const script = redis.createScript<number>(
+      "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"
+    );
+    await script.eval([CANDIDATE_POOL_REFRESH_LOCK_KEY], [token]);
   } catch {
-    // Best-effort only — the in-memory cache in route.ts still works without this.
+    // The lock has a short TTL, so a failed cleanup cannot wedge refreshes.
   }
 }

@@ -359,6 +359,22 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   const articleCoverageExact = articleCoverageByLemma.get(clean) ?? articleCoverageByForm.get(clean);
   if (articleCoverageExact) return toResult(rawWord, articleCoverageExact);
 
+  // Tokenisation intentionally keeps common French elisions together so the
+  // reader can select what it sees (d'épices, l'école, qu'il). If the whole
+  // form is not a fixed-expression entry, retry the lexical tail against the
+  // ordinary dictionary layers instead of treating apostrophe stripping as a
+  // proper-noun-only fallback.
+  const elision = clean.match(/^(?:[cdjlmnst]|qu)['’](.+)$/u);
+  if (elision?.[1]) {
+    const tail = elision[1];
+    const exactTail = lookupExact(tail);
+    if (exactTail) return toResult(rawWord, exactTail);
+    for (const guess of guessLemmas(tail)) {
+      const viaElidedGuess = lookupExact(guess);
+      if (viaElidedGuess) return withUncertainPartOfSpeech(toResult(rawWord, viaElidedGuess));
+    }
+  }
+
   for (const guess of guessLemmas(clean)) {
     const viaGuess =
       byLemma.get(guess) ??

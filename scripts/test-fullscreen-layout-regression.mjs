@@ -9,6 +9,7 @@ const files = {
   template: readFileSync(new URL("../src/app/template.tsx", import.meta.url), "utf8"),
   tutorial: readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8"),
   practice: readFileSync(new URL("../src/components/practice/PracticeOverlay.tsx", import.meta.url), "utf8"),
+  completion: readFileSync(new URL("../src/components/LessonCompleteScreen.tsx", import.meta.url), "utf8"),
   practicePage: readFileSync(new URL("../src/app/reader/[id]/practice/PracticePageClient.tsx", import.meta.url), "utf8"),
   listening: readFileSync(new URL("../src/components/practice/ListeningPractice.tsx", import.meta.url), "utf8"),
   wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
@@ -27,6 +28,7 @@ const files = {
   swRoute: readFileSync(new URL("../src/app/sw.js/route.ts", import.meta.url), "utf8"),
   swClient: readFileSync(new URL("../src/components/ServiceWorker.tsx", import.meta.url), "utf8"),
   readingTextHook: readFileSync(new URL("../src/lib/useReadingTextById.ts", import.meta.url), "utf8"),
+  documentTitle: readFileSync(new URL("../src/lib/useDocumentTitle.ts", import.meta.url), "utf8"),
 };
 
 let passed = 0;
@@ -107,6 +109,13 @@ check(
   "practice remains a viewport-fixed, scrollable screen",
   files.practice.includes("fixed inset-0") && files.practice.includes("overflow-y-auto")
 );
+check(
+  "completion actions occupy layout space instead of covering the scroll region",
+  files.completion.includes("flex min-h-0 flex-col") &&
+    files.completion.includes("min-h-0 flex-1 overflow-y-auto") &&
+    files.completion.includes("max-w-md shrink-0 border-t") &&
+    !files.completion.includes('className="fixed inset-x-0 bottom-0')
+);
 
 console.log("--- tutorial and practice interaction regressions ---");
 check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
@@ -164,6 +173,11 @@ check("the service worker only caches successful suitable responses", files.swRo
 check("homepage fallback is restricted to document navigation", files.swRoute.includes("if (isNavigation) return (await caches.match(\"/\"))"));
 check("the auto-reload guard is cleared for a later deployment", files.swClient.includes("sessionStorage.removeItem(RELOAD_GUARD_KEY)"));
 check("fresh RSS links fall back to exact-id candidate lookup", files.readingTextHook.includes("/api/rss-texts?id=${encodedId}"));
+check("non-RSS missing ids never trigger the remote candidate-pool lookup", files.readingTextHook.includes('if (!id.startsWith("rss-"))'));
+check(
+  "route-title cleanup cannot overwrite the title set by the next route",
+  files.documentTitle.includes("document.title =") && !files.documentTitle.includes("const previous = document.title")
+);
 
 console.log(`\n${passed} passed, ${failed} failed.`);
 if (failed > 0) process.exit(1);

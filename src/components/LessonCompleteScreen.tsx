@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
 import {
@@ -114,30 +114,6 @@ export default function LessonCompleteScreen({
   useEffect(() => {
     triggerHaptic("success");
   }, []);
-  // The fixed action tray's real height varies (one button vs. two, label
-  // length/wrapping, safe-area inset) — a hardcoded scroll-container padding
-  // guess previously let it overlap the last card(s) on shorter viewports.
-  // Measuring it directly keeps the reserved space always exactly right.
-  const actionTrayRef = useRef<HTMLDivElement>(null);
-  const [trayHeight, setTrayHeight] = useState(160);
-  useLayoutEffect(() => {
-    const el = actionTrayRef.current;
-    if (!el) return;
-    // ResizeObserver's own first callback doesn't fire until just before the
-    // *next* paint, which would leave the very first paint reserving the
-    // 160px guess instead of this tray's real height. Measuring directly
-    // here — synchronously, before paint — means the first paint already
-    // uses the exact value, with the observer only needed for later changes
-    // (e.g. a button label wrapping to a second line after a re-render).
-    setTrayHeight(Math.ceil(el.getBoundingClientRect().height));
-    if (typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver((entries) => {
-      const height = entries[0]?.contentRect.height;
-      if (height) setTrayHeight(Math.ceil(height));
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
   // Snapshot the other levels' scores once, when the screen mounts.
   const [allScores] = useState<LevelScores>(() => getLevelScores());
   const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
@@ -218,10 +194,10 @@ export default function LessonCompleteScreen({
       aria-modal="true"
       aria-label={isLesson ? "Lesson complete" : "Reading complete"}
       tabIndex={-1}
-      className="lesson-complete-screen fixed inset-0 z-50 overflow-y-auto bg-cream px-[22px] pt-[calc(var(--safe-top)+0.75rem)]"
-      style={{ paddingBottom: `calc(var(--safe-bottom) + ${trayHeight}px + 1rem)` }}
+      className="fixed inset-0 z-50 flex min-h-0 flex-col bg-cream"
     >
-      <div className="mx-auto flex w-full max-w-md flex-col">
+      <div className="min-h-0 flex-1 overflow-y-auto px-[22px] pb-4 pt-[calc(var(--safe-top)+0.75rem)]">
+        <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="lesson-complete-pop">
           <p className="ligne-label">{isLesson ? "Lesson complete" : "Reading complete"}</p>
           <h1 className="mt-1 text-[30px] font-semibold leading-tight text-ink">
@@ -393,10 +369,10 @@ export default function LessonCompleteScreen({
           <PracticeSection text={practiceText} plan={practicePlan} lookupRate={lookupRate} />
         )}
 
+        </div>
       </div>
       <div
-        ref={actionTrayRef}
-        className="fixed inset-x-0 bottom-0 z-[60] mx-auto w-full max-w-md border-t border-cream-dark bg-cream-card/95 px-[22px] pt-3 shadow-[0_-8px_24px_rgba(27,25,21,0.08)] backdrop-blur"
+        className="relative z-[60] mx-auto w-full max-w-md shrink-0 border-t border-cream-dark bg-cream-card/95 px-[22px] pt-3 shadow-[0_-8px_24px_rgba(27,25,21,0.08)] backdrop-blur"
         style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
         role="group"
         aria-label="Completion actions"

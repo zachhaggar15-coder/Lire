@@ -81,7 +81,7 @@ const BOILERPLATE_LINE_PATTERNS = [
   /^pour afficher ce contenu\b.*\bcookies?\b.*$/i,
   /^une extension de votre navigateur semble bloquer\b.*$/i,
   /^il est n[ée]cessaire d'autoriser les cookies\b.*$/i,
-  /^(?:publi[ée]|mis(?:e)?\s+à\s+jour)\s+le\s*:.*$/i,
+  /^(?:publi[ée]|mis(?:e)?\s+à\s+jour)\s+le(?:\s*:)?\s+.*$/i,
   /^temps de lecture\s*:.*$/i,
   /^[-–—|]?\s*(?:\d+\s+min\s+)?temps de lecture\s*:?\s*$/i,
   /^aujourd['’]hui\s+à\s+\d{1,2}:\d{2}\s*$/i,
@@ -90,8 +90,45 @@ const BOILERPLATE_LINE_PATTERNS = [
   /^tous les .{0,80}\brecevez\b.{0,80}\bnewsletter\b.*$/i,
   /^par\s*:.*$/i,
   /^mots[-\s]cl[ée]s associ[ée]s?.*$/i,
+  /^skip to main content$/i,
+  /^auteur\(s\)$/i,
+  /^dr(?:\s*[-–—]\s*[^.]{1,80})?$/i,
+  /^©\s*.*$/i,
+  /^france télévisions$/i,
+  /^l['’]article vous a plu\b.*$/i,
+  /^l['’]information a un coût\b.*$/i,
+  /^avec votre soutien\b.*$/i,
+  /^vous êtes la condition sine qua non\b.*$/i,
+  /^si vous le pouvez,? soutenez-nous\b.*$/i,
+  /^je fais un don\b.*$/i,
+  /^je m['’]inscris\b.*$/i,
   /^\d{1,2}:\d{2}$/,
 ];
+
+const TRAILING_PROMO_SECTION_PATTERNS = [
+  /^à regarder$/i,
+  /^vogue recommande$/i,
+  /^articles? recommand[ée]s?$/i,
+  /^sur le même sujet$/i,
+  /^pour aller plus loin$/i,
+];
+
+/**
+ * Readability can include a publisher's recommendation rail after the real
+ * article. Once a substantial article has already been found, drop a known
+ * recommendation heading and everything after it rather than turning dozens
+ * of unrelated headlines and durations into lesson paragraphs.
+ */
+export function stripTrailingPromoSections(text: string): string {
+  const lines = text.split("\n");
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index].trim();
+    if (!TRAILING_PROMO_SECTION_PATTERNS.some((pattern) => pattern.test(line))) continue;
+    const precedingWordCount = lines.slice(0, index).join(" ").split(/\s+/).filter(Boolean).length;
+    if (precedingWordCount >= 60) return lines.slice(0, index).join("\n");
+  }
+  return text;
+}
 
 /** Removes whole lines that are just known site chrome, keeping the rest of the text intact. */
 export function stripKnownBoilerplateLines(text: string): string {
@@ -115,7 +152,9 @@ export function normalizeWhitespace(text: string): string {
 
 /** Full pipeline: strip tags, decode entities, drop known boilerplate lines, collapse whitespace. */
 export function cleanRssText(raw: string): string {
-  return normalizeWhitespace(stripSourceBoilerplate(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw)))));
+  return normalizeWhitespace(
+    stripSourceBoilerplate(stripTrailingPromoSections(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw)))))
+  );
 }
 
 export function isTextLongEnough(text: string, minWords = 12): boolean {
@@ -139,6 +178,12 @@ const BOILERPLATE_PATTERNS = [
   /gdpr|rgpd/i,
   /unsubscribe/i,
   /se d[ée]sinscrire/i,
+  /l['’]article vous a plu/i,
+  /l['’]information a un coût/i,
+  /votre soutien/i,
+  /soutenez-nous/i,
+  /je fais un don/i,
+  /condition sine qua non à notre existence/i,
 ];
 
 /**
