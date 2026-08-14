@@ -1527,7 +1527,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     // instead of a generic "Continue" that just bounces back to the map.
     // Only meaningful for the guided starter/journey lessons; regular
     // imported articles have no ladder position to advance along.
-    const nextRecommendation = isStarterLesson ? getNextTextForReader() : null;
+    //
+    // Pass this text's own level, not the reader's globally selected/
+    // recommended level — without this, finishing an A1 lesson while your
+    // committed level is B1 recommended the next B1 stage (a different,
+    // unrelated section) instead of continuing the A1 section actually
+    // just read.
+    const nextRecommendation = isStarterLesson ? getNextTextForReader({ selectedLevel: text.difficulty }) : null;
     const nextStage = nextRecommendation ? getStageForText(nextRecommendation.textId) : null;
     const currentStage = getStageForText(text.id);
     // Crossing into a new stage names the stage (there's no single "next
