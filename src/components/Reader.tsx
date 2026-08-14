@@ -1535,14 +1535,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     // Staying within the same stage names the actual next lesson, both so
     // the button is specific rather than generic and so its destination
     // and visible label can never disagree (both come from nextRecommendation).
-    const nextLessonTitle = nextRecommendation ? getJourneyText(nextRecommendation.textId)?.title : null;
+    const nextLessonText = nextRecommendation ? getJourneyText(nextRecommendation.textId) : null;
+    const nextLessonTitle = nextLessonText?.title ?? null;
+    // Shown in the button so a jump to a new stage/level (crossing into a
+    // harder or easier band once the current one clears) is visible before
+    // tapping, rather than a same-looking "Continue" silently landing
+    // somewhere unexpected.
+    const nextLessonLevel = nextLessonText?.difficulty ?? nextStage?.band ?? null;
     const nextAction = nextRecommendation
       ? {
           label:
             nextStage && (!currentStage || nextStage.globalIndex !== currentStage.globalIndex)
-              ? `Continue ${nextStage.label}`
+              ? `Continue ${nextStage.label}${nextLessonLevel ? ` (${nextLessonLevel})` : ""}`
               : nextLessonTitle
-                ? `Continue: ${nextLessonTitle}`
+                ? `Continue: ${nextLessonTitle}${nextLessonLevel ? ` (${nextLessonLevel})` : ""}`
                 : "Read the next text",
           textId: nextRecommendation.textId,
         }

@@ -6,6 +6,7 @@ import type { PracticeActivity, PracticePlan } from "@/lib/practice/session";
 import { shuffledChipsFor, buildPracticePlan } from "@/lib/practice/session";
 import { checkReconstruction, type ReconstructionChip, type SentenceReconstructionExercise } from "@/lib/practice/sentenceReconstruction";
 import type { ClozeExercise } from "@/lib/practice/cloze";
+import { lookupWord } from "@/lib/dictionary/lookup";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
@@ -305,6 +306,12 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
 
   const [before, after] = exercise.prompt.split("___");
 
+  // Single-word blanks only — a "phrase" blank needs phrase-lookup, not the
+  // word dictionary, and showing a wrong/partial gloss would be worse than
+  // showing none.
+  const answerTranslation =
+    exercise.kind === "word" ? lookupWord(exercise.answer).translations[0] ?? null : null;
+
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <p className="ligne-label">{exercise.kind === "word" ? "Word completion" : "Phrase completion"}</p>
@@ -350,6 +357,11 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
           <p className="font-bold">
             {result === "correct" ? "Correct." : answerRevealed ? `The answer is "${exercise.answer}".` : "Not quite. Try once more or reveal the answer."}
           </p>
+          {result === "correct" && answerTranslation && (
+            <p className="mt-0.5">
+              "{exercise.answer}" — {answerTranslation}
+            </p>
+          )}
         </div>
       )}
 
