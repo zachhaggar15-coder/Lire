@@ -6,15 +6,25 @@ import {
   type ContextualTranslationGrammar,
   type ContextualTranslationResult,
 } from "@/lib/dictionary/contextualTranslation";
+import { validateAiSpan } from "@/lib/dictionary/aiSpan";
 import { isContextAmbiguous, sensesAgree } from "@/lib/dictionary/ambiguity";
+import {
+  buildCandidateContext,
+  generateCandidates,
+  type CandidateContext,
+  type CandidateInput,
+  type MeaningCandidate,
+} from "@/lib/dictionary/candidates";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import {
+  confidenceFromField,
+  scoreEvidence,
+  SOURCE_TRUST,
+  SPECIFICITY,
+} from "@/lib/dictionary/scoring";
 import type { DictionaryExample, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { hashString } from "@/lib/hash";
-import {
-  findNaturalTranslationForToken,
-  isWordScopedAlignment,
-  type ResolvedTranslationAlignment,
-} from "@/lib/translationAlignment";
+import { findNaturalTranslationForToken } from "@/lib/translationAlignment";
 import type { Token } from "@/lib/words";
 
 /**
@@ -77,6 +87,20 @@ export interface ResolvedMeaning {
   cacheKey: string;
 }
 
+/** One candidate with the score the weights gave it. */
+export interface ScoredCandidate {
+  candidate: MeaningCandidate;
+  score: number;
+}
+
+/** A resolution plus the field it was chosen from. Diagnostics only — the UI sees `meaning`. */
+export interface ResolutionOutcome {
+  meaning: ResolvedMeaning;
+  candidates: ScoredCandidate[];
+  /** Score of the best candidate that materially disagreed with the winner, if any. */
+  runnerUpScore: number | null;
+}
+
 export interface ResolveMeaningInput {
   tokens: Token[];
   tokenIndex: number;
@@ -95,25 +119,15 @@ export interface ResolveMeaningInput {
 export interface AiContextualMeaning {
   translation: string;
   meaningInContext?: string | null;
+  /**
+   * The French span the model says this meaning belongs to, when it identified
+   * a larger unit than the tapped word — "tenir le coup" for a tap on "coup".
+   * Never trusted as given: validated against the real tokens before use.
+   */
+  semanticSpan?: string | null;
 }
 
-/**
- * Widest natural-alignment span that may stand in as the answer for a single
- * tapped word.
- *
- * The article translator aligns at whatever granularity reads well, so the
- * segment containing a tapped word can be a whole clause. A clause is a fine
- * thing to show *alongside* the French, but presenting it as the word's
- * meaning is how "mouillé" ended up glossed "Was a ship moored in some inland
- * port". Anything wider stays out of the headline.
- */
-const MAX_ALIGNMENT_WORDS_AS_ANSWER = 3;
 
-/**
- * Alignment spans this short are usually filler that carries no meaning on its
- * own ("the", "of"), so they lose to a real lexical answer.
- */
-const MIN_USEFUL_ALIGNMENT_CHARS = 2;
 
 export function meaningCacheKey(input: {
   tappedText: string;
@@ -141,29 +155,33 @@ export function aiMeaningCacheKey(tappedText: string, contextSentence: string): 
 /**
  * Resolves one tapped token to one contextual meaning.
  *
- * Priority ladder, highest first. Each tier only wins when it genuinely
- * applies, so a tap falls through to the cheapest tier that can answer it and
- * the common case stays fully offline and instant:
- *
- *   1. Known expression / idiom containing the tapped word.
- *   2. A tightly-scoped natural article-translation alignment.
- *   3. Contextual lexical resolution (pronouns, contractions, polysemy,
- *      reflexives, conjugation, negation, function words).
- *   4. Trusted curated dictionary sense.
- *   5. Generated dictionary sense, hedged because its ordering is not editorial.
- *   6. AI contextual meaning, when the caller has already fetched one.
- *
- * Tiers 1 and 3-5 all come out of buildContextualTranslation, which already
- * runs them in this order; this function's job is to slot the natural
- * alignment in at the right height, grade the result, and decide between
- * answering and abstaining.
+ * Delegates to resolveWithCandidates: every interpretation the sentence
+ * supports is generated, scored against the evidence, and the strongest is
+ * returned. There is no tier ladder any more — a reading wins by explaining
+ * more of the sentence, not by being checked earlier.
  */
 export function resolveMeaning(input: ResolveMeaningInput): ResolvedMeaning {
+  return resolveWithCandidates(input).meaning;
+}
+
+/**
+ * The full resolution, including the candidates that lost.
+ *
+ * Kept separate from resolveMeaning so diagnostics can inspect the whole field
+ * without the production path paying for it or the UI ever seeing it.
+ */
+export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOutcome {
   const token = input.tokens[input.tokenIndex];
   const tappedText = token?.clean || token?.text?.trim() || "";
   const contextSentence = input.contextSentence;
 
   const lookup = input.lookup ?? lookupWord(token?.text ?? tappedText, adjacentWords(input.tokens, input.tokenIndex));
+  const alignment = input.alignments
+    ? findNaturalTranslationForToken(input.tokens, input.tokenIndex, input.alignments)
+    : null;
+
+  // buildContextualTranslation still supplies the grammar description and the
+  // examples shown under More; it no longer decides the answer.
   const contextual = buildContextualTranslation({
     tokens: input.tokens,
     tokenIndex: input.tokenIndex,
@@ -173,9 +191,35 @@ export function resolveMeaning(input: ResolveMeaningInput): ResolvedMeaning {
     lookup,
   });
 
-  const alignment = input.alignments
-    ? findNaturalTranslationForToken(input.tokens, input.tokenIndex, input.alignments)
-    : null;
+  const candidateInput: CandidateInput = {
+    tokens: input.tokens,
+    tokenIndex: input.tokenIndex,
+    sentence: contextSentence,
+    lookup,
+    alignment: alignment
+      ? {
+          french: alignment.french,
+          english: alignment.english,
+          frenchWordCount: alignment.frenchWordCount,
+          startIndex: alignment.startIndex,
+          endIndex: alignment.endIndex,
+        }
+      : null,
+  };
+
+  const context = buildCandidateContext(candidateInput);
+  const candidates = generateCandidates(candidateInput);
+
+  // Pronoun, contraction and grammar readings are worked out by
+  // buildContextualTranslation's special-form pass rather than by the rule
+  // corpus, so they enter the field from here. They are candidates like any
+  // other: "en" as a pronoun has to out-argue "en" as a preposition rather
+  // than win by being checked first.
+  const specialForm = specialFormCandidate(contextual, tappedText);
+  if (specialForm) candidates.push(specialForm);
+  const scored = candidates
+    .map((candidate) => ({ candidate, score: scoreCandidate(candidate, context, tappedText, lookup) }))
+    .sort((a, b) => b.score - a.score);
 
   const base = {
     tappedText,
@@ -188,139 +232,224 @@ export function resolveMeaning(input: ResolveMeaningInput): ResolvedMeaning {
     cacheKey: meaningCacheKey({ tappedText, contextSentence, lemma: contextual.lemma }),
   };
 
-  // Tier 1 — a known expression containing this word. This outranks even a
-  // natural alignment: the phrase bank names the whole idiom ("se rendre
-  // compte"), which is the unit a learner needs, while an alignment segment
-  // may cut across it.
-  if (contextual.source === "phrasebank") {
-    // The citation form, not the inflected span: a reader who taps "compte" in
-    // "elle se rend compte" should be shown "se rendre compte", which is the
-    // unit they can look for again and save, rather than "se rend compte du".
-    const expression = expressionMembership(contextual, tappedText);
+  const best = scored[0] ?? null;
+  const runnerUp = firstMateriallyDifferent(scored, best?.candidate.english ?? "");
+  const confidence: MeaningConfidence = best ? confidenceFromField(best.score, runnerUp?.score ?? null) : "low";
+
+  // An AI answer competes only where the local field failed to settle, so
+  // ordinary vocabulary is never displaced by a network result.
+  if (input.aiMeaning?.translation?.trim() && (!best || confidence === "low")) {
+    const english = input.aiMeaning.translation.trim();
+    // A span the model claims is only used once it has been found in the real
+    // tokens and shown to contain the tap. An unverifiable span is discarded
+    // and the answer falls back to describing the tapped word alone, which is
+    // still useful and cannot mislabel what the reader touched.
+    const span = validateAiSpan(input.tokens, input.tokenIndex, input.aiMeaning.semanticSpan);
     return {
-      ...base,
-      displayFrench: expression ?? contextual.selectedText,
-      displayEnglish: contextual.contextualTranslation,
-      partOfExpression: expression,
-      source: "phrase",
-      confidence: contextual.confidence,
-      alternatives: contextual.alternativeMeanings,
-      explanation: contextual.explanation,
-      abstained: false,
-      wantsAiEscalation: false,
+      meaning: {
+        ...base,
+        displayFrench: span?.french ?? contextual.selectedText ?? tappedText,
+        displayEnglish: english,
+        partOfExpression: span && span.wordCount > 1 ? span.french : null,
+        source: "ai-contextual",
+        confidence: "medium",
+        alternatives: dedupe(candidates.map((candidate) => candidate.english), english),
+        explanation:
+          input.aiMeaning.meaningInContext?.trim() ||
+          "Worked out from this sentence when the offline dictionaries could not settle it.",
+        abstained: false,
+        wantsAiEscalation: false,
+      },
+      candidates: scored,
+      runnerUpScore: runnerUp?.score ?? null,
     };
   }
 
-  const localSource = toMeaningSource(contextual, lookup);
-  const localConfidence = contextual.confidence;
-  const localAnswered = contextual.source !== "missing" && !!contextual.contextualTranslation;
-
-  // Tier 2 — a natural alignment, but only when it is scoped to this word
-  // rather than to the clause around it, and only when the local answer is not
-  // already a confident one. A perfectly good curated sense should not be
-  // displaced just because the article translation happened to finish loading.
-  if (usableAsAnswer(alignment) && (!localAnswered || localConfidence !== "high")) {
+  if (!best || !best.candidate.english) {
     return {
-      ...base,
-      displayFrench: alignment.french,
-      displayEnglish: alignment.english,
-      partOfExpression: alignment.frenchWordCount > 1 ? alignment.french : null,
-      source: "natural-alignment",
-      confidence: "high",
-      alternatives: dedupe([contextual.contextualTranslation, ...contextual.alternativeMeanings], alignment.english),
-      explanation: "Taken from this article's own English translation of the phrase this word sits in.",
-      abstained: false,
-      wantsAiEscalation: false,
+      meaning: {
+        ...base,
+        displayFrench: contextual.selectedText || tappedText,
+        displayEnglish: "",
+        partOfExpression: null,
+        source: "unresolved",
+        confidence: "low",
+        alternatives: [],
+        explanation: "No offline layer recognised this form in this sentence.",
+        abstained: true,
+        wantsAiEscalation: true,
+      },
+      candidates: scored,
+      runnerUpScore: runnerUp?.score ?? null,
     };
   }
 
-  // Tier 6 — an AI contextual meaning the caller fetched for this exact tap.
-  // Only consulted once local tiers have failed to produce something trusted,
-  // so ordinary vocabulary never waits on the network.
-  if (input.aiMeaning?.translation?.trim() && (!localAnswered || localConfidence === "low")) {
-    return {
-      ...base,
-      displayFrench: contextual.selectedText || tappedText,
-      displayEnglish: input.aiMeaning.translation.trim(),
-      partOfExpression: null,
-      source: "ai-contextual",
-      confidence: "medium",
-      alternatives: dedupe(
-        [contextual.contextualTranslation, ...contextual.alternativeMeanings],
-        input.aiMeaning.translation.trim()
-      ),
-      explanation: input.aiMeaning.meaningInContext?.trim() || "Worked out from this sentence when the offline dictionaries could not settle it.",
-      abstained: false,
-      wantsAiEscalation: false,
-    };
-  }
-
-  // Tiers 3-5 — whatever contextual resolution settled on locally, after
-  // asking whether a bare lexical answer is actually trustworthy for this word.
-  const graded = gradeLocalAnswer(contextual, lookup, tappedText, alignment, localConfidence);
-
-  if (localAnswered && graded !== "low") {
-    return {
-      ...base,
-      displayFrench: contextual.expandedPhrase ?? contextual.selectedText,
-      displayEnglish: contextual.contextualTranslation,
-      partOfExpression: expressionMembership(contextual, tappedText),
-      source: localSource,
-      confidence: graded,
-      alternatives: contextual.alternativeMeanings,
-      explanation: contextual.explanation,
-      abstained: false,
-      wantsAiEscalation: false,
-    };
-  }
-
-  // A low-confidence local answer is still shown — hedged, and flagged for an
-  // AI upgrade — because a plausible lead gloss with a caveat helps more than
-  // a blank. Nothing at all is the only case Lire refuses to guess at.
-  if (localAnswered && localConfidence !== "low" && graded === "low") {
-    // Downgraded by ambiguity or source disagreement rather than by the
-    // dictionary itself. Same treatment: shown, hedged, escalated.
-    return {
-      ...base,
-      displayFrench: contextual.expandedPhrase ?? contextual.selectedText,
-      displayEnglish: contextual.contextualTranslation,
-      partOfExpression: expressionMembership(contextual, tappedText),
-      source: localSource,
-      confidence: "low",
-      alternatives: contextual.alternativeMeanings,
-      explanation: contextual.explanation,
-      abstained: false,
-      wantsAiEscalation: true,
-    };
-  }
-
-  if (localAnswered) {
-    return {
-      ...base,
-      displayFrench: contextual.expandedPhrase ?? contextual.selectedText,
-      displayEnglish: contextual.contextualTranslation,
-      partOfExpression: expressionMembership(contextual, tappedText),
-      source: localSource,
-      confidence: "low",
-      alternatives: contextual.alternativeMeanings,
-      explanation: contextual.explanation,
-      abstained: false,
-      wantsAiEscalation: true,
-    };
-  }
+  const winner = best.candidate;
+  const spansExpression = !!winner.matchedSpan && winner.matchedWords > 1;
+  const expression = spansExpression ? winner.french : expressionMembership(contextual, tappedText);
+  const partOfExpression =
+    expression && expression.toLowerCase().replace(/\s+/g, " ") !== tappedText.toLowerCase() ? expression : null;
 
   return {
-    ...base,
-    displayFrench: contextual.selectedText || tappedText,
-    displayEnglish: "",
-    partOfExpression: null,
-    source: "unresolved",
-    confidence: "low",
-    alternatives: [],
-    explanation: "No offline layer recognised this form in this sentence.",
-    abstained: true,
-    wantsAiEscalation: true,
+    meaning: {
+      ...base,
+      displayFrench: expression ?? winner.french,
+      displayEnglish: winner.english,
+      partOfExpression,
+      source: toResolvedSource(winner),
+      confidence,
+      alternatives: dedupe(
+        [...winner.alternatives, ...scored.slice(1).map((entry) => entry.candidate.english)],
+        winner.english
+      ),
+      explanation: winner.explanation,
+      abstained: false,
+      // Escalate when the field could not settle: either nothing scored well
+      // enough to assert, or two materially different readings stayed too
+      // close together to choose between. Both are honest uncertainty rather
+      // than a missing dictionary entry.
+      wantsAiEscalation: confidence === "low",
+    },
+    candidates: scored,
+    runnerUpScore: runnerUp?.score ?? null,
   };
+}
+
+/**
+ * The strongest candidate that actually disagrees with the winner.
+ *
+ * Two candidates saying the same thing in different words are corroboration,
+ * not competition, so the margin is measured against the best genuinely
+ * different reading. Otherwise "to realise" and "realises" would look like a
+ * dead heat and every idiom would escalate.
+ */
+function firstMateriallyDifferent(
+  scored: ScoredCandidate[],
+  winnerEnglish: string
+): ScoredCandidate | null {
+  return scored.slice(1).find((entry) => !sensesAgree(entry.candidate.english, winnerEnglish)) ?? null;
+}
+
+/**
+ * The pronoun / contraction / grammar reading, as a candidate.
+ *
+ * These are genuine contextual analyses — "en" before a verb is a pronoun, not
+ * the preposition — so they sit above bare morphology on the specificity
+ * ladder, but below an expression that spans several words.
+ */
+function specialFormCandidate(
+  contextual: ContextualTranslationResult,
+  tappedText: string
+): MeaningCandidate | null {
+  const selecting: ContextualTranslationResult["source"][] = ["pronoun", "contraction", "proper-noun", "grammar"];
+  if (!selecting.includes(contextual.source) || !contextual.contextualTranslation) return null;
+  const isGrammarOnly = contextual.source === "grammar";
+  return {
+    french: contextual.selectedText || tappedText,
+    english: contextual.contextualTranslation,
+    lemma: contextual.lemma,
+    source: isGrammarOnly ? "grammar" : "context-rule",
+    // Grammar describes the form rather than choosing a sense, so it ranks
+    // below the analyses that genuinely disambiguate.
+    specificity: isGrammarOnly ? SPECIFICITY.morphology : SPECIFICITY.contextRule,
+    matchedWords: 0,
+    evidence: [`${contextual.source} analysis of this form`],
+    alternatives: contextual.alternativeMeanings,
+    explanation: contextual.explanation,
+  };
+}
+
+function toResolvedSource(candidate: MeaningCandidate): MeaningSource {
+  switch (candidate.source) {
+    case "expression":
+      return "phrase";
+    case "natural-alignment":
+      return "natural-alignment";
+    case "context-rule":
+    case "grammar":
+      return "context-rule";
+    case "generated-dictionary":
+      return "generated-dictionary";
+    default:
+      return "curated-dictionary";
+  }
+}
+
+/** Applies the weights in scoring.ts to one candidate, given the tap's context. */
+function scoreCandidate(
+  candidate: MeaningCandidate,
+  context: CandidateContext,
+  tappedText: string,
+  lookup: DictionaryLookupResult
+): number {
+  // The alignment cannot corroborate itself. Without this exclusion the
+  // alignment candidate scored its own text as independent agreement and
+  // collected a bonus for it, which let a single mistranslated span outrank
+  // the dictionary it was supposed to be checked against.
+  const alignmentAgrees =
+    candidate.source !== "natural-alignment" &&
+    !!context.alignmentEnglish &&
+    sensesAgree(candidate.english, context.alignmentEnglish);
+  // A disputed alignment penalises *both* sides, including the alignment
+  // itself. Exempting it would just move the overconfidence: a single
+  // mistranslated span would overrule a curated entry instead of the other way
+  // round. Neither is established, so neither gets to assert.
+  const alignmentConflicts = context.alignmentDisputed
+    ? candidate.source === "natural-alignment" || !!candidate.leadingSense
+    : !!context.alignmentEnglish && context.alignmentIsTight && !alignmentAgrees && candidate.source !== "natural-alignment";
+
+  return scoreEvidence({
+    specificity: candidate.specificity,
+    sourceTrust: SOURCE_TRUST[candidate.source] ?? 0.2,
+    matchedWords: candidate.matchedWords,
+    alignmentAgrees,
+    alignmentConflicts,
+    grammaticalSupport: hasGrammaticalSupport(candidate, context),
+    grammaticalConflict: hasGrammaticalConflict(candidate, context),
+    // Ambiguity counts only against readings that did not themselves resolve
+    // it: an expression or a governed construction has already chosen a sense.
+    senseAmbiguity: context.senseAmbiguous && candidate.specificity <= SPECIFICITY.contextRule,
+    grammaticalAmbiguity: context.grammaticallyAmbiguous && candidate.specificity <= SPECIFICITY.morphology,
+    weakMorphology: candidate.viaLemmaGuess,
+    disputedAlignment: context.alignmentDisputed && candidate.source === "natural-alignment",
+    idiomatic: candidate.idiomatic,
+    leadingSense: candidate.leadingSense && !isContextAmbiguous(lookup, tappedText),
+  });
+}
+
+/**
+ * Does the surrounding grammar point towards this reading?
+ *
+ * A multiword candidate the sentence structure actually licenses — a governed
+ * preposition, a reflexive clitic — is far more likely to be what the writer
+ * meant than one that merely happens to sit next to the tapped word.
+ */
+function hasGrammaticalSupport(candidate: MeaningCandidate, context: CandidateContext): boolean {
+  // A reflexive clitic in the sentence licenses the reading that contains it.
+  // "Se rendre compte" (to realise) and "rendre compte" (to report on) are
+  // different verbs sharing three words, and the "se" is the only thing that
+  // tells them apart — without this they scored identically and every tap on
+  // "compte" escalated.
+  if (context.grammar.hasReflexiveBefore && candidate.includesReflexive) return true;
+  if (candidate.matchedWords > 1 && context.grammar.governedPreposition) return true;
+  if (candidate.source === "context-rule" && candidate.matchedWords >= 2) return true;
+  return false;
+}
+
+/**
+ * Does the surrounding grammar point away from this reading?
+ *
+ * The clearest case is a determiner in front: "le parti" is a noun phrase, so
+ * a verbal reading of "parti" is fighting the sentence rather than explaining
+ * it.
+ */
+function hasGrammaticalConflict(candidate: MeaningCandidate, context: CandidateContext): boolean {
+  // A multiword reading that steps around a reflexive clitic the sentence
+  // actually contains is analysing a verb that isn't there.
+  if (context.grammar.hasReflexiveBefore && candidate.matchedWords > 1 && !candidate.includesReflexive) return true;
+  const english = candidate.english.toLowerCase();
+  const looksVerbal = english.startsWith("to ") || /^(?:is|are|was|were)\b/.test(english);
+  return context.grammar.hasDeterminerBefore && looksVerbal && candidate.matchedWords <= 1;
 }
 
 /**
@@ -356,74 +485,7 @@ function confidenceRank(confidence: MeaningConfidence): number {
   return confidence === "high" ? 3 : confidence === "medium" ? 2 : 1;
 }
 
-/**
- * Contextual sources that actually *chose a sense*, as opposed to merely
- * describing the word's form.
- *
- * The distinction matters more than it looks. Grammar inference can tell you
- * "fait" is third-person singular present without telling you whether the
- * sentence means "does", "makes", or the noun "fact" — so a grammar-only
- * result is still a bare lexical answer wearing a context label, and must not
- * inherit a context rule's confidence.
- */
-const SENSE_SELECTING_SOURCES = new Set<ContextualTranslationResult["source"]>([
-  "phrasebank",
-  "context-rule",
-  "pronoun",
-  "contraction",
-  "proper-noun",
-]);
 
-/**
- * Final confidence for a locally-resolved answer, combining three signals the
- * old source-trust-only model ignored.
- *
- * 1. Did anything actually select a sense? A phrase match or a context rule
- *    did; a dictionary lookup or a bare grammar reading did not.
- * 2. Is this a word whose meaning genuinely turns on the sentence? See
- *    ambiguity.ts — this is what stopped `tour` from confidently meaning
- *    "tower" in "c'est son tour", and what lets `chat` stay local.
- * 3. Do the independent sources agree? Corroboration is evidence; material
- *    disagreement is a reason to doubt whichever one happened to win.
- *
- * Only the grade changes. The UI still receives exactly one meaning — the
- * extra sophistication decides how sure Lire claims to be and whether it
- * quietly asks for help, never what the reader is shown competing against.
- */
-function gradeLocalAnswer(
-  contextual: ContextualTranslationResult,
-  lookup: DictionaryLookupResult,
-  tappedText: string,
-  alignment: ResolvedTranslationAlignment | null,
-  localConfidence: MeaningConfidence
-): MeaningConfidence {
-  const senseWasSelected = SENSE_SELECTING_SOURCES.has(contextual.source);
-  const answer = contextual.contextualTranslation;
-
-  // A natural article translation is independent evidence even when its span
-  // is too wide to *be* the answer, so it is consulted here regardless of
-  // whether it passed usableAsAnswer above.
-  const alignmentEnglish = alignment?.english ?? null;
-  const corroborated = !!alignmentEnglish && sensesAgree(answer, alignmentEnglish);
-  const contradicted = !!alignmentEnglish && !corroborated && isWordScopedAlignment(alignment);
-
-  if (senseWasSelected) {
-    // A rule picked the sense and the article's own translation agrees: the
-    // strongest local evidence available short of asking a model.
-    if (corroborated) return "high";
-    // A rule picked one sense and a tightly-scoped alignment picked another.
-    // Neither is authoritative enough to overrule the other, so say less.
-    if (contradicted) return "low";
-    return localConfidence;
-  }
-
-  // Nothing chose a sense. For a word whose meaning depends on the sentence,
-  // that is precisely the case where a leading gloss is a coin flip.
-  if (isContextAmbiguous(lookup, tappedText)) return "low";
-  if (contradicted) return "low";
-  if (corroborated) return "high";
-  return localConfidence;
-}
 
 /**
  * The expression a tapped word belongs to, or null when the word *is* the
@@ -446,31 +508,7 @@ function expressionMembership(contextual: ContextualTranslationResult, tappedTex
   return phrase;
 }
 
-function toMeaningSource(contextual: ContextualTranslationResult, lookup: DictionaryLookupResult): MeaningSource {
-  switch (contextual.source) {
-    case "phrasebank":
-      return "phrase";
-    case "context-rule":
-    case "pronoun":
-    case "contraction":
-    case "grammar":
-    case "proper-noun":
-      return "context-rule";
-    case "missing":
-      return "unresolved";
-    default:
-      return lookup.layer === "generated" ? "generated-dictionary" : "curated-dictionary";
-  }
-}
 
-function usableAsAnswer(
-  alignment: ResolvedTranslationAlignment | null
-): alignment is ResolvedTranslationAlignment {
-  if (!alignment) return false;
-  if (!isWordScopedAlignment(alignment)) return false;
-  if (alignment.frenchWordCount > MAX_ALIGNMENT_WORDS_AS_ANSWER) return false;
-  return alignment.english.trim().length > MIN_USEFUL_ALIGNMENT_CHARS;
-}
 
 function dedupe(values: (string | null | undefined)[], exclude: string): string[] {
   const seen = new Set([exclude.trim().toLowerCase()]);

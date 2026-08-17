@@ -145,7 +145,7 @@ console.log("--- Ambiguous common words, contrasted ---");
 expectContrast("tour", [
   ["La tour de l'église domine le village.", "tour", ["tower"]],
   ["C'est son tour de jouer maintenant.", "tour", ["turn"]],
-  ["Nous faisons un tour en ville après le dîner.", "tour", ["trip", "walk", "stroll"]],
+  ["Nous faisons un tour en ville après le dîner.", "tour", ["trip", "walk", "stroll", "ride"]],
 ]);
 expectContrast("droit", [
   ["Chacun a le droit de s'exprimer librement.", "droit", ["right", "entitle"]],

@@ -730,6 +730,30 @@ interface ContextSenseRule {
   sense: SenseSelection;
 }
 
+/**
+ * A rule that fired, plus what made it fire.
+ *
+ * Rules used to return an answer directly and the first one to match won,
+ * which made correctness depend on declaration order: the generic `compter`
+ * rule sitting above `compter sur` meant "je compte sur toi" resolved to
+ * "counts". Rules now produce evidence instead, and the scorer decides.
+ *
+ * `evidence` is the list of needles that actually matched — recorded by the
+ * instrumented `has`/`around` helpers rather than declared by hand, so
+ * specificity is derived from what the sentence really supported. A rule that
+ * fired because the two-word "compter sur" was present is measurably more
+ * specific than one that fired on a bare determiner check, without anyone
+ * having to annotate either.
+ */
+export interface ContextSenseCandidate {
+  sense: SenseSelection;
+  evidence: string[];
+  /** Longest matched needle in words; 0 when the rule matched on word identity alone. */
+  matchedWords: number;
+  /** Declaration order, used only as a stable tie-break between equally specific rules. */
+  order: number;
+}
+
 const HUMAN_OBJECT_WORDS = [
   "autorites",
   "habitants",
@@ -1277,7 +1301,7 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   },
   {
     keys: ["droit"],
-    when: (context) => context.has(["le droit de", "droit a", "a le droit", "ont le droit", "avoir le droit", "mon droit", "son droit", "ses droits", "leurs droits", "droits de"]),
+    when: (context) => context.has(["le droit de", "a le droit", "ont le droit", "avoir le droit", "mon droit", "son droit", "ses droits", "leurs droits", "droits de"]),
     sense: {
       translation: "right / entitlement",
       source: "context-rule",
@@ -1844,7 +1868,7 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   {
     keys: ["droit", "droits", "droite"],
     lemmas: ["droit"],
-    when: (context) => context.has(["droits de", "droit de", "droit a", "droit à", "droits humains", "droits de l'homme"]),
+    when: (context) => context.has(["droits de", "droit de", "droits humains", "droits de l'homme"]),
     sense: {
       translation: "right / legal entitlement",
       source: "context-rule",
@@ -1993,7 +2017,10 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   },
   {
     lemmas: ["arriver"],
-    when: (context) => context.has(["arrive a", "arrive à", "arrivent a", "arrivent à"]),
+    // Only before an infinitive: "il arrive à finir" is managing, while
+    // "le train arrive à huit heures" is plain arrival. Matching bare
+    // "arrive à" conflated the two.
+    when: (context) => /\barrive(?:nt)? a \w+(?:er|ir|re)\b/.test(context.sentenceKey),
     sense: {
       translation: "manage to / succeed in",
       source: "context-rule",
@@ -2627,13 +2654,107 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   },
 ];
 
+/**
+ * Every declarative rule that applies, not just the first.
+ *
+ * Each rule is evaluated against its own freshly-instrumented context so the
+ * evidence recorded belongs to that rule alone; sharing one context would
+ * attribute an earlier rule's matched needles to a later one.
+ */
+function collectDeclarativeContextCandidates(
+  base: Omit<ContextSenseRuleContext, "has" | "around">
+): ContextSenseCandidate[] {
+  const candidates: ContextSenseCandidate[] = [];
+
+  CONTEXT_SENSE_RULES.forEach((rule, order) => {
+    const keyMatch = (rule.keys ?? []).some((key) => normaliseForMatch(key) === base.selectedKey);
+    const lemmaMatch = (rule.lemmas ?? []).some((lemma) => normaliseForMatch(lemma) === base.lemmaKey);
+    if (!keyMatch && !lemmaMatch) return;
+
+    const evidence: string[] = [];
+    const context: ContextSenseRuleContext = {
+      ...base,
+      has: (needles) => {
+        const hit = needles.find((needle) => base.sentenceKey.includes(normaliseForMatch(needle)));
+        if (hit) evidence.push(normaliseForMatch(hit));
+        return !!hit;
+      },
+      around: (needles) => {
+        const hit = needles.find((needle) => base.words.includes(normaliseForMatch(needle)));
+        if (hit) evidence.push(normaliseForMatch(hit));
+        return !!hit;
+      },
+    };
+
+    if (rule.when && !rule.when(context)) return;
+    candidates.push({
+      sense: rule.sense,
+      evidence,
+      matchedWords: evidence.reduce((widest, needle) => Math.max(widest, needle.split(" ").length), 0),
+      order,
+    });
+  });
+
+  return candidates;
+}
+
+/**
+ * Ranks rule candidates by how much of the sentence they actually explain.
+ *
+ * A rule anchored on a longer matched phrase beats one anchored on a shorter
+ * phrase, which beats one that merely tested a neighbouring word, which beats
+ * a bare default with no `when` at all. Declaration order only breaks ties
+ * between rules with identical support.
+ */
+function rankContextCandidates(candidates: ContextSenseCandidate[]): ContextSenseCandidate[] {
+  return [...candidates].sort((a, b) => {
+    if (b.matchedWords !== a.matchedWords) return b.matchedWords - a.matchedWords;
+    if (b.evidence.length !== a.evidence.length) return b.evidence.length - a.evidence.length;
+    return a.order - b.order;
+  });
+}
+
 function selectDeclarativeContextSense(context: ContextSenseRuleContext): SenseSelection | null {
-  for (const rule of CONTEXT_SENSE_RULES) {
-    const keyMatch = (rule.keys ?? []).some((key) => normaliseForMatch(key) === context.selectedKey);
-    const lemmaMatch = (rule.lemmas ?? []).some((lemma) => normaliseForMatch(lemma) === context.lemmaKey);
-    if ((keyMatch || lemmaMatch) && (!rule.when || rule.when(context))) return rule.sense;
+  const base = { ...context } as Omit<ContextSenseRuleContext, "has" | "around">;
+  return rankContextCandidates(collectDeclarativeContextCandidates(base))[0]?.sense ?? null;
+}
+
+/**
+ * Every contextual reading the rule corpus supports for this tap, best-first.
+ *
+ * This is the entry point candidates.ts uses to fold rule evidence into the
+ * wider candidate pool. Exposing the whole ranked list rather than a single
+ * answer is what lets a governed-preposition reading compete with a bare
+ * lexical one on evidence instead of on file position.
+ */
+export function collectContextSenseCandidates(
+  clean: string,
+  lookup: DictionaryLookupResult,
+  tokens: Token[],
+  tokenIndex: number,
+  sentence: string
+): ContextSenseCandidate[] {
+  const sentenceKey = normaliseForMatch(sentence);
+  const base = {
+    selectedKey: normaliseForMatch(clean),
+    lemmaKey: normaliseForMatch(lookup.lemma ?? clean),
+    sentenceKey,
+    words: wordWindow(tokens, tokenIndex, 4),
+    previous: wordAt(tokens, tokenIndex, -1),
+    next: wordAt(tokens, tokenIndex, 1),
+    hasNegationCue: /\bne\b|n'/.test(sentenceKey),
+  };
+  const declarative = rankContextCandidates(collectDeclarativeContextCandidates(base));
+
+  // The imperative chain below still short-circuits internally, so it
+  // contributes a single reading. It is offered as one more candidate rather
+  // than as an override, which is what stops the two chains from shadowing
+  // each other the way they used to.
+  const imperative = selectContextSense(clean, lookup, tokens, tokenIndex, sentence);
+  if (imperative && !declarative.some((candidate) => candidate.sense.translation === imperative.translation)) {
+    declarative.push({ sense: imperative, evidence: [], matchedWords: 0, order: CONTEXT_SENSE_RULES.length });
   }
-  return null;
+  return declarative;
 }
 
 function selectContextSense(
