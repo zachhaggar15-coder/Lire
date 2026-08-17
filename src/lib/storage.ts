@@ -185,6 +185,8 @@ function normalize(entry: unknown): SavedWord | null {
     // sentence in hand would replace a contextual answer with a generic one.
     contextualMeaning: typeof e.contextualMeaning === "string" && e.contextualMeaning.trim() ? e.contextualMeaning.trim() : null,
     partOfExpression: typeof e.partOfExpression === "string" && e.partOfExpression.trim() ? e.partOfExpression.trim() : null,
+    lemmaGloss: typeof e.lemmaGloss === "string" && e.lemmaGloss.trim() ? e.lemmaGloss.trim() : null,
+    sentenceTranslation: typeof e.sentenceTranslation === "string" && e.sentenceTranslation.trim() ? e.sentenceTranslation.trim() : null,
     exampleSentenceFr: resolvedExampleFr,
     exampleSentenceEn: resolvedExampleEn,
     // old field was `sourceId`; new field is `sourceTextTitle`.

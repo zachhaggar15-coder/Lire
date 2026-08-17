@@ -1,5 +1,6 @@
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import { leadingLearnerSense } from "@/lib/dictionary/register";
 
 export interface InferenceChallenge {
   word: string;
@@ -46,8 +47,16 @@ function unique(values: string[]): string[] {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
 
+/**
+ * The gloss used as a quiz's correct answer.
+ *
+ * Marked correct or incorrect against this, so it is teaching material and
+ * takes the stricter standard — a vulgar or archaic sense sitting in position
+ * one of a bulk import must never become the answer a learner is graded on.
+ * See exerciseGloss.ts.
+ */
 function directDefinition(lookup: DictionaryLookupResult): string {
-  return lookup.translations[0] ?? "Not translated yet";
+  return leadingLearnerSense(lookup.translations) ?? lookup.translations[0] ?? "Not translated yet";
 }
 
 function distractorsFor(lookup: DictionaryLookupResult): string[] {

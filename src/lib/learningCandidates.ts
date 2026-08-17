@@ -1,6 +1,7 @@
 import type { ReadingText, SavedWord } from "@/types";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { findPhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
+import { leadingLearnerSense } from "@/lib/dictionary/register";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import { tokenizeParagraphsToSentences, type SentenceGroup } from "@/lib/words";
 
@@ -95,7 +96,9 @@ export function rankLearningCandidates(
         byLemma.set(lemma, {
           word: token.clean,
           lemma,
-          translation: lookup.translations[0],
+          // Learner-safe rather than raw position one: this is offered as the
+          // word's meaning and can be saved straight into review.
+          translation: leadingLearnerSense(lookup.translations) ?? lookup.translations[0],
           reason: phrase
             ? `Useful phrase: ${phrase}`
             : tapCount > 0

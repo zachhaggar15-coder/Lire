@@ -8,6 +8,7 @@ import { articleCoverageDictionary } from "@/data/dictionaries/article-coverage"
 import { loadGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
+import { preferLearnerSenses } from "@/lib/dictionary/register";
 import { getCustomDictionaryEntry } from "@/lib/dictionary/custom";
 
 /**
@@ -151,8 +152,12 @@ function isAcronymExpansion(translation: string): boolean {
 function preferPlainGlosses(translations: string[]): string[] {
   const noisy = (t: string) => isBareAbbreviation(t) || isAcronymExpansion(t);
   const plain = translations.filter((t) => !noisy(t));
-  if (plain.length === 0) return translations;
-  return [...plain, ...translations.filter(noisy)];
+  const ordered = plain.length === 0 ? translations : [...plain, ...translations.filter(noisy)];
+  // Then by register, so a vulgar or archaic sense cannot lead. WikDict order
+  // carries no editorial judgement, which is how "oignon" arrived with "arse"
+  // in first position and everything downstream read that as "the meaning".
+  // Nothing is dropped — see preferLearnerSenses.
+  return preferLearnerSenses(ordered);
 }
 
 /** Loads and indexes the broad generated dictionary. Idempotent and safe to call from anywhere. */

@@ -1,10 +1,10 @@
 import { isContextAmbiguous, sensesAgree } from "@/lib/dictionary/ambiguity";
 import { findContainingPhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
-import { collectContextSenseCandidates } from "@/lib/dictionary/contextualTranslation";
+import { cliticPronounReading, collectContextSenseCandidates } from "@/lib/dictionary/contextualTranslation";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { SPECIFICITY } from "@/lib/dictionary/scoring";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
-import type { Token } from "@/lib/words";
+import { lexicalSpan, type Token } from "@/lib/words";
 
 /**
  * Turning one tap into every interpretation the sentence plausibly supports.
@@ -94,8 +94,9 @@ function wordPositions(tokens: Token[]): { index: number; clean: string }[] {
     .map((item) => ({ index: item.index, clean: item.token.clean }));
 }
 
+/** The span's lexical identity, not its printed form. See lexicalSpan. */
 function spanText(tokens: Token[], start: number, end: number): string {
-  return tokens.slice(start, end + 1).map((token) => token.text).join("").trim();
+  return lexicalSpan(tokens.slice(start, end + 1).map((token) => token.text).join(""));
 }
 
 /**
@@ -375,6 +376,49 @@ export function generateCandidates(input: CandidateInput): MeaningCandidate[] {
       alternatives: [],
       explanation: "Taken from this article's own English translation of the phrase this word sits in.",
     });
+  }
+
+  // 4b. The lexical tail of an elision.
+  //
+  // Tokenisation keeps "j'en" together because that is what the reader sees
+  // and taps, but the word they are asking about is "en" — and looking up the
+  // whole token found the *preposition* en ("in") rather than the pronoun.
+  // Resolving the tail separately is what lets a tap on "j'en" answer about
+  // the clitic.
+  const elision = clean.match(/^([cdjlmnst]|qu)['’](.+)$/u);
+  if (elision?.[2]) {
+    const tail = elision[2];
+    // A clitic reading first: "j'en" is the pronoun en, not the preposition,
+    // and going straight to the dictionary answered "in".
+    const clitic = cliticPronounReading(tail);
+    if (clitic) {
+      candidates.push({
+        french: tail,
+        english: clitic.translation,
+        lemma: tail,
+        source: "context-rule",
+        specificity: SPECIFICITY.contextRule,
+        matchedWords: 0,
+        evidence: [`“${clean}” carries the clitic pronoun “${tail}”`],
+        alternatives: [],
+        explanation: clitic.explanation,
+      });
+    }
+    const tailLookup = lookupWord(tail);
+    const tailEnglish = tailLookup.translations[0];
+    if (tailEnglish && !tailLookup.partOfSpeechUncertain) {
+      candidates.push({
+        french: tail,
+        english: tailEnglish,
+        lemma: tailLookup.lemma,
+        source: tailLookup.layer === "generated" ? "generated-dictionary" : "curated-dictionary",
+        specificity: SPECIFICITY.morphology,
+        matchedWords: 0,
+        evidence: [`“${clean}” is “${elision[1]}’” elided onto “${tail}”`],
+        alternatives: tailLookup.translations.slice(1),
+        explanation: `Here “${clean}” is “${elision[1]}’” joined to “${tail}”; the meaning belongs to “${tail}”.`,
+      });
+    }
   }
 
   // 5. The bare dictionary sense, which is a candidate like any other rather

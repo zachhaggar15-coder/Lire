@@ -3397,6 +3397,19 @@ function selectContextSense(
   return null;
 }
 
+/**
+ * The clitic-pronoun reading of a bare form, when it has one.
+ *
+ * Exposed so candidate generation can apply it to the lexical tail of an
+ * elision. Tokenisation keeps "j'en" as one token, so the pronoun table never
+ * saw the "en" inside it and a tap answered with the preposition ("in")
+ * instead of the pronoun ("of it"). See the elision candidate in candidates.ts.
+ */
+export function cliticPronounReading(form: string): { translation: string; explanation: string } | null {
+  const entry = PRONOUN_TRANSLATIONS[normaliseForMatch(form)];
+  return entry ? { translation: entry.translation, explanation: entry.explanation } : null;
+}
+
 function shouldPreferPronoun(clean: string, previous: string | null, next: string | null): boolean {
   if (["y", "en", "lui"].includes(clean)) return true;
   if (clean === "leur") return !!next && !["ami", "amis", "maison", "parents", "enfants", "livre", "nom"].includes(next);

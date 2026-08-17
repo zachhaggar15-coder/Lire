@@ -1,6 +1,6 @@
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { hashString } from "@/lib/hash";
-import type { SentenceGroup, Token } from "@/lib/words";
+import { lexicalSpan, type SentenceGroup, type Token } from "@/lib/words";
 
 const DICTIONARY_TRANSLATION_CACHE_PREFIX = "lire.dictionaryArticleTranslation.v1.";
 const MAX_PHRASE_WORDS = 9;
@@ -85,8 +85,9 @@ function wordPositions(tokens: Token[]): { index: number; clean: string }[] {
   }));
 }
 
+/** The span's lexical identity, without the sentence punctuation at its edges. See lexicalSpan. */
 function phraseTextFromWindow(tokens: Token[], startIndex: number, endIndex: number): string {
-  return tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("");
+  return lexicalSpan(tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join(""));
 }
 
 function stripDiacritics(text: string): string {
