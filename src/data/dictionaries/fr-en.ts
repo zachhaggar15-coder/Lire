@@ -86,7 +86,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "aller",
-    forms: ["vais", "vas", "va", "allons", "allez", "vont", "aille", "ailles", "aillent", "allais", "allait", "allions", "alliez", "allaient", "irai", "iras", "ira", "irons", "irez", "iront", "irais", "irait", "irions", "iriez", "iraient", "allai", "allas", "alla", "allâmes", "allâtes", "allèrent", "allé"],
+    forms: ["vais", "vas", "va", "allons", "allez", "vont", "aille", "ailles", "aillent", "allais", "allait", "allions", "alliez", "allaient", "irai", "iras", "ira", "irons", "irez", "iront", "irais", "irait", "irions", "iriez", "iraient", "allai", "allas", "alla", "allâmes", "allâtes", "allèrent", "allé", "allée", "allés", "allées"],
     translations: ["to go"],
     partOfSpeech: "verb (infinitive)",
     frequencyRank: 6,

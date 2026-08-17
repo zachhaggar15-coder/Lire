@@ -1,3 +1,4 @@
+import { materiallyDistinctSenses } from "@/lib/dictionary/ambiguity";
 import { findContainingPhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
@@ -377,9 +378,13 @@ function baseLayerConfidence(lookup: DictionaryLookupResult): ContextualTranslat
     case "article-coverage":
       return "medium";
     case "generated":
-      // Sense order carries no editorial judgement here, so a single-sense
-      // entry is the only shape whose leading gloss is unambiguous.
-      return lookup.translations.length === 1 ? "medium" : "low";
+      // Sense order carries no editorial judgement here, so breadth is the only
+      // guide to whether the leading gloss is a real choice. Counted by meaning
+      // rather than by string: "chat" lists cat/tomcat/tag, which is one
+      // obvious sense plus a variant plus an oddity, not three competing
+      // answers — grading it low sent a concrete noun to the network on every
+      // tap. See materiallyDistinctSenses.
+      return materiallyDistinctSenses(lookup.translations) <= 2 ? "medium" : "low";
     default:
       return "low";
   }
@@ -1186,6 +1191,523 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
       confidence: "medium",
       alternativeMeanings: ["same"],
       explanation: "With no determiner in front, même is usually the emphasiser even — même les enfants comprennent.",
+    },
+  },
+
+  // ---------------------------------------------------------------------
+  // Frames for the words ambiguity.ts marks as context-dependent.
+  //
+  // Without these, every tap on "tour", "droit", "compte" and friends would
+  // fall through to an escalation, because a bare gloss for them is a coin
+  // flip. These rules read the frame the word sits in — its determiner, its
+  // object, the verb governing it — so the common cases resolve locally,
+  // instantly and correctly, and only genuinely unclear uses reach the model.
+  // ---------------------------------------------------------------------
+
+  // tour: masculine "un tour" (a turn, a trip) vs feminine "la tour" (a tower).
+  // The article is the whole signal, which is why the dictionary's frequency
+  // ordering can never settle it.
+  {
+    keys: ["tour"],
+    when: (context) => context.has(["son tour", "mon tour", "ton tour", "votre tour", "notre tour", "leur tour", "chacun son tour", "a tour de role"]),
+    sense: {
+      translation: "turn",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["tower", "trip"],
+      explanation: "With a possessive, tour is a turn in a sequence — c'est son tour means it is his or her turn.",
+    },
+  },
+  {
+    keys: ["tour"],
+    when: (context) => context.has(["faire un tour", "fait un tour", "faire le tour", "fait le tour", "un tour en", "un petit tour"]),
+    sense: {
+      translation: "a trip / a walk around",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["tower", "turn"],
+      explanation: "Faire un tour is to go for a short trip or walk, not to build a tower.",
+    },
+  },
+  {
+    keys: ["tour"],
+    when: (context) => ["la", "une", "cette", "l'"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "tower",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["turn", "trip"],
+      explanation: "Feminine la tour is a tower; masculine le tour is a turn or a trip.",
+    },
+  },
+  {
+    keys: ["tour"],
+    when: (context) => ["le", "un", "ce"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "turn / trip",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["tower"],
+      explanation: "Masculine le tour is a turn or a circuit; the tower sense is feminine la tour.",
+    },
+  },
+
+  // droit: an entitlement, the academic subject, or the adverb "straight".
+  {
+    keys: ["droit"],
+    when: (context) => context.has(["tout droit"]),
+    sense: {
+      translation: "straight ahead",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["right", "law"],
+      explanation: "Tout droit is the direction straight ahead, unrelated to rights or law.",
+    },
+  },
+  {
+    keys: ["droit"],
+    when: (context) => context.around(["etudie", "etudier", "etudiant", "faculte", "avocat", "juriste", "licence", "master", "cours", "universite", "professeur"]),
+    sense: {
+      translation: "law",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["right", "straight"],
+      explanation: "In an academic context le droit is the subject of law — il étudie le droit.",
+    },
+  },
+  {
+    keys: ["droit"],
+    when: (context) => context.has(["le droit de", "droit a", "a le droit", "ont le droit", "avoir le droit", "mon droit", "son droit", "ses droits", "leurs droits", "droits de"]),
+    sense: {
+      translation: "right / entitlement",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["law", "straight"],
+      explanation: "Here droit is an entitlement — avoir le droit de means to have the right to.",
+    },
+  },
+
+  // place: a square, a seat, or room to fit into.
+  {
+    keys: ["place", "places"],
+    when: (context) => context.has(["plus de place", "pas de place", "de la place", "assez de place", "prend de la place", "manque de place"]),
+    sense: {
+      translation: "room / space",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["square", "seat"],
+      explanation: "With a quantity expression, place is room or space rather than a location.",
+    },
+  },
+  {
+    keys: ["place", "places"],
+    when: (context) => context.has(["sur la place", "place publique", "grande place", "place du", "place de la"]),
+    sense: {
+      translation: "square",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["room", "seat"],
+      explanation: "La place is the public square at the centre of a French town.",
+    },
+  },
+  {
+    keys: ["place", "places"],
+    when: (context) => context.has(["a ma place", "a ta place", "a sa place", "a votre place", "a leur place", "sur place"]),
+    sense: {
+      translation: "in someone's position / on the spot",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["square", "room"],
+      explanation: "À sa place means in his or her position; sur place means on the spot.",
+    },
+  },
+  {
+    keys: ["place", "places"],
+    when: (context) => context.around(["reserve", "reserver", "train", "avion", "cinema", "theatre", "concert", "spectacle", "billet", "billets"]),
+    sense: {
+      translation: "seat",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["square", "room"],
+      explanation: "When booking travel or a show, une place is a seat.",
+    },
+  },
+
+  // fait: the noun "fact" vs the verb faire, whose own sense depends on what
+  // follows it. "Il fait beau" is about the weather and has no English "make".
+  {
+    keys: ["fait"],
+    when: (context) =>
+      context.has(["il fait", "il faisait", "il fera"]) &&
+      context.around(["beau", "chaud", "froid", "mauvais", "nuit", "jour", "gris", "doux", "frais", "soleil", "sombre", "humide", "degres"]),
+    sense: {
+      translation: "it is (weather)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["does", "makes", "fact"],
+      explanation: "Il fait + a weather word is the impersonal weather frame: il fait beau means the weather is fine.",
+    },
+  },
+  {
+    keys: ["fait", "faits"],
+    when: (context) => ["un", "le", "les", "des", "ce", "ces", "certains"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "fact",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["does", "makes"],
+      explanation: "After a determiner, fait is the noun a fact — un fait important.",
+    },
+  },
+  {
+    keys: ["fait"],
+    when: (context) => !!context.previous && SUBJECT_PRONOUNS.includes(normaliseForMatch(context.previous)),
+    sense: {
+      translation: "does / makes",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["fact"],
+      explanation: "After a subject pronoun, fait is the verb faire: does or makes.",
+    },
+  },
+
+  // compte: an account, the act of counting, intending to do something, or
+  // mattering. Four unrelated meanings behind one very common form.
+  {
+    keys: ["compte", "comptes"],
+    when: (context) => context.around(["bancaire", "banque", "epargne", "courant", "client", "utilisateur", "ouvrir", "ouvre", "virement"]),
+    sense: {
+      translation: "account",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["count", "matters"],
+      explanation: "In a banking or sign-up context, un compte is an account.",
+    },
+  },
+  {
+    keys: ["compte", "comptent"],
+    when: (context) => context.has(["compte partir", "compte aller", "compte faire", "compte venir", "compte rester", "comptent partir", "compte se", "compte y"]),
+    sense: {
+      translation: "plans to / intends to",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["counts", "account"],
+      explanation: "Compter followed by an infinitive means to plan or intend to do something.",
+    },
+  },
+  {
+    keys: ["compte", "comptent"],
+    when: (context) => context.has(["compte beaucoup", "compte pour", "ca compte", "cela compte", "compte vraiment", "comptent beaucoup", "ce qui compte"]),
+    sense: {
+      translation: "matters / counts",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["account", "counts"],
+      explanation: "Cela compte beaucoup means it matters a great deal.",
+    },
+  },
+  {
+    keys: ["compte", "comptent"],
+    // "compter sur" (to rely on) has its own rule further down and must not be
+    // swallowed by the generic subject-pronoun reading.
+    when: (context) =>
+      !!context.previous &&
+      SUBJECT_PRONOUNS.includes(normaliseForMatch(context.previous)) &&
+      normaliseForMatch(context.next ?? "") !== "sur",
+    sense: {
+      translation: "counts",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["account", "matters"],
+      explanation: "After a subject pronoun with an object, compte is the verb to count.",
+    },
+  },
+  {
+    keys: ["compte", "comptes"],
+    when: (context) => ["un", "le", "mon", "ton", "son", "votre", "leur", "des", "les"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "account",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["count", "matters"],
+      explanation: "After a determiner, compte is normally the noun an account.",
+    },
+  },
+
+  // prendre: the verb is almost meaningless without its object.
+  // Deliberately not matching the past participle "pris": in a compound tense
+  // the grammar path produces the tense-correct "has taken", and a flat
+  // present-tense gloss here would throw that away.
+  {
+    keys: ["prend", "prends", "prennent", "prendre"],
+    lemmas: ["prendre"],
+    when: (context) => context.around(["train", "bus", "avion", "metro", "voiture", "taxi", "velo", "bateau", "ascenseur"]),
+    sense: {
+      translation: "takes (transport)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["takes", "has"],
+      explanation: "With a means of transport, prendre is to take or catch it.",
+    },
+  },
+  {
+    keys: ["prend", "prends", "prennent", "prendre"],
+    lemmas: ["prendre"],
+    when: (context) => context.around(["cafe", "the", "verre", "petit-dejeuner", "dejeuner", "diner", "repas", "biere", "medicament"]),
+    sense: {
+      translation: "has (food or drink)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["takes"],
+      explanation: "With food or drink, prendre means to have — il prend un café.",
+    },
+  },
+  {
+    keys: ["prend", "prends", "prennent", "prendre"],
+    lemmas: ["prendre"],
+    when: (context) => context.around(["decision", "decisions", "risque", "risques", "rendez-vous", "mesures", "photo", "note", "notes"]),
+    sense: {
+      translation: "makes / takes",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["takes"],
+      explanation: "Prendre une décision is to make a decision; French takes where English makes.",
+    },
+  },
+
+  // mettre: to put, to put on, or to take a length of time.
+  {
+    keys: ["met", "mets", "mettent", "mettre"],
+    lemmas: ["mettre"],
+    when: (context) => context.around(["manteau", "chapeau", "chaussures", "robe", "veste", "pull", "lunettes", "gants", "echarpe", "costume", "uniforme"]),
+    sense: {
+      translation: "puts on (clothing)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["puts"],
+      explanation: "With clothing, mettre is to put on rather than simply to put.",
+    },
+  },
+  {
+    keys: ["met", "mets", "mettent", "mettre", "mis"],
+    lemmas: ["mettre"],
+    when: (context) => context.has(["met une heure", "met deux heures", "met du temps", "mettre du temps", "met trois heures", "met une demi"]),
+    sense: {
+      translation: "takes (an amount of time)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["puts"],
+      explanation: "Mettre with a duration means to take that long — il met une heure pour venir.",
+    },
+  },
+
+  // suivre: to follow, or to take a course.
+  {
+    keys: ["suit", "suis", "suivent", "suivre", "suivi"],
+    lemmas: ["suivre"],
+    when: (context) => context.around(["cours", "formation", "etudes", "stage", "classe", "regime", "traitement", "lecon"]),
+    sense: {
+      translation: "takes (a course or programme)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["follows"],
+      explanation: "Suivre un cours is to take a class, not to follow it around.",
+    },
+  },
+
+  // trouver: to find, or to think something is a certain way.
+  {
+    keys: ["trouve", "trouves", "trouvent", "trouver"],
+    lemmas: ["trouver"],
+    when: (context) => context.has(["se trouve", "se trouvent", "se trouvait"]),
+    sense: {
+      translation: "is located",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["finds"],
+      explanation: "Se trouver describes where something is located.",
+    },
+  },
+  {
+    keys: ["trouve", "trouves", "trouvent"],
+    lemmas: ["trouver"],
+    // Deliberately not keyed on "je trouve" alone: "je trouve la clé" is an
+    // ordinary find. The opinion reading needs a complement clause or an
+    // evaluative adjective.
+    when: (context) =>
+      context.has(["trouve que", "trouve ca", "trouve cela", "trouvent que", "trouve qu'"]) ||
+      context.around(["interessant", "difficile", "facile", "beau", "bizarre", "etrange", "bon", "mauvais", "joli", "cher", "long"]),
+    sense: {
+      translation: "thinks / finds (an opinion)",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["finds"],
+      explanation: "Trouver que introduces an opinion — je trouve cela difficile means I think that is hard.",
+    },
+  },
+
+  // depuis: "since" a point in time, "for" a duration. English splits what
+  // French does not, so the complement decides which word is correct.
+  {
+    keys: ["depuis"],
+    when: (context) =>
+      /depuis (?:\d+|un|une|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|quelques|plusieurs|longtemps|peu)\b/.test(context.sentenceKey) &&
+      !/depuis (?:19|20)\d\d/.test(context.sentenceKey),
+    sense: {
+      translation: "for",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["since"],
+      explanation: "Before a length of time, depuis is English for — depuis trois ans means for three years.",
+    },
+  },
+  {
+    keys: ["depuis"],
+    sense: {
+      translation: "since",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["for", "from"],
+      explanation: "Before a point in time, depuis is since — depuis 2010, depuis hier.",
+    },
+  },
+
+  // bien: the adverb "well", the intensifier "quite", or the noun "good".
+  {
+    keys: ["bien"],
+    when: (context) => ["le", "du", "un", "les", "des"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "good / goods",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["well"],
+      explanation: "After a determiner, bien is a noun: the good, or goods and property.",
+    },
+  },
+  {
+    keys: ["bien"],
+    when: (context) => context.has(["bien des", "bien plus", "bien mieux", "bien trop", "bien avant", "bien apres"]),
+    sense: {
+      translation: "much / far",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["well"],
+      explanation: "Before a comparative or quantity, bien intensifies it — bien plus means far more.",
+    },
+  },
+  {
+    keys: ["bien"],
+    sense: {
+      translation: "well",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["quite", "indeed", "good"],
+      explanation: "As an adverb after a verb, bien means well — il travaille bien.",
+    },
+  },
+
+  // passer: "se passer" is to happen, which shares no English word with the
+  // ordinary "to pass" the dictionary leads with.
+  {
+    keys: ["passe", "passer", "passait", "passent"],
+    lemmas: ["passer"],
+    // Inversion keeps the pronoun between the auxiliary and the participle
+    // ("que s'est-il passé"), so the plain "s'est passé" string never matches.
+    when: (context) =>
+      context.has(["se passe", "s'est passe", "se passait", "se passent", "il se passe", "que se passe"]) ||
+      /s'est-\w+ passe|se passe-t-il|se sont passe/.test(context.sentenceKey),
+    sense: {
+      translation: "happens / happened",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["passes", "spends"],
+      explanation: "Se passer means to happen — que s'est-il passé means what happened.",
+    },
+  },
+
+  // arriver: to arrive somewhere, or for something to happen.
+  {
+    keys: ["arrive", "arrives", "arrivent", "arriver", "arrivait"],
+    lemmas: ["arriver"],
+    when: (context) =>
+      context.around(["demain", "hier", "matin", "soir", "heure", "heures", "gare", "aeroport", "train", "avion", "midi", "tard", "tot", "bientot"]),
+    sense: {
+      translation: "arrives",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["happens"],
+      explanation: "With a time or a place, arriver is to arrive.",
+    },
+  },
+
+  // personne: a person, or nobody under negation.
+  {
+    keys: ["personne"],
+    when: (context) => context.hasNegationCue && !["une", "la", "cette", "des", "les", "quelques"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "nobody / anyone",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["person"],
+      explanation: "With ne, personne is the negative pronoun nobody — il n'y a personne.",
+    },
+  },
+  {
+    keys: ["personne", "personnes"],
+    when: (context) => ["une", "la", "cette", "des", "les", "quelques", "deux", "trois"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "person",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["nobody"],
+      explanation: "After a determiner, personne is the ordinary noun a person.",
+    },
+  },
+
+  // pas: the negator, or a footstep.
+  {
+    keys: ["pas"],
+    when: (context) => ["un", "le", "les", "des", "ce", "mes", "ses", "premiers", "grands"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "step",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["not"],
+      explanation: "After a determiner, pas is the noun a step — un pas en avant.",
+    },
+  },
+  {
+    keys: ["pas"],
+    when: (context) => context.hasNegationCue,
+    sense: {
+      translation: "not",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["step"],
+      explanation: "Paired with ne, pas is the second half of the standard French negative.",
+    },
+  },
+
+  // livre: a book, or a pound.
+  {
+    keys: ["livre", "livres"],
+    when: (context) => context.around(["sterling", "euros", "kilo", "grammes", "poids", "beurre", "farine"]) || ["une", "deux"].includes(normaliseForMatch(context.previous ?? "")),
+    sense: {
+      translation: "pound",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["book"],
+      explanation: "Feminine une livre is a pound in weight or currency; masculine un livre is a book.",
+    },
+  },
+  {
+    keys: ["livre", "livres"],
+    sense: {
+      translation: "book",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["pound"],
+      explanation: "Masculine le livre is a book, which is overwhelmingly the reading sense.",
     },
   },
   {

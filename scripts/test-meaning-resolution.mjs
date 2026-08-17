@@ -278,14 +278,29 @@ console.log("--- One authoritative answer, not competing ones ---");
   check("a word-scoped alignment is allowed to answer", !result.abstained && !!result.displayEnglish, JSON.stringify(result));
 }
 {
-  // A late-loading article translation must not displace a confident answer.
-  const late = [{ french: "sur", english: "atop" }];
-  const result = resolve("Le livre est sur la table.", "sur", { alignments: late });
+  // A late-loading article translation must not displace a confident answer,
+  // and when it says the same thing it corroborates rather than competes.
+  const agreeing = [{ french: "sur", english: "on" }];
+  const result = resolve("Le livre est sur la table.", "sur", { alignments: agreeing });
   check(
-    "a late alignment does not displace a high-confidence local answer",
-    result.confidence === "high" && result.source !== "natural-alignment",
+    "a corroborating alignment does not displace the local answer",
+    result.confidence === "high" && result.source !== "natural-alignment" && result.displayEnglish === "on",
     `${result.source}/${result.confidence}: ${result.displayEnglish}`
   );
+  check("a corroborated answer does not escalate", shouldEscalateToAi(result) === false);
+}
+{
+  // Disagreement is a reason to doubt, not a reason to show both. The headline
+  // stays single; only the confidence and the escalation flag change.
+  const contradicting = [{ french: "sur", english: "underneath" }];
+  const result = resolve("Le livre est sur la table.", "sur", { alignments: contradicting });
+  check(
+    "a contradicting alignment lowers confidence instead of overruling",
+    result.confidence === "low" && result.source !== "natural-alignment",
+    `${result.source}/${result.confidence}: ${result.displayEnglish}`
+  );
+  check("a contradicted answer escalates rather than asserting", shouldEscalateToAi(result) === true);
+  check("disagreement still yields exactly one headline meaning", typeof result.displayEnglish === "string" && !result.displayEnglish.includes("/"));
 }
 {
   const result = resolve("Elle se rend compte du problème.", "compte");

@@ -251,4 +251,12 @@ export const newsSenseDictionary: DictionaryEntry[] = [
   { lemma: "sortie", forms: ["sorties"], translations: ["release", "exit", "outing"], partOfSpeech: "noun", gender: "feminine", cefr: "A2" },
   { lemma: "tournage", forms: ["tournages"], translations: ["filming", "shoot"], partOfSpeech: "noun", gender: "masculine", cefr: "B2" },
   { lemma: "diffusion", forms: ["diffusions"], translations: ["broadcast", "release", "distribution"], partOfSpeech: "noun", gender: "feminine", cefr: "B1" },
+
+  // Surfaced by the continuous-prose corpus (scripts/test-meaning-corpus.mjs),
+  // where the generated layer's leading gloss was wrong for ordinary reading:
+  // "amende" came back as "amends", "dirigeants" resolved through the verb
+  // diriger to "to lead", and "moyens" took the adjective sense "average".
+  { lemma: "amende", forms: ["amendes"], translations: ["fine", "penalty"], partOfSpeech: "noun", gender: "feminine", cefr: "B1", notes: "The court/traffic penalty, not the verb amender." },
+  { lemma: "dirigeant", forms: ["dirigeants", "dirigeante", "dirigeantes"], translations: ["leader", "executive", "senior official"], partOfSpeech: "noun", gender: "masculine", cefr: "B1", notes: "Noun in news copy; the verb diriger is a separate entry." },
+  { lemma: "moyens", translations: ["means", "resources", "funding"], partOfSpeech: "noun (plural)", gender: "masculine", cefr: "B1", notes: "Plural noun = means/resources. Singular moyen is the adjective average or the noun a way." },
 ];

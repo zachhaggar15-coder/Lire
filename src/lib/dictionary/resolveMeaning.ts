@@ -6,6 +6,7 @@ import {
   type ContextualTranslationGrammar,
   type ContextualTranslationResult,
 } from "@/lib/dictionary/contextualTranslation";
+import { isContextAmbiguous, sensesAgree } from "@/lib/dictionary/ambiguity";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import type { DictionaryExample, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { hashString } from "@/lib/hash";
@@ -254,15 +255,18 @@ export function resolveMeaning(input: ResolveMeaningInput): ResolvedMeaning {
     };
   }
 
-  // Tiers 3-5 — whatever contextual resolution settled on locally.
-  if (localAnswered && localConfidence !== "low") {
+  // Tiers 3-5 — whatever contextual resolution settled on locally, after
+  // asking whether a bare lexical answer is actually trustworthy for this word.
+  const graded = gradeLocalAnswer(contextual, lookup, tappedText, alignment, localConfidence);
+
+  if (localAnswered && graded !== "low") {
     return {
       ...base,
       displayFrench: contextual.expandedPhrase ?? contextual.selectedText,
       displayEnglish: contextual.contextualTranslation,
       partOfExpression: expressionMembership(contextual, tappedText),
       source: localSource,
-      confidence: localConfidence,
+      confidence: graded,
       alternatives: contextual.alternativeMeanings,
       explanation: contextual.explanation,
       abstained: false,
@@ -273,6 +277,23 @@ export function resolveMeaning(input: ResolveMeaningInput): ResolvedMeaning {
   // A low-confidence local answer is still shown — hedged, and flagged for an
   // AI upgrade — because a plausible lead gloss with a caveat helps more than
   // a blank. Nothing at all is the only case Lire refuses to guess at.
+  if (localAnswered && localConfidence !== "low" && graded === "low") {
+    // Downgraded by ambiguity or source disagreement rather than by the
+    // dictionary itself. Same treatment: shown, hedged, escalated.
+    return {
+      ...base,
+      displayFrench: contextual.expandedPhrase ?? contextual.selectedText,
+      displayEnglish: contextual.contextualTranslation,
+      partOfExpression: expressionMembership(contextual, tappedText),
+      source: localSource,
+      confidence: "low",
+      alternatives: contextual.alternativeMeanings,
+      explanation: contextual.explanation,
+      abstained: false,
+      wantsAiEscalation: true,
+    };
+  }
+
   if (localAnswered) {
     return {
       ...base,
@@ -333,6 +354,75 @@ export function shouldEscalateToAi(meaning: ResolvedMeaning): boolean {
 
 function confidenceRank(confidence: MeaningConfidence): number {
   return confidence === "high" ? 3 : confidence === "medium" ? 2 : 1;
+}
+
+/**
+ * Contextual sources that actually *chose a sense*, as opposed to merely
+ * describing the word's form.
+ *
+ * The distinction matters more than it looks. Grammar inference can tell you
+ * "fait" is third-person singular present without telling you whether the
+ * sentence means "does", "makes", or the noun "fact" — so a grammar-only
+ * result is still a bare lexical answer wearing a context label, and must not
+ * inherit a context rule's confidence.
+ */
+const SENSE_SELECTING_SOURCES = new Set<ContextualTranslationResult["source"]>([
+  "phrasebank",
+  "context-rule",
+  "pronoun",
+  "contraction",
+  "proper-noun",
+]);
+
+/**
+ * Final confidence for a locally-resolved answer, combining three signals the
+ * old source-trust-only model ignored.
+ *
+ * 1. Did anything actually select a sense? A phrase match or a context rule
+ *    did; a dictionary lookup or a bare grammar reading did not.
+ * 2. Is this a word whose meaning genuinely turns on the sentence? See
+ *    ambiguity.ts — this is what stopped `tour` from confidently meaning
+ *    "tower" in "c'est son tour", and what lets `chat` stay local.
+ * 3. Do the independent sources agree? Corroboration is evidence; material
+ *    disagreement is a reason to doubt whichever one happened to win.
+ *
+ * Only the grade changes. The UI still receives exactly one meaning — the
+ * extra sophistication decides how sure Lire claims to be and whether it
+ * quietly asks for help, never what the reader is shown competing against.
+ */
+function gradeLocalAnswer(
+  contextual: ContextualTranslationResult,
+  lookup: DictionaryLookupResult,
+  tappedText: string,
+  alignment: ResolvedTranslationAlignment | null,
+  localConfidence: MeaningConfidence
+): MeaningConfidence {
+  const senseWasSelected = SENSE_SELECTING_SOURCES.has(contextual.source);
+  const answer = contextual.contextualTranslation;
+
+  // A natural article translation is independent evidence even when its span
+  // is too wide to *be* the answer, so it is consulted here regardless of
+  // whether it passed usableAsAnswer above.
+  const alignmentEnglish = alignment?.english ?? null;
+  const corroborated = !!alignmentEnglish && sensesAgree(answer, alignmentEnglish);
+  const contradicted = !!alignmentEnglish && !corroborated && isWordScopedAlignment(alignment);
+
+  if (senseWasSelected) {
+    // A rule picked the sense and the article's own translation agrees: the
+    // strongest local evidence available short of asking a model.
+    if (corroborated) return "high";
+    // A rule picked one sense and a tightly-scoped alignment picked another.
+    // Neither is authoritative enough to overrule the other, so say less.
+    if (contradicted) return "low";
+    return localConfidence;
+  }
+
+  // Nothing chose a sense. For a word whose meaning depends on the sentence,
+  // that is precisely the case where a leading gloss is a coin flip.
+  if (isContextAmbiguous(lookup, tappedText)) return "low";
+  if (contradicted) return "low";
+  if (corroborated) return "high";
+  return localConfidence;
 }
 
 /**

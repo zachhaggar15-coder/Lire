@@ -404,20 +404,27 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
     }
   }
 
-  for (const guess of guessLemmas(clean)) {
-    const viaGuess =
-      layered(byLemma.get(guess)) ??
-      layered(byForm.get(guess)) ??
-      layered(generatedByLemma.get(guess), "generated") ??
-      layered(generatedByForm.get(guess), "generated") ??
-      layered(getCustomDictionaryEntry(guess), "custom");
-    if (viaGuess) {
-      // An exact hit on the guessed lemma is safe; anything else crossed a
-      // form boundary we inferred, so the stored part of speech may not
-      // describe the word the reader actually tapped.
-      const exactLemmaHit = viaGuess.entry.lemma.toLowerCase() === guess;
-      const result = toResult(rawWord, viaGuess.entry, viaGuess.layer);
-      return exactLemmaHit && guess === clean ? result : withUncertainPartOfSpeech(result);
+  // The lemmatiser is a single-word suffix stripper, so running it over a
+  // multi-word key produces nonsense: asked for the phrase "il porte les
+  // valises jusqu'à la", it stripped its way to the entry for "à la" and
+  // reported the whole clause as a fixed expression meaning "a la". Phrase
+  // keys must match exactly or not at all.
+  if (!clean.includes(" ")) {
+    for (const guess of guessLemmas(clean)) {
+      const viaGuess =
+        layered(byLemma.get(guess)) ??
+        layered(byForm.get(guess)) ??
+        layered(generatedByLemma.get(guess), "generated") ??
+        layered(generatedByForm.get(guess), "generated") ??
+        layered(getCustomDictionaryEntry(guess), "custom");
+      if (viaGuess) {
+        // An exact hit on the guessed lemma is safe; anything else crossed a
+        // form boundary we inferred, so the stored part of speech may not
+        // describe the word the reader actually tapped.
+        const exactLemmaHit = viaGuess.entry.lemma.toLowerCase() === guess;
+        const result = toResult(rawWord, viaGuess.entry, viaGuess.layer);
+        return exactLemmaHit && guess === clean ? result : withUncertainPartOfSpeech(result);
+      }
     }
   }
 

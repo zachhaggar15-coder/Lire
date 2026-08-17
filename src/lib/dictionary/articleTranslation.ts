@@ -144,6 +144,10 @@ function lookupPhrase(words: string[]): { key: string; lookup: ReturnType<typeof
 
 function isPhraseLookup(lookup: ReturnType<typeof lookupWord>): boolean {
   if (lookup.source === "missing" || !lookup.translations[0]) return false;
+  // A fixed expression has to match exactly. An entry reached by a rule-based
+  // lemma guess is, by definition, not the phrase that was asked for — and
+  // treating one as such reported an entire clause as an idiom.
+  if (lookup.partOfSpeechUncertain) return false;
   const part = (lookup.partOfSpeech ?? "").toLowerCase();
   if (part.includes("proper noun")) return false;
   return (
