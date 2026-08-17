@@ -75,10 +75,17 @@ export function buildInferenceChallenge(
   word: string,
   lookup: DictionaryLookupResult,
   contextSentence: string,
-  sentenceTranslation: string
+  sentenceTranslation: string,
+  /**
+   * The contextual meaning to mark as correct, when the caller has resolved
+   * one. Without it the correct answer is the dictionary's leading gloss,
+   * which for a polysemous word can be a sense the sentence isn't using — so
+   * a reader who inferred correctly would be marked wrong.
+   */
+  answerOverride?: string | null
 ): InferenceChallenge | null {
   if (lookup.source !== "local" || lookup.translations.length === 0) return null;
-  const answer = directDefinition(lookup);
+  const answer = answerOverride?.trim() || directDefinition(lookup);
   const distractors = unique(distractorsFor(lookup).filter((choice) => choice.toLowerCase() !== answer.toLowerCase()));
   if (distractors.length < 2) return null;
   const { choices, answerIndex } = placeAnswer(answer, distractors, word);

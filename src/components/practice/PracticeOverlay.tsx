@@ -10,6 +10,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
+import type { MeaningInferenceExercise } from "@/lib/practice/meaningInference";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
@@ -27,6 +28,7 @@ type ActivityResult = "correct" | "incorrect" | null;
 function statKindFor(activity: PracticeActivity): PracticeExerciseType {
   if (activity.kind === "reconstruction") return "reconstruction";
   if (activity.kind === "paraphrase") return "paraphrase";
+  if (activity.kind === "inference") return "inference";
   return activity.exercise.kind === "word" ? "clozeWord" : "clozePhrase";
 }
 
@@ -157,6 +159,12 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
                 key={`cloze-${index}-${activity.exercise.kind}`}
                 exercise={activity.exercise}
                 onDone={(correct) => handleActivityDone(activity.exercise.kind === "word" ? "Word completed" : "Phrase completed", activity, correct)}
+              />
+            ) : activity.kind === "inference" ? (
+              <InferenceActivity
+                key={`inference-${index}`}
+                exercise={activity.exercise}
+                onDone={(correct) => handleActivityDone("Meaning inferred", activity, correct)}
               />
             ) : (
               <ParaphraseActivity
@@ -477,6 +485,75 @@ function ParaphraseActivity({ exercise, onDone }: { exercise: ParaphraseExercise
           </>
         )}
       </div>
+    </section>
+  );
+}
+
+/**
+ * "What did this word mean here?" — the inference question, in the place it
+ * belongs. In the reader it stood between a reader and the help they had just
+ * asked for; here they opted into practising, so working it out from context
+ * is the exercise rather than a toll.
+ */
+function InferenceActivity({
+  exercise,
+  onDone,
+}: {
+  exercise: MeaningInferenceExercise;
+  onDone: (correct: boolean) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const { challenge } = exercise;
+  const answered = selected !== null;
+  const correct = selected === challenge.answerIndex;
+
+  return (
+    <section className="rounded-card border border-cream-dark bg-cream-card p-4">
+      <p className="ligne-label">Meaning from context</p>
+      <p className="mt-3 font-french text-lg leading-relaxed text-ink">{exercise.contextSentence}</p>
+      <p className="mt-3 text-sm text-ink-muted">
+        What does <span className="font-french font-bold text-ink">{challenge.word}</span> mean here?
+      </p>
+
+      <div className="mt-4 grid gap-2" role="radiogroup" aria-label="Possible meanings">
+        {challenge.choices.map((choice, choiceIndex) => {
+          const isAnswer = choiceIndex === challenge.answerIndex;
+          const isSelected = selected === choiceIndex;
+          return (
+            <button
+              key={choice}
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              disabled={answered}
+              onClick={() => {
+                setSelected(choiceIndex);
+                onDone(choiceIndex === challenge.answerIndex);
+              }}
+              className={`min-h-12 rounded-xl px-3 py-2 text-left text-sm font-semibold ${
+                answered && isAnswer
+                  ? "bg-emerald-100 text-emerald-800"
+                  : answered && isSelected
+                    ? "bg-rose-100 text-rose-800"
+                    : "bg-cream text-ink"
+              }`}
+            >
+              {choice}
+            </button>
+          );
+        })}
+      </div>
+
+      {challenge.frenchSynonym && (
+        <p className="mt-3 text-xs text-ink-muted">
+          French synonym: <span className="font-french font-semibold text-ink">{challenge.frenchSynonym}</span>
+        </p>
+      )}
+      {answered && (
+        <p className={`mt-3 text-sm font-semibold ${correct ? "text-emerald-700" : "text-rose-700"}`}>
+          {correct ? "Inferred correctly." : `It means “${challenge.directDefinition}” here.`}
+        </p>
+      )}
     </section>
   );
 }

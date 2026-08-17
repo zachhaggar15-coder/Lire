@@ -1,4 +1,4 @@
-import type { DictionaryEntry, DictionaryLookupResult } from "@/lib/dictionary/types";
+import type { DictionaryEntry, DictionaryLayer, DictionaryLookupResult } from "@/lib/dictionary/types";
 import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { coreSenseDictionary } from "@/data/dictionaries/core-senses";
@@ -28,45 +28,49 @@ const byForm = new Map<string, DictionaryEntry>();
 const properByLemma = new Map<string, DictionaryEntry>();
 const properByForm = new Map<string, DictionaryEntry>();
 
-for (const entry of frEnDictionary) {
-  byLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    byForm.set(form.toLowerCase(), entry);
+/**
+ * Which layer each indexed entry came from. Keyed by object identity because
+ * the lemma/form maps deliberately let later layers overwrite earlier ones,
+ * so the key alone can't say who won. Entry objects are unique per layer (each
+ * data file builds its own), and the generated layer copies its entries at
+ * index time, so identity is stable for the process lifetime.
+ */
+const layerByEntry = new Map<DictionaryEntry, DictionaryLayer>();
+
+function indexLayer(
+  entries: readonly DictionaryEntry[],
+  layer: DictionaryLayer,
+  lemmaMap: Map<string, DictionaryEntry>,
+  formMap: Map<string, DictionaryEntry>
+): void {
+  for (const entry of entries) {
+    layerByEntry.set(entry, layer);
+    lemmaMap.set(entry.lemma.toLowerCase(), entry);
+    for (const form of entry.forms ?? []) {
+      formMap.set(form.toLowerCase(), entry);
+    }
   }
 }
+
+indexLayer(frEnDictionary, "curated", byLemma, byForm);
 
 // News/common-reading overrides intentionally win over the older curated
 // starter entries and the broad generated WikDict layer. This fixes cases
 // where a generated first gloss is technically valid but wrong for articles
 // ("escalade" -> escalation before rock climbing, "frappes" -> strikes
 // before the verb "to hit").
-for (const entry of newsSenseDictionary) {
-  byLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    byForm.set(form.toLowerCase(), entry);
-  }
-}
+indexLayer(newsSenseDictionary, "news", byLemma, byForm);
 
 // Core high-frequency vocabulary. These are single words a reader meets in
 // almost every sentence and which previously had no curated entry at all, so
 // they resolved through the generated layer's arbitrary sense order — "sur"
 // came back as "sour", "moi" as "ego", "ne" as "NE". See core-senses.ts.
-for (const entry of coreSenseDictionary) {
-  byLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    byForm.set(form.toLowerCase(), entry);
-  }
-}
+indexLayer(coreSenseDictionary, "core", byLemma, byForm);
 
 // Phrase-bank entries are intentionally high priority: if a reader long-presses
 // "mettre fin à" or "sur fond de", the phrase meaning should win before any
 // generated literal word sense can produce a plausible-but-wrong gloss.
-for (const entry of phraseBankDictionary) {
-  byLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    byForm.set(form.toLowerCase(), entry);
-  }
-}
+indexLayer(phraseBankDictionary, "phrase-bank", byLemma, byForm);
 
 // Proper nouns stay in their own maps and only claim a general-lookup slot
 // when no ordinary word already owns it — as a lemma *or* as an inflected
@@ -76,6 +80,7 @@ for (const entry of phraseBankDictionary) {
 // "une pièce claire" was told the word meant "Claire". A capitalised
 // occurrence still resolves to the name through properByLemma below.
 for (const entry of properNounDictionary) {
+  layerByEntry.set(entry, "proper-noun");
   const lemmaKey = entry.lemma.toLowerCase();
   properByLemma.set(lemmaKey, entry);
   if (!byLemma.has(lemmaKey) && !byForm.has(lemmaKey)) byLemma.set(lemmaKey, entry);
@@ -158,6 +163,7 @@ export function ensureGeneratedDictionary(): Promise<void> {
         for (const raw of entries) {
           // Reorder once here, at index time, rather than on every lookup.
           const entry: DictionaryEntry = { ...raw, translations: preferPlainGlosses(raw.translations) };
+          layerByEntry.set(entry, "generated");
           generatedByLemma.set(entry.lemma.toLowerCase(), entry);
           for (const form of entry.forms ?? []) {
             generatedByForm.set(form.toLowerCase(), entry);
@@ -188,12 +194,7 @@ function warmGeneratedDictionaryInBackground(): void {
   void ensureGeneratedDictionary();
 }
 
-for (const entry of articleCoverageDictionary) {
-  articleCoverageByLemma.set(entry.lemma.toLowerCase(), entry);
-  for (const form of entry.forms ?? []) {
-    articleCoverageByForm.set(form.toLowerCase(), entry);
-  }
-}
+indexLayer(articleCoverageDictionary, "article-coverage", articleCoverageByLemma, articleCoverageByForm);
 
 const enByLemma = new Map<string, DictionaryEntry>();
 const enByForm = new Map<string, DictionaryEntry>();
@@ -224,13 +225,30 @@ function withUncertainPartOfSpeech(result: DictionaryLookupResult): DictionaryLo
   return { ...result, partOfSpeechUncertain: true };
 }
 
-function toResult(input: string, entry: DictionaryEntry | null): DictionaryLookupResult {
+/**
+ * The layer an entry was indexed under.
+ *
+ * Entries reached through the browser-only custom store and the runtime
+ * proper-noun fallback are built fresh on each call, so they never appear in
+ * layerByEntry; they're identified by shape instead. Anything else with no
+ * recorded layer is treated as generated — the least-trusted reading, which is
+ * the safe default for a source we can't vouch for.
+ */
+function layerOf(entry: DictionaryEntry): DictionaryLayer {
+  const recorded = layerByEntry.get(entry);
+  if (recorded) return recorded;
+  if ((entry.partOfSpeech ?? "").toLowerCase().includes("proper noun")) return "proper-noun";
+  return "generated";
+}
+
+function toResult(input: string, entry: DictionaryEntry | null, layer?: DictionaryLayer): DictionaryLookupResult {
   if (!entry) {
     return {
       input,
       lemma: null,
       translations: [],
       partOfSpeech: null,
+      layer: null,
       gender: null,
       frequencyRank: null,
       cefr: null,
@@ -243,6 +261,7 @@ function toResult(input: string, entry: DictionaryEntry | null): DictionaryLooku
     lemma: entry.lemma,
     translations: entry.translations,
     partOfSpeech: entry.partOfSpeech ?? null,
+    layer: layer ?? layerOf(entry),
     gender: entry.gender ?? null,
     frequencyRank: entry.frequencyRank ?? null,
     cefr: entry.cefr ?? null,
@@ -257,15 +276,25 @@ export interface LookupContext {
   nextWord?: string | null;
 }
 
-function lookupExact(key: string): DictionaryEntry | null {
+/** An entry plus the layer it came from, so callers can label provenance the maps alone can't reveal. */
+interface LayeredEntry {
+  entry: DictionaryEntry;
+  layer: DictionaryLayer;
+}
+
+function layered(entry: DictionaryEntry | null | undefined, layer?: DictionaryLayer): LayeredEntry | null {
+  return entry ? { entry, layer: layer ?? layerOf(entry) } : null;
+}
+
+function lookupExact(key: string): LayeredEntry | null {
   return (
-    byLemma.get(key) ??
-    byForm.get(key) ??
-    generatedByLemma.get(key) ??
-    generatedByForm.get(key) ??
-    getCustomDictionaryEntry(key) ??
-    articleCoverageByLemma.get(key) ??
-    articleCoverageByForm.get(key) ??
+    layered(byLemma.get(key)) ??
+    layered(byForm.get(key)) ??
+    layered(generatedByLemma.get(key), "generated") ??
+    layered(generatedByForm.get(key), "generated") ??
+    layered(getCustomDictionaryEntry(key), "custom") ??
+    layered(articleCoverageByLemma.get(key), "article-coverage") ??
+    layered(articleCoverageByForm.get(key), "article-coverage") ??
     null
   );
 }
@@ -321,15 +350,15 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
 
   if (prev && next) {
     const threeWord = lookupExact(`${prev} ${clean} ${next}`);
-    if (threeWord) return toResult(rawWord, threeWord);
+    if (threeWord) return toResult(rawWord, threeWord.entry, threeWord.layer);
   }
   if (prev) {
     const phrase = lookupExact(`${prev} ${clean}`);
-    if (phrase) return toResult(rawWord, phrase);
+    if (phrase) return toResult(rawWord, phrase.entry, phrase.layer);
   }
   if (next) {
     const phrase = lookupExact(`${clean} ${next}`);
-    if (phrase) return toResult(rawWord, phrase);
+    if (phrase) return toResult(rawWord, phrase.entry, phrase.layer);
   }
 
   const exact = byLemma.get(clean);
@@ -340,7 +369,7 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
 
   if (looksLikeProperNoun(rawWord)) {
     const proper = properByLemma.get(clean) ?? properByForm.get(clean);
-    if (proper) return toResult(rawWord, proper);
+    if (proper) return toResult(rawWord, proper, "proper-noun");
   }
 
   // Past the curated layer: whatever this word is, the broad layer is the one
@@ -348,16 +377,16 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   warmGeneratedDictionaryInBackground();
 
   const generatedExact = generatedByLemma.get(clean);
-  if (generatedExact) return toResult(rawWord, generatedExact);
+  if (generatedExact) return toResult(rawWord, generatedExact, "generated");
 
   const generatedViaForm = generatedByForm.get(clean);
-  if (generatedViaForm) return toResult(rawWord, generatedViaForm);
+  if (generatedViaForm) return toResult(rawWord, generatedViaForm, "generated");
 
   const customExact = getCustomDictionaryEntry(clean);
-  if (customExact) return toResult(rawWord, customExact);
+  if (customExact) return toResult(rawWord, customExact, "custom");
 
   const articleCoverageExact = articleCoverageByLemma.get(clean) ?? articleCoverageByForm.get(clean);
-  if (articleCoverageExact) return toResult(rawWord, articleCoverageExact);
+  if (articleCoverageExact) return toResult(rawWord, articleCoverageExact, "article-coverage");
 
   // Tokenisation intentionally keeps common French elisions together so the
   // reader can select what it sees (d'épices, l'école, qu'il). If the whole
@@ -368,27 +397,34 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   if (elision?.[1]) {
     const tail = elision[1];
     const exactTail = lookupExact(tail);
-    if (exactTail) return toResult(rawWord, exactTail);
+    if (exactTail) return toResult(rawWord, exactTail.entry, exactTail.layer);
     for (const guess of guessLemmas(tail)) {
       const viaElidedGuess = lookupExact(guess);
-      if (viaElidedGuess) return withUncertainPartOfSpeech(toResult(rawWord, viaElidedGuess));
+      if (viaElidedGuess) return withUncertainPartOfSpeech(toResult(rawWord, viaElidedGuess.entry, viaElidedGuess.layer));
     }
   }
 
-  for (const guess of guessLemmas(clean)) {
-    const viaGuess =
-      byLemma.get(guess) ??
-      byForm.get(guess) ??
-      generatedByLemma.get(guess) ??
-      generatedByForm.get(guess) ??
-      getCustomDictionaryEntry(guess);
-    if (viaGuess) {
-      // An exact hit on the guessed lemma is safe; anything else crossed a
-      // form boundary we inferred, so the stored part of speech may not
-      // describe the word the reader actually tapped.
-      const exactLemmaHit = viaGuess.lemma.toLowerCase() === guess;
-      const result = toResult(rawWord, viaGuess);
-      return exactLemmaHit && guess === clean ? result : withUncertainPartOfSpeech(result);
+  // The lemmatiser is a single-word suffix stripper, so running it over a
+  // multi-word key produces nonsense: asked for the phrase "il porte les
+  // valises jusqu'à la", it stripped its way to the entry for "à la" and
+  // reported the whole clause as a fixed expression meaning "a la". Phrase
+  // keys must match exactly or not at all.
+  if (!clean.includes(" ")) {
+    for (const guess of guessLemmas(clean)) {
+      const viaGuess =
+        layered(byLemma.get(guess)) ??
+        layered(byForm.get(guess)) ??
+        layered(generatedByLemma.get(guess), "generated") ??
+        layered(generatedByForm.get(guess), "generated") ??
+        layered(getCustomDictionaryEntry(guess), "custom");
+      if (viaGuess) {
+        // An exact hit on the guessed lemma is safe; anything else crossed a
+        // form boundary we inferred, so the stored part of speech may not
+        // describe the word the reader actually tapped.
+        const exactLemmaHit = viaGuess.entry.lemma.toLowerCase() === guess;
+        const result = toResult(rawWord, viaGuess.entry, viaGuess.layer);
+        return exactLemmaHit && guess === clean ? result : withUncertainPartOfSpeech(result);
+      }
     }
   }
 
@@ -396,10 +432,10 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   if (apostropheIndex >= 0 && apostropheIndex < rawWord.length - 1) {
     const elidedTail = rawWord.slice(apostropheIndex + 1);
     const elidedProper = fallbackProperNoun(elidedTail);
-    if (elidedProper) return toResult(rawWord, elidedProper);
+    if (elidedProper) return toResult(rawWord, elidedProper, "proper-noun");
   }
 
-  return toResult(rawWord, fallbackProperNoun(rawWord));
+  return toResult(rawWord, fallbackProperNoun(rawWord), "proper-noun");
 }
 
 /**

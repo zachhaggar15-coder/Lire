@@ -247,6 +247,31 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("avoir pour objectif de", ["to aim to", "to have the objective of"], "verb phrase", "B2", ["a pour objectif de", "ont pour objectif de"]),
   phrase("tenir compte de", ["to take into account"], "verb phrase", "B1", ["tient compte de", "tiennent compte de", "tenu compte de"]),
   phrase("prendre en compte", ["to take into account", "to consider"], "verb phrase", "B1", ["prend en compte", "prennent en compte", "pris en compte", "prise en compte"]),
+
+  // Verb + governed preposition, where the preposition changes the meaning
+  // outright. Candidate discovery finds these from the lexicon and handles
+  // conjugation itself, so only the citation form is needed here.
+  phrase("passer à", ["to move on to", "to go on to"], "verb phrase", "B1", ["passe a", "passons a", "passer a"]),
+  phrase("passer par", ["to go through", "to go via"], "verb phrase", "B1"),
+  phrase("passer pour", ["to be taken for", "to pass as"], "verb phrase", "B2"),
+  phrase("se passer de", ["to do without"], "verb phrase", "B2", ["se passe de", "s'est passee de", "s'est passe de"]),
+  phrase("tenir le coup", ["to hold out", "to cope"], "verb phrase", "B2", ["tient le coup", "tenu le coup"]),
+  phrase("faire face à", ["to face", "to deal with"], "verb phrase", "B1", ["fait face a", "font face a"]),
+  phrase("mettre au point", ["to develop", "to finalise", "to perfect"], "verb phrase", "B2", ["met au point", "mis au point"]),
+  phrase("s'en sortir", ["to manage", "to get by", "to pull through"], "verb phrase", "B2", ["s'en sort", "s'en sortent"]),
+  phrase("avoir beau", ["however much one does", "in vain"], "verb phrase", "C1", ["a beau", "ont beau"]),
+  phrase("être censé", ["to be supposed to"], "verb phrase", "B2", ["est cense", "sont censes", "etait cense"]),
+
+  // Figurative uses whose literal reading is actively misleading.
+  phrase("prendre son temps", ["to take one's time"], "verb phrase", "A2", ["prend son temps", "prenez votre temps"]),
+  phrase("donner un coup de main", ["to lend a hand", "to help out"], "verb phrase", "B1", ["donne un coup de main"]),
+  phrase("avoir le cafard", ["to feel down", "to have the blues"], "verb phrase", "B2", ["a le cafard"]),
+  phrase("coûter les yeux de la tête", ["to cost a fortune"], "verb phrase", "B2", ["coute les yeux de la tete"]),
+  phrase("tomber dans les pommes", ["to faint", "to pass out"], "verb phrase", "B2", ["tombe dans les pommes"]),
+  phrase("mettre les pieds dans le plat", ["to put one's foot in it"], "verb phrase", "C1", ["met les pieds dans le plat"]),
+  phrase("faire la tête", ["to sulk"], "verb phrase", "B1", ["fait la tete"]),
+  phrase("tourner la page", ["to move on", "to turn the page"], "verb phrase", "B2", ["tourne la page", "tourne la page"]),
+  phrase("ouvrir la porte à", ["to open the door to", "to pave the way for"], "verb phrase", "B2", ["ouvre la porte a", "ouvert la porte a"]),
   phrase("rendre compte de", ["to report on", "to give an account of"], "verb phrase", "B2", ["rend compte de", "rendent compte de", "rendu compte de"]),
   phrase("se rendre compte de", ["to realize"], "verb phrase", "B1", ["se rend compte de", "se rendent compte de", "s'est rendu compte de"]),
   phrase("faire preuve de", ["to show", "to demonstrate"], "verb phrase", "B2", ["fait preuve de", "font preuve de", "a fait preuve de"]),

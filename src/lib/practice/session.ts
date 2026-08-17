@@ -9,11 +9,16 @@ import {
 import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
 import { buildGrammarNotes, type GrammarNote } from "@/lib/practice/grammarNotes";
 import { canSpeak } from "@/lib/speech";
+import { buildMeaningInferenceExercises, type MeaningInferenceExercise } from "@/lib/practice/meaningInference";
+import { getKnownWords } from "@/lib/knownWords";
 import type { ParaphraseExercise } from "@/lib/practice/paraphrase";
 
 export type PracticeActivity =
   | { kind: "reconstruction"; exercise: SentenceReconstructionExercise }
   | { kind: "cloze"; exercise: ClozeExercise }
+  // "Infer this word from context" — relocated here from the reading flow,
+  // where it used to gate word taps behind a quiz. See meaningInference.ts.
+  | { kind: "inference"; exercise: MeaningInferenceExercise }
   // Generated asynchronously (LLM-backed) — never produced by buildPracticePlan
   // itself (which stays fully synchronous); PracticeOverlay appends this kind
   // after the fact if generation succeeds. See paraphrase.ts.
@@ -58,6 +63,20 @@ export function buildPracticePlan(text: ReadingText): PracticePlan {
       return cloze ? { kind: "cloze", exercise: cloze } : null;
     },
   ];
+
+  // Inference questions are seeded first so a session always opens with at
+  // most a couple of them and the round-robin below fills the rest — they draw
+  // from a much smaller eligible pool than the other builders, so competing in
+  // the rotation would usually leave them out entirely.
+  const inferenceExercises = buildMeaningInferenceExercises(text, new Set(getKnownWords()), 2);
+  for (const exercise of inferenceExercises) {
+    if (activities.length >= MAX_ACTIVITIES - 1) break;
+    activities.push({ kind: "inference", exercise });
+    // Claim the sentence so the round-robin below doesn't build a second
+    // activity from it — being asked about the same sentence twice in one
+    // session reads as the app repeating itself.
+    used.add(exercise.sentenceIndex);
+  }
 
   let reconstructionPoolIndex = 0;
   let builderIndex = 0;

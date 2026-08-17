@@ -57,6 +57,15 @@ export interface SavedWord {
   frequencyRank: number | null;
   /** The full sentence the word was tapped in, exactly as it appeared in the article. */
   articleContextSentence: string;
+  /**
+   * The contextual meaning Lire showed when this word was saved — the answer
+   * the reader actually agreed to study. Kept apart from `translations` so the
+   * study view can show "meant X here" alongside the word's other senses.
+   * Absent on words saved before this was recorded.
+   */
+  contextualMeaning?: string | null;
+  /** The expression this word was part of where it was saved, e.g. "se rendre compte". */
+  partOfExpression?: string | null;
   /** A short, simple learner-friendly French example sentence (not from the article). */
   exampleSentenceFr: string;
   /** English translation of exampleSentenceFr. */
