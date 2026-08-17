@@ -335,13 +335,54 @@ export function buildContextualTranslation(input: BuildContextualTranslationInpu
     partOfSpeech: fallbackLookup.partOfSpeech,
     grammar,
     alternativeMeanings: withoutPrimary(fallbackLookup.translations, contextualTranslation),
-    confidence: grammar ? "medium" : "low",
+    confidence: dictionaryConfidence(fallbackLookup),
     source: grammar ? "grammar" : "dictionary",
     explanation: grammar
       ? "The dictionary meaning is combined with the visible verb/adjective form in this sentence."
       : "No stronger local context signal was found, so this is the base dictionary meaning.",
     cacheKey: contextualTranslationCacheKey(cacheBase),
   };
+}
+
+/**
+ * How much to trust a plain dictionary answer, based on which layer produced
+ * it rather than on the fact that no context rule fired.
+ *
+ * The old rule graded *every* rule-less answer "low", which conflated two very
+ * different situations: "sur" -> "on" came from core-senses.ts, where a person
+ * decided that gloss should lead, while "case" -> "double income, no kids"
+ * came from the bulk WikDict import, where nothing did. Treating both as low
+ * confidence made the signal useless — and now that low confidence is what
+ * triggers hedging and AI escalation in resolveMeaning.ts, it would have made
+ * Lire hedge on the most common words in the language.
+ *
+ * A lemma guess drops the grade one step: the entry may describe a different
+ * word class from the form actually tapped.
+ */
+function dictionaryConfidence(lookup: DictionaryLookupResult): ContextualTranslationConfidence {
+  const base = baseLayerConfidence(lookup);
+  if (!lookup.partOfSpeechUncertain) return base;
+  return base === "high" ? "medium" : "low";
+}
+
+function baseLayerConfidence(lookup: DictionaryLookupResult): ContextualTranslationConfidence {
+  switch (lookup.layer) {
+    case "phrase-bank":
+    case "core":
+    case "news":
+    case "curated":
+    case "custom":
+    case "proper-noun":
+      return "high";
+    case "article-coverage":
+      return "medium";
+    case "generated":
+      // Sense order carries no editorial judgement here, so a single-sense
+      // entry is the only shape whose leading gloss is unambiguous.
+      return lookup.translations.length === 1 ? "medium" : "low";
+    default:
+      return "low";
+  }
 }
 
 function decodeHtmlEntity(entity: string): string {
@@ -708,6 +749,29 @@ const WORK_WORDS = ["emploi", "poste", "travail", "entreprise", "salarie", "sala
 const SCHOOL_WORDS = ["ecole", "école", "classe", "professeur", "universite", "université", "cours", "eleves", "élèves", "etudiants", "étudiants"];
 const WEATHER_WORDS = ["pluie", "neige", "soleil", "meteo", "météo", "vent", "orage", "temperature", "température", "nuage"];
 
+/**
+ * Words that mark what follows as a noun phrase. Several French words are a
+ * noun and a verb form at once — "sens" is both "meaning" and "I feel", "place"
+ * is both "square/room" and "I place" — and the dictionary can only store one
+ * of them as the leading gloss. A determiner immediately before the word is the
+ * single strongest available signal that the noun reading is the right one.
+ */
+const DETERMINERS = [
+  "le", "la", "les", "l'", "un", "une", "des", "du", "de", "d'", "au", "aux",
+  "ce", "cet", "cette", "ces", "mon", "ma", "mes", "ton", "ta", "tes",
+  "son", "sa", "ses", "notre", "nos", "votre", "vos", "leur", "leurs",
+  "quel", "quelle", "chaque", "tout", "toute", "meme", "autre",
+];
+
+/** Subject pronouns that mark what follows as a conjugated verb rather than a noun. */
+const SUBJECT_PRONOUNS = ["je", "j'", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"];
+
+/** Forms of être plus other state verbs, after which "encore" reads as "still" rather than "again". */
+const STATE_VERB_FORMS = [
+  "est", "sont", "etait", "etaient", "suis", "es", "sommes", "etes",
+  "sera", "seront", "reste", "restent", "restait", "demeure", "a", "ont", "avait",
+];
+
 const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   {
     keys: ["actuellement"],
@@ -1042,7 +1106,9 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
   {
     keys: ["temps"],
     lemmas: ["temps"],
-    when: (context) => context.around(WEATHER_WORDS),
+    // "quel temps fait-il" carries no weather vocabulary at all — the giveaway
+    // is the impersonal "faire" frame that only ever asks about weather.
+    when: (context) => context.around(WEATHER_WORDS) || context.has(["quel temps", "temps qu'il fait", "beau temps", "mauvais temps"]),
     sense: {
       translation: "weather",
       source: "context-rule",
@@ -1060,6 +1126,66 @@ const CONTEXT_SENSE_RULES: ContextSenseRule[] = [
       confidence: "medium",
       alternativeMeanings: ["weather"],
       explanation: "Without weather cues, temps usually means time.",
+    },
+  },
+  // "sens" is a noun (meaning, direction) and a conjugated form of sentir (I/you
+  // feel) at once, and the dictionary stores only the verb. Without a rule here
+  // a reader tapping "le sens de la phrase" was told the word meant "to feel".
+  {
+    keys: ["sens"],
+    when: (context) => !!context.previous && SUBJECT_PRONOUNS.includes(normaliseForMatch(context.previous)),
+    sense: {
+      translation: "feel",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["meaning", "direction"],
+      explanation: "After a subject pronoun, sens is the verb sentir: I feel or you feel.",
+    },
+  },
+  {
+    keys: ["sens"],
+    when: (context) =>
+      context.around(["circulation", "route", "rue", "aiguilles", "montre", "interdit", "unique", "inverse", "giratoire", "marche", "direction"]),
+    sense: {
+      translation: "direction",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["meaning", "way"],
+      explanation: "In a traffic or movement context, sens is the direction something runs in — sens unique, sens interdit.",
+    },
+  },
+  {
+    keys: ["sens"],
+    when: (context) => !!context.previous && DETERMINERS.includes(normaliseForMatch(context.previous)),
+    sense: {
+      translation: "meaning",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["sense", "direction"],
+      explanation: "After a determiner, sens is the noun: the meaning or sense of something.",
+    },
+  },
+  // Bare "même" before a noun phrase is the concessive "even"; it only means
+  // "same" when a determiner introduces it (le même jour, la même chose).
+  {
+    keys: ["meme"],
+    when: (context) => !!context.previous && DETERMINERS.includes(normaliseForMatch(context.previous)),
+    sense: {
+      translation: "same",
+      source: "context-rule",
+      confidence: "high",
+      alternativeMeanings: ["even", "itself"],
+      explanation: "After a determiner, même means same — le même jour, la même chose.",
+    },
+  },
+  {
+    keys: ["meme"],
+    sense: {
+      translation: "even",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["same"],
+      explanation: "With no determiner in front, même is usually the emphasiser even — même les enfants comprennent.",
     },
   },
   {
@@ -2117,6 +2243,34 @@ function selectContextSense(
         explanation: "Encore une fois means once again.",
       };
     }
+    if (next && ["un", "une", "du", "de", "des", "deux", "trois", "plus"].includes(normaliseForMatch(next))) {
+      return {
+        translation: "another / more",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["still", "again"],
+        explanation: "Before a quantity, encore adds to it: encore un café is another coffee.",
+      };
+    }
+    if (previous && STATE_VERB_FORMS.includes(normaliseForMatch(previous))) {
+      return {
+        translation: "still",
+        source: "context-rule",
+        confidence: "high",
+        alternativeMeanings: ["again", "yet"],
+        explanation: "After a state verb, encore says the situation is continuing: il est encore là means he is still there.",
+      };
+    }
+    // Genuinely ambiguous without a cue. Naming both readings is more honest
+    // than picking one, and it is what the reader needs to disambiguate from
+    // the sentence themselves.
+    return {
+      translation: "still / again",
+      source: "context-rule",
+      confidence: "medium",
+      alternativeMeanings: ["yet", "more"],
+      explanation: "Encore covers both still (continuing) and again (repeated); the surrounding sentence decides which.",
+    };
   }
 
   if (selectedKey === "toujours" || lemmaKey === "toujours") {

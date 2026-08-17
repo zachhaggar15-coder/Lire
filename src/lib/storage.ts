@@ -180,6 +180,11 @@ function normalize(entry: unknown): SavedWord | null {
     cefr: resolvedLookup?.cefr ?? (typeof e.cefr === "string" ? e.cefr : null),
     frequencyRank: resolvedLookup?.frequencyRank ?? (typeof e.frequencyRank === "number" ? e.frequencyRank : null),
     articleContextSentence,
+    // Deliberately not re-derived from a fresh lookup: this records what the
+    // reader was shown at save time, and re-resolving it later without their
+    // sentence in hand would replace a contextual answer with a generic one.
+    contextualMeaning: typeof e.contextualMeaning === "string" && e.contextualMeaning.trim() ? e.contextualMeaning.trim() : null,
+    partOfExpression: typeof e.partOfExpression === "string" && e.partOfExpression.trim() ? e.partOfExpression.trim() : null,
     exampleSentenceFr: resolvedExampleFr,
     exampleSentenceEn: resolvedExampleEn,
     // old field was `sourceId`; new field is `sourceTextTitle`.

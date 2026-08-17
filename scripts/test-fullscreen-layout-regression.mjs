@@ -12,8 +12,9 @@ const files = {
   completion: readFileSync(new URL("../src/components/LessonCompleteScreen.tsx", import.meta.url), "utf8"),
   practicePage: readFileSync(new URL("../src/app/reader/[id]/practice/PracticePageClient.tsx", import.meta.url), "utf8"),
   listening: readFileSync(new URL("../src/components/practice/ListeningPractice.tsx", import.meta.url), "utf8"),
-  wordSheet: readFileSync(new URL("../src/components/WordSheet.tsx", import.meta.url), "utf8"),
-  phraseSheet: readFileSync(new URL("../src/components/PhraseSheet.tsx", import.meta.url), "utf8"),
+  // WordSheet and PhraseSheet were consolidated into MeaningSheet — a reader
+  // no longer chooses between a word lookup and a phrase lookup.
+  meaningSheet: readFileSync(new URL("../src/components/MeaningSheet.tsx", import.meta.url), "utf8"),
   sentenceSheet: readFileSync(new URL("../src/components/SentenceSheet.tsx", import.meta.url), "utf8"),
   bottomSheet: readFileSync(new URL("../src/components/BottomSheet.tsx", import.meta.url), "utf8"),
   bottomNav: readFileSync(new URL("../src/components/BottomNav.tsx", import.meta.url), "utf8"),
@@ -119,24 +120,35 @@ check(
 
 console.log("--- tutorial and practice interaction regressions ---");
 check("the tutorial includes all five interactive steps", files.tutorial.includes("const STEP_COUNT = 5"));
-check("the tutorial explicitly teaches holding a phrase", files.tutorial.includes("Hold for a phrase") && files.tutorial.includes("onPointerDown={startDemoPhraseHold}"));
+// The hold gesture is gone: expressions resolve from an ordinary tap, so the
+// tutorial must not train a second interaction that no longer exists.
+check(
+  "the tutorial teaches expressions through a plain tap, not a hold",
+  files.tutorial.includes("Expressions too") &&
+    !files.tutorial.includes("startDemoPhraseHold") &&
+    !files.tutorial.includes("Hold for a phrase")
+);
+check(
+  "the reader has no long-press phrase gesture left",
+  !files.reader.includes("startPhraseHold") && !files.reader.includes("handlePhraseHold")
+);
 check(
   "tutorial and real word cards both offer a single primary review action",
-  !files.tutorial.includes("<WordLearningActions") && !files.wordSheet.includes("<WordLearningActions")
+  !files.tutorial.includes("<WordLearningActions") && !files.meaningSheet.includes("<WordLearningActions")
 );
 check(
   "the real word card's review button toggles back off",
-  files.wordSheet.includes("saved ? onUnsave?.() : onSave?.(\"learning\")") &&
-    files.wordSheet.includes('saved ? "Remove from review" : "Add to review"')
+  files.meaningSheet.includes("saved ? onUnsave?.() : onSave?.()") &&
+    files.meaningSheet.includes('saved ? "Remove from review" : "Add to review"')
 );
-check("the real word card closes with an X, not a Done label", files.wordSheet.includes('aria-label="Close"'));
+check("the real word card closes with an X, not a Done label", files.meaningSheet.includes('aria-label="Close"'));
 check(
   "the real word card is viewport-bounded on mobile and web",
-  files.wordSheet.includes("<BottomSheet") && files.bottomSheet.includes("100dvh") && files.bottomSheet.includes("sm:items-center")
+  files.meaningSheet.includes("<BottomSheet") && files.bottomSheet.includes("100dvh") && files.bottomSheet.includes("sm:items-center")
 );
 check(
   "mobile word-card actions stay pinned outside the scrolling definition body",
-  files.wordSheet.includes("footer={footer}") &&
+  files.meaningSheet.includes("footer={footer}") &&
     files.bottomSheet.includes("min-h-0 flex-1 touch-pan-y overflow-y-auto") &&
     files.bottomSheet.includes("shrink-0 border-t")
 );
@@ -148,7 +160,7 @@ check(
 );
 check(
   "every bottom sheet registers itself so the nav knows to yield",
-  ["wordSheet", "phraseSheet", "sentenceSheet"].every((key) => files[key].includes("<BottomSheet")) &&
+  ["meaningSheet", "sentenceSheet"].every((key) => files[key].includes("<BottomSheet")) &&
     files.bottomSheet.includes("useModalPresence(open)")
 );
 check("incorrect practice offers retry and reveal", files.practice.includes("Try again") && files.practice.includes("Reveal answer"));

@@ -12,25 +12,20 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import {
   cacheDictionarySentenceTranslations,
-  buildComposedPhraseTranslationMatch,
-  findContainingPhraseTranslationMatch,
-  findPhraseTranslationMatch,
   translateSentencesWithDictionaryCache,
   type DictionaryArticleTranslationMode,
-  type PhraseTranslationMatch,
 } from "@/lib/dictionary/articleTranslation";
-import { getArticleTranslation } from "@/lib/ai/client";
+import { getArticleTranslation, getWordExplanation } from "@/lib/ai/client";
 import { getPrecomputedTranslation } from "@/lib/ai/precomputedTranslations";
 import type { ArticleTranslationAlignmentSegment } from "@/lib/ai/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { buildContextualTranslation } from "@/lib/dictionary/contextualTranslation";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import {
-  findNaturalTranslationForToken,
-  isWordScopedAlignment,
-  naturalTranslationForRange,
-  type ResolvedTranslationAlignment,
-} from "@/lib/translationAlignment";
+  isMeaningUpgrade,
+  resolveMeaning,
+  shouldEscalateToAi,
+  type ResolvedMeaning,
+} from "@/lib/dictionary/resolveMeaning";
 import { getKnownWords } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
@@ -46,9 +41,8 @@ import { getArticleSummary, saveArticleSummary } from "@/lib/articleSummaries";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { isLikelySourceBoilerplateToken } from "@/lib/rss/sourceNoise";
-import { buildInferenceChallenge, shouldOfferInference } from "@/lib/inference";
-import { rankLearningCandidates, selectInferenceWords, type LearningCandidate, type WordTapRecord } from "@/lib/learningCandidates";
-import { getInferenceResult, getWordTapsForArticle, recordInferenceResult, recordWordTap } from "@/lib/wordLearning";
+import { rankLearningCandidates, type LearningCandidate, type WordTapRecord } from "@/lib/learningCandidates";
+import { getWordTapsForArticle, recordWordTap } from "@/lib/wordLearning";
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
 import { formatCategory, toPercent } from "@/lib/format";
@@ -88,9 +82,8 @@ import { getCurrentStreak, getStreakWeek, isActiveToday, type StreakDay } from "
 import { getJourneyState, getNextTextForReader, markJourneyStageSeen, type JourneyState } from "@/lib/journey/state";
 import { JOURNEY_BANDS, getJourneyText, getStageForText } from "@/lib/journey/ladder";
 import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCompleteScreen";
-import WordSheet, { type ActiveWordState } from "@/components/WordSheet";
+import MeaningSheet, { type ActiveMeaningState } from "@/components/MeaningSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
-import PhraseSheet, { type ActivePhraseState } from "@/components/PhraseSheet";
 import { triggerHaptic } from "@/lib/haptics";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Toast from "@/components/Toast";
@@ -262,9 +255,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
   const [recentSavedWords, setRecentSavedWords] = useState<Set<string>>(new Set());
   const [recentKnownWords, setRecentKnownWords] = useState<Set<string>>(new Set());
-  const [activeWord, setActiveWord] = useState<ActiveWordState | null>(null);
+  const [activeWord, setActiveWord] = useState<ActiveMeaningState | null>(null);
   const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
-  const [activePhrase, setActivePhrase] = useState<ActivePhraseState | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [status, setStatus] = useState<TextStatus>("unread");
   const [lessonStep, setLessonStep] = useState(0);
@@ -348,8 +340,14 @@ export default function Reader({ text }: { text: ReadingText }) {
   const rewardTimeouts = useRef<number[]>([]);
   const sentenceHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sentenceHoldTriggered = useRef(false);
-  const phraseHoldTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const phraseHoldTriggered = useRef(false);
+  /**
+   * Which tap an in-flight AI meaning lookup belongs to. A reader can tap a
+   * second word before the first request returns, and without this the late
+   * answer would land in the newly-opened sheet.
+   */
+  const pendingAiLookupKey = useRef<string | null>(null);
+  /** The inputs behind the currently-open sheet, so a late data source can re-resolve the same tap. */
+  const lastTap = useRef<{ tokens: Token[]; tokenIndex: number; sentenceText: string } | null>(null);
   /** Latest summary text plus the article it belongs to, for the debounced/flush writes below. */
   const latestSummary = useRef<{ articleId: string; draft: string }>({ articleId: text.id, draft: "" });
   const readingStartedAt = useRef<string>(new Date().toISOString());
@@ -374,22 +372,10 @@ export default function Reader({ text }: { text: ReadingText }) {
   );
   const gistQuestion = comprehensionQuestions.gistQuestion;
   const toneQuestions = comprehensionQuestions.toneQuestions;
-  const inferenceWords = useMemo(() => selectInferenceWords(text, knownSet, 2), [knownSet, text]);
   const learningCandidates = useMemo(
     () => rankLearningCandidates(text, knownSet, savedWordsSnapshot, articleTapRecords, 6),
     [articleTapRecords, knownSet, savedWordsSnapshot, text]
   );
-  const activeInference = useMemo(() => {
-    if (isStarterLesson) return null;
-    if (!activeWord || !shouldOfferInference(activeWord.word, inferenceWords)) return null;
-    if (getInferenceResult(text.id, activeWord.word)) return null;
-    const sentenceIndex = flatSentences.indexOf(activeWord.contextSentence);
-    const sentenceTranslation =
-      sentenceIndex === -1
-        ? activeWord.contextSentence
-        : fluentSentences?.[sentenceIndex] ?? offlineSentences[sentenceIndex] ?? activeWord.contextSentence;
-    return buildInferenceChallenge(activeWord.word, activeWord.lookup, activeWord.contextSentence, sentenceTranslation);
-  }, [activeWord, flatSentences, fluentSentences, inferenceWords, isStarterLesson, offlineSentences, text.id]);
   const translationAllowance = useMemo(
     () => suggestedTranslationAllowance(difficulty?.unknownWordRatio),
     [difficulty?.unknownWordRatio]
@@ -593,6 +579,35 @@ export default function Reader({ text }: { text: ReadingText }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text.id]);
 
+  /**
+   * Re-resolves the open sheet when a slower data source lands — the generated
+   * dictionary finishing its fetch, or this article's natural translation
+   * arriving.
+   *
+   * isMeaningUpgrade is what keeps this from being disorienting: a reader
+   * looking at a correct, confident answer should never watch it be replaced
+   * because another layer finished loading. Only a strictly better result, or
+   * an escape from "couldn't determine this", is allowed through.
+   */
+  useEffect(() => {
+    const tap = lastTap.current;
+    if (!tap || !activeWord) return;
+    const { previous, next } = neighbours(tap.sentenceText);
+    const next_ = resolveMeaning({
+      tokens: tap.tokens,
+      tokenIndex: tap.tokenIndex,
+      contextSentence: tap.sentenceText,
+      previousSentence: previous,
+      nextSentence: next,
+      alignments: alignmentsForSentence(tap.sentenceText),
+    });
+    if (!isMeaningUpgrade(activeWord.meaning, next_)) return;
+    setActiveWord((current) => (current ? { ...current, meaning: next_ } : current));
+    // Deliberately keyed on the arrival of new data, not on activeWord itself:
+    // re-running on every sheet state change would fight the AI upgrade path.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dictionaryRevision, fluentAlignments]);
+
   useEffect(() => {
     if (!showInterpretationChecks) return;
     setComprehensionQuestions(getOrCreateComprehensionQuestionBundle(text, articlePool));
@@ -685,7 +700,6 @@ export default function Reader({ text }: { text: ReadingText }) {
       rewardTimeouts.current.forEach((timeout) => clearTimeout(timeout));
       rewardTimeouts.current = [];
       if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
-      if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
       // Never let audio keep playing after navigating away from the article.
       stopSpeaking();
       setIsSpeakingArticle(false);
@@ -1034,10 +1048,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     return { previousWord, nextWord };
   }
 
-  function naturalTranslationForWordTap(sentenceText: string, tokens: Token[], index: number): ResolvedTranslationAlignment | null {
+  function alignmentsForSentence(sentenceText: string): ArticleTranslationAlignmentSegment[] | null {
     const sentenceIndex = flatSentences.indexOf(sentenceText);
     if (sentenceIndex === -1) return null;
-    return findNaturalTranslationForToken(tokens, index, fluentAlignments?.[sentenceIndex]);
+    return fluentAlignments?.[sentenceIndex] ?? null;
   }
 
   function statusForWord(clean: string, lemma: string | null | undefined): WordStatus | null {
@@ -1047,6 +1061,15 @@ export default function Reader({ text }: { text: ReadingText }) {
     return lookupWordStatus(wordStatusMap, clean, lemmaKey);
   }
 
+  /**
+   * The one thing a tap does: ask what this means here.
+   *
+   * There is deliberately no second gesture. The reader used to have to know
+   * that a tap gave a word and a long press gave its phrase — which meant the
+   * app knew "compte" belonged to "se rendre compte" but waited to be asked
+   * before saying so. resolveMeaning decides the unit now, so tapping any word
+   * of an expression explains the expression.
+   */
   function handleWordTap(sentenceText: string, tokens: Token[], index: number) {
     if (rereadMode) return;
     const clean = tokens[index]?.clean;
@@ -1064,22 +1087,21 @@ export default function Reader({ text }: { text: ReadingText }) {
       });
     if (sourceBoilerplateToken) {
       setActiveSentence(null);
-      setActivePhrase(null);
       setActiveWord(null);
       return;
     }
     const lemma = lookup.lemma?.toLowerCase();
     const existingStatus = statusForWord(clean, lemma);
     const { previous, next } = neighbours(sentenceText);
-    const contextualTranslation = buildContextualTranslation({
+    const meaning = resolveMeaning({
       tokens,
       tokenIndex: index,
       contextSentence: sentenceText,
       previousSentence: previous,
       nextSentence: next,
+      alignments: alignmentsForSentence(sentenceText),
       lookup,
     });
-    const naturalTranslation = naturalTranslationForWordTap(sentenceText, tokens, index);
     const pronounReference = findPronounReference(
       clean,
       tokens,
@@ -1098,19 +1120,72 @@ export default function Reader({ text }: { text: ReadingText }) {
       articleId: text.id,
       knownBeforeTap: existingStatus === "known",
       dictionarySource: lookup.source,
+      meaningSource: meaning.source,
+      meaningConfidence: meaning.confidence,
     });
 
+    const escalating = shouldEscalateToAi(meaning);
+    lastTap.current = { tokens, tokenIndex: index, sentenceText };
     setActiveSentence(null);
-    setActivePhrase(null);
     setActiveWord({
-      word: clean,
-      contextSentence: sentenceText,
+      meaning,
       surroundingSentence: previous,
-      lookup,
-      contextualTranslation,
-      naturalTranslation,
       existingStatus,
       pronounReference,
+      resolving: escalating,
+    });
+    if (escalating) void escalateMeaningToAi(meaning, previous, tokens, index, sentenceText);
+  }
+
+  /**
+   * Targeted AI lookup for the small number of taps the offline layers cannot
+   * settle. Runs only when shouldEscalateToAi says so, so common vocabulary
+   * never waits on the network, and the result is cached per word+sentence by
+   * the AI client — a second tap on the same word in the same place is free.
+   */
+  async function escalateMeaningToAi(
+    meaning: ResolvedMeaning,
+    previousSentence: string | null,
+    tokens: Token[],
+    tokenIndex: number,
+    sentenceText: string
+  ) {
+    pendingAiLookupKey.current = meaning.cacheKey;
+    markAiSupportUsed("word");
+    const result = await getWordExplanation({
+      word: meaning.tappedText,
+      lemma: meaning.lemma,
+      articleSentence: meaning.contextSentence,
+      simpleExampleSentence: meaning.examples[0]?.fr ?? null,
+      surroundingSentence: previousSentence,
+      articleTitle: text.title,
+      level: "A2/B1 French learner",
+    });
+    // The reader may have tapped elsewhere while this was in flight.
+    if (pendingAiLookupKey.current !== meaning.cacheKey) return;
+    pendingAiLookupKey.current = null;
+
+    if (!result.data?.translation) {
+      setActiveWord((current) =>
+        current?.meaning.cacheKey === meaning.cacheKey ? { ...current, resolving: false } : current
+      );
+      return;
+    }
+    const upgraded = resolveMeaning({
+      tokens,
+      tokenIndex,
+      contextSentence: sentenceText,
+      previousSentence,
+      alignments: alignmentsForSentence(sentenceText),
+      aiMeaning: { translation: result.data.translation, meaningInContext: result.data.meaningInContext },
+    });
+    setActiveWord((current) => {
+      if (current?.meaning.cacheKey !== meaning.cacheKey) return current;
+      return {
+        ...current,
+        meaning: isMeaningUpgrade(current.meaning, upgraded) ? upgraded : current.meaning,
+        resolving: false,
+      };
     });
   }
 
@@ -1122,21 +1197,22 @@ export default function Reader({ text }: { text: ReadingText }) {
    */
   function handleSaveActiveWord(status: Exclude<WordStatus, "known"> = "learning") {
     if (!activeWord || activeWord.existingStatus) return;
+    const meaning = activeWord.meaning;
     // Names and places aren't vocabulary worth reviewing. This guard used to
     // sit on the auto-save in handleWordTap; it belongs wherever the save is.
-    if (isProperNounWord(activeWord.word)) {
+    if (isProperNounWord(meaning.tappedText)) {
       showToast("Names aren't added to review");
       return;
     }
-    // Only a tight, word-scoped alignment can stand in as this word's
-    // meaning. A clause-sized span is fine to read alongside the French, but
-    // saving it would make the flashcard say "mouillé = Was a ship moored in
-    // some inland port" — see isWordScopedAlignment.
-    const naturalTranslation = isWordScopedAlignment(activeWord.naturalTranslation)
-      ? activeWord.naturalTranslation!.english
-      : null;
+    if (meaning.abstained) {
+      showToast("Nothing to save until this word resolves");
+      return;
+    }
+    // The resolved contextual meaning is what the reader actually saw and
+    // agreed to save, so it leads the card — a flashcard that disagrees with
+    // the sheet it was saved from is worse than no card.
     const { words: nextWords, persisted } = saveWord(
-      buildSavedWord(activeWord.word, activeWord.lookup, activeWord.contextSentence, status, naturalTranslation)
+      buildSavedWord(meaning, status)
     );
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
@@ -1149,12 +1225,12 @@ export default function Reader({ text }: { text: ReadingText }) {
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
     rememberWordSaved("tap_lookup");
     triggerHaptic("confirm");
-    pulseRewardWords("saved", [activeWord.word, activeWord.lookup.lemma]);
+    pulseRewardWords("saved", [meaning.tappedText, meaning.lemma]);
     setActiveWord((prev) =>
       prev
         ? {
             ...prev,
-            existingStatus: lookupWordStatus(nextStatusMap, prev.word, prev.lookup.lemma) ?? status,
+            existingStatus: lookupWordStatus(nextStatusMap, prev.meaning.tappedText, prev.meaning.lemma) ?? status,
           }
         : prev
     );
@@ -1163,9 +1239,9 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleUnsaveActiveWord() {
     if (!activeWord || activeWord.existingStatus === null || activeWord.existingStatus === "known") return;
-    const nextWords = deleteWord(activeWord.word);
+    const nextWords = deleteWord(activeWord.meaning.tappedText);
     const nextStatusMap = buildWordStatusMap(nextWords);
-    const keys = [activeWord.word.toLowerCase(), activeWord.lookup.lemma?.toLowerCase()].filter(
+    const keys = [activeWord.meaning.tappedText.toLowerCase(), activeWord.meaning.lemma?.toLowerCase()].filter(
       (value): value is string => !!value
     );
     setRecentSavedWords((current) => {
@@ -1187,61 +1263,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     sentenceInteractionCount.current += 1;
     trackEvent("sentence_support_opened", { articleId: text.id });
     setActiveWord(null);
-    setActivePhrase(null);
     setActiveSentence({ sentence: sentenceText, previousSentence: previous, nextSentence: next });
-  }
-
-  function handlePhraseTap(sentenceText: string, phrase: ActivePhraseState) {
-    if (rereadMode) return;
-    recordLearningAction();
-    phraseInteractionCount.current += 1;
-    trackEvent("phrase_support_opened", { articleId: text.id, source: phrase.source ?? "unknown" });
-    setActiveWord(null);
-    setActiveSentence(null);
-    setActivePhrase({ ...phrase, contextSentence: sentenceText });
-  }
-
-  function handlePhraseHold(sentenceText: string, tokens: Token[], tokenIndex: number) {
-    if (rereadMode) return;
-    let phrase: PhraseTranslationMatch | null = findContainingPhraseTranslationMatch(tokens, tokenIndex);
-    if (!phrase) {
-      // Composing a translation word-by-word from the dictionary reliably
-      // produces literal nonsense for reflexive verbs, idioms, and anything
-      // with non-English word order ("je me suis réveillée tard" -> "i me
-      // to be wake late"). Whenever a fluent translation is loaded for this
-      // sentence, use its natural alignment for the held span instead —
-      // the same source the accurate "English help" text already comes
-      // from — and only fall back to the literal composition when no
-      // fluent translation is available yet.
-      const composedWindow = buildComposedPhraseTranslationMatch(tokens, tokenIndex);
-      if (composedWindow) {
-        const sentenceIndex = flatSentences.indexOf(sentenceText);
-        const alignments = sentenceIndex !== -1 ? fluentAlignments?.[sentenceIndex] : null;
-        const natural = naturalTranslationForRange(tokens, composedWindow.startIndex, composedWindow.endIndex, alignments);
-        phrase = natural
-          ? {
-              ...composedWindow,
-              phrase: natural.french.toLowerCase(),
-              lemma: natural.french.toLowerCase(),
-              translation: natural.english,
-              partOfSpeech: null,
-              source: "natural",
-            }
-          : composedWindow;
-      }
-    }
-    if (!phrase) {
-      showToast("No phrase found here");
-      return;
-    }
-    handlePhraseTap(sentenceText, {
-      phrase: phrase.phrase,
-      lemma: phrase.lemma,
-      translation: phrase.translation,
-      partOfSpeech: phrase.partOfSpeech,
-      contextSentence: sentenceText,
-      source: phrase.source,
-    });
   }
 
   function buildLessonMiniReviewItems(): LessonMiniReviewItem[] {
@@ -1317,8 +1339,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       setWordStatusMap(buildWordStatusMap(getSavedWords()));
       showToast("Removed from review");
     } else {
-      const lookup = lookupWord(item.french);
-      const { persisted } = saveWord(buildSavedWord(item.french, lookup, item.context ?? item.french, "learning", null));
+      const { persisted } = saveWord(
+        buildSavedWord(resolveMeaningForWord(item.french, item.context ?? item.french), "learning")
+      );
       if (!persisted) {
         showToast("Couldn't save — device storage is full");
         return;
@@ -1352,61 +1375,83 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (sentenceHoldTimeout.current) clearTimeout(sentenceHoldTimeout.current);
   }
 
-  function startPhraseHold(sentenceText: string, tokens: Token[], tokenIndex: number) {
-    phraseHoldTriggered.current = false;
-    if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
-    phraseHoldTimeout.current = setTimeout(() => {
-      phraseHoldTriggered.current = true;
-      handlePhraseHold(sentenceText, tokens, tokenIndex);
-    }, 450);
+  /**
+   * Resolves a word that wasn't reached through a tap — a learning candidate,
+   * or an item on the lesson-complete review card.
+   *
+   * These paths used to call lookupWord directly and save its first gloss,
+   * which is exactly the "first dictionary sense regardless of context"
+   * behaviour this work exists to remove. Running the same resolver over the
+   * word's own sentence keeps every saved card consistent with what the reader
+   * would have been shown had they tapped it.
+   */
+  function resolveMeaningForWord(word: string, contextSentence: string): ResolvedMeaning {
+    const tokens = tokenize(contextSentence);
+    const index = tokens.findIndex((token) => token.isWord && token.clean === word.toLowerCase());
+    if (index === -1) {
+      // The word isn't in the sentence we were handed (or there is no sentence
+      // at all): resolve it standing alone rather than against the wrong context.
+      const standalone = tokenize(word);
+      const standaloneIndex = standalone.findIndex((token) => token.isWord);
+      return resolveMeaning({
+        tokens: standalone,
+        tokenIndex: standaloneIndex === -1 ? 0 : standaloneIndex,
+        contextSentence: contextSentence || word,
+      });
+    }
+    return resolveMeaning({ tokens, tokenIndex: index, contextSentence });
   }
 
-  function cancelPhraseHold() {
-    if (phraseHoldTimeout.current) clearTimeout(phraseHoldTimeout.current);
-  }
-
-  function buildSavedWord(
-    word: string,
-    lookup: ActiveWordState["lookup"],
-    contextSentence: string,
-    wordStatus: Exclude<WordStatus, "known">,
-    naturalTranslation: string | null = null
-  ): SavedWord {
-    const missing = lookup.source === "missing";
-    const firstExample = lookup.examples[0];
-    const translations = [
-      ...(naturalTranslation?.trim() ? [naturalTranslation.trim()] : []),
-      ...lookup.translations,
-    ].filter((translation, index, values) => translation && values.indexOf(translation) === index);
-    // Deliberately the dictionary's own glosses rather than `translations`,
-    // which leads with the article-specific natural translation. The fallback
-    // example slots a gloss into a generic frame ("C'est très X." / "It's very
-    // X."), so a context-fitted phrase produces nonsense — "mouillé" aligned
-    // as "was anchored" rendered "It's very was anchored." The dictionary
-    // entry is the one that matches the frame's part of speech.
+  /**
+   * Turns a resolved meaning into a review card.
+   *
+   * The card leads with the contextual meaning the reader actually saw and
+   * chose to save, with the remaining dictionary senses behind it. Saving a
+   * different answer from the one on screen is how a reader ends up reviewing
+   * "compte = account" after Lire told them it meant "to realise".
+   *
+   * Only a word-scoped meaning may lead. An expression's citation form is kept
+   * separately so the study view can say where the word came from without the
+   * flashcard front becoming a whole idiom the reader didn't tap.
+   */
+  function buildSavedWord(meaning: ResolvedMeaning, wordStatus: Exclude<WordStatus, "known">): SavedWord {
+    const lookup = lookupWord(meaning.tappedText);
+    const missing = meaning.abstained || lookup.source === "missing";
+    const firstExample = meaning.examples[0];
+    const contextual = meaning.displayEnglish.trim();
+    const translations = [contextual, ...lookup.translations].filter(
+      (translation, index, values) => translation && values.indexOf(translation) === index
+    );
     // A guessed lemma may belong to a different word class than the form the
     // reader tapped, so don't let it pick the example frame or get stored as
     // this word's part of speech.
-    const reliablePartOfSpeech = lookup.partOfSpeechUncertain ? null : lookup.partOfSpeech;
+    const reliablePartOfSpeech = meaning.partOfSpeechUncertain ? null : meaning.partOfSpeech;
+    // Deliberately the dictionary's own glosses rather than `translations`,
+    // which leads with the context-fitted meaning. The fallback example slots a
+    // gloss into a generic frame ("C'est très X."), so a context-fitted phrase
+    // produces nonsense — "mouillé" resolved as "was anchored" rendered "It's
+    // very was anchored." The dictionary entry matches the frame's word class.
     const fallbackExample = generateFallbackExample({
-      word,
+      word: meaning.tappedText,
       lemma: lookup.lemma,
       partOfSpeech: reliablePartOfSpeech,
       gender: lookup.gender,
       translations: lookup.translations.length > 0 ? lookup.translations : translations,
     });
-    const entry: SavedWord = {
-      word,
-      lemma: lookup.lemma,
+    return {
+      word: meaning.tappedText,
+      lemma: meaning.lemma,
       translations,
-      primaryTranslation: translations[0] ?? (missing ? NOT_TRANSLATED_YET : lookup.translations[0] ?? NOT_TRANSLATED_YET),
+      primaryTranslation: translations[0] ?? NOT_TRANSLATED_YET,
       partOfSpeech: reliablePartOfSpeech,
       gender: lookup.gender,
       cefr: lookup.cefr,
       frequencyRank: lookup.frequencyRank,
-      articleContextSentence: contextSentence,
-      exampleSentenceFr: firstExample?.fr ?? contextSentence,
-      exampleSentenceEn: firstExample?.en ?? (naturalTranslation ?? translations[0] ?? fallbackExample.en),
+      articleContextSentence: meaning.contextSentence,
+      contextualMeaning: contextual || null,
+      partOfExpression: meaning.partOfExpression,
+      exampleSentenceFr: firstExample?.fr ?? meaning.contextSentence,
+      exampleSentenceEn: firstExample?.en ?? (contextual || fallbackExample.en),
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
@@ -1415,7 +1460,6 @@ export default function Reader({ text }: { text: ReadingText }) {
       missingFromDictionary: missing,
       ...defaultSpacedRepetitionFields(),
     };
-    return entry;
   }
 
   function handleMarkCompleted() {
@@ -1690,7 +1734,6 @@ export default function Reader({ text }: { text: ReadingText }) {
     setLessonStep((step) => Math.min(step + 1, Math.max(0, paragraphs.length - 1)));
     setActiveWord(null);
     setActiveSentence(null);
-    setActivePhrase(null);
     requestAnimationFrame(() => {
       articleRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     });
@@ -1702,7 +1745,6 @@ export default function Reader({ text }: { text: ReadingText }) {
     setShowEnglishTranslation(false);
     setActiveWord(null);
     setActiveSentence(null);
-    setActivePhrase(null);
     setRereadMode(true);
     setSecondPassStartedAt(startedAt);
     showToast("Second pass started");
@@ -1728,8 +1770,12 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function wordClassName(token: Token): string {
-    const base = "cursor-pointer rounded px-0.5 py-0.5 transition-colors";
-    if (rereadMode) return "rounded px-0.5 py-0.5";
+    // reader-tap-target adds vertical hit area on touch devices without moving
+    // the glyphs, so one- and two-letter words (à, y, en, de, ne) are reachable
+    // with a thumb. It is padding only — no visible gaps are inserted between
+    // words, so the paragraph still sets as ordinary prose.
+    const base = "reader-tap-target cursor-pointer rounded px-0.5 py-0.5 transition-colors";
+    if (rereadMode) return "reader-tap-target rounded px-0.5 py-0.5";
     const clean = token.clean;
     const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
@@ -1762,20 +1808,9 @@ export default function Reader({ text }: { text: ReadingText }) {
     return `${base} active:bg-brand/10`;
   }
 
-  function handleInferenceAnswer(word: string, lemma: string | null, correct: boolean) {
-    recordLearningAction();
-    recordInferenceResult(text.id, word, lemma, correct);
-    setInferenceStats((stats) => ({
-      attempted: stats.attempted + 1,
-      correct: stats.correct + (correct ? 1 : 0),
-    }));
-    showToast(correct ? "Inferred correctly" : "Context attempt saved");
-  }
-
   function handleSaveCandidate(candidate: LearningCandidate) {
-    const lookup = lookupWord(candidate.word);
     const { words: nextWords, persisted } = saveWord(
-      buildSavedWord(candidate.word, lookup, candidate.contextSentence, "learning")
+      buildSavedWord(resolveMeaningForWord(candidate.word, candidate.contextSentence), "learning")
     );
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
@@ -1824,12 +1859,6 @@ export default function Reader({ text }: { text: ReadingText }) {
     return false;
   }
 
-  /** The clickable, word-tappable French sentence used inside each paragraph, so tap targets stay consistent in normal and translated reading. */
-  function phraseClassName(): string {
-    if (rereadMode) return "reader-tap-target rounded px-0.5 py-0.5";
-    return "reader-tap-target cursor-pointer rounded bg-brand-light/80 px-0.5 py-0.5 text-brand underline decoration-dotted underline-offset-4 transition-colors active:bg-brand-light";
-  }
-
   function paragraphAudioButton(paragraph: string, paragraphIndex: number): ReactNode {
     if (!canUseSpeech) return null;
     const active = activeAudioParagraph === paragraphIndex;
@@ -1850,78 +1879,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     );
   }
 
+  /**
+   * Renders a sentence as individually tappable words.
+   *
+   * Recognised expressions used to be rendered as a single highlighted span,
+   * which taught the distinction this work removes: the words inside them
+   * weren't separately tappable, and a reader had to notice the highlight to
+   * know a phrase was there. Every word is its own target now, and tapping any
+   * one of them resolves to the expression when that's the right answer — so
+   * "tap anything" holds literally, with no visual vocabulary to learn.
+   */
   function renderTokenNodes(sg: SentenceGroup, startIndex = 0, endIndex = sg.tokens.length - 1): ReactNode[] {
     const renderedTokens: ReactNode[] = [];
     for (let ti = startIndex; ti <= endIndex; ti++) {
       const tok = sg.tokens[ti];
-      const phrase = tok.isWord ? findPhraseTranslationMatch(sg.tokens, ti) : null;
-      if (phrase && phrase.endIndex <= endIndex) {
-        const phraseText = sg.tokens.slice(ti, phrase.endIndex + 1).map((token) => token.text).join("");
-        renderedTokens.push(
-          <span
-            key={`${startIndex}-${ti}`}
-            role={rereadMode ? undefined : "button"}
-            tabIndex={rereadMode ? undefined : 0}
-            onKeyDown={(event: KeyboardEvent<HTMLSpanElement>) => {
-              if (rereadMode) return;
-              if (event.key !== "Enter" && event.key !== " ") return;
-              event.preventDefault();
-              event.stopPropagation();
-              handlePhraseTap(sg.text, {
-                phrase: phraseText.toLowerCase(),
-                lemma: phrase.lemma,
-                translation: phrase.translation,
-                partOfSpeech: phrase.partOfSpeech,
-                contextSentence: sg.text,
-                source: phrase.source,
-              });
-            }}
-            onPointerDown={(event) => {
-              event.stopPropagation();
-              if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
-            }}
-            onPointerUp={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onPointerCancel={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onPointerLeave={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onContextMenu={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              if (rereadMode) return;
-              handlePhraseHold(sg.text, sg.tokens, ti);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (rereadMode) return;
-              if (phraseHoldTriggered.current) {
-                phraseHoldTriggered.current = false;
-                return;
-              }
-              handlePhraseTap(sg.text, {
-                phrase: phraseText.toLowerCase(),
-                lemma: phrase.lemma,
-                translation: phrase.translation,
-                partOfSpeech: phrase.partOfSpeech,
-                contextSentence: sg.text,
-                source: phrase.source,
-              });
-            }}
-            className={phraseClassName()}
-          >
-            {phraseText}
-          </span>
-        );
-        ti = phrase.endIndex;
-        continue;
-      }
 
       renderedTokens.push(
         tok.isWord ? (
@@ -1936,35 +1907,9 @@ export default function Reader({ text }: { text: ReadingText }) {
               event.stopPropagation();
               handleWordTap(sg.text, sg.tokens, ti);
             }}
-            onPointerDown={(event) => {
-              event.stopPropagation();
-              if (!rereadMode) startPhraseHold(sg.text, sg.tokens, ti);
-            }}
-            onPointerUp={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onPointerCancel={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onPointerLeave={(event) => {
-              event.stopPropagation();
-              cancelPhraseHold();
-            }}
-            onContextMenu={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              if (rereadMode) return;
-              handlePhraseHold(sg.text, sg.tokens, ti);
-            }}
             onClick={(e) => {
               e.stopPropagation();
               if (rereadMode) return;
-              if (phraseHoldTriggered.current) {
-                phraseHoldTriggered.current = false;
-                return;
-              }
               handleWordTap(sg.text, sg.tokens, ti);
             }}
             className={`${wordClassName(tok)} ${!rereadMode && isHighlightedReference(sg.tokens, ti) ? "bg-brand-light ring-2 ring-brand/40" : ""}`}
@@ -2491,14 +2436,12 @@ export default function Reader({ text }: { text: ReadingText }) {
         </div>
       )}
 
-      <WordSheet
+      <MeaningSheet
           state={activeWord}
           articleTitle={text.title}
           onClose={() => setActiveWord(null)}
-          onSave={handleSaveActiveWord}
+          onSave={() => handleSaveActiveWord("learning")}
           onUnsave={handleUnsaveActiveWord}
-          inferenceChallenge={activeInference}
-          onInferenceAnswer={handleInferenceAnswer}
           onAiRequested={() => markAiSupportUsed("word")}
           onExplainSentence={(sentence) => {
             setActiveWord(null);
@@ -2510,19 +2453,6 @@ export default function Reader({ text }: { text: ReadingText }) {
           articleTitle={text.title}
           onClose={() => setActiveSentence(null)}
           onAiRequested={() => markAiSupportUsed("sentence")}
-        />
-      <PhraseSheet
-          state={activePhrase}
-          articleTitle={text.title}
-          onClose={() => setActivePhrase(null)}
-          onSaved={() => {
-            recordLearningAction();
-            showToast("Saved phrase");
-          }}
-          onUnsaved={() => {
-            showToast("Removed from review");
-          }}
-          onAiRequested={() => markAiSupportUsed("phrase")}
         />
       {lessonComplete && (
         <LessonCompleteScreen

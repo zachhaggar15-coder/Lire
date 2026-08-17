@@ -22,7 +22,7 @@ const MAX_RECORDS = 500;
 
 export type SessionSourceType = "curriculum" | "rss" | "imported";
 export type SessionCompletionStatus = "completed" | "abandoned" | "returned";
-export type PracticeExerciseType = "reconstruction" | "clozeWord" | "clozePhrase" | "paraphrase";
+export type PracticeExerciseType = "reconstruction" | "clozeWord" | "clozePhrase" | "paraphrase" | "inference";
 
 export interface PracticeTypeStats {
   attempted: number;
@@ -35,6 +35,7 @@ function emptyPracticeStats(): Record<PracticeExerciseType, PracticeTypeStats> {
     clozeWord: { attempted: 0, correct: 0 },
     clozePhrase: { attempted: 0, correct: 0 },
     paraphrase: { attempted: 0, correct: 0 },
+    inference: { attempted: 0, correct: 0 },
   };
 }
 
@@ -109,7 +110,7 @@ function isSessionRecord(value: unknown): value is SessionRecord {
 /** Backfills any missing per-exercise-type practice stats with zeroed values, so a record from an earlier schema version (missing a since-added kind) stays usable instead of being dropped. */
 function normalizeRecord(record: SessionRecord): SessionRecord {
   const practice = record.practice as Partial<Record<PracticeExerciseType, PracticeTypeStats>>;
-  const kinds: PracticeExerciseType[] = ["reconstruction", "clozeWord", "clozePhrase", "paraphrase"];
+  const kinds: PracticeExerciseType[] = ["reconstruction", "clozeWord", "clozePhrase", "paraphrase", "inference"];
   const normalizedPractice = Object.fromEntries(
     kinds.map((kind) => [kind, isPracticeTypeStats(practice[kind]) ? practice[kind] : { attempted: 0, correct: 0 }])
   ) as Record<PracticeExerciseType, PracticeTypeStats>;

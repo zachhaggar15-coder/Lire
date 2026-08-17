@@ -31,12 +31,36 @@ export interface DictionaryEntry {
   notes?: string;
 }
 
+/**
+ * Which data source answered a lookup.
+ *
+ * This is provenance, not preference order: it exists so a caller can tell a
+ * hand-checked sense apart from a bulk-imported one. The generated layer is
+ * WikDict-derived and its sense *ordering* carries no editorial judgement, so
+ * its leading gloss is a guess at the contextual meaning rather than a
+ * considered answer ("case" -> "double income, no kids"). Every other layer
+ * had a person decide what should come first. resolveMeaning.ts turns that
+ * distinction into confidence, which in turn decides whether Lire states a
+ * meaning plainly, hedges it, or abstains.
+ */
+export type DictionaryLayer =
+  | "phrase-bank"
+  | "core"
+  | "news"
+  | "curated"
+  | "proper-noun"
+  | "custom"
+  | "article-coverage"
+  | "generated";
+
 /** What a lookup returns — always this shape, whether or not an entry was found. */
 export interface DictionaryLookupResult {
   input: string;
   lemma: string | null;
   translations: string[];
   partOfSpeech: string | null;
+  /** Which dictionary layer supplied this entry, or null when nothing matched. See DictionaryLayer. */
+  layer: DictionaryLayer | null;
   /**
    * True when the entry was reached by a rule-based lemma guess, so the stored
    * part of speech describes the lemma and may not describe the word actually

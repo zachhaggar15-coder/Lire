@@ -234,10 +234,21 @@ summary {
   }
 }
 
+/*
+ * Grows a tapped word's hit box on touch devices without moving the glyph.
+ *
+ * The padding is cancelled by an equal negative margin on both axes, so the
+ * box the finger has to hit gets bigger while the text still sets as ordinary
+ * prose — no visible gaps open up between words. The inline half matters most
+ * for French's very short function words (à, y, en, de, le, ne), which are
+ * otherwise only a few pixels wide and effectively unhittable with a thumb.
+ */
 @media (pointer: coarse) {
   .reader-tap-target {
     padding-block: 0.42rem;
     margin-block: -0.42rem;
+    padding-inline: 0.22rem;
+    margin-inline: -0.22rem;
   }
 }
 

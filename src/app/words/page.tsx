@@ -7,7 +7,9 @@ import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate, toPercent } from "@/lib/format";
+import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import AppBar from "@/components/AppBar";
+import PronounceButton from "@/components/PronounceButton";
 
 type WordsFilter = "learning" | "unsure" | "known" | "missing";
 type VocabTab = "words" | "phrases";
@@ -201,7 +203,33 @@ function EmptyState({ copy }: { copy: string }) {
   );
 }
 
+/**
+ * The deliberate-study view of a saved word.
+ *
+ * This is where the linguistic depth lives now. The reading sheet answers one
+ * question and gets out of the way, because an interruption mid-paragraph
+ * should be as short as possible; someone who has opened their vocabulary list
+ * has chosen to study, so density is a feature here rather than a cost.
+ */
 function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string) => void }) {
+  const wordFamily = getWordFamily(word.lemma ?? word.word);
+  const familyRows: [string, string[]][] = wordFamily
+    ? [
+        ["Noun", wordFamily.noun],
+        ["Verb", wordFamily.verb],
+        ["Adjective", wordFamily.adjective],
+        ["Adverb", wordFamily.adverb],
+        ["Collocations", wordFamily.commonCollocations],
+        ["Opposites", wordFamily.opposites],
+        ["Expressions", wordFamily.relatedExpressions],
+      ].filter((row): row is [string, string[]] => (row[1] as string[]).length > 0)
+    : [];
+  // The contextual meaning is already the headline, so listing it again under
+  // "other meanings" would be the duplication this work set out to remove.
+  const otherMeanings = word.translations.filter(
+    (translation) => translation.toLowerCase() !== word.primaryTranslation.toLowerCase()
+  );
+
   return (
     <li className="rounded-card border border-cream-dark bg-cream-card p-4">
       <div className="flex items-start justify-between gap-3">
@@ -224,10 +252,25 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
             )}
           </div>
 
-          <p className={`mt-1 text-sm ${word.primaryTranslation === NOT_TRANSLATED_YET ? "italic text-ink-muted" : "font-semibold text-ink"}`}>
+          <div className="mt-2">
+            <PronounceButton text={word.word} label={`Play ${word.word}`} />
+          </div>
+
+          <p className={`mt-2 text-sm ${word.primaryTranslation === NOT_TRANSLATED_YET ? "italic text-ink-muted" : "font-semibold text-ink"}`}>
             {word.primaryTranslation}
           </p>
-          {word.translations.length > 1 && <p className="text-xs text-ink-muted">Also: {word.translations.slice(1).join(", ")}</p>}
+          {/* What it meant where it was saved, which is the sense being studied. */}
+          {word.contextualMeaning && word.contextualMeaning !== word.primaryTranslation && (
+            <p className="mt-0.5 text-xs text-ink-muted">
+              Meant <span className="font-semibold text-ink">{word.contextualMeaning}</span> where you saved it
+            </p>
+          )}
+          {word.partOfExpression && (
+            <p className="mt-0.5 text-xs text-ink-muted">
+              Part of <span className="font-french font-semibold text-ink">{word.partOfExpression}</span>
+            </p>
+          )}
+          {otherMeanings.length > 0 && <p className="mt-1 text-xs text-ink-muted">Also: {otherMeanings.join(", ")}</p>}
 
           {word.exampleSentenceFr && (
             <p className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
@@ -238,8 +281,24 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
           {word.articleContextSentence && (
             <p className="mt-2 line-clamp-2 text-xs text-ink-muted">
               <span className="font-mono text-[11px] uppercase tracking-[0.1em]">Original context: </span>
-              "{word.articleContextSentence}"
+              &ldquo;{word.articleContextSentence}&rdquo;
             </p>
+          )}
+
+          {familyRows.length > 0 && (
+            <details className="mt-2">
+              <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink-faint">
+                Word family
+              </summary>
+              <div className="mt-2 space-y-1.5">
+                {familyRows.map(([label, values]) => (
+                  <p key={label} className="text-xs text-ink-muted">
+                    <span className="font-mono uppercase tracking-[0.08em] text-ink-faint">{label}: </span>
+                    <span className="font-french text-ink">{values.join(", ")}</span>
+                  </p>
+                ))}
+              </div>
+            </details>
           )}
 
           <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-cream-fill pt-3 text-xs text-ink-muted">

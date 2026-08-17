@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { tokenize, type Token } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { saveWord } from "@/lib/storage";
@@ -36,7 +36,7 @@ const DEMO_TITLE = "Getting started";
 const DEMO_SENTENCES = ["Léa aime le café.", "De temps en temps, Léa lit un livre."];
 const DEMO_PHRASE = "De temps en temps";
 
-const STEP_COUNT = 5; // welcome, read+tap, phrase hold, audio, practice — then the summary
+const STEP_COUNT = 5; // welcome, read+tap, expressions, audio, practice — then the summary
 
 interface InteractiveWalkthroughProps {
   startStep: number | null;
@@ -52,17 +52,12 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [activeWord, setActiveWord] = useState<{ token: Token; lookup: ReturnType<typeof lookupWord> } | null>(null);
   const [activePhrase, setActivePhrase] = useState<PhraseTranslationMatch | null>(null);
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
-  const phraseHoldTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
   useDismissibleHistory(true, handleSkip);
 
   useEffect(() => {
     if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
   }, [step]);
-
-  useEffect(() => () => {
-    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
-  }, []);
 
   function goToStep(next: number) {
     setStep(next);
@@ -114,7 +109,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   }
 
   function revealDemoPhrase() {
-    phraseHoldTimer.current = null;
     const tokens = tokenize(DEMO_SENTENCES[1]);
     const phraseTokenIndex = tokens.findIndex((token) => token.isWord);
     const match = findContainingPhraseTranslationMatch(tokens, phraseTokenIndex);
@@ -129,16 +123,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
         source: "phrasebank",
       }
     );
-  }
-
-  function startDemoPhraseHold() {
-    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
-    phraseHoldTimer.current = setTimeout(revealDemoPhrase, 450);
-  }
-
-  function cancelDemoPhraseHold() {
-    if (phraseHoldTimer.current) clearTimeout(phraseHoldTimer.current);
-    phraseHoldTimer.current = null;
   }
 
   const clozeExercise = useMemo<ClozeExercise | null>(() => {
@@ -305,48 +289,43 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
           </div>
         )}
 
+        {/* Deliberately still a plain tap. There is no second gesture to teach
+            any more: expressions are resolved automatically, so this step
+            exists to show that a tap on one word can answer with the whole
+            expression — not to train a different interaction. */}
         {step === 2 && (
           <div className="flex-1">
-            <p className="ligne-label">Hold for a phrase</p>
+            <p className="ligne-label">Expressions too</p>
             <p className="mt-2 text-sm text-ink-muted">
-              Some meanings belong to several words together. Press and hold the underlined phrase, just as you can in a real text.
+              Some meanings belong to several words together. Tap any word of one and Lire explains the whole expression.
             </p>
             <div className="mt-4 rounded-card border border-cream-dark bg-cream-card p-4 text-lg leading-relaxed text-ink">
-              <button
-                type="button"
-                onPointerDown={startDemoPhraseHold}
-                onPointerUp={cancelDemoPhraseHold}
-                onPointerCancel={cancelDemoPhraseHold}
-                onPointerLeave={cancelDemoPhraseHold}
-                onContextMenu={(event) => {
-                  event.preventDefault();
-                  cancelDemoPhraseHold();
-                  revealDemoPhrase();
-                }}
-                // The real reader's hold gesture has no keyboard equivalent
-                // to time out — a keyboard activation should just produce
-                // the held-long-enough outcome directly, not require
-                // pressing and releasing Enter/Space over 450ms.
-                onKeyDown={(event) => {
-                  if (event.key !== "Enter" && event.key !== " ") return;
-                  event.preventDefault();
-                  revealDemoPhrase();
-                }}
-                className="touch-none rounded bg-brand-light px-1 font-semibold text-brand underline decoration-dotted decoration-2 underline-offset-4"
-              >
-                {DEMO_PHRASE}
-              </button>
+              {DEMO_PHRASE.split(" ").map((word, index) => (
+                <span key={`${word}-${index}`}>
+                  <button
+                    type="button"
+                    onClick={revealDemoPhrase}
+                    className="rounded px-0.5 font-semibold text-ink active:bg-brand/10"
+                  >
+                    {word}
+                  </button>
+                  {index < DEMO_PHRASE.split(" ").length - 1 ? " " : ""}
+                </span>
+              ))}
               <span>, Léa lit un livre.</span>
             </div>
             {!activePhrase ? (
               <div className="mt-3">
-                <CoachMark text={`Hold “${DEMO_PHRASE}” until its phrase meaning appears.`} />
+                <CoachMark text={`Tap any word in “${DEMO_PHRASE}”.`} />
               </div>
             ) : (
               <div className="mt-3 rounded-card border border-cream-dark bg-cream-card p-4" role="status">
-                <p className="text-xs font-semibold uppercase tracking-wide text-brand">Phrase meaning</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning here</p>
                 <p className="mt-1 text-lg font-bold text-ink">{activePhrase.translation}</p>
-                <p className="mt-1 text-xs text-ink-muted">Lire recognised the whole phrase, not three unrelated words.</p>
+                <p className="mt-1 text-xs text-ink-muted">
+                  from <span className="font-semibold text-ink">{DEMO_PHRASE.toLowerCase()}</span> — Lire recognised the whole
+                  expression, not four unrelated words.
+                </p>
               </div>
             )}
             <button
