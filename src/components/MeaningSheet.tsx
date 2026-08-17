@@ -214,6 +214,13 @@ export default function MeaningSheet({
                 from <span className="font-semibold text-ink">{meaning.partOfExpression}</span>
               </p>
             )}
+            {/* Only for tokens whose English contribution is not a word of its
+                own — auxiliaries, clitics, negation particles. Shown here
+                rather than under More because without it the gap between this
+                word's meaning and the sentence's meaning looks like an error. */}
+            {meaning?.grammaticalRole && (
+              <p className="mt-1 text-xs text-ink-muted">{meaning.grammaticalRole}</p>
+            )}
             {meaning?.confidence === "low" && (
               <p className="mt-1.5 text-xs text-ink-muted">
                 Best offline guess — the sentence may be using it differently.
@@ -222,6 +229,17 @@ export default function MeaningSheet({
           </>
         )}
       </div>
+
+      {/* The whole sentence, clearly labelled as such. Deliberately below the
+          word's own meaning and visually distinct from it: this is the context
+          that explains the word, never the answer to what the word means. */}
+      {meaning?.sentenceTranslation && (
+        <div className="mt-2.5 rounded-2xl bg-white/75 p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
+          <p className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
+          <p className="mt-1 text-sm font-semibold text-ink">{meaning.sentenceTranslation.english}</p>
+        </div>
+      )}
 
       {/* Escalation for the two states where the local answer isn't trusted. */}
       {meaning && (meaning.abstained || meaning.confidence === "low") && aiState !== "ready" && (
@@ -261,9 +279,15 @@ export default function MeaningSheet({
             </Panel>
           )}
 
+          {/* The lemma and its dictionary definition. This is where "to have"
+              belongs for a tap on "a" — true about avoir, and not the answer to
+              what the token is doing in this sentence. */}
           {meaning?.lemma && meaning.lemma !== meaning.displayFrench && (
             <Panel label="Dictionary form">
-              <p className="text-sm font-semibold text-ink">{meaning.lemma}</p>
+              <p className="font-french text-sm font-semibold text-ink">
+                {meaning.lemma}
+                {meaning.lemmaGloss && <span className="font-sans font-normal text-ink-muted"> — {meaning.lemmaGloss}</span>}
+              </p>
             </Panel>
           )}
 

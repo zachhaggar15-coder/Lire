@@ -7,6 +7,7 @@ import {
   type ContextualTranslationResult,
 } from "@/lib/dictionary/contextualTranslation";
 import { validateAiSpan } from "@/lib/dictionary/aiSpan";
+import { functionWordRole, surfaceGlossFor } from "@/lib/dictionary/surfaceGloss";
 import { isContextAmbiguous, sensesAgree } from "@/lib/dictionary/ambiguity";
 import {
   buildCandidateContext,
@@ -53,14 +54,70 @@ export type MeaningSource =
 
 export type MeaningConfidence = ContextualTranslationConfidence;
 
+/**
+ * A whole sentence's natural English, kept in a wrapper of its own.
+ *
+ * The wrapper is the point. Sentence translations are genuinely useful and
+ * should be shown — but a bare `string` field sitting next to `displayEnglish`
+ * is an accident waiting to happen, and the accident already happened once: a
+ * clause-sized translation ended up presented as a single word's meaning. A
+ * distinct type means assigning one to the other cannot compile, so the two can
+ * never be confused again by a future edit rather than merely by convention.
+ */
+export interface SentenceMeaning {
+  readonly kind: "sentence-translation";
+  /** The French sentence, exactly as the reader is reading it. */
+  french: string;
+  /** Natural English for the whole sentence. Never a word gloss. */
+  english: string;
+  /** Where this translation came from, so untrusted sources can be labelled or withheld. */
+  source: "article-translation" | "cached-contextual" | "ai-sentence";
+}
+
+export function sentenceMeaning(
+  french: string,
+  english: string,
+  source: SentenceMeaning["source"]
+): SentenceMeaning {
+  return { kind: "sentence-translation", french, english, source };
+}
+
 export interface ResolvedMeaning {
   /** Exactly what the reader tapped, for the "you tapped X" line. */
   tappedText: string;
   /** The French unit actually being explained — the word, or the expression it belongs to. */
   displayFrench: string;
-  /** The single contextual English meaning. Empty string only when `source` is "unresolved". */
+  /**
+   * What the tapped token or expression contributes *here* — the answer to
+   * "what does this mean in this sentence?".
+   *
+   * For an inflected verb this is the inflected English ("has", "said"), not
+   * the infinitive: the dictionary form lives in `lemmaGloss`. Empty string
+   * only when `source` is "unresolved".
+   */
   displayEnglish: string;
   lemma: string | null;
+  /**
+   * The dictionary definition of the lemma — "to have" for "a".
+   *
+   * Deliberately separate from displayEnglish. Conflating the two is what made
+   * tapping the auxiliary in "il a dit" answer "to have", which is true of
+   * `avoir` and unhelpful about the sentence. Shown under More.
+   */
+  lemmaGloss: string | null;
+  /**
+   * Short note on the token's grammatical job, when that explains why its
+   * meaning and the sentence's meaning look mismatched. Null for ordinary
+   * vocabulary, where it would be noise.
+   */
+  grammaticalRole: string | null;
+  /**
+   * Natural English for the whole sentence, when a trustworthy one exists.
+   *
+   * Supporting context shown under its own heading — never the headline
+   * answer, and structurally incapable of becoming one. See SentenceMeaning.
+   */
+  sentenceTranslation: SentenceMeaning | null;
   /** Set when the tapped word is only part of what's being translated, e.g. "se rendre compte". */
   partOfExpression: string | null;
   source: MeaningSource;
@@ -113,6 +170,13 @@ export interface ResolveMeaningInput {
   lookup?: DictionaryLookupResult;
   /** A previously fetched AI contextual meaning for this exact tap. See aiMeaningCacheKey. */
   aiMeaning?: AiContextualMeaning | null;
+  /**
+   * A trustworthy natural translation of the whole sentence, when one is
+   * available. Passed in rather than derived: only the caller knows whether
+   * the article translation has loaded, and a translation stitched together
+   * from word glosses is exactly what must not appear here.
+   */
+  sentenceTranslation?: SentenceMeaning | null;
 }
 
 /** The shape resolveMeaning needs back from an AI contextual lookup. */
@@ -221,9 +285,24 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
     .map((candidate) => ({ candidate, score: scoreCandidate(candidate, context, tappedText, lookup) }))
     .sort((a, b) => b.score - a.score);
 
+  // The lemma's own dictionary definition, kept apart from whatever the token
+  // contributes here. For "a" in "il a dit" this is "to have" — a true fact
+  // about avoir, and the wrong answer to what the reader asked.
+  const lemmaGloss = lookup.translations[0] ?? null;
+  const surface = surfaceGlossFor({
+    clean: tappedText,
+    lemma: lookup.lemma,
+    lemmaGloss,
+    grammar: contextual.grammar,
+    isAuxiliary: isServingAsAuxiliary(input.tokens, input.tokenIndex),
+  });
+
   const base = {
     tappedText,
     lemma: contextual.lemma,
+    lemmaGloss,
+    grammaticalRole: surface?.role ?? functionWordRole(tappedText, contextSentence),
+    sentenceTranslation: input.sentenceTranslation ?? null,
     contextSentence,
     partOfSpeech: lookup.partOfSpeech,
     partOfSpeechUncertain: !!lookup.partOfSpeechUncertain,
@@ -290,17 +369,36 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
   const partOfExpression =
     expression && expression.toLowerCase().replace(/\s+/g, " ") !== tappedText.toLowerCase() ? expression : null;
 
+  // A single-word winner that is just the lemma's citation form gets inflected
+  // into what the sentence is actually using: "to have" becomes "has", "to
+  // say" becomes "said". Expressions are left alone — their citation form is
+  // the unit being taught — and so is any reading a context rule or the
+  // article translation already fitted to the sentence.
+  // Exactly the two candidates that restate the lemma rather than choosing a
+  // sense: the bare dictionary entry, and the grammar reading that describes
+  // the form. A context rule that picked a *different* sense ("compte" ->
+  // "matters") is left alone, since inflecting that would discard the choice
+  // it made.
+  const winnerIsBareLemmaGloss =
+    !spansExpression && !!surface && (!!winner.leadingSense || winner.source === "grammar");
+  const displayEnglish = winnerIsBareLemmaGloss ? surface.english : winner.english;
+
   return {
     meaning: {
       ...base,
+      // An expression's lemma line would otherwise pair the *expression* with
+      // the tapped word's own gloss — "se rendre compte de — account" — which
+      // reads as a contradiction. The expression's meaning is already the
+      // headline, so there is no separate dictionary form to show.
+      lemmaGloss: spansExpression ? null : base.lemmaGloss,
       displayFrench: expression ?? winner.french,
-      displayEnglish: winner.english,
+      displayEnglish,
       partOfExpression,
       source: toResolvedSource(winner),
       confidence,
       alternatives: dedupe(
         [...winner.alternatives, ...scored.slice(1).map((entry) => entry.candidate.english)],
-        winner.english
+        displayEnglish
       ),
       explanation: winner.explanation,
       abstained: false,
@@ -314,6 +412,57 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
     runnerUpScore: runnerUp?.score ?? null,
   };
 }
+
+/** Forms of avoir and être, which are auxiliaries far more often than they are main verbs. */
+const AUXILIARY_FORMS = new Set([
+  "ai", "as", "a", "avons", "avez", "ont", "avais", "avait", "avions", "aviez", "avaient",
+  "aura", "aurai", "auront", "aurait", "auraient",
+  "suis", "es", "est", "sommes", "êtes", "etes", "sont",
+  "étais", "etais", "était", "etait", "étaient", "etaient", "sera", "seront", "serait",
+]);
+
+/**
+ * Words that end like a participle but never are one.
+ *
+ * The participle test is a suffix check, and French numerals and determiners
+ * collide with it — "trois" ends in "is", so "il a trois enfants" looked like a
+ * compound tense and a main-verb avoir was described as an auxiliary.
+ */
+const NEVER_PARTICIPLES = new Set([
+  "trois", "six", "dix", "puis", "depuis", "mais", "tres", "très", "apres", "après",
+  "fois", "mois", "pays", "fils", "avis", "prix", "choix", "vous", "nous", "plus",
+  "lui", "ici", "aussi", "ainsi", "parmi", "demi", "midi", "merci", "celui", "qui",
+  "tout", "tous", "quelques", "certains", "plusieurs", "plusieurs",
+]);
+
+/** Clitics and adverbs that may sit between an auxiliary and its participle. */
+const INTERVENING_BEFORE_PARTICIPLE = new Set([
+  "ne", "pas", "plus", "jamais", "bien", "toujours", "déjà", "deja",
+  "en", "y", "se", "me", "te", "nous", "vous", "tout", "vraiment",
+]);
+
+/**
+ * Is this form working as the auxiliary of a compound tense?
+ *
+ * The test is whether a past participle follows, which is what separates "il a
+ * dit" (auxiliary plus participle) from "il a un livre" (avoir as a main verb
+ * meaning to have). It decides whether the reader is told "has - auxiliary
+ * forming the past tense" or simply "has", and getting it wrong in either
+ * direction produces a confusing note rather than a wrong meaning.
+ */
+function isServingAsAuxiliary(tokens: Token[], tokenIndex: number): boolean {
+  const clean = tokens[tokenIndex]?.clean?.toLowerCase() ?? "";
+  if (!AUXILIARY_FORMS.has(clean)) return false;
+  for (let i = tokenIndex + 1; i < tokens.length; i++) {
+    if (!tokens[i].isWord) continue;
+    const next = tokens[i].clean.toLowerCase();
+    if (INTERVENING_BEFORE_PARTICIPLE.has(next)) continue;
+    if (NEVER_PARTICIPLES.has(next) || /^\d/.test(next)) return false;
+    return next.length > 2 && /(?:é|ée|és|ées|i|ie|is|it|u|ue|us)$/.test(next);
+  }
+  return false;
+}
+
 
 /**
  * The strongest candidate that actually disagrees with the winner.

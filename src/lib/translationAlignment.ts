@@ -1,5 +1,5 @@
 import type { ArticleTranslationAlignmentSegment } from "@/lib/ai/types";
-import { cleanWord, tokenize, type Token } from "@/lib/words";
+import { cleanWord, lexicalSpan, tokenize, type Token } from "@/lib/words";
 
 export interface ResolvedTranslationAlignment {
   startIndex: number;
@@ -88,8 +88,16 @@ function findWindow(positions: WordPosition[], words: string[], startOrdinal: nu
   return -1;
 }
 
+/**
+ * The text of a token range, with the sentence's own punctuation trimmed off
+ * the edges.
+ *
+ * Joining raw token text carries whatever punctuation sits at the span
+ * boundary, so an alignment ending before a comma produced "la table," and
+ * that reached display and saved vocabulary. See lexicalSpan.
+ */
 function tokenText(tokens: Token[], startIndex: number, endIndex: number): string {
-  return tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("");
+  return lexicalSpan(tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join(""));
 }
 
 export function resolveTranslationAlignments(

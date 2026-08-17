@@ -66,6 +66,15 @@ export interface SavedWord {
   contextualMeaning?: string | null;
   /** The expression this word was part of where it was saved, e.g. "se rendre compte". */
   partOfExpression?: string | null;
+  /**
+   * The dictionary definition of the lemma, kept apart from the contextual
+   * meaning above. Saving "a" from "il a dit" records "has" as what was met
+   * and "to have" here — conflating them is what made the reader see an
+   * infinitive where they expected the sentence's meaning.
+   */
+  lemmaGloss?: string | null;
+  /** Natural English for the sentence it was saved from, when one was available. */
+  sentenceTranslation?: string | null;
   /** A short, simple learner-friendly French example sentence (not from the article). */
   exampleSentenceFr: string;
   /** English translation of exampleSentenceFr. */

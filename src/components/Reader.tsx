@@ -23,8 +23,10 @@ import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import {
   isMeaningUpgrade,
   resolveMeaning,
+  sentenceMeaning,
   shouldEscalateToAi,
   type ResolvedMeaning,
+  type SentenceMeaning,
 } from "@/lib/dictionary/resolveMeaning";
 import { getKnownWords } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
@@ -600,6 +602,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       previousSentence: previous,
       nextSentence: next,
       alignments: alignmentsForSentence(tap.sentenceText),
+      sentenceTranslation: trustedSentenceTranslation(tap.sentenceText),
     });
     if (!isMeaningUpgrade(activeWord.meaning, next_)) return;
     setActiveWord((current) => (current ? { ...current, meaning: next_ } : current));
@@ -1054,6 +1057,23 @@ export default function Reader({ text }: { text: ReadingText }) {
     return fluentAlignments?.[sentenceIndex] ?? null;
   }
 
+  /**
+   * A trustworthy natural translation of this sentence, or null.
+   *
+   * Deliberately only the fluent article translation. The offline fallback is
+   * a word-by-word dictionary composition — fine as a reading aid beneath the
+   * French, where it is labelled as such, but presenting it in the sheet as
+   * "what this sentence means" would dress up literal word-salad as a natural
+   * translation ("je me suis réveillée tard" → "i me to be wake late").
+   */
+  function trustedSentenceTranslation(sentenceText: string): SentenceMeaning | null {
+    const sentenceIndex = flatSentences.indexOf(sentenceText);
+    if (sentenceIndex === -1) return null;
+    const fluent = fluentSentences?.[sentenceIndex]?.trim();
+    if (!fluent) return null;
+    return sentenceMeaning(sentenceText, fluent, "article-translation");
+  }
+
   function statusForWord(clean: string, lemma: string | null | undefined): WordStatus | null {
     const lemmaKey = lemma?.toLowerCase() ?? null;
     const known = knownSet.has(clean) || (!!lemmaKey && knownSet.has(lemmaKey));
@@ -1100,6 +1120,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       previousSentence: previous,
       nextSentence: next,
       alignments: alignmentsForSentence(sentenceText),
+      sentenceTranslation: trustedSentenceTranslation(sentenceText),
       lookup,
     });
     const pronounReference = findPronounReference(
@@ -1177,6 +1198,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       contextSentence: sentenceText,
       previousSentence,
       alignments: alignmentsForSentence(sentenceText),
+      sentenceTranslation: trustedSentenceTranslation(sentenceText),
       aiMeaning: { translation: result.data.translation, meaningInContext: result.data.meaningInContext },
     });
     setActiveWord((current) => {
@@ -1450,6 +1472,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       articleContextSentence: meaning.contextSentence,
       contextualMeaning: contextual || null,
       partOfExpression: meaning.partOfExpression,
+      lemmaGloss: meaning.lemmaGloss,
+      sentenceTranslation: meaning.sentenceTranslation?.english ?? null,
       exampleSentenceFr: firstExample?.fr ?? meaning.contextSentence,
       exampleSentenceEn: firstExample?.en ?? (contextual || fallbackExample.en),
       sourceTextTitle: text.title,

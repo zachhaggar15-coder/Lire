@@ -1,4 +1,4 @@
-import { cleanWord, tokenize, type Token } from "@/lib/words";
+import { cleanWord, lexicalSpan, tokenize, type Token } from "@/lib/words";
 
 /**
  * Validating a semantic span the model claims to have found.
@@ -75,7 +75,7 @@ export function validateAiSpan(
     if (tappedIndex < startIndex || tappedIndex > endIndex) continue;
 
     return {
-      french: tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("").trim(),
+      french: lexicalSpan(tokens.slice(startIndex, endIndex + 1).map((token) => token.text).join("")),
       startIndex,
       endIndex,
       wordCount: claimedWords.length,

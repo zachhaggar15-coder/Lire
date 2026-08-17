@@ -6,9 +6,10 @@ import type { PracticeActivity, PracticePlan } from "@/lib/practice/session";
 import { shuffledChipsFor, buildPracticePlan } from "@/lib/practice/session";
 import { checkReconstruction, type ReconstructionChip, type SentenceReconstructionExercise } from "@/lib/practice/sentenceReconstruction";
 import type { ClozeExercise } from "@/lib/practice/cloze";
-import { lookupWord } from "@/lib/dictionary/lookup";
+import { exerciseGlossFor } from "@/lib/practice/exerciseGloss";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
+import { naturalSentenceTranslation } from "@/lib/practice/sentenceTranslation";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
 import type { MeaningInferenceExercise } from "@/lib/practice/meaningInference";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
@@ -152,6 +153,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
               <ReconstructionActivity
                 key={`recon-${index}`}
                 exercise={activity.exercise}
+                text={text}
                 onDone={(correct) => handleActivityDone("Sentence reconstructed", activity, correct)}
               />
             ) : activity.kind === "cloze" ? (
@@ -182,12 +184,35 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   );
 }
 
-function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceReconstructionExercise; onDone: (correct: boolean) => void }) {
+function ReconstructionActivity({
+  exercise,
+  text,
+  onDone,
+}: {
+  exercise: SentenceReconstructionExercise;
+  text: ReadingText;
+  onDone: (correct: boolean) => void;
+}) {
   const shuffled = useMemo(() => shuffledChipsFor(exercise), [exercise]);
   const [bank, setBank] = useState<ReconstructionChip[]>(shuffled);
   const [placed, setPlaced] = useState<ReconstructionChip[]>([]);
   const [result, setResult] = useState<ActivityResult>(null);
   const [answerRevealed, setAnswerRevealed] = useState(false);
+  const [english, setEnglish] = useState<string | null>(null);
+
+  // Fetched only once the sentence is correct. Loading it earlier would put
+  // the answer in memory before it is earned, and the whole point of showing
+  // the meaning afterwards is that it confirms rather than gives away.
+  useEffect(() => {
+    if (result !== "correct") return;
+    let cancelled = false;
+    void naturalSentenceTranslation(text, exercise.sentenceIndex).then((translation) => {
+      if (!cancelled) setEnglish(translation);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [result, text, exercise.sentenceIndex]);
 
   function moveToPlaced(chip: ReconstructionChip) {
     if (result) return;
@@ -263,7 +288,13 @@ function ReconstructionActivity({ exercise, onDone }: { exercise: SentenceRecons
           <p className="font-bold">
             {result === "correct" ? "Correct." : answerRevealed ? "Answer revealed." : "Not quite. Try once more or reveal the answer."}
           </p>
-          {(result === "correct" || answerRevealed) && <p className="mt-1 italic">{exercise.canonicalText}</p>}
+          {(result === "correct" || answerRevealed) && (
+            <p className="mt-1 font-french italic">{exercise.canonicalText}</p>
+          )}
+          {/* Semantic closure: the learner assembled the French, so confirm
+              what they built. Only after a correct answer, and only when a
+              genuinely natural translation exists. */}
+          {result === "correct" && english && <p className="mt-2 not-italic">{english}</p>}
         </div>
       )}
 
@@ -317,8 +348,16 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
   // Single-word blanks only — a "phrase" blank needs phrase-lookup, not the
   // word dictionary, and showing a wrong/partial gloss would be worse than
   // showing none.
+  //
+  // Deliberately not lookupWord(...).translations[0]: that reached past the
+  // resolver into raw position one of a bulk import, which is how `oignons`
+  // was clued as "arse". exerciseGlossFor applies the stricter standard
+  // teaching material needs, and returns null rather than guessing — in which
+  // case the hint is simply omitted.
   const answerTranslation =
-    exercise.kind === "word" ? lookupWord(exercise.answer).translations[0] ?? null : null;
+    exercise.kind === "word"
+      ? exerciseGlossFor({ french: exercise.answer, sentence: exercise.prompt.replace("___", exercise.answer) })?.english ?? null
+      : null;
 
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">

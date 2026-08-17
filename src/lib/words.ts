@@ -33,6 +33,31 @@ export function cleanWord(raw: string): string {
 }
 
 /**
+ * The lexical identity of a multi-word span, as opposed to how it is printed.
+ *
+ * `cleanWord` handles single tokens, but a span is assembled by joining raw
+ * token text, so it carries whatever punctuation happened to fall inside and
+ * at its edges: a phrase ending before a comma arrived as "a besoin de," and
+ * that string then reached display, lookup keys and saved vocabulary.
+ *
+ * The distinction that matters is the same one `cleanWord` draws, applied
+ * across a range. Quotes, commas, terminal marks and guillemets are typography
+ * belonging to the sentence; the apostrophe in "aujourd'hui" and the hyphens
+ * in "va-t-il" are part of the word and must survive. Collapses whitespace so
+ * a span broken across a line break still matches one written inline.
+ *
+ * Display of the article itself never uses this — readers keep their
+ * punctuation. Only lookup, matching, caching and stored vocabulary do.
+ */
+export function lexicalSpan(text: string): string {
+  return text
+    .replace(/\s+/g, " ")
+    .replace(/^[^\p{L}\p{N}]+/u, "")
+    .replace(/[^\p{L}\p{N}]+$/u, "")
+    .trim();
+}
+
+/**
  * Split a string into an ordered list of tokens, preserving punctuation
  * and whitespace so the original text can be reconstructed exactly.
  * A "word" is a run of letters/numbers plus inner apostrophes or hyphens.
