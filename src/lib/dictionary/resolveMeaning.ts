@@ -7,7 +7,7 @@ import {
   type ContextualTranslationResult,
 } from "@/lib/dictionary/contextualTranslation";
 import { validateAiSpan } from "@/lib/dictionary/aiSpan";
-import { functionWordRole, surfaceGlossFor } from "@/lib/dictionary/surfaceGloss";
+import { functionWordLemmaLabel, functionWordRole, surfaceGlossFor } from "@/lib/dictionary/surfaceGloss";
 import { isContextAmbiguous, sensesAgree } from "@/lib/dictionary/ambiguity";
 import {
   buildCandidateContext,
@@ -295,6 +295,7 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
     lemmaGloss,
     grammar: contextual.grammar,
     isAuxiliary: isServingAsAuxiliary(input.tokens, input.tokenIndex),
+    partOfSpeech: lookup.partOfSpeech,
   });
 
   const base = {
@@ -390,7 +391,13 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
       // the tapped word's own gloss — "se rendre compte de — account" — which
       // reads as a contradiction. The expression's meaning is already the
       // headline, so there is no separate dictionary form to show.
-      lemmaGloss: spansExpression ? null : base.lemmaGloss,
+      //
+      // The same problem in a different guise for homographs: once the
+      // resolver has read "en" as a clitic pronoun, showing "en — in" beneath
+      // it asserts the preposition's meaning as the word's dictionary form and
+      // contradicts the answer above. A grammatical label agrees with the
+      // analysis instead of undercutting it.
+      lemmaGloss: spansExpression ? null : lemmaGlossForDisplay(tappedText, displayEnglish, base.lemmaGloss),
       displayFrench: expression ?? winner.french,
       displayEnglish,
       partOfExpression,
@@ -411,6 +418,27 @@ export function resolveWithCandidates(input: ResolveMeaningInput): ResolutionOut
     candidates: scored,
     runnerUpScore: runnerUp?.score ?? null,
   };
+}
+
+/**
+ * What the detail layer should show as this word's dictionary form.
+ *
+ * Normally the lemma's own gloss. But for a homograph the resolver has read as
+ * a function word — "en" as a clitic pronoun rather than the preposition — the
+ * gloss belongs to the *other* word, and printing it under an answer it
+ * contradicts is worse than printing nothing. The grammatical label is
+ * substituted only when the contextual answer genuinely disagrees with the
+ * gloss, so an ordinary word keeps its real definition.
+ */
+function lemmaGlossForDisplay(
+  tappedText: string,
+  displayEnglish: string,
+  lemmaGloss: string | null
+): string | null {
+  const label = functionWordLemmaLabel(tappedText);
+  if (!label) return lemmaGloss;
+  if (lemmaGloss && sensesAgree(displayEnglish, lemmaGloss)) return lemmaGloss;
+  return label;
 }
 
 /** Forms of avoir and être, which are auxiliaries far more often than they are main verbs. */

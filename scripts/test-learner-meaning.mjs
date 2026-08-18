@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolveMeaning, sentenceMeaning } from "../src/lib/dictionary/resolveMeaning.ts";
-import { surfaceGlossFor, bareVerb, isVerbGloss } from "../src/lib/dictionary/surfaceGloss.ts";
+import { surfaceGlossFor, bareVerb, isVerbGloss, pluralSurfaceGloss, functionWordLemmaLabel } from "../src/lib/dictionary/surfaceGloss.ts";
 import { classifyRegister, isLearnerSafeGloss, leadingLearnerSense, preferLearnerSenses } from "../src/lib/dictionary/register.ts";
 import { exerciseGlossFor, canonicalExerciseGloss, contextualExerciseGloss } from "../src/lib/practice/exerciseGloss.ts";
 import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/lookup.ts";
@@ -112,6 +112,98 @@ console.log("--- Function words are described honestly ---");
 
   const y = resolve("Il y va demain.", "y");
   check("y is explained as a pronoun", !!y.grammaticalRole && /pronoun/i.test(y.grammaticalRole), String(y.grammaticalRole));
+}
+
+console.log("--- Plural nouns keep their number in English ---");
+{
+  const oignons = resolve("Il coupe les oignons.", "oignons");
+  check("a plural noun reads as a plural", normalise(oignons.displayEnglish) === "onions", oignons.displayEnglish);
+  check("the lemma stays singular", normalise(oignons.lemma ?? "") === "oignon", String(oignons.lemma));
+  check("the lemma gloss stays singular", normalise(oignons.lemmaGloss ?? "") === "onion", String(oignons.lemmaGloss));
+}
+for (const [sentence, needle, expected] of [
+  ["Les enfants jouent dehors.", "enfants", "children"],
+  ["Les voitures sont rouges.", "voitures", "cars"],
+  ["Elle achète des pommes.", "pommes", "apples"],
+  ["Les femmes arrivent.", "femmes", "women"],
+  ["Les hommes attendent.", "hommes", "men"],
+  ["Les couteaux sont rangés.", "couteaux", "knives"],
+]) {
+  const result = resolve(sentence, needle);
+  check(`"${needle}" pluralises to ${expected}`, normalise(result.displayEnglish) === expected, result.displayEnglish);
+}
+{
+  // Conservative by design: no invented plural where English has none.
+  const uncountable = resolve("Des informations utiles circulent.", "informations");
+  check("an uncountable English noun is not pluralised", normalise(uncountable.displayEnglish) === "information", uncountable.displayEnglish);
+
+  const water = resolve("Il boit des eaux minérales.", "eaux");
+  check("water is not pluralised", normalise(water.displayEnglish) === "water", water.displayEnglish);
+
+  const invariable = resolve("Les prix montent.", "prix");
+  check("an invariable French noun is left alone", normalise(invariable.displayEnglish) === "price", invariable.displayEnglish);
+
+  const irregularFrench = resolve("Il lit les journaux.", "journaux");
+  check(
+    "an irregular French plural is not force-pluralised",
+    !normalise(irregularFrench.displayEnglish).endsWith("ss"),
+    irregularFrench.displayEnglish
+  );
+}
+{
+  // English adjectives do not agree in number, so pluralising one invents a
+  // word — the first version of this produced "reds" and "interestings".
+  const colour = resolve("Les voitures rouges sont rapides.", "rouges");
+  check("a plural adjective is not pluralised in English", normalise(colour.displayEnglish) === "red", colour.displayEnglish);
+
+  const adjective = resolve("Des livres intéressants.", "intéressants");
+  check("no invented adjective plural", !normalise(adjective.displayEnglish).endsWith("ings"), adjective.displayEnglish);
+}
+{
+  // The pluraliser itself, including the cases it must refuse.
+  check("a regular plural is formed", pluralSurfaceGloss("pommes", "pomme", "apple", "noun") === "apples");
+  check("an irregular plural is used", pluralSurfaceGloss("enfants", "enfant", "child", "noun") === "children");
+  check("a sibilant takes -es", pluralSurfaceGloss("boites", "boite", "box", "noun") === "boxes");
+  check("consonant-y takes -ies", pluralSurfaceGloss("pays2", "pays2", "city", "noun") === null, "form must differ from lemma");
+  check("an uncountable is refused", pluralSurfaceGloss("eaux", "eau", "water", "noun") === null);
+  check("an adjective is refused", pluralSurfaceGloss("rouges", "rouge", "red", "adjective") === null);
+  check("a verb is refused", pluralSurfaceGloss("parles", "parler", "speak", "verb") === null);
+  check("a multi-word gloss is refused", pluralSurfaceGloss("morceaux", "morceau", "piece of news", "noun") === null);
+  check("an -f ending is refused as ambiguous", pluralSurfaceGloss("toits", "toit", "roof", "noun") === null);
+  check("an irregular French plural is refused", pluralSurfaceGloss("journaux", "journal", "diary", "noun") === null);
+  check("an already-plural gloss is refused", pluralSurfaceGloss("gens", "gen", "people", "noun") === null);
+  check("a missing part of speech is refused", pluralSurfaceGloss("pommes", "pomme", "apple", null) === null);
+}
+
+console.log("--- Homographic function words keep an honest lemma line ---");
+{
+  const en = resolve("J'en ai besoin.", "j'en");
+  check("the clitic's lemma line is not the preposition gloss", normalise(en.lemmaGloss ?? "") !== "in", String(en.lemmaGloss));
+  check("the clitic's lemma line is a grammatical label", /clitic pronoun/i.test(en.lemmaGloss ?? ""), String(en.lemmaGloss));
+  check("the clitic's lemma is still the bare word", normalise(en.lemma ?? "") === "en", String(en.lemma));
+}
+{
+  const le = resolve("Je le vois souvent.", "le");
+  check("a pronoun le is not glossed as the article", normalise(le.lemmaGloss ?? "") !== "the", String(le.lemmaGloss));
+  check("a pronoun le gets a grammatical label", /pronoun/i.test(le.lemmaGloss ?? ""), String(le.lemmaGloss));
+}
+{
+  // An ordinary word must keep its real definition — the substitution applies
+  // only where the gloss contradicts the contextual answer.
+  const noun = resolve("Elle ouvre la fenêtre.", "fenêtre");
+  check("an ordinary noun keeps its dictionary gloss", normalise(noun.lemmaGloss ?? "") === "window", String(noun.lemmaGloss));
+
+  const agreeing = resolve("Il ne veut pas partir.", "ne");
+  check(
+    "a function word whose gloss agrees keeps it",
+    normalise(agreeing.lemmaGloss ?? "") === "not",
+    String(agreeing.lemmaGloss)
+  );
+}
+{
+  check("a label exists for each homograph", ["en", "y", "le", "la", "lui", "leur", "que"].every((word) => !!functionWordLemmaLabel(word)));
+  check("an ordinary word has no label", functionWordLemmaLabel("fenêtre") === null);
+  check("an elided clitic resolves its label", /clitic pronoun/i.test(functionWordLemmaLabel("j'en") ?? ""));
 }
 
 console.log("--- Sentence meaning cannot masquerade as word meaning ---");
