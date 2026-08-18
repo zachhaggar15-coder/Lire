@@ -238,6 +238,8 @@ export function surfaceGlossFor(input: {
   grammar: ContextualTranslationGrammar | null;
   /** True when this form is serving as the auxiliary of a compound tense. */
   isAuxiliary?: boolean;
+  /** The entry's part of speech, which gates noun pluralisation. */
+  partOfSpeech?: string | null;
 }): SurfaceGloss | null {
   const clean = fold(input.clean);
   const lemmaKey = fold(input.lemma ?? "");
@@ -264,7 +266,17 @@ export function surfaceGlossFor(input: {
   }
 
   const gloss = input.lemmaGloss?.trim();
-  if (!gloss || !isVerbGloss(gloss)) return null;
+  if (!gloss) return null;
+
+  // Plural nouns, before the verb branch: "oignons" is the same word as its
+  // lemma in every respect except number, and English marks number too, so
+  // answering "onion" for a plural is the same category of mismatch as
+  // answering "to have" for "a".
+  if (!isVerbGloss(gloss)) {
+    const plural = pluralSurfaceGloss(input.clean, input.lemma, gloss, input.partOfSpeech);
+    return plural ? { english: plural, role: null } : null;
+  }
+
   const verb = bareVerb(gloss);
   if (!verb) return null;
 
@@ -297,6 +309,136 @@ export function surfaceGlossFor(input: {
     return { english: verb, role: null };
   }
   return null;
+}
+
+/**
+ * English nouns with no plural, where adding an "s" invents a word.
+ *
+ * French pluralises several of these freely ("des informations", "des
+ * conseils"), so the French form being plural is not on its own a reason to
+ * pluralise the English.
+ */
+const UNCOUNTABLE = new Set([
+  "water", "bread", "money", "information", "advice", "furniture", "milk",
+  "rice", "music", "news", "research", "homework", "luggage", "equipment",
+  "knowledge", "progress", "traffic", "weather", "work", "wine", "coffee",
+  "tea", "sugar", "salt", "butter", "cheese", "meat", "air", "hair", "help",
+  "time", "space", "health", "peace", "love", "fun", "evidence", "software",
+]);
+
+/** English plurals that are not formed by adding a suffix. */
+const IRREGULAR_PLURAL: Record<string, string> = {
+  man: "men",
+  woman: "women",
+  child: "children",
+  person: "people",
+  foot: "feet",
+  tooth: "teeth",
+  goose: "geese",
+  mouse: "mice",
+  life: "lives",
+  knife: "knives",
+  wife: "wives",
+  leaf: "leaves",
+  half: "halves",
+  loaf: "loaves",
+  shelf: "shelves",
+  thief: "thieves",
+  wolf: "wolves",
+  scarf: "scarves",
+  eye: "eyes",
+};
+
+/** True when a gloss is already plural, so pluralising again would be wrong. */
+function looksAlreadyPlural(noun: string): boolean {
+  return /(?:s|people|children|men|women|feet|teeth|mice|geese)$/.test(noun) && !/(?:ss|us|is)$/.test(noun);
+}
+
+function pluralise(noun: string): string | null {
+  const irregular = IRREGULAR_PLURAL[noun];
+  if (irregular) return irregular;
+  if (UNCOUNTABLE.has(noun)) return null;
+  if (looksAlreadyPlural(noun)) return null;
+  // "-f"/"-fe" is genuinely split in English (roofs, but leaves), so anything
+  // not in the irregular table above is left alone rather than guessed at.
+  if (/(?:f|fe)$/.test(noun)) return null;
+  if (/(?:s|sh|ch|x|z)$/.test(noun)) return `${noun}es`;
+  if (/[^aeiou]y$/.test(noun)) return `${noun.slice(0, -1)}ies`;
+  if (/[^aeiou]o$/.test(noun)) return `${noun}es`;
+  return `${noun}s`;
+}
+
+/**
+ * The plural English for a plural French noun, or null when there isn't a safe
+ * one.
+ *
+ * Deliberately narrow. The French form has to be exactly its lemma plus "s" or
+ * "x" — the unambiguous regular plural — and the gloss has to be a single bare
+ * noun. A multi-word gloss ("piece of news"), an uncountable, an already-plural
+ * form or an "-f" ending all return null and keep the lemma gloss, because a
+ * wrong English plural is worse than an unmarked one.
+ */
+export function pluralSurfaceGloss(
+  clean: string,
+  lemma: string | null,
+  gloss: string,
+  partOfSpeech?: string | null
+): string | null {
+  if (!lemma) return null;
+  // Nouns only. English adjectives do not agree in number, so pluralising one
+  // manufactures a distinction the language does not make — the first version
+  // of this turned "rouges" into "reds" and "intéressants" into
+  // "interestings". Number is the one inflection English shares here, and only
+  // for nouns.
+  const part = (partOfSpeech ?? "").toLowerCase();
+  if (!part.includes("noun") || part.includes("adjective") || part.includes("verb")) return null;
+  const form = fold(clean);
+  const base = fold(lemma);
+  if (form === base) return null;
+  if (form !== `${base}s` && form !== `${base}x`) return null;
+
+  const noun = gloss.trim().toLowerCase();
+  // Only a single bare word. Anything with a qualifier or a preposition needs
+  // judgement this cannot supply.
+  if (!/^[a-z-]+$/.test(noun)) return null;
+
+  const plural = pluralise(noun);
+  return plural && plural !== noun ? plural : null;
+}
+
+/**
+ * How to describe a homograph the resolver has read as a function word.
+ *
+ * "en" is both a preposition ("in") and a clitic pronoun, and they are
+ * unrelated. Once the resolver has settled on the pronoun, showing "en — in"
+ * under the lemma contradicts the answer above it: the reader is told the word
+ * means "of it" and then, apparently authoritatively, that its dictionary form
+ * means "in". These labels replace the gloss in that situation, so the detail
+ * layer agrees with the analysis rather than undercutting it.
+ */
+const FUNCTION_WORD_LABELS: Record<string, string> = {
+  en: "clitic pronoun replacing a de-phrase",
+  y: "clitic pronoun replacing a place or an à-phrase",
+  le: "direct-object pronoun",
+  la: "direct-object pronoun",
+  les: "direct-object pronoun",
+  lui: "indirect-object pronoun",
+  leur: "indirect-object pronoun",
+  me: "object pronoun",
+  te: "object pronoun",
+  se: "reflexive pronoun",
+  nous: "object pronoun",
+  vous: "object pronoun",
+  que: "relative pronoun or conjunction",
+  qui: "relative pronoun",
+  dont: "relative pronoun meaning of which or whose",
+  ne: "first half of the negative construction",
+};
+
+/** The grammatical label for a function word, or null when it has none. */
+export function functionWordLemmaLabel(clean: string): string | null {
+  const elided = fold(clean).match(/^(?:[cdjlmnst]|qu)['’](.+)$/u);
+  return FUNCTION_WORD_LABELS[elided?.[1] ?? fold(clean)] ?? null;
 }
 
 function gerund(verb: string): string {
