@@ -35,6 +35,7 @@ import {
 import { trackEvent } from "@/lib/analytics/client";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
+import PremiumPromoCard from "@/components/PremiumPromoCard";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success" | "error";
@@ -470,6 +471,9 @@ function LessonsContent({
 
   return (
     <>
+      <div className="px-[22px] pb-4">
+        <PremiumPromoCard />
+      </div>
       <JourneyMap selectedLevel={selectedLevel} onLevelChange={onLevelChange} />
       <div className="px-[22px]">
         <details className="mb-6 rounded-card border border-cream-dark bg-cream-card p-4">

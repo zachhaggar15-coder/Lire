@@ -12,6 +12,7 @@ import {
 } from "@/lib/analytics/events";
 import { appVersion, deploymentEnvironment, shouldSendAnalytics } from "@/lib/validation/config";
 import { getValidationState } from "@/lib/validation/state";
+import { hasAnalyticsConsent } from "@/lib/privacy/analyticsConsent";
 
 const LOCAL_EVENT_KEY = "lire.analytics.localEvents.v1";
 const MAX_LOCAL_EVENTS = 120;
@@ -51,6 +52,7 @@ function enrichedPayload(payload: AnalyticsPayload): AnalyticsPayload {
 
 export function trackEvent(name: AnalyticsEventName, payload: AnalyticsPayload = {}): void {
   try {
+    if (!hasAnalyticsConsent()) return;
     const cleanPayload = enrichedPayload(payload);
     const validation = validateAnalyticsPayload(name, cleanPayload);
     if (!validation.ok) return;
@@ -83,6 +85,7 @@ export function trackEvent(name: AnalyticsEventName, payload: AnalyticsPayload =
 
 export function trackOnce(key: string, name: AnalyticsEventName, payload: AnalyticsPayload = {}): void {
   if (typeof window === "undefined") return;
+  if (!hasAnalyticsConsent()) return;
   const storageKey = `lire.analytics.once.${key}`;
   try {
     if (window.sessionStorage.getItem(storageKey)) return;
@@ -94,6 +97,7 @@ export function trackOnce(key: string, name: AnalyticsEventName, payload: Analyt
 }
 
 export function getLocalAnalyticsEvents(): Array<AnalyticsEvent & { suppressed?: boolean }> {
+  if (!hasAnalyticsConsent()) return [];
   if (!hasStorage()) return [];
   try {
     const raw = window.localStorage.getItem(LOCAL_EVENT_KEY);

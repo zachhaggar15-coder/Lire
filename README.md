@@ -1186,15 +1186,18 @@ devices" card at all.
    magic-link email correctly redirect back to whichever environment
    (local dev or production) the sign-in was requested from.
 5. **Copy your project's API keys.** In the dashboard, go to **Settings** →
-   **API**. Copy the **Project URL** and the **anon / public** key (*not*
-   the `service_role` key — that one must never be exposed to a browser,
-   and this app never needs it).
+   **API**. Copy the **Project URL** and the **anon / public** key. Premium
+   subscription verification also needs the `service_role` key on the
+   server only; never expose that key through a `NEXT_PUBLIC_` variable or
+   browser code.
 6. **Add them to your environment.**
    - Locally: copy `.env.local.example` to `.env.local` if you haven't
      already, and fill in:
      ```
      NEXT_PUBLIC_SUPABASE_URL=<your project URL>
      NEXT_PUBLIC_SUPABASE_ANON_KEY=<your anon key>
+     SUPABASE_URL=<your project URL>
+     SUPABASE_SERVICE_ROLE_KEY=<server-only service role key>
      ```
    - On Vercel: **Project Settings** → **Environment Variables**, add both
      of the same two variables (for Production *and* Preview, if you want

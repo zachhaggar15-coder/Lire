@@ -9,6 +9,7 @@ import ViewportHeightVar from "@/components/ViewportHeightVar";
 import StorageMigrations from "@/components/StorageMigrations";
 import RssPrefetch from "@/components/RssPrefetch";
 import AppNavigationPolish from "@/components/AppNavigationPolish";
+import AnalyticsConsentBanner from "@/components/AnalyticsConsentBanner";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -92,6 +93,7 @@ export default function RootLayout({
         <AppNavigationPolish />
         <StorageMigrations />
         <RssPrefetch />
+        <AnalyticsConsentBanner />
       </body>
     </html>
   );
