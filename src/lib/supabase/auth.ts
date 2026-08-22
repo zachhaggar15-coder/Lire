@@ -43,6 +43,16 @@ export async function getCurrentUser(): Promise<User | null> {
   return user;
 }
 
+/** Returns the current Supabase bearer token for authenticated API calls. */
+export async function getAccessToken(): Promise<string | null> {
+  const client = getSupabaseClient();
+  if (!client) return null;
+  const {
+    data: { session },
+  } = await client.auth.getSession();
+  return session?.access_token ?? null;
+}
+
 /** Fires `callback` on sign-in/sign-out/token refresh. Returns an unsubscribe function. */
 export function onAuthStateChange(callback: (user: User | null) => void): () => void {
   const client = getSupabaseClient();

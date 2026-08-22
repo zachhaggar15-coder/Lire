@@ -4,7 +4,7 @@
 -- SQL Editor -> New query -> paste this whole file -> Run). Safe to re-run:
 -- every statement is idempotent (create-if-not-exists / drop-then-create).
 --
--- One table, `lire_user_data`, holds every synced localStorage store as a
+-- `lire_user_data` holds every synced localStorage store as a
 -- JSONB blob keyed by (user_id, store_key) — store_key is the same string
 -- each store already uses as its own localStorage key (see
 -- src/lib/supabase/sync.ts's SYNCED_STORES). This mirrors localStorage
@@ -15,6 +15,8 @@
 -- Named with a `lire_` prefix (rather than a generic `user_data`)
 -- specifically so it reads unambiguously if this project's Supabase
 -- instance is shared with other, unrelated apps.
+-- `lire_subscriptions` separately holds server-managed Google Play
+-- entitlements and is never exposed through an anon-key policy.
 
 create table if not exists public.lire_user_data (
   user_id uuid not null references auth.users (id) on delete cascade,
@@ -34,3 +36,17 @@ create policy "Users manage their own data" on public.lire_user_data
   for all
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+-- Server-managed Google Play subscription entitlements. No client policy is
+-- created: only the service-role backend may read or write purchase tokens.
+create table if not exists public.lire_subscriptions (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  provider text not null check (provider = 'google_play'),
+  product_id text not null,
+  purchase_token text not null unique,
+  status text not null,
+  expires_at timestamptz,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.lire_subscriptions enable row level security;

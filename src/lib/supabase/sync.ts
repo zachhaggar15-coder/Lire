@@ -21,6 +21,8 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.archive.v1", kind: "list-by-id", idField: "textId" },
   { key: "lire.progress.v1", kind: "record" },
   { key: "lire.journey.v1", kind: "object" },
+  // Retired per-CEFR band score. Still synced so a device that has not yet
+  // run the migration can convert it to XP; nothing writes to it any more.
   { key: "lire.levelScore.v1", kind: "record" },
   { key: "lire.progress.lastOpened", kind: "object" },
   { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },

@@ -6,6 +6,7 @@ import { getAllInferenceResults, getAllWordTaps, type StoredInference, type Stor
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
 import { tokenize } from "@/lib/words";
 import { getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
+import { lireLevelFromXp, xpForLevel } from "@/lib/progression/lireLevel";
 
 export type XpEventType =
   | "article_completed"
@@ -18,7 +19,10 @@ export type XpEventType =
   | "translation_challenge_completed"
   | "summary_completed"
   | "second_pass_completed"
-  | "grammar_answer_correct";
+  | "grammar_answer_correct"
+  // One-off credit for progress earned under the retired per-CEFR band score.
+  // See progression/migration.ts.
+  | "legacy_progress_migrated";
 
 export type MissionKind =
   | "complete_article"
@@ -97,9 +101,12 @@ export interface MissionStatus extends MissionDefinition {
   rewarded: boolean;
 }
 
+/**
+ * A Lire Level snapshot. Deliberately has no `title`: the old one was a CEFR
+ * band name, which made an XP total look like a proficiency statement.
+ */
 export interface ReaderLevel {
   level: number;
-  title: string;
   totalXp: number;
   currentLevelXp: number;
   nextLevelXp: number;
@@ -215,16 +222,17 @@ const CATEGORY_LABELS: Record<Category, string> = {
   "everyday life": "Life",
 };
 
-const LEVEL_TITLES = [
-  "A1 Starter",
-  "A2 Reader",
-  "B1 Bridge",
-  "B2 Explorer",
-  "C1 Analyst",
-  "C2 Independent",
-];
-
-const CEFR_LEVEL_THRESHOLDS = [500, 2500, 5000, 7500, 10000];
+/*
+ * The CEFR-titled level ladder that used to live here has been removed.
+ *
+ * It named XP level 1 "A1 Starter", level 2 "A2 Reader" and so on up to "C2
+ * Independent", so crossing an XP threshold appeared to raise the reader's
+ * French proficiency. Reading volume cannot support that claim, and the ladder
+ * also capped progression at six levels because there were only six bands to
+ * name them after. See progression/lireLevel.ts for the replacement, and
+ * `Difficulty` in types.ts for CEFR's remaining, legitimate job of describing
+ * how hard a text is.
+ */
 
 const ACHIEVEMENTS = [
   { id: "first-article", title: "First Article", description: "Complete your first French article.", icon: "I", requirement: 1, xp: 25 },
@@ -310,29 +318,51 @@ function totalXp(events = getXpEvents()): number {
   return events.reduce((sum, event) => sum + event.xp, 0);
 }
 
-export function xpNeededForLevel(level: number): number {
-  return CEFR_LEVEL_THRESHOLDS[Math.max(0, Math.min(CEFR_LEVEL_THRESHOLDS.length - 1, level - 1))] ?? 0;
+/**
+ * Credits XP carried over from the retired per-CEFR band score.
+ *
+ * Idempotent through the ledger's own key check, which is a second guard on
+ * top of the migration's completion marker — between them a reader cannot be
+ * credited twice for the same historical progress.
+ */
+export function awardLegacyProgressXp(xp: number): void {
+  if (xp <= 0) return;
+  addXpEvent({
+    type: "legacy_progress_migrated",
+    relatedId: "cefr-band-score",
+    xp,
+    idempotencyKey: "legacy:cefr-band-score",
+  });
 }
 
+/** Lifetime XP across every recorded event. */
+export function getTotalXp(): number {
+  return totalXp();
+}
+
+export function xpNeededForLevel(level: number): number {
+  return xpForLevel(level);
+}
+
+/**
+ * The reader's Lire Level.
+ *
+ * Delegates the curve to progression/lireLevel.ts so there is exactly one
+ * place that turns XP into a level, and adds the recent-XP figure the progress
+ * screen shows alongside it. No CEFR band is involved at any point.
+ */
 export function levelFromXp(xp: number): ReaderLevel {
-  let level = 1;
-  let remaining = xp;
-  while (level <= CEFR_LEVEL_THRESHOLDS.length && remaining >= xpNeededForLevel(level)) {
-    remaining -= xpNeededForLevel(level);
-    level++;
-  }
-  const nextLevelXp = xpNeededForLevel(level);
+  const lire = lireLevelFromXp(xp);
   const recentCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
   const recentXp = getXpEvents()
     .filter((event) => new Date(event.createdAt).getTime() >= recentCutoff)
     .reduce((sum, event) => sum + event.xp, 0);
   return {
-    level,
-    title: LEVEL_TITLES[Math.min(LEVEL_TITLES.length - 1, level - 1)],
-    totalXp: xp,
-    currentLevelXp: remaining,
-    nextLevelXp,
-    progress: nextLevelXp === 0 ? 1 : Math.min(1, remaining / nextLevelXp),
+    level: lire.level,
+    totalXp: lire.totalXp,
+    currentLevelXp: lire.xpIntoLevel,
+    nextLevelXp: lire.xpForNextLevel,
+    progress: lire.progress,
     recentXp,
   };
 }

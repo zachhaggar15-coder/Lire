@@ -1,8 +1,17 @@
 import * as Sentry from "@sentry/nextjs";
 
+function clientAnalyticsAllowed(): boolean {
+  try {
+    return window.localStorage.getItem("lire.privacy.analyticsConsent.v1") === "granted";
+  } catch {
+    return false;
+  }
+}
+
 // No DSN configured (local dev without .env.local, or a fork) -> no-op, same as before Sentry existed.
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  enabled: clientAnalyticsAllowed(),
 
   // 100% in dev, 10% in production — cheap enough at this app's traffic to
   // get real signal without a meaningful ingest cost.
@@ -14,7 +23,16 @@ Sentry.init({
   replaysSessionSampleRate: 0,
   replaysOnErrorSampleRate: 1.0,
 
-  integrations: [Sentry.replayIntegration()],
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: true,
+      maskAllInputs: true,
+      blockAllMedia: true,
+    }),
+  ],
+  beforeSend(event) {
+    return clientAnalyticsAllowed() ? event : null;
+  },
 });
 
 // Hook into App Router navigation transitions.

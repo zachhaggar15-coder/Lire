@@ -25,6 +25,8 @@ import BetaNotice from "@/components/BetaNotice";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
+import AnalyticsPrivacyCard from "@/components/AnalyticsPrivacyCard";
+import PremiumPromoCard from "@/components/PremiumPromoCard";
 import { StreakCard } from "@/components/GamificationCards";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
@@ -313,8 +315,10 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="App" subtitle="Account, install options, feedback, and privacy." />
+          <PremiumPromoCard />
           <BetaNotice />
           <AccountCard />
+          <AnalyticsPrivacyCard />
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div>

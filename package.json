@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "audit:dictionary": "node --import ./scripts/register-alias-loader.mjs scripts/audit-dictionary-coverage.mjs",
-    "test": "node --import ./scripts/register-alias-loader.mjs scripts/test-rss-filters.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-rss-delivery.mjs && node scripts/test-learning-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-contextual-translation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-resolution.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-corpus.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-escalation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-shadowing.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-generalisation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-learner-meaning.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-translation-alignment.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-validation-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-dictionary-accuracy.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-practice-exercises.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-session-record.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-personal-challenge.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-reading-performance.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-baseline-comparison.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-diagnostic-messaging.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-validation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-fallback.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-session-integration.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-onboarding-walkthrough.mjs && node scripts/test-fullscreen-layout-regression.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-practice-corpus-coverage.mjs",
+    "test:analytics-consent": "node --import ./scripts/register-alias-loader.mjs scripts/test-analytics-consent.mjs",
+    "test:free-access": "node --import ./scripts/register-alias-loader.mjs scripts/test-free-daily-access.mjs",
+    "test": "node --import ./scripts/register-alias-loader.mjs scripts/test-rss-filters.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-rss-delivery.mjs && node scripts/test-learning-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-core-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-lire-level.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-contextual-translation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-resolution.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-corpus.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-escalation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-shadowing.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-meaning-generalisation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-learner-meaning.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-translation-alignment.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-validation-logic.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-dictionary-accuracy.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-practice-exercises.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-session-record.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-personal-challenge.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-reading-performance.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-baseline-comparison.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-diagnostic-messaging.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-validation.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-fallback.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-paraphrase-session-integration.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-onboarding-walkthrough.mjs && node scripts/test-fullscreen-layout-regression.mjs && node --import ./scripts/register-alias-loader.mjs scripts/test-practice-corpus-coverage.mjs",
     "audit:resolver": "node --import ./scripts/register-alias-loader.mjs scripts/audit-resolver.mjs"
   },
   "dependencies": {
@@ -16,27 +18,28 @@
     "@sentry/nextjs": "^10.69.0",
     "@supabase/supabase-js": "^2.110.2",
     "@upstash/redis": "^1.38.0",
+    "google-auth-library": "^11.0.2",
     "jsdom": "^29.1.1",
-    "next": "^16.2.10",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^16.2.10",
+    "@next/eslint-plugin-next": "^16.3.1",
     "@types/jsdom": "^28.0.3",
     "@types/node": "^20.14.10",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "postcss": "^8.5.16",
+    "postcss": "^8.5.26",
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.63.0"
   },
   "overrides": {
-    "postcss": "^8.5.16"
+    "postcss": "^8.5.26"
   }
 }
