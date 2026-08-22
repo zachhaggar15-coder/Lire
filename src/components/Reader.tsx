@@ -55,6 +55,7 @@ import { getValidationState, saveValidationState, updateValidationState } from "
 import { isStarterText } from "@/lib/publicDomainBank";
 import {
   quickChallengeForArticle,
+  getTotalXp,
   recordGamifiedArticleCompletion,
   recordSecondPassXp,
   readingWordsFromText,
@@ -72,7 +73,7 @@ import {
   getOrCreateComprehensionQuestionBundle,
   type ComprehensionQuestionBundle,
 } from "@/lib/comprehensionCache";
-import { addLevelScore, levelPointsForCompletion, type LevelScoreChange } from "@/lib/levelScore";
+import { lireLevelChange, type LireLevelChange } from "@/lib/progression/lireLevel";
 import { buildPracticePlan, type PracticePlan } from "@/lib/practice/session";
 import { recordLookupStat, summarizeLookupRate, type LookupRateSummary } from "@/lib/practice/lookupStats";
 import { getSessionRecords, getSessionRecordsForLevel, recordReadingSession } from "@/lib/sessionRecord";
@@ -279,7 +280,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [completionResult, setCompletionResult] = useState<ArticleCompletionRecord | null>(null);
   /** When set, the full-screen "lesson complete" celebration is shown over the reader. */
   const [lessonComplete, setLessonComplete] = useState<{
-    scoreChange: LevelScoreChange;
+    levelProgress: LireLevelChange;
     percentRead: number;
     wordsTapped: number;
     savedWords: number;
@@ -1578,18 +1579,14 @@ export default function Reader({ text }: { text: ReadingText }) {
     setCompletionResult(result);
     setStatus("completed");
 
-    // Per-level score + the full-screen celebration. The score is tied to the
-    // text's stored level (the one on the card and the filter), so "B1 score"
-    // means the B1 track. Re-reads award nothing (levelPointsForCompletion).
     const wordsTapped = getWordTapsForArticle(text.id).length;
-    const points = levelPointsForCompletion({
-      savedWords: articleSavedWordCount,
-      wordsTapped,
-      comprehensionCorrect,
-      comprehensionTotal: comprehensionItems.length,
-      alreadyCompleted: wasAlreadyCompleted,
-    });
-    const scoreChange = addLevelScore(text.difficulty, points);
+    // The completion screen shows movement on the Lire Level ladder, taken
+    // from the XP this completion actually earned. It used to animate a
+    // separate per-CEFR band score that nothing else in the app read, so the
+    // number being celebrated was not the reader's real progression — and,
+    // being labelled "A2 · 63/100 to next tier", it implied that finishing
+    // enough texts advances CEFR proficiency.
+    const levelProgress = lireLevelChange(getTotalXp(), result.xpEarned);
 
     // Figure out a destination-specific "what's next" for the primary button,
     // instead of a generic "Continue" that just bounces back to the map.
@@ -1710,7 +1707,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     })();
 
     setLessonComplete({
-      scoreChange,
+      levelProgress,
       // A short lesson that fits on one screen never fires a scroll event, so
       // treat "no scroll recorded" as fully read rather than 0%.
       percentRead: Math.min(100, Math.round(maxProgressPercent.current) || 100),
@@ -2481,7 +2478,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       {lessonComplete && (
         <LessonCompleteScreen
           level={text.difficulty}
-          scoreChange={lessonComplete.scoreChange}
+          levelProgress={lessonComplete.levelProgress}
           stats={{
             percentRead: lessonComplete.percentRead,
             wordsTapped: lessonComplete.wordsTapped,

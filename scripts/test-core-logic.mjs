@@ -96,7 +96,6 @@ import { getGoals } from "../src/lib/goals.ts";
 import { itemTimestamp, mergeStoreValue, mergeStoreValueWithMetadata } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
-import { bandNumber, bandProgress, levelPointsForCompletion } from "../src/lib/levelScore.ts";
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
 import {
   buildCategoryProficiency,
@@ -438,11 +437,6 @@ console.log("\n--- Public-domain reading bank ---");
       nextRecommendation.reason.length > 0
   );
   // Per-level completion score (drives the lesson-complete bar).
-  check("finishing a fresh lesson awards a base of 5", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 5);
-  check("saved words and taps add on top, capped", levelPointsForCompletion({ savedWords: 10, wordsTapped: 4, comprehensionCorrect: 0, comprehensionTotal: 0, alreadyCompleted: false }) === 9, "5 + min(3,10) + 1");
-  check("a perfect comprehension check adds a bonus", levelPointsForCompletion({ savedWords: 0, wordsTapped: 0, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: false }) === 7);
-  check("re-reading a finished lesson awards nothing", levelPointsForCompletion({ savedWords: 5, wordsTapped: 5, comprehensionCorrect: 2, comprehensionTotal: 2, alreadyCompleted: true }) === 0);
-  check("band maths wrap at 100", bandProgress(120) === 0.2 && bandNumber(120) === 2 && bandProgress(0) === 0 && bandNumber(0) === 1);
   // Streak week strip (Monday-first, exactly one "today", days after today are future).
   const week = getStreakWeek(new Date("2026-02-04T12:00:00Z")); // a Wednesday
   const todayIndex = week.findIndex((d) => d.isToday);
@@ -1338,9 +1332,19 @@ console.log("\n--- Gamification engine ---");
     createdAt: "2026-07-14T09:01:00.000Z",
   });
   check("XP events are idempotent by idempotency key", first.awarded && !duplicate.awarded && getXpEvents().length === 1);
-  check("CEFR XP thresholds follow the product ladder", xpNeededForLevel(1) === 500 && xpNeededForLevel(2) === 2500 && xpNeededForLevel(5) === 10000);
-  check("levelFromXp advances through CEFR bands cumulatively", levelFromXp(500).level === 2 && levelFromXp(3000).level === 3 && levelFromXp(8000).level === 4);
   check("saving a new word awards 1 XP once", recordWordSavedXp("pourtant") === 1 && recordWordSavedXp("pourtant") === 0);
+}
+{
+  // The XP ladder is Lire Level now. It used to title each level with a CEFR
+  // band and stop at six, so accumulating points appeared to raise the
+  // reader's French proficiency; see progression/lireLevel.ts.
+  const early = levelFromXp(0);
+  const later = levelFromXp(50000);
+  check("an XP total maps to a numeric Lire Level", early.level === 1 && later.level > early.level);
+  check("a level carries no CEFR title", !("title" in early), JSON.stringify(Object.keys(early)));
+  check("the ladder is not capped at six levels", later.level > 6, String(later.level));
+  check("level cost grows with level", xpNeededForLevel(10) > xpNeededForLevel(1));
+  check("progress within a level is a fraction", early.progress >= 0 && early.progress <= 1);
 }
 {
   const easyBudget = translationBudgetForMode("relaxed", 500, 0.05);

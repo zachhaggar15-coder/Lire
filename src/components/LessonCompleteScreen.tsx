@@ -4,15 +4,9 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
 import {
-  bandNumber,
-  bandProgress,
-  getLevelScores,
-  TAUGHT_LEVELS,
-  type LevelScoreChange,
-  type LevelScores,
-} from "@/lib/levelScore";
+  type LireLevelChange,
+} from "@/lib/progression/lireLevel";
 import type { StreakDay } from "@/lib/habit";
-import { toPercent } from "@/lib/format";
 import { StreakWeekStrip } from "@/components/GamificationCards";
 import type { ReadingText } from "@/types";
 import type { PracticePlan } from "@/lib/practice/session";
@@ -44,7 +38,7 @@ export interface JourneyMoment {
 
 interface LessonCompleteScreenProps {
   level: Difficulty;
-  scoreChange: LevelScoreChange;
+  levelProgress: LireLevelChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
   /** Toggles an item's saved status from the mini review card. Optional so older call sites / tests aren't forced to wire it. */
@@ -87,7 +81,7 @@ interface LessonCompleteScreenProps {
  */
 export default function LessonCompleteScreen({
   level,
-  scoreChange,
+  levelProgress,
   stats,
   reviewItems,
   onToggleSave,
@@ -114,40 +108,35 @@ export default function LessonCompleteScreen({
   useEffect(() => {
     triggerHaptic("success");
   }, []);
-  // Snapshot the other levels' scores once, when the screen mounts.
-  const [allScores] = useState<LevelScores>(() => getLevelScores());
-  const crosses = bandNumber(scoreChange.after) > bandNumber(scoreChange.before);
-
-  // Bar animation: start at the old fill, then transition to the new one. A
-  // second phase handles a band crossing (fill to 100%, wrap, fill remainder).
-  const [barPercent, setBarPercent] = useState(() => bandProgress(scoreChange.before) * 100);
+  // Bar animation: start at the fill before this lesson, then transition to
+  // the new one. A second phase handles a level-up (fill to 100%, wrap, fill
+  // the remainder of the next level).
+  const levelledUp = levelProgress.levelledUp;
+  const [barPercent, setBarPercent] = useState(() => levelProgress.before.progress * 100);
   const [wrapped, setWrapped] = useState(false);
-  const [displayScore, setDisplayScore] = useState(scoreChange.before);
+  const [displayXp, setDisplayXp] = useState(levelProgress.before.totalXp);
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
-    // Let the panel settle for a beat, then drive the bar.
     timers.push(
       setTimeout(() => {
-        if (crosses) {
+        if (levelledUp) {
           setBarPercent(100);
           timers.push(
             setTimeout(() => {
               setWrapped(true);
               setBarPercent(0);
-              // Force a reflow gap before filling the new band.
-              timers.push(setTimeout(() => setBarPercent(bandProgress(scoreChange.after) * 100), 60));
+              timers.push(setTimeout(() => setBarPercent(levelProgress.after.progress * 100), 60));
             }, 620)
           );
         } else {
-          setBarPercent(bandProgress(scoreChange.after) * 100);
+          setBarPercent(levelProgress.after.progress * 100);
         }
       }, 350)
     );
 
-    // Count the score number up in parallel.
-    const from = scoreChange.before;
-    const to = scoreChange.after;
+    const from = levelProgress.before.totalXp;
+    const to = levelProgress.after.totalXp;
     if (to > from) {
       const durationMs = 900;
       const startAt = performance.now() + 350;
@@ -155,7 +144,7 @@ export default function LessonCompleteScreen({
       const tick = (now: number) => {
         const t = Math.min(1, Math.max(0, (now - startAt) / durationMs));
         const eased = 1 - Math.pow(1 - t, 3);
-        setDisplayScore(Math.round(from + (to - from) * eased));
+        setDisplayXp(Math.round(from + (to - from) * eased));
         if (t < 1) raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
@@ -165,9 +154,9 @@ export default function LessonCompleteScreen({
       };
     }
     return () => timers.forEach(clearTimeout);
-  }, [crosses, scoreChange.after, scoreChange.before]);
+  }, [levelledUp, levelProgress.after.progress, levelProgress.after.totalXp, levelProgress.before.progress, levelProgress.before.totalXp]);
 
-  const currentBand = wrapped ? bandNumber(scoreChange.after) : bandNumber(scoreChange.before);
+  const shownLevel = wrapped || !levelledUp ? levelProgress.after : levelProgress.before;
 
   const percentRead = Math.min(100, Math.max(0, Math.round(stats.percentRead)));
   const statItems = [
@@ -298,20 +287,22 @@ export default function LessonCompleteScreen({
           </div>
         )}
 
-        {/* The level bar that just moved */}
+        {/* Lire Level — accumulated activity, not a proficiency claim. */}
         <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-5">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-extrabold text-ink">
-              {level} reading progress
-              {currentBand > 1 && <span className="ml-1.5 text-xs font-semibold text-ink-muted">· tier {currentBand}</span>}
+              Lire Level {shownLevel.level}
+              {levelledUp && wrapped && (
+                <span className="ml-1.5 rounded-full bg-brand-light px-1.5 py-0.5 text-xs font-bold text-brand">
+                  Level up
+                </span>
+              )}
             </p>
             <p className="flex items-center gap-1 text-sm font-extrabold text-brand">
-              <span className="tabular-nums">
-                {scoreChange.before} → {displayScore}
-              </span>
-              {scoreChange.delta > 0 && (
+              <span className="tabular-nums">{displayXp.toLocaleString()} XP</span>
+              {levelProgress.xpAwarded > 0 && (
                 <span className="lesson-complete-delta rounded-full bg-brand-light px-1.5 py-0.5 text-xs font-bold text-brand">
-                  +{scoreChange.delta} this lesson
+                  +{levelProgress.xpAwarded} this lesson
                 </span>
               )}
             </p>
@@ -322,47 +313,34 @@ export default function LessonCompleteScreen({
               style={{ width: `${barPercent}%` }}
             />
           </div>
-          <p className="mt-1 text-right text-[10px] font-semibold text-ink-faint">{toPercent(bandProgress(wrapped ? scoreChange.after : scoreChange.before))}/100 to next tier</p>
-          {scoreChange.delta === 0 && (
-            <p className="mt-2 text-xs text-ink-muted">Already completed earlier — no new points this time.</p>
+          <p className="mt-1 text-right text-[10px] font-semibold text-ink-faint">
+            {shownLevel.xpIntoLevel.toLocaleString()} / {shownLevel.xpForNextLevel.toLocaleString()} XP to Level{" "}
+            {shownLevel.level + 1}
+          </p>
+          {levelProgress.xpAwarded === 0 && (
+            <p className="mt-2 text-xs text-ink-muted">Already completed earlier — no new XP this time.</p>
           )}
+
+          {/* Reading difficulty is shown separately and deliberately not as a
+              progression bar: CEFR describes how hard the French was, and says
+              nothing about how far along the reader is. */}
+          <div className="mt-4 flex items-center justify-between border-t border-cream-fill pt-3">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">
+              Reading difficulty
+            </p>
+            <p className="text-sm font-extrabold text-ink">{level}</p>
+          </div>
+
           <details className="mt-3">
             <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline decoration-dotted underline-offset-2">
               What counts toward this?
             </summary>
             <p className="mt-1.5 text-xs leading-relaxed text-ink-muted">
-              Reading progress tracks how much you complete at this level, not accuracy or fluency. Finishing a new
-              text adds points; saving words and tapping a word for help add a little more; a perfect comprehension
-              check adds a bit extra. Re-reading something you already finished doesn&apos;t add more.
+              Lire Level tracks how much reading and practice you complete — finishing texts, comprehension checks,
+              practice and review all add XP. It measures activity, not how difficult the French you can read.
+              Re-reading something you already finished doesn&apos;t add more.
             </p>
           </details>
-        </div>
-
-        {/* All four levels, so progress is legible at a glance */}
-        <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your levels</p>
-          <div className="mt-3 space-y-2.5">
-            {TAUGHT_LEVELS.map((lvl) => {
-              const score = allScores[lvl] ?? 0;
-              const isCurrent = lvl === level;
-              // The current level's live total (post-award) drives its row.
-              const shownScore = isCurrent ? scoreChange.after : score;
-              return (
-                <div key={lvl} className="flex items-center gap-3">
-                  <span className={`w-7 shrink-0 text-xs font-extrabold ${isCurrent ? "text-brand" : "text-ink-muted"}`}>{lvl}</span>
-                  <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-cream-strong">
-                    <div
-                      className={`h-full rounded-full ${isCurrent ? "bg-brand" : "bg-ink-muted/50"}`}
-                      style={{ width: `${bandProgress(shownScore) * 100}%` }}
-                    />
-                  </div>
-                  <span className={`w-8 shrink-0 text-right text-xs font-bold tabular-nums ${isCurrent ? "text-ink" : "text-ink-muted"}`}>
-                    {shownScore}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
         </div>
 
         {practiceText && practicePlan && lookupRate && (
