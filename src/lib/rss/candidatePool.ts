@@ -69,7 +69,7 @@ async function fetchFromSource(
 
   try {
     const res = await fetch(source.feedUrl, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; SorlioReader/1.0)" },
       next: { revalidate: FEED_REVALIDATE_SECONDS },
       signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
     });

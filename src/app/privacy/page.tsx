@@ -11,11 +11,11 @@ const sections = [
     title: "Who operates Sorlio",
     body: (
       <>
-        <p>Sorlio is operated by Zach Haggar as an independent developer. This policy applies to the Sorlio website, installed web app, and Android app.</p>
+        <p>Sorlio is operated by Sorlio, an independent developer. This policy applies to the Sorlio website, installed web app, and Android app.</p>
         <p className="mt-2">
           Privacy enquiries and data requests can be sent to{" "}
-          <a className="font-semibold text-brand underline underline-offset-2" href="mailto:zach.haggar15@gmail.com">
-            zach.haggar15@gmail.com
+          <a className="font-semibold text-brand underline underline-offset-2" href="mailto:Sorlio@proton.me">
+            Sorlio@proton.me
           </a>.
         </p>
       </>

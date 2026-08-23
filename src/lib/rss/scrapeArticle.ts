@@ -59,7 +59,7 @@ export async function scrapeFullArticle(url: string): Promise<string | null> {
 
   try {
     const res = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; SorlioReader/1.0)" },
       signal: AbortSignal.timeout(SCRAPE_TIMEOUT_MS),
     });
     if (!res.ok) {

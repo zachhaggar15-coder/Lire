@@ -18,7 +18,7 @@ if (!source) {
 }
 
 const res = await fetch(source.feedUrl, {
-  headers: { "User-Agent": "Mozilla/5.0 (compatible; LireReader/1.0)" },
+  headers: { "User-Agent": "Mozilla/5.0 (compatible; SorlioReader/1.0)" },
 });
 console.log(`${source.name} (${source.feedUrl}) -> HTTP ${res.status}`);
 const xml = await res.text();
