@@ -25,7 +25,7 @@ const sections = [
     title: "Data kept on your device",
     body: (
       <p>
-        By default, Sorlio stores saved and known words, reading history and progress, goals, grammar progress, settings, imported or custom texts, offline files, and the article selected for the current day&apos;s free allowance on your device. This information remains until you remove it in Sorlio, clear the app or browser storage, or uninstall the app. It is not sent to Sorlio merely because it exists locally.
+        By default, Sorlio stores saved and known words, reading history and progress, goals, grammar progress, settings, imported or custom texts, offline files, and a record of which articles and how many word lookups have been used against the current day&apos;s allowance on your device. This information remains until you remove it in Sorlio, clear the app or browser storage, or uninstall the app. It is not sent to Sorlio merely because it exists locally.
       </p>
     ),
   },
@@ -34,7 +34,7 @@ const sections = [
     body: (
       <>
         <p>
-          The free version can be used without an account and includes one article per day on that device. A passwordless Sorlio account is required for Premium so paid access can be restored and used across supported devices. Google Play processes Premium purchases and payment information; Sorlio does not receive or store full card details.
+          Sorlio has three levels of access. Without an account you can read one article and look up three words per day on that device. Signing in with a free account raises that to three articles and ten word lookups per day. Premium removes both daily limits and unlocks the advanced study features. A Sorlio account is required for Premium so paid access can be restored and used across supported devices. Google Play processes Premium purchases and payment information; Sorlio does not receive or store full card details.
         </p>
         <p className="mt-2">
           Sorlio stores the account identifier, Google Play product and purchase-token references, subscription status, and access-expiry time needed to verify and provide Premium. Premium renews monthly unless cancelled through Google Play. Cancellation stops future renewal, while access normally continues through the paid period. Subscription records are retained while needed to provide access, handle disputes, meet accounting or legal duties, and prevent fraud.
@@ -133,7 +133,7 @@ export default function PrivacyPage() {
       <p className="-mt-3 mb-2 text-sm leading-relaxed text-ink-muted">
         How Sorlio collects, uses, stores, shares, and deletes app and learning data.
       </p>
-      <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">Effective 21 August 2026</p>
+      <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">Effective 23 August 2026</p>
 
       <div className="space-y-3 text-sm leading-relaxed text-ink-muted">
         {sections.map((section) => (

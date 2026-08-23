@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import { trackEvent } from "@/lib/analytics/client";
 import { peekAnonymousId } from "@/lib/analytics/identity";
@@ -26,7 +27,12 @@ function choosePrompt(): PromptKind | null {
     const last = window.localStorage.getItem(LAST_PROMPT_KEY);
     if (daysSince(last) < MIN_DAYS_BETWEEN_PROMPTS) return null;
   }
-  if (state.meaningfulSessionCount === 1 && !state.firstAndroidInterestAt && !state.dismissedPromptIds.includes("android-beta")) {
+  if (
+    VALIDATION_FEATURES.androidBetaCtaEnabled &&
+    state.meaningfulSessionCount === 1 &&
+    !state.firstAndroidInterestAt &&
+    !state.dismissedPromptIds.includes("android-beta")
+  ) {
     return "android";
   }
   const latestDate = state.activeDates[state.activeDates.length - 1];

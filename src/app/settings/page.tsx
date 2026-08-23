@@ -23,6 +23,7 @@ import AccountCard from "@/components/AccountCard";
 import SpeechSettingsCard from "@/components/SpeechSettingsCard";
 import BetaNotice from "@/components/BetaNotice";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
 import AnalyticsPrivacyCard from "@/components/AnalyticsPrivacyCard";
@@ -338,15 +339,17 @@ export default function SettingsPage() {
               </button>
             </div>
           </div>
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="font-semibold text-ink">Get Sorlio on Android</p>
-                <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
+          {VALIDATION_FEATURES.androidBetaCtaEnabled && (
+            <div className="rounded-card border border-cream-dark bg-cream-card p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-ink">Get Sorlio on Android</p>
+                  <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
+                </div>
+                <AndroidBetaButton source="settings" label="Join" />
               </div>
-              <AndroidBetaButton source="settings" label="Join" />
             </div>
-          </div>
+          )}
           <PwaInstallCard />
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-center justify-between gap-3">

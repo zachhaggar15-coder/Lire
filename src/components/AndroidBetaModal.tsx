@@ -6,6 +6,7 @@ import { trackEvent } from "@/lib/analytics/client";
 import { buildValidationBehaviourContext } from "@/lib/validation/context";
 import { markAndroidInterest } from "@/lib/validation/lifecycle";
 import BottomSheet from "@/components/BottomSheet";
+import { VALIDATION_FEATURES } from "@/lib/validation/config";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -21,10 +22,14 @@ export function AndroidBetaButton({
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const enabled = VALIDATION_FEATURES.androidBetaCtaEnabled;
 
   useEffect(() => {
+    if (!enabled) return;
     trackEvent("android_beta_cta_viewed", { source });
-  }, [source]);
+  }, [source, enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

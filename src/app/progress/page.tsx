@@ -19,6 +19,7 @@ import {
 import AppBar from "@/components/AppBar";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
+import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import { getSessionRecords } from "@/lib/sessionRecord";
 import { computeRollingLookupRate, computeTrend, BASELINE_THRESHOLDS } from "@/lib/practice/baselineComparison";
@@ -130,15 +131,17 @@ export default function ProgressPage() {
         <div className="space-y-5">
           <ReadingIndependenceTrendCard trend={readingTrend} rollingRates={rollingRates} hasEnoughData={hasEnoughForTrend} />
           <CurrentLevelCard level={snapshot.level} />
-          <section className="rounded-card bg-cream-card p-4 shadow-card">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
-                <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when beta opens?</p>
+          {VALIDATION_FEATURES.androidBetaCtaEnabled && (
+            <section className="rounded-card bg-cream-card p-4 shadow-card">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
+                  <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when beta opens?</p>
+                </div>
+                <AndroidBetaButton source="progress" label="Join" />
               </div>
-              <AndroidBetaButton source="progress" label="Join" />
-            </div>
-          </section>
+            </section>
+          )}
 
           <section className="rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
