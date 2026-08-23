@@ -46,7 +46,7 @@ const sections = [
     title: "Optional account and sync",
     body: (
       <p>
-        If you request a passwordless sign-in link, Supabase processes your email address and creates an account identifier. If you sign in, the learning stores described in the sync screen are copied to Supabase so they can be merged across your devices. Account and synced data are kept while the account is active and are deleted when an account-deletion request is completed, except for limited records that must be retained for security or legal reasons.
+        Liree can be used fully without an account. If you choose to sign in, you do so with Google, and Supabase provides the authentication and account infrastructure. Liree never receives your Google password. Liree stores an account identifier and your email address so you can see which Google account is signed in; it does not copy your Google profile name, profile picture or other Google account details. Signing in copies the learning stores described in the sync screen to Supabase so they can be merged across your devices. Account and synced data are kept while the account exists and are removed when you delete the account, except for limited records that must be retained for security or legal reasons.
       </p>
     ),
   },
@@ -99,7 +99,7 @@ const sections = [
     title: "Your choices and rights",
     body: (
       <p>
-        You can use Lire without an account and without optional analytics. You may withdraw analytics consent, unsubscribe from beta email, stop using the app, clear local storage, or uninstall at any time. You may contact the address above to request access, correction, export, restriction, objection, or deletion of personal data. Applicable law may give you the right to complain to your local data-protection authority, including the UK Information Commissioner's Office.
+        You can use Lire without an account and without optional analytics. You may withdraw analytics consent, unsubscribe from beta email, stop using the app, clear local storage, or uninstall at any time. You can delete your account yourself from Settings, or from the web page at /account/delete if the app is not installed. Deleting your account removes the account and the learning data synced to it, along with any feedback or research responses submitted while signed in; learning data already stored on a device stays there until you clear the app&rsquo;s storage or uninstall it. Premium subscriptions are billed by Google Play, so deleting your Liree account does not cancel a subscription — cancel it in Google Play. You may also contact the address above to request access, correction, export, restriction, or objection. Applicable law may give you the right to complain to your local data-protection authority, including the UK Information Commissioner&rsquo;s Office.
       </p>
     ),
   },

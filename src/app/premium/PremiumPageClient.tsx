@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import AppBar from "@/components/AppBar";
-import { getAccessToken, getCurrentUser, onAuthStateChange, sendMagicLink } from "@/lib/supabase/auth";
+import { getAccessToken, getCurrentUser, onAuthStateChange, signInWithGoogle } from "@/lib/supabase/auth";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 
 const PLAY_BILLING_METHOD = "https://play.google.com/billing";
@@ -13,8 +14,7 @@ type PurchaseState = "idle" | "working" | "success" | "error";
 export default function PremiumPageClient() {
   const { status, loading, refresh } = usePremiumStatus();
   const [userEmail, setUserEmail] = useState<string | null | undefined>(undefined);
-  const [email, setEmail] = useState("");
-  const [emailSent, setEmailSent] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
   const [billingAvailable, setBillingAvailable] = useState(false);
   const [displayPrice, setDisplayPrice] = useState("£3.99");
   const [purchaseState, setPurchaseState] = useState<PurchaseState>("idle");
@@ -89,10 +89,15 @@ export default function PremiumPageClient() {
   }
 
   async function requestSignIn() {
+    setSigningIn(true);
     setError(null);
-    const result = await sendMagicLink(email.trim());
-    if (result.ok) setEmailSent(true);
-    else setError(result.error);
+    // Returns to Premium rather than the homepage, so the purchase the reader
+    // came here for is still in front of them afterwards.
+    const result = await signInWithGoogle("/premium");
+    if (!result.ok) {
+      setSigningIn(false);
+      setError(result.error);
+    }
   }
 
   return (
@@ -107,7 +112,7 @@ export default function PremiumPageClient() {
         <ul className="mt-5 space-y-2 text-sm">
           <li>✓ Unlimited articles every day</li>
           <li>✓ Full vocabulary, translation, listening and practice tools</li>
-          <li>✓ Premium access follows your passwordless Lire account</li>
+          <li>✓ Premium access follows your Liree account</li>
         </ul>
       </section>
 
@@ -128,15 +133,10 @@ export default function PremiumPageClient() {
         ) : !userEmail ? (
           <>
             <p className="font-semibold text-ink">Sign in before subscribing</p>
-            <p className="mt-1 text-sm text-ink-muted">The free version never needs an account. Premium uses an email link so your purchase can be restored.</p>
-            {emailSent ? (
-              <p className="mt-4 text-sm font-semibold text-brand">Check your email for the sign-in link, then return here.</p>
-            ) : (
-              <div className="mt-4 flex gap-2">
-                <input aria-label="Email address" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" className="min-w-0 flex-1 rounded-xl bg-cream px-3 py-3 text-sm text-ink" />
-                <button type="button" disabled={!email.trim()} onClick={requestSignIn} className="rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">Send link</button>
-              </div>
-            )}
+            <p className="mt-1 text-sm text-ink-muted">The free version never needs an account. Premium signs in with Google so your purchase can be restored on another device.</p>
+            <div className="mt-4">
+              <GoogleSignInButton onClick={requestSignIn} disabled={signingIn} busy={signingIn} />
+            </div>
           </>
         ) : billingAvailable ? (
           <button type="button" onClick={subscribe} disabled={purchaseState === "working"} className="min-h-12 w-full rounded-full bg-brand px-5 py-3 font-semibold text-white disabled:opacity-60">

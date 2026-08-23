@@ -2,11 +2,24 @@ import type { User } from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabase/client";
 
 /**
- * Passwordless email ("magic link") auth — no password to set, reset, or
- * store. Chosen over a password flow specifically because this app has no
- * existing account system to migrate and no support burden appetite for
- * password resets; a link is also the lowest-friction option for what's
- * fundamentally a "let me get my words back on a new phone" feature.
+ * Google sign-in, on top of Supabase Auth.
+ *
+ * This replaced a passwordless email ("magic link") flow. The link worked, but
+ * it made signing in a two-app errand — leave Lire, find the email, come back —
+ * which is a poor trade for what is fundamentally "let me get my words back on
+ * a new phone", and worse still inside the Android wrapper. Google sign-in
+ * completes in place.
+ *
+ * Supabase stays underneath deliberately. Every user-owned row is keyed on
+ * `auth.users.id`, RLS is written against `auth.uid()`, Play subscriptions are
+ * owned by that same id, and deletion relies on its cascades. Swapping the
+ * identity provider would have meant rebuilding all of that; swapping only the
+ * *method* changes nothing below the session.
+ *
+ * There is no separate sign-up. Supabase creates the account the first time a
+ * Google identity authenticates and returns the same user afterwards, so one
+ * button covers both cases and Lire never stores a password, username, phone
+ * number or date of birth.
  */
 
 export interface AuthResult {
@@ -14,15 +27,37 @@ export interface AuthResult {
   error: string | null;
 }
 
-/** Sends a sign-in link to the given email. The link redirects back to whatever origin the request was made from (works for both localhost and production without extra config). */
-export async function sendMagicLink(email: string): Promise<AuthResult> {
-  const client = getSupabaseClient();
-  if (!client) return { ok: false, error: "Sync isn't configured yet." };
+/**
+ * Where to send the reader back to after Google returns.
+ *
+ * Sign-in is always started from somewhere with intent behind it — Settings to
+ * turn on sync, the Premium page to buy — so dropping everyone on the homepage
+ * afterwards loses the thread. The caller passes its own path and gets it back.
+ */
+function redirectUrl(returnPath?: string): string | undefined {
+  if (typeof window === "undefined") return undefined;
+  const origin = window.location.origin;
+  if (!returnPath) return origin;
+  // Same-origin paths only: an absolute URL here would let a crafted link turn
+  // the OAuth callback into an open redirect.
+  const safePath = returnPath.startsWith("/") && !returnPath.startsWith("//") ? returnPath : "/";
+  return `${origin}${safePath}`;
+}
 
-  const { error } = await client.auth.signInWithOtp({
-    email,
+/**
+ * Starts Google sign-in, returning to `returnPath` when it completes.
+ *
+ * Resolves as soon as the redirect is handed off; the session arrives later
+ * through onAuthStateChange, which is what callers should react to.
+ */
+export async function signInWithGoogle(returnPath?: string): Promise<AuthResult> {
+  const client = getSupabaseClient();
+  if (!client) return { ok: false, error: "Sign-in isn't configured yet." };
+
+  const { error } = await client.auth.signInWithOAuth({
+    provider: "google",
     options: {
-      emailRedirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+      redirectTo: redirectUrl(returnPath),
     },
   });
   return { ok: !error, error: error?.message ?? null };

@@ -42,7 +42,7 @@ backend, works instantly.
   server-only) — see "Full-length articles" below.
 - **localStorage** for saved words, known words, reading progress, daily
   activity/streak, completed-article history, and settings — with
-  **optional cross-device sync** via Supabase (magic-link auth, `Settings
+  **optional cross-device sync** via Supabase (Google sign-in, `Settings
   → Sync across devices`) once configured; see "Cross-device sync" below.
 - Deployable to **Vercel**
 
@@ -1112,7 +1112,7 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/habit.ts` | `recordActivityToday`, `getCurrentStreak` — the daily activity log behind the Today card's streak |
 | `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive`, `estimateTimeSpentMinutes` — completed-article history for `/archive` |
 | `src/lib/supabase/client.ts` | `getSupabaseClient`, `isSupabaseConfigured` — optional, no-ops if unset |
-| `src/lib/supabase/auth.ts` | `sendMagicLink`, `signOut`, `getCurrentUser`, `onAuthStateChange` |
+| `src/lib/supabase/auth.ts` | `signInWithGoogle`, `signOut`, `getCurrentUser`, `getAccessToken`, `onAuthStateChange` |
 | `src/lib/supabase/sync.ts` | `pushStore`, `pullAndMergeAllStores` — the actual cross-device sync logic |
 | `src/components/AccountCard.tsx`, `AuthSync.tsx` | Settings sign-in/out UI, and the app-wide pull-on-sign-in listener |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getLastOpenedTextId` |
@@ -1174,17 +1174,25 @@ devices" card at all.
    **Run**. This creates one table (`lire_user_data` — prefixed so it reads
    unambiguously if this project is shared with other apps) with row-level
    security so each signed-in user can only ever read/write their own rows.
-3. **Enable email sign-in.** In the dashboard, go to **Authentication** →
-   **Sign In / Providers**, and confirm **Email** is enabled (it is by
-   default on a new project — nothing to change unless you'd previously
-   disabled it). The app uses passwordless "magic link" sign-in, so no
-   further provider setup (Google, GitHub, etc.) is needed.
+3. **Enable Google sign-in.** First create the OAuth credentials in
+   [Google Cloud Console](https://console.cloud.google.com/apis/credentials):
+   **Create credentials** → **OAuth client ID** → **Web application**. Under
+   **Authorised redirect URIs** add your Supabase callback,
+   `https://<your-project-ref>.supabase.co/auth/v1/callback` (copy it from
+   the Supabase Google provider page so the ref is exact). You will also need
+   an OAuth consent screen; **External** with only the default
+   `email`/`profile`/`openid` scopes is enough, since Liree asks for nothing
+   beyond the email address. Then in Supabase go to **Authentication** →
+   **Sign In / Providers** → **Google**, enable it, and paste the **Client ID**
+   and **Client secret**. Email/password and magic links can be disabled —
+   Google is the only sign-in method the app uses.
 4. **Set the Site URL and Redirect URLs.** Still in **Authentication** →
    **URL Configuration**: set **Site URL** to your production URL (e.g.
    `https://liree.vercel.app`), and add both your production URL and
-   `http://localhost:3000` under **Redirect URLs**. This is what lets the
-   magic-link email correctly redirect back to whichever environment
-   (local dev or production) the sign-in was requested from.
+   `http://localhost:3000` under **Redirect URLs**. The app asks to be
+   returned to the page sign-in started from (`/settings`, `/premium`,
+   `/account/delete`), so add wildcard entries — `https://liree.vercel.app/**`
+   and `http://localhost:3000/**` — or those redirects will be rejected.
 5. **Copy your project's API keys.** In the dashboard, go to **Settings** →
    **API**. Copy the **Project URL** and the **anon / public** key. Premium
    subscription verification also needs the `service_role` key on the
@@ -1216,12 +1224,15 @@ devices" card at all.
   `isSupabaseConfigured()`. Returns `null` if the two env vars above aren't
   set; every other module in this feature checks that and no-ops silently,
   same posture as the optional Upstash Redis and OpenAI integrations.
-- **`src/lib/supabase/auth.ts`** — `sendMagicLink(email)`, `signOut()`,
-  `getCurrentUser()`, `onAuthStateChange(callback)`. Passwordless email
-  link only — chosen because there's no existing account system to
-  migrate and no appetite for password-reset flows, and a link is the
-  lowest-friction option for what's fundamentally a "get my words back on
-  a new phone" feature, not a full user-account system.
+- **`src/lib/supabase/auth.ts`** — `signInWithGoogle(returnPath)`,
+  `signOut()`, `getCurrentUser()`, `getAccessToken()`,
+  `onAuthStateChange(callback)`. Google OAuth through Supabase, replacing an
+  earlier magic-link flow that made signing in a two-app errand — leave the
+  app, find the email, come back — which was especially poor inside the
+  Android wrapper. There is no separate sign-up: Supabase creates the account
+  the first time a Google identity authenticates and returns the same user
+  afterwards. Liree stores only the user id and email; no password, username,
+  phone number, or Google profile name/picture.
 - **`src/lib/supabase/sync.ts`** — the actual sync logic. `pushStore(key)`
   uploads one store's current localStorage value (tagged with the
   signed-in user's id) whenever it changes; `pullAndMergeAllStores()` pulls
@@ -1247,13 +1258,26 @@ devices" card at all.
   `recordActivityToday`, etc. — automatically syncs with zero changes to
   any component; the sync hook lives at the one shared write point each
   store already had.
-- **`src/components/AccountCard.tsx`** — the Settings-page sign-in/out UI.
-  Renders nothing if Supabase isn't configured.
+- **`src/components/AccountCard.tsx`** — the Settings-page account UI:
+  Continue with Google when signed out; email, sync state, sign out and a
+  destructive **Delete account** when signed in. Renders nothing if Supabase
+  isn't configured.
+- **`src/lib/account/deleteAccount.ts`** + **`src/app/api/account/delete/route.ts`**
+  — self-service deletion. The client never sends a user id; the endpoint
+  derives it from the bearer token and calls `auth.admin.deleteUser` with the
+  service-role key, server-side only. `lire_user_data` and
+  `lire_subscriptions` cascade; `lire_feedback`,
+  `lire_research_prompt_responses` and `lire_analytics_events` have no foreign
+  key and are deleted explicitly first. See the note at the end of
+  `supabase/schema.sql`.
+- **`src/app/account/delete/`** — the same flow on a public web page, for
+  readers who have uninstalled the app or never had the Android build.
 - **`src/components/AuthSync.tsx`** — mounted once, app-wide, in
   `layout.tsx`. Subscribes to Supabase auth state changes and calls
-  `pullAndMergeAllStores()` on sign-in, regardless of which page the reader
-  lands on after tapping the magic-link email (the link's redirect target
-  is just the site's origin, not a specific page).
+  `pullAndMergeAllStores()` on sign-in, regardless of which page the OAuth
+  redirect lands on. Being the single app-wide listener also means exactly
+  one merge runs per sign-in; individual screens must not start their own or
+  the two race on the same stores.
 - **Merge semantics, spelled out**: list-shaped stores (saved words,
   archive, known words, activity dates) are merged by union — an entry
   that exists on only one device is always kept. For an entry that exists
@@ -1539,7 +1563,7 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   corrected and disabled), 2 with dead feed URLs, and 2 genuinely-French
   headline-only feeds whose full-article scrape can't recover real content
   either. See `scripts/diag-rss-source.mjs` for the per-source triage tool.
-- **Optional cross-device sync via Supabase** — magic-link email auth plus
+- **Optional cross-device sync via Supabase** — Google sign-in plus
   a synced `lire_user_data` table for saved words, known words, settings,
   goals, and reading history. Entirely opt-in (see "Cross-device sync"
   above for exact setup steps); without it configured, the app is
