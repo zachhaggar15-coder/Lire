@@ -1,5 +1,7 @@
 "use client";
 
+import PremiumRouteGate from "@/components/PremiumRouteGate";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -29,7 +31,7 @@ interface PracticePageClientProps {
  * identical (a loading state with no randomised content) and the shuffled
  * plan only appears after hydration has already completed.
  */
-export default function PracticePageClient({ id, initialText }: PracticePageClientProps) {
+function PracticePageClientContent({ id, initialText }: PracticePageClientProps) {
   const router = useRouter();
   const { text, checked } = useReadingTextById(id, initialText);
   const [plan, setPlan] = useState<PracticePlan | null>(null);
@@ -66,4 +68,12 @@ export default function PracticePageClient({ id, initialText }: PracticePageClie
   }
 
   return <PracticeOverlay text={text} plan={plan} onClose={returnToLesson} onReturnToMap={returnToMap} />;
+}
+
+export default function PracticePageClient(props: PracticePageClientProps) {
+  return (
+    <PremiumRouteGate feature="practice" loadingVariant="reader">
+      <PracticePageClientContent {...props} />
+    </PremiumRouteGate>
+  );
 }

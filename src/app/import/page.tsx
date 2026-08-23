@@ -1,5 +1,7 @@
 "use client";
 
+import PremiumRouteGate from "@/components/PremiumRouteGate";
+
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,7 +19,7 @@ const CATEGORIES: { value: Category; label: string }[] = [
 
 const LEVELS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-export default function ImportPage() {
+function ImportPageContent() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -155,5 +157,13 @@ export default function ImportPage() {
         </section>
       )}
     </div>
+  );
+}
+
+export default function ImportPage() {
+  return (
+    <PremiumRouteGate feature="importText">
+      <ImportPageContent />
+    </PremiumRouteGate>
   );
 }

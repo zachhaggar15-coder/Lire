@@ -16,6 +16,8 @@ import {
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
 import AppIcon from "@/components/AppIcon";
+import { canUseAIExplanation } from "@/lib/access/accessModel";
+import { useAccess } from "@/lib/access/useAccess";
 
 export interface ActiveMeaningState {
   meaning: ResolvedMeaning;
@@ -75,6 +77,12 @@ export default function MeaningSheet({
   const [reportReason, setReportReason] = useState<TranslationReportReason | null>(null);
   const [reportSuggestion, setReportSuggestion] = useState("");
   const [reportSent, setReportSent] = useState(false);
+  // Only the reader-invoked explanation is gated. The resolver's own automatic
+  // escalation is left alone: it is how a hard word gets resolved at all, not
+  // a feature, and gating it would quietly degrade lookup accuracy for
+  // non-Premium readers rather than withhold something they can see.
+  const { context: access } = useAccess();
+  const aiAllowed = canUseAIExplanation(access).allowed;
 
   const open = state !== null;
   const meaning = state?.meaning;
@@ -106,7 +114,7 @@ export default function MeaningSheet({
   }, [meaning?.cacheKey]);
 
   async function handleAskAi() {
-    if (!meaning) return;
+    if (!meaning || !aiAllowed) return;
     onAiRequested?.();
     setAiState("loading");
     setAiError(null);
@@ -242,7 +250,7 @@ export default function MeaningSheet({
       )}
 
       {/* Escalation for the two states where the local answer isn't trusted. */}
-      {meaning && (meaning.abstained || meaning.confidence === "low") && aiState !== "ready" && (
+      {aiAllowed && meaning && (meaning.abstained || meaning.confidence === "low") && aiState !== "ready" && (
         <button
           onClick={handleAskAi}
           disabled={aiState === "loading"}
@@ -349,7 +357,7 @@ export default function MeaningSheet({
             </Panel>
           )}
 
-          {aiState === "idle" && !meaning?.abstained && meaning?.confidence !== "low" && (
+          {aiAllowed && aiState === "idle" && !meaning?.abstained && meaning?.confidence !== "low" && (
             <button
               onClick={handleAskAi}
               className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink"

@@ -1,5 +1,7 @@
 "use client";
 
+import PremiumRouteGate from "@/components/PremiumRouteGate";
+
 import { useEffect, useRef, useState } from "react";
 import AppBar from "@/components/AppBar";
 import {
@@ -74,7 +76,7 @@ const ALL_TENSES: VerbTense[] = [
   "futur-anterieur",
 ];
 
-export default function GrammarPage() {
+function GrammarPageContent() {
   const [track, setTrack] = useState<GrammarDomain>("verbs");
   const [tab, setTab] = useState<Tab>("practice");
   const [progress, setProgress] = useState<GrammarProgressRecord[]>([]);
@@ -640,5 +642,13 @@ function StructureReferencePanel({
         </div>
       </section>
     </div>
+  );
+}
+
+export default function GrammarPage() {
+  return (
+    <PremiumRouteGate feature="grammar">
+      <GrammarPageContent />
+    </PremiumRouteGate>
   );
 }

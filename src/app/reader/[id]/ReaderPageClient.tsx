@@ -7,8 +7,8 @@ import { useReadingTextById } from "@/lib/useReadingTextById";
 import Reader from "@/components/Reader";
 import RouteLoading from "@/components/RouteLoading";
 import ReaderAccessGate from "@/components/ReaderAccessGate";
-import { claimDailyFreeArticle } from "@/lib/premium/freeAccess";
-import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
+import { canStartArticle, type AccessDenialReason } from "@/lib/access/accessModel";
+import { useAccess } from "@/lib/access/useAccess";
 
 interface ReaderPageClientProps {
   id: string;
@@ -18,15 +18,25 @@ interface ReaderPageClientProps {
 
 export default function ReaderPageClient({ id, initialText }: ReaderPageClientProps) {
   const { text, checked } = useReadingTextById(id, initialText);
-  const { status: premium, loading: premiumLoading } = usePremiumStatus();
-  const [allowed, setAllowed] = useState<boolean | null>(null);
+  const { context, ready, tier, consumeArticle } = useAccess();
+  const [denial, setDenial] = useState<AccessDenialReason | null | undefined>(undefined);
 
   useEffect(() => {
-    if (!checked || premiumLoading || !text) return;
-    setAllowed(premium.isPremium || claimDailyFreeArticle(text.id));
-  }, [checked, premium.isPremium, premiumLoading, text]);
+    if (!checked || !ready || !text) return;
+    const decision = canStartArticle(context, text.id);
+    setDenial(decision.allowed ? null : decision.reason);
+    // Counted only once the article is actually allowed to open, and only the
+    // first time today — reopening one already read costs nothing, since
+    // going back to finish something is continuing a lesson rather than
+    // starting another.
+    if (decision.allowed) consumeArticle(text.id);
+    // Deliberately keyed on the identity of the tap rather than on `context`,
+    // which changes object identity on every usage tick and would re-run this
+    // after its own write.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked, ready, text?.id, tier]);
 
-  if (!checked || premiumLoading || (text && allowed === null)) {
+  if (!checked || !ready || (text && denial === undefined)) {
     // A genuinely invalid id can spend real time here — the id-lookup path
     // still has to wait on the RSS candidate pool being built on a cold
     // server. Same destination-shaped skeleton + status announcement as
@@ -50,7 +60,7 @@ export default function ReaderPageClient({ id, initialText }: ReaderPageClientPr
     );
   }
 
-  if (!allowed) return <ReaderAccessGate />;
+  if (denial) return <ReaderAccessGate reason={denial} isGuest={tier === "guest"} articleId={text.id} />;
 
   return <Reader text={text} />;
 }
