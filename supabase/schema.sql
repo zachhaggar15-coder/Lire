@@ -50,3 +50,25 @@ create table if not exists public.lire_subscriptions (
 );
 
 alter table public.lire_subscriptions enable row level security;
+
+-- Account deletion
+--
+-- Deleting an auth user cascades to both tables above via their
+-- `references auth.users (id) on delete cascade` clauses, so no extra cleanup
+-- is needed for synced learning data or subscription entitlements.
+--
+-- Three further tables carry a `user_id` column but are created outside this
+-- file and have no foreign key to auth.users, so they do NOT cascade:
+--   lire_feedback
+--   lire_research_prompt_responses
+--   lire_analytics_events
+-- Rows in those are removed explicitly by the deletion endpoint before the auth
+-- user is deleted (see src/app/api/account/delete/route.ts). If you add another
+-- user-linked table, either give it an on-delete-cascade reference to
+-- auth.users or add it to that endpoint's list — otherwise deleting an account
+-- will leave identifiable rows behind.
+--
+-- lire_android_beta_interest is deliberately NOT deleted. It is keyed by email
+-- with its own unsubscribe token, records a separate mailing-list consent, and
+-- explicitly stores user_id as null; removing it on account deletion would drop
+-- the unsubscribe state that stops further email.
