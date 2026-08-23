@@ -1,5 +1,7 @@
 "use client";
 
+import PremiumRouteGate from "@/components/PremiumRouteGate";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
@@ -61,7 +63,7 @@ function SpeakButton({ text }: { text: string }) {
   );
 }
 
-export default function ReviewPage() {
+function ReviewPageContent() {
   useDocumentTitle("Review");
   const [words, setWords] = useState<SavedWord[]>([]);
   const [ready, setReady] = useState(false);
@@ -1063,5 +1065,13 @@ function PhraseReviewCard({
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ReviewPage() {
+  return (
+    <PremiumRouteGate feature="review" loadingVariant="review">
+      <ReviewPageContent />
+    </PremiumRouteGate>
   );
 }

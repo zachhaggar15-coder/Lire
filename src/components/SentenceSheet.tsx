@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import type { SentenceExplanation } from "@/lib/ai/types";
 import { getSentenceExplanation } from "@/lib/ai/client";
+import { canUseAIExplanation } from "@/lib/access/accessModel";
+import { useAccess } from "@/lib/access/useAccess";
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
 
@@ -40,8 +42,13 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
     setAiError(null);
   }, [state?.sentence]);
 
+  // The reader-invoked explanation is Premium; the sentence text itself and
+  // its natural translation are not, so the sheet stays useful without it.
+  const { context: access } = useAccess();
+  const aiAllowed = canUseAIExplanation(access).allowed;
+
   async function handleAskAi() {
-    if (!state) return;
+    if (!state || !aiAllowed) return;
     onAiRequested?.();
     setAiState("loading");
     setAiError(null);
@@ -88,7 +95,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
         </div>
 
         <div className="mt-4">
-          {aiState === "idle" && (
+          {aiAllowed && aiState === "idle" && (
             <button
               onClick={handleAskAi}
                 className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink"

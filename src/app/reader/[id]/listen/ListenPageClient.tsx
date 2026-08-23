@@ -1,5 +1,7 @@
 "use client";
 
+import PremiumRouteGate from "@/components/PremiumRouteGate";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { ReadingText } from "@/types";
@@ -12,7 +14,7 @@ interface ListenPageClientProps {
 }
 
 /** A real page for "Listen without text" — see PracticePageClient for why. */
-export default function ListenPageClient({ id, initialText }: ListenPageClientProps) {
+function ListenPageClientContent({ id, initialText }: ListenPageClientProps) {
   const router = useRouter();
   const { text, checked } = useReadingTextById(id, initialText);
 
@@ -36,4 +38,12 @@ export default function ListenPageClient({ id, initialText }: ListenPageClientPr
   }
 
   return <ListeningPractice text={text} onClose={returnToLesson} />;
+}
+
+export default function ListenPageClient(props: ListenPageClientProps) {
+  return (
+    <PremiumRouteGate feature="listening" loadingVariant="reader">
+      <ListenPageClientContent {...props} />
+    </PremiumRouteGate>
+  );
 }

@@ -88,6 +88,10 @@ import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCom
 import MeaningSheet, { type ActiveMeaningState } from "@/components/MeaningSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import { triggerHaptic } from "@/lib/haptics";
+import { canLookupWord, canSaveWord, canUseComprehension, type AccessDenialReason } from "@/lib/access/accessModel";
+import { useAccess } from "@/lib/access/useAccess";
+import AccessPrompt from "@/components/AccessPrompt";
+import type { PremiumFeature } from "@/lib/access/limits";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Toast from "@/components/Toast";
 import { CompletionSummary } from "@/components/GamificationCards";
@@ -168,7 +172,16 @@ export default function Reader({ text }: { text: ReadingText }) {
   const router = useRouter();
   const isImportedText = text.id.startsWith("custom-");
   const isStarterLesson = isStarterText(text);
-  const showInterpretationChecks = !isImportedText && !isStarterLesson;
+  const { context: access, tier, consumeLookup } = useAccess();
+  /** Set when an action was blocked, so the reader is told which wall it was. */
+  const [blocked, setBlocked] = useState<
+    { reason: AccessDenialReason; blocked: "lookup" | PremiumFeature } | null
+  >(null);
+
+  // Comprehension is Premium, so the existing suitability flag now also
+  // carries entitlement. Everything downstream — question building, the
+  // completion summary, scoring — already keys off this one flag.
+  const showInterpretationChecks = !isImportedText && !isStarterLesson && canUseComprehension(access).allowed;
   const paragraphs = useMemo(() => tokenizeParagraphsToSentences(text.body), [text.body]);
   /** Instant, free, offline fallback, one per sentence. Defaults to phrase-aware, with literal still available from Settings. */
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -1096,6 +1109,14 @@ export default function Reader({ text }: { text: ReadingText }) {
     const clean = tokens[index]?.clean;
     if (!clean) return;
 
+    // Checked before any work is done, so a blocked tap costs nothing and the
+    // reader sees the prompt rather than a sheet that half-opens.
+    const lookupDecision = canLookupWord(access);
+    if (!lookupDecision.allowed) {
+      setBlocked({ reason: lookupDecision.reason!, blocked: "lookup" });
+      return;
+    }
+
     const adjacent = adjacentWords(tokens, index);
     const lookup = lookupWord(tokens[index].text, adjacent);
     const sourceBoilerplateToken =
@@ -1145,6 +1166,10 @@ export default function Reader({ text }: { text: ReadingText }) {
       meaningSource: meaning.source,
       meaningConfidence: meaning.confidence,
     });
+
+    // Counted here rather than at the top: a source-boilerplate tap returns
+    // early above without opening anything, and should not cost an allowance.
+    consumeLookup();
 
     const escalating = shouldEscalateToAi(meaning);
     lastTap.current = { tokens, tokenIndex: index, sentenceText };
@@ -1220,6 +1245,15 @@ export default function Reader({ text }: { text: ReadingText }) {
    */
   function handleSaveActiveWord(status: Exclude<WordStatus, "known"> = "learning") {
     if (!activeWord || activeWord.existingStatus) return;
+    // Saving is Premium. Existing saved words stay readable — this only stops
+    // new ones being added, so nobody's vocabulary is destroyed by the rule
+    // changing underneath them.
+    const saveDecision = canSaveWord(access);
+    if (!saveDecision.allowed) {
+      setActiveWord(null);
+      setBlocked({ reason: saveDecision.reason!, blocked: "saveWord" });
+      return;
+    }
     const meaning = activeWord.meaning;
     // Names and places aren't vocabulary worth reviewing. This guard used to
     // sit on the auto-save in handleWordTap; it belongs wherever the save is.
@@ -2499,6 +2533,19 @@ export default function Reader({ text }: { text: ReadingText }) {
           diagnostics={lessonComplete.diagnostics}
           levelLabel={text.difficulty}
         />
+      )}
+      {blocked && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-0 sm:items-center sm:p-6">
+          <div className="w-full max-w-md">
+            <AccessPrompt
+              reason={blocked.reason}
+              blocked={blocked.blocked}
+              isGuest={tier === "guest"}
+              returnPath={`/reader/${text.id}`}
+              onDismiss={() => setBlocked(null)}
+            />
+          </div>
+        </div>
       )}
       <Toast message={toastMessage} />
     </div>
