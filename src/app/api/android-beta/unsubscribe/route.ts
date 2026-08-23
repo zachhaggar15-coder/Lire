@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   if (!supabase) return new Response("Unsubscribe is unavailable right now.", { status: 503 });
 
   const { error } = await supabase
-    .from("lire_android_beta_interest")
+    .from("sorlio_android_beta_interest")
     .update({ unsubscribed_at: new Date().toISOString(), updated_at: new Date().toISOString() })
     .eq("unsubscribe_token", token);
 

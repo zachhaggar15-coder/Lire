@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   if (!user || !client) return NextResponse.json(FREE_PREMIUM_STATUS, { status: user ? 503 : 401 });
 
   const { data } = await client
-    .from("lire_subscriptions")
+    .from("sorlio_subscriptions")
     .select("product_id,purchase_token,status,expires_at")
     .eq("user_id", user.id)
     .maybeSingle();
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   try {
     const verified = await verifyPlaySubscription(data.purchase_token, data.product_id);
-    await client.from("lire_subscriptions").update({
+    await client.from("sorlio_subscriptions").update({
       status: verified.status,
       expires_at: verified.expiresAt,
       updated_at: new Date().toISOString(),

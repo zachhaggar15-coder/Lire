@@ -31,7 +31,7 @@ file is stale.
   email are stored — no password ever exists, and no name or profile picture is
   requested or kept. `src/lib/supabase/auth.ts`, `src/app/api/account/delete/route.ts`.
 - Also collected separately, and only if the Android beta CTA flag is enabled,
-  by the beta mailing list (`lire_android_beta_interest`). **That flag now
+  by the beta mailing list (`sorlio_android_beta_interest`). **That flag now
   defaults to false**, so a standard production build does not collect this.
   `src/lib/validation/config.ts`.
 
@@ -48,10 +48,10 @@ file is stale.
 - **Purpose:** App functionality (cross-device sync).
 - **What and where:** Saved words, known words, reading progress and history,
   goals, settings, imported or custom texts. Stored locally first; synced to
-  `lire_user_data` only for a signed-in user. A guest's data never leaves the
+  `sorlio_user_data` only for a signed-in user. A guest's data never leaves the
   device. `src/lib/supabase/sync.ts`, `src/lib/storage.ts`.
-- Free-text the reader chooses to send: feedback comments (`lire_feedback`) and
-  research-prompt answers (`lire_research_prompt_responses`).
+- Free-text the reader chooses to send: feedback comments (`sorlio_feedback`) and
+  research-prompt answers (`sorlio_research_prompt_responses`).
 
 ### App activity → App interactions
 - **Collected:** Yes. **Shared:** No. **Optional — consent-gated.**
@@ -112,15 +112,15 @@ here.
 
 Play requires that advertised deletion is real. `src/app/api/account/delete/route.ts`:
 
-1. Explicitly deletes rows by `user_id` from `lire_feedback`,
-   `lire_research_prompt_responses`, and `lire_analytics_events`. These use
+1. Explicitly deletes rows by `user_id` from `sorlio_feedback`,
+   `sorlio_research_prompt_responses`, and `sorlio_analytics_events`. These use
    `on delete set null`, so they would otherwise survive as orphans.
-2. Calls `auth.admin.deleteUser`, which cascades to `lire_user_data` and
-   `lire_subscriptions` via their `on delete cascade` references.
+2. Calls `auth.admin.deleteUser`, which cascades to `sorlio_user_data` and
+   `sorlio_subscriptions` via their `on delete cascade` references.
 
 Two deliberate exceptions, both worth being able to explain if asked:
 
-- **`lire_android_beta_interest` is not deleted.** It is keyed by email, not by
+- **`sorlio_android_beta_interest` is not deleted.** It is keyed by email, not by
   account, and holds its own unsubscribe token. Deleting the row would destroy
   the record that stops further email to that address. Readers unsubscribe via
   the link in the email.

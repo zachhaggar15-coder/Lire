@@ -37,7 +37,7 @@ export async function GET(request: Request) {
   const environment = url.searchParams.get("environment");
 
   let eventQuery = supabase
-    .from("lire_analytics_events")
+    .from("sorlio_analytics_events")
     .select("id,event_name,anonymous_id,user_id,session_id,payload,app_version,deployment_environment,created_at")
     .gte("created_at", from)
     .lte("created_at", to)
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
   if (environment && environment !== "all") eventQuery = eventQuery.eq("deployment_environment", environment);
 
   const betaQuery = supabase
-    .from("lire_android_beta_interest")
+    .from("sorlio_android_beta_interest")
     .select("email_normalized,anonymous_id,user_id,source,french_level,uses_android,motivation,desired_improvement,first_touch_source,is_returning_user,articles_completed,reading_sessions_completed,created_at")
     .gte("created_at", from)
     .lte("created_at", to)
@@ -54,7 +54,7 @@ export async function GET(request: Request) {
     .limit(2000);
 
   const feedbackQuery = supabase
-    .from("lire_feedback")
+    .from("sorlio_feedback")
     .select("category,sentiment,page,feature,comment,anonymous_id,user_id,created_at")
     .gte("created_at", from)
     .lte("created_at", to)
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
     .limit(2000);
 
   const researchQuery = supabase
-    .from("lire_research_prompt_responses")
+    .from("sorlio_research_prompt_responses")
     .select("prompt_type,response,comment,created_at")
     .gte("created_at", from)
     .lte("created_at", to)

@@ -1166,12 +1166,13 @@ devices" card at all.
    projects **per Organization** (not per account) at 2 — if you've hit
    that, either spin up a new Organization (resets the quota) or just reuse
    an existing project: this app only adds one small, clearly-namespaced
-   table (`lire_user_data`, see below), so it coexists fine alongside an
+   table (`sorlio_user_data`, see below), so it coexists fine alongside an
    unrelated app's tables in the same project.
 2. **Run the schema.** In the project dashboard, open the **SQL Editor**
    (left sidebar) → **New query**, paste the entire contents of
-   [`supabase/schema.sql`](supabase/schema.sql) from this repo, and click
-   **Run**. This creates one table (`lire_user_data` — prefixed so it reads
+   every file in [`supabase/migrations/`](supabase/migrations/) from this repo
+   in filename order, and click
+   **Run**. This creates one table (`sorlio_user_data` — prefixed so it reads
    unambiguously if this project is shared with other apps) with row-level
    security so each signed-in user can only ever read/write their own rows.
 3. **Enable Google sign-in.** First create the OAuth credentials in
@@ -1268,11 +1269,11 @@ devices" card at all.
 - **`src/lib/account/deleteAccount.ts`** + **`src/app/api/account/delete/route.ts`**
   — self-service deletion. The client never sends a user id; the endpoint
   derives it from the bearer token and calls `auth.admin.deleteUser` with the
-  service-role key, server-side only. `lire_user_data` and
-  `lire_subscriptions` cascade; `lire_feedback`,
-  `lire_research_prompt_responses` and `lire_analytics_events` have no foreign
+  service-role key, server-side only. `sorlio_user_data` and
+  `sorlio_subscriptions` cascade; `sorlio_feedback`,
+  `sorlio_research_prompt_responses` and `sorlio_analytics_events` have no foreign
   key and are deleted explicitly first. See the note at the end of
-  `supabase/schema.sql`.
+  `supabase/migrations/`.
 - **`src/app/account/delete/`** — the same flow on a public web page, for
   readers who have uninstalled the app or never had the Android build.
 - **`src/components/AuthSync.tsx`** — mounted once, app-wide, in
@@ -1487,7 +1488,7 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   read awkwardly, and points back to tap-to-translate for accurate
   in-context meaning.
 - **Confirmed the Supabase cross-device sync table is live and correctly
-  secured** — queried `lire_user_data` directly with the anon key; it
+  secured** — queried `sorlio_user_data` directly with the anon key; it
   returns an empty result set (not a missing-table error) for an
   unauthenticated request, confirming both that the table exists and that
   row-level security is doing its job. No code changes needed.
@@ -1567,11 +1568,11 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   headline-only feeds whose full-article scrape can't recover real content
   either. See `scripts/diag-rss-source.mjs` for the per-source triage tool.
 - **Optional cross-device sync via Supabase** — Google sign-in plus
-  a synced `lire_user_data` table for saved words, known words, settings,
+  a synced `sorlio_user_data` table for saved words, known words, settings,
   goals, and reading history. Entirely opt-in (see "Cross-device sync"
   above for exact setup steps); without it configured, the app is
   unchanged. `src/lib/supabase/` (client, auth, sync), `AccountCard.tsx` /
-  `AuthSync.tsx`, and `supabase/schema.sql`.
+  `AuthSync.tsx`, and `supabase/migrations/`.
 - **Generated-dictionary entries now carry a real (frequency-estimated)
   CEFR level** instead of one flat "mid-frequency" placeholder —
   `scripts/build-dictionary.mjs` buckets each of the ~92,000 entries by its

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, unavailable: true, error: "Analytics storage is not configured." }, { status: 503 });
   }
 
-  const { error } = await supabase.from("lire_analytics_events").insert({
+  const { error } = await supabase.from("sorlio_analytics_events").insert({
     event_name: event.name,
     anonymous_id: typeof event.anonymousId === "string" ? event.anonymousId : null,
     user_id: typeof event.authenticatedUserId === "string" ? event.authenticatedUserId : null,

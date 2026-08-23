@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   }
 
   const { value } = parsed;
-  const { error } = await supabase.from("lire_feedback").insert({
+  const { error } = await supabase.from("sorlio_feedback").insert({
     user_id: value.userId,
     anonymous_id: value.anonymousId,
     session_id: value.sessionId,

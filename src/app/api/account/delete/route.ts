@@ -17,17 +17,17 @@ import { getSupabaseServiceClient } from "@/lib/supabase/server";
 /**
  * Tables holding user-linked rows that a cascade will not reach.
  *
- * `lire_user_data` and `lire_subscriptions` both declare
+ * `sorlio_user_data` and `sorlio_subscriptions` both declare
  * `references auth.users(id) on delete cascade`, so removing the auth user
- * clears them. These three do not: they were created outside schema.sql and
- * carry `user_id` as a plain column with no foreign key, so deleting the auth
- * user would silently orphan rows that still identify the person — feedback
+ * clears them. These three do not: they reference auth.users with
+ * `on delete set null`, which nulls the column and keeps the row. Deleting the
+ * auth user would leave rows behind that still identify the person — feedback
  * and research responses contain free text they wrote.
  *
  * Deleted explicitly, before the auth user, so a failure here surfaces as a
  * failed deletion rather than leaving data behind under a deleted account.
  */
-const NON_CASCADING_USER_TABLES = ["lire_feedback", "lire_research_prompt_responses", "lire_analytics_events"];
+const NON_CASCADING_USER_TABLES = ["sorlio_feedback", "sorlio_research_prompt_responses", "sorlio_analytics_events"];
 
 export async function POST(request: Request) {
   const user = await authenticatedUser(request);
@@ -46,8 +46,8 @@ export async function POST(request: Request) {
     }
   }
 
-  // Last, because it is the irreversible step. `lire_user_data` and
-  // `lire_subscriptions` cascade away with it.
+  // Last, because it is the irreversible step. `sorlio_user_data` and
+  // `sorlio_subscriptions` cascade away with it.
   const { error } = await client.auth.admin.deleteUser(user.id);
   if (error) {
     return NextResponse.json({ error: "Your account could not be deleted. Please try again." }, { status: 500 });

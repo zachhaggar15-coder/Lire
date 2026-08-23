@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 
   const now = new Date().toISOString();
   const { data: existing, error: readError } = await supabase
-    .from("lire_android_beta_interest")
+    .from("sorlio_android_beta_interest")
     .select("*")
     .eq("email_normalized", parsed.value.emailNormalized)
     .maybeSingle();
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
   };
 
   const { error } = await supabase
-    .from("lire_android_beta_interest")
+    .from("sorlio_android_beta_interest")
     .upsert(row, { onConflict: "email_normalized" });
 
   if (error) return NextResponse.json({ ok: false, error: "Could not save beta registration." }, { status: 502 });
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
     confirmationSent = await sendConfirmationEmail(parsed.value.email, unsubscribeToken);
     if (confirmationSent) {
       await supabase
-        .from("lire_android_beta_interest")
+        .from("sorlio_android_beta_interest")
         .update({ confirmation_sent_at: new Date().toISOString() })
         .eq("email_normalized", parsed.value.emailNormalized);
     }

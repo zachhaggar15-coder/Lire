@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   try {
     const verified = await verifyPlaySubscription(body.purchaseToken, PREMIUM_PRODUCT_ID);
-    const { error } = await client.from("lire_subscriptions").upsert({
+    const { error } = await client.from("sorlio_subscriptions").upsert({
       user_id: user.id,
       provider: "google_play",
       product_id: verified.productId,

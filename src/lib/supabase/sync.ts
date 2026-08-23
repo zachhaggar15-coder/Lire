@@ -448,7 +448,7 @@ export async function pushStore(key: string, options: { markLocalChange?: boolea
     if (!user) return false;
 
     const logicalUpdatedAt = metadata.updatedAt ?? new Date().toISOString();
-    const { error } = await client.from("lire_user_data").upsert(
+    const { error } = await client.from("sorlio_user_data").upsert(
       [
         { user_id: user.id, store_key: key, data: remoteValue, updated_at: logicalUpdatedAt },
         { user_id: user.id, store_key: `${REMOTE_METADATA_PREFIX}${key}`, data: metadata, updated_at: logicalUpdatedAt },
@@ -474,7 +474,7 @@ export async function pullAndMergeAllStores(): Promise<boolean> {
     } = await client.auth.getUser();
     if (!user) return false;
 
-    const { data: rows, error } = await client.from("lire_user_data").select("store_key, data, updated_at").eq("user_id", user.id);
+    const { data: rows, error } = await client.from("sorlio_user_data").select("store_key, data, updated_at").eq("user_id", user.id);
     if (error || !rows) throw error ?? new Error("No sync rows returned.");
 
     const remoteByKey = new Map(rows.map((row) => [row.store_key, { data: row.data, updatedAt: row.updated_at }]));

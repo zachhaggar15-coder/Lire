@@ -48,7 +48,11 @@ const deleteClient = read("src/lib/account/deleteAccount.ts");
 const dialog = read("src/components/DeleteAccountDialog.tsx");
 const accountCard = read("src/components/AccountCard.tsx");
 const premiumPage = read("src/app/premium/PremiumPageClient.tsx");
-const schema = read("supabase/schema.sql");
+const schema = [
+  "supabase/migrations/0002_user_data.sql",
+  "supabase/migrations/0003_subscriptions.sql",
+  "supabase/migrations/0007_account_deletion_contract.sql",
+].map(read).join("\n");
 const privacy = read("src/app/privacy/page.tsx");
 const verifyRoute = read("src/app/api/premium/google-play/verify/route.ts");
 const statusRoute = read("src/app/api/premium/status/route.ts");
@@ -115,15 +119,15 @@ console.log("--- Deletion is authorised by the session, not by a submitted id --
 
 console.log("--- Every user-linked table is covered ---");
 {
-  check("lire_user_data cascades", /lire_user_data[\s\S]*?references auth\.users \(id\) on delete cascade/.test(schema));
-  check("lire_subscriptions cascades", /lire_subscriptions[\s\S]*?references auth\.users \(id\) on delete cascade/.test(schema));
-  for (const table of ["lire_feedback", "lire_research_prompt_responses", "lire_analytics_events"]) {
+  check("sorlio_user_data cascades", /sorlio_user_data[\s\S]*?references auth\.users \(id\) on delete cascade/.test(schema));
+  check("sorlio_subscriptions cascades", /sorlio_subscriptions[\s\S]*?references auth\.users \(id\) on delete cascade/.test(schema));
+  for (const table of ["sorlio_feedback", "sorlio_research_prompt_responses", "sorlio_analytics_events"]) {
     check(`${table} is deleted explicitly`, deleteRoute.includes(table), "no cascade exists for it");
   }
   check("non-cascading rows are removed before the auth user", deleteRoute.indexOf("NON_CASCADING_USER_TABLES") < deleteRoute.indexOf("auth.admin.deleteUser"));
-  check("the schema documents what does not cascade", /do NOT cascade/.test(schema));
+  check("the schema documents what does not cascade", /(does|do) NOT cascade/i.test(schema));
   // Keyed by email with its own unsubscribe token, and stores user_id as null.
-  check("the beta mailing list is not silently deleted", !deleteRoute.includes("lire_android_beta_interest"));
+  check("the beta mailing list is not silently deleted", !deleteRoute.includes("sorlio_android_beta_interest"));
 }
 
 console.log("--- A failed deletion changes nothing ---");

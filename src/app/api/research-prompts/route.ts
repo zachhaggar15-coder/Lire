@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   const supabase = getSupabaseServiceClient();
   if (!supabase) return NextResponse.json({ ok: false, unavailable: true, error: "Research response storage is not configured." }, { status: 503 });
 
-  const { error } = await supabase.from("lire_research_prompt_responses").insert({
+  const { error } = await supabase.from("sorlio_research_prompt_responses").insert({
     prompt_type: promptType,
     response,
     comment: clean(body.comment, 2000),

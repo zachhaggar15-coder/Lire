@@ -18,7 +18,7 @@ The asset-links endpoint intentionally returns an empty valid array until a fing
 
 Sorlio uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, create an auto-renewing monthly subscription with product ID `sorlio_premium_monthly`, a GBP base price of £3.99, and the required regional prices. Access has three levels, defined in `src/lib/access/limits.ts`: a guest gets one article and three word lookups per day, a free signed-in account gets three articles and ten lookups, and Premium removes both limits and unlocks the advanced study features. Reopening an already-claimed article on the same day stays free at every level.
 
-Run `supabase/release-migration.sql` once. It is the consolidated, idempotent migration for a release database and creates every table the app queries, including the server-only `lire_subscriptions` entitlement table. Create a Google Play service account, grant it access to subscription information and purchase acknowledgement, and configure the following production variables:
+Run every file in `supabase/migrations/` once, in filename order (`0001` through `0007`). They are idempotent and create every table the app queries, including the server-only `sorlio_subscriptions` entitlement table. See `supabase/migrations/README.md`. Create a Google Play service account, grant it access to subscription information and purchase acknowledgement, and configure the following production variables:
 
 - `NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
 - `GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
