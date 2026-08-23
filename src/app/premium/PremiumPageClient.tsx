@@ -7,7 +7,7 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 
 const PLAY_BILLING_METHOD = "https://play.google.com/billing";
-const PRODUCT_ID = process.env.NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "lire_premium_monthly";
+const PRODUCT_ID = process.env.NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "sorlio_premium_monthly";
 
 type PurchaseState = "idle" | "working" | "success" | "error";
 
@@ -71,7 +71,7 @@ export default function PremiumPageClient() {
     try {
       const request = new PaymentRequest(
         [{ supportedMethods: PLAY_BILLING_METHOD, data: { sku: PRODUCT_ID } }],
-        { total: { label: "Lire Premium", amount: { currency: "GBP", value: "0" } } }
+        { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } }
       );
       const response = await request.show();
       const purchaseToken = (response.details as { purchaseToken?: string }).purchaseToken;
@@ -102,7 +102,7 @@ export default function PremiumPageClient() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Lire Premium" kicker="Unlimited reading" backHref="/" backLabel="Back to lessons" />
+      <AppBar title="Sorlio Premium" kicker="Unlimited reading" backHref="/" backLabel="Back to lessons" />
       <section className="rounded-card bg-brand p-6 text-cream shadow-raised">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-cream/75">Monthly membership</p>
         <div className="mt-2 flex items-end gap-2">
@@ -112,7 +112,7 @@ export default function PremiumPageClient() {
         <ul className="mt-5 space-y-2 text-sm">
           <li>✓ Unlimited articles every day</li>
           <li>✓ Full vocabulary, translation, listening and practice tools</li>
-          <li>✓ Premium access follows your Liree account</li>
+          <li>✓ Premium access follows your Sorlio account</li>
         </ul>
       </section>
 
@@ -124,7 +124,7 @@ export default function PremiumPageClient() {
             <p className="font-semibold text-brand">Premium is active</p>
             <p className="mt-1 text-sm text-ink-muted">You have unlimited access{status.expiresAt ? ` through ${new Date(status.expiresAt).toLocaleDateString()}` : ""}.</p>
             <a
-              href={`https://play.google.com/store/account/subscriptions?sku=${encodeURIComponent(PRODUCT_ID)}&package=app.liree.reader`}
+              href={`https://play.google.com/store/account/subscriptions?sku=${encodeURIComponent(PRODUCT_ID)}&package=app.sorlio.reader`}
               className="mt-4 inline-flex rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink"
             >
               Manage or cancel in Google Play
@@ -144,8 +144,8 @@ export default function PremiumPageClient() {
           </button>
         ) : (
           <>
-            <p className="font-semibold text-ink">Subscribe in the Lire Android app</p>
-            <p className="mt-1 text-sm text-ink-muted">Google Play checkout is available when Lire is installed from its Play testing or public track. Existing subscribers can sign in here to use Premium on the web.</p>
+            <p className="font-semibold text-ink">Subscribe in the Sorlio Android app</p>
+            <p className="mt-1 text-sm text-ink-muted">Google Play checkout is available when Sorlio is installed from its Play testing or public track. Existing subscribers can sign in here to use Premium on the web.</p>
           </>
         )}
         {purchaseState === "success" && <p className="mt-3 text-sm font-semibold text-brand">Premium is ready.</p>}

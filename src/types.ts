@@ -58,7 +58,7 @@ export interface SavedWord {
   /** The full sentence the word was tapped in, exactly as it appeared in the article. */
   articleContextSentence: string;
   /**
-   * The contextual meaning Lire showed when this word was saved — the answer
+   * The contextual meaning Sorlio showed when this word was saved — the answer
    * the reader actually agreed to study. Kept apart from `translations` so the
    * study view can show "meant X here" alongside the word's other senses.
    * Absent on words saved before this was recorded.

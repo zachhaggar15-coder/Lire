@@ -4,7 +4,7 @@ const METADATA_BLURB_PATTERNS = [
   /\bpublic-domain french excerpt\b/i,
   /\bselected as \d+[\s-]word reading practice\b/i,
   /\bimported by you\b/i,
-  /\bclose reading with liree'?s\b/i,
+  /\bclose reading with (?:liree|sorlio)'?s\b/i,
 ];
 const GENERATED_EXCERPT_TITLE_SUFFIX = /:\s*(extrait\s+\d+)\s*$/i;
 

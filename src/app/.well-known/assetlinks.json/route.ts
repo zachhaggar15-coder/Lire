@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const PACKAGE_NAME = "app.liree.reader";
+const PACKAGE_NAME = "app.sorlio.reader";
 
 function fingerprints(): string[] {
   return (process.env.ANDROID_APP_SHA256_CERT_FINGERPRINT ?? "")

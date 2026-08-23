@@ -134,7 +134,7 @@ export default function ProgressPage() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
-                <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when beta opens?</p>
+                <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when beta opens?</p>
               </div>
               <AndroidBetaButton source="progress" label="Join" />
             </div>

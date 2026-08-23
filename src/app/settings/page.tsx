@@ -341,7 +341,7 @@ export default function SettingsPage() {
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-semibold text-ink">Get Lire on Android</p>
+                <p className="font-semibold text-ink">Get Sorlio on Android</p>
                 <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
               </div>
               <AndroidBetaButton source="settings" label="Join" />
@@ -358,7 +358,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
-          <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Lire." />
+          <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Sorlio." />
         </section>
 
         <details>

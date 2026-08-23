@@ -79,7 +79,7 @@ export function materiallyDistinctSenses(translations: string[]): number {
  * flip for any particular occurrence — which is exactly the distinction this
  * list carries and the sense list cannot.
  *
- * Membership does not mean Lire refuses to answer. It means a bare dictionary
+ * Membership does not mean Sorlio refuses to answer. It means a bare dictionary
  * gloss is not enough: a context rule has to select the sense, or confidence
  * drops and the tap escalates. See CONTEXT_SENSE_RULES for the frames that
  * resolve most of these locally.

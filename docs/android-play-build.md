@@ -1,8 +1,8 @@
 # Android Play build
 
-Lire's Android app is a Trusted Web Activity for `https://liree.vercel.app`.
+Sorlio's Android app is a Trusted Web Activity for `https://liree.vercel.app`.
 
-- Package ID: `app.liree.reader`
+- Package ID: `app.sorlio.reader`
 - Target SDK: Android 16 / API 36
 - Minimum SDK: Android 6 / API 23 (required by the Play Billing bridge)
 - Web manifest: `https://liree.vercel.app/manifest.json`
@@ -16,15 +16,15 @@ The asset-links endpoint intentionally returns an empty valid array until a fing
 
 ## Premium subscription setup
 
-Lire uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, create an auto-renewing monthly subscription with product ID `lire_premium_monthly`, a GBP base price of £3.99, and the required regional prices. The free tier remains usable without an account and claims one distinct article per local calendar day; reopening that article on the same day remains available.
+Sorlio uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, create an auto-renewing monthly subscription with product ID `sorlio_premium_monthly`, a GBP base price of £3.99, and the required regional prices. The free tier remains usable without an account and claims one distinct article per local calendar day; reopening that article on the same day remains available.
 
 Run the updated `supabase/schema.sql` once to create the server-only `lire_subscriptions` entitlement table. Create a Google Play service account, grant it access to subscription information and purchase acknowledgement, and configure the following production variables:
 
-- `NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID=lire_premium_monthly`
-- `GOOGLE_PLAY_PREMIUM_PRODUCT_ID=lire_premium_monthly`
+- `NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
+- `GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
 - `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON=<complete service-account JSON on one line>`
 
-Premium purchases require the existing passwordless Lire account. This is intentional: the account connects a verified Google Play purchase to an entitlement that can also be used on the website. The web version does not direct Play-app users to an external payment method.
+Premium purchases require the existing passwordless Sorlio account. This is intentional: the account connects a verified Google Play purchase to an entitlement that can also be used on the website. The web version does not direct Play-app users to an external payment method.
 
 ## Build
 

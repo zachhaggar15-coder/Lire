@@ -1,8 +1,8 @@
 {
-  "packageId": "app.liree.reader",
+  "packageId": "app.sorlio.reader",
   "host": "liree.vercel.app",
-  "name": "Lire — French Reader",
-  "launcherName": "Lire",
+  "name": "Sorlio — French Reader",
+  "launcherName": "Sorlio",
   "display": "standalone",
   "themeColor": "#FFFCF4",
   "themeColorDark": "#000000",
@@ -11,7 +11,7 @@
   "navigationDividerColor": "#000000",
   "navigationDividerColorDark": "#000000",
   "backgroundColor": "#FFFCF4",
-  "enableNotifications": true,
+  "enableNotifications": false,
   "startUrl": "/",
   "iconUrl": "https://liree.vercel.app/icon-512.png",
   "maskableIconUrl": "https://liree.vercel.app/icon-maskable-512.png",
@@ -19,7 +19,7 @@
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "android.keystore",
-    "alias": "lire-upload"
+    "alias": "sorlio-upload"
   },
   "appVersionName": "1.0.0",
   "appVersionCode": 1,

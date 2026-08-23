@@ -24,7 +24,7 @@ const { migrateLegacyProgression, readLegacyBandPoints, hasRunLegacyMigration } 
 );
 
 /**
- * Lire Level, and the removal of CEFR as a progression ladder.
+ * Sorlio Level, and the removal of CEFR as a progression ladder.
  *
  * Two systems used to advance a reader through A1, A2, B1, B2 on points alone:
  * gamification.ts titled each XP level with a CEFR band, and levelScore.ts kept
@@ -32,7 +32,7 @@ const { migrateLegacyProgression, readLegacyBandPoints, hasRunLegacyMigration } 
  * comprehension, so both implied a proficiency claim that reading volume cannot
  * support.
  *
- * These tests pin the separation: XP drives Lire Level and nothing else, and
+ * These tests pin the separation: XP drives Sorlio Level and nothing else, and
  * CEFR survives only where it describes how hard the French is.
  */
 
@@ -48,7 +48,7 @@ function check(label, condition, detail = "") {
   }
 }
 
-console.log("--- Lire Level is derived only from XP ---");
+console.log("--- Sorlio Level is derived only from XP ---");
 {
   const zero = lireLevelFromXp(0);
   check("no XP is Level 1", zero.level === 1, String(zero.level));
@@ -83,7 +83,7 @@ console.log("--- Reaching a threshold does not advance CEFR ---");
   const before = lireLevelFromXp(0);
   const after = lireLevelFromXp(100000);
   check("levelling up produces a numeric level", typeof after.level === "number" && after.level > before.level);
-  check("a Lire Level carries no CEFR label", !("title" in after), JSON.stringify(Object.keys(after)));
+  check("a Sorlio Level carries no CEFR label", !("title" in after), JSON.stringify(Object.keys(after)));
   for (const key of Object.keys(after)) {
     check(`no CEFR band appears in the level shape (${key})`, !/^(A1|A2|B1|B2|C1|C2)$/.test(String(after[key])));
   }
@@ -175,12 +175,12 @@ console.log("--- No production UI shows CEFR as a progression ladder ---");
   const cards = readFileSync(new URL("../src/components/GamificationCards.tsx", import.meta.url), "utf8");
   check("the CEFR step bar is removed from the progress card", !/aria-label="CEFR progress"/.test(cards));
   check("the progress card has no CEFR step array", !/cefrSteps/.test(cards));
-  check("the progress card names Lire Level", /Lire Level \{level\.level\}/.test(cards));
+  check("the progress card names Sorlio Level", /Sorlio Level \{level\.level\}/.test(cards));
 
   const complete = readFileSync(new URL("../src/components/LessonCompleteScreen.tsx", import.meta.url), "utf8");
   check("the completion screen no longer shows a per-band score", !/to next tier/.test(complete));
   check("the completion screen no longer lists every CEFR level as bars", !/TAUGHT_LEVELS/.test(complete));
-  check("the completion screen shows Lire Level", /Lire Level \{shownLevel\.level\}/.test(complete));
+  check("the completion screen shows Sorlio Level", /Sorlio Level \{shownLevel\.level\}/.test(complete));
   check("reading difficulty is labelled separately", /Reading difficulty/.test(complete));
   check("the completion screen imports no band maths", !/bandProgress|bandNumber/.test(complete));
 }

@@ -91,7 +91,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
   if (submitted) {
     return (
       <div className="rounded-card bg-brand-light p-4 text-sm font-semibold text-brand shadow-card">
-        Thanks. That helps shape Lire.
+        Thanks. That helps shape Sorlio.
       </div>
     );
   }
@@ -99,8 +99,8 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
   if (prompt === "android") {
     return (
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Help shape Lire</h2>
-        <p className="mt-1 text-sm text-ink-muted">Interested in testing Lire on Android when it opens?</p>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Help shape Sorlio</h2>
+        <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when it opens?</p>
         <div className="mt-3 flex flex-wrap gap-2">
           <AndroidBetaButton source="post_session_prompt" label="Join Android beta" />
           <button type="button" onClick={dismiss} className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink-muted">
@@ -121,7 +121,7 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
   if (prompt === "disappearance") {
     const options = ["Very disappointed", "Somewhat disappointed", "Not disappointed", "I have not used it enough yet"];
     return (
-      <PromptCard title="How disappointed would you be if Lire disappeared?" options={options} onSelect={(value) => submit("disappearance_survey", value)} onDismiss={dismiss} />
+      <PromptCard title="How disappointed would you be if Sorlio disappeared?" options={options} onSelect={(value) => submit("disappearance_survey", value)} onDismiss={dismiss} />
     );
   }
 

@@ -20,7 +20,7 @@ import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import type { SavedWord } from "@/types";
 
 /**
- * A short (1-3 minute), interactive walkthrough that teaches Lire by using
+ * A short (1-3 minute), interactive walkthrough that teaches Sorlio by using
  * it, not by reading about it. First use now goes straight to a real lesson;
  * this fuller tutorial remains available from Library for anyone who wants
  * to replay it. Reuses real domain logic throughout (the actual dictionary
@@ -171,7 +171,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
       >
         <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center text-center">
           <p className="ligne-label">All set</p>
-          <h1 className="mt-1 text-2xl font-extrabold text-ink">Nice work — that's how Lire works.</h1>
+          <h1 className="mt-1 text-2xl font-extrabold text-ink">Nice work — that's how Sorlio works.</h1>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {[
               ["Words read", wordsRead],
@@ -201,7 +201,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
       ref={modalRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Interactive Lire tutorial"
+      aria-label="Interactive Sorlio tutorial"
       tabIndex={-1}
       className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream px-[22px] pb-6 pt-[calc(var(--safe-top)+1rem)]"
     >
@@ -222,7 +222,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
         {step === 0 && (
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <p className="ligne-label">Let's begin</p>
-            <h1 className="mt-2 text-2xl font-extrabold text-ink">Learn Lire by reading one tiny bit of French.</h1>
+            <h1 className="mt-2 text-2xl font-extrabold text-ink">Learn Sorlio by reading one tiny bit of French.</h1>
             <p className="mt-3 max-w-xs text-sm text-ink-muted">Takes about a minute. Tap through a few words, hear them spoken, then try one quick exercise.</p>
             <button type="button" onClick={() => goToStep(1)} className="ligne-pill mt-6 bg-brand text-cream">
               Start
@@ -297,7 +297,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
           <div className="flex-1">
             <p className="ligne-label">Expressions too</p>
             <p className="mt-2 text-sm text-ink-muted">
-              Some meanings belong to several words together. Tap any word of one and Lire explains the whole expression.
+              Some meanings belong to several words together. Tap any word of one and Sorlio explains the whole expression.
             </p>
             <div className="mt-4 rounded-card border border-cream-dark bg-cream-card p-4 text-lg leading-relaxed text-ink">
               {DEMO_PHRASE.split(" ").map((word, index) => (
@@ -323,7 +323,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">Meaning here</p>
                 <p className="mt-1 text-lg font-bold text-ink">{activePhrase.translation}</p>
                 <p className="mt-1 text-xs text-ink-muted">
-                  from <span className="font-semibold text-ink">{DEMO_PHRASE.toLowerCase()}</span> — Lire recognised the whole
+                  from <span className="font-semibold text-ink">{DEMO_PHRASE.toLowerCase()}</span> — Sorlio recognised the whole
                   expression, not four unrelated words.
                 </p>
               </div>

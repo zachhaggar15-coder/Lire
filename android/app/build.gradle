@@ -21,11 +21,11 @@ plugins {
 }
 
 def twaManifest = [
-    applicationId: 'app.liree.reader',
+    applicationId: 'app.sorlio.reader',
     hostName: 'liree.vercel.app', // The domain being opened in the TWA.
     launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
-    name: 'Lire — French Reader', // The application name.
-    launcherName: 'Lire', // The name shown on the Android Launcher.
+    name: 'Sorlio — French Reader', // The application name.
+    launcherName: 'Sorlio', // The name shown on the Android Launcher.
     themeColor: '#FFFCF4', // The color used for the status bar.
     themeColorDark: '#000000', // The color used for the dark status bar.
     navigationColor: '#000000', // The color used for the navigation bar.
@@ -52,9 +52,9 @@ def twaManifest = [
 
 android {
     compileSdkVersion 36
-    namespace "app.liree.reader"
+    namespace "app.sorlio.reader"
     defaultConfig {
-        applicationId "app.liree.reader"
+        applicationId "app.sorlio.reader"
         minSdkVersion 23
         targetSdkVersion 36
         versionCode 1

@@ -5,7 +5,7 @@ import { getSupabaseClient } from "@/lib/supabase/client";
  * Google sign-in, on top of Supabase Auth.
  *
  * This replaced a passwordless email ("magic link") flow. The link worked, but
- * it made signing in a two-app errand — leave Lire, find the email, come back —
+ * it made signing in a two-app errand — leave Sorlio, find the email, come back —
  * which is a poor trade for what is fundamentally "let me get my words back on
  * a new phone", and worse still inside the Android wrapper. Google sign-in
  * completes in place.
@@ -18,7 +18,7 @@ import { getSupabaseClient } from "@/lib/supabase/client";
  *
  * There is no separate sign-up. Supabase creates the account the first time a
  * Google identity authenticates and returns the same user afterwards, so one
- * button covers both cases and Lire never stores a password, username, phone
+ * button covers both cases and Sorlio never stores a password, username, phone
  * number or date of birth.
  */
 

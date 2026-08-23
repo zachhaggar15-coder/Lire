@@ -269,7 +269,7 @@ function toReadingText(candidate, level, sequence) {
 
 async function fetchSource(source) {
   const response = await fetch(textUrl(source.id), {
-    headers: { "User-Agent": "Liree public domain reading bank generator" },
+    headers: { "User-Agent": "Sorlio public domain reading bank generator" },
   });
   if (!response.ok) {
     throw new Error(`Failed ${source.id} ${source.title}: HTTP ${response.status}`);
@@ -329,7 +329,7 @@ async function main() {
 /**
  * Exact public-domain excerpts from French-language Project Gutenberg texts.
  *
- * The generator keeps the excerpt body wording unchanged, then adds Liree
+ * The generator keeps the excerpt body wording unchanged, then adds Sorlio
  * metadata (level, category, reading time, preview, and source URL). Regenerate
  * with: node scripts/generate-public-domain-texts.mjs
  */

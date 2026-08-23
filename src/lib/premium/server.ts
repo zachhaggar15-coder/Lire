@@ -9,4 +9,4 @@ export async function authenticatedUser(request: Request): Promise<User | null> 
   return error ? null : data.user;
 }
 
-export const PREMIUM_PRODUCT_ID = process.env.GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "lire_premium_monthly";
+export const PREMIUM_PRODUCT_ID = process.env.GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "sorlio_premium_monthly";

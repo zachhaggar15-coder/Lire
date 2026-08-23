@@ -10,7 +10,7 @@ export default function BetaNotice() {
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">Active beta</p>
-          <p className="mt-1 text-sm text-ink-muted">Lire is in active beta. Features may evolve as the reading experience improves.</p>
+          <p className="mt-1 text-sm text-ink-muted">Sorlio is in active beta. Features may evolve as the reading experience improves.</p>
         </div>
         <Link href="/changelog" className="shrink-0 rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted">
           What's new

@@ -223,7 +223,7 @@ export function bankTextToRssReadingText(text: ReadingText, builtAt: number): Rs
     readingTimeMinutes: text.minutes,
     language: text.language ?? "fr",
     originalText: text.body,
-    sourceName: text.sourceName ?? "Lire reading bank",
+    sourceName: text.sourceName ?? "Sorlio reading bank",
     sourceUrl: text.sourceUrl ?? `internal:${text.id}`,
     publishedAt: text.publishedAt ?? new Date(builtAt).toISOString(),
     blurbEn: text.blurbEn ?? null,

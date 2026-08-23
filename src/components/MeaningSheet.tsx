@@ -210,7 +210,7 @@ export default function MeaningSheet({
             </p>
             {!state?.resolving && (
               <p className="mt-1 text-xs text-ink-muted">
-                Lire would rather say nothing than teach you the wrong meaning.
+                Sorlio would rather say nothing than teach you the wrong meaning.
               </p>
             )}
           </>

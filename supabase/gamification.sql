@@ -1,4 +1,4 @@
--- Liree gamification persistence tables.
+-- Sorlio gamification persistence tables.
 -- The app remains local-first, but these tables give production Supabase
 -- projects typed storage for XP, missions, completions and rewards.
 

@@ -1,4 +1,4 @@
-# Lire — French Reader (PWA)
+# Sorlio — French Reader (PWA)
 
 **Live demo:** [liree.vercel.app](https://liree.vercel.app) — the source is
 public on GitHub at
@@ -48,7 +48,7 @@ backend, works instantly.
 
 ## Visual design system
 
-Lire now follows the Ligne design direction: a warm paper phone interface,
+Sorlio now follows the Ligne design direction: a warm paper phone interface,
 text-led lesson routes, restrained colour, and no decorative buttons that look
 clickable without doing anything. The main tokens live in `tailwind.config.ts`
 and `src/app/globals.css`.
@@ -1181,7 +1181,7 @@ devices" card at all.
    `https://<your-project-ref>.supabase.co/auth/v1/callback` (copy it from
    the Supabase Google provider page so the ref is exact). You will also need
    an OAuth consent screen; **External** with only the default
-   `email`/`profile`/`openid` scopes is enough, since Liree asks for nothing
+   `email`/`profile`/`openid` scopes is enough, since Sorlio asks for nothing
    beyond the email address. Then in Supabase go to **Authentication** →
    **Sign In / Providers** → **Google**, enable it, and paste the **Client ID**
    and **Client secret**. Email/password and magic links can be disabled —
@@ -1231,7 +1231,7 @@ devices" card at all.
   app, find the email, come back — which was especially poor inside the
   Android wrapper. There is no separate sign-up: Supabase creates the account
   the first time a Google identity authenticates and returns the same user
-  afterwards. Liree stores only the user id and email; no password, username,
+  afterwards. Sorlio stores only the user id and email; no password, username,
   phone number, or Google profile name/picture.
 - **`src/lib/supabase/sync.ts`** — the actual sync logic. `pushStore(key)`
   uploads one store's current localStorage value (tagged with the

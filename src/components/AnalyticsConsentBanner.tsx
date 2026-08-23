@@ -29,9 +29,9 @@ export default function AnalyticsConsentBanner() {
       aria-label="Optional analytics choice"
       className="fixed inset-x-3 bottom-[calc(5.75rem+var(--safe-bottom))] z-[80] mx-auto max-w-md rounded-card border border-cream-dark bg-cream-card p-4 shadow-raised"
     >
-      <p className="font-semibold text-ink">Help improve Lire?</p>
+      <p className="font-semibold text-ink">Help improve Sorlio?</p>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        You can allow anonymous product analytics and crash diagnostics. Lire works normally if you decline, and you can change this later in Library.
+        You can allow anonymous product analytics and crash diagnostics. Sorlio works normally if you decline, and you can change this later in Library.
       </p>
       <div className="mt-3 flex flex-col gap-2 sm:flex-row">
         <button

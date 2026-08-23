@@ -2,7 +2,7 @@ import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import ValidationDashboard from "@/components/admin/ValidationDashboard";
 
 export const metadata = {
-  title: "Validation Admin - Lire",
+  title: "Validation Admin - Sorlio",
 };
 
 export default function ValidationAdminPage() {

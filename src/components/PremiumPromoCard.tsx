@@ -11,7 +11,7 @@ export default function PremiumPromoCard() {
     <Link
       href="/premium"
       className="block rounded-card border border-brand/20 bg-brand-light p-4 shadow-card"
-      aria-label="See Lire Premium"
+      aria-label="See Sorlio Premium"
     >
       <div className="flex items-center justify-between gap-3">
         <div>

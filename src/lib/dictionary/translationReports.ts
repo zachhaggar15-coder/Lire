@@ -9,7 +9,7 @@ import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
  * lexicographic correction, it silently changed what every future tap on that
  * word said, and a mistake in it was invisible and permanent.
  *
- * A report is just a signal. It never edits what Lire shows. The store is
+ * A report is just a signal. It never edits what Sorlio shows. The store is
  * local today and already syncs through the same mechanism as saved words, so
  * connecting a backend later means adding a submit call at the boundary in
  * `recordTranslationReport` — nothing above it has to change.
@@ -21,7 +21,7 @@ export interface TranslationReport {
   id: string;
   /** What the reader tapped. */
   french: string;
-  /** The meaning Lire showed them, which they are disputing. */
+  /** The meaning Sorlio showed them, which they are disputing. */
   shownEnglish: string;
   /** Which resolver tier produced the disputed meaning — the most useful field for triage. */
   shownSource: string;

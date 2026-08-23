@@ -1335,12 +1335,12 @@ console.log("\n--- Gamification engine ---");
   check("saving a new word awards 1 XP once", recordWordSavedXp("pourtant") === 1 && recordWordSavedXp("pourtant") === 0);
 }
 {
-  // The XP ladder is Lire Level now. It used to title each level with a CEFR
+  // The XP ladder is Sorlio Level now. It used to title each level with a CEFR
   // band and stop at six, so accumulating points appeared to raise the
   // reader's French proficiency; see progression/lireLevel.ts.
   const early = levelFromXp(0);
   const later = levelFromXp(50000);
-  check("an XP total maps to a numeric Lire Level", early.level === 1 && later.level > early.level);
+  check("an XP total maps to a numeric Sorlio Level", early.level === 1 && later.level > early.level);
   check("a level carries no CEFR title", !("title" in early), JSON.stringify(Object.keys(early)));
   check("the ladder is not capped at six levels", later.level > 6, String(later.level));
   check("level cost grows with level", xpNeededForLevel(10) > xpNeededForLevel(1));
@@ -1376,7 +1376,7 @@ console.log("\n--- Gamification engine ---");
   const article = {
     id: "gamified-article",
     title: "Un test de lecture",
-    sourceName: "Liree Test",
+    sourceName: "Sorlio Test",
     category: "science",
     difficulty: "B1",
     minutes: 4,

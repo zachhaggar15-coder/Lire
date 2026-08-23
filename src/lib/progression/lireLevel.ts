@@ -1,5 +1,5 @@
 /**
- * Lire Level — the app's progression ladder.
+ * Sorlio Level — the app's progression ladder.
  *
  * This replaces two systems that both used CEFR bands as a progression tier,
  * which meant accumulating points appeared to raise the reader's French
@@ -15,7 +15,7 @@
  * volume cannot support: a reader who finishes forty A1 texts has demonstrated
  * persistence, not B1 ability.
  *
- * Lire Level makes no such claim. It counts meaningful activity and nothing
+ * Sorlio Level makes no such claim. It counts meaningful activity and nothing
  * else, and it is deliberately unbounded — there is no top rung to reach and no
  * band whose name says anything about French. CEFR keeps its real job of
  * describing how hard a text is; see `Difficulty` in types.ts.
@@ -93,7 +93,7 @@ export function xpProgressWithinLevel(totalXp: number): number {
 }
 
 /**
- * A Lire Level movement caused by one activity, for the completion screen.
+ * A Sorlio Level movement caused by one activity, for the completion screen.
  *
  * Derived from the XP ledger rather than from a parallel score: the completion
  * screen used to animate a per-CEFR band that nothing else in the app knew
@@ -104,7 +104,7 @@ export interface LireLevelChange {
   xpAwarded: number;
   before: LireLevel;
   after: LireLevel;
-  /** True when this activity crossed into a new Lire Level. */
+  /** True when this activity crossed into a new Sorlio Level. */
   levelledUp: boolean;
 }
 

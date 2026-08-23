@@ -100,7 +100,7 @@ export default function FeedbackModal({
       return;
     }
     setState("error");
-    setMessage(response.body?.error ?? "Feedback could not be sent right now. You can keep using Lire normally.");
+    setMessage(response.body?.error ?? "Feedback could not be sent right now. You can keep using Sorlio normally.");
   }
 
   return (

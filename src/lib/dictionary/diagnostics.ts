@@ -6,7 +6,7 @@ import { resolveWithCandidates, type ResolveMeaningInput, type ResolutionOutcome
  * Candidate scoring is a real improvement over the old cascade, but it trades
  * one debugging problem for another: with a cascade you could at least read
  * the code top-down and see which branch fired, whereas a weighted field gives
- * no such narrative. When a reader reports "Lire said the wrong thing here",
+ * no such narrative. When a reader reports "Sorlio said the wrong thing here",
  * the question is which candidates existed, what each scored, and what
  * evidence moved them — and that has to be answerable without a debugger.
  *

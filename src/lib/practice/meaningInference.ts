@@ -27,7 +27,7 @@ export interface MeaningInferenceExercise {
 /**
  * Builds up to `limit` inference exercises for a text.
  *
- * Only words whose contextual meaning Lire is confident about become
+ * Only words whose contextual meaning Sorlio is confident about become
  * questions: a quiz whose "correct" answer is a low-confidence guess would
  * mark a reader wrong for being right. The answer shown is the resolved
  * contextual meaning, so practice agrees with what the reader saw while

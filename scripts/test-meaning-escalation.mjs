@@ -3,7 +3,7 @@ import { ensureGeneratedDictionary } from "../src/lib/dictionary/lookup.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 
 /**
- * When Lire is allowed to reach the network, and what it does when that fails.
+ * When Sorlio is allowed to reach the network, and what it does when that fails.
  *
  * Two failure modes matter equally here and pull in opposite directions. A
  * resolver that escalates freely turns every tap into an API call and a

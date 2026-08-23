@@ -287,11 +287,11 @@ export default function LessonCompleteScreen({
           </div>
         )}
 
-        {/* Lire Level — accumulated activity, not a proficiency claim. */}
+        {/* Sorlio Level — accumulated activity, not a proficiency claim. */}
         <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-5">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-extrabold text-ink">
-              Lire Level {shownLevel.level}
+              Sorlio Level {shownLevel.level}
               {levelledUp && wrapped && (
                 <span className="ml-1.5 rounded-full bg-brand-light px-1.5 py-0.5 text-xs font-bold text-brand">
                   Level up
@@ -336,7 +336,7 @@ export default function LessonCompleteScreen({
               What counts toward this?
             </summary>
             <p className="mt-1.5 text-xs leading-relaxed text-ink-muted">
-              Lire Level tracks how much reading and practice you complete — finishing texts, comprehension checks,
+              Sorlio Level tracks how much reading and practice you complete — finishing texts, comprehension checks,
               practice and review all add XP. It measures activity, not how difficult the French you can read.
               Re-reading something you already finished doesn&apos;t add more.
             </p>

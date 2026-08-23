@@ -156,7 +156,7 @@ export function StreakCard({
 }
 
 /**
- * Lire Level, which is a measure of accumulated activity and nothing else.
+ * Sorlio Level, which is a measure of accumulated activity and nothing else.
  *
  * The CEFR step bar that used to sit here — A1 through C2, with the current
  * step lit by XP level — has been removed. It presented XP as advancement
@@ -173,14 +173,14 @@ export function CurrentLevelCard({ level }: { level: ReaderLevel }) {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Your progress</p>
-          <h2 className="mt-0.5 text-xl font-extrabold leading-tight text-ink">Lire Level {level.level}</h2>
+          <h2 className="mt-0.5 text-xl font-extrabold leading-tight text-ink">Sorlio Level {level.level}</h2>
           <p className="mt-1 text-sm text-ink-muted">
             {level.currentLevelXp.toLocaleString()} / {level.nextLevelXp.toLocaleString()} XP to Level {level.level + 1}
           </p>
-          <XPProgressBar value={level.progress} label={`XP to Lire Level ${level.level + 1}`} className="mt-3" />
+          <XPProgressBar value={level.progress} label={`XP to Sorlio Level ${level.level + 1}`} className="mt-3" />
           <p className="mt-2 text-xs font-semibold text-brand">+{level.recentXp} XP in the last 7 days</p>
           <p className="mt-1 text-xs text-ink-muted">
-            Lire Level tracks how much you have read and practised. It is separate from the difficulty of the French
+            Sorlio Level tracks how much you have read and practised. It is separate from the difficulty of the French
             you read.
           </p>
         </div>

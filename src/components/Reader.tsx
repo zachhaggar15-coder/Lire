@@ -1465,7 +1465,7 @@ export default function Reader({ text }: { text: ReadingText }) {
    * The card leads with the contextual meaning the reader actually saw and
    * chose to save, with the remaining dictionary senses behind it. Saving a
    * different answer from the one on screen is how a reader ends up reviewing
-   * "compte = account" after Lire told them it meant "to realise".
+   * "compte = account" after Sorlio told them it meant "to realise".
    *
    * Only a word-scoped meaning may lead. An expression's citation form is kept
    * separately so the study view can say where the word came from without the
@@ -1614,7 +1614,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     setStatus("completed");
 
     const wordsTapped = getWordTapsForArticle(text.id).length;
-    // The completion screen shows movement on the Lire Level ladder, taken
+    // The completion screen shows movement on the Sorlio Level ladder, taken
     // from the XP this completion actually earned. It used to animate a
     // separate per-CEFR band score that nothing else in the app read, so the
     // number being celebrated was not the reader's real progression — and,

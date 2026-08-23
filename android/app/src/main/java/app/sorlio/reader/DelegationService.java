@@ -1,4 +1,4 @@
-package app.liree.reader;
+package app.sorlio.reader;
 
 
 import com.google.androidbrowserhelper.playbilling.digitalgoods.DigitalGoodsRequestHandler;

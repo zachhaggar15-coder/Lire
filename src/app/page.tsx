@@ -43,7 +43,7 @@ export default function HomePage() {
     return (
       <div className="min-h-[100dvh] px-4 pt-[calc(var(--safe-top)+1.5rem)]">
         <header className="mb-5">
-          <h1 className="text-3xl font-extrabold text-ink">Lire</h1>
+          <h1 className="text-3xl font-extrabold text-ink">Sorlio</h1>
           <p className="mt-1 text-sm text-ink-muted">Set your starting point, then follow your guided lesson path.</p>
         </header>
         <FirstRunOnboarding

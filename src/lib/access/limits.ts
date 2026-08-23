@@ -1,7 +1,7 @@
 /**
  * What each access tier may do in a day.
  *
- * Liree has three states and they are deliberately distinct: a guest gets
+ * Sorlio has three states and they are deliberately distinct: a guest gets
  * enough to understand the product, a free account gets meaningfully more so
  * signing in is worth doing, and Premium removes the ceiling and opens the
  * deeper learning system.

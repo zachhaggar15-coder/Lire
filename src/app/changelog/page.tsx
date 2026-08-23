@@ -12,7 +12,7 @@ export default function ChangelogPage() {
   return (
     <div className="ligne-screen">
       <AppBar title="What’s new" kicker="Library" backHref="/settings" backLabel="Back to Library" />
-      <p className="-mt-3 mb-5 text-sm text-ink-muted">A short record of visible Lire improvements.</p>
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">A short record of visible Sorlio improvements.</p>
 
       <div className="space-y-3">
         {changelogEntries.map((entry) => (

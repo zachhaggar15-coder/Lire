@@ -355,7 +355,7 @@ export function buildContextualTranslation(input: BuildContextualTranslationInpu
  * came from the bulk WikDict import, where nothing did. Treating both as low
  * confidence made the signal useless — and now that low confidence is what
  * triggers hedging and AI escalation in resolveMeaning.ts, it would have made
- * Lire hedge on the most common words in the language.
+ * Sorlio hedge on the most common words in the language.
  *
  * A lemma guess drops the grade one step: the entry may describe a different
  * word class from the form actually tapped.

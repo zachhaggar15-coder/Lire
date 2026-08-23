@@ -133,7 +133,7 @@ export interface ResolvedMeaning {
   /** Plain-language note on why this reading was chosen — supporting detail only. */
   explanation: string;
   /**
-   * True when Lire could not settle on a meaning it trusts. The UI must say so
+   * True when Sorlio could not settle on a meaning it trusts. The UI must say so
    * rather than showing displayEnglish, which is empty in this state. Teaching
    * a learner the wrong sense costs more than admitting a gap.
    */

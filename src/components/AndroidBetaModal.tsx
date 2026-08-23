@@ -114,9 +114,9 @@ export default function AndroidBetaModal({
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Android beta</p>
-            <h2 className="mt-1 text-xl font-extrabold text-ink">Get Lire on Android</h2>
+            <h2 className="mt-1 text-xl font-extrabold text-ink">Get Sorlio on Android</h2>
             <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-              We're exploring an Android release for Lire. Join the beta list and we'll contact you when testing opens.
+              We're exploring an Android release for Sorlio. Join the beta list and we'll contact you when testing opens.
             </p>
           </div>
           <button
@@ -180,14 +180,14 @@ export default function AndroidBetaModal({
           <input
             value={motivation}
             onChange={(event) => setMotivation(event.target.value)}
-            placeholder="Main reason you want Lire on Android, optional"
+            placeholder="Main reason you want Sorlio on Android, optional"
             className="w-full rounded-2xl bg-cream px-3 py-3 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
           />
           <textarea
             value={desiredImprovement}
             onChange={(event) => setDesiredImprovement(event.target.value)}
             rows={3}
-            placeholder="What would make Lire useful enough to use regularly?"
+            placeholder="What would make Sorlio useful enough to use regularly?"
             className="w-full resize-none rounded-2xl bg-cream px-3 py-3 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
           />
 
@@ -210,7 +210,7 @@ export default function AndroidBetaModal({
             {state === "submitting" ? "Joining..." : state === "success" ? "Update beta details" : "Join beta list"}
           </button>
           <p className="text-xs leading-relaxed text-ink-muted">
-            We only use this email for Lire Android beta and launch communication. No Android app is downloadable yet.
+            We only use this email for Sorlio Android beta and launch communication. No Android app is downloadable yet.
           </p>
         </form>
       </div>

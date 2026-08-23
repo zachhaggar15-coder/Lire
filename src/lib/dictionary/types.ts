@@ -40,7 +40,7 @@ export interface DictionaryEntry {
  * its leading gloss is a guess at the contextual meaning rather than a
  * considered answer ("case" -> "double income, no kids"). Every other layer
  * had a person decide what should come first. resolveMeaning.ts turns that
- * distinction into confidence, which in turn decides whether Lire states a
+ * distinction into confidence, which in turn decides whether Sorlio states a
  * meaning plainly, hedges it, or abstains.
  */
 export type DictionaryLayer =

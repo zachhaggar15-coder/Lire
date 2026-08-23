@@ -46,12 +46,12 @@ export function productionDomain(): string {
 
 export const VALIDATION_FEATURES: ValidationFeatureFlags = {
   analyticsEnabled: envFlag("NEXT_PUBLIC_ANALYTICS_ENABLED", true),
-  androidBetaCtaEnabled: envFlag("NEXT_PUBLIC_ANDROID_BETA_CTA_ENABLED", true),
+  androidBetaCtaEnabled: envFlag("NEXT_PUBLIC_ANDROID_BETA_CTA_ENABLED", false),
   feedbackEnabled: envFlag("NEXT_PUBLIC_FEEDBACK_ENABLED", true),
   postSessionPromptsEnabled: envFlag("NEXT_PUBLIC_POST_SESSION_PROMPTS_ENABLED", true),
   productDisappearanceSurveyEnabled: envFlag("NEXT_PUBLIC_PRODUCT_DISAPPEARANCE_SURVEY_ENABLED", true),
-  adminDashboardEnabled: envFlag("NEXT_PUBLIC_ADMIN_DASHBOARD_ENABLED", true),
-  betaBannerEnabled: envFlag("NEXT_PUBLIC_BETA_BANNER_ENABLED", true),
+  adminDashboardEnabled: envFlag("NEXT_PUBLIC_ADMIN_DASHBOARD_ENABLED", false),
+  betaBannerEnabled: envFlag("NEXT_PUBLIC_BETA_BANNER_ENABLED", false),
   emailConfirmationEnabled: envFlag("NEXT_PUBLIC_EMAIL_CONFIRMATION_ENABLED", false),
 };
 

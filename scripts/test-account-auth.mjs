@@ -188,7 +188,7 @@ console.log("--- The privacy policy matches the implementation ---");
 {
   check("it says Google is used for sign-in", /sign in with Google|with Google/.test(privacy));
   check("it names Supabase as the account infrastructure", /Supabase/.test(privacy));
-  check("it states Liree never receives the Google password", /never receives your Google password/.test(privacy));
+  check("it states Sorlio never receives the Google password", /never receives your Google password/.test(privacy));
   check("it points to self-service deletion", /account\/delete/.test(privacy));
   check("it says deletion is available from Settings", /from Settings/.test(privacy));
   check("it warns that Play subscriptions are separate", /does not cancel a subscription/.test(privacy));
@@ -198,7 +198,7 @@ console.log("--- The privacy policy matches the implementation ---");
 
 console.log("--- Only the minimum personal data is handled ---");
 {
-  // Comments are stripped first: these files *explain* that Liree stores no
+  // Comments are stripped first: these files *explain* that Sorlio stores no
   // password or phone number, and that prose should not fail the test that
   // enforces it.
   const codeOnly = (source) =>
@@ -212,7 +212,7 @@ console.log("--- Only the minimum personal data is handled ---");
   check("no password handling exists", !/password/i.test(codeOnly(auth) + codeOnly(accountCard)));
   check("only the email is surfaced in the account UI", /user\?\.email/.test(accountCard));
   // The OAuth call must not widen scope beyond what Supabase requests by
-  // default, which is what keeps profile name and picture out of Liree.
+  // default, which is what keeps profile name and picture out of Sorlio.
   check("no extra Google scopes are requested", !/scopes:/.test(codeOnly(auth)));
 }
 

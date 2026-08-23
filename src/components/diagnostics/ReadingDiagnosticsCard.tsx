@@ -55,7 +55,7 @@ export default function ReadingDiagnosticsCard({
         <div className="mt-2 space-y-2 text-xs leading-relaxed text-ink-muted">
           <p>
             Lookups per 100 words estimates how often you needed vocabulary support. Comparing the rate across texts
-            helps show whether reading is becoming more independent. It is affected by text difficulty, so Lire
+            helps show whether reading is becoming more independent. It is affected by text difficulty, so Sorlio
             compares similar texts where possible.
           </p>
           <p>

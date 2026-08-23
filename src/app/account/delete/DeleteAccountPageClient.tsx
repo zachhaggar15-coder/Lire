@@ -14,7 +14,7 @@ import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
  *
  * Same dialog, same endpoint, same guarantees as Settings — the only thing
  * this page adds is a way to reach them from a browser, for someone who has
- * uninstalled Liree or never had the Android build. Signing in is required
+ * uninstalled Sorlio or never had the Android build. Signing in is required
  * because deletion is authorised by the session, never by a submitted id.
  */
 export default function DeleteAccountPageClient() {
@@ -44,17 +44,17 @@ export default function DeleteAccountPageClient() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Delete account" kicker="Liree account" backHref="/settings" backLabel="Back to settings" />
+      <AppBar title="Delete account" kicker="Sorlio account" backHref="/settings" backLabel="Back to settings" />
 
       {deleted ? (
         <section className="rounded-card border border-cream-dark bg-cream-card p-5 shadow-card">
           <p className="font-semibold text-ink">Your account has been deleted.</p>
           <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-            Your Liree account and the learning data synced to it have been removed. Liree still works on this device
+            Your Sorlio account and the learning data synced to it have been removed. Sorlio still works on this device
             without an account.
           </p>
           <Link href="/" className="ligne-pill mt-4 inline-block bg-brand text-cream">
-            Back to Liree
+            Back to Sorlio
           </Link>
         </section>
       ) : (
@@ -62,16 +62,16 @@ export default function DeleteAccountPageClient() {
           <section className="rounded-card border border-cream-dark bg-cream-card p-5 shadow-card">
             <p className="font-semibold text-ink">What deleting your account removes</p>
             <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-ink-muted">
-              <li>Your Liree account itself, and the sign-in that goes with it.</li>
+              <li>Your Sorlio account itself, and the sign-in that goes with it.</li>
               <li>The learning data synced to that account — saved words, progress, reviews and history.</li>
               <li>Any feedback or research responses submitted while signed in.</li>
             </ul>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
               Learning data already stored on a device stays there and keeps working without an account. To remove it
-              too, clear Liree&rsquo;s storage or uninstall the app on that device.
+              too, clear Sorlio&rsquo;s storage or uninstall the app on that device.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-              A Premium subscription is billed by Google Play, not by Liree. Deleting your account does not cancel it —
+              A Premium subscription is billed by Google Play, not by Sorlio. Deleting your account does not cancel it —
               cancel in Google Play if you no longer want to be billed.
             </p>
           </section>

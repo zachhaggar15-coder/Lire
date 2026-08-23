@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     .eq("unsubscribe_token", token);
 
   if (error) return new Response("Could not unsubscribe this address.", { status: 502 });
-  return new Response("You have been unsubscribed from Lire Android beta emails.", {
+  return new Response("You have been unsubscribed from Sorlio Android beta emails.", {
     status: 200,
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });

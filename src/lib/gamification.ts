@@ -102,7 +102,7 @@ export interface MissionStatus extends MissionDefinition {
 }
 
 /**
- * A Lire Level snapshot. Deliberately has no `title`: the old one was a CEFR
+ * A Sorlio Level snapshot. Deliberately has no `title`: the old one was a CEFR
  * band name, which made an XP total look like a proficiency statement.
  */
 export interface ReaderLevel {
@@ -345,7 +345,7 @@ export function xpNeededForLevel(level: number): number {
 }
 
 /**
- * The reader's Lire Level.
+ * The reader's Sorlio Level.
  *
  * Delegates the curve to progression/lireLevel.ts so there is exactly one
  * place that turns XP into a level, and adds the recent-XP figure the progress

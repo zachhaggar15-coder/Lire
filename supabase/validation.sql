@@ -1,4 +1,4 @@
--- Lire validation, Android beta, feedback, and research tables.
+-- Sorlio validation, Android beta, feedback, and research tables.
 -- Run in Supabase SQL Editor after supabase/schema.sql.
 -- Service-role access is used by Next.js API routes for inserts/admin reads.
 -- RLS remains enabled so anon/authenticated browser clients cannot list data.

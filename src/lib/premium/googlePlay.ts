@@ -1,7 +1,7 @@
 import { GoogleAuth } from "google-auth-library";
 import type { PremiumStatus, SubscriptionStatus } from "@/lib/premium/types";
 
-const PACKAGE_NAME = "app.liree.reader";
+const PACKAGE_NAME = "app.sorlio.reader";
 const PUBLISHER_SCOPE = "https://www.googleapis.com/auth/androidpublisher";
 
 interface SubscriptionV2 {
@@ -53,7 +53,7 @@ export async function verifyPlaySubscription(
   if (!response.ok) throw new Error(`Google Play verification failed (${response.status})`);
   const purchase = (await response.json()) as SubscriptionV2;
   const matchingLine = purchase.lineItems?.find((item) => item.productId === expectedProductId);
-  if (!matchingLine) throw new Error("Purchase does not match the Lire Premium product");
+  if (!matchingLine) throw new Error("Purchase does not match the Sorlio Premium product");
 
   const expiryTimes = (purchase.lineItems ?? [])
     .map((item) => item.expiryTime)

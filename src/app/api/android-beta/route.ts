@@ -26,15 +26,15 @@ async function sendConfirmationEmail(email: string, unsubscribeToken: string): P
     body: JSON.stringify({
       from,
       to: email,
-      subject: "You're on the Lire Android beta list",
+      subject: "You're on the Sorlio Android beta list",
       html: `
-        <p>Thanks for joining the Lire Android beta list.</p>
-        <p>Lire is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.</p>
-        <p>In the meantime, you can continue using Lire on the web.</p>
+        <p>Thanks for joining the Sorlio Android beta list.</p>
+        <p>Sorlio is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.</p>
+        <p>In the meantime, you can continue using Sorlio on the web.</p>
         <p><a href="${continueUrl}">Continue reading</a></p>
         <p style="font-size:12px;color:#666">You can <a href="${unsubscribeUrl}">unsubscribe</a> at any time.</p>
       `,
-      text: `Thanks for joining the Lire Android beta list.\n\nLire is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.\n\nContinue reading: ${continueUrl}\n\nUnsubscribe: ${unsubscribeUrl}`,
+      text: `Thanks for joining the Sorlio Android beta list.\n\nLire is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.\n\nContinue reading: ${continueUrl}\n\nUnsubscribe: ${unsubscribeUrl}`,
     }),
   });
   return res.ok;

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import DeleteAccountPageClient from "@/app/account/delete/DeleteAccountPageClient";
 
 export const metadata: Metadata = {
-  title: "Delete your Liree account",
-  description: "Sign in with Google to permanently delete your Liree account and the learning data synced to it.",
+  title: "Delete your Sorlio account",
+  description: "Sign in with Google to permanently delete your Sorlio account and the learning data synced to it.",
 };
 
 /**

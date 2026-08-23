@@ -16,7 +16,7 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
  * UI for someone who hasn't set it up.
  *
  * Signing in is optional and framed by what it gets you rather than as a
- * gate: Liree works fully as a guest, and this exists so words and progress
+ * gate: Sorlio works fully as a guest, and this exists so words and progress
  * survive a new phone.
  */
 export default function AccountCard() {
@@ -115,7 +115,7 @@ export default function AccountCard() {
         <>
           <p className="font-semibold text-ink">Sync your progress</p>
           <p className="mt-0.5 text-sm text-ink-muted">
-            Keep your saved words, reviews and progress available across devices. Liree works without an account —
+            Keep your saved words, reviews and progress available across devices. Sorlio works without an account —
             signing in only adds sync and lets you restore Premium.
           </p>
           <div className="mt-3">

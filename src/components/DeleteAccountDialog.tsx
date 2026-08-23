@@ -6,8 +6,8 @@ import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import type { PremiumStatus } from "@/lib/premium/types";
 
-const PRODUCT_ID = process.env.NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "lire_premium_monthly";
-const MANAGE_SUBSCRIPTION_URL = `https://play.google.com/store/account/subscriptions?sku=${encodeURIComponent(PRODUCT_ID)}&package=app.liree.reader`;
+const PRODUCT_ID = process.env.NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID || "sorlio_premium_monthly";
+const MANAGE_SUBSCRIPTION_URL = `https://play.google.com/store/account/subscriptions?sku=${encodeURIComponent(PRODUCT_ID)}&package=app.sorlio.reader`;
 
 interface DeleteAccountDialogProps {
   email: string | null;
@@ -23,7 +23,7 @@ interface DeleteAccountDialogProps {
  * account and everything synced to it go, while the words and progress already
  * on this device stay, and it says so rather than offering a comfortable
  * "everything deleted". And when a Play subscription is live it warns first,
- * because Google owns that billing relationship — deleting a Lire account does
+ * because Google owns that billing relationship — deleting a Sorlio account does
  * not cancel it, and someone could otherwise keep being charged for an account
  * that no longer exists.
  */
@@ -67,7 +67,7 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
               You have a Premium subscription
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              Your Premium subscription is billed by Google Play. Deleting your Liree account does not cancel it, and
+              Your Premium subscription is billed by Google Play. Deleting your Sorlio account does not cancel it, and
               you may continue to be charged.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
@@ -100,11 +100,11 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
               Delete your account?
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              This permanently deletes your Liree account{email ? ` (${email})` : ""} and the learning data synced to
+              This permanently deletes your Sorlio account{email ? ` (${email})` : ""} and the learning data synced to
               it. This cannot be undone.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              Your saved words and progress stay on this device and Liree keeps working without an account. To remove
+              Your saved words and progress stay on this device and Sorlio keeps working without an account. To remove
               them too, clear the app&rsquo;s storage or uninstall it.
             </p>
             {hasLiveSubscription && (

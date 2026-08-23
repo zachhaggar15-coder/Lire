@@ -41,7 +41,7 @@ const numeral = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Lire - French Reader",
+  title: "Sorlio - French Reader",
   description: "Read short French texts, tap words you don't know, review them later.",
   manifest: "/manifest.json",
   verification: {
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Lire",
+    title: "Sorlio",
   },
   icons: {
     icon: [
