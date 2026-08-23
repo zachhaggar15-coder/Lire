@@ -10,6 +10,7 @@ import StorageMigrations from "@/components/StorageMigrations";
 import RssPrefetch from "@/components/RssPrefetch";
 import AppNavigationPolish from "@/components/AppNavigationPolish";
 import AnalyticsConsentBanner from "@/components/AnalyticsConsentBanner";
+import { productionDomain } from "@/lib/validation/config";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -40,10 +41,38 @@ const numeral = Instrument_Serif({
   display: "swap",
 });
 
+const SITE_ORIGIN = productionDomain();
+const SITE_NAME = "Sorlio";
+const SITE_DESCRIPTION = "Read short French texts, tap words you don't know, review them later.";
+
 export const metadata: Metadata = {
+  // Canonical origin for every relative URL Next resolves in metadata —
+  // Open Graph, canonical links, and social images all hang off this.
+  // Driven by NEXT_PUBLIC_PRODUCTION_DOMAIN so a preview deployment can
+  // declare itself rather than claiming to be production.
+  metadataBase: new URL(SITE_ORIGIN),
   title: "Sorlio - French Reader",
-  description: "Read short French texts, tap words you don't know, review them later.",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
   manifest: "/manifest.json",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: "Sorlio - French Reader",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    locale: "en_GB",
+    images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Sorlio" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Sorlio - French Reader",
+    description: SITE_DESCRIPTION,
+    images: ["/icon-512.png"],
+  },
   verification: {
     google: [
       "u197HJazPk2IJD1yT_A3U5j8NaQeee81Qzsy0L-4E_E",

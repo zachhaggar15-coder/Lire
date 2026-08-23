@@ -4,6 +4,7 @@ import {
   type AcquisitionAttribution,
   type ValidationState,
 } from "@/lib/validation/state";
+import { productionDomain } from "@/lib/validation/config";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "ref"] as const;
 
@@ -32,7 +33,7 @@ export function attributionFromUrl({
   referrer?: string | null;
   now?: Date;
 }): AcquisitionAttribution {
-  const url = new URL(href, "https://liree.vercel.app");
+  const url = new URL(href, productionDomain());
   const params = url.searchParams;
   const utmSource = clean(params.get("utm_source"));
   const ref = clean(params.get("ref"));
@@ -53,7 +54,7 @@ export function attributionFromUrl({
 }
 
 export function hasExplicitAttribution(href: string): boolean {
-  const url = new URL(href, "https://liree.vercel.app");
+  const url = new URL(href, productionDomain());
   return UTM_KEYS.some((key) => !!clean(url.searchParams.get(key)));
 }
 

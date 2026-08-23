@@ -68,14 +68,14 @@ check("rolling seven-day retention is detected", retentionReached(baseState.firs
 console.log("\n--- Attribution and payload privacy ---");
 
 const attributed = attributionFromUrl({
-  href: "https://liree.vercel.app/?utm_source=reddit&utm_medium=social&utm_campaign=beta&ref=post",
+  href: "https://sorlio.site/?utm_source=reddit&utm_medium=social&utm_campaign=beta&ref=post",
   referrer: "https://example.com/thread",
   now: new Date("2026-07-01T10:00:00.000Z"),
 });
 check("utm source wins over referrer attribution", attributed.source === "reddit" && attributed.medium === "social");
 
 const direct = attributionFromUrl({
-  href: "https://liree.vercel.app/",
+  href: "https://sorlio.site/",
   now: new Date("2026-07-01T10:05:00.000Z"),
 });
 const withExplicit = applyAttribution(emptyValidationState(), attributed, true);

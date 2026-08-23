@@ -1,6 +1,6 @@
 {
   "packageId": "app.sorlio.reader",
-  "host": "liree.vercel.app",
+  "host": "sorlio.site",
   "name": "Sorlio — French Reader",
   "launcherName": "Sorlio",
   "display": "standalone",
@@ -13,9 +13,9 @@
   "backgroundColor": "#FFFCF4",
   "enableNotifications": false,
   "startUrl": "/",
-  "iconUrl": "https://liree.vercel.app/icon-512.png",
-  "maskableIconUrl": "https://liree.vercel.app/icon-maskable-512.png",
-  "monochromeIconUrl": "https://liree.vercel.app/icon-monochrome.svg",
+  "iconUrl": "https://sorlio.site/icon-512.png",
+  "maskableIconUrl": "https://sorlio.site/icon-maskable-512.png",
+  "monochromeIconUrl": "https://sorlio.site/icon-monochrome.svg",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "android.keystore",
@@ -25,7 +25,7 @@
   "appVersionCode": 1,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://liree.vercel.app/manifest.json",
+  "webManifestUrl": "https://sorlio.site/manifest.json",
   "fallbackType": "customtabs",
   "features": {
     "playBilling": {
@@ -38,7 +38,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://liree.vercel.app/",
+  "fullScopeUrl": "https://sorlio.site/",
   "minSdkVersion": 23,
   "orientation": "portrait",
   "fingerprints": [],

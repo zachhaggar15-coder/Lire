@@ -1,12 +1,12 @@
 # Android Play build
 
-Sorlio's Android app is a Trusted Web Activity for `https://liree.vercel.app`.
+Sorlio's Android app is a Trusted Web Activity for `https://sorlio.site`.
 
 - Package ID: `app.sorlio.reader`
 - Target SDK: Android 16 / API 36
 - Minimum SDK: Android 6 / API 23 (required by the Play Billing bridge)
-- Web manifest: `https://liree.vercel.app/manifest.json`
-- Digital Asset Links: `https://liree.vercel.app/.well-known/assetlinks.json`
+- Web manifest: `https://sorlio.site/manifest.json`
+- Digital Asset Links: `https://sorlio.site/.well-known/assetlinks.json`
 
 ## Signing setup
 

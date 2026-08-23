@@ -152,8 +152,8 @@ line about anything you change before launch.
 
 | Field | Value |
 | --- | --- |
-| Privacy policy | `https://<your production domain>/privacy` |
-| Account deletion | `https://<your production domain>/account/delete` |
+| Privacy policy | `https://sorlio.site/privacy` |
+| Account deletion | `https://sorlio.site/account/delete` |
 | Support email | `Sorlio@proton.me` |
 
 Both pages are already live in the app and both are reachable without

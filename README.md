@@ -1,6 +1,6 @@
 # Sorlio — French Reader (PWA)
 
-**Live demo:** [liree.vercel.app](https://liree.vercel.app) — the source is
+**Live demo:** [sorlio.site](https://sorlio.site) — the source is
 public on GitHub at
 [zachhaggar15-coder/Lire](https://github.com/zachhaggar15-coder/Lire).
 
@@ -1188,11 +1188,14 @@ devices" card at all.
    Google is the only sign-in method the app uses.
 4. **Set the Site URL and Redirect URLs.** Still in **Authentication** →
    **URL Configuration**: set **Site URL** to your production URL (e.g.
-   `https://liree.vercel.app`), and add both your production URL and
+   `https://sorlio.site`), and add both your production URL and
    `http://localhost:3000` under **Redirect URLs**. The app asks to be
    returned to the page sign-in started from (`/settings`, `/premium`,
-   `/account/delete`), so add wildcard entries — `https://liree.vercel.app/**`
+   `/account/delete`), so add wildcard entries — `https://sorlio.site/**`
    and `http://localhost:3000/**` — or those redirects will be rejected.
+   Keep the localhost entries: they are what makes sign-in work in
+   development, and removing them breaks local auth without touching
+   production.
 5. **Copy your project's API keys.** In the dashboard, go to **Settings** →
    **API**. Copy the **Project URL** and the **anon / public** key. Premium
    subscription verification also needs the `service_role` key on the

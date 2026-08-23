@@ -41,7 +41,7 @@ export function appVersion(): string {
 }
 
 export function productionDomain(): string {
-  return process.env.NEXT_PUBLIC_PRODUCTION_DOMAIN || "https://liree.vercel.app";
+  return process.env.NEXT_PUBLIC_PRODUCTION_DOMAIN || "https://sorlio.site";
 }
 
 export const VALIDATION_FEATURES: ValidationFeatureFlags = {
