@@ -33,6 +33,30 @@ never touches existing rows.
 Seven files, six tables. That is the whole database — if a table is not listed
 here, the app does not query it.
 
+## Checking it worked
+
+```bash
+npm run verify:supabase
+```
+
+Reads `.env.local` (or a path you pass after `--`, or the ambient environment)
+and checks the live database against what these files declare: all six tables
+present, the superseded `lire_*` and gamification tables absent, both keys
+issued by the project the URL points at, and row-level security actually
+refusing the anon key.
+
+It reads no row contents — every check uses an exact-count header, so it
+reports how many rows a key can see without retrieving any of them. The single
+write is a deliberate probe: it tries an anon `INSERT`, which a correct policy
+rejects, and cleans up if the policy turns out to be wrong.
+
+Checks against an empty table are reported as **inconclusive** rather than
+passing, because "the anon key saw no rows" proves nothing when there are no
+rows to see. Re-run once real data exists to turn those into real assertions.
+
+Worth running after applying migrations, after rotating keys, and after
+pointing the app at a different project.
+
 ## Two naming decisions worth knowing
 
 **Tables are `sorlio_*`.** They were `lire_*` until this rebuild. Renaming was
