@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { AiNotConfiguredError, explainWord } from "@/lib/ai/openai";
+import { optionalText, requirePaidAiCaller, requireText, MAX_TITLE_CHARS } from "@/lib/ai/guard";
 
 const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable explanations.";
 
 export async function POST(request: Request) {
+  const gate = await requirePaidAiCaller(request);
+  if (!gate.ok) return gate.response;
+
   let body: unknown;
   try {
     body = await request.json();
@@ -14,22 +18,20 @@ export async function POST(request: Request) {
   const { word, lemma, articleSentence, simpleExampleSentence, surroundingSentence, articleTitle, level } =
     (body ?? {}) as Record<string, unknown>;
 
-  if (typeof word !== "string" || !word.trim() || typeof articleSentence !== "string" || !articleSentence.trim()) {
-    return NextResponse.json(
-      { error: "Both 'word' and 'articleSentence' are required strings." },
-      { status: 400 }
-    );
-  }
+  const checkedWord = requireText(word, "word", 120);
+  if (!checkedWord.ok) return checkedWord.response;
+  const checkedSentence = requireText(articleSentence, "articleSentence");
+  if (!checkedSentence.ok) return checkedSentence.response;
 
   try {
     const result = await explainWord({
-      word,
-      lemma: typeof lemma === "string" && lemma ? lemma : null,
-      articleSentence,
-      simpleExampleSentence: typeof simpleExampleSentence === "string" ? simpleExampleSentence : null,
-      surroundingSentence: typeof surroundingSentence === "string" ? surroundingSentence : null,
-      articleTitle: typeof articleTitle === "string" ? articleTitle : null,
-      level: typeof level === "string" && level ? level : "A2/B1 French learner",
+      word: checkedWord.value,
+      lemma: optionalText(lemma, 120),
+      articleSentence: checkedSentence.value,
+      simpleExampleSentence: optionalText(simpleExampleSentence),
+      surroundingSentence: optionalText(surroundingSentence),
+      articleTitle: optionalText(articleTitle, MAX_TITLE_CHARS),
+      level: optionalText(level, 80) ?? "A2/B1 French learner",
     });
     return NextResponse.json(result);
   } catch (err) {

@@ -2,6 +2,7 @@ import { cacheStore, paraphraseCacheKey } from "@/lib/ai/cache";
 import type { ParaphraseDistinctionKind, ParaphraseGenerationRequest, ParaphraseGenerationResult } from "@/lib/ai/types";
 import { validateParaphraseSet } from "@/lib/practice/paraphraseValidation";
 import type { TextSentence } from "@/lib/practice/textSentences";
+import { getAccessToken } from "@/lib/supabase/auth";
 
 /**
  * Paraphrase-recognition exercise: pick the closest paraphrase of a sentence
@@ -70,9 +71,16 @@ function toExercise(sentence: TextSentence, result: ParaphraseGenerationResult):
 
 async function fetchOnce(req: ParaphraseGenerationRequest): Promise<ParaphraseGenerationResult | null> {
   try {
+    // The route requires a signed-in Premium account (src/lib/ai/guard.ts);
+    // without the token it answers 401 and paraphrase generation is skipped,
+    // which this function already treats as "no exercise available".
+    const token = await getAccessToken();
     const res = await fetch("/api/ai/paraphrase", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify(req),
     });
     if (!res.ok) return null;

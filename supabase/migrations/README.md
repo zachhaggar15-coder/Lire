@@ -6,7 +6,7 @@ Supabase project and you have the complete Sorlio database.
 ## Running them
 
 **Dashboard (simplest):** SQL Editor → New query → paste one file → Run.
-Repeat in order, `0001` through `0007`.
+Repeat in order, `0001` through `0008`.
 
 **CLI, if you prefer:**
 
@@ -29,9 +29,10 @@ never touches existing rows.
 | `0005_feedback_and_research.sql` | `sorlio_feedback`, `sorlio_research_prompt_responses` |
 | `0006_android_beta_interest.sql` | `sorlio_android_beta_interest` — beta mailing list |
 | `0007_account_deletion_contract.sql` | Table comments recording the deletion rules |
+| `0008_ai_usage.sql` | `sorlio_ai_usage` + `sorlio_consume_ai_call()` — daily AI budget |
 
-Seven files, six tables. That is the whole database — if a table is not listed
-here, the app does not query it.
+Eight files, seven tables. That is the whole database — if a table is not
+listed here, the app does not query it.
 
 ## Checking it worked
 
@@ -71,7 +72,7 @@ the keys inside it are the app's own history.
 
 ## Adding a table later
 
-Add `0008_*.sql`; never edit a migration that has been run. If the new table
+Add `0009_*.sql`; never edit a migration that has been run. If the new table
 has a `user_id`, decide its deletion behaviour deliberately — see
 `0007_account_deletion_contract.sql`. Getting this wrong leaves identifiable
 rows behind after a deletion the reader was told was complete.

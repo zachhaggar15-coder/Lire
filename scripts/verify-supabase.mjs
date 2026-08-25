@@ -29,7 +29,11 @@ const EXPECTED_TABLES = [
   "sorlio_feedback",
   "sorlio_research_prompt_responses",
   "sorlio_android_beta_interest",
+  "sorlio_ai_usage",
 ];
+
+/** The AI budget function from 0008; without it the AI routes fail closed. */
+const REQUIRED_FUNCTIONS = ["sorlio_consume_ai_call"];
 
 /**
  * Tables the anon key must never read. sorlio_user_data is absent here because
@@ -221,6 +225,23 @@ async function main() {
     });
     console.log(`  info  probe row removed (HTTP ${cleanup.status})`);
   }
+
+  console.log("\n--- Functions the app depends on exist ---");
+  for (const fn of REQUIRED_FUNCTIONS) {
+    // Calling with no arguments is enough to tell existence from absence:
+    // a missing function answers 404/PGRST202, a present one complains about
+    // its arguments instead.
+    const response = await fetch(`${url}/rest/v1/rpc/${fn}`, {
+      method: "POST",
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    let payload = null;
+    try { payload = await response.json(); } catch { payload = null; }
+    const missing = response.status === 404 || payload?.code === "PGRST202";
+    ok(`${fn}() exists`, !missing, "run supabase/migrations/0008_ai_usage.sql");
+  }
+
 
   console.log("\n--- The deletion contract is recorded in the database ---");
   // Migration 0007 stores these as COMMENT ON TABLE, so their presence is also

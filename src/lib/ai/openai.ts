@@ -18,6 +18,16 @@ import type {
 const DEFAULT_MODEL = "gpt-4o-mini";
 const REQUEST_TIMEOUT_MS = 20000;
 /**
+ * Ceiling on how much the model may write back.
+ *
+ * Input length is capped at the route (src/lib/ai/guard.ts), but output was
+ * uncapped, so a request could still bill for a very long completion. Every
+ * response here is a small JSON object; a whole-article translation is the
+ * only one that legitimately grows, and it gets its own budget below.
+ */
+const DEFAULT_MAX_TOKENS = 900;
+const ARTICLE_TRANSLATION_MAX_TOKENS = 8000;
+/**
  * A full-article translation sends much more text than a single word/sentence
  * explanation and can take longer to generate — a longer, denser article
  * (C1/C2-level curriculum texts routinely run 25-30 sentences plus their
@@ -55,7 +65,12 @@ function isStringArray(v: unknown): v is string[] {
  * Calls OpenAI's Chat Completions API in JSON mode and returns the parsed
  * object. Plain fetch, no SDK — this is a single simple HTTP call.
  */
-async function callOpenAiJson(systemPrompt: string, userPrompt: string, timeoutMs: number = REQUEST_TIMEOUT_MS): Promise<unknown> {
+async function callOpenAiJson(
+  systemPrompt: string,
+  userPrompt: string,
+  timeoutMs: number = REQUEST_TIMEOUT_MS,
+  maxTokens: number = DEFAULT_MAX_TOKENS
+): Promise<unknown> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new AiNotConfiguredError("OPENAI_API_KEY is not set.");
@@ -76,6 +91,7 @@ async function callOpenAiJson(systemPrompt: string, userPrompt: string, timeoutM
       ],
       response_format: { type: "json_object" },
       temperature: 0.3,
+      max_tokens: maxTokens,
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
@@ -423,7 +439,7 @@ export async function translateArticleSentences(req: ArticleTranslationRequest):
   let lastError: unknown;
   for (let attempt = 1; attempt <= ARTICLE_TRANSLATION_MAX_ATTEMPTS; attempt++) {
     try {
-      const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS);
+      const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS, ARTICLE_TRANSLATION_MAX_TOKENS);
       return assertArticleTranslation(raw, req.sentences.length, req.sentences);
     } catch (err) {
       if (err instanceof AiNotConfiguredError) throw err;

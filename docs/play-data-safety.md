@@ -68,6 +68,15 @@ file is stale.
   comments; strings are also capped at 500 characters.
   `BANNED_KEYS` in `src/lib/analytics/events.ts`.
 
+### App activity → App interactions (AI usage counter)
+- **Collected:** Yes, for Premium subscribers only. **Shared:** No.
+- **Purpose:** Fraud prevention, security — an anti-abuse ceiling on paid AI
+  features.
+- **What and where:** A per-day count of AI calls per account, and nothing
+  else — no prompt text, no responses, no article content. `sorlio_ai_usage`,
+  written only through `sorlio_consume_ai_call()`. Cascades on account
+  deletion. `supabase/migrations/0008_ai_usage.sql`, `src/lib/ai/guard.ts`.
+
 ### App info and performance → Crash logs / Diagnostics
 - **Collected:** Only if a Sentry DSN is configured. **Shared:** With Sentry as
   processor. **Optional.**
@@ -115,8 +124,9 @@ Play requires that advertised deletion is real. `src/app/api/account/delete/rout
 1. Explicitly deletes rows by `user_id` from `sorlio_feedback`,
    `sorlio_research_prompt_responses`, and `sorlio_analytics_events`. These use
    `on delete set null`, so they would otherwise survive as orphans.
-2. Calls `auth.admin.deleteUser`, which cascades to `sorlio_user_data` and
-   `sorlio_subscriptions` via their `on delete cascade` references.
+2. Calls `auth.admin.deleteUser`, which cascades to `sorlio_user_data`,
+   `sorlio_subscriptions`, and `sorlio_ai_usage` via their `on delete cascade`
+   references.
 
 Two deliberate exceptions, both worth being able to explain if asked:
 

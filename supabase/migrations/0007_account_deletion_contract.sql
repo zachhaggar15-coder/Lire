@@ -13,6 +13,7 @@
 -- Cascades automatically when the auth user is deleted:
 --   sorlio_user_data       — every synced store
 --   sorlio_subscriptions   — the entitlement row and its purchase token
+--   sorlio_ai_usage        — the daily AI counter (added in 0008)
 --
 -- Does NOT cascade. These use `on delete set null`, which orphans the row
 -- rather than removing it, so /api/account/delete deletes them by user_id

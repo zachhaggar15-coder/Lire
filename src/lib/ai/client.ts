@@ -9,10 +9,28 @@ import type {
   WordExplanationRequest,
 } from "@/lib/ai/types";
 import { articleTranslationCacheKey, cacheStore, paraphraseCacheKey, sentenceCacheKey, wordCacheKey } from "@/lib/ai/cache";
+import { getAccessToken } from "@/lib/supabase/auth";
 
 export type AiResult<T> = { data: T; error?: undefined } | { data?: undefined; error: string };
 
 const GENERIC_ERROR = "Couldn't get an AI answer. Please try again.";
+
+/**
+ * The AI routes require a signed-in Premium account, verified server-side —
+ * see src/lib/ai/guard.ts. Without this header every AI call is a 401, so the
+ * token goes on every request rather than being threaded through each caller.
+ *
+ * A signed-out reader gets no token and the route answers 401, which the
+ * callers surface as a normal error. The UI already hides these actions
+ * behind the same Premium check, so this is the backstop rather than the
+ * first line.
+ */
+async function aiHeaders(): Promise<Record<string, string>> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const token = await getAccessToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
 
 /**
  * Calls POST /api/ai/explain-word, cache-first (keyed on word + the exact
@@ -28,7 +46,7 @@ export async function getWordExplanation(req: WordExplanationRequest): Promise<A
   try {
     const res = await fetch("/api/ai/explain-word", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await aiHeaders(),
       body: JSON.stringify(req),
     });
     const body = await res.json().catch(() => null);
@@ -56,7 +74,7 @@ export async function getSentenceExplanation(
   try {
     const res = await fetch("/api/ai/explain-sentence", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await aiHeaders(),
       body: JSON.stringify(req),
     });
     const body = await res.json().catch(() => null);
@@ -87,7 +105,7 @@ export async function getParaphraseOptions(req: ParaphraseGenerationRequest): Pr
   try {
     const res = await fetch("/api/ai/paraphrase", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await aiHeaders(),
       body: JSON.stringify(req),
     });
     const body = await res.json().catch(() => null);
@@ -121,7 +139,7 @@ export async function getArticleTranslation(
   try {
     const res = await fetch("/api/ai/translate-article", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await aiHeaders(),
       body: JSON.stringify(req),
     });
     const body = await res.json().catch(() => null);

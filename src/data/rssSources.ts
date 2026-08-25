@@ -62,12 +62,37 @@ export interface RssSource {
  * To add a feed: append an entry with a fresh, unique `id`. To remove one
  * without deleting its config, set `enabled: false`.
  */
+/**
+ * ALL SOURCES ARE CURRENTLY DISABLED. This is deliberate — read this before
+ * turning any of them back on.
+ *
+ * The pipeline does not merely read these feeds; scrapeArticle.ts follows each
+ * item to the publisher's page and extracts the full article body, which is
+ * then stored and shown inside Sorlio as reading material. Several of the
+ * sources below are national newspapers — Le Monde, Mediapart, La Croix,
+ * Marianne — and several more are regional dailies. Mediapart is funded
+ * entirely by subscriptions.
+ *
+ * An RSS feed is an invitation to read the feed. It is not a licence to
+ * reproduce the article it links to, and Sorlio charges for access, which
+ * makes any reproduction commercial use of someone else's work. Linking back
+ * and naming the source is good manners; it is not permission.
+ *
+ * So the feature ships switched off rather than deleted. Nothing else changes:
+ * createFallbackCandidatePool() (src/lib/rss/candidatePool.ts) fills the same
+ * surfaces from the public-domain bank, and the app still has ~1,590 texts
+ * that are either written for it or genuinely free to use.
+ *
+ * Turning a source back on is a licensing decision, not a config change.
+ * Before switching one on, establish that its terms actually permit
+ * reproducing article text in a paid app, and record what you found.
+ */
 export const rssSources: RssSource[] = [
   { id: "france-today", name: "France Today", category: "culture", feedUrl: "https://francetoday.com/feed/", language: "en", enabled: false },
   { id: "the-good-life-france", name: "The Good Life France", category: "everyday life", feedUrl: "https://thegoodlifefrance.com/feed/", language: "en", enabled: false },
   { id: "tech-n-play", name: "Tech N Play", category: "science", feedUrl: "https://technplay.com/feed/", language: "en", enabled: false },
   { id: "rosbif-blog", name: "Rosbif Blog", category: "everyday life", feedUrl: "https://rosbifblog.com/feed/", language: "en", enabled: false },
-  { id: "sig-territoires", name: "SIG Territoires", category: "science", feedUrl: "https://www.sigterritoires.fr/index.php/feed/", language: "fr", enabled: true },
+  { id: "sig-territoires", name: "SIG Territoires", category: "science", feedUrl: "https://www.sigterritoires.fr/index.php/feed/", language: "fr", enabled: false },
   // Mislabeled fr — verified via /api/rss-texts?health=true on 2026-07-10:
   // every sampled item's title/body is actually English (French-history
   // blog written in English), so every item was correctly rejected by the
@@ -83,7 +108,7 @@ export const rssSources: RssSource[] = [
   { id: "the-provence-post", name: "The Provence Post", category: "everyday life", feedUrl: "https://theprovencepost.blogspot.com/feeds/posts/default", language: "en", enabled: false },
   { id: "a-taste-of-france", name: "A Taste of France", category: "culture", feedUrl: "https://www.a-taste-of-france.com/france.xml", language: "en", enabled: false },
   { id: "life-on-la-lune", name: "Life on La Lune", category: "everyday life", feedUrl: "https://lifeonlalune.com/feed/", language: "en", enabled: false },
-  { id: "rvf-nouvelles", name: "RVF Nouvelles", category: "news-style", feedUrl: "https://rvf.ca/nouvelles/feed/", language: "fr", enabled: true },
+  { id: "rvf-nouvelles", name: "RVF Nouvelles", category: "news-style", feedUrl: "https://rvf.ca/nouvelles/feed/", language: "fr", enabled: false },
   { id: "france-says", name: "France Says", category: "everyday life", feedUrl: "https://francesays.com/feed/", language: "en", enabled: false },
   { id: "paris-missives", name: "Paris Missives", category: "everyday life", feedUrl: "https://parismissives.blogspot.com/feeds/posts/default", language: "en", enabled: false },
   { id: "sharon-santoni", name: "Sharon Santoni", category: "everyday life", feedUrl: "https://sharonsantoni.com/feed/", language: "en", enabled: false },
@@ -91,7 +116,7 @@ export const rssSources: RssSource[] = [
   { id: "bonjour-paris", name: "Bonjour Paris", category: "culture", feedUrl: "https://bonjourparis.com/feed/", language: "en", enabled: false },
   { id: "le-francophile", name: "Le Francophile", category: "culture", feedUrl: "https://lefrancophile.com/feed/", language: "en", enabled: false },
   { id: "live-french", name: "Live French", category: "culture", feedUrl: "https://live-french.net/blog/feed/", language: "en", enabled: false },
-  { id: "y-a-pas-le-feu-au-lac", name: "Y'a Pas le Feu au Lac", category: "everyday life", feedUrl: "https://www.yapaslefeuaulac.ch/feed/", language: "fr", enabled: true },
+  { id: "y-a-pas-le-feu-au-lac", name: "Y'a Pas le Feu au Lac", category: "everyday life", feedUrl: "https://www.yapaslefeuaulac.ch/feed/", language: "fr", enabled: false },
   { id: "paris-perfect", name: "Paris Perfect", category: "everyday life", feedUrl: "https://www.parisperfect.com/blog/feed/", language: "en", enabled: false },
   { id: "secrets-of-paris", name: "Secrets of Paris", category: "everyday life", feedUrl: "https://secretsofparis.com/feed/", language: "en", enabled: false },
   { id: "french-country-cottage", name: "French Country Cottage", category: "everyday life", feedUrl: "https://www.frenchcountrycottage.net/feed/", language: "en", enabled: false },
@@ -105,35 +130,35 @@ export const rssSources: RssSource[] = [
   { id: "david-lebovitz", name: "David Lebovitz", category: "culture", feedUrl: "https://www.davidlebovitz.com/feed/", language: "en", enabled: false },
   { id: "messy-nessy-chic", name: "Messy Nessy Chic", category: "culture", feedUrl: "https://www.messynessychic.com/feed/", language: "en", enabled: false },
   { id: "lawless-french", name: "Lawless French", category: "culture", feedUrl: "https://feeds.feedblitz.com/LawlessFrench", language: "en", enabled: false },
-  { id: "une-armoire-pour-deux", name: "Une Armoire Pour Deux", category: "culture", feedUrl: "https://www.unearmoirepourdeux.fr/feed/", language: "fr", enabled: true },
+  { id: "une-armoire-pour-deux", name: "Une Armoire Pour Deux", category: "culture", feedUrl: "https://www.unearmoirepourdeux.fr/feed/", language: "fr", enabled: false },
   { id: "the-long-weekend", name: "The Long Weekend", category: "everyday life", feedUrl: "https://www.lelongweekend.com/feed/", language: "en", enabled: false },
   { id: "keith-van-sickle", name: "Keith Van Sickle", category: "everyday life", feedUrl: "https://keithvansickle.com/feed/", language: "en", enabled: false },
   // Mislabeled fr — verified 2026-07-10: this fashion/art magazine's RSS content is entirely English, 10/10 sampled items rejected.
   { id: "crash-magazine", name: "Crash Magazine", category: "culture", feedUrl: "https://www.crash.fr/feed/", language: "en", enabled: false },
   { id: "aussie-in-france", name: "Aussie in France", category: "everyday life", feedUrl: "https://www.aussieinfrance.com/feed/", language: "en", enabled: false },
   { id: "french-affaires", name: "French Affaires", category: "everyday life", feedUrl: "https://frenchaffaires.com/feed/", language: "en", enabled: false },
-  { id: "albert-learning-blog", name: "Albert Learning Blog", category: "culture", feedUrl: "https://blog.albert-learning.com/feed/", language: "mixed", enabled: true },
-  { id: "la-penderie-de-chloe", name: "La Penderie de Chloé", category: "culture", feedUrl: "https://www.lapenderiedechloe.com/feed/", language: "fr", enabled: true },
+  { id: "albert-learning-blog", name: "Albert Learning Blog", category: "culture", feedUrl: "https://blog.albert-learning.com/feed/", language: "mixed", enabled: false },
+  { id: "la-penderie-de-chloe", name: "La Penderie de Chloé", category: "culture", feedUrl: "https://www.lapenderiedechloe.com/feed/", language: "fr", enabled: false },
   { id: "esl-wq", name: "ESL WQ", category: "culture", feedUrl: "https://www.eslwq.com/blog-feed.xml", language: "en", enabled: false },
   { id: "french-today", name: "French Today", category: "culture", feedUrl: "https://www.frenchtoday.com/blog/feed/", language: "en", enabled: false },
   { id: "fluentu-french", name: "FluentU French", category: "culture", feedUrl: "https://www.fluentu.com/blog/french/feed/", language: "en", enabled: false },
-  { id: "arianne-g-voyance", name: "Arianne G Voyance", category: "everyday life", feedUrl: "https://www.arianne-g-voyance.fr/feed/", language: "fr", enabled: true },
+  { id: "arianne-g-voyance", name: "Arianne G Voyance", category: "everyday life", feedUrl: "https://www.arianne-g-voyance.fr/feed/", language: "fr", enabled: false },
   // Mislabeled fr — verified 2026-07-10: English-language Riviera lifestyle blog, all sampled items rejected.
   { id: "haute-vue", name: "Haute Vue", category: "culture", feedUrl: "https://www.haute-vue.com/blog-feed.xml", language: "en", enabled: false },
   // Verified 2026-07-10: feed URL now 404s (Feedburner has been sunsetting old redirects for years).
   { id: "chez-loulou", name: "Chez Loulou", category: "everyday life", feedUrl: "https://feeds.feedburner.com/blogspot/chezloulou", language: "fr", enabled: false },
   // Verified 2026-07-10: fetch/timeout/parse failure — unreachable.
   { id: "prete-moi-paris", name: "Prête-moi Paris", category: "everyday life", feedUrl: "https://pretemoiparis.com/feed/", language: "fr", enabled: false },
-  { id: "chut-mon-secret", name: "Chut Mon Secret", category: "everyday life", feedUrl: "https://www.chutmonsecret.com/feed/", language: "fr", enabled: true },
+  { id: "chut-mon-secret", name: "Chut Mon Secret", category: "everyday life", feedUrl: "https://www.chutmonsecret.com/feed/", language: "fr", enabled: false },
   { id: "the-french-life", name: "The French Life", category: "everyday life", feedUrl: "https://www.thefrenchlife.org/feed/", language: "en", enabled: false },
   { id: "sew-french-embroidery", name: "Sew French Embroidery", category: "culture", feedUrl: "https://sewfrenchembroidery.blogspot.com/feeds/posts/default?alt=rss", language: "en", enabled: false },
   // Verified 2026-07-10: genuinely French, but a headline-only feed (0-word
   // teasers) whose scrape doesn't recover real content either — 3/3 sampled
   // items unrecoverable. Very low volume (3-item feed) besides.
   { id: "la-revue-de-kenza", name: "La Revue de Kenza", category: "culture", feedUrl: "https://larevuedekenza.fr/feed/", language: "fr", enabled: false },
-  { id: "french-girl-cuisine", name: "French Girl Cuisine", category: "culture", feedUrl: "https://frenchgirlcuisine.com/fr/feed/", language: "fr", enabled: true },
+  { id: "french-girl-cuisine", name: "French Girl Cuisine", category: "culture", feedUrl: "https://frenchgirlcuisine.com/fr/feed/", language: "fr", enabled: false },
   { id: "a-french-american-life", name: "A French American Life", category: "everyday life", feedUrl: "https://afrenchamericanlife.com/feed/", language: "en", enabled: false },
-  { id: "francais-immersion", name: "Français Immersion", category: "culture", feedUrl: "https://www.francaisimmersion.com/feed/", language: "fr", enabled: true },
+  { id: "francais-immersion", name: "Français Immersion", category: "culture", feedUrl: "https://www.francaisimmersion.com/feed/", language: "fr", enabled: false },
   { id: "bonjour-french-words", name: "Bonjour French Words", category: "culture", feedUrl: "https://bonjourfrenchwords.tumblr.com/rss", language: "en", enabled: false },
   { id: "juliet-in-paris", name: "Juliet in Paris", category: "everyday life", feedUrl: "https://julietinparis.net/feed/", language: "en", enabled: false },
   { id: "our-french-oasis", name: "Our French Oasis", category: "everyday life", feedUrl: "https://ourfrenchoasis.com/feed/", language: "en", enabled: false },
@@ -143,22 +168,22 @@ export const rssSources: RssSource[] = [
   { id: "my-melange", name: "My Mélange", category: "everyday life", feedUrl: "https://mymelange.net/feed/", language: "en", enabled: false },
   { id: "j-adore-lyon", name: "J'Adore Lyon", category: "everyday life", feedUrl: "https://jadorelyon.com/feed/", language: "en", enabled: false },
   { id: "france-24-english", name: "France 24 English", category: "news-style", feedUrl: "https://www.france24.com/en/rss", language: "en", enabled: false },
-  { id: "sud-ouest", name: "Sud Ouest", category: "news-style", feedUrl: "https://www.sudouest.fr/essentiel/rss.xml", language: "fr", enabled: true },
+  { id: "sud-ouest", name: "Sud Ouest", category: "news-style", feedUrl: "https://www.sudouest.fr/essentiel/rss.xml", language: "fr", enabled: false },
   { id: "le-monde-diplomatique-english", name: "Le Monde Diplomatique English", category: "news-style", feedUrl: "https://mondediplo.com/backend", language: "en", enabled: false },
-  { id: "midi-libre", name: "Midi Libre", category: "news-style", feedUrl: "https://www.midilibre.fr/rss.xml", language: "fr", enabled: true },
-  { id: "l-est-republicain", name: "L'Est Républicain", category: "news-style", feedUrl: "https://www.estrepublicain.fr/rss", language: "fr", enabled: true },
+  { id: "midi-libre", name: "Midi Libre", category: "news-style", feedUrl: "https://www.midilibre.fr/rss.xml", language: "fr", enabled: false },
+  { id: "l-est-republicain", name: "L'Est Républicain", category: "news-style", feedUrl: "https://www.estrepublicain.fr/rss", language: "fr", enabled: false },
   { id: "paris-star-online", name: "Paris Star Online", category: "news-style", feedUrl: "https://www.parisstaronline.com/feed/", language: "en", enabled: false },
-  { id: "france-soir", name: "France Soir", category: "news-style", feedUrl: "https://www.francesoir.fr/rss.xml", language: "fr", enabled: true },
-  { id: "dernieres-nouvelles-d-alsace", name: "Dernières Nouvelles d'Alsace", category: "news-style", feedUrl: "https://www.dna.fr/rss", language: "fr", enabled: true },
+  { id: "france-soir", name: "France Soir", category: "news-style", feedUrl: "https://www.francesoir.fr/rss.xml", language: "fr", enabled: false },
+  { id: "dernieres-nouvelles-d-alsace", name: "Dernières Nouvelles d'Alsace", category: "news-style", feedUrl: "https://www.dna.fr/rss", language: "fr", enabled: false },
   { id: "france-revisited", name: "France Revisited", category: "culture", feedUrl: "https://francerevisited.com/feed/", language: "en", enabled: false },
-  { id: "la-croix", name: "La Croix", category: "news-style", feedUrl: "https://www.la-croix.com/feeds/rss/site.xml", language: "fr", enabled: true },
-  { id: "mediapart", name: "Mediapart", category: "news-style", feedUrl: "https://www.mediapart.fr/articles/feed", language: "fr", enabled: true },
+  { id: "la-croix", name: "La Croix", category: "news-style", feedUrl: "https://www.la-croix.com/feeds/rss/site.xml", language: "fr", enabled: false },
+  { id: "mediapart", name: "Mediapart", category: "news-style", feedUrl: "https://www.mediapart.fr/articles/feed", language: "fr", enabled: false },
   { id: "rfi-english", name: "RFI English", category: "news-style", feedUrl: "https://www.rfi.fr/en/rss", language: "en", enabled: false },
   { id: "the-paris-news", name: "The Paris News", category: "news-style", feedUrl: "https://theparisnews.com/search/?c%5B%5D=news&d=&d1=&d2=&f=rss&l=10&q=&s=start_time&sd=desc&t=article", language: "en", enabled: false },
-  { id: "le-monde", name: "Le Monde", category: "news-style", feedUrl: "https://www.lemonde.fr/rss/une.xml", language: "fr", enabled: true },
-  { id: "marianne", name: "Marianne", category: "news-style", feedUrl: "https://www.marianne.net/rss.xml", language: "fr", enabled: true },
-  { id: "la-depeche-du-midi", name: "La Dépêche du Midi", category: "news-style", feedUrl: "https://www.ladepeche.fr/rss.xml", language: "fr", enabled: true },
-  { id: "20-minutes", name: "20 Minutes", category: "news-style", feedUrl: "https://www.20minutes.fr/feeds/rss-une.xml", language: "fr", enabled: true },
+  { id: "le-monde", name: "Le Monde", category: "news-style", feedUrl: "https://www.lemonde.fr/rss/une.xml", language: "fr", enabled: false },
+  { id: "marianne", name: "Marianne", category: "news-style", feedUrl: "https://www.marianne.net/rss.xml", language: "fr", enabled: false },
+  { id: "la-depeche-du-midi", name: "La Dépêche du Midi", category: "news-style", feedUrl: "https://www.ladepeche.fr/rss.xml", language: "fr", enabled: false },
+  { id: "20-minutes", name: "20 Minutes", category: "news-style", feedUrl: "https://www.20minutes.fr/feeds/rss-une.xml", language: "fr", enabled: false },
   { id: "french-daily-news", name: "French Daily News", category: "news-style", feedUrl: "https://frenchdailynews.com/feed/", language: "en", enabled: false },
   // Verified 2026-07-10: genuinely French, but the feed publishes
   // headline-only items (empty description/content:encoded — 0 words before
@@ -170,7 +195,7 @@ export const rssSources: RssSource[] = [
   { id: "infomigrants-english", name: "InfoMigrants English", category: "news-style", feedUrl: "https://www.infomigrants.net/en/rss/all.xml", language: "en", enabled: false },
   { id: "pv-magazine-france", name: "PV Magazine France", category: "science", feedUrl: "https://www.pv-magazine.com/region/france/feed/", language: "en", enabled: false },
   { id: "taste-of-france-magazine", name: "Taste of France Magazine", category: "culture", feedUrl: "https://tasteoffrancemag.com/feed/", language: "en", enabled: false },
-  { id: "vogue-france", name: "Vogue France", category: "culture", feedUrl: "https://www.vogue.fr/feed/rss", language: "fr", enabled: true },
+  { id: "vogue-france", name: "Vogue France", category: "culture", feedUrl: "https://www.vogue.fr/feed/rss", language: "fr", enabled: false },
   { id: "arab-news-france", name: "Arab News – France", category: "news-style", feedUrl: "https://www.arabnews.com/taxonomy/term/1516/feed", language: "en", enabled: false },
   { id: "foreign-affairs-france", name: "Foreign Affairs – France", category: "news-style", feedUrl: "https://www.foreignaffairs.com/feeds/region/France/rss.xml", language: "en", enabled: false },
   { id: "atlantic-council-france", name: "Atlantic Council – France", category: "news-style", feedUrl: "https://www.atlanticcouncil.org/region/france/feed", language: "en", enabled: false },
@@ -179,11 +204,11 @@ export const rssSources: RssSource[] = [
   { id: "techcrunch-france", name: "TechCrunch – France", category: "science", feedUrl: "https://techcrunch.com/tag/france/feed", language: "en", enabled: false },
   { id: "the-independent-france", name: "The Independent – France", category: "news-style", feedUrl: "https://www.the-independent.com/topic/france/rss", language: "en", enabled: false },
   { id: "nyt-france", name: "NYT – France", category: "news-style", feedUrl: "https://www.nytimes.com/svc/collections/v1/publish/https%3A//www.nytimes.com/topic/destination/france/rss.xml", language: "en", enabled: false },
-  { id: "l-obs", name: "L'Obs", category: "news-style", feedUrl: "https://www.nouvelobs.com/a-la-une/rss.xml", language: "fr", enabled: true },
+  { id: "l-obs", name: "L'Obs", category: "news-style", feedUrl: "https://www.nouvelobs.com/a-la-une/rss.xml", language: "fr", enabled: false },
   { id: "channel-4-news-france", name: "Channel 4 News – France", category: "news-style", feedUrl: "https://www.channel4.com/news/world/france/feed", language: "en", enabled: false },
   { id: "complete-france", name: "Complete France", category: "everyday life", feedUrl: "https://www.completefrance.com/feed/", language: "en", enabled: false },
-  { id: "ouest-france", name: "Ouest-France", category: "news-style", feedUrl: "https://www.ouest-france.fr/rss/une", language: "fr", enabled: true },
-  { id: "gq-france", name: "GQ France", category: "culture", feedUrl: "https://www.gqmagazine.fr/feed/rss", language: "fr", enabled: true },
+  { id: "ouest-france", name: "Ouest-France", category: "news-style", feedUrl: "https://www.ouest-france.fr/rss/une", language: "fr", enabled: false },
+  { id: "gq-france", name: "GQ France", category: "culture", feedUrl: "https://www.gqmagazine.fr/feed/rss", language: "fr", enabled: false },
   { id: "france-voyager", name: "France Voyager", category: "everyday life", feedUrl: "https://francevoyager.com/feed/", language: "en", enabled: false },
   { id: "the-guardian-france", name: "The Guardian – France", category: "news-style", feedUrl: "https://www.theguardian.com/world/france/rss", language: "en", enabled: false },
   { id: "iarc-who-news", name: "IARC (WHO) News", category: "science", feedUrl: "https://www.iarc.who.int/feed/?post_type=news-events", language: "en", enabled: false },
@@ -192,7 +217,7 @@ export const rssSources: RssSource[] = [
   { id: "the-wildly-life-france", name: "The Wildly Life – France", category: "everyday life", feedUrl: "https://thewildlylife.com/tag/france/feed/", language: "en", enabled: false },
   { id: "travel-france-bucket-list", name: "Travel France Bucket List", category: "everyday life", feedUrl: "https://travelfrancebucketlist.com/feed/", language: "en", enabled: false },
   { id: "french-la-vie", name: "French La Vie", category: "everyday life", feedUrl: "https://www.frenchlavie.com/feed/", language: "en", enabled: false },
-  { id: "la-france-agricole", name: "La France Agricole", category: "science", feedUrl: "https://www.lafranceagricole.fr/rss", language: "fr", enabled: true },
+  { id: "la-france-agricole", name: "La France Agricole", category: "science", feedUrl: "https://www.lafranceagricole.fr/rss", language: "fr", enabled: false },
   { id: "bnn-news-france", name: "BNN News – France", category: "news-style", feedUrl: "https://bnn-news.com/tag/france/feed", language: "en", enabled: false },
   { id: "the-local-france", name: "The Local France", category: "news-style", feedUrl: "https://feeds.thelocal.com/rss/builder/fr", language: "en", enabled: false },
   { id: "us-news-france", name: "US News – France", category: "news-style", feedUrl: "https://www.usnews.com/topics/locations/france/rss", language: "en", enabled: false },
@@ -202,21 +227,21 @@ export const rssSources: RssSource[] = [
 
   // Previously-curated sources kept on top of the new list (not exact URL
   // duplicates of anything above).
-  { id: "france-24-french", name: "France 24 (French)", category: "news-style", feedUrl: "https://www.france24.com/fr/rss", language: "fr", enabled: true },
-  { id: "rfi-french", name: "RFI (French)", category: "news-style", feedUrl: "https://www.rfi.fr/fr/rss", language: "fr", enabled: true },
-  { id: "franceinfo", name: "Franceinfo", category: "news-style", feedUrl: "https://www.francetvinfo.fr/titres.rss", language: "fr", enabled: true },
-  { id: "liberation", name: "Libération", category: "culture", feedUrl: "https://www.liberation.fr/arc/outboundfeeds/rss-all/", language: "fr", enabled: true },
-  { id: "le-figaro", name: "Le Figaro", category: "news-style", feedUrl: "https://www.lefigaro.fr/rss/figaro_actualites.xml", language: "fr", enabled: true },
-  { id: "numerama", name: "Numerama", category: "science", feedUrl: "https://www.numerama.com/feed/", language: "fr", enabled: true },
-  { id: "ouest-france-continu", name: "Ouest-France (Continu)", category: "everyday life", feedUrl: "https://www.ouest-france.fr/rss-en-continu.xml", language: "fr", enabled: true },
+  { id: "france-24-french", name: "France 24 (French)", category: "news-style", feedUrl: "https://www.france24.com/fr/rss", language: "fr", enabled: false },
+  { id: "rfi-french", name: "RFI (French)", category: "news-style", feedUrl: "https://www.rfi.fr/fr/rss", language: "fr", enabled: false },
+  { id: "franceinfo", name: "Franceinfo", category: "news-style", feedUrl: "https://www.francetvinfo.fr/titres.rss", language: "fr", enabled: false },
+  { id: "liberation", name: "Libération", category: "culture", feedUrl: "https://www.liberation.fr/arc/outboundfeeds/rss-all/", language: "fr", enabled: false },
+  { id: "le-figaro", name: "Le Figaro", category: "news-style", feedUrl: "https://www.lefigaro.fr/rss/figaro_actualites.xml", language: "fr", enabled: false },
+  { id: "numerama", name: "Numerama", category: "science", feedUrl: "https://www.numerama.com/feed/", language: "fr", enabled: false },
+  { id: "ouest-france-continu", name: "Ouest-France (Continu)", category: "everyday life", feedUrl: "https://www.ouest-france.fr/rss-en-continu.xml", language: "fr", enabled: false },
 
   // Added to widen daily redundancy for generic French news (verified live
   // 200 + valid RSS/Atom XML via a direct curl check before adding).
-  { id: "bfmtv", name: "BFMTV", category: "news-style", feedUrl: "https://www.bfmtv.com/rss/news-24-7/", language: "fr", enabled: true },
-  { id: "lexpress", name: "L'Express", category: "news-style", feedUrl: "https://www.lexpress.fr/arc/outboundfeeds/rss/alaune.xml", language: "fr", enabled: true },
-  { id: "courrier-international", name: "Courrier International", category: "news-style", feedUrl: "https://www.courrierinternational.com/feed/all/rss.xml", language: "fr", enabled: true },
-  { id: "challenges", name: "Challenges", category: "news-style", feedUrl: "https://www.challenges.fr/rss.xml", language: "fr", enabled: true },
-  { id: "france-bleu", name: "France Bleu", category: "news-style", feedUrl: "https://www.francebleu.fr/rss/a-la-une.xml", language: "fr", enabled: true },
-  { id: "france-culture", name: "France Culture", category: "culture", feedUrl: "https://www.radiofrance.fr/franceculture/rss", language: "fr", enabled: true },
-  { id: "slate-fr", name: "Slate.fr", category: "culture", feedUrl: "https://www.slate.fr/rss.xml", language: "fr", enabled: true },
+  { id: "bfmtv", name: "BFMTV", category: "news-style", feedUrl: "https://www.bfmtv.com/rss/news-24-7/", language: "fr", enabled: false },
+  { id: "lexpress", name: "L'Express", category: "news-style", feedUrl: "https://www.lexpress.fr/arc/outboundfeeds/rss/alaune.xml", language: "fr", enabled: false },
+  { id: "courrier-international", name: "Courrier International", category: "news-style", feedUrl: "https://www.courrierinternational.com/feed/all/rss.xml", language: "fr", enabled: false },
+  { id: "challenges", name: "Challenges", category: "news-style", feedUrl: "https://www.challenges.fr/rss.xml", language: "fr", enabled: false },
+  { id: "france-bleu", name: "France Bleu", category: "news-style", feedUrl: "https://www.francebleu.fr/rss/a-la-une.xml", language: "fr", enabled: false },
+  { id: "france-culture", name: "France Culture", category: "culture", feedUrl: "https://www.radiofrance.fr/franceculture/rss", language: "fr", enabled: false },
+  { id: "slate-fr", name: "Slate.fr", category: "culture", feedUrl: "https://www.slate.fr/rss.xml", language: "fr", enabled: false },
 ];

@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { AiNotConfiguredError, generateParaphraseOptions } from "@/lib/ai/openai";
+import { optionalText, requirePaidAiCaller, requireText, MAX_TITLE_CHARS } from "@/lib/ai/guard";
 
 const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable paraphrase practice.";
 
 export async function POST(request: Request) {
+  const gate = await requirePaidAiCaller(request);
+  if (!gate.ok) return gate.response;
+
   let body: unknown;
   try {
     body = await request.json();
@@ -13,15 +17,14 @@ export async function POST(request: Request) {
 
   const { sentence, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
 
-  if (typeof sentence !== "string" || !sentence.trim()) {
-    return NextResponse.json({ error: "'sentence' is a required string." }, { status: 400 });
-  }
+  const checked = requireText(sentence, "sentence");
+  if (!checked.ok) return checked.response;
 
   try {
     const result = await generateParaphraseOptions({
-      sentence,
-      articleTitle: typeof articleTitle === "string" ? articleTitle : null,
-      level: typeof level === "string" && level ? level : "A2/B1 French learner",
+      sentence: checked.value,
+      articleTitle: optionalText(articleTitle, MAX_TITLE_CHARS),
+      level: optionalText(level, 80) ?? "A2/B1 French learner",
     });
     return NextResponse.json(result);
   } catch (err) {
