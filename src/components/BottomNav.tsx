@@ -14,7 +14,7 @@ const items = [
   { href: "/review", label: "Review", icon: "review" as const, activePaths: ["/review"] },
   {
     href: "/settings",
-    label: "Library",
+    label: "Settings",
     icon: "library" as const,
     activePaths: [
       "/settings",
