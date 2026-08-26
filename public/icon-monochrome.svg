@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <path fill="#000" d="M112 132h112c13 0 24 3 32 9 8-6 19-9 32-9h112v262H296c-17 0-30 6-40 20-10-14-23-20-40-20H112zm32 36v190h72c8 0 16 1 24 4V190c0-15-8-22-24-22zm224 0h-72c-16 0-24 7-24 22v172c8-3 16-4 24-4h72z"/>
-  <circle fill="#000" cx="397" cy="111" r="38"/>
+  <!-- Single-color silhouette of icon.svg, for Android themed icons and the
+       notification tray, where the OS supplies its own fill. Sun and pages
+       have to survive as one flat shape here, so the gap between them and
+       the spine notch both have to stay wide enough to punch through at
+       very small, monochrome sizes. -->
+  <circle fill="#000" cx="256" cy="176" r="66"/>
+  <path fill="#000" d="M152 280h98v176l-114-16v-144q0-16 16-16zM360 280h-98v176l114-16v-144q0-16-16-16z"/>
 </svg>

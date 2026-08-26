@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Same mark as icon.svg, scaled into Android's adaptive-icon safe zone
+       (66% of the canvas) since the OS applies its own mask shape and clips
+       anything outside that zone on some launchers. -->
   <rect width="512" height="512" fill="#16593C"/>
   <g transform="translate(256 256) scale(0.76) translate(-256 -256)">
-    <circle cx="394" cy="118" r="46" fill="#F9D96B"/>
-    <path d="M118 144h104c28 0 50 15 50 43v197c-14-17-32-25-55-25h-99z" fill="#FFFCF4"/>
-    <path d="M394 144H290c-28 0-50 15-50 43v197c14-17 32-25 55-25h99z" fill="#E4EFE7"/>
-    <path d="M240 187v197" stroke="#16593C" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="256" cy="176" r="66" fill="#F9D96B"/>
+    <path d="M152 280h98v176l-114-16v-144q0-16 16-16z" fill="#FFFCF4"/>
+    <path d="M360 280h-98v176l114-16v-144q0-16-16-16z" fill="#E4EFE7"/>
   </g>
 </svg>
