@@ -35,3 +35,6 @@ tsconfig.tsbuildinfo
 .next-dev-*.log
 dev-server-*.log
 codex-next-dev*.log
+
+# Bubblewrap signing metadata (build artefact)
+android/*.idsig
