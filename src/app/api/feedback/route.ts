@@ -6,7 +6,10 @@ import { appVersion, deploymentEnvironment } from "@/lib/validation/config";
 
 async function sendFeedbackNotification(feedbackData: Record<string, unknown>) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return false;
+  if (!apiKey) {
+    console.warn("[feedback] RESEND_API_KEY not configured");
+    return false;
+  }
 
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -37,8 +40,16 @@ async function sendFeedbackNotification(feedbackData: Record<string, unknown>) {
       }),
     });
 
-    return res.ok;
-  } catch {
+    if (!res.ok) {
+      const error = await res.text().catch(() => `HTTP ${res.status}`);
+      console.error("[feedback] Email send failed:", error);
+      return false;
+    }
+
+    console.log("[feedback] Email sent successfully to sorlio@proton.me");
+    return true;
+  } catch (err) {
+    console.error("[feedback] Email error:", err);
     return false;
   }
 }
