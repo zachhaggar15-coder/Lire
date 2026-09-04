@@ -74,6 +74,10 @@ export default function FeedbackModal({
   const [message, setMessage] = useState<string | null>(null);
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    if (!comment.trim()) {
+      setMessage("Please provide feedback before submitting.");
+      return;
+    }
     setState("submitting");
     setMessage(null);
     const response = await fetch("/api/feedback", {
@@ -140,8 +144,9 @@ export default function FeedbackModal({
           value={comment}
           onChange={(event) => setComment(event.target.value)}
           rows={4}
-          placeholder="Optional comment"
-          aria-label="Optional comment"
+          placeholder="What specifically happened? (required)"
+          aria-label="Feedback comment"
+          required
           className="mt-3 w-full resize-none rounded-2xl bg-cream px-3 py-3 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
         />
 
@@ -153,7 +158,7 @@ export default function FeedbackModal({
 
         <button
           type="submit"
-          disabled={state === "submitting"}
+          disabled={state === "submitting" || !comment.trim()}
           className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
         >
           {state === "submitting" ? "Sending..." : "Submit feedback"}
