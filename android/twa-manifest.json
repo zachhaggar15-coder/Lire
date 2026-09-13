@@ -22,7 +22,7 @@
     "alias": "sorlio-upload"
   },
   "appVersionName": "1.0.3",
-  "appVersionCode": 7,
+  "appVersionCode": 8,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://sorlio.site/manifest.json",
