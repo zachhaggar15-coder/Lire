@@ -77,12 +77,13 @@ To confirm the project compiles without creating or using signing secrets, run `
 | Signing alias | `sorlio-upload` | `android/twa-manifest.json` |
 | Declared permissions | none | `android/app/src/main/AndroidManifest.xml` |
 
-The app declares no permissions of its own. `INTERNET` arrives through manifest
-merge from the AndroidX browser-helper library, which is expected for a Trusted
-Web Activity. `POST_NOTIFICATIONS` was removed along with the TWA's
-`enableNotifications`, because nothing in the app sends notifications; asking
-for a permission the app never uses is a question Play review can reasonably
-ask about and there was no answer worth giving.
+`INTERNET` arrives through manifest merge from the AndroidX browser-helper
+library, which is expected for a Trusted Web Activity. `POST_NOTIFICATIONS` is
+declared because `enableNotifications` must stay `true`: Bubblewrap refuses to
+build with Play Billing enabled otherwise ("Play Billing requires
+enableNotifications to be true"). Nothing in the app sends notifications, so
+the permission is never requested at runtime; if Play review asks, that is the
+answer.
 
 Version code must increase on every upload. Version name is what readers see.
 For the first release, `versionCode 1` / `versionName 1.0.0` is correct; bump

@@ -11,7 +11,7 @@
   "navigationDividerColor": "#EAE2CF",
   "navigationDividerColorDark": "#36322B",
   "backgroundColor": "#FFFCF4",
-  "enableNotifications": false,
+  "enableNotifications": true,
   "startUrl": "/",
   "iconUrl": "https://sorlio.site/icon-512.png",
   "maskableIconUrl": "https://sorlio.site/icon-maskable-512.png",
