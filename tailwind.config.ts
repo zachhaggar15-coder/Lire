@@ -1,53 +1,68 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Every palette colour is a CSS variable holding bare RGB channels, defined
+ * for light mode in :root and redefined under html[data-theme="dark"] in
+ * src/app/globals.css. That keeps opacity modifiers (bg-cream/95,
+ * border-cream-dark/70) working and lets the whole app switch theme without
+ * per-component dark: variants. Change a colour's value in globals.css, not here.
+ */
+const token = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#16593C",
-          dark: "#0F3E2B",
-          light: "#E4EFE7",
+          DEFAULT: token("brand"),
+          dark: token("brand-dark"),
+          light: token("brand-light"),
         },
         cream: {
-          DEFAULT: "#FFFCF4",
-          card: "#FFFFFF",
-          dark: "#EAE2CF",
-          sunken: "#FBF7ED",
-          chrome: "#FFFDF6",
-          fill: "#F1EBDC",
-          strong: "#E8E0CC",
+          DEFAULT: token("cream"),
+          card: token("cream-card"),
+          dark: token("cream-dark"),
+          sunken: token("cream-sunken"),
+          chrome: token("cream-chrome"),
+          fill: token("cream-fill"),
+          strong: token("cream-strong"),
+          gutter: token("cream-gutter"),
         },
         ink: {
-          DEFAULT: "#1B1915",
-          muted: "#6E6858",
-          // Darkened from #817968 (4.21:1 on the cream background, 4.31:1
-          // on white — both below WCAG's 4.5:1 for normal-size text) to
-          // clear 4.5:1 on the app's two most common backgrounds while
-          // staying visibly lighter than ink-muted.
-          faint: "#756E5C",
+          DEFAULT: token("ink"),
+          muted: token("ink-muted"),
+          faint: token("ink-faint"),
         },
         accent: {
-          pink: "#F3DCD8",
-          pinktext: "#8C4A42",
-          sky: "#DDEDF0",
-          skytext: "#2F5960",
-          violet: "#E8E1EF",
-          violettext: "#5B4D6A",
-          gold: "#F9D96B",
-          goldtext: "#5E4A0E",
-          mint: "#E4EFE7",
-          minttext: "#16593C",
+          pink: token("accent-pink"),
+          pinktext: token("accent-pinktext"),
+          sky: token("accent-sky"),
+          skytext: token("accent-skytext"),
+          violet: token("accent-violet"),
+          violettext: token("accent-violettext"),
+          gold: token("accent-gold"),
+          goldtext: token("accent-goldtext"),
+          mint: token("accent-mint"),
+          minttext: token("accent-minttext"),
         },
         yellow: {
-          DEFAULT: "#F9D96B",
-          ink: "#5E4A0E",
-          muted: "#7A5E12",
+          DEFAULT: token("yellow"),
+          ink: token("yellow-ink"),
+          muted: token("yellow-muted"),
         },
         rose: {
-          DEFAULT: "#F3DCD8",
-          ink: "#8C4A42",
+          DEFAULT: token("rose"),
+          ink: token("rose-ink"),
+        },
+        journey: {
+          dot: token("journey-dot"),
+          cleared: token("journey-cleared"),
+          current: token("journey-current"),
+          currenttext: token("journey-currenttext"),
+          locked: token("journey-locked"),
+          lockedtext: token("journey-lockedtext"),
         },
       },
       fontFamily: {

@@ -2,9 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase/client';
-import type { Database } from '@/lib/supabase/types';
 
-type FeedbackRow = Database['public']['Tables']['sorlio_feedback']['Row'];
+/** Mirrors public.sorlio_feedback in supabase/migrations/0005_feedback_and_research.sql. */
+interface FeedbackRow {
+  id: string;
+  user_id: string | null;
+  anonymous_id: string | null;
+  session_id: string | null;
+  category: string;
+  sentiment: string | null;
+  page: string | null;
+  feature: string | null;
+  article_id: string | null;
+  affected_term: string | null;
+  comment: string | null;
+  app_version: string;
+  deployment_environment: string;
+  created_at: string;
+}
 
 export default function FeedbackDashboard() {
   const [feedback, setFeedback] = useState<FeedbackRow[]>([]);
@@ -15,6 +30,10 @@ export default function FeedbackDashboard() {
     async function loadFeedback() {
       try {
         const supabase = getSupabaseClient();
+        if (!supabase) {
+          setError('Supabase is not configured.');
+          return;
+        }
         const { data, error: err } = await supabase
           .from('sorlio_feedback')
           .select('*')
@@ -46,7 +65,7 @@ export default function FeedbackDashboard() {
 
       <div className="space-y-4">
         {feedback.map((item) => (
-          <div key={item.id} className="border rounded-lg p-4 bg-white">
+          <div key={item.id} className="border rounded-lg p-4 bg-cream-card">
             <div className="flex items-start justify-between mb-3">
               <div>
                 <p className="font-semibold text-lg">{item.category}</p>

@@ -21,9 +21,8 @@ import type { SavedWord } from "@/types";
 
 /**
  * A short (1-3 minute), interactive walkthrough that teaches Sorlio by using
- * it, not by reading about it. First use now goes straight to a real lesson;
- * this fuller tutorial remains available from Library for anyone who wants
- * to replay it. Reuses real domain logic throughout (the actual dictionary
+ * it, not by reading about it. Offered right after the level picker (with an
+ * equally prominent skip on its first screen) and replayable from Settings. Reuses real domain logic throughout (the actual dictionary
  * lookup, the actual saveWord/markWordAsKnown storage functions, the actual
  * cloze-exercise builder, the actual PronounceButton) against a small,
  * purpose-built demo text — not a fake mockup, and not the full Reader
@@ -214,19 +213,27 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
           ) : (
             <span />
           )}
-          <button type="button" onClick={handleSkip} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
-            Skip tutorial
-          </button>
+          {step > 0 && (
+            <button type="button" onClick={handleSkip} className="min-h-12 rounded-full px-3 text-sm font-semibold text-ink-muted">
+              Skip tutorial
+            </button>
+          )}
         </div>
 
         {step === 0 && (
           <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <p className="ligne-label">Let's begin</p>
+            <p className="ligne-label">Quick tour</p>
             <h1 className="mt-2 text-2xl font-extrabold text-ink">Learn Sorlio by reading one tiny bit of French.</h1>
             <p className="mt-3 max-w-xs text-sm text-ink-muted">Takes about a minute. Tap through a few words, hear them spoken, then try one quick exercise.</p>
-            <button type="button" onClick={() => goToStep(1)} className="ligne-pill mt-6 bg-brand text-cream">
-              Start
-            </button>
+            <div className="mt-6 flex w-full max-w-xs flex-col gap-2">
+              <button type="button" onClick={() => goToStep(1)} className="ligne-pill w-full bg-brand text-cream">
+                Take the 1-minute tour
+              </button>
+              <button type="button" onClick={handleSkip} className="ligne-pill w-full border border-cream-dark bg-cream-card text-ink">
+                Skip, start reading
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-ink-muted">You can replay the tour any time from Settings.</p>
           </div>
         )}
 
@@ -268,7 +275,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   <button
                     type="button"
                     onClick={handleWordAction}
-                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white"
+                    className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream"
                   >
                     Save
                   </button>

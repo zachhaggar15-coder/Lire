@@ -24,7 +24,7 @@ export default function GoogleSignInButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full border border-cream-dark bg-white px-5 py-3 text-sm font-semibold text-ink shadow-card disabled:opacity-60 ${className}`}
+      className={`inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full border border-cream-dark bg-cream-card px-5 py-3 text-sm font-semibold text-ink shadow-card disabled:opacity-60 ${className}`}
     >
       <GoogleMark />
       {busy ? "Opening Google…" : "Continue with Google"}

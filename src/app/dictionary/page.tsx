@@ -37,7 +37,7 @@ export default function DictionaryQualityPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Corrections and gaps from your reading.</p>
 
       <section className="mb-5 grid grid-cols-3 gap-2">
@@ -52,7 +52,7 @@ export default function DictionaryQualityPage() {
       {ready && feedback.length === 0 && missingWords.length === 0 && (
         <div className="mt-12 text-center">
           <p className="text-ink-muted">No dictionary issues recorded yet.</p>
-          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white">
+          <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream">
             Start reading
           </Link>
         </div>

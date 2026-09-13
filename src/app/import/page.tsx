@@ -46,7 +46,7 @@ function ImportPageContent() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
 
       <section className="rounded-card bg-cream-card p-4 shadow-card">
@@ -72,7 +72,7 @@ function ImportPageContent() {
                   onClick={() => setCategory(item.value)}
                   aria-pressed={category === item.value}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                    category === item.value ? "bg-brand text-white" : "bg-cream text-ink-muted"
+                    category === item.value ? "bg-brand text-cream" : "bg-cream text-ink-muted"
                   }`}
                 >
                   {item.label}
@@ -90,7 +90,7 @@ function ImportPageContent() {
                   onClick={() => setDifficulty(level)}
                   aria-pressed={difficulty === level}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                    difficulty === level ? "bg-brand text-white" : "bg-cream text-ink-muted"
+                    difficulty === level ? "bg-brand text-cream" : "bg-cream text-ink-muted"
                   }`}
                 >
                   {level}
@@ -121,7 +121,7 @@ function ImportPageContent() {
             type="button"
             onClick={handleSave}
             disabled={!canSave}
-            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white disabled:bg-cream-dark disabled:text-ink-muted"
+            className="rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream disabled:bg-cream-dark disabled:text-ink-muted"
           >
             Save and read
           </button>

@@ -436,7 +436,7 @@ function StageRouteStop({
         >
           <span className="flex items-start gap-3">
             <span className="min-w-0 flex-1">
-              <span className={`block font-french text-[20px] leading-tight ${cleared ? "text-[#5D7A6C]" : "text-ink"}`}>{stage.label}</span>
+              <span className={`block font-french text-[20px] leading-tight ${cleared ? "text-journey-cleared" : "text-ink"}`}>{stage.label}</span>
               <span className={`mt-1 block text-[13px] ${cleared ? "text-ink-faint" : "text-ink-muted"}`}>{subtitle}</span>
             </span>
             <span className="shrink-0 pt-1">
@@ -616,7 +616,7 @@ function StageRailNode({
     <span
       aria-hidden="true"
       className={`absolute left-[14px] top-6 z-10 h-[9px] w-[9px] rounded-full ring-[5px] ring-cream ${
-        locked ? "bg-cream-strong" : "bg-[#D9D1BC]"
+        locked ? "bg-cream-strong" : "bg-journey-dot"
       }`}
     />
   );
@@ -645,8 +645,8 @@ function FourTicks({
               isFilled
                 ? "bg-brand text-cream"
                 : current
-                  ? "border border-[#CBA92F] text-[#C79F1F]"
-                  : "border border-[#C9C0A6] text-[#B2A98D]"
+                  ? "border border-journey-current text-journey-currenttext"
+                  : "border border-journey-locked text-journey-lockedtext"
             }`}
           >
             <CheckIcon className="h-2.5 w-2.5" />

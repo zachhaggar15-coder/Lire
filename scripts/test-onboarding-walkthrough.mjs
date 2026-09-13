@@ -46,6 +46,15 @@ saveOnboarding("A2", [], "steady", { seedKnownWords: false });
   check("walkthrough step starts at null (not yet begun)", state.walkthroughStep === null);
 }
 
+console.log("--- the level picker no longer silently completes the walkthrough ---");
+{
+  const { readFileSync } = await import("node:fs");
+  const picker = readFileSync(new URL("../src/components/FirstRunOnboarding.tsx", import.meta.url), "utf8");
+  check("FirstRunOnboarding does not call completeWalkthrough (new users are offered the tour)", !picker.includes("completeWalkthrough"));
+  const tour = readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8");
+  check("the tour's first screen offers a skip option", tour.includes("Skip, start reading"));
+}
+
 console.log("--- mid-walkthrough close-and-reopen resumes at the right step ---");
 saveWalkthroughStep(2);
 {

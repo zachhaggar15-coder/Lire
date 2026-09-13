@@ -5,7 +5,43 @@
 :root {
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --app-surface: #fffcf4;
+  /* Palette channels (see tailwind.config.ts). Light values. */
+  --c-brand: 22 89 60;
+  --c-brand-dark: 15 62 43;
+  --c-brand-light: 228 239 231;
+  --c-cream: 255 252 244;
+  --c-cream-card: 255 255 255;
+  --c-cream-dark: 234 226 207;
+  --c-cream-sunken: 251 247 237;
+  --c-cream-chrome: 255 253 246;
+  --c-cream-fill: 241 235 220;
+  --c-cream-strong: 232 224 204;
+  --c-cream-gutter: 216 209 192;
+  --c-ink: 27 25 21;
+  --c-ink-muted: 110 104 88;
+  --c-ink-faint: 117 110 92;
+  --c-accent-pink: 243 220 216;
+  --c-accent-pinktext: 140 74 66;
+  --c-accent-sky: 221 237 240;
+  --c-accent-skytext: 47 89 96;
+  --c-accent-violet: 232 225 239;
+  --c-accent-violettext: 91 77 106;
+  --c-accent-gold: 249 217 107;
+  --c-accent-goldtext: 94 74 14;
+  --c-accent-mint: 228 239 231;
+  --c-accent-minttext: 22 89 60;
+  --c-yellow: 249 217 107;
+  --c-yellow-ink: 94 74 14;
+  --c-yellow-muted: 122 94 18;
+  --c-rose: 243 220 216;
+  --c-rose-ink: 140 74 66;
+  --c-journey-dot: 217 209 188;
+  --c-journey-cleared: 93 122 108;
+  --c-journey-current: 203 169 47;
+  --c-journey-currenttext: 199 159 31;
+  --c-journey-locked: 201 192 166;
+  --c-journey-lockedtext: 178 169 141;
+  --app-surface: rgb(var(--c-cream));
   --keyboard-inset: 0px;
   --visual-offset-top: 0px;
 }
@@ -21,6 +57,77 @@ html {
   background: var(--app-surface);
 }
 
+/*
+ * Dark theme. data-theme is set before first paint by the inline script in
+ * app/layout.tsx (from the Theme setting, following the system when set to
+ * "system"), so there is no light flash. Brand green is lightened so it stays
+ * readable as text on dark surfaces; text on brand fills uses text-cream,
+ * which becomes the dark surface colour here.
+ */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --c-brand: 99 185 143;
+  --c-brand-dark: 134 204 168;
+  --c-brand-light: 28 51 40;
+  --c-cream: 21 20 18;
+  --c-cream-card: 31 29 26;
+  --c-cream-dark: 54 50 43;
+  --c-cream-sunken: 26 25 22;
+  --c-cream-chrome: 25 24 21;
+  --c-cream-fill: 42 39 35;
+  --c-cream-strong: 58 54 47;
+  --c-cream-gutter: 12 11 10;
+  --c-ink: 241 236 226;
+  --c-ink-muted: 184 176 160;
+  --c-ink-faint: 163 155 138;
+  --c-accent-pink: 58 38 34;
+  --c-accent-pinktext: 237 179 169;
+  --c-accent-sky: 27 47 51;
+  --c-accent-skytext: 157 207 216;
+  --c-accent-violet: 42 36 51;
+  --c-accent-violettext: 201 186 223;
+  --c-accent-gold: 58 49 22;
+  --c-accent-goldtext: 239 210 123;
+  --c-accent-mint: 28 51 40;
+  --c-accent-minttext: 134 204 168;
+  --c-yellow: 58 49 22;
+  --c-yellow-ink: 239 210 123;
+  --c-yellow-muted: 214 183 95;
+  --c-rose: 58 38 34;
+  --c-rose-ink: 237 179 169;
+  --c-journey-dot: 74 69 59;
+  --c-journey-cleared: 141 180 160;
+  --c-journey-current: 217 184 69;
+  --c-journey-currenttext: 227 196 90;
+  --c-journey-locked: 79 73 63;
+  --c-journey-lockedtext: 126 118 101;
+}
+
+/* Pressing darkens in light mode; on dark surfaces it has to lighten instead. */
+html[data-theme="dark"] button:not(:disabled):active,
+html[data-theme="dark"] a:active,
+html[data-theme="dark"] summary:active,
+html[data-theme="dark"] [role="button"]:active {
+  filter: brightness(1.15) saturate(0.96);
+}
+
+/*
+ * A few status badges use Tailwind's stock palette (emerald/rose/amber/gray)
+ * rather than app tokens. Remap them here for dark mode so they stay legible
+ * without scattering dark: variants through every component.
+ */
+html[data-theme="dark"] .bg-emerald-100, html[data-theme="dark"] .bg-green-100 { background-color: rgb(24 58 43); }
+html[data-theme="dark"] .bg-rose-100, html[data-theme="dark"] .bg-red-100 { background-color: rgb(66 32 36); }
+html[data-theme="dark"] .bg-amber-100 { background-color: rgb(64 50 20); }
+html[data-theme="dark"] .bg-sky-100 { background-color: rgb(24 48 60); }
+html[data-theme="dark"] .bg-gray-50, html[data-theme="dark"] .bg-gray-100 { background-color: rgb(var(--c-cream-fill)); }
+html[data-theme="dark"] .text-emerald-700, html[data-theme="dark"] .text-emerald-800, html[data-theme="dark"] .text-green-700 { color: rgb(110 231 183); }
+html[data-theme="dark"] .text-rose-500, html[data-theme="dark"] .text-rose-600, html[data-theme="dark"] .text-rose-700, html[data-theme="dark"] .text-rose-800, html[data-theme="dark"] .text-red-600, html[data-theme="dark"] .text-red-700 { color: rgb(253 164 175); }
+html[data-theme="dark"] .text-amber-700, html[data-theme="dark"] .text-amber-800 { color: rgb(252 211 77); }
+html[data-theme="dark"] .text-sky-700 { color: rgb(125 211 252); }
+html[data-theme="dark"] .text-gray-500, html[data-theme="dark"] .text-gray-600, html[data-theme="dark"] .text-gray-700 { color: rgb(var(--c-ink-muted)); }
+
+
 body {
   @apply bg-cream text-ink antialiased;
   -webkit-text-size-adjust: 100%;
@@ -32,7 +139,7 @@ body {
 
 @media (min-width: 449px) {
   body {
-    @apply bg-[#D8D1C0];
+    @apply bg-cream-gutter;
   }
 }
 
@@ -65,7 +172,7 @@ button:focus-visible,
 a:focus-visible,
 summary:focus-visible,
 [role="button"]:focus-visible {
-  outline: 2px solid rgb(22 89 60 / 0.55);
+  outline: 2px solid rgb(var(--c-brand) / 0.55);
   outline-offset: 2px;
 }
 

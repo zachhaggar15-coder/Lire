@@ -117,7 +117,7 @@ export default function ArchivePage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
 
       {summary && (
@@ -190,7 +190,7 @@ export default function ArchivePage() {
           <p className="text-ink-muted">No completed articles yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white"
+            className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream"
           >
             Start reading
           </Link>
@@ -216,7 +216,7 @@ export default function ArchivePage() {
                   onClick={() => setSortKey(opt.key)}
                   aria-pressed={sortKey === opt.key}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    sortKey === opt.key ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                    sortKey === opt.key ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                   }`}
                 >
                   {opt.label}

@@ -52,7 +52,7 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-0 sm:items-center sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-6">
       <div
         ref={dialogRef}
         role="dialog"
@@ -78,7 +78,7 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
                 href={MANAGE_SUBSCRIPTION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-12 rounded-full bg-brand px-5 py-3 text-center text-sm font-semibold text-white"
+                className="min-h-12 rounded-full bg-brand px-5 py-3 text-center text-sm font-semibold text-cream"
               >
                 Manage subscription
               </a>

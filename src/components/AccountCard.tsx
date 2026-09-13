@@ -88,7 +88,7 @@ export default function AccountCard() {
             <button
               onClick={() => void syncNow()}
               disabled={syncStatus.phase === "syncing"}
-              className="min-h-12 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
+              className="min-h-12 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-cream disabled:opacity-50"
             >
               {syncStatus.phase === "syncing" ? "Syncing…" : "Sync now"}
             </button>

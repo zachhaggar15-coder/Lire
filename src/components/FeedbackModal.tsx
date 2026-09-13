@@ -132,7 +132,7 @@ export default function FeedbackModal({
               onClick={() => setCategory(item)}
               aria-pressed={category === item}
               className={`min-h-12 rounded-2xl px-3 py-2 text-left text-xs font-semibold ${
-                category === item ? "bg-brand text-white" : "bg-cream text-ink-muted"
+                category === item ? "bg-brand text-cream" : "bg-cream text-ink-muted"
               }`}
             >
               {LABELS[item]}
@@ -159,7 +159,7 @@ export default function FeedbackModal({
         <button
           type="submit"
           disabled={state === "submitting" || !comment.trim()}
-          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-white disabled:opacity-50"
+          className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-cream disabled:opacity-50"
         >
           {state === "submitting" ? "Sending..." : "Submit feedback"}
         </button>

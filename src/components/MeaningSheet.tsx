@@ -151,7 +151,7 @@ export default function MeaningSheet({
   }
 
   const footer = isProperNoun ? (
-    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-white">
+    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream">
       Close
     </button>
   ) : (
@@ -159,7 +159,7 @@ export default function MeaningSheet({
       onClick={() => (saved ? onUnsave?.() : onSave?.())}
       aria-pressed={saved}
       className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
-        saved ? "bg-brand-light text-brand" : "bg-brand text-white"
+        saved ? "bg-brand-light text-brand" : "bg-brand text-cream"
       }`}
     >
       {saved ? "Remove from review" : "Add to review"}
@@ -191,7 +191,7 @@ export default function MeaningSheet({
             </div>
           )}
         </div>
-        <button onClick={onClose} aria-label="Close" className="ligne-icon-button shrink-0 bg-white/70 text-ink">
+        <button onClick={onClose} aria-label="Close" className="ligne-icon-button shrink-0 bg-cream-card/70 text-ink">
           <AppIcon name="close" className="h-5 w-5" />
         </button>
       </div>
@@ -242,7 +242,7 @@ export default function MeaningSheet({
           word's own meaning and visually distinct from it: this is the context
           that explains the word, never the answer to what the word means. */}
       {meaning?.sentenceTranslation && (
-        <div className="mt-2.5 rounded-2xl bg-white/75 p-3">
+        <div className="mt-2.5 rounded-2xl bg-cream-card/75 p-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
           <p className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
           <p className="mt-1 text-sm font-semibold text-ink">{meaning.sentenceTranslation.english}</p>
@@ -254,7 +254,7 @@ export default function MeaningSheet({
         <button
           onClick={handleAskAi}
           disabled={aiState === "loading"}
-          className="mt-2.5 min-h-12 w-full rounded-2xl bg-white/75 py-3 text-sm font-semibold text-ink disabled:opacity-60"
+          className="mt-2.5 min-h-12 w-full rounded-2xl bg-cream-card/75 py-3 text-sm font-semibold text-ink disabled:opacity-60"
         >
           {aiState === "loading" ? "Working it out…" : "Explain in context"}
         </button>
@@ -268,7 +268,7 @@ export default function MeaningSheet({
         </p>
       )}
       {aiState === "ready" && aiResult && (
-        <div className="mt-2.5 rounded-2xl bg-white/75 p-3">
+        <div className="mt-2.5 rounded-2xl bg-cream-card/75 p-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand">In context</p>
           <p className="mt-1 text-lg font-bold text-ink">{aiResult.translation}</p>
           <p className="mt-1 text-sm text-ink">{aiResult.meaningInContext}</p>
@@ -276,7 +276,7 @@ export default function MeaningSheet({
       )}
 
       {/* Everything below is study material, not reading assistance. */}
-      <details className="mt-2.5 rounded-2xl bg-white/60 p-2.5">
+      <details className="mt-2.5 rounded-2xl bg-cream-card/60 p-2.5">
         <summary className="min-h-12 cursor-pointer list-none py-3 text-sm font-semibold text-accent-pinktext">
           More
         </summary>
@@ -316,7 +316,7 @@ export default function MeaningSheet({
                 <PronounceButton
                   text={meaning.examples[0].fr}
                   label="Play example sentence"
-                  className="bg-white"
+                  className="bg-cream-card"
                   scope="sentence"
                 />
               </div>
@@ -333,7 +333,7 @@ export default function MeaningSheet({
             <Panel label="Refers back to">
               <p className="text-sm text-ink">
                 <span className="font-semibold">{state.pronounReference.pronoun}</span> points back to{" "}
-                <span className="rounded bg-white/70 px-1 font-semibold">{state.pronounReference.antecedentText}</span>.
+                <span className="rounded bg-cream-card/70 px-1 font-semibold">{state.pronounReference.antecedentText}</span>.
               </p>
               <p className="mt-1 text-xs text-ink-muted">{state.pronounReference.note}</p>
             </Panel>
@@ -360,7 +360,7 @@ export default function MeaningSheet({
           {aiAllowed && aiState === "idle" && !meaning?.abstained && meaning?.confidence !== "low" && (
             <button
               onClick={handleAskAi}
-              className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink"
+              className="min-h-12 w-full rounded-2xl bg-cream-card/70 py-3 text-sm font-semibold text-ink"
             >
               Explain in context
             </button>
@@ -390,7 +390,7 @@ export default function MeaningSheet({
           {onExplainSentence && meaning && (
             <button
               onClick={() => onExplainSentence(meaning.contextSentence)}
-              className="min-h-12 w-full rounded-2xl bg-white/70 py-3 text-sm font-semibold text-ink"
+              className="min-h-12 w-full rounded-2xl bg-cream-card/70 py-3 text-sm font-semibold text-ink"
             >
               Explain the whole sentence
             </button>
@@ -398,7 +398,7 @@ export default function MeaningSheet({
 
           {/* Consumer feedback, not a dictionary editor. A report is a signal;
               it never changes what this or any future tap displays. */}
-          <details className="rounded-2xl bg-white/60 p-2.5">
+          <details className="rounded-2xl bg-cream-card/60 p-2.5">
             <summary className="min-h-12 cursor-pointer list-none py-3 text-xs font-semibold uppercase tracking-wide text-accent-pinktext">
               Report translation
             </summary>
@@ -415,7 +415,7 @@ export default function MeaningSheet({
                       onClick={() => setReportReason(option.value)}
                       aria-pressed={reportReason === option.value}
                       className={`min-h-12 rounded-xl px-3 py-2 text-left text-sm font-semibold ${
-                        reportReason === option.value ? "bg-brand text-white" : "bg-cream text-ink"
+                        reportReason === option.value ? "bg-brand text-cream" : "bg-cream text-ink"
                       }`}
                     >
                       {option.label}
@@ -428,13 +428,13 @@ export default function MeaningSheet({
                   onChange={(event) => setReportSuggestion(event.target.value)}
                   placeholder="What should it say? (optional)"
                   aria-label="Suggested meaning"
-                  className="w-full rounded-xl bg-white px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
+                  className="w-full rounded-xl bg-cream-card px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
                 />
                 <button
                   type="button"
                   onClick={handleSendReport}
                   disabled={!reportReason}
-                  className="min-h-12 w-full rounded-xl bg-brand py-2 text-sm font-semibold text-white disabled:opacity-40"
+                  className="min-h-12 w-full rounded-xl bg-brand py-2 text-sm font-semibold text-cream disabled:opacity-40"
                 >
                   Send report
                 </button>
@@ -449,7 +449,7 @@ export default function MeaningSheet({
 
 function Panel({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl bg-white/60 p-2.5">
+    <div className="rounded-2xl bg-cream-card/60 p-2.5">
       <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">{label}</p>
       <div className="mt-1">{children}</div>
     </div>
@@ -479,7 +479,7 @@ function WordFamilyRow({ label, values }: { label: string; values: string[] }) {
         {values.map((value) => {
           const gloss = lookupWord(value).translations[0] ?? null;
           return (
-            <div key={value} className="rounded-xl bg-white/60 px-3 py-2 text-sm text-ink">
+            <div key={value} className="rounded-xl bg-cream-card/60 px-3 py-2 text-sm text-ink">
               <span className="font-semibold">{value}</span>
               {gloss && <span className="text-ink-muted"> — {gloss}</span>}
             </div>

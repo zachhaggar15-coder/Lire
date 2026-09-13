@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { trackEvent, trackOnce } from "@/lib/analytics/client";
 import { markPwaInstalled, initialiseValidationVisit } from "@/lib/validation/lifecycle";
+import { rememberAndroidAppLaunch } from "@/lib/androidApp";
 import {
   getAnalyticsConsent,
   subscribeToAnalyticsConsent,
@@ -13,6 +14,12 @@ import {
 export default function AppLifecycleTracker() {
   const pathname = usePathname();
   const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
+
+  useEffect(() => {
+    // Not analytics — only decides whether Play Store features (Rate Sorlio)
+    // are shown — so it runs regardless of consent.
+    rememberAndroidAppLaunch();
+  }, []);
 
   useEffect(() => {
     setConsent(getAnalyticsConsent());

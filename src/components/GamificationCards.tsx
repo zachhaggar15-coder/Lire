@@ -168,7 +168,7 @@ export function CurrentLevelCard({ level }: { level: ReaderLevel }) {
   return (
     <section className="rounded-card bg-cream-card p-5 shadow-card">
       <div className="flex items-start gap-4">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-2xl font-extrabold text-white shadow-card">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-2xl font-extrabold text-cream shadow-card">
           {level.level}
         </div>
         <div className="min-w-0 flex-1">
@@ -198,7 +198,7 @@ export function MissionCard({ mission }: { mission: MissionStatus }) {
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-sm font-extrabold ${mission.completed ? "bg-brand text-white" : "bg-cream-dark text-ink"}`}>
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-sm font-extrabold ${mission.completed ? "bg-brand text-cream" : "bg-cream-dark text-ink"}`}>
           {mission.completed ? "OK" : mission.icon}
         </div>
         <div className="min-w-0 flex-1">
@@ -288,7 +288,7 @@ export function AchievementBadge({ achievement }: { achievement: AchievementStat
       <div className="flex items-start gap-3">
         <div
           className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-xs font-extrabold ${
-            achievement.unlocked ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+            achievement.unlocked ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
           }`}
           aria-label={`${achievement.title} ${achievement.unlocked ? "unlocked" : "locked"}`}
         >
@@ -348,7 +348,7 @@ export function CollectionCard({ collection }: { collection: VocabularyCollectio
 export function PassportStampCard({ stamp }: { stamp: PassportStamp }) {
   return (
     <article className={`rounded-card border p-4 shadow-card ${stamp.unlocked ? "border-brand/20 bg-cream-card" : "border-dashed border-cream-dark bg-cream/50"}`}>
-      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl text-xs font-extrabold ${stamp.unlocked ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"}`}>
+      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl text-xs font-extrabold ${stamp.unlocked ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"}`}>
         {stamp.icon}
       </div>
       <h3 className="mt-3 text-sm font-bold text-ink">{stamp.title}</h3>
@@ -404,7 +404,7 @@ export function CompletionSummary({
       <p className="mt-1 text-sm font-bold text-brand">+{completion.xpEarned} XP</p>
       <p className="mx-auto mt-2 max-w-xs text-sm text-ink-muted">{nextCopy}</p>
 
-      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-white">
+      <Link href={nextHref} className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-sm font-semibold text-cream">
         {nextLabel}
       </Link>
 

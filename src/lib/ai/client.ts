@@ -14,6 +14,13 @@ import { getAccessToken } from "@/lib/supabase/auth";
 export type AiResult<T> = { data: T; error?: undefined } | { data?: undefined; error: string };
 
 const GENERIC_ERROR = "Couldn't get an AI answer. Please try again.";
+const OFFLINE_ERROR = "You're offline. AI help needs an internet connection — the built-in dictionary still works.";
+
+/** A failed fetch while the device is offline gets a message that says so, rather than an unexplained "try again". */
+function failure(fallback: string): { error: string } {
+  const offline = typeof navigator !== "undefined" && navigator.onLine === false;
+  return { error: offline ? OFFLINE_ERROR : fallback };
+}
 
 /**
  * The AI routes require a signed-in Premium account, verified server-side —
@@ -56,7 +63,7 @@ export async function getWordExplanation(req: WordExplanationRequest): Promise<A
     cacheStore.set(key, body as WordExplanation);
     return { data: body as WordExplanation };
   } catch {
-    return { error: GENERIC_ERROR };
+    return failure(GENERIC_ERROR);
   }
 }
 
@@ -84,7 +91,7 @@ export async function getSentenceExplanation(
     cacheStore.set(key, body as SentenceExplanation);
     return { data: body as SentenceExplanation };
   } catch {
-    return { error: GENERIC_ERROR };
+    return failure(GENERIC_ERROR);
   }
 }
 
@@ -115,7 +122,7 @@ export async function getParaphraseOptions(req: ParaphraseGenerationRequest): Pr
     cacheStore.set(key, body as ParaphraseGenerationResult);
     return { data: body as ParaphraseGenerationResult };
   } catch {
-    return { error: PARAPHRASE_GENERIC_ERROR };
+    return failure(PARAPHRASE_GENERIC_ERROR);
   }
 }
 
@@ -149,6 +156,6 @@ export async function getArticleTranslation(
     cacheStore.set(key, body as ArticleTranslationResult);
     return { data: body as ArticleTranslationResult };
   } catch {
-    return { error: TRANSLATION_GENERIC_ERROR };
+    return failure(TRANSLATION_GENERIC_ERROR);
   }
 }

@@ -52,7 +52,7 @@ export default function ReaderPageClient({ id, initialText }: ReaderPageClientPr
         </p>
         <Link
           href="/"
-          className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white"
+          className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream"
         >
           Back to lessons
         </Link>

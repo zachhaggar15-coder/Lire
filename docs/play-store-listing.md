@@ -105,6 +105,7 @@ WHAT'S INSIDE
 • Import your own French text and read it with the same tools
 • A reading journey that tracks what you have completed
 • Works offline once loaded, and keeps working with no account
+• Dark mode, or follow your phone's light/dark setting
 
 NO ACCOUNT NEEDED
 

@@ -118,7 +118,7 @@ export default function SourcesPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Sources" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Sources" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
 
       {state === "loading" && (
@@ -141,7 +141,7 @@ export default function SourcesPage() {
       {state === "error" && (
         <div className="rounded-card bg-cream-card p-5 text-center shadow-card">
           <p className="text-sm font-bold text-ink">Source health is unavailable right now.</p>
-          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white">
+          <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-cream">
             Retry
           </button>
         </div>

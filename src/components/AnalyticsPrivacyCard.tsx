@@ -36,7 +36,7 @@ export default function AnalyticsPrivacyCard() {
           type="button"
           onClick={() => choose("granted")}
           aria-pressed={consent === "granted"}
-          className={`rounded-full px-3.5 py-2 text-xs font-semibold ${consent === "granted" ? "bg-brand text-white" : "bg-cream-dark text-ink"}`}
+          className={`rounded-full px-3.5 py-2 text-xs font-semibold ${consent === "granted" ? "bg-brand text-cream" : "bg-cream-dark text-ink"}`}
         >
           Allow
         </button>
@@ -44,7 +44,7 @@ export default function AnalyticsPrivacyCard() {
           type="button"
           onClick={() => choose("denied")}
           aria-pressed={consent === "denied"}
-          className={`rounded-full px-3.5 py-2 text-xs font-semibold ${consent === "denied" ? "bg-brand text-white" : "bg-cream-dark text-ink"}`}
+          className={`rounded-full px-3.5 py-2 text-xs font-semibold ${consent === "denied" ? "bg-brand text-cream" : "bg-cream-dark text-ink"}`}
         >
           Turn off and clear identifiers
         </button>

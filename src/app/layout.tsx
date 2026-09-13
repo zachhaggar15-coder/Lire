@@ -10,6 +10,9 @@ import StorageMigrations from "@/components/StorageMigrations";
 import RssPrefetch from "@/components/RssPrefetch";
 import AppNavigationPolish from "@/components/AppNavigationPolish";
 import AnalyticsConsentBanner from "@/components/AnalyticsConsentBanner";
+import OfflineBanner from "@/components/OfflineBanner";
+import ThemeController from "@/components/ThemeController";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { productionDomain } from "@/lib/validation/config";
 
 const ui = Space_Grotesk({
@@ -109,12 +112,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${ui.variable} ${french.variable} ${micro.variable} ${numeral.variable}`} data-scroll-behavior="smooth">
+    // suppressHydrationWarning: THEME_INIT_SCRIPT sets data-theme on <html>
+    // before React hydrates, which would otherwise be reported as a mismatch.
+    <html
+      lang="en"
+      className={`${ui.variable} ${french.variable} ${micro.variable} ${numeral.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         <div className="mx-auto flex max-w-md flex-col bg-cream" style={{ minHeight: "var(--vvh, 100dvh)" }}>
           <main className="flex-1 pb-[calc(6rem+var(--safe-bottom))]">{children}</main>
           <BottomNav />
         </div>
+        <ThemeController />
         <ServiceWorker />
         <AuthSync />
         <AppLifecycleTracker />
@@ -123,6 +137,7 @@ export default function RootLayout({
         <StorageMigrations />
         <RssPrefetch />
         <AnalyticsConsentBanner />
+        <OfflineBanner />
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
-import { completeWalkthrough, getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
+import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
 import { trackEvent } from "@/lib/analytics/client";
 import LessonScene, { type SceneName } from "@/components/LessonScene";
@@ -63,10 +63,10 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
   }
 
   function finish(nextLevel = level) {
+    // Leaves walkthroughCompleted false, so the home page offers the short
+    // interactive tour next. Its first screen has an equally prominent
+    // "Skip, start reading" so first use is still never gated on it.
     saveOnboarding(nextLevel, topics, goal);
-    // The first real lesson now carries the lightweight reading guidance.
-    // Keep the full tutorial available from Library, but do not gate first use on it.
-    completeWalkthrough();
     trackEvent("initial_level_selected", { level: nextLevel });
     trackEvent("onboarding_completed", {
       level: nextLevel,
@@ -80,14 +80,14 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
 
   return (
     <section className={variant === "focus" ? "rounded-card bg-cream-card shadow-card" : "mb-5 rounded-card bg-cream-card shadow-card"}>
-      <div className="rounded-t-card bg-brand p-5 text-white">
+      <div className="rounded-t-card bg-brand p-5 text-cream">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-white/75">Start here</h2>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-cream/75">Start here</h2>
             <p className="mt-1 text-2xl font-extrabold leading-tight">Read your first tiny French scene.</p>
-            <p className="mt-2 text-sm leading-relaxed text-white/80">Pick the closest starting point, then begin your first short lesson.</p>
+            <p className="mt-2 text-sm leading-relaxed text-cream/80">Pick the closest starting point, then begin your first short lesson.</p>
           </div>
-          <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-white/15 p-1 shadow-raised" />
+          <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-cream/15 p-1 shadow-raised" />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {[
@@ -95,7 +95,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
             "A few minutes of daily practice and review",
             "Real French news once you're ready for it",
           ].map((line) => (
-            <span key={line} className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold leading-snug text-white/90">
+            <span key={line} className="rounded-full bg-cream/15 px-3 py-1.5 text-xs font-semibold leading-snug text-cream/90">
               {line}
             </span>
           ))}
@@ -111,18 +111,18 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
               onClick={() => setLevel(option.value)}
               aria-pressed={level === option.value}
               className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left ${
-                level === option.value ? "border-brand bg-brand text-white shadow-raised" : `border-transparent ${option.tone} text-ink`
+                level === option.value ? "border-brand bg-brand text-cream shadow-raised" : `border-transparent ${option.tone} text-ink`
               }`}
             >
-              <LessonScene name={option.scene} size={44} className={level === option.value ? "rounded-2xl bg-white/15 p-0.5" : ""} />
+              <LessonScene name={option.scene} size={44} className={level === option.value ? "rounded-2xl bg-cream/15 p-0.5" : ""} />
               <span className="min-w-0 flex-1">
                 <span className="flex items-center justify-between gap-3">
                   <span className="text-sm font-bold">{option.label}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-white/20 text-white" : "bg-cream-card/70 text-ink-muted"}`}>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-cream/20 text-cream" : "bg-cream-card/70 text-ink-muted"}`}>
                     {option.value}
                   </span>
                 </span>
-                <span className={`mt-0.5 block text-xs ${level === option.value ? "text-white/80" : "text-ink-muted"}`}>
+                <span className={`mt-0.5 block text-xs ${level === option.value ? "text-cream/80" : "text-ink-muted"}`}>
                   {option.detail}
                 </span>
               </span>
@@ -141,7 +141,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                 onClick={() => setLevel(option)}
                 aria-pressed={level === option}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                  level === option ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                  level === option ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 {option} - about {knownWordEstimateForLevel(option).toLocaleString()} known words
@@ -164,7 +164,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                 onClick={() => toggleTopic(topic.value)}
                 aria-pressed={topics.includes(topic.value)}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                  topics.includes(topic.value) ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                  topics.includes(topic.value) ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 {topic.label}
@@ -183,7 +183,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                 onClick={() => setGoal(option.value)}
                 aria-pressed={goal === option.value}
                 className={`rounded-xl px-2 py-2 text-center ${
-                  goal === option.value ? "bg-brand text-white" : "bg-cream-dark text-ink-muted"
+                  goal === option.value ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                 }`}
               >
                 <span className="block text-sm font-semibold">{option.label}</span>
@@ -202,7 +202,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
           <button
             type="button"
             onClick={() => finish()}
-            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-white"
+            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-cream"
           >
             Start first lesson · {level}
           </button>

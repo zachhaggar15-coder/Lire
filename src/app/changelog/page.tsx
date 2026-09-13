@@ -11,7 +11,7 @@ const TYPE_STYLE = {
 export default function ChangelogPage() {
   return (
     <div className="ligne-screen">
-      <AppBar title="What’s new" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="What’s new" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">A short record of visible Sorlio improvements.</p>
 
       <div className="space-y-3">

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { AppSettings, Difficulty, FontSize, TranslationMode } from "@/types";
+import type { AppSettings, Difficulty, FontSize, ThemePreference, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
 import { trackEvent } from "@/lib/analytics/client";
@@ -30,6 +30,8 @@ import AnalyticsPrivacyCard from "@/components/AnalyticsPrivacyCard";
 import PremiumPromoCard from "@/components/PremiumPromoCard";
 import { StreakCard } from "@/components/GamificationCards";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
+import { markRated } from "@/lib/ratePrompt";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -37,7 +39,13 @@ const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "large", label: "Large" },
 ];
 
-const LEVEL_OPTIONS: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
+  { value: "system", label: "System" },
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
+];
+
+const LEVEL_OPTIONS: Difficulty[] =["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const TRANSLATION_MODE_OPTIONS: { value: TranslationMode; label: string; description: string }[] = [
   { value: "natural", label: "Natural", description: "Best for reading normally." },
@@ -142,12 +150,13 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
 }
 
 export default function SettingsPage() {
-  useDocumentTitle("Library");
+  useDocumentTitle("Settings");
   const router = useRouter();
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
   const [knownCount, setKnownCount] = useState(0);
   const [offlineCount, setOfflineCount] = useState(0);
+  const [inAndroidApp, setInAndroidApp] = useState(false);
   const [streak, setStreak] = useState<{ current: number; longest: number; activeToday: boolean; week: StreakDay[] }>({
     current: 0,
     longest: 0,
@@ -176,6 +185,7 @@ export default function SettingsPage() {
     setSelectedLevel(getSelectedReadingLevel());
     setKnownCount(getKnownWords().length);
     setOfflineCount(getOfflineRssTextCount());
+    setInAndroidApp(isAndroidApp());
     refreshStreakView();
   }, [refreshStreakView]);
 
@@ -210,7 +220,7 @@ export default function SettingsPage() {
     <div className="ligne-screen">
       <header className="mb-5">
         <p className="ligne-label">You</p>
-        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Library</h1>
+        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Settings</h1>
         <p className="mt-2 text-sm text-ink-muted">Learning setup, saved items, progress, and app settings.</p>
       </header>
 
@@ -236,6 +246,26 @@ export default function SettingsPage() {
                   }`}
                 >
                   {level}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
+            <p className="font-semibold text-ink">Theme</p>
+            <p className="mt-0.5 text-sm text-ink-muted">Dark mode is easier on the eyes at night. System follows your phone.</p>
+            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1">
+              {THEME_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => update({ theme: opt.value })}
+                  aria-pressed={settings.theme === opt.value}
+                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
+                    settings.theme === opt.value ? "bg-brand text-cream" : "text-ink-muted"
+                  }`}
+                >
+                  {opt.label}
                 </button>
               ))}
             </div>
@@ -315,7 +345,38 @@ export default function SettingsPage() {
         </section>
 
         <section className="space-y-3">
-          <SettingsSectionTitle title="App" subtitle="Account, install options, feedback, and privacy." />
+          <SettingsSectionTitle title="Support Sorlio" subtitle="Tell us what's working and what isn't." />
+          {inAndroidApp && (
+            <a
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                markRated();
+                trackEvent("rate_app_opened", { source: "settings" });
+              }}
+              className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4"
+            >
+              <div className="min-w-0">
+                <p className="font-semibold text-ink">Rate Sorlio</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Leave a rating on Google Play. It helps other learners find the app.</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-brand px-3.5 py-2 text-xs font-semibold text-cream">Rate</span>
+            </a>
+          )}
+          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="font-semibold text-ink">Send feedback</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Report a problem or suggest an improvement.</p>
+              </div>
+              <FeedbackButton feature="settings" label="Open" />
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <SettingsSectionTitle title="App" subtitle="Account, install options, and privacy." />
           <PremiumPromoCard />
           <BetaNotice />
           <AccountCard />
@@ -350,16 +411,7 @@ export default function SettingsPage() {
               </div>
             </div>
           )}
-          <PwaInstallCard />
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="font-semibold text-ink">Feedback</p>
-                <p className="mt-0.5 text-sm text-ink-muted">Report a dictionary, article, translation, or technical issue.</p>
-              </div>
-              <FeedbackButton feature="settings" label="Open" />
-            </div>
-          </div>
+          {!inAndroidApp && <PwaInstallCard />}
           <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
           <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Sorlio." />
         </section>

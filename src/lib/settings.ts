@@ -1,11 +1,13 @@
 import type { AppSettings } from "@/types";
 import { pushStore } from "@/lib/supabase/sync";
+import { SETTINGS_CHANGED_EVENT } from "@/lib/theme";
 
 /** localStorage-backed app settings (display preferences only). */
 
 const KEY = "lire.settings.v1";
 
 export const DEFAULT_SETTINGS: AppSettings = {
+  theme: "system",
   showSavedHighlights: true,
   showKnownWordStyling: true,
   fontSize: "medium",
@@ -36,6 +38,7 @@ export function saveSettings(patch: Partial<AppSettings>): AppSettings {
   if (hasStorage()) {
     window.localStorage.setItem(KEY, JSON.stringify(next));
     void pushStore(KEY);
+    window.dispatchEvent?.(new Event(SETTINGS_CHANGED_EVENT));
   }
   return next;
 }

@@ -62,7 +62,7 @@ export default function AccessPrompt({ reason, blocked, isGuest, returnPath, onD
         {reason === "needs-premium" && (
           <Link
             href="/premium"
-            className="min-h-12 rounded-full bg-brand px-5 py-3 text-center text-sm font-semibold text-white"
+            className="min-h-12 rounded-full bg-brand px-5 py-3 text-center text-sm font-semibold text-cream"
           >
             See Premium
           </Link>

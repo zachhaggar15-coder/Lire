@@ -13,6 +13,7 @@ import type { PracticePlan } from "@/lib/practice/session";
 import type { LookupRateSummary } from "@/lib/practice/lookupStats";
 import PracticeSection from "@/components/practice/PracticeSection";
 import ReadingDiagnosticsCard from "@/components/diagnostics/ReadingDiagnosticsCard";
+import RateSorlioCard from "@/components/RateSorlioCard";
 import type { ReadingPerformanceMetrics } from "@/lib/practice/readingPerformance";
 import type { BaselineComparison, TrendLabel } from "@/lib/practice/baselineComparison";
 import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
@@ -274,7 +275,7 @@ export default function LessonCompleteScreen({
                       aria-pressed={item.saved}
                       aria-label={item.saved ? `Remove ${item.french} from review` : `Save ${item.french} for review`}
                       className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                        item.saved ? "bg-brand text-white" : "bg-cream-card text-ink-muted"
+                        item.saved ? "bg-brand text-cream" : "bg-cream-card text-ink-muted"
                       }`}
                     >
                       {item.saved ? "Remove" : "Add to review"}
@@ -346,6 +347,10 @@ export default function LessonCompleteScreen({
         {practiceText && practicePlan && lookupRate && (
           <PracticeSection text={practiceText} plan={practicePlan} lookupRate={lookupRate} />
         )}
+
+        <div className="mt-4">
+          <RateSorlioCard source="lesson_complete" />
+        </div>
 
         </div>
       </div>

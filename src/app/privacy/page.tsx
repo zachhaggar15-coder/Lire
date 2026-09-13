@@ -58,7 +58,7 @@ const sections = [
           Sorlio asks before enabling optional analytics. If you allow them, Sorlio may collect a random anonymous identifier, session identifier, screens or features opened, reading and review events, approximate device category, installation state, referral or campaign information, and app version. Client crash diagnostics may also be sent to Sentry; error replays are configured to mask text and input content.
         </p>
         <p className="mt-2">
-          Analytics do not include full article or imported text, saved private text, full email addresses, feedback comments, translations, or OpenAI responses. You can turn analytics off at any time in Library. Turning them off immediately stops new optional analytics and clears Sorlio's analytics identifiers and locally retained analytics events from that device.
+          Analytics do not include full article or imported text, saved private text, full email addresses, feedback comments, translations, or OpenAI responses. You can turn analytics off at any time in Settings. Turning them off immediately stops new optional analytics and clears Sorlio's analytics identifiers and locally retained analytics events from that device.
         </p>
       </>
     ),
@@ -129,7 +129,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="ligne-screen">
-      <AppBar title="Privacy policy" kicker="Sorlio" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Privacy policy" kicker="Sorlio" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-2 text-sm leading-relaxed text-ink-muted">
         How Sorlio collects, uses, stores, shares, and deletes app and learning data.
       </p>

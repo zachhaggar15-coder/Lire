@@ -56,7 +56,7 @@ function PracticePageClientContent({ id, initialText }: PracticePageClientProps)
     return (
       <div className="px-4 pt-10 text-center">
         <p className="text-ink-muted">This article isn&apos;t available anymore.</p>
-        <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white">
+        <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream">
           Back to Read
         </Link>
       </div>

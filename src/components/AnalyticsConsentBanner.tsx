@@ -31,13 +31,13 @@ export default function AnalyticsConsentBanner() {
     >
       <p className="font-semibold text-ink">Help improve Sorlio?</p>
       <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        You can allow anonymous product analytics and crash diagnostics. Sorlio works normally if you decline, and you can change this later in Library.
+        You can allow anonymous product analytics and crash diagnostics. Sorlio works normally if you decline, and you can change this later in Settings.
       </p>
       <div className="mt-3 flex flex-col gap-2 sm:flex-row">
         <button
           type="button"
           onClick={() => choose("granted")}
-          className="min-h-12 flex-1 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white"
+          className="min-h-12 flex-1 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-cream"
         >
           Allow optional analytics
         </button>

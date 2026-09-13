@@ -65,6 +65,8 @@ export const ANALYTICS_EVENT_NAMES = [
   "return_reason_submitted",
   "disappearance_survey_submitted",
   "changelog_opened",
+  "rate_prompt_shown",
+  "rate_app_opened",
 ] as const;
 
 export type AnalyticsEventName = (typeof ANALYTICS_EVENT_NAMES)[number];

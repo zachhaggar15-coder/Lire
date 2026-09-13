@@ -100,7 +100,7 @@ export default function WordsPage() {
         title="Vocabulary"
         kicker="Saved from your texts"
         backHref="/settings"
-        backLabel="Back to Library"
+        backLabel="Back to Settings"
         action={tab === "words" && words.length > 0 ? (
           <button type="button" onClick={handleClear} className="min-h-12 rounded-full px-3 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-rose-ink">
             Clear all

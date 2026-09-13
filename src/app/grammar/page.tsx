@@ -211,7 +211,7 @@ function GrammarPageContent() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
 
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
@@ -222,7 +222,7 @@ function GrammarPageContent() {
             onClick={() => switchTrack(item.id)}
             aria-pressed={track === item.id}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
-              track === item.id ? "bg-ink text-white" : "bg-cream-card text-ink-muted shadow-card"
+              track === item.id ? "bg-ink text-cream" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
             {item.label}
@@ -242,7 +242,7 @@ function GrammarPageContent() {
               <p className="mt-1 text-xl font-extrabold text-ink">Lesson {currentLessonNumber} of {dashboard.totalLessons}</p>
               <p className="mt-1 text-xs text-ink-muted">{dashboard.completedLessons}/{dashboard.totalLessons} complete</p>
             </div>
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-lg font-extrabold text-white">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-card bg-brand text-lg font-extrabold text-cream">
               {currentProgress.mastery}%
             </div>
           </div>
@@ -258,7 +258,7 @@ function GrammarPageContent() {
             onClick={() => setTab(item.id)}
             aria-pressed={tab === item.id}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
-              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
+              tab === item.id ? "bg-brand text-cream" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
             {item.label}
@@ -413,7 +413,7 @@ function LessonDetail({
       <ProgressBar value={progress.mastery} label="Mastery" />
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white">
+        <button type="button" onClick={onPractice} className="rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-cream">
           Start 5-question quiz
         </button>
       </div>
@@ -514,7 +514,7 @@ function PracticeCard({
             {selectedCorrect ? "Correct" : "Not quite"}
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">{question.explanation}</p>
-          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-white">
+          <button type="button" onClick={onNext} className="mt-3 rounded-full bg-brand px-4 py-2 shadow-raised text-sm font-semibold text-cream">
             Next question
           </button>
         </div>
@@ -614,7 +614,7 @@ function StructureReferencePanel({
               onClick={() => onTopicChange(topic.id)}
               aria-pressed={selectedTopicId === topic.id}
               className={`rounded-full px-3 py-2 text-xs font-semibold ${
-                selectedTopicId === topic.id ? "bg-brand text-white" : "bg-cream text-ink-muted"
+                selectedTopicId === topic.id ? "bg-brand text-cream" : "bg-cream text-ink-muted"
               }`}
             >
               {topic.title}

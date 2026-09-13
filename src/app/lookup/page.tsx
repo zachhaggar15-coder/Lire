@@ -17,7 +17,7 @@ export default function LookupPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">
         Look up an English word to find its French translation — offline, same as reader lookups.
       </p>
@@ -34,7 +34,7 @@ export default function LookupPage() {
         />
         <button
           onClick={runSearch}
-          className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-white"
+          className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-cream"
         >
           Search
         </button>
@@ -74,7 +74,7 @@ export default function LookupPage() {
             <p className="text-sm italic text-ink-muted">
               No local dictionary entry yet for “{result.input}”.
             </p>
-            <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-white">
+            <Link href="/" className="mt-3 inline-block rounded-full bg-brand px-5 py-2.5 shadow-raised text-sm font-semibold text-cream">
               Start reading
             </Link>
           </div>

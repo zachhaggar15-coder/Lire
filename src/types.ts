@@ -125,8 +125,11 @@ export interface TextProgress {
 
 export type FontSize = "small" | "medium" | "large";
 export type TranslationMode = "natural" | "phrase-aware" | "literal";
+export type ThemePreference = "system" | "light" | "dark";
 
 export interface AppSettings {
+  /** Colour theme. "system" follows the device's light/dark setting. See src/lib/theme.ts. */
+  theme: ThemePreference;
   /** Visually highlight saved (learning/unsure) words while reading. */
   showSavedHighlights: boolean;
   /** De-emphasise words already marked "known" while reading. */

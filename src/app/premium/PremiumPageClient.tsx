@@ -139,7 +139,7 @@ export default function PremiumPageClient() {
             </div>
           </>
         ) : billingAvailable ? (
-          <button type="button" onClick={subscribe} disabled={purchaseState === "working"} className="min-h-12 w-full rounded-full bg-brand px-5 py-3 font-semibold text-white disabled:opacity-60">
+          <button type="button" onClick={subscribe} disabled={purchaseState === "working"} className="min-h-12 w-full rounded-full bg-brand px-5 py-3 font-semibold text-cream disabled:opacity-60">
             {purchaseState === "working" ? "Opening Google Play…" : `Subscribe for ${displayPrice}/month`}
           </button>
         ) : (

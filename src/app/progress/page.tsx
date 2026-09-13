@@ -98,7 +98,7 @@ export default function ProgressPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to Library" />
+      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
 
       {rewardNotice && (
@@ -119,7 +119,7 @@ export default function ProgressPage() {
             onClick={() => setTab(item.id)}
             aria-pressed={tab === item.id}
             className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
-              tab === item.id ? "bg-brand text-white" : "bg-cream-card text-ink-muted shadow-card"
+              tab === item.id ? "bg-brand text-cream" : "bg-cream-card text-ink-muted shadow-card"
             }`}
           >
             {item.label}
@@ -348,7 +348,7 @@ function FirstStepsProgressCard() {
           </div>
         ))}
       </div>
-      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-white">
+      <Link href="/" className="mt-4 block rounded-full bg-brand px-4 py-2.5 shadow-raised text-center text-sm font-semibold text-cream">
         Start reading
       </Link>
     </section>

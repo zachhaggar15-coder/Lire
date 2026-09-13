@@ -85,7 +85,7 @@ export default function ServiceWorker() {
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 mx-auto flex max-w-md justify-center px-4 pt-[var(--safe-top)]">
-      <div className="mt-2 flex items-center gap-3 rounded-full bg-ink px-4 py-2 text-sm text-white shadow-lg">
+      <div className="mt-2 flex items-center gap-3 rounded-full bg-ink px-4 py-2 text-sm text-cream shadow-lg">
         <span>Updating to the latest version…</span>
       </div>
     </div>

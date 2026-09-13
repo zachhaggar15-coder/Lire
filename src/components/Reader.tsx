@@ -38,6 +38,8 @@ import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getCustomTexts } from "@/lib/customTexts";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { markAudioTipSeen, recordAudioPlayAndCheckTip } from "@/lib/audioTip";
+import { hasSeenReaderTip, markReaderTipSeen } from "@/lib/readerTips";
+import { recordLessonCompletedForRating } from "@/lib/ratePrompt";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { getArticleSummary, saveArticleSummary } from "@/lib/articleSummaries";
 import { findPronounReference } from "@/lib/pronounReferences";
@@ -99,6 +101,7 @@ import PostSessionResearchPrompt from "@/components/PostSessionResearchPrompt";
 import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import AppIcon from "@/components/AppIcon";
+import CoachMark from "@/components/onboarding/CoachMark";
 
 const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
 
@@ -351,6 +354,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [readingHelpOpen, setReadingHelpOpen] = useState(false);
   /** Shown once, after a few audio plays across the app — see lib/audioTip.ts. */
   const [showAudioTip, setShowAudioTip] = useState(false);
+  /** "Tap any word" coach mark, shown on a learner's first real lesson until their first tap — see lib/readerTips.ts. */
+  const [showTapTip, setShowTapTip] = useState(false);
   const articleRef = useRef<HTMLElement | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rewardTimeouts = useRef<number[]>([]);
@@ -435,6 +440,16 @@ export default function Reader({ text }: { text: ReadingText }) {
     if (dictionaryRevision === 0 || text.language === "en") return;
     setDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
   }, [dictionaryRevision, text.body, text.language]);
+
+  useEffect(() => {
+    setShowTapTip(!hasSeenReaderTip("tap-word"));
+  }, []);
+
+  function dismissTapTip() {
+    if (!showTapTip) return;
+    markReaderTipSeen("tap-word");
+    setShowTapTip(false);
+  }
 
   useEffect(() => {
     try {
@@ -921,10 +936,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     return fluentSentences?.[flatIndex] ?? offlineSentences[flatIndex] ?? null;
   }
 
-  function showToast(message: string) {
+  function showToast(message: string, durationMs = 1400) {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
     setToastMessage(message);
-    toastTimeout.current = setTimeout(() => setToastMessage(null), 1400);
+    toastTimeout.current = setTimeout(() => setToastMessage(null), durationMs);
   }
 
   function recordLearningAction() {
@@ -1116,6 +1131,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       setBlocked({ reason: lookupDecision.reason!, blocked: "lookup" });
       return;
     }
+    dismissTapTip();
 
     const adjacent = adjacentWords(tokens, index);
     const lookup = lookupWord(tokens[index].text, adjacent);
@@ -1291,7 +1307,12 @@ export default function Reader({ text }: { text: ReadingText }) {
           }
         : prev
     );
-    showToast(status === "unsure" ? "Saved as unsure" : "Saved");
+    if (!hasSeenReaderTip("first-save")) {
+      markReaderTipSeen("first-save");
+      showToast("Saved — practise it later in the Review tab", 3200);
+    } else {
+      showToast(status === "unsure" ? "Saved as unsure" : "Saved");
+    }
   }
 
   function handleUnsaveActiveWord() {
@@ -1740,6 +1761,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       return { performance, baseline, message, trend: baseline.trend };
     })();
 
+    // Counted before the screen mounts so RateSorlioCard sees this lesson.
+    recordLessonCompletedForRating();
+
     setLessonComplete({
       levelProgress,
       // A short lesson that fits on one screen never fires a scroll event, so
@@ -2147,6 +2171,12 @@ export default function Reader({ text }: { text: ReadingText }) {
         </div>
       </details>
 
+      {showTapTip && !rereadMode && (
+        <div className="mt-2">
+          <CoachMark text="Tap any word to see what it means in this sentence." onDismiss={dismissTapTip} />
+        </div>
+      )}
+
       {showAudioTip && (
         <p className="mt-2 rounded-2xl bg-brand-light px-3 py-2 text-xs text-brand">
           Try listening once before reading the sentence.{" "}
@@ -2535,7 +2565,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         />
       )}
       {blocked && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-0 sm:items-center sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-6">
           <div className="w-full max-w-md">
             <AccessPrompt
               reason={blocked.reason}
