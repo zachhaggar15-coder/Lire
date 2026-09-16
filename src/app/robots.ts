@@ -20,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin/", "/api/", "/monitoring", "/account/"],
+      disallow: ["/admin/", "/api/", "/monitoring", "/account/", "/reader/rss-"],
     },
     sitemap: `${origin}/sitemap.xml`,
     host: origin,
