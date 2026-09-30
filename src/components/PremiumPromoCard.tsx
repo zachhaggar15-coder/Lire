@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
+import { useAccess } from "@/lib/access/useAccess";
 
 export default function PremiumPromoCard() {
-  const { status, loading } = usePremiumStatus();
-  if (loading || status.isPremium) return null;
+  const { ready, tier } = useAccess();
+  if (!ready || tier === "premium") return null;
 
   return (
     <Link

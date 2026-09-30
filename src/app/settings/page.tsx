@@ -28,6 +28,7 @@ import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
 import AnalyticsPrivacyCard from "@/components/AnalyticsPrivacyCard";
 import PremiumPromoCard from "@/components/PremiumPromoCard";
+import ClosedTestPremiumNotice from "@/components/ClosedTestPremiumNotice";
 import { StreakCard } from "@/components/GamificationCards";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
@@ -377,6 +378,7 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="App" subtitle="Account, install options, and privacy." />
+          <ClosedTestPremiumNotice />
           <PremiumPromoCard />
           <BetaNotice />
           <AccountCard />

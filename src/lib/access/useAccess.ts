@@ -5,6 +5,7 @@ import { getCurrentUser, onAuthStateChange } from "@/lib/supabase/auth";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import { accessContext, accessTier, getDailyUsage, type AccessContext } from "@/lib/access/accessModel";
 import { recordArticleOpened, recordLookup } from "@/lib/access/dailyUsage";
+import { useClosedTestPremium } from "@/lib/access/useClosedTestPremium";
 
 /**
  * The access context for the current reader, kept live.
@@ -19,6 +20,7 @@ import { recordArticleOpened, recordLookup } from "@/lib/access/dailyUsage";
  */
 export function useAccess() {
   const { status: premium, loading: premiumLoading } = usePremiumStatus();
+  const { active: closedTestPremium, loading: closedTestPremiumLoading } = useClosedTestPremium();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [usage, setUsage] = useState(() => getDailyUsage());
 
@@ -33,9 +35,9 @@ export function useAccess() {
     });
   }, []);
 
-  const tier = accessTier(!!authenticated, premium.isPremium);
+  const tier = accessTier(!!authenticated, premium.isPremium, closedTestPremium);
   const context: AccessContext = accessContext(tier, usage);
-  const ready = authenticated !== null && !premiumLoading;
+  const ready = authenticated !== null && !premiumLoading && !closedTestPremiumLoading;
 
   const consumeArticle = useCallback((articleId: string) => {
     setUsage(recordArticleOpened(articleId));
@@ -47,5 +49,5 @@ export function useAccess() {
 
   const refreshUsage = useCallback(() => setUsage(getDailyUsage()), []);
 
-  return { tier, context, ready, authenticated: !!authenticated, premium, consumeArticle, consumeLookup, refreshUsage };
+  return { tier, context, ready, authenticated: !!authenticated, premium, closedTestPremium, consumeArticle, consumeLookup, refreshUsage };
 }

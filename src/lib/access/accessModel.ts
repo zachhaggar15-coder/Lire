@@ -38,11 +38,13 @@ function deny(reason: AccessDenialReason, remaining = 0): AccessDecision {
 /**
  * The tier a person is in.
  *
- * Premium implies authenticated, but the check is written so a stale cached
- * entitlement can never grant Premium to a signed-out device: signing out
- * makes `authenticated` false, which drops straight back to guest.
+ * A real Premium entitlement implies authentication, so a stale cached
+ * subscription can never survive sign-out. The optional third argument is a
+ * separate, server-issued closed-test grant: it never represents a purchase
+ * and is intentionally the only unauthenticated route to the Premium tier.
  */
-export function accessTier(authenticated: boolean, premium: boolean): AccessTier {
+export function accessTier(authenticated: boolean, premium: boolean, closedTestPremium = false): AccessTier {
+  if (closedTestPremium) return "premium";
   if (!authenticated) return "guest";
   return premium ? "premium" : "free";
 }

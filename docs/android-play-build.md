@@ -26,6 +26,21 @@ Run every file in `supabase/migrations/` once, in filename order (`0001` through
 
 Premium purchases require the existing passwordless Sorlio account. This is intentional: the account connects a verified Google Play purchase to an entitlement that can also be used on the website. The web version does not direct Play-app users to an external payment method.
 
+## Temporary closed-test Premium access
+
+This is testing infrastructure, not a subscription. It is disabled by default and never writes a Play Billing record, Supabase subscription row, receipt, or account entitlement.
+
+To enable it for the Android closed-test window only, set these **Production** Vercel variables and redeploy:
+
+- `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS=true`
+- `CLOSED_TEST_PREMIUM_COOKIE_SECRET=<a unique random value of at least 32 characters>`
+
+Both conditions are required at runtime: the public flag must be enabled, and the user must have a signed, HttpOnly cookie issued from the existing `android-app://app.sorlio.reader` TWA launch signal. The proxy uses the navigation referrer where the edge preserves it; where a TWA exposes that signal only through `document.referrer`, the app sends it to a same-origin activation endpoint for the same cookie issuance. A normal browser visitor does not receive that cookie through normal use and stays on the usual free/Premium model. The cookie is temporary, expires after seven days, and becomes unusable immediately when the public flag is disabled.
+
+Closed testers see a Settings notice stating that Premium features are unlocked for testing and that the access is not a subscription. This includes the normal UI gates and, while the signed test cookie is valid, the AI routes; test AI requests remain rate-limited by their temporary signed principal. Real subscriptions and their server-side, database-backed quota path remain unchanged.
+
+> **REMOVE/DISABLE CLOSED-TEST PREMIUM ACCESS BEFORE PUBLIC PRODUCTION LAUNCH.** Set `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS=false` (or remove it), redeploy Production, then verify `/api/closed-test-premium/status` returns `{ "active": false }` from the Android app and that the Settings notice is gone. Remove `CLOSED_TEST_PREMIUM_COOKIE_SECRET` after that verification.
+
 ## Build
 
 ### JDK requirement
