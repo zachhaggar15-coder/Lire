@@ -225,7 +225,7 @@ console.log("--- Gates are wired at the real call sites ---");
 {
   const reader = readFileSync(new URL("../src/components/Reader.tsx", import.meta.url), "utf8");
   check("word taps are gated", /canLookupWord\(access\)/.test(reader));
-  check("saving is gated", /canSaveWord\(access\)/.test(reader));
+  check("saving is gated", /saveWordForAccess\(access/.test(reader));
   check("comprehension is gated", /canUseComprehension\(access\)/.test(reader));
   check("a blocked tap does not consume an allowance", reader.indexOf("canLookupWord(access)") < reader.indexOf("consumeLookup()"));
 
@@ -251,7 +251,7 @@ console.log("--- Existing vocabulary is not destroyed ---");
 {
   const reader = readFileSync(new URL("../src/components/Reader.tsx", import.meta.url), "utf8");
   const words = readFileSync(new URL("../src/app/words/page.tsx", import.meta.url), "utf8");
-  check("the save gate blocks adding, not reading", /setBlocked\(\{ reason: saveDecision\.reason/.test(reader));
+  check("the save gate blocks adding, not reading", /setBlocked\(\{ reason: saved\.decision\.reason/.test(reader));
   check("nothing deletes saved words on a tier change", !/clearWords\(\)/.test(reader));
   check("the vocabulary list is not gated", !/PremiumRouteGate/.test(words));
 }

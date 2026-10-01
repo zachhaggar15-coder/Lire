@@ -63,10 +63,16 @@ export async function signInWithGoogle(returnPath?: string): Promise<AuthResult>
   return { ok: !error, error: error?.message ?? null };
 }
 
-export async function signOut(): Promise<void> {
+/** Ends the remote session without touching device-local learning data. */
+export async function signOut(): Promise<AuthResult> {
   const client = getSupabaseClient();
-  if (!client) return;
-  await client.auth.signOut();
+  if (!client) return { ok: false, error: "Sign-out isn't configured yet." };
+  try {
+    const { error } = await client.auth.signOut();
+    return { ok: !error, error: error?.message ?? null };
+  } catch {
+    return { ok: false, error: "Couldn't sign out. Please check your connection and try again." };
+  }
 }
 
 export async function getCurrentUser(): Promise<User | null> {

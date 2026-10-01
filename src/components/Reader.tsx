@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
-import { deleteWord, getSavedWords, saveWord } from "@/lib/storage";
+import { deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
@@ -90,8 +90,9 @@ import type { JourneyMoment, LessonMiniReviewItem } from "@/components/LessonCom
 import MeaningSheet, { type ActiveMeaningState } from "@/components/MeaningSheet";
 import SentenceSheet, { type ActiveSentenceState } from "@/components/SentenceSheet";
 import { triggerHaptic } from "@/lib/haptics";
-import { canLookupWord, canSaveWord, canUseComprehension, type AccessDenialReason } from "@/lib/access/accessModel";
+import { canLookupWord, canUseComprehension, type AccessDenialReason } from "@/lib/access/accessModel";
 import { useAccess } from "@/lib/access/useAccess";
+import { saveWordForAccess } from "@/lib/access/saveWord";
 import AccessPrompt from "@/components/AccessPrompt";
 import type { PremiumFeature } from "@/lib/access/limits";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -1261,15 +1262,6 @@ export default function Reader({ text }: { text: ReadingText }) {
    */
   function handleSaveActiveWord(status: Exclude<WordStatus, "known"> = "learning") {
     if (!activeWord || activeWord.existingStatus) return;
-    // Saving is Premium. Existing saved words stay readable — this only stops
-    // new ones being added, so nobody's vocabulary is destroyed by the rule
-    // changing underneath them.
-    const saveDecision = canSaveWord(access);
-    if (!saveDecision.allowed) {
-      setActiveWord(null);
-      setBlocked({ reason: saveDecision.reason!, blocked: "saveWord" });
-      return;
-    }
     const meaning = activeWord.meaning;
     // Names and places aren't vocabulary worth reviewing. This guard used to
     // sit on the auto-save in handleWordTap; it belongs wherever the save is.
@@ -1281,24 +1273,27 @@ export default function Reader({ text }: { text: ReadingText }) {
       showToast("Nothing to save until this word resolves");
       return;
     }
+    // Saving is Premium. Existing saved words stay readable — this only stops
+    // new ones being added, so nobody's vocabulary is destroyed by the rule
+    // changing underneath them.
+    const saved = saveWordForAccess(access, buildSavedWord(meaning, status));
+    if (!saved.decision.allowed) {
+      setActiveWord(null);
+      setBlocked({ reason: saved.decision.reason!, blocked: "saveWord" });
+      return;
+    }
     // The resolved contextual meaning is what the reader actually saw and
     // agreed to save, so it leads the card — a flashcard that disagrees with
     // the sheet it was saved from is worse than no card.
-    const { words: nextWords, persisted } = saveWord(
-      buildSavedWord(meaning, status)
-    );
+    const { words: nextWords, persisted, created } = saved.result!;
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
       return;
     }
-    recordLearningAction();
     const nextStatusMap = buildWordStatusMap(nextWords);
     setWordStatusMap(nextStatusMap);
     setSavedWordsSnapshot(nextWords);
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-    rememberWordSaved("tap_lookup");
-    triggerHaptic("confirm");
-    pulseRewardWords("saved", [meaning.tappedText, meaning.lemma]);
     setActiveWord((prev) =>
       prev
         ? {
@@ -1307,6 +1302,14 @@ export default function Reader({ text }: { text: ReadingText }) {
           }
         : prev
     );
+    if (!created) {
+      showToast("Already saved — available in Review");
+      return;
+    }
+    recordLearningAction();
+    rememberWordSaved("tap_lookup");
+    triggerHaptic("confirm");
+    pulseRewardWords("saved", [meaning.tappedText, meaning.lemma]);
     if (!hasSeenReaderTip("first-save")) {
       markReaderTipSeen("first-save");
       showToast("Saved — practise it later in the Review tab", 3200);
@@ -1417,16 +1420,21 @@ export default function Reader({ text }: { text: ReadingText }) {
       setWordStatusMap(buildWordStatusMap(getSavedWords()));
       showToast("Removed from review");
     } else {
-      const { persisted } = saveWord(
-        buildSavedWord(resolveMeaningForWord(item.french, item.context ?? item.french), "learning")
-      );
+      const saved = saveWordForAccess(access, buildSavedWord(resolveMeaningForWord(item.french, item.context ?? item.french), "learning"));
+      if (!saved.decision.allowed) {
+        setBlocked({ reason: saved.decision.reason!, blocked: "saveWord" });
+        return;
+      }
+      const { words: nextWords, persisted, created } = saved.result!;
       if (!persisted) {
         showToast("Couldn't save — device storage is full");
         return;
       }
-      recordLearningAction();
-      setWordStatusMap(buildWordStatusMap(getSavedWords()));
-      showToast("Saved for review");
+      setWordStatusMap(buildWordStatusMap(nextWords));
+      setSavedWordsSnapshot(nextWords);
+      setArticleSavedWordCount(nextWords.filter((savedWord) => savedWord.sourceTextTitle === text.title && savedWord.status !== "known").length);
+      if (created) recordLearningAction();
+      showToast(created ? "Saved for review" : "Already saved — available in Review");
     }
     setLessonComplete((current) =>
       current
@@ -1888,18 +1896,25 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleSaveCandidate(candidate: LearningCandidate) {
-    const { words: nextWords, persisted } = saveWord(
-      buildSavedWord(resolveMeaningForWord(candidate.word, candidate.contextSentence), "learning")
-    );
+    const saved = saveWordForAccess(access, buildSavedWord(resolveMeaningForWord(candidate.word, candidate.contextSentence), "learning"));
+    if (!saved.decision.allowed) {
+      setBlocked({ reason: saved.decision.reason!, blocked: "saveWord" });
+      return;
+    }
+    const { words: nextWords, persisted, created } = saved.result!;
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
       return;
     }
-    recordLearningAction();
-    rememberWordSaved("candidate");
     setSavedWordsSnapshot(nextWords);
     setWordStatusMap(buildWordStatusMap(nextWords));
     setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    if (!created) {
+      showToast("Already saved — available in Review");
+      return;
+    }
+    recordLearningAction();
+    rememberWordSaved("candidate");
     pulseRewardWords("saved", [candidate.word, candidate.lemma]);
     showToast("Saved learning candidate");
   }

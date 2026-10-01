@@ -271,20 +271,22 @@ export interface SaveWordResult {
   words: SavedWord[];
   /** False when the write was rejected (quota) — the caller should say so rather than confirm a save that didn't happen. */
   persisted: boolean;
+  /** True only when this action added a new card, rather than finding an existing canonical word. */
+  created: boolean;
 }
 
 export function saveWord(entry: SavedWord): SaveWordResult {
   const words = getSavedWords();
   const entryLemma = entry.lemma?.toLowerCase();
   if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) {
-    return { words, persisted: true };
+    return { words, persisted: true, created: false };
   }
   const next = [entry, ...words];
-  if (!persist(next)) return { words, persisted: false };
+  if (!persist(next)) return { words, persisted: false, created: false };
   // Only credit progress for a word that actually made it to storage.
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
-  return { words: next, persisted: true };
+  return { words: next, persisted: true, created: true };
 }
 
 /**

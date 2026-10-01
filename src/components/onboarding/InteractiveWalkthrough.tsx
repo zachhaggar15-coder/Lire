@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { tokenize, type Token } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { saveWord } from "@/lib/storage";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
+import { useAccess } from "@/lib/access/useAccess";
+import { canSaveWord } from "@/lib/access/accessModel";
+import { saveWordForAccess } from "@/lib/access/saveWord";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildWordCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
 import { ratePer100Words } from "@/lib/sessionRecord";
@@ -48,11 +50,14 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [showSummary, setShowSummary] = useState(() => (startStep ?? 0) >= STEP_COUNT);
   const [tapCount, setTapCount] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const [activeWord, setActiveWord] = useState<{ token: Token; lookup: ReturnType<typeof lookupWord> } | null>(null);
   const [activePhrase, setActivePhrase] = useState<PhraseTranslationMatch | null>(null);
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
   const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
   useDismissibleHistory(true, handleSkip);
+  const { context: access, ready: accessReady, tier, authenticated, closedTestPremium } = useAccess();
+  const saveAllowed = accessReady && canSaveWord(access).allowed;
 
   useEffect(() => {
     if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
@@ -101,11 +106,43 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
 
   function handleWordAction() {
     if (!activeWord) return;
-    saveWord(buildDemoSavedWord(activeWord.token.clean, "learning"));
-    setSavedCount((c) => c + 1);
-    trackEvent("first_word_saved", { articleId: "onboarding-demo" });
+    if (!accessReady) {
+      setSaveMessage("Checking which learning features are available…");
+      return;
+    }
+    const saved = saveWordForAccess(access, buildDemoSavedWord(activeWord.token.clean, "learning"));
+    if (!saved.decision.allowed) {
+      setSaveMessage(
+        authenticated
+          ? "Word lookup is available on your free account. Saving words and Review are part of Premium."
+          : "Anyone can look up words. Saving words and Review are part of Premium, so this tour has not added a demo word."
+      );
+      setActiveWord(null);
+      return;
+    }
+    if (!saved.result?.persisted) {
+      setSaveMessage("Couldn't save the word on this device. Try again after freeing some storage.");
+      return;
+    }
+    if (saved.result.created) {
+      setSavedCount((c) => c + 1);
+      trackEvent("first_word_saved", { articleId: "onboarding-demo" });
+      setSaveMessage("Saved to your real Review deck.");
+    } else {
+      setSaveMessage("That word is already in your Review deck.");
+    }
     setActiveWord(null);
   }
+
+  const walkthroughAccessCopy = !accessReady
+    ? "Checking available learning features…"
+    : tier === "premium"
+      ? closedTestPremium
+        ? "Closed-test Premium is active, so this save uses your normal Review deck for testing."
+        : "Your Premium access lets this tour save a real word to Review."
+      : authenticated
+        ? "Your free account can look up words. Saving words and Review are Premium features."
+        : "Anyone can look up words. A free account adds more daily reading and lookups; saving words and Review require Premium.";
 
   function revealDemoPhrase() {
     const tokens = tokenize(DEMO_SENTENCES[1]);
@@ -240,6 +277,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
         {step === 1 && (
           <div className="flex-1">
             <p className="ligne-label">Tap a word</p>
+            <p className="mt-2 text-sm text-ink-muted">{walkthroughAccessCopy}</p>
             <div className="mt-3 rounded-card border border-cream-dark bg-cream-card p-4 text-lg leading-relaxed text-ink">
               {DEMO_SENTENCES.map((sentence, sIndex) => (
                 <p key={sentence} className={sIndex > 0 ? "mt-2" : ""}>
@@ -275,12 +313,19 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                   <button
                     type="button"
                     onClick={handleWordAction}
+                    disabled={!accessReady}
                     className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream"
                   >
-                    Save
+                    {!accessReady ? "Checking access…" : saveAllowed ? "Save to Review" : "See how saving works"}
                   </button>
                 </div>
               </div>
+            )}
+
+            {saveMessage && (
+              <p role="status" className="mt-3 rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink-muted">
+                {saveMessage}
+              </p>
             )}
 
             <button

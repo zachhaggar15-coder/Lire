@@ -18,6 +18,7 @@ import BottomSheet from "@/components/BottomSheet";
 import AppIcon from "@/components/AppIcon";
 import { canUseAIExplanation } from "@/lib/access/accessModel";
 import { useAccess } from "@/lib/access/useAccess";
+import { isReviewableWordStatus } from "@/lib/spacedRepetition";
 
 export interface ActiveMeaningState {
   meaning: ResolvedMeaning;
@@ -86,7 +87,8 @@ export default function MeaningSheet({
 
   const open = state !== null;
   const meaning = state?.meaning;
-  const saved = state?.existingStatus != null;
+  const saved = isReviewableWordStatus(state?.existingStatus);
+  const known = state?.existingStatus === "known";
   const isProperNoun = (meaning?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
 
   const wordFamily = meaning ? getWordFamily(meaning.lemma ?? meaning.tappedText) : null;
@@ -150,9 +152,9 @@ export default function MeaningSheet({
     setReportSent(true);
   }
 
-  const footer = isProperNoun ? (
+  const footer = isProperNoun || known ? (
     <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream">
-      Close
+      {known ? "Already known" : "Close"}
     </button>
   ) : (
     <button
@@ -197,7 +199,10 @@ export default function MeaningSheet({
       </div>
 
       {state?.existingStatus && (
-        <p className="mt-2 text-xs font-semibold text-brand">{STATUS_LABEL[state.existingStatus]}</p>
+        <p className="mt-2 text-xs font-semibold text-brand">
+          {STATUS_LABEL[state.existingStatus]}
+          {known ? " Known words are not added to Review." : ""}
+        </p>
       )}
 
       {/* The one authoritative answer. */}

@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
-import { getCurrentUser, onAuthStateChange, signInWithGoogle, signOut } from "@/lib/supabase/auth";
+import { getCurrentUser, onAuthStateChange, signInWithGoogle } from "@/lib/supabase/auth";
 import { getSyncStatus, subscribeToSyncStatus, syncNow, type SyncStatus } from "@/lib/supabase/sync";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import DeleteAccountDialog from "@/components/DeleteAccountDialog";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
+import SignOutDialog from "@/components/SignOutDialog";
 
 /**
  * Settings card for cross-device sync and the account behind it.
@@ -25,6 +26,7 @@ export default function AccountCard() {
   const [error, setError] = useState<string | null>(null);
   const [signingIn, setSigningIn] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [confirmingSignOut, setConfirmingSignOut] = useState(false);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>({ phase: "idle", lastSuccessAt: null, error: null });
   const { status: premium } = usePremiumStatus();
 
@@ -55,11 +57,6 @@ export default function AccountCard() {
       setSigningIn(false);
       setError(result.error);
     }
-  }
-
-  async function handleSignOut() {
-    await signOut();
-    setUserEmail(null);
   }
 
   const lastSyncLabel = syncStatus.lastSuccessAt
@@ -93,7 +90,7 @@ export default function AccountCard() {
               {syncStatus.phase === "syncing" ? "Syncing…" : "Sync now"}
             </button>
             <button
-              onClick={handleSignOut}
+              onClick={() => setConfirmingSignOut(true)}
               className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink-muted"
             >
               Sign out
@@ -136,6 +133,15 @@ export default function AccountCard() {
           onCancel={() => setConfirmingDelete(false)}
           onDeleted={() => {
             setConfirmingDelete(false);
+            setUserEmail(null);
+          }}
+        />
+      )}
+      {confirmingSignOut && (
+        <SignOutDialog
+          onCancel={() => setConfirmingSignOut(false)}
+          onSignedOut={() => {
+            setConfirmingSignOut(false);
             setUserEmail(null);
           }}
         />

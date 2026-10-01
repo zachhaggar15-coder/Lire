@@ -47,6 +47,7 @@ const deleteRoute = read("src/app/api/account/delete/route.ts");
 const deleteClient = read("src/lib/account/deleteAccount.ts");
 const dialog = read("src/components/DeleteAccountDialog.tsx");
 const accountCard = read("src/components/AccountCard.tsx");
+const signOutDialog = read("src/components/SignOutDialog.tsx");
 const premiumPage = read("src/app/premium/PremiumPageClient.tsx");
 const schema = [
   "supabase/migrations/0002_user_data.sql",
@@ -93,6 +94,16 @@ console.log("--- Sign-in returns to where it started ---");
     "the deletion page returns to itself",
     /signInWithGoogle\("\/account\/delete"\)/.test(read("src/app/account/delete/DeleteAccountPageClient.tsx"))
   );
+}
+
+console.log("--- Sign-out is confirmed and failure-safe ---");
+{
+  check("the auth wrapper returns Supabase sign-out errors", /const \{ error \} = await client\.auth\.signOut\(\)/.test(auth) && /ok: !error/.test(auth));
+  check("Settings opens a confirmation instead of signing out immediately", /setConfirmingSignOut\(true\)/.test(accountCard) && !/onClick=\{handleSignOut\}/.test(accountCard));
+  check("the dialog uses the app's dismissible modal behaviour", /useModalFocus/.test(signOutDialog) && /useDismissibleHistory/.test(signOutDialog));
+  check("cancel and dismissal have no sign-out side effect", /onCancel/.test(signOutDialog) && /signOut\(\)/.test(signOutDialog));
+  check("failed sign-out keeps the dialog open and reports an error", /setWorking\(false\);\s*\n\s*setError/.test(signOutDialog));
+  check("local learning data is explicitly preserved", /stays on this device/.test(signOutDialog));
 }
 
 console.log("--- Guest progress survives signing in ---");
