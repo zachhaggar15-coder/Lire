@@ -41,6 +41,22 @@ Closed testers see a Settings notice stating that Premium features are unlocked 
 
 > **REMOVE/DISABLE CLOSED-TEST PREMIUM ACCESS BEFORE PUBLIC PRODUCTION LAUNCH.** Set `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS=false` (or remove it), redeploy Production, then verify `/api/closed-test-premium/status` returns `{ "active": false }` from the Android app and that the Settings notice is gone. Remove `CLOSED_TEST_PREMIUM_COOKIE_SECRET` after that verification.
 
+## Closed-test update log
+
+### 2026-10-01 — Update 1: saved words, onboarding, and sign-out
+
+This web-only controlled update keeps the existing temporary closed-test Premium entitlement enabled and does not change the Android wrapper, package, version code, or version name.
+
+Implementation commit: `6df5980` (`Fix saved-word review flow and sign-out`).
+
+- Fixed the saved-word/review contradiction: onboarding can seed words as **known**, which intentionally records vocabulary but does not create Review cards. The word sheet now labels those words as already known rather than offering a misleading “Remove from review” action. New review saves use the real saved-word store and only report success after a durable new card exists.
+- Routed every vocabulary-save surface, including the reader’s mini review, learning candidates, and interactive onboarding, through the same entitlement-aware save path. Closed-test Premium uses that ordinary path; disabling the temporary entitlement restores the usual gate without deleting existing local learning data.
+- Updated the interactive onboarding copy and action to reflect the reader’s actual access state. It no longer creates a demo save for an unentitled learner.
+- Added a sign-out confirmation that states local learning data remains on-device. Cancel, Android Back, Escape, or a failed sign-out leave the account state unchanged and show an inline error where appropriate.
+- Added regression coverage for saved-word persistence/reviewability, duplicate and failed writes, entitlement restoration, onboarding messaging, and sign-out confirmation/error behavior.
+
+**Tester checks after deployment:** in an Android closed-test session, save a word from an article and confirm it appears in Review after reopening; verify a seeded known word says “Already known” and is absent from Review; complete the onboarding save step and confirm the copy matches closed-test Premium; then verify Settings sign-out cancel/back and a successful sign-out. In a normal browser/free-account session, verify save controls remain gated and onboarding does not create a demo Review card.
+
 ## Build
 
 ### JDK requirement
