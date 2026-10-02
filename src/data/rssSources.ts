@@ -31,6 +31,12 @@ interface RssSourceBase {
   language: "fr" | "en" | "mixed";
   /** Overrides DEFAULT_MIN_WORDS (src/lib/rss/contentQuality.ts) for this feed specifically. */
   minWords?: number;
+  /**
+   * Overrides the normal two-sentence prose floor for a reviewed feed whose
+   * official descriptions are deliberately concise but complete. Keep this
+   * source-specific: it must not relax the default quality bar globally.
+   */
+  minSentences?: 1 | 2;
   /** Overrides the pipeline's default of 2 accepted items per feed. */
   maxItems?: number;
   /**
@@ -192,6 +198,7 @@ export const rssSources: RssSource[] = [
     language: "fr",
     enabled: true,
     minWords: 20,
+    minSentences: 1,
     maxItems: 8,
     maxItemAgeDays: 14,
     attributionText: "© Union européenne — Source : Parlement européen",
@@ -199,7 +206,7 @@ export const rssSources: RssSource[] = [
     reuseTermsUrl: "https://www.europarl.europa.eu/legal-notice/fr",
     reuseTermsCheckedAt: "2026-10-02",
     contentUse: { title: true, description: true, fullFeedText: false, linkedPageContent: false },
-    notes: "Use only the RSS title and description with the complete-item URL. Reject non-French items and preserve the EU credit supplied by the feed.",
+    notes: "Use only the RSS title and description with the complete-item URL. The official feed intentionally publishes complete one-sentence summaries, so this source may use a one-sentence floor; the French-language, word-count, truncation and freshness gates still apply. Reject non-French items and preserve the EU credit supplied by the feed.",
     allowScraping: false,
   },
   { id: "france-today", name: "France Today", category: "culture", feedUrl: "https://francetoday.com/feed/", language: "en", enabled: false },

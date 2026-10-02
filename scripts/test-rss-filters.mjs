@@ -45,6 +45,8 @@ measures remain insufficient.
 
 const SHORT_FRENCH_TEASER = `Le gouvernement annonce de nouvelles mesures pour le climat.`;
 
+const COMPLETE_ONE_SENTENCE_SUMMARY = `Le jury du prix européen pour le journalisme a retenu dix reportages pour cette nouvelle édition organisée aujourd'hui à Strasbourg avec plusieurs partenaires.`;
+
 const ESCAPED_RSS_HTML = `&lt;p&gt;Le service public annonce une nouvelle mesure.&lt;/p&gt;&lt;p&gt;Les démarches sont expliquées clairement.&lt;/p&gt;`;
 
 const GOOD_FRENCH_ARTICLE = `
@@ -172,6 +174,10 @@ console.log("\n--- Content quality ---");
   const q = analyseContentQuality(SHORT_FRENCH_TEASER);
   console.log(`  Short French teaser -> ${q.wordCount} words, quality=${q.quality} — ${q.reason}`);
   check("short French teaser is rejected as content", isAcceptableReadingContent(SHORT_FRENCH_TEASER), false);
+}
+{
+  check("one complete sentence still fails the default two-sentence prose floor", isAcceptableReadingContent(COMPLETE_ONE_SENTENCE_SUMMARY, 20), false);
+  check("a reviewed source can opt into a one-sentence floor", isAcceptableReadingContent(COMPLETE_ONE_SENTENCE_SUMMARY, 20, 1), true);
 }
 {
   const q = analyseContentQuality(GOOD_FRENCH_ARTICLE);

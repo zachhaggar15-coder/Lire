@@ -12,9 +12,11 @@ import { isAcceptableFrenchText } from "@/lib/rss/language";
 import {
   analyseContentQuality,
   countWords,
+  DEFAULT_MIN_SENTENCES,
   DEFAULT_MIN_WORDS,
   isAcceptableAsShortSnippet,
   isAcceptableReadingContent,
+  SHORT_SNIPPET_MIN_WORDS,
 } from "@/lib/rss/contentQuality";
 import { scrapeFullArticle } from "@/lib/rss/scrapeArticle";
 import { hashString } from "@/lib/hash";
@@ -197,13 +199,14 @@ export async function itemToRssReadingText(
   // Content-quality check uses the body alone — a short teaser doesn't
   // become real reading material just because the title is long.
   const minWords = source.minWords ?? DEFAULT_MIN_WORDS;
-  const quality = analyseContentQuality(finalBody, minWords);
+  const minSentences = source.minSentences ?? DEFAULT_MIN_SENTENCES;
+  const quality = analyseContentQuality(finalBody, minWords, minSentences);
   let isShortSnippet = false;
-  if (!isAcceptableReadingContent(finalBody, minWords)) {
+  if (!isAcceptableReadingContent(finalBody, minWords, minSentences)) {
     // Only a "too short" rejection gets a second chance at the lower
     // snippet bar — content rejected for being truncated, boilerplate, or
     // shaped like a broken list is just as unsuitable at 20 words as at 60.
-    if (quality.isTooShort && isAcceptableAsShortSnippet(finalBody)) {
+    if (quality.isTooShort && isAcceptableAsShortSnippet(finalBody, SHORT_SNIPPET_MIN_WORDS, minSentences)) {
       isShortSnippet = true;
     } else {
       return { ok: false, rejection: { reason: `content quality: ${quality.reason}` } };

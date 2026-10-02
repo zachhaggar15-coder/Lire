@@ -76,6 +76,7 @@ check("every enabled source records a checked reuse basis", approved.every((sour
 check("enabled sources never permit linked-page scraping", approved.every((source) => !source.contentUse.linkedPageContent && source.allowScraping === false), true);
 check("Le Monde remains disabled", rssSources.find((source) => source.id === "le-monde")?.enabled, false);
 check("France 24 remains disabled", rssSources.find((source) => source.id === "france-24-french")?.enabled, false);
+check("only Parliament has the reviewed one-sentence exception", approved.filter((source) => source.minSentences === 1).map((source) => source.id).join(","), "europarl-press-releases");
 
 console.log("\n--- Parsing, freshness, ordering, and attribution ---");
 const currentIso = new Date().toISOString();
@@ -93,6 +94,16 @@ check("converted content records retrieval time", converted.ok ? Number.isFinite
 const staleParsed = [{ ...parsedServicePublic[0], pubDate: "2025-01-01T00:00:00.000Z" }];
 const staleConverted = await itemToRssReadingText(staleParsed[0], approved[0]);
 check("stale feed content is rejected", staleConverted.ok, false);
+
+const parliament = approved.find((source) => source.id === "europarl-press-releases");
+const conciseParliamentItem = {
+  ...parsedServicePublic[0],
+  title: "Prix européen pour le journalisme",
+  link: "https://www.europarl.europa.eu/news/fr/press-room/example",
+  description: "Le jury du prix européen pour le journalisme a retenu dix reportages pour cette nouvelle édition organisée aujourd'hui à Strasbourg avec plusieurs partenaires.",
+};
+const conciseParliamentConverted = parliament ? await itemToRssReadingText(conciseParliamentItem, parliament) : null;
+check("reviewed Parliament one-sentence summaries are accepted", conciseParliamentConverted?.ok, true);
 
 const ordered = sortNewestFirst([
   { id: "old", publishedAt: "2026-09-01T00:00:00.000Z" },

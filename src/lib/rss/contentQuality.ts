@@ -38,7 +38,7 @@ export const DEFAULT_MIN_WORDS = 60;
 export const SHORT_SNIPPET_MIN_WORDS = 20;
 
 /** Minimum number of real sentences — one giant run-on "sentence" is a red flag, not real prose. Kept low since DEFAULT_MIN_WORDS is itself modest (see that constant's comment). */
-const MIN_SENTENCES = 2;
+export const DEFAULT_MIN_SENTENCES = 2;
 
 /** Below this average words/sentence, text is usually a bullet list or broken markup rather than prose. */
 const MIN_AVERAGE_SENTENCE_LENGTH = 4;
@@ -89,13 +89,17 @@ function isProbablyTruncated(text: string): boolean {
  * Analyses cleaned RSS body text (title should *not* be included — see
  * the pipeline notes in rssToReadingText.ts) for length and shape.
  */
-export function analyseContentQuality(text: string, minWords: number = DEFAULT_MIN_WORDS): ContentQualityAnalysis {
+export function analyseContentQuality(
+  text: string,
+  minWords: number = DEFAULT_MIN_WORDS,
+  minSentences: number = DEFAULT_MIN_SENTENCES,
+): ContentQualityAnalysis {
   const wordCount = countWords(text);
   const sentenceCount = countSentences(text);
   const averageSentenceLength = sentenceCount > 0 ? wordCount / sentenceCount : 0;
 
   const isTooShort = wordCount < minWords;
-  const hasEnoughSentences = sentenceCount >= MIN_SENTENCES;
+  const hasEnoughSentences = sentenceCount >= minSentences;
   const truncated = isProbablyTruncated(text);
 
   let quality: ContentQuality;
@@ -109,7 +113,7 @@ export function analyseContentQuality(text: string, minWords: number = DEFAULT_M
     reason = "ends with a truncation/continue-reading marker";
   } else if (!hasEnoughSentences) {
     quality = "poor";
-    reason = `only ${sentenceCount} sentence(s) (minimum ${MIN_SENTENCES})`;
+    reason = `only ${sentenceCount} sentence(s) (minimum ${minSentences})`;
   } else if (averageSentenceLength < MIN_AVERAGE_SENTENCE_LENGTH) {
     quality = "poor";
     reason = `average sentence length (${averageSentenceLength.toFixed(1)} words) is implausibly low — likely a list or broken markup`;
@@ -133,8 +137,12 @@ export function analyseContentQuality(text: string, minWords: number = DEFAULT_M
   };
 }
 
-export function isAcceptableReadingContent(text: string, minWords: number = DEFAULT_MIN_WORDS): boolean {
-  return analyseContentQuality(text, minWords).quality !== "poor";
+export function isAcceptableReadingContent(
+  text: string,
+  minWords: number = DEFAULT_MIN_WORDS,
+  minSentences: number = DEFAULT_MIN_SENTENCES,
+): boolean {
+  return analyseContentQuality(text, minWords, minSentences).quality !== "poor";
 }
 
 /**
@@ -142,6 +150,10 @@ export function isAcceptableReadingContent(text: string, minWords: number = DEFA
  * keeping as a short snippet — same shape checks (sentence count, average
  * sentence length, truncation, boilerplate), just a much lower word floor.
  */
-export function isAcceptableAsShortSnippet(text: string, minWords: number = SHORT_SNIPPET_MIN_WORDS): boolean {
-  return analyseContentQuality(text, minWords).quality !== "poor";
+export function isAcceptableAsShortSnippet(
+  text: string,
+  minWords: number = SHORT_SNIPPET_MIN_WORDS,
+  minSentences: number = DEFAULT_MIN_SENTENCES,
+): boolean {
+  return analyseContentQuality(text, minWords, minSentences).quality !== "poor";
 }
