@@ -16,7 +16,7 @@ import {
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
 import AppIcon from "@/components/AppIcon";
-import { canUseAIExplanation } from "@/lib/access/accessModel";
+import { canSaveWord, canUseAIExplanation } from "@/lib/access/accessModel";
 import { useAccess } from "@/lib/access/useAccess";
 import { isReviewableWordStatus } from "@/lib/spacedRepetition";
 
@@ -84,6 +84,7 @@ export default function MeaningSheet({
   // non-Premium readers rather than withhold something they can see.
   const { context: access } = useAccess();
   const aiAllowed = canUseAIExplanation(access).allowed;
+  const saveAllowed = canSaveWord(access).allowed;
 
   const open = state !== null;
   const meaning = state?.meaning;
@@ -164,7 +165,7 @@ export default function MeaningSheet({
         saved ? "bg-brand-light text-brand" : "bg-brand text-cream"
       }`}
     >
-      {saved ? "Remove from review" : "Add to review"}
+      {saved ? "Remove from review" : saveAllowed ? "Add to review" : "Premium · Add to review"}
     </button>
   );
 

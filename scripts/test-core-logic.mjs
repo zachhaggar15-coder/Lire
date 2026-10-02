@@ -93,7 +93,7 @@ import {
   updateSelectedReadingLevel,
 } from "../src/lib/onboarding.ts";
 import { getGoals } from "../src/lib/goals.ts";
-import { itemTimestamp, mergeStoreValue, mergeStoreValueWithMetadata } from "../src/lib/supabase/sync.ts";
+import { SYNCED_STORES, configForKey, itemTimestamp, mergeStoreValue, mergeStoreValueWithMetadata } from "../src/lib/supabase/sync.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
@@ -1527,6 +1527,69 @@ console.log("\n--- Grammar conjugation section ---");
 }
 
 console.log("\n--- Supabase sync merge logic ---");
+{
+  const requiredConfigs = [
+    ["lire.customTexts.v1", "list-by-id", "id"],
+    ["lire.practiceCompleted.v1", "list-of-strings"],
+    ["lire.listeningPracticeCompleted.v1", "list-of-strings"],
+    ["lire.lookupStats.v1", "list-by-id", "textId"],
+    ["lire.sessionRecords.v1", "list-by-id", "textId"],
+    ["lire.translationReports.v1", "list-by-id", "id"],
+    ["lire.progression.cefrToLireLevel.v1", "object"],
+  ];
+  check(
+    "every pushed learning store is in the authoritative restore registry",
+    requiredConfigs.every(([key, kind, idField]) => {
+      const config = configForKey(key);
+      return config?.kind === kind && config.idField === idField;
+    }),
+    JSON.stringify(SYNCED_STORES.map((config) => config.key)),
+  );
+}
+{
+  const deviceA = [{ id: "custom-1", publishedAt: "2026-10-01T00:00:00Z" }];
+  const config = configForKey("lire.customTexts.v1");
+  const restoredOnDeviceB = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
+  check("custom imported texts round-trip from device A through sync to device B", restoredOnDeviceB?.value?.[0]?.id === "custom-1", JSON.stringify(restoredOnDeviceB?.value));
+}
+{
+  const config = configForKey("lire.sessionRecords.v1");
+  const deviceA = [{ textId: "article-1", completedAt: "2026-10-01T00:00:00Z", completionStatus: "completed" }];
+  const restoredOnDeviceB = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
+  check("session records round-trip from device A through sync to device B", restoredOnDeviceB?.value?.[0]?.textId === "article-1", JSON.stringify(restoredOnDeviceB?.value));
+}
+{
+  const cases = [
+    ["lire.practiceCompleted.v1", ["article-practice"], "article-practice"],
+    ["lire.listeningPracticeCompleted.v1", ["article-listening"], "article-listening"],
+    ["lire.lookupStats.v1", [{ textId: "article-lookup", completedAt: "2026-10-01T00:00:00Z" }], "article-lookup"],
+    ["lire.translationReports.v1", [{ id: "report-1", createdAt: "2026-10-01T00:00:00Z" }], "report-1"],
+  ];
+  for (const [key, deviceA, expectedId] of cases) {
+    const config = configForKey(key);
+    const restored = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
+    const first = restored?.value?.[0];
+    const restoredId = typeof first === "string" ? first : first?.textId ?? first?.id;
+    check(`${key} round-trips from device A through sync to device B`, restoredId === expectedId, JSON.stringify(restored?.value));
+  }
+}
+{
+  for (const [key, idField, id] of [
+    ["lire.customTexts.v1", "id", "custom-deleted"],
+    ["lire.translationReports.v1", "id", "report-deleted"],
+  ]) {
+    const config = configForKey(key);
+    const remote = [{ [idField]: id, createdAt: "2025-01-01T00:00:00Z" }];
+    const merged = config && mergeStoreValueWithMetadata(
+      config,
+      [],
+      remote,
+      { updatedAt: "2026-01-01T00:00:00Z", tombstones: { [id]: "2026-01-01T00:00:00Z" } },
+      { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { [id]: "2025-01-01T00:00:00Z" } },
+    );
+    check(`${key} deletion tombstone prevents remote resurrection`, merged?.value?.length === 0, JSON.stringify(merged?.value));
+  }
+}
 {
   check("itemTimestamp reads the latest of several timestamp-ish fields", itemTimestamp({ savedAt: "2020-01-01", lastReviewedAt: "2024-06-01" }) > itemTimestamp({ savedAt: "2020-01-01" }));
   check("itemTimestamp is 0 for a value with no timestamp fields", itemTimestamp({ word: "chat" }) === 0);

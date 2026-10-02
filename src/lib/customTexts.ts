@@ -1,7 +1,7 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { hashString } from "@/lib/hash";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
-import { pushStore } from "@/lib/supabase/sync";
+import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
 
 const KEY = "lire.customTexts.v1";
 const MAX_CUSTOM_TEXTS = 80;
@@ -87,6 +87,7 @@ export function saveCustomText(input: CustomTextInput): ReadingText {
 }
 
 export function deleteCustomText(id: string): ReadingText[] {
+  recordStoreDeletion(KEY, id);
   const next = read().filter((text) => text.id !== id);
   persist(next);
   return next;

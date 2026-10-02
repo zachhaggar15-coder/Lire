@@ -20,6 +20,8 @@ import type { DiagnosticMessage } from "@/lib/practice/diagnosticMessaging";
 import { useModalPresence } from "@/lib/modalPresence";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { triggerHaptic } from "@/lib/haptics";
+import { useAccess } from "@/lib/access/useAccess";
+import { canSaveWord } from "@/lib/access/accessModel";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -99,6 +101,8 @@ export default function LessonCompleteScreen({
   diagnostics,
   levelLabel,
 }: LessonCompleteScreenProps) {
+  const { context: access } = useAccess();
+  const saveAllowed = canSaveWord(access).allowed;
   useModalPresence(true);
   // This is the app's most-seen full-screen overlay — it needs the same
   // focus trap / background-inert / Escape-to-leave treatment every
@@ -273,12 +277,18 @@ export default function LessonCompleteScreen({
                       onClick={() => onToggleSave?.(item)}
                       disabled={!onToggleSave}
                       aria-pressed={item.saved}
-                      aria-label={item.saved ? `Remove ${item.french} from review` : `Save ${item.french} for review`}
+                      aria-label={
+                        item.saved
+                          ? `Remove ${item.french} from review`
+                          : saveAllowed
+                            ? `Save ${item.french} for review`
+                            : `Premium: save ${item.french} for review`
+                      }
                       className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${
                         item.saved ? "bg-brand text-cream" : "bg-cream-card text-ink-muted"
                       }`}
                     >
-                      {item.saved ? "Remove" : "Add to review"}
+                      {item.saved ? "Remove" : saveAllowed ? "Add to review" : "Premium · Add to review"}
                     </button>
                   </div>
                   {item.context && <p className="mt-1 line-clamp-2 text-xs italic leading-relaxed text-ink-muted">{item.context}</p>}

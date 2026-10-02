@@ -15,7 +15,12 @@ export interface SyncedStoreConfig {
   idField?: string;
 }
 
-const SYNCED_STORES: SyncedStoreConfig[] = [
+/**
+ * The authoritative allow-list for local data backed up to a signed-in
+ * reader's sync record. `pushStore` and restore both use this list so a new
+ * local feature cannot accidentally become push-only.
+ */
+export const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" },
   { key: "lire.knownWords.v1", kind: "list-of-strings" },
   { key: "lire.archive.v1", kind: "list-by-id", idField: "textId" },
@@ -25,6 +30,8 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   // run the migration can convert it to XP; nothing writes to it any more.
   { key: "lire.levelScore.v1", kind: "record" },
   { key: "lire.progress.lastOpened", kind: "object" },
+  { key: "lire.progression.cefrToLireLevel.v1", kind: "object" },
+  { key: "lire.customTexts.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },
   { key: "lire.interestProfile.v1", kind: "object" },
   { key: "lire.recommendation.hiddenSources.v1", kind: "list-of-strings" },
@@ -53,6 +60,11 @@ const SYNCED_STORES: SyncedStoreConfig[] = [
   { key: "lire.grammar.progress.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.grammar.practiceEvents.v1", kind: "list-by-id", idField: "id" },
   { key: "lire.validation.v1", kind: "object" },
+  { key: "lire.practiceCompleted.v1", kind: "list-of-strings" },
+  { key: "lire.listeningPracticeCompleted.v1", kind: "list-of-strings" },
+  { key: "lire.lookupStats.v1", kind: "list-by-id", idField: "textId" },
+  { key: "lire.sessionRecords.v1", kind: "list-by-id", idField: "textId" },
+  { key: "lire.translationReports.v1", kind: "list-by-id", idField: "id" },
 ];
 
 const LAST_SYNC_AT_KEY = "lire.sync.lastSuccessAt";
@@ -155,7 +167,7 @@ function writeStoreMetadata(key: string, metadata: StoreSyncMetadata): void {
   }
 }
 
-function configForKey(key: string): SyncedStoreConfig | undefined {
+export function configForKey(key: string): SyncedStoreConfig | undefined {
   return SYNCED_STORES.find((config) => config.key === key);
 }
 
@@ -429,6 +441,10 @@ export function mergeStoreValueWithMetadata(
 }
 
 export async function pushStore(key: string, options: { markLocalChange?: boolean } = {}): Promise<boolean> {
+  // Push and restore must be symmetric. Rejecting unknown keys here turns a
+  // missed registry entry into a visible no-op instead of silently creating
+  // data that another device can never restore.
+  if (!configForKey(key)) return false;
   const value = readLocal(key);
   const existingMetadata = readStoreMetadata(key);
   if (value === null && !existingMetadata.clearedAt) return false;

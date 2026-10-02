@@ -136,11 +136,11 @@ check(
   "tutorial and real word cards both offer a single primary review action",
   !files.tutorial.includes("<WordLearningActions") && !files.meaningSheet.includes("<WordLearningActions")
 );
-check(
-  "the real word card's review button toggles back off",
-  files.meaningSheet.includes("saved ? onUnsave?.() : onSave?.()") &&
-    files.meaningSheet.includes('saved ? "Remove from review" : "Add to review"')
-);
+  check(
+    "the real word card's review button toggles back off",
+    files.meaningSheet.includes("saved ? onUnsave?.() : onSave?.()") &&
+      files.meaningSheet.includes('saved ? "Remove from review"')
+  );
 check("the real word card closes with an X, not a Done label", files.meaningSheet.includes('aria-label="Close"'));
 check(
   "the real word card is viewport-bounded on mobile and web",
