@@ -4,17 +4,23 @@ import { verifyPlaySubscription } from "@/lib/premium/googlePlay";
 import { authenticatedUser } from "@/lib/premium/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
 
+const PRIVATE_NO_STORE = { "Cache-Control": "private, no-store, max-age=0" };
+
+function premiumStatusResponse(body: typeof FREE_PREMIUM_STATUS | { isPremium: boolean; status: string; expiresAt: string | null }, status = 200) {
+  return NextResponse.json(body, { status, headers: PRIVATE_NO_STORE });
+}
+
 export async function GET(request: Request) {
   const user = await authenticatedUser(request);
   const client = getSupabaseServiceClient();
-  if (!user || !client) return NextResponse.json(FREE_PREMIUM_STATUS, { status: user ? 503 : 401 });
+  if (!user || !client) return premiumStatusResponse(FREE_PREMIUM_STATUS, user ? 503 : 401);
 
   const { data } = await client
     .from("sorlio_subscriptions")
     .select("product_id,purchase_token,status,expires_at")
     .eq("user_id", user.id)
     .maybeSingle();
-  if (!data) return NextResponse.json(FREE_PREMIUM_STATUS);
+  if (!data) return premiumStatusResponse(FREE_PREMIUM_STATUS);
 
   try {
     const verified = await verifyPlaySubscription(data.purchase_token, data.product_id);
@@ -23,10 +29,10 @@ export async function GET(request: Request) {
       expires_at: verified.expiresAt,
       updated_at: new Date().toISOString(),
     }).eq("user_id", user.id);
-    return NextResponse.json({ isPremium: verified.isPremium, status: verified.status, expiresAt: verified.expiresAt });
+    return premiumStatusResponse({ isPremium: verified.isPremium, status: verified.status, expiresAt: verified.expiresAt });
   } catch {
     const expiresAt = data.expires_at as string | null;
     const active = ["active", "grace_period", "cancelled"].includes(data.status) && Boolean(expiresAt) && new Date(expiresAt!).getTime() > Date.now();
-    return NextResponse.json({ isPremium: active, status: active ? data.status : "expired", expiresAt });
+    return premiumStatusResponse({ isPremium: active, status: active ? data.status : "expired", expiresAt });
   }
 }

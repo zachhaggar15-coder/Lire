@@ -51,6 +51,7 @@ const analyticsClient = read("src/lib/analytics/client.ts");
 const feedbackClient = read("src/components/FeedbackModal.tsx");
 const researchClient = read("src/components/PostSessionResearchPrompt.tsx");
 const rateLimit = read("src/lib/server/rateLimit.ts");
+const premiumStatus = read("src/app/api/premium/status/route.ts");
 check("feedback uses a verified bearer identity", /authenticatedUser\(request\)/.test(feedback) && /user_id: user\?\.id \?\? null/.test(feedback));
 check("analytics ignores a body-supplied user id", /authenticatedUser\(request\)/.test(analytics) && !/event\.authenticatedUserId/.test(analytics));
 check("research ignores a body-supplied user id", /authenticatedUser\(request\)/.test(research) && !/clean\(body\.userId/.test(research));
@@ -79,6 +80,11 @@ check(
   !/headers\.get\(["']x-forwarded-for["']\)/.test(rateLimit) &&
     !/headers\.get\(["']x-real-ip["']\)/.test(rateLimit) &&
     /headers\.get\(["']x-vercel-forwarded-for["']\)/.test(rateLimit),
+);
+check(
+  "real Premium entitlement responses are private and never cached",
+  /Cache-Control.*private, no-store, max-age=0/.test(premiumStatus) &&
+    /premiumStatusResponse/.test(premiumStatus),
 );
 
 console.log("--- Feedback emails escape supplied text ---");
