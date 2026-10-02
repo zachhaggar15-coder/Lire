@@ -7,6 +7,8 @@ import {
 } from "../src/lib/rss/candidatePool.ts";
 import { RSS_LISTING_CDN_CACHE_CONTROL, getRssListingCacheHeaders } from "../src/lib/rss/rssDeliveryPolicy.ts";
 import { todayKey } from "../src/lib/rss/seededShuffle.ts";
+import { clampRssSelectionToLimit, parseLimit } from "../src/app/api/rss-texts/route.ts";
+import { readFileSync } from "node:fs";
 
 let passed = 0;
 let failed = 0;
@@ -54,6 +56,20 @@ check("browser responses require revalidation", headers["Cache-Control"], "publi
 check("Vercel CDN gets the shared RSS cache policy", headers["Vercel-CDN-Cache-Control"], RSS_LISTING_CDN_CACHE_CONTROL);
 check("CDN keeps a six-hour fresh window", RSS_LISTING_CDN_CACHE_CONTROL.includes("s-maxage=21600"), true);
 check("CDN can serve stale data during revalidation", RSS_LISTING_CDN_CACHE_CONTROL.includes("stale-while-revalidate=86400"), true);
+
+console.log("\n--- RSS request limits ---");
+const sample = Array.from({ length: 80 }, (_, index) => ({ id: `item-${index}` }));
+for (const limit of [1, 3, 5]) {
+  check(`limit=${limit} is a hard ceiling after backfill`, clampRssSelectionToLimit(sample, parseLimit(String(limit))).length, limit);
+}
+check("missing limit uses the documented default", clampRssSelectionToLimit(sample, parseLimit(null)).length, 5);
+check("oversized limit is capped at the maximum", clampRssSelectionToLimit(sample, parseLimit("500")).length, 50);
+check("fallback-sized input still respects limit=1", clampRssSelectionToLimit(sample.slice(0, 9), parseLimit("1")).length, 1);
+
+console.log("\n--- RSS fallback disclosure ---");
+const articleBrowser = readFileSync(new URL("../src/components/ArticleBrowserPage.tsx", import.meta.url), "utf8");
+check("fallback is explicitly described as non-current practice content", articleBrowser.includes("classic practice readings, not current reporting"), true);
+check("fallback copy does not promise disabled sources will recover", articleBrowser.includes("while live sources recover"), false);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exitCode = failed > 0 ? 1 : 0;

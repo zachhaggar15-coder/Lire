@@ -100,23 +100,27 @@ export function getCachedRssTextById(id: string): ReadingText | undefined {
  * languages" pool, so an app-open prefetch and the News tab's default view
  * can render instantly from it without risking a stale filtered subset.
  */
-export function cacheDefaultLiveNewsPool(texts: ReadingText[], poolBuiltAt: string | null): void {
+export function cacheDefaultLiveNewsPool(texts: ReadingText[], poolBuiltAt: string | null, servingFallback = false): void {
   if (!hasSessionStorage()) return;
   try {
-    window.sessionStorage.setItem(DEFAULT_POOL_KEY, JSON.stringify({ texts: sanitizeRssTexts(texts), poolBuiltAt }));
+    window.sessionStorage.setItem(DEFAULT_POOL_KEY, JSON.stringify({ texts: sanitizeRssTexts(texts), poolBuiltAt, servingFallback }));
   } catch {
     // Best-effort only; the News tab falls back to a normal fetch.
   }
 }
 
-export function getCachedDefaultLiveNewsPool(): { texts: ReadingText[]; poolBuiltAt: string | null } | null {
+export function getCachedDefaultLiveNewsPool(): { texts: ReadingText[]; poolBuiltAt: string | null; servingFallback: boolean } | null {
   if (!hasSessionStorage()) return null;
   try {
     const raw = window.sessionStorage.getItem(DEFAULT_POOL_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { texts?: unknown; poolBuiltAt?: unknown };
+    const parsed = JSON.parse(raw) as { texts?: unknown; poolBuiltAt?: unknown; servingFallback?: unknown };
     if (!Array.isArray(parsed.texts)) return null;
-    return { texts: sanitizeRssTexts(parsed.texts), poolBuiltAt: typeof parsed.poolBuiltAt === "string" ? parsed.poolBuiltAt : null };
+    return {
+      texts: sanitizeRssTexts(parsed.texts),
+      poolBuiltAt: typeof parsed.poolBuiltAt === "string" ? parsed.poolBuiltAt : null,
+      servingFallback: parsed.servingFallback === true,
+    };
   } catch {
     return null;
   }

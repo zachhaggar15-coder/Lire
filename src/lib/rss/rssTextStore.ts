@@ -82,6 +82,7 @@ export async function getPersistedRssText(id: string): Promise<ReadingText | nul
 
 const CANDIDATE_POOL_KEY_PREFIX = "lire:candidatePool:";
 const CURRENT_CANDIDATE_POOL_KEY = `${CANDIDATE_POOL_KEY_PREFIX}current`;
+const RSS_REFRESH_HEALTH_KEY = `${CANDIDATE_POOL_KEY_PREFIX}refresh-health`;
 const CANDIDATE_POOL_REFRESH_LOCK_KEY = `${CANDIDATE_POOL_KEY_PREFIX}refresh-lock`;
 const CANDIDATE_POOL_TTL_SECONDS = 60 * 60 * 24 * 7;
 const CANDIDATE_POOL_REFRESH_LOCK_SECONDS = 3 * 60;
@@ -90,6 +91,45 @@ export interface CandidatePoolPersistenceResult {
   ok: boolean;
   configured: boolean;
   reason: string;
+}
+
+export interface RssRefreshHealth {
+  attemptedAt: string;
+  lastSuccessfulRefreshAt: string | null;
+  feedsAttempted: number;
+  feedsSucceeded: number;
+  liveItemsAvailable: number;
+  status: "refreshed" | "rejected" | "failed";
+  reason: string;
+}
+
+export async function getRssRefreshHealth(): Promise<RssRefreshHealth | null> {
+  const redis = getClient();
+  if (!redis) return null;
+  try {
+    return (await redis.get<RssRefreshHealth>(RSS_REFRESH_HEALTH_KEY)) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Persists the latest attempt without erasing the timestamp of the last good promotion. */
+export async function recordRssRefreshHealth(
+  next: Omit<RssRefreshHealth, "lastSuccessfulRefreshAt"> & { successfulRefreshAt?: string | null },
+): Promise<void> {
+  const redis = getClient();
+  if (!redis) return;
+  try {
+    const previous = await redis.get<RssRefreshHealth>(RSS_REFRESH_HEALTH_KEY);
+    const { successfulRefreshAt, ...attempt } = next;
+    const value: RssRefreshHealth = {
+      ...attempt,
+      lastSuccessfulRefreshAt: successfulRefreshAt ?? previous?.lastSuccessfulRefreshAt ?? null,
+    };
+    await redis.set(RSS_REFRESH_HEALTH_KEY, value, { ex: CANDIDATE_POOL_TTL_SECONDS });
+  } catch {
+    // Health reporting must not prevent a valid pool from being promoted.
+  }
 }
 
 export function isRssPersistenceConfigured(): boolean {

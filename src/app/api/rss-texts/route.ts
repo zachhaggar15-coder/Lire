@@ -5,6 +5,7 @@ import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import {
   getCurrentPersistedCandidatePool,
   getPersistedCandidatePool,
+  getRssRefreshHealth,
   isRssPersistenceConfigured,
   putPersistedRssTexts,
 } from "@/lib/rss/rssTextStore";
@@ -29,7 +30,7 @@ import { getRssListingCacheHeaders } from "@/lib/rss/rssDeliveryPolicy";
  * timeout. The scheduled refresh (or an authenticated manual refresh) pays
  * this cost. User-facing requests only read a promoted pool or local fallback.
  */
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 /** How many texts a plain (unfiltered) request gets by default. */
 const DEFAULT_LIMIT = 5;
@@ -90,10 +91,14 @@ async function getCandidatePool(): Promise<CandidatePool> {
   return fallback;
 }
 
-function parseLimit(raw: string | null): number {
+export function parseLimit(raw: string | null): number {
   const n = Number(raw);
   if (!Number.isFinite(n) || n <= 0) return DEFAULT_LIMIT;
   return Math.min(MAX_LIMIT, Math.floor(n));
+}
+
+export function clampRssSelectionToLimit<T>(items: T[], limit: number): T[] {
+  return items.slice(0, Math.max(0, limit));
 }
 
 function isKnownCategory(value: string): value is Category {
@@ -133,9 +138,13 @@ async function backfillIfShort(
   selected: RssReadingText[],
   pool: CandidatePool,
   snippetParam: "all" | "only" | "exclude",
-  todayK: string
+  todayK: string,
+  requestedLimit: number
 ): Promise<RssReadingText[]> {
-  if (selected.length >= MIN_GUARANTEED_ARTICLES) return selected;
+  // A fallback may improve a thin generic list, but an API caller's limit is
+  // still a hard ceiling. This matters to compact surfaces and prefetches.
+  const targetCount = Math.min(MIN_GUARANTEED_ARTICLES, requestedLimit);
+  if (selected.length >= targetCount) return selected;
 
   const seenIds = new Set(selected.map((item) => item.id));
   const seenUrls = new Set(selected.map((item) => item.sourceUrl.trim().toLowerCase()));
@@ -143,7 +152,7 @@ async function backfillIfShort(
   const result = [...selected];
 
   function tryAdd(item: RssReadingText) {
-    if (result.length >= MIN_GUARANTEED_ARTICLES) return;
+    if (result.length >= targetCount) return;
     const urlKey = item.sourceUrl.trim().toLowerCase();
     const titleKey = item.title.trim().toLowerCase();
     if (seenIds.has(item.id) || seenUrls.has(urlKey) || seenTitles.has(titleKey)) return;
@@ -158,15 +167,15 @@ async function backfillIfShort(
   const yesterday = await getPersistedCandidatePool<CandidatePool>(previousDateKey(todayK));
   if (yesterday) {
     for (const item of seededShuffle(yesterday.items, `${todayK}::backfill::yesterday`)) {
-      if (result.length >= MIN_GUARANTEED_ARTICLES) break;
+      if (result.length >= targetCount) break;
       tryAdd(item);
     }
   }
 
-  if (result.length < MIN_GUARANTEED_ARTICLES) {
-    const bankTexts = getDailyExtraReadingTexts({ level: "B1", category: "all", limit: MIN_GUARANTEED_ARTICLES * 2 });
+  if (result.length < targetCount) {
+    const bankTexts = getDailyExtraReadingTexts({ level: "B1", category: "all", limit: targetCount * 2 });
     for (const text of bankTexts) {
-      if (result.length >= MIN_GUARANTEED_ARTICLES) break;
+      if (result.length >= targetCount) break;
       tryAdd(bankTextToRssReadingText(text, pool.builtAt));
     }
   }
@@ -191,7 +200,11 @@ export async function GET(request: Request) {
     return await handleGet(request);
   } catch (err) {
     if (isDev) console.error("GET /api/rss-texts failed unexpectedly:", err);
-    return NextResponse.json({ texts: [], fetchedAt: new Date().toISOString(), fewerThanRequested: true });
+    const isHealthCheck = new URL(request.url).searchParams.get("health") === "true";
+    return NextResponse.json(
+      { ok: false, texts: [], fetchedAt: new Date().toISOString(), fewerThanRequested: true, error: "RSS delivery failed." },
+      { status: isHealthCheck ? 503 : 200, headers: { "Cache-Control": "private, no-store, max-age=0" } },
+    );
   }
 }
 
@@ -295,13 +308,15 @@ async function handleGet(request: Request) {
   // deliberately narrowed category/language query is left exactly as
   // narrow as requested rather than diluted with backfill.
   if (categoryParam === "all" && languageParam === "all" && snippetParam !== "only") {
-    selected = await backfillIfShort(selected, pool, snippetParam, todayK);
+    selected = await backfillIfShort(selected, pool, snippetParam, todayK, limit);
   }
+  selected = clampRssSelectionToLimit(selected, limit);
 
   // Direct-link persistence runs after the response so it never delays the
   // page. The complete promoted pool is already shared through Redis.
   after(() => putPersistedRssTexts(selected.map(rssReadingTextToReadingText)));
 
+  const refreshHealth = includeHealth ? await getRssRefreshHealth() : null;
   const body = {
     texts: selected,
     fetchedAt: new Date().toISOString(),
@@ -318,17 +333,31 @@ async function handleGet(request: Request) {
     // and say so, instead of a reader just seeing thinner variety with no
     // explanation. See the degraded-sources banner in page.tsx.
     feedHealth: { feedsSucceeded: pool.feedsSucceeded, feedsFailed: pool.feedsFailed },
+    // This is intentionally present on ordinary reader requests too. A
+    // fallback pool is useful reading material, but it must never be framed
+    // as current reporting by the UI.
+    servingFallback: pool.isFallback === true,
     ...(refresh && { ok: true, refreshStatus, persistenceReason }),
     ...(includeHealth && {
       sourceHealth: pool.sourceHealth,
       sourceSummary: {
-        feedsSucceeded: pool.feedsSucceeded,
-        feedsFailed: pool.feedsFailed,
+        lastSuccessfulRefreshAt:
+          refreshHealth?.lastSuccessfulRefreshAt ?? (pool.isFallback ? null : new Date(pool.builtAt).toISOString()),
+        feedsAttempted: refreshHealth?.feedsAttempted ?? pool.feedsSucceeded + pool.feedsFailed,
+        feedsSucceeded: refreshHealth?.feedsSucceeded ?? pool.feedsSucceeded,
+        feedsFailed:
+          refreshHealth
+            ? Math.max(0, refreshHealth.feedsAttempted - refreshHealth.feedsSucceeded)
+            : pool.feedsFailed,
         itemsRejected: pool.itemsRejected,
         candidatePoolSize: pool.items.length,
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
         candidatePoolBuildDurationMs: pool.buildDurationMs ?? null,
         servingFallback: pool.isFallback === true,
+        liveItemsAvailable: refreshHealth?.liveItemsAvailable ?? (pool.isFallback ? 0 : pool.items.length),
+        lastRefreshAttemptAt: refreshHealth?.attemptedAt ?? null,
+        lastRefreshStatus: refreshHealth?.status ?? null,
+        lastRefreshReason: refreshHealth?.reason ?? null,
         persistenceConfigured: isRssPersistenceConfigured(),
       },
     }),
@@ -347,6 +376,9 @@ async function handleGet(request: Request) {
   };
 
   return NextResponse.json(body, {
-    headers: refresh || includeHealth ? undefined : getRssListingCacheHeaders(),
+    headers:
+      refresh || includeHealth || pool.isFallback
+        ? { "Cache-Control": "private, no-store, max-age=0" }
+        : getRssListingCacheHeaders(),
   });
 }

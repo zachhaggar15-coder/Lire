@@ -7,6 +7,7 @@ import {
   acquireCandidatePoolRefreshLock,
   isRssPersistenceConfigured,
   promotePersistedCandidatePool,
+  recordRssRefreshHealth,
   releaseCandidatePoolRefreshLock,
 } from "@/lib/rss/rssTextStore";
 
@@ -34,6 +35,7 @@ export type CandidatePoolRefreshResult =
  * it only if both the quality gate and the shared Redis readback succeed.
  */
 export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRefreshResult> {
+  const attemptedAt = new Date().toISOString();
   if (!isRssPersistenceConfigured()) {
     return {
       ok: false,
@@ -63,6 +65,14 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
     const pool = await buildCandidatePool();
     const validation = validateCandidatePoolForPromotion(pool);
     if (!validation.ok) {
+      await recordRssRefreshHealth({
+        attemptedAt,
+        feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
+        feedsSucceeded: pool.feedsSucceeded,
+        liveItemsAvailable: pool.items.length,
+        status: "rejected",
+        reason: validation.reason,
+      });
       return {
         ok: false,
         status: "rejected",
@@ -73,6 +83,14 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
 
     const persistence = await promotePersistedCandidatePool(pool.dateKey, pool);
     if (!persistence.ok) {
+      await recordRssRefreshHealth({
+        attemptedAt,
+        feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
+        feedsSucceeded: pool.feedsSucceeded,
+        liveItemsAvailable: pool.items.length,
+        status: "failed",
+        reason: persistence.reason,
+      });
       return {
         ok: false,
         status: "failed",
@@ -81,6 +99,15 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
       };
     }
 
+    await recordRssRefreshHealth({
+      attemptedAt,
+      successfulRefreshAt: new Date(pool.builtAt).toISOString(),
+      feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
+      feedsSucceeded: pool.feedsSucceeded,
+      liveItemsAvailable: pool.items.length,
+      status: "refreshed",
+      reason: persistence.reason,
+    });
     return {
       ok: true,
       status: "refreshed",
@@ -88,10 +115,19 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
       persistenceReason: persistence.reason,
     };
   } catch (error) {
+    const reason = error instanceof Error ? error.message : "RSS refresh failed unexpectedly";
+    await recordRssRefreshHealth({
+      attemptedAt,
+      feedsAttempted: 0,
+      feedsSucceeded: 0,
+      liveItemsAvailable: 0,
+      status: "failed",
+      reason,
+    });
     return {
       ok: false,
       status: "failed",
-      persistenceReason: error instanceof Error ? error.message : "RSS refresh failed unexpectedly",
+      persistenceReason: reason,
     };
   } finally {
     await releaseCandidatePoolRefreshLock(lock.token);

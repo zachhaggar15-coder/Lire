@@ -107,6 +107,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
   const [prefVersion, setPrefVersion] = useState(0);
   const [rssTexts, setRssTexts] = useState<ReadingText[]>([]);
   const [poolBuiltAt, setPoolBuiltAt] = useState<string | null>(null);
+  const [servingFallback, setServingFallback] = useState(false);
+  const [usingOfflineCache, setUsingOfflineCache] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isSlowLoading, setIsSlowLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
@@ -138,6 +140,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
         setState("loading");
         setSections(null);
         setRssTexts([]);
+        setServingFallback(false);
+        setUsingOfflineCache(false);
         setState("success");
         return;
       }
@@ -159,10 +163,14 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       if (hasCachedTexts && cachedDefaultPool) {
         setRssTexts(cachedDefaultPool.texts);
         setPoolBuiltAt(cachedDefaultPool.poolBuiltAt);
+        setServingFallback(cachedDefaultPool.servingFallback);
+        setUsingOfflineCache(false);
         setState("success");
       } else if (hasOfflineFallback) {
         setRssTexts(offlineFallback);
         setPoolBuiltAt(null);
+        setServingFallback(false);
+        setUsingOfflineCache(true);
         setState("success");
       } else {
         setState("loading");
@@ -181,16 +189,18 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
         const res = await fetch(`/api/rss-texts?${params.toString()}`, { signal: controller.signal });
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
-        const data: { texts: RssReadingText[]; poolBuiltAt?: string } = await res.json();
+        const data: { texts: RssReadingText[]; poolBuiltAt?: string; servingFallback?: boolean } = await res.json();
         if (cancelled) return;
 
         const nextRssTexts = data.texts.map(rssReadingTextToReadingText);
         cacheRssTexts(nextRssTexts);
-        if (isDefaultView) cacheDefaultLiveNewsPool(nextRssTexts, data.poolBuiltAt ?? null);
+        if (isDefaultView) cacheDefaultLiveNewsPool(nextRssTexts, data.poolBuiltAt ?? null, data.servingFallback === true);
         pruneStaleRssProgress(nextRssTexts.map((text) => text.id));
         detectAndRecordSkippedArticles(nextRssTexts.map((text) => ({ id: text.id, category: text.category })));
         setRssTexts(nextRssTexts);
         setPoolBuiltAt(data.poolBuiltAt ?? null);
+        setServingFallback(data.servingFallback === true);
+        setUsingOfflineCache(false);
         setState("success");
       } catch (error) {
         if (!cancelled) {
@@ -275,8 +285,12 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
     setSelectedLevel(level);
   }
 
-  const title = mode === "live" ? "News" : "Lessons";
-  const subtitle = mode === "live" ? "Three fresh picks a day, plus short snippets for a stretch." : "Follow one guided reading path.";
+  const title = mode === "live" ? (servingFallback ? "Readings" : "News") : "Lessons";
+  const subtitle = mode === "live"
+    ? servingFallback
+      ? "Classic French practice readings, clearly separated from current reporting."
+      : "Three current French reading picks a day, plus short snippets for a stretch."
+    : "Follow one guided reading path.";
 
   return (
     <div className={mode === "articles" ? "bg-cream" : "ligne-screen"}>
@@ -287,13 +301,13 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           </Link>
           <div className="mt-5 flex items-end justify-between gap-3">
             <div>
-              <p className="ligne-label">Current French</p>
+              <p className="ligne-label">{servingFallback ? "French practice" : "Current French"}</p>
               <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">{title}</h1>
               <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>
             </div>
             {poolBuiltAt && (
               <span className="shrink-0 rounded-full bg-cream-fill px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-muted">
-                Updated {formatUpdatedTime(poolBuiltAt)}
+                {servingFallback ? "Prepared" : "Updated"} {formatUpdatedTime(poolBuiltAt)}
               </span>
             )}
           </div>
@@ -320,7 +334,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       {state === "success" &&
         sections &&
         (mode === "live" ? (
-          <LiveNewsContent sections={sections} />
+          <LiveNewsContent sections={sections} servingFallback={servingFallback} usingOfflineCache={usingOfflineCache} />
         ) : (
           <LessonsContent
             sections={sections}
@@ -357,9 +371,9 @@ function ArticleLoadingState({ slow, onRetry }: { slow: boolean; onRetry: () => 
       <div className="h-28 animate-pulse rounded-card bg-cream-fill" />
       {slow && (
         <div className="ligne-card px-4 py-3">
-          <p className="text-sm font-semibold text-ink">Still fetching fresh articles.</p>
+          <p className="text-sm font-semibold text-ink">Still preparing your readings.</p>
           <div className="mt-2 flex items-center justify-between gap-3">
-            <p className="text-xs text-ink-muted">RSS sources can be slow during a refresh.</p>
+            <p className="text-xs text-ink-muted">This is taking longer than expected.</p>
             <button type="button" onClick={onRetry} className="ligne-pill shrink-0 bg-cream-fill text-ink-muted">
               Retry
             </button>
@@ -514,7 +528,15 @@ function LessonsContent({
   );
 }
 
-function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
+function LiveNewsContent({
+  sections,
+  servingFallback,
+  usingOfflineCache,
+}: {
+  sections: RecommendationSections;
+  servingFallback: boolean;
+  usingOfflineCache: boolean;
+}) {
   if (sections.dailyThree.length === 0) {
     return (
       <>
@@ -531,7 +553,22 @@ function LiveNewsContent({ sections }: { sections: RecommendationSections }) {
 
   return (
     <>
-      <ArticleSection title="Today's 3" subtitle="Real news when it's there, everyday French when it's not." articles={sections.dailyThree} variant="cards" />
+      {servingFallback && (
+        <p className="mb-4 rounded-2xl border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-950">
+          Live French news isn’t currently offered. These are classic practice readings, not current reporting.
+        </p>
+      )}
+      {usingOfflineCache && !servingFallback && (
+        <p className="mb-4 rounded-2xl border border-cream-dark bg-cream-card px-3 py-3 text-sm text-ink-muted">
+          Showing saved readings from this device because the network is unavailable.
+        </p>
+      )}
+      <ArticleSection
+        title="Today's 3"
+        subtitle={servingFallback ? "Classic French practice—not current reporting." : "Current French picks, refreshed from live sources."}
+        articles={sections.dailyThree}
+        variant="cards"
+      />
       <ShortSnippetsBlock defaultOpen />
     </>
   );

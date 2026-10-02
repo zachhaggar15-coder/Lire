@@ -23,8 +23,8 @@ export default function RssPrefetch() {
         const params = new URLSearchParams({ limit: String(DAILY_RSS_ARTICLE_LIMIT), snippets: "exclude" });
         const res = await fetch(`/api/rss-texts?${params.toString()}`, { signal: controller.signal });
         if (!res.ok) return;
-        const data: { texts: RssReadingText[]; poolBuiltAt?: string } = await res.json();
-        cacheDefaultLiveNewsPool(data.texts.map(rssReadingTextToReadingText), data.poolBuiltAt ?? null);
+        const data: { texts: RssReadingText[]; poolBuiltAt?: string; servingFallback?: boolean } = await res.json();
+        cacheDefaultLiveNewsPool(data.texts.map(rssReadingTextToReadingText), data.poolBuiltAt ?? null, data.servingFallback === true);
       } catch {
         // Best-effort prefetch; the News tab fetches fresh on its own if this fails.
       }

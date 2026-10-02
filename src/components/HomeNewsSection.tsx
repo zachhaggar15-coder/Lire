@@ -26,6 +26,7 @@ function sourceMeta(text: ReadingText): string {
 
 export default function HomeNewsSection() {
   const [articles, setArticles] = useState<ReadingText[] | null>(null);
+  const [servingFallback, setServingFallback] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function HomeNewsSection() {
         });
         const res = await fetch(`/api/rss-texts?${params.toString()}`);
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
-        const data: { texts: RssReadingText[] } = await res.json();
+        const data: { texts: RssReadingText[]; servingFallback?: boolean } = await res.json();
         if (cancelled) return;
 
         const hiddenSources = new Set(getHiddenSources());
@@ -51,6 +52,7 @@ export default function HomeNewsSection() {
 
         cacheRssTexts(texts);
         setArticles(texts);
+        setServingFallback(data.servingFallback === true);
       } catch {
         if (!cancelled) setArticles([]);
       }
@@ -75,9 +77,15 @@ export default function HomeNewsSection() {
           className="flex w-full items-center gap-3 p-4 text-left"
         >
           <span className="min-w-0 flex-1">
-            <span className="block text-sm font-semibold uppercase tracking-wide text-ink-muted">Today&apos;s News</span>
+            <span className="block text-sm font-semibold uppercase tracking-wide text-ink-muted">
+              {servingFallback ? "Today’s reading" : "Today’s News"}
+            </span>
             <span className="mt-0.5 block truncate text-xs text-ink-muted">
-              {articles === null ? "Preparing fresh articles" : `${readyCount} fresh article${readyCount === 1 ? "" : "s"} ready`}
+              {articles === null
+                ? "Preparing French readings"
+                : servingFallback
+                  ? `${readyCount} classic practice reading${readyCount === 1 ? "" : "s"} ready`
+                  : `${readyCount} fresh article${readyCount === 1 ? "" : "s"} ready`}
             </span>
           </span>
           <span className="shrink-0 rounded-full bg-brand-light px-2.5 py-1 text-xs font-bold text-brand">
@@ -100,7 +108,7 @@ export default function HomeNewsSection() {
               <div className="h-20 animate-pulse rounded-2xl bg-cream-dark" />
             </div>
           ) : articles.length === 0 ? (
-            <p className="px-1 pt-3 text-sm font-semibold text-ink-muted">No fresh articles are ready yet.</p>
+            <p className="px-1 pt-3 text-sm font-semibold text-ink-muted">No readings are ready yet.</p>
           ) : (
             <>
               <div className="divide-y divide-cream-dark rounded-2xl border border-cream-dark bg-cream/60">
@@ -120,7 +128,7 @@ export default function HomeNewsSection() {
                 ))}
               </div>
               <Link href="/live-news" className="mt-3 inline-flex text-xs font-bold text-brand underline underline-offset-2">
-                More news
+                {servingFallback ? "More readings" : "More news"}
               </Link>
             </>
           )}
