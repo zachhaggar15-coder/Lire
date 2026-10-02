@@ -150,10 +150,10 @@ export function normalizeWhitespace(text: string): string {
     .trim();
 }
 
-/** Full pipeline: strip tags, decode entities, drop known boilerplate lines, collapse whitespace. */
+/** Full pipeline: decode entities before stripping tags so escaped RSS HTML cannot leak into previews. */
 export function cleanRssText(raw: string): string {
   return normalizeWhitespace(
-    stripSourceBoilerplate(stripTrailingPromoSections(stripKnownBoilerplateLines(decodeHtmlEntities(stripHtml(raw)))))
+    stripSourceBoilerplate(stripTrailingPromoSections(stripKnownBoilerplateLines(stripHtml(decodeHtmlEntities(raw)))))
   );
 }
 

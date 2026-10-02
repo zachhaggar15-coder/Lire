@@ -45,6 +45,8 @@ measures remain insufficient.
 
 const SHORT_FRENCH_TEASER = `Le gouvernement annonce de nouvelles mesures pour le climat.`;
 
+const ESCAPED_RSS_HTML = `&lt;p&gt;Le service public annonce une nouvelle mesure.&lt;/p&gt;&lt;p&gt;Les démarches sont expliquées clairement.&lt;/p&gt;`;
+
 const GOOD_FRENCH_ARTICLE = `
 La ville de Lyon a inauguré hier son nouveau tramway, un projet qui aura
 coûté plus de deux cents millions d'euros. Les habitants du quartier se
@@ -161,6 +163,11 @@ console.log("--- Language detection ---");
 }
 
 console.log("\n--- Content quality ---");
+{
+  const cleaned = cleanRssText(ESCAPED_RSS_HTML);
+  check("escaped RSS HTML tags do not leak into reader previews", /<\/?p>/i.test(cleaned), false);
+  check("text inside escaped RSS HTML is preserved", cleaned.includes("nouvelle mesure"), true);
+}
 {
   const q = analyseContentQuality(SHORT_FRENCH_TEASER);
   console.log(`  Short French teaser -> ${q.wordCount} words, quality=${q.quality} — ${q.reason}`);
