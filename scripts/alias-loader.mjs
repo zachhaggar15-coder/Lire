@@ -10,6 +10,12 @@ import path from "node:path";
 const rootDir = path.resolve(import.meta.dirname, "..");
 
 export async function resolve(specifier, context, nextResolve) {
+  // Node's ESM resolver does not add the extension for this public Next.js
+  // entry point, while Next's bundler does. Route-level regression tests use
+  // the same implementation by resolving the package's explicit ESM file.
+  if (specifier === "next/server") {
+    return nextResolve("next/server.js", context);
+  }
   if (specifier.startsWith("@/")) {
     const target = path.join(rootDir, "src", specifier.slice(2) + ".ts");
     return nextResolve(pathToFileURL(target).href, context);

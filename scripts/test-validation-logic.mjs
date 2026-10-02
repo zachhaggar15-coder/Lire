@@ -11,6 +11,8 @@ import {
 import { emptyValidationState } from "../src/lib/validation/state.ts";
 import { applyAttribution, attributionFromUrl } from "../src/lib/analytics/attribution.ts";
 import { mergeAndroidBetaMetadata, normalizeAndroidBetaInput } from "../src/lib/beta/android.ts";
+import { normalizeFeedbackInput } from "../src/lib/feedback/types.ts";
+import { sanitizeResearchContext } from "../src/lib/validation/research.ts";
 
 function check(name, condition) {
   assert.ok(condition, name);
@@ -94,6 +96,57 @@ check(
 check(
   "analytics sanitizer drops sensitive text payload keys",
   !("body" in sanitizeAnalyticsPayload({ body: "full article text", articleId: "a1" }))
+);
+check(
+  "analytics rejects caller-supplied account identity fields",
+  !validateAnalyticsPayload("app_opened", { userId: "forged-account" }).ok
+);
+check(
+  "analytics rejects oversized property sets and arrays",
+  !validateAnalyticsPayload("app_opened", Object.fromEntries(Array.from({ length: 41 }, (_, index) => [`k${index}`, index]))).ok &&
+    !validateAnalyticsPayload("app_opened", { values: Array.from({ length: 26 }, (_, index) => index) }).ok
+);
+check(
+  "analytics sanitizer bounds arrays, strings, and property count",
+  (() => {
+    const sanitized = sanitizeAnalyticsPayload({
+      values: Array.from({ length: 30 }, () => "x".repeat(600)),
+      ...Object.fromEntries(Array.from({ length: 45 }, (_, index) => [`k${index}`, index])),
+    });
+    const values = sanitized.values;
+    return Object.keys(sanitized).length === 40 &&
+      Array.isArray(values) && values.length === 25 &&
+      values.every((value) => typeof value !== "string" || value.length === 500);
+  })()
+);
+
+const spoofedFeedback = normalizeFeedbackInput({
+  category: "other",
+  page: "/",
+  feature: "test",
+  userId: "forged-user-id",
+});
+check(
+  "feedback normalization drops caller-supplied account identities",
+  spoofedFeedback.ok && !("userId" in spoofedFeedback.value)
+);
+
+const researchContext = sanitizeResearchContext({
+  articleId: ` article-${"x".repeat(200)} `,
+  articlesStarted: 2.9,
+  currentStreak: 2_000_000,
+  isReturningUser: true,
+  nested: { secret: "do not store" },
+  unexpected: "do not store",
+});
+check(
+  "research context keeps only bounded allowlisted values",
+  researchContext.articleId.length === 160 &&
+    researchContext.articlesStarted === 2 &&
+    researchContext.currentStreak === 1_000_000 &&
+    researchContext.isReturningUser === true &&
+    !("nested" in researchContext) &&
+    !("unexpected" in researchContext)
 );
 
 console.log("\n--- Android beta input normalization ---");

@@ -1,9 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { getSupabaseClient } from '@/lib/supabase/client';
+import { useCallback, useEffect, useState } from "react";
 
-/** Mirrors public.sorlio_feedback in supabase/migrations/0005_feedback_and_research.sql. */
 interface FeedbackRow {
   id: string;
   user_id: string | null;
@@ -21,117 +19,85 @@ interface FeedbackRow {
   created_at: string;
 }
 
+type FeedbackResponse = { ok: true; feedback: FeedbackRow[] } | { ok: false; error: string };
+
+/** Internal feedback viewer. Records are read only through an authenticated server route. */
 export default function FeedbackDashboard() {
-  const [feedback, setFeedback] = useState<FeedbackRow[]>([]);
+  const [feedback, setFeedback] = useState<FeedbackRow[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function loadFeedback() {
-      try {
-        const supabase = getSupabaseClient();
-        if (!supabase) {
-          setError('Supabase is not configured.');
-          return;
-        }
-        const { data, error: err } = await supabase
-          .from('sorlio_feedback')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(100);
-
-        if (err) {
-          setError(err.message);
-          return;
-        }
-
-        setFeedback(data || []);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Failed to load feedback');
-      } finally {
-        setLoading(false);
+  const loadFeedback = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/admin/feedback?limit=100", {
+        cache: "no-store",
+      });
+      const payload = (await response.json()) as FeedbackResponse;
+      if (!response.ok || !payload.ok) {
+        setFeedback(null);
+        setError(payload.ok ? "Feedback could not be loaded." : payload.error);
+        return;
       }
+      setFeedback(payload.feedback);
+    } catch {
+      setFeedback(null);
+      setError("Feedback could not be loaded. Check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
-
-    loadFeedback();
   }, []);
 
-  if (loading) return <div className="p-6">Loading feedback...</div>;
-  if (error) return <div className="p-6 text-red-600">Error: {error}</div>;
+  useEffect(() => {
+    void loadFeedback();
+  }, [loadFeedback]);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Feedback ({feedback.length})</h1>
+    <main className="p-6">
+      <header className="mb-6">
+        <p className="text-xs font-bold uppercase tracking-wide text-brand">Admin</p>
+        <h1 className="mt-1 text-2xl font-bold">Feedback{feedback ? ` (${feedback.length})` : ""}</h1>
+      </header>
 
-      <div className="space-y-4">
-        {feedback.map((item) => (
-          <div key={item.id} className="border rounded-lg p-4 bg-cream-card">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <p className="font-semibold text-lg">{item.category}</p>
-                <p className="text-sm text-gray-600">
-                  {new Date(item.created_at).toLocaleString()} • {item.app_version}
-                </p>
+      <button type="button" onClick={() => void loadFeedback()} disabled={loading} className="mb-6 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-cream disabled:opacity-50">
+        {loading ? "Loading…" : "Refresh"}
+      </button>
+
+      {error && <p role="alert" className="mb-5 rounded-xl bg-rose-100 px-4 py-3 text-sm font-semibold text-rose-700">{error}</p>}
+      {feedback?.length === 0 && !loading && !error && <p className="text-sm text-ink-muted">No feedback has been received yet.</p>}
+
+      {feedback && feedback.length > 0 && (
+        <div className="space-y-4">
+          {feedback.map((item) => (
+            <article key={item.id} className="rounded-lg border bg-cream-card p-4">
+              <div className="mb-3 flex items-start justify-between">
+                <div>
+                  <p className="text-lg font-semibold">{item.category}</p>
+                  <p className="text-sm text-gray-600">{new Date(item.created_at).toLocaleString()} • {item.app_version}</p>
+                </div>
+                {item.sentiment && <span className="rounded bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">{item.sentiment}</span>}
               </div>
-              <div className="flex gap-2">
-                {item.sentiment && (
-                  <span
-                    className={`px-3 py-1 rounded text-sm font-medium ${
-                      item.sentiment === 'positive'
-                        ? 'bg-green-100 text-green-700'
-                        : item.sentiment === 'negative'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-gray-100 text-gray-700'
-                    }`}
-                  >
-                    {item.sentiment}
-                  </span>
-                )}
+              <div className="mb-4 grid grid-cols-2 gap-4 text-sm">
+                {item.page && <Detail label="Page" value={item.page} monospace />}
+                {item.feature && <Detail label="Feature" value={item.feature} />}
+                {item.affected_term && <Detail label="Affected term" value={item.affected_term} monospace />}
+                {item.article_id && <Detail label="Article" value={item.article_id} monospace />}
               </div>
-            </div>
+              {item.comment && <p className="whitespace-pre-wrap rounded bg-gray-50 p-3 text-sm">{item.comment}</p>}
+            </article>
+          ))}
+        </div>
+      )}
+    </main>
+  );
+}
 
-            <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-              {item.page && (
-                <div>
-                  <p className="text-gray-600">Page:</p>
-                  <p className="font-mono text-xs">{item.page}</p>
-                </div>
-              )}
-              {item.feature && (
-                <div>
-                  <p className="text-gray-600">Feature:</p>
-                  <p>{item.feature}</p>
-                </div>
-              )}
-              {item.affected_term && (
-                <div>
-                  <p className="text-gray-600">Affected Term:</p>
-                  <p className="font-mono">{item.affected_term}</p>
-                </div>
-              )}
-              {item.article_id && (
-                <div>
-                  <p className="text-gray-600">Article:</p>
-                  <p className="font-mono text-xs">{item.article_id}</p>
-                </div>
-              )}
-            </div>
-
-            {item.comment && (
-              <div className="bg-gray-50 p-3 rounded mb-3">
-                <p className="text-sm text-gray-600 mb-1">Comment:</p>
-                <p className="whitespace-pre-wrap">{item.comment}</p>
-              </div>
-            )}
-
-            <div className="text-xs text-gray-500 flex gap-4">
-              {item.user_id && <span>User: {item.user_id}</span>}
-              {item.anonymous_id && <span>Anon: {item.anonymous_id}</span>}
-              {item.session_id && <span>Session: {item.session_id}</span>}
-            </div>
-          </div>
-        ))}
-      </div>
+function Detail({ label, value, monospace = false }: { label: string; value: string; monospace?: boolean }) {
+  return (
+    <div>
+      <p className="text-gray-600">{label}:</p>
+      <p className={monospace ? "font-mono text-xs" : ""}>{value}</p>
     </div>
   );
 }

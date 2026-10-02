@@ -5,6 +5,7 @@ import { trackEvent } from "@/lib/analytics/client";
 import { getBrowserSession } from "@/lib/analytics/session";
 import { peekAnonymousId } from "@/lib/analytics/identity";
 import { FEEDBACK_CATEGORIES, type FeedbackCategory } from "@/lib/feedback/types";
+import { getOptionalBearerHeaders } from "@/lib/supabase/auth";
 import BottomSheet from "@/components/BottomSheet";
 
 const LABELS: Record<FeedbackCategory, string> = {
@@ -80,9 +81,10 @@ export default function FeedbackModal({
     }
     setState("submitting");
     setMessage(null);
+    const bearerHeaders = await getOptionalBearerHeaders();
     const response = await fetch("/api/feedback", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...bearerHeaders },
       body: JSON.stringify({
         category,
         sentiment: category === "useful" ? "positive" : category === "other" ? "neutral" : "negative",

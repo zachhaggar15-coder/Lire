@@ -26,7 +26,6 @@ export interface FeedbackInput {
   comment?: string | null;
   sessionId?: string | null;
   anonymousId?: string | null;
-  userId?: string | null;
 }
 
 const CATEGORY_SET = new Set<string>(FEEDBACK_CATEGORIES);
@@ -53,7 +52,6 @@ export function normalizeFeedbackInput(input: unknown): { ok: true; value: Feedb
       comment: clean(raw.comment, 2000),
       sessionId: clean(raw.sessionId, 160),
       anonymousId: clean(raw.anonymousId, 160),
-      userId: clean(raw.userId, 160),
     },
   };
 }

@@ -12,6 +12,13 @@ Sorlio's Android app is a Trusted Web Activity for `https://sorlio.site`.
 
 Signing material must never be committed. Create or select the upload key locally, then configure Play App Signing in Play Console. Set `ANDROID_APP_SHA256_CERT_FINGERPRINT` in the production deployment to the SHA-256 fingerprint from Play Console's **App integrity > App signing key certificate**. If testing a locally signed build before Play signing, add both fingerprints as a comma-separated value.
 
+`android/twa-manifest.json` deliberately keeps `fingerprints` as `[]`: it is
+not the source of truth for website verification. The deployed
+`/.well-known/assetlinks.json` route reads the production variable at request
+time. Before each Play upload, verify the deployed endpoint contains the Play
+App Signing fingerprint and the package `app.sorlio.reader`; do not copy a
+certificate into the manifest, where it would drift from the live association.
+
 The asset-links endpoint intentionally returns an empty valid array until a fingerprint is configured. This prevents an incorrect certificate from being asserted in production.
 
 ## Premium subscription setup
@@ -28,24 +35,23 @@ Premium purchases require the existing passwordless Sorlio account. This is inte
 
 ## Temporary closed-test Premium access
 
-This is testing infrastructure, not a subscription. It is disabled by default and never writes a Play Billing record, Supabase subscription row, receipt, or account entitlement.
+Temporary Premium is disabled and fails closed. The earlier web-only mechanism
+trusted TWA-shaped request metadata; raw HTTP clients can forge those headers,
+so the issuer and activation route were removed. The status endpoint always
+returns `active: false` and expires any cookie from the retired mechanism.
 
-To enable it for the Android closed-test window only, set these **Production** Vercel variables and redeploy:
-
-- `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS=true`
-- `CLOSED_TEST_PREMIUM_COOKIE_SECRET=<a unique random value of at least 32 characters>`
-
-Both conditions are required at runtime: the public flag must be enabled, and the user must have a signed, HttpOnly cookie issued from the existing `android-app://app.sorlio.reader` TWA launch signal. The proxy uses the navigation referrer where the edge preserves it; where a TWA exposes that signal only through `document.referrer`, the app sends it to a same-origin activation endpoint for the same cookie issuance. A normal browser visitor does not receive that cookie through normal use and stays on the usual free/Premium model. The cookie is temporary, expires after seven days, and becomes unusable immediately when the public flag is disabled.
-
-Closed testers see a Settings notice stating that Premium features are unlocked for testing and that the access is not a subscription. This includes the normal UI gates and, while the signed test cookie is valid, the AI routes; test AI requests remain rate-limited by their temporary signed principal. Real subscriptions and their server-side, database-backed quota path remain unchanged.
-
-> **REMOVE/DISABLE CLOSED-TEST PREMIUM ACCESS BEFORE PUBLIC PRODUCTION LAUNCH.** Set `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS=false` (or remove it), redeploy Production, then verify `/api/closed-test-premium/status` returns `{ "active": false }` from the Android app and that the Settings notice is gone. Remove `CLOSED_TEST_PREMIUM_COOKIE_SECRET` after that verification.
+Do not re-enable `NEXT_PUBLIC_CLOSED_TEST_PREMIUM_ACCESS` or reuse
+`CLOSED_TEST_PREMIUM_COOKIE_SECRET`. Safe tester-specific access requires a
+future Android binary to provide server-verifiable native proof (for example,
+an authenticated tester allow-list backed by Play Integrity). Until then,
+closed testers use the ordinary guest/free/subscription rules. No fake Play
+purchase or Supabase subscription is created.
 
 ## Closed-test update log
 
 ### 2026-10-01 — Update 1: saved words, onboarding, and sign-out
 
-This web-only controlled update keeps the existing temporary closed-test Premium entitlement enabled and does not change the Android wrapper, package, version code, or version name.
+At the time it shipped, this web-only controlled update kept the then-existing temporary closed-test Premium entitlement enabled and did not change the Android wrapper, package, version code, or version name. That temporary entitlement has since been retired as described above; this entry is retained only as historical release context.
 
 Implementation commit: `6df5980` (`Fix saved-word review flow and sign-out`).
 
@@ -101,8 +107,8 @@ To confirm the project compiles without creating or using signing secrets, run `
 | Setting | Value | Where |
 | --- | --- | --- |
 | Package ID | `app.sorlio.reader` | `android/app/build.gradle`, `android/twa-manifest.json` |
-| Version code | `1` | `android/app/build.gradle` |
-| Version name | `1.0.0` | `android/app/build.gradle` |
+| Version code | `8` | `android/app/build.gradle`, `android/twa-manifest.json` |
+| Version name | `1.0.3` | `android/app/build.gradle`, `android/twa-manifest.json` |
 | Launcher name | `Sorlio` | `android/twa-manifest.json` |
 | Full name | `Sorlio — French Reader` | `android/twa-manifest.json`, `public/manifest.json` |
 | Signing alias | `sorlio-upload` | `android/twa-manifest.json` |
@@ -117,9 +123,8 @@ the permission is never requested at runtime; if Play review asks, that is the
 answer.
 
 Version code must increase on every upload. Version name is what readers see.
-For the first release, `versionCode 1` / `versionName 1.0.0` is correct; bump
-`versionCode` by one for each subsequent upload even if the version name is
-unchanged.
+Bump `versionCode` by one for each subsequent upload even if the version name
+is unchanged.
 
 Before the first Play upload, confirm the package ID and app name. **The package
 ID can never be changed once the app exists in Play Console** — this is why

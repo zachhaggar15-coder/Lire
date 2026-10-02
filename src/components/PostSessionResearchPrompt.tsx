@@ -9,6 +9,7 @@ import { peekAnonymousId } from "@/lib/analytics/identity";
 import { getBrowserSession } from "@/lib/analytics/session";
 import { buildValidationBehaviourContext } from "@/lib/validation/context";
 import { getValidationState, markPromptAnswered, markPromptDismissed } from "@/lib/validation/state";
+import { getOptionalBearerHeaders } from "@/lib/supabase/auth";
 
 type PromptKind = "android" | "session_reaction" | "return_reason" | "disappearance";
 
@@ -71,9 +72,10 @@ export default function PostSessionResearchPrompt({ articleId }: { articleId: st
           : `${promptType}-${today}`;
     markPromptAnswered(answeredId);
     const context = buildValidationBehaviourContext();
+    const bearerHeaders = await getOptionalBearerHeaders();
     await fetch("/api/research-prompts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...bearerHeaders },
       body: JSON.stringify({
         promptType,
         response,

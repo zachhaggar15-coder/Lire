@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { authenticatedUser } from "@/lib/premium/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
-import { closedTestPremiumGrant } from "@/lib/closedTestPremiumServer";
-import { rateLimit } from "@/lib/server/rateLimit";
 
 /**
  * The gate in front of every AI route.
@@ -71,28 +69,6 @@ async function hasActivePremium(client: SupabaseClient, userId: string): Promise
  * repeatedly by triggering failures.
  */
 export async function requirePaidAiCaller(request: Request): Promise<AiGateResult> {
-  // A temporary grant is a signed, HttpOnly cookie that proxy.ts issues only
-  // on an Android TWA document launch. It is intentionally checked before the
-  // normal account branch because closed testers need not identify themselves.
-  // Unlike a subscription, it is never stored in Supabase or Play Billing.
-  const closedTestGrant = await closedTestPremiumGrant(request);
-  if (closedTestGrant) {
-    // Anonymous test access cannot use the auth.users-backed SQL quota. Keep
-    // the same daily ceiling against the signed ephemeral principal instead.
-    // This is deliberately an additional guard, not a substitute for the
-    // signed TWA grant; the entitlement stops instantly when the flag is off.
-    if (!rateLimit(`closed-test-ai:${closedTestGrant.principal}`, dailyAiCallLimit(), 24 * 60 * 60 * 1000)) {
-      return {
-        ok: false,
-        response: NextResponse.json(
-          { error: "You have reached today's AI limit. It resets tomorrow.", code: "rate_limited" },
-          { status: 429 }
-        ),
-      };
-    }
-    return { ok: true, caller: { entitlement: "closed-test", userId: null, client: null } };
-  }
-
   const client = getSupabaseServiceClient();
   if (!client) {
     return {

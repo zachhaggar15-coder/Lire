@@ -77,7 +77,6 @@ export interface AnalyticsEvent {
   name: AnalyticsEventName;
   payload: AnalyticsPayload;
   anonymousId: string | null;
-  authenticatedUserId?: string | null;
   sessionId: string;
   createdAt: string;
   appVersion: string;
@@ -85,6 +84,10 @@ export interface AnalyticsEvent {
 }
 
 const NAME_SET = new Set<string>(ANALYTICS_EVENT_NAMES);
+const MAX_PAYLOAD_PROPERTIES = 40;
+const MAX_PROPERTY_NAME_LENGTH = 80;
+const MAX_STRING_LENGTH = 500;
+const MAX_ARRAY_LENGTH = 25;
 const BANNED_KEYS = new Set([
   "articleBody",
   "body",
@@ -99,6 +102,12 @@ const BANNED_KEYS = new Set([
   "comment",
   "note",
   "personalText",
+  "userId",
+  "user_id",
+  "authenticatedUserId",
+  "authenticated_user_id",
+  "accountId",
+  "account_id",
 ]);
 
 const REQUIRED_KEYS: Partial<Record<AnalyticsEventName, string[]>> = {
@@ -113,10 +122,23 @@ const REQUIRED_KEYS: Partial<Record<AnalyticsEventName, string[]>> = {
   feedback_submitted: ["category"],
 };
 
-function isAllowedValue(value: unknown): boolean {
-  if (value == null) return true;
-  if (["string", "number", "boolean"].includes(typeof value)) return true;
-  return Array.isArray(value) && value.every((item) => item == null || ["string", "number", "boolean"].includes(typeof item));
+function isAllowedPrimitive(value: unknown): value is AnalyticsPrimitive {
+  if (value === null) return true;
+  if (typeof value === "number") return Number.isFinite(value);
+  return typeof value === "string" || typeof value === "boolean";
+}
+
+function isAllowedValue(value: unknown): value is AnalyticsPrimitive | AnalyticsPrimitive[] {
+  if (isAllowedPrimitive(value)) return true;
+  return Array.isArray(value) && value.length <= MAX_ARRAY_LENGTH && value.every(isAllowedPrimitive);
+}
+
+function isSanitizableValue(value: unknown): value is AnalyticsPrimitive | AnalyticsPrimitive[] {
+  return isAllowedPrimitive(value) || (Array.isArray(value) && value.every(isAllowedPrimitive));
+}
+
+function isOversizedString(value: AnalyticsPrimitive): boolean {
+  return typeof value === "string" && value.length > MAX_STRING_LENGTH;
 }
 
 export function isAnalyticsEventName(name: string): name is AnalyticsEventName {
@@ -124,16 +146,28 @@ export function isAnalyticsEventName(name: string): name is AnalyticsEventName {
 }
 
 export function validateAnalyticsPayload(name: AnalyticsEventName, payload: AnalyticsPayload = {}): { ok: true } | { ok: false; error: string } {
+  const entries = Object.entries(payload);
+  if (entries.length > MAX_PAYLOAD_PROPERTIES) {
+    return { ok: false, error: "Analytics payload contains too many properties." };
+  }
   const required = REQUIRED_KEYS[name] ?? [];
   for (const key of required) {
     if (payload[key] === undefined || payload[key] === null || payload[key] === "") {
       return { ok: false, error: `Missing required analytics property: ${key}` };
     }
   }
-  for (const [key, value] of Object.entries(payload)) {
+  for (const [key, value] of entries) {
+    if (key.length === 0 || key.length > MAX_PROPERTY_NAME_LENGTH) {
+      return { ok: false, error: "Analytics payload contains an invalid property name." };
+    }
     if (BANNED_KEYS.has(key)) return { ok: false, error: `Analytics payload contains banned property: ${key}` };
     if (!isAllowedValue(value)) return { ok: false, error: `Analytics payload contains unsupported value for: ${key}` };
-    if (typeof value === "string" && value.length > 500) return { ok: false, error: `Analytics payload property is too long: ${key}` };
+    if (Array.isArray(value) && value.some(isOversizedString)) {
+      return { ok: false, error: `Analytics payload property contains an oversized value: ${key}` };
+    }
+    if (!Array.isArray(value) && isOversizedString(value)) {
+      return { ok: false, error: `Analytics payload property is too long: ${key}` };
+    }
   }
   return { ok: true };
 }
@@ -141,9 +175,20 @@ export function validateAnalyticsPayload(name: AnalyticsEventName, payload: Anal
 export function sanitizeAnalyticsPayload(payload: AnalyticsPayload = {}): AnalyticsPayload {
   const out: AnalyticsPayload = {};
   for (const [key, value] of Object.entries(payload)) {
-    if (BANNED_KEYS.has(key) || value === undefined || !isAllowedValue(value)) continue;
-    if (typeof value === "string") out[key] = value.slice(0, 500);
-    else out[key] = value;
+    if (Object.keys(out).length >= MAX_PAYLOAD_PROPERTIES) break;
+    if (
+      key.length === 0 ||
+      key.length > MAX_PROPERTY_NAME_LENGTH ||
+      BANNED_KEYS.has(key) ||
+      value === undefined ||
+      !isSanitizableValue(value)
+    ) continue;
+    if (typeof value === "string") out[key] = value.slice(0, MAX_STRING_LENGTH);
+    else if (Array.isArray(value)) {
+      out[key] = value
+        .slice(0, MAX_ARRAY_LENGTH)
+        .map((item) => typeof item === "string" ? item.slice(0, MAX_STRING_LENGTH) : item);
+    } else out[key] = value;
   }
   return out;
 }

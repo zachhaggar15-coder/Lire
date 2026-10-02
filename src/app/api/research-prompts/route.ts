@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
 import { clientIp, rateLimit } from "@/lib/server/rateLimit";
 import { appVersion, deploymentEnvironment } from "@/lib/validation/config";
+import { authenticatedUser } from "@/lib/premium/server";
+import { sanitizeResearchContext } from "@/lib/validation/research";
 
 const PROMPT_TYPES = new Set(["session_reaction", "return_reason", "disappearance_survey", "android_beta_prompt"]);
 
@@ -11,7 +13,7 @@ function clean(value: unknown, max: number): string | null {
 
 export async function POST(request: Request) {
   const ip = clientIp(request);
-  if (!rateLimit(`research:${ip}`, 20, 60_000)) {
+  if (!(await rateLimit(`research:${ip}`, 20, 60_000))) {
     return NextResponse.json({ ok: false, error: "Too many responses. Please try again later." }, { status: 429 });
   }
 
@@ -30,16 +32,17 @@ export async function POST(request: Request) {
 
   const supabase = getSupabaseServiceClient();
   if (!supabase) return NextResponse.json({ ok: false, unavailable: true, error: "Research response storage is not configured." }, { status: 503 });
+  const user = await authenticatedUser(request);
 
   const { error } = await supabase.from("sorlio_research_prompt_responses").insert({
     prompt_type: promptType,
     response,
     comment: clean(body.comment, 2000),
     anonymous_id: clean(body.anonymousId, 160),
-    user_id: clean(body.userId, 160),
+    user_id: user?.id ?? null,
     session_id: clean(body.sessionId, 160),
     page: clean(body.page, 300) ?? "/",
-    behavioural_context: body.context && typeof body.context === "object" ? body.context : {},
+    behavioural_context: sanitizeResearchContext(body.context),
     app_version: appVersion(),
     deployment_environment: deploymentEnvironment(),
   });

@@ -94,6 +94,20 @@ export async function getAccessToken(): Promise<string | null> {
   return session?.access_token ?? null;
 }
 
+/**
+ * Adds a bearer token when a Supabase session exists while keeping public
+ * submissions usable for signed-out readers. Authentication remains
+ * server-authoritative: API handlers verify this token before trusting it.
+ */
+export async function getOptionalBearerHeaders(): Promise<Record<string, string>> {
+  try {
+    const token = await getAccessToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  } catch {
+    return {};
+  }
+}
+
 /** Fires `callback` on sign-in/sign-out/token refresh. Returns an unsubscribe function. */
 export function onAuthStateChange(callback: (user: User | null) => void): () => void {
   const client = getSupabaseClient();

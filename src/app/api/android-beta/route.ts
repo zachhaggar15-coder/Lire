@@ -34,7 +34,7 @@ async function sendConfirmationEmail(email: string, unsubscribeToken: string): P
         <p><a href="${continueUrl}">Continue reading</a></p>
         <p style="font-size:12px;color:#666">You can <a href="${unsubscribeUrl}">unsubscribe</a> at any time.</p>
       `,
-      text: `Thanks for joining the Sorlio Android beta list.\n\nLire is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.\n\nContinue reading: ${continueUrl}\n\nUnsubscribe: ${unsubscribeUrl}`,
+      text: `Thanks for joining the Sorlio Android beta list.\n\nSorlio is still evolving, and your interest helps guide what gets built next. We'll contact you when Android testing opens.\n\nContinue reading: ${continueUrl}\n\nUnsubscribe: ${unsubscribeUrl}`,
     }),
   });
   return res.ok;
@@ -42,7 +42,7 @@ async function sendConfirmationEmail(email: string, unsubscribeToken: string): P
 
 export async function POST(request: Request) {
   const ip = clientIp(request);
-  if (!rateLimit(`android-beta:${ip}`, 12, 60_000)) {
+  if (!(await rateLimit(`android-beta:${ip}`, 12, 60_000))) {
     return NextResponse.json({ ok: false, error: "Too many beta registrations. Please try again later." }, { status: 429 });
   }
 

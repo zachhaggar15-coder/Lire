@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { isAnalyticsEventName, validateAnalyticsPayload, type AnalyticsEvent } from "@/lib/analytics/events";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
+import { authenticatedUser } from "@/lib/premium/server";
 import { clientIp, rateLimit } from "@/lib/server/rateLimit";
+import { appVersion, deploymentEnvironment } from "@/lib/validation/config";
 
 export async function POST(request: Request) {
   const ip = clientIp(request);
-  if (!rateLimit(`analytics:${ip}`, 240, 60_000)) {
+  if (!(await rateLimit(`analytics:${ip}`, 240, 60_000))) {
     return NextResponse.json({ ok: false, error: "Too many analytics events." }, { status: 429 });
   }
 
@@ -29,18 +31,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, unavailable: true, error: "Analytics storage is not configured." }, { status: 503 });
   }
 
+  const user = await authenticatedUser(request);
   const { error } = await supabase.from("sorlio_analytics_events").insert({
     event_name: event.name,
     anonymous_id: typeof event.anonymousId === "string" ? event.anonymousId : null,
-    user_id: typeof event.authenticatedUserId === "string" ? event.authenticatedUserId : null,
+    // A body field is not evidence of identity. Only a verified bearer token
+    // can associate an event with an account.
+    user_id: user?.id ?? null,
     session_id: typeof event.sessionId === "string" ? event.sessionId : null,
     payload,
-    app_version: typeof event.appVersion === "string" ? event.appVersion : "unknown",
-    deployment_environment:
-      event.deploymentEnvironment === "production" || event.deploymentEnvironment === "preview" || event.deploymentEnvironment === "local"
-        ? event.deploymentEnvironment
-        : "local",
-    created_at: typeof event.createdAt === "string" ? event.createdAt : new Date().toISOString(),
+    app_version: appVersion(),
+    deployment_environment: deploymentEnvironment(),
+    created_at: new Date().toISOString(),
   });
 
   if (error) return NextResponse.json({ ok: false, error: "Analytics event could not be stored." }, { status: 502 });

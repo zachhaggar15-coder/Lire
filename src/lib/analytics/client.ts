@@ -13,6 +13,7 @@ import {
 import { appVersion, deploymentEnvironment, shouldSendAnalytics } from "@/lib/validation/config";
 import { getValidationState } from "@/lib/validation/state";
 import { hasAnalyticsConsent } from "@/lib/privacy/analyticsConsent";
+import { getOptionalBearerHeaders } from "@/lib/supabase/auth";
 
 const LOCAL_EVENT_KEY = "lire.analytics.localEvents.v1";
 const MAX_LOCAL_EVENTS = 120;
@@ -50,6 +51,16 @@ function enrichedPayload(payload: AnalyticsPayload): AnalyticsPayload {
   });
 }
 
+async function sendEvent(event: AnalyticsEvent): Promise<void> {
+  const bearerHeaders = await getOptionalBearerHeaders();
+  await fetch("/api/analytics/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...bearerHeaders },
+    body: JSON.stringify(event),
+    keepalive: true,
+  });
+}
+
 export function trackEvent(name: AnalyticsEventName, payload: AnalyticsPayload = {}): void {
   try {
     if (!hasAnalyticsConsent()) return;
@@ -72,12 +83,7 @@ export function trackEvent(name: AnalyticsEventName, payload: AnalyticsPayload =
     appendLocalEvent({ ...event, suppressed: !send });
     if (!send) return;
 
-    void fetch("/api/analytics/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(event),
-      keepalive: true,
-    }).catch(() => {});
+    void sendEvent(event).catch(() => {});
   } catch {
     // Analytics must never block reading.
   }

@@ -13,7 +13,13 @@ export const PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${A
 const ANDROID_APP_KEY = "lire.androidApp.v1";
 
 export function isAndroidAppReferrer(referrer: string | null | undefined): boolean {
-  return typeof referrer === "string" && referrer.startsWith(`android-app://${ANDROID_PACKAGE_ID}`);
+  if (typeof referrer !== "string") return false;
+  try {
+    const parsed = new URL(referrer);
+    return parsed.protocol === "android-app:" && parsed.hostname === ANDROID_PACKAGE_ID;
+  } catch {
+    return false;
+  }
 }
 
 export function rememberAndroidAppLaunch(): void {

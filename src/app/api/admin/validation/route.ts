@@ -7,12 +7,13 @@ import {
   type ResearchPromptRow,
 } from "@/lib/validation/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
+import { hasValidationAdminToken } from "@/lib/validation/adminAuth";
+import { clientIp, rateLimit } from "@/lib/server/rateLimit";
 
-function authorized(request: Request): boolean {
-  const token = process.env.VALIDATION_ADMIN_TOKEN;
-  if (!token) return false;
-  const auth = request.headers.get("authorization");
-  return auth === `Bearer ${token}`;
+const NO_STORE_HEADERS = { "Cache-Control": "private, no-store, max-age=0" };
+
+function json(body: unknown, status = 200) {
+  return NextResponse.json(body, { status, headers: NO_STORE_HEADERS });
 }
 
 function defaultFrom(): string {
@@ -22,12 +23,15 @@ function defaultFrom(): string {
 }
 
 export async function GET(request: Request) {
-  if (!authorized(request)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!(await rateLimit(`admin-validation:${clientIp(request)}`, 20, 60_000))) {
+    return json({ ok: false, error: "Too many requests. Please try again later." }, 429);
+  }
+  if (!hasValidationAdminToken(request)) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
   }
   const supabase = getSupabaseServiceClient();
   if (!supabase) {
-    return NextResponse.json({ ok: false, error: "Supabase service role is not configured." }, { status: 503 });
+    return json({ ok: false, error: "Supabase service role is not configured." }, 503);
   }
 
   const url = new URL(request.url);
@@ -76,7 +80,7 @@ export async function GET(request: Request) {
     researchQuery,
   ]);
   if (eventResult.error || betaResult.error || feedbackResult.error || researchResult.error) {
-    return NextResponse.json({ ok: false, error: "Could not load validation data." }, { status: 502 });
+    return json({ ok: false, error: "Could not load validation data." }, 502);
   }
 
   let events = (eventResult.data ?? []) as AnalyticsEventRow[];
@@ -93,7 +97,7 @@ export async function GET(request: Request) {
     });
   }
 
-  return NextResponse.json({
+  return json({
     ok: true,
     report: buildAdminValidationReport({ events, beta, feedback, research, from, to }),
   });
