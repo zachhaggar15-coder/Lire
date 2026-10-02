@@ -34,6 +34,16 @@ export interface ReadingText {
   sourceUrl?: string;
   /** ISO timestamp of the article's publication date. */
   publishedAt?: string;
+  /** ISO timestamp when Sorlio retrieved the feed item. */
+  retrievedAt?: string;
+  /** Stable registry identifier and centralised attribution/provenance. */
+  sourceId?: string;
+  sourceSiteUrl?: string | null;
+  attributionText?: string | null;
+  reuseBasis?: string | null;
+  reuseTermsUrl?: string | null;
+  reuseTermsCheckedAt?: string | null;
+  materialModifications?: string;
   /** The source feed's declared language, if known (RSS-sourced texts only). */
   language?: "fr" | "en" | "mixed";
   /** True for RSS items too short for the normal quality bar but kept as short-form reading practice — see the "Short Snippets" section. */

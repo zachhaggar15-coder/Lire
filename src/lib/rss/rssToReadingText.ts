@@ -32,6 +32,14 @@ export interface RssReadingText {
   sourceName: string;
   sourceUrl: string;
   publishedAt: string;
+  retrievedAt: string;
+  sourceId: string;
+  sourceSiteUrl: string | null;
+  attributionText: string | null;
+  reuseBasis: string | null;
+  reuseTermsUrl: string | null;
+  reuseTermsCheckedAt: string | null;
+  materialModifications: string;
   /**
    * A 2-3 sentence English summary of what the article is about, shown on
    * the home-page card before a reader taps in — mutated in after the
@@ -75,13 +83,32 @@ const MAX_BODY_LENGTH = 20_000;
  * *something*, this is the bar for "don't even bother trying to do better."
  */
 const FULL_ARTICLE_TARGET_WORDS = 250;
+export const LIVE_ITEM_MAX_FUTURE_SKEW_MS = 6 * 60 * 60 * 1000;
 
-function parsePublishedAt(pubDate: string | null): string {
-  if (pubDate) {
-    const parsed = new Date(pubDate);
-    if (!Number.isNaN(parsed.getTime())) return parsed.toISOString();
+export function parsePublishedAt(pubDate: string | null): string | null {
+  if (!pubDate) return null;
+  const parsed = new Date(pubDate);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
+}
+
+export function isPublishedWithinFreshnessWindow(
+  publishedAt: string,
+  maxItemAgeDays: number,
+  now = Date.now(),
+): boolean {
+  const timestamp = new Date(publishedAt).getTime();
+  if (!Number.isFinite(timestamp)) return false;
+  const ageMs = now - timestamp;
+  return ageMs >= -LIVE_ITEM_MAX_FUTURE_SKEW_MS && ageMs <= maxItemAgeDays * 24 * 60 * 60 * 1000;
+}
+
+function isSafeExternalUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
   }
-  return new Date().toISOString();
 }
 
 /** Maps a feed's own <category> text to one of our fixed categories, falling back to the source default. */
@@ -113,9 +140,15 @@ export async function itemToRssReadingText(
   item: RssItem,
   source: RssSource
 ): Promise<RssConversionResult> {
+  if (source.contentUse?.title === false) {
+    return { ok: false, rejection: { reason: "source policy does not permit title reuse" } };
+  }
   const title = cleanRssText(item.title);
   if (!title || !item.link) {
     return { ok: false, rejection: { reason: "missing title or link" } };
+  }
+  if (!isSafeExternalUrl(item.link)) {
+    return { ok: false, rejection: { reason: "invalid or unsafe source URL" } };
   }
   if (hasBrokenTemplateSyntax(title)) {
     return { ok: false, rejection: { reason: "title has broken CMS template syntax" } };
@@ -126,7 +159,10 @@ export async function itemToRssReadingText(
   // same short teaser in both, some only fill in description. Cleaning
   // both up front and keeping the longer one is more robust than assuming
   // either field is reliably better across 100+ different feeds.
-  const candidateBodies = [item.description, item.contentEncoded]
+  const candidateBodies = [
+    source.contentUse?.description !== false ? item.description : null,
+    source.contentUse?.fullFeedText !== false ? item.contentEncoded : null,
+  ]
     .filter((b): b is string => !!b)
     .map((b) => cleanRssText(b));
   const cleanedBody = candidateBodies.sort((a, b) => b.length - a.length)[0] ?? "";
@@ -145,7 +181,8 @@ export async function itemToRssReadingText(
   // extractable content) just means falling back to the feed's teaser, same
   // as before this existed. Only the longer, still-clean result is kept.
   let finalBody = cleanedBody;
-  if (countWords(cleanedBody) < FULL_ARTICLE_TARGET_WORDS && (source.allowScraping ?? true)) {
+  const mayUseLinkedPage = source.contentUse?.linkedPageContent ?? (source.allowScraping ?? true);
+  if (countWords(cleanedBody) < FULL_ARTICLE_TARGET_WORDS && mayUseLinkedPage && (source.allowScraping ?? true)) {
     const scraped = await scrapeFullArticle(item.link);
     if (
       scraped &&
@@ -184,8 +221,17 @@ export async function itemToRssReadingText(
     return { ok: false, rejection: { reason: "title+body combined is not recognisably French" } };
   }
 
+  const publishedAt = parsePublishedAt(item.pubDate);
+  if (!publishedAt) {
+    return { ok: false, rejection: { reason: "missing or invalid publication date" } };
+  }
+  if (!isPublishedWithinFreshnessWindow(publishedAt, source.maxItemAgeDays ?? 14)) {
+    return { ok: false, rejection: { reason: "publication date is stale or implausibly in the future" } };
+  }
+
   const body = truncateAtSentence(finalBody, MAX_BODY_LENGTH);
   const originalText = `${title}.\n\n${body}`;
+  const retrievedAt = new Date().toISOString();
 
   return {
     ok: true,
@@ -199,7 +245,15 @@ export async function itemToRssReadingText(
       originalText,
       sourceName: source.name,
       sourceUrl: item.link,
-      publishedAt: parsePublishedAt(item.pubDate),
+      publishedAt,
+      retrievedAt,
+      sourceId: source.id,
+      sourceSiteUrl: source.siteUrl ?? null,
+      attributionText: source.attributionText ?? null,
+      reuseBasis: source.reuseBasis ?? null,
+      reuseTermsUrl: source.reuseTermsUrl ?? null,
+      reuseTermsCheckedAt: source.reuseTermsCheckedAt ?? null,
+      materialModifications: "Sorlio removed feed markup and boilerplate, then added learning tools; the source title, publication timestamp and canonical link are retained.",
       blurbEn: null,
       isShortSnippet,
     },

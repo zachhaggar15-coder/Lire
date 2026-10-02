@@ -10,6 +10,7 @@ import {
   recordRssRefreshHealth,
   releaseCandidatePoolRefreshLock,
 } from "@/lib/rss/rssTextStore";
+import { isApprovedRssSource, rssSources } from "@/data/rssSources";
 
 export type CandidatePoolRefreshResult =
   | {
@@ -63,6 +64,12 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
 
   try {
     const pool = await buildCandidatePool();
+    const refreshDetails = {
+      newestItemAt: pool.items[0]?.publishedAt ?? null,
+      oldestLiveItemAt: pool.items.at(-1)?.publishedAt ?? null,
+      enabledSources: rssSources.filter(isApprovedRssSource).map(({ id, name }) => ({ id, name })),
+      sourceHealth: pool.sourceHealth,
+    };
     const validation = validateCandidatePoolForPromotion(pool);
     if (!validation.ok) {
       await recordRssRefreshHealth({
@@ -70,6 +77,7 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
         feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
         feedsSucceeded: pool.feedsSucceeded,
         liveItemsAvailable: pool.items.length,
+        ...refreshDetails,
         status: "rejected",
         reason: validation.reason,
       });
@@ -88,6 +96,7 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
         feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
         feedsSucceeded: pool.feedsSucceeded,
         liveItemsAvailable: pool.items.length,
+        ...refreshDetails,
         status: "failed",
         reason: persistence.reason,
       });
@@ -105,6 +114,7 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
       feedsAttempted: pool.feedsSucceeded + pool.feedsFailed,
       feedsSucceeded: pool.feedsSucceeded,
       liveItemsAvailable: pool.items.length,
+      ...refreshDetails,
       status: "refreshed",
       reason: persistence.reason,
     });
@@ -121,6 +131,10 @@ export async function refreshAndPersistCandidatePool(): Promise<CandidatePoolRef
       feedsAttempted: 0,
       feedsSucceeded: 0,
       liveItemsAvailable: 0,
+      newestItemAt: null,
+      oldestLiveItemAt: null,
+      enabledSources: rssSources.filter(isApprovedRssSource).map(({ id, name }) => ({ id, name })),
+      sourceHealth: [],
       status: "failed",
       reason,
     });

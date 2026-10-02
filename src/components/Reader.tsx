@@ -2523,16 +2523,32 @@ export default function Reader({ text }: { text: ReadingText }) {
       )}
 
       {/* RSS-only metadata. */}
-      {text.sourceUrl && (
+      {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
         <div className="mb-6 text-center">
+          {text.attributionText && <p className="mb-1 text-xs text-ink-muted">{text.attributionText}</p>}
           <a
             href={text.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="block text-xs text-ink-muted underline underline-offset-2"
           >
-            Original source
+            Read the original source
           </a>
+          {text.materialModifications && (
+            <p className="mx-auto mt-2 max-w-xl text-[11px] leading-relaxed text-ink-faint">
+              Sorlio learning version: {text.materialModifications}
+            </p>
+          )}
+          {text.reuseTermsUrl && (
+            <a
+              href={text.reuseTermsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 block text-[11px] text-ink-faint underline underline-offset-2"
+            >
+              Source reuse terms
+            </a>
+          )}
         </div>
       )}
 

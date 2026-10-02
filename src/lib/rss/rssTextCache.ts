@@ -15,6 +15,8 @@ const OFFLINE_KEY = "lire.rssTexts.offline";
 const DEFAULT_POOL_KEY = "lire.rssTexts.defaultPool.session";
 const MAX_OFFLINE_TEXTS = 80;
 const PREVIEW_LENGTH = 160;
+const LIVE_POOL_MAX_AGE_MS = 30 * 60 * 60 * 1000;
+const LIVE_ITEM_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000;
 
 function hasSessionStorage(): boolean {
   return typeof window !== "undefined" && !!window.sessionStorage;
@@ -48,6 +50,13 @@ function sanitizeRssText(text: ReadingText): ReadingText {
 
 function sanitizeRssTexts(texts: ReadingText[]): ReadingText[] {
   return texts.map(sanitizeRssText);
+}
+
+function isFreshCachedLiveText(text: ReadingText, now = Date.now()): boolean {
+  if (text.sourceId === "sorlio-reading-bank" || text.sourceUrl?.startsWith("internal:")) return true;
+  if (!text.publishedAt) return false;
+  const publishedAt = new Date(text.publishedAt).getTime();
+  return Number.isFinite(publishedAt) && now - publishedAt >= -6 * 60 * 60 * 1000 && now - publishedAt <= LIVE_ITEM_MAX_AGE_MS;
 }
 
 function writeOfflineTexts(texts: ReadingText[]): void {
@@ -116,10 +125,21 @@ export function getCachedDefaultLiveNewsPool(): { texts: ReadingText[]; poolBuil
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { texts?: unknown; poolBuiltAt?: unknown; servingFallback?: unknown };
     if (!Array.isArray(parsed.texts)) return null;
+    const servingFallback = parsed.servingFallback === true;
+    const poolBuiltAt = typeof parsed.poolBuiltAt === "string" ? parsed.poolBuiltAt : null;
+    if (!servingFallback) {
+      const poolTimestamp = poolBuiltAt ? new Date(poolBuiltAt).getTime() : Number.NaN;
+      if (!Number.isFinite(poolTimestamp) || Date.now() - poolTimestamp > LIVE_POOL_MAX_AGE_MS) {
+        window.sessionStorage.removeItem(DEFAULT_POOL_KEY);
+        return null;
+      }
+    }
+    const texts = sanitizeRssTexts(parsed.texts as ReadingText[]).filter((text) => servingFallback || isFreshCachedLiveText(text));
+    if (texts.length === 0) return null;
     return {
-      texts: sanitizeRssTexts(parsed.texts),
-      poolBuiltAt: typeof parsed.poolBuiltAt === "string" ? parsed.poolBuiltAt : null,
-      servingFallback: parsed.servingFallback === true,
+      texts,
+      poolBuiltAt,
+      servingFallback,
     };
   } catch {
     return null;
@@ -135,7 +155,7 @@ export function cacheOfflineTexts(texts: ReadingText[]): void {
 
 export function getOfflineRssTexts(): ReadingText[] {
   const raw = readOfflineTexts();
-  const sanitized = sanitizeRssTexts(raw);
+  const sanitized = sanitizeRssTexts(raw).filter(isFreshCachedLiveText);
   if (JSON.stringify(sanitized) !== JSON.stringify(raw)) writeOfflineTexts(sanitized);
   return sanitized;
 }

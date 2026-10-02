@@ -1,18 +1,23 @@
-import { rssSources, type RssSource } from "@/data/rssSources";
+import { isApprovedRssSource, rssSources, type RssSource } from "@/data/rssSources";
 import { getDailyExtraReadingTexts } from "@/lib/publicDomainBank";
 import { attachEnglishBlurbs } from "@/lib/rss/articleBlurbs";
 import { parseRssFeed } from "@/lib/rss/parseRss";
-import { itemToRssReadingText, type RssReadingText } from "@/lib/rss/rssToReadingText";
-import { todayKey } from "@/lib/rss/seededShuffle";
+import {
+  isPublishedWithinFreshnessWindow,
+  itemToRssReadingText,
+  type RssReadingText,
+} from "@/lib/rss/rssToReadingText";
+import { previousDateKey, todayKey } from "@/lib/rss/seededShuffle";
 import { areNearDuplicateTitles } from "@/lib/rss/titleSimilarity";
 import type { Category, ReadingText } from "@/types";
 
 const FEED_REVALIDATE_SECONDS = 900;
 const FEED_TIMEOUT_MS = 8000;
-const DEFAULT_MAX_PER_SOURCE = 2;
+const DEFAULT_MAX_PER_SOURCE = 8;
 
-export const CANDIDATE_POOL_MAX_AGE_MS = 12 * 60 * 60 * 1000;
-export const MIN_PROMOTABLE_CANDIDATE_POOL_SIZE = 20;
+export const CANDIDATE_POOL_MAX_AGE_MS = 30 * 60 * 60 * 1000;
+export const LIVE_ITEM_MAX_AGE_DAYS = 14;
+export const MIN_PROMOTABLE_CANDIDATE_POOL_SIZE = 1;
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -39,6 +44,28 @@ export interface SourceHealth {
   accepted: number;
   rejected: number;
   reason: string;
+  attemptedAt: string;
+  lastSuccessfulRefreshAt: string | null;
+  newestItemAt: string | null;
+  oldestItemAt: string | null;
+  rejectionReasons: Record<string, number>;
+}
+
+function itemTimestamp(item: { publishedAt: string }): number {
+  return new Date(item.publishedAt).getTime();
+}
+
+export function sortNewestFirst<T extends { publishedAt: string }>(items: T[]): T[] {
+  return [...items].sort((a, b) => itemTimestamp(b) - itemTimestamp(a));
+}
+
+export function isFreshLiveItem(item: Pick<RssReadingText, "publishedAt">, now = Date.now()): boolean {
+  return isPublishedWithinFreshnessWindow(item.publishedAt, LIVE_ITEM_MAX_AGE_DAYS, now);
+}
+
+export function filterFreshCandidatePool(pool: CandidatePool, now = Date.now()): CandidatePool {
+  if (pool.isFallback) return pool;
+  return { ...pool, items: sortNewestFirst(pool.items.filter((item) => isFreshLiveItem(item, now))) };
 }
 
 function logRejection(source: RssSource, itemTitle: string, reason: string): void {
@@ -54,6 +81,11 @@ async function fetchFromSource(
     name: source.name,
     language: source.language,
     category: source.category,
+    attemptedAt: new Date().toISOString(),
+    lastSuccessfulRefreshAt: null,
+    newestItemAt: null,
+    oldestItemAt: null,
+    rejectionReasons: {},
   };
 
   if (source.language === "en" && !source.allowEnglishForTesting) {
@@ -86,6 +118,7 @@ async function fetchFromSource(
     const rssItems = parseRssFeed(xml);
     const items: RssReadingText[] = [];
     let rejected = 0;
+    const rejectionReasons: Record<string, number> = {};
 
     for (const item of rssItems) {
       if (items.length >= maxItems) break;
@@ -94,21 +127,28 @@ async function fetchFromSource(
         items.push(result.text);
       } else {
         rejected++;
+        rejectionReasons[result.rejection.reason] = (rejectionReasons[result.rejection.reason] ?? 0) + 1;
         logRejection(source, item.title || "(no title)", result.rejection.reason);
       }
     }
 
+    const orderedItems = sortNewestFirst(items);
+    const successfulAt = new Date().toISOString();
     return {
       ok: true,
-      items,
+      items: orderedItems,
       rejected,
       health: {
         ...baseHealth,
         ok: true,
         skipped: false,
-        accepted: items.length,
+        accepted: orderedItems.length,
         rejected,
-        reason: items.length > 0 ? "Accepted candidates" : rejected > 0 ? "All candidates rejected" : "No feed items",
+        reason: orderedItems.length > 0 ? "Accepted candidates" : rejected > 0 ? "All candidates rejected" : "No feed items",
+        lastSuccessfulRefreshAt: successfulAt,
+        newestItemAt: orderedItems[0]?.publishedAt ?? null,
+        oldestItemAt: orderedItems.at(-1)?.publishedAt ?? null,
+        rejectionReasons,
       },
     };
   } catch {
@@ -121,7 +161,7 @@ async function fetchFromSource(
   }
 }
 
-function dedupe(items: RssReadingText[]): RssReadingText[] {
+export function dedupeRssItems(items: RssReadingText[]): RssReadingText[] {
   const seenUrls = new Set<string>();
   const seenTitles = new Set<string>();
   const out: RssReadingText[] = [];
@@ -139,9 +179,10 @@ function dedupe(items: RssReadingText[]): RssReadingText[] {
   return out;
 }
 
-export async function buildCandidatePool(): Promise<CandidatePool> {
+export async function buildCandidatePool(
+  enabledSources = rssSources.filter(isApprovedRssSource),
+): Promise<CandidatePool> {
   const startedAt = Date.now();
-  const enabledSources = rssSources.filter((source) => source.enabled);
   const settled = await Promise.allSettled(enabledSources.map(fetchFromSource));
 
   let feedsSucceeded = 0;
@@ -162,7 +203,7 @@ export async function buildCandidatePool(): Promise<CandidatePool> {
     }
   }
 
-  const items = dedupe(all);
+  const items = dedupeRssItems(sortNewestFirst(all));
   await attachEnglishBlurbs(items);
   const builtAt = Date.now();
 
@@ -188,15 +229,19 @@ export function validateCandidatePoolForPromotion(pool: CandidatePool): { ok: bo
     };
   }
   if (pool.feedsSucceeded <= 0) return { ok: false, reason: "No RSS feeds succeeded" };
+  if (!pool.items.some((item) => isFreshLiveItem(item))) {
+    return { ok: false, reason: "No acceptably recent live items were produced" };
+  }
   return { ok: true, reason: "Candidate pool passed promotion checks" };
 }
 
 export function isFreshCandidatePool(pool: CandidatePool, now = Date.now(), dateKey = todayKey()): boolean {
   return (
     !pool.isFallback &&
-    pool.dateKey === dateKey &&
+    (pool.dateKey === dateKey || pool.dateKey === previousDateKey(dateKey)) &&
     now - pool.builtAt >= 0 &&
-    now - pool.builtAt <= CANDIDATE_POOL_MAX_AGE_MS
+    now - pool.builtAt <= CANDIDATE_POOL_MAX_AGE_MS &&
+    pool.items.some((item) => isFreshLiveItem(item, now))
   );
 }
 
@@ -226,6 +271,14 @@ export function bankTextToRssReadingText(text: ReadingText, builtAt: number): Rs
     sourceName: text.sourceName ?? "Sorlio reading bank",
     sourceUrl: text.sourceUrl ?? `internal:${text.id}`,
     publishedAt: text.publishedAt ?? new Date(builtAt).toISOString(),
+    retrievedAt: new Date(builtAt).toISOString(),
+    sourceId: "sorlio-reading-bank",
+    sourceSiteUrl: null,
+    attributionText: null,
+    reuseBasis: null,
+    reuseTermsUrl: null,
+    reuseTermsCheckedAt: null,
+    materialModifications: "Bundled practice reading; not live reporting.",
     blurbEn: text.blurbEn ?? null,
     isShortSnippet: text.isShortSnippet ?? false,
   };

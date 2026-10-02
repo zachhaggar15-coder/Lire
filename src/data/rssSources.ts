@@ -1,6 +1,13 @@
 import type { Category } from "@/types";
 
-export interface RssSource {
+export interface RssContentUsePolicy {
+  title: boolean;
+  description: boolean;
+  fullFeedText: boolean;
+  linkedPageContent: boolean;
+}
+
+interface RssSourceBase {
   id: string;
   name: string;
   /**
@@ -22,7 +29,6 @@ export interface RssSource {
    * pool by this field.
    */
   language: "fr" | "en" | "mixed";
-  enabled: boolean;
   /** Overrides DEFAULT_MIN_WORDS (src/lib/rss/contentQuality.ts) for this feed specifically. */
   minWords?: number;
   /** Overrides the pipeline's default of 2 accepted items per feed. */
@@ -45,12 +51,45 @@ export interface RssSource {
 }
 
 /**
- * A large pool of France-related RSS feeds. `/api/rss-texts` fetches every
- * `enabled` **French-language** feed, builds a big candidate pool from the
- * working ones, and deterministically picks 5 for the day (see that route
- * for the selection logic) — the size of this list is deliberately much
- * larger than 5, so a handful of dead or rate-limited feeds on any given
- * day barely matters.
+ * Enabled feeds are an explicit legal/technical whitelist. TypeScript makes
+ * the provenance and permitted-use fields mandatory whenever `enabled` is
+ * true, so a future source cannot be switched on as a one-line config edit.
+ */
+export interface ApprovedRssSource extends RssSourceBase {
+  enabled: true;
+  siteUrl: string;
+  attributionText: string;
+  reuseBasis: string;
+  reuseTermsUrl: string;
+  reuseTermsCheckedAt: string;
+  contentUse: RssContentUsePolicy;
+  notes: string;
+  /** Maximum age of an item at ingestion time. */
+  maxItemAgeDays: number;
+}
+
+export interface DisabledRssSource extends RssSourceBase {
+  enabled: false;
+  siteUrl?: string;
+  attributionText?: string;
+  reuseBasis?: string;
+  reuseTermsUrl?: string;
+  reuseTermsCheckedAt?: string;
+  contentUse?: RssContentUsePolicy;
+  notes?: string;
+  maxItemAgeDays?: number;
+}
+
+export type RssSource = ApprovedRssSource | DisabledRssSource;
+
+export function isApprovedRssSource(source: RssSource): source is ApprovedRssSource {
+  return source.enabled;
+}
+
+/**
+ * A reviewed whitelist followed by the historical, disabled source catalogue.
+ * Only the entries with `enabled: true` are production inputs. Each enabled
+ * entry carries the terms review and a field-level use policy.
  *
  * Most of the English-language sources below are kept in the list with
  * `enabled: false` (rather than deleted) so the metadata/history isn't
@@ -63,12 +102,11 @@ export interface RssSource {
  * without deleting its config, set `enabled: false`.
  */
 /**
- * ALL SOURCES ARE CURRENTLY DISABLED. This is deliberate — read this before
- * turning any of them back on.
+ * Historical commercial sources remain disabled. Read this before turning
+ * any of them back on.
  *
- * The pipeline does not merely read these feeds; scrapeArticle.ts follows each
- * item to the publisher's page and extracts the full article body, which is
- * then stored and shown inside Sorlio as reading material. Several of the
+ * The legacy pipeline did not merely read these feeds; scrapeArticle.ts followed
+ * each item to the publisher's page and extracted the full article body. Several of the
  * sources below are national newspapers — Le Monde, Mediapart, La Croix,
  * Marianne — and several more are regional dailies. Mediapart is funded
  * entirely by subscriptions.
@@ -83,11 +121,87 @@ export interface RssSource {
  * surfaces from the public-domain bank, and the app still has ~1,590 texts
  * that are either written for it or genuinely free to use.
  *
- * Turning a source back on is a licensing decision, not a config change.
+ * Turning a source back on remains a licensing decision, not a config change.
  * Before switching one on, establish that its terms actually permit
  * reproducing article text in a paid app, and record what you found.
  */
 export const rssSources: RssSource[] = [
+  {
+    id: "service-public-particuliers",
+    name: "Service-Public.fr — Particuliers",
+    category: "everyday life",
+    feedUrl: "https://www.service-public.gouv.fr/abonnements/rss/actu-actualites-particuliers.rss",
+    siteUrl: "https://www.service-public.gouv.fr/particuliers/actualites",
+    language: "fr",
+    enabled: true,
+    minWords: 20,
+    maxItems: 8,
+    maxItemAgeDays: 14,
+    attributionText: "Source : service-public.fr — Direction de l’information légale et administrative",
+    reuseBasis: "Service-Public authorises webmasters and bloggers to freely redistribute its RSS news when the source is visibly identified.",
+    reuseTermsUrl: "https://www.service-public.gouv.fr/P10008",
+    reuseTermsCheckedAt: "2026-10-02",
+    contentUse: { title: true, description: true, fullFeedText: false, linkedPageContent: false },
+    notes: "Use only the RSS title, description, date and canonical link. Do not scrape the linked page.",
+    allowScraping: false,
+  },
+  {
+    id: "service-public-professionnels",
+    name: "Service-Public.fr — Entreprendre",
+    category: "news-style",
+    feedUrl: "https://www.service-public.gouv.fr/abonnements/rss/actu-actu-pro.rss",
+    siteUrl: "https://entreprendre.service-public.gouv.fr/actualites",
+    language: "fr",
+    enabled: true,
+    minWords: 20,
+    maxItems: 8,
+    maxItemAgeDays: 14,
+    attributionText: "Source : service-public.fr — Direction de l’information légale et administrative",
+    reuseBasis: "Service-Public authorises webmasters and bloggers to freely redistribute its RSS news when the source is visibly identified.",
+    reuseTermsUrl: "https://www.service-public.gouv.fr/P10008",
+    reuseTermsCheckedAt: "2026-10-02",
+    contentUse: { title: true, description: true, fullFeedText: false, linkedPageContent: false },
+    notes: "Use only the RSS title, description, date and canonical link. Do not scrape the linked page.",
+    allowScraping: false,
+  },
+  {
+    id: "european-commission-news",
+    name: "Commission européenne — Actualités",
+    category: "news-style",
+    feedUrl: "https://commission.europa.eu/node/29665/rss_fr",
+    siteUrl: "https://commission.europa.eu/news-and-media/highlighted-news_fr",
+    language: "fr",
+    enabled: true,
+    minWords: 20,
+    maxItems: 8,
+    maxItemAgeDays: 14,
+    attributionText: "Source : Commission européenne — Réutilisation sous CC BY 4.0",
+    reuseBasis: "Commission-owned website content is reusable under the Commission legal notice and Decision 2011/833/EU, generally under CC BY 4.0, subject to stated exceptions and third-party rights.",
+    reuseTermsUrl: "https://commission.europa.eu/legal-notice_fr",
+    reuseTermsCheckedAt: "2026-10-02",
+    contentUse: { title: true, description: true, fullFeedText: false, linkedPageContent: false },
+    notes: "Use only French RSS title/description text owned by the Commission. Do not use images, logos, third-party material or linked-page content.",
+    allowScraping: false,
+  },
+  {
+    id: "europarl-press-releases",
+    name: "Parlement européen — Communiqués de presse",
+    category: "news-style",
+    feedUrl: "https://www.europarl.europa.eu/rss/doc/press-releases/fr.xml",
+    siteUrl: "https://www.europarl.europa.eu/news/fr/press-room",
+    language: "fr",
+    enabled: true,
+    minWords: 20,
+    maxItems: 8,
+    maxItemAgeDays: 14,
+    attributionText: "© Union européenne — Source : Parlement européen",
+    reuseBasis: "The European Parliament legal notice permits reuse of EU-owned textual material for commercial or non-commercial dissemination with integrity and source acknowledgement; partial reuse must link to the complete source item.",
+    reuseTermsUrl: "https://www.europarl.europa.eu/legal-notice/fr",
+    reuseTermsCheckedAt: "2026-10-02",
+    contentUse: { title: true, description: true, fullFeedText: false, linkedPageContent: false },
+    notes: "Use only the RSS title and description with the complete-item URL. Reject non-French items and preserve the EU credit supplied by the feed.",
+    allowScraping: false,
+  },
   { id: "france-today", name: "France Today", category: "culture", feedUrl: "https://francetoday.com/feed/", language: "en", enabled: false },
   { id: "the-good-life-france", name: "The Good Life France", category: "everyday life", feedUrl: "https://thegoodlifefrance.com/feed/", language: "en", enabled: false },
   { id: "tech-n-play", name: "Tech N Play", category: "science", feedUrl: "https://technplay.com/feed/", language: "en", enabled: false },
@@ -180,7 +294,13 @@ export const rssSources: RssSource[] = [
   { id: "mediapart", name: "Mediapart", category: "news-style", feedUrl: "https://www.mediapart.fr/articles/feed", language: "fr", enabled: false },
   { id: "rfi-english", name: "RFI English", category: "news-style", feedUrl: "https://www.rfi.fr/en/rss", language: "en", enabled: false },
   { id: "the-paris-news", name: "The Paris News", category: "news-style", feedUrl: "https://theparisnews.com/search/?c%5B%5D=news&d=&d1=&d2=&f=rss&l=10&q=&s=start_time&sd=desc&t=article", language: "en", enabled: false },
-  { id: "le-monde", name: "Le Monde", category: "news-style", feedUrl: "https://www.lemonde.fr/rss/une.xml", language: "fr", enabled: false },
+  {
+    id: "le-monde", name: "Le Monde", category: "news-style", feedUrl: "https://www.lemonde.fr/rss/une.xml", language: "fr", enabled: false,
+    reuseBasis: "Rejected: Le Monde reserves RSS use to strictly personal, non-professional and non-collective use; other exploitation requires authorisation and payment.",
+    reuseTermsUrl: "https://www.lemonde.fr/le-monde-et-vous/article/2025/07/14/les-flux-rss-du-monde-fr_5498778_3237.html",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "Not compatible with redistribution inside Sorlio without a separate syndication licence.",
+  },
   { id: "marianne", name: "Marianne", category: "news-style", feedUrl: "https://www.marianne.net/rss.xml", language: "fr", enabled: false },
   { id: "la-depeche-du-midi", name: "La Dépêche du Midi", category: "news-style", feedUrl: "https://www.ladepeche.fr/rss.xml", language: "fr", enabled: false },
   { id: "20-minutes", name: "20 Minutes", category: "news-style", feedUrl: "https://www.20minutes.fr/feeds/rss-une.xml", language: "fr", enabled: false },
@@ -227,11 +347,37 @@ export const rssSources: RssSource[] = [
 
   // Previously-curated sources kept on top of the new list (not exact URL
   // duplicates of anything above).
-  { id: "france-24-french", name: "France 24 (French)", category: "news-style", feedUrl: "https://www.france24.com/fr/rss", language: "fr", enabled: false },
-  { id: "rfi-french", name: "RFI (French)", category: "news-style", feedUrl: "https://www.rfi.fr/fr/rss", language: "fr", enabled: false },
-  { id: "franceinfo", name: "Franceinfo", category: "news-style", feedUrl: "https://www.francetvinfo.fr/titres.rss", language: "fr", enabled: false },
-  { id: "liberation", name: "Libération", category: "culture", feedUrl: "https://www.liberation.fr/arc/outboundfeeds/rss-all/", language: "fr", enabled: false },
-  { id: "le-figaro", name: "Le Figaro", category: "news-style", feedUrl: "https://www.lefigaro.fr/rss/figaro_actualites.xml", language: "fr", enabled: false },
+  {
+    id: "france-24-french", name: "France 24 (French)", category: "news-style", feedUrl: "https://www.france24.com/fr/rss", language: "fr", enabled: false,
+    reuseBasis: "Rejected: no current permission was established for Sorlio to commercially redistribute feed text.",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "Public feed availability alone is not a reuse licence.",
+  },
+  {
+    id: "rfi-french", name: "RFI (French)", category: "news-style", feedUrl: "https://www.rfi.fr/fr/rss", language: "fr", enabled: false,
+    reuseBasis: "Rejected: RFI states that reproduction requires prior permission and cannot be used commercially.",
+    reuseTermsUrl: "https://www1.rfi.fr/actuen/articles/110/article_2829.asp",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "RSS reader availability does not grant Sorlio redistribution rights.",
+  },
+  {
+    id: "franceinfo", name: "Franceinfo", category: "news-style", feedUrl: "https://www.francetvinfo.fr/titres.rss", language: "fr", enabled: false,
+    reuseBasis: "Rejected: no current permission was established for Sorlio to commercially redistribute feed text.",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "Leave disabled unless written terms or a licence cover this exact use.",
+  },
+  {
+    id: "liberation", name: "Libération", category: "culture", feedUrl: "https://www.liberation.fr/arc/outboundfeeds/rss-all/", language: "fr", enabled: false,
+    reuseBasis: "Rejected: no current permission was established for Sorlio to commercially redistribute feed text.",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "Leave disabled unless written terms or a licence cover this exact use.",
+  },
+  {
+    id: "le-figaro", name: "Le Figaro", category: "news-style", feedUrl: "https://www.lefigaro.fr/rss/figaro_actualites.xml", language: "fr", enabled: false,
+    reuseBasis: "Rejected: no current permission was established for Sorlio to commercially redistribute feed text.",
+    reuseTermsCheckedAt: "2026-10-02",
+    notes: "Leave disabled unless written terms or a licence cover this exact use.",
+  },
   { id: "numerama", name: "Numerama", category: "science", feedUrl: "https://www.numerama.com/feed/", language: "fr", enabled: false },
   { id: "ouest-france-continu", name: "Ouest-France (Continu)", category: "everyday life", feedUrl: "https://www.ouest-france.fr/rss-en-continu.xml", language: "fr", enabled: false },
 

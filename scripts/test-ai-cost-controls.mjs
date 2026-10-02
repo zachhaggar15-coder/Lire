@@ -129,10 +129,13 @@ console.log("--- The quota is counted atomically ---");
 console.log("--- Scraping sources ship disabled ---");
 {
   const sources = read("src/data/rssSources.ts");
-  const enabled = (sources.match(/enabled: true/g) ?? []).length;
-  // The pipeline reproduces full article bodies from publishers, which no RSS
-  // feed licenses. Re-enabling a source is a licensing decision.
-  check("no scraping source is enabled", enabled === 0, `${enabled} still enabled`);
+  const enabled = (sources.match(/^\s+enabled: true,$/gm) ?? []).length;
+  const scrapingDisabled = (sources.match(/^\s+allowScraping: false,$/gm) ?? []).length;
+  const linkedPagesDisallowed = (sources.match(/linkedPageContent: false/g) ?? []).length;
+  // Approved live feeds may be enabled, but none may turn that into permission
+  // to fetch and reproduce their linked webpages.
+  check("every enabled source explicitly disables scraping", enabled > 0 && scrapingDisabled >= enabled, `${enabled} enabled, ${scrapingDisabled} no-scrape`);
+  check("every enabled source policy excludes linked-page content", linkedPagesDisallowed >= enabled, `${enabled} enabled, ${linkedPagesDisallowed} restricted`);
   check("the reason is recorded in the file", /licence|license/i.test(sources));
 
   const fallback = codeOnly(read("src/lib/rss/candidatePool.ts"));

@@ -102,8 +102,8 @@ check("Android beta email does not refer to Lire", !/Lire is still evolving/.tes
 
 console.log("--- RSS fallback honours the requested limit ---");
 const rssRoute = read("src/app/api/rss-texts/route.ts");
-check("fallback target is capped by the request limit", /Math\.min\(MIN_GUARANTEED_ARTICLES, requestedLimit\)/.test(rssRoute));
-check("the request limit is passed into fallback", /backfillIfShort\(selected, pool, snippetParam, todayK, limit\)/.test(rssRoute));
+check("every RSS response is clamped to the request limit", /clampRssSelectionToLimit\(selected, limit\)/.test(rssRoute));
+check("live responses cannot be padded with bundled fallback texts", !/backfillIfShort/.test(rssRoute));
 check("RSS response declares whether it is serving a fallback", /servingFallback: pool\.isFallback === true/.test(rssRoute));
 
 console.log("--- Premium save boundaries are visible before interaction ---");

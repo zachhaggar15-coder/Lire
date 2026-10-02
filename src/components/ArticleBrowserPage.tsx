@@ -169,7 +169,9 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       } else if (hasOfflineFallback) {
         setRssTexts(offlineFallback);
         setPoolBuiltAt(null);
-        setServingFallback(false);
+        setServingFallback(
+          offlineFallback.every((text) => text.sourceId === "sorlio-reading-bank" || text.sourceUrl?.startsWith("internal:")),
+        );
         setUsingOfflineCache(true);
         setState("success");
       } else {

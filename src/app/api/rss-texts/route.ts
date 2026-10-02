@@ -1,5 +1,5 @@
 import { NextResponse, after } from "next/server";
-import type { RssSource } from "@/data/rssSources";
+import { isApprovedRssSource, rssSources, type RssSource } from "@/data/rssSources";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import {
@@ -9,15 +9,14 @@ import {
   isRssPersistenceConfigured,
   putPersistedRssTexts,
 } from "@/lib/rss/rssTextStore";
-import { previousDateKey, seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
-import { areNearDuplicateTitles } from "@/lib/rss/titleSimilarity";
-import { getDailyExtraReadingTexts } from "@/lib/publicDomainBank";
+import { previousDateKey, todayKey } from "@/lib/rss/seededShuffle";
 import type { Category } from "@/types";
 import {
-  bankTextToRssReadingText,
   createFallbackCandidatePool,
+  filterFreshCandidatePool,
   isCandidatePool,
   isFreshCandidatePool,
+  sortNewestFirst,
   type CandidatePool,
 } from "@/lib/rss/candidatePool";
 import { refreshAndPersistCandidatePool } from "@/lib/rss/candidatePoolRefresh";
@@ -66,23 +65,31 @@ async function getCandidatePool(): Promise<CandidatePool> {
 
   const todayPool = await getPersistedCandidatePool<unknown>(todayK);
   if (isCandidatePool(todayPool)) {
-    candidatePoolCache = todayPool;
-    if (!isFreshCandidatePool(todayPool, Date.now(), todayK)) scheduleBackgroundRefresh();
-    return todayPool;
+    const freshPool = filterFreshCandidatePool(todayPool);
+    if (isFreshCandidatePool(freshPool, Date.now(), todayK)) {
+      candidatePoolCache = freshPool;
+      return freshPool;
+    }
   }
 
   const currentPool = await getCurrentPersistedCandidatePool<unknown>();
   if (isCandidatePool(currentPool)) {
-    candidatePoolCache = currentPool;
-    scheduleBackgroundRefresh();
-    return currentPool;
+    const freshPool = filterFreshCandidatePool(currentPool);
+    if (isFreshCandidatePool(freshPool, Date.now(), todayK)) {
+      candidatePoolCache = freshPool;
+      scheduleBackgroundRefresh();
+      return freshPool;
+    }
   }
 
   const previousPool = await getPersistedCandidatePool<unknown>(previousDateKey(todayK));
   if (isCandidatePool(previousPool)) {
-    candidatePoolCache = previousPool;
-    scheduleBackgroundRefresh();
-    return previousPool;
+    const freshPool = filterFreshCandidatePool(previousPool);
+    if (isFreshCandidatePool(freshPool, Date.now(), todayK)) {
+      candidatePoolCache = freshPool;
+      scheduleBackgroundRefresh();
+      return freshPool;
+    }
   }
 
   const fallback = createFallbackCandidatePool();
@@ -111,76 +118,6 @@ function isKnownLanguage(value: string): value is RssSource["language"] {
 
 function isKnownSnippetFilter(value: string): value is "all" | "only" | "exclude" {
   return value === "all" || value === "only" || value === "exclude";
-}
-
-/**
- * Floor for the unfiltered "generic news" selection, guaranteed even on a
- * genuinely bad day (several feeds down/rate-limited at once) — see
- * backfillIfShort below. Not the same as DAILY_RSS_ARTICLE_LIMIT (the
- * client's requested count): this is the minimum the server tops up to,
- * the client's `limit` is the ceiling. Set close to that ceiling rather
- * than a token minimum — the hardened source list comfortably clears it
- * on an ordinary day (39/40 feeds healthy in testing), so this should
- * read as "the real target," not just a rarely-hit emergency floor.
- */
-const MIN_GUARANTEED_ARTICLES = 20;
-
-/**
- * Guarantees a minimum-size, unfiltered daily selection even when live RSS
- * genuinely underdelivers. Two fallback tiers, in order: yesterday's
- * persisted candidate pool (still real, dated French news, just not from
- * today — see rssTextStore.ts), then the local extra-reading bank (always
- * available, no network dependency). Only called for the unfiltered
- * "generic news" request — see the guard at the call site — so a
- * deliberately narrowed query is left exactly as narrow as requested.
- */
-async function backfillIfShort(
-  selected: RssReadingText[],
-  pool: CandidatePool,
-  snippetParam: "all" | "only" | "exclude",
-  todayK: string,
-  requestedLimit: number
-): Promise<RssReadingText[]> {
-  // A fallback may improve a thin generic list, but an API caller's limit is
-  // still a hard ceiling. This matters to compact surfaces and prefetches.
-  const targetCount = Math.min(MIN_GUARANTEED_ARTICLES, requestedLimit);
-  if (selected.length >= targetCount) return selected;
-
-  const seenIds = new Set(selected.map((item) => item.id));
-  const seenUrls = new Set(selected.map((item) => item.sourceUrl.trim().toLowerCase()));
-  const seenTitles = new Set(selected.map((item) => item.title.trim().toLowerCase()));
-  const result = [...selected];
-
-  function tryAdd(item: RssReadingText) {
-    if (result.length >= targetCount) return;
-    const urlKey = item.sourceUrl.trim().toLowerCase();
-    const titleKey = item.title.trim().toLowerCase();
-    if (seenIds.has(item.id) || seenUrls.has(urlKey) || seenTitles.has(titleKey)) return;
-    if (snippetParam === "exclude" && item.isShortSnippet) return;
-    if (result.some((existing) => areNearDuplicateTitles(existing.title, item.title))) return;
-    seenIds.add(item.id);
-    seenUrls.add(urlKey);
-    seenTitles.add(titleKey);
-    result.push(item);
-  }
-
-  const yesterday = await getPersistedCandidatePool<CandidatePool>(previousDateKey(todayK));
-  if (yesterday) {
-    for (const item of seededShuffle(yesterday.items, `${todayK}::backfill::yesterday`)) {
-      if (result.length >= targetCount) break;
-      tryAdd(item);
-    }
-  }
-
-  if (result.length < targetCount) {
-    const bankTexts = getDailyExtraReadingTexts({ level: "B1", category: "all", limit: targetCount * 2 });
-    for (const text of bankTexts) {
-      if (result.length >= targetCount) break;
-      tryAdd(bankTextToRssReadingText(text, pool.builtAt));
-    }
-  }
-
-  return result;
 }
 
 /**
@@ -293,23 +230,16 @@ async function handleGet(request: Request) {
     } else if (snippetParam === "exclude") {
       candidates = candidates.filter((t) => !t.isShortSnippet);
     }
-    // Deterministic per (day, language, category) — same inputs always
-    // shuffle to the same order, so the selection is stable all day and
-    // only changes once the date (or the query) changes. Never Math.random().
-    const seed = `${todayK}::${languageParam}::${categoryParam}`;
-    selected = seededShuffle(candidates, seed).slice(0, limit);
+    // Current news is always newest-first. The pool itself is already
+    // deduplicated and bounded per source, but sort again after filters so
+    // every API variant preserves the same freshness guarantee.
+    selected = sortNewestFirst(candidates).slice(0, limit);
 
     if (isPlainDefaultQuery) {
       dailySelectionCache = { dateKey: todayK, items: selected };
     }
   }
 
-  // Only the unfiltered "generic news" request gets topped up — a
-  // deliberately narrowed category/language query is left exactly as
-  // narrow as requested rather than diluted with backfill.
-  if (categoryParam === "all" && languageParam === "all" && snippetParam !== "only") {
-    selected = await backfillIfShort(selected, pool, snippetParam, todayK, limit);
-  }
   selected = clampRssSelectionToLimit(selected, limit);
 
   // Direct-link persistence runs after the response so it never delays the
@@ -339,7 +269,7 @@ async function handleGet(request: Request) {
     servingFallback: pool.isFallback === true,
     ...(refresh && { ok: true, refreshStatus, persistenceReason }),
     ...(includeHealth && {
-      sourceHealth: pool.sourceHealth,
+      sourceHealth: refreshHealth?.sourceHealth ?? pool.sourceHealth,
       sourceSummary: {
         lastSuccessfulRefreshAt:
           refreshHealth?.lastSuccessfulRefreshAt ?? (pool.isFallback ? null : new Date(pool.builtAt).toISOString()),
@@ -354,7 +284,10 @@ async function handleGet(request: Request) {
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
         candidatePoolBuildDurationMs: pool.buildDurationMs ?? null,
         servingFallback: pool.isFallback === true,
-        liveItemsAvailable: refreshHealth?.liveItemsAvailable ?? (pool.isFallback ? 0 : pool.items.length),
+        liveItemsAvailable: pool.isFallback ? 0 : pool.items.length,
+        enabledSources: rssSources.filter(isApprovedRssSource).map((source) => ({ id: source.id, name: source.name })),
+        newestItemAt: pool.isFallback ? null : refreshHealth?.newestItemAt ?? pool.items[0]?.publishedAt ?? null,
+        oldestLiveItemAt: pool.isFallback ? null : refreshHealth?.oldestLiveItemAt ?? pool.items.at(-1)?.publishedAt ?? null,
         lastRefreshAttemptAt: refreshHealth?.attemptedAt ?? null,
         lastRefreshStatus: refreshHealth?.status ?? null,
         lastRefreshReason: refreshHealth?.reason ?? null,
@@ -370,7 +303,7 @@ async function handleGet(request: Request) {
         candidatePoolBuiltAt: new Date(pool.builtAt).toISOString(),
         selectedIds: selected.map((t) => t.id),
         sourceHealth: pool.sourceHealth,
-        seed: `${todayK}::${languageParam}::${categoryParam}`,
+        ordering: "publishedAt-desc",
       },
     }),
   };

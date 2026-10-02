@@ -39,10 +39,19 @@ function extractFirst(itemXml: string, tags: string[]): string | null {
 /** RSS `<link>text</link>` or Atom `<link href="...">`. */
 function extractLink(itemXml: string): string {
   const simple = extractTag(itemXml, "link");
-  if (simple && !simple.includes("<")) return simple;
+  if (simple && !simple.includes("<")) return decodeXmlEntities(simple);
   const hrefMatch = itemXml.match(/<link[^>]*\shref=["']([^"']+)["'][^>]*\/?>/i);
-  if (hrefMatch) return hrefMatch[1];
-  return simple ?? "";
+  if (hrefMatch) return decodeXmlEntities(hrefMatch[1]);
+  return simple ? decodeXmlEntities(simple) : "";
+}
+
+function decodeXmlEntities(value: string): string {
+  return value
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;/gi, "'")
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)));
 }
 
 function extractCategories(itemXml: string): string[] {

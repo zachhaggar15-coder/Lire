@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import type { ReadingText } from "@/types";
+import type { SourceHealth } from "@/lib/rss/candidatePool";
 import { cleanReadingTextSourceNoise } from "@/lib/rss/sourceNoise";
 
 /**
@@ -99,6 +100,10 @@ export interface RssRefreshHealth {
   feedsAttempted: number;
   feedsSucceeded: number;
   liveItemsAvailable: number;
+  newestItemAt: string | null;
+  oldestLiveItemAt: string | null;
+  enabledSources: Array<{ id: string; name: string }>;
+  sourceHealth: SourceHealth[];
   status: "refreshed" | "rejected" | "failed";
   reason: string;
 }
@@ -122,8 +127,17 @@ export async function recordRssRefreshHealth(
   try {
     const previous = await redis.get<RssRefreshHealth>(RSS_REFRESH_HEALTH_KEY);
     const { successfulRefreshAt, ...attempt } = next;
+    const previousById = new Map(previous?.sourceHealth?.map((source) => [source.id, source]) ?? []);
+    const mergedSourceHealth = attempt.sourceHealth.length > 0
+      ? attempt.sourceHealth.map((source) => ({
+          ...source,
+          lastSuccessfulRefreshAt:
+            source.lastSuccessfulRefreshAt ?? previousById.get(source.id)?.lastSuccessfulRefreshAt ?? null,
+        }))
+      : previous?.sourceHealth ?? [];
     const value: RssRefreshHealth = {
       ...attempt,
+      sourceHealth: mergedSourceHealth,
       lastSuccessfulRefreshAt: successfulRefreshAt ?? previous?.lastSuccessfulRefreshAt ?? null,
     };
     await redis.set(RSS_REFRESH_HEALTH_KEY, value, { ex: CANDIDATE_POOL_TTL_SECONDS });

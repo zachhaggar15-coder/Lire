@@ -218,6 +218,17 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             {text.publishedAt && <> {"\u00b7"} {formatDate(text.publishedAt)}</>}
           </p>
         )}
+        {text.attributionText && <p className="mt-1">{text.attributionText}</p>}
+        {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
+          <a
+            href={text.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 inline-block underline underline-offset-2"
+          >
+            Read the original source
+          </a>
+        )}
       </details>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
