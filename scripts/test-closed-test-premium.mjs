@@ -23,6 +23,7 @@ function read(relative) {
 console.log("--- Closed-test access fails closed ---");
 check("the forgeable activation route is absent", !existsSync(path("src/app/api/closed-test-premium/activate/route.ts")));
 check("no proxy mints an entitlement from request headers", !existsSync(path("proxy.ts")));
+check("the retired public feature-flag helper is absent", !existsSync(path("src/lib/closedTestPremium.ts")));
 
 const statusRoute = await import("../src/app/api/closed-test-premium/status/route.ts");
 const forgedRequest = new Request("https://sorlio.site/api/closed-test-premium/status", {
