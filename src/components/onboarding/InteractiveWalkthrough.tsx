@@ -6,7 +6,7 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { useAccess } from "@/lib/access/useAccess";
 import { canSaveWord } from "@/lib/access/accessModel";
-import { saveWordForAccess } from "@/lib/access/saveWord";
+import { runWalkthroughWordAction, walkthroughAccessCopy as accessCopyFor } from "@/lib/onboarding/walkthroughSave";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildWordCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
 import { ratePer100Words } from "@/lib/sessionRecord";
@@ -56,7 +56,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const [coachMarkDismissed, setCoachMarkDismissed] = useState(false);
   const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
   useDismissibleHistory(true, handleSkip);
-  const { context: access, ready: accessReady, tier, authenticated, closedTestPremium } = useAccess();
+  const { context: access, ready: accessReady, authenticated } = useAccess();
   const saveAllowed = accessReady && canSaveWord(access).allowed;
 
   useEffect(() => {
@@ -106,43 +106,20 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
 
   function handleWordAction() {
     if (!activeWord) return;
-    if (!accessReady) {
-      setSaveMessage("Checking which learning features are available…");
-      return;
-    }
-    const saved = saveWordForAccess(access, buildDemoSavedWord(activeWord.token.clean, "learning"));
-    if (!saved.decision.allowed) {
-      setSaveMessage(
-        authenticated
-          ? "Word lookup is available on your free account. Saving words and Review are part of Premium."
-          : "Anyone can look up words. Saving words and Review are part of Premium, so this tour has not added a demo word."
-      );
-      setActiveWord(null);
-      return;
-    }
-    if (!saved.result?.persisted) {
-      setSaveMessage("Couldn't save the word on this device. Try again after freeing some storage.");
-      return;
-    }
-    if (saved.result.created) {
+    const outcome = runWalkthroughWordAction(accessReady, access, authenticated, () =>
+      buildDemoSavedWord(activeWord.token.clean, "learning")
+    );
+    setSaveMessage(outcome.message);
+    if (outcome.kind === "saved") {
       setSavedCount((c) => c + 1);
       trackEvent("first_word_saved", { articleId: "onboarding-demo" });
-      setSaveMessage("Saved to your real Review deck.");
-    } else {
-      setSaveMessage("That word is already in your Review deck.");
     }
-    setActiveWord(null);
+    // The meaning stays visible after a preview; only a real save or an
+    // existing card closes the panel.
+    if (outcome.kind === "saved" || outcome.kind === "exists") setActiveWord(null);
   }
 
-  const walkthroughAccessCopy = !accessReady
-    ? "Checking available learning features…"
-    : tier === "premium"
-      ? closedTestPremium
-        ? "Closed-test Premium is active, so this save uses your normal Review deck for testing."
-        : "Your Premium access lets this tour save a real word to Review."
-      : authenticated
-        ? "Your free account can look up words. Saving words and Review are Premium features."
-        : "Anyone can look up words. A free account adds more daily reading and lookups; saving words and Review require Premium.";
+  const walkthroughAccessCopy = accessCopyFor(accessReady, access, authenticated);
 
   function revealDemoPhrase() {
     const tokens = tokenize(DEMO_SENTENCES[1]);
@@ -213,7 +190,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
               ["Words read", wordsRead],
               ["Lookups", tapCount],
               ["Lookups / 100 words", ratePer100Words(tapCount, wordsRead)],
-              ["Words saved", savedCount],
+              saveAllowed ? ["Words saved", savedCount] : ["Save & Review", "Premium"],
             ].map(([label, value]) => (
               <div key={label} className="rounded-card border border-cream-dark bg-cream-card p-3">
                 <p className="text-2xl font-extrabold tabular-nums text-ink">{value}</p>
@@ -316,7 +293,7 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
                     disabled={!accessReady}
                     className="w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream"
                   >
-                    {!accessReady ? "Checking access…" : saveAllowed ? "Save to Review" : "See how saving works"}
+                    {!accessReady ? "Checking access…" : saveAllowed ? "Save to Review" : "What does saving do?"}
                   </button>
                 </div>
               </div>

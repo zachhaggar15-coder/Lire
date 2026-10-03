@@ -1,4 +1,4 @@
-import type { User } from "@supabase/supabase-js";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabase/client";
 
 /**
@@ -63,15 +63,22 @@ export async function signInWithGoogle(returnPath?: string): Promise<AuthResult>
   return { ok: !error, error: error?.message ?? null };
 }
 
-/** Ends the remote session without touching device-local learning data. */
-export async function signOut(): Promise<AuthResult> {
-  const client = getSupabaseClient();
+const SIGN_OUT_FAILED = "Couldn't sign out. Please check your connection and try again.";
+
+/**
+ * Ends the remote session without touching device-local learning data.
+ *
+ * Reports whether it actually worked: a failed sign-out leaves the session in
+ * place, so callers must not present the reader as signed out unless `ok`.
+ * Supabase's own message is never surfaced — it is technical and unhelpful.
+ */
+export async function signOut(client: Pick<SupabaseClient, "auth"> | null = getSupabaseClient()): Promise<AuthResult> {
   if (!client) return { ok: false, error: "Sign-out isn't configured yet." };
   try {
     const { error } = await client.auth.signOut();
-    return { ok: !error, error: error?.message ?? null };
+    return error ? { ok: false, error: SIGN_OUT_FAILED } : { ok: true, error: null };
   } catch {
-    return { ok: false, error: "Couldn't sign out. Please check your connection and try again." };
+    return { ok: false, error: SIGN_OUT_FAILED };
   }
 }
 

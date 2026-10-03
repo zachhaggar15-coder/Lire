@@ -98,11 +98,11 @@ console.log("--- Sign-in returns to where it started ---");
 
 console.log("--- Sign-out is confirmed and failure-safe ---");
 {
-  check("the auth wrapper returns Supabase sign-out errors", /const \{ error \} = await client\.auth\.signOut\(\)/.test(auth) && /ok: !error/.test(auth));
+  check("the auth wrapper reports whether Supabase sign-out succeeded", /const \{ error \} = await client\.auth\.signOut\(\)/.test(auth) && /ok: false/.test(auth) && /ok: true/.test(auth));
   check("Settings opens a confirmation instead of signing out immediately", /setConfirmingSignOut\(true\)/.test(accountCard) && !/onClick=\{handleSignOut\}/.test(accountCard));
   check("the dialog uses the app's dismissible modal behaviour", /useModalFocus/.test(signOutDialog) && /useDismissibleHistory/.test(signOutDialog));
   check("cancel and dismissal have no sign-out side effect", /onCancel/.test(signOutDialog) && /signOut\(\)/.test(signOutDialog));
-  check("failed sign-out keeps the dialog open and reports an error", /setWorking\(false\);\s*\n\s*setError/.test(signOutDialog));
+  check("failed sign-out keeps the dialog open and reports an error", /createSignOutFlow/.test(signOutDialog) && /working: false, error/.test(read("src/lib/supabase/signOutFlow.ts")));
   check("local learning data is explicitly preserved", /stays on this device/.test(signOutDialog));
 }
 

@@ -100,7 +100,8 @@ const reader = readFileSync(new URL("../src/components/Reader.tsx", import.meta.
 const walkthrough = readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8");
 const meaningSheet = readFileSync(new URL("../src/components/MeaningSheet.tsx", import.meta.url), "utf8");
 check("Reader saves through the entitlement-aware helper", /saveWordForAccess\(/.test(reader));
-check("walkthrough uses the same real, guarded save mechanism", /saveWordForAccess\(/.test(walkthrough) && /useAccess\(\)/.test(walkthrough));
+const walkthroughSave = readFileSync(new URL("../src/lib/onboarding/walkthroughSave.ts", import.meta.url), "utf8");
+check("walkthrough uses the same real, guarded save mechanism", /runWalkthroughWordAction\(/.test(walkthrough) && /useAccess\(\)/.test(walkthrough) && /= saveWordForAccess/.test(walkthroughSave));
 check("known words are not rendered as Review saves", /isReviewableWordStatus/.test(meaningSheet) && /Already known/.test(meaningSheet));
 
 clearWords();
