@@ -42,7 +42,7 @@ function normalize(entry: unknown): ArticleFeedback | null {
 
 function persist(entries: ArticleFeedback[]): void {
   if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(entries));
+  localStore.writeItem(KEY, JSON.stringify(entries));
   notifyStoreChanged(KEY);
 }
 

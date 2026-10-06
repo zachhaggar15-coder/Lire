@@ -171,6 +171,6 @@ export function getOfflineRssTextCount(): number {
 
 export function clearOfflineRssTexts(): void {
   if (!hasLocalStorage()) return;
-  localStore.setItem(OFFLINE_KEY, JSON.stringify([]));
+  localStore.writeItem(OFFLINE_KEY, JSON.stringify([]));
   notifyStoreChanged(OFFLINE_KEY);
 }

@@ -8,7 +8,7 @@ import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
 import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { isSourceFooterText } from "@/lib/rss/sourceNoise";
-import { localStore } from "@/lib/localData/store";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -220,17 +220,27 @@ function normalize(entry: unknown): SavedWord | null {
  * Returns whether the write landed so callers can tell the user when it didn't,
  * rather than showing a success toast for a word that wasn't stored.
  */
-function persist(words: SavedWord[]): boolean {
-  if (!hasStorage()) return false;
-  try {
-    localStore.setItem(KEY, JSON.stringify(words));
-  } catch {
-    return false;
-  }
-  // Best-effort, fire-and-forget — no-ops if sync isn't configured or no
-  // one's signed in. See src/lib/supabase/sync.ts.
+function persist(words: SavedWord[]): WriteFailure | null {
+  if (!hasStorage()) return "unavailable";
+  // If the stored list could not be read, writing now would replace words we
+  // could not see. Refuse until it can be read again.
+  if (unreadable) return "error";
+  const result = localStore.writeItem(KEY, JSON.stringify(words));
+  if (!result.ok) return result.reason;
+  // Schedules a sync for signed-in accounts; a no-op for guests.
   notifyStoreChanged(KEY);
-  return true;
+  return null;
+}
+
+/** Set when the stored list exists but cannot be read or parsed. */
+let unreadable = false;
+
+/** The outcome of a change to saved words. `words` is always what is actually stored. */
+export type WordsMutation = { ok: true; words: SavedWord[] } | { ok: false; words: SavedWord[]; reason: WriteFailure };
+
+function mutation(next: SavedWord[], previous: SavedWord[]): WordsMutation {
+  const failure = persist(next);
+  return failure ? { ok: false, words: previous, reason: failure } : { ok: true, words: next };
 }
 
 /**
@@ -239,11 +249,24 @@ function persist(words: SavedWord[]): boolean {
  */
 export function getSavedWords(): SavedWord[] {
   if (!hasStorage()) return [];
+  let raw: string | null;
   try {
-    const raw = localStore.getItem(KEY);
-    if (!raw) return [];
+    raw = localStore.getItem(KEY);
+  } catch {
+    unreadable = true;
+    return [];
+  }
+  if (!raw) {
+    unreadable = false;
+    return [];
+  }
+  try {
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
+    if (!Array.isArray(parsed)) {
+      unreadable = true;
+      return [];
+    }
+    unreadable = false;
 
     const migrated = parsed
       .map(normalize)
@@ -253,6 +276,7 @@ export function getSavedWords(): SavedWord[] {
     if (JSON.stringify(migrated) !== raw) persist(migrated);
     return migrated;
   } catch {
+    unreadable = true;
     return [];
   }
 }
@@ -283,7 +307,7 @@ export function saveWord(entry: SavedWord): SaveWordResult {
     return { words, persisted: true, created: false };
   }
   const next = [entry, ...words];
-  if (!persist(next)) return { words, persisted: false, created: false };
+  if (persist(next)) return { words, persisted: false, created: false };
   // Only credit progress for a word that actually made it to storage.
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
@@ -297,8 +321,9 @@ export function saveWord(entry: SavedWord): SaveWordResult {
  * src/lib/spacedRepetition.ts for the actual scheduling logic. Returns the
  * updated list.
  */
-export function recordReviewResult(word: string, result: ReviewResult): SavedWord[] {
-  const next = getSavedWords().map((w) => {
+export function recordReviewResult(word: string, result: ReviewResult): WordsMutation {
+  const previous = getSavedWords();
+  const next = previous.map((w) => {
     if (w.word !== word) return w;
     const schedule = computeNextSchedule(w, result);
     return {
@@ -308,9 +333,10 @@ export function recordReviewResult(word: string, result: ReviewResult): SavedWor
       ...schedule,
     };
   });
-  persist(next);
-  recordActivityToday();
-  return next;
+  const outcome = mutation(next, previous);
+  // Activity only counts once the review is actually stored.
+  if (outcome.ok) recordActivityToday();
+  return outcome;
 }
 
 /**
@@ -319,27 +345,27 @@ export function recordReviewResult(word: string, result: ReviewResult): SavedWor
  * from then on) and adds the word — and its lemma, if any — to the known-
  * words list, so reader highlighting/lookups have one source of truth.
  */
-export function markWordAsKnown(word: string): SavedWord[] {
+export function markWordAsKnown(word: string): WordsMutation {
   const words = getSavedWords();
   const lookup = lookupWord(word);
   const lemma = lookup.lemma?.toLowerCase();
   const target = words.find((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
   const next = words.map((w) => (w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma) ? { ...w, status: "known" as const } : w));
-  persist(next);
+  const outcome = mutation(next, words);
+  if (!outcome.ok) return outcome;
   markKnown(word);
   if (target?.lemma) markKnown(target.lemma);
-  return next;
+  return outcome;
 }
 
-export function deleteWord(word: string): SavedWord[] {
+export function deleteWord(word: string): WordsMutation {
   const lookup = lookupWord(word);
   const lemma = lookup.lemma?.toLowerCase();
   const current = getSavedWords();
   const next = current.filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
-  persist(next);
-  return next;
+  return mutation(next, current);
 }
 
-export function clearWords(): void {
-  persist([]);
+export function clearWords(): WordsMutation {
+  return mutation([], getSavedWords());
 }

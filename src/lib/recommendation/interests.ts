@@ -57,7 +57,7 @@ export function getInterestProfile(): InterestProfile {
 
 function persist(profile: InterestProfile): void {
   if (!hasStorage()) return;
-  localStore.setItem(PROFILE_KEY, JSON.stringify(profile));
+  localStore.writeItem(PROFILE_KEY, JSON.stringify(profile));
   notifyStoreChanged(PROFILE_KEY);
 }
 

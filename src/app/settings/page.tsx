@@ -8,6 +8,7 @@ import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
 import { trackEvent } from "@/lib/analytics/client";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import {
   getCurrentStreak,
@@ -202,8 +203,9 @@ export default function SettingsPage() {
   function handleClearKnown() {
     if (knownCount === 0) return;
     if (confirm("Forget all known words? They will show up again in the reader and can be re-reviewed.")) {
-      clearKnownWords();
-      setKnownCount(0);
+      const failure = clearKnownWords();
+      if (failure) window.alert(persistenceFailureMessage(failure));
+      else setKnownCount(0);
     }
   }
 

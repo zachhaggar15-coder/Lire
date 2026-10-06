@@ -49,7 +49,7 @@ function normalize(entry: unknown): DictionaryFeedback | null {
 
 function persist(entries: DictionaryFeedback[]): void {
   if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(entries.slice(0, MAX_FEEDBACK)));
+  localStore.writeItem(KEY, JSON.stringify(entries.slice(0, MAX_FEEDBACK)));
   notifyStoreChanged(KEY);
 }
 

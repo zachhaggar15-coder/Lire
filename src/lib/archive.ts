@@ -59,7 +59,7 @@ export function getArchive(): ArchiveEntry[] {
 
 function persist(entries: ArchiveEntry[]): void {
   if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
+  localStore.writeItem(KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
   notifyStoreChanged(KEY);
 }
 

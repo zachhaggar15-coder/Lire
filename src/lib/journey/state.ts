@@ -130,7 +130,7 @@ export function getJourneyStore(): JourneyStore {
 
 function persistJourneyStore(next: JourneyStore): void {
   if (!hasStorage()) return;
-  localStore.setItem(JOURNEY_STORE_KEY, JSON.stringify({ ...next, updatedAt: new Date().toISOString() }));
+  localStore.writeItem(JOURNEY_STORE_KEY, JSON.stringify({ ...next, updatedAt: new Date().toISOString() }));
   notifyStoreChanged(JOURNEY_STORE_KEY);
 }
 

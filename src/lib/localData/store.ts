@@ -61,6 +61,22 @@ export function partitionKeyPrefix(identity: Identity): string {
 export type WriteFailure = "unavailable" | "quota" | "stale-identity" | "error";
 export type WriteResult = { ok: true } | { ok: false; reason: WriteFailure };
 
+export const STORAGE_FAILURE_EVENT = "sorlio-storage-failure";
+
+/**
+ * Lets the app show one clear warning (StorageWarning) when the device stops
+ * accepting writes, instead of progress silently going missing. Callers that
+ * need to react specifically still check the WriteResult.
+ */
+function announceStorageFailure(reason: WriteFailure): void {
+  if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
+  try {
+    window.dispatchEvent(new CustomEvent<WriteFailure>(STORAGE_FAILURE_EVENT, { detail: reason }));
+  } catch {
+    // Reporting must never be the thing that fails.
+  }
+}
+
 function rawStorage(): Storage | null {
   try {
     return typeof window !== "undefined" && window.localStorage ? window.localStorage : null;
@@ -200,7 +216,9 @@ export function storeFor(identity: Identity): PartitionedStore {
         storage.setItem(resolve(identity, key), value);
         return { ok: true };
       } catch (error) {
-        return { ok: false, reason: isQuotaError(error) ? "quota" : "error" };
+        const reason: WriteFailure = isQuotaError(error) ? "quota" : "error";
+        announceStorageFailure(reason);
+        return { ok: false, reason };
       }
     },
     deleteItem(key) {

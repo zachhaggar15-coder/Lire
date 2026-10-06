@@ -7,7 +7,7 @@
  */
 
 import { notifyStoreChanged } from "@/lib/sync/runtime";
-import { localStore } from "@/lib/localData/store";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 const KEY = "lire.knownWords.v1";
 
@@ -31,10 +31,13 @@ export function getKnownWords(): string[] {
   }
 }
 
-function persist(words: string[]): void {
-  if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(words));
+/** Writes the list; returns the failure reason, or null when it landed. */
+function persist(words: string[]): WriteFailure | null {
+  if (!hasStorage()) return "unavailable";
+  const result = localStore.writeItem(KEY, JSON.stringify(words));
+  if (!result.ok) return result.reason;
   notifyStoreChanged(KEY);
+  return null;
 }
 
 export function isKnown(wordOrLemma: string): boolean {
@@ -48,8 +51,7 @@ export function markKnown(wordOrLemma: string): string[] {
   const words = getKnownWords();
   if (words.includes(key)) return words;
   const next = [...words, key];
-  persist(next);
-  return next;
+  return persist(next) ? words : next;
 }
 
 export function markKnownBatch(wordsOrLemmas: string[]): string[] {
@@ -60,17 +62,18 @@ export function markKnownBatch(wordsOrLemmas: string[]): string[] {
     if (key) next.add(key);
   }
   const out = [...next];
-  if (out.length !== existing.length) persist(out);
+  if (out.length !== existing.length && persist(out)) return existing;
   return out;
 }
 
 export function removeKnown(wordOrLemma: string): string[] {
   const key = clean(wordOrLemma);
-  const next = getKnownWords().filter((w) => w !== key);
-  persist(next);
-  return next;
+  const words = getKnownWords();
+  const next = words.filter((w) => w !== key);
+  return persist(next) ? words : next;
 }
 
-export function clearKnownWords(): void {
-  persist([]);
+/** Returns the failure reason, or null when the list was cleared. */
+export function clearKnownWords(): WriteFailure | null {
+  return persist([]);
 }

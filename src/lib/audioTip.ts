@@ -23,7 +23,7 @@ function isTipSeen(): boolean {
 
 export function markAudioTipSeen(): void {
   if (!hasStorage()) return;
-  localStore.setItem(TIP_SEEN_KEY, "1");
+  localStore.writeItem(TIP_SEEN_KEY, "1");
 }
 
 /**
@@ -35,7 +35,7 @@ export function markAudioTipSeen(): void {
 export function recordAudioPlayAndCheckTip(): boolean {
   if (!hasStorage()) return false;
   const nextCount = getPlayCount() + 1;
-  localStore.setItem(PLAY_COUNT_KEY, String(nextCount));
+  localStore.writeItem(PLAY_COUNT_KEY, String(nextCount));
   if (isTipSeen()) return false;
   return nextCount >= PLAYS_BEFORE_TIP;
 }

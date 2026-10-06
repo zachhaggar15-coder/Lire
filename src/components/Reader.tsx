@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
 import { deleteWord, getSavedWords } from "@/lib/storage";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { deletePhrase, getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
@@ -1321,7 +1322,12 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   function handleUnsaveActiveWord() {
     if (!activeWord || activeWord.existingStatus === null || activeWord.existingStatus === "known") return;
-    const nextWords = deleteWord(activeWord.meaning.tappedText);
+    const removed = deleteWord(activeWord.meaning.tappedText);
+    if (!removed.ok) {
+      showToast(persistenceFailureMessage(removed.reason), 4200);
+      return;
+    }
+    const nextWords = removed.words;
     const nextStatusMap = buildWordStatusMap(nextWords);
     const keys = [activeWord.meaning.tappedText.toLowerCase(), activeWord.meaning.lemma?.toLowerCase()].filter(
       (value): value is string => !!value
@@ -1414,11 +1420,19 @@ export default function Reader({ text }: { text: ReadingText }) {
   function handleToggleMiniReviewSave(item: LessonMiniReviewItem) {
     if (item.kind === "phrase") {
       if (!item.saved) return;
-      deletePhrase(item.french);
+      const removed = deletePhrase(item.french);
+      if (!removed.ok) {
+        showToast(persistenceFailureMessage(removed.reason), 4200);
+        return;
+      }
       showToast("Removed from review");
     } else if (item.saved) {
-      deleteWord(item.french);
-      setWordStatusMap(buildWordStatusMap(getSavedWords()));
+      const removed = deleteWord(item.french);
+      if (!removed.ok) {
+        showToast(persistenceFailureMessage(removed.reason), 4200);
+        return;
+      }
+      setWordStatusMap(buildWordStatusMap(removed.words));
       showToast("Removed from review");
     } else {
       const saved = saveWordForAccess(access, buildSavedWord(resolveMeaningForWord(item.french, item.context ?? item.french), "learning"));

@@ -36,7 +36,7 @@ function readAll(): Record<string, TextProgress> {
 
 function persist(all: Record<string, TextProgress>): void {
   if (!hasStorage()) return;
-  localStore.setItem(PROGRESS_KEY, JSON.stringify(all));
+  localStore.writeItem(PROGRESS_KEY, JSON.stringify(all));
   notifyStoreChanged(PROGRESS_KEY);
 }
 
@@ -64,7 +64,7 @@ export function markOpened(textId: string): void {
       : current;
 
   persist(all);
-  localStore.setItem(LAST_OPENED_KEY, textId);
+  localStore.writeItem(LAST_OPENED_KEY, textId);
   notifyStoreChanged(LAST_OPENED_KEY);
 }
 

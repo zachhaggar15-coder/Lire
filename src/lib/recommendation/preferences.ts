@@ -39,7 +39,7 @@ function readStringList(key: string): string[] {
 
 function writeStringList(key: string, values: string[]): void {
   if (!hasStorage()) return;
-  localStore.setItem(key, JSON.stringify([...new Set(values)]));
+  localStore.writeItem(key, JSON.stringify([...new Set(values)]));
   notifyStoreChanged(key);
   notify();
 }

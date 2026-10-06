@@ -76,7 +76,7 @@ export function saveCustomDictionaryEntry(entry: DictionaryEntry): DictionaryEnt
 
   const existing = getCustomDictionaryEntries().filter((item) => item.lemma !== normalised.lemma);
   const next = [normalised, ...existing].slice(0, MAX_ENTRIES);
-  localStore.setItem(KEY, JSON.stringify(next));
+  localStore.writeItem(KEY, JSON.stringify(next));
   notifyStoreChanged(KEY);
   return next;
 }

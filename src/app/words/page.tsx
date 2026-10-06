@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { SavedWord } from "@/types";
 import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { formatDate, toPercent } from "@/lib/format";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
@@ -51,6 +52,7 @@ export default function WordsPage() {
   const [filter, setFilter] = useState<WordsFilter>("learning");
   const [tab, setTab] = useState<VocabTab>("words");
   const [query, setQuery] = useState("");
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     setWords(getSavedWords());
@@ -62,23 +64,30 @@ export default function WordsPage() {
   }, []);
 
   function handleDelete(word: string) {
-    setWords(deleteWord(word));
+    const result = deleteWord(word);
+    setWords(result.words);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
   }
 
   function handleClear() {
     if (words.length === 0) return;
     if (confirm("Delete all saved words?")) {
-      clearWords();
-      setWords([]);
+      const result = clearWords();
+      setWords(result.words);
+      setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
     }
   }
 
   function handlePhraseKnown(phrase: string) {
-    setPhrases(markPhraseKnown(phrase));
+    const result = markPhraseKnown(phrase);
+    setPhrases(result.phrases);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
   }
 
   function handlePhraseDelete(phrase: string) {
-    setPhrases(deletePhrase(phrase));
+    const result = deletePhrase(phrase);
+    setPhrases(result.phrases);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
   }
 
   const counts: Record<WordsFilter, number> = {
@@ -110,6 +119,11 @@ export default function WordsPage() {
       <p className="-mt-3 mb-5 text-sm text-ink-muted">
         {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length} {phrases.length === 1 ? "phrase" : "phrases"}
       </p>
+      {saveError && (
+        <p role="alert" className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+          {saveError}
+        </p>
+      )}
 
       {(words.length > 0 || phrases.length > 0) && (
         <input

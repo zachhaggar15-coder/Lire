@@ -1,5 +1,5 @@
 import { notifyStoreChanged } from "@/lib/sync/runtime";
-import { localStore } from "@/lib/localData/store";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 export type SavedPhraseStatus = "learning" | "known";
 
@@ -52,10 +52,16 @@ function normalize(entry: unknown): SavedPhrase | null {
   };
 }
 
-function persist(phrases: SavedPhrase[]): void {
-  if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(phrases.slice(0, MAX_PHRASES)));
+/** The outcome of a change to saved phrases. `phrases` is always what is actually stored. */
+export type PhrasesMutation = { ok: true; phrases: SavedPhrase[] } | { ok: false; phrases: SavedPhrase[]; reason: WriteFailure };
+
+function persist(next: SavedPhrase[], previous: SavedPhrase[]): PhrasesMutation {
+  if (!hasStorage()) return { ok: false, phrases: previous, reason: "unavailable" };
+  const capped = next.slice(0, MAX_PHRASES);
+  const result = localStore.writeItem(KEY, JSON.stringify(capped));
+  if (!result.ok) return { ok: false, phrases: previous, reason: result.reason };
   notifyStoreChanged(KEY);
+  return { ok: true, phrases: capped };
 }
 
 export function getSavedPhrases(): SavedPhrase[] {
@@ -75,7 +81,7 @@ export function isPhraseSaved(phrase: string): boolean {
   return getSavedPhrases().some((saved) => saved.phrase === key);
 }
 
-export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): SavedPhrase[] {
+export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): PhrasesMutation {
   const now = new Date().toISOString();
   const entry: SavedPhrase = {
     ...phrase,
@@ -86,19 +92,18 @@ export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "saved
     updatedAt: now,
     correctStreak: 0,
   };
-  const existing = getSavedPhrases().filter((saved) => saved.phrase !== entry.phrase);
-  const next = [entry, ...existing];
-  persist(next);
-  return next;
+  const previous = getSavedPhrases();
+  const existing = previous.filter((saved) => saved.phrase !== entry.phrase);
+  return persist([entry, ...existing], previous);
 }
 
 /** Manual override (e.g. a "Known" button on the Words/Phrases pages) — marks known immediately, bypassing the review streak. */
-export function markPhraseKnown(phrase: string): SavedPhrase[] {
+export function markPhraseKnown(phrase: string): PhrasesMutation {
   const key = clean(phrase);
   const now = new Date().toISOString();
-  const next = getSavedPhrases().map((saved) => (saved.phrase === key ? { ...saved, status: "known" as const, correctStreak: 0, updatedAt: now } : saved));
-  persist(next);
-  return next;
+  const previous = getSavedPhrases();
+  const next = previous.map((saved) => (saved.phrase === key ? { ...saved, status: "known" as const, correctStreak: 0, updatedAt: now } : saved));
+  return persist(next, previous);
 }
 
 /**
@@ -107,10 +112,11 @@ export function markPhraseKnown(phrase: string): SavedPhrase[] {
  * PHRASE_GRADUATE_AFTER_CORRECT_STREAK), an incorrect grade resets it to 0
  * — mirrors the word-side streak in review/page.tsx's GRADUATE_AFTER_CORRECT_STREAK.
  */
-export function recordPhraseReview(phrase: string, correct: boolean): SavedPhrase[] {
+export function recordPhraseReview(phrase: string, correct: boolean): PhrasesMutation {
   const key = clean(phrase);
   const now = new Date().toISOString();
-  const next = getSavedPhrases().map((saved) => {
+  const previous = getSavedPhrases();
+  const next = previous.map((saved) => {
     if (saved.phrase !== key) return saved;
     const correctStreak = correct ? saved.correctStreak + 1 : 0;
     const graduated = correct && correctStreak >= PHRASE_GRADUATE_AFTER_CORRECT_STREAK;
@@ -121,13 +127,11 @@ export function recordPhraseReview(phrase: string, correct: boolean): SavedPhras
       updatedAt: now,
     };
   });
-  persist(next);
-  return next;
+  return persist(next, previous);
 }
 
-export function deletePhrase(phrase: string): SavedPhrase[] {
+export function deletePhrase(phrase: string): PhrasesMutation {
   const key = clean(phrase);
-  const next = getSavedPhrases().filter((saved) => saved.phrase !== key);
-  persist(next);
-  return next;
+  const previous = getSavedPhrases();
+  return persist(previous.filter((saved) => saved.phrase !== key), previous);
 }

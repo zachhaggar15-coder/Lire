@@ -39,7 +39,7 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  localStore.setItem(key, JSON.stringify(value));
+  localStore.writeItem(key, JSON.stringify(value));
   notifyStoreChanged(key);
 }
 

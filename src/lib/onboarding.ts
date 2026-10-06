@@ -178,7 +178,7 @@ export function skipOnboarding(): OnboardingState {
 export function saveWalkthroughStep(step: number | null): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  localStore.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
+  localStore.writeItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
   notifyStoreChanged(ONBOARDING_KEY);
 }
 
@@ -186,7 +186,7 @@ export function saveWalkthroughStep(step: number | null): void {
 export function completeWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  localStore.setItem(
+  localStore.writeItem(
     ONBOARDING_KEY,
     JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );
@@ -203,7 +203,7 @@ export function completeWalkthrough(): void {
 export function resetWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  localStore.setItem(
+  localStore.writeItem(
     ONBOARDING_KEY,
     JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );

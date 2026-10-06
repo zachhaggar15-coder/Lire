@@ -63,7 +63,7 @@ export function getActivityDates(): string[] {
 
 function persist(dates: string[]): void {
   if (!hasStorage()) return;
-  localStore.setItem(KEY, JSON.stringify(dates.slice(-MAX_STORED_DATES)));
+  localStore.writeItem(KEY, JSON.stringify(dates.slice(-MAX_STORED_DATES)));
   notifyStoreChanged(KEY);
 }
 
@@ -94,7 +94,7 @@ function getGraceRecord(): StreakGraceRecord | null {
 
 function persistGraceRecord(record: StreakGraceRecord): void {
   if (!hasStorage()) return;
-  localStore.setItem(GRACE_KEY, JSON.stringify(record));
+  localStore.writeItem(GRACE_KEY, JSON.stringify(record));
   notifyStoreChanged(GRACE_KEY);
 }
 

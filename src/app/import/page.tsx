@@ -6,7 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Category, Difficulty, ReadingText } from "@/types";
-import { deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
+import { MAX_IMPORT_CHARS, MAX_IMPORT_TITLE_CHARS, deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import AppBar from "@/components/AppBar";
 
 const CATEGORIES: { value: Category; label: string }[] = [
@@ -26,6 +27,7 @@ function ImportPageContent() {
   const [category, setCategory] = useState<Category>("news-style");
   const [difficulty, setDifficulty] = useState<Difficulty>("B1");
   const [texts, setTexts] = useState<ReadingText[]>([]);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const wordCount = useMemo(() => body.trim().split(/\s+/).filter(Boolean).length, [body]);
   const canSave = body.trim().split(/\s+/).filter(Boolean).length >= 20;
 
@@ -35,19 +37,39 @@ function ImportPageContent() {
 
   function handleSave() {
     if (!canSave) return;
-    const text = saveCustomText({ title, body, category, difficulty });
+    const saved = saveCustomText({ title, body, category, difficulty });
+    if (!saved.ok) {
+      setSaveError(
+        saved.reason === "too-long"
+          ? `That text is too long to import (the limit is ${MAX_IMPORT_CHARS.toLocaleString("en-GB")} characters). Try importing it in parts.`
+          : saved.reason === "empty"
+            ? "Paste some French text first."
+            : persistenceFailureMessage(saved.reason),
+      );
+      return;
+    }
+    setSaveError(null);
     setTexts(getCustomTexts());
-    router.push(`/reader/${text.id}`);
+    router.push(`/reader/${saved.text.id}`);
   }
 
   function handleDelete(id: string) {
-    setTexts(deleteCustomText(id));
+    const result = deleteCustomText(id);
+    setTexts(result.texts);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
   }
 
   return (
     <div className="ligne-screen">
       <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
-      <p className="-mt-3 mb-5 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review, and progress tools.</p>
+      <p className="-mt-3 mb-2 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review and progress tools.</p>
+      <p className="mb-5 text-xs leading-relaxed text-ink-muted">
+        Imported texts stay private on this device. They&rsquo;re only copied to your account if you turn on{" "}
+        <Link href="/settings#sync-imported-texts" className="font-semibold text-brand underline underline-offset-2">
+          Sync imported texts
+        </Link>
+        , and they&rsquo;re never sent for AI help unless you ask for it while reading.
+      </p>
 
       <section className="rounded-card bg-cream-card p-4 shadow-card">
         <label className="text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor="custom-title">
@@ -57,6 +79,7 @@ function ImportPageContent() {
           id="custom-title"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
+          maxLength={MAX_IMPORT_TITLE_CHARS}
           placeholder="Optional"
           className="mt-2 w-full rounded-2xl bg-cream px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
         />
@@ -107,13 +130,19 @@ function ImportPageContent() {
           id="custom-body"
           value={body}
           onChange={(event) => setBody(event.target.value)}
+          maxLength={MAX_IMPORT_CHARS}
           rows={10}
           placeholder="Paste at least a short paragraph of French here."
           className="mt-2 w-full resize-none rounded-2xl bg-cream px-3 py-3 text-sm leading-relaxed text-ink outline-none focus:ring-2 focus:ring-brand/30"
         />
         <p className="mt-1 text-xs text-ink-muted">
-          A complete paragraph works best because word meanings depend on context.
+          At least 20 words. A complete paragraph works best because word meanings depend on context.
         </p>
+        {saveError && (
+          <p role="alert" className="mt-2 text-sm font-semibold text-rose-700 dark:text-rose-300">
+            {saveError}
+          </p>
+        )}
 
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-xs font-semibold text-ink-muted">{wordCount} words</p>

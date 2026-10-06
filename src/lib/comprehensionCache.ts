@@ -80,7 +80,7 @@ function persist(cache: CachedComprehensionQuestionBundle[]): void {
     memoryCache = cache;
     return;
   }
-  localStore.setItem(KEY, JSON.stringify(cache));
+  localStore.writeItem(KEY, JSON.stringify(cache));
   notifyStoreChanged(KEY);
 }
 

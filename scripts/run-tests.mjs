@@ -56,6 +56,7 @@ export const SUITES = [
   "test-rate-prompt.mjs",
   "test-account-isolation.mjs",
   "test-sync-engine.mjs",
+  "test-persistence-failures.mjs",
 ];
 
 const filters = process.argv.slice(2);

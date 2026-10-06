@@ -4,6 +4,7 @@ import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import IdentityController from "@/components/IdentityController";
+import StorageWarning from "@/components/StorageWarning";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 import ViewportHeightVar from "@/components/ViewportHeightVar";
 import StorageMigrations from "@/components/StorageMigrations";
@@ -131,6 +132,7 @@ export default function RootLayout({
         <ThemeController />
         <ServiceWorker />
         <IdentityController />
+        <StorageWarning />
         <AppLifecycleTracker />
         <ViewportHeightVar />
         <AppNavigationPolish />

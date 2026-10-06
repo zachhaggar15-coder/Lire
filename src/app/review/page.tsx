@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
 import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
@@ -95,6 +96,7 @@ function ReviewPageContent() {
   const [phraseReviewStarted, setPhraseReviewStarted] = useState(false);
   const [phraseRevealed, setPhraseRevealed] = useState(false);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [cardFeedback, setCardFeedback] = useState<CardFeedback>(null);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
@@ -110,6 +112,7 @@ function ReviewPageContent() {
   // logic runs in an event handler); missedCount mirrors its size into state
   // since refs can't be read during render.
   const missedWordKeys = useRef<Set<string>>(new Set());
+  const missedBefore = useRef<Set<string>>(new Set());
   const [missedCount, setMissedCount] = useState(0);
   const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reviewCardRef = useRef<HTMLDivElement | null>(null);
@@ -245,6 +248,7 @@ function ReviewPageContent() {
     if (!current || cardFeedback) return;
     const correct = grade === "knew";
     triggerHaptic(correct ? "confirm" : "selection");
+    missedBefore.current = new Set(missedWordKeys.current);
     if (!correct) {
       missedWordKeys.current.add(current.word);
       setMissedCount(missedWordKeys.current.size);
@@ -264,11 +268,21 @@ function ReviewPageContent() {
     });
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const updatedWords = recordReviewResult(current.word, correct ? "correct" : "incorrect");
-      const updatedWord = updatedWords.find((w) => w.word === current.word);
+      const reviewed = recordReviewResult(current.word, correct ? "correct" : "incorrect");
+      if (!reviewed.ok) {
+        // Nothing was stored: keep the same card on screen, award nothing,
+        // and say why. The answer can simply be given again.
+        undoGradeFeedback(correct, current.word, score);
+        setSaveError(persistenceFailureMessage(reviewed.reason));
+        return;
+      }
+      setSaveError(null);
+      const updatedWord = reviewed.words.find((w) => w.word === current.word);
       const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
-      const nextWords = visibleWords(graduated ? markWordAsKnown(current.word) : updatedWords);
-      if (graduated) {
+      const known = graduated ? markWordAsKnown(current.word) : null;
+      if (known && !known.ok) setSaveError(persistenceFailureMessage(known.reason));
+      const nextWords = visibleWords(known?.ok ? known.words : reviewed.words);
+      if (known?.ok) {
         const xp = recordReviewSuccessXp(current.word);
         if (xp > 0) {
           setXpNotice(`+${xp} XP`);
@@ -285,6 +299,17 @@ function ReviewPageContent() {
       setCardFeedback(null);
       cardFeedbackTimeout.current = null;
     }, REVIEW_FEEDBACK_DELAY_MS);
+  }
+
+  /** Reverses the optimistic feedback for an answer whose result could not be stored. */
+  function undoGradeFeedback(correct: boolean, word: string, previousScore: { knew: number; missed: number }) {
+    if (!correct && !missedBefore.current.has(word)) {
+      missedWordKeys.current.delete(word);
+      setMissedCount(missedWordKeys.current.size);
+    }
+    setScore(previousScore);
+    setCardFeedback(null);
+    cardFeedbackTimeout.current = null;
   }
 
   function restart() {
@@ -335,7 +360,19 @@ function ReviewPageContent() {
 
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const updatedPhrases = recordPhraseReview(currentPhrase.phrase, correct);
+      const reviewed = recordPhraseReview(currentPhrase.phrase, correct);
+      if (!reviewed.ok) {
+        phraseScore.current = {
+          correct: phraseScore.current.correct - (correct ? 1 : 0),
+          total: phraseScore.current.total - 1,
+        };
+        setSaveError(persistenceFailureMessage(reviewed.reason));
+        setCardFeedback(null);
+        cardFeedbackTimeout.current = null;
+        return;
+      }
+      setSaveError(null);
+      const updatedPhrases = reviewed.phrases;
       setPhrases(articleFilter ? updatedPhrases.filter((phrase) => phrase.sourceTextTitle === articleFilter) : updatedPhrases);
       const remainingQueue = sessionPhraseQueue.slice(1);
       const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
@@ -487,6 +524,12 @@ function ReviewPageContent() {
           <span key={reviewProgressLabel} className="ligne-value-change inline-block">{reviewProgressLabel}</span>
         </span>
       </header>
+
+      {saveError && (
+        <div role="alert" className="mb-3 rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+          {saveError}
+        </div>
+      )}
 
       {xpNotice && (
         <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand">
