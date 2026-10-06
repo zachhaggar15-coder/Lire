@@ -1,6 +1,7 @@
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { hashString } from "@/lib/hash";
 import { lexicalSpan, type SentenceGroup, type Token } from "@/lib/words";
+import { localStore } from "@/lib/localData/store";
 
 const DICTIONARY_TRANSLATION_CACHE_PREFIX = "lire.dictionaryArticleTranslation.v1.";
 const MAX_PHRASE_WORDS = 9;
@@ -311,7 +312,7 @@ export function translateSentencesWithDictionaryCache(
 
   if (hasStorage()) {
     try {
-      const raw = window.localStorage.getItem(key);
+      const raw = localStore.getItem(key);
       const cached = raw ? JSON.parse(raw) : null;
       if (
         cached &&
@@ -344,12 +345,11 @@ const MAX_CACHED_ARTICLE_TRANSLATIONS = 30;
 /** Cache keys, oldest `updatedAt` first. Entries with no readable timestamp sort oldest so they're evicted first. */
 function cacheKeysOldestFirst(): string[] {
   const entries: { key: string; updatedAt: number }[] = [];
-  for (let i = 0; i < window.localStorage.length; i++) {
-    const key = window.localStorage.key(i);
-    if (!key?.startsWith(DICTIONARY_TRANSLATION_CACHE_PREFIX)) continue;
+  for (const key of localStore.keys()) {
+    if (!key.startsWith(DICTIONARY_TRANSLATION_CACHE_PREFIX)) continue;
     let updatedAt = 0;
     try {
-      const parsed = JSON.parse(window.localStorage.getItem(key) ?? "null");
+      const parsed = JSON.parse(localStore.getItem(key) ?? "null");
       const parsedTime = parsed && typeof parsed === "object" ? Date.parse(parsed.updatedAt) : NaN;
       if (Number.isFinite(parsedTime)) updatedAt = parsedTime;
     } catch {
@@ -365,7 +365,7 @@ function evictOldestTranslations(keep: number): void {
   const keys = cacheKeysOldestFirst();
   for (const key of keys.slice(0, Math.max(0, keys.length - keep))) {
     try {
-      window.localStorage.removeItem(key);
+      localStore.removeItem(key);
     } catch {
       // Nothing useful to do; keep trying the rest.
     }
@@ -383,14 +383,14 @@ export function cacheDictionarySentenceTranslations(
   const payload = JSON.stringify({ sentences, updatedAt: new Date().toISOString() });
 
   try {
-    window.localStorage.setItem(key, payload);
+    localStore.setItem(key, payload);
   } catch {
     // Likely quota. Clear this cache down hard and retry once — a cached
     // translation is a nice-to-have, so it should yield space rather than
     // hold onto it at the expense of the user's saved words.
     try {
       evictOldestTranslations(Math.floor(MAX_CACHED_ARTICLE_TRANSLATIONS / 3));
-      window.localStorage.setItem(key, payload);
+      localStore.setItem(key, payload);
     } catch {
       // Storage genuinely unavailable: deterministic translation still works.
       return;

@@ -1,6 +1,7 @@
 import type { TextProgress } from "@/types";
 import { recordActivityToday } from "@/lib/habit";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * localStorage-backed reading progress: per-text status (unread /
@@ -24,7 +25,7 @@ const DEFAULT_PROGRESS: TextProgress = {
 function readAll(): Record<string, TextProgress> {
   if (!hasStorage()) return {};
   try {
-    const raw = window.localStorage.getItem(PROGRESS_KEY);
+    const raw = localStore.getItem(PROGRESS_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === "object" ? parsed : {};
@@ -35,8 +36,8 @@ function readAll(): Record<string, TextProgress> {
 
 function persist(all: Record<string, TextProgress>): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(all));
-  void pushStore(PROGRESS_KEY);
+  localStore.setItem(PROGRESS_KEY, JSON.stringify(all));
+  notifyStoreChanged(PROGRESS_KEY);
 }
 
 export function getAllProgress(): Record<string, TextProgress> {
@@ -63,8 +64,8 @@ export function markOpened(textId: string): void {
       : current;
 
   persist(all);
-  window.localStorage.setItem(LAST_OPENED_KEY, textId);
-  void pushStore(LAST_OPENED_KEY);
+  localStore.setItem(LAST_OPENED_KEY, textId);
+  notifyStoreChanged(LAST_OPENED_KEY);
 }
 
 /** Mark a text as completed. */
@@ -84,7 +85,7 @@ export function markCompleted(textId: string): void {
 /** The id of the most recently opened text, or null if none yet. */
 export function getLastOpenedTextId(): string | null {
   if (!hasStorage()) return null;
-  return window.localStorage.getItem(LAST_OPENED_KEY);
+  return localStore.getItem(LAST_OPENED_KEY);
 }
 
 /**

@@ -1,4 +1,5 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Per-reading lookup-rate tracking: "how often did you open word help,
@@ -43,7 +44,7 @@ function isEntry(value: unknown): value is LookupStatEntry {
 function readAll(): LookupStatEntry[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(LOOKUP_STATS_KEY);
+    const raw = localStore.getItem(LOOKUP_STATS_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(isEntry) : [];
   } catch {
@@ -54,8 +55,8 @@ function readAll(): LookupStatEntry[] {
 function persist(entries: LookupStatEntry[]): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(LOOKUP_STATS_KEY, JSON.stringify(entries));
-    void pushStore(LOOKUP_STATS_KEY);
+    localStore.setItem(LOOKUP_STATS_KEY, JSON.stringify(entries));
+    notifyStoreChanged(LOOKUP_STATS_KEY);
   } catch {
     // A full quota shouldn't break finishing a lesson; this stat is a nicety.
   }

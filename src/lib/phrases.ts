@@ -1,4 +1,5 @@
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 export type SavedPhraseStatus = "learning" | "known";
 
@@ -53,14 +54,14 @@ function normalize(entry: unknown): SavedPhrase | null {
 
 function persist(phrases: SavedPhrase[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(phrases.slice(0, MAX_PHRASES)));
-  void pushStore(KEY);
+  localStore.setItem(KEY, JSON.stringify(phrases.slice(0, MAX_PHRASES)));
+  notifyStoreChanged(KEY);
 }
 
 export function getSavedPhrases(): SavedPhrase[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((phrase): phrase is SavedPhrase => phrase !== null);
@@ -126,7 +127,6 @@ export function recordPhraseReview(phrase: string, correct: boolean): SavedPhras
 
 export function deletePhrase(phrase: string): SavedPhrase[] {
   const key = clean(phrase);
-  recordStoreDeletion(KEY, key);
   const next = getSavedPhrases().filter((saved) => saved.phrase !== key);
   persist(next);
   return next;

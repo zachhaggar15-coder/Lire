@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { getCurrentUser, onAuthStateChange, signInWithGoogle } from "@/lib/supabase/auth";
-import { getSyncStatus, subscribeToSyncStatus, syncNow, type SyncStatus } from "@/lib/supabase/sync";
+import { getSyncStatus, subscribeToSyncStatus, syncNow, type SyncStatus } from "@/lib/sync/runtime";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import DeleteAccountDialog from "@/components/DeleteAccountDialog";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
@@ -27,15 +27,14 @@ export default function AccountCard() {
   const [signingIn, setSigningIn] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>({ phase: "idle", lastSuccessAt: null, error: null });
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>({ phase: "idle", lastSuccessAt: null, message: null });
   const { status: premium } = usePremiumStatus();
 
   useEffect(() => {
     setConfigured(isSupabaseConfigured());
     getCurrentUser().then((user) => setUserEmail(user?.email ?? null));
-    // Only the email is tracked here. The merge that carries a guest's
-    // progress up to the account is done app-wide by AuthSync, so starting
-    // another one here would have two merges racing on the same stores.
+    // Only the email is tracked here. Sync and the guest-data question are
+    // handled app-wide by IdentityController.
     const unsubscribe = onAuthStateChange((user) => setUserEmail(user?.email ?? null));
     const unsubscribeSync = subscribeToSyncStatus(setSyncStatus);
     setSyncStatus(getSyncStatus());
@@ -72,14 +71,23 @@ export default function AccountCard() {
           <p className="font-semibold text-ink">Account</p>
           <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">Signed in as</p>
           <p className="text-sm text-ink">{userEmail}</p>
-          <p className="mt-2 text-xs text-ink-muted">
+          <p className="mt-2 text-xs text-ink-muted" aria-live="polite">
             {syncStatus.phase === "syncing"
               ? "Syncing…"
-              : lastSyncLabel
-                ? `Your progress is synced. Last synced ${lastSyncLabel}`
-                : "Your progress will sync shortly."}
+              : syncStatus.phase === "success"
+                ? `Synced${lastSyncLabel ? ` · ${lastSyncLabel}` : ""}`
+                : lastSyncLabel
+                  ? `Last fully synced ${lastSyncLabel}`
+                  : "Not synced yet."}
           </p>
-          {syncStatus.error && <p className="mt-1 text-xs text-rose-600">{syncStatus.error}</p>}
+          {syncStatus.message && (
+            <p
+              role={syncStatus.phase === "error" ? "alert" : undefined}
+              className={`mt-1 text-xs ${syncStatus.phase === "error" ? "text-rose-600" : "text-ink-muted"}`}
+            >
+              {syncStatus.message}
+            </p>
+          )}
 
           <div className="mt-3 flex flex-wrap gap-2">
             <button
@@ -132,8 +140,7 @@ export default function AccountCard() {
           premium={premium}
           onCancel={() => setConfirmingDelete(false)}
           onDeleted={() => {
-            setConfirmingDelete(false);
-            setUserEmail(null);
+            window.location.replace("/settings?accountDeleted=1");
           }}
         />
       )}
@@ -141,8 +148,7 @@ export default function AccountCard() {
         <SignOutDialog
           onCancel={() => setConfirmingSignOut(false)}
           onSignedOut={() => {
-            setConfirmingSignOut(false);
-            setUserEmail(null);
+            // signOutThisDevice reloads into the guest partition.
           }}
         />
       )}

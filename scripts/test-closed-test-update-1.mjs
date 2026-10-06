@@ -112,7 +112,7 @@ console.log("--- Onboarding: state ---");
   check("completion clears the resume step", onboarding.getOnboardingState().walkthroughStep === null);
   onboarding.resetWalkthrough();
   check("restart works", onboarding.getOnboardingState().walkthroughCompleted === false);
-  check("a preview never wrote saved words during any of this", !store.has("lire.savedWords.v1"));
+  check("a preview never wrote saved words during any of this", !store.has("sorlio.v2:guest:lire.savedWords.v1"));
 }
 
 console.log("--- Auth wrapper: signOut ---");
@@ -132,8 +132,8 @@ console.log("--- Auth wrapper: signOut ---");
 console.log("--- Sign-out flow ---");
 {
   store.clear();
-  store.set("lire.savedWords.v1", JSON.stringify([{ word: "bonjour" }]));
-  store.set("lire.sessionRecords.v1", JSON.stringify([{ textId: "a" }]));
+  store.set("sorlio.v2:guest:lire.savedWords.v1", JSON.stringify([{ word: "bonjour" }]));
+  store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([{ textId: "a" }]));
   const snapshot = JSON.stringify([...store.entries()]);
 
   let session = true;
@@ -191,8 +191,10 @@ console.log("--- Sign-out dialog wiring ---");
   check("the dialog is a labelled modal", /role="dialog"/.test(dialog) && /aria-modal="true"/.test(dialog) && /aria-labelledby/.test(dialog));
   check("focus starts on Cancel", /cancelRef/.test(dialog));
   check("dismissal is blocked while signing out", /if \(!working\) onCancel\(\)/.test(dialog));
-  check("copy says account sync and Premium are paused, data stays", /stays on this device/.test(dialog) && /account sync and Premium/.test(dialog));
-  check("account UI clears only after success", /onSignedOut=\{\(\) => \{\s*setConfirmingSignOut\(false\);\s*setUserEmail\(null\)/.test(card));
+  check("copy says the data stays on the device but is hidden from others", /stays on this device/.test(dialog) && /hidden until you sign in again/.test(dialog));
+  // Signing out reloads into the guest partition, so no signed-in UI can linger.
+  const session = readFileSync(new URL("../src/lib/localData/session.ts", import.meta.url), "utf8");
+  check("sign-out ends in a reload into the guest partition", /setActiveIdentity\(GUEST\);\s*clearTabSessionState\(\);\s*reload\(/.test(session) && /signOutThisDevice/.test(dialog));
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

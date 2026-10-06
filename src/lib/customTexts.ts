@@ -1,7 +1,8 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { hashString } from "@/lib/hash";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const KEY = "lire.customTexts.v1";
 const MAX_CUSTOM_TEXTS = 80;
@@ -20,7 +21,7 @@ function hasStorage(): boolean {
 function read(): ReadingText[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(isReadingText).map(stripMetadataOnlyBlurb) : [];
   } catch {
@@ -30,8 +31,8 @@ function read(): ReadingText[] {
 
 function persist(texts: ReadingText[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(texts.slice(0, MAX_CUSTOM_TEXTS)));
-  void pushStore(KEY);
+  localStore.setItem(KEY, JSON.stringify(texts.slice(0, MAX_CUSTOM_TEXTS)));
+  notifyStoreChanged(KEY);
 }
 
 function isReadingText(value: unknown): value is ReadingText {
@@ -87,7 +88,6 @@ export function saveCustomText(input: CustomTextInput): ReadingText {
 }
 
 export function deleteCustomText(id: string): ReadingText[] {
-  recordStoreDeletion(KEY, id);
   const next = read().filter((text) => text.id !== id);
   persist(next);
   return next;

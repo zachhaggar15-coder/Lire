@@ -1,5 +1,6 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import type { EstimatedCefr } from "@/lib/difficulty";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Longitudinal per-text reading diagnostics — the richer record the old
@@ -120,7 +121,7 @@ function normalizeRecord(record: SessionRecord): SessionRecord {
 function readAll(): SessionRecord[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(SESSION_RECORDS_KEY);
+    const raw = localStore.getItem(SESSION_RECORDS_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(isSessionRecord).map(normalizeRecord) : [];
   } catch {
@@ -131,8 +132,8 @@ function readAll(): SessionRecord[] {
 function persist(records: SessionRecord[]): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records));
-    void pushStore(SESSION_RECORDS_KEY);
+    localStore.setItem(SESSION_RECORDS_KEY, JSON.stringify(records));
+    notifyStoreChanged(SESSION_RECORDS_KEY);
   } catch {
     // A full quota shouldn't break finishing a lesson; these diagnostics are a nicety.
   }

@@ -6,7 +6,7 @@ globalThis.window = {
   localStorage: {
     getItem: (key) => (store.has(key) ? store.get(key) : null),
     setItem: (key, value) => {
-      if (rejectWrites && key === "lire.savedWords.v1") throw new Error("QuotaExceededError");
+      if (rejectWrites && key.endsWith(":lire.savedWords.v1")) throw new Error("QuotaExceededError");
       store.set(key, String(value));
     },
     removeItem: (key) => store.delete(key),

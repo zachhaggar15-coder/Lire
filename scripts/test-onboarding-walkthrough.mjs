@@ -79,8 +79,8 @@ console.log("--- returning user (already finished) does not see the walkthrough 
 
 console.log("--- restarting the tutorial from Settings ---");
 // Simulate unrelated learner data that must never be touched by a restart.
-store.set("lire.savedWords.v1", JSON.stringify([{ word: "chat", status: "learning" }]));
-store.set("lire.sessionRecords.v1", JSON.stringify([{ textId: "some-text" }]));
+store.set("sorlio.v2:guest:lire.savedWords.v1", JSON.stringify([{ word: "chat", status: "learning" }]));
+store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([{ textId: "some-text" }]));
 resetWalkthrough();
 {
   const state = getOnboardingState();
@@ -88,8 +88,8 @@ resetWalkthrough();
   check("restart clears any stale resume step", state.walkthroughStep === null);
   check("restart does NOT touch the picker's own completed flag", state.completed === true);
   check("restart does NOT change the previously-selected level", state.level === "A2");
-  check("restart does NOT erase saved words", store.get("lire.savedWords.v1") === JSON.stringify([{ word: "chat", status: "learning" }]));
-  check("restart does NOT erase session-record history", store.get("lire.sessionRecords.v1") === JSON.stringify([{ textId: "some-text" }]));
+  check("restart does NOT erase saved words", store.get("sorlio.v2:guest:lire.savedWords.v1") === JSON.stringify([{ word: "chat", status: "learning" }]));
+  check("restart does NOT erase session-record history", store.get("sorlio.v2:guest:lire.sessionRecords.v1") === JSON.stringify([{ textId: "some-text" }]));
 }
 
 console.log("--- skip is equivalent to completing (never shown again after skipping) ---");

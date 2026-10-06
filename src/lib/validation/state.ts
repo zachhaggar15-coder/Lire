@@ -1,4 +1,4 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { hasAnalyticsConsent } from "@/lib/privacy/analyticsConsent";
 
 export const VALIDATION_STATE_KEY = "lire.validation.v1";
@@ -162,7 +162,7 @@ export function saveValidationState(state: ValidationState): ValidationState {
   if (!hasAnalyticsConsent()) return state;
   if (!hasStorage()) return state;
   window.localStorage.setItem(VALIDATION_STATE_KEY, JSON.stringify(state));
-  void pushStore(VALIDATION_STATE_KEY);
+  notifyStoreChanged(VALIDATION_STATE_KEY);
   return state;
 }
 

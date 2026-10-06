@@ -24,6 +24,10 @@ export default function DeleteAccountPageClient() {
   const [error, setError] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [deleted, setDeleted] = useState(false);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("deleted") === "1") setDeleted(true);
+  }, []);
   const { status: premium } = usePremiumStatus();
 
   useEffect(() => {
@@ -64,11 +68,14 @@ export default function DeleteAccountPageClient() {
             <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-ink-muted">
               <li>Your Sorlio account itself, and the sign-in that goes with it.</li>
               <li>The learning data synced to that account — saved words, progress, reviews and history.</li>
-              <li>Any feedback or research responses submitted while signed in.</li>
+              <li>Any feedback submitted while signed in.</li>
+              <li>
+                This account&rsquo;s learning data in this browser, and on your other devices the next time each one
+                opens Sorlio.
+              </li>
             </ul>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-              Learning data already stored on a device stays there and keeps working without an account. To remove it
-              too, clear Sorlio&rsquo;s storage or uninstall the app on that device.
+              Signing in on this page does not download your learning data to this browser.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
               A Premium subscription is billed by Google Play, not by Sorlio. Deleting your account does not cancel it —
@@ -119,9 +126,7 @@ export default function DeleteAccountPageClient() {
           premium={premium}
           onCancel={() => setConfirming(false)}
           onDeleted={() => {
-            setConfirming(false);
-            setUserEmail(null);
-            setDeleted(true);
+            window.location.replace("/account/delete?deleted=1");
           }}
         />
       )}

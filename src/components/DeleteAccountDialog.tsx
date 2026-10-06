@@ -19,10 +19,10 @@ interface DeleteAccountDialogProps {
 /**
  * Confirmation for account deletion, shared by Settings and /account/delete.
  *
- * Two things it is careful about. It never claims more than it does: the
- * account and everything synced to it go, while the words and progress already
- * on this device stay, and it says so rather than offering a comfortable
- * "everything deleted". And when a Play subscription is live it warns first,
+ * Two things it is careful about. It says exactly what goes: the account,
+ * everything synced to it, and this account's data on this device (guest data
+ * is a separate partition and stays). And when a Play subscription is live it
+ * warns first,
  * because Google owns that billing relationship — deleting a Sorlio account does
  * not cancel it, and someone could otherwise keep being charged for an account
  * that no longer exists.
@@ -100,12 +100,12 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
               Delete your account?
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              This permanently deletes your Sorlio account{email ? ` (${email})` : ""} and the learning data synced to
-              it. This cannot be undone.
+              This permanently deletes your Sorlio account{email ? ` (${email})` : ""}, the learning data synced to it,
+              and this account&rsquo;s learning data on this device. This cannot be undone.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              Your saved words and progress stay on this device and Sorlio keeps working without an account. To remove
-              them too, clear the app&rsquo;s storage or uninstall it.
+              Anything you did in Sorlio while signed out is separate and is not affected. Copies of this account&rsquo;s
+              data on your other devices are removed the next time each of them opens Sorlio signed in.
             </p>
             {hasLiveSubscription && (
               <p className="mt-2 text-sm leading-relaxed text-ink-muted">

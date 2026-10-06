@@ -1,5 +1,6 @@
 import type { Category } from "@/types";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * A history of completed articles, snapshotted at completion time. Kept
@@ -39,7 +40,7 @@ function hasStorage(): boolean {
 export function getArchive(): ArchiveEntry[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -58,8 +59,8 @@ export function getArchive(): ArchiveEntry[] {
 
 function persist(entries: ArchiveEntry[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
-  void pushStore(KEY);
+  localStore.setItem(KEY, JSON.stringify(entries.slice(-MAX_ENTRIES)));
+  notifyStoreChanged(KEY);
 }
 
 /** Records (or updates, if completed again) one text's completion. Newest-first on read via getArchive().reverse() by callers. */

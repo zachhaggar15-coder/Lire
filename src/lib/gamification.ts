@@ -1,12 +1,13 @@
 import type { Category, ReadingText, SavedWord } from "@/types";
 import { toPercent } from "@/lib/format";
 import type { ArchiveEntry } from "@/lib/archive";
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { getAllInferenceResults, getAllWordTaps, type StoredInference, type StoredWordTap } from "@/lib/wordLearning";
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
 import { tokenize } from "@/lib/words";
 import { getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
 import { lireLevelFromXp, xpForLevel } from "@/lib/progression/lireLevel";
+import { localStore } from "@/lib/localData/store";
 
 export type XpEventType =
   | "article_completed"
@@ -263,7 +264,7 @@ function localDate(date = new Date()): string {
 function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(guard) : [];
   } catch {
@@ -273,8 +274,8 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  void pushStore(key);
+  localStore.setItem(key, JSON.stringify(value));
+  notifyStoreChanged(key);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -949,9 +950,6 @@ export function translationRecordsForToday(): number {
 }
 
 export function clearGamificationStores(): void {
-  for (const key of [XP_EVENTS_KEY, COMPLETIONS_KEY, ACHIEVEMENTS_KEY, PASSPORT_KEY, MASTERY_KEY]) {
-    recordStoreClear(key);
-  }
   persist(XP_EVENTS_KEY, []);
   persist(COMPLETIONS_KEY, []);
   persist(ACHIEVEMENTS_KEY, []);

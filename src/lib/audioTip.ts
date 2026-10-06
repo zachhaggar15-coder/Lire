@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 const PLAY_COUNT_KEY = "lire.audioPlayCount.v1";
 const TIP_SEEN_KEY = "lire.audioTipSeen.v1";
 
@@ -10,19 +11,19 @@ function hasStorage(): boolean {
 
 function getPlayCount(): number {
   if (!hasStorage()) return 0;
-  const raw = window.localStorage.getItem(PLAY_COUNT_KEY);
+  const raw = localStore.getItem(PLAY_COUNT_KEY);
   const value = raw ? Number(raw) : 0;
   return Number.isFinite(value) ? value : 0;
 }
 
 function isTipSeen(): boolean {
   if (!hasStorage()) return true;
-  return window.localStorage.getItem(TIP_SEEN_KEY) === "1";
+  return localStore.getItem(TIP_SEEN_KEY) === "1";
 }
 
 export function markAudioTipSeen(): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(TIP_SEEN_KEY, "1");
+  localStore.setItem(TIP_SEEN_KEY, "1");
 }
 
 /**
@@ -34,7 +35,7 @@ export function markAudioTipSeen(): void {
 export function recordAudioPlayAndCheckTip(): boolean {
   if (!hasStorage()) return false;
   const nextCount = getPlayCount() + 1;
-  window.localStorage.setItem(PLAY_COUNT_KEY, String(nextCount));
+  localStore.setItem(PLAY_COUNT_KEY, String(nextCount));
   if (isTipSeen()) return false;
   return nextCount >= PLAYS_BEFORE_TIP;
 }

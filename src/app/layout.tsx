@@ -3,7 +3,7 @@ import { Instrument_Serif, Newsreader, Space_Grotesk, Space_Mono } from "next/fo
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
-import AuthSync from "@/components/AuthSync";
+import IdentityController from "@/components/IdentityController";
 import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 import ViewportHeightVar from "@/components/ViewportHeightVar";
 import StorageMigrations from "@/components/StorageMigrations";
@@ -130,7 +130,7 @@ export default function RootLayout({
         </div>
         <ThemeController />
         <ServiceWorker />
-        <AuthSync />
+        <IdentityController />
         <AppLifecycleTracker />
         <ViewportHeightVar />
         <AppNavigationPolish />

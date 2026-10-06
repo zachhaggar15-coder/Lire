@@ -31,6 +31,7 @@ import {
   sourcePreferenceScore,
   unknownWordTargetScore,
 } from "../src/lib/recommendation/signals.ts";
+const { localStore: __guestStore } = await import("../src/lib/localData/store.ts");
 import { buildSections } from "../src/lib/recommendation/sections.ts";
 import { buildScorableArticles } from "../src/lib/recommendation/build.ts";
 import { buildScoringContext } from "../src/lib/recommendation/context.ts";
@@ -93,7 +94,8 @@ import {
   updateSelectedReadingLevel,
 } from "../src/lib/onboarding.ts";
 import { getGoals } from "../src/lib/goals.ts";
-import { SYNCED_STORES, configForKey, itemTimestamp, mergeStoreValue, mergeStoreValueWithMetadata } from "../src/lib/supabase/sync.ts";
+import { SYNCED_STORES, configForKey } from "../src/lib/sync/stores.ts";
+import { toItems, fromItems, mergeItem, contentHash } from "../src/lib/sync/items.ts";
 import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
@@ -443,20 +445,20 @@ console.log("\n--- Public-domain reading bank ---");
   check("streak week has seven Monday-first days", week.length === 7 && week.map((d) => d.weekdayLabel).join("") === "MTWTFSS");
   check("streak week marks exactly one day as today", week.filter((d) => d.isToday).length === 1);
   check("streak week flags days after today as future, earlier days as past", week.every((d, i) => d.isFuture === i > todayIndex));
-  const previousActivityDates = window.localStorage.getItem("lire.activityDates.v1");
-  const previousGraceDay = window.localStorage.getItem("lire.streakGrace.v1");
-  window.localStorage.setItem("lire.activityDates.v1", JSON.stringify(["2026-02-02", "2026-02-03"]));
-  window.localStorage.removeItem("lire.streakGrace.v1");
+  const previousActivityDates = __guestStore.getItem("lire.activityDates.v1");
+  const previousGraceDay = __guestStore.getItem("lire.streakGrace.v1");
+  __guestStore.setItem("lire.activityDates.v1", JSON.stringify(["2026-02-02", "2026-02-03"]));
+  __guestStore.removeItem("lire.streakGrace.v1");
   const graceDate = new Date("2026-02-05T12:00:00Z");
   const graceBefore = getStreakGraceStatus(graceDate);
   check("streak grace appears after one missed day", graceBefore.available && graceBefore.eligibleDateKey === "2026-02-04");
   check("using streak grace fills the missed day", applyStreakGraceDay(graceDate) && getCurrentStreak(graceDate) === 3);
   const graceAfter = getStreakGraceStatus(graceDate);
   check("streak grace is once per week", !graceAfter.available && graceAfter.usedThisWeek && graceAfter.recoveredDateKey === "2026-02-04");
-  if (previousActivityDates === null) window.localStorage.removeItem("lire.activityDates.v1");
-  else window.localStorage.setItem("lire.activityDates.v1", previousActivityDates);
-  if (previousGraceDay === null) window.localStorage.removeItem("lire.streakGrace.v1");
-  else window.localStorage.setItem("lire.streakGrace.v1", previousGraceDay);
+  if (previousActivityDates === null) __guestStore.removeItem("lire.activityDates.v1");
+  else __guestStore.setItem("lire.activityDates.v1", previousActivityDates);
+  if (previousGraceDay === null) __guestStore.removeItem("lire.streakGrace.v1");
+  else __guestStore.setItem("lire.streakGrace.v1", previousGraceDay);
   check("daily bank reformats generated extrait numbers, not the raw colon form", dailyB1.every((text) => !generatedExcerptSuffix.test(text.title)), dailyB1.map((text) => text.title).join(" | "));
   const pdReadingTexts = readingTexts.filter((text) => text.id.startsWith("pd-"));
   check(
@@ -1219,7 +1221,7 @@ console.log("\n--- Lemma-aware saved words ---");
   check("saved words dedupe inflected forms by lemma", getSavedWords().filter((word) => word.lemma === "prendre").length === 1);
 }
 {
-  window.localStorage.setItem("lire.savedWords.v1", JSON.stringify(["eût"]));
+  __guestStore.setItem("lire.savedWords.v1", JSON.stringify(["eût"]));
   const [legacy] = getSavedWords();
   check(
     "legacy string saved words are backfilled from the current dictionary",
@@ -1231,7 +1233,7 @@ console.log("\n--- Lemma-aware saved words ---");
   );
 }
 {
-  window.localStorage.setItem(
+  __guestStore.setItem(
     "lire.savedWords.v1",
     JSON.stringify([
       {
@@ -1268,7 +1270,7 @@ console.log("\n--- Lemma-aware saved words ---");
   clearWords();
 }
 {
-  window.localStorage.setItem(
+  __guestStore.setItem(
     "lire.savedWords.v1",
     JSON.stringify([
       {
@@ -1526,7 +1528,7 @@ console.log("\n--- Grammar conjugation section ---");
   check("lesson lookup falls back safely", getVerbLesson("missing-lesson").id === getVerbLessons()[0].id);
 }
 
-console.log("\n--- Supabase sync merge logic ---");
+console.log("\n--- Sync item model (behavioural sync tests: scripts/test-sync-engine.mjs) ---");
 {
   const requiredConfigs = [
     ["lire.customTexts.v1", "list-by-id", "id"],
@@ -1538,171 +1540,44 @@ console.log("\n--- Supabase sync merge logic ---");
     ["lire.progression.cefrToLireLevel.v1", "object"],
   ];
   check(
-    "every pushed learning store is in the authoritative restore registry",
+    "every learning store is in the sync registry with the right shape",
     requiredConfigs.every(([key, kind, idField]) => {
       const config = configForKey(key);
       return config?.kind === kind && config.idField === idField;
     }),
     JSON.stringify(SYNCED_STORES.map((config) => config.key)),
   );
-}
-{
-  const deviceA = [{ id: "custom-1", publishedAt: "2026-10-01T00:00:00Z" }];
-  const config = configForKey("lire.customTexts.v1");
-  const restoredOnDeviceB = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
-  check("custom imported texts round-trip from device A through sync to device B", restoredOnDeviceB?.value?.[0]?.id === "custom-1", JSON.stringify(restoredOnDeviceB?.value));
-}
-{
-  const config = configForKey("lire.sessionRecords.v1");
-  const deviceA = [{ textId: "article-1", completedAt: "2026-10-01T00:00:00Z", completionStatus: "completed" }];
-  const restoredOnDeviceB = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
-  check("session records round-trip from device A through sync to device B", restoredOnDeviceB?.value?.[0]?.textId === "article-1", JSON.stringify(restoredOnDeviceB?.value));
+  check("retired analytics state is not synced", !configForKey("lire.validation.v1"));
+  check("offline news cache is not synced", !configForKey("lire.rssTexts.offline"));
+  check("imported texts are opt-in", configForKey("lire.customTexts.v1")?.optIn === "importedTexts");
 }
 {
   const cases = [
-    ["lire.practiceCompleted.v1", ["article-practice"], "article-practice"],
-    ["lire.listeningPracticeCompleted.v1", ["article-listening"], "article-listening"],
-    ["lire.lookupStats.v1", [{ textId: "article-lookup", completedAt: "2026-10-01T00:00:00Z" }], "article-lookup"],
-    ["lire.translationReports.v1", [{ id: "report-1", createdAt: "2026-10-01T00:00:00Z" }], "report-1"],
+    [{ key: "a", kind: "list-by-id", idField: "id" }, [{ id: "x", v: 1 }, { id: "y", v: 2 }]],
+    [{ key: "b", kind: "list-of-strings" }, ["chat", "chien"]],
+    [{ key: "c", kind: "record" }, { A1: 3, B2: { n: 1 } }],
+    [{ key: "d", kind: "object" }, { theme: "dark", fontSize: "large" }],
   ];
-  for (const [key, deviceA, expectedId] of cases) {
-    const config = configForKey(key);
-    const restored = config && mergeStoreValueWithMetadata(config, null, deviceA, {}, { updatedAt: "2026-10-01T00:00:00Z" });
-    const first = restored?.value?.[0];
-    const restoredId = typeof first === "string" ? first : first?.textId ?? first?.id;
-    check(`${key} round-trips from device A through sync to device B`, restoredId === expectedId, JSON.stringify(restored?.value));
+  for (const [config, value] of cases) {
+    const items = toItems(config, value);
+    const back = fromItems(config, items, [...items.keys()]);
+    check(`${config.kind} store round-trips through items`, JSON.stringify(back) === JSON.stringify(value), JSON.stringify(back));
   }
+  const config = { key: "w", kind: "list-by-id", idField: "word", insertNew: "start" };
+  const items = toItems(config, [{ word: "b" }]);
+  items.set("a", { word: "a" });
+  check("new remote items go first where configured", JSON.stringify(fromItems(config, items, ["b"]).map((w) => w.word)) === '["a","b"]');
 }
 {
-  for (const [key, idField, id] of [
-    ["lire.customTexts.v1", "id", "custom-deleted"],
-    ["lire.translationReports.v1", "id", "report-deleted"],
-  ]) {
-    const config = configForKey(key);
-    const remote = [{ [idField]: id, createdAt: "2025-01-01T00:00:00Z" }];
-    const merged = config && mergeStoreValueWithMetadata(
-      config,
-      [],
-      remote,
-      { updatedAt: "2026-01-01T00:00:00Z", tombstones: { [id]: "2026-01-01T00:00:00Z" } },
-      { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { [id]: "2025-01-01T00:00:00Z" } },
-    );
-    check(`${key} deletion tombstone prevents remote resurrection`, merged?.value?.length === 0, JSON.stringify(merged?.value));
-  }
-}
-{
-  check("itemTimestamp reads the latest of several timestamp-ish fields", itemTimestamp({ savedAt: "2020-01-01", lastReviewedAt: "2024-06-01" }) > itemTimestamp({ savedAt: "2020-01-01" }));
-  check("itemTimestamp is 0 for a value with no timestamp fields", itemTimestamp({ word: "chat" }) === 0);
-  check("itemTimestamp is 0 for non-objects", itemTimestamp("just a string") === 0 && itemTimestamp(null) === 0);
-}
-{
-  const config = { key: "lire.knownWords.v1", kind: "list-of-strings" };
-  const merged = mergeStoreValue(config, ["chat", "chien"], ["chien", "oiseau"]);
-  check(
-    "list-of-strings merge is a deduped union of local and remote",
-    merged.length === 3 && ["chat", "chien", "oiseau"].every((w) => merged.includes(w)),
-    JSON.stringify(merged)
-  );
-}
-{
-  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
-  const local = [{ word: "chat", savedAt: "2024-01-01T00:00:00Z", reviewCount: 1 }];
-  const remote = [{ word: "chat", savedAt: "2024-06-01T00:00:00Z", reviewCount: 5 }];
-  const merged = mergeStoreValue(config, local, remote);
-  check(
-    "list-by-id merge keeps whichever side has the newer timestamp for a shared id",
-    merged.length === 1 && merged[0].reviewCount === 5,
-    JSON.stringify(merged)
-  );
-}
-{
-  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
-  const local = [{ word: "chat", savedAt: "2024-06-01T00:00:00Z", reviewCount: 9 }];
-  const remote = [{ word: "chat", savedAt: "2024-01-01T00:00:00Z", reviewCount: 1 }];
-  const merged = mergeStoreValue(config, local, remote);
-  check(
-    "list-by-id merge keeps the local side when it's the newer one",
-    merged.length === 1 && merged[0].reviewCount === 9,
-    JSON.stringify(merged)
-  );
-}
-{
-  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
-  const local = [{ word: "chat" }];
-  const remote = [{ word: "chien" }];
-  const merged = mergeStoreValue(config, local, remote);
-  check(
-    "list-by-id merge keeps distinct ids from both sides",
-    merged.length === 2,
-    JSON.stringify(merged)
-  );
-}
-{
-  const config = { key: "lire.progress.v1", kind: "record" };
-  const local = { "id-1": { status: "completed", completedAt: "2024-06-01T00:00:00Z" } };
-  const remote = { "id-1": { status: "in-progress", completedAt: "2024-01-01T00:00:00Z" }, "id-2": { status: "unread" } };
-  const merged = mergeStoreValue(config, local, remote);
-  check(
-    "record merge keeps the newer entry per key and adds remote-only keys",
-    merged["id-1"].status === "completed" && merged["id-2"].status === "unread",
-    JSON.stringify(merged)
-  );
-}
-{
-  check("mergeStoreValue returns local as-is when remote is null", mergeStoreValue({ key: "k", kind: "object" }, { a: 1 }, null).a === 1);
-  check("mergeStoreValue returns remote as-is when local is null", mergeStoreValue({ key: "k", kind: "object" }, null, { a: 1 }).a === 1);
-}
-{
-  const config = { key: "lire.onboarding.v1", kind: "object" };
-  const local = { completed: true, walkthroughCompleted: true, level: "B1", updatedAt: "2026-06-01T00:00:00Z" };
-  const remote = { completed: true, walkthroughCompleted: false, level: "A1", updatedAt: "2025-01-01T00:00:00Z" };
-  const merged = mergeStoreValueWithMetadata(
-    config,
-    local,
-    remote,
-    { updatedAt: "2026-06-01T00:00:00Z" },
-    { updatedAt: "2025-01-01T00:00:00Z" },
-    "2025-01-01T00:00:00Z",
-  );
-  check(
-    "timestamp-aware object merge does not let stale remote onboarding reset newer local progress",
-    merged.value.level === "B1" && merged.value.walkthroughCompleted === true,
-    JSON.stringify(merged.value),
-  );
-}
-{
-  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
-  const merged = mergeStoreValueWithMetadata(
-    config,
-    [],
-    [{ word: "chat", savedAt: "2025-01-01T00:00:00Z" }],
-    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { chat: "2026-01-01T00:00:00Z" } },
-    { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { chat: "2025-01-01T00:00:00Z" } },
-    "2025-01-01T00:00:00Z",
-  );
-  check("a saved-word tombstone prevents an older remote copy from being resurrected", merged.value.length === 0, JSON.stringify(merged.value));
-}
-{
-  const config = { key: "lire.recommendation.savedLater.v1", kind: "list-of-strings" };
-  const merged = mergeStoreValueWithMetadata(
-    config,
-    [],
-    ["article-1"],
-    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { "article-1": "2026-01-01T00:00:00Z" } },
-    { updatedAt: "2025-01-01T00:00:00Z", itemUpdatedAt: { "article-1": "2025-01-01T00:00:00Z" } },
-  );
-  check("saved-for-later removals survive cross-device union merges", merged.value.length === 0, JSON.stringify(merged.value));
-}
-{
-  const config = { key: "lire.savedWords.v1", kind: "list-by-id", idField: "word" };
-  const merged = mergeStoreValueWithMetadata(
-    config,
-    [{ word: "chat", savedAt: "2026-06-01T00:00:00Z" }],
-    [],
-    { updatedAt: "2026-06-01T00:00:00Z", itemUpdatedAt: { chat: "2026-06-01T00:00:00Z" } },
-    { updatedAt: "2026-01-01T00:00:00Z", tombstones: { chat: "2026-01-01T00:00:00Z" } },
-  );
-  check("a deliberate newer re-save wins over an older deletion tombstone", merged.value.length === 1, JSON.stringify(merged.value));
+  check("content hash ignores key order (jsonb reorders keys)", contentHash({ a: 1, b: [1, { c: 2, d: 3 }] }) === contentHash({ b: [1, { d: 3, c: 2 }], a: 1 }));
+  check("content hash detects a change", contentHash({ a: 1 }) !== contentHash({ a: 2 }));
+  const base = { word: "chat", reviewCount: 1, status: "learning" };
+  const merged = mergeItem(base, { ...base, reviewCount: 2 }, { ...base, status: "known" });
+  check("three-way merge keeps both sides' field edits", merged.reviewCount === 2 && merged.status === "known", JSON.stringify(merged));
+  const removed = mergeItem({ a: 1, b: 2 }, { a: 1 }, { a: 1, b: 2, c: 3 });
+  check("three-way merge honours a field removed locally", !("b" in removed) && removed.c === 3, JSON.stringify(removed));
+  const noBase = mergeItem(undefined, { word: "x", savedAt: "2026-01-02T00:00:00Z", note: "local" }, { word: "x", savedAt: "2026-01-01T00:00:00Z", extra: 1 });
+  check("base-less merge keeps fields from both sides", noBase.note === "local" && noBase.extra === 1);
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

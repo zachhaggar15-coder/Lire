@@ -74,7 +74,7 @@ check("never eligible after rating", !isEligibleForRatePrompt(getRatePromptState
 check("rating keeps the lesson count", getRatePromptState().lessonsCompleted === LESSONS_BEFORE_RATE_PROMPT);
 
 console.log("--- corrupt storage is tolerated ---");
-store.set("lire.ratePrompt.v1", "{not json");
+store.set("sorlio.v2:guest:lire.ratePrompt.v1", "{not json");
 check("corrupt state reads as empty", getRatePromptState().lessonsCompleted === 0);
 
 console.log(`\n${passed} passed, ${failed} failed.`);

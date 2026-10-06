@@ -1,9 +1,10 @@
 import type { Category, Difficulty } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { notifyRecommendationPreferencesChanged } from "@/lib/recommendation/preferences";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { saveGoals, type ReadingGoals } from "@/lib/goals";
 import { knownWordEstimateForLevel, seedKnownWordsForLevel } from "@/lib/knownWordBootstrap";
+import { localStore } from "@/lib/localData/store";
 
 export const ONBOARDING_KEY = "lire.onboarding.v1";
 
@@ -46,7 +47,7 @@ function hasStorage(): boolean {
 export function getOnboardingState(): OnboardingState | null {
   if (!hasStorage()) return null;
   try {
-    const raw = window.localStorage.getItem(ONBOARDING_KEY);
+    const raw = localStore.getItem(ONBOARDING_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!parsed || typeof parsed !== "object") return null;
     return {
@@ -86,8 +87,8 @@ function recordSeededKnownWords(seededWords: number): void {
   const current = getOnboardingState();
   if (!current) return;
   try {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, seededKnownWords: seededWords }));
-    void pushStore(ONBOARDING_KEY);
+    localStore.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, seededKnownWords: seededWords }));
+    notifyStoreChanged(ONBOARDING_KEY);
   } catch {
     // The seeded count is informational; known words themselves are already saved.
   }
@@ -124,8 +125,8 @@ export function saveOnboarding(
   };
 
   if (hasStorage()) {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
-    void pushStore(ONBOARDING_KEY);
+    localStore.setItem(ONBOARDING_KEY, JSON.stringify(next));
+    notifyStoreChanged(ONBOARDING_KEY);
     notifyRecommendationPreferencesChanged();
   }
 
@@ -161,8 +162,8 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
   };
 
   if (hasStorage()) {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
-    void pushStore(ONBOARDING_KEY);
+    localStore.setItem(ONBOARDING_KEY, JSON.stringify(next));
+    notifyStoreChanged(ONBOARDING_KEY);
     notifyRecommendationPreferencesChanged();
   }
 
@@ -177,19 +178,19 @@ export function skipOnboarding(): OnboardingState {
 export function saveWalkthroughStep(step: number | null): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
-  void pushStore(ONBOARDING_KEY);
+  localStore.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
+  notifyStoreChanged(ONBOARDING_KEY);
 }
 
 /** Marks the walkthrough finished (naturally, or via skip) — never shown again until resetWalkthrough is called. */
 export function completeWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(
+  localStore.setItem(
     ONBOARDING_KEY,
     JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );
-  void pushStore(ONBOARDING_KEY);
+  notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();
 }
 
@@ -202,10 +203,10 @@ export function completeWalkthrough(): void {
 export function resetWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(
+  localStore.setItem(
     ONBOARDING_KEY,
     JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
   );
-  void pushStore(ONBOARDING_KEY);
+  notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();
 }

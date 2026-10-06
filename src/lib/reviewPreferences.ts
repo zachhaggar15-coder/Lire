@@ -1,4 +1,5 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Remembers the last-used Review setup (direction, words vs phrases,
@@ -27,7 +28,7 @@ function hasStorage(): boolean {
 export function getReviewPreferences(): ReviewPreferences {
   if (!hasStorage()) return DEFAULT_REVIEW_PREFERENCES;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return DEFAULT_REVIEW_PREFERENCES;
     const parsed = JSON.parse(raw);
     return { ...DEFAULT_REVIEW_PREFERENCES, ...parsed };
@@ -39,8 +40,8 @@ export function getReviewPreferences(): ReviewPreferences {
 export function saveReviewPreferences(patch: Partial<ReviewPreferences>): ReviewPreferences {
   const next = { ...getReviewPreferences(), ...patch };
   if (hasStorage()) {
-    window.localStorage.setItem(KEY, JSON.stringify(next));
-    void pushStore(KEY);
+    localStore.setItem(KEY, JSON.stringify(next));
+    notifyStoreChanged(KEY);
   }
   return next;
 }

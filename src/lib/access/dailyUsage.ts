@@ -1,4 +1,5 @@
 import { DAILY_FREE_ACCESS_KEY, localDateKey } from "@/lib/premium/freeAccess";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * What has been used today, on this device.
@@ -49,7 +50,7 @@ export function getDailyUsage(date = new Date()): DailyUsage {
   const today = localDateKey(date);
 
   try {
-    const raw = window.localStorage.getItem(USAGE_KEY);
+    const raw = localStore.getItem(USAGE_KEY);
     const parsed = raw ? (JSON.parse(raw) as Partial<DailyUsage> | null) : null;
     if (parsed && parsed.dateKey === today) {
       return {
@@ -68,7 +69,7 @@ export function getDailyUsage(date = new Date()): DailyUsage {
 
 function migrateLegacyFreeArticle(today: string): DailyUsage {
   try {
-    const raw = window.localStorage.getItem(DAILY_FREE_ACCESS_KEY);
+    const raw = localStore.getItem(DAILY_FREE_ACCESS_KEY);
     const legacy = raw ? (JSON.parse(raw) as { dateKey?: string; articleId?: string } | null) : null;
     if (legacy?.dateKey === today && typeof legacy.articleId === "string") {
       return { dateKey: today, articleIds: [legacy.articleId], lookups: 0 };
@@ -82,7 +83,7 @@ function migrateLegacyFreeArticle(today: string): DailyUsage {
 function persist(usage: DailyUsage): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
+    localStore.setItem(USAGE_KEY, JSON.stringify(usage));
   } catch {
     // Restricted storage must not stop someone using the app.
   }
@@ -114,7 +115,7 @@ export function recordLookup(date = new Date()): DailyUsage {
 export function resetDailyUsage(): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.removeItem(USAGE_KEY);
+    localStore.removeItem(USAGE_KEY);
   } catch {
     // Nothing useful to do.
   }

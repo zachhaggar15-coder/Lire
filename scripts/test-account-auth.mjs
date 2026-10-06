@@ -11,7 +11,6 @@ globalThis.window = {
   dispatchEvent: () => true,
 };
 
-const { accountScopedKeys, clearAccountScopedLocalData } = await import("../src/lib/account/deleteAccount.ts");
 
 /**
  * Google sign-in and self-service account deletion.
@@ -98,23 +97,21 @@ console.log("--- Sign-in returns to where it started ---");
 
 console.log("--- Sign-out is confirmed and failure-safe ---");
 {
-  check("the auth wrapper reports whether Supabase sign-out succeeded", /const \{ error \} = await client\.auth\.signOut\(\)/.test(auth) && /ok: false/.test(auth) && /ok: true/.test(auth));
+  const session = read("src/lib/localData/session.ts");
   check("Settings opens a confirmation instead of signing out immediately", /setConfirmingSignOut\(true\)/.test(accountCard) && !/onClick=\{handleSignOut\}/.test(accountCard));
   check("the dialog uses the app's dismissible modal behaviour", /useModalFocus/.test(signOutDialog) && /useDismissibleHistory/.test(signOutDialog));
-  check("cancel and dismissal have no sign-out side effect", /onCancel/.test(signOutDialog) && /signOut\(\)/.test(signOutDialog));
-  check("failed sign-out keeps the dialog open and reports an error", /createSignOutFlow/.test(signOutDialog) && /working: false, error/.test(read("src/lib/supabase/signOutFlow.ts")));
-  check("local learning data is explicitly preserved", /stays on this device/.test(signOutDialog));
+  check("sign-out is local to this device", /signOut\(\{ scope: "local" \}\)/.test(session));
+  check("sign-out switches this tab to the guest partition", /setActiveIdentity\(GUEST\)/.test(session));
+  check("the dialog explains the data is hidden, not deleted", /hidden until you sign in again/.test(signOutDialog));
+  // Behaviour (A → sign out → B sees nothing): scripts/test-account-isolation.mjs
 }
 
-console.log("--- Guest progress survives signing in ---");
+console.log("--- Guest data is only moved with consent ---");
 {
-  const authSync = read("src/components/AuthSync.tsx");
-  const sync = read("src/lib/supabase/sync.ts");
-  check("sign-in triggers a merge, not a replace", /pullAndMergeAllStores/.test(authSync));
-  check("an empty cloud never overwrites local data", /if \(usableRemote == null\) return \{ value: usableLocal/.test(sync));
-  // Two concurrent merges would race on the same stores, so exactly one
-  // listener may start one.
-  check("only AuthSync starts the merge", !/syncNow\(\)/.test(accountCard.split("onAuthStateChange")[1]?.split("}, [])")[0] ?? ""));
+  const controller = read("src/components/IdentityController.tsx");
+  check("sign-in offers adoption rather than merging silently", /shouldOfferAdoption/.test(controller) && /GuestAdoptionDialog/.test(controller));
+  check("the old automatic merge is gone", !/pullAndMergeAllStores/.test(controller));
+  // Behaviour (accept, decline, retry): scripts/test-account-isolation.mjs
 }
 
 console.log("--- Deletion is authorised by the session, not by a submitted id ---");
@@ -143,8 +140,8 @@ console.log("--- Every user-linked table is covered ---");
 
 console.log("--- A failed deletion changes nothing ---");
 {
-  const beforeClear = deleteClient.indexOf("clearAccountScopedLocalData()");
-  check("nothing is cleared before the server confirms", deleteClient.indexOf("if (!response.ok)") < beforeClear);
+  const forgetAt = deleteClient.indexOf("forgetDeletedAccount(");
+  check("nothing is cleared before the server confirms", forgetAt > deleteClient.indexOf("if (!response.ok)"));
   check("a network failure reports that nothing happened", /has not been deleted/.test(deleteClient));
   check("a failed dialog keeps the user signed in", /setWorking\(false\);\s*\n\s*setError/.test(dialog));
   check("success is only reported after the server confirms", /if \(result\.ok\) \{\s*\n\s*onDeleted\(\)/.test(dialog));
@@ -152,21 +149,12 @@ console.log("--- A failed deletion changes nothing ---");
 
 console.log("--- Local data claims are truthful ---");
 {
-  const keys = accountScopedKeys();
-  check("the cached entitlement is cleared", keys.includes("lire.premium.status.v1"));
-  check("sync bookkeeping is cleared", keys.includes("lire.sync.storeMetadata.v1"));
-  check("learning data is not in the cleared set", !keys.some((k) => /savedWords|knownWords|gamification|progress\.v1/.test(k)));
-
-  store.clear();
-  store.set("lire.premium.status.v1", "{}");
-  store.set("lire.sync.storeMetadata.v1", "{}");
-  store.set("lire.savedWords.v1", '[{"word":"bonjour"}]');
-  clearAccountScopedLocalData();
-  check("account traces are removed", !store.has("lire.premium.status.v1") && !store.has("lire.sync.storeMetadata.v1"));
-  check("saved words survive deletion", store.get("lire.savedWords.v1") === '[{"word":"bonjour"}]');
-
-  check("the dialog says progress stays on the device", /stay on this device/.test(dialog));
-  check("the dialog does not claim everything is deleted", !/all (your )?data (is|will be) deleted/i.test(dialog));
+  const session = read("src/lib/localData/session.ts");
+  check("deletion marks the account deleted before erasing", session.indexOf("rememberDeletedAccount(userId)") < session.indexOf("erasePartition(accountIdentity(userId))"));
+  check("the dialog says this account's local data goes too", /this account&rsquo;s learning data on this device/.test(dialog));
+  check("the dialog says signed-out data is unaffected", /signed out is separate/.test(dialog));
+  // Behaviour (partition erased, guest and other accounts untouched, late
+  // writes refused): scripts/test-account-isolation.mjs
 }
 
 console.log("--- Google Play subscriptions are handled honestly ---");

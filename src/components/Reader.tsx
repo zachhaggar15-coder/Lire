@@ -103,6 +103,7 @@ import { AndroidBetaButton } from "@/components/AndroidBetaModal";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import AppIcon from "@/components/AppIcon";
 import CoachMark from "@/components/onboarding/CoachMark";
+import { localStore } from "@/lib/localData/store";
 
 const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
 
@@ -454,9 +455,9 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   useEffect(() => {
     try {
-      if (window.localStorage.getItem(READING_HELP_SEEN_KEY)) return;
+      if (localStore.getItem(READING_HELP_SEEN_KEY)) return;
       setReadingHelpOpen(true);
-      window.localStorage.setItem(READING_HELP_SEEN_KEY, "1");
+      localStore.setItem(READING_HELP_SEEN_KEY, "1");
     } catch {
       // Best-effort — worst case the hint just doesn't auto-expand.
     }

@@ -2,7 +2,8 @@ import type { Category } from "@/types";
 import type { InterestProfile } from "@/lib/recommendation/types";
 import { getProgress } from "@/lib/progress";
 import { dateKey } from "@/lib/habit";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Automatically-learned topic interest profile — no onboarding, no explicit
@@ -40,7 +41,7 @@ function emptyProfile(): InterestProfile {
 export function getInterestProfile(): InterestProfile {
   if (!hasStorage()) return emptyProfile();
   try {
-    const raw = window.localStorage.getItem(PROFILE_KEY);
+    const raw = localStore.getItem(PROFILE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     const profile = emptyProfile();
     if (parsed && typeof parsed === "object") {
@@ -56,8 +57,8 @@ export function getInterestProfile(): InterestProfile {
 
 function persist(profile: InterestProfile): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  void pushStore(PROFILE_KEY);
+  localStore.setItem(PROFILE_KEY, JSON.stringify(profile));
+  notifyStoreChanged(PROFILE_KEY);
 }
 
 export function nudgeTopicPreference(category: Category, amount: number): void {
@@ -100,7 +101,7 @@ export function detectAndRecordSkippedArticles(todayItems: LastShownEntry[]): vo
 
   let stored: { dateKey: string; items: LastShownEntry[] } | null = null;
   try {
-    const raw = window.localStorage.getItem(LAST_SHOWN_KEY);
+    const raw = localStore.getItem(LAST_SHOWN_KEY);
     stored = raw ? JSON.parse(raw) : null;
   } catch {
     stored = null;
@@ -115,6 +116,6 @@ export function detectAndRecordSkippedArticles(todayItems: LastShownEntry[]): vo
   }
 
   if (!stored || stored.dateKey !== today) {
-    window.localStorage.setItem(LAST_SHOWN_KEY, JSON.stringify({ dateKey: today, items: todayItems }));
+    localStore.setItem(LAST_SHOWN_KEY, JSON.stringify({ dateKey: today, items: todayItems }));
   }
 }

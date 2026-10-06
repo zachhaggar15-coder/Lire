@@ -1,7 +1,8 @@
 import { getSavedWords } from "@/lib/storage";
 import { getArchive, estimateTimeSpentMinutes } from "@/lib/archive";
 import { dateKey } from "@/lib/habit";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Simple reading goals. Each goal is optional (null = "not set"); progress
@@ -33,7 +34,7 @@ function hasStorage(): boolean {
 export function getGoals(): ReadingGoals {
   if (!hasStorage()) return DEFAULT_GOALS;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return DEFAULT_GOALS;
     const parsed = JSON.parse(raw);
     return { ...DEFAULT_GOALS, ...parsed };
@@ -45,8 +46,8 @@ export function getGoals(): ReadingGoals {
 export function saveGoals(patch: Partial<ReadingGoals>): ReadingGoals {
   const next = { ...getGoals(), ...patch };
   if (hasStorage()) {
-    window.localStorage.setItem(KEY, JSON.stringify(next));
-    void pushStore(KEY);
+    localStore.setItem(KEY, JSON.stringify(next));
+    notifyStoreChanged(KEY);
   }
   return next;
 }

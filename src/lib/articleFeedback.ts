@@ -1,6 +1,7 @@
 import type { ReadingText } from "@/types";
 import { recordArticlePreference } from "@/lib/recommendation/preferences";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 export type ArticleDifficultyFeedback = "too-easy" | "good" | "hard";
 
@@ -41,14 +42,14 @@ function normalize(entry: unknown): ArticleFeedback | null {
 
 function persist(entries: ArticleFeedback[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(entries));
-  void pushStore(KEY);
+  localStore.setItem(KEY, JSON.stringify(entries));
+  notifyStoreChanged(KEY);
 }
 
 export function getArticleFeedback(): ArticleFeedback[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((entry): entry is ArticleFeedback => entry !== null);

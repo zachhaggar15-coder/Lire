@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 /**
  * When to invite a learner to rate Sorlio on Google Play.
  *
@@ -26,7 +27,7 @@ function hasStorage(): boolean {
 export function getRatePromptState(): RatePromptState {
   if (!hasStorage()) return EMPTY;
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(RATE_PROMPT_KEY) ?? "null");
+    const parsed = JSON.parse(localStore.getItem(RATE_PROMPT_KEY) ?? "null");
     if (!parsed || typeof parsed !== "object") return EMPTY;
     return {
       lessonsCompleted: typeof parsed.lessonsCompleted === "number" ? parsed.lessonsCompleted : 0,
@@ -41,7 +42,7 @@ export function getRatePromptState(): RatePromptState {
 function save(state: RatePromptState): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(RATE_PROMPT_KEY, JSON.stringify(state));
+    localStore.setItem(RATE_PROMPT_KEY, JSON.stringify(state));
   } catch {
     // Best-effort — worst case the prompt timing resets.
   }

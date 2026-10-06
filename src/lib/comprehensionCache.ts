@@ -6,7 +6,8 @@ import {
   type MultipleChoiceQuestion,
   type ToneQuestion,
 } from "@/lib/comprehension";
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const KEY = "lire.comprehensionQuestions.v1";
 const CACHE_VERSION = 2;
@@ -34,7 +35,7 @@ function hasStorage(): boolean {
 function readCache(): CachedComprehensionQuestionBundle[] {
   if (!hasStorage()) return memoryCache;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter(isCachedBundle) : [];
@@ -79,8 +80,8 @@ function persist(cache: CachedComprehensionQuestionBundle[]): void {
     memoryCache = cache;
     return;
   }
-  window.localStorage.setItem(KEY, JSON.stringify(cache));
-  void pushStore(KEY);
+  localStore.setItem(KEY, JSON.stringify(cache));
+  notifyStoreChanged(KEY);
 }
 
 function signatureFor(text: ReadingText): string {
@@ -140,6 +141,5 @@ export function getOrCreateComprehensionQuestionBundle(
 }
 
 export function clearComprehensionQuestionCache(): void {
-  recordStoreClear(KEY);
   persist([]);
 }

@@ -2,6 +2,7 @@ import { buildKnownWordBootstrapList } from "@/lib/knownWordBootstrap";
 import { getKnownWords, removeKnown } from "@/lib/knownWords";
 import { getOnboardingState } from "@/lib/onboarding";
 import { getSavedWords } from "@/lib/storage";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * One-time cleanup of words marked "known" by the reader's retired Known
@@ -38,11 +39,11 @@ function hasStorage(): boolean {
 
 export async function clearManualKnownWords(): Promise<void> {
   if (!hasStorage()) return;
-  if (window.localStorage.getItem(MIGRATION_KEY)) return;
+  if (localStore.getItem(MIGRATION_KEY)) return;
 
   const known = getKnownWords();
   if (known.length === 0) {
-    window.localStorage.setItem(MIGRATION_KEY, new Date().toISOString());
+    localStore.setItem(MIGRATION_KEY, new Date().toISOString());
     return;
   }
 
@@ -76,5 +77,5 @@ export async function clearManualKnownWords(): Promise<void> {
     removeKnown(entry);
   }
 
-  window.localStorage.setItem(MIGRATION_KEY, new Date().toISOString());
+  localStore.setItem(MIGRATION_KEY, new Date().toISOString());
 }

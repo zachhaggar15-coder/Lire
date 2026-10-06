@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 export const DAILY_FREE_ACCESS_KEY = "lire.access.dailyArticle.v1";
 
 export interface DailyFreeAccess {
@@ -15,7 +16,7 @@ export function localDateKey(date = new Date()): string {
 export function getDailyFreeAccess(date = new Date()): DailyFreeAccess | null {
   if (typeof window === "undefined") return null;
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(DAILY_FREE_ACCESS_KEY) ?? "null") as Partial<DailyFreeAccess> | null;
+    const parsed = JSON.parse(localStore.getItem(DAILY_FREE_ACCESS_KEY) ?? "null") as Partial<DailyFreeAccess> | null;
     if (!parsed || parsed.dateKey !== localDateKey(date) || typeof parsed.articleId !== "string") return null;
     return { dateKey: parsed.dateKey, articleId: parsed.articleId };
   } catch {
@@ -29,7 +30,7 @@ export function claimDailyFreeArticle(articleId: string, date = new Date()): boo
   if (existing) return existing.articleId === articleId;
   if (typeof window === "undefined") return false;
   try {
-    window.localStorage.setItem(
+    localStore.setItem(
       DAILY_FREE_ACCESS_KEY,
       JSON.stringify({ dateKey: localDateKey(date), articleId } satisfies DailyFreeAccess)
     );

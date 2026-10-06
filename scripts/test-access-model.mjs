@@ -186,7 +186,7 @@ console.log("--- Storage failures fail open ---");
 }
 {
   store.clear();
-  store.set("lire.access.dailyUsage.v1", "not json");
+  store.set("sorlio.v2:guest:lire.access.dailyUsage.v1", "not json");
   const corrupt = usage.getDailyUsage();
   check("corrupt usage reads as nothing used", corrupt.articleIds.length === 0 && corrupt.lookups === 0);
 }
@@ -197,7 +197,7 @@ console.log("--- The old free-article record is carried over ---");
   // format changed underneath them.
   store.clear();
   const today = usage.getDailyUsage().dateKey;
-  store.set("lire.access.dailyArticle.v1", JSON.stringify({ dateKey: today, articleId: "legacy-article" }));
+  store.set("sorlio.v2:guest:lire.access.dailyArticle.v1", JSON.stringify({ dateKey: today, articleId: "legacy-article" }));
   const migrated = usage.getDailyUsage();
   check("the legacy article counts against today", migrated.articleIds.includes("legacy-article"));
   const context = access.accessContext("guest", migrated);
@@ -206,7 +206,7 @@ console.log("--- The old free-article record is carried over ---");
 }
 {
   store.clear();
-  store.set("lire.access.dailyArticle.v1", JSON.stringify({ dateKey: "1999-01-01", articleId: "old" }));
+  store.set("sorlio.v2:guest:lire.access.dailyArticle.v1", JSON.stringify({ dateKey: "1999-01-01", articleId: "old" }));
   check("a stale legacy record does not count", usage.getDailyUsage().articleIds.length === 0);
 }
 

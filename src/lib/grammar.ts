@@ -1,4 +1,5 @@
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 export type GrammarDomain = "verbs" | "sentence-grammar";
 export type GrammarLevel = "A1" | "A2" | "B1" | "B2" | "C1";
@@ -3069,7 +3070,7 @@ function isPracticeEvent(value: unknown): value is GrammarPracticeEvent {
 function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(guard) : [];
   } catch {
@@ -3079,8 +3080,8 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  void pushStore(key);
+  localStore.setItem(key, JSON.stringify(value));
+  notifyStoreChanged(key);
 }
 
 export function getVerbLessons(): VerbLesson[] {
@@ -3271,8 +3272,6 @@ export function referenceForStructureTopic(id: string): StructureReference | nul
 }
 
 export function clearGrammarStores(): void {
-  recordStoreClear(PROGRESS_KEY);
-  recordStoreClear(EVENTS_KEY);
   persist(PROGRESS_KEY, []);
   persist(EVENTS_KEY, []);
 }

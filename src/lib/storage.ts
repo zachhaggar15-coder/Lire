@@ -6,8 +6,9 @@ import { markKnown } from "@/lib/knownWords";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
-import { pushStore, recordStoreClear, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { isSourceFooterText } from "@/lib/rss/sourceNoise";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -222,13 +223,13 @@ function normalize(entry: unknown): SavedWord | null {
 function persist(words: SavedWord[]): boolean {
   if (!hasStorage()) return false;
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(words));
+    localStore.setItem(KEY, JSON.stringify(words));
   } catch {
     return false;
   }
   // Best-effort, fire-and-forget — no-ops if sync isn't configured or no
   // one's signed in. See src/lib/supabase/sync.ts.
-  void pushStore(KEY);
+  notifyStoreChanged(KEY);
   return true;
 }
 
@@ -239,7 +240,7 @@ function persist(words: SavedWord[]): boolean {
 export function getSavedWords(): SavedWord[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -334,14 +335,11 @@ export function deleteWord(word: string): SavedWord[] {
   const lookup = lookupWord(word);
   const lemma = lookup.lemma?.toLowerCase();
   const current = getSavedWords();
-  const removed = current.filter((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
-  for (const entry of removed) recordStoreDeletion(KEY, entry.word);
   const next = current.filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
   persist(next);
   return next;
 }
 
 export function clearWords(): void {
-  recordStoreClear(KEY);
   persist([]);
 }

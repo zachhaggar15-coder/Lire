@@ -94,7 +94,7 @@ check("no-op update for an unrecorded textId does not throw or create a record",
 })());
 
 console.log("--- malformed/old rows never crash new code ---");
-store.set("lire.sessionRecords.v1", JSON.stringify([{ garbage: true }, "not an object", null, 42]));
+store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([{ garbage: true }, "not an object", null, 42]));
 check("malformed rows are dropped, not thrown", getSessionRecords().length === 0);
 
 console.log("--- old-schema records (missing a since-added exercise kind) stay usable ---");
@@ -111,7 +111,7 @@ console.log("--- old-schema records (missing a since-added exercise kind) stay u
       clozePhrase: { attempted: 0, correct: 0 },
     },
   };
-  store.set("lire.sessionRecords.v1", JSON.stringify([legacyRecord]));
+  store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([legacyRecord]));
   const records = getSessionRecords();
   check("legacy record is kept, not dropped", records.length === 1, JSON.stringify(records));
   check(

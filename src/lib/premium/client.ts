@@ -1,5 +1,6 @@
 import { getAccessToken, getCurrentUser } from "@/lib/supabase/auth";
 import { FREE_PREMIUM_STATUS, type PremiumStatus } from "@/lib/premium/types";
+import { localStore } from "@/lib/localData/store";
 
 const PREMIUM_CACHE_KEY = "lire.premium.status.v1";
 
@@ -10,7 +11,7 @@ interface CachedPremiumStatus extends PremiumStatus {
 function readCachedStatus(userId: string): PremiumStatus {
   if (typeof window === "undefined") return FREE_PREMIUM_STATUS;
   try {
-    const value = JSON.parse(window.localStorage.getItem(PREMIUM_CACHE_KEY) ?? "null") as CachedPremiumStatus | null;
+    const value = JSON.parse(localStore.getItem(PREMIUM_CACHE_KEY) ?? "null") as CachedPremiumStatus | null;
     if (value?.userId !== userId || !value.isPremium || !value.expiresAt || new Date(value.expiresAt).getTime() <= Date.now()) return FREE_PREMIUM_STATUS;
     return value;
   } catch {
@@ -21,7 +22,7 @@ function readCachedStatus(userId: string): PremiumStatus {
 function cacheStatus(userId: string, status: PremiumStatus): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(PREMIUM_CACHE_KEY, JSON.stringify({ ...status, userId } satisfies CachedPremiumStatus));
+    localStore.setItem(PREMIUM_CACHE_KEY, JSON.stringify({ ...status, userId } satisfies CachedPremiumStatus));
   } catch {
     // Online status remains authoritative when storage is unavailable.
   }

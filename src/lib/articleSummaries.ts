@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 /**
  * Persistence for the reader's "Summarise it" box.
  *
@@ -43,7 +44,7 @@ function normalize(entry: unknown): ArticleSummary | null {
 function readAll(): ArticleSummary[] {
   if (!hasStorage()) return [];
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(KEY) ?? "null");
+    const parsed = JSON.parse(localStore.getItem(KEY) ?? "null");
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((entry): entry is ArticleSummary => entry !== null);
   } catch {
@@ -69,7 +70,7 @@ export function saveArticleSummary(textId: string, summary: string): void {
     : others;
 
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(next.slice(0, MAX_SUMMARIES)));
+    localStore.setItem(KEY, JSON.stringify(next.slice(0, MAX_SUMMARIES)));
   } catch {
     // Storage full or unavailable — nothing useful to do here.
   }

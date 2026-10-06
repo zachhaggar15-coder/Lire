@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { signOut } from "@/lib/supabase/auth";
+import { signOutThisDevice } from "@/lib/localData/session";
 import { createSignOutFlow, type SignOutFlowState } from "@/lib/supabase/signOutFlow";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import { useModalFocus } from "@/lib/useModalFocus";
@@ -25,7 +25,13 @@ export default function SignOutDialog({ onCancel, onSignedOut }: SignOutDialogPr
   useDismissibleHistory(true, dismiss);
   // Start on the safe action so a stray Enter or tap never signs the user out.
   useEffect(() => cancelRef.current?.focus({ preventScroll: true }), []);
-  const [confirm] = useState(() => createSignOutFlow(() => signOut(), onSignedOut, setState));
+  const [confirm] = useState(() =>
+    createSignOutFlow(
+      async () => ((await signOutThisDevice()).ok ? { ok: true, error: null } : { ok: false, error: null }),
+      onSignedOut,
+      setState,
+    ),
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-6">
@@ -41,7 +47,8 @@ export default function SignOutDialog({ onCancel, onSignedOut }: SignOutDialogPr
           Sign out?
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          Your saved learning data stays on this device, but account sync and Premium access will be unavailable until you sign in again.
+          You&rsquo;ll be signed out on this device only. This account&rsquo;s learning data stays on this device but is
+          hidden until you sign in again — anyone using Sorlio here afterwards won&rsquo;t see it.
         </p>
         {error && (
           <p role="alert" className="mt-3 text-sm font-semibold text-rose-600">
