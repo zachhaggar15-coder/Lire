@@ -13,7 +13,7 @@
 //   node --import ./scripts/register-alias-loader.mjs scripts/precompute-fluent-translations.mjs [--limit N] [--concurrency N]
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "fs";
-import { shardForId, NUM_SHARDS } from "./shard-precomputed-translations.mjs";
+import { shardForId, NUM_SHARDS } from "./lib/precomputedShards.mjs";
 
 // Plain node doesn't auto-load .env.local the way `next dev`/`next build` do.
 function loadDotEnvLocal() {
