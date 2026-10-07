@@ -45,6 +45,7 @@ for (const text of publicDomainTexts) {
   const words = countWords(text.body);
   const target = WORD_TARGETS[text.difficulty];
   t.check(`${text.id} length fits ${text.difficulty}`, words >= target.min && words <= target.max, `${words} words`);
+  t.check(`${text.id} contains no editorial matter (illustration, note, synopsis, scene break)`, !text.body.split(/\n{2,}/).some(isBarrier), text.body.split(/\n{2,}/).find(isBarrier)?.slice(0, 80));
   t.check(`${text.id} keeps one paragraph per source paragraph`, text.body.split(/\n{2,}/).length === record.lastParagraph - record.firstParagraph + 1);
   t.check(`${text.id} source URL matches provenance`, text.sourceUrl.endsWith(`/${record.gutenbergId}`));
   const list = ranges.get(record.gutenbergId) ?? [];

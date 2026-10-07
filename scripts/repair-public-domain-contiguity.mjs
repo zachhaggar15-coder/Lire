@@ -89,8 +89,34 @@ export function countWords(text) {
   return (text.match(/[A-Za-zÀ-ÖØ-öø-ÿœŒ]+(?:['’‑-][A-Za-zÀ-ÖØ-öø-ÿœŒ]+)*/g) ?? []).length;
 }
 
+/**
+ * A chapter synopsis printed under a heading in these editions:
+ * "Traversée rapide.--Résolutions prudentes.--Caravanes.--Gao.--Le Niger."
+ * Short headline fragments joined by unspaced "--" (dialogue opens with "--"
+ * or «, and parenthetical dashes in Face au drapeau are spaced " -- ").
+ */
+export function isSynopsis(paragraph) {
+  if (paragraph.length > 700 || /^\s*(«|--)/.test(paragraph) || / -- /.test(paragraph)) return false;
+  const segments = paragraph.split(/--/).map((segment) => segment.trim()).filter(Boolean);
+  if (segments.length < 4) return false;
+  const short = segments.filter((segment) => segment.split(/\s+/).length <= 7).length;
+  return short / segments.length >= 0.75;
+}
+
+export const RACIAL_SLUR = /(?<![-\w])n[èé]gr(?:e|es|esse|esses)\b/i;
+
 /** Paragraphs an excerpt may never include or cross. */
 export function isBarrier(paragraph) {
+  // Editorial insertions: "[Illustration: LE VIEUX]" and the editors' notes
+  // these editions print inline, "[Environ 400 lieues]".
+  if (/\[[^\]]*\]/.test(paragraph)) return true;
+  // A scene break ("* * *"): text either side belongs to different scenes.
+  if (/^[\s*]+$/.test(paragraph)) return true;
+  if (isSynopsis(paragraph)) return true;
+  // Content, not editorial: a passage using this slur is never shown
+  // unframed to a 13+ audience, so rebuilds must not land on one
+  // (see CONTENT_EXCLUSIONS and the gate in test-public-domain-provenance).
+  if (RACIAL_SLUR.test(paragraph)) return true;
   const digits = (paragraph.match(/\d/g) ?? []).length;
   if (/project gutenberg|ebook|copyright|license|produced by|table des mati[eè]res/i.test(paragraph)) return true;
   if (/^(CHAPITRE|LIVRE|TOME|PARTIE|PREMI[EÈ]RE PARTIE)\b/i.test(paragraph)) return true;

@@ -13,7 +13,11 @@
 //   node --import ./scripts/register-alias-loader.mjs scripts/precompute-fluent-translations.mjs [--limit N] [--concurrency N]
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "fs";
+import { createHash } from "crypto";
 import { shardForId, NUM_SHARDS } from "./lib/precomputedShards.mjs";
+
+/** Binds an entry to the exact body it translates (see verify-precomputed-translations.mjs). */
+const sourceHash = (body) => createHash("sha256").update(body).digest("hex").slice(0, 32);
 
 // Plain node doesn't auto-load .env.local the way `next dev`/`next build` do.
 function loadDotEnvLocal() {
@@ -144,7 +148,8 @@ async function translateWithRetries(sentences, paragraphBreakBeforeIndex, text) 
 }
 
 async function processOne(text, store) {
-  if (store[text.id]) return "skipped";
+  // Only an entry bound to this exact body counts as done (see verify-precomputed-translations.mjs).
+  if (store[text.id]?.sourceHash === sourceHash(text.body)) return "skipped";
   if ((text.language ?? "fr") !== "fr") return "skipped-lang";
 
   const groups = buildParagraphGroups(text);
@@ -154,7 +159,7 @@ async function processOne(text, store) {
   if (sentences.length <= MAX_SENTENCES_PER_REQUEST) {
     const outcome = await translateWithRetries(sentences, paragraphBreakBeforeIndex, text);
     if (outcome.ok) {
-      store[text.id] = outcome.result;
+      store[text.id] = { ...outcome.result, sourceHash: sourceHash(text.body) };
       return "done";
     }
     console.log(`FAILED ${text.id} after ${MAX_ATTEMPTS} attempts: ${outcome.error}`);
@@ -182,7 +187,7 @@ async function processOne(text, store) {
     console.log(`FAILED ${text.id}: merged chunk count ${mergedSentences.length} != expected ${sentences.length}`);
     return "error";
   }
-  store[text.id] = { sentences: mergedSentences, alignments: mergedAlignments };
+  store[text.id] = { sentences: mergedSentences, alignments: mergedAlignments, sourceHash: sourceHash(text.body) };
   return "done";
 }
 

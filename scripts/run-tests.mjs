@@ -21,6 +21,7 @@ export const SUITES = [
   "test-learning-logic.mjs",
   "test-core-logic.mjs",
   "test-dictionary-recovery.mjs",
+  "test-sentence-splitting.mjs",
   "test-public-domain-provenance.mjs",
   "test-lire-level.mjs",
   "test-contextual-translation.mjs",
