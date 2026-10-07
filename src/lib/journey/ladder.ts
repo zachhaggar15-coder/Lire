@@ -3,6 +3,7 @@ import { starterTexts } from "@/data/starterTexts";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { tokenize } from "@/lib/words";
 import { JOURNEY_SECTIONS, sectionedTextIds } from "@/lib/journey/sections";
+import { JOURNEY_DIFFICULTY } from "@/data/generated/journeyDifficulty";
 
 export const TEXTS_PER_STAGE = 5;
 /** How many theme nodes make up a single map (page) of the route. */
@@ -147,6 +148,22 @@ function scoreBand(texts: ReadingText[]): Array<{ text: ReadingText; intrinsicDi
     .sort((a, b) => a.intrinsicDifficulty - b.intrinsicDifficulty || a.text.id.localeCompare(b.text.id));
 }
 
+/**
+ * Intrinsic difficulty of every starter text, scored per band. Expensive
+ * (tokenises every text and looks up every word), so the app uses the copy
+ * generated at build time (scripts/generate-journey-difficulty.mjs; kept in
+ * sync by test-core-logic). Computing it on the device took ~0.6 s on a
+ * desktop. Clients always built it before the broad dictionary loaded, so it
+ * is generated without that dictionary, keeping route order unchanged.
+ */
+export function computeIntrinsicDifficulties(): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const band of JOURNEY_BANDS) {
+    for (const scored of scoreBand(starterTexts.filter((text) => text.difficulty === band))) out[scored.text.id] = scored.intrinsicDifficulty;
+  }
+  return out;
+}
+
 export function buildLadder(): BuiltLadder {
   if (cached) return cached;
 
@@ -156,15 +173,11 @@ export function buildLadder(): BuiltLadder {
   const textById = new Map(starterTexts.map((text) => [text.id, text]));
 
   const sectioned = sectionedTextIds();
-  const difficultyById = new Map<string, number>();
+  // Intrinsic difficulty is scored across the whole band (sections included),
+  // so every LadderText carries a comparable value; see computeIntrinsicDifficulties.
+  const difficultyById = new Map<string, number>(Object.entries(JOURNEY_DIFFICULTY));
 
   for (const band of JOURNEY_BANDS) {
-    // Intrinsic difficulty is scored across the whole band (sections included),
-    // so every LadderText still carries a comparable difficulty value.
-    for (const scored of scoreBand(starterTexts.filter((text) => text.difficulty === band))) {
-      difficultyById.set(scored.text.id, scored.intrinsicDifficulty);
-    }
-
     const stageThemes: StageTheme[] = [];
     const pushTheme = (theme: StageTheme) => {
       if (theme.textIds.length > 0) stageThemes.push(theme);

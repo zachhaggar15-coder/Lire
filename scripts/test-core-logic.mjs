@@ -21,6 +21,7 @@ globalThis.window = {
   dispatchEvent: () => true,
 };
 
+import { execFileSync } from "node:child_process";
 import {
   contentQualityScore,
   difficultyMatchScore,
@@ -322,6 +323,17 @@ console.log("\n--- Public-domain reading bank ---");
   const guidedStarterTexts = starterTexts.filter((text) => JOURNEY_BANDS.includes(text.difficulty));
   check("journey bands are ready for C1 and C2", JOURNEY_BANDS.includes("C1") && JOURNEY_BANDS.includes("C2"));
   check("journey ladder contains the guided starter set", ladder.texts.length === guidedStarterTexts.length);
+  {
+    // The app reads difficulty generated at build time; it must match a fresh
+    // computation (in its own process: this one has the broad dictionary loaded).
+    let stale = "";
+    try {
+      execFileSync(process.execPath, ["--no-warnings", "--import", "./scripts/register-alias-loader.mjs", "scripts/generate-journey-difficulty.mjs", "--check"], { stdio: "pipe", cwd: new URL("..", import.meta.url) });
+    } catch (error) {
+      stale = String(error.stderr ?? error);
+    }
+    check("precomputed journey difficulty is current", stale === "", stale.trim());
+  }
   check(
     "guided bands split into one-theme nodes, paged by NODES_PER_MAP",
     ["A1", "A2", "B1", "B2"].every((band) => {
