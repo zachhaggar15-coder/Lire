@@ -13,10 +13,11 @@ export type SubscriptionStatus =
 /**
  * The client's view of an account's entitlement.
  *
- * `isPremium` is only ever true when the server said so (or, offline, when a
- * recent server answer for THIS account said so — see client.ts). It is a
- * display hint: every capability that matters (AI, unlimited synced saves) is
- * enforced by the server independently.
+ * `isPremium` is only ever true when the server said so, or (offline) when a
+ * copy of a recent server answer for THIS account is read back from device
+ * storage — see client.ts. Device storage is editable by whoever holds the
+ * device, so a status read from it (`fromDeviceCache`) is shown to the reader
+ * but never grants anything: see `confersPremium`.
  */
 export interface PremiumStatus {
   isPremium: boolean;
@@ -27,6 +28,25 @@ export interface PremiumStatus {
   stale: boolean;
   /** True when the server could not be asked at all and there was no usable recent answer. */
   unverified: boolean;
+  /**
+   * True when this answer was read from device storage because the server
+   * could not be reached. Never set from a server response body.
+   */
+  fromDeviceCache: boolean;
+}
+
+/**
+ * The security boundary for paid capability on the device.
+ *
+ * Only an answer the server gave in this session confers Premium (including
+ * the server's own bounded outage answer, which it marks `stale`). A status
+ * read back from device storage is display-only: offline, a subscriber sees
+ * "Premium (last confirmed …)" but gets Free limits until the server answers
+ * again. Server-enforced capabilities (AI, synced saves) never trust the
+ * client at all.
+ */
+export function confersPremium(status: PremiumStatus): boolean {
+  return status.isPremium && !status.fromDeviceCache;
 }
 
 export const FREE_PREMIUM_STATUS: PremiumStatus = {
@@ -36,6 +56,7 @@ export const FREE_PREMIUM_STATUS: PremiumStatus = {
   autoRenewing: null,
   stale: false,
   unverified: false,
+  fromDeviceCache: false,
 };
 
 const STATUSES: ReadonlySet<string> = new Set(["none", "pending", "active", "grace_period", "cancelled", "on_hold", "paused", "expired", "revoked", "unknown"]);
@@ -59,6 +80,8 @@ export function parsePremiumStatus(body: unknown, now = Date.now()): PremiumStat
     autoRenewing: typeof value.autoRenewing === "boolean" ? value.autoRenewing : null,
     stale: value.stale === true,
     unverified: false,
+    // Only client.ts sets this, after parsing; a body cannot claim it.
+    fromDeviceCache: false,
   };
 }
 

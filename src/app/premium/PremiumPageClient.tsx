@@ -156,9 +156,14 @@ export default function PremiumPageClient() {
                     ? `Renews automatically on ${expiry} unless you cancel.`
                     : "Renews automatically each month unless you cancel."}
             </p>
-            {status.stale && (
-              <p className="mt-1 text-xs text-ink-muted">Couldn&rsquo;t reach Sorlio just now — showing your last confirmed status.</p>
-            )}
+            {status.fromDeviceCache ? (
+              <p className="mt-1 text-xs text-ink-muted">
+                You&rsquo;re offline, so this is your last confirmed status. Premium features return as soon as Sorlio can
+                check your subscription again.
+              </p>
+            ) : status.stale ? (
+              <p className="mt-1 text-xs text-ink-muted">Couldn&rsquo;t reach Google Play just now — showing your last confirmed status.</p>
+            ) : null}
           </>
         ) : !signedIn ? (
           <>

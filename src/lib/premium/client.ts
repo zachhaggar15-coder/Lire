@@ -13,9 +13,10 @@ import { FREE_PREMIUM_STATUS, parsePremiumStatus, type PremiumStatus } from "@/l
  *     cache that (a) lives in this account's partition, (b) was confirmed by
  *     the server within OFFLINE_CACHE_MS, and (c) has an unexpired, valid
  *     expiry. Switching accounts therefore can never carry Premium across.
- *   - The cache is a display hint. Forging it unlocks nothing the server
- *     enforces: AI is refused, and synced saves beyond the free limit are
- *     refused by the database.
+ *   - The cache is a display hint and nothing more: it is returned with
+ *     `fromDeviceCache: true`, and confersPremium() never grants capability
+ *     from it. Forging it therefore unlocks nothing — not local saves, not AI
+ *     (refused by the server), not synced saves (refused by the database).
  */
 
 const CACHE_KEY = "lire.premium.status.v1";
@@ -35,7 +36,7 @@ function readCache(userId: string, now: number): PremiumStatus | null {
   const confirmed = Date.parse(cached.confirmedAt);
   if (!Number.isFinite(confirmed) || confirmed > now || now - confirmed > OFFLINE_CACHE_MS) return null;
   const parsed = parsePremiumStatus(cached.status, now);
-  return parsed.isPremium ? { ...parsed, stale: true } : null;
+  return parsed.isPremium ? { ...parsed, stale: true, fromDeviceCache: true } : null;
 }
 
 function writeCache(userId: string, status: PremiumStatus): void {
@@ -49,11 +50,22 @@ export type StatusFetcher = (token: string) => Promise<Response>;
 const defaultFetcher: StatusFetcher = (token) =>
   fetch("/api/premium/status", { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
 
-export async function fetchPremiumStatus(fetcher: StatusFetcher = defaultFetcher, now = Date.now()): Promise<PremiumStatus> {
+/** The signed-in session, if any. Injectable so tests need no live auth client. */
+export type SessionSource = () => Promise<{ access_token: string; user: { id: string } } | null>;
+
+const defaultSession: SessionSource = async () => {
   const client = getSupabaseClient();
-  if (!client) return FREE_PREMIUM_STATUS;
+  if (!client) return null;
   const { data } = await client.auth.getSession();
-  const session = data.session;
+  return data.session;
+};
+
+export async function fetchPremiumStatus(
+  fetcher: StatusFetcher = defaultFetcher,
+  now = Date.now(),
+  getSession: SessionSource = defaultSession,
+): Promise<PremiumStatus> {
+  const session = await getSession();
   if (!session) return FREE_PREMIUM_STATUS;
   const userId = session.user.id.toLowerCase();
 

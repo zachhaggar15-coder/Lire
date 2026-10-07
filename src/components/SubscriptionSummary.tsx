@@ -42,6 +42,10 @@ export default function SubscriptionSummary() {
     detail = status.status === "on_hold" ? "Fix your payment method in Google Play to restart Premium." : "Premium resumes when the pause ends.";
   }
 
+  if (!loading && status.fromDeviceCache) {
+    detail = `${detail} You're offline: Premium features return when Sorlio can check your subscription again.`;
+  }
+
   return (
     <div className="mt-4 border-t border-cream-fill pt-3" aria-live="polite">
       <p className="text-sm font-semibold text-ink">{title}</p>

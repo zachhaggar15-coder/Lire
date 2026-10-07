@@ -56,6 +56,7 @@ export const SUITES = [
   "test-sync-engine.mjs",
   "test-persistence-failures.mjs",
   "test-billing.mjs",
+  "test-premium-cache-authority.mjs",
   "test-account-deletion.mjs",
   "test-auth-metadata.mjs",
   "test-legacy-build-compat.mjs",

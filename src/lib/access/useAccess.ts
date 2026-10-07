@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
-import { accessContext, accessTier, type AccessContext } from "@/lib/access/accessModel";
+import { accessContext, tierForStatus, type AccessContext } from "@/lib/access/accessModel";
 import { newSavesToday } from "@/lib/access/saveAllowance";
 import { activeIdentity } from "@/lib/localData/store";
 import { lastKnownSaveQuota } from "@/lib/sync/runtime";
@@ -36,7 +36,7 @@ export function useAccess() {
     return () => window.removeEventListener("sorlio-sync-complete", onSync);
   }, [refreshUsage]);
 
-  const tier = accessTier(authenticated, premium.isPremium);
+  const tier = tierForStatus(authenticated, premium);
   const context: AccessContext = accessContext(tier, saves);
   const ready = !authenticated || !loading;
 

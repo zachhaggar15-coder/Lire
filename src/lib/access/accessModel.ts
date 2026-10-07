@@ -1,4 +1,5 @@
 import { FEATURES, FREE_DAILY_NEW_SAVES, isPremiumOnly, type AccessTier, type Feature } from "@/lib/access/features";
+import { confersPremium, type PremiumStatus } from "@/lib/premium/types";
 
 /**
  * One place that answers "may this person do this right now".
@@ -32,6 +33,15 @@ const ALLOWED: AccessDecision = { allowed: true, reason: null, remaining: null }
 export function accessTier(authenticated: boolean, premium: boolean): AccessTier {
   if (!authenticated) return "guest";
   return premium ? "premium" : "free";
+}
+
+/**
+ * The tier the app actually grants for a fetched entitlement. A status read
+ * back from device storage is display-only (confersPremium), so a forged or
+ * leftover cache can never raise the tier.
+ */
+export function tierForStatus(authenticated: boolean, status: PremiumStatus): AccessTier {
+  return accessTier(authenticated, confersPremium(status));
 }
 
 export function accessContext(tier: AccessTier, newSavesToday = 0): AccessContext {
