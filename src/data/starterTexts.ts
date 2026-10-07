@@ -47,7 +47,7 @@ Son frère Tom arrive. Il ne mange pas le matin. Il boit seulement un jus d'oran
 « Oui, je commence à huit heures », répond Tom.
 
 À sept heures et demie, ils partent ensemble. Léa prend son sac et Tom prend son vélo.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -68,7 +68,7 @@ Ma cuisine est verte. C'est ma couleur préférée. Sur la table, il y a toujour
 J'ai aussi un balcon. Je cultive des tomates et du basilic. En été, je mange dehors.
 
 Mes voisins sont gentils, mais leur chien fait beaucoup de bruit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -91,7 +91,7 @@ Nous achetons des carottes, des pommes et une salade. Ma mère prend aussi du fr
 Le vendeur sourit. Il donne toujours une pomme aux enfants.
 
 Après, nous achetons du pain chaud. Sur le chemin du retour, nous buvons un chocolat.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -114,7 +114,7 @@ Je travaille et il dort. Nous sommes contents.
 À six heures, il part. C'est l'heure de son dîner. Il rentre chez la voisine.
 
 Le soir, ma chaise est chaude et pleine de poils.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -137,7 +137,7 @@ Je fais du thé. Je prends un livre et une couverture. C'est agréable.
 L'après-midi, je regarde un vieux film. Le chat dort sur mes pieds.
 
 Le soir, la pluie s'arrête enfin. Je sors dix minutes. L'air est frais et propre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -160,7 +160,7 @@ Le match commence. Mon père crie beaucoup. Moi, je mange des frites.
 À la fin, notre équipe perd deux à un. Mon père n'est pas content.
 
 Mais dans la voiture, il dit : « La semaine prochaine, on gagne. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -183,7 +183,7 @@ Sur l'eau, il y a des canards. Ils ne bougent pas quand je passe.
 Je roule pendant quarante minutes. Après, je m'arrête à la boulangerie.
 
 Un croissant après le sport, c'est ma petite règle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -206,7 +206,7 @@ J'ai un tableau préféré. C'est une fenêtre bleue avec la mer derrière. Je r
 Il y a beaucoup d'enfants le dimanche. Ils courent et ils parlent fort.
 
 Le gardien sourit. Il est habitué.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -229,7 +229,7 @@ Un peu plus loin, une vieille dame joue du piano. Son piano est dans la rue ! Le
 Près du pont, il y a des tambours. C'est très fort.
 
 Je rentre à minuit. J'ai mal aux oreilles, mais je suis content.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -252,7 +252,7 @@ Mais elles font aussi un travail important. Elles transportent le pollen. Grâce
 Beaucoup de gens ont peur des abeilles. Ce n'est pas nécessaire. Une abeille ne pique pas sans raison.
 
 Sans les abeilles, notre assiette est presque vide.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -275,7 +275,7 @@ En réalité, la lune ne change pas. C'est le soleil qui l'éclaire d'un côté 
 La lune n'a pas de lumière. Elle reçoit la lumière du soleil.
 
 Elle est loin : environ trois cent mille kilomètres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -298,7 +298,7 @@ Pour les enfants, il y a un toboggan et deux balançoires.
 Il y a aussi un petit jardin. Les habitants du quartier cultivent des légumes.
 
 Le parc est ouvert tous les jours, de huit heures à vingt heures.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -321,7 +321,7 @@ Un homme demande pourquoi. Une employée explique : il y a un problème techniqu
 Une femme téléphone à son bureau. Elle dit qu'elle arrive plus tard.
 
 Le train arrive enfin. Tout le monde monte vite.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -344,7 +344,7 @@ Le matin, le café est plein. Les gens parlent, lisent le journal, regardent la 
 Vers onze heures, c'est calme. C'est mon moment préféré.
 
 Je choisis une table près de la fenêtre. Je regarde les gens qui passent. Je ne fais rien. C'est parfait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -369,7 +369,7 @@ Quand il pleut, nous jouons aux cartes. Ma sœur gagne toujours.
 Le soir, nous mangeons dehors. On entend la mer.
 
 Deux semaines, c'est court. Mais c'est bien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -392,7 +392,7 @@ Le nouvel appartement est plus petit, mais il y a de la lumière toute la journ�
 Le soir, les amis ont commandé des pizzas. Ils ont mangé par terre, entre les cartons.
 
 Paul ne connaît encore personne dans le quartier. Mais la boulangère lui a déjà dit bonjour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -415,7 +415,7 @@ Après quelques semaines, j'ai essayé une tarte. La première n'était pas bonn
 Maintenant, je cuisine trois ou quatre fois par semaine. Je ne suis pas un grand chef, mais mes amis reviennent dîner.
 
 Le carnet est toujours dans ma cuisine. Il est sale, et c'est normal.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -438,7 +438,7 @@ Sur le parcours, beaucoup d'habitants sont sortis pour encourager les coureurs. 
 Nadia, quarante ans, courait son premier marathon. Elle a fini en quatre heures et demie. « J'ai eu mal partout après trente kilomètres, mais je n'ai pas voulu m'arrêter », a-t-elle expliqué.
 
 L'année prochaine, la ville veut ouvrir la course à douze mille personnes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -461,7 +461,7 @@ Je nage pendant quarante minutes. Je ne compte plus les longueurs, parce que ça
 À la piscine, je vois souvent les mêmes personnes. Nous ne parlons pas beaucoup, mais nous nous disons bonjour.
 
 Quand je sors, il fait jour. J'ai l'impression d'avoir déjà gagné quelque chose.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -484,7 +484,7 @@ Le jeudi soir, il passe maintenant de vieux films. C'est devenu très populaire.
 Anne, qui travaille ici depuis vingt ans, était très émue. « Je pensais vraiment que c'était fini », dit-elle.
 
 Le billet coûte six euros. Ce n'est pas cher, et on peut venir à pied.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -507,7 +507,7 @@ Plus tard, j'ai remarqué autre chose. Le livre parle beaucoup du silence entre 
 C'est étrange : le texte ne change pas, mais je ne lis jamais le même livre.
 
 Mon exemplaire est en mauvais état. La couverture est cassée et il y a des notes partout. Je ne veux pas en acheter un autre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -530,7 +530,7 @@ Le bleu est dévié beaucoup plus que le rouge. Il part alors dans toutes les di
 Le soir, c'est différent. La lumière traverse une plus grande épaisseur d'air, et le bleu se perd en chemin. Il reste surtout le rouge et l'orange.
 
 Le ciel ne change donc pas de couleur. C'est le chemin de la lumière qui change.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -553,7 +553,7 @@ Le reste du temps, il dort. Les visiteurs sont parfois déçus, mais c'est norma
 Faire naître des pandas est difficile. La femelle ne peut avoir un petit que quelques jours par an.
 
 Le zoo travaille avec des scientifiques chinois. Les jeunes pandas nés ici repartent en Chine vers quatre ans.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -576,7 +576,7 @@ Il n'est pas nécessaire de laver longtemps. Il suffit de vider et de gratter un
 Une autre erreur est de mettre les sacs en plastique dans le verre. Le verre doit être seul, sans bouchon et sans couvercle.
 
 La ville a expliqué qu'environ un quart des déchets triés sont mal triés. C'est beaucoup, mais ça peut changer facilement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -599,7 +599,7 @@ La ville va recruter quatre personnes pour ce nouveau jour d'ouverture. Le budge
 Certains ont critiqué cette dépense. Le maire a répondu que la bibliothèque était « le seul endroit chauffé et gratuit où l'on peut rester toute la journée ».
 
 Les autres services, comme l'espace enfants, seront également ouverts.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -622,7 +622,7 @@ Tout n'est pas parfait. En moyenne, un vélo sur dix ne fonctionne pas. Certains
 « Nous avons sous-estimé le travail d'entretien », a reconnu une responsable du projet.
 
 La ville va donc engager deux mécaniciens supplémentaires et ajouter cent vélos avant l'été prochain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -645,7 +645,7 @@ Chaque classe s'occupe du jardin pendant une semaine. Les élèves arrosent, enl
 Une partie des légumes est utilisée à la cantine. Le reste part à la maison, avec les enfants.
 
 L'institutrice a remarqué un changement : « Ils goûtent des légumes qu'ils refusaient avant. Quand on a planté quelque chose, on a envie de l'essayer. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -668,7 +668,7 @@ Ensuite, on m'a présenté à quinze personnes en dix minutes. J'ai oublié tous
 L'après-midi, une collègue est venue me voir. Elle m'a dit : « Le premier jour, personne ne comprend rien. Moi, j'ai pleuré dans les toilettes. »
 
 Ça m'a fait beaucoup de bien. Aujourd'hui, c'est elle qui s'assied à côté de moi à la cantine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -691,7 +691,7 @@ Les styles sont très différents : accordéon, violon classique, chansons afric
 Pour certains, c'est un vrai métier. Un violoniste explique qu'il gagne parfois mieux ici que dans une petite salle de concert.
 
 « Les gens sont pressés », dit-il, « mais quand quelqu'un s'arrête pour écouter, c'est un beau moment. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -714,7 +714,7 @@ Je n'ai pas très bien dormi. Le lit était étroit et le train s'arrêtait souv
 Au petit matin, j'ai ouvert le rideau. Il y avait des montagnes partout, encore un peu roses.
 
 J'étais fatigué, mais je n'oublierai pas ce moment. En avion, on n'a jamais ça.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -735,7 +735,7 @@ Maintenant, je prends le bus ou mon vélo. Quand il pleut, je marche sous un par
 Bien sûr, sans voiture, certaines choses sont plus difficiles. Faire de grandes courses, par exemple, demande un peu d'organisation. Et pour partir le week-end, je loue une voiture ou je prends le train.
 
 Je ne dis pas que tout le monde doit faire comme moi. À la campagne, la voiture reste souvent nécessaire. Mais en ville, on peut très bien vivre autrement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -756,7 +756,7 @@ Mais il y a un autre côté. À la maison, on est parfois seul toute la journée
 Je pense que le bon équilibre se trouve au milieu. Deux ou trois jours à la maison, deux ou trois jours au bureau : pour moi, c'est le mieux.
 
 Mon entreprise a compris cela. Elle laisse chacun choisir, et je trouve que c'est une bonne idée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -777,7 +777,7 @@ En général, on fait la bise à la famille et aux amis. Entre collègues, cela 
 Les étrangers ne sont pas les seuls à hésiter. Les Français aussi se trompent parfois. Faut-il commencer par la joue droite ou la joue gauche ? Personne n'est vraiment sûr.
 
 Depuis quelques années, la bise est moins automatique. Certaines personnes préfèrent un simple bonjour, et c'est très bien aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -800,7 +800,7 @@ Les produits sont souvent plus frais qu'au supermarché. Beaucoup viennent de fe
 Bien sûr, le marché coûte parfois un peu plus cher. Mais pour beaucoup de gens, l'ambiance vaut ce petit prix.
 
 Après le marché, certains vont boire un café en terrasse. C'est une façon agréable de commencer le week-end.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -821,7 +821,7 @@ Le film a commencé quand la nuit est tombée, vers dix heures. Regarder un film
 Il y a quand même quelques problèmes. S'il y a du vent, on entend mal. Et si un moustique décide de vous embêter, c'est fini pour la tranquillité.
 
 Malgré tout, j'ai adoré. Cette année, je compte y retourner, mais cette fois avec un pull et un bon répulsif.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -842,7 +842,7 @@ Or ce contact n'affecte pas chaque couleur de façon identique. Le bleu, dont la
 Au coucher du soleil, la situation s'inverse. La lumière doit alors traverser une épaisseur d'atmosphère beaucoup plus grande pour nous atteindre ; la majeure partie du bleu se disperse et se perd bien avant d'arriver jusqu'à nous, ne laissant passer que le rouge et l'orange, moins sensibles à ce phénomène.
 
 Sur la Lune, où il n'existe presque pas d'atmosphère pour disperser quoi que ce soit, le ciel reste noir en plein jour, même en pleine lumière du soleil — la meilleure preuve, sans doute, que la couleur du ciel ne dépend pas du soleil lui-même, mais bien de l'air qui l'entoure.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -863,7 +863,7 @@ Une personne qui ne dort pas assez oublie plus vite. Elle a aussi plus de mal à
 Les chercheurs conseillent de dormir entre sept et neuf heures. Ils recommandent aussi de réviser un peu chaque jour, plutôt que tout d'un coup.
 
 Alors, avant un examen important, le meilleur conseil est peut-être simple : fermez vos livres et allez dormir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -884,7 +884,7 @@ De plus, les parcs et les jardins offrent des fleurs différentes pendant une gr
 Les abeilles sont très importantes pour la nature. Sans elles, beaucoup de plantes ne pourraient pas se reproduire. Une grande partie de ce que nous mangeons dépend de leur travail.
 
 Protéger les abeilles, même en ville, c'est donc protéger notre alimentation.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -905,7 +905,7 @@ Le jour du marathon, il faisait frais. Les premiers kilomètres sont passés vit
 Ce qui m'a aidé, ce sont les gens dans la rue. Ils criaient, ils applaudissaient. Grâce à eux, j'ai continué.
 
 Quand j'ai franchi la ligne d'arrivée, j'étais épuisé mais très fier. Je comprends maintenant pourquoi tant de gens aiment ce sport.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -926,7 +926,7 @@ Nager est aussi bon pour la tête. Beaucoup de gens disent qu'après quelques lo
 On peut commencer à tout âge. Il n'est jamais trop tard pour apprendre à nager.
 
 Le seul vrai conseil, c'est la régularité. Nager une fois par mois ne sert à rien ; deux fois par semaine change tout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -947,7 +947,7 @@ Beaucoup de gens pensent que l'escalade demande surtout de la force. En réalit�
 L'escalade se pratique souvent à deux. Une personne grimpe, l'autre tient la corde et assure sa sécurité. Il faut donc avoir confiance en son partenaire.
 
 C'est peut-être pour cela que ce sport plaît autant : on progresse ensemble, sans vraiment être en compétition.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -968,7 +968,7 @@ J'ai donc commencé à apprendre, petit à petit. Ma grand-mère m'a donné quel
 Mais peu à peu, j'ai progressé. J'ai compris qu'il ne faut pas beaucoup de choses pour bien manger : des légumes frais, un peu de patience et quelques idées.
 
 Aujourd'hui, cuisiner n'est plus une corvée. C'est devenu un vrai plaisir, surtout quand je reçois des amis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -989,7 +989,7 @@ La plupart des voyageurs passent sans s'arrêter. Ils sont pressés, ils pensent
 Pour les musiciens, le métro est un endroit difficile. Il y a du bruit, du passage, et il faut jouer pendant des heures. Mais c'est aussi une façon de se faire connaître.
 
 Certains artistes célèbres ont commencé ainsi, en bas des escaliers, guitare à la main.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1010,7 +1010,7 @@ J'ai aussi appris à mieux garder les aliments. Avant, je jetais souvent des fru
 Au début, je pensais que ce serait compliqué. En réalité, ces habitudes sont vite devenues naturelles. Et j'ai remarqué une chose intéressante : je dépense moins d'argent qu'avant.
 
 Je ne suis pas parfait, loin de là. Mais je crois que si chacun fait un petit effort, cela finit par compter.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1031,7 +1031,7 @@ La séance durait trente minutes. Nous avons fait des mouvements lents et des ex
 En retournant à mon bureau, je me suis senti différent. J'étais plus calme et plus concentré. L'après-midi, j'ai mieux travaillé que d'habitude.
 
 Depuis, j'y vais chaque semaine. Je ne suis pas devenu un expert, et je reste assez raide. Mais ces trente minutes sont devenues un moment important de ma semaine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1052,7 +1052,7 @@ Certains regrettent cette habitude. Selon eux, garder les titres en anglais mont
 Il est difficile de donner raison à un seul camp. Une belle traduction peut enrichir un titre ; une mauvaise peut le rendre ridicule.
 
 Ce petit détail en dit long sur notre rapport aux langues : nous voulons rester ouverts au monde sans pour autant oublier qui nous sommes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1073,7 +1073,7 @@ On pourrait croire qu'il s'agit d'un simple problème économique. Pourtant, l'e
 Certaines communes réagissent. Elles aident les commerçants à s'installer, ou ouvrent des magasins gérés par le village lui-même.
 
 Rien ne garantit que ces efforts suffisent. Mais ils montrent au moins que beaucoup refusent de voir mourir leur centre-ville sans réagir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1094,7 +1094,7 @@ Cependant, il serait exagéré de penser qu'elles remplaceront tout. L'intellige
 Le plus probable, c'est que de nombreux métiers changent plutôt qu'ils ne disparaissent. Il faudra apprendre à travailler avec ces outils, comme on a appris autrefois à utiliser l'ordinateur.
 
 La vraie question n'est peut-être pas de savoir si la machine nous remplacera, mais ce que nous choisirons de lui confier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1115,7 +1115,7 @@ Manger des produits de saison et cultivés près de chez soi aide également. Un
 Il ne s'agit pas de culpabiliser chacun pour le moindre repas. Personne ne peut être parfait, et une règle trop stricte décourage vite.
 
 L'important, c'est peut-être de comprendre que nos choix quotidiens, additionnés à ceux de millions de personnes, finissent par peser lourd — dans un sens comme dans l'autre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1136,7 +1136,7 @@ Sur le papier, cette mesure semble excellente. Dans la réalité, les choses son
 Une loi peut poser un principe, mais elle ne change pas facilement les comportements. Il faudrait aussi que les entreprises encouragent réellement leurs employés à se déconnecter.
 
 Tant que répondre vite sera vu comme une preuve de sérieux, ce droit restera, pour beaucoup, une belle idée difficile à appliquer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1157,7 +1157,7 @@ La campagne, elle, promet le calme, l'espace et un contact plus direct avec la n
 Il n'existe pas de réponse universelle. Ce qui convient à une personne peut ne pas convenir à une autre.
 
 Peut-être que l'essentiel n'est pas le lieu lui-même, mais l'accord entre cet endroit et la vie que l'on souhaite vraiment mener.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1178,7 +1178,7 @@ Le roman offre quelque chose de rare : le temps. Il nous oblige à ralentir, à 
 Lire un roman, c'est aussi vivre, l'espace de quelques pages, une vie qui n'est pas la nôtre. On comprend mieux les autres lorsqu'on a partagé, même par la fiction, leurs doutes et leurs joies.
 
 Il se peut que la forme du livre change avec le temps. Mais le besoin de récits, lui, ne disparaîtra sans doute jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1199,7 +1199,7 @@ Le problème, c'est que notre capacité de concentration en souffre. Après avoi
 Il ne s'agit pas de tout rejeter. Ces outils ont aussi des avantages réels. Mais il serait sage de reprendre un peu de contrôle : couper les notifications, poser son téléphone pendant les repas, choisir quand le regarder plutôt que de le subir.
 
 Notre attention est précieuse. Il vaut la peine de décider nous-mêmes à quoi nous la donnons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1220,7 +1220,7 @@ Cependant, tout n'est pas si simple. Lorsque l'argent domine, la passion passe p
 Il est légitime de se demander jusqu'où cela peut aller. Le risque, c'est que le sport devienne un simple produit, où seul compte le résultat financier.
 
 Le défi des années à venir sera sans doute de garder l'équilibre : profiter de cet argent sans oublier ce qui, au départ, rend le sport si beau.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1241,7 +1241,7 @@ On peut pourtant voir les choses autrement. Une cuisine qui voyage est une cuisi
 Après tout, la cuisine française elle-même s'est construite au fil des siècles, en empruntant des produits et des idées venus d'ailleurs.
 
 Il n'est donc pas nécessaire qu'un plat reste identique pour qu'il ait de la valeur. Ce qui compte, c'est peut-être moins la fidélité à une recette que le plaisir qu'on éprouve à la table.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1262,7 +1262,7 @@ Depuis quelques années, les scientifiques s'y intéressent de près. Ils ont d�
 Ce savoir change notre regard sur la propreté. Se laver reste évidemment important. Mais vouloir tout désinfecter en permanence peut se retourner contre nous, car cela détruit aussi de bonnes bactéries.
 
 Il ne faut donc pas avoir peur des microbes en général. Le véritable enjeu n'est pas de tous les éliminer, mais d'apprendre à vivre avec eux dans un juste équilibre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1283,7 +1283,7 @@ Puis j'ai fait un simple test : j'ai trié mes affaires et donné ce que je n'ut
 Je ne crois pas pour autant qu'il faille tomber dans l'excès. Vivre presque sans rien n'a rien d'un idéal en soi.
 
 Le minimalisme n'est peut-être ni une mode ni une philosophie, mais une question toute simple : de quoi ai-je vraiment besoin pour être bien ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1304,7 +1304,7 @@ Résultat : aujourd'hui, la plupart de ces langues sont fragiles. Certaines ne s
 Pourtant, un mouvement inverse existe. Des écoles proposent un enseignement dans ces langues, et de jeunes parents choisissent d'y inscrire leurs enfants. Des chanteurs, des écrivains les font vivre autrement.
 
 Sauver une langue n'est jamais facile, car il ne suffit pas de l'étudier : il faut qu'elle soit parlée au quotidien. Mais tant que des gens y tiennent, rien n'est vraiment perdu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1325,7 +1325,7 @@ L'agriculture, l'industrie et les villes en consomment d'énormes quantités. Il
 Réduire le gaspillage est possible à tous les niveaux : réparer les fuites, arroser moins, choisir des cultures adaptées au climat.
 
 Il est encore temps d'agir, mais à condition de prendre le problème au sérieux dès maintenant. L'eau paraît ordinaire justement parce qu'elle est essentielle ; c'est peut-être pour cela qu'on la protège trop peu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1346,7 +1346,7 @@ Elle a aussi un avantage que d'autres activités n'ont pas : on peut l'intégrer
 Marcher offre enfin un temps rare : celui où l'on ne fait rien d'autre que réfléchir, ou simplement observer ce qui nous entoure.
 
 Il n'est donc pas nécessaire de courir un marathon pour prendre soin de soi. Parfois, il suffit de marcher.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1373,7 +1373,7 @@ Alors, elle marche. Elle entend une voix : « Camille ! Attends-moi ! » C'est H
 Ils marchent ensemble. Ils parlent de l'école et du week-end. Ils arrivent à l'école à l'heure.
 
 Camille sourit. Une panne de bus, ce n'est pas toujours une mauvaise nouvelle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1398,7 +1398,7 @@ Mais le samedi, c'est notre moment. Julie me montre ses dessins. Ensuite, elle d
 Le soir, nous parlons dans le noir. Julie raconte sa journée. Moi, je raconte mon école. Nous rions doucement.
 
 Julie est ma sœur, mais c'est aussi ma meilleure amie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1423,7 +1423,7 @@ L'après-midi, nous marchons jusqu'à la ferme du voisin. Il a trois chevaux. Je
 Le soir, il faut partir. Ma grand-mère nous donne des légumes du jardin. « À dimanche prochain ! » dit-elle.
 
 Dans la voiture, je dors un peu. Le dimanche chez mes grands-parents, c'est mon jour préféré.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1448,7 +1448,7 @@ Samedi dernier, j'ai trouvé un magasin de thé. Sur les murs, il y a des boîte
 Pourquoi j'aime le thé ? Ma grand-mère buvait du thé tous les jours, à cinq heures. Petite, je buvais une tasse avec elle. Le thé a le goût de ces moments.
 
 Ce soir, il pleut. Je prends une tasse de thé, un livre, une couverture. Le bonheur, parfois, c'est simple.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1471,7 +1471,7 @@ Après le marché, je vais au supermarché pour le lait, les œufs, le riz. À l
 Je rentre à la maison avec mes sacs lourds. Je range tout. Je regarde ma liste et là… oh non. Le pain ! J'ai encore oublié le pain.
 
 Je retourne à la boulangerie. La boulangère rit : « Comme vendredi dernier ? » Oui. Une baguette, s'il vous plaît.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1498,7 +1498,7 @@ J'ai un visiteur : un petit oiseau gris. Il vient presque tous les matins. Je me
 Le soir, en été, je dîne dehors. Le ciel devient rose, puis bleu foncé.
 
 Mon balcon est petit. Mais le bonheur n'a pas besoin de beaucoup de place.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1523,7 +1523,7 @@ Chacun mange sa part lentement. Attention aux dents, la fève est dure !
 Soudain, Léo crie : « J'ai quelque chose ! » C'est la fève ! Léo est le roi. Il met la couronne. Elle est trop grande, mais il est très fier.
 
 Vive le roi Léo, et vive la galette !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1548,7 +1548,7 @@ Ensuite, c'est mon moment préféré : le chocolat chaud. La dame me donne une g
 Devant l'église, des enfants chantent des chansons de Noël. Une petite fille chante très fort et pas très bien, mais tout le monde sourit.
 
 Nous rentrons à pied. Vivement décembre prochain !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1575,7 +1575,7 @@ Maman commence à chanter. Ma sœur chante avec elle. Moi aussi ! Et puis papa c
 La chanson finit. Trois minutes de bonheur.
 
 Ma sœur me regarde et sourit. Le voyage n'est plus ennuyeux. Dans deux heures, nous serons à la mer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1600,7 +1600,7 @@ Aujourd'hui, le match est serré. Thomas gagne, puis moi. Nous courons partout. 
 Et puis, la pluie tombe ! En cinq minutes, le court est mouillé. Fin du match.
 
 « Match nul ? » demande Thomas. « Match nul », je réponds. Nous rions sous la pluie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1625,7 +1625,7 @@ Il y a les autres coureurs du matin. Nous ne connaissons pas nos noms, mais nous
 Après la course, je prends une douche chaude et un bon petit-déjeuner.
 
 Au travail, mes collègues arrivent fatigués. Moi, je suis en forme. Le sport du matin, c'est mon secret.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1652,7 +1652,7 @@ Soudain, maman s'arrête. « Regardez ! » Sur un rocher, il y a une marmotte. E
 Une heure de marche encore, et nous arrivons en haut. La vue est incroyable. On voit toute la vallée et un lac bleu.
 
 Le soir, j'ai mal aux jambes. Mais dans ma tête, je vois encore la vue du sommet. Je veux recommencer demain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1677,7 +1677,7 @@ Ma mère m'appelle pour le goûter. Je réponds : « Cinq minutes ! » La maison
 Le soir, le morceau de biscuit n'est plus là.
 
 Les fourmis sont toutes petites. Mais ensemble, elles sont très fortes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1706,7 +1706,7 @@ Ensuite, bataille de boules de neige ! Une boule arrive dans mon cou. C'est froi
 À midi, nous rentrons, mouillés et heureux. Maman prépare un chocolat chaud.
 
 La neige, c'est le plus beau cadeau de l'hiver.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1731,7 +1731,7 @@ En juin, les tomates sont vertes. En juillet, elles deviennent rouges. La premi�
 Ce soir, je prépare une grande salade avec mes légumes. Toute ma famille mange mon travail. « C'est délicieux ! » dit ma femme.
 
 Madame Petit a raison. Du soleil, de l'eau, de la patience, et un peu d'amour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1756,7 +1756,7 @@ Mais ce matin, c'est différent. Marc sonne à ma porte. « Une lettre pour vous
 J'ouvre la lettre avec un café. Emma raconte sa nouvelle vie, son travail, la neige. Elle écrit : « Réponds-moi avec une vraie lettre. »
 
 Cet après-midi, j'achète du papier et un timbre. Une vraie lettre, ça fait du bien. Merci, Emma. Et merci, Marc.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1783,7 +1783,7 @@ Max n'est pas parfait. Il mange parfois mes chaussettes. Il a peur de l'aspirate
 Le soir, Max dort dans son panier, à côté de mon lit. Parfois, il rêve : ses pattes bougent.
 
 Max ne parle pas. Mais quand il pose sa tête sur mes genoux, je comprends tout. Max est mon meilleur ami.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1808,7 +1808,7 @@ Les plats arrivent. Ma pizza sent très bon. Je mange tout. Papa goûte les pât
 À la fin, Giovanni arrive avec un tiramisu et une bougie. Tout le restaurant chante « Joyeux anniversaire » ! Maman est très heureuse.
 
 Nous rentrons à pied dans la nuit. « Bonne soirée ? » demande papa. Maman sourit : « La meilleure. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1841,7 +1841,7 @@ Ton meilleur ami pour toujours,
 Louis
 
 P.S. : J'envoie une photo de la plage. Regarde bien la bouée jaune !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1868,7 +1868,7 @@ Ma fille remplit ses poches : des marrons bruns, une feuille dorée, une plume g
 L'air est frais. Je porte mon premier pull de l'année.
 
 Aujourd'hui, le parc est en fête. L'automne est un artiste.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1893,7 +1893,7 @@ Je me suis assis sur un banc, furieux. Le prochain train partait dans une heure.
 Cette dame s'appelait Jeanne. Elle allait voir sa petite-fille à Lyon. Nous avons parlé de tout, et l'heure est passée très vite. Dans le train, nous avons voyagé ensemble.
 
 Mon rendez-vous s'est bien passé. Depuis ce jour, je prépare mes affaires la veille. Mais je pense parfois à Jeanne : un train raté n'est pas toujours une catastrophe. Parfois, c'est une rencontre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1918,7 +1918,7 @@ Le huitième jour, une surprise : Gribouille est monté sur le canapé, à côt�
 Aujourd'hui, un mois plus tard, Gribouille dort sur mon lit et il m'attend derrière la porte le soir. Quand je rentre du travail, il court vers moi en miaulant.
 
 Mon appartement n'est plus calme et vide. Il est vivant. Merci, Gribouille.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1943,7 +1943,7 @@ Ensuite, nous avons parlé de l'école, du travail, des vacances d'été. À la 
 Vers dix heures, la lumière est revenue d'un coup. Et vous savez quoi ? Nous avons été presque déçus. Nous avons fini notre partie de cartes avant d'éteindre la télévision.
 
 Depuis hier, nous avons décidé une chose : une soirée sans écrans par semaine. C'est peut-être la meilleure panne de notre vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1970,7 +1970,7 @@ Et ma tarte ? Un succès total ! « C'est la meilleure tarte de la soirée », a
 Nous avons mangé, parlé et ri jusqu'à minuit. J'ai appris que mon voisin de palier s'appelle Karim et qu'il adore le football, comme moi. Nous allons regarder le prochain match ensemble.
 
 Avant, je disais juste bonjour à mes voisins. Maintenant, je connais leurs prénoms et leurs histoires. Il a suffi d'une soirée et d'une tarte aux pommes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -1995,7 +1995,7 @@ Au vide-grenier, il faut négocier. C'est le jeu ! Un vendeur demandait dix euro
 À midi, je suis rentré avec mes trésors : le livre, la lampe, et un pull presque neuf pour deux euros.
 
 Ce soir, la lampe est sur mon bureau. Un objet neuf n'a pas d'histoire. Un objet ancien en a mille. C'est pour ça que j'aime les vide-greniers.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2022,7 +2022,7 @@ Pendant une chanson douce, je me suis allongé sur la couverture, les étoiles a
 Le concert a fini vers onze heures. Nous sommes rentrés à pied, la tête pleine de musique.
 
 Cet été, le groupe revient. Cette fois, c'est moi qui apporte le gâteau au citron.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2051,7 +2051,7 @@ Ensuite, les feuilles tombent et l'arbre reste nu tout l'hiver.
 Chloé a ramassé une feuille rouge et une feuille jaune. « Alors l'automne, ce n'est pas triste, a-t-elle dit. C'est l'arbre qui va dormir. »
 
 C'est exactement ça. Et au printemps, le réveil sera magnifique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2076,7 +2076,7 @@ Ensuite, l'eau de pluie entre dans la terre, retrouve les rivières, et les rivi
 Léo a regardé la pluie avec d'autres yeux. « Alors la pluie, c'est de la mer qui voyage. »
 
 Et maintenant, les crêpes. Promis, c'est promis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2099,7 +2099,7 @@ Le voyage est incroyable et dangereux. Certains oiseaux volent des milliers de k
 Mais le plus étonnant, c'est le retour. Au printemps, les hirondelles reviennent, et souvent elles retrouvent exactement le même nid que l'année d'avant ! Sans carte, sans téléphone. Les scientifiques pensent qu'elles utilisent le soleil, les étoiles et le champ magnétique de la Terre.
 
 Alors au printemps, quand les premières hirondelles arrivent dans votre ciel, pensez à leur voyage. Ces petits oiseaux de vingt grammes reviennent d'Afrique, et ils sont peut-être nés sous votre toit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2126,7 +2126,7 @@ Le mois dernier, le grand moment est arrivé : j'ai traversé tout le parc sans 
 Je ne serai jamais un champion. Je tombe encore, mais chaque samedi, je progresse un peu.
 
 Il n'y a pas d'âge pour apprendre. Il y a juste des genoux à plier et un peu de courage à trouver.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2151,7 +2151,7 @@ Maintenant, le mardi soir est mon moment préféré de la semaine. Dans la salle
 La danse m'a aussi changé ailleurs. Je me tiens plus droit et j'ose un peu plus. Au mariage de mon cousin, le mois dernier, j'ai dansé toute la soirée. Avant, je restais assis près du buffet.
 
 Merci, Nadia. Au fait, je te dois toujours un restaurant. C'est moi qui invite.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2178,7 +2178,7 @@ Pendant ce temps, Emma et moi avons ouvert le sac du pique-nique en avance. Les 
 Ce pneu à plat nous a offert la plus belle pause de la journée : une heure au bord de l'eau, sans horaire et sans écran.
 
 Sur le chemin du retour, Lucas a déclaré : « La prochaine fois, on va jusqu'au pont ! » D'accord, champion.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2199,7 +2199,7 @@ Un soir, Marc m'a proposé : « On boit un café et on parle ? » Nous avons dis
 Une feuille de papier a tout changé. Et petit à petit, nous sommes devenus amis. Le dimanche, nous cuisinons ensemble. Marc m'a appris sa recette de lasagnes, et il m'a même accompagné chez le médecin quand j'étais malade.
 
 Le mois dernier, ma mère est venue dîner. En partant, elle m'a dit : « Tu as trouvé un bon colocataire. » Non, maman. J'ai trouvé mieux : un ami.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2226,7 +2226,7 @@ Le soir, j'ai remarqué une chose bizarre : la journée m'a semblé longue et pl
 Dimanche matin, j'ai rallumé le téléphone. Verdict : vingt-trois messages, et aucun n'était urgent.
 
 Depuis, j'ai gardé une règle : le samedi matin, le téléphone reste dans le tiroir jusqu'à midi. C'est un bon début.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2251,7 +2251,7 @@ Après le repas, chacun a trouvé son bonheur. Marc et Karim ont joué aux carte
 L'après-midi a glissé doucement vers le soir. Vers sept heures, l'air est devenu frais et nous avons rangé les affaires.
 
 Coût de cette journée parfaite : quelques euros chacun. Le bonheur n'est pas une question d'argent. C'est une question de couverture, d'amis et de soleil.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2276,7 +2276,7 @@ Après le château, nous avons visité les jardins. Maman a pris cent photos. Pa
 À la boutique, Inès a acheté un livre sur les châteaux de la Loire. Notre Inès, qui déteste l'histoire ! Dans la voiture, elle a lu tout le trajet.
 
 Ce soir-là, papa m'a fait un clin d'œil. L'histoire n'est pas ennuyeuse. Elle est mal racontée, parfois. Merci, monsieur Perrin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2301,7 +2301,7 @@ Dans le bac, une armée invisible travaille : des vers de terre, des insectes, d
 Après plusieurs mois, la magie était là : une belle terre noire, douce et riche. Les jardiniers l'appellent « l'or noir ». Au printemps, nous l'avons donnée à nos tomates. Résultat : des tomates délicieuses, et une poubelle qui a maigri d'un tiers !
 
 Nos épluchures nourrissent le jardin, et le jardin nous nourrit. La boucle est bouclée, comme dit la maîtresse de Camille.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2326,7 +2326,7 @@ Premier appel : le bureau. Rien. Deuxième appel : la boulangerie. « Des clés 
 Vingt minutes plus tard, le serveur me donne mes clés avec un grand sourire. « Ça arrive tous les jours, vous savez. » Je lui laisse un bon pourboire.
 
 Aujourd'hui, j'ai installé un crochet rouge près de ma porte. Maintenant, les clés ont une maison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2351,7 +2351,7 @@ Et puis, en mai, le voyage. Séville, enfin. Dans un café, j'ai commandé en es
 Je fais encore beaucoup d'erreurs. La semaine dernière, j'ai dit à Carmen que j'avais « mangé une porte » au lieu d'une soupe. Elle en rit encore. Mais les erreurs ne sont pas l'ennemi. Le silence, oui.
 
 Année deux : objectif Andalousie, version longue. Et peut-être, après, l'italien ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2378,7 +2378,7 @@ Nous avons perdu de trois points. Mon tir de la victoire a tourné sur le cercle
 Et puis, comme tous les jeudis, vainqueurs et vaincus sont allés au café d'en face. Une heure de rires et de « la semaine prochaine, on vous détruit ».
 
 Nous jouons au basket, officiellement. En vérité, nous entretenons une amitié. Le jeudi soir, ça compte plus que le score.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2403,7 +2403,7 @@ Il y a enfin les bonnes surprises. Léa, ma colocataire, est devenue une amie pr
 Ma mère a fini par venir déjeuner chez nous. En partant, elle m'a glissé : « C'est vrai qu'il est bien, cet appartement. Et ils sont gentils, tes colocataires. » Venant d'elle, c'est une victoire totale.
 
 La colocation à trente ans n'est pas une régression. C'est parfois, tout simplement, une manière plus intelligente — et plus chaleureuse — d'habiter la ville.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2430,7 +2430,7 @@ Certains s'inquiètent : à force d'avoir les oreilles occupées, ne perdons-nou
 Si vous n'avez jamais essayé, le mode d'emploi est simple : choisissez un sujet qui vous passionne, cherchez, écoutez. Le premier épisode est rarement le bon ; le troisième, souvent, vous accroche.
 
 La radio n'est pas morte. Elle s'est glissée dans nos poches, et elle ne s'est jamais aussi bien portée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2455,7 +2455,7 @@ Faut-il s'inquiéter de tout cela ? Un peu, peut-être. Les soirées entières a
 La solution n'est certainement pas d'arrêter les séries, qui comptent parmi les grandes créations de notre époque. Elle est plus modeste : décider avant de commencer combien d'épisodes on regardera. Et parfois, avoir le courage héroïque d'éteindre au milieu du suspense.
 
 Le personnage principal survivra jusqu'à demain. Nous aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2480,7 +2480,7 @@ Il faut enfin rappeler que nous sommes très inégaux devant la caféine. Certai
 En résumé : si vous aimez le café, buvez-le sans culpabilité, de préférence avant le milieu de l'après-midi, et sans dépasser ce qui vous convient. Méfiez-vous des gros titres, dans un sens comme dans l'autre.
 
 Et rappelez-vous que le meilleur café reste celui qu'on prend le temps de savourer — idéalement avec quelqu'un.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2507,7 +2507,7 @@ Il existe bien sûr des exceptions. Les personnes âgées sentent moins la soif 
 Mais pour les autres, inutile de transporter partout une bouteille géante ni de compter ses verres avec angoisse. Buvez quand vous avez soif, mangez des fruits et des légumes, et faites confiance à votre corps.
 
 Il fait ce métier depuis très longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2534,7 +2534,7 @@ Tout le monde, dira-t-on, n'a pas une forêt à sa porte. C'est vrai, mais l'eff
 Nous avons passé l'essentiel de notre histoire au milieu des arbres. Y retourner une heure par semaine, ce n'est pas fuir le monde moderne.
 
 C'est simplement rentrer un moment à la maison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2561,7 +2561,7 @@ Un an plus tard, le bilan dépasse tout ce que j'espérais. Je cours quarante-ci
 Si vous êtes dans la situation qui était la mienne, voici ce que j'aurais aimé entendre plus tôt. Commencez plus petit que votre fierté ne le voudrait. Visez la régularité, pas la performance : deux séances tenues valent mieux que cinq séances rêvées. Attendez-vous à un creux de motivation vers la troisième semaine — il passe. Et trouvez un plaisir dans l'activité elle-même, sinon vous ne durerez pas.
 
 Le corps pardonne étonnamment bien les années d'abandon. Il demande seulement qu'on revienne vers lui avec patience.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2588,7 +2588,7 @@ J'ajouterai un aveu : courir seul m'a réconcilié avec la lenteur. Sans témoin
 Je ne dis pas que le groupe n'a pas ses joies — l'émulation, les encouragements, la troisième mi-temps au café. Il m'arrive d'y goûter avec plaisir.
 
 Mais si vous n'avez jamais couru seul, sans musique, sans compagnon et sans objectif, essayez une fois. Vous découvrirez peut-être, comme moi, que ce rendez-vous avec soi-même est le plus fidèle de tous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2613,7 +2613,7 @@ Il faut pourtant signaler un paradoxe. La facilité de la revente en ligne pouss
 La vraie question reste donc la même qu'avant : ai-je besoin de ce vêtement, et vais-je vraiment le porter ?
 
 Si la réponse est oui, alors la seconde main est une double bonne affaire : pour le budget, et pour la planète. Et si l'on y prend du plaisir en plus, où est le problème ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2640,7 +2640,7 @@ Que retenir de tout cela, concrètement ? D'abord, que la saison compte plus que
 Ensuite, que le contenu de l'assiette pèse plus que son origine. Réduire un peu la viande a plus d'effet sur le climat que n'importe quelle chasse aux kilomètres.
 
 Manger local reste une belle idée — pour le goût, pour les producteurs, pour le plaisir du marché. Il faut juste lui ajouter un calendrier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2667,7 +2667,7 @@ Le dernier soir, dans le même type de restaurant qu'au premier jour, j'ai deman
 Voyager seul ne m'a pas seulement fait visiter le Portugal. Cela m'a présenté quelqu'un que je connaissais mal : moi-même. Je suis rentré différent — un peu plus libre, un peu plus ouvert.
 
 Mes amis me demandent déjà où nous partons l'année prochaine. Je ne leur ai pas encore dit que j'hésite à repartir seul.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2692,7 +2692,7 @@ Il faut cependant rester honnête sur les limites. Nos animaux ne comprennent pa
 Mais est-ce si important ? Mon chien ne comprend pas mes phrases ; il comprend mes soupirs, mes silences, ma joie et ma fatigue. La communication ne passe pas toujours par les mots.
 
 Hier soir, sur le canapé, la question ne se posait même pas. Il avait très bien compris.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2719,7 +2719,7 @@ Alors, que faire — ou plutôt, que ne pas faire ? J'ai commencé un petit exer
 Je ne dis pas qu'il faut s'ennuyer toute la journée. Je dis qu'un peu de vide, dans une vie trop pleine, n'est pas du temps perdu.
 
 C'est peut-être le temps le mieux employé de la journée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2748,7 +2748,7 @@ Enfin — et ce fut la vraie surprise — les gens l'acceptent très bien. Perso
 Je dis encore oui souvent. Aider les autres reste un plaisir. Mais c'est devenu une décision, plus un réflexe.
 
 Et mes samedis, parfois, sont enfin à moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2771,7 +2771,7 @@ Mais le plus fascinant reste la contagion. Vous le savez déjà : voir quelqu'un
 Un geste vieux de millions d'années, présent avant la naissance, contagieux par simple lecture, et toujours mystérieux : le bâillement est une belle leçon de modestie pour la science.
 
 Alors, combien de fois avez-vous bâillé en lisant ceci ? Ne vous excusez pas. C'est la preuve que vous êtes humain — et probablement quelqu'un d'empathique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2794,7 +2794,7 @@ La troisième leçon est la plus précieuse : le gratuit. Privé de cinéma, de 
 Aujourd'hui, ma situation est confortable, et je ne romantise pas la pauvreté : les fins de mois angoissées, les soins dentaires repoussés, je m'en souviens aussi. Mais ces années m'ont appris à séparer deux questions que la publicité s'efforce de mélanger : en ai-je envie, ou en ai-je besoin ?
 
 L'envie passe. Le besoin, lui, est étonnamment petit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2817,7 +2817,7 @@ J'ai un exemple à la maison. L'an dernier, nous avons instauré le « vendredi 
 Il serait faux d'opposer brutalement écrans et plateaux : beaucoup de joueurs aiment les deux, et d'excellents jeux vidéo se jouent aussi ensemble. Mais le succès des jeux de société envoie un signal clair sur notre époque.
 
 La technologie nous a tout donné, sauf une chose : une bonne raison de nous asseoir autour d'une table, face à face, pendant une heure. Il a suffi d'une boîte en carton.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2842,7 +2842,7 @@ Le mois dernier, poussé par ma voisine — soixante-dix ans et un mollet d'acie
 Moralité : méfiez-vous des sports qui font sourire. Ce sont souvent ceux qui durent. Et si vous croisez un groupe de marcheurs à bâtons dans votre parc, ne souriez pas trop vite.
 
 Dans un mois, ce sera peut-être vous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2867,7 +2867,7 @@ La parade est connue : des protéines et des fibres. Un œuf, un yaourt nature, 
 Alors, repas le plus important de la journée ? Disons plutôt : un repas comme les autres — ni sacré, ni obligatoire, mais qui mérite mieux que du sucre en boîte colorée.
 
 Le plus important, au fond, c'est peut-être simplement de commencer la journée sans se mentir sur ce qu'il y a dans le bol.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2892,7 +2892,7 @@ Et puis il y a la relecture. C'est le cadeau différé du journal. Relire un mar
 Si l'envie vous prend, le mode d'emploi tient en trois règles. Un carnet qui vous plaît. Un moment fixe — le soir, au lit, fonctionne bien. Et aucune exigence : deux lignes suffisent, les jours vides ont droit à « rien à signaler ».
 
 C'est tout. Le reste — le calme, l'attention, la mémoire — vient tout seul, page après page.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2915,7 +2915,7 @@ Il y a plus. Consulter sans cesse un écran a un coût caché. Chaque interrupti
 Reste enfin ce que l'argument utilitaire oublie tout à fait : certains savoirs ne servent à rien, et c'est précisément leur valeur. Un poème appris à l'enfance nous accompagne toute la vie, revient un soir de tristesse ou de bonheur, nous relie à ceux qui l'ont su avant nous. Le savoir n'est pas qu'un outil ; il est aussi une compagnie, une culture partagée, une part de nous-mêmes qu'aucun écran ne remplacera.
 
 La bonne question n'est donc pas « mémoire ou réflexion ? » — fausse opposition —, mais « que vaut-il la peine de savoir par cœur ? ». À cette question, chaque époque doit répondre à nouveau. La nôtre aurait tort de répondre « rien ».`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2938,7 +2938,7 @@ Ces découvertes éclairent les dégâts du manque de sommeil, longtemps sous-es
 Et pourtant — et c'est là que l'humilité s'impose —, l'essentiel nous échappe encore. Nul ne sait vraiment pourquoi nous rêvons, ni à quoi servent ces récits absurdes que notre esprit fabrique chaque nuit. Les hypothèses abondent, aucune ne fait l'unanimité. Au cœur de l'expérience la plus universelle qui soit, un mystère demeure intact.
 
 Ce que la science établit clairement, en revanche, c'est ceci : dormir n'est pas s'absenter du monde. C'est accomplir, dans l'ombre, un travail sans lequel la veille elle-même deviendrait impossible.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2961,7 +2961,7 @@ Il ne s'agit pas de nier tout problème. La circulation, l'anonymat des villes, 
 Reste, sous les formes changeantes, le principe : ce mouvement par lequel je reconnais l'autre, je tiens compte de son existence, je lui témoigne qu'il compte. Ce principe, lui, ne date d'aucune époque et n'appartient à aucune. Il est le ciment discret de toute vie commune.
 
 Nos petits-enfants, un jour, jugeront nos manières dépassées et pleureront la politesse de « leur temps » — c'est-à-dire le nôtre. Ils auront tort, comme nous. Et la politesse, elle, continuera son chemin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -2984,7 +2984,7 @@ Les conséquences dépassent de loin la curiosité de laboratoire. La justice, l
 Faut-il alors désespérer de notre mémoire, la tenir pour un tissu d'inventions ? Ce serait exagérer dans l'autre sens. Pour l'essentiel, elle nous sert fidèlement : elle retient le sens, les grandes lignes, ce qui compte pour agir. Elle sacrifie l'exactitude des détails, mais cette « infidélité » a peut-être un rôle utile — une mémoire souple, qui réorganise sans cesse, s'adapte mieux qu'un enregistrement figé.
 
 La leçon n'est donc pas la méfiance, mais la modestie. La prochaine fois que vous serez absolument certain d'un souvenir, rappelez-vous que cette certitude même ne prouve rien. Votre mémoire est une conteuse de talent. Elle ne cherche pas à vous tromper ; elle fait seulement son métier, qui n'a jamais été de dire toute la vérité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3009,7 +3009,7 @@ Se tromperait-il pourtant, celui qui conclurait qu'il faut tout faire lentement 
 Au fond, la vraie richesse n'est peut-être pas de faire beaucoup, mais de vivre pleinement le peu qui compte. Ralentir, ce n'est pas perdre son temps.
 
 C'est refuser de laisser sa vie filer sans l'avoir habitée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3032,7 +3032,7 @@ Face à cela, des réponses s'esquissent, encore hésitantes. Certaines villes l
 Mais l'action des villes ne dispense pas d'une réflexion plus personnelle. Chacun de nous, en tant que voyageur, dispose d'une marge. Faut-il vraiment se rendre au même endroit que tout le monde, au même moment ? Faut-il réduire une région à ses trois sites les plus photographiés, qu'on « fait » en une journée avant de repartir ? Voyager hors saison, s'écarter des foules, rester plus longtemps au même endroit, s'intéresser aux lieux moins célèbres qui n'attendent que d'être aimés : autant de façons de continuer à découvrir le monde sans participer à sa dégradation.
 
 Le tourisme de masse nous place devant une question inconfortable mais salutaire. Aimer un lieu, est-ce s'y précipiter avec la foule ? Ou est-ce, parfois, savoir le visiter autrement — voire renoncer, pour qu'il demeure ce que nous étions venus chercher ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3057,7 +3057,7 @@ Mais il faut se garder d'un malentendu. Le silence dont il est ici question n'es
 Nous ne renoncerons pas aux villes, ni au commerce joyeux des voix, des rires et de la musique, qui font aussi le prix de la vie. Mais reconnaître la valeur du silence, lui ménager une place — quelques minutes, un lieu, un moment —, ce n'est pas fuir le monde.
 
 C'est simplement cesser de laisser le bruit décider à notre place de l'état de notre corps et de notre esprit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3082,7 +3082,7 @@ Sur le corps, ses effets sont réels, quoique parfois exagérés par la mode du 
 Beaucoup de questions demeurent ouvertes, et le rire garde une part de mystère que la science n'a pas dissipée. Mais peut-être n'est-il pas nécessaire de tout expliquer. Savoir que ce son étrange qui nous échappe est, au fond, l'un de nos plus vieux moyens de dire « nous sommes ensemble » suffit à le regarder autrement.
 
 La prochaine fois que vous rirez avec quelqu'un, songez-y un instant : vous ne réagissez pas seulement à quelque chose de drôle. Vous accomplissez, sans le savoir, un geste de lien vieux comme l'humanité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3107,7 +3107,7 @@ Il ne s'agit pas de prêcher le désengagement ni de mépriser l'ambition, qui a
 Peut-être faudrait-il, pour commencer, changer nos questions. Demander à un inconnu, non plus « que faites-vous ? », mais « qu'est-ce qui vous passionne ? », « comment allez-vous ? ». On découvrirait des personnes, là où l'on ne recueillait que des fonctions.
 
 Et l'on se rappellerait, au passage, que nous ne sommes pas ce que nous faisons pour gagner notre vie. Nous sommes ce que nous faisons de notre vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3132,7 +3132,7 @@ La voiture électrique est ainsi un progrès conditionnel : elle sera réellemen
 Reste une question plus dérangeante, que l'engouement pour la voiture électrique permet commodément d'éviter. Et si le vrai problème n'était pas le type de moteur, mais le nombre de voitures ? Remplacer une à une des centaines de millions de voitures thermiques par des électriques, c'est perpétuer un modèle fondé sur l'automobile individuelle, avec ses embouteillages, son espace confisqué, ses ressources englouties. Développer les transports en commun, le vélo, les villes où l'on peut vivre sans voiture : voilà des réponses souvent plus efficaces, mais moins séduisantes, car elles ne se vendent pas en concession.
 
 La voiture électrique mérite donc sa place — à condition de ne pas la prendre pour ce qu'elle n'est pas : la fin du problème. Elle en est, au mieux, une partie de la solution.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3157,7 +3157,7 @@ Le piège n'est donc pas de ressentir de la nostalgie, mais de s'y laisser enfer
 La sagesse consiste, ici comme souvent, dans la mesure et le discernement. Savourer les souvenirs heureux sans oublier qu'ils sont embellis. Puiser dans le passé de la douceur et de la force, non un jugement contre le présent. Se souvenir que nos propres « bons vieux temps » furent, sur le moment, un présent inquiet et imparfait — exactement comme aujourd'hui.
 
 Et se rappeler enfin ceci : dans quelques années, ce présent que nous jugeons si terne deviendra peut-être, à son tour, le « bon vieux temps » que nous regretterons. Autant, tant qu'il est là, essayer de l'habiter.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3182,7 +3182,7 @@ Il faut aussi replacer l'écran dans l'ensemble d'une vie d'enfant. Le problème
 Enfin, l'exemple pèse plus que les règles. Difficile de convaincre un adolescent de lever les yeux de son téléphone quand ses parents ont le nez sur le leur à table. Les enfants imitent ce que nous faisons, non ce que nous disons.
 
 La réponse raisonnable n'est donc ni la panique ni l'indifférence, mais l'attention. Non pas « combien d'heures ? » comme seule boussole, mais « quel contenu, à quel âge, en remplacement de quoi, et sous quel regard ? ». C'est plus exigeant qu'une règle simple. C'est aussi beaucoup plus juste.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3205,7 +3205,7 @@ Pourquoi cet essoufflement ? Deux mécanismes bien humains l'expliquent. Le prem
 Que reste-t-il, alors, une fois l'aisance atteinte ? Les recherches convergent vers des réponses étrangement anciennes : la qualité des relations humaines, la santé, le sentiment d'être utile, le temps dont on dispose pour ce qu'on aime. Fait révélateur, l'argent lui-même rend plus heureux quand on l'emploie à ces fins-là — acheter du temps plutôt que des objets, offrir plutôt que thésauriser, vivre des expériences plutôt qu'accumuler des choses. Ce n'est pas la somme qui compte, mais l'usage.
 
 La formule populaire méritait donc mieux qu'un oui ou un non. L'argent ne fait pas le bonheur, mais son absence fait le malheur ; il est un formidable moyen, et un piètre but. Le confondre avec la fin plutôt qu'avec l'outil, c'est courir toute sa vie après un horizon qui recule à mesure qu'on avance. Le bonheur, décidément, campe ailleurs — non pas plus loin sur la même route, mais sur un tout autre chemin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3228,7 +3228,7 @@ Ce constat pourrait accabler. Il a pourtant une contrepartie encourageante, prop
 Il serait naïf de croire que ces initiatives individuelles suffiront seules, sans politiques ambitieuses ni changements agricoles profonds ; il serait tout aussi faux de les juger dérisoires. Elles ont une double vertu : un effet concret sur le vivant local, et un effet sur nous-mêmes. Car en accueillant la vie sauvage chez soi, on réapprend à la regarder, à s'y attacher, à s'en sentir responsable. On cesse de considérer la nature comme un décor lointain à préserver « là-bas » pour la retrouver comme une présence quotidienne, à nos côtés.
 
 Protéger la biodiversité n'est donc pas seulement l'affaire de grands espaces protégés et de sommets internationaux. C'est aussi, et peut-être d'abord, une affaire de tous les jours, qui commence dans un carré de pelouse laissé en paix.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3253,7 +3253,7 @@ Vieillir, c'est donc un art fait d'attention à deux choses : entretenir son cor
 Une dernière vérité s'impose, un peu vertigineuse : la façon dont nous vieillirons ne se décide pas à soixante-dix ans, mais tout au long de l'existence. Les amitiés qu'on entretient, les passions qu'on nourrit, le rapport qu'on établit avec le temps qui passe — tout cela prépare, lentement, la personne âgée que nous deviendrons. Bien vieillir ne commence pas dans la vieillesse.
 
 Cela commence maintenant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3276,7 +3276,7 @@ Il y a enfin une dimension plus intime, que l'on avoue moins volontiers. Le voya
 Reste alors une question dérangeante. Si le voyage vaut d'abord par le déplacement intérieur qu'il produit, faut-il vraiment aller au bout du monde pour l'obtenir ? Certains l'ont noté avec malice : on peut parcourir des continents sans rien voir, enfermé dans ses habitudes et son téléphone, et l'on peut au contraire redécouvrir sa propre ville avec un regard neuf. Le vrai voyage n'est peut-être pas affaire de kilomètres, mais de disponibilité — cette capacité à s'ouvrir, à s'étonner, à se laisser déplacer.
 
 « On voyage pour voir le monde », dit-on. C'est vrai, mais incomplet. On voyage aussi, et surtout, pour se voir soi-même sous un autre éclairage, et pour rentrer — car il faut rentrer — un peu différent de celui qui était parti.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3299,7 +3299,7 @@ Ces découvertes ont des prolongements concrets, au-delà de la curiosité. On u
 Faut-il, pour autant, tout expliquer ? Bien des mystères résistent encore, et il n'est pas certain que la science élucide un jour entièrement pourquoi une suite de sons peut nous bouleverser. Mais il y a là une belle leçon : comprendre les mécanismes n'abolit pas l'émotion. Savoir comment fonctionne l'arc-en-ciel n'en diminue pas la beauté ; connaître les circuits de la musique n'ôte rien au frisson qu'elle procure.
 
 Nous n'avons pas besoin de comprendre la musique pour qu'elle nous touche. Mais découvrir à quel point elle est inscrite au plus profond de notre cerveau ajoute, à ce vieux compagnon de l'humanité, une raison de plus de s'émerveiller.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3324,7 +3324,7 @@ Faut-il en conclure qu'il faudrait tout cacher, se retrancher dans le secret, ba
 Il y a d'ailleurs, dans le fait de garder pour soi certains moments, non pas un manque de sincérité, mais peut-être le contraire. Ne pas tout exposer, c'est reconnaître qu'un instant vécu pleinement se suffit à lui-même, qu'il n'a pas besoin d'un public pour être réel. Les moments les plus précieux sont parfois ceux que nous ne partageons pas — ceux que nous nous contentons de vivre.
 
 Dans un monde qui nous pousse à tout montrer, décider de garder une part de sa vie pour soi et pour ses proches n'est pas se cacher. C'est protéger ce qui a le plus de valeur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3347,7 +3347,7 @@ Mais au-delà des trajectoires individuelles, ce mouvement dit quelque chose de 
 Il n'est d'ailleurs pas nécessaire de tout quitter pour l'écouter. Un balcon planté, un jardin partagé, quelques heures de travail manuel, un peu de temps rendu aux choses lentes et concrètes : chacun peut, à sa mesure, répondre à cette soif sans bouleverser sa vie.
 
 Le retour à la terre, pris au sérieux, n'est pas seulement le choix de quelques-uns. C'est un signal que nous adresse notre époque, et qui mérite qu'on l'écoute : celui d'un besoin de réel que le progrès, à force d'abstraction, a laissé sans réponse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3370,7 +3370,7 @@ Reste une troisième dimension, plus difficile à chiffrer, et pourtant peut-êt
 Faut-il pour autant tout accepter au nom de l'espace ? Non, et l'objection garde sa part de vérité comme garde-fou. Les milliardaires qui s'offrent des promenades orbitales, la militarisation de l'espace, la course aux drapeaux plantés pour la seule gloire : tout cela est légitimement critiquable. La question n'est pas « l'espace, oui ou non ? », mais « quel espace, pour quoi, et à quel prix ? ». Une exploration au service de la connaissance et du bien commun n'a rien à voir avec le tourisme spatial des très riches.
 
 L'espace ne résoudra pas la faim ni la pauvreté, et ceux qui l'opposent aux urgences terrestres ont raison de refuser qu'il serve d'échappatoire. Mais bien conçu, il n'est pas l'ennemi de ces causes : il en est parfois l'allié inattendu. Continuer à lever les yeux vers le ciel, à condition de ne jamais oublier la Terre sous nos pieds, n'est pas une fuite. C'est fidèle à ce que nous sommes depuis toujours : une espèce qui, pour avancer, a toujours eu besoin d'un horizon.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3391,7 +3391,7 @@ Les magasins restent ouverts. Les habitants peuvent marcher dans la rue sans voi
 Le bus ne passe pas par la rue samedi. Il s'arrête devant la gare.
 
 La rue ouvre encore aux voitures dimanche matin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3412,7 +3412,7 @@ Les vêtements doivent être propres. Les habitants peuvent donner un vêtement 
 Mardi matin, beaucoup de personnes arrivent avec des sacs. Une femme donne deux manteaux pour enfants.
 
 L'association donne ensuite les vêtements aux familles du quartier. "Merci pour votre aide", dit le responsable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3433,7 +3433,7 @@ Le nouvel arrêt est devant la pharmacie. Il est à cinq minutes à pied de l'é
 Le matin, un agent aide les élèves. Il montre le chemin aux parents.
 
 Vendredi soir, les travaux sont finis. Lundi, le bus revient devant l'école.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3454,7 +3454,7 @@ La mairie a aidé le médecin à trouver un local. Des travaux ont commencé lun
 Le médecin recevra les premiers patients au début du mois prochain. Les rendez-vous pourront se prendre par téléphone ou sur internet.
 
 Pour les habitants, c'est une bonne nouvelle. "On attendait cela depuis longtemps", dit une mère devant l'école.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3475,7 +3475,7 @@ Chaque vendredi, une classe pèse la nourriture jetée. Les chiffres sont écrit
 La première semaine, la cantine a jeté trente kilos de moins. Le chef est content, mais il veut continuer les efforts.
 
 Les élèves proposent aussi des idées. Certains demandent plus de fruits coupés, d'autres veulent choisir entre deux légumes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3496,7 +3496,7 @@ La nouvelle résidence n'est pas luxueuse. Les chambres sont petites, mais le lo
 Pour les associations étudiantes, l'ouverture va dans le bon sens, mais elle ne suffira pas. Elles rappellent que des centaines de jeunes cherchent encore une solution avant la rentrée.
 
 La ville promet déjà un deuxième projet dans deux ans. En attendant, les premiers habitants arrivent avec leurs cartons et beaucoup d'espoir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3517,7 +3517,7 @@ Le but n'est pas seulement de rendre la ville plus agréable. Il s'agit aussi de
 Les commerçants observent déjà une différence. Quand il y a de l'ombre, les passants s'arrêtent davantage devant les vitrines. Certains demandent donc que le test devienne permanent.
 
 Un bilan sera publié à la fin du mois de septembre. Si les résultats sont bons, d'autres rues seront transformées l'année prochaine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3538,7 +3538,7 @@ Les propriétaires des bars répondent qu'ils font déjà attention. Ils rappell
 La mairie cherche donc un compromis. Elle propose plus de contrôles après minuit, mais aussi une campagne d'information pour les clients. Des affiches demanderont de respecter le voisinage en quittant les bars.
 
 Une nouvelle réunion aura lieu dans deux mois. Les habitants espèrent des changements rapides, sans faire disparaître l'ambiance du centre-ville.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3559,7 +3559,7 @@ Le cinéma espère attirer un public plus large sans supprimer les séances du s
 La première séance avancée proposera un film français récent, suivi d'une courte discussion. Si la salle est assez remplie, le cinéma gardera ce nouvel horaire.
 
 Pour la mairie, l'enjeu est important. Le cinéma n'est pas seulement un commerce : c'est aussi un lieu de rencontre au centre de la ville.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3580,7 +3580,7 @@ L'association propose donc une matinée simple. Des bénévoles présenteront le
 Le projet répond à un problème discret : l'isolement. Certaines personnes déménagent pour un travail ou des études et ne connaissent personne. Quelques échanges peuvent déjà changer leur première impression.
 
 Si la rencontre fonctionne, elle sera organisée le premier samedi de chaque mois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3599,7 +3599,7 @@ Sur le papier, le plan paraît consensuel. Personne ne défend sérieusement l'i
 Les associations écologistes saluent donc l'orientation générale, tout en demandant des moyens plus clairs. Elles craignent que les communes les plus riches avancent vite, tandis que les autres restent avec de bonnes intentions. Plusieurs maires ruraux posent aussi la question du transport : dans un village, se rendre à un atelier de réparation peut nécessiter une voiture.
 
 La région promet un premier bilan dans un an. Ce sera le moment de voir si le plan modifie réellement les pratiques ou s'il reste une ambition correcte, mais trop générale.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3618,7 +3618,7 @@ La ville envisage d'encadrer davantage les loyers dans les zones les plus tendue
 Les représentants des propriétaires répondent que l'encadrement risque de décourager la location. Certains préféreront vendre ou laisser leur logement vide plutôt que de louer à un prix jugé trop bas. Selon eux, le vrai problème est le manque de logements disponibles.
 
 Entre ces deux positions, la mairie cherche une solution mixte : construire davantage, limiter les abus les plus visibles et réserver une partie des nouveaux programmes à des loyers accessibles. Reste à savoir si ces outils agiront assez vite pour les habitants déjà menacés de départ.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3637,7 +3637,7 @@ L'objectif affiché est de rompre avec une succession de cours trop courts, où 
 Les premières réactions sont contrastées. Certains élèves apprécient de travailler autrement et disent mieux comprendre l'utilité de ce qu'ils apprennent. D'autres trouvent les matinées plus lourdes, car plusieurs matières exigeantes s'enchaînent. Des parents s'inquiètent également pour les élèves qui ont déjà des difficultés d'organisation.
 
 Le proviseur insiste sur le caractère expérimental du dispositif. Rien ne sera généralisé avant un bilan complet, avec les résultats scolaires, l'absentéisme et le ressenti des élèves. Cette prudence est nécessaire : changer le rythme scolaire touche à la fois au savoir, à la fatigue et à l'égalité entre élèves.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3656,7 +3656,7 @@ L'initiative répond à une urgence bien identifiée : lors des épisodes de cha
 C'est là que le débat commence. Des habitants demandent plus d'arbres devant les écoles et les arrêts de bus. D'autres craignent de perdre des places pour leur voiture ou de voir les trottoirs encombrés. Les commerçants, eux, veulent être associés au choix des rues, car les travaux peuvent gêner leur activité.
 
 La consultation ne réglera pas toutes les tensions, mais elle peut rendre les arbitrages plus visibles. Adapter la ville au climat suppose des choix concrets, parfois modestes, rarement neutres. Un arbre planté est aussi une décision sur la façon de partager la rue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3675,7 +3675,7 @@ Face à cette situation, certains commerçants misent sur ce qu'internet offre m
 La mairie tente aussi d'agir. Elle finance des animations le samedi et aide les boutiques à améliorer leur présence en ligne. Mais les commerçants rappellent que les événements ponctuels ne suffisent pas si le stationnement, les transports et les loyers rendent le centre moins accessible.
 
 Le débat dépasse donc la nostalgie des rues commerçantes d'autrefois. Il pose une question très actuelle : que veut-on trouver au centre d'une ville ? Si la réponse est seulement "des achats", les plateformes seront souvent plus efficaces. Si la réponse inclut le conseil, la rencontre et une certaine idée de la vie locale, alors les commerces ont encore un rôle à jouer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3698,7 +3698,7 @@ Le travail n'était pas toujours facile. Certains jours, il y avait beaucoup de 
 À la fin du mois, j'ai reçu mon premier salaire. Ce n'était pas beaucoup, mais j'étais fière : c'était mon argent, gagné par mon travail. J'ai invité mes collègues à boire un café pour les remercier.
 
 Aujourd'hui, je ne travaille plus dans cette librairie. Mais je n'oublierai jamais ce premier emploi. J'y ai appris une chose importante : un bon patron et des collègues gentils changent tout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3721,7 +3721,7 @@ Le jour de l'entretien, je suis arrivée en avance. La recruteuse m'a posé beau
 À la fin, elle m'a demandé si j'avais des questions. J'en avais préparé deux ; cela montre qu'on s'intéresse vraiment à l'emploi.
 
 Une semaine plus tard, bonne nouvelle : j'étais embauchée ! Depuis, j'ai passé d'autres entretiens, et je suis toujours un peu nerveuse. Mais j'ai compris que ce n'est pas un examen : c'est simplement une conversation entre deux personnes qui cherchent à se connaître.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3744,7 +3744,7 @@ Bien sûr, je ne suis pas seule. Grâce à l'écran, je reste en contact avec me
 Le vrai danger du télétravail, c'est l'équilibre. Quand le travail est à la maison, on ne s'arrête jamais vraiment. Le soir, je suis parfois tentée de répondre à un dernier message. Alors j'ai pris une décision : à dix-huit heures, je ferme mon ordinateur et je ne le rouvre pas.
 
 Le télétravail a des avantages et des inconvénients. J'aime la liberté qu'il me donne, mais j'ai aussi besoin de voir mes collègues en vrai. C'est pour ça que l'équilibre entre les deux me convient parfaitement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3765,7 +3765,7 @@ Thomas rêvait depuis longtemps de travailler le bois. Il a donc décidé de se 
 Aujourd'hui, Thomas gagne un peu moins d'argent qu'avant, et ses journées sont plus fatigantes physiquement. Pourtant, il n'a jamais été aussi heureux. Le soir, il regarde les meubles qu'il a fabriqués de ses mains, et il ressent une vraie fierté.
 
 Bien sûr, se reconvertir n'est pas possible pour tout le monde, et ce n'est pas toujours une réussite. Mais l'histoire de Thomas pose une bonne question : vaut-il mieux un emploi confortable qui nous ennuie, ou un métier plus difficile qui a du sens pour nous ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3786,7 +3786,7 @@ Le grand avantage, c'est la liberté. On n'a pas de patron qui surveille chaque 
 Mais il y a un prix à payer. Ces emplois sont souvent précaires : le salaire n'est pas garanti, et il change d'une semaine à l'autre. Il n'y a pas de contrat stable, pas de sécurité en cas de maladie. Quand on est indépendant, personne ne s'occupe de nous.
 
 L'économie des petits boulots pose donc une question difficile pour l'avenir du travail. Faut-il préférer la liberté et la flexibilité, ou la sécurité d'un emploi classique ? La réponse n'est pas simple. Ce qui est sûr, c'est que le monde du travail change vite, et que ces petits boulots ne sont plus si petits.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3809,7 +3809,7 @@ Ensuite, il faut préparer la nuit. Le soir, on évite le café et les écrans, 
 Enfin, il ne faut pas rester au lit quand on ne dort pas. Si le sommeil ne vient pas après vingt minutes, il vaut mieux se lever, lire quelques pages, puis retourner se coucher.
 
 Bien dormir n'est pas un luxe : c'est un besoin. Une bonne nuit donne de l'énergie pour toute la journée. Prendre soin de son sommeil, c'est prendre soin de tout le reste.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3830,7 +3830,7 @@ La deuxième règle concerne le sucre. Nous mangeons aujourd'hui beaucoup trop d
 La troisième règle est peut-être la plus importante : cuisiner soi-même. Quand on prépare son repas, on sait ce qu'on mange. Pas besoin d'être un grand chef : une soupe, une salade, un plat de pâtes avec des légumes, c'est simple et équilibré.
 
 Manger sainement ne veut pas dire se priver de tout. On peut se faire plaisir de temps en temps. L'important, c'est l'habitude de tous les jours. Le corps, comme une voiture, fonctionne mieux avec un bon carburant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3851,7 +3851,7 @@ La bonne nouvelle, c'est qu'un petit effort régulier vaut mieux qu'un gros effo
 Bouger n'est pas seulement bon pour le corps ; c'est aussi bon pour le moral. Après une marche, même courte, on se sent souvent plus calme et de meilleure humeur. La fatigue mentale de la journée diminue.
 
 Le secret, c'est de choisir une activité qu'on aime : marcher, danser, faire du vélo, jardiner. Quand une activité est un plaisir, on la répète sans effort. Et c'est la régularité, plus que l'intensité, qui garde le corps en bonne santé toute la vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3874,7 +3874,7 @@ Il faut aussi savoir faire des pauses. On croit souvent qu'il faut travailler sa
 Enfin, le stress et le sommeil sont liés. Une personne fatiguée supporte moins bien la pression. Protéger ses nuits, c'est donc aussi protéger son calme.
 
 On ne peut pas supprimer tout le stress de sa vie. Mais on peut apprendre à mieux vivre avec, en écoutant son corps et en s'accordant, chaque jour, quelques vrais moments de calme.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3895,7 +3895,7 @@ Après l'examen, le médecin explique ce qu'on a et propose un traitement. Souve
 Mais le rôle du médecin n'est pas seulement de soigner les malades. Il est aussi de les aider à rester en bonne santé. C'est ce qu'on appelle la prévention. Une visite régulière permet de repérer un problème avant qu'il devienne grave. « Mieux vaut prévenir que guérir », dit le proverbe, et c'est particulièrement vrai pour la santé.
 
 Prendre soin de son corps, c'est donc aussi accepter de consulter, sans attendre le dernier moment. Le médecin n'est pas un ennemi : c'est un allié pour une vie plus longue et en meilleure santé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3918,7 +3918,7 @@ Une fois ces chiffres sous les yeux, on peut agir. Il ne s'agit pas de tout supp
 Un bon budget prévoit aussi une part pour économiser, même petite. Mettre de côté un peu chaque mois, avant même de dépenser, change tout. Cette réserve permet de faire face à un imprévu — une machine qui casse, une facture surprise — sans paniquer ni s'endetter.
 
 Il serait naïf de croire qu'un budget résout tous les problèmes : quand les revenus sont trop faibles, aucun tableau ne suffit. Mais pour la plupart des gens, le vrai problème n'est pas de gagner plus ; c'est de savoir où va l'argent. Et cette clarté, curieusement, ne rend pas la vie plus triste. Elle apporte quelque chose de précieux : la tranquillité d'esprit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3939,7 +3939,7 @@ Résister à ce piège ne demande pas une volonté de fer, mais quelques habitud
 Une autre clé est de se poser la bonne question. Non pas « est-ce que je peux me le permettre ? », mais « quelle valeur cet achat va-t-il vraiment m'apporter ? ». Certaines dépenses, même importantes, enrichissent la vie : un voyage, un livre, un repas partagé. D'autres, une fois l'excitation retombée, ne laissent qu'un objet de plus dans un placard.
 
 Économiser intelligemment, ce n'est donc pas dire non à tout. C'est dire oui à ce qui compte, et non à ce qui ne compte pas. Vu ainsi, l'épargne cesse d'être une privation pour devenir une forme de liberté : celle de ne plus dépenser par réflexe, et de garder son argent pour ce qui a, pour nous, une vraie valeur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3960,7 +3960,7 @@ Le danger vient de la facilité. Comme on ne paie pas tout de suite, on a l'impr
 Le crédit n'est pas mauvais en soi. Emprunter peut avoir du sens pour un projet important et durable, comme un logement, ou en cas de nécessité réelle. Mais il faut toujours se poser la même question avant de signer : est-ce que j'emprunte pour un vrai besoin, ou simplement parce que je n'ai pas la patience d'économiser ?
 
 La règle la plus sage tient en une phrase : ne jamais s'endetter pour un plaisir passager. Le canapé sera vieux bien avant que la dette soit remboursée, et l'on continuera de payer un objet dont on ne profite même plus. Face à la publicité qui pousse à consommer tout de suite, la vieille habitude d'attendre et d'économiser reste, souvent, la plus rentable — et la plus tranquille.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -3981,7 +3981,7 @@ Pourtant, ce tabou a un coût, et il ne profite pas toujours à ceux qui se tais
 Le silence pèse aussi dans la vie privée. Combien de couples évitent le sujet jusqu'au jour où une dette cachée ou des dépenses secrètes provoquent une vraie crise ? Combien de familles se déchirent, à la mort d'un proche, faute d'avoir jamais abordé calmement ces questions ? Ne pas parler d'argent ne fait pas disparaître les problèmes d'argent ; cela les laisse simplement grandir dans l'ombre.
 
 Il ne s'agit pas, bien sûr, d'afficher son compte en banque à la première rencontre. Mais il serait sain de pouvoir parler d'argent plus librement avec ceux qui comptent : sa famille, son partenaire, ses collègues proches. Aborder le sujet avec honnêteté demande un peu de courage et beaucoup de confiance. En retour, cela évite bien des malentendus, et souvent bien des injustices. Le vrai tabou, au fond, n'est peut-être pas l'argent lui-même, mais la peur de ce qu'il révèle de nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4002,7 +4002,7 @@ Pourtant, nous faisons rarement ce calcul. Nous acceptons de longs trajets pour 
 Cela ne signifie pas qu'il faille tout payer pour ne rien faire, ni que le temps libre soit toujours mieux employé que le travail. Réparer soi-même un objet peut être un plaisir ; la lenteur choisie a sa valeur. La vraie question n'est pas « quel est le prix ? », mais « qu'est-ce que cet argent m'achète en temps et en tranquillité, et ce temps, qu'en ferai-je ? ».
 
 Apprendre à voir l'argent comme un moyen d'acheter du temps, et non seulement des choses, change la façon de le dépenser. On cesse de courir après le dernier objet à la mode pour se demander, plus simplement : de quoi ai-je besoin pour vivre les journées que je veux vivre ? À cette question, l'argent n'est plus un but, mais un outil — et le temps qu'il libère devient la vraie richesse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4025,7 +4025,7 @@ Une hausse de un ou deux degrés peut sembler minuscule ; après tout, la tempé
 Sur les causes, la communauté scientifique est aujourd'hui quasi unanime : ce réchauffement rapide est bien d'origine humaine. Le débat sérieux ne porte plus sur le « si », mais sur le « combien » et sur ce que nous décidons de faire.
 
 Comprendre cela ne règle rien à soi seul, et peut même donner le vertige devant l'ampleur du problème. Mais c'est un point de départ nécessaire. On ne peut pas agir intelligemment face à une menace qu'on ne comprend pas. Et la bonne nouvelle, c'est que les mêmes activités qui ont causé le problème peuvent, transformées, faire partie de la solution.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4046,7 +4046,7 @@ C'est pourquoi les spécialistes rappellent une vérité inconfortable : le meil
 Que peut-on faire, concrètement ? À l'échelle individuelle, quelques habitudes réduisent nettement nos déchets : refuser les emballages inutiles, acheter en vrac, réparer au lieu de remplacer, éviter les objets à usage unique. Ces gestes, seuls, ne sauveront pas la planète — il ne faut pas se raconter d'histoires. Mais ils changent notre regard, et ils envoient un signal.
 
 Car le vrai levier est plus large. Ce sont les entreprises qui décident des emballages, et les gouvernements qui fixent les règles. Un citoyen qui réduit ses déchets est aussi un consommateur et un électeur qui pousse, à sa mesure, dans la bonne direction. La montagne de nos déchets n'est pas une fatalité : elle est le résultat de milliards de petites décisions, et ces décisions peuvent changer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4067,7 +4067,7 @@ Face à ce double problème, les énergies renouvelables se développent. Comme 
 La transition d'un modèle à l'autre est l'un des plus grands défis de notre époque. Elle est compliquée, coûteuse, et personne ne prétend qu'elle sera simple. Changer la façon dont un pays entier produit son énergie ne se fait pas en quelques années.
 
 Cette question dépasse largement nos gestes individuels : éteindre une lumière est une bonne habitude, mais l'essentiel se joue à l'échelle des pays et des entreprises, dans les choix qu'ils font aujourd'hui. Pourtant, comprendre d'où vient notre énergie n'est pas inutile. Un citoyen informé fait de meilleurs choix, soutient de meilleures décisions, et cesse de croire que l'électricité vient, comme par magie, de la prise au mur. Derrière chaque interrupteur, il y a un choix de société.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4088,7 +4088,7 @@ Consommer autrement ne veut pas dire ne plus rien acheter, ce qui serait irréal
 Ce changement se heurte pourtant à une force puissante : le marketing, qui travaille sans relâche à nous faire désirer du neuf. La mode elle-même repose sur cette logique : ce qui était parfait l'an dernier devient soudain « dépassé ». Résister à cette pression demande une certaine liberté d'esprit — celle de ne pas laisser la publicité décider de nos besoins.
 
 Consommer de façon plus responsable n'est pas un sacrifice, et ce n'est pas non plus la solution unique au problème écologique. Mais c'est un choix qui a du sens, et qui a un avantage inattendu : il allège aussi nos vies. Moins d'objets, c'est moins de désordre, moins de dépenses, moins de choses à ranger et à entretenir. En prenant soin de la planète, on finit souvent par prendre soin de soi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4109,7 +4109,7 @@ Faut-il en conclure que nos gestes ne servent à rien ? Ce serait aller trop vit
 Le vrai piège serait de choisir entre les deux. Opposer l'action individuelle et l'action collective est une fausse alternative, et une alternative qui paralyse : ceux qui attendent tout des gouvernements ne font rien eux-mêmes, et ceux qui misent tout sur les petits gestes se découragent en découvrant leurs limites. Or les deux se nourrissent l'un l'autre. Un citoyen qui agit dans sa vie est aussi celui qui vote, qui parle autour de lui, qui pousse les entreprises et les États à bouger.
 
 Alors, un seul geste suffit-il ? Non, évidemment. Mais poser la question ainsi, c'est déjà se tromper. Le geste individuel n'a jamais eu vocation à suffire ; il est un point de départ, pas une fin. Il compte non pas parce qu'il sauve la planète à lui seul, mais parce qu'il nous garde en mouvement, et parce que rien de grand, à l'échelle collective, n'a jamais commencé sans que des individus, un jour, décident d'agir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4138,7 +4138,7 @@ Julien sort de l'appartement. Il court dans la rue. Le bus part à sept heures q
 Il arrive à l'arrêt. Le bus est là ! Julien monte dans le bus. Il est content.
 
 Sa journée commence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4169,7 +4169,7 @@ L'après-midi, Julien est un peu fatigué. Il boit un autre café.
 « Bonne soirée ! » répond Julien.
 
 Il prend le bus. Il rentre à la maison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4202,7 +4202,7 @@ Ils parlent pendant vingt minutes.
 Il va dans sa chambre. Il lit trois pages de son livre. Ses yeux se ferment.
 
 Julien dort. Demain, le réveil sonne encore à six heures et demie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4231,7 +4231,7 @@ Le soir, ses amis viennent chez lui. Ils mangent une pizza. Ils regardent un fil
 Ses amis partent. Julien est fatigué, mais content.
 
 Demain, c'est dimanche. Il ne travaille pas non plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4262,7 +4262,7 @@ Mais Sophie sourit. Elle lui donne un café chaud. « Tu as l'air fatigué », d
 Julien boit son café. Il est encore mouillé, mais il se sent mieux.
 
 Ce soir, il va acheter un nouveau réveil.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4295,7 +4295,7 @@ Nous parlons beaucoup à table. Nous parlons de la semaine, du travail, de l'éc
 À quatre heures, nous sommes encore là. Le repas est fini, mais nous restons ensemble.
 
 C'est ça, le dimanche.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4326,7 +4326,7 @@ La soupe est prête. La cuisine sent très bon.
 Je mange ma soupe avec du pain et du fromage. C'est simple, mais c'est parfait pour un soir de pluie.
 
 Demain, il reste de la soupe pour le déjeuner.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4355,7 +4355,7 @@ Après le goûter, elle fait ses devoirs.
 Le goûter, ce n'est pas seulement de la nourriture. C'est un moment ensemble, chaque jour.
 
 Et le soir, Camille a encore faim pour le dîner !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4390,7 +4390,7 @@ Elle souffle la bougie. Elle ferme les yeux. Elle fait un vœu.
 « Qu'est-ce que tu demandes ? » je demande.
 
 « Je ne peux pas le dire ! » répond Alice.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4425,7 +4425,7 @@ Je mets mon omelette dans une assiette. Je mange avec le pain.
 C'est simple, mais c'est vraiment bon.
 
 Demain, je vais au supermarché. Promis !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4454,7 +4454,7 @@ Derrière l'école, il y a un parc. Il n'est pas grand, mais il est joli. Il y a
 Le dimanche matin, je marche dans le parc. Je rencontre souvent mes voisins.
 
 Mon quartier n'est pas célèbre. Mais ici, tout le monde se dit bonjour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4489,7 +4489,7 @@ Sur le chemin de la maison, je mange toujours un petit morceau de ma baguette.
 Ma mère dit : « Encore ! Tu manges toujours le pain avant la maison ! »
 
 C'est vrai. Mais c'est trop bon.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4532,7 +4532,7 @@ Elle part vers la boulangerie. Puis elle se retourne.
 « À gauche après la boulangerie, c'est ça ? »
 
 « C'est ça ! » je crie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4563,7 +4563,7 @@ Il y a aussi une grande salle de lecture. Des étudiants travaillent. Des person
 Le mercredi après-midi, c'est l'heure du conte pour les enfants. Ils écoutent des histoires, assis par terre.
 
 En hiver, la bibliothèque est pleine. Il fait chaud ici, et les livres ne coûtent rien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4594,7 +4594,7 @@ Le marché, c'est pour acheter, mais c'est aussi pour parler. Je rencontre des g
 À deux heures, la place est normale. Les voitures reviennent.
 
 Et il faut attendre mercredi prochain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4623,7 +4623,7 @@ Nous avons un chat, Moustache. Il dort toute la journée.
 Ma grand-mère habite dans la même rue. Elle vient dîner le mardi et le vendredi.
 
 Nous ne sommes pas une famille parfaite. Mais nous sommes ensemble.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4654,7 +4654,7 @@ Mais nous nous téléphonons souvent. Et le samedi, il vient toujours.
 Il y a des choses que je ne dis à personne. Sauf à Yanis.
 
 C'est ça, un meilleur ami : quelqu'un qui connaît tout de toi, et qui reste.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4693,7 +4693,7 @@ Et soudain, il sourit !
 Sarah dort trois heures par nuit. Elle est fatiguée.
 
 Mais quand elle regarde Léo, elle sourit aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4728,7 +4728,7 @@ Le soir, nous mangeons une pizza devant un film.
 À dix heures, Noah dort déjà. Emma bâille. Même Lucas est fatigué.
 
 Demain, ils repartent. La maison sera trop calme.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4767,7 +4767,7 @@ Je souris. Mon père chante mal aussi.
 Ma grand-mère remet la photo sur le mur.
 
 « Regarde bien », dit-elle. « Tu as ses yeux. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4796,7 +4796,7 @@ Le samedi, je vais parfois à un concert. J'aime être là, avec beaucoup de gen
 Je ne joue pas d'instrument. Je ne sais pas lire les notes.
 
 Mais pour écouter, pas besoin de savoir. Il faut seulement des oreilles.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4831,7 +4831,7 @@ Je dessine pendant une heure. Je ne parle pas. Le temps passe vite.
 Mais la pomme ? La pomme est bonne !
 
 Vincent sourit. « Vous voyez ? Vous progressez. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4868,7 +4868,7 @@ Vers dix heures et demie, je regarde ma mère. Elle dort ! Elle dort toujours pe
 À la fin, elle ouvre les yeux : « Il était très bien, ce film. »
 
 Nous rions encore.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4903,7 +4903,7 @@ Hier soir, je joue une chanson complète, sans erreur.
 Paul frappe à ma porte. J'ai peur. Mais non, il sourit.
 
 « C'était bien ! » dit-il. « Continue. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4938,7 +4938,7 @@ Nous jouons jusqu'à une heure du matin.
 Quand mes amis partent, ils reprennent leur téléphone.
 
 « Bizarre », dit Marc. « Je n'ai pas regardé l'heure. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -4969,7 +4969,7 @@ Mes collègues rient : « Encore le vélo ? Par ce temps ? »
 Oui. Encore le vélo.
 
 Le soir, je rentre à vélo aussi. Ça fait du bien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5006,7 +5006,7 @@ Un homme court : son train part dans une minute !
 Une gare, c'est un endroit d'arrivées et de départs.
 
 Mon train arrive. Je monte. Bon voyage à moi !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5045,7 +5045,7 @@ Le train arrive à Bordeaux.
 « Merci ! À vous aussi ! »
 
 Je ne connais pas son nom. Mais ce voyage était très agréable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5080,7 +5080,7 @@ L'année dernière, un homme propose de l'acheter.
 « Non merci », dit mon père.
 
 Il ne vend pas sa voiture. Je crois qu'il ne la vendra jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5117,7 +5117,7 @@ Je continue à marcher. Je regarde les gens, les magasins.
 Je rentre une heure plus tard que d'habitude.
 
 Mais je connais mieux ma ville qu'hier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5148,7 +5148,7 @@ Il y a aussi une petite plante verte. Elle s'appelle Georges. Oui, j'ai donné u
 Le soir, je ferme la porte, j'allume ma lampe et je lis.
 
 Ici, je suis tranquille. C'est mon petit monde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5183,7 +5183,7 @@ C'est la télécommande. Nous la cherchons depuis trois semaines.
 « C'est agréable, une maison propre », dit ma mère.
 
 C'est vrai. Mais dans une semaine, tout sera en désordre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5220,7 +5220,7 @@ Je recommence. Je perds une vis sous le lit. Je la cherche dix minutes.
 Deux heures plus tard, l'étagère est finie. Elle est droite. Elle est solide.
 
 Et je suis très fier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5251,7 +5251,7 @@ Les plantes changent une maison. L'air est meilleur. La pièce est plus jolie.
 Quand je rentre le soir, je regarde mes plantes. Une nouvelle feuille ? Une fleur ?
 
 Quelque chose grandit ici, doucement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5288,7 +5288,7 @@ Nous montons les meubles. Ma mère nettoie la cuisine.
 Le soir, nous partons. Ma mère pleure un peu dans la voiture.
 
 Elle m'envoie un message : « Ma première nuit ! J'ai un peu peur. Mais ça va. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5329,7 +5329,7 @@ Et Yanis ? Il sourit. « 3e B ! Nous sommes ensemble ! »
 La cloche sonne. Nous entrons dans la classe.
 
 Une nouvelle année commence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5366,7 +5366,7 @@ Soudain, l'histoire n'est plus dans les livres. Elle est vraie.
 Maintenant, je lis des livres d'histoire à la maison. Pour le plaisir.
 
 Un bon professeur change tout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5403,7 +5403,7 @@ Je reviens à la question 4. Et soudain, je comprends !
 Une semaine plus tard, elle rend les copies.
 
 J'ai quinze sur vingt. Mon meilleur résultat de l'année !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5438,7 +5438,7 @@ Je mange avec Yanis et deux amis. Nous parlons du contrôle de maths et du week-
 Le poisson n'est pas très bon. Mais le dessert est bon.
 
 Après le repas, nous allons dans la cour. Nous jouons au football jusqu'à la cloche.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5469,7 +5469,7 @@ Le troisième jour, nous marchons le long de la Seine.
 Dans le bus du retour, tout le monde dort. Même les professeurs.
 
 C'était un très bon voyage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5502,7 +5502,7 @@ Alors, avant de partir, je mange une pomme.
 Maintenant, je suis prêt. J'ai ma liste et je n'ai pas faim.
 
 Allons au supermarché !`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5539,7 +5539,7 @@ Je regarde ma liste : le savon ! J'oublie le savon. Je retourne dans l'autre ray
 Ça fait quarante-trois euros. Un peu plus que prévu.
 
 C'est la faute des biscuits.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5580,7 +5580,7 @@ Le moins cher n'est pas toujours le meilleur. Le plus cher non plus.
 Il faut regarder et comparer.
 
 Mes tomates sont excellentes. Ce soir, je fais une salade.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5617,7 +5617,7 @@ Mais il est confortable et chaud. Le prix ? Soixante-quinze euros. C'est correct
 Je réfléchis. Puis je décide : je le prends.
 
 Finalement, j'aime beaucoup le vert.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5654,7 +5654,7 @@ Le jour de l'anniversaire, ma mère ouvre le paquet. Elle regarde le livre longt
 « Tu parles toujours de tes plantes, maman. »
 
 Elle me serre très fort.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5689,7 +5689,7 @@ Chaque matin, je regarde par la fenêtre avant de m'habiller.
 Aujourd'hui ? Le ciel est gris, mais il ne pleut pas.
 
 Je prends quand même mon parapluie. On ne sait jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5722,7 +5722,7 @@ Nous mangeons dehors, dans le jardin, à neuf heures.
 La nuit est douce. Il y a des étoiles.
 
 Ces soirées d'été sont mes moments préférés de l'année.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5759,7 +5759,7 @@ Mon voisin sort aussi. « Quelle nuit ! » dit-il. « Vous avez dormi ? »
 Nous ramassons les feuilles ensemble.
 
 Ce soir, je ferme bien les volets.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5796,7 +5796,7 @@ Dans la rue, tout le monde marche vite. Les gens ont les mains dans les poches.
 Oui. C'est l'hiver.
 
 Ce soir, je fais une soupe.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5829,7 +5829,7 @@ Une dame me dit bonjour avec un grand sourire. En janvier, personne ne sourit da
 Le soir, à sept heures, il fait toujours jour.
 
 L'hiver était long. Le printemps est là.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5862,7 +5862,7 @@ Je les regarde avec mon café, derrière la fenêtre.
 Ma fille aime beaucoup ça aussi. Elle compte les oiseaux : « Un, deux, trois, quatre... »
 
 Au printemps, ils viennent moins. Mais en décembre, je remets des graines. Et ils reviennent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5901,7 +5901,7 @@ Les enfants ont un peu peur, puis ils rient.
 À la fin, nous achetons du fromage et des œufs.
 
 Dans la voiture, mon fils dit : « Je veux habiter dans une ferme. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5940,7 +5940,7 @@ Maintenant, c'est lui qui s'occupe de Bubulle. Chaque matin, il lui donne à man
 Une fois par semaine, nous nettoyons l'aquarium ensemble.
 
 Bubulle ne joue pas. C'est vrai. Mais mon fils lui parle tous les jours.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -5973,7 +5973,7 @@ Il lève la tête. Il me regarde. Nous nous regardons pendant cinq secondes.
 Puis il part en courant, sans bruit.
 
 Cinq secondes seulement. Mais je m'en souviendrai longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6008,7 +6008,7 @@ Le mois dernier, une famille cherche un chien calme. Ils choisissent Rex.
 Le jour de son départ, je suis triste et content en même temps.
 
 Rex a une maison maintenant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6045,7 +6045,7 @@ Tom trouve ça compliqué. « Deux ou trois ? Je ne sais jamais ! »
 Une fois, il tourne la tête au mauvais moment.
 
 Maintenant, il attend toujours une seconde. C'est plus sûr.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6082,7 +6082,7 @@ Un déjeuner du dimanche peut durer deux ou trois heures. On mange, mais surtout
 « En Angleterre, dit Tom, on mange en trente minutes. »
 
 « Alors reste ici », je réponds. « C'est plus agréable. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6119,7 +6119,7 @@ L'après-midi, les familles se promènent dans le parc.
 Tom achète sa lampe le lundi.
 
 Et maintenant, il aime bien les dimanches français. « On ne fait rien, dit-il. C'est reposant. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6152,7 +6152,7 @@ Sur les routes, c'est le contraire. Il y a des kilomètres de voitures.
 À la rentrée, en septembre, tout le monde revient. Les enfants racontent leurs vacances.
 
 Et huit semaines plus tard, ce sont déjà les vacances de la Toussaint.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6185,7 +6185,7 @@ En France, quand quelqu'un arrive, on demande : « Un café ? »
 Alors, le café ou le thé ?
 
 Chez moi, maintenant, il y a les deux. Et quand Tom vient, je fais du thé. Avec du lait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6222,7 +6222,7 @@ L'après-midi est passé très vite. J'ai répondu à quarante messages.
 Je suis rentrée chez moi à sept heures et demie. J'étais fatiguée, mais très contente.
 
 Ce soir-là, je me suis couchée à neuf heures.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6253,7 +6253,7 @@ Quand ils sont partis, j'ai fait la vaisselle et j'ai rangé un peu.
 Le soir, j'ai préparé mes affaires pour lundi. J'étais un peu triste : le week-end était fini.
 
 Mais j'étais reposée. Et ça, c'est le plus important.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6286,7 +6286,7 @@ J'ai dit non. Alors elle m'a invitée à dîner chez elle.
 Nous avons mangé une soupe et nous avons parlé pendant deux heures.
 
 Cinq ans plus tard, cette dame est toujours ma voisine. Nous dînons encore ensemble, une fois par mois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6315,7 +6315,7 @@ J'avais peur. Ma grand-mère m'a prise sur ses genoux. Nous avons regardé la pl
 L'orage a duré une heure. Après, le jardin sentait la terre mouillée.
 
 Ma grand-mère est morte il y a dix ans. Mais quand il pleut très fort, je pense toujours à cet après-midi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6350,7 +6350,7 @@ Nous avons discuté pendant une heure. Deux semaines plus tard, elle a embauché
 Aujourd'hui, mon travail me plaît de nouveau.
 
 J'ai gardé la lettre dans un tiroir. Elle me rappelle une leçon : il faut parler avant de partir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6383,7 +6383,7 @@ Nous avons mangé le tajine avec du pain. C'était délicieux, vraiment.
 J'ai envoyé un message à Aïcha : « Merci ! Je vais le refaire. »
 
 Elle a répondu : « La prochaine fois, viens le manger chez moi. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6416,7 +6416,7 @@ Ce midi, j'ai mangé une soupe de légumes et un poisson avec du riz. C'était s
 Quand je suis partie, Bruno est sorti de la cuisine pour dire au revoir.
 
 Dans un grand restaurant, ça n'arrive jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6451,7 +6451,7 @@ Quand nous sommes partis, il était minuit et demi.
 Dans la voiture, mon mari a dit : « Nous devons les inviter chez nous maintenant. »
 
 Il avait raison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6486,7 +6486,7 @@ C'était parfait. Vraiment parfait.
 Maintenant, j'y retourne chaque semaine. Le poissonnier me reconnaît et il me donne toujours une idée nouvelle.
 
 La semaine dernière, il m'a dit : « Vous voyez ? Ce n'était pas difficile. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6529,7 +6529,7 @@ Elle a sorti des bonbons de sa poche et elle les a posés dessus.
 « Voilà ! Maintenant il est beau. »
 
 Nous l'avons mangé. Et il était bon.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6568,7 +6568,7 @@ Enfin, la boulangerie. Mais quand je suis arrivée, il y avait un papier sur la 
 Il était une heure et quart. Trop tard !
 
 Cinq choses sur six. Pour le pain, ce sera demain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6605,7 +6605,7 @@ J'ai réfléchi. Deux ou trois semaines, c'était trop long pour l'anniversaire.
 Finalement, j'ai choisi l'express.
 
 Ma sœur a reçu le colis quatre jours plus tard. Elle m'a envoyé une photo : elle mangeait déjà les biscuits.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6644,7 +6644,7 @@ Dans la rue, j'étais un peu triste. Mais le soir, mon mari a dit : « Tu as l'a
 Le lundi, deux collègues m'ont fait des compliments.
 
 Finalement, j'aime beaucoup. Mais la prochaine fois, j'apporterai une photo.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6683,7 +6683,7 @@ Puis j'ai réfléchi et j'ai compris. Il y avait une enveloppe de la banque sur 
 Le conseiller a souri. « Ça arrive souvent, vous savez. »
 
 Le soir, j'ai ouvert l'enveloppe. Ma nouvelle carte était dedans.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6722,7 +6722,7 @@ Il m'a demandé une pièce d'identité et j'ai signé un papier.
 En partant, j'ai regardé encore les étagères.
 
 Toutes ces choses attendent quelqu'un.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6753,7 +6753,7 @@ Il avait raison, et ça m'a beaucoup aidé.
 À la fin du mois de juillet, j'ai reçu mon premier salaire : mille deux cents euros. J'ai regardé le papier pendant cinq minutes. C'était mon argent, gagné par mon travail.
 
 Ce job n'était pas mon rêve. Mais il m'a appris deux choses : la valeur de l'argent, et le respect pour ceux qui font ces métiers toute leur vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6790,7 +6790,7 @@ Elle a fait un petit signe de la tête.
 Elle a parlé pendant cinq minutes.
 
 Deux jours après, elle m'a appelé. Je commençais le samedi suivant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6821,7 +6821,7 @@ Deux jeunes étudiantes ont commencé à travailler avec moi. Elles m'appelaient
 Maintenant, je suis en deuxième année. Je travaille beaucoup et j'ai moins d'argent qu'avant.
 
 Mais le matin, je me lève sans effort.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6856,7 +6856,7 @@ Après ce jour, tout a changé. On m'a confié d'autres tâches, plus intéressa
 À la fin du stage, Nathalie m'a dit : « Envoie-moi ton CV quand tu auras fini tes études. »
 
 Deux ans plus tard, je l'ai fait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6893,7 +6893,7 @@ Bernard est parti à la retraite l'année dernière.
 Le mois dernier, une jeune femme a rejoint mon équipe. Elle avait l'air perdue en réunion.
 
 Je suis allée la voir. « Ça va ? Tu veux qu'on prenne quinze minutes demain matin ? »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6928,7 +6928,7 @@ Je n'ai rien supprimé d'autre. Je sors toujours avec mes amis.
 Hier, j'ai regardé mon compte : j'ai économisé cent trente euros ce mois-ci.
 
 Un cahier à deux euros m'a fait gagner cent trente euros.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6963,7 +6963,7 @@ J'ai réfléchi. « Peut-être pas. »
 Elle avait raison. Une chose pas chère qu'on ne porte pas coûte cher.
 
 La chemise est encore dans mon armoire, avec l'étiquette.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -6996,7 +6996,7 @@ Mais quand on trouve la bonne chose, c'est une vraie victoire.
 Le mois dernier, j'ai acheté un vélo pour soixante euros. Il roule parfaitement.
 
 Mes amis me demandent souvent : « Où as-tu trouvé ça ? »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7035,7 +7035,7 @@ Après trois mois, j'ai recommencé à acheter mon café dehors.
 Maintenant, j'ai une règle : pour tout achat de plus de cent euros, j'attends une semaine.
 
 Souvent, l'envie disparaît.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7066,7 +7066,7 @@ Il avait prévenu, alors ce n'était pas un problème.
 Il m'a tout remboursé en quatre mois au lieu de trois.
 
 Aujourd'hui, nous sommes toujours amis. Et je crois que nous le sommes restés justement parce que nous avons osé parler d'argent au début.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7099,7 +7099,7 @@ Puis nous avons fermé l'ordinateur, et j'ai remarqué quelque chose : nous éti
 Pendant les semaines suivantes, nous en avons parlé souvent. Mon mari a lu des choses sur la ville. Moi, j'ai fait une petite liste d'endroits à voir.
 
 Attendre fait partie du voyage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7138,7 +7138,7 @@ Nous avons suivi son conseil. Le restaurant était petit, plein d'habitants du q
 À quinze heures, notre chambre était prête. Elle donnait sur la rivière.
 
 Le meilleur guide, c'est souvent quelqu'un qui habite là.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7169,7 +7169,7 @@ Le soir, nous avons dîné en terrasse. J'avais mal aux pieds : nous avions marc
 Avant de dormir, mon mari a dit : « Je ne connaissais même pas le nom de cette ville il y a un mois. »
 
 Moi non plus. Et maintenant, je l'aime beaucoup.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7204,7 +7204,7 @@ Le train est finalement parti à vingt et une heures trente.
 Nous sommes rentrés chez nous à minuit, épuisés.
 
 Mais ce matin, je repense surtout à cette conversation dans la gare.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7243,7 +7243,7 @@ Mais quand je la regarde, je me souviens exactement de ce moment : la températu
 Je l'ai imprimée. Elle est maintenant sur le frigo.
 
 Les autres soixante photos, je ne les ai jamais rouvertes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7272,7 +7272,7 @@ Aucune de ces rencontres n'était prévue.
 Parfois, je pense à ça : si j'étais arrivée cinq minutes plus tard à la préfecture, je n'aurais jamais connu Léa.
 
 C'est un peu effrayant. Et c'est aussi très beau.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7307,7 +7307,7 @@ Nous nous sommes vues le mardi et nous avons parlé pendant trois heures.
 Elle avait raison sur une chose : j'organise trop, sans demander. Et moi, j'avais raison aussi.
 
 Nous avons appris qu'il ne faut pas laisser passer trois semaines.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7340,7 +7340,7 @@ Alors nous avons décidé quelque chose. Le dimanche matin, à dix heures pour m
 Nous le faisons depuis huit mois, presque chaque dimanche.
 
 Ce n'est pas comme avant. Mais notre amitié n'a pas disparu. Elle demande simplement plus d'efforts.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7375,7 +7375,7 @@ Puis, doucement, il a trouvé un travail. Et il a recommencé à rire.
 Un jour, il m'a dit : « Merci d'être resté. Beaucoup de gens ont disparu. »
 
 Je n'avais rien résolu. J'étais simplement là. C'était suffisant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7410,7 +7410,7 @@ L'année dernière, j'ai même eu une conversation avec mon père. Je lui ai dit
 Il est resté silencieux un moment. Puis il a répondu : « Personne ne m'a appris à faire ça. »
 
 Nous n'avons pas tout réparé ce jour-là. Mais nous avons commencé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7441,7 +7441,7 @@ La mairie a ouvert une salle climatisée. Beaucoup de gens y passaient l'après-
 Le septième jour, un orage est arrivé. La température est descendue de douze degrés en une heure.
 
 Les gens sont sortis sous la pluie. Certains applaudissaient.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7474,7 +7474,7 @@ Je ne connaissais pas la moitié de ces gens.
 L'électricité est revenue le soir, après dix-huit heures.
 
 Depuis cette tempête, nous nous disons tous bonjour dans la rue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7507,7 +7507,7 @@ Ma fille l'a regardée avec de grands yeux. « Des skis ? Pour aller à l'école
 Dans la voiture, ma fille était silencieuse. Puis elle a demandé : « Est-ce qu'il neigera encore quand je serai grande ? »
 
 Je n'ai pas su quoi répondre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7542,7 +7542,7 @@ Il a perdu presque toute sa récolte d'abricots. C'était la troisième fois en 
 Les agriculteurs essaient des solutions : des bougies entre les arbres, de grands ventilateurs, parfois de l'eau. Mais tout cela coûte cher et ne marche pas toujours.
 
 Cet été, les abricots ont été rares et chers au marché. Quand j'ai vu le prix, j'ai pensé à ces deux nuits d'avril.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7575,7 +7575,7 @@ Je ne suis pas scientifique. Je parle seulement de mon jardin. Mais je note ces 
 Mon petit-fils m'a demandé pourquoi je gardais ce vieux cahier.
 
 Je lui ai répondu : « Pour me souvenir de ce qui était normal avant. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7606,7 +7606,7 @@ Au-dessus de moi, il y a un homme d'une trentaine d'années. Je l'ai croisé tro
 Il y a aussi madame Renard, qui habite ici depuis vingt-huit ans et qui sait absolument tout.
 
 Ce qui m'a surprise, c'est que je me sens moins seule qu'avant. Dans ma maison, je pouvais passer une semaine sans parler à personne. Ici, c'est impossible.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7643,7 +7643,7 @@ Sa réaction m'a étonnée. Il est devenu tout rouge.
 Nous avons parlé dix minutes. Il a proposé un tapis épais et de finir avant vingt-deux heures.
 
 Depuis, presque plus de bruit. Trois semaines de colère, et il a suffi de dix minutes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7674,7 +7674,7 @@ Madame Renard voulait absolument le beige. Un autre voisin trouvait ça « trist
 À la fin, nous avons choisi le gris clair, par huit voix contre sept.
 
 En sortant, j'étais épuisée. Mais j'ai compris : dans un immeuble, personne ne décide seul, même pour une couleur de mur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7707,7 +7707,7 @@ Le quatrième jour, il est sorti de sous le lit. Le sixième jour, il est venu c
 Quand madame Lambert est rentrée, elle m'a apporté un cadeau.
 
 Depuis, nous prenons un café ensemble presque chaque semaine. Un chat a créé une amitié.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7738,7 +7738,7 @@ Chaque famille s'occupe d'un carré, mais nous arrosons tous ensemble.
 Cet été, nous avons récolté des tomates, des courgettes, des salades et beaucoup d'herbes.
 
 Mais le plus intéressant n'est pas les légumes. Avant, je connaissais trois voisins. Maintenant, j'en connais douze. Et madame Renard ne râle presque plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7771,7 +7771,7 @@ Ces trois jours ont été longs. J'ai dormi énormément, parfois douze heures p
 Le vendredi, je me sentais un peu mieux. Le lundi, j'ai pu retourner travailler.
 
 Ma collègue m'a dit : « Tu as bien fait de rester chez toi. La dernière fois, tu es venue malade et la moitié du bureau a été malade aussi. » Elle avait raison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7810,7 +7810,7 @@ Il m'a fait une piqûre, puis il a travaillé pendant quarante minutes. Ce n'ét
 En partant, il m'a dit une phrase que je n'ai pas oubliée : « Une dent qui fait mal ne guérit jamais toute seule. »
 
 Depuis, j'y vais deux fois par an.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7843,7 +7843,7 @@ Mais surtout, il m'a posé des questions sur ma vie quotidienne. Combien d'heure
 « Voilà le vrai problème », a-t-il dit. « Le carton était seulement la goutte d'eau. Votre dos est fragile parce qu'il ne bouge jamais. »
 
 Depuis, j'ai changé deux choses. Je me lève toutes les heures au bureau, et je marche vingt minutes chaque jour. Je n'ai plus mal au dos.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7876,7 +7876,7 @@ Après un mois, c'était plus facile. Après trois mois, il montait les escalier
 Cela fait maintenant quatorze mois.
 
 Il m'a dit récemment : « Les quatre premières fois, j'ai essayé tout seul. La cinquième fois, j'ai accepté d'être aidé. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7913,7 +7913,7 @@ Il ne m'a pas donné de médicament. Il m'a conseillé de voir mon médecin dans
 Je suis passée de six cafés à deux. Trois mois plus tard, ma tension était normale.
 
 Maintenant, je ne trouve plus cette visite inutile.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7948,7 +7948,7 @@ Mais une joueuse est venue me parler. Elle m'a dit qu'elle avait commencé deux 
 Je suis revenue la semaine suivante. Puis la suivante.
 
 Aujourd'hui, huit mois plus tard, je joue toujours mal. Mais je rate moins de balles, et le mardi soir est devenu un rendez-vous que je ne manque jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -7981,7 +7981,7 @@ Il y a eu un grand silence. Après, le match a continué, et c'était beaucoup p
 Léo a marqué un but. Son équipe a perdu quatre à deux.
 
 Dans la voiture, il m'a dit : « C'était bien aujourd'hui. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8012,7 +8012,7 @@ Le mois dernier, dans une brocante, j'ai trouvé un album que je cherchais depui
 Mes amis me disent parfois : « Tu peux tout écouter gratuitement sur internet. » C'est vrai. Mais ce n'est pas la même chose.
 
 Le dimanche soir, je mets un disque, et je ne fais rien d'autre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8045,7 +8045,7 @@ Après huit semaines, j'ai couru vingt minutes sans m'arrêter. Après quatre mo
 Aujourd'hui, je cours trois fois par semaine.
 
 Je ne suis pas rapide. Je ne fais pas de compétition. Mais je dors mieux et je suis plus calme. Ce qui a changé, ce n'est pas ma motivation : c'est ma patience.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8074,7 +8074,7 @@ Le mois dernier, nous avons lu un roman sur une famille. Pour moi, le personnage
 Personne n'a changé d'avis, et ce n'était pas le but.
 
 À la fin, la bibliothécaire nous dit toujours : « Il faut fermer ! » Alors nous continuons dehors, sur le trottoir, encore dix minutes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8107,7 +8107,7 @@ J'ai finalement acheté un téléphone reconditionné, c'est-à-dire un téléph
 Il a deux ans, mais il reçoit encore les mises à jour pendant trois ans.
 
 Mon ancien téléphone, je l'ai déposé dans un bac de recyclage. J'espère garder celui-ci six ans aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8140,7 +8140,7 @@ Il a fallu environ deux mois.
 Aujourd'hui, elle appelle ses petits-enfants en vidéo toute seule, elle envoie des photos et elle lit le journal en ligne.
 
 La semaine dernière, elle m'a appelée pour me montrer une chose que je ne savais pas faire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8173,7 +8173,7 @@ Les premiers jours ont été bizarres. Je regardais mon téléphone sans raison,
 Puis, après une semaine, quelque chose a changé. J'étais plus calme. Je lisais des pages entières sans m'arrêter.
 
 Je n'ai rien manqué d'important en six mois. Les nouvelles arrivent quand même. Elles attendent simplement que je vienne les chercher.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8208,7 +8208,7 @@ Mon père a raccroché. Il a appelé sa banque avec le numéro écrit sur sa car
 L'urgence, c'est l'arme principale de ces escrocs. Ils ne veulent pas qu'on réfléchisse.
 
 Depuis, mon père a une règle : il raccroche toujours, et il rappelle lui-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8237,7 +8237,7 @@ Le troisième problème était la solitude. Certains jours, je ne parlais à per
 Alors j'ai changé plusieurs choses. J'ai acheté un petit bureau d'occasion pour séparer le travail du repas. Je fais maintenant une « fausse sortie » : je marche vingt minutes avant de commencer et vingt minutes à la fin.
 
 Le télétravail n'est ni bon ni mauvais. Tout dépend des règles qu'on se donne.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8268,7 +8268,7 @@ Ensuite, j'ai laissé un coin du jardin sans le toucher, avec des feuilles et de
 Enfin, j'ai fait un petit trou en bas de ma clôture. Cela peut sembler étrange, mais les hérissons marchent un ou deux kilomètres par nuit. Si tous les jardins sont fermés, ils ne peuvent plus circuler.
 
 Cet été, j'ai vu le hérisson quatre fois. Un soir, il y en avait deux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8299,7 +8299,7 @@ Mes enfants, eux, ne voient rien de tout cela. Pour eux, cette forêt est normal
 C'est ce qui me trouble le plus : chaque génération pense que le monde qu'elle découvre est normal.
 
 Alors je leur raconte le ruisseau.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8330,7 +8330,7 @@ Enfin, j'ai mis une petite coupelle d'eau avec des cailloux, pour que les insect
 Les résultats ont été rapides. Dès le mois de juin, il y avait des abeilles chaque jour sur la lavande. En juillet, j'ai vu trois papillons différents.
 
 Ce n'est pas grand-chose. Mais le matin, avec mon café, je regarde mon balcon travailler.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8361,7 +8361,7 @@ Le vétérinaire nous a dit d'être patients : un chien âgé a une histoire, et
 Petit à petit, Oscar a changé de place. Il a quitté la porte pour le tapis du salon, puis pour le canapé.
 
 Aujourd'hui, il a neuf ans. Il marche lentement et il dort beaucoup. Mais chaque soir, il vient poser sa tête sur les genoux de ma fille.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8390,7 +8390,7 @@ La mer était grise et agitée, avec de hautes vagues bruyantes. Ce n'était pas
 À midi, nous avons trouvé le seul restaurant ouvert, avec seulement des habitants de la ville à l'intérieur.
 
 La patronne nous a dit : « Vous avez raison de venir maintenant. L'hiver, la mer est à nous. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8421,7 +8421,7 @@ Trois projets, c'est peu. Mais chacun a une date, et c'est nouveau pour moi.
 Ma sœur m'a demandé pourquoi « faire du sport » n'était pas sur la liste.
 
 J'ai répondu : « Parce que je le mets depuis dix ans. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8454,7 +8454,7 @@ Et je vais quitter mon quartier, où j'habite depuis onze ans. Je connais le bou
 La semaine prochaine, nous allons commencer à trier nos affaires.
 
 Nous sommes contents et inquiets en même temps. Je crois que c'est normal.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8485,7 +8485,7 @@ Il m'a raconté l'histoire d'un collègue parti à la retraite. Les six premiers
 Alors il a déjà pris une décision : il va faire du bénévolat deux matins par semaine, pour aider des enfants avec leurs devoirs.
 
 « Le jardin, c'est bien », m'a-t-il dit. « Mais il ne me dit jamais merci. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8518,7 +8518,7 @@ Cette année, elle a dix-sept de moyenne en sciences.
 Nous lui avons aussi dit une chose importante : si elle n'y arrive pas, ce ne sera pas un échec. Il existe d'autres métiers avec les animaux.
 
 Elle a répondu : « D'accord. Mais d'abord, j'essaie. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8552,7 +8552,7 @@ Cette découverte m'a mise mal à l'aise. Je n'avais pas un problème de temps :
 Je n'ai pas tout changé, parce que se reposer est nécessaire aussi. Mais j'ai pris une petite décision : deux soirs par semaine, je laisse mon téléphone dans une autre pièce après vingt heures.
 
 Je n'ai toujours pas commencé le piano. Mais maintenant, je sais que ce n'est pas le temps qui manque.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8585,7 +8585,7 @@ L'adjoint au maire a présenté le projet pendant quarante minutes, puis il a r�
 Une deuxième réunion aura lieu en mars, quartier par quartier.
 
 Les travaux devraient commencer en septembre prochain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8614,7 +8614,7 @@ Samedi dernier, ils ont organisé une manifestation devant la mairie. Environ ce
 Le maire soutient les parents. Il a proposé une solution : accueillir les enfants d'un village voisin, qui n'a plus d'école depuis trois ans. Cette proposition permettrait d'atteindre trente et un élèves.
 
 La décision sera prise au mois de mai.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8645,7 +8645,7 @@ La mairie a installé quelques tables et un producteur vend des plats à emporte
 « Ce n'est plus seulement un marché », dit une habitante. « C'est devenu la soirée du village. »
 
 Le marché continuera tout l'hiver.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8674,7 +8674,7 @@ Après huit mois, le bilan est positif : plus de mille deux cents emprunts. Les 
 Un utilisateur raconte : « J'avais besoin d'une ponceuse pour un week-end. En acheter une coûtait quatre-vingts euros. »
 
 Trois autres villes étudient maintenant le même projet.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8705,7 +8705,7 @@ Enfin, la mairie a choisi la période des vacances scolaires, quand la circulati
 Les commerçants des deux rives s'inquiètent malgré tout. Le coût total des travaux est estimé à quatre millions d'euros.
 
 Le pont rouvrira le 1er octobre, avec une piste cyclable en plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8734,7 +8734,7 @@ J'ai donné un conseil simple à Tom : quand tu ne sais pas, commence par « vou
 Il existe une phrase magique : « On peut se tutoyer ? » C'est souvent la personne la plus âgée qui la propose.
 
 Tom l'a apprise par cœur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8765,7 +8765,7 @@ Tom l'a mal pris au début. Puis il a compris que ce n'était pas une critique.
 Aujourd'hui, il éteint son ordinateur à dix-huit heures.
 
 « C'est la meilleure habitude que la France m'a donnée », dit-il.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8798,7 +8798,7 @@ Chaque système a ses qualités et ses défauts. Le système britannique est plu
 Tom a maintenant une carte Vitale et une mutuelle.
 
 « J'ai mis un an à comprendre », dit-il. « Maintenant, ça va. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8827,7 +8827,7 @@ De son côté, Tom ne comprend pas toujours l'humour français. Il y a beaucoup 
 « Quand tout le monde rit et que je dois demander l'explication, ce n'est plus drôle », dit-il.
 
 Il progresse quand même. La semaine dernière, il a fait un jeu de mots en français. Il était mauvais. Mais tout le monde a ri, et cette fois, c'était pour la bonne raison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8856,7 +8856,7 @@ Tom a mis du temps à l'apprendre. Au début, il restait poliment près de la po
 « Personne n'était malhonnête », dit-il maintenant. « Simplement, je n'avais pas dit que j'étais là. »
 
 Deux cultures, deux méthodes. Dans les deux cas, l'idée est la même : chacun son tour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8885,7 +8885,7 @@ Alors, faut-il rester ou partir ? Je crois que la question est mal posée. Ce qu
 Moi, je suis venu pour le travail et pour les possibilités. Tant que j'en profite, la ville a du sens.
 
 Le jour où je paierai ce loyer sans plus rien en tirer, je saurai qu'il est temps de partir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8914,7 +8914,7 @@ Que faire ? Aucune solution unique ne suffit. Construire davantage est nécessai
 Ce qui est certain, c'est que le sujet ne concerne pas seulement les mal-logés.
 
 Une ville où seuls les plus aisés peuvent habiter finit par perdre ce qui la faisait fonctionner.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8941,7 +8941,7 @@ Tout cela suppose des choix. Un arbre en ville coûte cher à planter et à entr
 Ces débats sont souvent vifs en conseil municipal.
 
 Mais un arbre planté aujourd'hui rendra service pendant soixante ans.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -8972,7 +8972,7 @@ Ce qui m'a le plus frappé, c'est le silence relatif. On entend des choses qu'on
 Quand je suis revenu à un rythme normal, j'ai gardé une habitude.
 
 Le matin, à la boulangerie, je regarde la personne derrière le comptoir et je me demande à quelle heure elle a commencé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9003,7 +9003,7 @@ Il n'y a donc pas de bonne réponse générale.
 La vraie question n'est pas « ville ou campagne ? », mais « qu'est-ce que je fuis, et qu'est-ce que je cherche ? ».
 
 Ceux qui partent seulement pour fuir sont rarement satisfaits.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9034,7 +9034,7 @@ Je ne prétends pas que ce soit la seule bonne méthode. Un premier voyage dans 
 Mais je ne compte plus les villes visitées.
 
 Je compte les endroits où j'ai fini par me sentir un peu chez moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9063,7 +9063,7 @@ En tant que voyageurs, nous avons pourtant une petite marge d'action. Venir hors
 Aimer un endroit, ce n'est pas seulement vouloir le voir.
 
 C'est aussi accepter qu'il continue d'appartenir à ceux qui y vivent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9092,7 +9092,7 @@ Le confort, lui, s'est amélioré : les nouvelles voitures proposent des compart
 J'ai pris un train de nuit l'an dernier. J'ai mal dormi, je l'admets.
 
 Mais je me suis réveillé dans une autre région, sans avoir perdu un seul jour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9125,7 +9125,7 @@ Je ne parle correctement aucune des langues des pays que j'ai visités. Je ne pr
 Mais je n'ai jamais regretté ces deux heures.
 
 Et il m'arrive encore, des années plus tard, de me souvenir du mot « merci » en hongrois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9154,7 +9154,7 @@ C'est peut-être là le vrai bénéfice du voyage : non pas ce qu'on a vu, mais 
 Aujourd'hui, je n'achète presque plus de souvenirs.
 
 En revanche, je note quelques lignes chaque soir. Ce carnet est le seul objet que je rapporte, et c'est le seul que je rouvre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9181,7 +9181,7 @@ Mais on peut mettre en place quelques garde-fous simples : attendre vingt-quatre
 Cette dernière question, posée honnêtement, fait souvent tomber l'envie.
 
 Ce n'est pas de la privation. C'est simplement reprendre la décision.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9212,7 +9212,7 @@ Or l'essentiel est ailleurs. Une réserve de cinq cents euros change déjà éno
 Le meilleur conseil que j'aie reçu était très simple : mettre de côté un petit montant automatiquement, le jour du salaire, avant de dépenser quoi que ce soit.
 
 Ce qu'on ne voit pas passer ne manque pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9245,7 +9245,7 @@ J'y suis allé une fois, avec un aspirateur qui ne fonctionnait plus.
 Le problème était un morceau de tissu coincé. La réparation a pris douze minutes.
 
 J'ai failli jeter un appareil de deux cents euros.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9278,7 +9278,7 @@ Quarante minutes pour six cents euros par an : c'est probablement le meilleur ta
 Depuis, j'ai adopté une règle. Chaque année, en janvier, je relis mes relevés.
 
 Et j'annule tout ce que je ne pourrais pas justifier à voix haute.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9309,7 +9309,7 @@ Ils m'ont coûté plus cher au départ. Je les ai tous encore.
 Et curieusement, j'y fais davantage attention.
 
 On prend mieux soin de ce qu'on n'a pas prévu de remplacer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9338,7 +9338,7 @@ Désactiver les notifications non essentielles supprime les interruptions. Range
 L'idée n'est pas de diaboliser ces outils, qui rendent d'immenses services.
 
 Elle est de rétablir un rapport plus équilibré : que ce soit nous qui décidions du moment, et non l'inverse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9369,7 +9369,7 @@ Des réponses existent : des « France Services » dans les territoires, des mé
 Mais ces dispositifs supposent un choix politique clair : considérer que l'accompagnement fait partie du service, et non qu'il est une dépense à réduire.
 
 Une administration accessible seulement en ligne n'est pas accessible à tous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9398,7 +9398,7 @@ Dans la pratique, les familles qui s'en sortent le mieux ne sont pas les plus st
 Il est difficile d'exiger qu'un adolescent laisse son téléphone hors de la chambre si ses parents dînent avec le leur à table.
 
 La cohérence convainc mieux que l'interdiction.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9427,7 +9427,7 @@ L'usage raisonnable qui se dégage est assez simple. Ces outils sont utiles pour
 Ils ne remplacent pas la vérification, surtout dès qu'il s'agit de faits, de chiffres ou de décisions importantes.
 
 Autrement dit : un assistant rapide, jamais une source.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9460,7 +9460,7 @@ Quelques gestes simples réduisent la collecte : refuser les cookies non essenti
 Rien de tout cela ne relève de la paranoïa.
 
 C'est simplement décider qui, de nous ou d'un autre, connaît le mieux nos habitudes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9491,7 +9491,7 @@ Ce qui a changé n'est donc pas tant la valeur accordée au repas que la place q
 Il serait excessif de parler de disparition.
 
 Il est plus juste de dire que le repas s'est concentré : moins fréquent, mais toujours important quand il a lieu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9522,7 +9522,7 @@ Le troisième est le circuit. Acheter directement à un producteur ne garantit p
 Il y a enfin un intérêt moins pratique. Savoir qu'une pomme met des mois à mûrir, qu'un fromage demande un affinage, qu'un poulet met plusieurs semaines à grandir change le regard porté sur son prix.
 
 Ce que nous appelons « cher » paraît parfois moins cher quand on sait ce que cela suppose.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9551,7 +9551,7 @@ Ce qui fonctionne, en pratique, tient à peu de choses : planifier les repas de 
 La loi française interdit désormais aux grandes surfaces de jeter les invendus consommables ; elles doivent les donner.
 
 C'est une avancée. Mais l'essentiel se joue encore dans nos cuisines.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9580,7 +9580,7 @@ Personnellement, je suis passé de la viande presque chaque jour à deux ou troi
 Je dépense autant, parce que j'achète mieux.
 
 Et je n'ai jamais eu l'impression de me priver.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9615,7 +9615,7 @@ Avec cela, on tient des mois de repas.
 Ce n'est pas de la gastronomie, et ce n'est pas le but.
 
 C'est simplement savoir se nourrir soi-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9650,7 +9650,7 @@ L'autre levier est moins confortable : il faut oser proposer. À l'âge adulte, 
 Ce n'est pas envahissant.
 
 Dans la plupart des cas, la personne en face est simplement soulagée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9681,7 +9681,7 @@ Ce qui rend ces dispositifs efficaces, c'est la régularité. Un événement pon
 Vivre seul n'est donc ni bon ni mauvais en soi.
 
 Ce qui compte, c'est le nombre de personnes qui remarqueraient votre absence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9712,7 +9712,7 @@ Rien de tout cela n'est propre au couple. Les mêmes principes valent entre amis
 Ce n'est pas le désaccord qui abîme les relations.
 
 C'est la façon dont on le mène, et surtout dont on le termine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9745,7 +9745,7 @@ S'occuper d'un parent sur plusieurs années suppose d'être encore debout à la 
 Demander de l'aide n'est pas un abandon.
 
 C'est la condition pour tenir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9776,7 +9776,7 @@ J'ai un ami au Canada depuis six ans. Nous nous parlons un dimanche matin sur de
 Ce n'est pas grand-chose.
 
 Mais c'est écrit dans nos deux agendas, et c'est probablement pour cela que ça tient.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9807,7 +9807,7 @@ Mieux vaut concentrer ses efforts sur deux ou trois leviers réellement importan
 Et il reste un dernier levier, souvent oublié : la voix.
 
 Un citoyen qui vote, qui écrit, qui soutient un projet local pèse davantage que le tri parfait de ses déchets.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9840,7 +9840,7 @@ Des mesures ont été prises, notamment l'interdiction progressive de louer les 
 Elles suscitent des débats légitimes : mal appliquées, elles peuvent réduire l'offre locative.
 
 Mais laisser des millions de foyers dans des logements coûteux à chauffer n'est pas non plus une politique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9869,7 +9869,7 @@ Les réponses discutées concernent surtout les infrastructures et les usages. R
 Ces choix sont techniques mais aussi politiques.
 
 Décider qui peut utiliser l'eau, et pour quoi, sera l'une des questions des prochaines décennies.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9900,7 +9900,7 @@ Il existe aussi des critiques légitimes. Les aménagements se font parfois au d
 La leçon générale est pourtant claire, et elle vaut au-delà du vélo.
 
 On change plus efficacement les comportements en rendant le bon choix facile qu'en demandant aux gens d'être meilleurs.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9933,7 +9933,7 @@ Un autre élément aide : distinguer ce sur quoi on peut agir de ce sur quoi on 
 Personne ne peut résoudre le climat mondial à lui seul.
 
 Mais presque tout le monde peut faire quelque chose quelque part, avec d'autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -9968,7 +9968,7 @@ Enfin, la difficulté modérée est utile : ce qui est trop facile n'apprend rie
 La question n'est donc pas de savoir si l'on peut encore apprendre.
 
 Elle est de savoir si l'on accepte d'être mauvais pendant quelques semaines.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10003,7 +10003,7 @@ Le principe vaut au-delà des langues : pour un cours, une procédure profession
 Il ne s'agit pas de travailler plus.
 
 Il s'agit de travailler au bon moment.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10034,7 +10034,7 @@ Alors, la lecture rend-elle plus intelligent ?
 La question est mal posée.
 
 Elle entraîne une capacité que peu d'autres activités entraînent encore.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10069,7 +10069,7 @@ Le conseil qui revient le plus souvent est donc simple.
 Ne pas commencer par chercher une formation.
 
 Commencer par définir ce qu'on veut pouvoir faire, puis chercher.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10102,7 +10102,7 @@ J'ai mis des années à l'accepter.
 Aujourd'hui, quand je parle une langue étrangère, je fais beaucoup de fautes.
 
 Et je suis compris, ce qui était exactement l'objectif.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10131,7 +10131,7 @@ D'où un conseil très concret : ne jamais partager un article dont on n'a lu qu
 Les études montrent que cela arrive extrêmement souvent.
 
 Lire l'article prend deux minutes. Cela suffit à éviter la moitié des malentendus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10162,7 +10162,7 @@ Enfin, un principe utile : nous sommes tous plus crédules face à ce qui confir
 La vraie difficulté n'est donc pas de vérifier ce que disent les autres.
 
 C'est de vérifier ce qui nous arrange.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10195,7 +10195,7 @@ Ce qui fonctionne, pour beaucoup, tient en deux ajustements. Choisir des moments
 Être informé, ce n'est pas tout savoir en temps réel.
 
 C'est comprendre ce qui se passe.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10226,7 +10226,7 @@ Il y a là un choix collectif, rarement formulé ainsi.
 Une information de qualité n'est pas un bien qui apparaît spontanément.
 
 Si personne ne la paie, quelqu'un finira par la financer pour d'autres raisons que nous informer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10257,7 +10257,7 @@ Et se rappeler une chose simple, souvent oubliée dans les discussions en ligne.
 La personne qui écrit une opinion absurde n'est pas nécessairement représentative de quoi que ce soit.
 
 Elle a peut-être seulement été choisie pour nous parce qu'elle nous fait réagir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10288,7 +10288,7 @@ Enfin, l'activité la plus efficace reste celle qu'on pratique réellement. Un s
 La question n'est donc pas « quel est le meilleur exercice ? ».
 
 Elle est : « qu'est-ce que je ferai encore dans un an ? »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10319,7 +10319,7 @@ Il y a enfin l'effet d'exemple, difficile à quantifier mais réel.
 Les inscriptions en clubs augmentent régulièrement après les grandes compétitions féminines.
 
 On pratique plus facilement un sport quand on a vu quelqu'un qui vous ressemble le pratiquer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10350,7 +10350,7 @@ Cette dernière idée mérite d'être soulignée.
 Un corps qui marche, porte, nage ou danse fait quelque chose.
 
 C'est un critère plus juste, et plus durable, que son apparence sur une photographie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10383,7 +10383,7 @@ Le second est la variété. Répéter exactement le même mouvement sollicite to
 Enfin, une douleur qui persiste plus de quelques jours mérite un avis, pas de la patience.
 
 La plupart des blessures longues ont commencé par une gêne qu'on a choisi d'ignorer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10414,7 +10414,7 @@ Car il existe un risque à ne penser l'activité qu'à travers la compétition. 
 L'enjeu n'est pas de former des athlètes.
 
 Il est que bouger reste, à l'âge adulte, quelque chose de normal plutôt qu'une épreuve.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10443,7 +10443,7 @@ Elle s'explique simplement : ces jours n'ont pas été décidés ensemble, mais 
 Peu de Français pourraient expliquer ce que célèbre l'Ascension.
 
 Tous savent qu'elle tombe un jeudi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10472,7 +10472,7 @@ Les municipalités l'ont compris : beaucoup soutiennent activement leurs marché
 Le marché n'a donc pas résisté malgré son inefficacité commerciale.
 
 Il a résisté parce qu'il ne servait pas seulement à acheter.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10503,7 +10503,7 @@ Les débats contemporains portent rarement sur le principe lui-même, largement 
 Ils portent sur son application concrète — à l'école, dans le sport, au travail.
 
 C'est-à-dire, comme souvent, non sur la règle, mais sur sa frontière.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10534,7 +10534,7 @@ Ces nouveaux locuteurs ne parlent pas exactement la même langue que leurs grand
 Une langue apprise à l'école n'est jamais identique à une langue héritée.
 
 Elle a toutefois un avantage décisif : elle est encore là.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10567,7 +10567,7 @@ Conserver ne signifie donc pas figer.
 Beaucoup des édifices que nous admirons ont changé plusieurs fois de fonction au cours des siècles.
 
 Ce que nous appelons patrimoine est souvent le résultat d'une longue série de réemplois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10602,7 +10602,7 @@ Ce qui rend ce sujet difficile, c'est son invisibilité.
 Personne ne remarque l'absence d'un insecte.
 
 On remarque seulement, des années plus tard, qu'il n'y en a plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10633,7 +10633,7 @@ Les politiques actuelles combinent protection de l'espèce, indemnisations, aide
 Cette solution ne satisfait pleinement personne, ce qui est peut-être inévitable.
 
 Le retour du loup pose en réalité une question plus large : jusqu'où sommes-nous prêts à partager le territoire avec une faune sauvage que nous avions éliminée ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10666,7 +10666,7 @@ Ce dernier point est le plus difficile, car il suppose de changer ce qu'on consi
 Une pelouse rase et verte est un désert écologique.
 
 Un coin d'herbe folle est un habitat.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10697,7 +10697,7 @@ Un dernier conseil vaut d'être mentionné : une fois commencé, il vaut mieux c
 Et si l'on veut vraiment aider, le meilleur geste n'est pas la mangeoire.
 
 C'est de planter une haie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10734,7 +10734,7 @@ De nombreuses communes françaises ont déjà instauré une extinction en milieu
 Peu de mesures écologiques coûtent moins cher et agissent aussi vite.
 
 Il suffit, littéralement, d'appuyer sur un interrupteur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10765,7 +10765,7 @@ Il serait vain de désigner un vainqueur.
 Les deux systèmes forment des élèves compétents, avec des habitudes intellectuelles différentes.
 
 Ce qu'ils révèlent surtout, ce sont deux idées de ce qu'une école doit produire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10798,7 +10798,7 @@ Mon ami Tom, arrivé de Londres, a mis du temps à s'y faire. La première grèv
 Puis un collègue lui a dit une phrase qui l'a marqué :
 
 « Ici, quand personne ne descend dans la rue, cela veut souvent dire que personne n'écoute. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10831,7 +10831,7 @@ Tom a mis trois ans à comprendre le système.
 Il conserve désormais un classeur — une habitude qu'il n'avait jamais eue à Londres.
 
 « Ça m'agace toujours », dit-il. « Mais je n'ai plus jamais de problème. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10868,7 +10868,7 @@ Mais la norme sociale, elle, diffère.
 Après six ans en France, Tom prend désormais toutes ses vacances.
 
 « Au début, je culpabilisais », dit-il. « Maintenant, je trouve ça normal. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10899,7 +10899,7 @@ Tom résume les choses à sa façon.
 « Ça m'a choqué pendant deux ans. »
 
 « Maintenant, ça me fait gagner du temps. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10932,7 +10932,7 @@ Mais peut-être faut-il déplacer l'exigence. Un travail peut être supportable 
 Ce n'est pas un renoncement.
 
 C'est une autre façon de refuser que l'emploi occupe toute la place.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10963,7 +10963,7 @@ Ces principes sont connus depuis longtemps et rarement appliqués.
 La raison en est peut-être moins organisationnelle que sociale.
 
 Convoquer une réunion reste, dans beaucoup de structures, une manière de montrer qu'on existe.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -10996,7 +10996,7 @@ Les couples qui y parviennent décrivent souvent la même méthode.
 Ils n'ont pas partagé les tâches.
 
 Ils ont partagé la responsabilité de savoir ce qu'il y a à faire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11027,7 +11027,7 @@ Le débat sur l'intelligence artificielle reprend aujourd'hui les mêmes termes.
 La question utile n'est probablement pas « combien d'emplois vont disparaître ? », car personne ne le sait précisément.
 
 Elle est : qu'aura-t-on prévu pour ceux qui les occupaient ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11062,7 +11062,7 @@ Un ancien collègue me l'a résumé après deux années de retraite :
 « Je croyais que je voulais ne rien faire. »
 
 « En réalité, je voulais choisir ce que je fais. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11097,7 +11097,7 @@ Il faut aussi reconnaître que la pression ne vient pas uniquement des patients.
 Un médecin pressé, face à quelqu'un qui insiste, prescrit parfois pour éviter un conflit.
 
 La bonne question à poser n'est pas « pouvez-vous me donner quelque chose ? », mais « est-ce que c'est viral ? ».`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11130,7 +11130,7 @@ Ce qu'il enseigne, en tout cas, est important.
 La relation entre un patient et son médecin n'est pas un supplément d'humanité optionnel.
 
 Elle fait partie du traitement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11163,7 +11163,7 @@ C'est là que le débat se tend, car il est plus simple de proposer une séance 
 Les entreprises qui obtiennent des résultats agissent presque toujours sur l'organisation elle-même.
 
 Le reste relève de l'affichage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11196,7 +11196,7 @@ L'idée qu'il serait « trop tard » est démentie par les données.
 Le corps, y compris âgé, répond à ce qu'on lui demande.
 
 Il faut simplement continuer à lui demander quelque chose.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11229,7 +11229,7 @@ Un moteur de recherche liste des possibilités.
 Un médecin examine une personne, connaît son histoire, et écarte l'immense majorité de ces possibilités en quelques minutes.
 
 Ce n'est pas la même opération.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11260,7 +11260,7 @@ Inversement, la location offre une mobilité réelle, précieuse dans un marché
 Le débat est donc mal posé lorsqu'il oppose un choix intelligent à un choix stupide.
 
 La vraie question est simple : combien de temps compte-t-on rester ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11291,7 +11291,7 @@ Mais il illustre une idée utile.
 Certains problèmes sociaux ne se résolvent pas séparément.
 
 Ils se résolvent en les mettant en présence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11324,7 +11324,7 @@ Vivre à l'étroit n'est donc pas nécessairement mal vivre.
 Cela dépend surtout de choix de conception qui ne coûtent pas grand-chose au moment de la construction.
 
 Et beaucoup, ensuite, à ceux qui y habitent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11357,7 +11357,7 @@ Un ami m'a résumé son chantier ainsi, deux ans après :
 « Ce n'est pas que j'avais mal calculé. »
 
 « C'est que je ne savais pas encore ce que j'achetais. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11388,7 +11388,7 @@ La question posée n'est donc pas seulement technique ou budgétaire.
 Elle est de savoir si les personnes qui font fonctionner une ville doivent pouvoir y habiter.
 
 La réponse paraît évidente jusqu'au moment où il faut décider où construire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11417,7 +11417,7 @@ Il explique pourquoi ces réformes sont si difficiles : elles ne tranchent pas u
 La plupart des gens veulent, en réalité, les trois fonctions à la fois.
 
 Le problème est qu'elles tirent parfois dans des directions opposées.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11448,7 +11448,7 @@ Le débat, au fond, porte moins sur les devoirs eux-mêmes que sur ce qu'on atte
 Un système qui repose fortement sur le travail à la maison suppose des familles disponibles et outillées.
 
 Toutes ne le sont pas, et c'est là que le principe d'égalité se joue réellement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11481,7 +11481,7 @@ Il existe des intelligences différentes : abstraite, manuelle, relationnelle. U
 Un bon plombier, un bon cuisinier, un bon électricien exercent un savoir complexe.
 
 Le mépris qui a longtemps entouré ces métiers en dit plus long sur nous que sur eux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11512,7 +11512,7 @@ La conclusion qui se dégage est décevante pour ceux qui espéraient une soluti
 Le numérique à l'école n'est ni un progrès automatique, ni un danger en soi.
 
 C'est un outil dont tout dépend de l'usage — ce qui ramène, encore une fois, à la question de la formation des enseignants.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11543,7 +11543,7 @@ Les choses évoluent lentement : la formation continue se développe, les reconv
 Mais l'idée reste ancrée.
 
 Dans un entretien d'embauche, en France, on demande encore fréquemment ce que le candidat a étudié il y a vingt-cinq ans.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11572,7 +11572,7 @@ Ce mécanisme, décrit au dix-neuvième siècle, illustre une idée intéressant
 Une couleur n'est pas seulement une propriété de la lumière.
 
 C'est le résultat d'un trajet, et de ce qu'il a rencontré en chemin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11601,7 +11601,7 @@ Comprendre cela change la façon de cuisiner.
 On cesse de suivre une recette à l'aveugle.
 
 On commence à travailler avec un organisme vivant, qui a ses préférences et son rythme.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11630,7 +11630,7 @@ Cela explique pourquoi il n'existe pas un remède unique : plusieurs voies mène
 Dans de très rares cas, un hoquet persiste des jours, voire des semaines, et signale alors un problème médical.
 
 Mais pour l'immense majorité d'entre nous, il reste ce qu'il est : un rappel étrange que notre corps fait parfois des choses sans raison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11663,7 +11663,7 @@ Ce calcul de bénéfice et de risque est précisément ce que les autorités san
 Comprendre ce principe ne remplace pas cette évaluation.
 
 Mais il rend le débat plus clair.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11696,7 +11696,7 @@ Ce principe explique une multitude de phénomènes quotidiens : pourquoi on flot
 Une idée vieille de plus de deux mille ans continue ainsi de faire naviguer nos plus grands navires.
 
 La science ne vieillit pas comme les techniques.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11727,7 +11727,7 @@ Son utilité est plus subtile.
 Elle ne prédit pas l'avenir.
 
 Elle apprend à ne pas croire le premier récit venu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11758,7 +11758,7 @@ Les derniers combattants de cette guerre sont morts depuis longtemps.
 Restent les pierres, et les noms gravés dessus.
 
 Les lire à voix haute, une fois, suffit souvent à comprendre pourquoi ces monuments existent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11791,7 +11791,7 @@ L'histoire n'est donc jamais entièrement neutre.
 Ce qui la rend fiable n'est pas l'absence de point de vue.
 
 C'est la méthode, et la possibilité de vérifier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11820,7 +11820,7 @@ Un archéologue l'a joliment formulé.
 Les gens mentent dans leurs écrits.
 
 Ils mentent rarement dans leurs poubelles.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11853,7 +11853,7 @@ Ils font pourtant la différence entre une personne dont on se souvient et un si
 La grande histoire garde les rois.
 
 La petite histoire, il faut la garder soi-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11886,7 +11886,7 @@ Comprendre une œuvre, c'est pareil.
 La connaissance ne remplace pas l'émotion.
 
 Elle lui donne parfois plus de place.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11919,7 +11919,7 @@ Il n'y a pas de conclusion morale à en tirer.
 Peut-être seulement une invitation.
 
 Écouter, parfois, un seul morceau, sans rien faire d'autre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11952,7 +11952,7 @@ C'est le plaisir de fabriquer soi-même de la musique, plutôt que de seulement 
 Peu de gens le regrettent.
 
 Beaucoup regrettent d'avoir arrêté.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -11985,7 +11985,7 @@ Ils obligent une collectivité à se demander ce qu'elle valorise, ce dont elle 
 Une ville sans art public serait plus tranquille.
 
 Elle dirait aussi quelque chose de plus triste : que l'espace commun ne mérite que l'utile.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12014,7 +12014,7 @@ Le musée n'est pas un examen.
 Personne ne vérifiera ce qu'on a retenu.
 
 Il vaut mieux en garder trois œuvres vivantes que cent oubliées.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12045,7 +12045,7 @@ Il y a aussi une part de courage. Écouter vraiment expose : on peut être touch
 La prochaine fois, un test simple : compter combien de questions on pose sur l'autre.
 
 Souvent, la réponse est zéro.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12078,7 +12078,7 @@ Le meilleur conseil est peut-être le plus libérateur.
 Les invités ne viennent pas juger.
 
 Ils viennent passer un moment avec vous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12111,7 +12111,7 @@ Ce qui surprend le plus ceux qui s'y essaient, c'est la réaction des autres.
 Presque personne ne se vexe.
 
 La plupart des gens acceptent un non honnête bien mieux qu'un oui qui traîne.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12142,7 +12142,7 @@ Mais ils rendent supportable le fait de vivre à des millions au même endroit.
 Une société n'est pas seulement faite de lois.
 
 Elle est faite, aussi, de bonjours.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12175,7 +12175,7 @@ Apprendre à être bien seul n'éloigne pas des autres.
 C'est souvent le contraire.
 
 On a plus à offrir quand on ne fuit pas le silence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12208,7 +12208,7 @@ Une garde-robe plus petite, mais réellement portée, coûte moins cher et pèse
 Ce n'est pas de la privation.
 
 C'est simplement cesser d'acheter ce qu'on ne mettra pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12239,7 +12239,7 @@ L'avis en ligne reste utile, à condition d'être lu comme un indice, non comme 
 Un chiffre global rassure.
 
 Trois commentaires précis renseignent davantage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12268,7 +12268,7 @@ Il ne s'agit donc pas de renoncer au local, qui garde de nombreuses vertus.
 Il s'agit de ne pas croire qu'un seul mot sur une étiquette résout la question.
 
 Le bon sens géographique doit s'accompagner d'un calendrier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12299,7 +12299,7 @@ La publicité n'est ni un complot ni une catastrophe.
 C'est un environnement, et comme tout environnement, il nous façonne.
 
 Le minimum est de savoir qu'il est là.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12330,7 +12330,7 @@ Mais pour ceux qui ont une marge, la question utile change.
 Non pas « combien ça coûte ? », mais « qui paie la différence ? ».
 
 Une fois qu'on voit cette question, on ne la voit plus jamais tout à fait de la même façon.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12363,7 +12363,7 @@ L'idée n'est donc ni une utopie ni une menace.
 C'est un objectif d'aménagement, plus facile à réaliser dans certaines villes que dans d'autres.
 
 Et une manière de reposer une vieille question : à quelle distance vit-on de sa propre vie ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12396,7 +12396,7 @@ La question n'est donc pas « pour ou contre la voiture ».
 Elle est : comment redistribuer un espace limité entre des usages qui se disputent chaque mètre ?
 
 Et cette question, par nature, ne se tranche pas sans conflit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12429,7 +12429,7 @@ Un transport que personne ne veut prendre reste inutilisé, même gratuit.
 Le vrai luxe, en matière de transport, n'est pas la gratuité.
 
 C'est de pouvoir compter dessus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12460,7 +12460,7 @@ Le bruit a un défaut par rapport à d'autres pollutions : il est invisible et s
 On ne le photographie pas, on ne le mesure pas d'un coup d'œil.
 
 C'est peut-être pour cela qu'il a été si longtemps toléré.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12491,7 +12491,7 @@ La vraie question n'est donc pas individuelle mais collective.
 Elle n'est pas « pourquoi gardez-vous une voiture ? ».
 
 Elle est : combien de gens n'ont aujourd'hui pas d'autre choix, et que fait-on pour cela ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12522,7 +12522,7 @@ Il n'est donc jamais trop tard.
 La seule vraie question n'est pas « en suis-je capable ? ».
 
 Elle est : « suis-je prêt à me tromper pendant un an ? »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12557,7 +12557,7 @@ Mais c'est justement sa force.
 Il ne demande pas de la volonté héroïque.
 
 Il demande une habitude minuscule, tenue longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12592,7 +12592,7 @@ Comprendre beaucoup, tôt.
 Parler imparfaitement, tôt aussi.
 
 Et accepter que les deux ne progressent jamais à la même vitesse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12623,7 +12623,7 @@ C'est peut-être pour cela qu'ils comptent.
 Une langue n'ajoute pas seulement un outil à sa boîte.
 
 Elle ajoute une fenêtre à sa maison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12654,7 +12654,7 @@ Un peu, chaque jour, longtemps, avec du contact réel avec la langue.
 Ce n'est pas vendeur.
 
 C'est simplement ce qui marche.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12687,7 +12687,7 @@ Le bon réflexe, face à un « c'était mieux avant », est de se demander : est
 Souvent, c'est le refrain.
 
 Et un jour, ce sont les jeunes critiqués qui le chanteront à leur tour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12718,7 +12718,7 @@ Les familles qui vivent bien cette organisation partagent une chose : elles en p
 Cette aide n'est pas un dû.
 
 C'est un cadeau, immense, qui mérite d'être nommé comme tel — et discuté comme tel.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12749,7 +12749,7 @@ Le fossé numérique n'est donc pas une fatalité liée à l'âge.
 C'est surtout un manque d'accompagnement.
 
 Et l'accompagnement, contrairement à la technologie, ne se périme jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12782,7 +12782,7 @@ Mais ils rappellent une évidence oubliée.
 Séparer les âges est récent dans l'histoire humaine.
 
 Pendant très longtemps, les générations ont simplement vécu ensemble.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12815,7 +12815,7 @@ C'est pourquoi la transmission reste un acte profondément humain, et un peu urg
 Un savoir-faire non transmis ne se perd pas lentement.
 
 Il se perd d'un coup, avec la personne qui le portait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12854,7 +12854,7 @@ C'est une activité humaine ordinaire, qui répond à des besoins de part et d'a
 Ce qui est plutôt une bonne nouvelle.
 
 Ce qui profite à celui qui aide dure plus longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12891,7 +12891,7 @@ Une société généreuse aide ceux qui ont faim.
 Une société juste cherche à ce qu'ils n'aient plus faim.
 
 Les deux sont nécessaires. La première ne dispense pas de la seconde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12924,7 +12924,7 @@ Mais il invite à une aide plus humble, qui écoute avant d'agir, et qui se dema
 La meilleure aide, souvent, ne se remarque pas.
 
 Elle laisse l'autre debout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12957,7 +12957,7 @@ On mesure mal ce qu'il apporte, précisément parce qu'il fonctionne sans bruit.
 On le mesurerait immédiatement s'il disparaissait.
 
 Une grande partie de ce qui rend une vie locale vivable passe par lui.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -12990,7 +12990,7 @@ La question n'est donc pas « puis-je changer les choses ? ».
 C'est : « puis-je donner deux heures, cette semaine, à quelque chose de plus grand que moi ? »
 
 Cette question-là a presque toujours une réponse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13015,7 +13015,7 @@ Il serait naïf de prétendre qu'on pourrait se passer entièrement du travail c
 La prochaine fois que nous rencontrerons un inconnu, nous pourrions essayer une autre question. Non pas « que faites-vous ? », mais « qu'est-ce qui vous passionne ? ». La réponse, souvent, nous en apprendrait davantage sur la personne réelle.
 
 Car ce que nous faisons pour gagner notre vie n'est qu'une facette de ce que nous sommes. La confondre avec le tout, c'est passer à côté de l'essentiel.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13038,7 +13038,7 @@ Il faut aussi reconnaître un privilège dans cette exigence. Chercher du sens d
 Faut-il pour autant renoncer à cette aspiration ? Certainement pas. Mais il serait peut-être plus juste de chercher le sens à plusieurs endroits de la vie, et non dans le seul travail. Un emploi supportable qui laisse du temps et de l'énergie pour ce qu'on aime vaut peut-être mieux qu'une passion dévorante qui ne laisse plus rien.
 
 Le travail peut avoir du sens ; il ne devrait pas avoir à en porter tout le poids. Attendre qu'un emploi nous sauve, c'est presque à coup sûr le condamner à nous décevoir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13061,7 +13061,7 @@ Certains pays ont tenté de réagir, en reconnaissant un « droit à la déconne
 La responsabilité est donc partagée. Il appartient aux employeurs de ne pas récompenser la disponibilité permanente, et de distinguer l'urgence réelle de l'habitude. Mais il appartient aussi à chacun de reconquérir des espaces où le travail n'a pas droit de cité — un repas, une soirée, un dimanche.
 
 Une vie où le travail ne s'arrête jamais n'est pas une vie plus productive. C'est une vie où l'on ne se repose plus, et l'on finit par y perdre ce que le repos, seul, permet de reconstruire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13084,7 +13084,7 @@ Il serait vain de vouloir figer le monde pour préserver chaque métier. Le prog
 Mais reconnaître la nécessité du changement n'oblige pas à en ignorer le coût humain. Une société qui accepte que des métiers disparaissent devrait, en retour, accompagner ceux qui les exerçaient — non par une simple indemnité, mais par les moyens réels de se reconstruire une place et une dignité.
 
 Car derrière chaque métier qui s'efface, il y a des personnes qui avaient appris à en être fières. L'oublier, c'est traiter comme une simple statistique ce qui est, pour elles, une déchirure.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13107,7 +13107,7 @@ Les objections, toutefois, ne sont pas négligeables. Travailler moins signifie,
 Il faut également se garder d'une illusion : le temps libéré n'est pas automatiquement un temps heureux. Encore faut-il savoir qu'en faire. Le loisir, lui aussi, s'apprend, et une société qui ne saurait remplir son temps que par la consommation passive n'y gagnerait pas grand-chose.
 
 La question n'est donc pas de savoir s'il faut travailler moins dans l'absolu, mais comment, pour qui, et en échange de quoi. Bien menée, une telle évolution pourrait enrichir nos vies. Mal pensée, elle ne ferait que déplacer les problèmes. Le temps, comme l'argent, ne vaut que par l'usage qu'on en fait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13130,7 +13130,7 @@ Le déséquilibre est saisissant. D'un côté, des entreprises disposant de moye
 Comprendre cette logique ne suffit pas à s'en libérer, mais c'est un premier pas indispensable. Car tant que l'on croit que ces outils sont neutres, de simples instruments à notre service, on ne songe pas à s'en méfier. Or ils ne sont pas neutres : ils ont un intérêt, et cet intérêt n'est pas toujours le nôtre.
 
 Reconnaître que notre attention est convoitée, c'est commencer à la considérer comme ce qu'elle est : un bien précieux, limité, qu'il vaut la peine de défendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13153,7 +13153,7 @@ Les conséquences dépassent le simple inconfort. La pensée profonde — celle 
 La bonne nouvelle, c'est que la concentration se rééduque. Comme un muscle, elle se renforce par l'exercice : s'imposer des plages sans écran, lire de nouveau des textes longs, accepter l'ennui plutôt que de le fuir aussitôt. Rien de tout cela n'est spectaculaire, et rien n'est immédiat.
 
 Mais l'enjeu en vaut la peine. Retrouver sa capacité de concentration, ce n'est pas seulement mieux travailler ; c'est reconquérir la maîtrise de son propre esprit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13176,7 +13176,7 @@ Un troisième problème, plus insidieux, concerne nos émotions. L'information c
 Faut-il alors se couper de l'actualité ? Ce serait une erreur inverse, car s'informer reste un devoir dans une démocratie. La solution n'est pas de moins savoir, mais de savoir autrement. Mieux vaut lire quelques analyses approfondies qu'engloutir des dizaines de brèves ; mieux vaut choisir ses moments d'information que subir un flux permanent.
 
 S'informer véritablement demande un effort que la facilité du flux continu nous fait oublier. Être exposé à l'information n'est pas la comprendre, et confondre les deux, c'est se croire éclairé quand on ne fait que s'agiter dans le noir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13197,7 +13197,7 @@ De plus, l'objection du « rien à cacher » suppose que ces données ne serviro
 Il faut enfin dépasser la seule perspective individuelle. Même si chacun, pour son propre compte, acceptait volontiers cet échange, l'accumulation de nos données confère à quelques entreprises un pouvoir considérable : celui de prévoir nos comportements, d'orienter nos choix, parfois d'influencer nos opinions. Ce pouvoir ne concerne pas seulement les individus qui l'ont, en apparence, consenti ; il pèse sur la société tout entière.
 
 Défendre la vie privée n'est donc pas une lubie de gens ayant quelque chose à dissimuler. C'est défendre une condition de la liberté, pour soi et pour les autres. La gratuité qu'on nous offre a un prix, et ce prix n'est pas seulement personnel : il est, en dernière analyse, politique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13220,7 +13220,7 @@ Le troisième principe est de cultiver délibérément l'attention longue. De m�
 Il importe enfin d'aborder tout cela sans culpabilité. Le but n'est pas de renoncer aux outils numériques, qui rendent d'immenses services, ni de se juger sévèrement à chaque écart. Il est de rétablir un rapport de force plus juste, où c'est nous qui décidons de notre attention, et non des machines conçues pour la capter.
 
 Notre attention est ce que nous avons de plus précieux : c'est par elle que nous entrons en contact avec le monde, avec les autres, avec nous-mêmes. La défendre n'est pas un caprice ; c'est veiller sur l'étoffe même de notre vie intérieure.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13241,7 +13241,7 @@ Or cet espace commun est aujourd'hui fragilisé. Il rétrécit sous la pression 
 Se sentir chez soi suppose aussi d'avoir une prise sur son cadre de vie. Or les décisions qui façonnent une ville — ce qu'on y construit, ce qu'on y démolit — échappent le plus souvent aux habitants. On leur demande rarement leur avis, et lorsqu'on le fait, c'est parfois pour la forme. Comment s'approprier un lieu qu'on n'a pas contribué à façonner, et qui peut changer du jour au lendemain sans qu'on y soit pour rien ?
 
 La ville nous appartiendra vraiment le jour où nous cesserons d'en être seulement les usagers pour en redevenir les habitants : des gens qui y ont une place, une voix, et des lieux où s'attarder sans autre raison que le plaisir d'y être. C'est à cette condition, modeste et exigeante, qu'un espace devient un chez-soi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13264,7 +13264,7 @@ Ce qui se perd alors n'est pas seulement un logement, mais un tissu de relations
 Faut-il alors renoncer à améliorer les quartiers pauvres ? Certainement pas. Mais on peut le faire autrement, en veillant à ce que la rénovation profite d'abord à ceux qui y vivent, plutôt que de les remplacer. Cela suppose des logements protégés, un encadrement des loyers, une volonté politique de ne pas abandonner les habitants aux seules lois du marché.
 
 Car une ville juste ne se contente pas d'embellir ses quartiers : elle veille à ce que ceux qui les ont habités puissent y demeurer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13285,7 +13285,7 @@ Mais il serait tout aussi injuste de n'en retenir que le côté sombre, car cet 
 C'est pourquoi les grandes villes ont si souvent attiré ceux que leur milieu d'origine étouffait. L'artiste, le marginal, celui qui aime différemment, celui qui veut recommencer : tous ont vu dans la ville non pas un désert humain, mais une promesse d'émancipation. L'indifférence des autres, si dure lorsqu'on souffre, devient bienfaisante lorsqu'on veut simplement vivre sans être jugé.
 
 L'anonymat des villes n'est donc ni un mal ni un bien absolu ; il est l'un et l'autre selon le moment de la vie où l'on se trouve. Le défi n'est pas de le supprimer — on ne peut pas connaître des millions de gens —, mais de créer, à l'intérieur de l'immense ville anonyme, de petits cercles de familiarité : un immeuble où l'on se salue, un quartier où l'on a ses repères. La liberté de l'inconnu, tempérée par la chaleur de quelques liens choisis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13308,7 +13308,7 @@ Une autre inquiétude concerne la démocratie. Lorsqu'une ville est gérée par 
 Rien de tout cela ne condamne l'idée d'une ville plus intelligente. La technologie peut rendre de réels services, à condition qu'elle reste un moyen et non une fin. Mais cela suppose de poser d'emblée les bonnes questions : qui contrôle les données, dans quel but, sous quel regard démocratique ?
 
 Une ville n'est pas intelligente parce qu'elle mesure tout ; elle l'est lorsqu'elle met la technique au service de ceux qui l'habitent, et non l'inverse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13331,7 +13331,7 @@ Redonner une place au silence dans la ville n'est pourtant pas hors de portée. 
 Il faut surtout cesser de considérer le bruit comme une fatalité de la vie urbaine, une nuisance à laquelle il faudrait simplement s'adapter. Le vacarme n'est pas une propriété inévitable des villes ; il est le résultat de choix — d'aménagement, de transport, de construction — que d'autres choix pourraient corriger.
 
 Réclamer du silence n'est pas fuir la ville ni rêver d'un impossible calme de campagne. C'est demander que la vie urbaine, si dense et si vivante, ménage aussi des espaces où l'on puisse, enfin, s'entendre penser.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13354,7 +13354,7 @@ Il faut d'abord reconnaître que peu de choix sont parfaits. L'aliment idéal �
 Une attitude plus juste consisterait à viser le mieux plutôt que le parfait. Réduire, sans forcément supprimer ; privilégier, sans se l'interdire absolument ; s'informer, sans se laisser paralyser. De petits changements tenus dans la durée valent mieux qu'une rigueur héroïque et brève.
 
 Il importe enfin de ne pas oublier ce qu'est aussi un repas : un plaisir, un moment de partage, un héritage culturel. À trop faire de l'alimentation une affaire de calculs et de règles, on risque d'oublier qu'elle est d'abord l'une des grandes joies de vivre. Manger avec conscience, oui ; manger avec angoisse, sûrement pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13377,7 +13377,7 @@ La vérité est que « manger moins de viande » ne signifie pas « ne plus jama
 Il faut aussi reconnaître les obstacles réels. Changer d'alimentation suppose du temps, des connaissances, parfois des moyens. On ne peut pas demander les mêmes efforts à qui cuisine sans contrainte et à qui peine déjà à se nourrir. Faire de la réduction de viande une affaire purement individuelle, sans se soucier de ces inégalités, serait injuste.
 
 La question n'est donc pas de savoir si l'on est « pour » ou « contre » la viande, comme s'il s'agissait d'un camp à choisir. Elle est de savoir combien, laquelle, à quelle fréquence — des questions de mesure, non de dogme. Et sur ce terrain, chacun peut avancer à son rythme, sans renoncer d'un coup ni s'aveugler sur les enjeux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13400,7 +13400,7 @@ La bonne nouvelle, c'est qu'aucune de ces causes n'est insurmontable. Contrairem
 À l'échelle individuelle, quelques habitudes simples suffisent à réduire considérablement ses propres pertes : acheter selon ses besoins réels, accommoder les restes, faire confiance à ses sens plutôt qu'à une date. Rien d'héroïque, mais un respect élémentaire pour ce que représente la nourriture.
 
 Le gaspillage alimentaire est peut-être l'un des rares grands problèmes que l'on pourrait largement résoudre sans sacrifice, seulement en cessant de traiter comme un déchet ce qui a demandé tant de terre, d'eau et de travail. Il suffirait, en somme, de nous souvenir de la valeur de ce que nous jetons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13421,7 +13421,7 @@ Or cette transmission est aujourd'hui menacée. Le temps manque, les modes de vi
 Il ne s'agit pas de condamner la commodité, ni de sommer chacun de passer des heures aux fourneaux. La vie moderne a ses contraintes, et l'on peut légitimement s'en remettre, parfois, à la facilité. Mais il serait dommage de laisser entièrement disparaître cet art domestique, sous prétexte qu'il n'est plus nécessaire. Car ce qui n'est plus nécessaire n'est pas pour autant sans valeur.
 
 Cuisiner soi-même, transmettre une recette, apprendre un plat de sa famille : ces gestes modestes entretiennent un lien précieux avec le passé et avec les autres. Ils rappellent que se nourrir n'est pas qu'une fonction, mais une culture. Préserver ce patrimoine vivant ne demande ni loi ni musée : seulement que, de temps à autre, quelqu'un prenne le temps de faire, et de montrer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13444,7 +13444,7 @@ Les études sur le sujet confirment cette intuition. Là où l'on partage régul
 Préserver ce rituel ne demande pas de grands moyens, seulement une décision : celle de traiter le repas partagé comme un rendez-vous qui compte, et non comme une variable d'ajustement. Éteindre les écrans, s'attendre les uns les autres, faire du dîner un moment protégé : ces choix modestes suffisent souvent à sauver ce qui, une fois perdu, se retrouve difficilement.
 
 Dans un monde qui éparpille nos vies, le repas partagé reste l'un des derniers lieux où l'on peut, chaque jour, se rassembler. Ce serait une étrange pauvreté que de le laisser disparaître par simple négligence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13467,7 +13467,7 @@ Il ne s'agit pas de condamner ces outils, qui ont aussi permis à d'innombrables
 Aimer suppose peut-être, au fond, le contraire de ce que promet le choix illimité. Non pas trouver la personne parfaite parmi une infinité de possibles, mais décider de s'attacher à une personne réelle, avec ses défauts, et de construire quelque chose avec elle plutôt que de continuer à chercher. L'engagement n'est pas la fin de la liberté ; il en est peut-être l'usage le plus profond.
 
 Dans un monde qui nous invite sans cesse à garder toutes nos options ouvertes, choisir vraiment quelqu'un — et renoncer, pour lui, à tous les autres — est devenu un acte presque à contre-courant. C'est peut-être ce qui lui donne, aujourd'hui plus que jamais, sa valeur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13490,7 +13490,7 @@ Reconnaître cela n'a rien de désespérant ; c'est au contraire libérateur. Ca
 Il faut aussi accepter que toutes les amitiés n'ont pas vocation à durer, et que certaines s'éteignent naturellement, sans qu'on ait à s'en vouloir. L'important n'est pas de retenir tout le monde, mais d'entretenir ce qui compte vraiment.
 
 L'amitié adulte est peut-être moins facile que celle de la jeunesse, mais elle n'en est pas moins précieuse — et le fait même qu'elle demande un effort lui confère, en un sens, plus de valeur. Ce qu'on choisit délibérément de cultiver vaut souvent mieux que ce qui nous était simplement donné.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13513,7 +13513,7 @@ Il faut donc se garder des deux discours symétriques. Celui qui célèbre béat
 Ce que révèle surtout la montée de la vie solitaire, c'est un enjeu nouveau : puisqu'on ne vit plus automatiquement entouré, il faut désormais construire son entourage de manière plus délibérée. Les liens que la vie commune fournissait sans effort, chacun doit maintenant les cultiver : amitiés entretenues, voisinage vivant, engagements partagés.
 
 Vivre seul n'est donc en soi ni une chance ni un malheur ; tout dépend de ce qu'on en fait, et surtout des liens que l'on tisse au-delà de son propre logement. La solitude choisie peut être une richesse ; la solitude subie reste une épreuve. Toute la différence tient dans ce petit mot : choisir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13536,7 +13536,7 @@ Il ne faut pas céder à la nostalgie facile d'un âge d'or de la conversation q
 La solution ne réside pas dans un rejet spectaculaire, mais dans quelques gestes simples et délibérés : ranger son téléphone lors d'un repas, d'une confidence, d'un moment qui compte. Créer, dans la journée, des espaces protégés où l'on soit vraiment là, tout entier, pour l'autre.
 
 Car ce que nous risquons de perdre, à force de présence partielle, n'est pas mince : c'est cette qualité d'attention qui fait qu'une conversation nous relie vraiment. Être pleinement présent à quelqu'un est devenu, paradoxalement, l'un des cadeaux les plus rares que l'on puisse offrir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13559,7 +13559,7 @@ Il serait naïf de nier que ces évolutions posent aussi des difficultés. Les f
 Mais l'essentiel est peut-être ailleurs. Ce qui fait une famille n'a jamais été la conformité à un modèle, mais la qualité des liens qui unissent ses membres : l'attention, la fidélité, l'amour qui résiste au temps. À cette aune, une famille qui ne ressemble à aucune image d'autrefois peut être pleinement une famille, et une famille en apparence conforme peut n'en avoir que l'apparence.
 
 La famille ne disparaît pas ; elle se réinvente, comme elle l'a toujours fait. Et tant que des êtres humains auront besoin d'être aimés et soutenus par d'autres, dans la durée, elle continuera, sous mille formes, d'exister.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13582,7 +13582,7 @@ Reconnaître cela ne signifie pas rendre la technologie responsable de tout, ni 
 L'enjeu est important, car il concerne la manière dont nous concevons les technologies elles-mêmes. Si l'on admet qu'elles ne sont pas neutres, alors il devient légitime de se demander, avant même de les adopter, quels usages elles favorisent et quels effets elles produisent. La question n'est plus seulement « comment vais-je m'en servir ? », mais « que va faire de moi, et de nous, cet outil ? ».
 
 Croire la technologie neutre, c'est renoncer à la juger. Or les outils que nous nous donnons nous façonnent en retour, et il vaut mieux le savoir avant qu'ils ne nous aient changés.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13605,7 +13605,7 @@ C'est là que se situe le vrai enjeu, souvent négligé dans le débat. Le probl
 Autrement dit, les conséquences de l'intelligence artificielle ne sont pas inscrites dans la technique elle-même ; elles dépendront de choix collectifs. Ce n'est pas la machine qui décidera si elle nous libère ou nous appauvrit, mais la société qui l'emploie et la façon dont elle en organise les effets.
 
 Face à ces transformations, la bonne attitude n'est donc ni la résignation ni l'enthousiasme naïf, mais la vigilance. Une technologie puissante n'est jamais bonne ou mauvaise en soi ; tout dépend de ce que nous en ferons, ensemble.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13628,7 +13628,7 @@ Car une démocratie suppose un espace partagé, où des citoyens aux vues diffé
 Que faire face à ce risque ? Les plateformes ont, certes, une responsabilité, et l'on peut exiger d'elles plus de transparence et de diversité. Mais il appartient aussi à chacun de résister à sa propre bulle : rechercher délibérément des points de vue différents, fréquenter des sources variées, se méfier du confort de n'entendre que ce qui nous plaît.
 
 Sortir de sa bulle demande un effort, car il est plus agréable d'avoir raison que d'être contredit. Mais c'est à ce prix que l'on reste capable de comprendre le monde tel qu'il est, et non tel qu'un algorithme a décidé de nous le montrer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13651,7 +13651,7 @@ Il ne s'agit pas de diaboliser des outils qui rendent d'immenses services, ni de
 Reconquérir le droit de se déconnecter suppose des décisions concrètes : des plages sans écran, des moments où l'on éteint, des règles que l'on se donne et que l'on assume face aux autres. Cela demande un certain courage, car il faut accepter de décevoir des attentes devenues excessives. Mais c'est à ce prix que l'on redevient maître de son temps, au lieu d'en être le serviteur.
 
 Être joignable est une commodité ; pouvoir ne pas l'être est une liberté. Dans un monde qui confond les deux, préserver la seconde est devenu un acte de résistance ordinaire, mais essentiel.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13674,7 +13674,7 @@ Le problème est aggravé par l'opacité. Les critères qui régissent ces choix
 Que faire face à cette situation ? La première nécessité est d'en prendre conscience, car on ne se méfie pas d'un pouvoir qu'on ne voit pas. La deuxième est d'exiger de la transparence : ceux qui organisent la circulation de l'information à si vaste échelle devraient rendre des comptes sur les règles qu'ils appliquent. La troisième est de refuser de s'en remettre à une source unique, et de diversifier délibérément ce qui nous informe.
 
 Nous croyons regarder le monde ; le plus souvent, nous regardons ce que d'autres ont choisi de nous montrer. Le savoir ne nous rend pas entièrement libres, mais c'est le commencement de toute liberté.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13697,7 +13697,7 @@ Or nos gestes comptent, à plusieurs titres. D'abord parce qu'additionnés, les 
 Enfin, et peut-être surtout, il existe un lien entre nos actes et nos convictions. Difficile de réclamer des changements profonds tout en refusant d'en accomplir aucun soi-même. Nos gestes, même modestes, nous engagent, donnent de la crédibilité à nos exigences, et nous transforment en citoyens cohérents plutôt qu'en spectateurs impuissants.
 
 La véritable réponse n'est donc pas de choisir entre l'action individuelle et l'action collective, comme si l'une excluait l'autre. C'est de comprendre qu'elles se nourrissent mutuellement. Changer sa vie sans jamais peser sur les décisions collectives serait insuffisant ; réclamer des changements collectifs sans jamais rien changer à sa vie serait peu crédible. Les deux vont ensemble, et c'est leur conjonction qui, seule, peut espérer faire la différence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13720,7 +13720,7 @@ Cette myopie n'a rien d'une fatalité ; elle est plutôt un défi à relever. D'
 Y parvenir suppose de transformer notre rapport au temps. Cela passe par l'éducation, qui peut apprendre à se projeter au-delà de l'immédiat. Cela passe par des institutions repensées, capables de représenter les intérêts des générations futures dans les décisions présentes. Cela passe, enfin, par un récit : celui d'une responsabilité qui nous relie à ceux qui viendront après nous, comme nous sommes reliés à ceux qui nous ont précédés.
 
 Penser à long terme n'est pas naturel ; c'est une conquête, une discipline, presque une vertu. La crise climatique nous oblige à l'acquérir. Peut-être est-ce là, au fond, l'un des rares bienfaits qu'elle pourrait nous apporter : nous forcer à devenir enfin les gardiens d'un avenir qui nous dépasse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13743,7 +13743,7 @@ Le vrai problème n'est donc pas de choisir entre la fin du mois et la fin du mo
 Concrètement, cela signifie que la transition écologique doit être juste : que ses coûts ne pèsent pas sur les plus fragiles, que les alternatives soient rendues accessibles à tous, que l'effort demandé soit proportionné aux moyens de chacun. Une écologie qui n'est pas sociale se condamne elle-même ; une politique sociale qui n'est pas écologique prépare de pires injustices.
 
 L'écologie n'est un luxe que lorsqu'on la conçoit mal. Bien pensée, elle est au contraire ce qui protège d'abord ceux qui ont le moins.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13766,7 +13766,7 @@ C'est ici qu'un autre espoir devient possible, à condition de le bien comprendr
 On pourrait même dire que l'espoir, ainsi entendu, n'est pas un préalable à l'action, mais son fruit. Ce n'est pas parce qu'on espère qu'on agit ; c'est souvent en agissant qu'on retrouve l'espoir. Ceux qui s'engagent, à leur mesure, témoignent presque tous de ce renversement : l'action, en donnant un sens et une prise, dissipe l'accablement que l'inaction entretient.
 
 L'espoir raisonnable n'est donc ni l'optimisme béat ni la résignation déguisée. C'est la conviction que, l'avenir restant indéterminé, il vaut la peine de se battre pour l'infléchir. Non parce que nous sommes sûrs de gagner, mais parce que nous ne sommes pas sûrs de perdre — et que c'est déjà une raison suffisante.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13789,7 +13789,7 @@ Dans cette perspective, consommer moins pourrait n'être pas un appauvrissement,
 Il faut se garder, ici, d'un piège inverse : celui de faire de la sobriété une nouvelle morale culpabilisante, ou de romantiser le manque. Vivre avec moins n'a de sens que si l'essentiel est assuré, et il serait cruel de prêcher la frugalité à ceux qui subissent déjà la privation. La sobriété heureuse est un choix ; imposée, elle n'est que misère.
 
 Mais pour ceux qui ont assez, la question mérite d'être posée sans préjugé : et si vivre mieux, ce n'était pas avoir davantage, mais désirer autrement ? Consommer moins n'est un appauvrissement que si l'on a d'abord confondu la richesse avec l'abondance des choses.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13812,7 +13812,7 @@ Ce qui reste, ensuite, c'est un rapport au savoir. L'école, quand elle réussit
 Ce qui reste, enfin, ce sont des rencontres et des ouvertures. Un professeur qui a transmis le goût d'une discipline, un livre qui a révélé un monde, une idée qui a bouleversé une manière de voir : ces éclairs-là façonnent une vie plus sûrement que mille leçons oubliées. L'école n'est pas seulement un lieu où l'on emmagasine ; c'est un lieu où l'on peut être éveillé.
 
 Reconnaître cela ne dispense pas de s'interroger sur ce que l'école transmet et sur la manière dont elle le fait. Mais cela déplace la question. Le but de l'éducation n'est pas de remplir des têtes de savoirs voués à s'effacer ; c'est de former des esprits capables de penser, de comprendre et de continuer à apprendre. À cette aune, ce qui s'oublie n'est pas ce qui compte le plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13835,7 +13835,7 @@ Pourquoi, dès lors, la craignons-nous tant ? Parce que nous avons été formés
 Changer notre rapport à l'erreur aurait des effets considérables, bien au-delà de l'école. Dans le travail, dans la création, dans la recherche, les avancées naissent presque toujours d'une succession d'échecs surmontés. Les milieux qui autorisent l'erreur, qui la traitent comme une information plutôt que comme une faute, sont ceux où l'on invente et où l'on progresse le plus. À l'inverse, la peur de se tromper stérilise.
 
 Il ne s'agit pas de célébrer l'erreur pour elle-même, ni de se satisfaire de ses fautes. Il s'agit de cesser de la diaboliser, pour y voir ce qu'elle est vraiment : non l'échec de l'apprentissage, mais son instrument le plus fidèle. Qui n'accepte jamais de se tromper se condamne, en réalité, à ne jamais vraiment apprendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13858,7 +13858,7 @@ C'est que la mémoire n'est pas un simple entrepôt d'informations, séparé de 
 Il ne s'agit pas de tout mémoriser, ni de tenir la mémorisation pour une fin en soi. L'accès facile à l'information est un progrès réel, et libérer l'esprit de certains fardeaux n'a rien de regrettable. Mais il faut distinguer ce qu'on peut sans dommage confier aux machines de ce qui doit demeurer en nous. Les connaissances fondamentales d'un domaine, celles qui permettent de comprendre et de raisonner, ne sauraient être déléguées sans que la pensée elle-même s'appauvrisse.
 
 La vraie question n'est donc pas de choisir entre mémoriser et consulter, mais de savoir quoi garder en soi et quoi confier au dehors. Un esprit qui ne retiendrait plus rien ne serait pas un esprit libéré ; ce serait un esprit dépossédé, incapable de penser sans béquille. Se souvenir reste, à l'ère de l'information disponible, une condition de la pensée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13881,7 +13881,7 @@ En vérité, comprendre et retenir ne s'opposent pas ; ils se soutiennent mutuel
 Le faux dilemme vient de ce qu'on a confondu la mauvaise mémorisation — mécanique, isolée, sans compréhension — avec la mémorisation en général. Or il existe une autre manière de retenir : celle qui accompagne la compréhension, qui fixe des savoirs qu'on a saisis et qui, à leur tour, permettront d'en comprendre de nouveaux. Cette mémoire-là n'est pas l'ennemie de l'intelligence ; elle en est l'un des fondements.
 
 La question n'est donc pas de choisir entre comprendre et retenir, comme s'il fallait sacrifier l'un à l'autre. Elle est de retenir en comprenant, et de comprendre grâce à ce qu'on a retenu. Séparer les deux, c'est se condamner soit à un savoir vide, soit à une compréhension sans objet.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13904,7 +13904,7 @@ Les recherches sur le cerveau confortent cette idée. Contrairement à une croya
 Encore faut-il se défaire de quelques obstacles intérieurs. Le premier est la croyance qu'on serait « trop vieux » pour apprendre, croyance qui, en décourageant d'essayer, se vérifie d'elle-même. Le second est la peur de recommencer, d'être débutant, de se tromper — cette peur de l'erreur qui, là encore, entrave l'apprentissage. Accepter d'être maladroit, de ne pas savoir, de progresser lentement, est le prix, modeste, de tout apprentissage nouveau.
 
 Apprendre toute la vie n'est donc pas seulement une obligation imposée par l'époque ; c'est une manière de rester pleinement vivant. L'esprit, comme le corps, s'entretient par l'exercice, et le jour où l'on cesse d'apprendre est peut-être celui où l'on commence, doucement, à vieillir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13927,7 +13927,7 @@ Cette conception élargie a des conséquences pratiques. Si la santé n'est pas 
 Il faut néanmoins se garder d'un excès. Faire de la santé un idéal de « bien-être complet » risque de la transformer en obligation permanente, en injonction à être toujours au mieux de sa forme. Or personne ne l'est en permanence, et culpabiliser de ne pas atteindre un état parfait serait une nouvelle forme de mal-être. La santé n'est pas une performance à réussir, mais un équilibre à chercher, toujours imparfaitement.
 
 Comprendre que la santé dépasse l'absence de maladie, c'est cesser d'attendre d'être malade pour s'en soucier. C'est reconnaître qu'elle se construit chaque jour, dans les gestes ordinaires d'une vie, et non seulement chez le médecin quand quelque chose ne va plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13950,7 +13950,7 @@ Il faut aussi mesurer ce que ces normes ont d'arbitraire et de changeant. Ce qui
 Reconnaître cela ne suffit pas à s'en libérer, mais aide à prendre du recul. Comprendre que ces images sont truquées, que ces normes sont arbitraires, que ce mal-être est en partie fabriqué, c'est commencer à desserrer leur emprise. On peut aussi choisir ce que l'on regarde, se détourner des sources qui nourrissent la comparaison, et rechercher des représentations plus diverses et plus vraies des corps réels.
 
 Le corps n'est pas d'abord un objet à donner à voir, un produit à conformer à une norme. Il est ce par quoi nous vivons, éprouvons, agissons. Renouer avec cette évidence — habiter son corps plutôt que le juger — est peut-être le premier pas vers une paix que nulle image parfaite ne procurera jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13973,7 +13973,7 @@ Comment expliquer, dès lors, que nous le maltraitions à ce point ? En partie p
 Réhabiliter le sommeil suppose donc un changement de regard. Il ne s'agit pas d'une faveur qu'on accorde à son corps quand on en a le loisir, mais d'un besoin fondamental qu'il faut respecter. Cela passe par des gestes concrets — des horaires réguliers, une chambre calme et sombre, une distance avec les écrans le soir —, mais surtout par une conviction : que le temps consacré à dormir n'est jamais du temps perdu.
 
 Bien dormir n'est pas un luxe ni une paresse ; c'est l'une des conditions les plus élémentaires d'une vie saine. En méprisant notre sommeil, c'est nous-mêmes que nous négligeons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -13996,7 +13996,7 @@ Il faut donc affirmer une évidence trop longtemps ignorée : la santé mentale 
 Les choses, heureusement, évoluent. On parle davantage, on comprend mieux, la parole se libère peu à peu, et des personnalités publiques osent témoigner de leurs propres épreuves, contribuant à faire reculer la honte. Ce mouvement, encore fragile, va dans le bon sens : il rapproche, lentement, le traitement des maux de l'esprit de celui des maux du corps.
 
 Guérir la tête comme le corps : cette formule simple résume tout un progrès à accomplir. Tant qu'elle ne sera pas une évidence pour tous, des personnes continueront de souffrir en silence, faute d'oser demander l'aide qu'on leur accorderait sans hésiter pour n'importe quelle blessure visible.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14019,7 +14019,7 @@ La deuxième raison est économique. Nos systèmes de santé sont largement orga
 La troisième raison, enfin, tient à nous-mêmes. Prévenir suppose d'agir aujourd'hui pour un bénéfice lointain et incertain, ce à quoi notre esprit, on l'a vu, résiste. Il est plus facile de remettre à plus tard les efforts qui protègent, quitte à devoir se soigner ensuite. La prévention se heurte à notre penchant pour l'immédiat.
 
 Rééquilibrer soin et prévention ne signifie pas renoncer à l'un pour l'autre ; les deux sont nécessaires. Il s'agit de cesser d'attendre la maladie pour agir, et de reconnaître à la prévention la place qu'elle mérite — dans nos systèmes de santé comme dans nos vies. Car la plus belle des guérisons reste celle dont on n'a jamais eu besoin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14042,7 +14042,7 @@ Pourquoi cet essoufflement ? En partie à cause de l'accoutumance déjà évoqu�
 Il y a plus troublant encore : la manière dont on gagne et dépense l'argent compte davantage que la somme elle-même. Un travail épuisant qui rapporte beaucoup peut nuire au bonheur qu'il prétend servir. Et les recherches montrent qu'on tire plus de satisfaction à dépenser pour des expériences, ou pour autrui, que pour accumuler des biens. Ce n'est pas seulement combien l'on a, mais ce qu'on en fait, qui importe.
 
 La réponse honnête à la vieille question est donc nuancée. L'argent ne fait pas le bonheur, mais son manque fait le malheur ; il y contribue, mais de moins en moins ; il compte, mais moins que l'usage qu'on en fait. Le mépriser serait naïf ; en attendre le bonheur le serait tout autant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14065,7 +14065,7 @@ Cet exercice ouvre alors une possibilité : celle de réaligner ses dépenses su
 Il faut se garder, ici, d'un piège : celui de croire que tout se réduit à l'argent. Bien des choses précieuses ne s'achètent pas, et une vie n'est pas la somme de ses dépenses. Mais dans un monde où l'argent est le moyen de tant de choses, la manière dont nous l'employons reste un révélateur fidèle de ce que nous sommes.
 
 Se demander « où va mon argent ? », c'est donc se demander, indirectement, « qu'est-ce qui compte vraiment pour moi ? ». La réponse, inscrite dans nos relevés plus sûrement que dans nos discours, mérite qu'on la regarde en face.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14088,7 +14088,7 @@ Comprendre cela transforme le regard que l'on porte sur la consommation. Cela in
 Cette lucidité a aussi une portée collective. Si les prix disaient la vérité — s'ils intégraient les coûts aujourd'hui externalisés —, bien des produits nuisibles seraient plus chers, et bien des produits vertueux plus compétitifs. Faire en sorte que les prix reflètent les coûts réels est l'un des grands enjeux d'une économie plus juste et plus durable, même s'il se heurte à d'immenses résistances.
 
 Le prix n'est donc qu'une information partielle, et parfois mensongère. Derrière les chiffres affichés se cache une réalité plus complexe, qu'il vaut la peine d'apprendre à voir. Car ce que nous ne payons pas, quelqu'un, quelque part, le paie à notre place.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14111,7 +14111,7 @@ Il faut donc distinguer deux usages de la dette, aussi différents que possible.
 Se prémunir contre la mauvaise dette suppose quelques principes simples : n'emprunter que ce qu'on peut rembourser sans détresse, se méfier des crédits faciles et coûteux, distinguer le désir de l'instant du besoin réel. Cela suppose surtout de résister à une culture qui fait de l'endettement une habitude et de la patience une faiblesse.
 
 La question n'est donc pas de bannir le crédit, mais de rester son maître plutôt que son serviteur. Un emprunt au service d'un projet est un outil de liberté ; une dette qui gouverne la vie en est le contraire. Toute la différence tient dans ce renversement, qu'il vaut mieux prévenir que subir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14134,7 +14134,7 @@ Poser la question du « assez », c'est donc introduire une rupture dans cette l
 Encore faut-il se garder d'un malentendu. Parler d'« assez » n'a de sens que pour qui possède déjà le nécessaire. À celui qui manque de l'essentiel, il serait indécent de prêcher la modération : son problème n'est pas d'avoir trop, mais trop peu. La question du « assez » s'adresse à ceux, nombreux dans les sociétés d'abondance, qui ont depuis longtemps dépassé le seuil des besoins réels sans jamais s'en apercevoir.
 
 Savoir dire « c'est assez » est peut-être l'une des libertés les plus rares et les plus précieuses de notre temps. Dans un monde qui vit de notre insatiabilité, reconnaître qu'on a assez est presque un acte de résistance — et sans doute l'une des conditions d'une vie apaisée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14157,7 +14157,7 @@ Il y a plus troublant encore : notre manière de voyager transforme, et souvent 
 Faut-il pour autant renoncer au voyage, ou le réserver de nouveau à quelques privilégiés ? Ce serait une conclusion injuste et triste. Le problème n'est pas de voyager, mais la manière dont nous le faisons. On peut voyager autrement : moins loin peut-être, mais plus longtemps ; moins vite, mais plus attentivement ; en cherchant non à consommer des lieux, mais à les comprendre et à s'y laisser surprendre.
 
 Voyager vraiment n'est pas une question de distance ni de nombre de pays visités. C'est une question de disposition intérieure : celle qui accepte d'être dépaysé, ralenti, changé. À cette aune, on peut faire le tour du monde sans jamais voyager, et voyager profondément à quelques heures de chez soi. Tout dépend, au fond, non de l'endroit où l'on va, mais de la façon dont on y regarde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14180,7 +14180,7 @@ Pourquoi ce problème est-il si difficile à résoudre ? Parce que le tourisme r
 Des solutions existent pourtant, même si elles se heurtent à ces résistances : limiter le nombre de visiteurs, encadrer les hébergements touristiques, protéger le logement des habitants, répartir les flux dans le temps et l'espace. Aucune n'est simple, toutes supposent de faire passer l'intérêt des lieux et de ceux qui les habitent avant le profit immédiat.
 
 Le surtourisme nous tend, au fond, un miroir. Il montre ce qui arrive lorsqu'on traite un lieu comme une simple ressource à exploiter, sans égard pour ceux qui y vivent. Et il rappelle une vérité que le voyageur oublie souvent : les endroits que nous aimons visiter sont d'abord les maisons d'autres que nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14203,7 +14203,7 @@ Ce phénomène s'aggrave lorsque la photographie n'est plus destinée à nous, m
 Faut-il alors renoncer à photographier ? Ce serait excessif, car l'image a aussi ses vertus : elle peut raviver un souvenir, prolonger une émotion, partager une beauté. Le problème n'est pas la photographie en soi, mais son automatisme, qui nous fait saisir avant d'avoir regardé. On peut photographier autrement : moins, mieux, après avoir d'abord contemplé.
 
 Peut-être faudrait-il, devant ce qui nous émeut, résister au premier réflexe et commencer par regarder — vraiment, longuement, sans appareil. Puis, seulement ensuite, décider si l'on veut en garder une image. Car aucune photographie ne remplacera jamais ce qu'on n'a pas pris le temps de voir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14226,7 +14226,7 @@ Mais cette confrontation peut aussi être une leçon de reconnaissance. En déco
 C'est pourquoi le voyage véritable exige une disposition particulière : celle de se laisser interroger. Le voyageur qui juge tout à l'aune de ses propres habitudes, qui trouve « bizarre » ou « arriéré » ce qui diffère de lui, ne verra dans l'étranger qu'une déviation par rapport à sa norme. Il ne voyage pas vraiment : il transporte son monde avec lui. Voyager, c'est au contraire accepter, un temps, de voir avec d'autres yeux.
 
 Le plus beau bénéfice du voyage n'est donc peut-être pas ce qu'il nous fait découvrir du monde, mais ce qu'il nous fait découvrir de nous-mêmes. On part chercher l'ailleurs ; on revient avec un peu plus de lucidité sur soi. L'étranger, décidément, est le meilleur des miroirs.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14249,7 +14249,7 @@ Une réponse plus juste consisterait à réfléchir en termes de mesure, non de 
 Il faut aussi refuser une hypocrisie fréquente : celle qui fait peser toute la responsabilité sur les individus, tout en laissant intactes les structures qui rendent les alternatives difficiles. Tant que le train coûtera plus cher que l'avion, tant que les transports peu polluants resteront lents et rares, il sera injuste de reprocher à chacun ses choix contraints. La question du voyage rejoint ici celle, plus large, d'une transition qui doit être collective pour être juste.
 
 Faut-il donc culpabiliser de prendre l'avion ? Non, si la culpabilité ne mène à rien. Oui, en revanche, à s'interroger, à modérer, à choisir avec conscience. Le voyage n'est ni un droit sans coût ni un péché à expier, mais un bien précieux dont il nous faut apprendre à user avec plus de mesure.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14272,7 +14272,7 @@ L'art a aussi ce pouvoir singulier de nous faire éprouver ce que nous ne vivron
 Il faut se garder, ici, de deux erreurs opposées. La première serait de mépriser l'art comme un luxe superflu, bon pour les temps d'abondance. La seconde serait d'en faire une religion, de le sacraliser jusqu'à le rendre intimidant, réservé à quelques initiés. L'art n'est ni un ornement inutile ni un culte réservé ; il est un besoin humain fondamental, aussi ancien que l'humanité elle-même, et accessible, sous mille formes, à chacun.
 
 À quoi sert l'art ? À rien, si l'on entend par là une utilité pratique. À tout, si l'on comprend qu'une vie purement utile ne serait pas une vie humaine. L'art ne nous aide pas à vivre ; il est une part de ce qui fait que la vie vaut d'être vécue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14295,7 +14295,7 @@ Il y a même quelque chose de précieux dans cette rencontre directe, non média
 Le danger de la croyance selon laquelle « il faut comprendre » est justement là : elle décourage, elle intimide, elle éloigne de l'art ceux qui, faute de savoir, n'osent plus ressentir. Elle transforme ce qui devrait être une rencontre libre en un examen que l'on craint d'échouer. Combien renoncent à entrer dans un musée ou à écouter une œuvre exigeante, persuadés que « ce n'est pas pour eux » ?
 
 La vérité est plus accueillante : on peut apprécier sans tout comprendre, ressentir sans savoir expliquer, être touché sans pouvoir en rendre raison. Le savoir peut venir ensuite, approfondir, enrichir — et il en vaut la peine. Mais il n'est pas le péage à payer pour avoir droit à l'émotion. Devant une œuvre, la première chose à faire n'est pas de comprendre ; c'est de se laisser toucher.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14318,7 +14318,7 @@ C'est qu'il existe une différence entre le goût comme simple préférence et l
 Reconnaître cela n'a rien d'élitiste, à condition de ne pas confondre le discernement avec le mépris. Dire que certains jugements sont plus éclairés que d'autres ne revient pas à mépriser ceux qui aiment des choses simples ; c'est seulement affirmer que le goût peut s'approfondir, et qu'il vaut la peine de le cultiver. Celui qui a appris à apprécier une musique complexe n'a pas un goût « meilleur » en tant que personne ; il a un goût plus formé, qui lui ouvre des plaisirs plus riches.
 
 Le goût, en somme, se discute et ne se discute pas, selon ce qu'on entend par là. Comme préférence brute, il échappe à la discussion ; comme discernement cultivé, il l'appelle. Entre le relativisme qui nivelle tout et l'arrogance qui méprise, il y a place pour une attitude plus juste : respecter les goûts de chacun, tout en croyant qu'il vaut la peine d'éduquer le sien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14341,7 +14341,7 @@ C'est pourquoi la plupart des sociétés ont estimé que la culture ne devait pa
 Cette conviction ne va pas sans tensions ni sans abus, et l'on peut discuter des formes que doit prendre le soutien à la culture. Mais le principe demeure : une œuvre n'est pas seulement une marchandise, parce que sa valeur ne se mesure pas seulement à ce qu'elle rapporte. Un livre qui ne se vend guère peut compter immensément ; un succès commercial peut n'avoir aucune portée durable. Le marché mesure une chose ; la valeur culturelle en est une autre.
 
 Traiter la culture comme un bien ordinaire, ce serait donc oublier ce qui la rend précieuse. Non qu'il faille la soustraire à toute économie — c'est impossible et ce ne serait pas souhaitable —, mais parce qu'il faut la protéger d'une logique qui, laissée seule, finirait par la réduire à ce qui se vend, en sacrifiant ce qui vaut.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14364,7 +14364,7 @@ Il y a plus. Ce qu'on appelle un « classique » n'est pas seulement une œuvre 
 Cette part d'arbitraire ne doit pourtant pas conduire au relativisme, à l'idée que tout se vaudrait et que la durée serait pur hasard. Car si le hasard fait beaucoup, il ne fait pas tout : une œuvre sans qualité ne dure pas longtemps, quelle que soit la faveur dont elle bénéficie d'abord. Le mérite ne suffit pas à assurer la survie, mais il en est le plus souvent la condition. Le temps ne garde pas toujours le meilleur, mais il finit par écarter ce qui n'a rien à dire.
 
 Pourquoi certaines œuvres traversent-elles le temps ? Par un mélange de valeur propre, de circonstances favorables et de choix collectifs sans cesse renouvelés. Ni pur mérite ni pur hasard : les deux, entremêlés. Ce qui devrait nous rendre à la fois exigeants envers ce que nous créons, et humbles devant ce que nous jugeons — car nous ne savons jamais tout à fait ce que l'avenir retiendra de nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14387,7 +14387,7 @@ Connaître le passé, c'est aussi apprendre que le monde n'a pas toujours été 
 Il y a enfin, dans l'étude du passé, une dimension proprement humaine. Se pencher sur ceux qui nous ont précédés, sur leurs espoirs, leurs souffrances, leurs combats, c'est étendre notre humanité au-delà des étroites limites de notre propre temps. C'est reconnaître une dette envers ceux qui ont bâti le monde dont nous héritons, et une responsabilité envers ceux qui hériteront du nôtre. L'histoire nous inscrit dans une chaîne qui nous dépasse.
 
 À quoi sert donc de connaître le passé ? Non à en tirer des recettes, mais à comprendre d'où nous venons, à mesurer que les choses peuvent changer, à nous relier à ce qui nous précède. Un peuple sans mémoire est comme un homme amnésique : il ne sait plus qui il est. C'est pourquoi, bien qu'on ne puisse rien changer au passé, il importe tant de ne pas l'oublier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14410,7 +14410,7 @@ Ces conflits de mémoire sont souvent douloureux, et il serait tentant de vouloi
 À l'inverse, une mémoire obsédée par les seules fautes, incapable de reconnaître aussi ce qui fut grand, sombrerait dans une autocritique stérile. L'enjeu n'est pas de choisir entre la fierté et la honte, mais de tenir ensemble la vérité tout entière : les grandeurs et les crimes, sans complaisance ni reniement. Une mémoire adulte est celle qui peut regarder son passé en face, dans toute sa complexité.
 
 La manière dont un peuple se souvient dit donc beaucoup de sa maturité. Assumer son passé, y compris ses zones d'ombre, sans s'y complaire ni le nier, est le signe d'une société sûre d'elle-même. Car on ne se construit pas sur un mensonge, fût-il flatteur, mais sur la vérité, fût-elle difficile.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14433,7 +14433,7 @@ Entre ces deux impasses, une voie plus juste consiste à distinguer comprendre e
 Cette distinction permet aussi une forme d'humilité. Car si nous jugeons sévèrement l'aveuglement de nos ancêtres, nous devrions nous souvenir que nous avons, nous aussi, nos aveuglements, que les générations futures jugeront peut-être avec la même sévérité. Nous tolérons sans doute, aujourd'hui, des choses qui paraîtront un jour scandaleuses. Juger le passé devrait donc nous rendre non pas arrogants, mais lucides sur notre propre temps.
 
 Juger le passé avec les yeux d'aujourd'hui, c'est donc à la fois nécessaire et périlleux. Nécessaire, car renoncer à tout jugement serait renoncer à la morale ; périlleux, car juger sans comprendre est injuste. La sagesse consiste à tenir les deux : comprendre sans absoudre, juger sans se croire supérieur. Et à ne jamais oublier que nous serons, à notre tour, jugés.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14456,7 +14456,7 @@ Le danger apparaît lorsque ce récit, au lieu de simplement unir, se met à exc
 Faut-il alors renoncer à tout récit national, au nom de la seule vérité historique ? Ce serait à la fois impossible et dangereux. Impossible, car aucune communauté ne se passe de récit ; dangereux, car le vide laissé serait aussitôt comblé par des récits plus grossiers. L'enjeu n'est pas de supprimer le récit, mais de le vouloir plus honnête : capable d'unir sans mentir, de fonder une appartenance sans nier la complexité, d'être fier sans être aveugle.
 
 Une nation adulte est celle qui peut se raconter une histoire vraie, avec ses grandeurs et ses fautes, et y trouver malgré tout de quoi tenir ensemble. C'est là un équilibre difficile, toujours menacé, entre le mythe qui unit et la vérité qui libère. Mais c'est à cette condition qu'un récit commun peut rassembler les vivants sans les armer contre d'autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14479,7 +14479,7 @@ C'est que le souvenir peut prendre des formes très différentes. Se souvenir en
 Le souvenir n'est donc une protection qu'à certaines conditions. Il faut qu'il s'accompagne de compréhension, qu'il vise à reconnaître les mécanismes du mal plutôt qu'à seulement en pleurer les victimes, qu'il éclaire le présent plutôt que d'enfermer dans le passé. Un souvenir intelligent regarde moins vers l'arrière que vers l'avant : il scrute le présent pour y déceler les signes de ce qu'il connaît.
 
 Se souvenir pour ne pas recommencer : oui, mais à condition de se souvenir vraiment, c'est-à-dire de comprendre. La mémoire n'est pas une garantie automatique ; c'est une vigilance à entretenir, un travail toujours à reprendre. Elle ne nous protège que si nous la faisons travailler, non si nous la laissons dormir dans les commémorations.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14502,7 +14502,7 @@ Il faut se garder, ici, de deux erreurs symétriques. La première, qu'on pourra
 La juste attitude tient dans un double respect. Respect de la science dans son domaine : sur les questions de fait, son autorité est légitime, et lui préférer l'opinion ou la croyance est déraisonnable. Respect, aussi, de ce qui échappe à son domaine : les questions de sens et de valeur, qu'elle ne saurait trancher, appellent d'autres ressources — la philosophie, la morale, l'expérience, la sagesse.
 
 La science est un instrument admirable, mais un instrument, non un oracle universel. Savoir ce qu'elle peut nous éviter de la mépriser ; savoir ce qu'elle ne peut pas nous éviter de lui demander ce qu'elle ne saurait donner. Entre l'idolâtrie et la méfiance, il y a place pour une confiance lucide.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14525,7 +14525,7 @@ C'est ce doute méthodique qui fait la fiabilité de la science, malgré ses err
 Il faut cependant se garder d'un contresens. Que la science se corrige ne signifie pas que tout s'y vaut, ni que ses conclusions actuelles ne mériteraient aucune confiance sous prétexte qu'elles pourraient changer. Une théorie longuement éprouvée, confirmée par d'innombrables observations, mérite qu'on s'y fie, même si l'avenir peut l'affiner. Du fait que la science est révisable, on ne saurait conclure que ses résultats seraient sans valeur : ce serait confondre la prudence avec le scepticisme paresseux.
 
 Le doute, bien compris, n'affaiblit donc pas la science ; il la fonde. Se défier de ce qui ne doute jamais, faire confiance à ce qui accepte de se corriger : voilà peut-être la leçon la plus précieuse que la science puisse nous transmettre, bien au-delà de ses résultats. Car cette disposition à réviser ses croyances devant les faits n'est pas seulement une méthode scientifique ; c'est une vertu intellectuelle dont nos débats, souvent, manquent cruellement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14548,7 +14548,7 @@ Ensuite, il faut distinguer l'accord et le désaccord des experts. Lorsque, sur 
 Il faut enfin s'interroger sur les intérêts. Un expert n'est pas un pur esprit : il peut être influencé par ce qui le finance, par ses convictions, par les intérêts qu'il sert. Cela ne suffit pas à le disqualifier — un chercheur financé peut dire vrai —, mais invite à la vigilance, surtout quand ses conclusions coïncident opportunément avec les intérêts de qui le rémunère. Chercher qui parle, et au nom de quoi, fait partie d'un jugement éclairé.
 
 Faire confiance aux experts n'est donc ni une abdication ni une naïveté, à condition de le faire avec discernement : respecter la compétence dans son domaine, suivre les consensus solides, rester prudent devant les désaccords, s'interroger sur les intérêts. On peut ainsi se fier à ceux qui savent sans renoncer à son jugement — car le vrai jugement ne consiste pas à tout savoir soi-même, mais à savoir raisonnablement à qui se fier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14571,7 +14571,7 @@ Résister à cette tentation demande un effort, et même un certain courage : ce
 Cela ne signifie pas qu'il faille se réfugier dans un scepticisme paralysant, où rien ne serait jamais explicable. Toutes les explications ne se valent pas, et certaines, quoique complexes, sont solidement établies. Il ne s'agit pas de renoncer à comprendre, mais de se méfier des compréhensions trop faciles, de préférer une vérité compliquée à un mensonge limpide. La simplicité peut être la marque d'une pensée profonde ; elle est plus souvent celle d'une pensée paresseuse.
 
 Se défier des explications simples, c'est cultiver une forme de maturité intellectuelle : celle qui préfère l'inconfort du vrai au confort du faux, qui accepte que le monde résiste à nos désirs de clarté. Dans un temps où tant de voix offrent des réponses tranchées à des questions complexes, cette défiance n'est pas un luxe ; c'est une nécessité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14594,7 +14594,7 @@ Comprendre le hasard, c'est donc d'abord accepter une idée dérangeante : bien 
 Cette compréhension a des vertus concrètes. Elle rend plus prudent devant les coïncidences, plus modeste devant ses réussites comme devant ses échecs, plus résistant aux illusions qui exploitent notre difficulté avec le hasard. Elle protège contre ceux qui, jouant sur ce penchant, nous vendent des causes imaginaires, des remèdes miracles, des explications trompeuses de ce qui n'est que fluctuation. Savoir reconnaître le hasard, c'est se prémunir contre une foule d'erreurs et de manipulations.
 
 Comprendre le hasard, enfin, est une forme de sagesse. C'est accepter que nous ne contrôlons pas tout, que la chance joue dans nos vies un rôle que nous préférons ignorer, que tout n'a pas un sens caché. Cette lucidité peut sembler austère ; elle est aussi libératrice. Car reconnaître la part du hasard, c'est cesser de chercher désespérément un sens là où il n'y en a pas, et concentrer son intelligence là où elle peut vraiment comprendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14617,7 +14617,7 @@ Des recherches ont mis en évidence de tels effets, subtils mais réels. Selon l
 Cette conclusion mesurée a des implications qui dépassent la linguistique. Elle suggère que parler plusieurs langues, c'est disposer de plusieurs manières de découper le monde, donc, en un sens, enrichir sa pensée de perspectives multiples. Elle invite aussi à la vigilance : si les mots orientent l'esprit, alors le choix des mots, dans le débat public, n'est jamais innocent. Nommer une réalité d'une certaine façon, c'est déjà incliner à la voir ainsi.
 
 Les mots ne façonnent donc pas la pensée à eux seuls, mais ils ne la laissent pas non plus intacte. Entre le mythe d'une langue qui déterminerait tout et l'illusion d'une pensée totalement indépendante des mots, la vérité tient dans cet entre-deux : la langue est moins une prison qu'un paysage, où certains chemins sont plus faciles que d'autres, mais où l'esprit, toujours, peut tracer de nouvelles voies.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14640,7 +14640,7 @@ On peut comparer cette perte à celle de la biodiversité. De même que la dispa
 Il faut néanmoins se garder d'un idéalisme qui ignorerait les réalités. Les langues meurent rarement par hasard : elles disparaissent souvent parce que leurs locuteurs, sous la pression économique ou sociale, sont contraints d'en adopter une autre pour vivre. On ne peut donc défendre les langues menacées sans se soucier du sort de ceux qui les parlent. Préserver une langue contre la volonté de ses locuteurs n'aurait pas de sens ; il s'agit plutôt de leur donner les moyens de la garder s'ils le souhaitent, sans avoir à sacrifier leur avenir.
 
 Défendre les langues qui meurent, ce n'est donc pas s'opposer par nostalgie au cours du monde. C'est reconnaître que chaque langue est une richesse irremplaçable, et refuser qu'elle disparaisse par simple négligence ou sous la contrainte. Un monde qui ne parlerait plus qu'une poignée de langues serait peut-être plus commode ; il serait, à coup sûr, infiniment plus pauvre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14663,7 +14663,7 @@ Il y a plus. Une langue n'appartient pas à une académie ni à quelques gardien
 La vérité est sans doute que ces deux forces sont l'une et l'autre nécessaires, et que leur tension même est féconde. La norme retient, stabilise, transmet ; l'usage innove, adapte, renouvelle. Une langue livrée à la seule norme se figerait et s'éloignerait de ses locuteurs ; une langue livrée au seul usage, sans aucun repère commun, risquerait de se fragmenter. C'est de l'équilibre entre ces deux tendances que naît une langue à la fois stable et vivante.
 
 La langue appartient donc bien à ceux qui la parlent, mais ceux qui la parlent ont aussi intérêt à en préserver la cohérence. Entre le conservatisme qui voudrait tout figer et le laisser-faire qui renoncerait à toute règle, la sagesse consiste à accompagner l'évolution sans la précipiter ni la refuser — à traiter la langue non comme un monument à conserver intact, ni comme une matière informe, mais comme un héritage vivant qu'on transmet en le laissant, prudemment, changer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14686,7 +14686,7 @@ Il y a plus troublant encore. L'éloquence peut non seulement masquer l'absence 
 Inversement, une pensée juste peut se dire maladroitement. Bien des gens qui pensent avec profondeur s'expriment sans éclat, hésitent, cherchent leurs mots, et nous les jugeons à tort médiocres parce qu'ils manquent d'aisance. Nous risquons ainsi de préférer un beau parleur creux à un penseur maladroit mais juste, trompés par la forme au détriment du fond. La séduction de l'éloquence peut nous rendre injustes envers la vérité mal habillée.
 
 Bien parler n'est donc ni la garantie ni la preuve de bien penser. C'en est parfois le signe, parfois le masque. La sagesse consiste à ne pas se laisser éblouir par la forme, à chercher sous les mots la solidité des idées, à se méfier de sa propre tendance à croire ce qui est bien dit. Non pour mépriser l'éloquence — qui, au service du vrai, est précieuse —, mais pour ne jamais la confondre avec la vérité qu'elle peut aussi bien servir que trahir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14709,7 +14709,7 @@ Dans l'échange même, le silence a des vertus que la parole abondante ne rempla
 Il ne s'agit pas, bien sûr, de faire du silence une valeur absolue, ni de mépriser la parole, qui reste le moyen par excellence de nous comprendre et de nous relier. Le silence a aussi ses ombres : il peut être fuite, lâcheté, refus de dire ce qui devrait l'être. Se taire quand il faudrait parler, garder le silence devant l'injustice, n'a rien d'une vertu. Le silence ne vaut pas en lui-même ; il vaut par ce qu'il porte et par le moment où on le choisit.
 
 Le silence a donc bien un sens, et même plusieurs. Loin d'être le simple contraire de la communication, il en est une part essentielle, que notre culture bavarde a désappris à entendre. Retrouver le sens du silence — savoir se taire, écouter, laisser de l'espace, habiter les vides plutôt que les fuir —, c'est peut-être retrouver une part de ce que le trop-plein de paroles nous a fait perdre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14732,7 +14732,7 @@ Une troisième réponse déplace encore la question. Ce qui importe, dit-elle, n
 Ces conceptions ne sont pas de simples opinions arbitraires ; chacune s'appuie sur des valeurs respectables — la liberté, l'égalité, la dignité, la responsabilité — qui comptent toutes, mais qui entrent en tension. On ne peut maximiser à la fois la récompense du mérite et la correction des inégalités de naissance ; il faut arbitrer, et c'est dans cet arbitrage que se logent nos désaccords. Ceux qui s'opposent sur la justice ne sont pas, le plus souvent, les uns justes et les autres non : ils accordent un poids différent à des valeurs également légitimes.
 
 Reconnaître cela ne résout pas le désaccord, mais le rend plus fécond. Cela permet de cesser de voir dans l'adversaire un ennemi de la justice, pour comprendre qu'il en a une autre conception, fondée sur d'autres priorités. Une société juste n'est peut-être pas celle qui aurait trouvé la formule définitive de la justice — il n'y en a pas —, mais celle qui sait débattre de ces tensions sans les trancher par la force, et chercher, sans jamais l'atteindre tout à fait, un équilibre entre des exigences toutes réelles.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14755,7 +14755,7 @@ Mais supposons même l'égalité des chances parfaitement réalisée : suffirait
 Il y a plus. L'idée même de mérite, sur laquelle repose l'égalité des chances, est fragile. Car les talents, l'énergie, la capacité de travail, dont dépend la réussite dans une compétition équitable, sont eux-mêmes largement des dons, hérités ou reçus, dont nul n'est vraiment l'auteur. Celui qui gagne parce qu'il est plus doué mérite-t-il pleinement sa victoire, s'il n'a pas mérité son don ? L'égalité des chances déplace la loterie de la naissance sans l'abolir tout à fait.
 
 L'égalité des chances est donc un idéal précieux, mais ni pleinement réalisé ni pleinement suffisant. Précieux, car il vaut mieux une société qui s'en approche qu'une société où tout se joue à la naissance. Insuffisant, car même parfaite, elle laisse entières les questions du sort des perdants et de la dignité due à tous. La justice ne se réduit pas à organiser une compétition équitable ; elle concerne aussi ce qu'on doit à chacun, gagnant ou perdant, dans une société qui se veut humaine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14778,7 +14778,7 @@ Une troisième raison, plus obscure, est de rétribuer : le coupable doit payer,
 Une quatrième raison, enfin, est de corriger : la punition devrait viser à amender le coupable, à le réinsérer, à faire en sorte qu'il ne recommence pas et retrouve une place dans la société. Cette fonction, la plus tournée vers l'avenir, est aussi la plus exigeante et la plus souvent négligée. Une société qui punit sans jamais chercher à réinsérer se condamne à produire des récidivistes, et manque à ce qu'elle doit même à ceux qui ont fauté : la possibilité de se racheter.
 
 Ces quatre buts — protéger, dissuader, rétribuer, corriger — coexistent dans nos systèmes pénaux sans jamais s'accorder pleinement. Ce qui sert l'un dessert parfois l'autre : la sévérité qui prétend dissuader ou rétribuer contrarie souvent la réinsertion. Réfléchir à la punition, c'est d'abord clarifier ce qu'on en attend, et accepter qu'on ne peut tout obtenir à la fois. Une société se juge peut-être moins à la façon dont elle punit qu'à la clarté avec laquelle elle sait pourquoi elle le fait — et à la place qu'elle laisse, malgré tout, au rachat.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14801,7 +14801,7 @@ Il y a plus. Les libertés, entre elles, entrent souvent en conflit, sans qu'auc
 C'est pourquoi la question des limites de la liberté ne se règle pas par une formule, mais par une délibération continue. Une société doit constamment décider, sur mille sujets, où placer les bornes : quelles libertés protéger absolument, lesquelles limiter au nom d'autrui ou de l'intérêt commun, comment arbitrer entre des libertés rivales. Ces décisions ne sont jamais définitives ; elles se rediscutent à chaque époque, à mesure que changent les mœurs et les techniques.
 
 La belle formule sur la liberté des uns et des autres n'est donc pas fausse ; elle est seulement le début du problème, non sa solution. Elle nous rappelle un principe essentiel — que ma liberté n'est pas illimitée, qu'elle doit composer avec celle d'autrui —, mais elle nous laisse toute la tâche difficile : tracer, cas par cas, la frontière qu'elle se contente de nommer. Vivre libres ensemble, c'est accepter de rediscuter sans fin cette frontière, plutôt que de croire qu'une phrase pourrait la fixer une fois pour toutes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14824,7 +14824,7 @@ Une deuxième position affirme donc qu'il existe une justice supérieure à la l
 Reste à savoir quand la désobéissance est légitime, car ce ne peut être à la seule mesure de nos préférences. Une pensée s'est développée autour de cette question, celle de la désobéissance civile, qui en précise les conditions : qu'il s'agisse d'une injustice grave et non d'un simple désaccord ; que la désobéissance soit publique et non clandestine ; qu'elle soit non violente ; que celui qui désobéit accepte d'en assumer les conséquences légales. À ces conditions, désobéir n'est pas nier la loi, mais en appeler, au nom de la justice, à une loi meilleure.
 
 Faut-il donc obéir à des lois injustes ? En règle générale, oui, car l'obéissance aux lois est la condition de la vie commune, et le désaccord doit d'abord chercher la voie du changement légal. Mais il est un point au-delà duquel l'injustice devient si grave que l'obéissance elle-même devient complicité. Reconnaître ce point, sans en abuser, est l'une des responsabilités les plus lourdes du citoyen. La loi mérite le respect ; la justice, davantage encore — et savoir distinguer, dans les cas extrêmes, ce qu'on doit à l'une et à l'autre, est peut-être la marque même de la conscience.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14847,7 +14847,7 @@ Or cette construction n'est pas sans conséquences, et beaucoup sont fâcheuses.
 Faut-il pour autant nier toute différence entre l'humain et le reste du vivant ? Ce serait un excès inverse. Nous avons des capacités singulières — le langage, la réflexion, la culture, une puissance d'agir sans équivalent — qui font de nous des êtres à part, non par nature séparée, mais par responsabilité accrue. Reconnaître notre appartenance à la nature n'efface pas notre spécificité ; elle lui donne son vrai sens : non celui d'une domination, mais celui d'une responsabilité envers un monde dont nous faisons partie.
 
 Repenser notre rapport à la nature suppose donc de dépasser la séparation qui nous en a fait des étrangers. Non pour nous dissoudre dans elle, ni pour renoncer à ce qui nous distingue, mais pour nous reconnaître comme ce que nous sommes : une partie du vivant, singulière et responsable, dont le sort est lié à celui de l'ensemble. Se savoir dans la nature, et non au-dessus, est peut-être le premier pas vers un rapport plus juste au monde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14870,7 +14870,7 @@ Les objections, cependant, ne manquent pas. On fait valoir qu'un fleuve n'a pas 
 Ces objections ne sont pas sans force, mais elles ne tranchent pas la question. Après tout, le droit a toujours procédé par fictions utiles : une entreprise, une association sont des « personnes » juridiques sans avoir de conscience, et nul ne s'en offusque. Que la nature soit défendue par des humains parlant en son nom ne diffère pas fondamentalement de la manière dont on défend les droits d'un enfant ou d'un être incapable de se défendre seul. L'essentiel est peut-être moins la cohérence juridique parfaite que le changement de regard qu'une telle reconnaissance opère.
 
 Que la nature ait ou non des droits au sens strict, la question elle-même est révélatrice. Elle marque une insatisfaction croissante à l'égard d'un monde où tout ce qui n'est pas humain n'est que matière exploitable. Qu'on réponde par des droits ou par d'autres moyens, l'enjeu demeure : trouver les formes juridiques et morales d'un rapport à la nature qui ne la réduise plus à une chose. Et sur ce point, la simple émergence de la question est déjà, peut-être, un progrès.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14893,7 +14893,7 @@ Cette hypothèse, qu'on ne saurait tenir pour certaine, éclaire cependant un ph
 Reconnaître ce besoin a des implications concrètes. Cela fait de l'accès à la nature non un luxe, mais une composante de la santé et du bien-être, qui devrait être garantie à tous. Végétaliser les villes, préserver et créer des espaces verts, rapprocher les enfants du vivant : ces choix, souvent traités comme des ornements, apparaissent alors comme des nécessités. Une ville sans nature n'est pas seulement moins agréable ; elle est, en un sens, moins humaine.
 
 Le besoin de nature nous rappelle enfin ce que la séparation d'avec elle nous fait oublier : que nous en faisons partie, et qu'elle nous manque quand nous en sommes coupés. Ce bien-être que nous éprouvons devant un arbre ou une rivière n'est pas une nostalgie sentimentale ; c'est peut-être le signe, inscrit en nous, de notre appartenance au monde vivant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14916,7 +14916,7 @@ Mais l'argument le plus intéressant est d'un autre ordre. Il y a une valeur, di
 Cette valeur du sauvage rejoint quelque chose de notre propre équilibre. Face à un monde entièrement humanisé, où tout porterait notre marque, nous perdrions un point de repère essentiel : la mesure de ce qui nous dépasse. Le sauvage est une leçon d'humilité, un rappel de nos limites, une présence de l'autre qui nous empêche de nous croire seuls au monde. Le préserver, ce n'est pas seulement protéger des écosystèmes ; c'est préserver une certaine idée de notre place, ni toute-puissante ni centrale.
 
 Faut-il donc laisser une place au sauvage ? Oui, pour des raisons qui vont de la simple prudence à une exigence plus haute. Non que l'humanité doive renoncer à transformer le monde — elle ne le peut ni ne le doit —, mais qu'elle sache s'imposer des limites, réserver des espaces à ce qui n'est pas elle. Une civilisation se juge peut-être aussi à ce qu'elle sait ne pas s'approprier, à sa capacité à laisser, quelque part, le monde être sans elle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14939,7 +14939,7 @@ Reconnaître cette incohérence ne conduit pas nécessairement à une conclusion
 Ce qui est certain, c'est que l'ampleur de la souffrance animale que nous infligeons ne peut plus être ignorée. Les conditions dans lesquelles sont élevés et abattus la plupart des animaux destinés à notre consommation heurtent, dès qu'on les regarde en face, le principe même que nous reconnaissons : qu'il est mal de faire souffrir inutilement. Que nous choisissions de renoncer à cette consommation ou de la transformer profondément, il devient difficile de la poursuivre en fermant les yeux.
 
 Aimer les animaux, jusqu'où ? La question n'appelle pas une réponse simple, mais elle appelle une réponse cohérente, ou du moins réfléchie. Nous ne pouvons plus nous contenter d'aimer les uns et d'ignorer le sort des autres, comme si nos sentiments spontanés tenaient lieu de morale. Prendre au sérieux la sensibilité animale, c'est accepter d'interroger nos habitudes, et de mettre nos actes un peu plus en accord avec ce que, au fond, nous savons déjà.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14962,7 +14962,7 @@ Ces différences nourrissent des clichés que chacun entretient avec délectatio
 Car sous la moquerie perce souvent une secrète fascination. Le Français rêve parfois du flegme britannique, de cette capacité à ne pas se départir de son calme, de cet humour qui désamorce tout. Le Britannique envie parfois l'art de vivre français, ce goût de la table, de la conversation, du plaisir sans culpabilité. Chacun trouve chez l'autre ce qui lui manque, et c'est peut-être pourquoi, par-delà les railleries, les deux peuples ne se lassent pas l'un de l'autre.
 
 Comprendre le rapport entre la France et la Grande-Bretagne, c'est donc saisir bien plus qu'une rivalité de voisinage. C'est observer comment deux nations, parties d'une histoire commune, ont emprunté des chemins opposés, et comment elles continuent, aujourd'hui encore, à se définir l'une par rapport à l'autre. Ces articles exploreront quelques-unes de ces différences — dans le rapport à l'État, à la nourriture, aux règles, à la vie quotidienne — non pour trancher qui a raison, mais pour comprendre ce que chacune révèle de l'autre, et de nous-mêmes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -14985,7 +14985,7 @@ Ces deux visions ont chacune leurs forces et leurs faiblesses. Le modèle franç
 Il serait vain de vouloir décréter lequel est supérieur, car ils répondent à des questions sur lesquelles les valeurs légitiment divergent : combien de sécurité, combien de liberté ; combien de solidarité imposée, combien de responsabilité individuelle. Ce sont là des arbitrages, non des vérités, et chaque société les tranche selon son histoire et ses préférences. Le Français attaché à l'État et le Britannique attaché à l'initiative n'ont pas l'un tort et l'autre raison ; ils privilégient des biens différents.
 
 Observer ces deux modèles, c'est comprendre qu'il n'existe pas une seule bonne manière d'organiser une société, mais des choix qui engagent des valeurs. Et c'est aussi, pour chacun, l'occasion de mieux voir son propre modèle : le Français, en découvrant l'attachement britannique à l'autonomie, mesure ce que son goût de l'État a de particulier ; le Britannique, en découvrant la protection française, s'interroge peut-être sur ce que son individualisme laisse de côté. Chaque voisin est, pour l'autre, un miroir révélateur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15008,7 +15008,7 @@ Cet humour a aussi une fonction sociale profonde. Dans une culture qui valorise 
 Le Français, dont l'humour existe bien sûr mais s'accommode d'un rapport plus direct aux émotions et aux idées, est souvent décontenancé par ce jeu. Il peine parfois à savoir quand on plaisante, prend au premier degré ce qui était ironique, ou s'étonne qu'on tourne en dérision des choses sérieuses. Réciproquement, le Britannique peut trouver le Français trop sérieux, trop prompt à s'enflammer, insuffisamment capable de rire de lui-même. Chacun, à travers l'humour de l'autre, bute sur une manière différente d'habiter le monde.
 
 Comprendre l'humour d'un peuple, c'est donc bien plus qu'apprendre à rire de ses plaisanteries. C'est saisir son rapport au sérieux, à l'émotion, à soi-même, aux autres. L'humour britannique, avec son flegme et son autodérision, exprime toute une vision : celle d'une culture qui se méfie de l'emphase, préfère la litote à l'exagération, et tient qu'on peut dire les choses les plus graves à condition de savoir en sourire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15031,7 +15031,7 @@ Ces deux attitudes ont, là encore, leurs vertus et leurs revers. Le respect bri
 Ce contraste renvoie à des conceptions différentes de la liberté. Pour le Britannique, la liberté s'accommode fort bien du respect des règles, pourvu qu'elles soient justes et acceptées : obéir à une règle qu'on approuve n'aliène en rien. Pour le Français, la liberté implique le droit permanent de juger la règle, de la contester, de ne pas s'y soumettre aveuglément : l'obéissance sans examen lui paraît suspecte. L'un voit dans la règle un pacte qui protège la liberté de tous ; l'autre, un pouvoir dont il faut toujours se méfier.
 
 Aucune de ces attitudes n'est en soi supérieure. Une société a besoin, sans doute, des deux : du respect des règles qui permet de vivre ensemble, et de l'esprit critique qui empêche les règles injustes de perdurer. Le Britannique gagnerait parfois à contester davantage ; le Français, à respecter davantage. En s'observant l'un l'autre, chacun peut apercevoir ce que son propre rapport aux règles a d'excessif — et ce qu'il pourrait emprunter à son voisin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15054,7 +15054,7 @@ La troisième leçon, la plus profonde, fut un certain inconfort, mais fécond. 
 Ce que Tom a fini par comprendre vaut au-delà de la France et de l'Angleterre. La rencontre d'une autre culture, quand elle est vécue en profondeur et non en touriste, ne nous apprend pas seulement l'autre : elle nous apprend nous-mêmes, en nous révélant ce que nous prenions pour naturel. Elle nous délivre de l'illusion que notre monde serait le seul possible, et nous rend capables de le regarder de l'extérieur, avec un mélange d'attachement et de distance critique.
 
 C'est peut-être là le sens le plus haut de tout ce parcours entre deux cultures voisines. Non pas décider qui, de la France ou de la Grande-Bretagne, aurait raison — question sans réponse et sans intérêt —, mais découvrir, à travers l'autre, la relativité et la valeur de ce qui est nôtre. Comme Tom, quiconque prend le temps de comprendre un autre peuple revient, au fond, mieux armé pour se comprendre lui-même. Et c'est déjà, pour un lecteur qui apprend une langue étrangère, la plus belle des raisons de continuer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15077,7 +15077,7 @@ Une première réponse tient à ce que nous avons fait de ces gains. Plutôt que
 Une seconde réponse tient à la répartition. Les fruits de l'automatisation ne se sont pas partagés également : ils ont surtout profité à certains, tandis que d'autres continuaient de travailler dur, parfois davantage. Le temps libéré pour les uns s'est parfois payé du travail intensifié des autres. La promesse d'une libération générale supposait un partage qui n'a pas eu lieu, et sans lequel les machines libèrent les uns en asservissant les autres.
 
 Cela signifie que la libération par les machines n'a jamais été une conséquence automatique de la technique, mais dépendait de choix que nous n'avons pas faits. Rien, dans les machines elles-mêmes, ne nous condamne à travailler autant ; c'est notre organisation sociale, nos priorités, notre course à la consommation qui en décident. La promesse pourrait donc encore être tenue — mais elle suppose de vouloir vraiment le temps libre plutôt que l'accroissement sans fin de la production. Les machines peuvent nous libérer ; encore faudrait-il le décider.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15100,7 +15100,7 @@ Ces objections méritent d'être prises au sérieux, mais certaines reposent sur
 La question du financement demeure toutefois réelle, et l'on ne saurait la balayer. Un revenu universel généreux exigerait une refonte profonde de la fiscalité et de la protection sociale, aux conséquences difficiles à prévoir. C'est pourquoi le débat porte souvent moins sur le principe que sur les modalités : quel montant, financé comment, en remplacement de quoi. Un revenu modeste n'a pas les mêmes effets qu'un revenu suffisant pour vivre, et l'on peut soutenir l'idée dans une version et la rejeter dans une autre.
 
 Que l'on soit pour ou contre, le débat sur le revenu universel a le mérite de poser une question que l'avenir rendra peut-être incontournable : dans une société où le travail pourrait ne plus suffire à occuper et à faire vivre tout le monde, comment garantir à chacun de quoi exister dignement ? La réponse n'est pas évidente, mais la question, elle, ne se laissera pas éluder longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15123,7 +15123,7 @@ Un deuxième domaine est celui de la création véritable, non pas la production
 Un troisième domaine, enfin, est celui du jugement, surtout lorsqu'il engage des valeurs. Décider de ce qui est juste, arbitrer entre des intérêts contradictoires, assumer une responsabilité morale : ces actes supposent non seulement de traiter de l'information, mais de peser, de choisir, de répondre de ses choix. On peut confier à une machine des calculs ; il est plus douteux, et peut-être dangereux, de lui confier les décisions qui engagent le sens et la responsabilité. Ces décisions-là devraient rester nôtres.
 
 Ce qui se dessine, à travers ces domaines, c'est une possible redéfinition du travail humain autour de ce qui nous est le plus propre : la relation, la création, le jugement, le soin. Loin d'être dévalorisées, ces dimensions pourraient gagner en importance à mesure que le reste s'automatise. Encore faudrait-il que nos sociétés les reconnaissent et les valorisent, au lieu de les mépriser comme elles le font trop souvent. L'avenir du travail humain dépendra moins de ce que les machines peuvent faire que de ce que nous choisirons de tenir pour précieux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15146,7 +15146,7 @@ Il faut pourtant se garder de deux réactions également stériles. La première
 Cette attitude consiste à reconnaître le coût humain du progrès, et à ne pas le laisser peser sur les seuls individus qui le subissent. Une société qui accepte l'automatisation, parce qu'elle en tire des bénéfices collectifs, a une dette envers ceux qu'elle déplace. Cette dette ne se solde pas par une simple indemnité, mais par les moyens réels de retrouver une place et une dignité : formation véritable, accompagnement, reconnaissance des compétences, création de nouvelles activités valorisées. Le progrès n'est juste que si ses fruits et ses coûts sont partagés.
 
 Au fond, l'expérience d'être remplacé par une machine nous adresse une question sur la valeur des personnes. Si nous ne valons que par ce que nous produisons, alors celui que la machine remplace ne vaut plus rien, et cette conclusion est insupportable. C'est peut-être l'occasion de reconnaître que la valeur d'un être humain ne se réduit pas à son utilité économique — vérité qu'il vaudrait mieux affirmer avant que les machines ne nous forcent à la redécouvrir dans la douleur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15169,7 +15169,7 @@ Pourquoi, dès lors, présente-t-on si souvent l'automatisation comme inéluctab
 Résister à cette illusion ne signifie pas s'opposer au progrès technique, ni rêver d'arrêter les machines. Cela signifie réaffirmer que la technique est un moyen au service de fins que nous devons choisir, et non une fin qui s'imposerait à nous. Cela signifie poser, à chaque étape, les questions que l'illusion du destin fait taire : quelles machines voulons-nous, pour quoi faire, au bénéfice de qui, avec quelles conséquences pour ceux qu'elles affectent ?
 
 Qui décide de ce que font les machines ? La réponse ne devrait pas être : personne, ou la technique elle-même. Elle devrait être : nous, collectivement, à travers des choix assumés et débattus. Reconquérir ces choix, c'est refuser d'être les spectateurs passifs d'un avenir qu'on nous présente comme déjà écrit. Car l'avenir du travail, comme celui des machines, n'est pas une prédiction à subir ; c'est une décision à prendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15192,7 +15192,7 @@ Mais la nuit urbaine a aussi son ombre. Elle est le temps de la solitude, pour c
 Cette double nature de la nuit urbaine en fait un révélateur. Ce qui se passe dans la ville après la tombée du jour dit beaucoup de ce qu'est cette ville : la manière dont elle traite ceux qui y travaillent la nuit, dont elle accueille ou repousse ceux qui la peuplent, dont elle éclaire ou abandonne ses rues obscures. La nuit met en lumière, paradoxalement, ce que le jour cache : les inégalités, les solitudes, mais aussi les libertés et les solidarités d'une cité.
 
 Regarder la ville la nuit, c'est donc la voir autrement, dans une vérité que le jour recouvre. C'est découvrir qu'une cité n'est jamais tout entière celle qu'on croit, qu'elle mène, dans l'ombre, une existence parallèle, faite de labeur et de fête, de liberté et de détresse. La ville ne dort jamais ; elle change seulement de visage, et ce visage nocturne mérite qu'on apprenne, aussi, à le regarder.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15215,7 +15215,7 @@ Ce qui frappe, c'est que ce travail pénible et coûteux est souvent le fait des
 Reconnaître cela ne conduit pas à réclamer la fin de tout travail nocturne, dont une part est indispensable : on ne fermera pas les hôpitaux la nuit. Mais cela invite à distinguer le travail de nuit nécessaire de celui qui ne l'est pas, imposé par la seule course à la disponibilité permanente et à la rentabilité. Une part de notre activité nocturne relève moins d'un besoin réel que d'une exigence de consommation immédiate à laquelle on pourrait renoncer sans grand dommage.
 
 Cela invite surtout à mieux reconnaître, protéger et rémunérer ceux qui travaillent la nuit pour que la ville tourne. Le minimum serait de ne pas oublier leur existence, de mesurer ce que nous leur devons, de compenser la pénibilité qu'ils assument à notre place. Car le confort de nos journées repose, pour une part, sur le sacrifice de leurs nuits — et il serait juste, au moins, de ne pas l'ignorer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15238,7 +15238,7 @@ Cette peur est en partie justifiée : la nuit connaît sa part réelle de danger
 Car la peur de la nuit transforme la ville. En désertant les rues obscures, nous les rendons plus inquiétantes encore, car une rue vide fait plus peur qu'une rue vivante. La peur se nourrit ainsi elle-même : moins on sort, plus la nuit paraît menaçante, plus on reste chez soi. Elle frappe aussi inégalement : certains, par leur condition, se sentent plus vulnérables et voient la nuit se fermer à eux, tandis que d'autres la parcourent librement. La peur nocturne dessine des frontières invisibles, exclut, restreint la liberté de se mouvoir.
 
 Interroger la peur de la nuit, ce n'est donc pas nier ses dangers, mais refuser qu'elle nous gouverne au-delà de ce que la réalité justifie. C'est aussi comprendre que la sécurité de la nuit ne se gagne pas seulement en éclairant les rues ou en y multipliant les surveillances, mais en y ramenant la vie : car une ville nocturne habitée, animée, partagée, est plus sûre qu'une ville désertée par la peur. Reconquérir la nuit, c'est peut-être, d'abord, cesser d'avoir peur les uns des autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15261,7 +15261,7 @@ Mais la pollution lumineuse a aussi des effets bien concrets, longtemps ignorés
 La bonne nouvelle, c'est que cette pollution est peut-être la plus facile à corriger de toutes. Contrairement à d'autres, elle ne laisse pas de traces durables : il suffit d'éteindre ou de mieux orienter la lumière pour que, aussitôt, la nuit et les étoiles reviennent. Éclairer moins, éclairer mieux, éclairer seulement où et quand il le faut : ces mesures simples réduiraient le gaspillage, économiseraient de l'énergie, rendraient la nuit à la vie et le ciel aux étoiles. Rarement un problème environnemental aura eu de solution si accessible.
 
 Reconquérir l'obscurité n'est donc pas un caprice de contemplateurs nostalgiques. C'est préserver un patrimoine — le ciel étoilé —, protéger le vivant nocturne, respecter notre propre besoin de nuit, et cesser un gaspillage absurde. La nuit noire, que nous avons effacée sans y penser, mérite qu'on la retrouve. Car une ville qui aurait perdu jusqu'à la vue des étoiles aurait, sans le savoir, perdu un peu de ce qui relie les humains à l'univers.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15284,7 +15284,7 @@ Ce droit à la nuit a une dimension sociale, car la nuit n'est pas également ac
 Défendre la nuit suppose des choix, individuels et collectifs. Individuels : se ménager des temps d'obscurité et de déconnexion, protéger son repos, résister à l'injonction d'être toujours disponible. Collectifs : limiter la pollution lumineuse, encadrer le travail nocturne, préserver des temps et des espaces où la ville ralentit, où la nuit reste la nuit. Ces choix vont à l'encontre d'une logique puissante, celle d'un monde qui voudrait tout éclairer, tout accélérer, ne jamais s'arrêter.
 
 Reconnaître un droit à la nuit, c'est donc affirmer une limite face à cette logique. C'est dire qu'il est des moments où il faut pouvoir s'éteindre, se taire, disparaître, se reposer — et qu'une civilisation qui abolirait la nuit abolirait, avec elle, une part de ce dont l'humain a besoin pour demeurer humain. La nuit n'est pas un vide à combler ni un temps à exploiter ; c'est un bien précieux, qu'il nous faut réapprendre à protéger.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15307,7 +15307,7 @@ C'est pourquoi la surveillance généralisée pose un problème qui dépasse la 
 Cette surveillance a ses raisons, rétorquera-t-on, souvent bonnes : la sécurité, la prévention, le bon fonctionnement de services. C'est vrai, et il ne s'agit pas de la rejeter en bloc. Mais il s'agit de ne pas l'accepter aveuglément, comme une évidence sans coût. Chaque dispositif de surveillance devrait être pesé : quel bénéfice réel, pour quelle atteinte à la liberté ? Trop souvent, on adopte la surveillance pour un gain de sécurité incertain, sans jamais mesurer ce qu'on abandonne en échange. La question n'est pas « avez-vous quelque chose à cacher ? », mais « quelle société voulons-nous ? ».
 
 Vivre sous le regard n'est donc pas une fatalité qu'il faudrait subir sans y penser. C'est un choix de société, qui engage notre liberté autant que notre sécurité, et qui mérite d'être discuté plutôt que consenti par défaut. Préserver des espaces sans regard, des moments sans traces, une part de vie soustraite à l'observation, ce n'est pas défendre des secrets coupables ; c'est défendre les conditions mêmes d'une existence libre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15330,7 +15330,7 @@ La troisième confusion, plus subtile, ramène tout à la seule personne qui par
 Il y a enfin quelque chose de troublant dans l'argument lui-même. Dire « je n'ai rien à cacher », c'est déjà accepter l'idée que le regard serait légitime, et qu'il reviendrait à chacun de prouver son innocence en s'exposant. Mais pourquoi devrais-je justifier mon droit à l'intimité ? C'est à la surveillance de se justifier, non à la vie privée. Renverser la charge, exiger de chacun qu'il montre patte blanche, c'est déjà avoir cédé l'essentiel : le principe qu'une personne a droit, par défaut, à une part d'existence soustraite au regard.
 
 L'argument du « rien à cacher » est donc bien plus faible qu'il n'y paraît. Il confond intimité et culpabilité, parie imprudemment sur l'avenir, oublie la dimension collective, et renverse la charge de la justification. Défendre la vie privée n'est pas le réflexe de qui a des secrets honteux ; c'est reconnaître qu'une existence libre a besoin d'ombre autant que de lumière, pour soi et pour les autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15353,7 +15353,7 @@ Ce système soulève des questions qui dépassent la seule vie privée. D'abord 
 Face à cette situation, plusieurs réponses se dessinent. Certains plaident pour une reprise de contrôle individuel : que chacun puisse savoir quelles données sont collectées, s'y opposer, voire en tirer profit. D'autres estiment que la réponse ne peut être que collective et politique : encadrer strictement la collecte, limiter ce qui peut être fait des données, briser la concentration de ce pouvoir. Les deux voies ne s'excluent pas, et toutes deux supposent d'abord une prise de conscience : que ce que nous cédons si légèrement a une immense valeur.
 
 Nos données valent de l'or, mais cet or, d'autres le ramassent. Prendre conscience de cette réalité, ce n'est pas céder à la paranoïa ; c'est cesser d'être naïf. Ce que nous laissons derrière nous, jour après jour, n'est pas sans conséquence : c'est la matière d'un pouvoir qui s'exerce sur nous, et qu'il vaudrait mieux regarder en face que continuer d'ignorer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15376,7 +15376,7 @@ C'est pourquoi certains ont plaidé pour un « droit à l'oubli » : le droit, s
 Mais qu'on y réponde ainsi ou autrement, l'enjeu demeure. Une société où rien ne s'oublie n'est pas nécessairement plus juste ; elle peut être plus impitoyable. L'oubli avait une fonction : il permettait le pardon, la seconde chance, la réconciliation avec un passé qu'on n'était plus condamné à traîner. En abolissant l'oubli, nous risquons d'abolir aussi ces possibilités, et de bâtir un monde où chacun serait éternellement responsable de son plus mauvais moment.
 
 La mémoire qui n'oublie jamais n'est donc pas un progrès sans revers. Elle nous prive d'un bienfait qu'on ne mesurait pas tant qu'on l'avait : la capacité de laisser le passé s'estomper, pour soi et pour les autres. Réapprendre à oublier, ou du moins à ne pas tout retenir contre les gens, est peut-être l'un des défis de notre temps — car une humanité incapable d'oubli serait aussi une humanité incapable de pardon.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15399,7 +15399,7 @@ Faut-il en conclure que la partie est perdue, et se résigner à un monde de tra
 Ces choix sont à la fois individuels et collectifs. Individuellement, chacun peut décider de ce qu'il livre, résister à l'injonction de tout montrer, préserver une part d'ombre. Collectivement, une société peut décider de protéger la vie privée, d'encadrer la surveillance, de garantir à chacun le droit de n'être pas observé en permanence. Rien de tout cela n'est acquis ; tout dépend de la valeur que nous accordons à cette liberté, et de notre volonté de la défendre contre les forces qui la menacent.
 
 Se cacher est-il encore possible ? De moins en moins, si nous laissons faire ; encore un peu, si nous le voulons. La vraie question n'est peut-être pas de savoir si nous pouvons disparaître, mais si nous tenons assez à cette possibilité pour la préserver. Car une humanité qui aurait perdu jusqu'au droit de se soustraire au regard aurait perdu, avec lui, une part de ce qui fait qu'une vie est vraiment la sienne.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15422,7 +15422,7 @@ Cette seconde explication est riche d'enseignement, car elle suggère un moyen d
 Cette réflexion touche à quelque chose d'essentiel dans notre rapport au temps. Nous mesurons souvent le temps en quantité — les heures, les années —, mais ce qui compte est peut-être sa densité, la manière dont il est rempli. Une vie longue mais vide peut sembler avoir passé en un instant ; une vie plus courte mais dense peut sembler avoir contenu des mondes. Le temps que nous vivons vraiment n'est pas celui de l'horloge, mais celui que nous éprouvons, et cet éprouvé dépend de ce que nous en faisons.
 
 Le temps qui file n'est donc pas seulement une fatalité liée à l'âge ; c'est aussi, en partie, le reflet de la manière dont nous vivons. Le laisser s'écouler dans la répétition, c'est le voir s'accélérer et se vider ; le remplir de nouveauté, d'attention, de présence, c'est lui redonner de l'épaisseur. Nous ne pouvons pas ralentir l'horloge, mais nous pouvons, peut-être, changer la façon dont nous habitons le temps qu'elle mesure.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15445,7 +15445,7 @@ Mais la manière dont on pose ces défis n'est pas neutre, et certains discours 
 Il faut aussi se garder d'un catastrophisme qui présente le vieillissement comme une fatalité menant au déclin. Les sociétés se sont toujours adaptées à des transformations profondes, et rien n'interdit de penser qu'elles sauront s'adapter à celle-ci. Cela suppose des choix — sur le travail, la solidarité, la place des âges —, mais ces choix sont possibles. Le vieillissement n'est un désastre que si l'on refuse de s'y adapter ; il peut être vécu autrement si l'on accepte de repenser nos manières de vivre ensemble.
 
 Une société qui vieillit n'est donc ni simplement une réussite ni simplement une crise. C'est une transformation majeure, née d'un progrès, porteuse de défis, qui appelle non l'alarme ni le déni, mais l'intelligence et la justice. La question n'est pas de savoir s'il faut s'en réjouir ou s'en désoler, mais comment faire, d'une société plus âgée, une société qui reste juste envers tous ses âges.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15468,7 +15468,7 @@ Or cette relégation a un coût, pour les personnes âgées comme pour la socié
 Il ne s'agit pas de retourner à une vénération naïve de l'âge, ni de prétendre que la vieillesse apporterait automatiquement la sagesse — vieillir ne rend pas nécessairement sage. Mais il s'agit de refuser la relégation inverse, qui ne voit dans le grand âge qu'un déclin sans valeur. Entre le culte de l'ancien et le culte de la jeunesse, il y a place pour une reconnaissance juste : celle qui accorde à chaque âge sa dignité et son apport propres, sans hiérarchie méprisante.
 
 Redonner une place aux vieux, ce n'est donc pas seulement une question de justice envers eux ; c'est aussi une manière, pour la société, de ne pas s'appauvrir. Une civilisation qui n'aurait d'yeux que pour la jeunesse serait comme un être sans mémoire, coupé de sa propre durée. Faire une place à la vieillesse, l'écouter, l'honorer, c'est reconnaître que la vie ne vaut pas seulement par sa vigueur, et qu'il y a, dans le fait d'avoir longtemps vécu, quelque chose qui mérite respect et attention.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15491,7 +15491,7 @@ Il y a plus vertigineux encore : l'idée d'une vie sans fin. Certains rêvent d'
 Cela ne signifie pas qu'il faille cesser de reculer la mort, ni renoncer aux progrès qui allongent et améliorent la vie. Cela signifie de ne pas faire de la seule durée un absolu, comme si vivre toujours plus longtemps était en soi le but suprême. Une sagesse ancienne enseignait qu'il faut moins chercher à ajouter des jours à sa vie qu'à donner de la vie à ses jours. Cette distinction reste précieuse à l'heure où la médecine nous donne des pouvoirs inédits sur la durée de l'existence.
 
 Faut-il vouloir vivre toujours plus longtemps ? Oui, tant qu'il s'agit de vivre pleinement, en bonne santé, dans une existence qui vaut la peine. Mais peut-être pas au point de faire de la durée le tout, ni de rêver d'une immortalité qui, en abolissant la mort, abolirait aussi ce qui donne à la vie son prix. Bien vivre importe plus que vivre longtemps — et la sagesse consiste peut-être à accepter que le temps nous soit compté, sans cesser pour autant de chérir chaque instant qu'il nous accorde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15514,7 +15514,7 @@ Le troisième don, lié aux précédents, est une meilleure perception de ce qui
 Il ne s'agit pas d'idéaliser la vieillesse, ni de nier ses souffrances. Vieillir apporte aussi des épreuves, et la sagesse, l'apaisement, la lucidité ne sont pas garantis : on peut vieillir aigri, apeuré, sans rien avoir appris. Ces dons du temps ne sont pas automatiques ; ils demandent qu'on y consente, qu'on accepte de vieillir plutôt que de le refuser. Mais ils sont possibles, et ceux qui les reçoivent témoignent qu'il y a, dans l'avancée en âge, autre chose que du déclin.
 
 Ce que le temps nous apprend, c'est peut-être, au fond, à vivre — trop tard parfois, mais pas toujours. Et cette leçon, les aînés pourraient la transmettre aux plus jeunes, si nous savions les écouter. Car dans une société obsédée par la jeunesse et pressée de vivre, la voix de ceux qui ont traversé le temps a quelque chose d'irremplaçable à dire : que la vie est brève, qu'elle est précieuse, et qu'il vaut mieux le comprendre tôt que tard.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15537,7 +15537,7 @@ Il y a plus grave. Dans ce bruit, ce qui surnage n'est pas nécessairement le vr
 Faut-il en conclure que l'abondance d'information serait un mal, et regretter la rareté d'autrefois ? Ce serait excessif. L'accès élargi au savoir reste un progrès considérable, et bien des vérités autrefois inaccessibles sont désormais à portée. Le problème n'est pas l'abondance en soi, mais l'absence des filtres, des repères, des compétences qui permettraient d'y trouver le vrai. Nous avons gagné l'accès à tout, sans acquérir l'art de trier — et c'est cet art qu'il nous faut désormais développer.
 
 La vérité, à l'épreuve du bruit, ne se donne donc plus toute seule ; elle exige un travail, une méthode, une vigilance. Dans un monde de rareté, s'informer suffisait presque ; dans un monde d'abondance, il faut apprendre à discerner. C'est le défi propre de notre époque : non plus accéder à l'information, mais savoir, dans le vacarme, reconnaître ce qui mérite d'être cru.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15560,7 +15560,7 @@ La troisième raison tient à nos biais. Nous sommes naturellement enclins à cr
 Comprendre ces mécanismes ne suffit pas à s'en prémunir, mais c'est un premier pas indispensable. Car ils suggèrent une règle de prudence : se méfier précisément de ce qui nous fait le plus réagir. Une information qui nous indigne, qui nous réjouit de voir nos adversaires pris en faute, qui confirme trop bien ce que nous pensions, mérite un surcroît de méfiance, non de confiance. C'est quand nous sommes le plus prompts à croire et à partager qu'il faudrait, au contraire, nous arrêter et vérifier.
 
 Le faux se propage vite parce qu'il exploite ce qu'il y a en nous de plus prompt : nos émotions, nos préjugés, notre paresse. Résister à sa propagation suppose donc de résister à nous-mêmes, de ralentir là où tout nous pousse à réagir vite. Dans un monde où le mensonge a pris de l'avance, la vérité a besoin, pour se défendre, de notre vigilance — et cette vigilance commence par la défiance envers nos propres emballements.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15583,7 +15583,7 @@ Le troisième réflexe est de se méfier de sa propre réaction. On l'a vu : ce 
 Le quatrième réflexe est de recouper et de remonter à la source première. Une information reprise de main en main se déforme, s'amplifie, perd son contexte. Chercher d'où elle vient à l'origine, ce qui a réellement été dit ou trouvé, permet souvent de découvrir qu'une nouvelle spectaculaire reposait sur un malentendu, une citation tronquée, une image sortie de son contexte. Ce travail de remontée demande un peu d'effort, mais il déjoue quantité de manipulations.
 
 Ces réflexes ne transforment personne en expert infaillible, et il restera toujours des cas difficiles où le vrai se distingue mal du faux. Mais ils suffisent à éviter d'être la proie des tromperies les plus courantes, et à distinguer une information sérieuse d'une rumeur sans fondement. Surtout, ils reposent moins sur un savoir que sur une attitude : celle du doute méthodique, de la lenteur, de la vigilance. Vérifier, au fond, c'est refuser de croire trop vite — et cela, chacun peut l'apprendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15606,7 +15606,7 @@ Il y a plus. Une société où plus personne ne croit rien devient ingouvernable
 C'est pourquoi ceux qui cherchent à manipuler ont parfois moins intérêt à nous faire croire une chose précise qu'à détruire notre confiance en toute vérité. Semer le doute partout, brouiller le vrai et le faux, faire croire que « de toute façon, on ne peut rien savoir » : cette stratégie du doute généralisé est redoutable, car elle désarme la résistance. Un peuple qui ne croit plus rien ne peut plus s'indigner de rien, ni s'unir autour de rien. Le cynisme est le meilleur allié du mensonge.
 
 La juste attitude n'est donc ni la crédulité, qui croit tout, ni le cynisme, qui ne croit rien, mais un scepticisme mesuré, qui sait distinguer. Douter, oui, mais avec discernement ; se méfier, mais sans rejeter en bloc ; reconnaître qu'on peut être trompé, sans conclure qu'on ne peut jamais rien savoir. Préserver la capacité de croire ce qui le mérite, tout en se méfiant de ce qui ne le mérite pas : tel est l'équilibre difficile, mais vital, qu'exige un monde saturé de faux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15629,7 +15629,7 @@ Pourquoi est-ce si difficile ? Parce que nos opinions finissent par faire partie
 Ce courage est d'autant plus nécessaire aujourd'hui que tout nous pousse à l'entêtement. Enfermés dans nos bulles, entourés de gens qui pensent comme nous, exposés à ce qui conforte nos vues, nous sommes plus que jamais tentés de nous arc-bouter sur nos convictions. Dans ce contexte, la capacité à écouter l'autre, à reconnaître qu'il peut avoir raison, à réviser ses positions, devient un acte presque héroïque, et une condition de tout débat possible. Sans elle, il ne reste que des camps retranchés, incapables de se parler.
 
 Le courage de changer d'avis est donc au cœur d'un rapport sain à la vérité. Il suppose l'humilité de reconnaître qu'on peut se tromper, la souplesse de réviser ses positions, la force de résister à l'orgueil et à la pression. Loin d'être une girouette, celui qui sait changer d'avis pour de bonnes raisons est celui qui prend la vérité au sérieux. Dans un monde qui valorise la certitude bruyante, oser dire « je me suis trompé » est peut-être l'une des formes les plus hautes, et les plus rares, de la lucidité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15652,7 +15652,7 @@ Elle nous invite ensuite à ne pas confondre la force d'une conviction avec sa v
 Faut-il en conclure que la croyance serait méprisable, et qu'il ne faudrait s'en tenir qu'au savoir prouvé ? Ce serait excessif, et d'ailleurs impossible. Nous ne pouvons pas tout savoir au sens fort ; nous devons, pour vivre, croire une foule de choses que nous ne pouvons vérifier nous-mêmes. La croyance n'est pas un défaut à éliminer, mais une nécessité de la condition humaine. Ce qui importe, ce n'est pas de ne jamais croire, mais de savoir que l'on croit, de ne pas prendre ses croyances pour des savoirs, et de rester prêt à les réviser.
 
 Distinguer croire et savoir, c'est donc apprendre à hiérarchiser ses convictions selon leur solidité : tenir fermement ce qui est bien fondé, plus souplement ce qui l'est moins, reconnaître ce qu'on ignore. C'est refuser la fausse assurance qui prend toute conviction pour une certitude, et cultiver une confiance proportionnée aux raisons. Cette lucidité sur la nature de nos convictions est le fondement de toute pensée honnête — et la meilleure protection contre le dogmatisme, qui commence toujours par confondre ce qu'on croit avec ce qu'on sait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15675,7 +15675,7 @@ Là est le nœud moral. Car agir sur les émotions de quelqu'un pour lui faire a
 Faut-il pour autant condamner tout recours à l'émotion, et n'admettre que la froide argumentation ? Ce serait naïf et même appauvrissant. Les émotions ne sont pas l'ennemi de la vérité ; une cause juste peut légitimement émouvoir, et l'émotion peut ouvrir à des raisons qu'on n'aurait pas entendues. Le grand orateur qui défend une cause juste en touchant les cœurs ne manipule pas ; il mobilise. Ce qui distingue la persuasion légitime de la manipulation, ce n'est pas le recours à l'émotion, mais le respect ou le mépris du jugement de l'autre : émeut-on pour éclairer, ou pour aveugler ?
 
 Comprendre cette distinction est essentiel, car nous sommes en permanence l'objet de tentatives de persuasion, dont beaucoup relèvent de la manipulation. Publicité, propagande, discours qui jouent sur nos peurs et nos désirs : partout, on cherche à agir sur nous en contournant notre jugement. Savoir reconnaître quand on s'adresse à notre raison et quand on cherche à la court-circuiter, c'est se donner les moyens de résister à la seconde tout en restant ouvert à la première. Convaincre honore ; manipuler abaisse — et distinguer l'un de l'autre est une compétence vitale pour un esprit libre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15698,7 +15698,7 @@ D'autres biais encore nous font surestimer nos propres capacités, juger après 
 Ce qui rend ces biais redoutables, c'est justement qu'ils opèrent sans que nous en ayons conscience. Nous ne sentons pas que nous sommes biaisés ; nous avons l'impression de juger objectivement, alors même que nos biais font leur œuvre. Pire, nous repérons bien plus facilement les biais des autres que les nôtres : chacun voit l'aveuglement du voisin et reste aveugle au sien. Cette asymétrie est elle-même un biais, et l'un des plus tenaces. Croire qu'on est, soi, à l'abri des biais est la meilleure façon d'en être la victime.
 
 Peut-on se corriger ? Pas entièrement, car ces biais sont trop profondément ancrés pour être supprimés par la seule volonté. Mais on peut en atténuer les effets : connaître leur existence, se méfier de ses jugements trop assurés, rechercher délibérément ce qui contredit ses vues, écouter ceux qui pensent autrement. Surtout, on peut renoncer à l'illusion de sa propre objectivité, qui est le premier pas vers un jugement plus juste. Reconnaître qu'on a des angles morts ne les supprime pas, mais permet de conduire avec plus de prudence — et c'est déjà beaucoup.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15721,7 +15721,7 @@ Que faudrait-il pour que ces discussions redeviennent possibles ? D'abord, abord
 Cela ne signifie pas qu'il faille tout accepter, renoncer à ses convictions, ou traiter toutes les opinions comme également valables. On peut écouter avec respect une position et la juger fausse ; comprendre les raisons de quelqu'un et lui montrer, calmement, pourquoi on les croit erronées. Discuter avec un contradicteur n'est pas céder ; c'est chercher ensemble, dans le respect, ce qui pourrait être vrai. On peut sortir d'une telle discussion sans avoir changé d'avis, mais en ayant mieux compris l'autre, et parfois soi-même.
 
 L'enjeu dépasse le confort de conversations plus civiles. Une démocratie, une société, ne tiennent que si ceux qui pensent différemment peuvent encore se parler. Quand la discussion devient impossible, il ne reste que l'affrontement des camps, la haine, la violence parfois. Réapprendre à discuter avec ceux qui pensent autrement — à les écouter, à leur prêter la bonne foi, à accepter de pouvoir se tromper — n'est donc pas une simple politesse ; c'est une condition de la vie commune. Et cela commence par un renoncement modeste mais difficile : celui de vouloir toujours avoir le dernier mot.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15744,7 +15744,7 @@ Cette autonomie a des ennemis. Le premier est le conformisme, qui nous fait adop
 Mais cette autonomie a aussi ses illusions, contre lesquelles il faut se garder. La première est de confondre penser par soi-même avec penser contre tout le monde, comme si l'originalité était en elle-même une preuve de lucidité. Or rejeter systématiquement ce que pensent les autres est une autre forme de dépendance, en négatif : on se laisse encore déterminer par eux, en pensant toujours l'inverse. La seconde illusion est de croire qu'on pense par soi-même alors qu'on ne fait que suivre un autre troupeau, celui qui se croit précisément indépendant. L'autonomie véritable n'est ni le conformisme ni la contradiction systématique ; c'est le jugement.
 
 Penser par soi-même, au fond, ce n'est donc pas produire seul ses opinions, ni s'opposer à tous, mais exercer son jugement sur ce qu'on reçoit : accueillir les savoirs et les idées des autres, mais les passer au crible de la raison ; se fier à ceux qui savent, mais sans renoncer à comprendre ; changer d'avis quand il le faut, sans céder à toutes les pressions. C'est un idéal jamais pleinement atteint, un effort toujours à reprendre. Mais c'est aussi ce qui fait la dignité d'un esprit libre : non de tout savoir seul, mais de ne jamais abdiquer sa faculté de juger.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15767,7 +15767,7 @@ Il y a plus. Ces contacts permanents peuvent nourrir la solitude au lieu de la c
 Faut-il en conclure que ces technologies seraient la cause de notre solitude, et qu'il faudrait s'en détourner ? Ce serait trop simple. Elles peuvent aussi relier vraiment, maintenir des liens précieux malgré la distance, rompre l'isolement de certains. Le problème n'est pas l'outil, mais l'usage qui substitue le contact au lien, la connexion à la présence. Ce qui nous manque, ce ne sont pas des moyens de communiquer, que nous avons en abondance ; ce sont des relations profondes, qui demandent du temps, de la présence, une attention que le contact permanent tend, au contraire, à disperser.
 
 Sortir de cette solitude au milieu de la foule ne suppose donc pas de se couper des autres, mais de distinguer le contact du lien, et de cultiver le second. Cela veut dire privilégier quelques relations profondes à la multitude des contacts superficiels ; offrir une présence réelle plutôt qu'une disponibilité permanente et distraite ; accepter l'exigence du lien véritable, qui ne se noue pas d'un clic. Être vraiment avec quelqu'un, dans un monde de contacts sans fin, est devenu à la fois plus rare et plus précieux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15790,7 +15790,7 @@ L'histoire témoigne de cette fécondité de la solitude. Les penseurs, les arti
 La solitude choisie a aussi une vertu pour la vie avec les autres. Celui qui sait être seul ne dépend pas des autres pour ne pas s'ennuyer, pour se sentir exister, pour combler un vide ; il vient à eux par choix, non par besoin de fuir sa propre compagnie. Il peut donc entretenir des relations plus libres, plus saines, moins avides. Savoir être seul, paradoxalement, rend meilleur avec les autres : on ne leur demande plus de nous sauver de nous-mêmes. La capacité à la solitude est une condition de relations équilibrées.
 
 Il ne s'agit donc pas de choisir entre les autres et la solitude, mais de faire une place à l'une et aux autres. Une vie tout entière tournée vers les autres, sans jamais de retour à soi, s'épuise et se disperse ; une vie tout entière solitaire se dessèche et s'attriste. L'équilibre est dans l'alternance : des moments de lien véritable, et des moments de solitude choisie. Réhabiliter cette dernière, apprendre à être seul sans en souffrir, à goûter le silence et le retour à soi, c'est reconquérir une part de richesse que la peur de la solitude nous a fait oublier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15813,7 +15813,7 @@ Il y a un troisième ingrédient, plus discret : la rencontre régulière, la pr
 Or ces trois ingrédients — le partagé, l'interdépendance, la rencontre — sont aujourd'hui fragilisés. La mobilité défait les appartenances à un lieu ; l'autonomie matérielle réduit l'interdépendance ; la vie privée et les écrans raréfient les rencontres. Nous vivons de plus en plus comme des individus indépendants, autosuffisants, mobiles, ce qui a ses avantages — plus de liberté, moins de contraintes du groupe —, mais nous prive aussi de ce que la communauté apportait : le soutien, l'appartenance, le sentiment de ne pas être seul face à la vie.
 
 Ce constat ne conduit pas à regretter naïvement les communautés d'autrefois, souvent étouffantes, pesantes, peu tolérantes à la différence. Il invite plutôt à chercher comment recréer du lien dans un monde d'individus : par des engagements choisis, des associations, des projets communs, des lieux de rencontre à préserver ou à réinventer. Car si l'ancienne communauté avait ses servitudes, l'individu sans communauté a sa détresse. Ce qui nous relie ne va plus de soi ; il faut désormais le vouloir et le construire — mais nous en avons, plus que jamais, besoin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15836,7 +15836,7 @@ Pourtant, savoir recevoir est une vertu au moins aussi grande que savoir donner,
 Cette réflexion touche à la nature même du lien communautaire. Une communauté ne vit pas seulement de gens qui donnent, mais de la circulation de l'aide, où chacun tour à tour aide et est aidé, donne et reçoit. Celui qui veut toujours donner sans jamais recevoir se place au-dessus des autres, dans une générosité qui peut cacher un refus du lien d'égalité. La vraie réciprocité suppose qu'on accepte aussi de recevoir, de se laisser aider, de reconnaître qu'on a besoin des autres autant qu'ils ont besoin de nous.
 
 Apprendre à recevoir est donc, à sa manière, un apprentissage de l'humilité et du lien. C'est accepter que nous sommes des êtres vulnérables, interdépendants, qui ne s'en sortent pas seuls et n'ont pas à s'en sortir seuls. Dans un monde qui exalte l'autonomie et fait du besoin une faiblesse, savoir demander et accepter l'aide est un acte de sagesse et de confiance. Car une vie où l'on n'aurait jamais besoin de personne ne serait pas une vie plus réussie ; ce serait une vie plus pauvre, coupée de ce que le lien humain a de plus profond : le fait de compter les uns pour les autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15859,7 +15859,7 @@ Cette force du lien vaut aussi à l'échelle des communautés et des sociétés.
 Ce constat devrait nous alerter, car nous vivons dans des sociétés qui, on l'a vu, tendent à défaire les liens : individualisme, mobilité, écrans, disparition des lieux de rencontre. En affaiblissant ce qui nous relie, nous affaiblissons aussi, sans le mesurer, notre protection collective et individuelle face aux épreuves. Nous gagnons en autonomie et en liberté, mais nous perdons en résilience, en soutien, en force partagée. Une société d'individus isolés est une société plus fragile, où chacun est plus exposé.
 
 Reconnaître que le lien fait la force, c'est donc comprendre qu'entretenir ses relations, tisser et préserver des liens, n'est pas un simple agrément, mais un investissement essentiel. Le temps consacré aux autres, l'attention portée à ses proches, l'engagement dans une communauté, ne sont jamais du temps perdu : ils construisent le filet qui nous portera dans les épreuves, et que nous tendrons, à notre tour, sous les autres. Dans un monde qui exalte l'individu autonome, il vaut la peine de se souvenir de cette vérité ancienne : que notre plus grande force, face à la fragilité de la vie, ce sont les uns les autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15882,7 +15882,7 @@ Il faut aussi se méfier des réponses que notre époque nous souffle sans que n
 Il y a peut-être plus important que de trouver la bonne réponse : c'est de se poser vraiment la question. Car le danger n'est pas tant de se tromper de réponse que de ne jamais réfléchir, de vivre sans jamais s'interroger sur ce qu'on cherche, emporté par le courant, poursuivant des buts qu'on n'a pas choisis. Une vie non examinée, disait un ancien, ne vaut pas la peine d'être vécue. Ce n'est pas qu'il faille passer sa vie à philosopher ; mais une existence qui ne se demanderait jamais ce vers quoi elle tend risquerait de passer à côté d'elle-même.
 
 Ces dernières réflexions n'apporteront pas de réponse définitive, car il n'y en a pas qui vaille pour tous. Mais elles exploreront quelques-unes des grandes questions qui se cachent derrière celle de la vie réussie : le bonheur, le sens, la place des autres, l'acceptation de la finitude. Non pour dicter une réponse, mais pour aider chacun à chercher la sienne — car c'est là, au fond, une tâche que nul ne peut accomplir à notre place, et qui donne à l'existence, même incertaine, sa gravité et son prix.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15905,7 +15905,7 @@ Cela suggère un déplacement : plutôt que de chercher le bonheur, chercher ce 
 Il faut néanmoins se garder d'un contresens. Dire que le bonheur ne se cherche pas directement ne signifie pas qu'il faille s'en désintéresser, ni s'imposer une vie de sacrifice austère. Cela signifie que le chemin vers le bonheur passe indirectement, par ce à quoi l'on s'attache et que l'on fait, plutôt que par une obsession de son propre état. Prendre soin de ce qui compte — ses liens, son activité, son rapport au monde — est plus fécond que scruter son bonheur. On ne cueille pas le bonheur en le fixant ; on le rencontre en marchant vers autre chose.
 
 Le bonheur se cherche donc, mais pas comme on cherche un objet qu'on pourrait saisir. Il se cherche indirectement, en construisant une vie qui en vaille la peine, riche de sens et de liens, et en renonçant à l'obsession anxieuse de son propre contentement. Peut-être la sagesse consiste-t-elle moins à poursuivre le bonheur qu'à le rendre possible, puis à savoir l'accueillir quand il vient — sans le retenir de force, ni s'affoler de ses absences. Car une vie qui exige d'être heureuse à tout prix est une vie qui se condamne, souvent, à ne pas l'être.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15928,7 +15928,7 @@ Le sens naît aussi de la cohérence entre ce qu'on fait et ce qu'on croit. Une 
 Il faut noter que le sens ne dépend pas des circonstances autant qu'on le croit. On peut trouver du sens dans une vie modeste, difficile, dépourvue de réussite éclatante ; et manquer de sens dans une vie comblée de succès. Car le sens ne se mesure pas à ce qu'on a, mais à la manière dont on habite sa vie, aux liens qu'on tisse, à ce à quoi l'on se dévoue. C'est une bonne nouvelle : le sens n'est pas réservé à quelques privilégiés ; il est, en principe, à la portée de chacun, quelles que soient les circonstances, pour peu qu'on cherche ce à quoi se donner.
 
 Donner un sens à sa vie n'est donc pas un luxe philosophique, mais une nécessité vitale, aussi essentielle que le pain. Dans un monde qui offre plaisirs et distractions en abondance mais peine à proposer du sens, cette quête est peut-être la plus urgente de toutes. Non pas attendre que la vie ait un sens tout fait, mais le construire : par ce à quoi l'on s'attache, ce à quoi l'on se dévoue, ce que l'on choisit de servir. Car une vie qui a du sens peut supporter presque tout, quand une vie qui n'en a pas ne supporte, à la fin, plus rien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15951,7 +15951,7 @@ Accepter ce qu'on ne peut changer n'est pas de la résignation ni de la passivit
 Cette sagesse s'applique jusqu'aux limites de l'existence. Il est des maux qu'on ne peut éviter, des pertes qu'on ne peut réparer, une finitude qu'on ne peut abolir. Contre eux, la révolte est vaine, et l'acceptation, non la résignation amère mais la reconnaissance sereine, est la seule voie vers la paix. Accepter qu'on ne peut pas tout, qu'on est mortel, vulnérable, dépendant, n'est pas une défaite ; c'est la condition d'une existence apaisée, qui a cessé de se battre contre la réalité pour apprendre à vivre avec elle.
 
 Distinguer ce qui dépend de nous de ce qui n'en dépend pas est donc une clé de la vie bonne. Elle nous délivre de deux erreurs : l'illusion de toute-puissance, qui veut tout contrôler et se brise sur le réel ; et le sentiment d'impuissance, qui croit ne rien pouvoir et renonce à agir là où il le pourrait. Entre les deux, il y a la juste mesure : agir avec toute son énergie sur ce qui dépend de nous, accepter avec sérénité ce qui n'en dépend pas. Une part de la sagesse — et de la paix — tient dans cette distinction, simple à énoncer, difficile à vivre, mais qui éclaire toute une existence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15974,7 +15974,7 @@ La conscience de la mort, bien accueillie, est ainsi une maîtresse de vie. Elle
 Cette conscience peut même nous apaiser, plutôt que nous angoisser. Accepter notre finitude, cesser de la fuir ou de la nier, c'est faire la paix avec la condition qui est la nôtre. Ceux qui ont regardé la mort en face témoignent souvent d'une sérénité nouvelle, d'une capacité à goûter la vie qu'ils n'avaient pas auparavant. Non parce qu'ils ne craignent plus rien, mais parce qu'ayant accepté la fin, ils sont enfin libres de vivre pleinement le temps qui reste. L'acceptation de la mort peut être la condition d'une vie vraiment vivante.
 
 Ainsi s'achève ce long parcours, sur la plus haute des questions. Vivre en sachant que l'on va mourir n'est pas une malédiction dont il faudrait se détourner, mais peut-être le fondement même d'une vie consciente et pleine. Cette conscience nous invite à ne pas remettre l'essentiel, à chérir ce qui est, à donner sens et profondeur à nos jours comptés. Elle rappelle, à qui apprend une langue comme à quiconque, que le temps est précieux, que rien n'est acquis, et qu'il vaut la peine de vivre chaque jour comme s'il comptait — car, en vérité, il compte. C'est là, peut-être, la plus ancienne et la plus simple des sagesses : puisque la vie est brève, il n'en est que plus important de la vivre bien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -15997,7 +15997,7 @@ La troisième condition tient à une disposition intérieure rare : accepter de 
 Que ces conditions soient si exigeantes explique la fragilité du débat, et la facilité avec laquelle il se dégrade en son contraire. Il suffit qu'une seule vienne à manquer — que l'on dénie à l'adversaire sa légitimité, que le socle factuel se dissolve, que nul n'accepte plus de pouvoir se tromper — pour que la délibération cède la place à l'invective, à la propagande, à la guerre des camps. Or ces trois conditions sont aujourd'hui simultanément attaquées, ce qui devrait nous inquiéter plus que le contenu de tel ou tel débat particulier.
 
 Comprendre le débat comme une civilisation fragile, et non comme un acquis, change le regard qu'on porte sur lui. Cela invite à le tenir non pour un droit qu'il suffirait de proclamer, mais pour une pratique délicate qu'il faut entretenir, protéger, réapprendre. Une société ne cesse pas de débattre du jour au lendemain ; elle en perd insensiblement la capacité, à mesure que se défont les conditions qui la rendaient possible. Et lorsqu'un peuple a désappris à débattre, il ne lui reste, pour trancher ses désaccords, que des voies dont l'histoire a montré le prix.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16020,7 +16020,7 @@ Cette dérive est aggravée par les dispositifs qui organisent aujourd'hui l'exp
 Faut-il en conclure qu'il faudrait bannir l'indignation, lui préférer une froideur détachée ? Ce serait une erreur symétrique. L'indignation a sa place et sa légitimité : elle peut être le premier mouvement, sain et nécessaire, par lequel une conscience refuse l'inacceptable. Le problème n'est pas qu'on s'indigne, mais qu'on en reste là, que l'indignation se substitue à l'examen au lieu de le précéder. Une indignation qui débouche sur la pensée, qui accepte ensuite de s'interroger, de nuancer, de comprendre, reste féconde ; une indignation qui se suffit à elle-même se stérilise et stérilise le débat.
 
 Le véritable enjeu est donc de rendre à l'indignation sa juste fonction : celle d'une alerte, non d'un verdict. Éprouver le choc du mal, mais ne pas s'en contenter ; laisser l'émotion appeler la réflexion plutôt que la clore. Cela suppose de résister à la facilité du jugement immédiat, à la douceur de la certitude morale, à la pente qui fait préférer l'éclat de l'indignation à la patience de la pensée. Dans une époque qui érige l'indignation en vertu suprême, revendiquer le droit de penser avant de condamner est devenu, paradoxalement, une audace.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16043,7 +16043,7 @@ Cette exigence a aussi partie liée avec une défiance généralisée qu'elle no
 Il ne s'agit pas, en critiquant la transparence absolue, de défendre le secret des puissants ni l'opacité qui couvre les abus. La distinction est ici décisive : autre chose est d'exiger que ceux qui exercent un pouvoir rendent des comptes, autre chose est de vouloir que tout, en toute chose, soit exposé au regard. La première exigence est légitime et salutaire ; la seconde est une chimère dangereuse. Confondre les deux, au nom d'une transparence indistincte, c'est risquer de détruire, avec l'opacité coupable, l'ombre légitime dont la liberté, la pensée et la confiance ont besoin.
 
 Ce qu'une société libre doit préserver, c'est donc moins la transparence que sa juste mesure : la visibilité là où le pouvoir doit rendre des comptes, l'ombre là où la vie, la pensée et l'intimité doivent se protéger. Une civilisation ne se juge pas seulement à ce qu'elle expose, mais à ce qu'elle sait laisser dans une pénombre respectée. Car un monde entièrement transparent ne serait pas un monde entièrement vrai ; ce serait un monde où plus personne, se sachant toujours vu, n'oserait être tout à fait soi-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16066,7 +16066,7 @@ Cette usure a une conséquence grave, souvent inaperçue. Dans le vacarme des sc
 Il faut ajouter que ce régime favorise une forme particulière d'injustice : le procès expéditif. Le scandale exige un coupable immédiat, une condamnation rapide, sans le temps de l'examen ni les précautions du jugement. Emportée par sa propre dynamique, l'indignation collective désigne, condamne et punit avant d'avoir instruit, quitte à briser des réputations sur la foi d'accusations que nul n'a vérifiées. La vitesse du scandale est incompatible avec la lenteur de la justice, et cette incompatibilité fait des victimes que l'oubli du scandale suivant n'innocentera jamais.
 
 Résister au scandale permanent suppose une discipline collective difficile : réapprendre à distinguer, à hiérarchiser, à réserver l'alarme à ce qui la mérite, à accorder au jugement le temps qu'il exige. Cela suppose aussi une défiance envers notre propre appétit de scandale, envers le plaisir trouble qu'il y a à s'indigner, à condamner, à participer à la curée. Une société qui saurait s'indigner moins, mais mieux, serait plus juste qu'une société qui s'indigne de tout. Car la valeur de l'indignation ne tient pas à sa fréquence, mais à sa justesse — et une émotion qu'on prodigue sur tout finit par ne plus rien pouvoir défendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16089,7 +16089,7 @@ C'est en quoi elle est un courage. Il est facile, et confortable, d'épouser san
 La nuance a en outre une vertu que la polarisation détruit : elle maintient ouvert l'espace du dialogue. Là où les positions tranchées s'affrontent sans se rencontrer, la nuance ménage des points de contact, reconnaît à l'autre une part de raison, rend possible qu'on s'écoute encore. Elle est le contraire de la guerre des camps, non parce qu'elle refuse de prendre parti, mais parce qu'elle prend parti sans nier la complexité ni diaboliser l'adversaire. En cela, elle est peut-être la condition même d'un débat qui ne dégénère pas en affrontement — cette civilisation fragile dont il a été question.
 
 Défendre la nuance n'est donc pas prôner la tiédeur, ni le refus de s'engager. C'est rappeler qu'une pensée juste épouse la complexité de son objet, qu'une conviction solide n'a pas peur de reconnaître ce qui la limite, et qu'un débat fécond suppose des esprits capables de distinguer plutôt que de rallier. Dans une époque qui récompense la certitude bruyante et le ralliement sans réserve, oser la nuance, maintenir la complexité contre la pression de simplifier, refuser de haïr ceux qu'on désapprouve : voilà qui exige, aujourd'hui plus que jamais, un véritable courage. Et c'est peut-être de ce courage-là, plus que de convictions plus fermes, que nos débats manquent le plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16112,7 +16112,7 @@ Cette fonction, qui semble purement négative, est en réalité une libération.
 Certains rétorqueront que cette émancipation est un luxe, réservé à quelques-uns, sans effet sur le cours du monde. Ce serait sous-estimer la portée des idées. Les conceptions que nous nous faisons du juste, de la liberté, de la nature humaine, ne restent pas dans les livres : elles gouvernent nos institutions, nos lois, nos manières de vivre ensemble. Les grandes transformations politiques ont presque toujours été précédées et nourries par un travail de la pensée qui avait, d'abord, rendu pensable ce qui allait devenir réel. La philosophie n'agit pas directement, mais elle façonne l'horizon dans lequel l'action devient possible ; son inutilité apparente masque une efficacité lente et profonde.
 
 Il reste que sa valeur ne se réduit pas à ses effets. La philosophie répond à un besoin qui n'est pas d'utilité mais de sens : celui, proprement humain, de comprendre sa condition, de ne pas traverser l'existence sans jamais s'interroger sur ce qu'on fait et pourquoi. Une vie qui ne se poserait jamais ces questions ne serait pas moins efficace ; elle serait moins pleinement humaine. C'est pourquoi la philosophie, qui ne sert à rien au sens où l'on sert un intérêt, est indispensable au sens où l'est tout ce qui fait que la vie mérite d'être examinée. Son inutilité n'est pas un défaut ; c'est le signe qu'elle touche à ce qui, en nous, dépasse le seul besoin de vivre pour interroger le fait même de vivre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16135,7 +16135,7 @@ Une autre conception est possible, qui ne place pas la liberté hors des causes,
 Cette conception ne dissipe pas toute difficulté, car on peut objecter que ce moi lui-même, avec ses raisons et ses valeurs, est le produit de causes qu'il n'a pas choisies. Le débat, ici, ne se laisse pas trancher d'un mot, et il serait présomptueux de prétendre le clore. Mais il faut remarquer ceci : même celui qui se persuade, en théorie, que la liberté est illusoire, continue, en pratique, de délibérer, de choisir, de tenir les autres pour responsables. Il ne peut pas vivre selon sa thèse. Cette impossibilité n'est pas une preuve, mais elle indique que la liberté, quoi qu'on pense de son statut métaphysique, est une catégorie dont nous ne pouvons nous défaire, inscrite au cœur de notre expérience et de notre vie commune.
 
 Peut-être la question n'est-elle pas de savoir si nous sommes libres au sens absolu — question qui pourrait n'avoir pas de réponse —, mais de reconnaître les degrés de liberté qui font une différence réelle dans nos vies. Entre l'homme dominé par ses impulsions et celui qui les maîtrise, entre celui qui suit aveuglément et celui qui réfléchit, entre l'esclave et l'homme libre, il y a des différences que nul déterminisme n'efface. Cultiver ces différences, accroître en soi la part de ce qui agit par raison plutôt que par contrainte, c'est peut-être cela, être libre : non échapper aux causes, mais devenir toujours davantage la cause de ses propres actes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16158,7 +16158,7 @@ Nous invoquons volontiers la proximité : nous devrions plus à nos proches qu'a
 Peut-être faut-il accepter que la morale ne se laisse pas réduire à un principe unique et cohérent, appliqué sans reste. Nos obligations résultent de la tension entre plusieurs exigences légitimes : l'universalité, qui veut que toute vie compte également ; la partialité, qui reconnaît les liens particuliers ; et le droit que chacun a de vivre sa propre vie, de n'être pas un pur instrument du bien d'autrui. Ces exigences ne se hiérarchisent pas aisément, et la vie morale consiste peut-être moins à appliquer une règle qu'à composer, tant bien que mal, entre des devoirs qui tirent en des sens différents.
 
 Ce qui demeure, au terme de cet examen, ce n'est pas une réponse claire, mais une inquiétude salutaire. Nous ne pouvons plus tenir nos frontières morales pour évidentes, ni nous croire quittes envers les autres au motif que nous respectons la morale ordinaire. Reconnaître que nous devons probablement plus que nous ne faisons, sans pour autant nous croire tenus à un sacrifice illimité, c'est habiter honnêtement la tension qui constitue la vie morale. Cette lucidité inconfortable vaut mieux que la fausse tranquillité de qui croit avoir rempli tous ses devoirs — car la question de ce que nous devons aux autres n'est pas de celles qu'on peut clore, mais de celles avec lesquelles il faut apprendre à vivre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16181,7 +16181,7 @@ La deuxième illusion est de croire le progrès unifié, comme si l'amélioratio
 La troisième illusion, plus subtile, concerne la mesure du progrès. Progrès vers quoi ? Dire que l'histoire s'améliore suppose un critère, une idée de ce qui est meilleur. Or ce critère n'est pas donné ; il dépend de ce que nous valorisons. Une civilisation qui juge le progrès à la puissance et à la richesse ne mesure pas la même chose que celle qui le jugerait à la justice ou à la qualité des vies. L'idée de progrès dissimule souvent ce présupposé : elle fait passer pour une avancée objective ce qui n'est qu'un mouvement vers ce que, nous, tenons pour désirable. Interroger le progrès, c'est interroger nos propres valeurs, que nous projetons sur l'histoire en croyant y lire un sens qu'elle contiendrait.
 
 Faut-il pour autant abandonner l'idée de progrès ? Ce serait renoncer à ce qui donne à l'action humaine une part de son ressort : l'espoir de rendre le monde meilleur. Mais il faut la tenir autrement : non comme une loi de l'histoire qui nous porterait, mais comme une tâche qui nous incombe ; non comme un fait acquis, mais comme une possibilité fragile ; non comme un mouvement unifié et garanti, mais comme un effort toujours partiel, réversible, à reprendre. Un progrès ainsi compris est plus modeste, mais plus vrai, et surtout plus exigeant : il ne nous dispense pas d'agir, il nous y oblige. Car si rien ne garantit que demain sera meilleur, alors il dépend de nous qu'il le soit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16204,7 +16204,7 @@ Cette discipline a une vertu supplémentaire : elle est le meilleur remède à l
 Il ne s'agit pas, pour autant, de sombrer dans un doute universel qui interdirait toute conviction. Penser contre soi-même n'est pas ne plus rien penser, ni changer d'avis à chaque objection ; c'est éprouver ses convictions, non les dissoudre. Le but n'est pas l'incertitude perpétuelle, mais une certitude qui a payé le prix de l'examen. Après avoir cherché les raisons contraires et pesé leur force, on peut, on doit conclure — mais on conclut alors en connaissance de cause, en sachant ce qu'on a écarté et pourquoi. C'est une fermeté qui a traversé le doute, non qui l'a fui.
 
 Une telle discipline est exigeante, et nul ne la pratique parfaitement, car elle demande de dominer sans cesse notre amour-propre, notre désir d'avoir raison, notre attachement à ce que nous sommes. Mais elle est le cœur de toute vie intellectuelle honnête, et sa rareté même en fait le prix. Dans une époque qui récompense la certitude affichée et le ralliement sans faille, où chacun s'entoure de ce qui le conforte, faire l'effort de penser contre soi-même est presque un acte de résistance. C'est aussi la marque d'un esprit véritablement libre : non celui qui ne doute jamais, ni celui qui doute de tout, mais celui qui a le courage de se demander, à propos de ses convictions les plus chères, s'il ne se pourrait pas qu'il ait tort.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16227,7 +16227,7 @@ Mais cette identification a un revers, qui apparaît lorsqu'elle devient exclusi
 Il y a plus. L'identification au travail sert aussi une logique qui n'est pas innocente. En faisant du métier le lieu principal de la valeur et de la reconnaissance, une société oriente les énergies vers la production, subordonne les autres dimensions de l'existence à l'activité professionnelle, et rend suspecte toute vie qui ne se définirait pas par un travail. Celui qui ne produit pas — parce qu'il ne le peut, ou ne le veut — se voit dénié une part de dignité, comme s'il manquait à un devoir d'exister utilement. Cette pression, intériorisée, transforme le travail de moyen en fin, et l'être humain en producteur qui n'existe qu'en tant qu'il produit.
 
 Reconnaître le caractère construit de l'identité par le travail, c'est se donner la liberté de la relativiser. Non pour dévaloriser le travail, qui garde son importance, mais pour lui assigner sa juste place : une dimension de l'existence parmi d'autres, non son tout. Un être humain est aussi un proche, un citoyen, un curieux, un créateur, un vivant — rôles qu'aucune fiche de poste n'enregistre. Se souvenir que nous ne sommes pas réductibles à ce que nous faisons pour gagner notre vie, c'est préserver, contre une époque qui tend à l'oublier, une conception plus ample de ce qu'est une personne — et se ménager, pour le jour où le travail viendrait à manquer, un socle d'identité que sa perte ne pourrait emporter.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16250,7 +16250,7 @@ C'est pourtant ce renversement qu'opère la tyrannie de l'utile. Elle somme la b
 Cette dérive touche jusqu'à la conception que nous nous faisons de la vie humaine. Sommer chaque existence de se justifier par son utilité, c'est nier qu'une vie puisse valoir pour elle-même, indépendamment de ce qu'elle produit ou rapporte. C'est la pente qui conduit à mesurer les êtres à leur rendement, à tenir pour un poids ceux qui ne produisent plus, à ne plus reconnaître de dignité qu'à la vie utile. Or une vie n'est pas un moyen ; elle est, s'il est quelque chose qui vaille pour soi-même, ce quelque chose même. Réduire l'existence à son utilité, c'est manquer ce qui, en elle, dépasse toute utilité.
 
 Défendre le gratuit contre la tyrannie de l'utile n'est donc pas plaider pour l'oisiveté ou le gaspillage. C'est rappeler que l'utilité n'est pas la valeur suprême, mais un ordre subordonné, qui n'a de sens qu'au service de fins qui, elles, ne servent à rien parce qu'elles sont ce à quoi tout sert. Une civilisation se juge peut-être moins à ce qu'elle produit qu'à ce qu'elle sait préserver de gratuit : la place qu'elle laisse à la beauté, à la pensée désintéressée, aux liens qui ne rapportent rien, à tout ce qui, ne servant à rien, fait pourtant que la vie mérite d'être vécue. Car ce qui n'a pas de prix, au sens où l'on ne saurait le monnayer, est aussi ce qui n'a pas de prix au sens où rien ne le vaut.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16273,7 +16273,7 @@ C'est ici que se révèle une souffrance majeure du travail contemporain, souven
 Cette dimension éclaire aussi le sort réservé à certains métiers. Il est des travaux indispensables — le soin, le nettoyage, l'aide aux plus vulnérables — qui sont pourtant parmi les moins reconnus, mal payés et socialement dévalorisés. Le déni de reconnaissance s'ajoute alors à la pénibilité, et redouble l'injustice : ceux qui accomplissent les tâches dont la société ne saurait se passer sont ceux à qui elle refuse l'estime. Certaines circonstances, en révélant soudain l'utilité vitale de ces métiers, ont fait apparaître ce scandale — sans que la reconnaissance proclamée se traduise toujours, ensuite, dans les faits.
 
 Prendre au sérieux le besoin de reconnaissance transforme la manière de penser le travail. Il ne suffit pas d'améliorer les salaires et les conditions, si essentiel que cela soit ; il faut aussi que le travail permette à chacun d'être reconnu dans sa contribution, estimé dans son effort, tenu pour une personne et non pour une fonction. Une organisation qui broie la reconnaissance, qui rend les êtres interchangeables et invisibles, produit de la souffrance quand bien même elle paierait correctement. Car l'homme au travail ne demande pas seulement de quoi vivre ; il demande à exister aux yeux des autres — et ce besoin invisible, si on le méconnaît, se venge par une souffrance que rien de matériel n'apaise.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16296,7 +16296,7 @@ Or cette illusion a des conséquences politiques et morales considérables. En f
 Cette humiliation méritocratique est peut-être l'un des ressorts méconnus du ressentiment qui traverse nos sociétés. Aux inégalités anciennes, on pouvait au moins opposer qu'elles étaient injustes, imméritées ; la méritocratie ôte cette consolation, en présentant les inégalités comme le juste reflet des mérites. Celui qui échoue est alors sommé de se juger lui-même responsable de son sort, privé même de la dignité de la protestation. Il n'est pas étonnant qu'une telle blessure engendre la colère de ceux à qui l'on dit, en substance, que leur place au bas de l'échelle est ce qu'ils méritent.
 
 Reconnaître le caractère trouble du mérite ne conduit pas à renoncer à toute idée de responsabilité ou de récompense de l'effort ; ce serait une autre illusion, et une injustice inverse. Cela conduit à plus de modestie chez ceux qui réussissent — qui devraient mesurer ce qu'ils doivent à la chance —, à plus de compassion envers ceux qui échouent, et à une société qui ne ferait pas dépendre la dignité des personnes de leur seule réussite. Une justice lucide sur les limites du mérite serait à la fois plus humble et plus humaine : elle récompenserait l'effort sans en faire un absolu, et n'oublierait jamais que, derrière tout mérite, il y a une part de grâce reçue, dont nul ne saurait tirer gloire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16319,7 +16319,7 @@ Ensuite, et surtout, l'exigence d'aimer son travail sert une logique qui n'est p
 Il y a plus. L'idéologie de l'amour du travail suppose que chacun pourrait trouver un métier qui le passionne, comme si de tels métiers existaient en nombre suffisant pour tous. Or l'immense majorité des tâches nécessaires à la vie collective ne sont pas passionnantes, et il faudra bien que quelqu'un les accomplisse. Prétendre que chacun devrait aimer son travail, c'est ignorer la réalité de ces tâches indispensables et ingrates, et faire porter à ceux qui les accomplissent le poids d'un idéal inaccessible. C'est un discours de privilégiés, qui projette sur tous une possibilité réservée à quelques-uns.
 
 Peut-être faut-il donc libérer le travail de cette injonction elle-même. Non pour revenir à la résignation d'autrefois, mais pour rendre au travail une place plus juste : une activité qui peut être aimée, mais ne doit pas nécessairement l'être ; qui peut avoir du sens, sans qu'on exige qu'elle comble toute l'existence. On peut faire correctement, et sans honte, un travail qu'on n'aime pas passionnément, en trouvant ailleurs — dans ses liens, ses passions, sa vie hors travail — de quoi s'épanouir. Cette conception, plus modeste, est aussi plus libre : elle délivre de la culpabilité de ne pas aimer, et de l'exploitation qui se cache sous l'amour exigé. Aimer son travail, quand cela arrive, est une chance ; en faire un devoir est une manière de nous lier plus étroitement encore à lui — au risque de n'avoir plus, hors de lui, aucune vie à aimer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16342,7 +16342,7 @@ Faut-il en conclure que l'histoire serait arbitraire, que chacun pourrait racont
 Comprendre cette nature de l'histoire a des conséquences importantes. Cela invite à la vigilance envers tout récit du passé qui se présenterait comme la vérité pure et simple, alors qu'il est toujours une interprétation, portée par des choix et des valeurs. Cela invite aussi à distinguer l'histoire, soumise à la critique, des usages politiques du passé, qui l'instrumentalisent au service d'une cause. Une nation, un pouvoir, un groupe peuvent mobiliser le passé pour se légitimer, mais cette mobilisation n'est pas de l'histoire ; c'est de la mémoire militante, souvent nécessaire, mais qu'il ne faut pas confondre avec le travail critique de l'historien.
 
 Distinguer le passé et l'histoire, c'est donc à la fois reconnaître que notre rapport au passé est toujours construit, situé, révisable, et refuser d'en conclure qu'il serait arbitraire. C'est tenir ensemble deux vérités : que l'histoire répond à des questions du présent, et qu'elle demeure responsable devant les faits du passé. Cette double conscience est le propre d'un rapport mûr à l'histoire — celui qui ne prend pas un récit pour la vérité définitive, mais qui ne sombre pas non plus dans l'idée que tout se vaudrait. Le passé ne reviendra pas ; mais ce que nous en faisons, l'histoire que nous en écrivons, engage ce que nous sommes et ce que nous voulons être.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16365,7 +16365,7 @@ L'usage le plus pervers, enfin, est l'instrumentalisation au service d'une cause
 Ces usages posent un problème redoutable, car ils se réclament de l'histoire tout en la trahissant. Ils invoquent le passé, les faits, la mémoire, mais les plient à des fins qui ne sont pas celles de la connaissance. Le pouvoir qui instrumentalise l'histoire ne dit pas qu'il la déforme ; il prétend, au contraire, restaurer la vérité que d'autres auraient occultée. Distinguer l'histoire de son instrumentalisation devient alors difficile, d'autant que la frontière n'est pas toujours nette, et que l'historien lui-même n'est pas exempt des préoccupations de son temps. Mais cette difficulté ne doit pas conduire au renoncement : entre le travail critique, soumis aux faits et à la méthode, et l'usage militant, soumis à une cause, la différence demeure, et elle est décisive.
 
 Face aux usages politiques du passé, la meilleure protection est la connaissance historique elle-même, avec ses exigences de rigueur, de contexte, de complexité. Un peuple instruit de son histoire réelle, dans ses grandeurs et ses ombres, résiste mieux aux mythes qu'on voudrait lui vendre ; un peuple ignorant, ou qui ne connaît qu'un récit flatteur, est à la merci de ceux qui manipulent le passé. C'est pourquoi l'enseignement d'une histoire critique, qui apprend à distinguer les faits de leur usage, n'est pas un luxe, mais une nécessité démocratique. Car celui qui contrôle le récit du passé oriente le présent — et rien n'est plus dangereux qu'un peuple qui ne connaît de son histoire que ce qu'on a voulu lui en faire croire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16388,7 +16388,7 @@ La troisième difficulté, plus profonde, concerne l'efficacité même de la mé
 Faut-il alors relativiser le devoir de mémoire ? Non, mais le penser autrement. Il ne s'agit pas de moins se souvenir, mais de mieux : de lier la mémoire à la compréhension, plutôt que de les opposer ; de viser, à travers le souvenir des victimes, l'intelligence des mécanismes qui ont rendu le crime possible ; de faire de la mémoire non un culte figé, tourné vers le passé, mais une vigilance active, tournée vers le présent. Une mémoire qui ne servirait qu'à commémorer, sans éclairer ni prévenir, manquerait à sa fin ; une mémoire qui rendrait attentif aux signes annonciateurs, dans le présent, de ce qu'elle rappelle du passé, remplirait vraiment son office.
 
 Le devoir de mémoire, bien compris, n'est donc pas le devoir de ressasser, mais celui de comprendre pour rester vigilant. Il ne s'oppose pas à l'histoire ; il l'appelle. Honorer les victimes, oui, mais aussi comprendre les bourreaux, non pour les excuser, mais pour reconnaître, dans l'humanité ordinaire, la possibilité du pire — car c'est cette reconnaissance, plus que l'émotion commémorative, qui peut nous armer. La mémoire sans la compréhension est une piété stérile ; la compréhension sans la mémoire, une froideur coupable. C'est de leur union que peut naître ce que le devoir de mémoire vise vraiment : non seulement ne pas oublier, mais ne pas recommencer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16411,7 +16411,7 @@ Ces deux positions ont chacune leur part de vérité, et c'est pourquoi la quest
 Ce qui importe, au fond, c'est de distinguer ce que la statue fait dans l'espace public. Tant qu'elle trône en gloire, elle honore ; c'est cet honneur qui pose problème, non l'existence de l'objet. La question n'est donc pas tant « faut-il détruire ou conserver ? » que « faut-il continuer d'honorer ? » — et à celle-là, la réponse peut être non sans qu'il faille pour autant effacer. Retirer un hommage n'est pas effacer une histoire ; c'est cesser de célébrer ce qui ne doit plus l'être, tout en gardant les moyens de le comprendre.
 
 Le débat sur les statues, par-delà les objets qu'il concerne, touche à notre rapport au passé. Il révèle que ce rapport n'est jamais figé, qu'il se rediscute à chaque génération, et que l'espace public, où le passé se donne à voir, est aussi un lieu où le présent affirme ses valeurs. Ni le conservatisme qui voudrait tout maintenir intact, ni l'iconoclasme qui voudrait tout effacer ne rendent justice à la complexité de la tâche : assumer un passé dans sa vérité, sans continuer d'en honorer ce qui ne le mérite plus. Une société mûre n'est ni celle qui vénère aveuglément ses monuments, ni celle qui les abat dans la fièvre, mais celle qui sait, devant eux, à la fois se souvenir et juger.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16434,7 +16434,7 @@ Il y a là un paradoxe qu'il faut tenir. D'un côté, l'oubli des crimes est une
 Cette distinction éclaire ce que pourrait être un rapport équilibré au passé. Ni l'oubli qui efface et prépare la répétition, ni la mémoire qui ressasse et entretient la guerre, mais une mémoire apaisée, qui sait les faits sans en faire une arme éternelle. Le pardon, dont on parle tant, n'est pas l'oubli des faits ; il est le renoncement à la vengeance malgré le souvenir. C'est peut-être là la forme la plus haute du rapport au passé : se souvenir pleinement, et pourtant cesser de faire du souvenir un motif de haine. Non oublier pour pardonner, mais pardonner sans oublier.
 
 Réhabiliter une part d'oubli, ce n'est donc pas trahir la mémoire ; c'est reconnaître que la mémoire, seule, ne suffit pas, et qu'elle peut même, mal orientée, devenir un poison. Une société, comme un être humain, a besoin à la fois de se souvenir et de pouvoir laisser le passé passer, faute de quoi elle demeure prisonnière de ses blessures. La sagesse, ici comme ailleurs, n'est pas dans l'un des termes contre l'autre, mais dans leur juste équilibre : savoir ce qu'il faut garder vif, et ce qu'il faut laisser s'apaiser. Car un peuple qui n'oublierait jamais rien serait aussi malheureux qu'un peuple qui aurait tout oublié.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16457,7 +16457,7 @@ Il y a plus subtil encore. Certains mots ont le pouvoir de rendre pensables, ou 
 De ce pouvoir découle une manipulation courante : l'euphémisme, qui adoucit ce qu'il nomme pour le rendre acceptable. On parle de « dommages collatéraux » pour ne pas dire des morts, de « plan social » pour ne pas dire des licenciements, de « frappes » pour ne pas dire des bombardements. Ces mots ne mentent pas tout à fait, mais ils anesthésient, ils mettent à distance, ils empêchent de ressentir ce que la chose nue provoquerait. L'euphémisme est une arme précisément parce que le langage n'est pas neutre : il exploite le pouvoir des mots de colorer la réalité, pour la rendre supportable ou invisible.
 
 Prendre conscience que les mots ne sont jamais neutres, ce n'est pas sombrer dans un soupçon généralisé où tout langage serait manipulation. C'est acquérir une vigilance : se demander, devant les mots qu'on nous propose, ce qu'ils suggèrent, ce qu'ils cachent, quel cadre ils installent, à quelle interprétation ils inclinent. C'est aussi refuser de laisser à d'autres le monopole de nommer, revendiquer le droit de choisir ses propres mots plutôt que de subir ceux qu'on nous impose. Car dans une large mesure, celui qui contrôle les mots contrôle la pensée — et reconquérir le langage est la première des libertés.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16480,7 +16480,7 @@ Sa seconde utilité est d'anesthésier. La langue de bois endort la vigilance ; 
 Il faut se garder, ici, d'une confusion. Toute prudence dans le langage n'est pas langue de bois ; il est des sujets délicats où la nuance et la réserve sont légitimes, où l'on doit peser ses mots. La langue de bois se distingue de cette prudence honnête par son intention : elle ne pèse pas ses mots pour dire juste, mais les vide pour ne rien dire. La prudence cherche la justesse ; la langue de bois cherche l'esquive. L'une affine la pensée, l'autre la dissout. Savoir les distinguer est nécessaire pour ne pas confondre la rigueur avec le vide.
 
 Résister à la langue de bois suppose une exigence : celle de demander, derrière les mots, ce qui est réellement dit. Que signifie concrètement cette formule ? Qu'affirme-t-elle qui puisse être vrai ou faux ? Qu'engage-t-elle ? Ces questions, adressées à tout discours, font apparaître le vide là où il est, et forcent, parfois, ceux qui parlent à sortir de leur armure verbale. Dans une démocratie, cette exigence est un devoir civique, car la langue de bois n'est pas seulement une paresse du langage : c'est une manière de gouverner sans rendre de comptes, de parler pour ne pas être compris, de noyer sous les mots ce qui devrait être clairement dit et clairement débattu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16503,7 +16503,7 @@ Ces codes, précisément, constituent une troisième barrière. La parole publiq
 Reconnaître ces inégalités ne conduit pas à nier toute hiérarchie des paroles, comme si toutes se valaient, comme si l'ignorant et le savant devaient être également écoutés sur ce qu'ils ignorent. Il y a une légitimité fondée de l'expertise, et prétendre l'abolir serait tomber dans un populisme qui n'écoute plus personne parce qu'il refuse toute autorité du savoir. Le problème n'est pas qu'il existe des hiérarchies de la parole, mais qu'elles soient injustes : qu'elles excluent au nom de la forme ce qui mériterait d'être entendu, qu'elles confondent la légitimité du savoir avec les privilèges d'un milieu, qu'elles fassent taire des voix pour de mauvaises raisons.
 
 La question « qui a le droit de parler ? » n'appelle donc pas la réponse simpliste « tout le monde également », qui ignore les légitimes différences de compétence, ni la réponse élitiste « seuls les habilités », qui masque des exclusions injustes sous couvert d'exigence. Elle appelle un travail : rendre l'accès à la parole plus juste, écouter des voix qu'on disqualifie trop vite, distinguer la légitimité réelle du savoir des barrières purement sociales, ouvrir le débat à ceux qu'on en exclut sans raison valable. Une démocratie ne se mesure pas seulement à la liberté de parole qu'elle proclame, mais à l'égalité réelle de la parole qu'elle permet — et sur ce terrain, il reste beaucoup à faire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16526,7 +16526,7 @@ Mais cette reconnaissance de limites ouvre aussitôt un péril, car il est terri
 C'est pourquoi la sagesse, en cette matière, consiste à tenir fermement deux exigences en tension. D'une part, reconnaître que la liberté d'expression n'est pas absolue, qu'elle connaît des limites justifiées quand la parole cause des torts graves sans servir les biens qui la fondent. D'autre part, se méfier extrêmement de l'extension de ces limites, poser la barre très haut, ne restreindre qu'à contrecœur et pour des motifs impérieux, en gardant toujours à l'esprit que le remède peut être pire que le mal. La liberté d'expression doit être défendue jusque dans son inconfort : elle n'a de sens que si elle protège aussi la parole qui déplaît, qui choque, qui dérange, car la parole consensuelle n'a jamais eu besoin d'être protégée.
 
 Il n'existe donc pas de réponse simple à la question de savoir si l'on peut tout dire. Ni le « tout est permis » qui nierait les torts réels que la parole peut causer, ni le « on ne peut plus rien dire » qui multiplierait les interdits jusqu'à étouffer le débat, ne rendent justice à la complexité du problème. La liberté d'expression est un équilibre difficile, toujours à réajuster, entre la protection d'un bien fondamental et la reconnaissance de ses limites. Cet équilibre ne se règle pas par une formule, mais par un jugement toujours renouvelé, exercé avec le souci constant de ne pas sacrifier, sous prétexte de protéger, ce qui fait le prix d'une société libre : la possibilité de dire, aussi, ce qui dérange.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16549,7 +16549,7 @@ Mais ce pouvoir créateur a un revers, qu'il serait imprudent d'ignorer. Car nom
 Il y a plus troublant. Nommer peut créer la chose nommée par un effet en retour. Désigner des gens d'un certain terme, les enfermer dans une catégorie, peut finir par les faire devenir ce qu'on les dit être, tant les mots dont on use pour désigner les êtres influencent ce qu'ils deviennent. L'étiquette qu'on appose n'est pas toujours un simple constat ; elle peut être une prophétie qui contribue à se réaliser, façonnant les perceptions, les attentes, les comportements, jusqu'à produire la réalité qu'elle prétendait décrire. Le pouvoir de nommer est aussi, en ce sens, un pouvoir de façonner les êtres.
 
 Ce double pouvoir — libérateur et créateur de divisions — commande une responsabilité dans l'usage des mots. Nommer n'est jamais anodin : c'est faire exister, pour le meilleur et pour le pire. Le même acte qui peut donner voix aux sans-voix peut aussi dresser les groupes les uns contre les autres ; le même mot qui libère peut enfermer. Il n'y a pas de règle simple pour distinguer le bon usage du mauvais, sinon la conscience de ce que l'on fait quand on nomme, et le souci de ses effets. Car les mots, qui semblent si légers, sont parmi les forces les plus puissantes qui façonnent le monde humain — et en manier le pouvoir de faire exister exige qu'on mesure ce qu'on appelle à l'existence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16572,7 +16572,7 @@ C'est pourquoi il est trompeur, et souvent malhonnête, d'exploiter l'incertitud
 Cette stratégie a été délibérément employée, l'histoire le montre, par ceux qui avaient intérêt à retarder l'action : entretenir le doute, exagérer l'incertitude, faire passer un consensus solide pour une controverse ouverte, afin de paralyser sous prétexte qu'on « ne serait pas sûr ». Cette fabrique du doute exploite précisément notre méprise sur l'incertitude scientifique : en la présentant comme une ignorance, elle transforme la vertu de la science — son honnêteté sur ses limites — en argument contre elle. Il n'y a pas de défense plus efficace de l'inaction que de réclamer une certitude absolue qu'aucune science ne peut jamais offrir.
 
 Comprendre que le doute n'est pas l'ignorance, c'est donc se prémunir contre cette manipulation. C'est reconnaître qu'un savoir qui connaît ses limites vaut mieux qu'une certitude aveugle, que l'incertitude mesurée est une forme de rigueur, et qu'exiger une certitude totale avant d'agir est souvent une manière déguisée de refuser d'agir. La science ne nous offre pas des certitudes absolues, parce qu'elle est honnête ; mais elle nous offre les meilleurs savoirs disponibles, avec l'indication de leur fiabilité. S'en détourner sous prétexte qu'ils ne sont pas absolument certains, c'est préférer l'illusion de la certitude à la réalité du savoir — et se condamner, au nom d'un doute mal compris, à ne plus rien pouvoir croire ni décider.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16595,7 +16595,7 @@ Car dans la plupart des situations réelles, le piège est bien plus subtil. Lor
 Cette confusion est d'autant plus dangereuse qu'elle est exploitée. Ceux qui veulent nous vendre un produit, nous convaincre d'une idée, nous faire adopter un comportement, brandissent volontiers des corrélations en les présentant comme des causalités. « Les gens qui utilisent ce produit sont en meilleure santé » : la formule suggère un lien causal que la corrélation ne prouve pas, et que d'autres facteurs pourraient entièrement expliquer. Savoir résister à ces suggestions, se demander systématiquement si une corrélation présentée établit vraiment une cause, est une protection essentielle contre la manipulation par les chiffres et les études mal interprétées.
 
 Retenir que la corrélation n'est pas la causalité, ce n'est pas verser dans un scepticisme qui refuserait tout lien causal, comme si l'on ne pouvait jamais rien conclure. C'est acquérir une exigence : avant de conclure qu'une chose en cause une autre, écarter les explications alternatives, se demander si le lien est réel ou apparent, exiger mieux qu'une simple concomitance. Cette exigence, que la science a érigée en méthode, est l'un des outils les plus puissants de la pensée critique. Dans un monde saturé d'études, de statistiques et de chiffres brandis pour nous convaincre, savoir distinguer ce qui varie ensemble de ce qui se cause vraiment est devenu une compétence indispensable — et l'une des plus sûres protections contre la crédulité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16618,7 +16618,7 @@ Mais le principe de précaution, poussé à l'absolu, se retourne en son contrai
 Il y a plus. L'inaction que prône une précaution excessive n'est pas sans risque ; elle a ses propres dangers, souvent ignorés. Refuser une technologie par précaution, c'est aussi se priver de ses bénéfices et subir les risques qu'elle aurait évités. La précaution qui se focalise sur les risques de l'action, en oubliant les risques de l'inaction, n'est pas une vraie prudence : elle est un biais, qui traite comme neutre ce qui ne l'est pas. Ne rien faire est aussi une décision, qui engage aussi une responsabilité.
 
 La sagesse, en cette matière, ne réside donc ni dans le refus d'agir sans certitude, ni dans l'exigence de certitude avant d'agir, mais dans une évaluation nuancée : peser la gravité et la probabilité du risque, son caractère réversible ou non, les coûts de l'action comme ceux de l'inaction, les bénéfices attendus comme les dangers possibles. Face à un risque grave, irréversible et plausible, la précaution s'impose ; face à un risque mineur, incertain et réversible, exiger d'agir dans le doute paralyserait sans raison. Le principe de précaution n'est un bon guide que tempéré par la proportion : appliqué mécaniquement, dans un sens ou dans l'autre, il conduit soit à l'imprudence, soit à la paralysie. Décider dans l'incertitude est un art difficile, qui ne se réduit à aucune formule — et prétendre qu'une règle simple pourrait nous en dispenser est l'illusion qu'il faut d'abord écarter.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16641,7 +16641,7 @@ Faut-il alors en conclure qu'il faudrait s'en remettre aveuglément aux experts,
 C'est cette distinction qui permet de sortir du faux dilemme entre le mépris des experts et la soumission aveugle. Sur les questions de fait, la compétence a une autorité légitime, et la nier au nom de l'égalité est une déraison. Sur les questions de valeurs et de choix collectifs, en revanche, nul expert ne saurait décider à la place des citoyens, et l'égalité des voix reprend ses droits. Confondre ces deux plans — vouloir que les experts décident des fins, ou que les citoyens tranchent les faits par leur seule opinion — conduit aux deux impasses : la technocratie qui dépossède les citoyens, ou le populisme qui méprise le savoir.
 
 Défendre l'idée que, sur les faits, tous les avis ne se valent pas, ce n'est donc pas trahir l'esprit démocratique ; c'est le préserver de sa propre dérive. Une démocratie n'a pas besoin de citoyens qui se croient tous experts, mais de citoyens capables de reconnaître ce qu'ils savent et ce qu'ils ignorent, de faire confiance au savoir là où il est fondé, tout en gardant leur pleine autorité sur les choix qui relèvent des valeurs. L'égalité des personnes n'exige pas l'égalité des savoirs ; elle exige au contraire qu'on distingue, pour que le débat démocratique se fonde sur les faits les mieux établis, et non sur la confusion de toutes les opinions. Respecter le savoir n'est pas renoncer à sa liberté de citoyen ; c'est en faire un usage éclairé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16664,7 +16664,7 @@ Méconnaître cette frontière conduit à deux erreurs symétriques et égalemen
 La seconde erreur, inverse, consiste à disqualifier la science au motif qu'elle ne dit pas tout, à rejeter ce qu'elle établit parce qu'elle ne tranche pas les questions de valeur. « La science ne peut pas nous dire comment vivre, donc son autorité n'est pas supérieure » : ce raisonnement confond les deux plans en sens inverse, et sert souvent à récuser des faits gênants au nom de ce que la science ne prétend pas faire. Que la science ne dise pas ce qui doit être n'affaiblit en rien ce qu'elle établit sur ce qui est ; c'est même en respectant sa limite qu'on reconnaît le mieux son autorité dans son domaine propre.
 
 Tenir fermement la frontière entre le fait et la valeur, c'est donc rendre justice à la fois à la science et à la morale, en assignant à chacune son domaine. À la science, l'établissement rigoureux de ce qui est, avec l'autorité qui s'y attache ; à la délibération humaine, le jugement sur ce qui doit être, que nul savoir ne saurait dispenser d'assumer. Cette répartition n'abaisse pas la science ; elle la préserve des usages qui la dévoient, et préserve la liberté humaine de la tentation de se décharger de ses choix sur une prétendue nécessité scientifique. Car décider de ce que nous devons faire, de ce vers quoi nous voulons tendre, restera toujours notre tâche et notre responsabilité — une tâche que la science peut éclairer, mais qu'elle ne nous ôtera jamais.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16687,7 +16687,7 @@ Car l'art peut viser autre chose que le plaisir esthétique. Il peut chercher à
 Faut-il alors donner raison à tout l'art contemporain, et tenir pour réactionnaire quiconque lui résiste ? Ce serait tomber dans l'excès inverse. Car la rupture avec la beauté, si elle a libéré l'art, l'a aussi exposé à des dérives : la provocation gratuite qui ne dit rien, l'obscurité qui masque le vide, l'imposture qui se pare de profondeur. Que l'art ne soit pas tenu d'être beau ne signifie pas que tout vaille, ni que l'absence de beauté soit en elle-même une qualité. Il y a un art qui rompt avec la beauté pour dire davantage, et un art qui s'en dispense pour n'avoir rien à dire ; les distinguer exige un jugement que ni le rejet global ni l'admiration béate ne remplacent.
 
 La vraie question n'est donc pas « l'art doit-il être beau ? », à laquelle on ne peut répondre par un simple oui ou non, mais « qu'attendons-nous de l'art ? ». Si nous n'en attendons que du plaisir, alors l'art qui renonce à la beauté nous décevra ; si nous acceptons qu'il puisse aussi nous faire penser, nous déranger, nous révéler, alors nous pourrons accueillir des œuvres qui ne cherchent pas à plaire. La beauté demeure l'un des pouvoirs de l'art, l'un des plus précieux ; mais en faire son unique mission, c'est méconnaître tout ce que l'art peut être d'autre. Un art qui ne serait que beau serait, à sa manière, aussi pauvre qu'un art qui aurait renoncé à toute exigence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16710,7 +16710,7 @@ Ce constat en dit long sur nous. Il montre que notre rapport aux œuvres, et plu
 Ce phénomène dépasse le seul domaine de l'art. À l'ère où tout se reproduit, se simule, se virtualise, l'authentique acquiert une valeur nouvelle, précisément parce qu'il devient rare. On recherche l'expérience « réelle », le contact « vrai », l'objet « authentique », dans un monde saturé de reproductions et de simulacres. Cette quête d'authenticité, si caractéristique de notre époque, est peut-être une réaction à la reproductibilité généralisée : plus le monde se remplit de copies, plus nous avons soif d'originaux, de ce qui est unique, réel, irremplaçable.
 
 Il ne s'agit pas d'opposer naïvement l'original noble à la copie méprisable, ni de regretter la reproduction, qui a démocratisé l'accès à l'art et à la culture. Il s'agit de comprendre ce que chacune apporte et ce que chacune perd. La reproduction diffuse l'information de l'œuvre, la rend accessible, l'inscrit dans nos vies ; l'original offre la présence, l'authenticité, le contact avec le réel. Les deux ont leur valeur, et notre époque, loin de devoir choisir, jouit des deux à la fois : elle connaît les œuvres par leurs reproductions, et se presse vers les originaux pour éprouver ce que nulle copie ne donne. Cette coexistence révèle que nous sommes des êtres pour qui la présence réelle a un prix que l'information, si parfaite soit-elle, ne remplace pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16733,7 +16733,7 @@ La position inverse, qui célèbre sans réserve la culture de masse au nom de l
 Sortir de ce faux débat suppose de refuser l'alternative entre le mépris élitiste et la complaisance populiste. On peut reconnaître à la fois que la culture de masse a démocratisé l'accès à la culture, ce qui est un bien, et qu'elle obéit souvent à une logique qui appauvrit, ce qui est un risque. On peut apprécier des œuvres populaires sans renoncer à l'exigence, distinguer dans la production de masse ce qui a de la valeur de ce qui n'en a pas, sans mépriser le peuple ni flatter tous ses goûts. La vraie question n'est pas « la culture de masse est-elle bonne ou mauvaise ? », mais « comment faire pour qu'une culture accessible à tous reste aussi une culture exigeante ? ».
 
 Car l'enjeu véritable est là : non de choisir entre l'élite et la masse, entre l'exigence et l'accessibilité, mais de refuser qu'on les oppose. Une culture qui serait exigeante mais réservée à quelques-uns trahirait sa vocation à être partagée ; une culture qui serait accessible mais renoncerait à toute exigence trahirait sa vocation à élever. L'idéal serait une culture à la fois exigeante et partagée, qui ne sacrifie ni la qualité à la diffusion, ni la diffusion à la qualité. Cet idéal est difficile, jamais pleinement atteint, mais c'est vers lui qu'il faut tendre — plutôt que de se résigner au faux choix entre une culture de qualité pour quelques-uns et une culture appauvrie pour tous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16756,7 +16756,7 @@ Cette approche est plus solide, mais elle déplace la difficulté plutôt qu'ell
 Peut-être est-ce là ce que la question des machines nous apprend sur l'art. Nous découvrons, en la posant, que nous ne valorisons pas seulement le beau ou l'habile, que la machine peut produire, mais la présence d'une conscience, l'expression d'un vécu, le lien avec un autre être humain. Ce qui nous touche dans une œuvre, ce n'est pas seulement sa forme, mais le fait qu'un être comme nous l'ait créée pour dire quelque chose ; l'art est une communication entre consciences, et une production sans conscience, si réussie soit-elle, manque ce qui en fait le prix. La machine, en imitant les résultats de l'art, nous révèle que l'art n'était pas seulement dans ses résultats.
 
 Cela ne règle pas toutes les questions pratiques que soulèvent ces machines, ni ne préjuge de ce qu'elles deviendront. Mais cela suggère que la création humaine garde quelque chose d'irréductible, non parce que la machine ne pourrait produire d'aussi belles formes, mais parce que ce que nous cherchons dans l'art n'est pas que la forme. Face aux machines qui créent, la question n'est peut-être pas de savoir si elles remplaceront les artistes, mais de redécouvrir ce que nous attendions vraiment de l'art — et de reconnaître que ce que nous en attendions supposait, au fond, la présence d'un autre que nous, qui, ayant vécu, avait quelque chose à nous dire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16779,7 +16779,7 @@ Le sublime pousse cette différence à l'extrême. Il ne cherche pas à plaire, 
 Cette opposition a une portée qui dépasse l'esthétique. Car le kitsch n'est pas seulement une catégorie artistique ; c'est une manière de rapport au monde, qui préfère l'image rassurante à la réalité complexe, l'émotion facile à la vérité difficile. On peut vivre dans le kitsch, se raconter une vie idéalisée, fuir tout ce qui dérange, préférer les sentiments doux aux vérités dures. Le kitsch est une tentation permanente, celle de se contenter d'une belle image mensongère plutôt que d'affronter le réel dans sa complexité. Y résister, en art comme dans la vie, c'est refuser la facilité de l'émotion préfabriquée pour chercher une vérité qui, même douloureuse, vaut mieux qu'un beau mensonge.
 
 Distinguer le kitsch du sublime, l'émotion facile de l'émotion vraie, n'est donc pas une subtilité d'esthète. C'est apprendre à ne pas se contenter de ce qui flatte, à se méfier de ce qui émeut trop aisément, à préférer ce qui nous dépasse à ce qui nous rassure. Cette exigence, difficile, est celle du goût véritable, qui n'est pas la capacité de jouir des belles choses, mais celle de distinguer l'authentique de sa contrefaçon. Et cette distinction, au fond, est une exigence de vérité : car le kitsch, sous sa douceur, est un mensonge, et le sublime, sous son trouble, une vérité. Choisir le second contre le premier, c'est préférer, jusque dans l'émotion, le vrai au commode.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16802,7 +16802,7 @@ Cette transformation est d'autant plus profonde qu'elle est invisible et involon
 Faut-il en conclure qu'il faudrait renoncer à nos outils, ou les redouter ? Nullement. La transformation par la technique n'est pas en soi un mal ; elle est la condition même de l'aventure humaine, qui s'est construite en s'équipant d'instruments qui l'ont chaque fois métamorphosée. L'humanité est cet être qui se transforme lui-même en transformant ses outils, et il n'y a pas de retour à une humanité « pure » qui existerait avant ses techniques. Le problème n'est pas que les outils nous changent, mais que nous l'ignorions, et que nous subissions ces changements sans les évaluer.
 
 Ce que cette réciprocité commande, c'est donc une vigilance : prendre conscience que nos outils nous façonnent, se demander en quoi ils nous transforment, quelles capacités ils développent et lesquelles ils atrophient, quel type d'êtres ils font de nous. Cette lucidité ne suffit pas à contrôler entièrement leur effet, mais elle permet, au moins, de le percevoir, de le peser, parfois de le corriger. Choisir consciemment ses outils, mesurer ce qu'ils nous font, préserver délibérément les capacités qu'ils tendent à effacer : voilà ce que suppose un usage libre de la technique. Car nous ne pouvons pas empêcher nos outils de nous transformer ; mais nous pouvons, si nous y prenons garde, avoir notre mot à dire sur ce qu'ils font de nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16825,7 +16825,7 @@ Il y a plus subtil. La commodité généralisée nous rend progressivement incap
 Ce n'est pas tout. La commodité a aussi un prix que nous ne voyons pas parce qu'il est payé ailleurs. Ce qui nous est rendu si facile repose souvent sur un travail invisible, sur des ressources consommées, sur des coûts reportés sur d'autres ou sur l'avenir. La livraison instantanée, l'accès immédiat, le service permanent supposent des chaînes entières d'efforts et de dépenses que la commodité nous masque. Nous jouissons de la facilité sans en voir le prix, qui est bien réel, mais payé hors de notre vue. La commodité n'abolit pas l'effort et le coût ; elle les déplace, les rend invisibles, les fait supporter par d'autres.
 
 Reconnaître le prix de la commodité, ce n'est pas la refuser en bloc, ni prôner un retour à une difficulté érigée en vertu. C'est distinguer les efforts dont il est bon d'être délivré de ceux qui valaient la peine d'être faits, et se demander, devant chaque facilité nouvelle, ce qu'elle nous épargne et ce qu'elle nous coûte. C'est parfois choisir délibérément l'effort là où il a de la valeur, préférer faire soi-même, chercher, apprendre, plutôt que de tout déléguer à la commodité. Dans un monde qui érige la facilité en valeur suprême, se réserver des espaces d'effort choisi n'est pas de l'archaïsme ; c'est préserver ce que la commodité, à trop nous épargner, finit par nous ôter : la capacité de faire, de peiner, de mériter ce que nous obtenons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16848,7 +16848,7 @@ Cette atrophie du jugement est d'autant plus préoccupante qu'elle nous rend vul
 Il y a plus troublant encore. En déléguant nos décisions, nous déléguons aussi, peu à peu, la responsabilité qui les accompagne. Décider, c'est assumer ; se soumettre à une décision prise par un système, c'est se décharger de cette responsabilité. « Ce n'est pas moi, c'est le système » : cette formule, commode, dissout la responsabilité dans des mécanismes anonymes, où plus personne ne répond de rien. Or une société où les décisions sont prises par des systèmes dont nul n'est responsable est une société où la responsabilité elle-même s'évanouit, où l'on subit des décisions sans pouvoir en demander compte à personne. La délégation du jugement est aussi une dilution de la responsabilité.
 
 Préserver notre jugement face à la délégation croissante ne suppose pas de refuser toute aide, ce qui serait vain et déraisonnable. Cela suppose de garder la main : de comprendre, au moins dans leurs principes, les systèmes auxquels nous nous fions ; de conserver la capacité de décider par nous-mêmes, en l'exerçant assez pour qu'elle ne s'atrophie pas ; de ne pas déléguer les décisions qui engagent le plus profondément nos valeurs et nos vies. Car il est des choix qu'on peut sans dommage confier à des systèmes, et d'autres qui doivent rester nôtres, non parce que nous déciderions mieux, mais parce que décider fait partie de ce que c'est qu'être un sujet libre et responsable. Renoncer entièrement à juger, ce ne serait pas seulement perdre une compétence ; ce serait renoncer à une part de ce qui fait de nous des êtres autonomes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16871,7 +16871,7 @@ Cette différence n'est pas mince, car elle touche à la nature même de la conn
 Il y a un risque supplémentaire, plus insidieux : que l'accès facile à la représentation nous détourne de l'expérience réelle, en nous en donnant l'illusion. Pourquoi se déplacer, s'engager, éprouver, quand on peut tout voir sans effort sur un écran ? Cette facilité peut engendrer une forme de passivité, où l'on se contente de contempler des images du monde au lieu de le vivre, où l'expérience médiate remplace l'expérience directe. Nous risquons alors de vivre par procuration, spectateurs d'un monde que nous regardons sans y être, connaissant tout en image et rien en réalité. L'accessibilité, en rendant l'expérience réelle moins nécessaire en apparence, pourrait nous en détourner.
 
 Il ne s'agit pas d'opposer l'expérience réelle noble à la représentation méprisable, ni de renoncer à l'accessibilité qui a tant apporté. Il s'agit de ne pas confondre l'une avec l'autre, de garder conscience que voir n'est pas vivre, que l'image du monde n'est pas le monde. C'est préserver, à côté de l'accès facile aux représentations, le goût et la pratique de l'expérience réelle, de la présence, de l'engagement direct ; c'est se rappeler que certaines choses ne se connaissent qu'en les vivant, et que l'écran, si précieux soit-il pour donner accès, ne remplace pas ce contact avec le réel dont il ne transmet que l'apparence. Le monde à portée d'écran est un don ; le prendre pour le monde même serait s'enfermer dans sa représentation.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16894,7 +16894,7 @@ Cette piste déplace la question de manière féconde. Elle suggère que notre h
 Cette réflexion a une portée pratique, car elle indique ce que nous devrions préserver et cultiver dans un monde de machines. Non pas rivaliser avec elles sur le terrain de la performance, où nous serons toujours dépassés, mais approfondir ce qui nous est propre : la vie de la conscience, la profondeur du vécu, la capacité de sens, les relations vraies entre êtres qui éprouvent. Dans un monde où les machines font de mieux en mieux ce qui est fonctionnel, ce qui restera précieux, ce sera précisément ce qui ne l'est pas : la présence, l'attention, l'expérience partagée, tout ce qui relève non de l'accomplissement d'une tâche, mais de la rencontre de consciences.
 
 Rester humain parmi les machines, ce n'est donc pas s'accrocher à une supériorité menacée, ni imiter les machines pour ne pas être distancé. C'est cultiver ce qui nous constitue en propre : notre condition d'êtres conscients, sensibles, mortels, capables de sens et de relation. Les machines, en nous dépossédant de nos performances, nous rendent peut-être un service inattendu : nous forcer à redécouvrir ce qui, en nous, n'était pas réductible à une performance, et à le cultiver enfin pour lui-même. Le défi n'est pas de rester supérieurs aux machines, mais de rester pleinement humains — et cela ne se joue pas sur le terrain où les machines nous rejoignent, mais sur celui, plus profond, où elles ne nous suivent pas : celui de la vie vécue et du sens éprouvé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16917,7 +16917,7 @@ Ainsi apparaît un premier critère pour distinguer les inégalités justes des 
 Un second critère concerne les effets de l'inégalité sur les plus défavorisés. On peut soutenir qu'une inégalité est acceptable si elle profite, in fine, à tous, y compris aux plus démunis — si, par exemple, en récompensant les plus productifs, elle stimule une activité dont les plus pauvres bénéficient aussi. Mais qu'une inégalité aggrave le sort des plus défavorisés, qu'elle enferme les uns dans la misère pour permettre aux autres l'opulence, la rend difficile à justifier. Selon ce critère, l'inégalité n'est acceptable que dans la mesure où elle sert l'intérêt de tous, non celui des seuls avantagés au détriment des autres.
 
 Ces critères ne fournissent pas de réponse simple, et le débat sur la justice des inégalités reste ouvert, car il engage des valeurs qui se hiérarchisent différemment selon les convictions. Mais ils permettent de dépasser deux positions également simplistes : celle qui tient toute inégalité pour juste, au motif qu'elle refléterait le mérite, alors qu'elle tient largement à des circonstances non méritées ; et celle qui tient toute inégalité pour injuste, au nom d'un égalitarisme qui ignorerait les différences légitimes. La vérité est plus nuancée : certaines inégalités sont justes, d'autres non, et tout l'enjeu est de les distinguer. Refuser cette distinction, dans un sens ou dans l'autre, c'est se dispenser de penser la justice au profit d'un slogan.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16940,7 +16940,7 @@ Ce second argument est décisif, car il montre que la question des limites du ma
 C'est pourquoi la question des limites du marché est l'une des plus importantes de notre temps, où le marché tend précisément à déborder ses frontières traditionnelles, à mettre un prix sur ce qui n'en avait pas, à traiter comme des marchandises des choses qui ne l'étaient pas. Cette extension se présente souvent comme un progrès, une efficacité, une liberté ; mais elle opère, en silence, une transformation de nos valeurs, en faisant du marché la mesure de toute chose. Résister à cette extension, ce n'est pas s'opposer au marché dans son domaine légitime, où il rend d'immenses services ; c'est refuser qu'il devienne le principe unique d'organisation de toute la vie humaine.
 
 Tracer les limites du marché n'est pas une tâche que l'économie pourrait accomplir, car c'est une tâche morale, qui engage notre conception de ce qui a du prix et de ce qui a une valeur au-delà de tout prix. Elle exige de nous demander, pour chaque bien, s'il peut sans dommage être acheté et vendu, ou si sa nature exige qu'il échappe au marché. Cette délibération, jamais close, est l'une des responsabilités d'une société qui ne veut pas se laisser entièrement gouverner par l'argent. Car la vraie question n'est pas de savoir si l'argent peut, en fait, tout acheter — il le peut de plus en plus —, mais de savoir ce qu'il ne devrait pas pouvoir acheter, si nous voulons préserver ce qui, dans l'existence humaine, vaut mieux que son prix.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16963,7 +16963,7 @@ Le fatalisme sur la pauvreté remplit donc une fonction : il transforme un probl
 Reconnaître que la pauvreté absolue n'est pas une fatalité ne signifie pas prétendre qu'il serait facile de l'éradiquer, ni ignorer la complexité des obstacles. La répartition des ressources se heurte à des intérêts puissants, à des difficultés réelles, à des effets pervers qu'il faut anticiper ; combattre la pauvreté n'est pas simple, et les solutions naïves peuvent aggraver les maux qu'elles prétendent guérir. Mais la difficulté n'est pas l'impossibilité, et reconnaître qu'une chose est difficile est tout autre que la déclarer fatale. On peut débattre des moyens de réduire la pauvreté ; on ne peut pas se réfugier dans l'idée qu'elle serait inévitable pour ne rien tenter.
 
 Quant à la pauvreté relative, aux écarts de richesse, la question est différente et plus complexe, car une certaine inégalité peut être inévitable, voire, dans certaines limites, acceptable. Mais même là, l'ampleur des écarts n'a rien de fatal : ils ont beaucoup varié selon les époques et les sociétés, ce qui prouve qu'ils dépendent de choix et non d'une nature immuable. Que la pauvreté, absolue ou relative, persiste, n'est jamais une simple fatalité ; c'est toujours, pour une part, le résultat de ce que nous faisons et ne faisons pas. Le fatalisme qui la naturalise est la première chose à combattre, car tant qu'on tient un mal pour inévitable, on ne cherche même pas à le guérir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -16986,7 +16986,7 @@ Il y a plus troublant encore. L'héritage ne transmet pas seulement des biens ma
 Faut-il en conclure qu'il faudrait abolir l'héritage ? La question est plus complexe que ce que suggèrent les positions tranchées. D'un côté, l'héritage illimité perpétue des inégalités injustes et contredit l'égalité des chances ; de l'autre, l'interdire entièrement serait à la fois irréaliste, attentatoire à des attachements légitimes, et impuissant à supprimer les héritages immatériels qui pèsent le plus. Entre l'héritage illimité et son abolition, il existe des positions intermédiaires : encadrer, taxer, limiter la transmission des grandes fortunes, tout en préservant la transmission ordinaire ; investir dans l'éducation pour compenser les héritages immatériels. Ces mesures ne suppriment pas la tension, mais elles l'atténuent.
 
 L'essentiel est peut-être de ne pas escamoter la contradiction sous la fausse évidence du « c'est naturel ». Reconnaître que l'héritage, si compréhensible soit-il, contredit l'égalité des chances, que ce que nous transmettons à nos enfants avantage indûment les uns au détriment des autres, c'est refuser de tenir pour juste ce qui est seulement habituel. On peut, en connaissance de cause, choisir de maintenir une part d'héritage, en pesant les valeurs en jeu ; mais on ne devrait pas le faire en feignant qu'il n'y a là aucun problème. Car derrière l'apparente évidence de transmettre aux siens se cache l'un des mécanismes les plus puissants de perpétuation des inégalités — et le regarder en face est la condition de tout jugement honnête sur la justice de nos sociétés.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17009,7 +17009,7 @@ Pourquoi ce mythe est-il si tenace, malgré son évidente fragilité ? Parce qu'
 Dissiper ce mythe a des conséquences importantes. Reconnaître que nulle réussite n'est purement individuelle, qu'elle doit beaucoup aux autres, à la société, à la chance, c'est reconnaître une dette. Celui qui a réussi n'a pas seulement des droits sur ce qu'il a acquis ; il a aussi des obligations envers cette société et ces autres sans lesquels il n'aurait rien pu. La réussite n'est pas un dû qu'on aurait entièrement mérité, mais un fruit partagé, qui appelle en retour une contribution. C'est saper le mythe du self-made-man qui permet de fonder l'idée que ceux qui ont le plus reçu doivent aussi le plus rendre.
 
 Il ne s'agit pas de nier tout mérite, de prétendre que les efforts et les qualités ne comptent pour rien, que tout ne serait que chance et circonstances. Celui qui réussit a souvent, en effet, travaillé, persévéré, fait preuve de qualités réelles, et il serait injuste de le nier. Il s'agit de refuser l'illusion inverse, celle qui attribue tout au seul individu, en oubliant tout ce qui l'a porté. La vérité est entre les deux : la réussite mêle le mérite, la contribution des autres et la chance, et l'honnêteté consiste à reconnaître les trois. « Je me suis fait tout seul » est un mensonge, non parce que celui qui le dit n'aurait rien fait, mais parce qu'il oublie tout ce sans quoi ce qu'il a fait n'aurait servi à rien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17032,7 +17032,7 @@ Pourquoi importe-t-il de reconnaître que « la nature » est une construction ?
 Que faudrait-il mettre à la place de cette idée trompeuse ? Non pas nier qu'il existe un monde vivant, des écosystèmes, des équilibres à préserver — tout cela est bien réel et vital. Mais renoncer à l'opposition entre l'homme et la nature, pour penser l'homme comme partie d'un monde vivant dont il est à la fois issu et responsable. Non pas rêver de restaurer une nature vierge qui n'a jamais existé, mais chercher à préserver et à cultiver des équilibres viables entre l'humanité et le reste du vivant. L'écologie n'a pas besoin du mythe d'une nature pure et séparée ; elle a besoin de la conscience que nous sommes des êtres vivants parmi d'autres, dont le sort est lié à celui de l'ensemble.
 
 Dire que « la nature n'existe pas » n'est donc pas nier la réalité du monde vivant ni la gravité de sa destruction ; c'est refuser une idée qui, sous couvert de le défendre, le pense mal. C'est troquer le mythe d'une nature idéale et séparée contre la reconnaissance plus juste, et plus exigeante, d'une communauté du vivant dont nous faisons partie. Cette reconnaissance ne nous donne pas la commodité d'un idéal simple à restaurer ; elle nous impose la responsabilité plus complexe d'habiter un monde dont nous sommes à la fois membres et gardiens. Renoncer à « la nature » comme mythe, c'est peut-être la condition pour prendre enfin au sérieux le monde vivant comme réalité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17055,7 +17055,7 @@ Le deuxième piège est d'ignorer que le mode de vie qu'on présente comme un co
 Le troisième piège, enfin, est d'ignorer les coûts de l'inaction, qui rendent le dilemme trompeur. Car ne rien changer pour préserver notre confort n'est pas préserver notre confort : c'est le condamner, à terme, aux conséquences de la destruction écologique, qui menacent précisément ce mode de vie et bien plus encore. Le vrai dilemme n'est pas entre le confort et la planète, mais entre un changement choisi maintenant et un effondrement subi plus tard. Présenter l'inaction comme le maintien du confort, c'est ignorer que l'inaction mène, elle aussi, et bien plus sûrement, à la perte du confort qu'elle prétend préserver.
 
 Sortir du faux dilemme, ce n'est donc pas nier tout renoncement, mais refuser le cadrage qui oppose simplement la planète au confort. C'est reconnaître que certains renoncements sont nécessaires, mais qu'ils peuvent ouvrir à d'autres formes de bien-être ; que le mode de vie à préserver a lui-même ses coûts ; et que l'inaction ne préserve rien, mais mène à la perte de tout. La question n'est pas « faut-il sacrifier notre confort à la planète ? », mais « quel mode de vie voulons-nous, qui soit à la fois soutenable et désirable ? ». Ainsi reformulée, la question n'appelle plus la paralysie du dilemme, mais l'invention d'une vie bonne qui ne détruise pas ses propres conditions. C'est une tâche plus difficile qu'un simple sacrifice, mais aussi plus féconde : non renoncer au bonheur pour sauver la planète, mais repenser le bonheur pour qu'il soit compatible avec elle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17078,7 +17078,7 @@ On peut aussi fonder ces devoirs sur l'idée d'une continuité entre les génér
 La véritable difficulté n'est peut-être pas tant de fonder ces devoirs que de les ressentir. Car nos obligations envers l'avenir se heurtent à un obstacle psychologique majeur : l'avenir lointain nous est abstrait, les générations futures nous sont étrangères, et nous accordons spontanément bien plus de poids au présent qu'à un futur qui ne nous concernera plus. Nous savons intellectuellement que nous devrions nous soucier de l'avenir, mais nous le sentons mal, et ce défaut de sentiment paralyse l'action. Le problème n'est pas que nous ignorions nos devoirs envers l'avenir, mais que nous peinions à les éprouver avec assez de force pour agir en conséquence.
 
 Surmonter cet obstacle est l'un des grands défis moraux de notre temps. Il ne suffit pas d'établir en théorie nos devoirs envers les générations futures ; il faut apprendre à les ressentir, à nous soucier concrètement d'un avenir que nous ne verrons pas, à élargir notre horizon moral au-delà de notre propre existence. Cela suppose une forme d'imagination et de générosité : se soucier de ceux qu'on ne connaîtra jamais, agir pour un monde dont on ne jouira pas, planter des arbres à l'ombre desquels on ne s'assoira pas. Cette capacité à se soucier de l'avenir lointain n'est pas naturelle ; elle est une conquête, presque une vertu. Mais c'est de cette vertu que dépend, peut-être, le sort de ceux qui nous succéderont — et la dignité de ce que nous leur laisserons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17101,7 +17101,7 @@ La deuxième erreur est d'ignorer que la technique, tout en résolvant certains 
 La troisième erreur, la plus subtile, est que l'espoir techno-optimiste sert souvent d'alibi à l'inaction et au maintien de l'ordre existant. En promettant que la technique préservera notre mode de vie sans que nous ayons à le changer, il rassure, endort, dispense de remettre en question ce qui devrait l'être. Il permet à ceux qui profitent de l'ordre actuel de le défendre, en repoussant indéfiniment le changement au nom d'un salut technique à venir. « La technique résoudra le problème » devient ainsi une manière de ne rien faire, de continuer comme avant, de refuser les transformations nécessaires. L'optimisme technique, sous ses dehors dynamiques, peut être le plus efficace des conservatismes.
 
 La position juste n'est donc ni le techno-optimisme qui attend tout de la technique, ni le rejet technophobe qui n'en attend rien. C'est de reconnaître que la technique est un moyen indispensable, mais un moyen parmi d'autres, qui ne dispensera pas des changements de comportement, d'organisation, de mode de vie. Développer les techniques utiles, oui ; mais sans en faire un prétexte pour ne rien changer d'autre, sans parier notre avenir sur des solutions hypothétiques, sans oublier que la technique elle-même doit être orientée par des choix. La technique ne nous sauvera pas toute seule ; elle peut nous y aider, si nous faisons aussi le reste. Et c'est précisément ce « reste » — les changements que l'espoir techno-optimiste nous invite à esquiver — qui est le plus difficile, et le plus nécessaire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17124,7 +17124,7 @@ Cette manière d'habiter suppose une transformation de notre rapport aux choses 
 Il ne s'agit pas de tomber dans une mystique de la Terre, ni de renoncer à toute transformation du monde, car habiter, c'est aussi transformer, cultiver, bâtir. L'homme ne peut habiter sans agir sur son milieu, et il serait absurde de rêver d'une présence humaine sans effet. La différence n'est pas entre transformer et ne pas transformer, mais entre deux manières de transformer : celle qui épuise et détruit, traitant le monde en réserve à piller, et celle qui entretient et cultive, transformant le monde en prenant soin de sa pérennité. Habiter, c'est transformer en demeurant, agir en préservant les conditions de la vie, bâtir sans détruire ce qui rend le bâtir possible.
 
 Apprendre à habiter la Terre est peut-être le nom le plus juste de la tâche écologique. Non pas protéger une nature extérieure au nom d'une pureté imaginaire, ni gérer des ressources au mieux de nos intérêts, mais réapprendre à demeurer dans notre monde comme dans une demeure dont nous sommes solidaires. Cette tâche est plus exigeante qu'une simple gestion, car elle engage notre manière d'être au monde, notre rapport aux choses et aux vivants, notre conception de notre place. Mais elle est aussi plus féconde, car elle ne nous demande pas seulement de sauver un objet menacé ; elle nous invite à retrouver un rapport au monde où nous serions enfin chez nous, non en maîtres qui exploitent, mais en habitants qui prennent soin de la seule demeure que nous ayons.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17147,7 +17147,7 @@ Peut-être l'erreur est-elle de chercher une chose fixe, un noyau permanent, un 
 Faut-il en conclure que le « moi » est une illusion, que je ne suis personne, qu'il n'y a pas de sujet stable ? Ce serait tirer une conclusion excessive d'une difficulté réelle. Car même si le « moi » n'est pas une chose fixe, il y a bien une continuité, un point de vue unique sur le monde, une histoire qui est la mienne et non celle d'un autre. Cette continuité n'est peut-être pas celle d'une substance immuable, mais celle d'un récit, d'un projet, d'une perspective qui se maintient à travers le changement en l'intégrant. Je ne suis pas une chose fixe ; je suis une histoire qui se poursuit, une identité qui se construit plutôt qu'elle ne se trouve.
 
 Cette conception a des conséquences libératrices. Si le « moi » n'est pas un noyau fixe qu'il faudrait découvrir, mais une histoire qui se construit, alors je ne suis pas condamné à être ce que j'ai été ; je peux changer, devenir autre, réécrire mon récit. L'identité n'est pas une donnée à laquelle il faudrait être fidèle, mais une œuvre à laquelle je travaille. « Qui suis-je ? » n'appelle donc pas la découverte d'une essence cachée, mais l'invention continuée de soi-même. Nous ne sommes pas des choses qui ont une identité ; nous sommes des êtres qui se font, et cette absence de noyau fixe, loin d'être une perte, est la condition de notre liberté de devenir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17170,7 +17170,7 @@ Mais ce même regard peut devenir une aliénation. Car à trop dépendre du rega
 Cette aliénation est aggravée par notre époque, qui a fait de l'exposition de soi une pratique permanente. Dans un monde où chacun se donne sans cesse à voir, où l'on quête l'approbation à travers des images de soi soigneusement mises en scène, la dépendance au regard d'autrui atteint une intensité inédite. On vit sous le regard supposé des autres, on règle son existence sur l'image qu'on en donne, on mesure sa valeur à l'approbation reçue. Cette exposition permanente, loin de libérer, peut enfermer dans une quête anxieuse de reconnaissance, où l'on se perd à force de vouloir être vu.
 
 L'enjeu n'est donc pas de se libérer du regard des autres — ce qui est impossible et ne serait pas souhaitable, car nous avons besoin de reconnaissance —, mais de trouver un juste rapport à lui. Cela suppose d'accueillir la reconnaissance d'autrui sans en devenir esclave, de tenir compte du regard des autres sans lui abandonner son être, de garder, sous le regard, un rapport à soi qui ne dépende pas entièrement de lui. Il s'agit d'exister par les autres sans se perdre en eux, d'être reconnu sans se renier. Cet équilibre difficile — accueillir le regard sans s'y aliéner — est l'une des conditions d'une identité à la fois reliée aux autres et fidèle à elle-même. Car nous nous construisons dans le regard d'autrui, mais nous ne devons pas nous y dissoudre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17193,7 +17193,7 @@ Faut-il pour autant rejeter l'idéal d'authenticité, y voir une pure illusion ?
 Cette reformulation change tout. Si l'authenticité n'est pas fidélité à un moi donné, mais cohérence entre ce qu'on fait et ce qu'on croit, alors elle n'est pas la découverte d'une nature, mais une exigence morale, une manière de se conduire. Être fidèle à soi-même, ce n'est pas exhumer un trésor enfoui ; c'est construire une existence cohérente, assumer ses choix, ne pas vivre en contradiction avec ses valeurs. Le « soi » auquel on est fidèle n'est pas un donné antérieur, mais une œuvre en cours, que la fidélité même contribue à façonner. On ne trouve pas son moi ; on le fait, en tâchant de ne pas le trahir.
 
 L'idéal d'authenticité, ainsi compris, cesse d'être l'injonction impossible de découvrir un moi caché, pour devenir l'exigence, difficile mais sensée, de mener une vie cohérente et non aliénée. Il ne s'agit pas de creuser en soi pour trouver sa vérité, mais de vivre de telle sorte qu'on puisse se reconnaître dans ce qu'on fait, ne pas se mentir, ne pas se trahir. Cette authenticité-là n'est pas donnée ; elle se conquiert, dans l'effort de faire concorder sa vie et ses convictions. « Sois toi-même » ne signifie donc pas « conforme-toi à ce que tu es déjà », mais plutôt « fais en sorte de devenir quelqu'un dont tu ne rougisses pas » — ce qui est une tâche, non une découverte.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17216,7 +17216,7 @@ Cette réduction identitaire est particulièrement dangereuse parce qu'elle est 
 À cette logique de la réduction, il faut opposer la reconnaissance de la complexité. Nul n'est réductible à une seule de ses appartenances ; chacun est fait d'un entrelacs unique d'appartenances multiples, qui le distingue de tous les autres membres de chacun de ses groupes. Deux personnes de même nation diffèrent par mille autres appartenances ; ce qui les rassemble sous une étiquette n'épuise pas ce qu'elles sont. Reconnaître cela, c'est refuser d'enfermer autrui, comme soi-même, dans une identité unique ; c'est voir en chacun la complexité irréductible de ses appartenances, plutôt que de le réduire à celle qui, dans un contexte donné, sert à l'opposer.
 
 Défendre les identités multiples contre la sommation de choisir, ce n'est donc pas prôner une identité floue, sans attaches, mais reconnaître que l'attachement peut être pluriel, que l'on peut appartenir à plusieurs mondes sans être infidèle à aucun. C'est refuser que l'identité devienne un principe d'exclusion et d'affrontement, pour en faire ce qu'elle peut être : une richesse faite de multiples fidélités, un pont plutôt qu'un mur. Dans un monde où les logiques identitaires meurtrières se réveillent, où l'on somme à nouveau chacun de choisir son camp, affirmer la légitimité et la richesse des identités multiples n'est pas seulement une vérité sur ce que nous sommes ; c'est aussi, peut-être, une condition de la paix.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17239,7 +17239,7 @@ Cette conception permet de distinguer deux sortes de changements. Il y a le chan
 Il y a d'ailleurs des changements profonds qui, loin de trahir, sont exigés par la fidélité à soi. Celui qui reconnaît son erreur et se corrige, qui abandonne une conviction devenue intenable, qui se transforme pour rester fidèle à ce qu'il tient pour vrai, celui-là change par fidélité, non par trahison. La vraie fidélité à soi-même n'est pas l'immobilité, le refus de tout changement ; c'est parfois la capacité de changer pour rester fidèle à l'essentiel, de transformer ce qu'on est pour ne pas trahir ce qu'on croit. S'entêter dans l'erreur par crainte de changer serait une fausse fidélité ; changer pour être plus juste peut être la vraie.
 
 Changer sans se trahir est donc non seulement possible, mais nécessaire à une vie vivante. Une identité qui refuserait tout changement se figerait, se dessécherait, cesserait d'être vivante ; une identité qui changerait sans continuité se dissoudrait, se perdrait. Entre la stagnation qui refuse d'évoluer et la dissolution qui perd tout fil, il y a la voie d'une identité vivante : celle qui change en restant fidèle à son histoire, qui évolue sans se renier, qui devient autre en demeurant elle-même. Être soi-même, en définitive, ce n'est pas rester identique ; c'est demeurer l'auteur cohérent d'une histoire qui, pour rester vivante, ne cesse de se transformer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17262,7 +17262,7 @@ La deuxième vertu est que la démocratie, en associant les gouvernés aux déci
 La troisième vertu, liée aux précédentes, est que la démocratie permet la contestation, la critique, le débat, et donc la correction de ses propres erreurs. Un régime qui interdit la critique s'enferme dans ses fautes, car nul ne peut les signaler ; la démocratie, en autorisant l'opposition et le débat, se donne les moyens de reconnaître et de corriger ses erreurs. Elle n'est pas infaillible, mais elle est corrigible, ce qui vaut mieux qu'une infaillibilité prétendue qui interdit toute remise en question. Sa force n'est pas de ne pas se tromper, mais de pouvoir se corriger.
 
 L'éloge paradoxal de la démocratie prend alors son sens. Elle n'est pas le meilleur régime au sens où elle garantirait les décisions les plus sages ; à cet égard, elle a de réelles faiblesses. Mais elle est le meilleur au sens où elle offre ce qu'aucun autre n'offre : le changement pacifique, la dignité du citoyen, la capacité de se corriger. Ces vertus ne tiennent pas à sa perfection, mais à sa modestie même : la démocratie est le régime qui ne prétend pas détenir la vérité ni la sagesse, et qui, sachant qu'il peut se tromper, se donne les moyens de rectifier. C'est pourquoi il faut la défendre non comme un régime parfait, mais comme le moins mauvais — ce qui, en matière politique où la perfection n'existe pas, est le plus haut éloge qu'on puisse faire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17285,7 +17285,7 @@ Comment se garder de cette double tyrannie ? La réponse a façonné les démocr
 La deuxième limite tient à la séparation des pouvoirs et à l'existence de contre-pouvoirs. Pour qu'une majorité ne puisse pas tout, il faut que le pouvoir soit divisé, que des institutions indépendantes puissent faire contrepoids, qu'une justice puisse censurer les décisions injustes même majoritaires. Ces mécanismes, qui limitent le pouvoir de la majorité, ne sont pas des entraves à la démocratie, mais ses conditions : sans eux, la démocratie dégénérerait en tyrannie du nombre. Une véritable démocratie est un équilibre entre le pouvoir de la majorité et les limites qui l'empêchent d'opprimer.
 
 Reconnaître le danger de la tyrannie de la majorité, c'est donc comprendre que la démocratie ne se réduit pas à la règle du nombre, mais suppose des limites qui protègent contre le nombre lui-même. C'est refuser l'idée simpliste selon laquelle serait démocratique tout ce que veut la majorité, pour affirmer qu'une démocratie digne de ce nom protège les droits et les libertés contre la volonté majoritaire elle-même. Cette exigence est aujourd'hui d'une brûlante actualité, où l'on invoque parfois la légitimité du nombre pour justifier des atteintes aux droits des minorités ou aux libertés. Rappeler que la majorité n'a pas tous les droits, que la démocratie est aussi la protection contre elle, n'est pas antidémocratique : c'est défendre ce qui distingue la démocratie de la simple tyrannie du plus grand nombre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17308,7 +17308,7 @@ Faut-il en conclure que le mensonge serait une nécessité de la politique, qu'o
 Car le mensonge politique, au sens fort, n'est pas seulement une faute morale ; il est une atteinte au fondement même de la démocratie. La démocratie suppose que les citoyens décident en connaissance de cause ; les tromper, c'est vicier leur décision, leur faire choisir sur la base de fausses informations, donc corrompre le processus démocratique lui-même. Un peuple systématiquement trompé ne se gouverne pas vraiment ; il croit décider alors qu'on décide pour lui en manipulant ce qu'il sait. Le mensonge politique n'est donc pas un péché véniel de la vie publique ; c'est une corruption de la démocratie, qui prive les citoyens de la vérité dont ils ont besoin pour se gouverner.
 
 La réponse à la question n'est donc ni le cynisme qui tient le mensonge pour inévitable, ni la naïveté qui exigerait une transparence totale. C'est de distinguer ce qui, dans le pouvoir, relève de la réserve légitime et ce qui relève de la tromperie corruptrice, et de tenir la seconde pour inacceptable même si la première est nécessaire. On peut gouverner sans mentir, au sens où l'on peut gouverner sans tromper délibérément les citoyens sur ce qui fonde leurs choix, même si l'on ne peut pas gouverner en disant tout. Le cynisme qui confond les deux, qui absout le mensonge au nom de la nécessité du secret, rend un mauvais service à la démocratie : il désarme l'exigence de vérité sans laquelle le pouvoir n'est plus tenu à rien. Exiger la vérité de ceux qui nous gouvernent n'est pas naïf ; c'est défendre la condition même de notre pouvoir de citoyens.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17331,7 +17331,7 @@ Or, quelles qu'en soient les causes, l'apathie a des conséquences graves pour l
 Il y a là un cercle vicieux qu'il faut nommer. L'impuissance et la déception engendrent l'apathie ; l'apathie affaiblit la démocratie et livre le pouvoir à des intérêts particuliers ; cet affaiblissement accroît le sentiment d'impuissance et de déception, qui nourrit à son tour l'apathie. Comment briser ce cercle ? Non par le reproche adressé aux citoyens désengagés, qui ne ferait qu'aggraver leur défiance, mais par la restauration de ce qui a été perdu : le sentiment que la participation compte, que la voix des citoyens pèse, que la politique peut changer les choses. Cela suppose des institutions qui redonnent du pouvoir aux citoyens, une vie politique qui mérite la confiance, des dirigeants qui servent le bien commun plutôt que de le trahir.
 
 Lutter contre l'apathie n'est donc pas seulement affaire de civisme individuel, mais de restauration collective du sens de la démocratie. Chacun peut, certes, refuser le découragement, s'engager malgré tout, exercer sa part de citoyenneté ; et cet engagement individuel a sa valeur. Mais l'apathie ne se dissipera durablement que si la démocratie redonne à ses citoyens des raisons de croire que leur participation compte. Car on ne s'engage que si l'on pense que cela peut changer quelque chose, et le désengagement massif est d'abord le signe que trop de citoyens ont cessé de le croire. Rendre à la démocratie sa capacité de changer les choses est le seul remède durable à l'apathie qui la menace.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17354,7 +17354,7 @@ Comment sortir de cette alternative entre une notion dévoyée et un cynisme des
 Cette conception permet de reconnaître les divisions sans renoncer à l'idée d'un bien partagé. Oui, les intérêts s'opposent, les conceptions du bien divergent ; mais il existe aussi des choses qui profitent à tous, ou du moins qui peuvent être reconnues par tous comme justes après délibération : la paix, la justice, des institutions équitables, la préservation de ce dont tous dépendent. Le bien commun n'est pas ce sur quoi tous seraient spontanément d'accord, mais ce qu'une délibération honnête peut faire reconnaître comme dépassant les intérêts particuliers. Il ne supprime pas les conflits, mais il offre un horizon qui les dépasse, un critère au nom duquel on peut juger les prétentions de chacun.
 
 Affirmer que le bien commun existe, non comme un donné mais comme une tâche, est donc essentiel à la démocratie. Car la démocratie n'est pas seulement la gestion pacifique des conflits d'intérêts ; elle est aussi la recherche en commun de ce qui est juste, la délibération sur ce qui sert l'ensemble. Sans l'idée d'un bien qui dépasse les intérêts particuliers, elle se réduirait à un marchandage entre égoïsmes, à une lutte où le nombre ou la force l'emportent. Avec elle, elle devient ce qu'elle prétend être : la recherche collective, par des citoyens libres, de ce qui est bon pour tous. Le bien commun n'est peut-être jamais pleinement atteint, ni même définissable une fois pour toutes ; mais y renoncer, ce serait renoncer à ce qui distingue la politique de la simple guerre — et la démocratie de la simple domination du plus grand nombre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17377,7 +17377,7 @@ Cette symétrie ne signifie pas que toutes les positions se valent, ni que croir
 Cette humilité partagée devrait transformer le rapport entre croyants et incroyants. Trop souvent, chacun traite l'autre avec un mépris qui suppose qu'on détiendrait, soi, la vérité évidente : le croyant plaignant l'aveuglement de l'incroyant, l'incroyant raillant la crédulité du croyant. Or si tous prennent position sur de l'indémontrable, ce mépris réciproque est infondé. Le croyant lucide sait que sa foi est un pari ; l'incroyant lucide sait que son incroyance en est un aussi. Cette conscience partagée de l'incertitude ultime devrait fonder, entre eux, non le mépris, mais le respect : celui d'êtres qui, face au même mystère, ont fait des paris différents, sans que nul puisse prouver qu'il a raison.
 
 Croire et ne pas croire ne sont donc pas les positions opposées d'un savoir et d'une ignorance, mais deux manières de se situer face à ce qui dépasse le savoir. Cette reconnaissance n'affaiblit ni la foi ni l'incroyance ; elle les rend plus honnêtes, en les délivrant de la prétention à une certitude qu'aucune ne peut légitimement revendiquer. Elle invite chacun à tenir sa position avec conviction, mais sans arrogance ; à assumer son pari, tout en respectant celui qui a parié autrement. Face au mystère ultime, la vraie sagesse n'est peut-être ni dans la certitude du croyant dogmatique ni dans celle de l'athée militant, mais dans la lucidité de qui sait qu'il croit, ou ne croit pas, sans pouvoir le prouver — et en tire, non de l'orgueil, mais de l'humilité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17400,7 +17400,7 @@ Cette persistance du sacré n'est pas un archaïsme résiduel, mais peut-être u
 Reconnaître le sacré laïque a des implications importantes. Cela invite d'abord à comprendre que la sécularisation n'est pas l'abolition du sacré, mais son déplacement, et que nos sociétés, qui se croient désenchantées, ont leurs propres absolus, leurs propres intangibles, leurs propres interdits sacrés. Cela invite aussi à interroger ces sacrés : quels sont-ils, sont-ils justes, que révèlent-ils de nos valeurs ? Une société se définit largement par ce qu'elle tient pour sacré, par ce qu'elle refuse de traiter comme une chose ordinaire ; examiner nos sacrés, c'est examiner ce que nous sommes.
 
 Il ne s'agit pas de regretter le sacré religieux ni de prôner un retour de la religion, mais de reconnaître lucidement que le besoin de sacré persiste, qu'il structure encore nos sociétés sous des formes laïcisées, et qu'il remplit une fonction dont on ne saurait se passer sans péril. Le désenchantement du monde n'a pas aboli le sacré ; il l'a transformé, déplacé, laïcisé. Comprendre cela, c'est mieux se comprendre soi-même, en reconnaissant que même la société la plus sécularisée continue de tenir certaines choses pour absolues et intangibles — et que c'est peut-être là, dans ces sacrés laïques, que résident ses valeurs les plus profondes et les plus dignes d'être défendues.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17423,7 +17423,7 @@ Un second malentendu fait de la laïcité une sorte de conviction parmi les autr
 Ces malentendus ne sont pas innocents ; ils servent souvent des intentions polémiques. Invoquer la laïcité pour restreindre la liberté religieuse, pour cibler telle croyance, pour imposer une forme de conformité, c'est instrumentaliser un principe de liberté au service d'une exclusion. La véritable laïcité est exigeante précisément parce qu'elle protège aussi les convictions qui déplaisent, garantit la liberté de ceux mêmes dont on voudrait restreindre l'expression. Elle n'est pas au service d'un camp, mais de la coexistence de tous ; la dévoyer en arme contre certains, c'est trahir ce qui en fait le prix.
 
 Comprendre la laïcité, c'est donc la restituer à son principe : non l'hostilité à la religion, non une identité militante, mais la neutralité de l'État qui garantit à chacun l'égale liberté de croire ou non. Ainsi comprise, elle est l'une des plus belles inventions pour faire coexister pacifiquement des convictions incompatibles, en soustrayant l'État à leur querelle. Sa difficulté, et sa grandeur, est de protéger la liberté de tous, y compris de ceux dont on ne partage pas les convictions. La défendre vraiment, c'est refuser les usages qui la dénaturent, et se souvenir qu'elle est un principe de liberté avant d'être quoi que ce soit d'autre — surtout pas une arme contre la liberté qu'elle a pour mission de garantir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17446,7 +17446,7 @@ Ce déplacement n'est pas sans ambiguïté. Certaines de ces transcendances de s
 Que faire de ce constat ? Il invite d'abord à reconnaître ce besoin plutôt qu'à le nier. Prétendre que l'homme moderne n'aurait plus besoin de transcendance, qu'il se satisferait d'une existence purement immanente, calculatrice, matérielle, c'est méconnaître une dimension profonde de la condition humaine, et risquer de la voir resurgir sous des formes incontrôlées. Une société qui ne ménage aucune place au besoin de dépassement, qui réduit l'existence à la consommation et au calcul, prépare peut-être le retour sauvage de ce qu'elle a refoulé. Reconnaître le besoin de transcendance, c'est se donner une chance de lui offrir des objets dignes plutôt que de le laisser investir des idoles.
 
 Il ne s'agit pas de prôner un retour des religions, ni de trancher la question de leur vérité. Il s'agit de reconnaître que le besoin de dépasser le quotidien, de se relier à plus grand que soi, de trouver un sens qui excède l'existence ordinaire, est une dimension durable de l'humain, que la sécularisation n'a pas abolie. Comprendre cela, c'est se garder à la fois du matérialisme qui nie ce besoin et le laisse resurgir sous de mauvaises formes, et du fanatisme qui le comble par des absolus destructeurs. Entre les deux, il reste à inventer des formes de transcendance qui répondent à ce besoin sans l'asservir : dans l'art, la pensée, l'engagement, la contemplation, tout ce qui élève l'homme au-dessus de lui-même sans le livrer à des idoles. Car ce besoin, on ne le supprime pas ; on ne peut que lui offrir des objets dignes de lui, ou le laisser en trouver de funestes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17469,7 +17469,7 @@ Cette conception révèle aussi la véritable difficulté de la tolérance, que 
 La tolérance a néanmoins ses limites, que sa version relativiste ne peut penser. Si tolérer, c'est supporter ce qu'on désapprouve par respect de la liberté d'autrui, alors la tolérance trouve sa limite là où cette liberté détruit celle des autres, où ce qu'on tolérerait mettrait fin à la tolérance elle-même. On ne saurait tolérer, au nom de la tolérance, ce qui vise à détruire la coexistence des libertés : il y a une intolérance légitime envers ce qui menace les conditions mêmes de la tolérance. Ce paradoxe — que la tolérance ne peut tout tolérer, sous peine de se détruire — n'apparaît que si l'on comprend la tolérance comme respect de la liberté, non comme approbation indifférente de tout.
 
 La vraie tolérance est donc une vertu difficile et paradoxale : supporter ce qu'on désapprouve, respecter la liberté de qui use mal de sa liberté, tout en refusant de tolérer ce qui détruirait la tolérance. Elle n'est ni le relativisme qui n'ose plus juger, ni l'indifférence qui ne se sent pas concernée, mais l'effort exigeant de tenir ensemble la fermeté de ses convictions et le respect de la liberté d'autrui. Dans un monde de convictions incompatibles, où chacun tient l'autre pour égaré, cette tolérance-là — qui juge sans opprimer, qui désapprouve sans persécuter — est peut-être la condition la plus précieuse, et la plus fragile, de la coexistence pacifique. Elle ne demande pas de cesser de croire qu'on a raison ; elle demande de laisser à l'autre le droit de croire qu'il a raison aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17492,7 +17492,7 @@ Ces deux rapports procèdent de deux conceptions de la liberté. Pour la sensibi
 Chacun de ces rapports a ses vertus et ses vices, et l'un éclaire l'autre par contraste. Le respect britannique de la règle produit une société ordonnée, fluide, courtoise, où la vie commune se déroule avec une remarquable civilité ; mais il peut verser dans une docilité qui accepte des règles qui mériteraient d'être contestées, dans un conformisme qui confond l'ordre avec la justice. L'esprit critique français entretient une vigilance salutaire contre l'arbitraire, une capacité de résistance à l'injuste ; mais il peut dégénérer en indiscipline chronique, en contestation systématique, en difficulté à s'accorder sur des règles communes et à les faire respecter.
 
 Comprendre ces deux rapports, c'est comprendre que ni l'un ni l'autre ne détient la vérité, mais que chacun révèle les limites de l'autre. Le Britannique gagnerait parfois à contester davantage, le Français à respecter davantage ; l'un pourrait apprendre de la vigilance critique de l'autre, l'autre de sa confiance civique. Aucune des deux dispositions n'est en soi supérieure : elles répondent différemment à une même tension, entre l'ordre qui rend la vie commune possible et la liberté qui refuse de s'y soumettre aveuglément. Les observer l'une par l'autre, c'est mesurer que notre propre rapport à la règle, que nous croyons naturel, est en réalité un choix parmi d'autres possibles — et découvrir, dans le miroir du voisin, ce que notre évidence a de particulier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17515,7 +17515,7 @@ Ces deux tempéraments ont chacun leurs forces et leurs dangers. La force de la 
 Ces différences se manifestent jusque dans la manière de concevoir les droits et la justice. Là où la tradition française proclame des droits universels de l'homme, valables pour tout être humain en vertu de sa seule humanité, la tradition britannique se réclame plutôt de libertés concrètes, historiquement acquises, inscrites dans des usages et des précédents. L'une fonde les droits sur un principe universel ; l'autre sur une tradition particulière. Ces deux approches peuvent aboutir à des protections semblables, mais elles les fondent tout autrement : l'une sur l'abstraction d'un principe, l'autre sur la concrétude d'un héritage.
 
 Comprendre cette différence, c'est saisir que l'universel et le particulier ne sont pas seulement des catégories philosophiques, mais des tempéraments qui façonnent des cultures entières. Et c'est reconnaître que chacun a besoin de l'autre : l'universel sans le sens du particulier devient une abstraction dangereuse, aveugle aux réalités ; le particulier sans le sens de l'universel devient un pragmatisme sans principes, incapable de juger. La sagesse serait de tenir les deux, de fonder l'action sur des principes tout en les adaptant aux circonstances, de ne sacrifier ni le principe à l'expédient ni le réel à la logique. Chaque tradition, en observant l'autre, peut y apprendre ce qui lui manque : le Français, le sens du concret et la méfiance des systèmes ; le Britannique, le besoin de principes qui fondent le jugement. Leur contraste n'est pas une querelle à trancher, mais une complémentarité à comprendre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17538,7 +17538,7 @@ Ces deux rapports révèlent deux philosophies du plaisir. La sensibilité fran�
 Ces différences se doublent d'un rapport différent au temps. Le repas à la française, long, rituel, protégé, suppose qu'on accorde du temps au plaisir, qu'on interrompe l'activité pour savourer, qu'on ne subordonne pas tout à l'efficacité. Le rapport plus expéditif à la nourriture, longtemps courant outre-Manche, témoigne d'une subordination plus grande de la table aux impératifs de l'activité, d'une réticence à consacrer un temps long à ce qui n'est, après tout, qu'un besoin. Là encore, deux philosophies du temps s'opposent : l'une qui ménage des plages de plaisir soustraites à l'utile, l'autre qui tend à subordonner le plaisir à l'activité.
 
 Il serait naïf, aujourd'hui, de figer ces différences, car les cultures s'interpénètrent, et le paysage gastronomique des deux pays a beaucoup changé. Mais ce que révèle ce contraste demeure éclairant : le rapport à la table n'est jamais seulement affaire de goût ou de talent culinaire ; il exprime une conception de la place du plaisir, du temps, de la convivialité dans une vie bonne. Observer le rapport de l'autre à la table, c'est interroger le sien, mesurer ce qu'il a de particulier, se demander quelle philosophie de la vie s'y exprime. Et l'on peut, dans ce miroir, apprendre de l'autre : le sens du plaisir cultivé, ou au contraire la sage réserve envers les jouissances — car ces deux sagesses, comme souvent entre ces deux voisins, se complètent plus qu'elles ne s'excluent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17561,7 +17561,7 @@ Ces deux positions ont façonné des rapports différents à l'ouverture et à l
 On aurait tort de faire de ces dispositions des fatalités mécaniques, comme si la géographie déterminait tout. Les peuples ne sont pas prisonniers de leur position ; ils l'interprètent, la vivent, en font des choix. Mais il serait tout aussi naïf de nier que la géographie ait pesé, qu'être une île ou être continental ait façonné des manières durables de se situer par rapport aux autres. La psychologie collective d'un peuple n'est pas inscrite dans son sol, mais elle se forme dans un dialogue avec lui, dans la manière dont une histoire s'écrit sur un territoire donné. L'insularité et la continentalité ne sont pas des destins imposés, mais des conditions qui ont orienté, sans les déterminer entièrement, deux rapports au monde.
 
 Comprendre cette différence de position, c'est comprendre bien des malentendus entre les deux voisins. Là où le continental voit dans la réserve insulaire de l'égoïsme, du repli, une réticence à s'engager, l'insulaire voit dans l'engagement continental une menace pour une souveraineté que la mer lui avait apprise à chérir. Ni l'un ni l'autre n'a simplement tort ; ils parlent depuis des positions différentes, façonnées par un rapport différent à la mer et à la terre. Mesurer cela, c'est cesser de juger l'autre depuis sa propre position comme s'il s'agissait de la seule légitime, pour comprendre que chacun regarde le monde depuis un lieu qui a façonné son regard. Un bras de mer, décidément, peut séparer plus profondément qu'un océan, quand il a façonné deux manières d'être au monde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17584,7 +17584,7 @@ Cette réciprocité des leçons révèle que les vertus de chaque peuple sont au
 Cette leçon vaut au-delà du cas de la France et de la Grande-Bretagne. Elle illustre ce que peut être, en général, un rapport fécond à l'altérité culturelle : non le mépris de qui juge l'autre depuis ses propres valeurs, ni l'admiration béate qui renierait les siennes, mais l'apprentissage mutuel de qui reconnaît dans l'autre une part de ce qui lui manque. Chaque culture, ayant développé certaines vertus au prix d'autres, peut trouver chez ses voisines ce qu'elle a négligé. La différence des peuples, source de tant de conflits, est aussi une richesse, à condition de la vivre comme une occasion d'apprendre plutôt que comme une rivalité à gagner.
 
 Ainsi, la vieille rivalité de la France et de la Grande-Bretagne, faite de guerres, de moqueries et de fascination réciproque, peut se muer en autre chose : une conversation où chacun, dans le miroir de l'autre, apprend à mieux se connaître et à se compléter. Ni l'un ni l'autre n'a raison contre l'autre ; chacun a raison à sa manière, et tort à sa manière, et c'est de leur différence même qu'ils peuvent tirer profit. Pour qui apprend une langue, et à travers elle une culture, c'est peut-être la plus belle leçon : que l'étranger n'est pas un rival à vaincre ni un modèle à imiter, mais un autre soi-même possible, qui nous révèle ce que nous sommes et nous invite à devenir davantage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17607,7 +17607,7 @@ Il y a plus. Réduire l'école à la seule instruction, c'est peut-être méconn
 Mais la position inverse, qui ferait de l'école l'instance chargée d'éduquer au sens le plus large, de former les personnes selon un certain modèle, comporte aussi ses dangers. Car éduquer suppose des choix — sur les valeurs, sur ce qu'est une vie bonne, sur ce que doit être une personne accomplie — qui ne sont pas neutres, et qu'une école ne saurait imposer sans risque. Confier à l'école le soin de former les âmes selon un modèle donné, c'est risquer l'endoctrinement, l'uniformisation, l'empiétement sur la liberté des consciences et le rôle des familles. L'école qui prétendrait éduquer au sens plein pourrait devenir un instrument de conformation, ce qui est le contraire de sa vraie mission.
 
 La sagesse est peut-être dans une conception qui dépasse l'alternative. L'école ne doit ni se borner à une instruction qui feindrait de ne rien transmettre d'autre que des savoirs, ni prétendre à une éducation qui imposerait un modèle de personne. Sa mission propre est de former des esprits libres, capables de penser par eux-mêmes, en leur transmettant les savoirs et les exigences qui rendent cette liberté possible. Éduquer, pour l'école, ce n'est pas façonner selon un modèle, mais donner les moyens de se former soi-même ; ce n'est pas transmettre des valeurs comme des dogmes, mais transmettre ce qui permet de juger des valeurs. Ainsi comprise, l'école instruit et éduque à la fois, non en imposant un modèle, mais en formant la liberté même de ceux qu'elle instruit — ce qui est peut-être la plus haute et la plus difficile de ses tâches.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17630,7 +17630,7 @@ Il faut aussi se demander de quoi le savoir libère. Le savoir libère de l'igno
 Cette nuance ne conduit pas à faire l'éloge de l'ignorance, ni à renoncer à l'idéal émancipateur du savoir. Elle invite à une conception plus juste de ce qui, dans le savoir, libère vraiment. Ce n'est pas l'accumulation de connaissances qui libère, mais un certain rapport au savoir : la capacité de comprendre, de juger, de penser par soi-même. Le savoir libérateur n'est pas la masse des informations, mais la formation d'un esprit capable de les ordonner, de les critiquer, d'en faire un usage autonome. On peut savoir beaucoup et n'être pas libre, si ce savoir reste inerte, subi, non maîtrisé ; on peut savoir moins et être plus libre, si le peu qu'on sait, on le pense vraiment. Ce n'est pas la quantité du savoir qui libère, mais la qualité du rapport qu'on entretient avec lui.
 
 Le savoir rend donc libre, mais à condition de bien entendre cette formule. Non pas tout savoir, ni le savoir comme simple accumulation, ni un savoir qui apporterait un bonheur garanti. Mais le savoir qui forme le jugement, qui rend capable de comprendre et de décider par soi-même, qui affranchit de la sujétion de l'ignorance sans promettre une félicité qu'il ne peut donner. Cette libération-là est réelle et précieuse, mais elle est aussi exigeante : elle demande non de savoir beaucoup, mais de penser ce qu'on sait ; non d'accumuler, mais de comprendre. Le savoir qui libère n'est pas un trésor qu'on possède, mais une lumière dont on apprend à se servir — et cette lumière, si elle éclaire, ne réchauffe pas toujours.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17653,7 +17653,7 @@ Il y a plus troublant encore dans cette critique. L'école ne se contente pas de
 Faut-il, devant cette critique, désespérer de l'école, y renoncer comme à une imposture ? Ce serait tirer une conclusion excessive et démobilisatrice. Car si l'école reproduit largement les inégalités, elle n'est pas un pur mécanisme de reproduction ; elle permet aussi, pour une part, la mobilité, l'émancipation, la réussite d'enfants que rien n'y destinait. Reconnaître la tendance à la reproduction ne signifie pas nier toute capacité émancipatrice ; cela signifie que cette capacité est bien moindre qu'on ne le prétend, et qu'elle se heurte à des mécanismes puissants. La critique n'invite pas à renoncer à l'école, mais à cesser de croire naïvement qu'elle corrige spontanément les inégalités, pour agir sur ce qui l'en empêche.
 
 Car reconnaître que l'école reproduit les inégalités, c'est se donner les moyens de combattre cette reproduction. Si l'égalité de traitement d'enfants inégaux perpétue l'inégalité, alors la corriger suppose de traiter différemment ceux qui sont différemment préparés, de donner davantage à ceux qui ont moins reçu, de compenser les inégalités de départ plutôt que de les ignorer sous une égalité formelle. Cela suppose une école qui ne se contente pas d'offrir le même à tous, mais qui s'attache à réduire les écarts initiaux, à transmettre à ceux qui ne les possèdent pas les codes et la culture qu'elle valorise. L'école peut reproduire les inégalités ; elle peut aussi, si elle en prend conscience et s'en donne les moyens, les combattre. Mais elle ne le fera pas spontanément, par sa seule existence : il y faut une volonté lucide, qui commence par reconnaître ce que la promesse naïve de l'égalité des chances masquait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17676,7 +17676,7 @@ Il y a plus. La compétence tant vantée de « savoir chercher et trier l'inform
 Cela ne signifie pas que l'ère de l'information ne change rien à ce qu'il faut apprendre. Certaines connaissances, autrefois indispensables, peuvent être moins nécessaires quand elles sont aisément disponibles ; l'accent peut se déplacer de la mémorisation de détails vers la compréhension des principes, des structures, des méthodes. Mais ce déplacement ne dispense pas d'apprendre ; il modifie ce qu'on apprend et comment, sans supprimer la nécessité d'un savoir intériorisé. L'ère de l'information ne rend pas l'apprentissage obsolète ; elle en redéfinit l'objet, en le recentrant peut-être sur l'essentiel : les connaissances fondamentales, les cadres qui permettent de comprendre, les méthodes qui permettent de juger.
 
 Apprendre à l'ère de l'information reste donc nécessaire, et peut-être plus que jamais. Car dans un monde saturé d'informations de toute qualité, où le vrai côtoie le faux, où la masse déborde toute capacité de traitement, ce qui distingue l'esprit formé de l'esprit démuni, c'est précisément le savoir intériorisé qui permet de se repérer, de juger, de comprendre. L'accès universel à l'information n'égalise pas les esprits ; il creuse l'écart entre ceux qui savent et peuvent en tirer parti, et ceux qui, faute de savoir, s'y noient. La vraie liberté, à l'ère de l'information, n'appartient pas à qui peut tout trouver, mais à qui sait assez pour comprendre ce qu'il trouve. C'est pourquoi apprendre, loin d'être rendu superflu, demeure la condition de l'autonomie dans un monde d'informations sans fin.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17699,7 +17699,7 @@ Ce renversement témoigne d'une transformation de notre rapport aux limites du s
 Peut-être la vérité est-elle que la curiosité n'est ni simplement un vice ni simplement une vertu, mais une puissance ambivalente, selon son objet et sa mesure. Il y a une curiosité féconde, qui pousse à comprendre, à découvrir, à s'ouvrir au monde, et qui est bien une vertu ; et il y a une curiosité vaine ou malsaine, qui se disperse, qui s'attache à ce qui ne mérite pas, qui viole l'intimité d'autrui ou s'aventure là où elle nuit. La curiosité qui approfondit diffère de celle qui papillonne ; celle qui cherche la vérité, de celle qui se repaît du scandale. Juger la curiosité en bloc, comme vice ou comme vertu, c'est manquer cette distinction : tout dépend de ce vers quoi elle se porte et de la mesure qu'elle garde.
 
 Le renversement de la valeur de la curiosité nous apprend donc quelque chose sur nous-mêmes. Il révèle que nous avons fait du désir de connaître un absolu, que nous avons levé les anciennes méfiances, que nous tenons pour évidente une valorisation qui ne l'était pas. Reconnaître ce renversement, ce n'est pas prôner un retour à la condamnation ancienne, mais retrouver une part de sa lucidité : se demander s'il n'y a vraiment aucune limite à la curiosité, distinguer la curiosité féconde de celle qui ne l'est pas, ne pas ériger le désir de tout savoir en vertu sans réserve. La curiosité est une puissance magnifique ; mais toute puissance, pour être une vertu, demande à être orientée et mesurée. La sagesse n'est peut-être ni de la condamner ni de la célébrer sans réserve, mais d'apprendre à en faire bon usage.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17722,7 +17722,7 @@ Il y a plus. Cette accélération continue nous prive du présent lui-même. Tou
 Il y a une ironie profonde dans notre rapport à la vitesse. Nous accélérons pour gagner du temps ; mais ce temps gagné, nous ne le savourons pas, nous le remplissons aussitôt de nouvelles activités, de nouvelles hâtes. La vitesse ne nous donne pas plus de temps libre ; elle intensifie le remplissage de notre temps, nous fait faire davantage dans le même délai, sans jamais nous rendre le loisir qu'elle promettait. Nous sommes plus rapides et plus pressés que jamais, plus efficaces et plus débordés, gagnant du temps que nous perdons aussitôt. L'accélération ne débouche pas sur le repos, mais sur une course sans fin, où l'on court toujours plus vite sans jamais arriver.
 
 Reconquérir un rapport sain au temps ne suppose pas de renoncer à toute vitesse, ni de prôner une lenteur généralisée qui serait tout aussi absurde. Il s'agit de discerner ce qui gagne à être accéléré de ce qui demande du temps, de ménager, dans une vie rapide, des espaces de lenteur, de retrouver la capacité d'être présent à ce qu'on vit plutôt que toujours tourné vers ce qui vient. Il s'agit de refuser que la vitesse devienne une valeur absolue, de résister à l'injonction d'aller toujours plus vite, de se réapproprier son temps plutôt que de le subir. Car une vie n'est pas plus réussie pour être plus rapide ; elle l'est pour être pleinement vécue, et il est des choses essentielles que seule la lenteur permet de goûter. Vivre vite, ce n'est pas vivre plus ; c'est souvent passer à côté de sa vie en croyant la gagner.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17745,7 +17745,7 @@ Il y a plus troublant. L'abondance elle-même peut engendrer une forme particuli
 Ce diagnostic ne conduit pas à faire l'éloge de la rareté, ni à regretter la pauvreté matérielle, qui fut et reste un malheur bien réel. Le vide de l'abondance est un problème de riches, et il serait indécent de le comparer à la détresse du manque. Mais il révèle une vérité importante : que la satisfaction des besoins matériels, si nécessaire soit-elle, ne suffit pas au bonheur, et qu'une civilisation qui aurait vaincu la rareté sans répondre au besoin de sens n'aurait pas vaincu le malheur. L'abondance résout un problème — celui du manque matériel — sans résoudre celui qui subsiste par-delà : le besoin de sens, de relations, d'accomplissement, que nulle profusion de biens ne comble.
 
 Sortir du vide de l'abondance ne suppose donc pas d'y renoncer, mais de comprendre ce qu'elle ne peut donner, et de le chercher ailleurs. C'est reconnaître que le sens ne s'achète pas, que les relations profondes ne se consomment pas, que l'accomplissement ne se trouve pas dans la possession ; c'est cesser d'attendre de l'abondance matérielle ce qu'elle ne peut procurer, pour investir ce qui, seul, comble le besoin le plus profond. C'est peut-être aussi apprendre à désirer autrement, à sortir de la course à la possession qui entretient le manque, à trouver dans le suffisant ce que l'excès ne donne pas. Le vide de l'abondance n'est pas une fatalité ; il est le signe que nous cherchons au mauvais endroit ce que l'abondance ne contient pas — et qu'il nous faut, au sein même de la profusion, réapprendre où se trouve ce qui comble vraiment.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17768,7 +17768,7 @@ Le troisième effet pervers concerne la comparaison. L'impératif de bonheur s'a
 Ce diagnostic ne conduit pas à renoncer au bonheur, ni à faire l'éloge du malheur. Il invite à changer de rapport au bonheur, à le libérer de l'impératif qui le dénature. Cela suppose d'abord d'accepter le malheur comme une part normale de l'existence, non comme un échec : reconnaître que la peine, le doute, la tristesse font partie de toute vie, et qu'il n'y a nulle faute à ne pas être toujours heureux. Cela suppose ensuite de cesser de poursuivre le bonheur directement, de le surveiller, d'en faire un but anxieux, pour se tourner vers ce qui donne sens et joie, en laissant le bonheur venir de surcroît. Cela suppose enfin de se défier des bonheurs exhibés, de cesser de comparer sa réalité à des mises en scène, de renoncer à l'idée qu'on devrait être aussi heureux qu'on nous le montre.
 
 Le paradoxe du bonheur est ainsi que sa quête explicite, érigée en impératif, se retourne contre lui. Non que le bonheur ne soit désirable — il l'est —, mais parce qu'il ne se laisse pas saisir de front, qu'il ne supporte pas d'être un devoir, qu'il fuit qui le traque et se donne à qui l'oublie. La sagesse, à l'égard du bonheur, n'est peut-être pas de le poursuivre, mais de rendre sa vie digne d'être vécue et d'accueillir le bonheur quand il vient, sans en faire une obligation ni une mesure. Une vie qui exige d'être heureuse à tout prix se condamne à ne pas l'être ; une vie qui cherche le sens, les liens, l'accomplissement, et laisse le bonheur venir par surcroît, a plus de chances de le rencontrer. Le bonheur n'est pas un but à atteindre, mais un don à accueillir — et vouloir le forcer, c'est le manquer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17791,7 +17791,7 @@ Cette conception, qui lie la liberté à l'autodétermination plutôt qu'à l'il
 Il faut se garder ici d'un contresens. Reconnaître que la liberté suppose des limites choisies ne signifie pas justifier les contraintes subies, l'oppression, les limites imposées de l'extérieur. La distinction est décisive : autre chose est de se donner à soi-même des limites, autre chose est de se les voir imposer. La liberté véritable n'est pas la soumission à des contraintes extérieures, mais l'autodétermination, la capacité de se gouverner soi-même. Ce qui libère, ce n'est pas la limite en tant que telle, mais la limite qu'on se donne, par opposition à la limite qu'on subit et à l'absence de toute limite. La liberté est dans l'autonomie — se donner à soi-même sa loi —, également éloignée de la servitude qui subit et du chaos qui ne se limite en rien.
 
 Remettre en question l'identification de la liberté à l'illimitation, c'est donc retrouver une conception plus profonde de la liberté, comme autodétermination plutôt que comme absence de contraintes. Cette conception, loin d'affaiblir la valeur de la liberté, l'approfondit : elle montre que la vraie liberté n'est pas de n'être borné par rien, mais de se gouverner soi-même ; non de suivre tous ses désirs, mais de les ordonner selon un choix ; non l'absence de limites, mais la capacité de se donner les siennes. Dans une modernité qui confond souvent la liberté avec l'illimitation du désir, avec le refus de toute contrainte, retrouver cette conception est peut-être nécessaire pour ne pas voir la liberté se dégrader en son contraire : car une liberté qui ne serait qu'absence de limites ne mènerait pas à l'accomplissement, mais à la dispersion, à la servitude des impulsions, au vide d'une existence qui, ne se déterminant à rien, ne serait finalement rien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17814,7 +17814,7 @@ Donner forme à sa vie suppose plusieurs choses que ce parcours a rencontrées. 
 Cette conception a quelque chose d'exigeant, mais aussi de libérateur. D'exigeant, car elle fait de la vie une tâche, une responsabilité : il ne suffit pas de vivre, il faut donner forme à sa vie, ce qui demande conscience, choix, effort, cohérence. De libérateur, car elle place le sens de la vie non dans des circonstances qu'on ne maîtrise pas — le bonheur, la chance, les événements —, mais dans ce qui dépend de nous : la forme que nous donnons à notre existence. Même dans des circonstances difficiles, même privé de bonheur, on peut donner forme à sa vie, lui imprimer un sens, la mener selon ses valeurs. Cette liberté-là, celle de donner forme à sa vie quelles que soient les circonstances, ne peut nous être ôtée.
 
 Ainsi s'achève ce parcours à travers les plus hautes questions, non sur une réponse définitive — il n'y en a pas —, mais sur une orientation. Une vie réussie n'est peut-être ni la plus heureuse, ni la plus riche, ni la plus longue, mais celle à laquelle on a donné forme : une vie orientée par un sens, cohérente avec ses valeurs, assumée comme la sienne. Cette tâche de donner forme à sa vie, nul ne peut l'accomplir à notre place ; elle est notre responsabilité et notre liberté les plus propres. Et pour qui apprend une langue, franchissant les niveaux jusqu'à ces textes les plus exigeants, c'est peut-être une image de ce qu'est tout apprentissage, toute existence : non recevoir passivement ce qui vient, mais donner forme, patiemment, à ce qu'on devient. Car vivre, comme apprendre, ce n'est pas subir, mais façonner — et une vie, comme une langue, ne vaut que par ce qu'on en fait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17837,7 +17837,7 @@ Il y a plus. Si la pensée était strictement bornée par le langage existant, c
 Faut-il alors renverser la formule, et affirmer que la pensée serait entièrement libre à l'égard du langage, qui ne serait qu'un habit extérieur ? Ce serait tomber dans l'excès inverse, tout aussi faux. Car s'il est vrai que la pensée déborde le langage, il est vrai aussi que le langage la structure, la nourrit, la rend possible. Nous ne pensons pas dans un pur éther, indépendamment de toute langue ; nos concepts, nos distinctions, nos raisonnements sont largement tissés de mots. Une pensée sans langage serait informe, fugace, incapable de se fixer, de se développer, de se transmettre. Le langage n'emprisonne pas la pensée, mais il la porte, et sans lui elle ne serait guère plus qu'un tremblement inarticulé.
 
 La vérité tient peut-être dans cette tension irréductible : la pensée déborde le langage, et pourtant elle en dépend ; le langage la limite, et pourtant elle l'excède. Les frontières de ma langue ne sont pas les murs d'une prison où ma pensée serait enfermée, mais plutôt le rivage mouvant où elle rencontre ce qu'elle ne peut encore dire, et qu'elle s'efforce de conquérir. Apprendre une langue, en ce sens, n'est pas seulement acquérir des mots ; c'est étendre les frontières de son monde, gagner de nouvelles nuances, de nouvelles perceptions, de nouvelles manières d'articuler l'expérience. Chaque langue nouvelle est un monde de plus, et celui qui en possède plusieurs habite un monde plus vaste — non que sa pensée en fût prisonnière, mais parce que chaque langue lui offre de nouveaux moyens de dire ce que, peut-être, il pressentait déjà sans pouvoir le formuler.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17860,7 +17860,7 @@ Mais il faut se garder de tirer de l'intraduisible des conclusions excessives. C
 C'est là que se révèle le paradoxe fécond de la traduction. Traduire, ce n'est jamais substituer mécaniquement les mots d'une langue à ceux d'une autre ; c'est faire passer un sens, une expérience, une pensée, d'un monde langagier à un autre, au prix d'inévitables pertes et de non moins inévitables trouvailles. Le traducteur ne peut pas tout rendre ; il doit choisir, sacrifier, compenser, recréer. Mais ce qu'il ne peut rendre d'un mot, il peut le faire comprendre autrement ; et par son travail, ce qui semblait enfermé dans une langue devient accessible à une autre. La traduction est la preuve vivante que l'intraduisible, s'il complique le passage d'une langue à l'autre, ne l'interdit pas ; elle est le pont jeté par-dessus les frontières que les intraduisibles semblaient dresser.
 
 L'intraduisible nous enseigne ainsi une double vérité, apparemment contradictoire et pourtant cohérente. D'une part, les langues ne sont pas de simples nomenclatures interchangeables, désignant les mêmes choses avec des mots différents ; chacune porte un monde, une sensibilité, une manière singulière d'articuler l'expérience, dont les intraduisibles sont les témoins. D'autre part, ces mondes ne sont pas étanches ; ils communiquent, se traduisent, s'enrichissent mutuellement, et celui qui apprend une langue étrangère accède à un monde qui n'était pas le sien. L'intraduisible n'est donc pas un mur, mais un seuil : ce qui, résistant à la traduction facile, invite à l'effort de comprendre l'autre dans sa singularité — et récompense cet effort par l'accès à une manière d'être au monde qu'aucune traduction ne pouvait entièrement livrer, mais que l'apprentissage de la langue, lui, finit par ouvrir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17883,7 +17883,7 @@ Cette découverte éclaire des pans entiers de notre existence. Nos métaphores 
 Il ne s'agit pas, en reconnaissant l'omniprésence de la métaphore, de sombrer dans l'idée que tout serait métaphore, qu'il n'y aurait aucun langage propre, aucune vérité littérale. Cette conclusion excessive dissoudrait la distinction entre le vrai et le figuré, sans laquelle la pensée elle-même vacille. Il y a bien un langage plus littéral, des énoncés dont la valeur métaphorique est nulle ou négligeable ; mais ce langage propre est plus étroit qu'on ne le croyait, et l'abstrait, en particulier, ne se dit guère sans métaphore. Reconnaître cela, ce n'est pas nier toute littéralité ; c'est mesurer combien la métaphore, loin d'être un ornement dont l'abstrait pourrait se passer, en est souvent le seul accès.
 
 Le pouvoir des métaphores nous enseigne ainsi une leçon d'humilité et de vigilance. D'humilité, car nous découvrons que notre pensée, que nous croyions maîtresse d'elle-même, est traversée de métaphores qui l'orientent à son insu, héritées d'une langue et d'une culture qui pensent en nous avant que nous ne pensions. De vigilance, car reconnaître ce pouvoir nous invite à examiner les métaphores par lesquelles nous vivons, à débusquer celles qui nous égarent, à choisir, autant qu'il est possible, les figures qui éclairent plutôt que celles qui obscurcissent. Car nous ne pouvons pas penser sans métaphores ; mais nous pouvons, prenant conscience de leur pouvoir, cesser d'en être les jouets pour en devenir, un peu, les maîtres — et découvrir que changer sa manière de dire les choses, c'est déjà commencer à changer sa manière de les vivre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17906,7 +17906,7 @@ C'est ici que se révèle le pouvoir créateur du langage. Car nommer une expér
 Cette fonction révélatrice du langage a une dimension éthique et politique que l'on aurait tort de négliger. Car il est des souffrances, des injustices, des expériences qui, faute de mots pour les nommer, restent invisibles, indicibles, condamnées au silence ; ceux qui les subissent les éprouvent sans pouvoir les dire, les dénoncer, les faire reconnaître. Forger le mot qui les nomme, c'est les faire exister dans l'espace commun, permettre qu'on les reconnaisse et qu'on les combatte. Bien des combats ont commencé par la conquête d'un mot, par la nomination d'une réalité que l'absence de nom maintenait dans l'ombre. Le silence de ce qui n'a pas de nom n'est pas toujours innocent ; il peut être le silence imposé à ce qu'on préfère ne pas voir, et lui donner un nom est alors un acte de justice.
 
 Ainsi ce qui n'a pas de nom occupe-t-il un statut singulier : ni pleinement existant pour nous, ni tout à fait inexistant, il subsiste dans la pénombre de l'innommé, réclamant le mot qui l'accomplira. Le langage ne crée pas l'expérience à partir de rien, mais il la révèle, la constitue, la fait passer de l'obscur au clair. C'est pourquoi enrichir une langue, forger les mots qui manquent, apprendre les mots d'une autre langue pour ce que la sienne ne dit pas, ce n'est pas un simple jeu de vocabulaire : c'est étendre le domaine du dicible, et donc du pensable, du partageable, de l'existant. Chaque mot conquis sur le silence est une région de l'expérience arrachée à l'ombre — et celui qui apprend une langue nouvelle ne gagne pas seulement des mots, mais des pans entiers d'un monde que sa langue maternelle laissait, peut-être, dans le silence de l'innommé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17929,7 +17929,7 @@ Cette éthique exige aussi l'honnêteté. Il ne suffit pas de nommer avec préci
 Cette éthique exige enfin une forme de justice. Car bien nommer, c'est aussi rendre aux choses et aux êtres leur juste nom, refuser les mots qui rabaissent, excluent, déshumanisent, comme les mots qui flattent et trompent. La manière dont nous nommons les êtres humains, en particulier, n'est jamais indifférente : le mot qui réduit une personne à une catégorie, qui l'enferme dans une étiquette, qui la désigne pour l'exclure, fait violence ; le mot qui la reconnaît dans sa dignité rend justice. Il y a une justice du langage, qui consiste à nommer chacun et chaque chose selon ce qu'ils sont, sans les rabaisser ni les dénaturer. Mal nommer les êtres, c'est leur faire tort ; bien les nommer, c'est leur rendre ce qui leur est dû.
 
 Ainsi l'éthique du langage couronne-t-elle notre réflexion sur ses pouvoirs. Si le langage façonne notre monde, oriente notre pensée, révèle ou masque l'expérience, constitue notre rapport au réel et à autrui, alors la manière dont nous en usons engage une responsabilité. Bien nommer les choses n'est pas une élégance secondaire, mais un devoir : de vérité, envers le réel ; d'honnêteté, envers autrui ; de justice, envers les êtres. Et pour qui apprend une langue, cette exigence prend un sens particulier : car apprendre à bien nommer, dans une langue nouvelle comme dans la sienne, à chercher le mot juste, à fuir le mot faux, ce n'est pas seulement gagner en maîtrise ; c'est apprendre un rapport plus vrai, plus honnête, plus juste au monde et aux autres. Le soin du langage est le soin de la vérité — et c'est peut-être là que la maîtrise d'une langue rejoint la sagesse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17952,7 +17952,7 @@ Et pourtant, le temps n'est pas rien ; il est même, en un sens, ce qu'il y a de
 Cette conception déplace le vertige sans le dissiper tout à fait, mais elle éclaire notre rapport au temps. Si le temps est d'abord vécu, alors notre manière de le vivre importe plus que sa nature objective. Nous pouvons habiter le temps de diverses façons : fuir le présent en vivant dans la nostalgie du passé ou l'anxiété de l'avenir ; ou au contraire nous tenir dans le présent, seul lieu où nous vivons réellement. Car si le passé n'est plus et l'avenir pas encore, c'est bien dans le présent, si fuyant soit-il, que se déroule notre vie ; c'est le seul temps que nous ayons vraiment. Toute la sagesse à l'égard du temps tient peut-être là : ne pas déserter le présent, seul réel, au profit d'un passé révolu ou d'un avenir incertain, mais habiter pleinement l'instant qui fuit, puisque c'est en lui, et en lui seul, que nous existons.
 
 Le présent, dira-t-on, n'existe pas, puisqu'il s'évanouit dès qu'on le saisit. Mais c'est peut-être le contraire qu'il faut conclure : que le présent, si fuyant soit-il, est le seul lieu de la réalité, le seul temps où nous vivions vraiment, et que la sagesse consiste non à le retenir — ce qui est impossible —, mais à l'habiter. Le temps nous échappe si nous voulons le saisir comme une chose ; il se donne à nous si nous consentons à le vivre comme un flux. Et vivre, au fond, n'est peut-être rien d'autre que cela : consentir à la fuite du temps tout en habitant pleinement chacun de ses instants — accepter de ne pouvoir retenir le présent, et l'aimer d'autant plus qu'il passe.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17975,7 +17975,7 @@ Faut-il en conclure que la mémoire nous trompe, qu'elle est une faculté défai
 Il y a plus. Cette reconstruction incessante du passé est le fondement même de notre identité. Nous avons vu que le moi n'est pas une chose fixe, mais une histoire, un récit ; or ce récit, c'est la mémoire qui le tisse, en recomposant sans cesse notre passé pour en faire l'histoire cohérente qui nous constitue. La mémoire, en réinventant notre passé, construit du même mouvement notre identité, l'unité narrative qui fait de la succession de nos moments une vie qui est la nôtre. Que cette reconstruction soit infidèle à l'événement importe moins que le fait qu'elle produise une histoire vivable, une continuité, un sens. Nous sommes, en un sens, les fictions que notre mémoire compose à partir de notre passé.
 
 Cette vérité, loin d'être seulement inquiétante, comporte une part de libération. Si notre passé n'est pas un donné fixe, mais une reconstruction perpétuelle, alors nous ne sommes pas absolument prisonniers de ce qui fut ; nous pouvons, dans une certaine mesure, réinterpréter notre passé, en changer le sens, le recomposer autrement. Non que nous puissions le falsifier à volonté — les faits eurent lieu —, mais nous pouvons transformer le récit que nous en faisons, la signification que nous lui donnons, la place qu'il tient dans notre histoire. La plasticité de la mémoire, qui rend notre passé incertain, est aussi ce qui nous permet de ne pas en être les esclaves, de le réélaborer, de guérir parfois de ses blessures en les réinscrivant dans un récit plus vivable. La mémoire invente notre passé ; mais cette invention, si elle nous rend incertains de ce qui fut, nous rend aussi, un peu, maîtres de ce que ce passé signifie pour nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -17998,7 +17998,7 @@ L'oubli est aussi la condition du bonheur, ou du moins de la sérénité. Car no
 Il y a plus profond encore. L'oubli est lié à notre capacité de changer, de devenir autres, de nous libérer de ce que nous fûmes. Une mémoire qui garderait tout nous enchaînerait à notre passé, à nos erreurs, à ce que nous avons été ; l'oubli, en laissant s'estomper une part de ce passé, nous permet de ne pas en être prisonniers, de nous transformer, de recommencer. Il est ce qui rend possible le pardon — d'autrui et de soi-même —, la seconde chance, le renouvellement. Un être sans oubli serait figé dans son passé intégral, incapable de devenir autre que ce que sa mémoire totale aurait fixé. L'oubli est ainsi lié à la liberté même, à la possibilité de n'être pas déterminé absolument par tout ce qui fut.
 
 Réhabiliter l'oubli, ce n'est donc pas faire l'éloge de la négligence ou de l'amnésie, ni nier la valeur de la mémoire, qui reste essentielle. C'est reconnaître que l'oubli et la mémoire sont les deux faces d'une même faculté, également nécessaires, et que l'aspiration à une mémoire totale méconnaît la fonction vitale de l'oubli. Nous avons besoin de nous souvenir, mais aussi d'oublier ; de retenir l'essentiel, mais de laisser s'estomper le reste ; de garder vif ce qui doit l'être, mais de laisser le temps apaiser ce qui doit l'être. La sagesse à l'égard du temps et de la mémoire consiste non à tout retenir, mais à bien oublier — à laisser aller ce qui doit passer, pour garder vivante et libre la mémoire de ce qui compte. Car c'est aussi par ce qu'il consent à oublier qu'un être reste capable de vivre, de penser et de devenir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18021,7 +18021,7 @@ Cette conception narrative de l'identité éclaire bien des choses. Elle expliqu
 Mais cette conception a aussi ses limites et ses dangers, qu'il faut reconnaître. Car le récit que nous faisons de notre vie est une construction, et comme toute construction, il peut être trompeur. Nous pouvons nous raconter une histoire fausse, nous illusionner sur le sens de notre vie, plaquer sur le désordre réel de notre existence une cohérence factice. Le besoin de faire de sa vie un récit cohérent peut conduire à falsifier, à simplifier, à imposer un sens là où il n'y en a pas. Il y a une tyrannie possible du récit, qui voudrait que toute vie ait la forme d'une histoire bien construite, alors que bien des vies sont faites de hasard, de discontinuité, de moments sans lien. Reconnaître l'unité narrative de la vie ne doit pas conduire à nier ce que l'existence a d'irréductiblement dispersé, contingent, insensé.
 
 La sagesse consiste peut-être à tenir les deux : reconnaître que nous donnons à notre vie une unité narrative, que nous la tissons en une histoire qui la constitue comme nôtre, et en même temps ne pas être dupes de ce récit, ne pas lui sacrifier la vérité de ce que nous vivons, accepter ce que notre existence garde d'irréductible au récit. Le fil d'une vie n'est pas donné d'avance ; nous le tissons, et cette tâche est notre liberté autant que notre nécessité. Mais nous devons le tisser avec probité, sans nous mentir, sans plaquer une fausse cohérence sur le réel. Faire de sa vie une histoire vraie, cohérente sans être factice, unifiée sans être falsifiée — voilà peut-être ce que signifie donner un sens à son existence : non découvrir un fil qui préexisterait, mais en tisser un, patiemment et honnêtement, qui relie nos moments sans trahir ce que nous avons vraiment vécu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18044,7 +18044,7 @@ Entre ces deux tentations — retenir ce qui passe, ou s'en détacher — il exi
 Cette sagesse est difficile, car elle demande de tenir ensemble ce qui semble se contredire : l'attachement et le consentement à la perte, l'amour de ce qui passe et l'acceptation de sa fuite. Elle ne supprime pas la douleur de perdre — cette douleur est le prix de l'attachement, et le refuser serait refuser d'aimer —, mais elle transforme notre rapport à la perte, en faisant de la finitude non l'ennemie de la valeur, mais sa condition. Aimer un être en sachant qu'on le perdra, goûter un moment en sachant qu'il s'enfuit, ce n'est pas se condamner à la souffrance ; c'est aimer et goûter pleinement, avec cette intensité que seule donne la conscience de la finitude. Le temps qui passe, dans cette perspective, n'est plus seulement ce qui nous arrache ce que nous aimons ; il est ce qui donne à ce que nous aimons son prix irremplaçable.
 
 Retenir ce qui passe est impossible ; s'en détacher est appauvrissant ; il reste à l'aimer parce qu'il passe. C'est là, peut-être, la plus haute sagesse à l'égard du temps : non la lutte vaine contre sa fuite, ni le détachement qui se prive de la vie, mais un consentement lucide et aimant à la finitude, qui fait de la fuite du temps non une malédiction, mais la source même de la valeur et de la beauté de ce qui nous est donné. Le temps nous prend tout ; mais c'est aussi lui qui, en rendant tout éphémère, rend tout précieux. Consentir à cela, aimer pleinement ce que l'on sait devoir perdre, vivre chaque instant comme unique parce qu'il l'est, c'est peut-être la seule victoire possible sur le temps : non l'arrêter, ce qui est impossible, mais l'habiter si pleinement que sa fuite même devienne une raison d'aimer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18067,7 +18067,7 @@ Cette reconnaissance a une portée qui dépasse la scène tragique. Car la vie e
 Que faire de cette reconnaissance du tragique ? Elle ne conduit pas au désespoir, ni à la paralysie, comme si l'inévitabilité de la faute devait décourager toute action. Elle conduit plutôt à une forme de lucidité et de gravité. Lucidité : ne pas se leurrer sur la nature de certains choix, ne pas prétendre qu'ils sont innocents quand ils ne le sont pas, reconnaître ce qu'on sacrifie en choisissant. Gravité : mesurer le poids de ces choix, en assumer la part de faute, ne pas se donner bonne conscience à bon compte. Le tragique nous apprend à agir tout en reconnaissant que notre action, dans certaines situations, comporte une part inévitable de mal, et à porter cette part sans nous en absoudre faussement ni nous en accabler stérilement.
 
 Le tragique n'est donc pas le malheur, mais une vérité sur la structure de l'existence morale : qu'il est des conflits de valeurs qui ne se résolvent pas, des situations où le devoir s'oppose au devoir, où la faute est inévitable. Le reconnaître, c'est acquérir une sagesse plus profonde que celle qui croit à l'harmonie de toutes les valeurs et à l'innocence de tous les bons choix. C'est comprendre que vivre en être moral, ce n'est pas seulement vouloir le bien contre le mal, mais aussi affronter, parfois, le déchirement où le bien s'oppose au bien — et assumer, avec lucidité et gravité, la part de faute que comporte alors tout choix. Cette reconnaissance du tragique, loin d'être un pessimisme, est peut-être la marque d'une conscience morale parvenue à sa pleine maturité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18090,7 +18090,7 @@ La troisième réponse, la plus exigeante, consiste à assumer l'absurde sans le
 Cette troisième voie a quelque chose de paradoxal, voire d'héroïque. Elle demande de tenir ensemble la lucidité sur l'absurde et l'affirmation de la vie, de reconnaître que rien ne justifie l'existence et pourtant de la vivre avec passion. Elle refuse le confort de la fuite comme celui de la croyance, pour habiter l'absurde les yeux ouverts. Sa noblesse est de ne rien se cacher, de n'acheter la vie ni par le déni ni par l'illusion, mais de l'affirmer dans sa nudité, sans autre justification qu'elle-même. Celui qui vit ainsi ne demande pas au monde un sens qu'il ne donne pas ; il crée son propre sens, dans l'acte même de vivre pleinement une existence qu'aucune transcendance ne garantit.
 
 Il faut se garder de tenir cette troisième voie pour la seule légitime, comme si la foi n'était que fuite et la fuite que lâcheté ; ces jugements seraient trop rapides, et la question du sens de l'existence reste, nous l'avons vu, ouverte. Mais la réflexion sur l'absurde a le mérite de poser nettement l'alternative, et de révéler ce qui se joue dans notre rapport au sens. Que nous fuyions l'absurde, que nous le surmontions par la foi, ou que nous l'assumions par la révolte, nous prenons position sur la question la plus fondamentale : comment vivre dans un monde qui n'offre pas de sens donné ? Et cette position, quelle qu'elle soit, engage notre manière d'être au monde. L'absurde n'est pas une abstraction philosophique ; il est l'épreuve où se décide notre rapport à l'existence, et la manière dont nous y répondons dessine, en profondeur, qui nous sommes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18113,7 +18113,7 @@ Il faut donc distinguer deux gestes que le besoin de sens tend à confondre. L'u
 La position la plus juste est peut-être la plus difficile : reconnaître que la souffrance, en elle-même, n'a pas de sens donné, qu'elle est souvent un pur mal, gratuit et injustifiable, et refuser de la justifier par un sens qui l'absoudrait ; et pourtant admettre que nous pouvons, parfois, donner un sens à notre souffrance, non en la justifiant, mais en la transformant, en tirant de l'épreuve subie quelque chose qui l'inscrive dans notre histoire sans la rendre acceptable. Le sens de la souffrance n'est pas dans la souffrance ; il est, s'il existe, dans ce que nous en faisons, dans la réponse que nous y apportons. La souffrance ne signifie rien par elle-même ; mais nous pouvons, face à elle, créer du sens — non en la justifiant, mais en refusant qu'elle ait le dernier mot.
 
 Cette distinction a une conséquence éthique décisive. Car si la souffrance n'a pas de sens en elle-même, alors elle ne doit pas être acceptée, justifiée, sanctifiée ; elle doit être combattue. La tentation de donner un sens à la souffrance peut conduire à une résignation coupable, à accepter le mal comme s'il était justifié ; refuser ce sens, reconnaître que la souffrance est un mal gratuit, c'est se donner les moyens de la combattre plutôt que de s'y résigner. Devant la souffrance d'autrui, en particulier, notre premier devoir n'est pas de lui trouver un sens consolant, mais de la soulager, de la combattre, de refuser qu'elle soit. Le vrai respect de celui qui souffre n'est pas de lui expliquer le sens de sa douleur, mais de la prendre au sérieux comme un mal, et de faire ce qui est en notre pouvoir pour y mettre fin. La souffrance n'a peut-être pas de sens ; mais notre réponse à elle, si.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18136,7 +18136,7 @@ Cette grandeur éclaire une vérité que le culte du succès occulte : la valeur
 Cette reconnaissance de la grandeur des vaincus a une portée consolante et libératrice. Consolante, car elle nous délivre de la tyrannie du succès, de l'angoisse de réussir, de la honte de l'échec ; elle nous dit que notre valeur ne dépend pas de notre réussite, que nous pouvons échouer et rester dignes, perdre et demeurer grands. Libératrice, car elle nous permet de placer notre fidélité ailleurs que dans la victoire, de servir ce qui vaut sans subordonner tout au succès, de préférer la justice à la réussite. Celui qui a compris la grandeur des vaincus est libre à l'égard du succès ; il peut le rechercher, mais sans lui sacrifier l'essentiel, sans en faire la mesure de sa valeur.
 
 Il ne s'agit pas, en célébrant la grandeur des vaincus, de faire l'éloge de l'échec, ni de mépriser le succès, ni de se consoler à bon compte de ses défaites. Toutes les défaites ne sont pas grandes ; il est des échecs qui ne témoignent que de la faiblesse ou de la faute, et la grandeur des vaincus n'appartient qu'à ceux dont la défaite fut le prix d'une fidélité. Mais reconnaître cette grandeur, c'est refuser l'identification de la valeur au succès, c'est affirmer que certaines choses valent plus que la victoire, et que rester fidèle à elles, même vaincu, est la plus haute des réussites. Dans un monde qui n'adore que les vainqueurs, se souvenir de la grandeur des vaincus, c'est préserver une vérité essentielle : que le prix d'une vie ne se mesure pas à ce qu'elle gagne, mais à ce à quoi elle reste fidèle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18159,7 +18159,7 @@ Entre la révolte vaine et la résignation morne, une troisième voie est peut-�
 Ce consentement n'est pas facile, et il ne doit pas être confondu avec la résignation dont il diffère profondément. Le résigné subit ses limites en cessant de vivre ; celui qui consent les accepte en vivant pleinement. La différence est celle de l'attitude intérieure : le consentement est actif, affirmatif, il dit oui à la vie dans ses limites, quand la résignation dit non au désir pour ne plus souffrir. Consentir à la mort, ce n'est pas cesser d'aimer la vie ; c'est l'aimer d'autant plus qu'on la sait finie. Consentir à la vulnérabilité, ce n'est pas renoncer à agir ; c'est agir en sachant nos limites. Consentir à la condition humaine, c'est l'embrasser tout entière, ses grandeurs et ses limites, et y trouver, non malgré elle mais à travers elle, la possibilité d'une vie pleine.
 
 Cette sagesse du consentement rassemble ce que nous avons entrevu. Elle rejoint la sagesse à l'égard du temps, qui aime ce qui passe parce qu'il passe ; celle à l'égard de la souffrance, qui la combat sans la justifier ; celle des vaincus, qui trouve une grandeur au-delà du succès ; celle du tragique, qui assume la part de faute inévitable. Toutes convergent vers cette attitude fondamentale : accepter la condition humaine dans ses limites, non par résignation, mais par un consentement qui permet de vivre pleinement une existence finie, vulnérable, mortelle. C'est peut-être là la plus haute sagesse que l'homme puisse atteindre : non abolir ses limites, ce qui est impossible, ni s'y résigner, ce qui est mourir, mais y consentir en vivant pleinement — faire de sa finitude non une malédiction à fuir, mais la condition même d'une vie qui, parce qu'elle est limitée, mérite d'être pleinement vécue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18182,7 +18182,7 @@ Cette dépendance du pouvoir à l'égard des récits a une double implication, l
 Libératrice : car si le pouvoir dépend de récits, et si ces récits sont des constructions, alors ils peuvent être mis en question, démasqués, contestés. Le pouvoir qui paraît le plus naturel, le plus légitime, le plus indiscutable, repose sur un récit qui aurait pu être autre, qui n'a rien de nécessaire, qu'on peut interroger. Démasquer le récit qui légitime un pouvoir, montrer qu'il est une construction et non une évidence, révéler l'arbitraire de ce qui se donne pour naturel, c'est ébranler le pouvoir dans son fondement même. Toutes les grandes contestations du pouvoir ont commencé par la mise en question du récit qui le légitimait, par le refus de tenir pour naturel ce qui n'était qu'une construction. La lucidité sur les récits du pouvoir est ainsi une arme, celle qui rend possible la contestation de ce qui se donnait pour indiscutable.
 
 Comprendre que le pouvoir a besoin de récits, c'est donc acquérir une clé de lecture essentielle de la vie politique. C'est apprendre à repérer, derrière tout pouvoir, le récit qui le légitime, à l'interroger, à ne pas le tenir pour une évidence naturelle. C'est comprendre que la domination ne s'exerce pas seulement par la force, mais par les représentations, et que la lutte pour ou contre un pouvoir est toujours aussi une lutte sur les récits, sur ce qui est tenu pour légitime. Dans un monde où les pouvoirs, anciens et nouveaux, produisent sans cesse les récits qui les justifient, savoir les démasquer, distinguer la légitimité réelle de sa fabrication, est une compétence politique fondamentale — celle qui distingue le citoyen lucide du sujet qui obéit sans savoir pourquoi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18205,7 +18205,7 @@ Mais le ressort le plus profond de la servitude volontaire est peut-être ailleu
 Cette analyse a une portée à la fois désenchantée et libératrice. Désenchantée, car elle révèle que la domination ne repose pas seulement sur la violence des dominants, mais sur la complicité des dominés, sur leur habitude, leur croyance, leur division, leur participation intéressée à l'ordre qui les opprime. Il n'y a pas d'un côté les oppresseurs, de l'autre les opprimés innocents ; il y a une chaîne de servitude où chacun a sa part. Libératrice, car si le pouvoir repose sur le consentement de ceux qui obéissent, alors ce consentement peut être retiré ; si la servitude est volontaire, en un sens, alors la liberté est à portée, dans le refus d'obéir. Le penseur qui a posé cette énigme en tirait cette conclusion vertigineuse : pour se libérer d'un tyran, il n'est pas besoin de le combattre, il suffit de cesser de le soutenir ; qu'on lui refuse l'obéissance, et il tombe de lui-même.
 
 Cette conclusion, si elle simplifie sans doute la réalité des rapports de force, met le doigt sur une vérité essentielle : que le pouvoir, même le plus oppressif, dépend de ceux qu'il opprime, et que sa force est celle qu'ils lui prêtent. Comprendre la servitude volontaire, c'est comprendre que la domination n'est jamais une pure fatalité imposée du dehors, mais toujours, pour une part, entretenue par le consentement, l'habitude, la complicité de ceux qui la subissent. Et c'est découvrir que la liberté commence par la conscience de cette servitude, par le refus de la tenir pour naturelle, par la reprise du consentement qu'on avait, sans le savoir, accordé. La servitude la plus profonde est celle qu'on ne perçoit plus comme telle ; la première libération est de la reconnaître.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18228,7 +18228,7 @@ Faut-il en conclure que nous sommes irrémédiablement prisonniers de l'idéolog
 Comment gagner cette lucidité relative ? Plusieurs voies y conduisent. La confrontation à d'autres cultures, à d'autres époques, à d'autres manières de penser, révèle la contingence de nos propres évidences, en montrant qu'on peut penser autrement. L'histoire, qui montre que ce que nous tenons pour naturel a une origine, a été autre, pourrait être autre, dénaturalise nos présupposés. La rencontre de ceux qui pensent différemment, si nous les écoutons vraiment, nous fait apercevoir nos propres cadres en les heurtant aux leurs. Toutes ces voies ont un point commun : elles nous décentrent, nous arrachent à l'évidence de notre point de vue, nous font voir de l'extérieur ce que nous vivions du dedans comme allant de soi. Se déprendre un peu de son idéologie, c'est apprendre à se voir avec les yeux d'un autre.
 
 Reconnaître que l'idéologie est l'air qu'on respire, et non ce que respirent seulement les autres, est donc le commencement d'une lucidité possible. Cela nous délivre de l'illusion la plus dangereuse, celle de se croire hors de toute idéologie, et nous invite à la vigilance à l'égard de nos propres évidences. Cela nous rend aussi plus justes envers ceux qui pensent autrement : car si nous sommes tous pris dans quelque idéologie, alors l'adversaire n'est pas seul « idéologue » tandis que nous serions lucides ; nous le sommes tous, et cette communauté de condition devrait tempérer notre assurance. Dans un monde où chacun dénonce l'idéologie des autres en se croyant lucide, la véritable lucidité commence par la reconnaissance de sa propre idéologie — non pour y renoncer, ce qui est impossible, mais pour cesser de la confondre avec la vérité.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18251,7 +18251,7 @@ Mais il serait unilatéral de ne voir dans les foules que ce visage inquiétant.
 Comment comprendre cette ambivalence ? Peut-être en reconnaissant que la foule amplifie, plutôt qu'elle ne crée, qu'elle démultiplie les possibilités contenues dans les individus, pour le pire comme pour le meilleur. Le nombre dissout la responsabilité individuelle, mais cette dissolution peut libérer aussi bien la violence que le courage, la cruauté que la générosité ; il propage les émotions, mais ces émotions peuvent être la haine comme l'enthousiasme pour une juste cause. Ce qui décide du visage que prend une foule, ce sont les représentations qui la traversent, les récits qui l'animent, les fins vers lesquelles elle est orientée. Une même force du nombre peut servir l'oppression ou l'émancipation, selon ce qui la meut. La foule n'est ni bonne ni mauvaise en soi ; elle est une puissance ambivalente, dont l'orientation décide de la valeur.
 
 Comprendre la foule et l'individu, c'est donc échapper à deux visions unilatérales : celle qui ne voit dans les foules que danger et régression, et qui conduit à une méfiance aristocratique envers tout rassemblement populaire ; et celle qui les idéalise, qui voit dans le peuple rassemblé une innocence et une sagesse infaillibles. La vérité est que le rassemblement des individus est une puissance ambivalente, capable du pire et du meilleur, et que la vigilance consiste à en connaître les ressorts pour ne pas en être le jouet. Savoir comment le nombre nous transforme, comment il peut abaisser notre jugement ou élever notre courage, comment il peut être manipulé ou porter l'émancipation, c'est se donner les moyens de participer aux foules sans s'y dissoudre, d'y apporter le meilleur plutôt que le pire, de rester un individu conscient au sein même du rassemblement. Car le défi n'est pas de fuir les foules, sans lesquelles rien de collectif ne se fait, mais d'y demeurer soi-même, lucide et responsable, au milieu de la puissance ambivalente du nombre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18274,7 +18274,7 @@ Qu'est-ce donc qui tient une société, par-delà la force et l'intérêt ? Des 
 Ces liens invisibles ont ceci de commun qu'ils relèvent non de la contrainte ni du calcul, mais de la croyance, du sentiment, de l'appartenance. Ils ne se décrètent pas, ne s'imposent pas par la force, ne se réduisent pas à l'intérêt ; ils se tissent lentement, se transmettent, s'entretiennent, et se défont quand on cesse d'en prendre soin. Une société tient par ces liens fragiles autant que par ses institutions visibles ; et quand ils se délitent — quand la confiance s'effondre, quand les valeurs communes se dissolvent, quand plus rien n'est tenu pour sacré, quand le récit commun se défait —, aucune force ni aucun intérêt ne suffit à maintenir ensemble ce qui n'est plus relié. Les sociétés ne meurent pas seulement de leurs conflits visibles ; elles meurent aussi, plus silencieusement, de l'effritement des liens invisibles qui les tenaient.
 
 Comprendre ce qui tient une société, c'est donc reconnaître l'importance de ces liens que la modernité, éprise de force et d'intérêt, tend à négliger. C'est comprendre que la confiance, les valeurs partagées, le sacré, le récit commun, ne sont pas des survivances archaïques dont une société rationnelle pourrait se passer, mais les conditions mêmes de la vie commune, ce sans quoi ni la force ni l'intérêt ne suffisent à faire tenir les hommes ensemble. Et c'est mesurer la fragilité de ces liens, la nécessité d'en prendre soin, le péril de les laisser se déliter. Une société n'est jamais assurée de durer ; elle repose sur des liens invisibles qu'il faut sans cesse entretenir, et dont l'effritement, plus que toute menace extérieure, la met en péril. Prendre soin de ce qui nous relie — la confiance, les valeurs, le sens du commun — est peut-être la tâche la plus essentielle, et la plus négligée, de toute vie en société.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18297,7 +18297,7 @@ Il y a plus. La beauté pourrait sauver en ce qu'elle transforme celui qui la co
 Mais il faut se garder d'idéaliser la beauté, comme si elle était toujours du côté du bien. Car la beauté peut aussi séduire, tromper, servir le mal ; il est des laideurs morales qui se parent de beauté, des pouvoirs criminels qui ont cultivé un art superbe, des séductions esthétiques mises au service du pire. La beauté n'est pas nécessairement morale ; elle peut envoûter, détourner, faire accepter l'inacceptable sous de belles apparences. Croire que la beauté sauverait toujours, qu'elle serait par nature du côté du bien, serait une naïveté dangereuse, que dément l'histoire. La beauté est ambivalente, comme toute puissance ; elle peut élever ou séduire, ouvrir au bien ou en détourner.
 
 Que conclure de cette méditation ? Peut-être que la formule, plutôt qu'une affirmation, est une question, ou une espérance fragile. La beauté ne sauvera pas le monde automatiquement, ni par une efficacité qu'elle n'a pas, ni parce qu'elle serait toujours du côté du bien. Mais elle peut, si nous savons l'accueillir, préserver en nous la dimension de la valeur, nous ouvrir au désintéressement, témoigner qu'autre chose est possible que la laideur et le mal. En ce sens précis et limité, elle participe à ce qui pourrait sauver le monde — non seule, non par magie, mais comme l'un des signes et l'une des forces qui maintiennent vivante l'idée qu'il existe quelque chose qui vaut, et qui mérite qu'on le sauve. La beauté ne sauve pas le monde ; mais un monde qui aurait perdu jusqu'au sens de la beauté serait sans doute déjà perdu. C'est peut-être cela que dit la formule : non que la beauté suffise, mais que sans elle, rien ne suffirait.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18320,7 +18320,7 @@ Cette analyse a une portée qui dépasse l'esthétique. Car le sublime nous rév
 L'expérience du sublime a aussi une valeur, dans un monde qui tend à l'oublier. Car nous vivons de plus en plus dans un environnement humanisé, maîtrisé, à notre mesure, d'où le démesuré, l'immense, ce qui nous dépasse, tend à disparaître. Nos villes, nos écrans, nos existences confinées nous soustraient à la rencontre de ce qui excède l'humain. Or cette rencontre a une valeur : elle nous décentre, nous rappelle notre petitesse, nous arrache à la démesure de notre propre importance. Le sublime est une leçon d'humilité, mais une humilité qui n'abaisse pas, qui élève au contraire, en nous mettant en présence de ce qui nous dépasse. Une civilisation qui aurait perdu toute expérience du sublime, tout contact avec ce qui l'excède, serait une civilisation rétrécie, enfermée dans sa propre mesure, privée de cette élévation que procure la rencontre de l'immense.
 
 Cultiver l'expérience du sublime, se ménager la rencontre de ce qui nous dépasse — la nature dans sa démesure, l'immensité du ciel, la puissance des éléments, mais aussi la grandeur de certaines œuvres, de certaines pensées, de certains actes —, c'est donc préserver une dimension essentielle de notre humanité. Le sublime nous rappelle que nous ne sommes pas la mesure de toute chose, que quelque chose nous dépasse, et que dans cette rencontre même se révèle ce que nous avons de plus haut. Dans un monde qui nous enferme dans notre propre mesure, qui réduit tout à l'humain, à l'utile, au maîtrisable, l'expérience du sublime est comme une fenêtre ouverte sur l'immense, un rappel de notre petitesse et de notre grandeur mêlées. C'est peut-être l'une des expériences dont l'homme a le plus besoin, et dont notre époque le prive le plus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18343,7 +18343,7 @@ Il y a plus troublant. L'art peut même, en un sens, détourner de la morale, ou
 Faut-il alors conclure que l'art n'a aucun rapport avec la morale, qu'il est moralement neutre ou indifférent ? Ce serait aller trop loin, et méconnaître ce que l'art peut, malgré tout, apporter. Car s'il ne rend pas automatiquement meilleur, l'art peut néanmoins, à qui s'y ouvre vraiment, élargir la sensibilité, faire éprouver d'autres vies, d'autres perspectives, développer l'imagination morale sans laquelle il n'est pas de véritable souci d'autrui. La grande littérature, en nous faisant entrer dans la vie intérieure d'autres êtres, peut nous rendre plus attentifs, plus compréhensifs, plus capables de nous mettre à la place de l'autre. L'art peut nourrir la morale ; mais il ne le fait pas automatiquement, ni nécessairement, et cela dépend de la manière dont on le reçoit.
 
 La vérité est donc nuancée, et elle exige de renoncer à la belle illusion sans tomber dans le cynisme inverse. L'art ne rend pas automatiquement meilleur ; la culture ne garantit pas la moralité ; on peut être cultivé et cruel. Mais l'art peut, à qui s'y ouvre avec cette disposition, nourrir la sensibilité morale, élargir l'imagination, développer la capacité de compassion. Tout dépend non de l'art seul, mais de la rencontre entre l'art et celui qui le reçoit, de ce qu'il en fait, de la disposition avec laquelle il l'accueille. L'art offre une possibilité, non une garantie ; il peut élever, mais il peut aussi laisser indifférent, voire fournir une bonne conscience à bon compte. Renoncer à l'illusion que l'art rendrait meilleur, c'est se garder de confondre la culture avec la vertu ; mais ce n'est pas renoncer à l'espoir que l'art, bien reçu, puisse contribuer à nous rendre plus humains.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18366,7 +18366,7 @@ Il y a plus. Le génie ne se contente pas de transgresser les règles anciennes 
 Cette conception éclaire le rapport dialectique du génie et de la tradition. Le créateur véritable n'est ni le pur conservateur qui applique les règles reçues, ni le pur révolté qui les rejette toutes ; il est celui qui, ayant assimilé la tradition, la prolonge en la transformant, la dépasse en s'en nourrissant. Il y a une continuité dans la rupture même : le génie s'inscrit dans une tradition qu'il transforme, dialogue avec ses prédécesseurs qu'il dépasse, invente du neuf à partir de l'héritage qu'il a fait sien. La création véritable n'est ni répétition ni table rase ; elle est transformation féconde d'un héritage, invention qui prolonge en dépassant.
 
 Comprendre le rapport du génie et de la règle a une portée qui dépasse l'esthétique, car il vaut pour toute création, dans tous les domaines. En science, en pensée, en tout art, le créateur véritable est celui qui, ayant maîtrisé les acquis de son domaine, sait les dépasser, inventer du neuf sans partir de rien, transformer la tradition plutôt que la répéter ou la rejeter. Cette leçon vaut aussi pour qui apprend : car maîtriser d'abord les règles, les assimiler profondément, est la condition de pouvoir un jour les dépasser. On ne crée pas en ignorant les règles, mais en les possédant si bien qu'on peut aller au-delà. Le génie n'est pas le contraire de la maîtrise ; il en est l'accomplissement, le point où la maîtrise si complète des règles permet enfin de les transcender. Il n'y a pas de liberté créatrice sans la maîtrise préalable dont elle s'affranchit — et c'est peut-être la plus haute leçon sur ce que signifie apprendre, en art comme en tout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18389,7 +18389,7 @@ D'autres encore ont lié l'émotion esthétique à un sens, à une signification
 Ce qui frappe, dans ces tentatives d'explication, c'est qu'aucune n'épuise le phénomène, que toutes laissent un reste, que l'émotion esthétique semble toujours excéder ce qu'on en dit. Peut-être est-ce là l'essentiel : que la beauté, et l'émotion qu'elle suscite, touchent à quelque chose qui résiste à l'explication, qui ne se laisse pas réduire à une cause, à une fonction, à une signification. L'émotion esthétique nous met en présence de quelque chose qui nous dépasse, qui excède nos catégories, qui garde une part de mystère. Et il se pourrait que ce mystère ne soit pas une limite provisoire de notre savoir, une énigme qu'un jour on résoudrait, mais une dimension essentielle du phénomène : que la beauté soit précisément ce qui nous émeut sans que nous puissions dire tout à fait pourquoi, ce qui excède toute explication.
 
 Reconnaître ce mystère n'est pas renoncer à comprendre, ni sombrer dans l'irrationnel ; c'est reconnaître les limites de l'explication devant certains phénomènes, et respecter ce qui, dans notre expérience, résiste à la réduction. L'émotion devant la beauté est de ces expériences qui nous rappellent que tout ne se laisse pas expliquer, que notre rapport au monde comporte des dimensions qui excèdent le savoir, que nous sommes des êtres capables d'être émus par ce que nous ne comprenons pas entièrement. Et peut-être est-ce là une part de la valeur de la beauté : qu'elle nous ouvre à un mystère, qu'elle nous mette en présence de ce qui nous dépasse, qu'elle nous rappelle que l'existence humaine ne se réduit pas à ce qu'on peut expliquer et maîtriser. La beauté nous émeut, et que nous ne sachions pas tout à fait pourquoi n'est pas un échec de notre compréhension, mais peut-être le signe que nous touchons, dans cette émotion, à quelque chose d'essentiel qui excède la compréhension même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18412,7 +18412,7 @@ Il y a ensuite des limites plus profondes, que la raison elle-même a découvert
 Il y a enfin le mystère, ce qui excède la raison sans la contredire, ce devant quoi elle reconnaît son incapacité à saisir. Nous avons rencontré ce mystère dans l'émotion esthétique, dans l'expérience du sublime, dans la question du sens ultime de l'existence. Il ne s'agit pas de l'irrationnel, qui contredit la raison, mais du supra-rationnel, de ce qui la dépasse. La raison peut reconnaître qu'il existe des réalités qu'elle ne peut épuiser, des expériences qu'elle ne peut réduire, des dimensions de l'existence qui excèdent ses prises. Cette reconnaissance n'est pas une défaite de la raison, mais sa lucidité suprême : savoir qu'il est plus de choses dans le monde que la raison ne peut en embrasser.
 
 Reconnaître les limites de la raison est donc, paradoxalement, l'acte le plus haut de la raison. Car c'est la raison démesurée, qui se croit toute-puissante, qui est en réalité déraisonnable, en méconnaissant ses propres limites ; et c'est la raison lucide, qui connaît ce qu'elle peut et ce qu'elle ne peut pas, qui est pleinement rationnelle. Cette lucidité nous garde de deux excès : l'irrationalisme qui déprécie la raison, et le rationalisme démesuré qui lui prête un pouvoir illimité. Elle nous invite à user pleinement de la raison dans son domaine, où son autorité est légitime, tout en reconnaissant qu'il est des questions, des réalités, des mystères qui la dépassent. La sagesse n'est ni de renoncer à la raison ni de tout lui demander, mais de la connaître assez pour savoir ce qu'on peut en attendre — et cette connaissance des limites de la raison est elle-même le fruit le plus mûr de son exercice.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18435,7 +18435,7 @@ Une seconde catégorie concerne peut-être les fondements ultimes, les questions
 Une troisième limite, plus troublante, concerne peut-être la conscience elle-même, ce par quoi nous connaissons tout le reste. La science peut décrire les processus qui accompagnent la conscience, mais elle bute sur le mystère de la conscience même : comment se fait-il qu'il y ait de l'expérience vécue, un point de vue subjectif, un « effet que cela fait » d'être conscient ? Ce mystère de la subjectivité, du fait qu'il y ait quelqu'un qui éprouve, semble résister à une science qui décrit des objets et des processus, mais peine à rendre compte de l'expérience subjective elle-même. Que la conscience puisse jamais s'expliquer entièrement elle-même, se saisir complètement par la science, n'est pas assuré ; il se pourrait qu'elle comporte une limite de principe à l'auto-connaissance.
 
 Reconnaître qu'il existe peut-être des choses que nous ne saurons jamais n'est pas dénigrer la science, ni fixer arbitrairement des bornes à son pouvoir. C'est reconnaître, avec la lucidité qui prolonge la science elle-même, qu'il pourrait exister des limites de principe à la connaissance, des questions qui échappent par nature à ce que nous pouvons établir. Cette reconnaissance a une valeur : elle nous garde de la démesure qui croit que tout sera un jour expliqué, que rien ne résistera au savoir ; elle nous ouvre à la possibilité du mystère, de ce qui excède la connaissance ; elle nous rend une humilité que l'ivresse du progrès scientifique tend à nous faire perdre. Savoir qu'il est peut-être des choses que nous ne saurons jamais, ce n'est pas renoncer à savoir tout ce que nous pouvons savoir ; c'est reconnaître que la connaissance humaine, si vaste soit-elle, pourrait n'être pas sans limites — et que le mystère, loin d'être seulement ce que nous n'avons pas encore élucidé, pourrait être une dimension permanente de notre condition.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18458,7 +18458,7 @@ Comprendre que le savoir naît de l'étonnement, et non du seul besoin, a des co
 Cela signifie aussi que l'émerveillement n'est pas seulement à l'origine du savoir, mais qu'il en demeure le ressort et peut-être la fin. Car le savoir, s'il naît de l'étonnement, ne le dissipe pas nécessairement ; les plus grands savants témoignent souvent d'un émerveillement qui croît avec leur connaissance, comme si comprendre davantage ne faisait qu'approfondir le mystère. La science ne tue pas l'émerveillement ; elle le nourrit, en révélant un monde plus vaste, plus complexe, plus mystérieux qu'on ne l'imaginait. L'étonnement n'est pas seulement le commencement du savoir, aboli par lui ; il en est le compagnon permanent, ravivé à chaque découverte, approfondi par chaque avancée. Le vrai savant reste celui qui sait s'émerveiller.
 
 Cultiver l'émerveillement, retrouver la capacité de s'étonner de ce qui est, est donc plus qu'une disposition agréable ; c'est renouer avec la source même du désir de connaître et de comprendre. Dans un monde où l'habitude, la routine, la saturation d'informations tendent à émousser notre capacité d'étonnement, où tout est traité comme allant de soi, connu, disponible, retrouver l'émerveillement est une forme de résistance et de vie. C'est réapprendre à voir le monde comme remarquable, à trouver mystérieux ce qu'on croyait connaître, à s'étonner du fait même que les choses soient. Et cette capacité d'émerveillement n'est pas seulement ce qui anime le savoir ; elle est aussi ce qui rend le monde habitable, ce qui nous garde de l'ennui de qui croit tout connaître, ce qui maintient vivante la joie de comprendre. S'émerveiller encore, malgré tout ce qu'on sait ou croit savoir, est peut-être le signe d'un esprit resté vivant — et la condition de tout savoir véritable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18481,7 +18481,7 @@ Faut-il en conclure qu'on peut sacrifier la vérité au nom d'autres valeurs, qu
 La position juste tient peut-être dans cette distinction : entre le mensonge, qu'il faut refuser presque absolument, et le silence ou la réserve, qui peuvent être légitimes. On peut, sans mentir, choisir de ne pas dire une vérité qui blesserait inutilement, de taire ce qui doit rester secret, de ménager le moment et la manière de dire une vérité difficile. Ce n'est pas trahir la vérité que de la taire par égard ; c'est trahir la vérité que d'affirmer le faux. La sagesse, à l'égard de la vérité, n'est pas de tout dire sans égard aux conséquences, ni de mentir au nom du bien, mais de ne jamais affirmer le faux tout en sachant taire, ménager, choisir le moment et la manière. Il y a un art de dire la vérité, qui n'est ni la brutalité de qui l'assène sans égard, ni la lâcheté de qui la travestit, mais le discernement de qui sait la dire avec justesse.
 
 Cette réflexion nous ramène à ce que nous disions de l'éthique du langage. Bien user de la vérité, ce n'est pas seulement ne pas mentir ; c'est aussi savoir dire le vrai avec justesse, au bon moment, de la bonne manière, avec le souci d'autrui. La vérité est un bien précieux, mais elle n'est pas le seul, et l'art de vivre consiste souvent à concilier des biens qui peuvent entrer en tension : la vérité et la bonté, la sincérité et le soin d'autrui. La vérité n'est pas toujours bonne à dire brutalement, sans égard, à contretemps ; mais elle est presque toujours mauvaise à trahir par le mensonge. Entre le devoir de ne pas mentir, presque absolu, et le devoir de tout dire, qui souffre des exceptions, il y a place pour une sagesse qui honore la vérité sans en faire une arme, qui la sert sans la brandir, qui ne la trahit jamais mais sait parfois la taire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18504,7 +18504,7 @@ Cette conscience est aussi une garde contre les pièges de la fausse certitude. 
 Il faut se garder, cependant, d'un contresens qui ferait de cette sagesse un scepticisme paralysant, une renonciation à tout savoir. « Je sais que je ne sais rien » ne signifie pas qu'on ne peut rien savoir, que tout se vaut, qu'il faut renoncer à chercher le vrai. C'est le contraire : c'est parce qu'on sait l'étendue de son ignorance qu'on cherche à la réduire, c'est parce qu'on connaît ses limites qu'on peut les repousser. La conscience de son ignorance n'est pas le renoncement au savoir, mais sa condition ; elle n'abolit pas la recherche de la vérité, elle la fonde et l'anime. Le sage qui sait ne pas savoir n'est pas celui qui renonce à connaître, mais celui qui connaît en sachant ses limites, qui cherche en sachant ce qui lui échappe.
 
 Cette sagesse de l'ignorance sue couronne notre parcours à travers les plus hautes questions. Car toutes ces réflexions, sur le langage, le temps, le tragique, le pouvoir, la beauté, la science, aboutissent à une même reconnaissance : que le savoir le plus profond inclut la conscience de ses limites, que la sagesse n'est pas de tout savoir, mais de savoir ce qu'on sait et ce qu'on ignore, de mesurer l'étendue du mystère, de rester ouvert à ce qui nous dépasse. Savoir qu'on ne sait pas n'est pas un aveu d'échec, mais l'accomplissement le plus haut de la pensée : la lucidité qui, ayant beaucoup appris, mesure l'immensité de ce qui reste inconnu, et trouve dans cette mesure même, non le découragement, mais l'humilité, l'ouverture, et le désir toujours renouvelé de comprendre. C'est peut-être là le terme de toute sagesse, comme de tout apprentissage : non la possession d'un savoir achevé, mais la conscience éclairée de ce qui nous reste à apprendre, et l'humilité de qui, sachant beaucoup, sait surtout combien il ignore.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18527,7 +18527,7 @@ Ensuite, et plus profondément, suivre des règles ne suffit pas à être moral 
 C'est pourquoi une longue tradition morale a insisté non sur les règles, mais sur les vertus, sur le caractère, sur la disposition intérieure. Ce qui compte, dans cette perspective, n'est pas tant de suivre des règles que d'être une certaine sorte de personne : juste, bonne, courageuse, généreuse, capable de discernement. La vertu n'est pas l'obéissance à des règles, mais une disposition acquise, une manière d'être qui incline au bien, un caractère façonné par l'habitude et l'éducation. L'homme vertueux ne fait pas le bien parce qu'une règle le lui commande, mais parce qu'il est ainsi disposé ; il fait le bien avec justesse, dans les situations concrètes, par un discernement que nulle règle ne peut remplacer. La morale des vertus déplace l'accent des règles vers le caractère, de l'obéissance vers l'être.
 
 La vérité tient peut-être dans la complémentarité de ces approches. Les règles sont nécessaires, comme repères, comme garde-fous, comme socle ; mais elles ne suffisent pas, car elles ne peuvent tout prévoir, ni tenir lieu de la bonté positive, ni remplacer le jugement qui les applique. La morale demande à la fois des règles et le discernement qui sait les appliquer, des interdits et la vertu qui les dépasse vers le bien positif, l'obéissance aux règles et la disposition intérieure qui seule fait l'être vraiment moral. Réduire la morale à des règles, c'est la mutiler, en oublier le cœur, qui est une certaine qualité de l'âme ; mais rejeter toute règle au nom de la seule vertu, c'est ouvrir la porte à l'arbitraire. La sagesse morale tient les deux : suivre les règles justes, mais avec le discernement et la bonté qui les excèdent — car être moral, ce n'est pas seulement obéir, mais devenir une certaine sorte d'être.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18550,7 +18550,7 @@ Entre ces deux positions, la réflexion morale a cherché des voies plus nuancé
 Car c'est peut-être là que réside la vérité la plus profonde sur cette question : dans la reconnaissance du tragique de l'action. Celui qui agit, surtout dans les affaires publiques, est parfois confronté à des situations où toute option comporte du mal, où il faut choisir le moindre mal sans que ce moindre mal cesse d'être un mal. La lucidité consiste alors non à se persuader que la fin justifie le moyen, effaçant la faute, ni à refuser d'agir au nom de la pureté, mais à assumer la part de mal de son action tout en la reconnaissant comme telle. L'homme d'action responsable n'est ni le cynique qui se croit justifié par ses fins, ni le pur qui refuse de se salir les mains ; c'est celui qui, contraint parfois à des moyens douteux, en assume le poids sans s'en absoudre, qui garde le sens de la faute même quand il croit devoir la commettre.
 
 La formule « la fin justifie les moyens » est donc à la fois fausse et incomplète. Fausse, si elle signifie que le but efface la nature des moyens, que tout est permis au nom des fins ; ce serait abolir toute morale. Incomplète, car elle ignore la complexité : que certains moyens sont absolument interdits, que d'autres peuvent être pesés, que l'action comporte parfois du tragique. La vraie sagesse n'est ni de justifier tout par les fins, ni d'ignorer les conséquences au nom d'une pureté abstraite, mais de tenir ensemble le respect de limites absolues, la pesée des conséquences, et la lucidité tragique qui assume la part de mal de l'action sans jamais s'en absoudre. La fin ne justifie pas les moyens ; mais elle ne les rend pas non plus indifférents ; et agir moralement, dans un monde imparfait, c'est souvent porter le poids de ce déchirement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18573,7 +18573,7 @@ Un second paradoxe concerne la condition du pardon. Faut-il, pour pardonner, que
 Ces paradoxes n'ont pas de solution simple, et il serait présomptueux de prétendre les trancher. Mais ils révèlent la nature profonde du pardon : qu'il n'est ni un dû ni un oubli, ni une justice ni une complaisance, mais quelque chose d'excédentaire, de gratuit, de presque impossible, qui ne prend son sens que face à ce qui semble le refuser. Le pardon véritable est difficile précisément parce qu'il n'est pas dû, parce qu'il s'exerce face à ce qui pourrait légitimement appeler le ressentiment, parce qu'il excède la justice sans l'abolir. Il ne consiste ni à excuser la faute, ni à l'oublier, ni à renoncer à la justice, mais à surmonter le ressentiment personnel, à ne pas laisser la faute empoisonner indéfiniment celui qui l'a subie.
 
 Ce qui demeure, au terme de ces paradoxes, c'est que le pardon, s'il est possible, est une libération, mais une libération d'abord pour celui qui pardonne. Car le ressentiment, la haine, le désir de vengeance, empoisonnent d'abord celui qui les nourrit ; le pardon, en y renonçant, délivre celui qui l'accorde du poison de sa propre rancune. Le pardon n'efface pas la faute, ne rend pas justice, ne ressuscite pas ce qui a été détruit ; mais il libère celui qui pardonne de l'emprise de la faute subie, il refuse que le mal reçu continue de le dominer par le ressentiment. En ce sens, même face à ce qui semble impardonnable, une forme de pardon peut être une victoire : non sur la faute, qui demeure, mais sur son pouvoir de nous enfermer dans la haine. Pardonner, ce n'est peut-être pas absoudre le coupable, mais se délivrer soi-même — et c'est peut-être là, dans cette libération, que réside le sens le plus profond, et le plus accessible, d'un pardon qui, à l'égard de certaines fautes, ne pourra jamais être un acquittement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18596,7 +18596,7 @@ Cette difficulté est capitale, car elle met en question l'autorité de la consc
 De là découle une exigence essentielle : la conscience doit être éclairée, formée, éduquée. Il ne suffit pas de suivre sa conscience ; encore faut-il que cette conscience soit droite, informée, capable de juger avec justesse. Une conscience aveugle, mal formée, remplie de préjugés, peut conduire aux pires actes tout en donnant le sentiment de bien agir. C'est pourquoi la vie morale ne consiste pas seulement à suivre sa conscience, mais aussi à la former, à l'éclairer, à l'examiner, à la confronter à la réflexion, à la discussion, à d'autres points de vue. La conscience n'est pas un oracle qu'il suffirait de consulter ; elle est une faculté qu'il faut cultiver, éduquer, soumettre à l'examen, pour qu'elle juge avec justesse. Suivre une conscience non éclairée peut être aussi dangereux que de ne pas suivre sa conscience.
 
 Ainsi la conscience morale occupe-t-elle une place à la fois centrale et paradoxale dans la vie morale. Centrale, car elle est le lieu de notre responsabilité, ce par quoi nous jugeons et répondons de nos actes ; nul ne devrait agir contre elle, et sa voix mérite respect et écoute. Paradoxale, car elle n'est pas infaillible, peut se tromper, doit être formée et éclairée. La sagesse morale consiste à tenir les deux : respecter sa conscience, ne pas agir contre ce qu'on croit fermement être le bien, mais aussi travailler à l'éclairer, la soumettre à l'examen, ne pas la tenir pour un oracle infaillible. Écouter sa conscience et l'éduquer, la suivre et l'examiner : tel est le double devoir qui fait de la vie morale non l'obéissance à une voix, mais le dialogue exigeant avec une conscience qu'il faut sans cesse former pour qu'elle mérite d'être suivie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18619,7 +18619,7 @@ Ces deux conceptions semblent inconciliables, et pourtant chacune saisit une par
 Peut-être en distinguant deux moments de la vie morale. Au commencement, la bonté est coûteuse : il faut lutter contre ses penchants, se forcer, conquérir sur soi la disposition au bien ; c'est le temps de l'effort, où la valeur morale se prouve dans le combat. Mais cet effort, répété, peut façonner une disposition, une habitude, un caractère, où le bien devient peu à peu plus facile, plus naturel, jusqu'à devenir seconde nature. La bonté spontanée de l'homme accompli n'est pas alors un don initial, mais le fruit d'un long effort, la vertu conquise devenue naturelle à force d'exercice. Ce qui était coûteux devient facile, non par un don reçu, mais par une conquête accomplie. Ainsi les deux conceptions se réconcilient : la vraie bonté est spontanée, mais cette spontanéité est le fruit d'un effort ; elle est un don, mais un don qu'on s'est fait à soi-même par la conquête patiente de la vertu.
 
 Cette conception a une portée à la fois exigeante et encourageante. Exigeante, car elle refuse de dispenser d'effort au prétexte qu'on ne serait pas naturellement bon : la bonté se conquiert, elle demande une lutte, un travail sur soi. Encourageante, car elle affirme que cette conquête est possible, que l'effort répété peut façonner un caractère, transformer une disposition, rendre facile ce qui était difficile. On ne naît pas bon, ou on ne l'est qu'inégalement ; mais on peut le devenir, par l'exercice, l'habitude, la formation de soi. La bonté n'est ni un don pur qu'on aurait ou non, ni un effort perpétuel sans espoir de facilité ; elle est une conquête qui, patiemment poursuivie, peut devenir une seconde nature. Être bon sans effort est possible, non comme point de départ, mais comme aboutissement — le terme d'un long travail sur soi qui a fait, du bien pénible, un bien devenu naturel. Et c'est peut-être là la plus haute réponse : que la vertu accomplie est celle qui, ayant été conquise par l'effort, s'est faite assez nôtre pour n'en plus demander.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18642,7 +18642,7 @@ Cette reconnaissance pourrait sembler désespérante, comme si elle condamnait �
 Il y a même quelque chose de précieux dans cette solitude essentielle, quand on la comprend bien. Car elle est le corrélat de notre singularité, de notre unicité, de ce qui fait de chacun un être irremplaçable. Si nous pouvions nous fondre entièrement les uns dans les autres, partager totalement notre expérience, abolir toute solitude, nous cesserions d'être des individus distincts, des consciences uniques ; la solitude essentielle est le prix, et la garantie, de notre individualité. Elle est ce qui fait que chacun est quelqu'un, un point de vue unique sur le monde, un être qui n'est pas interchangeable. La solitude essentielle n'est pas seulement une limite de nos rapports ; elle est aussi ce qui fonde la valeur de chaque être comme singulier.
 
 Comprendre la solitude essentielle transforme notre rapport aux autres et à nous-mêmes. À nous-mêmes, en nous réconciliant avec cette part de solitude irréductible, en cessant de la vivre comme un manque à combler, en reconnaissant qu'elle est le corrélat de notre singularité. Aux autres, en comprenant que le lien véritable n'est pas la fusion qui abolirait toute distance, mais la rencontre qui respecte la solitude de chacun, le pont jeté par-dessus l'abîme qui demeure. Aimer autrui, ce n'est pas abolir sa solitude essentielle ni la nôtre, mais reconnaître et respecter cette solitude tout en jetant vers elle des ponts d'amour et de compréhension. La plus belle relation n'est pas celle qui nierait la solitude essentielle, mais celle qui, la reconnaissant, unit deux solitudes qui se respectent — car, comme l'a dit un poète, l'amour le plus haut est peut-être celui où deux solitudes se protègent, se bornent et se saluent l'une l'autre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18665,7 +18665,7 @@ Peut-être faut-il reconnaître que la connaissance d'autrui, sans être l'accè
 Il faut néanmoins reconnaître les limites de cette connaissance, et se garder de l'illusion de connaître autrui entièrement. Car même l'être le plus proche, le mieux connu, garde une part de mystère, d'imprévisibilité, d'insondable ; nous ne l'épuisons jamais, il peut toujours nous surprendre, nous échapper, se révéler autre que nous le croyions. Cette part irréductible de mystère en autrui n'est pas seulement une limite de notre connaissance ; elle est le respect dû à sa liberté, à sa singularité, à sa solitude essentielle. Prétendre connaître entièrement autrui, l'enfermer dans l'idée qu'on s'en fait, c'est en un sens lui faire violence, nier sa liberté de nous surprendre, sa capacité de changer, sa profondeur inépuisable. La juste connaissance d'autrui inclut la reconnaissance de ce qu'il garde d'inconnaissable.
 
 Cette conception a une portée éthique. Car connaître autrui, dans ce respect de son mystère, c'est aussi une manière de le traiter avec justice : ne pas l'enfermer dans une image figée, rester ouvert à ce qu'il peut nous révéler, l'aborder avec cette humilité de qui sait qu'il ne le connaît jamais entièrement. La pire manière de traiter autrui est de croire le connaître de part en part, de le réduire à l'idée qu'on s'en fait, de nier sa profondeur et sa liberté. La juste connaissance d'autrui est celle qui cherche à le comprendre tout en respectant son mystère, qui l'interprète avec justesse tout en restant ouverte à le voir autrement, qui l'atteint réellement tout en reconnaissant ne jamais l'épuiser. Connaître autrui, au fond, ce n'est pas percer son secret, mais entretenir avec lui une relation où la compréhension et le respect du mystère se conjuguent — où l'on s'approche de lui sans prétendre jamais le posséder tout entier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18688,7 +18688,7 @@ Comment concilier ces deux vérités ? Peut-être en distinguant deux formes ou 
 Il y a plus. L'amour véritable n'a pas seulement le pouvoir de voir l'autre tel qu'il est ; il a peut-être celui de l'aider à devenir meilleur, de révéler en lui des possibilités qu'il actualise sous ce regard. Car être aimé, être vu avec cette attention, cette confiance, cette foi en ce qu'on peut être, peut nous aider à le devenir. L'amour qui voit en l'autre le meilleur de lui-même ne se trompe pas nécessairement ; il peut susciter ce qu'il perçoit, appeler l'autre à devenir ce qu'il voit en lui. En ce sens, l'idéalisation de l'amour n'est pas toujours illusion ; elle peut être une vision anticipatrice, qui perçoit des possibilités et contribue à les réaliser. L'amour ne se contente pas de connaître l'autre ; il participe à le faire devenir.
 
 L'amour est donc, dans son rapport à autrui, à la fois connaissance et méconnaissance, lucidité et aveuglement, selon sa forme et sa maturité. L'amour immature idéalise et méconnaît ; l'amour mûr voit et connaît ; et l'amour le plus haut, peut-être, voit l'autre tel qu'il est tout en percevant ce qu'il peut devenir, connaît sa réalité tout en croyant en ses possibilités. Aimer véritablement, ce n'est ni se aveugler sur l'autre, ni le réduire à ce qu'il est, mais le connaître dans sa vérité tout en l'aimant assez pour l'aider à devenir le meilleur de lui-même. C'est cette conjonction de la lucidité et de la foi, de la connaissance du réel et de la vision du possible, qui fait de l'amour non une méconnaissance illusoire ni une froide connaissance, mais la plus haute manière d'atteindre autrui : celle qui le voit tel qu'il est, et l'aime tel qu'il pourrait être.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18711,7 +18711,7 @@ Cette distinction transforme le rapport au désir. Si tout désir était manque,
 Cette conception éclaire aussi la nature de l'amour. Car l'amour peut être l'un ou l'autre désir. Il y a un amour qui est manque, qui cherche dans l'autre à combler un vide, qui aime par besoin, qui possède plus qu'il ne donne ; cet amour est avide, inquiet, jamais rassasié, car il attend de l'autre qu'il comble un manque que rien ne comble. Et il y a un amour qui est plénitude, qui aime par surabondance, qui désire le bien de l'aimé plus que sa possession, qui donne plus qu'il ne prend ; cet amour n'est pas manque mais générosité, non avidité mais don. La différence entre ces deux amours — l'amour-manque qui prend et l'amour-plénitude qui donne — est peut-être la plus profonde qui soit en matière d'amour, et elle décide de sa valeur.
 
 Ainsi le désir n'est-il pas nécessairement condamné au manque et à l'insatisfaction. S'il est vrai qu'une grande part de nos désirs sont des manques voués à ne jamais se combler, et qu'à leur égard une certaine sagesse du détachement a sa vérité, il est aussi des désirs qui sont plénitude, débordement, générosité, et qui appellent non l'extinction mais l'accomplissement. La sagesse à l'égard du désir n'est donc pas simplement de l'éteindre, mais de le discerner et de l'orienter : se libérer des désirs-manques qui nous dévorent sans nous combler, et cultiver les désirs-plénitudes qui expriment et déploient ce que nous avons de meilleur. Non pas ne plus rien désirer, ce qui serait cesser de vivre, mais désirer autrement : moins par manque que par plénitude, moins pour prendre que pour donner, moins pour combler un vide que pour répandre une richesse. Car le plus haut désir n'est peut-être pas celui qui manque et veut posséder, mais celui qui déborde et veut donner.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18734,7 +18734,7 @@ Cette conception de l'amour a des implications profondes pour la manière d'aime
 Cette manière d'aimer est plus exigeante que la fusion rêvée, et sans doute plus rare. Car il est plus facile de vouloir posséder, absorber, fondre, que de respecter l'altérité, de protéger la distance, d'aimer l'autre dans sa liberté. La fusion flatte le désir de sortir de soi, d'abolir sa solitude ; le respect de deux solitudes demande une maturité, une générosité, un renoncement à la possession qui sont l'accomplissement de l'amour plutôt que son point de départ. Mais c'est dans cette exigence que réside la grandeur de l'amour véritable : non dans l'abolition impossible de la solitude, mais dans sa reconnaissance et son respect ; non dans la fusion qui nie l'autre, mais dans la rencontre qui l'honore.
 
 Ainsi l'amour le plus haut n'est-il pas celui qui prétend abolir la solitude essentielle, ce qui est impossible et ce qui nierait la singularité de chacun ; c'est celui qui, la reconnaissant, la transforme en une solitude habitée par la présence de l'autre, en une rencontre où deux êtres distincts se saluent et se protègent par-dessus la distance qui les fait autres. Cette conception réconcilie ce que nous avons entrevu : la solitude essentielle qui ne s'abolit pas, la connaissance d'autrui qui respecte son mystère, l'amour qui voit et fait devenir, le désir qui donne plutôt que de prendre. Elle dit que la plus haute relation entre les êtres n'est pas la fusion qui nie leur solitude, mais l'amour qui la reconnaît et l'honore — deux solitudes qui, se sachant irréductibles, choisissent néanmoins de se rencontrer, de se protéger, de se saluer, et trouvent dans cette rencontre respectueuse, plus que dans toute fusion, la vérité et la beauté de l'amour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18757,7 +18757,7 @@ Cette conception, pour sombre qu'elle soit, a le mérite de la lucidité. Elle n
 Car de cette lucidité découle une exigence : si la civilisation est fragile, alors elle demande à être sans cesse défendue, entretenue, protégée. Elle n'est pas un acquis dont on pourrait jouir passivement, mais une conquête toujours à reprendre, un équilibre toujours menacé, des digues qu'il faut sans cesse consolider. Les institutions qui contiennent la violence, les mœurs qui adoucissent, l'éducation qui civilise, les interdits qui protègent, ne tiennent que si on les entretient, si on veille sur eux, si on ne les laisse pas se déliter. La civilisation ne se maintient pas d'elle-même ; elle exige un effort constant, une vigilance de chaque génération, sans laquelle elle peut se défaire.
 
 Reconnaître que la civilisation est un vernis fragile n'est donc pas céder au pessimisme ni au désespoir. C'est acquérir la lucidité qui, seule, permet de la défendre. Celui qui croit la civilisation acquise ne la défend pas, et la laisse se déliter ; celui qui sait sa fragilité veille sur elle, la protège, la transmet. La conscience de la fragilité n'est pas démobilisatrice, mais mobilisatrice : elle nous rappelle que ce que nous avons de plus précieux — la paix, le droit, la douceur des mœurs, l'horreur de la cruauté — n'est jamais définitivement acquis, qu'il faut le mériter et le défendre à chaque génération, qu'il peut se perdre si nous cessons d'y veiller. La civilisation est un héritage fragile ; et c'est parce qu'elle est fragile qu'elle nous oblige — à en prendre soin, à la transmettre, à ne jamais la tenir pour assurée. Car ce que des siècles ont bâti, quelques années peuvent le défaire ; et il ne tient qu'à nous, à chaque génération, de veiller à ce que le vernis ne se craquelle pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18780,7 +18780,7 @@ Cette vérité est troublante précisément parce qu'elle abolit la frontière r
 Reconnaître le mal ordinaire n'est donc pas dédouaner les criminels, comme si leur banalité les excusait ; c'est au contraire nous rendre plus vigilants, envers les autres et envers nous-mêmes. Cela nous invite à surveiller en nous les dispositions qui rendent le mal possible : l'obéissance aveugle à l'autorité, le conformisme qui suit le groupe, la déresponsabilisation qui se décharge sur d'autres, le refus de penser par soi-même, la lâcheté qui n'ose pas résister. Ce sont ces dispositions ordinaires, plus que quelque méchanceté exceptionnelle, qui pavent la voie du pire. Et se prémunir contre le mal, ce n'est pas se croire d'une autre espèce que ses auteurs, mais cultiver en soi ce qui résiste à ces mécanismes : le courage de désobéir à l'injuste, l'indépendance qui refuse le conformisme, la responsabilité qui ne se décharge pas, la pensée qui ne s'abdique pas.
 
 La leçon du mal ordinaire est ainsi, paradoxalement, une leçon de responsabilité. Car si le mal était l'œuvre de monstres, nous n'aurions rien à faire, sinon nous distinguer d'eux ; mais s'il peut naître en tout homme ordinaire, sous l'effet de circonstances et de dispositions ordinaires, alors la vigilance nous incombe à tous. Défendre la civilisation contre la barbarie qui la menace, ce n'est pas seulement combattre des monstres extérieurs ; c'est surveiller en soi et autour de soi les dispositions ordinaires qui rendent le mal possible, cultiver le courage, l'indépendance, la responsabilité, la pensée, qui seuls y résistent. Le mal ordinaire nous apprend que la ligne entre la civilisation et la barbarie ne passe pas entre les hommes, mais en chacun d'eux — et que c'est en chacun, par la vigilance et le courage, qu'elle se défend ou se perd.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18803,7 +18803,7 @@ Ce déséquilibre se manifeste aussi dans notre rapport à la nature. Nos pouvoi
 Faut-il en conclure qu'il faudrait limiter le progrès technique, renoncer à des pouvoirs que notre sagesse ne peut maîtriser ? Cette conclusion, séduisante, est difficile à mettre en œuvre, car nul ne peut arrêter le progrès technique, et le vouloir serait vain. La vraie réponse est peut-être ailleurs : non dans la limitation des pouvoirs, illusoire, mais dans le développement de la sagesse, pour qu'elle rattrape nos pouvoirs. Si nos pouvoirs croissent plus vite que notre sagesse, la solution n'est pas de brider les pouvoirs, mais d'accroître la sagesse, de faire en sorte qu'elle grandisse à la mesure de notre puissance. C'est un défi immense, car la sagesse ne progresse pas comme la technique, ne s'accumule pas, doit être reconquise par chaque génération ; mais c'est le seul qui puisse répondre au déséquilibre qui nous menace.
 
 Ce défi donne un sens nouveau à ce que nous avons dit de la sagesse, de la vertu, de la formation de soi. Car si le péril majeur de notre temps est le déséquilibre entre nos pouvoirs et notre sagesse, alors le développement de la sagesse — individuelle et collective — n'est pas un luxe, mais une nécessité vitale. Cultiver la sagesse, la prudence, la maîtrise de soi, le sens des limites, la responsabilité envers l'avenir, n'est pas seulement affaire de perfectionnement personnel ; c'est peut-être la condition de la survie même d'une humanité dont les pouvoirs ont dépassé la maîtrise. Le progrès technique, sans progrès de la sagesse, mène à la catastrophe ; et le grand enjeu de notre temps est peut-être de faire en sorte que notre sagesse rattrape enfin nos pouvoirs, avant que le déséquilibre ne devienne fatal. Jamais l'antique exigence de sagesse n'aura été aussi urgente qu'à l'âge où nos pouvoirs sont devenus démesurés.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18826,7 +18826,7 @@ Cette difficulté de transmettre a des conséquences graves, qu'on mesure mal. C
 Que faut-il pour que la transmission soit possible ? Il faut d'abord que ceux qui transmettent aient quelque chose à transmettre qu'ils tiennent pour précieux, et qu'ils veuillent transmettre ; une génération qui mépriserait son propre héritage, qui ne verrait rien en lui qui vaille d'être légué, ne transmettrait rien. Il faut ensuite que ceux qui reçoivent soient disposés à recevoir, qu'ils ne rejettent pas par principe l'héritage des générations passées, qu'ils reconnaissent avoir quelque chose à recevoir. Il faut enfin des lieux, des institutions, des relations où la transmission puisse s'opérer : l'école, la famille, les maîtres, tous ces lieux où l'héritage se passe d'une génération à l'autre. La transmission suppose une chaîne de bonne volonté, de fidélité, de reconnaissance, sans laquelle elle se rompt.
 
 Prendre soin de la transmission est donc l'une des responsabilités les plus essentielles, et les plus négligées, de notre temps. Car nous avons hérité d'un monde que nous n'avons pas fait, que des générations avant nous ont bâti et transmis ; et nous avons la responsabilité de le transmettre à notre tour, de ne pas rompre la chaîne, de ne pas dilapider un héritage que nous ne faisons que détenir provisoirement. Transmettre ce que nous avons de plus précieux — les savoirs, les œuvres, les valeurs, la mémoire —, c'est assurer la survie de la civilisation, la relier à son passé et à son avenir, refuser qu'elle se défasse dans l'oubli. Dans un monde qui valorise la rupture et méprise l'héritage, réhabiliter la transmission, en prendre soin, la vouloir, est peut-être l'une des tâches les plus urgentes pour qui tient à ce que la civilisation ne se perde pas. Car une civilisation ne meurt pas seulement de ses catastrophes ; elle meurt aussi, plus silencieusement, de cesser de se transmettre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18849,7 +18849,7 @@ Cette distinction est capitale, car elle fonde une attitude que ni l'optimisme n
 L'espérance ainsi comprise n'ignore rien de la fragilité de la civilisation, des menaces qui pèsent sur elle, du déséquilibre qui nous met en péril. Elle regarde tout cela en face, sans se bercer d'illusions optimistes. Mais elle en tire non le désespoir, mais l'engagement : puisque rien n'est joué, puisque l'avenir dépend de nous, puisque le meilleur est possible quoique non garanti, il vaut la peine d'agir, de lutter, de veiller sur ce qui est fragile, de le défendre et de le transmettre. L'espérance est cette disposition à faire ce qui dépend de nous, sans nous décharger sur une providence qui ferait le bien à notre place, ni renoncer devant l'incertitude de l'issue. Elle est le contraire à la fois de l'optimisme paresseux et du désespoir démobilisateur : une lucidité active, qui agit précisément parce qu'elle sait que rien n'est assuré.
 
 Ainsi l'espérance, distinguée de l'optimisme, est-elle la disposition qui convient à notre condition et à notre temps. Face à la fragilité de la civilisation, elle ne se console pas d'un optimisme qui croirait le bien assuré, ni ne cède à un désespoir qui croirait tout perdu ; elle reconnaît l'incertitude, et agit néanmoins, parce que le meilleur est possible et vaut la peine. Cette espérance n'est pas un sentiment, une humeur, une prévision ; elle est un choix, une volonté, presque une vertu — la disposition à faire le bien dans l'incertitude, à veiller sur ce qui est fragile sans garantie de succès, à transmettre ce qui pourrait se perdre en pariant qu'il vaut la peine d'être sauvé. C'est cette espérance, et non l'optimisme, qui peut fonder l'action face aux menaces de notre temps ; car elle ne dépend pas de la certitude que nous vaincrons, mais de la conviction que le combat vaut la peine d'être mené — et cette conviction, aucun avenir, si sombre soit-il, ne peut la démentir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18872,7 +18872,7 @@ Mais cette prétention a aussi ses illusions et ses dangers. La première illusi
 La seconde illusion est le décalage entre la prétention et la réalité. Se penser comme une exception, comme une grande nation porteuse d'un message universel, peut masquer une réalité plus modeste, entretenir l'illusion d'une grandeur que les faits démentent, nourrir une nostalgie d'un rôle qui n'est plus le sien. La France du présent n'est plus la puissance qu'elle fut ; se penser encore comme une exception peut être une manière de ne pas voir sa place réelle dans le monde, de vivre dans la nostalgie d'une grandeur passée, de confondre ce qu'on fut avec ce qu'on est. La prétention à l'exception peut ainsi être un aveuglement, un refus de voir sa condition réelle.
 
 Que conclure de cette singularité française ? Peut-être qu'elle est, comme souvent, ambivalente : porteuse d'une grandeur et d'illusions, d'une aspiration noble et de tentations dangereuses. L'aspiration à l'universel, à dépasser l'étroitesse des intérêts, à se mettre au service de valeurs qui transcendent les frontières, est ce que la France a de meilleur, et il serait dommage qu'elle y renonce. Mais elle doit se garder des illusions qui l'accompagnent : de confondre son particulier avec l'universel, d'imposer aux autres sa singularité au nom de l'humanité, de se bercer d'une grandeur que le présent dément. L'exception française, bien comprise, n'est pas la prétention arrogante d'être supérieure aux autres, mais la fidélité à une aspiration universaliste qui, si elle reste lucide sur ses limites, peut être une contribution précieuse au monde. Se penser comme exception peut être grandeur ou aveuglement ; tout dépend de la lucidité avec laquelle on assume cette singularité — comme une vocation à servir l'universel, non comme un droit à s'imposer en son nom.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18895,7 +18895,7 @@ Mais le français n'est pas seulement la langue de la France ; il est parlé sur
 Il faut se garder, en célébrant le monde qu'ouvre le français, de tomber dans une glorification naïve, comme si cette langue était supérieure aux autres, comme si le monde qu'elle ouvre valait mieux que ceux qu'ouvrent d'autres langues. Chaque langue ouvre un monde, et aucun ne vaut absolument mieux qu'un autre ; le français n'est pas supérieur, il est différent, il offre un accès particulier à une culture, une sensibilité, une tradition parmi d'autres également précieuses. Célébrer le monde qu'ouvre le français, ce n'est pas le tenir pour le meilleur, mais reconnaître qu'il ouvre, comme toute langue, un monde propre, digne d'être connu, qui enrichit celui qui y accède.
 
 Au terme de ce parcours, celui qui a appris le français jusqu'à pouvoir lire ces textes exigeants a donc gagné plus qu'une langue : il a gagné un monde, un accès à une culture, une sensibilité, une tradition ; il a élargi son propre monde d'un monde nouveau. Et cette conquête n'est pas seulement utile, un instrument de plus ; elle est un enrichissement, une ouverture, une manière de devenir plus vaste, de multiplier ses accès au réel, de n'être plus prisonnier d'une seule manière de voir. Apprendre le français, comme apprendre toute langue, c'est se donner un monde de plus ; et celui qui possède plusieurs langues, plusieurs mondes, habite un univers plus riche, plus divers, que celui qui n'en connaît qu'un. C'est là, peut-être, la plus belle récompense de ce long apprentissage : non seulement pouvoir dire et comprendre davantage, mais être devenu, par la langue conquise, un être plus vaste, ouvert à un monde qui, sans elle, lui fût resté fermé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18918,7 +18918,7 @@ Comment sortir de cette opposition ? Ni l'universalisme absolu qui nierait toute
 Cette voie passe peut-être par une distinction : entre un petit nombre de valeurs vraiment universelles, qui touchent à la dignité fondamentale de l'homme et qu'aucune culture ne peut légitimement violer, et l'immense diversité des manières de vivre, des coutumes, des valeurs secondaires, qui relèvent de la légitime différence des cultures. Il y aurait ainsi un noyau universel, restreint mais ferme — l'interdiction de la cruauté, le respect de la dignité, certains droits fondamentaux —, et, au-delà, un vaste domaine de diversité légitime, où les cultures peuvent et doivent différer. Cette distinction permet de condamner l'inacceptable sans imposer un modèle unique, de respecter la diversité sans tout accepter, de tenir ensemble l'exigence universaliste et le respect des différences.
 
 Une telle position n'est pas simple à tenir, car la frontière entre le noyau universel et le domaine de la diversité est difficile à tracer, et fait elle-même l'objet de débats. Mais elle indique la direction d'une sagesse : ni l'arrogance universaliste qui impose son particulier, ni le relativisme qui renonce à tout jugement, mais la reconnaissance d'un universel restreint et ferme, conjugué au respect d'une diversité légitime. Cette position rejoint peut-être ce que la France a de meilleur dans son universalisme, quand il reste lucide : non la prétention à imposer sa culture au nom de l'humanité, mais la fidélité à quelques valeurs vraiment universelles, jointe au respect de la diversité des manières d'être humain. Croire à l'universel sans imposer son particulier, respecter la diversité sans renoncer à tout juger : tel est l'équilibre difficile qu'exige notre temps, où les cultures se côtoient comme jamais, et où il faut apprendre à la fois à défendre ce qui vaut pour tous et à respecter ce qui légitimement diffère.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18941,7 +18941,7 @@ Mais si l'étranger nous dérange et nous fait peur, il est aussi ce qui nous r�
 Il y a plus. L'étrangeté n'est pas seulement au-dehors, dans l'autre peuple, l'autre culture ; elle est aussi en nous, plus proche que nous ne le croyons. Nous sommes étrangers à nous-mêmes, disait un penseur, portant en nous une part d'ombre, d'inconnu, d'étrangeté, que nous ne maîtrisons pas. Reconnaître l'étrangeté en soi, c'est peut-être la condition pour accueillir celle de l'autre : car celui qui refuse toute étrangeté, qui veut la pureté, l'identité sans mélange, le même sans l'autre, celui-là rejette l'étranger au-dehors comme il refoule l'étrangeté en lui. Accueillir l'autre suppose d'accepter sa propre part d'étrangeté, de renoncer au fantasme d'une identité pure, de reconnaître que nous sommes nous-mêmes traversés d'altérité.
 
 Notre rapport à l'étranger est ainsi révélateur de ce que nous sommes. Le craindre, le rejeter, en faire un bouc émissaire, c'est céder à la peur, refuser la remise en question qu'il apporte, s'enfermer dans une identité qui se veut pure ; l'accueillir, s'ouvrir à sa différence, accepter d'être déstabilisé, c'est faire preuve d'une force et d'une générosité qui enrichissent. La rencontre de l'étranger est une épreuve, qui révèle si nous sommes capables d'accueillir ce qui nous dérange, de nous laisser remettre en question, de nous enrichir de la différence, ou si nous nous replions dans la peur et le rejet. Et pour qui a appris une langue étrangère, entrant dans un monde autre que le sien, cette épreuve a déjà été traversée, et surmontée : car apprendre la langue de l'étranger, c'est déjà l'accueillir, s'ouvrir à son monde, se laisser enrichir par sa différence. L'apprentissage d'une langue est peut-être la plus belle réponse à la peur de l'étranger : non le rejet de ce qui nous dérange, mais l'accueil de ce qui nous enrichit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18964,7 +18964,7 @@ Le besoin d'enracinement a donc sa légitimité, que le cosmopolitisme méconna�
 Mais le besoin d'enracinement a aussi ses dangers, que le cosmopolitisme met en lumière. Car l'attachement à son appartenance particulière peut dégénérer en repli, en exclusion, en hostilité envers ce qui est autre ; l'enracinement peut devenir enfermement, l'amour de son monde, mépris des autres, l'attachement à ses racines, rejet de l'étranger. L'histoire montre à quels excès peut conduire l'exaltation de l'appartenance particulière, quand elle se ferme, se durcit, se dresse contre les autres. Le besoin d'enracinement, légitime, peut ainsi se pervertir en nationalisme étroit, en xénophobie, en refus de l'universel.
 
 La sagesse est peut-être dans la conciliation de ces deux aspirations, plutôt que dans le choix de l'une contre l'autre. On peut être enraciné et ouvert, appartenir à un lieu particulier et se sentir membre de l'humanité, aimer son monde propre sans mépriser les autres. L'enracinement et l'ouverture ne s'excluent pas nécessairement ; on peut avoir des racines et des ailes, appartenir concrètement à un monde particulier tout en se sentant relié à l'humanité entière. Le véritable enracinement n'est pas le repli, mais l'ancrage à partir duquel on peut s'ouvrir ; le véritable cosmopolitisme n'est pas le déracinement, mais l'ouverture à partir d'un enracinement. Celui qui est bien enraciné dans son monde peut s'ouvrir aux autres sans se perdre ; celui qui est ouvert au monde peut rester fidèle à ses racines sans s'enfermer. Être enraciné et citoyen du monde, appartenir à un lieu particulier et à l'humanité entière, tel est peut-être l'équilibre à chercher — celui qui rejoint ce que nous avons dit de l'universel et du particulier, de la France et du monde, de l'étranger et de soi : non l'un contre l'autre, mais l'un par l'autre, l'ouverture à partir de l'enracinement, l'universel à travers le particulier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -18987,7 +18987,7 @@ Il y a plus. La méditation sur la mort nous enseigne ce qui compte vraiment, en
 Cette sagesse ancienne n'est pas un culte morbide de la mort, mais au contraire un art de vivre pleinement. Car elle ne médite la mort que pour mieux vivre, ne pense la fin que pour donner à la vie son intensité, son prix, son sens. « Apprendre à mourir », dans cette perspective, c'est apprendre à vivre en pleine conscience de sa finitude, à ne pas gaspiller son temps compté, à vivre chaque instant comme précieux, à se libérer de la peur qui empoisonne, à discerner ce qui compte. La méditation sur la mort est au service de la vie ; elle est le détour par lequel on apprend à vivre vraiment. Loin d'être l'ennemie de la joie de vivre, elle en est peut-être la condition, car c'est la conscience de la finitude qui donne à la vie son prix.
 
 Ainsi cette formule ancienne, qui semble d'abord morbide, révèle-t-elle une sagesse profonde et lumineuse. Philosopher, c'est apprendre à mourir, non pour s'obséder de la mort, mais pour apprendre à vivre ; non pour assombrir la vie, mais pour l'éclairer ; non pour craindre la fin, mais pour s'en libérer. La méditation sur la mort est le cœur d'une sagesse qui est un art de vivre, car c'est en regardant la mort en face que l'on apprend le prix de la vie. Et cette leçon, la plus ancienne peut-être, garde toute sa force à notre époque qui fuit la mort, la cache, la refoule, et qui, ce faisant, se prive de la conscience de la finitude sans laquelle la vie perd son intensité et son sens. Apprendre à mourir pour apprendre à vivre : telle est la sagesse par laquelle il faut peut-être commencer, et finir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19010,7 +19010,7 @@ On peut aller plus loin encore. C'est peut-être la conscience de la mort qui re
 Faut-il en conclure qu'il faudrait se réjouir de la mort, la désirer, y voir un bien ? Ce serait aller trop loin, et trahir notre expérience. Car la mort reste, à bien des égards, un mal : elle nous prive de la vie, nous arrache à ceux que nous aimons, met fin à ce qui nous est cher. Reconnaître que la finitude donne un sens à la vie ne signifie pas nier que la mort soit une perte, une douleur, un déchirement. La vérité est plus nuancée : la mort est à la fois un mal, qui nous prive, et une condition du sens, qui donne à la vie son prix. Elle est ambivalente, comme la finitude elle-même : ce qui nous limite et ce qui nous constitue, ce qui nous prive et ce qui donne valeur à ce dont nous jouissons.
 
 Cette ambivalence est peut-être la vérité la plus profonde sur notre condition mortelle. Nous ne pouvons ni nous réjouir purement de la mort, qui reste une perte, ni la maudire absolument, car elle est aussi condition du sens. La sagesse consiste peut-être à tenir les deux : reconnaître la mort comme un mal, sans cesser de la combattre là où on le peut, et reconnaître en même temps que la finitude donne à la vie son prix, que c'est parce que nous sommes mortels que nos vies ont une forme, une intensité, un sens. Non pas aimer la mort, mais accepter la finitude ; non pas désirer l'immortalité, qui abolirait le sens, mais vivre pleinement une vie que sa finitude même rend précieuse. La mort ne donne pas un sens à la vie comme une réponse ; mais notre finitude est la condition qui rend le sens possible, en donnant à nos vies la forme, l'intensité, la gravité que l'éternité leur ôterait. Et c'est peut-être en cela que, sans cesser d'être un mal, la mort participe à ce qui fait de la vie autre chose qu'une durée indéfinie : une existence qui, parce qu'elle finit, mérite d'être pleinement vécue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19033,7 +19033,7 @@ Nous laissons enfin le monde lui-même, tel que nos actes l'ont marqué. Chacun 
 Cette survie dans les autres, dans les œuvres, dans le monde, quelle valeur lui accorder ? Elle ne console pas entièrement de la mort, car elle n'est pas notre survie personnelle ; ce n'est pas nous qui survivons, mais notre trace, notre influence, notre œuvre. Nous ne serons plus là pour en jouir, et cette survie ne nous rend pas immortels. Mais elle donne néanmoins un sens à notre existence mortelle, en la reliant à ce qui la dépasse et la prolonge ; elle nous inscrit dans une continuité qui excède notre vie individuelle, nous fait participer à quelque chose de plus vaste et de plus durable que nous. Vivre en sachant qu'on laissera une trace, qu'on contribue à ce qui survivra, donne à la vie mortelle une portée qui dépasse sa durée.
 
 Cette pensée de ce que nous laissons a une portée éthique. Car si nous survivons dans ce que nous laissons, alors ce que nous laissons importe, et nous en sommes responsables. Vivre en pensant à ce qu'on laissera — dans les autres, dans ses œuvres, dans le monde —, c'est vivre avec le souci de laisser quelque chose de bon, de contribuer positivement, de ne pas laisser derrière soi des ruines ou du mal. La conscience de ce que nous laissons nous relie à l'avenir, nous rend responsables de ce que nous transmettons, donne à notre vie une orientation qui dépasse notre seul intérêt présent. Nous ne vivons pas seulement pour nous, dans le temps borné de notre existence ; nous vivons aussi pour ce que nous laisserons, dans la trace que nous prolongerons au-delà de notre mort. Et c'est peut-être là une manière de donner sens à notre condition mortelle : non pas nier la mort, mais vivre de telle sorte que ce que nous laisserons vaille la peine d'avoir été laissé — que notre passage, si bref soit-il, ait ajouté au monde quelque chose de bon plutôt que de l'avoir appauvri.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19056,7 +19056,7 @@ Comment sortir de ce dilemme entre l'oubli qui trahit et la douleur qui fige ? P
 Cette transformation du lien permet de concilier la fidélité et la vie. Car garder vivant en soi celui qu'on a perdu, faire vivre sa mémoire, laisser son influence continuer de nous porter, ce n'est pas l'oublier ; c'est lui rester fidèle. Et cette fidélité, loin de nous figer dans la douleur, nous rend à la vie, car elle transforme la perte en héritage, l'absence en présence intérieure, le chagrin en mémoire vivante. On peut vivre après la perte, retrouver la joie, se tourner vers l'avenir, tout en restant fidèle à celui qu'on a perdu, en le gardant vivant en soi. La vraie fidélité n'est pas de refuser de vivre, mais de vivre en portant en soi celui qu'on a perdu, en faisant fructifier ce qu'il nous a donné.
 
 Le deuil, ainsi compris, n'est pas un choix entre l'oubli et la douleur, mais un travail de transformation, qui fait passer de la présence perdue à la présence intérieure, de l'absence déchirante à la mémoire vivante. Ce travail est long, douloureux, jamais tout à fait achevé ; mais il permet de concilier la fidélité au disparu et le retour à la vie, d'honorer celui qu'on a perdu sans se laisser détruire par sa perte. Et il révèle une vérité sur l'amour et la mort : que la mort sépare, mais ne détruit pas entièrement le lien ; que ceux que nous avons aimés continuent de vivre en nous, dans ce qu'ils nous ont donné ; et que la fidélité aux morts n'est pas de mourir avec eux, mais de les garder vivants en nous tout en vivant nous-mêmes. Aimer ceux qui ne sont plus, c'est les porter en soi, non comme un poids qui écrase, mais comme une présence qui accompagne — et c'est peut-être la plus haute manière de vaincre, sinon la mort, du moins son pouvoir de détruire ce que fut l'amour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19079,7 +19079,7 @@ Mais cette quête révèle peut-être aussi une illusion, ou du moins une ambiva
 Car il est des formes d'immortalité qui ne sont pas l'abolition de la mort, mais le dépassement de sa finitude par le sens. Laisser une œuvre, une trace, une influence qui survit ; contribuer à quelque chose de plus vaste et de plus durable que soi ; s'inscrire dans une continuité qui dépasse notre existence individuelle : ce sont là des formes de dépassement de la mort qui ne l'abolissent pas, mais qui donnent à notre vie mortelle une portée qui excède sa durée. Cette immortalité-là — non biologique, mais par le sens, l'œuvre, la trace, la contribution — est peut-être celle que nous cherchons vraiment, celle qui répond à notre besoin de sens et de permanence sans abolir ce qui fait le prix de la vie finie. Non pas ne jamais mourir, mais que notre passage ait un sens qui le dépasse.
 
 Ainsi la quête d'immortalité, si on la comprend bien, ne vise peut-être pas tant l'abolition de la mort que le dépassement de sa finitude par le sens. Ce que nous cherchons vraiment, ce n'est peut-être pas de ne jamais mourir — ce qui abolirait le prix de la vie —, mais de donner à notre vie mortelle un sens qui la dépasse, une portée qui excède notre durée, une trace qui survive. Cette immortalité-là est à notre portée, non par la science ni par un miracle, mais par la manière dont nous vivons, par ce que nous laissons, par le sens que nous donnons à notre passage. Nous ne vaincrons pas la mort ; mais nous pouvons faire que notre vie mortelle ait un sens qui la dépasse, une valeur qui survive, une trace qui demeure. Et c'est peut-être là la seule immortalité qui nous soit accessible, et la seule qui vaille : non l'abolition impossible et peut-être indésirable de la mort, mais le sens dont nous chargeons notre vie finie — cette manière de vivre qui fait qu'une existence, bien que mortelle, n'aura pas passé en vain.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19102,7 +19102,7 @@ La sagesse est peut-être avant tout un art de vivre, une manière d'être au mo
 Ce qui rassemble ces dimensions — connaissance, vertu, art de vivre —, c'est peut-être que la sagesse est une intégration, une unité entre ce qu'on comprend, ce qu'on est et ce qu'on fait. Le sage n'est pas celui qui sait le bien sans le faire, ni celui qui fait le bien sans le comprendre, ni celui qui vit bien par hasard ; c'est celui chez qui la compréhension, la vertu et l'action s'accordent, où le savoir se fait manière d'être, où la vertu se fait vie, où la pensée se fait existence. La sagesse est cette cohérence entre la pensée et la vie, cette unité de l'être qui fait que le sage vit ce qu'il comprend et comprend ce qu'il vit. Elle est l'accomplissement d'une vie qui a mis en accord ce qu'elle sait, ce qu'elle veut et ce qu'elle fait.
 
 Cette conception de la sagesse éclaire tout le parcours qui l'a précédée. Car toutes les réflexions que nous avons menées — sur le temps, la mort, l'amour, le mal, la vérité, la beauté — ne visaient pas seulement à savoir, à accumuler des connaissances ; elles visaient une compréhension qui se fasse manière de vivre, un savoir qui devienne sagesse. Comprendre le prix du temps pour mieux le vivre ; comprendre la mort pour mieux vivre ; comprendre l'amour, le mal, la vérité, non pour en avoir des théories, mais pour vivre plus justement. La sagesse est le terme vers lequel tend toute pensée véritable : non le savoir pour le savoir, mais la compréhension qui transforme la vie, la lucidité qui se fait art de vivre. Et c'est cette sagesse, plus que toute connaissance, qui est peut-être le vrai but de tout apprentissage — apprendre non seulement à savoir, mais à vivre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19125,7 +19125,7 @@ Or notre époque semble à l'opposé de cette sagesse. Elle fait l'éloge de l'e
 Bien au contraire, peut-être n'a-t-elle jamais été aussi nécessaire. Car les excès de notre époque — la démesure de la consommation, de la performance, de l'exploitation de la nature, de nos pouvoirs techniques — sont précisément ce qui nous menace, ce qui nous épuise, ce qui détruit notre équilibre et celui du monde. La crise écologique est une crise de la démesure, de l'excès, du toujours plus ; le mal-être contemporain naît en partie de l'excès, de l'intensité sans repos, de la course sans mesure ; le déséquilibre entre nos pouvoirs et notre sagesse est un défaut de mesure. Dans un monde menacé par ses propres excès, la sagesse de la mesure, loin d'être démodée, retrouve une urgence nouvelle ; elle est peut-être ce dont notre temps a le plus besoin.
 
 Réhabiliter la sagesse de la mesure, ce n'est donc pas prôner la tiédeur, la médiocrité, le renoncement à toute intensité. C'est reconnaître que le bien se trouve souvent dans la juste proportion, que l'excès détruit ce qu'il prétend accroître, que la démesure mène à la ruine. C'est retrouver le sens des limites, de l'équilibre, de la juste mesure, dans un monde qui les a perdus. La mesure n'est pas l'ennemie de l'intensité ni de la grandeur ; elle en est la condition, car ce qui est sans mesure se détruit, tandis que ce qui garde la juste proportion dure et s'accomplit. « Rien de trop » : cette antique maxime, loin d'être périmée, énonce peut-être la sagesse dont notre époque de démesure a le plus cruellement besoin — la reconnaissance que toute chose a sa mesure, et que la dépasser, c'est courir à sa perte. Dans un monde ivre d'excès, retrouver le sens de la mesure est peut-être le commencement de la sagesse.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19148,7 +19148,7 @@ Ce courage est rare parce qu'il est coûteux. Se conformer est facile, confortab
 Il faut se garder, cependant, d'un contresens qui ferait du courage d'être soi une simple affirmation de soi contre les autres, un individualisme qui mépriserait autrui. Être soi n'est pas se dresser contre les autres, ni cultiver une originalité de façade, ni faire de sa différence un étendard. Le vrai courage d'être soi n'est pas ostentatoire ; il est souvent discret, intérieur, fait moins de rébellion spectaculaire que de fidélité tranquille à ce qu'on croit et à ce qu'on est. Il ne s'agit pas de se distinguer pour se distinguer, mais d'être fidèle à soi, ce qui peut fort bien s'accorder avec le respect des autres et la vie en commun. Le courage d'être soi n'est pas l'affirmation bruyante d'un moi contre le monde ; il est la fidélité, souvent silencieuse, à ce qu'on tient pour vrai et juste, contre les pressions qui voudraient nous en détourner.
 
 Ce courage d'être soi est au cœur de la sagesse, car il n'y a pas de vie sage qui ne soit d'abord une vie qui soit vraiment la sienne. On ne peut pas vivre sagement en vivant la vie d'un autre, en épousant des valeurs qu'on n'a pas faites siennes, en se conformant à ce qu'on attend de nous. La sagesse suppose l'authenticité, la fidélité à soi, la construction d'une existence qui soit vraiment la nôtre. Et cette construction, contre les pressions qui nous façonnent, demande ce courage rare et discret d'être soi, de penser par soi-même, de faire ses propres choix, d'assumer sa singularité. Devenir soi-même, contre tout ce qui voudrait nous conformer, est peut-être l'une des tâches les plus difficiles et les plus essentielles de l'existence — et l'une des conditions de cette vie réussie, cohérente et fidèle à ses valeurs, dont nous avons dit qu'elle était le fruit d'une vie à laquelle on a donné forme.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19171,7 +19171,7 @@ Ce renversement transforme profondément la qualité de la vie. Car celui qui cu
 La gratitude a aussi une dimension qui dépasse le seul bien-être, une profondeur presque métaphysique. Car reconnaître ce qui nous est donné, c'est reconnaître que nous ne sommes pas la source de tout ce dont nous jouissons, que beaucoup nous a été donné sans que nous l'ayons mérité ou produit : la vie elle-même, le monde, ceux qui nous ont formés, tout cet héritage que nous n'avons pas fait. La gratitude est la reconnaissance de cette dette, de ce que nous devons à ce qui nous précède et nous dépasse ; elle est une forme d'humilité, qui reconnaît que nous ne nous devons pas tout à nous-mêmes, que notre existence est portée par ce qui nous a été donné. En ce sens, la gratitude est plus qu'une technique du bonheur ; elle est une vérité sur notre condition d'êtres qui reçoivent plus qu'ils ne produisent, qui doivent à d'autres et au monde ce dont ils jouissent.
 
 Cultiver la gratitude est donc une part essentielle de la sagesse. Non pas nier ce qui manque, les maux, les épreuves, qui sont réels ; non pas se contenter d'un optimisme béat qui refuserait de voir le mal ; mais apprendre à percevoir aussi, et d'abord, ce qui est donné, à s'en réjouir, à le reconnaître. Cette disposition, qui se cultive par l'attention, par l'habitude de reconnaître les biens de son existence, transforme la qualité de la vie ; elle est l'une des voies vers ce contentement qui ne dépend pas des circonstances, mais du regard qu'on porte sur elles. Dans un monde qui excite le manque, qui nous fixe sur ce que nous n'avons pas, cultiver la gratitude, apprendre à reconnaître et à apprécier ce qui nous est donné, est un acte de sagesse et presque de résistance — et l'une des clés, peut-être, d'une vie qui, sans nier ses manques et ses épreuves, sait néanmoins se réjouir de ce qu'elle a reçu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19194,7 +19194,7 @@ Tout ce parcours n'aura été, en un sens, qu'un exercice de cet examen. Réflé
 Mais ce mot de la fin est aussi un commencement, car l'examen d'une vie n'est jamais achevé. On n'en finit pas d'examiner sa vie, de l'interroger, de la réfléchir ; c'est une tâche qui dure autant que l'existence, toujours à reprendre, jamais terminée. Les questions que nous avons abordées n'ont pas reçu de réponses définitives, et n'en pouvaient recevoir ; elles restent ouvertes, à méditer, à approfondir tout au long d'une vie. Ce parcours ne clôt rien ; il ouvre, il invite à poursuivre, à continuer d'examiner, de réfléchir, de chercher. La fin n'est qu'un seuil ; ce qui a été commencé ici est à continuer, non dans les livres seulement, mais dans la vie, qui est le vrai lieu où s'examine et se réfléchit une existence.
 
 Et pour qui a parcouru tout ce chemin — d'une langue apprise mot à mot jusqu'à ces textes qui interrogent les plus hautes questions —, il y a peut-être une image dans ce parcours même. Car apprendre une langue, comme examiner sa vie, est une tâche qui n'a pas de fin, toujours à approfondir, jamais achevée ; et l'une comme l'autre transforme celui qui s'y adonne, l'élargit, le rend plus vaste, plus conscient, plus humain. Ce lecteur qui, ayant gravi tous les niveaux, peut aujourd'hui lire et méditer ces textes dans une langue qui n'était pas la sienne, a fait plus qu'apprendre une langue : il a élargi son monde, gagné un accès à d'autres pensées, à d'autres manières de voir, et, à travers elles, examiné sa propre vie. Que cet examen se poursuive, dans cette langue conquise et dans toutes les autres, dans les livres et dans l'existence : car une vie qui continue de s'examiner, de s'interroger, de chercher, est une vie qui reste vivante, ouverte, en chemin. Et c'est peut-être là le dernier mot, qui est un commencement : que le vrai savoir n'est pas un terme qu'on atteint, mais un chemin qu'on ne cesse de parcourir — et qu'une vie, comme un apprentissage, ne vaut que par ce mouvement même de chercher, de comprendre, et de continuer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19225,7 +19225,7 @@ Julien aime son équipe. Ses amis sont gentils et drôles.
 « Le sport, c'est bon pour le corps et pour la tête », dit Julien.
 
 Le sport rend Julien heureux. Il continue chaque semaine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19258,7 +19258,7 @@ Les Lions sont tristes. Mais ils continuent à jouer.
 Un à un ! Match nul, mais tout le monde est content.
 
 Après le match, l'équipe va manger une pizza ensemble. « Bravo, Julien ! » disent ses amis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19293,7 +19293,7 @@ Il nage doucement, d'un côté à l'autre. Il y arrive !
 Yanis est très fier. « Je sais nager maintenant ! » dit-il à Julien, son ami.
 
 Julien est content pour lui. « Bravo, Yanis ! Maintenant, on nage ensemble le week-end ? »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19326,7 +19326,7 @@ Julien n'est pas triste. Il a passé un bon moment.
 « L'important, ce n'est pas de gagner, dit-il à Yanis. C'est de jouer et de s'amuser. »
 
 L'année prochaine, Julien veut participer encore. Peut-être qu'il gagnera un match, cette fois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19361,7 +19361,7 @@ Trois à deux ! L'équipe de Julien gagne !
 Tout le monde crie de joie. Julien est très fier de son équipe.
 
 « On a gagné ensemble, dit-il à Yanis après le match. C'est ça, le plus beau, dans le sport : jouer ensemble. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19394,7 +19394,7 @@ Mais il a encore mal à la gorge. Il reste encore un jour à la maison.
 Après deux jours de repos, Julien va beaucoup mieux. Il retourne au travail.
 
 « Il faut se reposer quand on est malade », dit Julien à Yanis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19431,7 +19431,7 @@ Elle donne une ordonnance à Yanis. Il doit prendre un médicament pendant trois
 Yanis remercie le docteur Petit. Il va à la pharmacie chercher son médicament.
 
 Après trois jours, Yanis va beaucoup mieux. Il n'a plus mal au ventre.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19468,7 +19468,7 @@ Après, Yanis n'a plus mal du tout ! Il est très soulagé.
 « Merci docteur, dit Yanis. Ce n'était pas si terrible, finalement. »
 
 En sortant, il pense : « La prochaine fois, j'irai chez le dentiste plus tôt. »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19501,7 +19501,7 @@ Il a aussi plus d'énergie pendant la journée.
 « Ce ne sont pas de grands changements, dit-il à Yanis. Mais ça change beaucoup de choses. »
 
 Yanis décide d'essayer, lui aussi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19536,7 +19536,7 @@ Le lendemain, il se sent vraiment mieux.
 « Alors, ça marche, tes remèdes de grand-mère ? » demande Yanis.
 
 « Peut-être, répond Julien en riant. Ou peut-être que le repos suffit. Mais la soupe était bonne ! »`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19565,7 +19565,7 @@ Nous avons joué à plusieurs jeux dans le jardin. Les enfants ont beaucoup ri.
 Ma fille a soufflé les bougies... mais elle a mis le feu à sa manche par accident ! Heureusement, ce n'était rien de grave. Nous avons vite éteint le petit feu avec un verre d'eau.
 
 Tout le monde a ri, y compris ma fille. « Une fête qu'on n'oubliera pas ! » a dit mon mari.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19594,7 +19594,7 @@ Le soir, il y a eu de la musique et de la danse. Les enfants dansaient devant to
 Nous avons dansé jusqu'à deux heures du matin. C'était une des plus belles fêtes de ma vie.
 
 Le lendemain, tout le monde était fatigué, mais heureux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19625,7 +19625,7 @@ Nous avons ri de bon cœur. Ce n'est pas grave, c'est Noël.
 Après le dîner, nous jouons à des jeux de société jusqu'à minuit.
 
 Ce ne sont jamais des vacances très reposantes. Mais je ne changerais ça pour rien au monde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19656,7 +19656,7 @@ Depuis cette fête, je connais mes voisins. Nous nous saluons dans la rue, nous 
 Cette année, j'ai décidé d'apporter une tarte aux pommes. Elle a eu beaucoup de succès !
 
 La fête des voisins a changé ma manière de vivre dans cette rue.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19689,7 +19689,7 @@ Mon mari est resté sans voix pendant une bonne minute. Puis il a ri et il a ple
 « Comment as-tu réussi à me cacher tout ça ? » m'a-t-il demandé plus tard.
 
 Cette fête restera un des meilleurs souvenirs de notre vie ensemble.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19718,7 +19718,7 @@ Ma femme a remarqué le changement. « Tu as l'air différent, plus en forme »,
 Maintenant, je cours trois fois par semaine, dans le parc près de chez moi.
 
 Je ne cours plus en cachette. Et je vais même parfois courir avec mon voisin, qui a commencé grâce à moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19749,7 +19749,7 @@ Après le cours, je me sentais étrangement calme et détendu.
 « Alors, toujours pas du vrai sport ? » m'a demandé ma sœur en souriant.
 
 J'ai dû admettre que j'avais eu tort. Je suis retourné au cours la semaine suivante.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19780,7 +19780,7 @@ Maintenant, ce n'est plus seulement du sport pour moi. C'est aussi devenu un mom
 Karim dit toujours : « Le plus dur, c'est de venir la première fois. Après, ça devient une habitude. »
 
 Il avait raison.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19811,7 +19811,7 @@ J'ai continué, un pied devant l'autre, jusqu'à la ligne d'arrivée.
 Quand j'ai fini la course, après une heure et huit minutes, j'étais épuisé mais tellement fier.
 
 Ma famille m'attendait à l'arrivée avec une médaille et un grand sourire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19844,7 +19844,7 @@ Les cinq derniers kilomètres ont été les plus longs de ma vie.
 Quand j'ai enfin franchi la ligne d'arrivée, après quatre heures et vingt minutes, j'ai pleuré de fatigue et de fierté.
 
 Je ne referai peut-être jamais un marathon. Mais je suis heureux de savoir que j'en ai fini un.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19873,7 +19873,7 @@ Ma sœur m'a aidé. « Si tu ne l'as pas portée depuis un an, donne-la », m'a-
 Mon armoire est maintenant bien plus légère. Je vois enfin tout ce que j'ai.
 
 Et je me sens un peu plus léger moi aussi, étrangement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19902,7 +19902,7 @@ Après, j'ai mis le pull dans un tiroir, sans vraiment savoir quoi en faire.
 Quelques mois plus tard, j'ai finalement donné le pull à une association caritative.
 
 Je n'ai jamais dit la vérité à ma belle-mère. Certains mensonges valent la peine, non ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19933,7 +19933,7 @@ Mon mari a regardé les sacs et a souri. « Encore les soldes... » a-t-il dit, 
 L'année prochaine, je me le promets encore : je n'irai pas aux soldes.
 
 Mais je sais déjà que je n'y arriverai pas.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19964,7 +19964,7 @@ Le week-end suivant, je l'ai laissée choisir seule ses vêtements, sans comment
 Elle est revenue avec des choix surprenants, mais elle souriait, vraiment fière d'elle-même.
 
 J'ai compris que le style, à cet âge, c'est surtout une façon de dire qui on est.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -19995,7 +19995,7 @@ Je réponds que non, au contraire. Chaque vêtement a une petite histoire, même
 En plus, j'ai dépensé beaucoup moins d'argent cette année, tout en ayant une garde-robe plus intéressante.
 
 Je ne pense pas revenir en arrière. Ce nouveau mode de consommation me convient parfaitement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20024,7 +20024,7 @@ Après trois mois, j'ai enfin réussi à jouer un morceau entier sans erreur. J'
 Mes propres enfants me regardent maintenant jouer, un peu surpris. « Je ne savais pas que tu savais jouer, papa ! »
 
 Le piano m'a redonné quelque chose que j'avais perdu depuis longtemps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20055,7 +20055,7 @@ Pendant deux heures, j'ai chanté chaque parole, avec des milliers d'autres pers
 À la fin, le chanteur a dit : « Merci d'avoir attendu si longtemps avec nous. » J'ai eu les larmes aux yeux.
 
 Ce concert restera un des plus beaux moments de ma vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20084,7 +20084,7 @@ Il l'a écoutée pendant une semaine, puis il m'a dit : « Elle est trop calme p
 Chacun sa playlist, chacun son trajet. Mais pour moi, ces chansons sont devenues une vraie habitude du matin.
 
 Sans musique, je pense que je détesterais vraiment ce trajet quotidien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20115,7 +20115,7 @@ Un soir, il m'a montré un accord difficile que je n'arrivais pas à faire. « C
 Les rôles s'étaient inversés : c'était lui qui m'apprenait maintenant.
 
 Nous jouons encore ensemble chaque dimanche. Il est devenu bien meilleur que moi, mais ça ne me dérange pas du tout.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20146,7 +20146,7 @@ Le dernier soir, pendant le concert final, la pluie s'est enfin arrêtée. Un ar
 Toute la foule a applaudi, autant pour le groupe que pour le ciel.
 
 En rentrant chez nous, épuisés et sales, nous étions tous d'accord : c'était le meilleur festival de notre vie, malgré la pluie. Ou peut-être justement à cause d'elle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20175,7 +20175,7 @@ Il a aussi pris l'habitude de venir dormir sur mes genoux, quand je regarde la t
 Notre vétérinaire dit qu'il est en très bonne santé, et qu'il grandit bien.
 
 En quelques semaines, Simba est devenu un vrai membre de la famille. Nous ne pouvons plus imaginer la maison sans lui.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20204,7 +20204,7 @@ L'année dernière, nous avons acheté un plus grand aquarium, avec des plantes 
 Mon fils dit souvent : « Bulle est mon animal préféré, même s'il ne peut pas jouer avec moi. »
 
 Ce petit poisson, gagné presque par hasard, a appris à mon fils ce que veut dire s'occuper de quelqu'un.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20235,7 +20235,7 @@ Ma fille était tellement soulagée qu'elle a pleuré de joie cette fois.
 Depuis cette aventure, nous vérifions deux fois que la cage est bien fermée avant de dormir.
 
 Nono, lui, ne semble se souvenir de rien. Il continue de courir dans sa roue comme si de rien n'était.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20266,7 +20266,7 @@ Finalement, il a adoré nager, encore plus que nous ne l'imaginions.
 Chaque matin des vacances, Rex nous attendait devant la porte, prêt à retourner à la plage.
 
 De retour à la maison, nous avons décidé que ce ne serait plus jamais des vacances sans lui.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20297,7 +20297,7 @@ La maison, depuis, semble étrangement silencieuse. Nous cherchons encore parfoi
 Ma fille a dit : « Dix-huit ans, c'est presque toute ma vie avec lui. »
 
 Nous savons qu'un jour, peut-être, un autre chat viendra. Mais pour l'instant, nous avons simplement besoin de nous souvenir de Minou.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20328,7 +20328,7 @@ En sortant du cinéma, nous avons discuté pendant une heure entière du film, p
 Finalement, personne n'était vraiment d'accord sur ce qui s'était passé !
 
 « Au moins, on aura de quoi parler toute la soirée », a dit un de mes amis en riant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20359,7 +20359,7 @@ Elle a ri. « Cette série rend tout le monde fou en ce moment, apparemment. »
 Après cette nuit difficile, j'ai décidé de me fixer une règle : un seul épisode par soir, pas plus.
 
 Ce n'est pas toujours facile à respecter, mais au moins, je dors mieux maintenant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20388,7 +20388,7 @@ Après le film, les habitants ont applaudi longuement, pas seulement pour le fil
 Un grand supermarché va peut-être ouvrir à sa place.
 
 Beaucoup d'habitants sont tristes de cette fermeture. Le quartier perd un endroit où les gens se retrouvaient, discutaient, partageaient une même histoire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20417,7 +20417,7 @@ Après le film, nous avons parlé pendant longtemps de nos propres familles, de 
 Ce film, que je pensais oublier facilement, m'a fait réfléchir pendant plusieurs jours.
 
 Certains films semblent simples, mais ils touchent quelque chose de profond en nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20450,7 +20450,7 @@ Si, dans quelques années, elle veut vraiment essayer ce métier, nous la soutie
 « Merci de m'écouter, maman », m'a-t-elle dit après cette discussion. « Je sais que ce n'est pas le chemin le plus simple. »
 
 Je ne sais pas ce que l'avenir lui réserve. Mais je sais qu'elle a une vraie passion, et ça, ça compte beaucoup.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20481,7 +20481,7 @@ Il y a une dame âgée, toujours assise à la même place, qui me sourit chaque 
 Le trajet dure vingt-cinq minutes, un peu plus long qu'en voiture, mais je peux lire pendant le trajet.
 
 Je ne pensais pas dire ça un jour, mais je préfère finalement le bus à la voiture.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20512,7 +20512,7 @@ Une femme à côté de moi m'a proposé son chargeur de téléphone, en voyant q
 Finalement, le métro est reparti après cinquante-cinq minutes. J'ai appelé l'entreprise pour expliquer mon retard.
 
 Ils ont été compréhensifs et ont décalé l'entretien d'une heure. Tout s'est bien terminé, malgré cette matinée stressante.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20543,7 +20543,7 @@ J'ai aussi économisé beaucoup d'argent : plus d'essence, plus de parking à pa
 La seule chose vraiment plus difficile, c'est de faire les grosses courses sans voiture. Je dois maintenant les faire à pied, avec un sac, ou demander de l'aide à un ami.
 
 Dans l'ensemble, je ne regrette absolument pas ce changement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20576,7 +20576,7 @@ D'autres, au contraire, espèrent que le tramway attirera de nouveaux clients da
 La mairie affirme que le nombre de voitures en centre-ville a déjà commencé à baisser.
 
 Dans un an, une deuxième ligne devrait ouvrir vers l'est de la ville.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20611,7 +20611,7 @@ Le train a roulé toute la nuit, avec un léger bruit régulier, presque apaisan
 Le lendemain matin, je suis arrivé reposé, avec l'impression étrange d'avoir vécu un petit moment suspendu dans le temps.
 
 Je referai sans doute ce voyage en train, même si c'est plus long que l'avion.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20642,7 +20642,7 @@ Il m'a fallu tout le week-end pour finir les quatre murs.
 Le dimanche soir, j'étais épuisé, couvert de peinture, mais très fier du résultat.
 
 Ma cuisine a maintenant un look complètement différent, et je l'ai fait moi-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20675,7 +20675,7 @@ Cette fois, j'ai demandé conseil à mon voisin, qui bricole souvent.
 Il m'a aidé à refaire l'installation correctement, avec les bons outils.
 
 Cette deuxième étagère, elle, tient parfaitement, même avec tous mes livres dessus.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20706,7 +20706,7 @@ Enfin, j'ai poncé toute la surface pour qu'elle soit bien lisse, puis j'ai appl
 Après trois semaines de travail, ma table basse était enfin terminée.
 
 Elle n'est pas parfaite, on voit quelques petits défauts si on regarde de près. Mais elle est dans mon salon maintenant, et j'en suis très fier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20739,7 +20739,7 @@ Le plombier est arrivé une heure plus tard. Il a réparé le tuyau en vingt min
 « Ce n'est pas grave, m'a-t-il dit en souriant. Beaucoup de gens font la même erreur en voulant bien faire. »
 
 La prochaine fois, je crois que j'appellerai directement un professionnel, sans essayer moi-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20772,7 +20772,7 @@ Mais petit à petit, pièce par pièce, la maison a commencé à ressembler à c
 Après deux ans de travaux, la maison est enfin presque terminée.
 
 Nos amis avaient raison sur le temps et l'argent. Mais aujourd'hui, en regardant cette maison que nous avons transformée nous-mêmes, nous ne regrettons rien.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20803,7 +20803,7 @@ Le soir, dans mon petit studio étudiant, j'ai un peu pensé à mes parents et �
 Mais dès le deuxième jour, j'ai commencé à parler à d'autres étudiants dans mon cours.
 
 Une fille de ma classe, Léa, m'a proposé de déjeuner ensemble. Ce petit geste a beaucoup changé ma semaine.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20834,7 +20834,7 @@ Depuis, nous nous entendons bien mieux. Nous cuisinons même parfois ensemble, l
 L'un de mes colocataires, Hugo, est devenu un très bon ami. Nous étudions souvent ensemble à la bibliothèque.
 
 Je ne pensais pas qu'une colocation avec des inconnus deviendrait si agréable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20867,7 +20867,7 @@ J'ai suivi son conseil, et j'ai changé complètement ma façon de travailler.
 Au deuxième examen, en mai, j'ai obtenu une bien meilleure note.
 
 Cet échec, aussi difficile soit-il sur le moment, m'a appris à mieux étudier.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20900,7 +20900,7 @@ J'ai accepté immédiatement, soulagée après tant de recherches difficiles.
 Le stage a duré trois mois, et j'y ai beaucoup appris, bien plus que je ne l'imaginais.
 
 À la fin, Madame Girard m'a même proposé un emploi à temps partiel pour continuer avec eux.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20933,7 +20933,7 @@ Maintenant, je dois trouver un emploi, dans un marché du travail qui n'est pas 
 Je ne sais pas encore exactement ce que l'avenir me réserve.
 
 Mais je pars avec un diplôme, des amis précieux, et la conviction d'avoir bien utilisé ces années.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20964,7 +20964,7 @@ Quatre jours plus tard, le livreur a sonné à ma porte avec mon colis.
 J'ai ouvert le paquet avec une excitation presque enfantine. Le livre était exactement celui que j'avais commandé.
 
 Depuis ce jour, j'achète régulièrement en ligne, sans plus aucune peur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -20997,7 +20997,7 @@ Après une longue attente, une employée m'a proposé de renvoyer immédiatement
 Le nouveau colis est arrivé deux jours plus tard, juste à temps pour l'anniversaire.
 
 J'ai eu de la chance, mais cette expérience m'a rendue plus prudente pour mes futures commandes importantes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21028,7 +21028,7 @@ Mais pour moi, ces quelques minutes valent vraiment la peine, surtout pour les a
 Le plus difficile, c'est de résister à l'envie d'acheter tout de suite, avant même d'avoir comparé.
 
 J'ai appris à être patiente, et cette patience a un vrai prix : celui de l'argent économisé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21059,7 +21059,7 @@ Pendant ce temps, j'ai commandé une taille au-dessus, dans une autre couleur, p
 Cette deuxième robe est arrivée quatre jours avant le mariage, et elle m'allait parfaitement, cette fois.
 
 J'ai porté cette robe avec plaisir, mais j'ai bien retenu la leçon : toujours vérifier attentivement les tailles avant de commander en ligne pour une occasion importante.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21092,7 +21092,7 @@ La plupart du temps, après ce délai, je n'ai plus vraiment envie de cet objet.
 J'ai aussi désactivé les notifications de ces sites sur mon téléphone.
 
 Ce petit changement m'a permis d'économiser beaucoup d'argent, et de reprendre le contrôle sur mes achats.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21117,7 +21117,7 @@ On dit souvent qu'il ne faut pas juger les gens sur leur apparence. C'est vrai, 
 Depuis cette conversation, mon armoire me semble différente. Ces couleurs sombres, ces coupes simples, sans motif : tout cela raconte peut-être une envie de ne pas se faire remarquer, de rester dans une zone familière plutôt que d'expérimenter. Un collègue plus audacieux, lui, change de style presque chaque semaine ; il dit que ça l'amuse, et que ça ne demande aucun courage particulier.
 
 Je ne suis pas devenu passionné de mode du jour au lendemain. Mais je fais maintenant des choix un peu plus conscients, en sachant que même le gris a quelque chose à dire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21144,7 +21144,7 @@ Certaines marques répondent désormais à ces critiques en proposant des lignes
 Depuis, j'essaie d'acheter moins, mais mieux. Je choisis des vêtements que je porterai plusieurs années, plutôt que des pièces qui suivent une tendance éphémère.
 
 Je ne prétends pas avoir complètement changé mes habitudes. Mais je réfléchis maintenant un peu plus avant chaque achat, en me demandant ce que ce prix bas signifie vraiment.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21171,7 +21171,7 @@ Cette pression change d'ailleurs selon les groupes : un dîner de famille et une
 Peut-être que la vraie liberté n'est pas d'ignorer totalement ce regard, ce qui semble presque impossible, mais de choisir consciemment jusqu'où on le laisse influencer nos choix.
 
 Je continue, pour ma part, à m'habiller différemment selon les situations. Et je ne suis plus sûr que ce soit un problème.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21198,7 +21198,7 @@ Certaines certifications, censées garantir des conditions de travail décentes,
 Face à ces chiffres, difficile de continuer à acheter sans y penser, du moins pour moi. Je ne dis pas qu'il faut arrêter d'acheter des vêtements neufs, ce serait naïf et peu réaliste pour la plupart des gens.
 
 Mais peut-être devrions-nous nous demander, avant chaque achat très bon marché, qui a réellement payé la différence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21227,7 +21227,7 @@ Certains proches trouvent cette démarche extrême, presque absurde. « Tu ne t'
 En réalité, c'est l'inverse qui s'est produit. Libéré du choix permanent et de l'accumulation, j'accorde aujourd'hui plus d'attention à la qualité de chaque pièce, et moins à la quantité.
 
 Cette expérience, qui semblait au départ une simple contrainte, est devenue une vraie façon de repenser ma relation aux objets en général.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21254,7 +21254,7 @@ Un soir, je lui ai demandé d'expliquer ce qu'il trouvait à l'un de ses morceau
 Je me demande parfois si, dans vingt ans, ces chansons actuelles lui rappelleront cette période de sa vie, exactement comme les miennes me ramènent à la mienne.
 
 Il y a quelque chose de rassurant dans cette idée : la musique qu'on aime à quinze ans ne nous quitte peut-être jamais vraiment, même quand tout le reste change.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21281,7 +21281,7 @@ Cela suggère que la mémoire musicale serait en quelque sorte plus profondémen
 Certains enseignants exploitent déjà ce mécanisme en classe : associer une information complexe à une mélodie simple en facilite étonnamment la mémorisation, y compris chez des élèves qui peinent autrement à retenir la même leçon présentée sous une forme purement verbale.
 
 Ces recherches ouvrent aujourd'hui des pistes intéressantes, notamment pour utiliser la musique dans le traitement de certaines maladies liées à la mémoire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21308,7 +21308,7 @@ Depuis cette conversation, j'assume un peu plus ouvertement ces goûts musicaux 
 Mes enfants, eux, n'ont jamais connu ce genre de gêne. Ils écoutent à voix haute ce qui leur plaît, sans filtrer selon l'image que cela projette. Peut-être qu'une génération habituée aux plateformes de streaming personnalisées développe naturellement un rapport plus libre à ses propres goûts que la mienne n'a jamais eu.
 
 Peut-être que le vrai plaisir musical commence quand on arrête de choisir sa musique en fonction du regard des autres.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21335,7 +21335,7 @@ Cette efficacité a un revers : je découvre peut-être moins de choses qui me s
 Un ami m'a recommandé récemment un groupe qu'aucun algorithme ne m'aurait proposé, simplement parce qu'il connaissait une anecdote liée à leur histoire. Cette découverte, chargée d'un récit humain, m'a marqué bien davantage que la plupart des suggestions automatiques que je reçois chaque semaine, aussi pertinentes soient-elles statistiquement.
 
 Je ne rejette pas complètement ces recommandations, qui m'ont fait découvrir de vrais coups de cœur. Mais j'essaie, de temps en temps, de chercher volontairement en dehors de ce que l'algorithme me propose.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21364,7 +21364,7 @@ Une amie, à qui j'ai raconté cette découverte, a vérifié son propre histori
 Aujourd'hui, quand je remarque que je reviens vers une musique particulièrement mélancolique pendant plusieurs jours d'affilée, je me pose la question : qu'est-ce qui, dans ma vie en ce moment, mérite peut-être un peu plus d'attention ?
 
 La musique, sans qu'on s'en aperçoive toujours, en dit peut-être plus long sur nous que nos propres mots.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21391,7 +21391,7 @@ J'ai moi-même découvert plusieurs de mes films préférés bien après leur so
 Le même phénomène touche la musique : un album ignoré à sa sortie peut, vingt ans plus tard, devenir une référence pour toute une scène. Ce décalage entre l'accueil immédiat et la reconnaissance tardive en dit peut-être davantage sur la difficulté du public à apprécier ce qui s'écarte trop de ses attentes du moment que sur la qualité réelle de l'œuvre elle-même.
 
 Ce phénomène montre bien que la valeur d'une œuvre ne se mesure pas uniquement à son succès immédiat. Parfois, il faut simplement le bon moment, et le bon public, pour qu'un film trouve enfin sa place.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21418,7 +21418,7 @@ Le simple fait de sortir de chez moi pour aller m'installer dans un lieu dédié
 Certains cinémas, conscients de cette évolution, misent aujourd'hui sur une expérience que le streaming ne peut pas offrir : des salles plus confortables, des événements spéciaux, des rencontres avec des réalisateurs.
 
 Je continue d'aller au cinéma de temps en temps, précisément pour retrouver cette attention particulière que je ne parviens plus à recréer chez moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21445,7 +21445,7 @@ Cette multiplication des remakes reflète peut-être aussi une époque plus prud
 Le résultat, c'est que le cinéma grand public semble parfois tourner en boucle sur lui-même, recyclant les mêmes histoires plutôt que d'en inventer de nouvelles.
 
 Je continue d'espérer, malgré tout, que les studios prendront à nouveau davantage de risques créatifs à l'avenir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21472,7 +21472,7 @@ De plus, certains critiques professionnels ont parfois des goûts très éloign�
 Avant un billet coûteux, je croise désormais les deux sources : l'avis d'un critique reconnu et la moyenne des notes du public. Cette double vérification, un peu plus longue qu'une décision impulsive, m'évite au moins les déceptions les plus prévisibles, sans pour autant m'ôter le plaisir d'une découverte personnelle.
 
 Je pense, pour ma part, que les deux approches ont leur utilité, selon ce qu'on cherche. Pour un film d'auteur exigeant, l'avis d'un critique reste précieux. Pour une comédie familiale, l'avis du public me semble suffisant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21499,7 +21499,7 @@ Ce n'est donc pas simplement une question de goût, mais aussi une question d'ha
 Depuis cette soirée manquée, nous avons pris l'habitude d'échanger nos rôles : je choisis un film que mes parents auraient aimé au même âge, pendant qu'ils tentent, de leur côté, de comprendre ce qui m'attire dans mes propres choix. Le résultat reste maladroit la plupart du temps, mais quelque chose s'en trouve un peu rapproché.
 
 Cette découverte m'a rendu plus indulgent envers les deux générations : ni mes parents ni moi n'avons "tort" dans notre manière de regarder un film. Nous avons simplement appris, chacun à notre époque, un langage visuel différent.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21526,7 +21526,7 @@ J'ai essayé plusieurs fois de réduire mon temps d'écran, avec un succès miti
 Les moments où je consulte le plus ces applications correspondent presque toujours à une pointe de stress ou d'ennui, comme si mon téléphone servait de réflexe automatique face à un inconfort que je préfère éviter plutôt qu'affronter directement. Une fois cette observation faite, au moins, je sais reconnaître le signal.
 
 Je ne pense pas que la solution soit de tout supprimer complètement, ce serait sans doute excessif pour ma vie sociale et professionnelle. Mais je cherche encore un équilibre satisfaisant, entre l'utilité réelle de ces outils et le temps qu'ils m'absorbent malgré moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21555,7 +21555,7 @@ Cette confidence m'a rappelé une chose simple : personne ne publie sa vie enti�
 Curieusement, je me montre parfois plus honnête sur un sujet précis avec des inconnus croisés en ligne qu'avec mes propres abonnés sur mon quotidien général. L'anonymat relatif de ces échanges ponctuels retire peut-être une partie de la pression que je ressens sur mon profil principal, où je sais que des proches me lisent.
 
 Je continue de publier, moi aussi, principalement mes bons moments. Mais j'essaie désormais de me souvenir que c'est également le cas pour tout le monde autour de moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21582,7 +21582,7 @@ Quand j'ai réactivé mes comptes, à la fin du mois, j'ai été surpris de cons
 Deux amis, inquiets de ne plus avoir de nouvelles, m'ont appelé directement pendant cette pause, un mode de communication que nous avions presque abandonné. Ces conversations, plus longues et plus profondes que nos échanges habituels en ligne, m'ont rappelé une forme d'amitié que les réseaux avaient, sans que je m'en rende vraiment compte, discrètement remplacée.
 
 Je n'ai pas supprimé mes comptes définitivement. Mais je m'accorde désormais régulièrement des pauses, en me souvenant de ce que ce mois m'avait rendu.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21609,7 +21609,7 @@ Cette explication me rassure un peu, sans résoudre complètement le problème. 
 Depuis, je publie de temps en temps un moment moins parfait de ma propre vie, en partie pour équilibrer un peu cette image collective trop lissée. Plusieurs abonnés m'ont remerciée pour cette honnêteté, ce qui laisse penser que d'autres, eux aussi, se sentent soulagés de voir une existence qui n'a rien d'uniformément réussie.
 
 J'essaie, quand je remarque cette sensation d'insatisfaction, de me rappeler consciemment que je ne vois qu'un fragment soigneusement choisi de la vie des autres, et non leur réalité complète.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21636,7 +21636,7 @@ Sans que je le lui demande, elle a elle-même désactivé certaines notification
 Cette lucidité me rassure en partie, sans effacer complètement mon inquiétude. Grandir avec ces outils depuis l'enfance a peut-être développé chez sa génération une forme de recul que la mienne a dû apprendre plus tard, parfois difficilement.
 
 Je continue de surveiller son usage, tout en essayant de faire confiance à cette lucidité qu'elle semble avoir développée bien plus tôt que moi.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21665,7 +21665,7 @@ Cette expérience m'a appris quelque chose d'important : la solution miracle qu'
 En discutant plus tard avec d'autres personnes ayant vécu la même mésaventure, j'ai découvert que ce sentiment d'échec personnel était étrangement répandu. Beaucoup se reprochaient leur manque de volonté, alors que le problème venait peut-être davantage de la conception même du régime que d'un défaut de caractère quelconque.
 
 Aujourd'hui, j'essaie plutôt de manger un peu plus équilibré, sans interdiction totale, ce qui me semble bien plus simple à tenir dans la durée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21694,7 +21694,7 @@ Mon frère continue de trouver ça un peu contraignant, mais il a fini par accep
 Un de mes neveux, sans que je le lui demande jamais, a fini par suivre le même chemin, simplement en observant mes choix au fil des repas partagés. Cette influence discrète, jamais revendiquée, m'a semblé finalement plus efficace que n'importe quel argument que j'aurais pu avancer directement à table.
 
 Cette expérience m'a montré qu'un choix alimentaire personnel peut toucher, bien plus qu'on ne l'imagine, des questions familiales sensibles autour de la tradition et de l'appartenance.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21721,7 +21721,7 @@ Puis, progressivement, mes envies diminuent, sans disparaître complètement. Un
 J'ai pris l'habitude, depuis, de lire les étiquettes plus attentivement, découvrant avec surprise la quantité de sucre ajouté dans des produits qui ne me semblaient pourtant pas sucrés au goût. Cette vigilance, fastidieuse les premières semaines, est devenue un réflexe qui a discrètement changé mes choix au supermarché.
 
 Je ne pense pas qu'il faille bannir totalement le sucre, ce qui semble d'ailleurs presque impossible dans notre alimentation actuelle. Mais apprendre à mieux le doser, plutôt que de le consommer par automatisme, change beaucoup de choses.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21748,7 +21748,7 @@ Ma grand-mère, quand je lui montre mes propres repas, reste souvent perplexe de
 Mes propres enfants grandissent avec une familiarité pour ces cuisines mélangées que je n'avais absolument pas au même âge. Pour eux, un plat asiatique ou une recette mexicaine n'a rien d'exotique : c'est une option ordinaire, aussi normale que le plat traditionnel que préparait leur arrière-grand-mère chaque dimanche.
 
 Nos assiettes changent avec notre époque, portant les traces de nos modes de vie, de nos échanges culturels, et parfois aussi de nos contraintes de temps.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21777,7 +21777,7 @@ Cette attention nouvelle à mes propres sensations s'est étendue, presque sans 
 Ce changement n'a rien d'un régime au sens classique. Il ne s'agit pas de manger moins, mais de manger plus consciemment, en réapprenant un signal que des années d'habitudes avaient fini par brouiller.
 
 Cette démarche demande de la patience, mais elle m'a réconciliée avec une relation à la nourriture plus simple, et finalement plus apaisée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21802,7 +21802,7 @@ J'ai aussi remarqué que je travaillais, sans m'en rendre compte, bien plus tard
 Les jours suivants m'ont appris qu'il fallait réapprendre à structurer ma propre journée, sans les repères qu'offrait autrefois le bureau : la pause déjeuner collective, les allers-retours entre deux réunions, les petites interruptions qui ponctuaient naturellement le temps. Tout cela, il fallait désormais le recréer volontairement, sans qu'aucune contrainte extérieure ne m'y pousse.
 
 Ce premier jour ne s'est pas déroulé comme je l'imaginais : ni la liberté rêvée, ni la catastrophe redoutée par certains. Simplement une nouvelle façon de travailler, avec ses propres règles à inventer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21829,7 +21829,7 @@ J'ai essayé cette méthode, avec un certain succès. Ce simple geste, presque s
 Un collègue confronté à la même difficulté a trouvé sa propre parade, presque comique : il change littéralement de vêtements en fin de journée, comme s'il rentrait du bureau, uniquement pour marquer une transition que l'absence de trajet ne fournit plus.
 
 Le télétravail nous offre une vraie liberté d'organisation. Mais cette liberté demande, paradoxalement, une discipline nouvelle pour ne pas laisser le travail envahir chaque moment de notre vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21856,7 +21856,7 @@ En télétravail, je suis certainement plus efficace sur certaines tâches préc
 J'ai essayé de recréer artificiellement certains de ces instants informels, en proposant des appels vidéo sans ordre du jour précis, juste pour discuter. Le résultat varie : certaines conversations restent maladroites derrière un écran, d'autres retrouvent, avec le temps, un peu de la spontanéité que je croyais perdue pour de bon.
 
 Cette expérience m'a appris qu'il ne faut jamais juger totalement une situation avant de vivre son contraire. Le bureau avait ses défauts réels, mais aussi des qualités que je n'avais jamais réellement remarquées.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21883,7 +21883,7 @@ J'ai aussi appris à faire davantage confiance, en me concentrant sur les résul
 Je repère désormais des signaux plus discrets que je n'aurais jamais remarqués auparavant : un ton légèrement différent, un délai de réponse inhabituel, une caméra qui reste éteinte plus souvent que d'habitude. Ces indices ténus sont devenus mes nouveaux outils, là où un simple coup d'œil dans un couloir suffisait autrefois.
 
 Ce changement de posture, difficile au début, m'a finalement rendu meilleur manager, je crois, en m'obligeant à me concentrer sur l'essentiel : la confiance et la communication réelle, plutôt que sur la simple surveillance.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21912,7 +21912,7 @@ En me promenant récemment dans ce même quartier un lundi, j'ai remarqué que c
 Je me demande souvent à quoi ressembleront nos villes dans dix ans, si cette tendance continue de s'installer durablement. Peut-être verrons-nous des centres-villes réinventés, moins centrés uniquement sur le travail de bureau, et davantage mêlant logements, commerces et loisirs.
 
 Une chose semble certaine : la manière dont nous travaillons continue de redessiner, discrètement mais profondément, l'espace même de nos villes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21937,7 +21937,7 @@ Mon chat, que j'ai appelé Léon, m'a effectivement aidé pendant cette période
 D'autres personnes ayant vécu une rupture similaire décrivent exactement le même réflexe : l'impression qu'un animal, sans jamais poser de question ni exiger d'explication, offre une présence rassurante précisément au moment où l'on se sent le moins capable de raconter ce qui nous arrive à quelqu'un d'autre.
 
 Je ne prétends pas qu'un animal remplace une relation humaine, ce serait exagéré. Mais je comprends aujourd'hui pourquoi tant de personnes, dans une période de vulnérabilité, cherchent ce type de compagnie simple et inconditionnelle.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21964,7 +21964,7 @@ D'autres, au contraire, défendent ces dépenses comme légitimes, considérant 
 Je dois avouer avoir moi-même cédé à certains de ces achats superflus pour mon propre chat, sans être pleinement convaincue de leur utilité. Cette contradiction, entre ma lucidité de principe et mon comportement réel de consommatrice, illustre peut-être la difficulté générale à résister à ce marché, même quand on en connaît les mécanismes.
 
 Ce marché, qui ne cesse de croître, illustre en tout cas à quel point notre relation aux animaux de compagnie a profondément évolué.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -21991,7 +21991,7 @@ J'ai finalement trouvé un appartement accueillant mon chien, après plusieurs s
 Certaines associations proposent désormais des labels signalant les logements réellement ouverts aux animaux, ce qui facilite la recherche pour d'autres locataires dans ma situation. Ce type d'initiative, encore peu connu, mériterait davantage de visibilité tant la difficulté que j'ai rencontrée semble largement partagée autour de moi.
 
 Cette expérience m'a fait réfléchir à une question plus large : dans une société où de plus en plus de gens vivent seuls avec un animal pour compagnie, ne devrions-nous pas repenser certaines règles de logement devenues, à mon avis, dépassées ?`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22018,7 +22018,7 @@ Cette remarque m'a obligé à changer d'attitude, pas seulement envers mon chien
 Cette patience nouvellement acquise s'étend désormais à des situations où je ne l'aurais jamais appliquée auparavant : une file d'attente interminable, un collègue qui explique lentement quelque chose que j'ai déjà compris. Mon chien, sans le savoir, m'a rendu un peu plus supportable pour les gens qui m'entourent.
 
 Aujourd'hui, mon chien obéit bien mieux, mais je pense avoir moi-même changé davantage que lui pendant cet apprentissage. Il m'a, sans le savoir, enseigné une leçon que je n'avais jamais réussi à apprendre autrement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22045,7 +22045,7 @@ D'autres restent sceptiques, estimant qu'on ne peut mettre sur un même plan la 
 En racontant cette journée à des collègues, j'ai découvert que plusieurs d'entre eux avaient vécu un silence identique à la mort de leur propre animal, sans jamais oser en parler ouvertement au travail non plus. Ce silence partagé, révélé seulement après coup, suggère qu'un vrai besoin existe, même s'il reste largement tu.
 
 Je comprends cette réserve, sans la partager complètement. Le lien créé sur quinze années avec un compagnon fidèle représente, à mes yeux, une perte réelle, méritant peut-être davantage de reconnaissance que le simple silence poli que j'ai reçu ce jour-là.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22072,7 +22072,7 @@ D'autres, comme mon voisin qui tient un petit restaurant, attendent au contraire
 Certains habitants ont trouvé leurs propres parades pour composer avec cette période : décaler leurs horaires de courses, éviter certaines rues aux heures les plus fréquentées, adopter, le temps de l'été, un rythme légèrement différent, comme si la ville elle-même devenait un lieu qu'il fallait réapprendre à habiter.
 
 Cette situation m'inspire des sentiments partagés. Je comprends l'importance économique de ce tourisme pour ma ville. Mais je ressens aussi, chaque année, un léger soulagement quand septembre arrive et que ma ville retrouve, progressivement, son calme habituel.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22099,7 +22099,7 @@ Ma grand-mère, qui a longtemps regretté le déclin de son village natal, recon
 Lors de ma dernière visite, j'ai croisé plusieurs jeunes revenus s'installer au village, attirés par ces emplois liés au tourisme, après être partis en ville chercher du travail quelques années plus tôt. Ce retour modeste redonne au village une population plus jeune qu'il n'en avait connu depuis des décennies.
 
 Cette histoire illustre bien une réalité complexe : le tourisme, souvent critiqué pour ses effets négatifs sur certains lieux, peut aussi représenter, pour d'autres endroits menacés de disparition, une véritable planche de salut économique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22126,7 +22126,7 @@ Certains sites touristiques commencent eux-mêmes à limiter cette pratique, en 
 Depuis cette prise de conscience, j'essaie de limiter mes photos pendant les voyages, en me forçant parfois à ranger mon téléphone complètement pendant quelques heures.
 
 Ce n'est pas toujours facile, tant l'habitude de photographier chaque instant est devenue automatique. Mais je ressens, quand j'y parviens, une présence différente, plus réelle, à ce que je suis venu voir.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22153,7 +22153,7 @@ Ma propre ville envisage actuellement des mesures similaires, sans avoir encore 
 Plusieurs habitants du quartier envisagent sérieusement de déménager, non par choix mais par nécessité, faute de pouvoir continuer à payer un loyer désormais calé sur les revenus touristiques plutôt que sur les salaires locaux. Cette pression, difficile à chiffrer précisément, transforme peu à peu la composition sociale du quartier lui-même.
 
 Cette situation illustre une tension croissante dans de nombreuses villes touristiques : comment profiter des bénéfices économiques du tourisme sans sacrifier la possibilité, pour les habitants eux-mêmes, de continuer à vivre dans leur propre ville.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22180,7 +22180,7 @@ Ce mode de voyage, plus lent, correspond aussi à ce qu'on appelle aujourd'hui l
 Étrangement, je me souviens beaucoup mieux de ce mois passé dans ce village que de nombreux voyages plus courts et plus chargés faits les années précédentes. La lenteur, contrairement à ce que je redoutais, a produit des souvenirs plus riches et plus précis que l'accumulation rapide de visites que je pratiquais avant.
 
 Je ne renie pas totalement mes anciens voyages, qui m'ont fait découvrir de nombreux endroits magnifiques. Mais cette nouvelle approche, plus lente et plus profonde, m'a offert quelque chose que mes voyages précédents n'avaient jamais réussi à me donner : un vrai sentiment d'avoir vécu quelque part, ne serait-ce que pour un mois.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22205,7 +22205,7 @@ Cette conversation m'a poussé à réfléchir sérieusement, pour la première f
 En en parlant autour de moi, j'ai découvert que plusieurs collègues vivaient exactement la même situation, sans jamais l'avoir vraiment questionnée eux non plus. Cette découverte partagée m'a un peu rassuré, tout en confirmant à quel point ce déni du manque de sommeil semble répandu dans mon entourage professionnel.
 
 Depuis ce jour, j'essaie, avec plus ou moins de succès, de me coucher plus tôt. Ce n'est pas encore parfait, mais au moins, je ne considère plus ma fatigue permanente comme une fatalité inévitable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22232,7 +22232,7 @@ Je repense maintenant à des erreurs commises au travail, des décisions prises 
 Depuis, je surveille de plus près mon propre comportement au lendemain d'une mauvaise nuit, et je reconnais effectivement une irritabilité, une distraction que j'attribuais autrefois à d'autres causes. Cette observation directe, faite sur moi-même, m'a convaincu bien plus qu'aucune statistique de la réalité concrète de ces effets.
 
 Cette prise de conscience, bien que tardive, change ma manière de considérer le sommeil aujourd'hui. Ce n'est plus, à mes yeux, un luxe optionnel qu'on peut sacrifier sans conséquence, mais un besoin fondamental, aussi important que l'alimentation ou l'exercice physique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22257,7 +22257,7 @@ Autrement dit, la plupart des gens qui affirment dormir quatre heures et "s'en s
 Certains collègues qui revendiquaient fièrement dormir peu commettaient pourtant des erreurs qu'un peu plus de repos leur aurait sans doute épargnées. Cette contradiction, entre le prestige affiché du sacrifice et son coût réel sur la qualité du travail, reste pourtant rarement questionnée dans ces mêmes environnements professionnels.
 
 Cette découverte a changé mon regard sur ce mythe de la réussite par le manque de sommeil. Ce n'est pas un signe de force, mais bien souvent un signe d'épuisement non reconnu, présenté à tort comme une qualité admirable.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22286,7 +22286,7 @@ Le médecin m'a proposé un traitement adapté, qui a progressivement amélioré
 En salle d'attente, ce matin-là, j'avais discuté avec d'autres patients qui décrivaient des années de difficultés similaires avant de se décider enfin à consulter, souvent freinés par l'idée que leur problème n'était pas assez grave pour justifier une telle démarche.
 
 Cette expérience étrange, presque scientifique, m'a permis de comprendre que certains problèmes de sommeil ont des causes physiologiques précises, qui méritent d'être identifiées plutôt que simplement subies en silence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22313,7 +22313,7 @@ Renoncer à certaines habitudes du soir — un film tardif, une lecture au lit s
 Progressivement, cependant, les résultats sont apparus. Mon endormissement est devenu plus rapide, mes réveils nocturnes moins fréquents.
 
 Cette expérience m'a appris une leçon plus large que le simple sommeil : certaines compétences que nous croyons acquises pour toujours peuvent en réalité se perdre avec le temps, et méritent parfois d'être réapprises, patiemment, à n'importe quel âge de la vie.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22340,7 +22340,7 @@ Progressivement, ce tri est devenu un réflexe presque automatique. Je regarde d
 Mes enfants, en me voyant faire ce tri chaque jour, ont fini par le reproduire spontanément, sans que j'aie eu besoin de le leur enseigner. Cette transmission presque silencieuse, par le simple exemple répété, a fonctionné bien mieux que n'importe quel discours que j'aurais pu leur tenir sur le sujet.
 
 Ce simple geste, imposé au départ par mon immeuble, a fini par changer ma manière de consommer bien plus largement que je ne l'aurais imaginé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22367,7 +22367,7 @@ Ce changement d'habitude a eu plusieurs effets inattendus. D'abord, j'achète d�
 Le gaspillage, lui aussi, a nettement reculé : j'achète désormais des quantités précises, adaptées à mes besoins réels, plutôt que des emballages standardisés souvent trop grands. Ce changement discret mais constant a fini par modifier durablement mon rapport à ce que je conserve chez moi.
 
 Je continue de faire une partie de mes courses dans des magasins classiques, pour certains produits non disponibles en vrac. Mais cette nouvelle habitude, adoptée progressivement, a changé ma manière de considérer chaque achat alimentaire, désormais plus réfléchi qu'auparavant.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22396,7 +22396,7 @@ Aujourd'hui, presque un an après cette décision, j'estime avoir réduit ma con
 Compter, semaine après semaine, le nombre de bouteilles que je ne rachète plus procure une satisfaction presque comptable : un chiffre concret, qui rend visible un changement qui, autrement, serait resté abstrait et facile à oublier dans le tourbillon du quotidien.
 
 Ce changement, qui semblait simple sur le papier, m'a rappelé qu'une habitude ancienne demande du temps et de la patience pour être réellement transformée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22423,7 +22423,7 @@ Après plusieurs ajustements, le système a fini par bien fonctionner, sans odeu
 Mes voisins, curieux de voir ce petit composteur posé sur mon plan de travail, m'ont posé de nombreuses questions ; certains ont fini par essayer à leur tour. Ce geste au départ purement personnel a fini par essaimer discrètement dans l'immeuble, sans que je l'aie jamais recherché.
 
 Cette expérience, qui semblait impossible au départ dans mon petit appartement, m'a montré qu'avec un peu de recherche et de patience, presque n'importe quel geste écologique peut s'adapter, même aux conditions de vie les plus contraignantes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22450,7 +22450,7 @@ En parler ouvertement autour de moi, sans le présenter comme une solution mirac
 Je continue, pour ma part, à croire en l'utilité de mes propres gestes quotidiens, sans me faire d'illusions excessives sur leur portée individuelle.
 
 Je pense simplement qu'agir à mon échelle, tout en soutenant également des changements plus larges, politiques et industriels, reste la position la plus cohérente, plutôt que d'attendre passivement que d'autres résolvent seuls un problème qui nous concerne tous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22471,7 +22471,7 @@ Faut-il pour autant regretter cette transformation ? Certains y voient une véri
 D'autres observateurs soulignent, à l'inverse, que cette dimension spectaculaire a toujours accompagné le sport, sous une forme ou une autre, depuis les jeux antiques jusqu'aux premiers matchs radiodiffusés du siècle dernier. Le sport, rappellent-ils, a toujours été en partie un spectacle collectif, rassemblant des foules avides d'émotion autant que de performance pure ; et cette dimension n'a jamais empêché, en parallèle, l'existence d'une véritable exigence athlétique, ni la possibilité d'exploits sincères et imprévisibles.
 
 Peut-être la question la plus juste n'est-elle donc pas de savoir si le sport est devenu un spectacle, ce qu'il a toujours été en partie, mais de se demander si cette dimension spectaculaire, aujourd'hui démultipliée par les impératifs commerciaux, laisse encore suffisamment de place à ce qui faisait, à l'origine, la valeur profonde du sport : l'incertitude réelle du résultat, l'effort authentique des corps engagés, et la possibilité, toujours vivante malgré tout, qu'un simple outsider vienne renverser tous les pronostics établis.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22492,7 +22492,7 @@ Une explication possible réside dans l'attrait rassurant de la mesure elle-mêm
 Cette quantification généralisée n'est pourtant pas sans conséquences. Des chercheurs en psychologie du travail et de l'éducation observent une augmentation significative de l'anxiété liée à la performance chez les jeunes générations, confrontées dès l'enfance à une évaluation permanente de leurs résultats, comparés sans cesse à ceux des autres.
 
 Faut-il alors rejeter entièrement cette culture de la performance, héritée en partie du monde sportif ? Ce serait sans doute excessif : la mesure permet aussi de progresser objectivement, d'identifier de vraies faiblesses à corriger. Mais peut-être conviendrait-il de retrouver, aussi dans le sport lui-même, une place plus importante pour ce qui échappe au chiffre : le plaisir simple de l'effort, l'apprentissage patient, la persévérance qui ne se traduit pas immédiatement par un résultat mesurable. Sans cet équilibre, la performance risque de devenir, à l'école comme ailleurs, une source d'épuisement plutôt qu'un véritable moteur de progrès.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22513,7 +22513,7 @@ Ce qui a véritablement changé au fil du temps, c'est la sophistication croissa
 Cette perspective historique invite à nuancer un discours parfois trop moralisateur, qui présenterait le dopage comme une simple déviance individuelle propre à notre époque. Le phénomène semble plutôt indissociable de la compétition elle-même, dès lors que la victoire procure un avantage suffisamment important, matériel ou symbolique, pour justifier une prise de risque.
 
 Cela ne signifie évidemment pas qu'il faille renoncer à lutter contre le dopage, dont les conséquences sanitaires et l'atteinte à l'équité sportive restent bien réelles. Mais comprendre sa profondeur historique permet peut-être d'aborder ce combat avec plus de lucidité : non comme l'éradication d'un mal moderne isolé, mais comme la régulation constante d'une tentation vieille comme la compétition humaine elle-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22534,7 +22534,7 @@ Une première explication tient sans doute à la lisibilité immédiate de la pe
 Une seconde explication réside dans la dimension corporelle de l'exploit. L'athlète incarne, littéralement, dans son propre corps, les limites que nous imaginons pour nous-mêmes. Le voir les dépasser produit une sorte de dépassement par procuration, une célébration collective de ce que le corps humain peut accomplir, y compris pour ceux qui ne pratiquent aucun sport eux-mêmes.
 
 Enfin, l'aspect éphémère et incertain de la compétition sportive joue également un rôle. Contrairement à d'autres formes de réussite, construites sur des années sans instant décisif visible, la performance sportive se joue souvent en quelques secondes, sur un plan clairement défini, avec un vainqueur et des vaincus immédiatement désignés. Cette intensité dramatique, concentrée dans un temps très court, explique en grande partie pourquoi le sport continue de fasciner autant de sociétés à travers le monde, bien au-delà de la simple appréciation technique de la performance elle-même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22555,7 +22555,7 @@ Plusieurs exemples historiques suggèrent que cette unité, bien réelle sur le 
 D'autres analyses, cependant, nuancent ce constat pessimiste. Certains chercheurs en sociologie soulignent que ces moments collectifs, même éphémères, ne sont pas pour autant sans valeur : ils créent une expérience partagée, un souvenir commun auquel des citoyens très différents peuvent se référer par la suite, ce qui contribue, modestement mais réellement, à une forme de sentiment national partagé, même s'il ne résout aucun problème structurel.
 
 Le sport ne peut donc probablement pas, à lui seul, réconcilier une société profondément divisée, ni remplacer un travail politique et social de long terme. Mais réduire ces moments d'unité collective à une simple illusion sans conséquence serait également excessif. Peut-être faut-il accepter cette réalité plus modeste : le sport n'unit pas durablement une nation, mais il lui offre, de temps à autre, l'occasion rare de se voir, brièvement, comme un tout, avant de retrouver ses complexités habituelles.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22576,7 +22576,7 @@ L'argument en faveur du statut artistique de la mode repose sur des éléments s
 L'argument inverse souligne, à raison, la dimension éminemment commerciale de l'industrie : contrairement à une œuvre d'art traditionnelle, un vêtement de mode est conçu, dès l'origine, pour être vendu en quantité, produit selon des logiques industrielles, souvent dans des conditions de fabrication éloignées de tout idéal artistique.
 
 Peut-être la réponse la plus honnête consiste-t-elle à refuser cette opposition trop binaire. La mode contemporaine mêle, de façon inextricable, une dimension créative authentique et une logique commerciale assumée, sans que l'une annule nécessairement l'autre. Certains vêtements relèvent clairement de l'un ou l'autre pôle ; la plupart, en réalité, se situent quelque part entre les deux, portant à la fois la marque d'une vision esthétique et les contraintes d'un marché mondial.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22597,7 +22597,7 @@ Les partisans de l'uniforme avancent un argument d'égalité assez convaincant :
 Les opposants rétorquent que cette égalité imposée reste largement superficielle, puisque les inégalités réelles entre élèves — logement, accès à la culture, soutien familial — persistent bien au-delà du simple vêtement porté en classe. Selon eux, l'uniforme masquerait le problème sans le résoudre, tout en supprimant un espace d'expression personnelle légitime à un âge où l'identité se construit précisément à travers ce type de choix.
 
 Cette tension révèle finalement un désaccord plus fondamental sur la mission même de l'école : doit-elle privilégier une égalité de façade, quitte à uniformiser certains aspects de l'expression individuelle, ou accepter une diversité visible, au risque de rendre plus criantes certaines inégalités sociales déjà existantes ? Aucune des deux positions ne semble emporter une adhésion totale, ce qui explique sans doute pourquoi ce débat, en apparence anodin, continue de diviser aussi durablement les opinions.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22618,7 +22618,7 @@ Le coût environnemental constitue le premier de ces coûts invisibles. L'indust
 Le coût social représente le second, plus directement lié aux conditions de travail dans les pays où ces vêtements sont fabriqués. Des salaires très bas, des conditions de sécurité parfois insuffisantes, des journées de travail excessives : ces réalités, largement documentées depuis plusieurs catastrophes industrielles médiatisées, restent pourtant peu visibles pour le consommateur final, éloigné géographiquement de la chaîne de production.
 
 Enfin, un coût plus diffus concerne la valeur symbolique même du vêtement, désormais perçu comme un objet presque jetable plutôt que comme un bien durable à entretenir et à réparer. Cette évolution culturelle, peut-être plus difficile à quantifier que les précédentes, n'en modifie pas moins profondément notre rapport aux objets et à leur véritable valeur.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22641,7 +22641,7 @@ Aujourd'hui encore, cette dimension politique du vêtement demeure bien vivante,
 Cette dimension politique n'est cependant pas toujours consciente ou revendiquée par celui qui la porte. Beaucoup de choix vestimentaires, en apparence neutres, s'inscrivent malgré tout dans des logiques sociales et culturelles plus larges, sans que la personne qui les fait en ait pleinement conscience.
 
 Reconnaître cette dimension politique du vêtement, loin d'être anecdotique, permet peut-être de mieux comprendre pourquoi certains débats vestimentaires, en apparence superficiels, suscitent en réalité des passions et des tensions bien plus profondes que leur objet immédiat ne le laisserait supposer.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22664,7 +22664,7 @@ Cette philosophie se heurte cependant à des obstacles structurels importants. L
 De plus, la culture du renouvellement rapide, désormais profondément ancrée dans nos habitudes de consommation et alimentée par les réseaux sociaux, ne disparaît pas facilement, même chez des consommateurs pourtant convaincus intellectuellement par les arguments de la durabilité.
 
 Réconcilier ces deux exigences, apparemment contradictoires, représente peut-être le véritable défi des années à venir pour l'industrie de la mode : rendre la qualité durable suffisamment accessible pour qu'elle cesse d'être un luxe réservé à quelques-uns, sans pour autant sacrifier les emplois d'une industrie qui, aujourd'hui encore, fait vivre des millions de travailleurs à travers le monde.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22687,7 +22687,7 @@ Enfin, l'intensification du rythme professionnel dans de nombreux secteurs a con
 Les conséquences de cette évolution collective ne se limitent pas à la simple fatigue individuelle. Des recherches en santé publique établissent des liens de plus en plus solides entre le manque chronique de sommeil à l'échelle d'une population et l'augmentation de certaines pathologies, ainsi qu'une baisse générale de la productivité réelle, paradoxalement inverse à l'objectif initialement recherché en sacrifiant le repos.
 
 Face à ce constat, certains chercheurs appellent à une véritable prise de conscience collective, comparable à celle qui a progressivement transformé notre rapport à l'alimentation ou à l'exercice physique. Reconnaître le sommeil comme un pilier de santé publique à part entière, et non comme une simple préférence individuelle négociable, constituerait selon eux une étape nécessaire pour inverser cette tendance inquiétante.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22710,7 +22710,7 @@ Plus troublant encore, plusieurs études démontrent qu'un déficit de sommeil, 
 Cette dissonance entre croyance populaire et réalité scientifique illustre un phénomène plus large : certaines idées reçues, une fois ancrées culturellement, résistent remarquablement bien aux preuves qui les contredisent, notamment lorsqu'elles flattent des valeurs valorisées par ailleurs, comme le dévouement ou l'ambition professionnelle.
 
 Déconstruire ce mythe demanderait sans doute un changement culturel plus large que la simple diffusion d'informations scientifiques, tant l'association entre sommeil réduit et réussite semble aujourd'hui profondément ancrée dans l'imaginaire collectif de nombreuses sociétés contemporaines.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22731,7 +22731,7 @@ Cette transformation, souvent célébrée comme un progrès indéniable, a eu de
 Des chercheurs en chronobiologie ont notamment montré que l'exposition à la lumière artificielle en soirée, particulièrement celle émise par les écrans modernes, perturbe la sécrétion naturelle de mélatonine, l'hormone qui signale à notre organisme qu'il est temps de se préparer au sommeil. Cette perturbation retarderait ainsi, chez de nombreuses personnes, l'endormissement naturel de plusieurs dizaines de minutes, voire davantage.
 
 Cette situation illustre un décalage plus large entre notre biologie, restée fondamentalement ancienne, et un environnement technologique en constante évolution, capable de modifier profondément des rythmes que l'humanité avait pourtant respectés, sans même y penser consciemment, pendant l'essentiel de son histoire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22752,7 +22752,7 @@ Cette contradiction produit des conséquences concrètes largement documentées 
 Face à ce constat, plusieurs établissements, notamment aux États-Unis et dans certains pays scandinaves, ont commencé à expérimenter des horaires de début de cours retardés d'une heure environ. Les premiers résultats de ces expérimentations montrent des améliorations mesurables : meilleure concentration, réduction de l'absentéisme, et même une baisse des accidents de la route chez les jeunes conducteurs se rendant en cours.
 
 Les obstacles à une généralisation de ces mesures restent cependant nombreux : organisation des transports scolaires, contraintes des parents travaillant selon des horaires fixes, activités extrascolaires programmées en fin de journée. Ces difficultés pratiques, bien réelles, expliquent en grande partie la lenteur avec laquelle les systèmes éducatifs adaptent leurs horaires à des connaissances scientifiques pourtant solidement établies depuis plusieurs années déjà.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22773,7 +22773,7 @@ L'intention initiale de ces outils paraît louable : aider les individus à mieu
 Un effet paradoxal, cependant, mérite d'être signalé. Plusieurs spécialistes du sommeil observent l'émergence d'un phénomène qu'ils nomment "l'orthosomnie" : une anxiété nouvelle, provoquée précisément par l'obsession de bien dormir selon les critères mesurés par ces appareils, au point que la préoccupation excessive du score nocturne finit par nuire elle-même à l'endormissement naturel.
 
 On touche ici à un paradoxe plus large de notre époque : la logique de quantification et d'optimisation permanente, initialement pensée pour améliorer notre bien-être, risque de coloniser jusqu'aux derniers espaces de notre existence encore relativement préservés de cette pression, transformant même le repos, censé nous libérer de la performance, en un nouveau terrain de performance à part entière. Peut-être le sommeil restera-t-il, malgré tout, l'un des rares domaines où l'abandon du contrôle demeure, paradoxalement, la seule véritable stratégie efficace.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22794,7 +22794,7 @@ Cette position se heurte cependant à une objection sérieuse : la manière dont
 Une distinction utile pourrait résider dans la différence entre rire avec et rire de : le premier crée une complicité, une reconnaissance partagée d'une réalité commune ; le second installe une distance, une supériorité implicite du rieur sur celui dont on se moque.
 
 Peut-être la véritable question n'est-elle donc pas de savoir si l'on peut rire de tout, ce qui reste techniquement toujours possible, mais de se demander pourquoi on choisit de rire de telle chose plutôt que d'une autre, et ce que cette moquerie révèle, finalement, du rapport de pouvoir entre celui qui rit et celui dont on rit.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22815,7 +22815,7 @@ Certaines formes d'humour, comme l'ironie ou l'autodérision, varient également
 La structure narrative de l'humour diffère également selon les traditions culturelles : certaines cultures privilégient une chute rapide et explicite, tandis que d'autres apprécient davantage un humour plus subtil, fondé sur l'implicite et le sous-entendu, difficile à percevoir pour quelqu'un habitué à un style plus direct.
 
 Cette difficulté de traduction culturelle de l'humour explique pourquoi tant de comédies, pourtant très populaires dans leur pays d'origine, échouent souvent à rencontrer le même succès une fois exportées, malgré une traduction techniquement fidèle des dialogues. L'humour, en définitive, ne se traduit jamais vraiment mot à mot ; il exige une véritable transposition culturelle, bien plus exigeante qu'une simple traduction linguistique.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22836,7 +22836,7 @@ Cette dimension sociale du rire expliquerait pourquoi les personnes considérée
 Plus surprenant encore, des chercheurs ont observé que produire spontanément de l'humour adapté à une situation nécessite des capacités cognitives sophistiquées : comprendre les attentes de son interlocuteur, anticiper sa réaction probable, choisir le bon moment pour introduire une remarque comique. Cette complexité expliquerait, selon certaines études, une corrélation observée entre un sens de l'humour développé et certaines formes d'intelligence sociale et émotionnelle.
 
 Cette perspective invite à reconsidérer l'humour non comme un simple divertissement superficiel, mais comme une compétence sociale à part entière, révélatrice de la capacité d'un individu à percevoir finement les dynamiques relationnelles qui l'entourent, et à s'y adapter avec justesse et à propos.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22859,7 +22859,7 @@ Les critiques de cet humour soulignent cependant un risque réel : la banalisati
 La distinction cruciale semble résider précisément dans ce contexte de réception : un humour noir partagé entre personnes vivant une même épreuve fonctionne différemment d'un même humour imposé publiquement à des personnes n'ayant pas choisi d'y être exposées, ni nécessairement concernées par la situation tournée en dérision.
 
 Cette tension entre fonction thérapeutique légitime et risque réel de blessure explique pourquoi l'humour noir continue de diviser aussi profondément, sans qu'aucune position tranchée ne puisse honnêtement prétendre couvrir l'ensemble des situations dans lesquelles il s'exprime.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22882,7 +22882,7 @@ Les générations précédentes, formées dans un paysage médiatique plus centr
 Ces différences ne signifient pas nécessairement qu'une génération possède un humour supérieur à une autre, mais plutôt que chaque génération développe des codes comiques adaptés à son propre contexte historique, technologique et social, souvent difficiles à décoder pleinement pour ceux qui n'ont pas partagé ce même contexte formateur.
 
 Observer attentivement ce que chaque génération trouve drôle constitue ainsi, pour les sociologues qui étudient ces phénomènes, un indicateur précieux et souvent négligé des transformations culturelles plus larges qui traversent une société à un moment donné de son histoire, révélant à travers le rire des vérités que le discours sérieux peine parfois à exprimer aussi directement.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22905,7 +22905,7 @@ Les sceptiques rétorquent que cette reconnaissance récente concerne surtout un
 Cette objection n'est pas sans fondement, mais elle pourrait s'appliquer identiquement à d'autres formes artistiques : le cinéma compte lui aussi une majorité de productions purement commerciales, sans que cela remette en question le statut artistique du médium dans son ensemble.
 
 Le jeu vidéo semble ainsi traverser aujourd'hui une transition comparable à celle qu'a connue le cinéma au vingtième siècle : d'un divertissement populaire méprisé par l'establishment culturel vers une reconnaissance progressive de son potentiel artistique propre, spécifique, irréductible à celui des médiums qui l'ont précédé.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22926,7 +22926,7 @@ Les critiques de cette classification soulignent, à l'inverse, un risque de con
 Ces critiques rappellent également un précédent historique instructif : des paniques morales similaires ont accompagné, par le passé, l'apparition d'autres médiums de divertissement, de la télévision aux romans populaires, souvent accusés à leur époque de corrompre la jeunesse, sans que ces craintes se soient toujours révélées scientifiquement fondées à long terme.
 
 Un consensus semble néanmoins émerger progressivement parmi les chercheurs : si une minorité de joueurs développe effectivement des comportements problématiques méritant une attention clinique sérieuse, la généralisation hâtive de cette réalité à l'ensemble des pratiquants de jeux vidéo relève probablement d'une simplification excessive, davantage motivée par une inquiétude culturelle générationnelle que par une évaluation rigoureuse et nuancée des données scientifiques réellement disponibles sur la question.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22947,7 +22947,7 @@ Les sceptiques rétorquent que l'absence d'effort physique intense, critère his
 Cette opposition révèle en réalité un désaccord plus profond sur ce qui constitue véritablement l'essence du sport : est-ce l'effort physique lui-même, ou plutôt la structure compétitive organisée, l'entraînement rigoureux et la performance mesurable qui caractérisent fondamentalement une activité sportive, indépendamment du support sur lequel elle s'exerce ?
 
 Certaines fédérations sportives internationales ont d'ailleurs commencé à reconnaître partiellement l'e-sport, sans pour autant trancher définitivement cette question conceptuelle. Cette évolution progressive suggère peut-être que notre définition du sport, loin d'être figée une fois pour toutes, continue d'évoluer avec les transformations technologiques et culturelles de chaque époque, comme elle l'a d'ailleurs toujours fait au fil de l'histoire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22968,7 +22968,7 @@ Plusieurs études ont effectivement démontré des résultats prometteurs dans d
 Ces résultats encourageants méritent cependant d'être nuancés par plusieurs limites importantes. La conception d'un jeu véritablement éducatif, alliant rigueur pédagogique et plaisir ludique authentique, demeure un exercice complexe : de nombreux jeux commercialisés comme "éducatifs" échouent en réalité à combiner ces deux exigences, produisant soit un contenu pédagogiquement solide mais ennuyeux, soit un divertissement réussi mais pédagogiquement superficiel.
 
 L'enjeu véritable ne consiste donc probablement pas à se demander si les jeux vidéo peuvent éduquer en général, une question trop vaste pour recevoir une réponse simple, mais plutôt à identifier précisément dans quelles conditions spécifiques, pour quels contenus et selon quelle conception pédagogique rigoureuse, ce médium parvient effectivement à remplir cette promesse éducative encore largement expérimentale à ce jour.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -22989,7 +22989,7 @@ Certains chercheurs en psychologie du développement soulignent des inquiétudes
 D'autres chercheurs adoptent une perspective plus nuancée, rappelant que chaque génération a toujours dû s'adapter à des environnements technologiques nouveaux, sans que cela signifie nécessairement une dégradation de ses capacités relationnelles fondamentales, mais plutôt le développement de compétences sociales adaptées à ces nouveaux contextes, différentes mais pas nécessairement inférieures à celles des générations précédentes.
 
 Il est probablement trop tôt pour trancher définitivement ce débat, tant les premières générations ayant grandi presque entièrement immergées dans ces mondes numériques n'ont pas encore atteint un âge suffisant pour permettre une évaluation complète et rigoureuse des effets à long terme de cette expérience formatrice inédite dans l'histoire humaine, dont nous ne mesurons peut-être encore qu'une fraction des conséquences réelles.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23010,7 +23010,7 @@ Une première explication réside dans la fonction d'évasion que remplit préci
 Une seconde explication, plus subtile, concerne la capacité de ces récits irréalistes à exprimer, sous une forme symbolique et distanciée, des vérités psychologiques ou morales bien réelles. Un monde imaginaire, précisément parce qu'il s'éloigne du réel, permet parfois d'aborder des questions universelles — le pouvoir, la loyauté, le sacrifice — avec une clarté que la complexité du monde réel rendrait plus difficile à percevoir directement.
 
 Cette fonction de la fiction irréaliste n'est d'ailleurs pas nouvelle : les mythes anciens, les contes populaires transmis depuis des siècles remplissaient déjà une fonction similaire, bien avant l'apparition du roman moderne. Lire des histoires qu'on sait fausses ne relève donc probablement pas d'un simple divertissement superficiel, mais répond à un besoin humain ancien et profond, celui de comprendre sa propre condition à travers le détour rassurant de l'imaginaire.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23031,7 +23031,7 @@ Cette évolution inquiète certains chercheurs en sciences cognitives, qui souli
 D'autres observateurs nuancent cependant ce constat pessimiste, rappelant que chaque nouvelle technologie de communication a historiquement suscité des inquiétudes similaires quant à la disparition supposée de la lecture, sans que ces prédictions ne se soient toujours révélées exactes. Le livre a survécu à l'apparition de la radio, de la télévision, puis d'internet, en trouvant chaque fois une place, certes différente, mais bien réelle, dans l'écosystème culturel contemporain.
 
 La lecture ne va sans doute pas disparaître, tant elle a déjà survécu à plusieurs révolutions médiatiques annoncées comme fatales. Le véritable enjeu semble ailleurs : préserver, individuellement et collectivement, des espaces de temps suffisamment protégés des sollicitations permanentes pour que cette pratique exigeante mais précieuse continue d'occuper une place significative dans nos existences.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23052,7 +23052,7 @@ Une seconde différence concerne le rythme narratif imposé par chaque médium. 
 Certains défenseurs de l'adaptation cinématographique rappellent cependant que le cinéma dispose de ses propres outils narratifs, différents mais tout aussi puissants : la musique, le cadrage, le montage, capables de créer des effets émotionnels que l'écrit seul ne pourrait jamais produire de la même manière.
 
 Plutôt que de considérer systématiquement l'adaptation comme une trahison nécessaire de l'œuvre originale, peut-être conviendrait-il de l'envisager comme une œuvre distincte, dialoguant avec le roman sans prétendre s'y substituer, chaque médium offrant finalement une expérience irréductible à l'autre, ni supérieure ni inférieure, simplement différente dans sa nature même.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23073,7 +23073,7 @@ Cette conception néglige pourtant une réalité importante : la lecture, quelle
 De plus, plusieurs études en sciences de l'éducation suggèrent que le plaisir de lecture, quel que soit le niveau de complexité du texte concerné, constitue souvent la porte d'entrée nécessaire vers une pratique de lecture plus régulière et, éventuellement, vers des lectures ultérieures plus exigeantes. Imposer prématurément une littérature jugée "sérieuse" à quelqu'un découvrant à peine le plaisir de lire risquerait, paradoxalement, de le décourager durablement de cette pratique.
 
 Peut-être conviendrait-il donc d'abandonner cette hiérarchie culpabilisante entre lectures nobles et lectures honteuses, pour reconnaître simplement la diversité légitime des fonctions que peut remplir la lecture, chacune répondant à des besoins différents mais également respectables, selon les moments et les personnes concernées.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23096,7 +23096,7 @@ D'autres, plus optimistes, rappellent que le pouvoir transformateur de la lectur
 Selon cette perspective, la lecture véritablement transformatrice n'a jamais été menacée par l'abondance de contenus disponibles, mais seulement par notre propre disposition, toujours possible à cultiver malgré les distractions ambiantes, à accorder à un texte l'attention profonde qu'il mérite véritablement.
 
 La question n'est donc peut-être pas de savoir si la lecture peut encore nous transformer, ce qui reste toujours possible en principe, mais de savoir si nous sommes encore collectivement disposés, dans un monde qui valorise la vitesse et la quantité, à lui accorder les conditions patientes et attentives que cette transformation a toujours exigées.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23121,7 +23121,7 @@ Il serait cependant excessif d'attribuer aux seuls algorithmes la responsabilit�
 Certains chercheurs ont d'ailleurs tenté de chiffrer précisément cette fragmentation, en mesurant le recoupement effectif des sources d'information consultées par des groupes politiquement opposés au sein d'une même société. Les résultats, convergents d'une étude à l'autre, montrent un recoupement de plus en plus réduit au fil des années, corroborant empiriquement ce que l'observation quotidienne suggérait déjà : deux citoyens d'un même pays, d'une même ville parfois, en viennent à s'informer auprès de sources presque entièrement disjointes, sans le moindre point de contact informationnel commun sur lequel fonder un dialogue véritable.
 
 Face à ce constat, les remèdes proposés restent d'une portée incertaine. Réguler les algorithmes, exiger davantage de transparence, encourager une plus grande diversité d'exposition : ces pistes, si elles ne sont pas sans mérite, se heurtent à un obstacle plus profond, presque anthropologique. Car il ne suffit pas de modifier les outils techniques pour restaurer un espace public unifié ; il faudrait aussi convaincre des individus, structurellement enclins à préférer le confort de la confirmation à l'inconfort de la contradiction, de rechercher activement ce qui les dérange. Cette exigence, qui suppose une discipline intellectuelle rare, ne se décrète pas par la seule ingénierie logicielle ; elle relève d'une culture à cultiver, patiemment, contre la pente naturelle de nos esprits.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23146,7 +23146,7 @@ On pourrait répondre que les plateformes ne sont pas seules responsables de ce 
 Cette opacité algorithmique pose en outre un problème d'imputabilité inédit : lorsqu'un contenu manifestement problématique se propage massivement, à qui revient la responsabilité de cette propagation ? Ni à l'auteur du contenu, qui n'a fait qu'exercer une liberté d'expression par ailleurs légitime, ni tout à fait à la plateforme, qui se retranche derrière la neutralité prétendue de son algorithme, comme s'il s'agissait d'un phénomène purement mécanique, dénué de toute intention identifiable et donc de toute faute véritablement imputable.
 
 La difficulté centrale que pose cette nouvelle configuration tient à son opacité même : contrairement au rédacteur en chef qu'on pouvait interpeller, contester, ou dont on pouvait au moins nommer les choix, l'algorithme demeure un arbitre sans visage, dont les critères exacts restent protégés par le secret commercial, et dont l'évolution constante rend d'ailleurs toute analyse rapidement obsolète. Réclamer sa régulation, comme le proposent de nombreux observateurs, suppose de résoudre une tension difficile : comment exiger la transparence d'un mécanisme dont l'opacité relative constitue précisément, aux yeux de ceux qui l'exploitent, l'un des principaux avantages compétitifs ? Cette question, encore largement sans réponse satisfaisante, définit peut-être l'un des défis démocratiques majeurs de notre époque.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23171,7 +23171,7 @@ Un exemple révélateur de ce mécanisme concerne la vitesse comparée de circul
 Face à ce constat, certains proposent de développer, chez les individus, un réflexe critique systématique face à tout contenu viral, une forme de scepticisme méthodique appliqué précisément aux informations qui circulent le plus largement. Cette proposition, louable dans son principe, se heurte cependant à une difficulté pratique considérable : elle exige un effort cognitif soutenu, contraire à la rapidité même de la consommation d'information sur les réseaux sociaux, où l'utilisateur moyen consacre à chaque contenu une attention de quelques secondes à peine, insuffisante pour exercer le discernement requis.
 
 Peut-être faut-il alors chercher la solution non pas seulement du côté de l'individu, sommé d'exercer une vigilance qu'aucune plateforme ne l'encourage réellement à cultiver, mais aussi du côté des architectures techniques elles-mêmes, qui pourraient, si la volonté politique et commerciale s'y prêtait, ralentir délibérément certaines formes de diffusion, introduire des frictions salutaires, redonner au temps de la réflexion l'espace que la vitesse de la viralité lui a largement confisqué.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23196,7 +23196,7 @@ Il existe pourtant des signes, encore timides, d'une résistance à cette pressi
 On pourrait objecter que rien n'oblige, en droit, quiconque à s'exprimer sur les réseaux sociaux, que la liberté de se taire demeure techniquement intacte, disponible à qui souhaite simplement fermer une application ou s'abstenir de commenter. Cette objection, juridiquement exacte, néglige cependant la dimension sociale et professionnelle que ces plateformes ont progressivement acquise : pour beaucoup, s'abstenir totalement de toute présence numérique revient désormais à s'exclure de pans entiers de la vie sociale, professionnelle, voire civique contemporaine, rendant la liberté théorique du silence de plus en plus coûteuse à exercer concrètement.
 
 Restaurer une véritable liberté de silence, dans un tel contexte, ne relève donc pas simplement d'un choix individuel qu'il suffirait de vouloir exercer, mais suppose une transformation plus large de nos attentes collectives à l'égard de la parole publique : accepter, à nouveau, que le silence d'autrui puisse signifier autre chose qu'une absence coupable, et que la réflexion silencieuse conserve sa place légitime face à l'injonction permanente de réagir, de commenter, de prendre position sur tout, immédiatement et sans délai.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23221,7 +23221,7 @@ Faut-il, de ce constat accumulé, conclure que la délibération démocratique a
 Cette reformulation invite également à reconsidérer le rôle du citoyen ordinaire, trop souvent réduit, dans ce débat, à la position d'utilisateur passif subissant des architectures qu'il n'a pas conçues. Rien n'empêche, en principe, l'émergence d'une exigence citoyenne collective, portée par une masse suffisante d'utilisateurs, réclamant des plateformes différentes, des algorithmes différemment orientés, une régulation à la hauteur des enjeux démocratiques réellement en jeu — à condition que cette exigence elle-même parvienne à se frayer un chemin dans un espace numérique dont nous avons vu qu'il favorise structurellement l'immédiateté sur la réflexion de long terme.
 
 La question posée par ce titre appelle donc moins une réponse tranchée qu'une reformulation : non pas « peut-on encore délibérer », comme si la réponse dépendait d'une fatalité technologique déjà scellée, mais « voulons-nous encore, collectivement, créer les conditions d'une délibération authentique », ce qui déplace la question du terrain de la technologie vers celui, plus inconfortable mais aussi plus fécond, de la volonté politique et culturelle. Car les plateformes actuelles ne sont pas des lois de la nature, mais des artefacts construits, façonnés par des choix qui pourraient, en principe, être défaits ou refaits autrement — à condition que suffisamment de citoyens en viennent à exiger, pour l'espace public numérique, les mêmes exigences de qualité délibérative qu'ils réclament, par ailleurs, pour leurs institutions politiques les plus anciennes.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23246,7 +23246,7 @@ Faut-il, de cette instabilité constitutive, conclure à une forme de scepticism
 Cette conception reconstructive de la mémoire éclaire aussi d'un jour nouveau la question de l'identité personnelle elle-même. Si nous sommes, comme le veut une intuition répandue, faits de nos souvenirs, et que ces souvenirs sont constamment reconstruits plutôt que simplement conservés, alors l'identité elle-même n'est jamais un donné stable qu'on découvrirait en fouillant assez profondément dans un passé immuable, mais une construction continuée, toujours en cours, jamais achevée. Nous ne sommes pas, à proprement parler, ce que nous avons été ; nous sommes, à chaque instant, ce que nous reconstruisons avoir été, à la lumière de qui nous sommes devenus.
 
 Cette conclusion, loin d'être un motif d'inquiétude sur la fiabilité de notre rapport au passé, pourrait au contraire se lire comme une forme de liberté insoupçonnée : si la mémoire n'était qu'un dépôt fixe, notre passé nous enchaînerait à jamais à ce qu'il fut littéralement ; parce qu'elle est reconstruction vivante, notre passé demeure, dans une certaine mesure, toujours réinterprétable, toujours susceptible d'être compris autrement, à la lumière de ce que nous devenons — sans que cette plasticité n'équivaille pour autant à une licence de tout réinventer arbitrairement, la reconstruction mémorielle demeurant contrainte par des traces réelles, aussi fragmentaires soient-elles, qui résistent à une falsification complète.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23269,7 +23269,7 @@ L'oubli remplit également une fonction moins souvent reconnue, mais tout aussi 
 Cette dynamique individuelle trouve un écho frappant à l'échelle collective : les sociétés elles-mêmes pratiquent un oubli sélectif de leur propre histoire, mettant en avant certains épisodes tout en laissant s'estomper d'autres, dans un processus qui n'est pas sans rappeler, à une échelle différente, les mécanismes de la mémoire individuelle. Certains historiens y voient une nécessité comparable à celle qui opère chez l'individu : une nation qui retiendrait avec une égale intensité chaque conflit, chaque division, chaque blessure de son passé pourrait difficilement se projeter collectivement vers l'avenir. D'autres, à l'inverse, dénoncent dans cet oubli collectif sélectif un danger réel, celui de répéter des erreurs précisément parce qu'on a cessé de s'en souvenir suffisamment vivement pour en tirer une leçon durable.
 
 Faut-il, dès lors, renoncer entièrement à l'idéal ancien d'une mémoire fidèle, cultivée, entretenue contre l'érosion naturelle du temps ? Certainement pas : il existe une différence de nature entre l'oubli sélectif et bienvenu de ce qui n'a pas besoin d'être retenu, et la perte regrettable de ce qui, au contraire, mériterait d'être préservé — un souvenir précieux, un savoir durement acquis, une leçon dont l'oubli nous exposerait à répéter les mêmes erreurs. La sagesse, en matière de mémoire, ne consiste donc probablement pas à combattre l'oubli en général, ce qui serait à la fois vain et contre-productif, mais à apprendre à distinguer ce qui mérite d'être cultivé activement de ce que l'oubli, laissé à son cours naturel, se charge fort heureusement d'effacer pour nous, nous libérant ainsi d'un poids que nulle mémoire humaine ne pourrait indéfiniment porter sans en être écrasée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23294,7 +23294,7 @@ Cette situation affecte de manière inégale les différentes générations actu
 Il serait tentant de répondre que rien n'oblige à consulter ces archives numériques, que leur simple existence, quelque part sur un serveur distant, ne constitue pas en soi une contrainte imposée à l'individu qui pourrait, en principe, les ignorer complètement. Cette réponse néglige cependant la réalité concrète de l'exposition contemporaine à ces dispositifs, dont les notifications automatiques, les rappels algorithmiques, les résurgences non sollicitées s'imposent bien souvent sans que l'utilisateur les ait activement recherchés, ni même anticipés.
 
 Peut-être faut-il alors envisager, face à cette nouvelle configuration, une forme de discipline volontaire à cultiver : non pas rejeter en bloc ces technologies mémorielles, dont l'utilité pratique demeure par ailleurs considérable, mais reconquérir, au moins partiellement, cette prérogative ancienne de sélection et de reconstruction qui a toujours caractérisé la mémoire humaine vivante, en résistant à la tentation de laisser l'archive numérique, dans sa fidélité aveugle et sans nuance, dicter seule ce que notre propre passé doit désormais signifier pour nous.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23319,7 +23319,7 @@ La mise en œuvre pratique de ce droit se heurte, par ailleurs, à des difficult
 Cette tension révèle, plus profondément, que la mémoire n'a jamais été une simple affaire individuelle, mais toujours aussi un phénomène irréductiblement social et collectif, dont les règles implicites — ce qu'il convient de retenir, de pardonner, d'oublier — se négociaient autrefois de façon informelle, à travers les usages sociaux ordinaires, et se retrouvent aujourd'hui codifiées, imparfaitement, dans des textes juridiques qui peinent à traduire en règles précises ce que la pratique sociale accomplissait autrefois avec souplesse.
 
 Le défi que pose cette nouvelle configuration ne consiste donc probablement pas à trancher définitivement, une fois pour toutes, entre le droit à l'oubli et le droit à l'information, deux principes également légitimes et pourtant structurellement en tension, mais à accepter que cette tension demeure permanente, à négocier au cas par cas, à mesure que la société apprend, non sans tâtonnements, à vivre avec cette mémoire numérique d'une permanence à laquelle rien, dans toute l'histoire humaine antérieure, ne l'avait jamais préparée.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
   {
@@ -23344,7 +23344,7 @@ D'autres traditions philosophiques, plus anciennes, avaient proposé des répons
 Ces difficultés n'invalident pas entièrement l'intuition initiale, mais invitent à la reformuler avec davantage de nuance : peut-être n'est-ce pas la mémoire elle-même, dans son contenu précis et sa fidélité toujours partielle, qui fonde notre identité, mais la capacité même à se raconter, à tisser, malgré les lacunes et les reconstructions, un récit continu de soi, suffisamment cohérent pour qu'il se donne, à celui qui l'élabore, l'apparence rassurante d'une continuité ininterrompue. Ce récit, jamais achevé, toujours révisé, n'est peut-être pas moins réel pour autant : il constitue, sinon la preuve objective d'une identité stable sous-jacente, du moins la condition psychologique nécessaire pour qu'un individu puisse continuer à agir, à décider, à se projeter dans l'avenir comme le même sujet qui s'est engagé, hier, dans telle promesse ou tel projet.
 
 Sommes-nous, alors, ce que nous nous souvenons avoir été ? La réponse la plus honnête est peut-être la suivante : nous sommes moins ce dont nous nous souvenons fidèlement — une exigence que la nature reconstructive de la mémoire rend de toute façon inatteignable — que ce que nous parvenons, à chaque instant, à raconter de nous-mêmes de façon suffisamment cohérente pour continuer d'habiter, sans déchirement insupportable, la même vie que celle que nous avons commencé de vivre. L'identité n'est peut-être pas un fait à découvrir dans les replis d'une mémoire fidèle, mais une œuvre à poursuivre, sans cesse, dans le récit toujours recommencé que chacun fait de sa propre existence.`,
-    sourceName: "Written for Lire",
+    sourceName: "Written for Sorlio",
     language: "fr",
   },
 ];
