@@ -25,13 +25,26 @@ export interface ArchiveEntry {
   minutes?: number | null;
   /** Count of French word tokens at completion time, used for weekly reports. */
   wordCount?: number | null;
-  /** ISO timestamp of when the text was first opened — combined with completedAt to estimate time spent. */
+  /** Legacy: when the text was first opened. No longer used for time spent (see activeMinutes). */
   openedAt?: string | null;
+  /**
+   * Snapshots taken at completion, so history does not change when vocabulary
+   * is later edited. Absent on older entries, which then show nothing rather
+   * than an invented value.
+   */
+  /** Whole minutes the reader was actively reading (foreground, interacting). */
+  activeMinutes?: number | null;
+  savedWordCount?: number | null;
+  phraseCount?: number | null;
 }
 
 const KEY = "lire.archive.v1";
-/** Bounded so this can't grow forever for a very long-running install. */
-const MAX_ENTRIES = 500;
+/**
+ * A rolling history: the most recent completions are kept (the page says so).
+ * It is a record of reading, not user-authored content.
+ */
+export const MAX_ARCHIVE_ENTRIES = 500;
+const MAX_ENTRIES = MAX_ARCHIVE_ENTRIES;
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -69,10 +82,21 @@ export function recordArchiveEntry(entry: ArchiveEntry): void {
   persist([...existing, entry]);
 }
 
-/** Minutes spent between opening and completing, or null if either timestamp is missing — used by the Reading History page. */
+/**
+ * Active reading time in whole minutes, from the reader's foreground/interaction
+ * tracker. Under ~30 seconds is not a meaningful reading time (null); otherwise
+ * at least 1 minute.
+ */
+export function activeMinutesFromMs(ms: number | null | undefined): number | null {
+  if (!ms || !Number.isFinite(ms) || ms < 30_000) return null;
+  return Math.max(1, Math.round(ms / 60_000));
+}
+
+/**
+ * Time spent on an archived reading: the active minutes recorded at
+ * completion, or null. It used to be completedAt − openedAt, so an article
+ * opened at 10pm and finished at 8am showed about 600 minutes.
+ */
 export function estimateTimeSpentMinutes(entry: ArchiveEntry): number | null {
-  if (!entry.openedAt) return null;
-  const ms = new Date(entry.completedAt).getTime() - new Date(entry.openedAt).getTime();
-  if (!Number.isFinite(ms) || ms <= 0) return null;
-  return Math.round(ms / 60000);
+  return typeof entry.activeMinutes === "number" && entry.activeMinutes > 0 ? entry.activeMinutes : null;
 }

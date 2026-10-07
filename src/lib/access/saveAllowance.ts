@@ -16,9 +16,8 @@ interface Counter {
   count: number;
 }
 
-export function localDateKey(date = new Date()): string {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-}
+export { localDateKey } from "@/lib/localDate";
+import { localDateKey } from "@/lib/localDate";
 
 export function newSavesToday(date = new Date()): number {
   const counter = readJson<Counter | null>(KEY, null, localStore);

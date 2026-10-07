@@ -101,10 +101,8 @@ import { addWordToReview, clearWords, getSavedWords } from "../src/lib/storage.t
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
 import {
-  buildCategoryProficiency,
   buildHeadlineComparison,
   buildTodayNewsWords,
-  buildWeeklyReadingReport,
   classifyVocabularyStates,
 } from "../src/lib/readingAnalytics.ts";
 import {
@@ -1095,21 +1093,6 @@ console.log("\n--- Reading analytics ---");
     []
   );
   check("vocabulary state detects behavioural forgetting", states[0]?.state === "forgotten");
-  const report = buildWeeklyReadingReport(
-    [{ textId: "news-a", title: a.title, sourceName: "Source A", completedAt: today, category: "news-style", cefr: "A2", minutes: 3, wordCount: 120 }],
-    [{ ...saved, status: "known", correctCount: 3, lastReviewedAt: today }],
-    ["selon", "hausse"],
-    [{ id: "budget-a", articleId: "news-a", articleTitle: a.title, allowance: 8, used: 5, metTarget: true, completedAt: today }]
-  );
-  check("weekly report includes reading and budget metrics", report.articlesCompleted === 1 && report.translationBudgetMet === 1);
-  const proficiency = buildCategoryProficiency(
-    [{ textId: "news-a", title: a.title, sourceName: "Source A", completedAt: today, category: "news-style", cefr: "A2", minutes: 3, wordCount: 120 }],
-    ["selon", "hausse"]
-  );
-  check("category proficiency includes general news", proficiency.some((item) => item.category === "news-style" && item.articles === 1));
-  const emptyReport = buildWeeklyReadingReport([], [], []);
-  check("empty weekly report avoids invented guidance", emptyReport.mostDifficultArea === null && emptyReport.nextFocus === null && emptyReport.strongestTopic === null);
-  check("empty category proficiency is hidden", buildCategoryProficiency([], []).length === 0);
 }
 
 console.log("\n--- Recommendation preferences (hide source / save for later) ---");
@@ -1383,7 +1366,8 @@ console.log("\n--- Gamification engine ---");
     translationBudget: 5,
     summaryCompleted: true,
   });
-  check("article score rewards staying inside the translation budget", metBudget.total > missedBudget.total, `${metBudget.total}/${missedBudget.total}`);
+  // Looking words up is normal learning: the score no longer drops for it.
+  check("article score does not penalise lookups", metBudget.total === missedBudget.total, `${metBudget.total}/${missedBudget.total}`);
 }
 {
   clearGamificationStores();

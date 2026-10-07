@@ -131,9 +131,9 @@ export default function ProgressPage() {
               {[
                 ["Articles", weeklyArticles],
                 ["Words read", snapshot.weeklyWords.toLocaleString()],
-                ["Comprehension", `${snapshot.weeklyComprehensionAverage}%`],
+                ["Comprehension", snapshot.weeklyComprehensionAverage === null ? "Not measured yet" : `${snapshot.weeklyComprehensionAverage}%`],
                 ["Vocabulary reviewed", snapshot.weeklyReviewed],
-                ["Translations / 100 words", snapshot.translationsPer100Words],
+                ["Lookups / 100 words", snapshot.translationsPer100Words],
                 ["Reading streak", `${snapshot.currentStreak} days`],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl bg-cream p-3">
@@ -243,7 +243,7 @@ export default function ProgressPage() {
         <section>
           <div className="mb-3 rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Reading Passport</h2>
-            <p className="mt-1 text-sm text-ink-muted">A quiet record of topics, levels, sources and independence milestones you have explored.</p>
+            <p className="mt-1 text-sm text-ink-muted">A quiet record of the topics, levels and sources you have explored.</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {snapshot.passport.map((stamp) => (
@@ -265,7 +265,7 @@ export default function ProgressPage() {
 const TREND_HEADLINE: Record<string, string> = {
   Improving: "Your lookup rate is falling.",
   Stable: "Your lookup rate is holding steady.",
-  "Increasing support needed": "You've been leaning on lookups a bit more lately.",
+  "Increasing support needed": "You've used a few more lookups lately — often a sign of harder texts.",
   "Not enough data": "Not enough readings yet to show a trend.",
 };
 
@@ -287,7 +287,7 @@ function ReadingIndependenceTrendCard({
   if (!hasEnoughData) {
     return (
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Lookup use</p>
         <p className="mt-1 text-base font-bold text-ink">Not enough readings yet to show a trend.</p>
         <p className="mt-1 text-xs text-ink-muted">Finish a few more texts and this will start comparing your lookup rate over time.</p>
       </section>
@@ -296,7 +296,7 @@ function ReadingIndependenceTrendCard({
 
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Lookup use</p>
       <p className="mt-1 text-lg font-extrabold text-ink">{TREND_HEADLINE[trend] ?? TREND_HEADLINE["Not enough data"]}</p>
       {rollingRates.last5.rate != null && (
         <p className="mt-1 text-sm text-ink-muted">

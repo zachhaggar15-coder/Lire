@@ -9,6 +9,7 @@
 
 import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { localStore } from "@/lib/localData/store";
+import { addLocalDays, localDateKey } from "@/lib/localDate";
 
 const KEY = "lire.activityDates.v1";
 const GRACE_KEY = "lire.streakGrace.v1";
@@ -32,15 +33,12 @@ function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
 }
 
+/** The learner's local calendar day (see localDate.ts). */
 export function dateKey(date: Date = new Date()): string {
-  return date.toISOString().slice(0, 10);
+  return localDateKey(date);
 }
 
-function addDays(date: Date, days: number): Date {
-  const copy = new Date(date);
-  copy.setDate(copy.getDate() + days);
-  return copy;
-}
+const addDays = addLocalDays;
 
 function weekKey(date: Date = new Date()): string {
   const mondayOffset = (date.getDay() + 6) % 7;

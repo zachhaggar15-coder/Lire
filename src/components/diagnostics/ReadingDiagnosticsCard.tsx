@@ -15,9 +15,9 @@ interface ReadingDiagnosticsCardProps {
 }
 
 const TREND_COPY: Record<TrendLabel, string> = {
-  Improving: "Improving",
-  Stable: "Stable",
-  "Increasing support needed": "Increasing support needed",
+  Improving: "fewer than your recent readings",
+  Stable: "about the same as your recent readings",
+  "Increasing support needed": "more than your recent readings",
   "Not enough data": "Not enough data yet",
 };
 
@@ -37,7 +37,7 @@ export default function ReadingDiagnosticsCard({
 }: ReadingDiagnosticsCardProps) {
   return (
     <div className={`rounded-card border border-cream-dark bg-cream-card p-4 ${className}`}>
-      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Reading independence</p>
+      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Lookup use</p>
       <p className="mt-1 text-2xl font-extrabold tabular-nums text-ink">
         {performance.lookupsPer100} <span className="text-sm font-semibold text-ink-muted">lookups / 100 words</span>
       </p>
@@ -54,9 +54,9 @@ export default function ReadingDiagnosticsCard({
         </summary>
         <div className="mt-2 space-y-2 text-xs leading-relaxed text-ink-muted">
           <p>
-            Lookups per 100 words estimates how often you needed vocabulary support. Comparing the rate across texts
-            helps show whether reading is becoming more independent. It is affected by text difficulty, so Sorlio
-            compares similar texts where possible.
+            Lookups per 100 words counts how often you checked a word. Looking words up is a normal part of
+            reading; the number mostly reflects how hard the text was, so Sorlio compares similar texts where
+            possible.
           </p>
           <p>
             Unique lookups count different words rather than every tap — looking up the same word several times

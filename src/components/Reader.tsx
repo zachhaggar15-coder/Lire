@@ -32,7 +32,7 @@ import {
   type SentenceMeaning,
 } from "@/lib/dictionary/resolveMeaning";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
-import { recordArchiveEntry } from "@/lib/archive";
+import { activeMinutesFromMs, recordArchiveEntry } from "@/lib/archive";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { recordArticleCompleted } from "@/lib/recommendation/interests";
@@ -1407,6 +1407,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       : [];
     const comprehensionCorrect = comprehensionItems.filter(Boolean).length;
     const phraseCount = getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === text.title).length;
+    const activeMinutes = activeMinutesFromMs(activeTimeTracker.current?.activeMs());
     // Capture whether today already counted before markCompleted records
     // activity, so the completion screen knows if *this* finish extended the
     // streak (a celebration) versus just kept an already-earned day.
@@ -1433,7 +1434,10 @@ export default function Reader({ text }: { text: ReadingText }) {
       cefr: difficulty?.cefr ?? text.difficulty,
       minutes: text.minutes,
       wordCount: countFrenchWords(text),
-      openedAt: getProgress(text.id).openedAt,
+      // Snapshots: history shows what was true at completion.
+      activeMinutes,
+      savedWordCount: articleSavedWordCount,
+      phraseCount,
     });
     // Feeds the automatically-learned interest profile behind the home
     // page's recommendations — see src/lib/recommendation/interests.ts.
@@ -1451,7 +1455,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       // means the same thing for every article, not one that can drift with
       // a single reader's vocabulary at the moment they happened to finish it.
       difficulty: text.difficulty,
-      openedAt: getProgress(text.id).openedAt,
+      activeMinutes,
       completedAt,
       wordsRead: countFrenchWords(text),
       translationsUsed: translationUses,

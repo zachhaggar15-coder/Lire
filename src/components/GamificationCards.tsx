@@ -255,18 +255,18 @@ export function TodaysMissionsPanel({
   );
 }
 
+/** Activity in a topic: what was read, never a level or a "coverage" score. */
 export function TopicProgressCard({ topic }: { topic: TopicProgress }) {
   return (
     <article className="rounded-card bg-cream-card p-4 shadow-card">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <h3 className="font-bold text-ink">{topic.label}</h3>
-          <p className="text-xs text-ink-muted">{topic.articlesCompleted} completed - {topic.averageComprehension}% comprehension</p>
-        </div>
-        <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-extrabold text-brand">Lv {topic.level}</span>
-      </div>
-      <XPProgressBar value={topic.progress} label={topic.nextMilestone} className="mt-3" />
-      <p className="mt-2 text-xs text-ink-muted">{topic.vocabularyCoverage}% estimated vocabulary coverage</p>
+      <h3 className="font-bold text-ink">{topic.label}</h3>
+      <p className="mt-0.5 text-sm text-ink-muted">
+        {topic.articlesCompleted} {topic.articlesCompleted === 1 ? "reading" : "readings"} completed
+        {topic.wordsRead > 0 && ` · ${topic.wordsRead.toLocaleString()} words read`}
+      </p>
+      <p className="mt-0.5 text-xs text-ink-muted">
+        Comprehension: {topic.comprehensionPercent === null ? "not measured yet" : `${topic.comprehensionPercent}% of answers right`}
+      </p>
     </article>
   );
 }
