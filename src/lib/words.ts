@@ -94,7 +94,9 @@ export function tokenize(text: string): Token[] {
  */
 export function splitSentences(paragraph: string): string[] {
   const pieces = paragraph
-    .split(/(?<=[.!?…])\s+(?!["'»”])/)
+    // A sentence also ends after its closing quote: "... gagne. » Puis ..."
+    // (a dialogue tag that follows in lowercase is rejoined below).
+    .split(/(?<=[.!?…])\s+(?!["'»”])|(?<=[.!?…]\s?[»”"])\s+/)
     .map((s) => s.trim())
     .filter(Boolean);
   // A full stop after a title or an initial does not end the sentence:
@@ -104,7 +106,18 @@ export function splitSentences(paragraph: string): string[] {
   const merged: string[] = [];
   for (const piece of pieces) {
     const previous = merged[merged.length - 1];
-    if (previous !== undefined && ENDS_WITH_ABBREVIATION.test(previous)) merged[merged.length - 1] = `${previous} ${piece}`;
+    const continues =
+      previous !== undefined &&
+      (ENDS_WITH_ABBREVIATION.test(previous) ||
+        // French dialogue tags continue the sentence after ! ? or …:
+        // « Viens ! » dit le sergent. / « Ah ! mon père, dit Franz… »
+        /^[a-zà-ÿœæ]/.test(piece) ||
+        // A bare list number ("1.") belongs to what follows it.
+        /^\d{1,3}\.$/.test(previous) ||
+        // A quotation that opens with a pause ("bonjour: «... Crés cochons")
+        // has not ended at the ellipsis.
+        /«\s*(?:\.{3}|…)$/.test(previous));
+    if (continues) merged[merged.length - 1] = `${previous} ${piece}`;
     else merged.push(piece);
   }
   return merged;

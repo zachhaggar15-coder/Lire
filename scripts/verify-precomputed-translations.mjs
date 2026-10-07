@@ -34,9 +34,11 @@ const live = new Map(texts.map((text) => [text.id, text]));
 const report = { live: texts.length, verified: 0, alreadyStamped: 0, stale: [], missing: [], orphans: [] };
 
 function verify(text, entry) {
-  if (entry.sourceHash) return entry.sourceHash === sourceHash(text.body) ? "ok" : "hash-mismatch";
   const sentences = tokenizeParagraphsToSentences(text.body).flat().map((s) => s.text);
+  // The split can change without the body changing (a splitter fix), and the
+  // reader pairs translations by sentence index, so counts are always checked.
   if (!Array.isArray(entry.sentences) || entry.sentences.length !== sentences.length) return "sentence-count";
+  if (entry.sourceHash) return entry.sourceHash === sourceHash(text.body) ? "ok" : "hash-mismatch";
   if (!Array.isArray(entry.alignments) || entry.alignments.length !== sentences.length) return "alignment-count";
   for (let i = 0; i < sentences.length; i += 1) {
     const sentence = norm(sentences[i]);
@@ -78,3 +80,11 @@ if (stamp || dropStale) {
 console.log(JSON.stringify({ ...report, stale: report.stale.length, missing: report.missing.length, orphans: report.orphans.length }));
 if (report.stale.length) console.log(`stale: ${report.stale.slice(0, 40).join(" ")}`);
 if (report.missing.length) console.log(`missing: ${report.missing.slice(0, 40).join(" ")}`);
+
+// Read-only runs are a test suite (run-tests): every live text must have a
+// translation bound to its current body, with nothing unstamped or orphaned.
+if (!stamp && !dropStale) {
+  const failures = report.stale.length + report.missing.length + report.orphans.length + report.verified;
+  console.log(`${report.live - report.stale.length - report.missing.length} checks passed, ${failures} failed`);
+  if (failures) process.exitCode = 1;
+}

@@ -16,8 +16,14 @@ const cases = [
   ["Le capitaine J.-T. Maston parla. Puis il partit.", 2],
   ["On achète du pain, des œufs, etc. Ensuite on rentre.", 2],
   ["Ce n'est pas A qui cause B, mais B qui cause A. Ensuite on voit.", 2],
-  ["Il dit : « on gagne. » Puis rien.", 1],
+  ["Il dit : « on gagne. » Puis rien.", 2],
+  ["« Si j'avais le temps. »\n« Si j'avais le choix. »", 2],
   ["Vraiment ? Oui ! Bon… D'accord.", 4],
+  ["« Viens ! » dit le sergent Long. Il partit.", 2],
+  ["«Où vas-tu?» demanda Fix. Personne ne répondit.", 2],
+  ["«Ah! mon père, dit Franz, je comprends.» Puis il lut.", 2],
+  ["1. Le premier point. 2. Le second point.", 2],
+  ["Mélie parut, avant de nous avoir dit bonjour: «... Crés cochons, vous aviez bien l'mètre.»", 1],
 ];
 for (const [input, expected] of cases) {
   const out = splitSentences(input);
