@@ -5,7 +5,8 @@ import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 const KEY = "lire.customTexts.v1";
-const MAX_CUSTOM_TEXTS = 80;
+/** Imported texts kept per account on a device. Reaching it blocks new imports; nothing is ever evicted. */
+export const MAX_CUSTOM_TEXTS = 80;
 /** Imported text limits. Far above a long article; keeps device storage and (opt-in) sync bounded. */
 export const MAX_IMPORT_CHARS = 50_000;
 export const MAX_IMPORT_TITLE_CHARS = 200;
@@ -34,13 +35,16 @@ function read(): ReadingText[] {
 
 function persist(texts: ReadingText[]): WriteFailure | null {
   if (!hasStorage()) return "unavailable";
-  const result = localStore.writeItem(KEY, JSON.stringify(texts.slice(0, MAX_CUSTOM_TEXTS)));
+  // Never truncate: a reader's private texts are only removed when they
+  // delete them. (This used to keep the newest 80, silently dropping the
+  // oldest import, or texts merged in from another device.)
+  const result = localStore.writeItem(KEY, JSON.stringify(texts));
   if (!result.ok) return result.reason;
   notifyStoreChanged(KEY);
   return null;
 }
 
-export type SaveCustomTextResult = { ok: true; text: ReadingText } | { ok: false; reason: WriteFailure | "too-long" | "empty" };
+export type SaveCustomTextResult = { ok: true; text: ReadingText } | { ok: false; reason: WriteFailure | "too-long" | "empty" | "limit" };
 
 function isReadingText(value: unknown): value is ReadingText {
   if (!value || typeof value !== "object") return false;
@@ -91,7 +95,10 @@ export function saveCustomText(input: CustomTextInput): SaveCustomTextResult {
     publishedAt: createdAt,
     language: "fr",
   };
-  const existing = read().filter((item) => item.id !== id);
+  const current = read();
+  const existing = current.filter((item) => item.id !== id);
+  // Re-importing the same text replaces it; a new one at the limit is refused.
+  if (existing.length === current.length && current.length >= MAX_CUSTOM_TEXTS) return { ok: false, reason: "limit" };
   const failure = persist([text, ...existing]);
   return failure ? { ok: false, reason: failure } : { ok: true, text };
 }

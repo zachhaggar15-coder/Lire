@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Category, Difficulty, ReadingText } from "@/types";
-import { MAX_IMPORT_CHARS, MAX_IMPORT_TITLE_CHARS, deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
+import { MAX_CUSTOM_TEXTS, MAX_IMPORT_CHARS, MAX_IMPORT_TITLE_CHARS, deleteCustomText, getCustomTexts, saveCustomText } from "@/lib/customTexts";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import AppBar from "@/components/AppBar";
 
@@ -41,7 +41,9 @@ function ImportPageContent() {
       setSaveError(
         saved.reason === "too-long"
           ? `That text is too long to import (the limit is ${MAX_IMPORT_CHARS.toLocaleString("en-GB")} characters). Try importing it in parts.`
-          : saved.reason === "empty"
+          : saved.reason === "limit"
+            ? `You have ${MAX_CUSTOM_TEXTS} imported texts, the most Sorlio keeps. Delete one you've finished with to import another.`
+            : saved.reason === "empty"
             ? "Paste some French text first."
             : persistenceFailureMessage(saved.reason),
       );
