@@ -3,7 +3,7 @@ import {
   VALIDATION_ADMIN_COOKIE,
   hasValidationAdminToken,
   validationAdminSessionValue,
-} from "@/lib/validation/adminAuth";
+} from "@/lib/admin/auth";
 import { clientIp, rateLimit } from "@/lib/server/rateLimit";
 
 const NO_STORE_HEADERS = { "Cache-Control": "private, no-store, max-age=0" };

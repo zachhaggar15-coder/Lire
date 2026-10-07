@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
 import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
-import { trackEvent } from "@/lib/analytics/client";
 import LessonScene, { type SceneName } from "@/components/LessonScene";
 
 const STARTING_POINTS: { value: Difficulty; label: string; detail: string; scene: SceneName; tone: string }[] = [
@@ -48,7 +47,6 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
     const state = getOnboardingState();
     const shouldShow = !state?.completed;
     setVisible(shouldShow);
-    if (shouldShow) trackEvent("onboarding_started", {});
     if (state?.level) setLevel(state.level);
     if (state?.topics?.length) setTopics(state.topics);
     if (state?.goalPreset) setGoal(state.goalPreset);
@@ -67,13 +65,6 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
     // interactive tour next. Its first screen has an equally prominent
     // "Skip, start reading" so first use is still never gated on it.
     saveOnboarding(nextLevel, topics, goal);
-    trackEvent("initial_level_selected", { level: nextLevel });
-    trackEvent("onboarding_completed", {
-      level: nextLevel,
-      topicCount: topics.length,
-      goal,
-      skipped: false,
-    });
     setVisible(false);
     onComplete?.();
   }

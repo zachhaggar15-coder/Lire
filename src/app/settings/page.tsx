@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import type { AppSettings, Difficulty, FontSize, ThemePreference, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
-import { trackEvent } from "@/lib/analytics/client";
 import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
@@ -22,14 +21,9 @@ import {
 } from "@/lib/habit";
 import AccountCard from "@/components/AccountCard";
 import SpeechSettingsCard from "@/components/SpeechSettingsCard";
-import BetaNotice from "@/components/BetaNotice";
-import { AndroidBetaButton } from "@/components/AndroidBetaModal";
-import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import PwaInstallCard from "@/components/PwaInstallCard";
-import AnalyticsPrivacyCard from "@/components/AnalyticsPrivacyCard";
 import PremiumPromoCard from "@/components/PremiumPromoCard";
-import ClosedTestPremiumNotice from "@/components/ClosedTestPremiumNotice";
 import { StreakCard } from "@/components/GamificationCards";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
@@ -356,7 +350,6 @@ export default function SettingsPage() {
               rel="noopener noreferrer"
               onClick={() => {
                 markRated();
-                trackEvent("rate_app_opened", { source: "settings" });
               }}
               className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4"
             >
@@ -380,11 +373,8 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="App" subtitle="Account, install options, and privacy." />
-          <ClosedTestPremiumNotice />
           <PremiumPromoCard />
-          <BetaNotice />
           <AccountCard />
-          <AnalyticsPrivacyCard />
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -394,7 +384,6 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => {
-                  trackEvent("tutorial_restarted", {});
                   resetWalkthrough();
                   router.push("/");
                 }}
@@ -404,19 +393,8 @@ export default function SettingsPage() {
               </button>
             </div>
           </div>
-          {VALIDATION_FEATURES.androidBetaCtaEnabled && (
-            <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-semibold text-ink">Get Sorlio on Android</p>
-                  <p className="mt-0.5 text-sm text-ink-muted">Join the interest list for beta access.</p>
-                </div>
-                <AndroidBetaButton source="settings" label="Join" />
-              </div>
-            </div>
-          )}
           {!inAndroidApp && <PwaInstallCard />}
-          <SettingsLink href="/privacy" title="Privacy" description="Local-first storage, analytics, beta emails, and AI use." />
+          <SettingsLink href="/privacy" title="Privacy" description="What Sorlio stores, why, and your choices." />
           <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Sorlio." />
         </section>
 

@@ -5,16 +5,14 @@ import BottomNav from "@/components/BottomNav";
 import ServiceWorker from "@/components/ServiceWorker";
 import IdentityController from "@/components/IdentityController";
 import StorageWarning from "@/components/StorageWarning";
-import AppLifecycleTracker from "@/components/AppLifecycleTracker";
 import ViewportHeightVar from "@/components/ViewportHeightVar";
 import StorageMigrations from "@/components/StorageMigrations";
 import RssPrefetch from "@/components/RssPrefetch";
 import AppNavigationPolish from "@/components/AppNavigationPolish";
-import AnalyticsConsentBanner from "@/components/AnalyticsConsentBanner";
 import OfflineBanner from "@/components/OfflineBanner";
 import ThemeController from "@/components/ThemeController";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
-import { productionDomain } from "@/lib/validation/config";
+import { productionDomain } from "@/lib/config";
 
 const ui = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
@@ -133,12 +131,10 @@ export default function RootLayout({
         <ServiceWorker />
         <IdentityController />
         <StorageWarning />
-        <AppLifecycleTracker />
         <ViewportHeightVar />
         <AppNavigationPolish />
         <StorageMigrations />
         <RssPrefetch />
-        <AnalyticsConsentBanner />
         <OfflineBanner />
       </body>
     </html>

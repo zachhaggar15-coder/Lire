@@ -8,7 +8,6 @@ import { formatCategory, formatDate, toPercent } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getKnownWords } from "@/lib/knownWords";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
-import { trackEvent, trackOnce } from "@/lib/analytics/client";
 import {
   hideSource,
   isSavedForLater,
@@ -107,15 +106,6 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     }
   }, [difficultyProp, text.body, text.id, text.language, text.sourceName]);
 
-  useEffect(() => {
-    trackOnce(`reading-card-viewed:${text.id}`, "reading_card_viewed", {
-      articleId: text.id,
-      articleSourceType: sourceTrustLabel(text),
-      articleCategory: text.category,
-      articleDifficulty: difficulty?.cefr ?? text.difficulty,
-      estimatedReadingTime: text.minutes,
-    });
-  }, [difficulty?.cefr, text]);
 
   if (hidden) return null;
 
@@ -150,15 +140,6 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     <article className="rounded-card border border-cream-dark bg-cream-card p-4">
       <Link
         href={`/reader/${text.id}`}
-        onClick={() =>
-          trackEvent("reading_card_selected", {
-            articleId: text.id,
-            articleSourceType: sourceTrustLabel(text),
-            articleCategory: text.category,
-            articleDifficulty: difficulty?.cefr ?? text.difficulty,
-            estimatedReadingTime: text.minutes,
-          })
-        }
         className="block transition"
       >
         <div className="mb-2 flex flex-wrap items-center gap-2">

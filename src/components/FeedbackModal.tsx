@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { trackEvent } from "@/lib/analytics/client";
-import { getBrowserSession } from "@/lib/analytics/session";
-import { peekAnonymousId } from "@/lib/analytics/identity";
 import { FEEDBACK_CATEGORIES, type FeedbackCategory } from "@/lib/feedback/types";
-import { getOptionalBearerHeaders } from "@/lib/supabase/auth";
+import { submitFeedback } from "@/lib/feedback/client";
 import BottomSheet from "@/components/BottomSheet";
 
 const LABELS: Record<FeedbackCategory, string> = {
@@ -17,10 +14,8 @@ const LABELS: Record<FeedbackCategory, string> = {
   article_issue: "Article issue",
   confusing: "Confusing",
   technical_problem: "Technical problem",
+  ai_output_issue: "Problem with an AI answer",
   other: "Other",
-  return_reason: "Return reason",
-  disappearance_survey: "Disappearance survey",
-  session_reaction: "Session reaction",
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -44,7 +39,6 @@ export function FeedbackButton({
       <button
         type="button"
         onClick={() => {
-          trackEvent("feedback_opened", { feature });
           setOpen(true);
         }}
         className={className}
@@ -81,32 +75,23 @@ export default function FeedbackModal({
     }
     setState("submitting");
     setMessage(null);
-    const bearerHeaders = await getOptionalBearerHeaders();
-    const response = await fetch("/api/feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...bearerHeaders },
-      body: JSON.stringify({
-        category,
-        sentiment: category === "useful" ? "positive" : category === "other" ? "neutral" : "negative",
-        page: window.location.pathname,
-        feature,
-        articleId,
-        affectedTerm,
-        comment,
-        anonymousId: peekAnonymousId(),
-        sessionId: getBrowserSession().id,
-      }),
-    }).then((res) => res.json().then((body) => ({ ok: res.ok, body })).catch(() => ({ ok: res.ok, body: null }))).catch(() => ({ ok: false, body: null }));
-
-    if (response.ok && response.body?.ok) {
-      trackEvent("feedback_submitted", { category, feature, articleId: articleId ?? null });
+    const result = await submitFeedback({
+      category,
+      sentiment: category === "useful" ? "positive" : category === "other" ? "neutral" : "negative",
+      page: window.location.pathname.slice(0, 300),
+      feature,
+      articleId,
+      affectedTerm,
+      comment: comment.slice(0, 2000),
+    });
+    if (result.ok) {
       setState("success");
-      setMessage("Thanks. That feedback was saved.");
+      setMessage("Thanks — your feedback was sent.");
       setComment("");
       return;
     }
     setState("error");
-    setMessage(response.body?.error ?? "Feedback could not be sent right now. You can keep using Sorlio normally.");
+    setMessage(result.error);
   }
 
   return (
@@ -127,7 +112,7 @@ export default function FeedbackModal({
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          {FEEDBACK_CATEGORIES.filter((item) => !["return_reason", "disappearance_survey", "session_reaction"].includes(item)).map((item) => (
+          {FEEDBACK_CATEGORIES.map((item) => (
             <button
               key={item}
               type="button"

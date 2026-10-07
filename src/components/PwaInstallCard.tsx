@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { trackEvent } from "@/lib/analytics/client";
-import { isStandalonePwa } from "@/lib/analytics/identity";
+import { isStandalonePwa } from "@/lib/pwa";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -30,7 +29,6 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
     function handleBeforeInstallPrompt(event: Event) {
       event.preventDefault();
       setPromptEvent(event as BeforeInstallPromptEvent);
-      trackEvent("pwa_install_prompt_shown", {});
     }
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -41,13 +39,11 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
 
   async function install() {
     if (!promptEvent) return;
-    trackEvent("pwa_install_clicked", {});
     await promptEvent.prompt();
     const choice = await promptEvent.userChoice.catch(() => null);
     if (choice?.outcome === "accepted") {
       setInstalled(true);
     } else {
-      trackEvent("pwa_install_dismissed", {});
       setDismissed(true);
     }
     setPromptEvent(null);
@@ -78,7 +74,6 @@ export default function PwaInstallCard({ compact = false }: { compact?: boolean 
       <button
         type="button"
         onClick={() => {
-          trackEvent("pwa_install_dismissed", { manual: true });
           setDismissed(true);
         }}
         className="mt-3 text-xs font-semibold text-ink-muted underline underline-offset-2"

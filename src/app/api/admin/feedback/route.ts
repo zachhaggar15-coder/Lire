@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
-import { hasValidationAdminToken } from "@/lib/validation/adminAuth";
+import { hasValidationAdminToken } from "@/lib/admin/auth";
 import { clientIp, rateLimit } from "@/lib/server/rateLimit";
 
 const MAX_LIMIT = 100;

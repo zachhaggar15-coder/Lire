@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { authenticatedUser } from "@/lib/premium/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
+import { recordOpsEvent } from "@/lib/server/ops";
+import { rateLimit } from "@/lib/server/rateLimit";
 
 /**
  * Deletes the signed-in account.
@@ -27,14 +29,27 @@ import { getSupabaseServiceClient } from "@/lib/supabase/server";
  * Deleted explicitly, before the auth user, so a failure here surfaces as a
  * failed deletion rather than leaving data behind under a deleted account.
  */
-const NON_CASCADING_USER_TABLES = ["sorlio_feedback", "sorlio_research_prompt_responses", "sorlio_analytics_events"];
+const NON_CASCADING_USER_TABLES = [
+  "sorlio_feedback",
+  // Retired features (no longer collected), still deleted for older rows:
+  "sorlio_research_prompt_responses",
+  "sorlio_analytics_events",
+  "sorlio_android_beta_interest",
+];
+
+// Cascade with the auth user: sorlio_user_data (legacy sync), sorlio_sync_items,
+// sorlio_sync_state, sorlio_save_quota, sorlio_subscriptions, sorlio_ai_usage.
+// Asserted against the real schema in scripts/test-account-deletion.mjs.
 
 export async function POST(request: Request) {
   const user = await authenticatedUser(request);
   if (!user) return NextResponse.json({ error: "Sign in before deleting your account." }, { status: 401 });
 
   const client = getSupabaseServiceClient();
-  if (!client) return NextResponse.json({ error: "Account deletion is not configured." }, { status: 503 });
+  if (!client) return NextResponse.json({ error: "Account deletion isn't available right now. Please try again later." }, { status: 503 });
+  if (!(await rateLimit(`account-delete:${user.id}`, 5, 60_000))) {
+    return NextResponse.json({ error: "Please wait a minute and try again." }, { status: 429 });
+  }
 
   for (const table of NON_CASCADING_USER_TABLES) {
     const { error } = await client.from(table).delete().eq("user_id", user.id);
@@ -50,9 +65,11 @@ export async function POST(request: Request) {
   // `sorlio_subscriptions` cascade away with it.
   const { error } = await client.auth.admin.deleteUser(user.id);
   if (error) {
+    void recordOpsEvent("account.delete_failed");
     return NextResponse.json({ error: "Your account could not be deleted. Please try again." }, { status: 500 });
   }
 
+  void recordOpsEvent("account.deleted");
   return NextResponse.json({ ok: true });
 }
 

@@ -18,12 +18,9 @@ import {
 } from "@/components/GamificationCards";
 import AppBar from "@/components/AppBar";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
-import { AndroidBetaButton } from "@/components/AndroidBetaModal";
-import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import { getSessionRecords } from "@/lib/sessionRecord";
 import { computeRollingLookupRate, computeTrend, BASELINE_THRESHOLDS } from "@/lib/practice/baselineComparison";
-import { trackEvent } from "@/lib/analytics/client";
 
 type Tab = "overview" | "missions" | "vocabulary" | "achievements" | "passport";
 
@@ -58,7 +55,6 @@ export default function ProgressPage() {
     const requested = params.get("tab");
     if (requested && TABS.some((item) => item.id === requested)) setTab(requested as Tab);
     refresh(true);
-    trackEvent("progress_page_viewed", {});
   }, []);
 
   const sessionRecords = useMemo(() => getSessionRecords(), []);
@@ -72,9 +68,6 @@ export default function ProgressPage() {
     [sessionRecords]
   );
   const hasEnoughForTrend = sessionRecords.length >= BASELINE_THRESHOLDS.minimumSampleForTrend;
-  useEffect(() => {
-    if (hasEnoughForTrend) trackEvent("progress_comparison_displayed", { trend: readingTrend });
-  }, [hasEnoughForTrend, readingTrend]);
 
   const weeklyArticles = useMemo(
     () => snapshot?.completions.filter((item) => weekStart !== null && new Date(item.completedAt).getTime() >= weekStart).length ?? 0,
@@ -131,17 +124,6 @@ export default function ProgressPage() {
         <div className="space-y-5">
           <ReadingIndependenceTrendCard trend={readingTrend} rollingRates={rollingRates} hasEnoughData={hasEnoughForTrend} />
           <CurrentLevelCard level={snapshot.level} />
-          {VALIDATION_FEATURES.androidBetaCtaEnabled && (
-            <section className="rounded-card bg-cream-card p-4 shadow-card">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
-                  <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when beta opens?</p>
-                </div>
-                <AndroidBetaButton source="progress" label="Join" />
-              </div>
-            </section>
-          )}
 
           <section className="rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Weekly overview</h2>

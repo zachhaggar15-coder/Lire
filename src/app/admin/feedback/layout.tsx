@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import type { ReactNode } from "react";
 import AdminFeedbackLogin from "./AdminFeedbackLogin";
-import { VALIDATION_ADMIN_COOKIE, isValidationAdminSessionValue } from "@/lib/validation/adminAuth";
+import { VALIDATION_ADMIN_COOKIE, isValidationAdminSessionValue } from "@/lib/admin/auth";
 
 export default async function FeedbackAdminLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
