@@ -21,11 +21,21 @@ export function useGeneratedDictionary(): number {
   useEffect(() => {
     if (isGeneratedDictionaryReady()) return;
     let cancelled = false;
-    void ensureGeneratedDictionary().then(() => {
-      if (!cancelled) setRevision((current) => current + 1);
-    });
+    const attempt = () => {
+      void ensureGeneratedDictionary().then(() => {
+        if (!cancelled && isGeneratedDictionaryReady()) {
+          setRevision((current) => current + 1);
+          window.removeEventListener("online", attempt);
+        }
+      });
+    };
+    // A failed load (offline) is retried when the connection returns, so the
+    // screen does not stay on curated-only coverage until a reload.
+    window.addEventListener("online", attempt);
+    attempt();
     return () => {
       cancelled = true;
+      window.removeEventListener("online", attempt);
     };
   }, []);
 
