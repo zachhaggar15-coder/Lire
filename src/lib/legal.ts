@@ -16,8 +16,8 @@ export const LEGAL = {
   /** Postal address for legal notices (may be a service address). */
   operatorAddress: "[Postal address for legal notices]",
   contactEmail: "sorlio@proton.me",
-  /** Region of the Supabase project holding accounts and synced data. */
-  databaseRegion: "[Supabase project region, e.g. EU West (Ireland)]",
+  /** Region of the Supabase project holding accounts and synced data (eu-central-1). */
+  databaseRegion: "the EU (Frankfurt, Germany)",
   privacyEffectiveDate: "[Release date]",
   termsEffectiveDate: "[Release date]",
   minimumAge: 13,
