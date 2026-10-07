@@ -1,18 +1,15 @@
 import { NextResponse } from "next/server";
 import { explainWord } from "@/lib/ai/openai";
-import { optionalText, requirePaidAiCaller, requireText, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
+import { optionalText, readJsonBody, requirePaidAiCaller, requireText, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
 
 
 export async function POST(request: Request) {
   const gate = await requirePaidAiCaller(request);
   if (!gate.ok) return gate.response;
 
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-  }
+  const parsed = await readJsonBody(request);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.value;
 
   const { word, lemma, articleSentence, simpleExampleSentence, surroundingSentence, articleTitle, level } =
     (body ?? {}) as Record<string, unknown>;

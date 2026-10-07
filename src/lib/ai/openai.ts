@@ -79,11 +79,40 @@ function material(lines: Array<string | null>): string {
 
 export class AiProviderError extends Error {
   readonly status: number;
-  constructor(status: number) {
+  /** From the provider's Retry-After header, when it sent one. */
+  readonly retryAfterMs: number | null;
+  constructor(status: number, retryAfterMs: number | null = null) {
     super(`AI provider error ${status}`);
     this.name = "AiProviderError";
     this.status = status;
+    this.retryAfterMs = retryAfterMs;
   }
+}
+
+/** Longest wait between attempts; a provider asking for longer gets no retry. */
+const MAX_RETRY_WAIT_MS = 5_000;
+
+/**
+ * Whether another attempt can help, and how long to wait first. Permanent
+ * provider errors (bad key, bad request) are never retried: each retry costs
+ * a call and cannot succeed. Rate limits and server errors back off.
+ * Malformed answers and timeouts retry at once.
+ */
+export function retryDelayMs(error: unknown, attempt: number): number | null {
+  if (error instanceof AiNotConfiguredError) return null;
+  if (!(error instanceof AiProviderError)) return 0;
+  if (error.status !== 429 && error.status < 500) return null;
+  const wait = error.retryAfterMs ?? attempt * 1_000;
+  return wait > MAX_RETRY_WAIT_MS ? null : wait;
+}
+
+function retryAfterMs(response: Response): number | null {
+  const header = response.headers.get("retry-after");
+  if (!header) return null;
+  const seconds = Number(header);
+  if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000);
+  const date = Date.parse(header);
+  return Number.isFinite(date) ? Math.max(0, date - Date.now()) : null;
 }
 
 async function callOpenAiJson(
@@ -123,7 +152,7 @@ async function callOpenAiJson(
   if (!res.ok) {
     // The provider's error body can contain account details; it is never
     // passed on. Only the status code is kept for the server log.
-    throw new AiProviderError(res.status);
+    throw new AiProviderError(res.status, retryAfterMs(res));
   }
 
   const data = await res.json();
@@ -459,8 +488,10 @@ export async function translateArticleSentences(req: ArticleTranslationRequest):
       const raw = await callOpenAiJson(system, user, ARTICLE_TRANSLATION_TIMEOUT_MS, ARTICLE_TRANSLATION_MAX_TOKENS);
       return assertArticleTranslation(raw, req.sentences.length, req.sentences);
     } catch (err) {
-      if (err instanceof AiNotConfiguredError) throw err;
       lastError = err;
+      const wait = retryDelayMs(err, attempt);
+      if (wait === null || attempt === ARTICLE_TRANSLATION_MAX_ATTEMPTS) break;
+      if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
     }
   }
   throw lastError instanceof Error ? lastError : new Error(String(lastError));

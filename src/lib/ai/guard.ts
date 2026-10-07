@@ -149,6 +149,44 @@ export const MAX_TEXT_CHARS = 2_000;
 export const MAX_TITLE_CHARS = 300;
 export const MAX_ARTICLE_SENTENCES = 200;
 export const MAX_ARTICLE_TOTAL_CHARS = 60_000;
+/** Largest request body any AI route will read (an article at the caps above is well under this). */
+export const MAX_AI_BODY_BYTES = 256 * 1024;
+
+/**
+ * Reads a JSON body without trusting its size: a declared or actual body over
+ * the limit is refused before parsing. Called after requirePaidAiCaller, so an
+ * unauthenticated caller never gets as far as the body.
+ */
+export async function readJsonBody(request: Request, maxBytes = MAX_AI_BODY_BYTES): Promise<{ ok: true; value: Record<string, unknown> } | { ok: false; response: NextResponse }> {
+  const tooLarge = () => ({ ok: false as const, response: NextResponse.json({ error: "That request is too large." }, { status: 413 }) });
+  const declared = Number(request.headers.get("content-length") ?? 0);
+  if (Number.isFinite(declared) && declared > maxBytes) return tooLarge();
+  let text: string;
+  try {
+    text = await request.text();
+  } catch {
+    return { ok: false, response: NextResponse.json({ error: "Invalid request." }, { status: 400 }) };
+  }
+  if (Buffer.byteLength(text) > maxBytes) return tooLarge();
+  try {
+    const value = JSON.parse(text);
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("not an object");
+    return { ok: true, value: value as Record<string, unknown> };
+  } catch {
+    return { ok: false, response: NextResponse.json({ error: "Invalid request." }, { status: 400 }) };
+  }
+}
+
+/** Paragraph starts as sentence indices: strictly increasing, each within the article. */
+export function validParagraphBreaks(value: unknown, sentenceCount: number): value is number[] {
+  if (!Array.isArray(value) || value.length > sentenceCount) return false;
+  let previous = -1;
+  for (const index of value) {
+    if (typeof index !== "number" || !Number.isInteger(index) || index <= previous || index >= sentenceCount) return false;
+    previous = index;
+  }
+  return true;
+}
 
 /** Rejects a field that is missing, empty, or implausibly long. */
 export function requireText(value: unknown, field: string, max = MAX_TEXT_CHARS): { ok: true; value: string } | { ok: false; response: NextResponse } {

@@ -1,25 +1,18 @@
 import { NextResponse } from "next/server";
 import { translateArticleSentences } from "@/lib/ai/openai";
-import { optionalText, requirePaidAiCaller, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
+import { optionalText, readJsonBody, requirePaidAiCaller, validParagraphBreaks, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
 
 /** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI, and translateArticleSentences now retries up to 3 times internally — sized to cover 3 back-to-back 45s attempts with headroom. */
 export const maxDuration = 150;
 
 
-function isNumberArray(v: unknown): v is number[] {
-  return Array.isArray(v) && v.every((x) => typeof x === "number" && Number.isInteger(x));
-}
-
 export async function POST(request: Request) {
   const gate = await requirePaidAiCaller(request);
   if (!gate.ok) return gate.response;
 
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-  }
+  const parsed = await readJsonBody(request);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.value;
 
   const { sentences, paragraphBreakBeforeIndex, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
 
@@ -38,8 +31,8 @@ export async function POST(request: Request) {
   if (totalChars > MAX_ARTICLE_TOTAL_CHARS) {
     return NextResponse.json({ error: `Article is too long (max ${MAX_ARTICLE_TOTAL_CHARS} characters).` }, { status: 400 });
   }
-  if (!isNumberArray(paragraphBreakBeforeIndex)) {
-    return NextResponse.json({ error: "'paragraphBreakBeforeIndex' must be an array of integers." }, { status: 400 });
+  if (!validParagraphBreaks(paragraphBreakBeforeIndex, sentences.length)) {
+    return NextResponse.json({ error: "'paragraphBreakBeforeIndex' must list increasing sentence indices within the article." }, { status: 400 });
   }
 
   try {
