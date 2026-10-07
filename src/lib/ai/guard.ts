@@ -31,7 +31,7 @@ export function dailyAiCallLimit(): number {
 }
 
 export interface AiCaller {
-  entitlement: "subscription" | "closed-test";
+  entitlement: "subscription";
   userId: string | null;
   client: SupabaseClient | null;
 }

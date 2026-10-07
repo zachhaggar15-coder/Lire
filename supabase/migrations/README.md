@@ -5,18 +5,27 @@ Supabase project and you have the complete Sorlio database.
 
 ## Running them
 
-**Dashboard (simplest):** SQL Editor → New query → paste one file → Run.
-Repeat in order, `0001` through the highest number.
+**Production (`blumuxrepzzdwwzomffx`) is at `0012`, and its migration history
+records exactly `0001`–`0012`** (reconciled 7 Oct 2026 with
+`supabase migration repair`). Keep it that way:
 
-**CLI, if you prefer:**
+1. Add the next file as `0013_<name>.sql` (four-digit prefix, the CLI accepts it).
+2. Test it locally: `npm test` runs every migration against PGlite, including
+   `test-legacy-build-compat.mjs` (the deployed build must keep working).
+3. Read-only check: `npx supabase@2.120.0 migration list --linked`.
+4. Apply it deliberately (reviewed SQL editor run or the Supabase MCP
+   `apply_migration`), then `migration repair --status applied 0013` if it was
+   not recorded, and confirm `migration list` shows local = remote.
+5. Bump `EXPECTED_SCHEMA_VERSION` (src/lib/server/schema.ts) and
+   `sorlio_schema_version()`; verify with `npm run verify:supabase`.
 
-```bash
-supabase db push
-```
+Do not use `supabase db push` against production: it applies everything it
+thinks is missing, without the review above.
 
-Every file is safe to re-run — `create table if not exists`, `create index if
-not exists`, and `drop policy if exists` before each `create policy`. Re-running
-never touches existing rows.
+Re-running a file is safe — tables, indexes and functions use `if not exists`
+/ `create or replace` — and never deletes or rewrites user data. Two files do
+write rows: `0009` backfills `verified_at` on existing subscriptions, and
+`0010` upserts the sync store registry (`sorlio_sync_stores`).
 
 ## What each one does
 
