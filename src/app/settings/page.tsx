@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import type { AppSettings, Difficulty, FontSize, ThemePreference, TranslationMode } from "@/types";
 import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
 import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
-import { clearKnownWords, getKnownWords } from "@/lib/knownWords";
-import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
 import {
   getCurrentStreak,
@@ -151,7 +149,6 @@ export default function SettingsPage() {
   const router = useRouter();
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
-  const [knownCount, setKnownCount] = useState(0);
   const [offlineCount, setOfflineCount] = useState(0);
   const [inAndroidApp, setInAndroidApp] = useState(false);
   const [streak, setStreak] = useState<{ current: number; longest: number; activeToday: boolean; week: StreakDay[] }>({
@@ -180,7 +177,6 @@ export default function SettingsPage() {
   useEffect(() => {
     setSettings(getSettings());
     setSelectedLevel(getSelectedReadingLevel());
-    setKnownCount(getKnownWords().length);
     setOfflineCount(getOfflineRssTextCount());
     setInAndroidApp(isAndroidApp());
     refreshStreakView();
@@ -193,15 +189,6 @@ export default function SettingsPage() {
   function changeLevel(level: Difficulty) {
     updateSelectedReadingLevel(level);
     setSelectedLevel(level);
-  }
-
-  function handleClearKnown() {
-    if (knownCount === 0) return;
-    if (confirm("Forget all known words? They will show up again in the reader and can be re-reviewed.")) {
-      const failure = clearKnownWords();
-      if (failure) window.alert(persistenceFailureMessage(failure));
-      else setKnownCount(0);
-    }
   }
 
   function handleClearOffline() {
@@ -322,12 +309,6 @@ export default function SettingsPage() {
                 label="Saved word highlights"
                 description="Highlight words you saved for review."
               />
-              <Toggle
-                checked={settings.showKnownWordStyling}
-                onChange={(v) => update({ showKnownWordStyling: v })}
-                label="Known word styling"
-                description="Dim words you marked as known."
-              />
               <SpeechSettingsCard settings={settings} onChange={update} />
             </div>
           </details>
@@ -335,7 +316,7 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <SettingsLink href="/words" title="Words" description="Manage saved and known vocabulary." />
+          <SettingsLink href="/words" title="Words" description="Your saved words: in review or not, and how well you know them." />
           <SettingsLink href="/words?tab=phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
           <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
           <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
@@ -416,24 +397,6 @@ export default function SettingsPage() {
             <div className="rounded-card border border-cream-dark bg-cream-card p-4">
               <p className="font-semibold text-ink">AI explanations</p>
               <p className="mt-0.5 text-sm text-ink-muted">Word and sentence AI help runs only when you ask for it.</p>
-            </div>
-
-            <div className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4">
-              <div className="min-w-0">
-                <p className="font-semibold text-ink">Known words</p>
-                <p className="mt-0.5 text-sm text-ink-muted">
-                  {knownCount} {knownCount === 1 ? "word" : "words"} marked known.
-                </p>
-              </div>
-              {knownCount > 0 && (
-                <button
-                  type="button"
-                  onClick={handleClearKnown}
-                  className="ligne-pill shrink-0 bg-rose text-rose-ink"
-                >
-                  Clear
-                </button>
-              )}
             </div>
 
             <div className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4">

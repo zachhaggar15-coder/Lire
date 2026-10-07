@@ -63,6 +63,7 @@ Statuses: **FIXED + VERIFIED**, **ALREADY FIXED + REVERIFIED**, **FALSE POSITIVE
 | C07 Grammar feedback/toast unannounced; lookup unlabeled | Still open | role=status + focus on feedback; toast live region; labelled search | 5ec33f6 | Build: answering moves focus to the role=status feedback | FIXED + VERIFIED | No |
 | C08 Account says synced after failure | Must reverify | Latest failure/dirty state overrides history | None | test-sync-engine | ALREADY FIXED + REVERIFIED | No |
 | A03 CSP/security headers | Must reverify | CSP + nosniff, DENY, HSTS, COOP, Permissions-Policy | 04129bd | Build: no CSP violations across pages; test-security-regressions (6 header checks, mutation-tested) | FIXED + VERIFIED | Google sign-in on deployed build (M01) |
+| V01 Reader vocabulary state: false "Already known", seeded CEFR "known" words, terminal graduation (raised by the developer, 7 Oct) | New (release-blocking) | Confirmed on this branch: the reader let a 500–8,000-lemma level seed and legacy marks override saved cards; "Already known" was a dead end; 3× "Knew it" removed cards from Review; re-saving a known card did nothing | Binary membership (reviewMembership.ts); remove keeps history; CEFR estimate computed, never stored; graduation removed; Words page In review / Not in review | test-review-membership (65, incl. real-Postgres sync and server quota); 4 mutations caught; manual browser pass on legacy data | FIXED + VERIFIED | No |
 
 ## Rows already marked confirmed, manual, or blocker
 

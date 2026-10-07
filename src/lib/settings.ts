@@ -10,7 +10,6 @@ const KEY = "lire.settings.v1";
 export const DEFAULT_SETTINGS: AppSettings = {
   theme: "system",
   showSavedHighlights: true,
-  showKnownWordStyling: true,
   fontSize: "medium",
   speechRate: 1,
   speechVoiceURI: null,

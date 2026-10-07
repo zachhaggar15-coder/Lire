@@ -6,7 +6,7 @@ import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/a
 import { getSavedWords } from "@/lib/storage";
 import { formatCategory, formatDate } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { getTranslationBudgetRecords } from "@/lib/readingInsights";
 import {
   buildCategoryProficiency,
@@ -57,7 +57,7 @@ export default function ArchivePage() {
     const weekAgoMs = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     const entries = getArchive();
     const words = getSavedWords();
-    const knownWords = getKnownWords();
+    const knownWords = [...getEstimatedKnownVocabulary()];
     const built = entries.map((entry) => ({
       entry,
       wordsSaved: words.filter((w) => w.sourceTextTitle === entry.title).length,

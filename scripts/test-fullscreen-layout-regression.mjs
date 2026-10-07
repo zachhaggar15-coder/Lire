@@ -138,8 +138,8 @@ check(
 );
   check(
     "the real word card's review button toggles back off",
-    files.meaningSheet.includes("saved ? onUnsave?.() : onSave?.()") &&
-      files.meaningSheet.includes('saved ? "Remove from review"')
+    files.meaningSheet.includes('control === "remove" ? onUnsave?.() : onSave?.()') &&
+      files.meaningSheet.includes("REVIEW_CONTROL_LABEL[control]")
   );
 check("the real word card closes with an X, not a Done label", files.meaningSheet.includes('aria-label="Close"'));
 check(

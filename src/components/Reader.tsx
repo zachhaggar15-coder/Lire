@@ -5,8 +5,10 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordStatus } from "@/types";
+import { isInReview, isMastered, VocabularyIndex } from "@/lib/reviewMembership";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
-import { deleteWord, getSavedWords } from "@/lib/storage";
+import { getSavedWords, removeWordFromReview } from "@/lib/storage";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { deletePhrase, getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
@@ -29,7 +31,6 @@ import {
   type ResolvedMeaning,
   type SentenceMeaning,
 } from "@/lib/dictionary/resolveMeaning";
-import { getKnownWords } from "@/lib/knownWords";
 import { getProgress, markCompleted, markOpened } from "@/lib/progress";
 import { recordArchiveEntry } from "@/lib/archive";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
@@ -121,21 +122,6 @@ const FONT_SIZE_CLASSES: Record<FontSize, string> = {
 type TranslationState = "idle" | "loading" | "ready";
 /** How many paragraphs go in each translation request — small enough that the first chunk (typically what's on screen when the toggle is tapped) comes back in a couple of seconds instead of waiting for the whole article, large enough that each request still has some real context to work with. */
 const PARAGRAPHS_PER_TRANSLATION_CHUNK = 2;
-
-function buildWordStatusMap(words: SavedWord[]): Map<string, WordStatus> {
-  const map = new Map<string, WordStatus>();
-  for (const word of words) {
-    map.set(word.word.toLowerCase(), word.status);
-    if (word.lemma) map.set(word.lemma.toLowerCase(), word.status);
-  }
-  return map;
-}
-
-function lookupWordStatus(map: Map<string, WordStatus>, word: string, lemma: string | null | undefined): WordStatus | null {
-  const wordKey = word.toLowerCase();
-  const lemmaKey = lemma?.toLowerCase() ?? null;
-  return map.get(wordKey) ?? (lemmaKey ? map.get(lemmaKey) ?? null : null);
-}
 
 function journeyMomentForCompletion(before: JourneyState | null, after: JourneyState | null, textId: string): JourneyMoment | null {
   if (!before || !after) return null;
@@ -264,11 +250,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     return { previous: i > 0 ? flatSentences[i - 1] : null, next: i < flatSentences.length - 1 ? flatSentences[i + 1] : null };
   }
 
-  const [wordStatusMap, setWordStatusMap] = useState<Map<string, WordStatus>>(new Map());
   const [savedWordsSnapshot, setSavedWordsSnapshot] = useState<SavedWord[]>([]);
-  const [knownSet, setKnownSet] = useState<Set<string>>(new Set());
+  // Review membership for every token comes from saved cards alone (see
+  // reviewMembership.ts). What the reader is estimated to know is a separate
+  // thing, used only for difficulty and choosing words to suggest.
+  const vocabulary = useMemo(() => new VocabularyIndex(savedWordsSnapshot), [savedWordsSnapshot]);
+  const [estimatedVocabulary, setEstimatedVocabulary] = useState<Set<string>>(new Set());
   const [recentSavedWords, setRecentSavedWords] = useState<Set<string>>(new Set());
-  const [recentKnownWords, setRecentKnownWords] = useState<Set<string>>(new Set());
   const [activeWord, setActiveWord] = useState<ActiveMeaningState | null>(null);
   const [activeSentence, setActiveSentence] = useState<ActiveSentenceState | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -388,8 +376,8 @@ export default function Reader({ text }: { text: ReadingText }) {
   const gistQuestion = comprehensionQuestions.gistQuestion;
   const toneQuestions = comprehensionQuestions.toneQuestions;
   const learningCandidates = useMemo(
-    () => rankLearningCandidates(text, knownSet, savedWordsSnapshot, articleTapRecords, 6),
-    [articleTapRecords, knownSet, savedWordsSnapshot, text]
+    () => rankLearningCandidates(text, estimatedVocabulary, savedWordsSnapshot, articleTapRecords, 6),
+    [articleTapRecords, estimatedVocabulary, savedWordsSnapshot, text]
   );
   const translationAllowance = useMemo(
     () => suggestedTranslationAllowance(difficulty?.unknownWordRatio),
@@ -427,12 +415,15 @@ export default function Reader({ text }: { text: ReadingText }) {
 
   /**
    * The first difficulty estimate may have run against curated-only coverage,
-   * which overstates how many words are unfamiliar. Redo it once the broad
-   * dictionary lands.
+   * which overstates how many words are unfamiliar (and the level's
+   * estimated vocabulary is only its curated part until then). Redo both once
+   * the broad dictionary lands.
    */
   useEffect(() => {
     if (dictionaryRevision === 0 || text.language === "en") return;
-    setDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
+    const known = getEstimatedKnownVocabulary();
+    setEstimatedVocabulary(known);
+    setDifficulty(estimateDifficulty(text.body, known));
   }, [dictionaryRevision, text.body, text.language]);
 
   useEffect(() => {
@@ -622,15 +613,14 @@ export default function Reader({ text }: { text: ReadingText }) {
     setComprehensionQuestions(getOrCreateComprehensionQuestionBundle(text, articlePool));
   }, [articlePool, showInterpretationChecks, text]);
 
-  // Load saved words + known words + settings + progress once on mount,
-  // and record that this text has been opened.
+  // Load saved words + estimated vocabulary + settings + progress once on
+  // mount, and record that this text has been opened.
   useEffect(() => {
-    const known = new Set(getKnownWords());
     const savedWords = getSavedWords();
-    setWordStatusMap(buildWordStatusMap(savedWords));
+    const known = getEstimatedKnownVocabulary(undefined, savedWords);
     setSavedWordsSnapshot(savedWords);
-    setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && word.status !== "known").length);
-    setKnownSet(known);
+    setArticleSavedWordCount(savedWords.filter((word) => word.sourceTextTitle === text.title && isInReview(word)).length);
+    setEstimatedVocabulary(known);
     const loadedSettings = getSettings();
     setSettings(loadedSettings);
     // Skip for English-language sources — the estimator's French dictionary
@@ -937,10 +927,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     wordsSavedThisSession.current += 1;
   }
 
-  function pulseRewardWords(kind: "saved" | "known", values: Array<string | null | undefined>) {
+  function pulseSavedWords(values: Array<string | null | undefined>) {
     const keys = values.map((value) => value?.toLowerCase()).filter((value): value is string => !!value);
     if (keys.length === 0) return;
-    const setter = kind === "saved" ? setRecentSavedWords : setRecentKnownWords;
+    const setter = setRecentSavedWords;
     setter((prev) => {
       const next = new Set(prev);
       keys.forEach((key) => next.add(key));
@@ -952,7 +942,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         keys.forEach((key) => next.delete(key));
         return next;
       });
-    }, kind === "saved" ? 1500 : 1700);
+    }, 1500);
     rewardTimeouts.current.push(timeout);
   }
 
@@ -1024,11 +1014,9 @@ export default function Reader({ text }: { text: ReadingText }) {
     return sentenceMeaning(sentenceText, fluent, "article-translation");
   }
 
-  function statusForWord(clean: string, lemma: string | null | undefined): WordStatus | null {
-    const lemmaKey = lemma?.toLowerCase() ?? null;
-    const known = knownSet.has(clean) || (!!lemmaKey && knownSet.has(lemmaKey));
-    if (known) return "known";
-    return lookupWordStatus(wordStatusMap, clean, lemmaKey);
+  /** How the word's card in Review was saved, or null when the word is not in Review. */
+  function reviewStatusForWord(clean: string, lemma: string | null | undefined): WordStatus | null {
+    return vocabulary.activeCard(clean, lemma)?.status ?? null;
   }
 
   /**
@@ -1063,7 +1051,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       return;
     }
     const lemma = lookup.lemma?.toLowerCase();
-    const existingStatus = statusForWord(clean, lemma);
+    const inReview = vocabulary.inReview(clean, lemma);
     const { previous, next } = neighbours(sentenceText);
     const meaning = resolveMeaning({
       tokens,
@@ -1096,7 +1084,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     setActiveWord({
       meaning,
       surroundingSentence: previous,
-      existingStatus,
+      inReview,
+      hasCard: vocabulary.cards(clean, lemma).length > 0,
       pronounReference,
       resolving: false,
       aiSuggested: shouldEscalateToAi(meaning),
@@ -1109,8 +1098,8 @@ export default function Reader({ text }: { text: ReadingText }) {
    * word. Auto-saving on every tap meant a reader who was merely curious
    * ended up with a review queue full of words they never chose.
    */
-  function handleSaveActiveWord(status: Exclude<WordStatus, "known"> = "learning") {
-    if (!activeWord || activeWord.existingStatus) return;
+  function handleSaveActiveWord() {
+    if (!activeWord || activeWord.inReview) return;
     const meaning = activeWord.meaning;
     // Names and places aren't vocabulary worth reviewing. This guard used to
     // sit on the auto-save in handleWordTap; it belongs wherever the save is.
@@ -1122,9 +1111,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       showToast("Nothing to save until this word resolves");
       return;
     }
-    // Free accounts save a limited number of NEW words a day; reviewing and
-    // re-saving existing words is never limited (see access/features.ts).
-    const saved = saveWordForAccess(access, buildSavedWord(meaning, status));
+    // Free accounts save a limited number of NEW words a day; putting back a
+    // word that already has a card is never limited (see access/saveWord.ts).
+    const saved = saveWordForAccess(access, buildSavedWord(meaning, "learning"));
     refreshUsage();
     if (!saved.decision.allowed) {
       setActiveWord(null);
@@ -1134,60 +1123,55 @@ export default function Reader({ text }: { text: ReadingText }) {
     // The resolved contextual meaning is what the reader actually saw and
     // agreed to save, so it leads the card — a flashcard that disagrees with
     // the sheet it was saved from is worse than no card.
-    const { words: nextWords, persisted, created } = saved.result!;
+    const { words: nextWords, persisted, created, reactivated } = saved.result!;
     if (!persisted) {
+      // Nothing changed: the sheet keeps offering "Add to review".
       showToast("Couldn't save — device storage is full");
       return;
     }
-    const nextStatusMap = buildWordStatusMap(nextWords);
-    setWordStatusMap(nextStatusMap);
     setSavedWordsSnapshot(nextWords);
-    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-    setActiveWord((prev) =>
-      prev
-        ? {
-            ...prev,
-            existingStatus: lookupWordStatus(nextStatusMap, prev.meaning.tappedText, prev.meaning.lemma) ?? status,
-          }
-        : prev
-    );
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && isInReview(saved)).length);
+    const nowInReview = new VocabularyIndex(nextWords).inReview(meaning.tappedText, meaning.lemma);
+    setActiveWord((prev) => (prev ? { ...prev, inReview: nowInReview, hasCard: true } : prev));
+    if (reactivated) {
+      showToast("Added back to review");
+      return;
+    }
     if (!created) {
-      showToast("Already saved — available in Review");
+      showToast("Already in review");
       return;
     }
     recordLearningAction();
     rememberWordSaved("tap_lookup");
     triggerHaptic("confirm");
-    pulseRewardWords("saved", [meaning.tappedText, meaning.lemma]);
+    pulseSavedWords([meaning.tappedText, meaning.lemma]);
     if (!hasSeenReaderTip("first-save")) {
       markReaderTipSeen("first-save");
       showToast("Saved — practise it later in the Review tab", 3200);
     } else {
-      showToast(status === "unsure" ? "Saved as unsure" : "Saved");
+      showToast("Added to review");
     }
   }
 
   function handleUnsaveActiveWord() {
-    if (!activeWord || activeWord.existingStatus === null || activeWord.existingStatus === "known") return;
-    const removed = deleteWord(activeWord.meaning.tappedText);
+    if (!activeWord || !activeWord.inReview) return;
+    const { tappedText, lemma } = activeWord.meaning;
+    const removed = removeWordFromReview(tappedText, lemma);
     if (!removed.ok) {
       showToast(persistenceFailureMessage(removed.reason), 4200);
       return;
     }
     const nextWords = removed.words;
-    const nextStatusMap = buildWordStatusMap(nextWords);
-    const keys = [activeWord.meaning.tappedText.toLowerCase(), activeWord.meaning.lemma?.toLowerCase()].filter(
-      (value): value is string => !!value
-    );
+    const keys = [tappedText.toLowerCase(), lemma?.toLowerCase()].filter((value): value is string => !!value);
     setRecentSavedWords((current) => {
       const next = new Set(current);
       keys.forEach((key) => next.delete(key));
       return next;
     });
-    setWordStatusMap(nextStatusMap);
     setSavedWordsSnapshot(nextWords);
-    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
-    setActiveWord((previous) => (previous ? { ...previous, existingStatus: null } : previous));
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && isInReview(saved)).length);
+    const stillInReview = new VocabularyIndex(nextWords).inReview(tappedText, lemma);
+    setActiveWord((previous) => (previous ? { ...previous, inReview: stillInReview, hasCard: true } : previous));
     showToast("Removed from review");
   }
 
@@ -1224,7 +1208,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       );
 
     getSavedWords()
-      .filter((word) => word.sourceTextTitle === text.title && word.status !== "known")
+      .filter((word) => word.sourceTextTitle === text.title && isInReview(word))
       .slice(0, 5)
       .forEach((word) =>
         add({
@@ -1273,12 +1257,13 @@ export default function Reader({ text }: { text: ReadingText }) {
       }
       showToast("Removed from review");
     } else if (item.saved) {
-      const removed = deleteWord(item.french);
+      // item.french is the card's lemma (or its form when it has none).
+      const removed = removeWordFromReview(item.french, item.french);
       if (!removed.ok) {
         showToast(persistenceFailureMessage(removed.reason), 4200);
         return;
       }
-      setWordStatusMap(buildWordStatusMap(removed.words));
+      setSavedWordsSnapshot(removed.words);
       showToast("Removed from review");
     } else {
       const saved = saveWordForAccess(access, buildSavedWord(resolveMeaningForWord(item.french, item.context ?? item.french), "learning"));
@@ -1287,16 +1272,15 @@ export default function Reader({ text }: { text: ReadingText }) {
         setBlocked({ reason: saved.decision.reason!, feature: "saveWord" });
         return;
       }
-      const { words: nextWords, persisted, created } = saved.result!;
+      const { words: nextWords, persisted, created, reactivated } = saved.result!;
       if (!persisted) {
         showToast("Couldn't save — device storage is full");
         return;
       }
-      setWordStatusMap(buildWordStatusMap(nextWords));
       setSavedWordsSnapshot(nextWords);
-      setArticleSavedWordCount(nextWords.filter((savedWord) => savedWord.sourceTextTitle === text.title && savedWord.status !== "known").length);
+      setArticleSavedWordCount(nextWords.filter((savedWord) => savedWord.sourceTextTitle === text.title && isInReview(savedWord)).length);
       if (created) recordLearningAction();
-      showToast(created ? "Saved for review" : "Already saved — available in Review");
+      showToast(created ? "Added to review" : reactivated ? "Added back to review" : "Already in review");
     }
     setLessonComplete((current) =>
       current
@@ -1568,9 +1552,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       wordCount: wordTotal,
       totalLookupActions: wordLookupCount.current,
       uniqueWordsLookedUp: wordLookupLemmas.current.size,
-      wordsSaved: wordsForThisArticle.filter((word) => word.status === "learning").length,
-      wordsUnsure: wordsForThisArticle.filter((word) => word.status === "unsure").length,
-      wordsKnown: wordsForThisArticle.filter((word) => word.status === "known").length,
+      wordsSaved: wordsForThisArticle.filter((word) => isInReview(word) && word.status === "learning").length,
+      wordsUnsure: wordsForThisArticle.filter((word) => isInReview(word) && word.status === "unsure").length,
+      wordsKnown: wordsForThisArticle.filter(isMastered).length,
       openedAt: getProgress(text.id).openedAt ?? completedAt,
       completedAt,
       activeReadingTimeMs: activeTimeTracker.current?.activeMs() ?? 0,
@@ -1707,18 +1691,10 @@ export default function Reader({ text }: { text: ReadingText }) {
     const clean = token.clean;
     const entry = lookupWord(token.text);
     const lemma = entry.lemma?.toLowerCase();
-    const wordStatus = statusForWord(clean, lemma);
-    const known = wordStatus === "known";
-    const recentlyKnown = recentKnownWords.has(clean) || (!!lemma && recentKnownWords.has(lemma));
+    // Only membership is shown: a word in Review is highlighted. Nothing is
+    // dimmed as "known" — the reader never claims the learner knows a word.
+    const wordStatus = reviewStatusForWord(clean, lemma);
     const recentlySaved = recentSavedWords.has(clean) || (!!lemma && recentSavedWords.has(lemma));
-
-    if (known && settings.showKnownWordStyling) {
-      return `${base} text-ink-muted ${recentlyKnown ? "reward-word-mastered" : ""}`;
-    }
-
-    if (recentlyKnown) {
-      return `${base} reward-word-mastered`;
-    }
 
     if (recentlySaved) {
       return `${base} bg-brand-light text-ink underline decoration-brand decoration-2 underline-offset-4 reward-word-save`;
@@ -1743,21 +1719,20 @@ export default function Reader({ text }: { text: ReadingText }) {
       setBlocked({ reason: saved.decision.reason!, feature: "saveWord" });
       return;
     }
-    const { words: nextWords, persisted, created } = saved.result!;
+    const { words: nextWords, persisted, created, reactivated } = saved.result!;
     if (!persisted) {
       showToast("Couldn't save — device storage is full");
       return;
     }
     setSavedWordsSnapshot(nextWords);
-    setWordStatusMap(buildWordStatusMap(nextWords));
-    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && saved.status !== "known").length);
+    setArticleSavedWordCount(nextWords.filter((saved) => saved.sourceTextTitle === text.title && isInReview(saved)).length);
     if (!created) {
-      showToast("Already saved — available in Review");
+      showToast(reactivated ? "Added back to review" : "Already in review");
       return;
     }
     recordLearningAction();
     rememberWordSaved("candidate");
-    pulseRewardWords("saved", [candidate.word, candidate.lemma]);
+    pulseSavedWords([candidate.word, candidate.lemma]);
     showToast("Saved learning candidate");
   }
 
@@ -2394,7 +2369,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           state={activeWord}
           articleTitle={text.title}
           onClose={() => setActiveWord(null)}
-          onSave={() => handleSaveActiveWord("learning")}
+          onSave={handleSaveActiveWord}
           onUnsave={handleUnsaveActiveWord}
           onAiRequested={() => markAiSupportUsed("word")}
           privateText={isImportedText}

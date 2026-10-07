@@ -10,7 +10,7 @@ import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody, type ClozeExe
 import { buildGrammarNotes, type GrammarNote } from "@/lib/practice/grammarNotes";
 import { canSpeak } from "@/lib/speech";
 import { buildMeaningInferenceExercises, type MeaningInferenceExercise } from "@/lib/practice/meaningInference";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import type { ParaphraseExercise } from "@/lib/practice/paraphrase";
 
 export type PracticeActivity =
@@ -68,7 +68,7 @@ export function buildPracticePlan(text: ReadingText): PracticePlan {
   // most a couple of them and the round-robin below fills the rest — they draw
   // from a much smaller eligible pool than the other builders, so competing in
   // the rotation would usually leave them out entirely.
-  const inferenceExercises = buildMeaningInferenceExercises(text, new Set(getKnownWords()), 2);
+  const inferenceExercises = buildMeaningInferenceExercises(text, getEstimatedKnownVocabulary(), 2);
   for (const exercise of inferenceExercises) {
     if (activities.length >= MAX_ACTIVITIES - 1) break;
     activities.push({ kind: "inference", exercise });

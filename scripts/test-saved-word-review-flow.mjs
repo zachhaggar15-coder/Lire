@@ -17,7 +17,8 @@ globalThis.window = {
 const { accessContext, accessTier, canSaveNewWord } = await import("../src/lib/access/accessModel.ts");
 const { saveWordForAccess } = await import("../src/lib/access/saveWord.ts");
 const { clearWords, getSavedWords } = await import("../src/lib/storage.ts");
-const { buildReviewQueue, defaultSpacedRepetitionFields, isReviewableWordStatus } = await import("../src/lib/spacedRepetition.ts");
+const { buildReviewQueue, defaultSpacedRepetitionFields } = await import("../src/lib/spacedRepetition.ts");
+const { isInReview } = await import("../src/lib/reviewMembership.ts");
 
 let passed = 0;
 let failed = 0;
@@ -74,10 +75,10 @@ check("a free save within the allowance persists through the same store", freeSa
 check("both saved words appear in Review", buildReviewQueue(getSavedWords()).map((word) => word.word).includes("bonjour") && buildReviewQueue(getSavedWords()).map((word) => word.word).includes("salut"));
 
 console.log("--- UI status matches the Review source of truth ---");
-check("learning is a Review-saved status", isReviewableWordStatus("learning"));
-check("unsure is a Review-saved status", isReviewableWordStatus("unsure"));
-check("known is not falsely presented as saved to Review", !isReviewableWordStatus("known"));
-check("known is intentionally absent from a review queue", buildReviewQueue([{ ...entry("connu"), status: "known" }]).length === 0);
+check("a learning card is in Review", isInReview(entry("appris")));
+check("an unsure card is in Review", isInReview({ ...entry("douteux"), status: "unsure" }));
+check("a removed card is not in Review, and not queued", !isInReview({ ...entry("retire"), removedFromReviewAt: "2026-10-02T00:00:00.000Z" }) && buildReviewQueue([{ ...entry("retire"), removedFromReviewAt: "2026-10-02T00:00:00.000Z" }]).length === 0);
+check("a legacy known card reads as not in Review (re-addable), and is not queued", !isInReview({ ...entry("connu"), status: "known" }) && buildReviewQueue([{ ...entry("connu"), status: "known" }]).length === 0);
 
 console.log("--- Repeated and failed saves cannot claim new success ---");
 const repeated = saveWordForAccess(premium, entry("bonjour"));
@@ -101,7 +102,7 @@ const meaningSheet = readFileSync(new URL("../src/components/MeaningSheet.tsx", 
 check("Reader saves through the entitlement-aware helper", /saveWordForAccess\(/.test(reader));
 const walkthroughSave = readFileSync(new URL("../src/lib/onboarding/walkthroughSave.ts", import.meta.url), "utf8");
 check("walkthrough uses the same real, guarded save mechanism", /runWalkthroughWordAction\(/.test(walkthrough) && /useAccess\(\)/.test(walkthrough) && /= saveWordForAccess/.test(walkthroughSave));
-check("known words are not rendered as Review saves", /isReviewableWordStatus/.test(meaningSheet) && /Already known/.test(meaningSheet));
+check("the word sheet renders the shared binary control, with no third \"known\" state", /reviewControlFor\(/.test(meaningSheet) && !/Already known|Marked as known|I know this/.test(meaningSheet));
 
 clearWords();
 // A grade must be stored before the feedback animation timer starts: the

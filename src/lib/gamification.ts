@@ -8,6 +8,7 @@ import { tokenize } from "@/lib/words";
 import { getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
 import { lireLevelFromXp, xpForLevel } from "@/lib/progression/lireLevel";
 import { localStore } from "@/lib/localData/store";
+import { isMastered } from "@/lib/reviewMembership";
 
 export type XpEventType =
   | "article_completed"
@@ -732,7 +733,7 @@ export function buildMastery(words: SavedWord[], taps: StoredWordTap[] = getAllW
     if ((word.reviewCount ?? 0) > 0 || contexts >= 2) stageIndex = 1;
     if ((word.correctCount ?? 0) >= 1 && contexts >= 2) stageIndex = 2;
     if ((word.correctCount ?? 0) >= 2 && contexts >= 3 && inferenceWins >= 1) stageIndex = 3;
-    if ((word.correctCount ?? 0) >= 4 && contexts >= 4 && word.status === "known") stageIndex = 4;
+    if ((word.correctCount ?? 0) >= 4 && contexts >= 4 && isMastered(word)) stageIndex = 4;
     return {
       word,
       stage: stages[stageIndex],

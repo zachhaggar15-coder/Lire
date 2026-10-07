@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
+import { addWordToReview, clearWords, deleteWord, getSavedWords, removeWordFromReview } from "@/lib/storage";
+import { isInReview, isMastered } from "@/lib/reviewMembership";
 import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
@@ -12,19 +13,19 @@ import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import AppBar from "@/components/AppBar";
 import PronounceButton from "@/components/PronounceButton";
 
-type WordsFilter = "learning" | "unsure" | "known" | "missing";
+type WordsFilter = "in-review" | "not-in-review" | "missing";
 type VocabTab = "words" | "phrases";
 
+// A word is in Review or it is not — the same two states the reader shows.
 const FILTERS: { value: WordsFilter; label: string }[] = [
-  { value: "learning", label: "Learning" },
-  { value: "unsure", label: "Unsure" },
-  { value: "known", label: "Known" },
+  { value: "in-review", label: "In review" },
+  { value: "not-in-review", label: "Not in review" },
   { value: "missing", label: "Untranslated" },
 ];
 
 function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
   if (filter === "missing") return !!word.missingFromDictionary;
-  return word.status === filter;
+  return filter === "in-review" ? isInReview(word) : !isInReview(word);
 }
 
 function matchesQuery(word: SavedWord, q: string): boolean {
@@ -49,7 +50,7 @@ export default function WordsPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [ready, setReady] = useState(false);
-  const [filter, setFilter] = useState<WordsFilter>("learning");
+  const [filter, setFilter] = useState<WordsFilter>("in-review");
   const [tab, setTab] = useState<VocabTab>("words");
   const [query, setQuery] = useState("");
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -67,6 +68,19 @@ export default function WordsPage() {
     const result = deleteWord(word);
     setWords(result.words);
     setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
+  }
+
+  /** Same toggle as the reader. Adding back an existing card is never a new save. */
+  function handleToggleReview(word: SavedWord) {
+    if (isInReview(word)) {
+      const result = removeWordFromReview(word.word, word.lemma);
+      setWords(result.words);
+      setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
+      return;
+    }
+    const result = addWordToReview(word);
+    setWords(result.words);
+    setSaveError(result.persisted ? null : persistenceFailureMessage("error"));
   }
 
   function handleClear() {
@@ -91,9 +105,8 @@ export default function WordsPage() {
   }
 
   const counts: Record<WordsFilter, number> = {
-    learning: words.filter((word) => word.status === "learning").length,
-    unsure: words.filter((word) => word.status === "unsure").length,
-    known: words.filter((word) => word.status === "known").length,
+    "in-review": words.filter(isInReview).length,
+    "not-in-review": words.filter((word) => !isInReview(word)).length,
     missing: words.filter((word) => word.missingFromDictionary).length,
   };
 
@@ -180,7 +193,7 @@ export default function WordsPage() {
           ) : (
             <ul className="space-y-3">
               {filtered.map((word) => (
-                <WordCard key={word.word} word={word} onDelete={handleDelete} />
+                <WordCard key={word.word} word={word} onDelete={handleDelete} onToggleReview={handleToggleReview} />
               ))}
             </ul>
           )}
@@ -225,7 +238,16 @@ function EmptyState({ copy }: { copy: string }) {
  * should be as short as possible; someone who has opened their vocabulary list
  * has chosen to study, so density is a feature here rather than a cost.
  */
-function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string) => void }) {
+function WordCard({
+  word,
+  onDelete,
+  onToggleReview,
+}: {
+  word: SavedWord;
+  onDelete: (word: string) => void;
+  onToggleReview: (word: SavedWord) => void;
+}) {
+  const inReview = isInReview(word);
   const wordFamily = getWordFamily(word.lemma ?? word.word);
   const familyRows: [string, string[]][] = wordFamily
     ? [
@@ -323,13 +345,22 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
             )}
             {word.savedAt && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
             {word.reviewCount > 0 && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
+            {isMastered(word) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Mastered</span>}
           </div>
+          <button
+            type="button"
+            onClick={() => onToggleReview(word)}
+            aria-pressed={inReview}
+            className={`mt-3 min-h-11 rounded-full px-4 text-sm font-semibold ${inReview ? "bg-brand-light text-brand" : "bg-brand text-cream"}`}
+          >
+            {inReview ? "Remove from review" : "Add to review"}
+          </button>
         </div>
 
         <button
           type="button"
           onClick={() => onDelete(word.word)}
-          aria-label={`Delete ${word.word}`}
+          aria-label={`Delete ${word.word} permanently`}
           className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-cream-fill text-rose-ink"
         >
           <span aria-hidden="true">x</span>

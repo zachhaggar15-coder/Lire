@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import type { ResolvedMeaning } from "@/lib/dictionary/resolveMeaning";
 import type { WordExplanation } from "@/lib/ai/types";
-import type { WordStatus } from "@/types";
 import type { PronounReference } from "@/lib/pronounReferences";
 import { getWordExplanation } from "@/lib/ai/client";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
@@ -20,14 +19,20 @@ import { canSaveNewWord, canUseAI } from "@/lib/access/accessModel";
 import Link from "next/link";
 import { useAccess } from "@/lib/access/useAccess";
 import { submitFeedback } from "@/lib/feedback/client";
-import { isReviewableWordStatus } from "@/lib/spacedRepetition";
+import { REVIEW_CONTROL_LABEL, reviewControlFor } from "@/lib/reviewMembership";
 
 export interface ActiveMeaningState {
   meaning: ResolvedMeaning;
   /** The sentence just before the context sentence — extra grounding for the AI explanation. */
   surroundingSentence: string | null;
-  /** The word's current saved status, or null when untouched. */
-  existingStatus: WordStatus | null;
+  /**
+   * Whether this word (or another form of its lemma) has a card in Review.
+   * The only state the sheet's review control reflects: it offers exactly
+   * "Add to review" or "Remove from review" (see reviewMembership.ts).
+   */
+  inReview: boolean;
+  /** A card exists but is not in Review: adding it back is not a new save. */
+  hasCard?: boolean;
   pronounReference: PronounReference | null;
   /** True while a targeted AI lookup for this tap is still in flight. */
   resolving: boolean;
@@ -53,12 +58,6 @@ interface MeaningSheetProps {
   /** Imported text: its sentences are private and never included in reports. */
   privateText?: boolean;
 }
-
-const STATUS_LABEL: Record<WordStatus, string> = {
-  learning: "Saved to review",
-  unsure: "Saved as unsure",
-  known: "Marked as known",
-};
 
 /**
  * The single sheet behind every word tap.
@@ -96,8 +95,7 @@ export default function MeaningSheet({
 
   const open = state !== null;
   const meaning = state?.meaning;
-  const saved = isReviewableWordStatus(state?.existingStatus);
-  const known = state?.existingStatus === "known";
+  const saved = state?.inReview === true;
   const isProperNoun = (meaning?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
 
   const wordFamily = meaning ? getWordFamily(meaning.lemma ?? meaning.tappedText) : null;
@@ -204,23 +202,24 @@ export default function MeaningSheet({
     if (!result.ok) setAiError(result.error);
   }
 
-  const footer = isProperNoun || known ? (
-    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream">
-      {known ? "Already known" : "Close"}
-    </button>
-  ) : (
+  // Exactly "Add to review" or "Remove from review" for a normal word; a name
+  // or place only closes (reviewMembership.ts).
+  // A meaning still being worked out (AI in flight) is not "no meaning".
+  const noMeaning = !!meaning?.abstained && !state?.resolving;
+  const control = reviewControlFor({ inReview: saved, isProperNoun, noMeaning });
+  const footer = (
     <button
-      onClick={() => (saved ? onUnsave?.() : onSave?.())}
-      aria-pressed={saved}
+      onClick={() => (control === "close" ? onClose() : control === "remove" ? onUnsave?.() : onSave?.())}
+      aria-pressed={control === "close" ? undefined : saved}
       className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
-        saved ? "bg-brand-light text-brand" : "bg-brand text-cream"
+        control === "remove" ? "bg-brand-light text-brand" : "bg-brand text-cream"
       }`}
     >
-      {saved ? "Remove from review" : "Add to review"}
+      {REVIEW_CONTROL_LABEL[control]}
     </button>
   );
   const saveHint =
-    !saved && !known && !isProperNoun && tier !== "premium"
+    control === "add" && !state?.hasCard && tier !== "premium"
       ? saveDecision.allowed
         ? `${(saveDecision.remaining ?? 0) + 1} of 5 free new saves left today`
         : "You've used today's 5 free new saves"
@@ -256,11 +255,9 @@ export default function MeaningSheet({
         </button>
       </div>
 
-      {state?.existingStatus && (
-        <p className="mt-2 text-xs font-semibold text-brand">
-          {STATUS_LABEL[state.existingStatus]}
-          {known ? " Known words are not added to Review." : ""}
-        </p>
+      {saved && <p className="mt-2 text-xs font-semibold text-brand">In your review</p>}
+      {control === "close" && noMeaning && !isProperNoun && (
+        <p className="mt-2 text-xs text-ink-muted">Words without a meaning here can&rsquo;t be added to review.</p>
       )}
 
       {/* The one authoritative answer. */}

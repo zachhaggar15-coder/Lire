@@ -26,7 +26,8 @@ const DECISION_KEY = "sorlio.guestAdoption.v1";
 /** Stores whose contents mean "this person has learning data worth keeping". */
 const MEANINGFUL_STORES = [
   "lire.savedWords.v1",
-  "lire.knownWords.v1",
+  // Not lire.knownWords.v1: mostly the old onboarding seed, not learning data
+  // (see vocabulary/estimatedVocabulary.ts). It is still adopted with the rest.
   "lire.savedPhrases.v1",
   "lire.archive.v1",
   "lire.customTexts.v1",
@@ -37,7 +38,6 @@ const MEANINGFUL_STORES = [
 export interface GuestDataSummary {
   hasData: boolean;
   savedWords: number;
-  knownWords: number;
   articlesRead: number;
   importedTexts: number;
   fingerprint: string;
@@ -57,7 +57,6 @@ export function summariseGuestData(guest: PartitionedStore = storeFor(GUEST)): G
   return {
     hasData: Object.values(counts).some((count) => count > 0),
     savedWords: counts["lire.savedWords.v1"],
-    knownWords: counts["lire.knownWords.v1"],
     articlesRead: counts["lire.archive.v1"],
     importedTexts: counts["lire.customTexts.v1"],
     fingerprint,

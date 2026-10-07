@@ -47,6 +47,7 @@ export const SUITES = [
   "test-onboarding-walkthrough.mjs",
   "test-closed-test-update-1.mjs",
   "test-saved-word-review-flow.mjs",
+  "test-review-membership.mjs",
   "test-security-regressions.mjs",
   "test-admin-session.mjs",
   "test-account-auth.mjs",

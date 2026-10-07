@@ -24,7 +24,7 @@ import type { SavedWord } from "@/types";
  * A short (1-3 minute), interactive walkthrough that teaches Sorlio by using
  * it, not by reading about it. Offered right after the level picker (with an
  * equally prominent skip on its first screen) and replayable from Settings. Reuses real domain logic throughout (the actual dictionary
- * lookup, the actual saveWord/markWordAsKnown storage functions, the actual
+ * lookup, the actual review storage functions, the actual
  * cloze-exercise builder, the actual PronounceButton) against a small,
  * purpose-built demo text — not a fake mockup, and not the full Reader
  * component (whose word-tap plumbing carries far more machinery — AI

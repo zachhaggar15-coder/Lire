@@ -18,7 +18,6 @@ control.storage.setItem("sorlio.storage.schema", "2");
 const t = createRunner("persistence failures");
 const storage = await import("../src/lib/storage.ts");
 const phrases = await import("../src/lib/phrases.ts");
-const known = await import("../src/lib/knownWords.ts");
 const custom = await import("../src/lib/customTexts.ts");
 const { localStore } = await import("../src/lib/localData/store.ts");
 const { persistenceFailureMessage } = await import("../src/lib/localData/messages.ts");
@@ -59,23 +58,25 @@ for (const [label, inject, reason] of FAILURES) {
   await t.section(`saved words: ${label}`, async () => {
     control.data.clear();
     control.storage.setItem("sorlio.storage.schema", "2");
-    seedWords([word("chat"), word("chien")]);
+    seedWords([word("chat"), word("chien"), word("loup", { removedFromReviewAt: "2026-10-01T00:00:00.000Z" })]);
     const before = raw(WORDS);
     const xpBefore = raw(XP);
     const activityBefore = raw(ACTIVITY);
     inject();
 
-    const save = storage.saveWord(word("oiseau"));
-    t.check(`[${label}] saveWord reports not persisted`, save.persisted === false && save.created === false);
+    const save = storage.addWordToReview(word("oiseau"));
+    t.check(`[${label}] add reports not persisted`, save.persisted === false && save.created === false);
+    const back = storage.addWordToReview(word("loup"));
+    t.check(`[${label}] adding back reports not persisted`, back.persisted === false && back.reactivated === false);
     const review = storage.recordReviewResult("chat", "correct");
     t.check(`[${label}] review reports failure with reason`, review.ok === false && review.reason === reason, JSON.stringify({ ok: review.ok, reason: review.reason }));
     t.check(`[${label}] review returns the unchanged words`, review.words.find((w) => w.word === "chat").reviewCount === 0);
-    const knownResult = storage.markWordAsKnown("chat");
-    t.check(`[${label}] mark known reports failure`, knownResult.ok === false);
+    const removal = storage.removeWordFromReview("chat", null);
+    t.check(`[${label}] remove from review reports failure and the card stays in Review`, removal.ok === false && !removal.words.find((w) => w.word === "chat").removedFromReviewAt);
     const del = storage.deleteWord("chien");
     t.check(`[${label}] delete reports failure and keeps the word`, del.ok === false && del.words.some((w) => w.word === "chien"));
     const clear = storage.clearWords();
-    t.check(`[${label}] clear reports failure and keeps everything`, clear.ok === false && clear.words.length === 2);
+    t.check(`[${label}] clear reports failure and keeps everything`, clear.ok === false && clear.words.length === 3);
 
     restore(originalSet);
     t.check(`[${label}] stored words are byte-for-byte unchanged`, raw(WORDS) === before);
@@ -100,7 +101,7 @@ await t.section("storage denied (reads throw): nothing is overwritten", async ()
   let threw = false;
   let save;
   try {
-    save = storage.saveWord(word("nouveau"));
+    save = storage.addWordToReview(word("nouveau"));
   } catch {
     threw = true;
   }
@@ -108,7 +109,7 @@ await t.section("storage denied (reads throw): nothing is overwritten", async ()
   t.check("a save while reads are denied is refused, not thrown", !threw && save.persisted === false);
   t.check("existing words were not replaced", raw(WORDS) === before);
   // Once reads work again, saving keeps the existing words.
-  const recovered = storage.saveWord(word("nouveau"));
+  const recovered = storage.addWordToReview(word("nouveau"));
   t.check("after recovery the save keeps existing words", recovered.persisted === true && recovered.words.map((w) => w.word).sort().join() === "nouveau,precieux");
 });
 
@@ -117,7 +118,7 @@ await t.section("corrupted saved words are never overwritten by a new save", asy
   control.storage.setItem("sorlio.storage.schema", "2");
   localStore.setItem(WORDS, "{not json");
   t.check("unreadable list shows as empty", storage.getSavedWords().length === 0);
-  const save = storage.saveWord(word("nouveau"));
+  const save = storage.addWordToReview(word("nouveau"));
   t.check("save refused", save.persisted === false);
   t.check("corrupted data preserved for recovery", raw(WORDS) === "{not json");
 });
@@ -137,20 +138,6 @@ await t.section("phrases", async () => {
   t.check("phrase delete reports failure, phrase kept", del.ok === false && del.phrases.length === 1);
   t.check("stored phrases unchanged", raw("lire.savedPhrases.v1") === before);
   t.check("phrase review succeeds after recovery", phrases.recordPhraseReview("tout de suite", true).ok === true);
-});
-
-await t.section("known words", async () => {
-  control.data.clear();
-  control.storage.setItem("sorlio.storage.schema", "2");
-  localStore.setItem("lire.knownWords.v1", JSON.stringify(["bonjour", "merci"]));
-  control.failAllWrites(true);
-  const failure = known.clearKnownWords();
-  const marked = known.markKnown("salut");
-  control.failAllWrites(false);
-  t.check("clear reports the failure", failure === "quota");
-  t.check("mark returns the unchanged list", !marked.includes("salut"));
-  t.check("known words unchanged", JSON.parse(raw("lire.knownWords.v1")).join() === "bonjour,merci");
-  t.check("clear succeeds after recovery", known.clearKnownWords() === null && JSON.parse(raw("lire.knownWords.v1")).length === 0);
 });
 
 await t.section("imported texts", async () => {

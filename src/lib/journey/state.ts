@@ -1,7 +1,7 @@
 import type { Difficulty, TextProgress } from "@/types";
 import { getArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { estimateDifficulty } from "@/lib/difficulty";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { getProgress } from "@/lib/progress";
 import { notifyStoreChanged } from "@/lib/sync/runtime";
@@ -220,7 +220,7 @@ function recentCompletedTextIds(options: JourneyStateOptions): string[] {
 
 function paceSignal(options: JourneyStateOptions): "flying" | "hold" | "normal" {
   const feedback = readFeedbackMap(options);
-  const knownWords = options.knownWords ?? new Set(getKnownWords());
+  const knownWords = options.knownWords ?? getEstimatedKnownVocabulary();
   const recent = recentCompletedTextIds(options);
   if (recent.length < 2) return "normal";
 
@@ -245,7 +245,7 @@ export function getNextTextForReader(options: JourneyStateOptions = {}): NextTex
 
   const stage = ladder.stages[state.currentStageIndex];
   const skippedIds = new Set(options.skippedTextIds ?? getJourneyStore().skippedTextIds);
-  const knownWords = options.knownWords ?? new Set(getKnownWords());
+  const knownWords = options.knownWords ?? getEstimatedKnownVocabulary();
   const pace = paceSignal(options);
 
   const candidates = stage.textIds

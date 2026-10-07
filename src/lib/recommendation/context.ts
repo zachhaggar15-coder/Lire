@@ -2,7 +2,8 @@ import type { Category } from "@/types";
 import type { ScoringContext } from "@/lib/recommendation/types";
 import { getInterestProfile } from "@/lib/recommendation/interests";
 import { inferUserLevelNumeric } from "@/lib/recommendation/signals";
-import { getKnownWords } from "@/lib/knownWords";
+import { getSavedWords } from "@/lib/storage";
+import { isMastered } from "@/lib/reviewMembership";
 import { getArchive } from "@/lib/archive";
 import { getOnboardingLevelNumeric } from "@/lib/onboarding";
 import { getPreferredSources } from "@/lib/recommendation/preferences";
@@ -14,7 +15,7 @@ const RECENT_DAYS = 7;
 export function buildScoringContext(now: Date = new Date()): ScoringContext {
   const interestProfile = getInterestProfile();
   const preferredSources = getPreferredSources();
-  const userLevelNumeric = getOnboardingLevelNumeric() ?? inferUserLevelNumeric(getKnownWords().length);
+  const userLevelNumeric = getOnboardingLevelNumeric() ?? inferUserLevelNumeric(getSavedWords().filter(isMastered).length);
 
   const cutoffMs = now.getTime() - RECENT_DAYS * 24 * 60 * 60 * 1000;
   const recentCategories: Category[] = getArchive()

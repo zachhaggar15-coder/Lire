@@ -3,7 +3,7 @@ import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { notifyRecommendationPreferencesChanged } from "@/lib/recommendation/preferences";
 import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { saveGoals, type ReadingGoals } from "@/lib/goals";
-import { knownWordEstimateForLevel, seedKnownWordsForLevel } from "@/lib/knownWordBootstrap";
+import { vocabularyEstimateForLevel } from "@/lib/vocabulary/levelEstimates";
 import { localStore } from "@/lib/localData/store";
 
 export const ONBOARDING_KEY = "lire.onboarding.v1";
@@ -13,7 +13,9 @@ export interface OnboardingState {
   level: Difficulty;
   topics: Category[];
   goalPreset?: OnboardingGoal;
+  /** Typical vocabulary size for the level — an estimate, see vocabulary/estimatedVocabulary.ts. */
   estimatedKnownWords: number;
+  /** Legacy: how many lemmas older builds seeded into lire.knownWords.v1. Nothing seeds now. */
   seededKnownWords: number;
   updatedAt: string;
   /** Whether the interactive walkthrough (tap/save/audio/practice demo) has been finished or explicitly skipped — separate from `completed`, which only covers the level/topic/goal picker. */
@@ -61,7 +63,7 @@ export function getOnboardingState(): OnboardingState | null {
       estimatedKnownWords:
         typeof parsed.estimatedKnownWords === "number"
           ? parsed.estimatedKnownWords
-          : knownWordEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
+          : vocabularyEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
       seededKnownWords: typeof parsed.seededKnownWords === "number" ? parsed.seededKnownWords : 0,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
       walkthroughCompleted: parsed.walkthroughCompleted === true,
@@ -81,43 +83,24 @@ export function getSelectedReadingLevel(): Difficulty {
   return getOnboardingState()?.level ?? DEFAULT_LEVEL;
 }
 
-/** Writes back just the seeded-word count once background seeding finishes. */
-function recordSeededKnownWords(seededWords: number): void {
-  if (!hasStorage()) return;
-  const current = getOnboardingState();
-  if (!current) return;
-  try {
-    localStore.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, seededKnownWords: seededWords }));
-    notifyStoreChanged(ONBOARDING_KEY);
-  } catch {
-    // The seeded count is informational; known words themselves are already saved.
-  }
-  // The dashboard rendered its counts before this finished, so it's still
-  // showing "0 known". Nudge subscribed screens to re-read.
-  notifyRecommendationPreferencesChanged();
-}
-
 /**
- * Stays synchronous even though known-word seeding is now async (the broad
- * dictionary it needs is fetched on demand rather than bundled — see
- * data/dictionaries/generated/fr-en-generated.ts). Onboarding finishes
- * immediately and the seeding lands in the background a moment later, which
- * is also the better interaction: "Save start point" shouldn't sit there
- * waiting on a multi-megabyte download before letting anyone read.
+ * Records the starting point. The level informs difficulty and
+ * recommendations through an estimate computed from it on demand
+ * (vocabulary/estimatedVocabulary.ts); it no longer seeds hundreds or
+ * thousands of "known" words, which the reader then treated as words the
+ * learner had individually marked.
  */
 export function saveOnboarding(
   level: Difficulty,
   topics: Category[],
-  goalPreset?: OnboardingGoal,
-  options: { seedKnownWords?: boolean } = {}
+  goalPreset?: OnboardingGoal
 ): OnboardingState {
-  const shouldSeedKnownWords = options.seedKnownWords ?? true;
   const next: OnboardingState = {
     completed: true,
     level,
     topics,
     goalPreset,
-    estimatedKnownWords: knownWordEstimateForLevel(level),
+    estimatedKnownWords: vocabularyEstimateForLevel(level),
     seededKnownWords: 0,
     updatedAt: new Date().toISOString(),
     walkthroughCompleted: false,
@@ -128,14 +111,6 @@ export function saveOnboarding(
     localStore.setItem(ONBOARDING_KEY, JSON.stringify(next));
     notifyStoreChanged(ONBOARDING_KEY);
     notifyRecommendationPreferencesChanged();
-  }
-
-  if (shouldSeedKnownWords) {
-    void seedKnownWordsForLevel(level)
-      .then((seed) => recordSeededKnownWords(seed.seededWords))
-      .catch(() => {
-        // Seeding is an optimisation for recommendations, not a hard requirement.
-      });
   }
 
   for (const topic of topics) {
@@ -154,7 +129,7 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
     level,
     topics: current?.topics ?? [],
     goalPreset: current?.goalPreset,
-    estimatedKnownWords: knownWordEstimateForLevel(level),
+    estimatedKnownWords: vocabularyEstimateForLevel(level),
     seededKnownWords: current?.seededKnownWords ?? 0,
     updatedAt: new Date().toISOString(),
     walkthroughCompleted: current?.walkthroughCompleted ?? false,
@@ -171,7 +146,7 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
 }
 
 export function skipOnboarding(): OnboardingState {
-  return saveOnboarding("A2", [], undefined, { seedKnownWords: false });
+  return saveOnboarding("A2", []);
 }
 
 /** Persists which walkthrough step to resume at — called on every step transition so closing the app mid-walkthrough resumes rather than restarting. Touches only the walkthrough fields. */

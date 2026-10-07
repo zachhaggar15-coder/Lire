@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { clearManualKnownWords } from "@/lib/migrations/clearManualKnownWords";
 import { awardLegacyProgressXp } from "@/lib/gamification";
 import { migrateLegacyProgression } from "@/lib/progression/migration";
 
@@ -12,9 +11,6 @@ import { migrateLegacyProgression } from "@/lib/progression/migration";
  */
 export default function StorageMigrations() {
   useEffect(() => {
-    void clearManualKnownWords().catch(() => {
-      // Left unmarked on failure, so it simply retries on the next launch.
-    });
     try {
       // Converts the retired per-CEFR band score into XP so nobody loses the
       // progress they earned under it. See progression/migration.ts.

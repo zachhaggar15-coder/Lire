@@ -69,8 +69,8 @@ import { findPronounReference } from "../src/lib/pronounReferences.ts";
 import { getWordFamily } from "../src/lib/dictionary/wordFamily.ts";
 import { saveCustomDictionaryEntry } from "../src/lib/dictionary/custom.ts";
 import { properNounDictionary } from "../src/data/dictionaries/proper-nouns.ts";
-import { buildKnownWordBootstrapList, knownWordEstimateForLevel } from "../src/lib/knownWordBootstrap.ts";
-import { clearKnownWords, getKnownWords } from "../src/lib/knownWords.ts";
+import { vocabularyEstimateForLevel } from "../src/lib/vocabulary/levelEstimates.ts";
+import { getEstimatedKnownVocabulary, getInferredBaseline } from "../src/lib/vocabulary/estimatedVocabulary.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { isAcceptableAsShortSnippet, isAcceptableReadingContent } from "../src/lib/rss/contentQuality.ts";
 import {
@@ -97,7 +97,7 @@ import {
 import { getGoals } from "../src/lib/goals.ts";
 import { SYNCED_STORES, configForKey } from "../src/lib/sync/stores.ts";
 import { toItems, fromItems, mergeItem, contentHash } from "../src/lib/sync/items.ts";
-import { clearWords, getSavedWords, saveWord } from "../src/lib/storage.ts";
+import { addWordToReview, clearWords, getSavedWords } from "../src/lib/storage.ts";
 import { defaultSpacedRepetitionFields } from "../src/lib/spacedRepetition.ts";
 import { applyStreakGraceDay, getCurrentStreak, getStreakGraceStatus, getStreakWeek } from "../src/lib/habit.ts";
 import {
@@ -1141,10 +1141,10 @@ console.log("\n--- Recommendation preferences (hide source / save for later) ---
 console.log("\n--- Onboarding ---");
 {
   check("onboarding numeric level is null before completion (this test's store is fresh for this key)", getOnboardingLevelNumeric() === null);
-  clearKnownWords();
-  // Bootstrap seeding is async now: it needs the generated dictionary, which
-  // is fetched on demand rather than bundled (see fr-en-generated.ts).
-  check("known-word bootstrap list reaches the A2 estimate", (await buildKnownWordBootstrapList("A2")).length === knownWordEstimateForLevel("A2"));
+  // The level is an estimate of vocabulary size, computed on demand. It is
+  // never written into a list of "known" words (which the reader used to
+  // treat as words the learner had marked).
+  check("the inferred baseline reaches the A2 estimate", getInferredBaseline("A2").size === vocabularyEstimateForLevel("A2"), String(getInferredBaseline("A2").size));
   const state = saveOnboarding("B1", ["culture", "science"], "serious");
   check("saveOnboarding marks it completed", state.completed === true);
   const stored = getOnboardingState();
@@ -1154,22 +1154,22 @@ console.log("\n--- Onboarding ---");
     JSON.stringify(stored)
   );
   check("getOnboardingState round-trips the chosen goal preset", stored?.goalPreset === "serious", JSON.stringify(stored));
-  check("getOnboardingState stores the estimated known-word count", stored?.estimatedKnownWords === knownWordEstimateForLevel("B1"), JSON.stringify(stored));
-  // saveOnboarding deliberately returns immediately and seeds in the
-  // background, so onboarding isn't blocked on the dictionary download. Wait
-  // for the seeding it kicked off (bounded, so a genuine regression still
-  // fails rather than hanging) instead of re-seeding here — the point of this
-  // check is that saveOnboarding causes it.
-  for (let i = 0; i < 50 && getKnownWords().length < knownWordEstimateForLevel("B1"); i++) {
-    await new Promise((resolve) => setTimeout(resolve, 20));
-  }
-  check("saveOnboarding seeds known words from the selected level", getKnownWords().length >= knownWordEstimateForLevel("B1"), `known=${getKnownWords().length}`);
+  check("getOnboardingState stores the level's vocabulary estimate", stored?.estimatedKnownWords === vocabularyEstimateForLevel("B1"), JSON.stringify(stored));
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  check("saveOnboarding writes no known-word list", __guestStore.getItem("lire.knownWords.v1") === null);
+  check("estimated vocabulary follows the selected level (B1)", getEstimatedKnownVocabulary().size >= vocabularyEstimateForLevel("B1"));
   check("onboarding goal preset seeds reading goals", getGoals().minutesPerDay === 20 && getGoals().articlesPerDay === 2, JSON.stringify(getGoals()));
   check("getOnboardingLevelNumeric maps B1 to 3 once completed", getOnboardingLevelNumeric() === 3);
-  const knownBeforeLevelChange = getKnownWords().length;
   const changed = updateSelectedReadingLevel("C2");
   check("selected level can move to C2", changed.level === "C2" && getOnboardingLevelNumeric() === 6);
-  check("changing selected level does not clear known words", getKnownWords().length === knownBeforeLevelChange);
+  check("estimated vocabulary grows with the level (C2)", getEstimatedKnownVocabulary().size >= vocabularyEstimateForLevel("C2"));
+  updateSelectedReadingLevel("A1");
+  check(
+    "lowering the level leaves no stale higher-level vocabulary behind",
+    getEstimatedKnownVocabulary().size < vocabularyEstimateForLevel("A2"),
+    String(getEstimatedKnownVocabulary().size)
+  );
+  updateSelectedReadingLevel("C2");
 }
 {
   const state = skipOnboarding();
@@ -1228,8 +1228,8 @@ console.log("\n--- Lemma-aware saved words ---");
     status: "learning",
     ...defaultSpacedRepetitionFields(),
   };
-  saveWord(base);
-  saveWord({ ...base, word: "prend", articleContextSentence: "Il prend le train." });
+  addWordToReview(base);
+  addWordToReview({ ...base, word: "prend", articleContextSentence: "Il prend le train." });
   check("saved words dedupe inflected forms by lemma", getSavedWords().filter((word) => word.lemma === "prendre").length === 1);
 }
 {

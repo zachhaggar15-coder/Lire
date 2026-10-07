@@ -7,6 +7,7 @@ import type { StoredInference, StoredWordTap } from "@/lib/wordLearning";
 import type { TranslationBudgetRecord } from "@/lib/readingInsights";
 import { findRelatedArticles } from "@/lib/comprehension";
 import { tokenize, tokenizeParagraphsToSentences } from "@/lib/words";
+import { isInReview, isMastered } from "@/lib/reviewMembership";
 
 export interface NewsWordExample {
   articleId: string;
@@ -215,16 +216,17 @@ function failedInferenceCount(word: SavedWord, inferences: StoredInference[]): n
 
 export function classifyVocabularyStates(words: SavedWord[], taps: StoredWordTap[] = [], inferences: StoredInference[] = []): VocabularyStateItem[] {
   return words.map((word) => {
-    const tapsAfterKnown = word.status === "known" ? tapCountFor(word, taps) : 0;
+    const mastered = isMastered(word);
+    const tapsAfterMastered = mastered ? tapCountFor(word, taps) : 0;
     const failedInferences = failedInferenceCount(word, inferences);
-    if ((word.status === "known" && tapsAfterKnown >= 2) || (word.lastReviewResult === "incorrect" && (word.incorrectCount ?? 0) >= 2)) {
-      return { word, state: "forgotten", reason: "Previously known, but recent behaviour suggests it is slipping." };
+    if ((mastered && tapsAfterMastered >= 2) || (word.lastReviewResult === "incorrect" && (word.incorrectCount ?? 0) >= 2)) {
+      return { word, state: "forgotten", reason: "Previously mastered, but recent behaviour suggests it is slipping." };
     }
     if ((word.incorrectCount ?? 0) > 0 || failedInferences > 0 || tapCountFor(word, taps) >= 3) {
       return { word, state: "fragile", reason: "Repeated lookups or missed answers make this worth isolating." };
     }
-    if (word.status === "known" || (word.correctCount ?? 0) >= 3) {
-      return { word, state: "stable", reason: "Several successful reviews or an explicit known mark." };
+    if (mastered) {
+      return { word, state: "stable", reason: "Several successful reviews in a row." };
     }
     return { word, state: "emerging", reason: "Still building recognition; context review is useful." };
   });
@@ -276,7 +278,7 @@ export function buildWeeklyReadingReport(
           ? "one short article with five deliberate lookups"
           : null;
   const stableThisWeek = states.filter((item) => item.state === "stable" && item.word.lastReviewedAt && new Date(item.word.lastReviewedAt).getTime() >= start).length;
-  const currentCoverage = coveragePercent(knownWords.length, words.filter((word) => word.status !== "known").length);
+  const currentCoverage = coveragePercent(knownWords.length, words.filter(isInReview).length);
   const startCoverage = Math.max(0, currentCoverage - Math.min(8, stableThisWeek + Math.floor(weekWords.length / 8)));
   const weekBudgets = budgetRecords.filter((record) => new Date(record.completedAt).getTime() >= start);
 

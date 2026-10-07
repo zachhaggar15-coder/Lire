@@ -4,7 +4,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
+import { getSavedWords, recordReviewResult } from "@/lib/storage";
+import { MASTERY_STREAK } from "@/lib/reviewMembership";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
@@ -24,13 +25,14 @@ type CardFeedback = "correct" | "learning" | null;
 
 const REVIEW_FEEDBACK_DELAY_MS = 760;
 /**
- * A word graduates out of the active review deck once it's been graded
- * "Knew it" this many times in a row — an unprompted self-report of "I
- * knew it" three times running is a fair bar for calling a word learned,
- * without needing a separate typed-confirmation pass. Phrases use the
- * same threshold — see PHRASE_GRADUATE_AFTER_CORRECT_STREAK in phrases.ts.
+ * Words no longer graduate out of Review. Three "Knew it" in a row used to
+ * move a card to a "known" state that left Review and showed "Already known"
+ * in the reader with no way back. Now correct answers only lengthen the
+ * interval (spacedRepetition.ts); reaching MASTERY_STREAK earns the review
+ * XP that graduating used to, and the card stays until the reader removes it.
+ * Phrases still graduate (PHRASE_GRADUATE_AFTER_CORRECT_STREAK): they have no
+ * reader save path, so no reader control can disagree with them.
  */
-const GRADUATE_AFTER_CORRECT_STREAK = 3;
 
 function promptLabel(direction: ReviewDirection): string {
   return direction === "en-fr" ? "English to French" : "French to English";
@@ -250,11 +252,9 @@ function ReviewPageContent() {
     }
     setSaveError(null);
     const updatedWord = reviewed.words.find((w) => w.word === current.word);
-    const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
-    const known = graduated ? markWordAsKnown(current.word) : null;
-    if (known && !known.ok) setSaveError(persistenceFailureMessage(known.reason));
-    const nextWords = visibleWords(known?.ok ? known.words : reviewed.words);
-    const xp = known?.ok ? recordReviewSuccessXp(current.word) : 0;
+    const reachedMastery = correct && (updatedWord?.correctCount ?? 0) === MASTERY_STREAK;
+    const nextWords = visibleWords(reviewed.words);
+    const xp = reachedMastery ? recordReviewSuccessXp(current.word) : 0;
     const remainingQueue = wordQueue.slice(1);
     const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
 
@@ -454,10 +454,10 @@ function ReviewPageContent() {
           <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
           <p className="mt-1 text-sm text-ink-muted">
             {phrasesDone ? (
-              `Known: ${phraseSessionTotal}`
+              `Reviewed: ${phraseSessionTotal}`
             ) : (
               <>
-                Known: {wordSessionTotal}
+                Reviewed: {wordSessionTotal}
                 {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
               </>
             )}

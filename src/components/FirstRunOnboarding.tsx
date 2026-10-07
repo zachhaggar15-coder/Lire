@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
-import { knownWordEstimateForLevel } from "@/lib/knownWordBootstrap";
+import { vocabularyEstimateForLevel } from "@/lib/vocabulary/levelEstimates";
 import LessonScene, { type SceneName } from "@/components/LessonScene";
 
 const STARTING_POINTS: { value: Difficulty; label: string; detail: string; scene: SceneName; tone: string }[] = [
@@ -135,7 +135,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                   level === option ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                 }`}
               >
-                {option} - about {knownWordEstimateForLevel(option).toLocaleString()} known words
+                {option} - vocabulary of roughly {vocabularyEstimateForLevel(option).toLocaleString()} words
               </button>
             ))}
           </div>

@@ -6,7 +6,7 @@ import type { Category, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
 import { formatCategory, formatDate, toPercent } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
 import {
   hideSource,
@@ -105,7 +105,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     setSavedLater(isSavedForLater(text.id));
     if (difficultyProp !== undefined) return;
     if (text.language !== "en") {
-      setComputedDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
+      setComputedDifficulty(estimateDifficulty(text.body, getEstimatedKnownVocabulary()));
     }
   }, [difficultyProp, text.body, text.id, text.language, text.sourceName]);
 

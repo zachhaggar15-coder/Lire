@@ -2,7 +2,7 @@ import type { SavedWord, WordStatus } from "@/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { markKnown } from "@/lib/knownWords";
+import { findVocabularyCards, isInReview } from "@/lib/reviewMembership";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
@@ -206,7 +206,16 @@ function normalize(entry: unknown): SavedWord | null {
     incorrectCount: typeof e.incorrectCount === "number" ? e.incorrectCount : 0,
     lastReviewResult:
       e.lastReviewResult === "correct" || e.lastReviewResult === "incorrect" ? e.lastReviewResult : null,
+    // Present only on a removed card, so every other card stays byte-identical
+    // to what older builds wrote (no rewrite, and no sync churn, on upgrade).
+    ...(typeof e.removedFromReviewAt === "string" && e.removedFromReviewAt ? { removedFromReviewAt: e.removedFromReviewAt } : {}),
   };
+}
+
+/** The card as it is stored when in Review: the removal marker absent, not null. */
+function inReviewCard(card: SavedWord): SavedWord {
+  const { removedFromReviewAt: _removed, ...rest } = card;
+  return { ...rest, status: card.status === "known" ? "learning" : card.status };
 }
 
 /**
@@ -281,37 +290,64 @@ export function getSavedWords(): SavedWord[] {
   }
 }
 
-export function isWordSaved(word: string): boolean {
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
-  return getSavedWords().some((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
+/**
+ * True when a card exists for this word, in Review or not. Reactivating an
+ * existing card is never a new save, so the free daily limit does not apply.
+ */
+export function hasVocabularyCard(word: string, lemma: string | null | undefined): boolean {
+  return findVocabularyCards(getSavedWords(), word, lemma).length > 0;
+}
+
+export interface SaveWordResult {
+  words: SavedWord[];
+  /** False when the write was rejected — the caller should say so rather than confirm a save that didn't happen. */
+  persisted: boolean;
+  /** True only when this action added a new card: the only case that is a new save. */
+  created: boolean;
+  /** True when an existing card that was not in Review was put back (history kept). */
+  reactivated: boolean;
 }
 
 /**
- * Save a word with status "learning" or "unsure". No-ops if the word is already saved — the
- * original saved context and status are kept, even if tapped again in a
- * new sentence later.
+ * "Add to review". Exactly one of three things happens:
+ *   - the word (or its lemma) already has a card in Review: nothing changes;
+ *   - it has a card that is not in Review (removed, or legacy "known"): that
+ *     card is put back, keeping its review history and schedule;
+ *   - it has no card: the new card is stored.
  */
-export interface SaveWordResult {
-  words: SavedWord[];
-  /** False when the write was rejected (quota) — the caller should say so rather than confirm a save that didn't happen. */
-  persisted: boolean;
-  /** True only when this action added a new card, rather than finding an existing canonical word. */
-  created: boolean;
-}
-
-export function saveWord(entry: SavedWord): SaveWordResult {
+export function addWordToReview(entry: SavedWord): SaveWordResult {
   const words = getSavedWords();
-  const entryLemma = entry.lemma?.toLowerCase();
-  if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) {
-    return { words, persisted: true, created: false };
+  const existing = findVocabularyCards(words, entry.word, entry.lemma);
+  if (existing.some(isInReview)) return { words, persisted: true, created: false, reactivated: false };
+
+  if (existing.length > 0) {
+    const target = existing.find((card) => card.word === entry.word) ?? existing[0];
+    const next = words.map((card) => (card === target ? inReviewCard(card) : card));
+    if (persist(next)) return { words, persisted: false, created: false, reactivated: false };
+    recordActivityToday();
+    return { words: next, persisted: true, created: false, reactivated: true };
   }
-  const next = [entry, ...words];
-  if (persist(next)) return { words, persisted: false, created: false };
+
+  const next = [inReviewCard(entry), ...words];
+  if (persist(next)) return { words, persisted: false, created: false, reactivated: false };
   // Only credit progress for a word that actually made it to storage.
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
-  return { words: next, persisted: true, created: true };
+  return { words: next, persisted: true, created: true, reactivated: false };
+}
+
+/**
+ * "Remove from review": every card for this word that is in Review is taken
+ * out of it. The card and its history stay, so the word can be added back
+ * (and doing so is not a new save). Deleting a card outright is deleteWord.
+ */
+export function removeWordFromReview(word: string, lemma: string | null | undefined): WordsMutation {
+  const previous = getSavedWords();
+  const targets = new Set(findVocabularyCards(previous, word, lemma).filter(isInReview));
+  if (targets.size === 0) return { ok: true, words: previous };
+  const removedAt = new Date().toISOString();
+  const next = previous.map((card) => (targets.has(card) ? { ...card, removedFromReviewAt: removedAt } : card));
+  return mutation(next, previous);
 }
 
 /**
@@ -340,29 +376,12 @@ export function recordReviewResult(word: string, result: ReviewResult): WordsMut
 }
 
 /**
- * Marks an already-saved word as known: flips its status (it stays in
- * storage as a record, visible on the Words page, but Review excludes it
- * from then on) and adds the word — and its lemma, if any — to the known-
- * words list, so reader highlighting/lookups have one source of truth.
+ * Deletes one card permanently, review history included (the Words page's
+ * delete). Only that exact card: a lemma guess must never delete another one.
  */
-export function markWordAsKnown(word: string): WordsMutation {
-  const words = getSavedWords();
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
-  const target = words.find((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
-  const next = words.map((w) => (w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma) ? { ...w, status: "known" as const } : w));
-  const outcome = mutation(next, words);
-  if (!outcome.ok) return outcome;
-  markKnown(word);
-  if (target?.lemma) markKnown(target.lemma);
-  return outcome;
-}
-
 export function deleteWord(word: string): WordsMutation {
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
   const current = getSavedWords();
-  const next = current.filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
+  const next = current.filter((w) => w.word !== word);
   return mutation(next, current);
 }
 

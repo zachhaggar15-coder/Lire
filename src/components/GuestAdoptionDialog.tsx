@@ -14,7 +14,6 @@ function describe(summary: GuestDataSummary): string {
   const parts: string[] = [];
   if (summary.savedWords) parts.push(`${summary.savedWords} saved ${summary.savedWords === 1 ? "word" : "words"}`);
   if (summary.articlesRead) parts.push(`${summary.articlesRead} ${summary.articlesRead === 1 ? "text" : "texts"} read`);
-  if (summary.knownWords) parts.push(`${summary.knownWords} known ${summary.knownWords === 1 ? "word" : "words"}`);
   if (summary.importedTexts) parts.push(`${summary.importedTexts} imported ${summary.importedTexts === 1 ? "text" : "texts"}`);
   if (parts.length === 0) return "Your progress from before you signed in.";
   return `${parts.join(", ")}.`;

@@ -9,7 +9,7 @@ import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { getCustomTexts } from "@/lib/customTexts";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import {
@@ -246,7 +246,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           : [];
       const importedTexts = getCustomTexts();
       const hiddenSources = new Set(getHiddenSources());
-      const knownWords = new Set(getKnownWords());
+      const knownWords = getEstimatedKnownVocabulary();
       const pool = (mode === "articles" ? [...importedTexts, ...extraReadingTexts] : rssTexts).filter(
         (text) => (!text.sourceName || !hiddenSources.has(text.sourceName)) && (mode !== "articles" || isEligibleArticleModeText(text))
       );
