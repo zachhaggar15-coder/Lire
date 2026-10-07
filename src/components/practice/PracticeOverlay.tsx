@@ -300,7 +300,7 @@ function ReconstructionActivity({
             {result === "correct" ? "Correct." : answerRevealed ? "Answer revealed." : "Not quite. Try once more or reveal the answer."}
           </p>
           {(result === "correct" || answerRevealed) && (
-            <p className="mt-1 font-french italic">{exercise.canonicalText}</p>
+            <p lang="fr" className="mt-1 font-french italic">{exercise.canonicalText}</p>
           )}
           {/* Semantic closure: the learner assembled the French, so confirm
               what they built. Only after a correct answer, and only when a
@@ -560,9 +560,9 @@ function InferenceActivity({
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <p className="ligne-label">Meaning from context</p>
-      <p className="mt-3 font-french text-lg leading-relaxed text-ink">{exercise.contextSentence}</p>
+      <p lang="fr" className="mt-3 font-french text-lg leading-relaxed text-ink">{exercise.contextSentence}</p>
       <p className="mt-3 text-sm text-ink-muted">
-        What does <span className="font-french font-bold text-ink">{challenge.word}</span> mean here?
+        What does <span lang="fr" className="font-french font-bold text-ink">{challenge.word}</span> mean here?
       </p>
 
       <div className="mt-4 grid gap-2" role="radiogroup" aria-label="Possible meanings">
@@ -596,7 +596,7 @@ function InferenceActivity({
 
       {challenge.frenchSynonym && (
         <p className="mt-3 text-xs text-ink-muted">
-          French synonym: <span className="font-french font-semibold text-ink">{challenge.frenchSynonym}</span>
+          French synonym: <span lang="fr" className="font-french font-semibold text-ink">{challenge.frenchSynonym}</span>
         </p>
       )}
       {answered && (

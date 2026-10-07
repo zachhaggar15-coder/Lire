@@ -24,6 +24,8 @@ export default function LookupPage() {
 
       <div className="flex gap-2">
         <input
+          type="search"
+          aria-label="English word to look up"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -33,6 +35,7 @@ export default function LookupPage() {
           className="min-w-0 flex-1 rounded-2xl bg-cream-card px-4 py-3 text-base text-ink shadow-card"
         />
         <button
+          type="button"
           onClick={runSearch}
           className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-cream"
         >

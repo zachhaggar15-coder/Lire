@@ -184,7 +184,7 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
         ) : (
           <div className="mt-8 max-h-[45vh] overflow-y-auto rounded-card border border-cream-dark bg-cream-card p-4 text-left">
             {paragraphs.map((p, i) => (
-              <p key={i} className={`mb-3 font-french text-[15px] leading-relaxed last:mb-0 ${i === index ? "text-ink" : "text-ink-muted"}`}>
+              <p key={i} lang="fr" className={`mb-3 font-french text-[15px] leading-relaxed last:mb-0 ${i === index ? "text-ink" : "text-ink-muted"}`}>
                 {p}
               </p>
             ))}

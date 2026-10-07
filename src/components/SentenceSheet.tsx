@@ -79,7 +79,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand">Sentence</p>
-            <p className="mt-1 text-base font-semibold leading-snug text-ink">{state?.sentence}</p>
+            <p lang="fr" className="mt-1 text-base font-semibold leading-snug text-ink">{state?.sentence}</p>
             {state?.sentence && (
               <div className="mt-2 flex flex-wrap gap-2">
                 <PronounceButton text={state.sentence} label="Play sentence" className="bg-cream-dark" scope="sentence" />

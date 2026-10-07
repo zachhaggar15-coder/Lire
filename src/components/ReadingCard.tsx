@@ -165,7 +165,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
         </div>
 
-        <h2 className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
+        <h2 lang="fr" className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
         {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
         <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
         <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>

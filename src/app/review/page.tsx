@@ -594,13 +594,13 @@ function ReviewPageContent() {
                 {promptLabel(reviewDirection)}
               </p>
               <div className="mt-2 flex items-center justify-center gap-2">
-                <p className="text-3xl font-bold text-ink">
+                <p lang={reviewDirection === "en-fr" ? "en" : "fr"} className="text-3xl font-bold text-ink">
                   {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
                 </p>
                 {reviewDirection === "fr-en" && <SpeakButton text={current.word} />}
               </div>
             {reviewDirection === "fr-en" && current.lemma && current.lemma !== current.word && (
-              <p className="text-xs text-ink-muted">from "{current.lemma}"</p>
+              <p className="text-xs text-ink-muted">from "<span lang="fr">{current.lemma}</span>"</p>
             )}
 
             {!revealed ? (
@@ -621,7 +621,7 @@ function ReviewPageContent() {
                   {reviewDirection === "en-fr" && <SpeakButton text={current.word} />}
                 </div>
                 {reviewDirection === "en-fr" && current.lemma && current.lemma !== current.word && (
-                  <p className="mt-1 text-sm text-ink-muted">Lemma: {current.lemma}</p>
+                  <p className="mt-1 text-sm text-ink-muted">Lemma: <span lang="fr">{current.lemma}</span></p>
                 )}
                 {reviewDirection === "fr-en" && current.translations.length > 1 && (
                   <p className="mt-1 text-sm text-ink-muted">Also: {current.translations.slice(1).join(", ")}</p>
@@ -1016,7 +1016,7 @@ function PhraseReviewCard({
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
         <div className="mt-3 flex items-center gap-2">
-          <p className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
+          <p lang={direction === "fr-en" ? "fr" : "en"} className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
           {direction === "fr-en" && <SpeakButton text={phrase.phrase} />}
         </div>
 
@@ -1032,18 +1032,13 @@ function PhraseReviewCard({
           <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
             <div className="flex items-center gap-2">
               <p className="text-sm font-semibold text-ink">
-                {phrase.phrase} = {phrase.translation}
+                <span lang="fr">{phrase.phrase}</span> = {phrase.translation}
               </p>
               {direction === "en-fr" && <SpeakButton text={phrase.phrase} />}
             </div>
             <div className="rounded-2xl bg-cream p-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
-              <p className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
-            </div>
-            <div className="rounded-2xl bg-cream p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">New example</p>
-              <p className="mt-1 text-sm italic text-ink">On peut {phrase.phrase} cette idee dans un autre article.</p>
-              <p className="mt-0.5 text-sm text-ink-muted">You can use this phrase with the same idea in another article.</p>
+              <p lang="fr" className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
             </div>
             <p className="text-xs text-ink-muted">
               Register: <span className="font-semibold">{phrase.partOfSpeech?.includes("formal") ? "formal" : "neutral"}</span>

@@ -1929,7 +1929,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             <span className="mb-1.5 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-brand">
               {formatCategory(text.category)}
             </span>
-            <h1 className="break-words font-french text-[26px] leading-[1.12] text-ink">
+            <h1 lang={text.language === "en" ? "en" : "fr"} className="break-words font-french text-[26px] leading-[1.12] text-ink">
               {text.title}
             </h1>
       {/* The stored level, matching the card that led here — see the note in
@@ -2115,7 +2115,7 @@ export default function Reader({ text }: { text: ReadingText }) {
                   const english = sentenceTranslationForDisplay(flatIndex);
                   return (
                     <div key={si}>
-                      <p className="leading-[1.7]">{renderSentenceSpan(sg, si)}</p>
+                      <p lang="fr" className="leading-[1.7]">{renderSentenceSpan(sg, si)}</p>
                       {english && (
                         <p className="mt-1.5 border-l-2 border-brand/30 pl-3 text-[0.82em] italic leading-snug text-ink-muted">
                           {english}
@@ -2130,7 +2130,7 @@ export default function Reader({ text }: { text: ReadingText }) {
             // Normal reading layout: sentences flow together into one paragraph.
             <div key={paragraphIndex} className="flex items-start gap-2">
               {paragraphAudioButton(paragraphTexts[paragraphIndex] ?? sentences.map((sg) => sg.text).join(" "), paragraphIndex)}
-              <p className="min-w-0 flex-1">
+              <p lang="fr" className="min-w-0 flex-1">
                 {sentences.map((sg, si) => (
                   <Fragment key={si}>
                     {renderSentenceSpan(sg, si)}

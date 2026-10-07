@@ -38,21 +38,21 @@ export default function BottomSheet({
   useModalPresence(open);
   useDismissibleHistory(open, onClose);
 
-  function handleDragStart(event: PointerEvent<HTMLButtonElement>) {
+  function handleDragStart(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
     dragStartY.current = event.clientY;
     activePointerId.current = event.pointerId;
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
-  function handleDragMove(event: PointerEvent<HTMLButtonElement>) {
+  function handleDragMove(event: PointerEvent<HTMLDivElement>) {
     if (activePointerId.current !== event.pointerId || dragStartY.current === null) return;
     const nextOffset = Math.max(0, event.clientY - dragStartY.current);
     dragOffsetRef.current = nextOffset;
     setDragOffset(nextOffset);
   }
 
-  function handleDragEnd(event: PointerEvent<HTMLButtonElement>) {
+  function handleDragEnd(event: PointerEvent<HTMLDivElement>) {
     if (activePointerId.current !== event.pointerId) return;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
@@ -79,6 +79,9 @@ export default function BottomSheet({
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
         aria-hidden={!open}
+        // A closed sheet stays mounted for its exit animation; inert takes
+        // its controls out of the tab order and the accessibility tree.
+        inert={!open}
         onClick={onClose}
         style={{
           paddingTop: "var(--visual-offset-top)",
@@ -100,9 +103,11 @@ export default function BottomSheet({
             transitionDuration: dragOffset > 0 ? "0ms" : undefined,
           }}
         >
-          <button
-            type="button"
-            aria-label="Swipe down to close"
+          {/* Pointer-only drag handle. Keyboard and screen-reader users close
+              with Escape or Back, so it is not a focusable control and the
+              dialog's first stop is its actual content. */}
+          <div
+            aria-hidden="true"
             onPointerDown={handleDragStart}
             onPointerMove={handleDragMove}
             onPointerUp={handleDragEnd}
@@ -110,7 +115,7 @@ export default function BottomSheet({
             className="flex min-h-12 w-full shrink-0 touch-none items-center justify-center active:cursor-grabbing"
           >
             <span className={`h-1.5 w-10 rounded-full ${handleClassName}`} />
-          </button>
+          </div>
           <div className={`min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain ${contentClassName}`}>
             {children}
           </div>

@@ -236,7 +236,7 @@ export default function MeaningSheet({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-french text-2xl font-bold leading-tight text-ink">{meaning?.displayFrench}</h3>
+          <h3 lang="fr" className="font-french text-2xl font-bold leading-tight text-ink">{meaning?.displayFrench}</h3>
           {/* Only when the reader tapped something smaller than the unit being
               explained — tapping "compte" inside "se rendre compte". */}
           {meaning?.partOfExpression && (
@@ -307,7 +307,7 @@ export default function MeaningSheet({
       {meaning?.sentenceTranslation && (
         <div className="mt-2.5 rounded-2xl bg-cream-card/75 p-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
-          <p className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
+          <p lang="fr" className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
           <p className="mt-1 text-sm font-semibold text-ink">{meaning.sentenceTranslation.english}</p>
         </div>
       )}
@@ -379,7 +379,7 @@ export default function MeaningSheet({
           {meaning?.lemma && meaning.lemma !== meaning.displayFrench && (
             <Panel label="Dictionary form">
               <p className="font-french text-sm font-semibold text-ink">
-                {meaning.lemma}
+                <span lang="fr">{meaning.lemma}</span>
                 {meaning.lemmaGloss && <span className="font-sans font-normal text-ink-muted"> — {meaning.lemmaGloss}</span>}
               </p>
             </Panel>
@@ -396,7 +396,7 @@ export default function MeaningSheet({
               both inside "More meanings" and again in its own section. */}
           {meaning?.examples[0] && (
             <Panel label="Example">
-              <p className="font-french text-sm italic text-ink">{meaning.examples[0].fr}</p>
+              <p lang="fr" className="font-french text-sm italic text-ink">{meaning.examples[0].fr}</p>
               <p className="mt-0.5 text-sm text-ink-muted">{meaning.examples[0].en}</p>
               <div className="mt-2">
                 <PronounceButton
@@ -411,7 +411,7 @@ export default function MeaningSheet({
 
           {meaning?.contextSentence && (
             <Panel label="This sentence">
-              <p className="font-french text-sm italic text-ink">“{meaning.contextSentence}”</p>
+              <p lang="fr" className="font-french text-sm italic text-ink">“{meaning.contextSentence}”</p>
             </Panel>
           )}
 
@@ -457,7 +457,7 @@ export default function MeaningSheet({
           {aiState === "ready" && aiResult && (
             <Panel label="Usage notes">
               <div className="rounded-xl bg-cream p-2">
-                <p className="font-french text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
+                <p lang="fr" className="font-french text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
                 <p className="text-xs text-ink-muted">{aiResult.simpleExampleEn}</p>
               </div>
               {aiResult.grammarOrUsageNote && <p className="mt-2 text-xs text-ink-muted">{aiResult.grammarOrUsageNote}</p>}

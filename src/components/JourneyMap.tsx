@@ -551,7 +551,7 @@ function LessonPreviewRow({
           <LessonStatusDot completed={completed} next={!!next} skipped={reviewableSkipped} bandTone={bandTone} />
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-french text-[16px] leading-snug text-ink">{text.title}</p>
+          <p lang="fr" className="font-french text-[16px] leading-snug text-ink">{text.title}</p>
           <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{meta}</p>
         </div>
       </div>

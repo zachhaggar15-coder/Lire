@@ -11,15 +11,16 @@ interface ToastProps {
 export default function Toast({ message }: ToastProps) {
   const open = message !== null;
   return (
+    // Always mounted and a polite live region, so each new message is
+    // announced; it is empty (nothing to announce) when closed.
     <div
-      aria-hidden={!open}
+      role="status"
+      aria-live="polite"
       className={`pointer-events-none fixed inset-x-0 bottom-24 z-50 mx-auto flex max-w-md justify-center px-4 transition-all duration-200 ${
         open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
       }`}
     >
-      <div className="rounded-full bg-ink/90 px-4 py-2 text-sm font-medium text-cream shadow-lg">
-        {message}
-      </div>
+      {open && <div className="rounded-full bg-ink/90 px-4 py-2 text-sm font-medium text-cream shadow-lg">{message}</div>}
     </div>
   );
 }

@@ -249,7 +249,7 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <p className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
+            <p lang="fr" className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
             {word.lemma && word.lemma !== word.word && (
               <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">({word.lemma})</span>
             )}
@@ -281,13 +281,13 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
           )}
           {word.partOfExpression && (
             <p className="mt-0.5 text-xs text-ink-muted">
-              Part of <span className="font-french font-semibold text-ink">{word.partOfExpression}</span>
+              Part of <span lang="fr" className="font-french font-semibold text-ink">{word.partOfExpression}</span>
             </p>
           )}
           {otherMeanings.length > 0 && <p className="mt-1 text-xs text-ink-muted">Also: {otherMeanings.join(", ")}</p>}
 
           {word.exampleSentenceFr && (
-            <p className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
+            <p lang="fr" className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
               {word.exampleSentenceFr}
               <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>
             </p>
@@ -308,7 +308,7 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
                 {familyRows.map(([label, values]) => (
                   <p key={label} className="text-xs text-ink-muted">
                     <span className="font-mono uppercase tracking-[0.08em] text-ink-faint">{label}: </span>
-                    <span className="font-french text-ink">{values.join(", ")}</span>
+                    <span lang="fr" className="font-french text-ink">{values.join(", ")}</span>
                   </p>
                 ))}
               </div>
@@ -384,10 +384,10 @@ function PhraseList({
           <li key={phrase.phrase} className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="font-french text-[22px] leading-tight text-ink">{phrase.phrase}</p>
+                <p lang="fr" className="font-french text-[22px] leading-tight text-ink">{phrase.phrase}</p>
                 <p className="mt-1 text-sm font-semibold text-ink">{phrase.translation}</p>
                 {phrase.contextSentence && (
-                  <p className="mt-2 line-clamp-2 font-french text-[15px] italic leading-snug text-ink-muted">"{phrase.contextSentence}"</p>
+                  <p lang="fr" className="mt-2 line-clamp-2 font-french text-[15px] italic leading-snug text-ink-muted">"{phrase.contextSentence}"</p>
                 )}
                 <div className="mt-3 flex flex-wrap gap-2 border-t border-cream-fill pt-3 text-xs text-ink-muted">
                   {phrase.sourceTextTitle && (
