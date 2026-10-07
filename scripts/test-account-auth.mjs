@@ -192,10 +192,10 @@ console.log("--- The privacy policy matches the implementation ---");
 {
   check("it says Google is used for sign-in", /sign in with Google|with Google/.test(privacy));
   check("it names Supabase as the account infrastructure", /Supabase/.test(privacy));
-  check("it states Sorlio never receives the Google password", /never receives your Google password/.test(privacy));
+  check("it states Sorlio never receives the Google password", /never (?:sees|receives) your Google password/.test(privacy));
   check("it points to self-service deletion", /account\/delete/.test(privacy));
   check("it says deletion is available from Settings", /from Settings/.test(privacy));
-  check("it warns that Play subscriptions are separate", /does not cancel a subscription/.test(privacy));
+  check("it warns that Play subscriptions are separate", /does not cancel a (?:Premium )?subscription/.test(privacy));
   check("it no longer describes magic links", !/passwordless sign-in link/.test(privacy));
   check("it states local data stays on the device", /stays there until you clear/.test(privacy));
 }
