@@ -104,6 +104,21 @@ check("walkthrough uses the same real, guarded save mechanism", /runWalkthroughW
 check("known words are not rendered as Review saves", /isReviewableWordStatus/.test(meaningSheet) && /Already known/.test(meaningSheet));
 
 clearWords();
+// A grade must be stored before the feedback animation timer starts: the
+// review page cancels that timer on unmount, so leaving during the animation
+// used to drop the answer (audit RC26).
+{
+  const { readFileSync } = await import("node:fs");
+  const page = readFileSync(new URL("../src/app/review/page.tsx", import.meta.url), "utf8");
+  const body = (name) => page.slice(page.indexOf(`function ${name}(`), page.indexOf("\n  }\n", page.indexOf(`function ${name}(`)));
+  for (const [name, write] of [["gradeWord", "recordReviewResult("], ["gradePhrase", "recordPhraseReview("]]) {
+    const source = body(name);
+    const writeAt = source.indexOf(write);
+    const timerAt = source.indexOf("setTimeout(");
+    check(`${name} stores the grade before starting the animation timer`, writeAt !== -1 && timerAt !== -1 && writeAt < timerAt, `write ${writeAt}, timer ${timerAt}`);
+  }
+}
+
 console.log(`\n${passed} passed, ${failed} failed`);
 if (failures.length) {
   for (const failure of failures) console.log(`FAIL ${failure}`);

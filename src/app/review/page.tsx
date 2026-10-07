@@ -237,32 +237,34 @@ function ReviewPageContent() {
       knew: score.knew + (correct ? 1 : 0),
       missed: score.missed + (correct ? 0 : 1),
     };
+    // Store the answer first, synchronously: the feedback delay below is
+    // only animation, and leaving the page during it (which cancels the
+    // timer) must not lose the grade.
+    const reviewed = recordReviewResult(current.word, correct ? "correct" : "incorrect");
+    if (!reviewed.ok) {
+      // Nothing was stored: keep the same card on screen, award nothing,
+      // and say why. The answer can simply be given again.
+      undoGradeFeedback(correct, current.word, score);
+      setSaveError(persistenceFailureMessage(reviewed.reason));
+      return;
+    }
+    setSaveError(null);
+    const updatedWord = reviewed.words.find((w) => w.word === current.word);
+    const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
+    const known = graduated ? markWordAsKnown(current.word) : null;
+    if (known && !known.ok) setSaveError(persistenceFailureMessage(known.reason));
+    const nextWords = visibleWords(known?.ok ? known.words : reviewed.words);
+    const xp = known?.ok ? recordReviewSuccessXp(current.word) : 0;
+    const remainingQueue = wordQueue.slice(1);
+    const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
+
     setCardFeedback(correct ? "correct" : "learning");
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const reviewed = recordReviewResult(current.word, correct ? "correct" : "incorrect");
-      if (!reviewed.ok) {
-        // Nothing was stored: keep the same card on screen, award nothing,
-        // and say why. The answer can simply be given again.
-        undoGradeFeedback(correct, current.word, score);
-        setSaveError(persistenceFailureMessage(reviewed.reason));
-        return;
+      if (xp > 0) {
+        setXpNotice(`+${xp} XP`);
+        window.setTimeout(() => setXpNotice(null), 1600);
       }
-      setSaveError(null);
-      const updatedWord = reviewed.words.find((w) => w.word === current.word);
-      const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
-      const known = graduated ? markWordAsKnown(current.word) : null;
-      if (known && !known.ok) setSaveError(persistenceFailureMessage(known.reason));
-      const nextWords = visibleWords(known?.ok ? known.words : reviewed.words);
-      if (known?.ok) {
-        const xp = recordReviewSuccessXp(current.word);
-        if (xp > 0) {
-          setXpNotice(`+${xp} XP`);
-          window.setTimeout(() => setXpNotice(null), 1600);
-        }
-      }
-      const remainingQueue = wordQueue.slice(1);
-      const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
       setWords(nextWords);
       setWordQueue(nextQueue);
       setScore(nextScore);
@@ -320,29 +322,29 @@ function ReviewPageContent() {
       correct: phraseScore.current.correct + (correct ? 1 : 0),
       total: phraseScore.current.total + 1,
     };
-    setCardFeedback(correct ? "correct" : "learning");
+    // Stored first; the delay is animation only (see gradeWord).
+    const reviewed = recordPhraseReview(currentPhrase.phrase, correct);
+    if (!reviewed.ok) {
+      phraseScore.current = {
+        correct: phraseScore.current.correct - (correct ? 1 : 0),
+        total: phraseScore.current.total - 1,
+      };
+      setSaveError(persistenceFailureMessage(reviewed.reason));
+      return;
+    }
+    setSaveError(null);
+    const updatedPhrases = reviewed.phrases;
+    const remainingQueue = sessionPhraseQueue.slice(1);
+    const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
+    const sessionCorrect = phraseScore.current.correct;
 
+    setCardFeedback(correct ? "correct" : "learning");
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const reviewed = recordPhraseReview(currentPhrase.phrase, correct);
-      if (!reviewed.ok) {
-        phraseScore.current = {
-          correct: phraseScore.current.correct - (correct ? 1 : 0),
-          total: phraseScore.current.total - 1,
-        };
-        setSaveError(persistenceFailureMessage(reviewed.reason));
-        setCardFeedback(null);
-        cardFeedbackTimeout.current = null;
-        return;
-      }
-      setSaveError(null);
-      const updatedPhrases = reviewed.phrases;
       setPhrases(articleFilter ? updatedPhrases.filter((phrase) => phrase.sourceTextTitle === articleFilter) : updatedPhrases);
-      const remainingQueue = sessionPhraseQueue.slice(1);
-      const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
       setSessionPhraseQueue(nextQueue);
       setPhraseRevealed(false);
-      if (nextQueue.length === 0) completeReviewSession("phrases", phraseSessionTotal, phraseScore.current.correct);
+      if (nextQueue.length === 0) completeReviewSession("phrases", phraseSessionTotal, sessionCorrect);
       setCardFeedback(null);
       cardFeedbackTimeout.current = null;
     }, REVIEW_FEEDBACK_DELAY_MS);
