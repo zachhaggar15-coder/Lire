@@ -53,13 +53,14 @@ const feedbackDashboard = read("src/app/admin/feedback/page.tsx");
 const feedbackLayout = read("src/app/admin/feedback/layout.tsx");
 const adminSessionRoute = read("src/app/api/admin/session/route.ts");
 check("production test-email route has been removed", !exists("src/app/api/feedback/test/route.ts"));
-check("feedback reader requires admin authorization", /hasValidationAdminToken\(request\)/.test(feedbackRoute));
+check("feedback reader requires admin authorization", /await hasAdminAccess\(request\)/.test(feedbackRoute));
 check("feedback dashboard uses the protected route", /\/api\/admin\/feedback/.test(feedbackDashboard));
 check("feedback dashboard does not query Supabase from the browser", !/getSupabaseClient/.test(feedbackDashboard));
-check("feedback page is blocked by a server-validated session", /await cookies\(\)/.test(feedbackLayout) && /isValidationAdminSessionValue/.test(feedbackLayout));
+check("feedback page is blocked by a server-validated session", /await cookies\(\)/.test(feedbackLayout) && /await isAdminSessionCookie/.test(feedbackLayout));
 check(
-  "admin session cookie is hardened and does not contain the raw token",
-  /validationAdminSessionValue/.test(adminSessionRoute) &&
+  "admin session cookie is hardened, per-session and revocable (behaviour: test-admin-session.mjs)",
+  /createAdminSession\(/.test(adminSessionRoute) &&
+    /revokeAdminSession\(request\)/.test(adminSessionRoute) &&
     /httpOnly:\s*true/.test(adminSessionRoute) &&
     /secure:\s*true/.test(adminSessionRoute) &&
     /sameSite:\s*["']strict["']/.test(adminSessionRoute),

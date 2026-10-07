@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
-import { hasValidationAdminToken } from "@/lib/admin/auth";
+import { hasAdminAccess } from "@/lib/admin/auth";
 import { clientIp, rateLimit } from "@/lib/server/rateLimit";
 
 const MAX_LIMIT = 100;
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   if (!(await rateLimit(`admin-feedback:${clientIp(request)}`, 30, 60_000))) {
     return json({ ok: false, error: "Too many requests. Please try again later." }, 429);
   }
-  if (!hasValidationAdminToken(request)) {
+  if (!(await hasAdminAccess(request))) {
     return json({ ok: false, error: "Unauthorized" }, 401);
   }
   const supabase = getSupabaseServiceClient();

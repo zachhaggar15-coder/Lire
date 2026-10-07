@@ -1,42 +1,40 @@
 import "server-only";
 
-import { createHash, timingSafeEqual } from "node:crypto";
+import { isAdminBearer, isValidAdminSession, readAdminSession, type AdminSessionDeps } from "@/lib/admin/session";
+import { isRevoked, revoke } from "@/lib/server/revocations";
 
-export const VALIDATION_ADMIN_COOKIE = "__Host-sorlio-validation-admin";
+// A new cookie name: sessions issued by the old deterministic scheme are
+// simply never read again.
+export const ADMIN_SESSION_COOKIE = "__Host-sorlio-admin-session";
 
-function adminToken(): string | null {
-  const token = process.env.VALIDATION_ADMIN_TOKEN;
-  return token?.trim() || null;
+export function adminToken(): string | null {
+  return process.env.VALIDATION_ADMIN_TOKEN?.trim() || null;
 }
 
-function safeEqual(left: string, right: string): boolean {
-  const leftBytes = Buffer.from(left);
-  const rightBytes = Buffer.from(right);
-  return leftBytes.length === rightBytes.length && timingSafeEqual(leftBytes, rightBytes);
+function deps(): AdminSessionDeps {
+  return { token: adminToken(), nowMs: Date.now(), isRevoked: (id) => isRevoked(`admin-session:${id}`) };
 }
 
-/** A one-way browser session value; the private admin token is never stored in a cookie. */
-export function validationAdminSessionValue(): string | null {
-  const token = adminToken();
-  return token ? createHash("sha256").update(`sorlio-validation-admin:${token}`).digest("hex") : null;
-}
-
-export function isValidationAdminSessionValue(value: string | null | undefined): boolean {
-  const expected = validationAdminSessionValue();
-  return !!value && !!expected && safeEqual(value, expected);
+export async function isAdminSessionCookie(value: string | null | undefined): Promise<boolean> {
+  return isValidAdminSession(value, deps());
 }
 
 function cookieValue(request: Request): string | null {
   const header = request.headers.get("cookie");
   if (!header) return null;
-  return header.match(new RegExp(`(?:^|;\\s*)${VALIDATION_ADMIN_COOKIE}=([^;]+)`))?.[1] ?? null;
+  return header.match(new RegExp(`(?:^|;\\s*)${ADMIN_SESSION_COOKIE}=([^;]+)`))?.[1] ?? null;
 }
 
-/** Validates the private token shared by the internal validation tools. */
-export function hasValidationAdminToken(request: Request): boolean {
-  const token = adminToken();
-  if (!token) return false;
-  const authorization = request.headers.get("authorization");
-  const bearer = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
-  return (!!bearer && safeEqual(bearer, token)) || isValidationAdminSessionValue(cookieValue(request));
+/** Admin token as a bearer header, or a valid, unexpired, unrevoked session cookie. */
+export async function hasAdminAccess(request: Request): Promise<boolean> {
+  if (isAdminBearer(request.headers.get("authorization"), adminToken())) return true;
+  return isAdminSessionCookie(cookieValue(request));
+}
+
+/** Revokes the request's session server-side so a copied cookie stops working. */
+export async function revokeAdminSession(request: Request): Promise<void> {
+  const session = readAdminSession(adminToken(), cookieValue(request), Date.now());
+  if (!session) return;
+  const ttlMs = Math.max(1000, session.expiresAt * 1000 - Date.now());
+  await revoke(`admin-session:${session.sessionId}`, ttlMs);
 }

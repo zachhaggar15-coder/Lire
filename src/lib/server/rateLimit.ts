@@ -10,7 +10,8 @@ function redisCredentials(): { url: string; token: string } | null {
 
 let redisClient: Redis | null | undefined;
 
-function redis(): Redis | null {
+/** The shared Redis client, when configured (rate limits, revocations). */
+export function sharedRedis(): Redis | null {
   if (redisClient !== undefined) return redisClient;
   const credentials = redisCredentials();
   redisClient = credentials ? new Redis(credentials) : null;
@@ -54,7 +55,7 @@ export function localRateLimitFallbackAllowed(
  * development and preview smoke tests.
  */
 export async function rateLimit(key: string, limit: number, windowMs: number): Promise<boolean> {
-  const client = redis();
+  const client = sharedRedis();
   if (!client) {
     return localRateLimitFallbackAllowed() ? localRateLimit(key, limit, windowMs) : false;
   }

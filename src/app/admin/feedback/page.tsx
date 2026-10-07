@@ -53,6 +53,19 @@ export default function FeedbackDashboard() {
     void loadFeedback();
   }, [loadFeedback]);
 
+  const [signingOut, setSigningOut] = useState(false);
+  const signOut = useCallback(async () => {
+    setSigningOut(true);
+    try {
+      const response = await fetch("/api/admin/session", { method: "DELETE", cache: "no-store" });
+      if (!response.ok) throw new Error("sign-out failed");
+      window.location.reload();
+    } catch {
+      setError("Could not sign out. Please try again.");
+      setSigningOut(false);
+    }
+  }, []);
+
   return (
     <main className="p-6">
       <header className="mb-6">
@@ -60,9 +73,14 @@ export default function FeedbackDashboard() {
         <h1 className="mt-1 text-2xl font-bold">Feedback{feedback ? ` (${feedback.length})` : ""}</h1>
       </header>
 
-      <button type="button" onClick={() => void loadFeedback()} disabled={loading} className="mb-6 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-cream disabled:opacity-50">
-        {loading ? "Loading…" : "Refresh"}
-      </button>
+      <div className="mb-6 flex gap-2">
+        <button type="button" onClick={() => void loadFeedback()} disabled={loading} className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-cream disabled:opacity-50">
+          {loading ? "Loading…" : "Refresh"}
+        </button>
+        <button type="button" onClick={() => void signOut()} disabled={signingOut} className="rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink disabled:opacity-50">
+          {signingOut ? "Signing out…" : "Sign out"}
+        </button>
+      </div>
 
       {error && <p role="alert" className="mb-5 rounded-xl bg-rose-100 px-4 py-3 text-sm font-semibold text-rose-700">{error}</p>}
       {feedback?.length === 0 && !loading && !error && <p className="text-sm text-ink-muted">No feedback has been received yet.</p>}
