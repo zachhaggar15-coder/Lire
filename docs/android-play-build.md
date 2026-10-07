@@ -119,35 +119,57 @@ rather than chasing the error.
 
 ### Running the build
 
-From the `android` directory, use Bubblewrap to update or build the generated project:
+**Do not use `bubblewrap build` or `bubblewrap update` for releases.** The
+Android project here has been edited after generation so that it requests no
+notification permission while Play Billing keeps working (see below).
+Bubblewrap would regenerate the project from `twa-manifest.json` and undo
+that, and with `enableNotifications: false` it refuses to build at all ("Play
+Billing requires enableNotifications to be true"). `npm test`
+(`test-android-release-config.mjs`) fails if the permission ever comes back.
+
+Build with Gradle, using the JDK and SDK Bubblewrap installed (paths are in
+`%USERPROFILE%\.bubblewrap\config.json`):
 
 ```powershell
-npx @bubblewrap/cli build
+$cfg = Get-Content "$env:USERPROFILE\.bubblewrap\config.json" | ConvertFrom-Json
+$env:JAVA_HOME = $cfg.jdkPath; $env:ANDROID_HOME = $cfg.androidSdkPath
+cd android
+.\gradlew.bat bundleRelease
 ```
 
-A release build produces an APK for device testing and an Android App Bundle for Play Console. Bubblewrap will request the local keystore passwords at build time; do not add them to environment files committed to source control. If Bubblewrap's downloaded Java runtime fails with an out-of-memory error, set `JAVA_HOME` to an installed 64-bit JDK before running the build.
+This writes an unsigned bundle to `android/app/build/outputs/bundle/release/app-release.aab`.
+Sign it with the upload key (you are prompted for the keystore password; never
+put it in a file):
 
-To confirm the project compiles without creating or using signing secrets, run `gradlew.bat assembleRelease bundleRelease` from the `android` directory. The unsigned outputs are written below `android/app/build/outputs/` and are intentionally excluded from source control.
+```powershell
+& "$env:JAVA_HOME\bin\jarsigner.exe" -keystore android.keystore app\build\outputs\bundle\release\app-release.aab sorlio-upload
+& "$env:JAVA_HOME\bin\jarsigner.exe" -verify app\build\outputs\bundle\release\app-release.aab
+```
+
+Signed bundles and keystores are excluded from source control.
 
 ## Release configuration
 
 | Setting | Value | Where |
 | --- | --- | --- |
 | Package ID | `app.sorlio.reader` | `android/app/build.gradle`, `android/twa-manifest.json` |
-| Version code | `8` | `android/app/build.gradle`, `android/twa-manifest.json` |
-| Version name | `1.0.3` | `android/app/build.gradle`, `android/twa-manifest.json` |
+| Version code | `9` | `android/app/build.gradle`, `android/twa-manifest.json` |
+| Version name | `1.1.0` | `android/app/build.gradle`, `android/twa-manifest.json` |
 | Launcher name | `Sorlio` | `android/twa-manifest.json` |
 | Full name | `Sorlio — French Reader` | `android/twa-manifest.json`, `public/manifest.json` |
 | Signing alias | `sorlio-upload` | `android/twa-manifest.json` |
 | Declared permissions | none | `android/app/src/main/AndroidManifest.xml` |
 
-`INTERNET` arrives through manifest merge from the AndroidX browser-helper
-library, which is expected for a Trusted Web Activity. `POST_NOTIFICATIONS` is
-declared because `enableNotifications` must stay `true`: Bubblewrap refuses to
-build with Play Billing enabled otherwise ("Play Billing requires
-enableNotifications to be true"). Nothing in the app sends notifications, so
-the permission is never requested at runtime; if Play review asks, that is the
-answer.
+The merged release manifest requests only `INTERNET` and
+`ACCESS_NETWORK_STATE` (from the AndroidX browser-helper library, expected
+for a Trusted Web Activity), `com.android.vending.BILLING` (Play Billing) and
+an app-internal receiver permission. There is no `POST_NOTIFICATIONS`:
+nothing in Sorlio sends notifications.
+
+`DelegationService` is declared with `android:enabled="true"` rather than
+Bubblewrap's `@bool/enableNotification`, because it also carries the Digital
+Goods API handler that Play Billing in a TWA depends on. Turning notification
+delegation off must not turn billing off.
 
 Version code must increase on every upload. Version name is what readers see.
 Bump `versionCode` by one for each subsequent upload even if the version name
