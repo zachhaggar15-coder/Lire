@@ -100,6 +100,9 @@ begin
   if exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
              where n.nspname = 'public' and p.proname = 'sorlio_consume_ai_call') then
     execute 'revoke all on function public.sorlio_consume_ai_call(uuid, integer) from public, anon, authenticated';
+    -- Supabase grants new tables to client roles by default; RLS already
+    -- blocks them, but they have no reason to hold privileges here either.
+    execute 'revoke all on table public.sorlio_ai_usage from anon, authenticated';
     execute 'alter function public.sorlio_consume_ai_call(uuid, integer) set search_path = public, pg_temp';
     if exists (select 1 from pg_roles where rolname = 'service_role') then
       execute 'grant execute on function public.sorlio_consume_ai_call(uuid, integer) to service_role';

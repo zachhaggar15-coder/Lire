@@ -84,6 +84,10 @@ await t.section("clients gain nothing they should not have", async () => {
     quotaBlocked = true;
   }
   t.check("authenticated role cannot spend AI quota directly", quotaBlocked);
+  const grants = await h.db.query(
+    "select count(*)::int as n from information_schema.role_table_grants where table_schema = 'public' and table_name in ('sorlio_ai_usage', 'sorlio_subscriptions') and grantee in ('anon', 'authenticated')",
+  );
+  t.check("no client role holds privileges on AI usage or subscriptions", grants.rows[0].n === 0, String(grants.rows[0].n));
 });
 
 await t.section("Google sign-in by Supabase Auth's role", async () => {
