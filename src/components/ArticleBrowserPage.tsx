@@ -210,8 +210,8 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
           setRssTexts([]);
           setLoadError(
             timedOut
-              ? "Live RSS is taking too long to answer. Try again, or switch filters."
-              : "Live RSS is unavailable right now. Try again in a moment."
+              ? "The news is taking too long to load. Try again, or switch filters."
+              : "The news can't be loaded right now. Try again in a moment."
           );
           setState("error");
         }

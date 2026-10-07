@@ -74,9 +74,12 @@ function recommendationReasons(
 
 function sourceTrustLabel(text: ReadingText): string {
   if (text.id.startsWith("custom-")) return "Imported by you";
-  if (text.id.startsWith("pd-")) return "Public-domain bank";
-  if (text.sourceName) return "Live RSS source";
-  return "Built-in practice text";
+  if (text.id.startsWith("pd-")) return "Classic literature";
+  // Starter texts carry a source name ("Written for Sorlio"), so they must be
+  // recognised before the news case or they would be labelled as news.
+  if (text.id.startsWith("starter-")) return "Written for Sorlio";
+  if (text.sourceName) return "News";
+  return "Written for Sorlio";
 }
 
 function learnerSourceLabel(text: ReadingText): string {
