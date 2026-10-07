@@ -28,6 +28,7 @@ import { StreakCard } from "@/components/GamificationCards";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
 import { markRated } from "@/lib/ratePrompt";
+import { deploymentEnvironment } from "@/lib/config";
 
 const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
   { value: "small", label: "Small" },
@@ -395,6 +396,8 @@ export default function SettingsPage() {
           </div>
           {!inAndroidApp && <PwaInstallCard />}
           <SettingsLink href="/privacy" title="Privacy" description="What Sorlio stores, why, and your choices." />
+          <SettingsLink href="/terms" title="Terms of use" description="The rules for using Sorlio and Premium." />
+          <SettingsLink href="/credits" title="Credits and licences" description="Where Sorlio's texts, dictionary and news come from." />
           <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Sorlio." />
         </section>
 
@@ -452,8 +455,13 @@ export default function SettingsPage() {
             </div>
 
             <SettingsLink href="/lookup" title="English to French lookup" description="Look up an English word offline." />
-            <SettingsLink href="/dictionary" title="Dictionary quality" description="See missing entries, saved corrections, and phrase coverage." />
-            <SettingsLink href="/sources" title="RSS sources" description="Check which feeds are producing French articles." />
+            {/* Developer diagnostics: useful on preview builds, noise for readers. */}
+            {deploymentEnvironment() !== "production" && (
+              <>
+                <SettingsLink href="/dictionary" title="Dictionary quality" description="See missing entries, saved corrections, and phrase coverage." />
+                <SettingsLink href="/sources" title="News feed health" description="Check which feeds are producing French articles." />
+              </>
+            )}
           </div>
         </details>
       </div>
