@@ -41,7 +41,6 @@ export const SYNCED_STORES: SyncedStoreConfig[] = [
   // Retired per-CEFR band score. Still synced so a device that has not yet
   // run the migration can convert it to XP; nothing writes to it any more.
   { key: "lire.levelScore.v1", kind: "record" },
-  { key: "lire.progress.lastOpened", kind: "object" },
   { key: "lire.progression.cefrToLireLevel.v1", kind: "object" },
   { key: "lire.customTexts.v1", kind: "list-by-id", idField: "id", insertNew: "start", optIn: "importedTexts" },
   { key: "lire.customDictionary.v1", kind: "list-by-id", idField: "lemma" },

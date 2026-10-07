@@ -2,8 +2,8 @@
 --
 -- Additive only. Nothing existing is deleted by applying this migration.
 -- sorlio_maintenance() deletes data past its retention period when the
--- maintenance cron calls it; the periods are documented in
--- docs/privacy/retention-schedule.md.
+-- maintenance cron calls it; the periods are listed below and stated to
+-- readers in the privacy policy (src/app/privacy/page.tsx).
 
 -- ---------------------------------------------------------------------------
 -- Operational counters: one row per (day, metric). No user ids, IPs, device

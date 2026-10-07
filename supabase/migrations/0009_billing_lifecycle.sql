@@ -89,7 +89,7 @@ revoke all on table public.sorlio_billing_events from anon, authenticated;
 create index if not exists sorlio_billing_events_received_idx on public.sorlio_billing_events (received_at);
 
 comment on table public.sorlio_billing_events is
-  'RTDN idempotency log. No user id; token stored as SHA-256 only. Retained 90 days (sorlio_purge_operational_data).';
+  'RTDN idempotency log. No user id; token stored as SHA-256 only. Retained 90 days (sorlio_billing_purge_events, run by sorlio_maintenance).';
 
 -- 0008 left sorlio_consume_ai_call executable by PUBLIC (the Postgres
 -- default for new functions). It is not SECURITY DEFINER, so anon callers hit

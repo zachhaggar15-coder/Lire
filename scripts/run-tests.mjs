@@ -58,6 +58,7 @@ export const SUITES = [
   "test-billing.mjs",
   "test-account-deletion.mjs",
   "test-auth-metadata.mjs",
+  "test-legacy-build-compat.mjs",
 ];
 
 const filters = process.argv.slice(2);

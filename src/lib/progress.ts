@@ -64,8 +64,9 @@ export function markOpened(textId: string): void {
       : current;
 
   persist(all);
+  // Device-local on purpose: "continue reading" follows the device in use.
+  // (It is a bare string, not JSON, so it was never syncable as stored.)
   localStore.writeItem(LAST_OPENED_KEY, textId);
-  notifyStoreChanged(LAST_OPENED_KEY);
 }
 
 /** Mark a text as completed. */

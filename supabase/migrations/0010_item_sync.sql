@@ -68,7 +68,6 @@ insert into public.sorlio_sync_stores (store_key, kind, id_field, max_item_bytes
   ('lire.progress.v1', 'record', null, 32768, 20000, true),
   ('lire.journey.v1', 'object', null, 262144, 1, true),
   ('lire.levelScore.v1', 'record', null, 1024, 100, true),
-  ('lire.progress.lastOpened', 'object', null, 4096, 1, true),
   ('lire.progression.cefrToLireLevel.v1', 'object', null, 16384, 1, true),
   ('lire.customTexts.v1', 'list-by-id', 'id', 262144, 200, false),
   ('lire.customDictionary.v1', 'list-by-id', 'lemma', 8192, 20000, true),
