@@ -455,11 +455,11 @@ export default function SettingsPage() {
             </div>
 
             <SettingsLink href="/lookup" title="English to French lookup" description="Look up an English word offline." />
+            <SettingsLink href="/sources" title="News sources" description="Unhide or prefer the sources you see in News." />
             {/* Developer diagnostics: useful on preview builds, noise for readers. */}
             {deploymentEnvironment() !== "production" && (
               <>
                 <SettingsLink href="/dictionary" title="Dictionary quality" description="See missing entries, saved corrections, and phrase coverage." />
-                <SettingsLink href="/sources" title="News feed health" description="Check which feeds are producing French articles." />
               </>
             )}
           </div>

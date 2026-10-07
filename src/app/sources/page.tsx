@@ -11,6 +11,11 @@ import {
 } from "@/lib/recommendation/preferences";
 import { formatCategory } from "@/lib/format";
 import AppBar from "@/components/AppBar";
+import { deploymentEnvironment } from "@/lib/config";
+
+// Feed-health diagnostics are for developers; readers only manage their own
+// (device-local) source preferences, which must work offline.
+const SHOW_DIAGNOSTICS = deploymentEnvironment() !== "production";
 
 type LoadState = "loading" | "success" | "error";
 
@@ -56,6 +61,7 @@ export default function SourcesPage() {
 
   useEffect(() => {
     refreshPreferences();
+    if (!SHOW_DIAGNOSTICS) return;
     let cancelled = false;
     const controller = new AbortController();
     let slowTimer: ReturnType<typeof setTimeout> | null = null;
@@ -118,8 +124,29 @@ export default function SourcesPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Sources" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
-      <p className="-mt-3 mb-5 text-sm text-ink-muted">RSS feed status for the current article pool. Refreshes are warmed by a daily cron, with automatic backfill if a day's pool ever comes up short.</p>
+      <AppBar title="News sources" kicker="Settings" backHref="/settings" backLabel="Back to Settings" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">Sources you hide never appear in News; preferred sources come first. Saved on this device.</p>
+
+      <section className="mb-5 space-y-3">
+        <SourceControlList
+          title="Preferred sources"
+          empty="No preferred sources yet."
+          sources={preferredSources}
+          actionLabel="Remove"
+          onAction={handleUnpreferSource}
+        />
+        <SourceControlList
+          title="Hidden sources"
+          empty="No hidden sources. Hide one from the menu on any news article."
+          sources={hiddenSources}
+          actionLabel="Unhide"
+          onAction={handleUnhideSource}
+        />
+      </section>
+
+      {SHOW_DIAGNOSTICS && (
+        <>
+      <h2 className="mb-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Feed health (developer builds only)</h2>
 
       {state === "loading" && (
         <div className="space-y-3">
@@ -149,23 +176,6 @@ export default function SourcesPage() {
 
       {state === "success" && (
         <>
-          <section className="mb-5 space-y-3">
-            <SourceControlList
-              title="Preferred sources"
-              empty="No preferred sources yet."
-              sources={preferredSources}
-              actionLabel="Remove"
-              onAction={handleUnpreferSource}
-            />
-            <SourceControlList
-              title="Hidden sources"
-              empty="No hidden sources."
-              sources={hiddenSources}
-              actionLabel="Unhide"
-              onAction={handleUnhideSource}
-            />
-          </section>
-
           <section className="mb-5 grid grid-cols-3 gap-2">
             <Metric label="Attempted" value={attempted.length} />
             <Metric label="Yielded" value={yielded.length} />
@@ -224,6 +234,8 @@ export default function SourcesPage() {
               </article>
             ))}
           </section>
+        </>
+      )}
         </>
       )}
     </div>
