@@ -13,7 +13,6 @@
  * mention words like "present" or "decide" are not flagged.
  */
 
-import { readFileSync } from "node:fs";
 
 let failures = 0;
 let checked = 0;
