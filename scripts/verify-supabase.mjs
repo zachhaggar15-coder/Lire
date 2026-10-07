@@ -21,19 +21,49 @@
  * given key can see without retrieving any of them.
  */
 import { readFileSync, existsSync } from "node:fs";
+import { EXPECTED_SCHEMA_VERSION } from "../src/lib/server/schema.ts";
+
 
 const EXPECTED_TABLES = [
   "sorlio_user_data",
   "sorlio_subscriptions",
-  "sorlio_analytics_events",
   "sorlio_feedback",
-  "sorlio_research_prompt_responses",
-  "sorlio_android_beta_interest",
   "sorlio_ai_usage",
+  "sorlio_billing_events",
+  "sorlio_sync_stores",
+  "sorlio_sync_state",
+  "sorlio_sync_items",
+  "sorlio_save_quota",
+  "sorlio_ops_counters",
 ];
 
-/** The AI budget function from 0008; without it the AI routes fail closed. */
-const REQUIRED_FUNCTIONS = ["sorlio_consume_ai_call"];
+/**
+ * Functions a signed-in client calls directly. Everything else in public.*
+ * is server-only and must NOT be executable with the anon key.
+ */
+const CLIENT_FUNCTIONS = [
+  "sorlio_sync_pull",
+  "sorlio_sync_push",
+  "sorlio_sync_import_legacy",
+  "sorlio_sync_import_store",
+  "sorlio_sync_remove_store",
+  "sorlio_schema_version",
+];
+const SERVER_FUNCTIONS = [
+  "sorlio_consume_ai_call",
+  "sorlio_has_premium",
+  "sorlio_billing_record",
+  "sorlio_billing_owner",
+  "sorlio_billing_get",
+  "sorlio_billing_claim_event",
+  "sorlio_billing_finish_event",
+  "sorlio_billing_due",
+  "sorlio_billing_purge_events",
+  "sorlio_sync_purge",
+  "sorlio_ops_increment",
+  "sorlio_ops_summary",
+  "sorlio_maintenance",
+];
 
 /**
  * Tables the anon key must never read. sorlio_user_data is absent here because
@@ -42,6 +72,13 @@ const REQUIRED_FUNCTIONS = ["sorlio_consume_ai_call"];
  * rather than "zero rows ever".
  */
 const SERVICE_ONLY_TABLES = EXPECTED_TABLES.filter((t) => t !== "sorlio_user_data");
+
+/**
+ * Retired data collection (analytics, research prompts, beta list). The app
+ * no longer writes these; they are dropped once the purge in
+ * docs/release/analytics-purge-plan.md is approved. Reported, not failed.
+ */
+const RETIRED_TABLES = ["sorlio_analytics_events", "sorlio_research_prompt_responses", "sorlio_android_beta_interest"];
 
 /** Must not exist: pre-rename tables, and the removed CEFR gamification set. */
 const FORBIDDEN_TABLES = [
@@ -189,7 +226,7 @@ async function main() {
     ok(`${table} shows nothing to the anon key`, visible === 0, `${visible} row(s) readable with a key that ships in the app`);
     // On an empty table the assertion above is trivially true, so say so
     // rather than let a green tick imply a guarantee that was never tested.
-    if ((serviceCounts[table] ?? 0) === 0) {
+    if (serviceCounts[table] === 0) {
       warn(`${table} is empty, so its RLS check proved nothing — re-run once it holds rows`);
     }
   }
@@ -202,65 +239,72 @@ async function main() {
     }
   }
 
+  console.log("\n--- Retired tables ---");
+  for (const table of RETIRED_TABLES) {
+    const { status, count } = await countRows(url, table, serviceKey);
+    if (status === 404) {
+      ok(`${table} has been dropped`, true);
+      continue;
+    }
+    const visible = (await countRows(url, table, anonKey)).count ?? 0;
+    ok(`${table} shows nothing to the anon key`, visible === 0, `${visible} row(s) readable`);
+    warn(`${table} still exists with ${count ?? "?"} row(s) — awaiting the approved purge`);
+  }
+
   console.log("\n--- Row-level security refuses anon writes ---");
-  // The only write in this script. If the insert policy is correct the row is
-  // rejected and nothing is stored; if it is not, that is a finding worth the
-  // cleanup below.
+  // The only write in this script. The anon role has no privileges on the
+  // sync tables, so this must be refused; if it is not, that is a finding
+  // worth the cleanup below.
   const probe = "__sorlio_rls_probe__";
-  const insert = await fetch(`${url}/rest/v1/sorlio_analytics_events`, {
+  const insert = await fetch(`${url}/rest/v1/sorlio_sync_items`, {
     method: "POST",
-    headers: {
-      apikey: anonKey,
-      Authorization: `Bearer ${anonKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify({ event_name: probe }),
+    headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, "Content-Type": "application/json", Prefer: "return=minimal" },
+    body: JSON.stringify({ store_key: probe, item_id: probe, rev: 1, data: {} }),
   });
   ok("an anon insert is rejected", insert.status >= 400, `HTTP ${insert.status} — the anon key can write to your tables`);
   if (insert.status < 400) {
-    const cleanup = await fetch(`${url}/rest/v1/sorlio_analytics_events?event_name=eq.${probe}`, {
+    const cleanup = await fetch(`${url}/rest/v1/sorlio_sync_items?item_id=eq.${probe}`, {
       method: "DELETE",
       headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
     });
     console.log(`  info  probe row removed (HTTP ${cleanup.status})`);
   }
 
-  console.log("\n--- Functions the app depends on exist ---");
-  for (const fn of REQUIRED_FUNCTIONS) {
-    // Calling with no arguments is enough to tell existence from absence:
-    // a missing function answers 404/PGRST202, a present one complains about
-    // its arguments instead.
-    const response = await fetch(`${url}/rest/v1/rpc/${fn}`, {
-      method: "POST",
-      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    });
-    let payload = null;
-    try { payload = await response.json(); } catch { payload = null; }
-    const missing = response.status === 404 || payload?.code === "PGRST202";
-    ok(`${fn}() exists`, !missing, "run supabase/migrations/0008_ai_usage.sql");
-  }
+  console.log("\n--- Schema version ---");
+  const versionResponse = await fetch(`${url}/rest/v1/rpc/sorlio_schema_version`, {
+    method: "POST",
+    headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, "Content-Type": "application/json" },
+    body: "{}",
+  });
+  const version = await versionResponse.json().catch(() => null);
+  ok(
+    `database schema version is ${EXPECTED_SCHEMA_VERSION}`,
+    version === EXPECTED_SCHEMA_VERSION,
+    `found ${JSON.stringify(version)} — apply supabase/migrations/ in order through ${String(EXPECTED_SCHEMA_VERSION).padStart(4, "0")}`
+  );
 
+  console.log("\n--- Function exposure ---");
+  // PostgREST's OpenAPI document lists exactly the functions the calling key
+  // may execute, so it proves existence (service key) and exposure (anon key)
+  // without calling anything.
+  const openApi = async (key) => {
+    const response = await fetch(`${url}/rest/v1/`, { headers: { apikey: key, Authorization: `Bearer ${key}`, Accept: "application/openapi+json" } });
+    return response.json().catch(() => ({}));
+  };
+  const rpcNames = (doc) => new Set(Object.keys(doc.paths ?? {}).filter((path) => path.startsWith("/rpc/")).map((path) => path.slice(5)));
+  const serviceDoc = await openApi(serviceKey);
+  const asService = rpcNames(serviceDoc);
+  const asAnon = rpcNames(await openApi(anonKey));
+  for (const fn of [...CLIENT_FUNCTIONS, ...SERVER_FUNCTIONS]) ok(`${fn}() exists`, asService.has(fn), "a migration has not been applied");
+  for (const fn of SERVER_FUNCTIONS) ok(`${fn}() is not callable with the public key`, !asAnon.has(fn), "server-only function exposed to clients");
+  for (const fn of ["sorlio_strip_user_metadata", "sorlio_strip_identity_data"]) ok(`${fn}() is not exposed as an RPC`, !asAnon.has(fn) && !asService.has(fn));
 
   console.log("\n--- The deletion contract is recorded in the database ---");
-  // Migration 0007 stores these as COMMENT ON TABLE, so their presence is also
-  // proof that the last migration ran.
-  const spec = await fetch(`${url}/rest/v1/`, {
-    headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, Accept: "application/openapi+json" },
-  });
-  let doc = null;
-  try {
-    doc = await spec.json();
-  } catch {
-    doc = null;
-  }
+  // Migration 0007 stores these as COMMENT ON TABLE.
   const description = (table) =>
-    doc?.definitions?.[table]?.description ?? doc?.components?.schemas?.[table]?.description ?? "";
-
+    serviceDoc?.definitions?.[table]?.description ?? serviceDoc?.components?.schemas?.[table]?.description ?? "";
   ok("sorlio_user_data documents its cascade", /cascades on auth user delete/i.test(description("sorlio_user_data")), "migration 0007 has not been applied");
   ok("sorlio_subscriptions documents that it is service-role only", /service-role only/i.test(description("sorlio_subscriptions")), "migration 0007 has not been applied");
-  ok("sorlio_android_beta_interest documents that it survives deletion", /not deleted/i.test(description("sorlio_android_beta_interest")), "migration 0007 has not been applied");
 
   console.log(`\n${passed} passed, ${failed} failed${warnings.length ? `, ${warnings.length} inconclusive` : ""}\n`);
   if (warnings.length) {

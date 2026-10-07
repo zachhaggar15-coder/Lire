@@ -57,6 +57,7 @@ export const SUITES = [
   "test-persistence-failures.mjs",
   "test-billing.mjs",
   "test-account-deletion.mjs",
+  "test-auth-metadata.mjs",
 ];
 
 const filters = process.argv.slice(2);
