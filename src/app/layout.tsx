@@ -14,15 +14,19 @@ import ThemeController from "@/components/ThemeController";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { productionDomain } from "@/lib/config";
 
+// `subsets` only chooses what is preloaded: every subset's @font-face is
+// still declared and fetched by unicode-range if a page needs it. French
+// (including œ/Œ) is in "latin", so preloading "latin-ext" too doubled the
+// fonts every page downloaded up front (12 files, ~290 KB) for no benefit.
 const ui = Space_Grotesk({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-ui",
   display: "swap",
 });
 
 const french = Newsreader({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-french",
@@ -30,14 +34,14 @@ const french = Newsreader({
 });
 
 const micro = Space_Mono({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-micro",
   display: "swap",
 });
 
 const numeral = Instrument_Serif({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: "400",
   variable: "--font-numeral",
   display: "swap",
