@@ -135,7 +135,8 @@ console.log("--- Every user-linked table is covered ---");
   check("non-cascading rows are removed before the auth user", deleteRoute.indexOf("NON_CASCADING_USER_TABLES") < deleteRoute.indexOf("auth.admin.deleteUser"));
   check("the schema documents what does not cascade", /(does|do) NOT cascade/i.test(schema));
   // Keyed by email with its own unsubscribe token, and stores user_id as null.
-  check("the beta mailing list is not silently deleted", !deleteRoute.includes("sorlio_android_beta_interest"));
+  // The beta list is retired; any row linked to the account is deleted with it.
+  check("retired beta-list rows linked to the account are deleted", deleteRoute.includes("sorlio_android_beta_interest"));
 }
 
 console.log("--- A failed deletion changes nothing ---");
@@ -169,12 +170,12 @@ console.log("--- Google Play subscriptions are handled honestly ---");
 
 console.log("--- The Play payment path is unchanged ---");
 {
-  check("purchases are still verified server-side", /verifyPlaySubscription/.test(verifyRoute));
+  check("purchases are still verified server-side", /reconcilePurchase\(/.test(verifyRoute));
   check("the product id is still validated", /PREMIUM_PRODUCT_ID/.test(verifyRoute));
-  check("purchases are still owned by the authenticated user", /user_id:\s*user\.id/.test(verifyRoute));
+  check("purchases are still owned by the authenticated user", /userId: user\.id/.test(verifyRoute));
   check("subscription writes still require the service client", /getSupabaseServiceClient/.test(verifyRoute));
-  check("status still re-verifies with Google", /verifyPlaySubscription/.test(statusRoute));
-  check("expiry is still checked", /expires_at|expiresAt/.test(statusRoute));
+  check("status still re-verifies with Google", /currentEntitlement\(/.test(statusRoute));
+  check("expiry is still checked (entitlement authority)", /expires_at/.test(readFileSync(new URL("../src/lib/premium/entitlement.ts", import.meta.url), "utf8")));
   check("verification did not move client-side", !/androidpublisher/.test(read("src/lib/premium/client.ts")));
 }
 

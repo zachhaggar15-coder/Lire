@@ -72,10 +72,12 @@ console.log("--- The guard requires an account, a subscription, and budget ---")
   // If migration 0008 has not been applied the RPC errors. Failing open there
   // would restore the exact hole this file exists to close.
   const errorBranch = guard.slice(guard.indexOf("sorlio_consume_ai_call"));
-  check("a missing quota function fails closed", /if \(error\)[\s\S]{0,200}status: 503/.test(errorBranch));
+  check("a missing quota function fails closed", /if \(error\)[\s\S]{0,400}status: 503/.test(errorBranch));
 
   // An expired subscription must not keep working.
-  check("premium requires an unexpired period", /expiresAt\)\.getTime\(\) > Date\.now\(\)/.test(guard));
+  // Expiry, freshness and revocation are decided by the entitlement authority
+  // (behaviour: scripts/test-billing.mjs); the guard must use it.
+  check("premium is decided by the entitlement authority with AI freshness", /currentEntitlement\(\{[^}]*freshMs: AI_FRESH_MS/.test(guard));
 }
 
 console.log("--- Input size is bounded ---");

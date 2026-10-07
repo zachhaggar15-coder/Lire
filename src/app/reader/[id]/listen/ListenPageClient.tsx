@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,9 +40,5 @@ function ListenPageClientContent({ id, initialText }: ListenPageClientProps) {
 }
 
 export default function ListenPageClient(props: ListenPageClientProps) {
-  return (
-    <PremiumRouteGate feature="listening" loadingVariant="reader">
-      <ListenPageClientContent {...props} />
-    </PremiumRouteGate>
-  );
+  return <ListenPageClientContent {...props} />;
 }

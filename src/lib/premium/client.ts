@@ -1,47 +1,75 @@
-import { getAccessToken, getCurrentUser } from "@/lib/supabase/auth";
-import { FREE_PREMIUM_STATUS, type PremiumStatus } from "@/lib/premium/types";
-import { localStore } from "@/lib/localData/store";
+import { getSupabaseClient } from "@/lib/supabase/client";
+import { activeIdentity, readJson, storeFor, writeJson } from "@/lib/localData/store";
+import { FREE_PREMIUM_STATUS, parsePremiumStatus, type PremiumStatus } from "@/lib/premium/types";
 
-const PREMIUM_CACHE_KEY = "lire.premium.status.v1";
+/**
+ * Fetching the account's entitlement from the server.
+ *
+ * Rules (each one closes a hole the audit found):
+ *   - Guests are never Premium.
+ *   - Any HTTP answer from the server is authoritative: 401/403/4xx/5xx-with-
+ *     body never fall back to a cached "Premium".
+ *   - Only a network failure (no answer at all) may use the cache, and only a
+ *     cache that (a) lives in this account's partition, (b) was confirmed by
+ *     the server within OFFLINE_CACHE_MS, and (c) has an unexpired, valid
+ *     expiry. Switching accounts therefore can never carry Premium across.
+ *   - The cache is a display hint. Forging it unlocks nothing the server
+ *     enforces: AI is refused, and synced saves beyond the free limit are
+ *     refused by the database.
+ */
 
-interface CachedPremiumStatus extends PremiumStatus {
+const CACHE_KEY = "lire.premium.status.v1";
+export const OFFLINE_CACHE_MS = 72 * 60 * 60 * 1000;
+
+interface CachedStatus {
   userId: string;
+  status: PremiumStatus;
+  confirmedAt: string;
 }
 
-function readCachedStatus(userId: string): PremiumStatus {
-  if (typeof window === "undefined") return FREE_PREMIUM_STATUS;
-  try {
-    const value = JSON.parse(localStore.getItem(PREMIUM_CACHE_KEY) ?? "null") as CachedPremiumStatus | null;
-    if (value?.userId !== userId || !value.isPremium || !value.expiresAt || new Date(value.expiresAt).getTime() <= Date.now()) return FREE_PREMIUM_STATUS;
-    return value;
-  } catch {
-    return FREE_PREMIUM_STATUS;
-  }
+function readCache(userId: string, now: number): PremiumStatus | null {
+  const identity = activeIdentity();
+  if (identity.kind !== "account" || identity.userId !== userId) return null;
+  const cached = readJson<CachedStatus | null>(CACHE_KEY, null, storeFor(identity));
+  if (!cached || cached.userId !== userId) return null;
+  const confirmed = Date.parse(cached.confirmedAt);
+  if (!Number.isFinite(confirmed) || confirmed > now || now - confirmed > OFFLINE_CACHE_MS) return null;
+  const parsed = parsePremiumStatus(cached.status, now);
+  return parsed.isPremium ? { ...parsed, stale: true } : null;
 }
 
-function cacheStatus(userId: string, status: PremiumStatus): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStore.setItem(PREMIUM_CACHE_KEY, JSON.stringify({ ...status, userId } satisfies CachedPremiumStatus));
-  } catch {
-    // Online status remains authoritative when storage is unavailable.
-  }
+function writeCache(userId: string, status: PremiumStatus): void {
+  const identity = activeIdentity();
+  if (identity.kind !== "account" || identity.userId !== userId) return;
+  writeJson(CACHE_KEY, { userId, status, confirmedAt: new Date().toISOString() } satisfies CachedStatus, storeFor(identity));
 }
 
-export async function fetchPremiumStatus(): Promise<PremiumStatus> {
-  const user = await getCurrentUser();
-  const token = await getAccessToken();
-  if (!user || !token) return FREE_PREMIUM_STATUS;
+export type StatusFetcher = (token: string) => Promise<Response>;
+
+const defaultFetcher: StatusFetcher = (token) =>
+  fetch("/api/premium/status", { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
+
+export async function fetchPremiumStatus(fetcher: StatusFetcher = defaultFetcher, now = Date.now()): Promise<PremiumStatus> {
+  const client = getSupabaseClient();
+  if (!client) return FREE_PREMIUM_STATUS;
+  const { data } = await client.auth.getSession();
+  const session = data.session;
+  if (!session) return FREE_PREMIUM_STATUS;
+  const userId = session.user.id.toLowerCase();
+
+  let response: Response;
   try {
-    const response = await fetch("/api/premium/status", {
-      headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
-    });
-    if (!response.ok) throw new Error("Premium status request failed");
-    const status = (await response.json()) as PremiumStatus;
-    cacheStatus(user.id, status);
-    return status;
+    response = await fetcher(session.access_token);
   } catch {
-    return readCachedStatus(user.id);
+    // No answer at all: offline or the server is unreachable.
+    return readCache(userId, now) ?? { ...FREE_PREMIUM_STATUS, unverified: true };
   }
+  if (!response.ok) {
+    // The server answered, and the answer is not "Premium".
+    return { ...FREE_PREMIUM_STATUS, unverified: response.status >= 500 };
+  }
+  const body = await response.json().catch(() => null);
+  const status = parsePremiumStatus(body, now);
+  writeCache(userId, status);
+  return status;
 }

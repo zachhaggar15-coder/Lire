@@ -110,6 +110,8 @@ interface SyncState {
   deferred: Record<string, Record<string, string>>;
   /** Items added from guest data at the reader's request, not yet uploaded. */
   adopted: Record<string, Record<string, 1>>;
+  /** Opt-in stores that were enabled at the last completed pull. */
+  optIn: string[];
   lastSuccessAt: string | null;
   saveQuota: SaveQuotaInfo | null;
   premium: boolean | null;
@@ -140,7 +142,7 @@ export interface EngineDeps {
 }
 
 function emptyState(): SyncState {
-  return { v: 2, cursor: 0, bootstrapped: false, base: {}, deferred: {}, adopted: {}, lastSuccessAt: null, saveQuota: null, premium: null };
+  return { v: 2, cursor: 0, bootstrapped: false, base: {}, deferred: {}, adopted: {}, optIn: [], lastSuccessAt: null, saveQuota: null, premium: null };
 }
 
 export function readSyncState(store: PartitionedStore): SyncState {
@@ -153,6 +155,7 @@ export function readSyncState(store: PartitionedStore): SyncState {
     base: raw.base && typeof raw.base === "object" ? raw.base : {},
     deferred: raw.deferred && typeof raw.deferred === "object" ? raw.deferred : {},
     adopted: raw.adopted && typeof raw.adopted === "object" ? raw.adopted : {},
+    optIn: Array.isArray(raw.optIn) ? raw.optIn.filter((key): key is string => typeof key === "string") : [],
     lastSuccessAt: typeof raw.lastSuccessAt === "string" ? raw.lastSuccessAt : null,
     saveQuota: raw.saveQuota ?? null,
     premium: typeof raw.premium === "boolean" ? raw.premium : null,
@@ -218,8 +221,31 @@ function decide(
 export async function syncPartition(deps: EngineDeps): Promise<SyncOutcome> {
   const { store, transport, userId } = deps;
   const state = readSyncState(store);
-  const enabled = enabledStores(store);
-  const enabledKeys = new Set(enabled.map((config) => config.key));
+  let enabled = enabledStores(store);
+  let enabledKeys = new Set(enabled.map((config) => config.key));
+
+  /**
+   * A store this account no longer syncs (imported texts after opting out)
+   * must not keep sync bases: otherwise re-enabling it later would treat the
+   * local copies as stale and delete them. Forgetting the bases means a later
+   * opt-in simply uploads what is on the device.
+   */
+  function forgetDisabledBases(): void {
+    for (const config of SYNCED_STORES) {
+      if (!enabledKeys.has(config.key) && state.base[config.key]) delete state.base[config.key];
+    }
+  }
+  forgetDisabledBases();
+
+  /** Opt-in stores enabled now that were not enabled at the last pull: their items may sit behind the cursor. */
+  function newlyEnabledOptIn(): boolean {
+    return enabled.some((config) => config.optIn && !state.optIn.includes(config.key));
+  }
+  function recordOptIn(): void {
+    state.optIn = enabled.filter((config) => config.optIn).map((config) => config.key);
+  }
+  if (newlyEnabledOptIn()) state.cursor = 0;
+
   const working = new Map<string, WorkingStore>();
   const outcome: SyncOutcome = {
     status: "success",
@@ -451,6 +477,20 @@ export async function syncPartition(deps: EngineDeps): Promise<SyncOutcome> {
   try {
     if (!deps.stillCurrent()) return aborted();
     if (!(await pullAll())) return outcome.status === "error" ? outcome : aborted();
+    // The pull may have brought a changed sync preference from another
+    // device (e.g. imported-text sync turned off): respect it before pushing.
+    enabled = enabledStores(store);
+    enabledKeys = new Set(enabled.map((config) => config.key));
+    forgetDisabledBases();
+    working.clear();
+    if (newlyEnabledOptIn()) {
+      // Items of a store that just became enabled were skipped by the pull
+      // above; list everything once so none are missed.
+      state.cursor = 0;
+      if (!(await pullAll())) return outcome.status === "error" ? outcome : aborted();
+      working.clear();
+    }
+    recordOptIn();
     if (!(await pushAll())) return outcome.status === "error" ? outcome : aborted();
     if (!(await pullAll())) return outcome.status === "error" ? outcome : aborted();
 

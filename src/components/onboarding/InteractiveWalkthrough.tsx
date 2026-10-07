@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { tokenize, type Token } from "@/lib/words";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { defaultSpacedRepetitionFields } from "@/lib/spacedRepetition";
 import { useAccess } from "@/lib/access/useAccess";
-import { canSaveWord } from "@/lib/access/accessModel";
+import { canSaveNewWord } from "@/lib/access/accessModel";
 import { runWalkthroughWordAction, walkthroughAccessCopy as accessCopyFor } from "@/lib/onboarding/walkthroughSave";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildWordCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
@@ -13,7 +13,6 @@ import { ratePer100Words } from "@/lib/sessionRecord";
 import { getNextTextForReader } from "@/lib/journey/state";
 import { getJourneyText } from "@/lib/journey/ladder";
 import { saveWalkthroughStep, completeWalkthrough } from "@/lib/onboarding";
-import { trackEvent } from "@/lib/analytics/client";
 import PronounceButton from "@/components/PronounceButton";
 import CoachMark from "@/components/onboarding/CoachMark";
 import { findContainingPhraseTranslationMatch, type PhraseTranslationMatch } from "@/lib/dictionary/articleTranslation";
@@ -57,11 +56,8 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const modalRef = useModalFocus<HTMLDivElement>(true, handleSkip);
   useDismissibleHistory(true, handleSkip);
   const { context: access, ready: accessReady, authenticated } = useAccess();
-  const saveAllowed = accessReady && canSaveWord(access).allowed;
+  const saveAllowed = accessReady && canSaveNewWord(access).allowed;
 
-  useEffect(() => {
-    if (step === 0) trackEvent("onboarding_started", { surface: "walkthrough" });
-  }, [step]);
 
   function goToStep(next: number) {
     setStep(next);
@@ -112,7 +108,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
     setSaveMessage(outcome.message);
     if (outcome.kind === "saved") {
       setSavedCount((c) => c + 1);
-      trackEvent("first_word_saved", { articleId: "onboarding-demo" });
     }
     // The meaning stays visible after a preview; only a real save or an
     // existing card closes the panel.
@@ -151,7 +146,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
   const wordsRead = useMemo(() => tokenize(DEMO_SENTENCES.join(" ")).filter((t) => t.isWord).length, []);
 
   function handleSkip() {
-    trackEvent("onboarding_skipped", { atStep: step });
     completeWalkthrough();
     onSkip();
   }
@@ -308,7 +302,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
             <button
               type="button"
               onClick={() => {
-                trackEvent("intro_text_completed", {});
                 goToStep(2);
               }}
               className="ligne-pill mt-4 w-full bg-brand text-cream"
@@ -381,7 +374,6 @@ export default function InteractiveWalkthrough({ startStep, onFinish, onSkip }: 
             <button
               type="button"
               onClick={() => {
-                trackEvent("audio_played", { scope: "onboarding" });
                 goToStep(4);
               }}
               className="ligne-pill mt-4 w-full bg-brand text-cream"

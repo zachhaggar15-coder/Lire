@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { AiNotConfiguredError, translateArticleSentences } from "@/lib/ai/openai";
-import { optionalText, requirePaidAiCaller, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS } from "@/lib/ai/guard";
+import { translateArticleSentences } from "@/lib/ai/openai";
+import { optionalText, requirePaidAiCaller, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
 
 /** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI, and translateArticleSentences now retries up to 3 times internally — sized to cover 3 back-to-back 45s attempts with headroom. */
 export const maxDuration = 150;
 
-const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable fluent translation.";
 
 function isNumberArray(v: unknown): v is number[] {
   return Array.isArray(v) && v.every((x) => typeof x === "number" && Number.isInteger(x));
@@ -19,7 +18,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
   const { sentences, paragraphBreakBeforeIndex, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
@@ -48,16 +47,10 @@ export async function POST(request: Request) {
       sentences: sentences as string[],
       paragraphBreakBeforeIndex,
       articleTitle: optionalText(articleTitle, MAX_TITLE_CHARS),
-      level: optionalText(level, 80) ?? "A2/B1 French learner",
+      level: learnerLevel(level),
     });
     return NextResponse.json(result);
   } catch (err) {
-    if (err instanceof AiNotConfiguredError) {
-      return NextResponse.json({ error: NOT_CONFIGURED_MESSAGE, code: "not_configured" }, { status: 503 });
-    }
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : "AI article translation failed." },
-      { status: 502 }
-    );
+    return aiFailureResponse(err);
   }
 }

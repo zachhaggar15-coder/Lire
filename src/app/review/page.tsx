@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
@@ -15,8 +14,6 @@ import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { canSpeak, speakFrench } from "@/lib/speech";
 import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
-import { trackEvent } from "@/lib/analytics/client";
-import { updateValidationState } from "@/lib/validation/state";
 import { triggerHaptic } from "@/lib/haptics";
 import AppIcon from "@/components/AppIcon";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -187,32 +184,15 @@ function ReviewPageContent() {
         : phraseSessionTotal || sessionPhraseQueue.length;
     if (cardCount <= 0) return;
     reviewSessionStarted.current = true;
-    trackEvent("review_session_started", {
-      mode: reviewMode,
-      cardCount,
-      articleFiltered: !!articleFilter,
-    });
   }, [articleFilter, phraseSessionTotal, ready, reviewMode, reviewStarted, sessionPhraseQueue.length, wordQueue.length, wordSessionTotal]);
 
   function visibleWords(allWords: SavedWord[]): SavedWord[] {
     return articleFilter ? allWords.filter((word) => word.sourceTextTitle === articleFilter) : allWords;
   }
 
-  function completeReviewSession(mode: "words" | "phrases", totalCards: number, correctCards: number) {
+  function completeReviewSession(_mode: "words" | "phrases", totalCards: number, _correctCards: number) {
     if (reviewSessionCompleted.current || totalCards <= 0) return;
     reviewSessionCompleted.current = true;
-    const completedAt = new Date().toISOString();
-    updateValidationState((state) => ({
-      ...state,
-      firstReviewCompletedAt: state.firstReviewCompletedAt ?? completedAt,
-      totalReviewsCompleted: state.totalReviewsCompleted + 1,
-    }));
-    trackEvent("review_session_completed", {
-      mode,
-      totalCards,
-      correctCards,
-      articleFiltered: !!articleFilter,
-    });
   }
 
   function startWordReview() {
@@ -258,14 +238,6 @@ function ReviewPageContent() {
       missed: score.missed + (correct ? 0 : 1),
     };
     setCardFeedback(correct ? "correct" : "learning");
-    trackEvent("review_answer_submitted", {
-      mode: "words",
-      correct,
-      grade,
-      cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
-      totalCards: wordSessionTotal || wordQueue.length,
-      articleFiltered: !!articleFilter,
-    });
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
       const reviewed = recordReviewResult(current.word, correct ? "correct" : "incorrect");
@@ -349,14 +321,6 @@ function ReviewPageContent() {
       total: phraseScore.current.total + 1,
     };
     setCardFeedback(correct ? "correct" : "learning");
-    trackEvent("review_answer_submitted", {
-      mode: "phrases",
-      correct,
-      grade,
-      cardIndex: Math.min(phraseScore.current.total, Math.max(1, phraseSessionTotal)),
-      totalCards: phraseSessionTotal || sessionPhraseQueue.length,
-      articleFiltered: !!articleFilter,
-    });
 
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
@@ -1112,9 +1076,5 @@ function PhraseReviewCard({
 }
 
 export default function ReviewPage() {
-  return (
-    <PremiumRouteGate feature="review" loadingVariant="review">
-      <ReviewPageContent />
-    </PremiumRouteGate>
-  );
+  return <ReviewPageContent />;
 }

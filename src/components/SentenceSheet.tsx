@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { SentenceExplanation } from "@/lib/ai/types";
 import { getSentenceExplanation } from "@/lib/ai/client";
-import { canUseAIExplanation } from "@/lib/access/accessModel";
+import { canUseAI } from "@/lib/access/accessModel";
 import { useAccess } from "@/lib/access/useAccess";
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
@@ -45,7 +46,7 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
   // The reader-invoked explanation is Premium; the sentence text itself and
   // its natural translation are not, so the sheet stays useful without it.
   const { context: access } = useAccess();
-  const aiAllowed = canUseAIExplanation(access).allowed;
+  const aiAllowed = canUseAI(access).allowed;
 
   async function handleAskAi() {
     if (!state || !aiAllowed) return;
@@ -96,12 +97,26 @@ export default function SentenceSheet({ state, articleTitle, onClose, onAiReques
 
         <div className="mt-4">
           {aiAllowed && aiState === "idle" && (
-            <button
-              onClick={handleAskAi}
+            <>
+              <button
+                onClick={handleAskAi}
                 className="min-h-12 rounded-full bg-cream-dark px-4 py-2.5 text-sm font-semibold text-ink"
-            >
-              Explain sentence
-            </button>
+              >
+                Explain with AI
+              </button>
+              <p className="mt-1 text-[11px] leading-snug text-ink-muted">
+                Sends this sentence and the ones either side of it to OpenAI. AI can make mistakes.
+              </p>
+            </>
+          )}
+          {!aiAllowed && (
+            <p className="text-xs leading-relaxed text-ink-muted">
+              AI explanations of whole sentences are part of{" "}
+              <Link href="/premium" className="font-semibold text-brand underline underline-offset-2">
+                Premium
+              </Link>
+              .
+            </p>
           )}
           {aiState === "loading" && (
             <button

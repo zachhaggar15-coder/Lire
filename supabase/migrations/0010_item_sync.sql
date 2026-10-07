@@ -593,8 +593,12 @@ $$;
 -- ---------------------------------------------------------------------------
 
 /**
- * Removes every cloud copy in one store (tombstoning each item, which clears
- * its data). Used when a reader turns off imported-text sync.
+ * Removes every cloud copy in one opt-in store (imported texts) when the
+ * reader turns its sync off. Rows are deleted outright rather than
+ * tombstoned: a tombstone would tell the reader's OTHER devices to delete
+ * their local copies, and turning sync off must never delete anyone's local
+ * data. Clients forget their sync bases for a store they no longer sync (see
+ * engine.ts), so a later opt-in uploads local copies afresh.
  */
 create or replace function public.sorlio_sync_remove_store(p_expected_user uuid, p_store text)
 returns jsonb
@@ -604,29 +608,18 @@ set search_path = public, pg_temp
 as $$
 declare
   v_uid uuid := public.sorlio_sync_caller(p_expected_user);
-  v_state public.sorlio_sync_state;
-  v_rev bigint;
-  v_item record;
-  v_count integer := 0;
+  v_count integer;
 begin
-  if not exists (select 1 from public.sorlio_sync_stores where store_key = p_store) then
-    raise exception 'unknown_store' using errcode = '22023';
+  if not exists (select 1 from public.sorlio_sync_stores where store_key = p_store and not legacy_auto_import) then
+    raise exception 'not_opt_in_store' using errcode = '22023';
   end if;
-  v_state := public.sorlio_sync_lock_state(v_uid);
-  v_rev := v_state.last_rev;
-  for v_item in select item_id from public.sorlio_sync_items
-    where user_id = v_uid and store_key = p_store and not deleted order by item_id
-  loop
-    v_rev := v_rev + 1;
-    update public.sorlio_sync_items set deleted = true, data = null, rev = v_rev, updated_at = now()
-      where user_id = v_uid and store_key = p_store and item_id = v_item.item_id;
-    v_count := v_count + 1;
-  end loop;
+  perform public.sorlio_sync_lock_state(v_uid);
+  delete from public.sorlio_sync_items where user_id = v_uid and store_key = p_store;
+  get diagnostics v_count = row_count;
   -- Old-format copies of the same store go too.
   delete from public.sorlio_user_data
     where user_id = v_uid and store_key in (p_store, '__sync_meta__:' || p_store);
-  update public.sorlio_sync_state set last_rev = v_rev where user_id = v_uid;
-  return jsonb_build_object('removed', v_count, 'last_rev', v_rev);
+  return jsonb_build_object('removed', v_count);
 end;
 $$;
 

@@ -21,7 +21,7 @@ import { useModalPresence } from "@/lib/modalPresence";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { triggerHaptic } from "@/lib/haptics";
 import { useAccess } from "@/lib/access/useAccess";
-import { canSaveWord } from "@/lib/access/accessModel";
+import { canSaveNewWord } from "@/lib/access/accessModel";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -102,7 +102,7 @@ export default function LessonCompleteScreen({
   levelLabel,
 }: LessonCompleteScreenProps) {
   const { context: access } = useAccess();
-  const saveAllowed = canSaveWord(access).allowed;
+  const saveAllowed = canSaveNewWord(access).allowed;
   useModalPresence(true);
   // This is the app's most-seen full-screen overlay — it needs the same
   // focus trap / background-inert / Escape-to-leave treatment every

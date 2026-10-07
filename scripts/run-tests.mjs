@@ -29,7 +29,6 @@ export const SUITES = [
   "test-meaning-generalisation.mjs",
   "test-learner-meaning.mjs",
   "test-translation-alignment.mjs",
-  "test-validation-logic.mjs",
   "test-dictionary-accuracy.mjs",
   "test-practice-exercises.mjs",
   "test-session-record.mjs",
@@ -42,13 +41,10 @@ export const SUITES = [
   "test-paraphrase-session-integration.mjs",
   "test-onboarding-walkthrough.mjs",
   "test-closed-test-update-1.mjs",
-  "test-analytics-consent.mjs",
-  "test-free-daily-access.mjs",
   "test-saved-word-review-flow.mjs",
   "test-security-regressions.mjs",
   "test-account-auth.mjs",
   "test-ai-cost-controls.mjs",
-  "test-closed-test-premium.mjs",
   "test-access-model.mjs",
   "test-fullscreen-layout-regression.mjs",
   "test-practice-corpus-coverage.mjs",
@@ -57,6 +53,8 @@ export const SUITES = [
   "test-account-isolation.mjs",
   "test-sync-engine.mjs",
   "test-persistence-failures.mjs",
+  "test-billing.mjs",
+  "test-account-deletion.mjs",
 ];
 
 const filters = process.argv.slice(2);

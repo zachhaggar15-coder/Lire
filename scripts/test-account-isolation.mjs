@@ -156,7 +156,7 @@ await t.section("A's deletions never reach B's server data; A's data never uploa
       push: (u, ops, day) => h.rpc(B, "sorlio_sync_push", { p_expected_user: u, p_ops: ops, p_day: day }),
     },
     stillCurrent: () => true,
-    today: () => "2026-10-06",
+    today: () => new Date().toISOString().slice(0, 10),
   });
   t.check("B's sync succeeds", out.status === "success", JSON.stringify(out));
   const { rows } = await h.db.query("select item_id, deleted from public.sorlio_sync_items where user_id = $1", [B]);
@@ -235,7 +235,7 @@ await t.section("adopted words upload with the carry-over allowance, not the dai
       push: (u, ops, day) => h.rpc(A, "sorlio_sync_push", { p_expected_user: u, p_ops: ops, p_day: day }),
     },
     stillCurrent: () => true,
-    today: () => "2026-10-06",
+    today: () => new Date().toISOString().slice(0, 10),
   });
   const { rows } = await h.db.query("select count(*)::int n from public.sorlio_sync_items where user_id = $1 and store_key = $2", [A, WORDS]);
   t.check("all 12 adopted words synced for a free account", out.status === "success" && rows[0].n === 12, JSON.stringify(out));

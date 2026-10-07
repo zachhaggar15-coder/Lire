@@ -10,6 +10,8 @@ import { exerciseGlossFor } from "@/lib/practice/exerciseGloss";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { naturalSentenceTranslation } from "@/lib/practice/sentenceTranslation";
+import { useAccess } from "@/lib/access/useAccess";
+import { canUse } from "@/lib/access/accessModel";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
 import type { MeaningInferenceExercise } from "@/lib/practice/meaningInference";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
@@ -57,6 +59,10 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   const paraphraseStartedRef = useRef(false);
   const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
   useDismissibleHistory(true, onClose);
+  // The AI paraphrase activity is Premium, and never generated from imported
+  // (private) text — opening practice must not send that text anywhere.
+  const { context: access, ready: accessReady } = useAccess();
+  const aiPracticeAllowed = accessReady && canUse(access, "aiPractice").allowed && !text.id.startsWith("custom-");
 
   useEffect(() => {
     mountedRef.current = true;
@@ -66,8 +72,13 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   }, []);
 
   useEffect(() => {
+    if (!accessReady) return;
     if (paraphraseStartedRef.current) return;
     paraphraseStartedRef.current = true;
+    if (!aiPracticeAllowed) {
+      setParaphraseChecked(true);
+      return;
+    }
     // Paraphrase generation is explicitly a nice-to-have addition on top of
     // the reconstruction/cloze activities that are already ready and
     // showing — nothing here, sync or async, may ever be allowed to crash
@@ -94,9 +105,9 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
     } catch {
       setParaphraseChecked(true);
     }
-    // Deliberately mount-only: this is a one-shot addition per practice session, not something that re-runs as activities change.
+    // One-shot per practice session, once entitlement is known; not re-run as activities change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [accessReady]);
 
   const activity = activities[index];
 

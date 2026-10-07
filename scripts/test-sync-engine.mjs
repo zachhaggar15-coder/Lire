@@ -21,6 +21,8 @@ const B = "bbbbbbbb-0000-4000-8000-000000000002";
 const WORDS = "lire.savedWords.v1";
 const KNOWN = "lire.knownWords.v1";
 const SETTINGS = "lire.settings.v1";
+// The server counts the free quota by its UTC calendar day.
+const TODAY = new Date().toISOString().slice(0, 10);
 
 function partitionStore(control, userId) {
   const prefix = `sorlio.v2:acct.${userId}:`;
@@ -86,7 +88,7 @@ function device(h, userId, options = {}) {
     words() {
       return (dev.read(WORDS) ?? []).map((w) => w.word).sort();
     },
-    sync(day = "2026-10-06") {
+    sync(day = TODAY) {
       return syncPartition({
         userId,
         store,
@@ -481,19 +483,19 @@ await t.section("free accounts: server enforces five new saves per day", async (
   const d1 = device(h, A);
   // First sync uploads pre-existing data under the one-time carry-over
   // allowance (tested separately); today's NEW saves come after it.
-  await d1.sync("2026-10-06");
+  await d1.sync(TODAY);
   d1.write(WORDS, ["un", "deux", "trois", "quatre", "cinq", "six", "sept"].map((w) => word(w)));
-  const r = await d1.sync("2026-10-06");
+  const r = await d1.sync(TODAY);
   t.check("outcome is partial with save_quota", r.status === "partial" && r.rejected.save_quota === 2, JSON.stringify(r));
   t.check("message explains the deferral", /tomorrow/.test(r.message ?? ""));
   t.check("exactly five reached the server", (await serverItems(h, A, WORDS)).length === 5);
   t.check("all seven kept locally", d1.words().length === 7);
   t.check("quota reported", r.saveQuota?.used === 5 && r.saveQuota?.limit === 5, JSON.stringify(r.saveQuota));
-  const again = await d1.sync("2026-10-06");
+  const again = await d1.sync(TODAY);
   t.check("same day: deferred words are not retried", (await serverItems(h, A, WORDS)).length === 5 && again.rejected.save_quota === undefined);
   // Edits and deletes of existing words are not limited.
   d1.write(WORDS, d1.read(WORDS).map((w) => (w.word === "un" ? { ...w, reviewCount: 1 } : w)).filter((w) => w.word !== "deux"));
-  await d1.sync("2026-10-06");
+  await d1.sync(TODAY);
   const rows = await serverItems(h, A, WORDS);
   t.check("review of existing word synced despite quota", rows.find((x) => x.item_id === "un")?.data.reviewCount === 1);
   t.check("deletion synced despite quota", rows.find((x) => x.item_id === "deux")?.deleted === true);
@@ -613,8 +615,41 @@ await t.section("legacy rows: imported once, own tombstones honoured, opt-in sto
   t.check("opting out removes cloud copies (new and legacy)", removed.removed === 1);
   const { rows: legacyLeft } = await h.db.query("select count(*)::int as n from public.sorlio_user_data where user_id = $1 and store_key like '%customTexts%'", [A]);
   t.check("legacy imported-text copy deleted on opt-out", legacyLeft[0].n === 0);
-  const tomb = await serverItems(h, A, "lire.customTexts.v1");
-  t.check("tombstone keeps no text", tomb.every((x) => x.deleted && x.data === null));
+  t.check("no rows (not even tombstones) remain", (await serverItems(h, A, "lire.customTexts.v1")).length === 0);
+  let refused = false;
+  try {
+    await h.rpc(A, "sorlio_sync_remove_store", { p_expected_user: A, p_store: "lire.savedWords.v1" });
+  } catch {
+    refused = true;
+  }
+  t.check("store removal is limited to opt-in stores", refused);
+});
+
+await t.section("turning imported-text sync off never deletes local copies on any device", async () => {
+  const h = await createDatabase();
+  await h.addUser(A);
+  await grantPremium(h, A);
+  const d1 = device(h, A);
+  const d2 = device(h, A);
+  const text = { id: "custom-1", title: "Journal", body: "privé" };
+  d1.write("lire.syncPreferences.v1", { importedTexts: true });
+  d1.write("lire.customTexts.v1", [text]);
+  await d1.sync();
+  await d2.sync();
+  t.check("second device received the text", (d2.read("lire.customTexts.v1") ?? []).length === 1);
+  // Device 1 turns sync off: preference first, then cloud copies removed.
+  d1.write("lire.syncPreferences.v1", { importedTexts: false });
+  await d1.sync();
+  await h.rpc(A, "sorlio_sync_remove_store", { p_expected_user: A, p_store: "lire.customTexts.v1" });
+  await d2.sync();
+  t.check("device 1 keeps its local copy", (d1.read("lire.customTexts.v1") ?? []).length === 1);
+  t.check("device 2 keeps its local copy", (d2.read("lire.customTexts.v1") ?? []).length === 1);
+  t.check("cloud copy gone", (await serverItems(h, A, "lire.customTexts.v1")).length === 0);
+  // Turning it back on later re-uploads rather than deleting.
+  d2.write("lire.syncPreferences.v1", { importedTexts: true });
+  await d2.sync();
+  t.check("re-enabling uploads again", (await serverItems(h, A, "lire.customTexts.v1")).filter((r) => !r.deleted).length === 1);
+  t.check("and keeps local", (d2.read("lire.customTexts.v1") ?? []).length === 1);
 });
 
 await t.section("imported texts only sync when the account opts in", async () => {

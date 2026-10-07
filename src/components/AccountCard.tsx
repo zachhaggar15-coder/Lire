@@ -8,6 +8,8 @@ import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import DeleteAccountDialog from "@/components/DeleteAccountDialog";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import SignOutDialog from "@/components/SignOutDialog";
+import SubscriptionSummary from "@/components/SubscriptionSummary";
+import AccountSyncOptions from "@/components/AccountSyncOptions";
 
 /**
  * Settings card for cross-device sync and the account behind it.
@@ -105,6 +107,9 @@ export default function AccountCard() {
             </button>
           </div>
 
+          <SubscriptionSummary />
+          <AccountSyncOptions />
+
           {/* Kept below a divider and styled destructively so it reads as a
               different class of action from the two above it. */}
           <div className="mt-4 border-t border-cream-fill pt-3">
@@ -120,8 +125,8 @@ export default function AccountCard() {
         <>
           <p className="font-semibold text-ink">Sync your progress</p>
           <p className="mt-0.5 text-sm text-ink-muted">
-            Keep your saved words, reviews and progress available across devices. Sorlio works without an account —
-            signing in only adds sync and lets you restore Premium.
+            Keep your saved words, reviews and progress on all your devices. Sorlio works fully without an account —
+            signing in adds sync, and is needed for Premium.
           </p>
           <div className="mt-3">
             <GoogleSignInButton onClick={handleSignIn} disabled={signingIn} busy={signingIn} />

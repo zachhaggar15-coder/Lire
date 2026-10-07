@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -190,9 +189,5 @@ function ImportPageContent() {
 }
 
 export default function ImportPage() {
-  return (
-    <PremiumRouteGate feature="importText">
-      <ImportPageContent />
-    </PremiumRouteGate>
-  );
+  return <ImportPageContent />;
 }

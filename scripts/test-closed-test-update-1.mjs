@@ -40,32 +40,30 @@ function entry(word) {
   };
 }
 
-console.log("--- Onboarding: guest ---");
+console.log("--- Onboarding: guest (free tier, 5 new saves a day) ---");
 {
   clearWords();
-  const ctx = accessContext(accessTier(false, false));
+  const ctx = accessContext(accessTier(false, false), 0);
   check("guest tier is guest", ctx.tier === "guest");
-  let built = 0;
-  const out = runWalkthroughWordAction(true, ctx, false, () => (built++, entry("chat")));
-  check("guest gets a preview, not a save", out.kind === "preview");
-  check("the entry is never even built for a guest", built === 0);
-  check("no saved-word state is created", getSavedWords().length === 0);
-  check("preview says Premium unlocks saving and Review", /Premium/.test(out.message) && /review/i.test(out.message));
-  check("preview says nothing was saved", /nothing was saved/.test(out.message));
-  check("preview never claims success", !/^Saved/.test(out.message));
-  check("guest copy does not claim saving is available", /require Premium/.test(walkthroughAccessCopy(true, ctx, false)));
+  const out = runWalkthroughWordAction(true, ctx, false, () => entry("chat"));
+  check("guest with allowance saves for real", out.kind === "saved");
+  check("the word is really stored", getSavedWords().some((w) => w.word === "chat"));
+  check("guest copy states the real free limit", /5 new words a day/.test(walkthroughAccessCopy(true, ctx, false)));
 }
 
-console.log("--- Onboarding: signed-in free ---");
+console.log("--- Onboarding: free tier at the daily limit ---");
 {
   clearWords();
-  const ctx = accessContext(accessTier(true, false));
+  const ctx = accessContext(accessTier(true, false), 5);
   check("authenticated non-subscriber is free, not premium", ctx.tier === "free");
-  const out = runWalkthroughWordAction(true, ctx, true, () => entry("chat"));
-  check("free user gets a preview", out.kind === "preview");
-  check("free user nothing persisted", getSavedWords().length === 0);
-  check("free copy mentions the free account", /free account/.test(out.message));
-  check("free copy matches real access", /Premium features/.test(walkthroughAccessCopy(true, ctx, true)));
+  let built = 0;
+  const out = runWalkthroughWordAction(true, ctx, true, () => (built++, entry("chat")));
+  check("at the limit the step is a preview", out.kind === "preview");
+  check("the entry is never even built at the limit", built === 0);
+  check("nothing persisted", getSavedWords().length === 0);
+  check("preview says nothing was saved", /Nothing was saved/.test(out.message));
+  check("preview never claims success", !/^Saved/.test(out.message));
+  check("preview says Review still works", /review every word/i.test(walkthroughAccessCopy(true, ctx, true)));
 }
 
 console.log("--- Onboarding: unresolved access never saves ---");
@@ -86,7 +84,7 @@ console.log("--- Onboarding: genuine Premium ---");
   check("the word is in the real saved-word store", getSavedWords().some((w) => w.word === "chat" && w.status === "learning"));
   const again = runWalkthroughWordAction(true, ctx, true, () => entry("chat"));
   check("saving twice reports existing, no duplicate", again.kind === "exists" && getSavedWords().length === 1);
-  check("premium copy offers real saving", /real word to Review/.test(walkthroughAccessCopy(true, ctx, true)));
+  check("premium copy offers real saving", /real word to Review/.test(walkthroughAccessCopy(true, ctx, true)) && /unlimited/i.test(walkthroughAccessCopy(true, ctx, true)));
   check("a premium flag without a session is still guest (no stale entitlement)", accessTier(false, true) === "guest");
   clearWords();
 }

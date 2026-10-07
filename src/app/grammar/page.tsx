@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useRef, useState } from "react";
 import AppBar from "@/components/AppBar";
@@ -33,8 +32,6 @@ import {
   type VerbTense,
 } from "@/lib/grammar";
 import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
-import { trackEvent } from "@/lib/analytics/client";
-import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
 
@@ -137,12 +134,6 @@ function GrammarPageContent() {
 
   function openPractice() {
     grammarSessionCompleted.current = false;
-    trackEvent("grammar_session_started", {
-      lessonId: currentLesson.id,
-      lessonLevel: currentLesson.level,
-      domain: currentLesson.domain,
-      questionCount: questions.length,
-    });
     setTab("practice");
   }
 
@@ -181,21 +172,7 @@ function GrammarPageContent() {
       // went (even 0/5 correct still read as 70% "mastery").
       markGrammarLessonComplete(currentQuestion.lessonId);
       evaluateAndUnlockAchievements();
-      if (!grammarSessionCompleted.current) {
-        grammarSessionCompleted.current = true;
-        const completedAt = new Date().toISOString();
-        updateValidationState((state) => ({
-          ...state,
-          totalGrammarSessions: state.totalGrammarSessions + 1,
-        }));
-        trackEvent("grammar_session_completed", {
-          lessonId: currentQuestion.lessonId,
-          domain: currentLesson.domain,
-          correctAnswers: sessionCorrect,
-          totalQuestions: sessionAnswered,
-          completedAt,
-        });
-      }
+      grammarSessionCompleted.current = true;
       setTab("learn");
       setQuestionIndex(0);
       setSelectedAnswer(null);
@@ -646,9 +623,5 @@ function StructureReferencePanel({
 }
 
 export default function GrammarPage() {
-  return (
-    <PremiumRouteGate feature="grammar">
-      <GrammarPageContent />
-    </PremiumRouteGate>
-  );
+  return <GrammarPageContent />;
 }
