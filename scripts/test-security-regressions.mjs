@@ -107,5 +107,38 @@ const rssRoute = read("src/app/api/rss-texts/route.ts");
 check("every RSS response is clamped to the request limit", /clampRssSelectionToLimit\(selected, limit\)/.test(rssRoute));
 check("live responses cannot be padded with bundled fallback texts", !/backfillIfShort/.test(rssRoute));
 
+console.log("--- Security headers ---");
+{
+  const previous = { env: process.env.NODE_ENV, supabase: process.env.NEXT_PUBLIC_SUPABASE_URL };
+  process.env.NODE_ENV = "production";
+  process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example-project.supabase.co";
+  const config = (await import("../next.config.mjs")).default;
+  const rules = await config.headers();
+  if (previous.env === undefined) delete process.env.NODE_ENV;
+  else process.env.NODE_ENV = previous.env;
+  if (previous.supabase === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+  else process.env.NEXT_PUBLIC_SUPABASE_URL = previous.supabase;
+  const all = rules.find((rule) => rule.source === "/:path*");
+  const header = (name) => all?.headers.find((h) => h.key.toLowerCase() === name)?.value ?? "";
+  const csp = Object.fromEntries(
+    header("content-security-policy")
+      .split(";")
+      .map((directive) => directive.trim().split(/\s+/))
+      .map(([name, ...values]) => [name, values.join(" ")])
+  );
+  check("headers apply to every path", Boolean(all));
+  check("scripts only from this origin, no eval in production", csp["script-src"] === "'self' 'unsafe-inline'");
+  check("browser connects only to this origin and the Supabase project", csp["connect-src"] === "'self' https://example-project.supabase.co");
+  check(
+    "no framing, plugins, or base/form hijacking",
+    csp["frame-ancestors"] === "'none'" && csp["object-src"] === "'none'" && csp["base-uri"] === "'self'" && csp["form-action"] === "'self'"
+  );
+  check(
+    "nosniff, DENY framing and HSTS are set",
+    header("x-content-type-options") === "nosniff" && header("x-frame-options") === "DENY" && /max-age=\d{8}/.test(header("strict-transport-security"))
+  );
+  check("payment stays allowed for Play Billing", /payment=\(self\)/.test(header("permissions-policy")));
+}
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exitCode = failed ? 1 : 0;
