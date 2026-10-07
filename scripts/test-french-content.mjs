@@ -83,6 +83,47 @@ for (const q of grammar.GRAMMAR_QUESTIONS) {
   if (!q.choices.includes(q.answer)) problems.push(`${q.id}: the answer is not one of the choices`);
 }
 
+// Semantic regressions from the independent French QA (closure matrix
+// G04-G14, RC13). Each guards a specific wrong rule or answer key that an
+// accent check cannot see. A qualified reviewer still signs the content off.
+const allLessons = [...grammar.VERB_LESSONS, ...grammar.STRUCTURE_LESSONS];
+const lessonText = (id) => {
+  const lesson = allLessons.find((l) => l.id === id);
+  return lesson ? [lesson.explanation, lesson.commonMistake, lesson.pattern ?? lesson.corePattern].join(" ") : "";
+};
+const question = (id) => grammar.GRAMMAR_QUESTIONS.find((q) => q.id === id);
+const semantic = [
+  ["G05 -re stem drops -re, not -e", !/vendre drop the -e/.test(lessonText("present-ir-re")) && /drop -re/.test(lessonText("present-ir-re"))],
+  ["G06 imparfait teaches the être exception", /être, whose stem is ét-/.test(lessonText("imparfait"))],
+  ["G06 future teaches -re verbs drop final e", /drop their final e/.test(lessonText("future-simple"))],
+  ["G07 que alone does not decide the mood", !/only que before the clause signals subjunctive/.test(lessonText("subjonctif-present-formation"))],
+  ["G08 allions uses all-, not aill-", !/stem aill-, with the regular nous/.test(question("subjonctif-present-irregulars-4")?.explanation ?? "") && /all-/.test(question("subjonctif-present-irregulars-4")?.explanation ?? "")],
+  ["G09 participle vs agreeing adjective separated", /never agrees/.test(lessonText("participe-present-gerondif")) && /étant/.test(lessonText("participe-present-gerondif"))],
+  ["G10 si rule limited to conditions", /si means whether/.test(lessonText("si-clauses-real"))],
+  ["G10 penser de not limited to questions", !/only used when asking/.test(lessonText("preposition-verb-pairings"))],
+  ["G10 dont: only the replaced de", !/anywhere else in the clause/.test(lessonText("relative-pronoun-dont"))],
+  ["G14 object pronouns before infinitive / after in commands", /je vais le lire/.test(lessonText("object-pronouns-cod")) && /lis-le/.test(lessonText("object-pronouns-cod"))],
+  ["G14 passive vs state", /la porte est fermée/.test(lessonText("voix-passive"))],
+  ["G14 reflexive agreement exception", /s'est lavé les mains/.test(lessonText("passe-compose"))],
+  ["G13 reported speech: still-true present allowed", /still true/.test(lessonText("reported-speech"))],
+  ["G04 jacket uses celle de, not la sienne de", question("demonstratives-and-possessives-3")?.answer === "celle"],
+  ["G12 si + present: no valid alternative offered", !question("si-clauses-real-2")?.choices.includes("peux")],
+  ["G12 dès que: no valid alternative offered", !question("futur-anterieur-4")?.choices.includes("feront")],
+  ["G12 adverb: no valid alternative offered", !question("adverb-placement-3")?.choices.includes("Il a poliment répondu.")],
+  ["G12 relative: no valid alternative offered", !question("relative-pronouns-advanced-4")?.choices.includes("avec lesquels")],
+  ["RC13 nous avons voyagé", /nous avons voyagé/.test(question("relative-pronouns-advanced-4")?.sentence ?? "")],
+  ["G13 reported speech questions: no valid alternative offered", !question("reported-speech-1")?.choices.includes("est fatigué") && !question("reported-speech-2")?.choices.includes("arrivera")],
+];
+for (const [label, ok] of semantic) {
+  checked += 1;
+  if (!ok) problems.push(`semantic: ${label}`);
+}
+// No answer key may be offered twice, and every question has exactly one key.
+for (const q of grammar.GRAMMAR_QUESTIONS) {
+  checked += 1;
+  if (new Set(q.choices).size !== q.choices.length) problems.push(`${q.id}: duplicate choices`);
+}
+
 failures = problems.length;
 if (failures) {
   console.error(problems.join("\n"));
