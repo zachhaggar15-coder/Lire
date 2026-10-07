@@ -31,6 +31,7 @@ export const SUITES = [
   "test-translation-alignment.mjs",
   "test-dictionary-accuracy.mjs",
   "test-practice-exercises.mjs",
+  "test-french-content.mjs",
   "test-session-record.mjs",
   "test-personal-challenge.mjs",
   "test-reading-performance.mjs",

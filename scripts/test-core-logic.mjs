@@ -1488,7 +1488,7 @@ console.log("\n--- Grammar conjugation section ---");
   clearGrammarStores();
   check("verb lessons provide a complete first grammar path", getVerbLessons().length >= 8);
   check("all verb lessons have five-question practice sets", getVerbLessons().every((lesson) => practiceSetForLesson(lesson.id).length === 5));
-  check("tense labels are learner-friendly", tenseLabel("passe-compose") === "Passe compose" && tenseLabel("futur-simple") === "Future simple");
+  check("tense labels are learner-friendly and correctly spelled", tenseLabel("passe-compose") === "Passé composé" && tenseLabel("passe-simple") === "Passé simple" && tenseLabel("futur-simple") === "Future simple");
 }
 {
   const question = questionsForLesson("passe-compose")[0];
@@ -1523,7 +1523,7 @@ console.log("\n--- Grammar conjugation section ---");
   const etre = referenceForVerb("etre");
   const accented = referenceForVerb("être");
   check("verb reference resolves common verbs", etre?.forms.present.includes("je suis"));
-  check("verb reference lookup tolerates accents", accented?.infinitive === "etre");
+  check("verb reference lookup tolerates missing accents", accented?.infinitive === "être" && etre?.infinitive === "être");
   check("reference set includes several core verbs", VERB_REFERENCES.length >= 6);
   check("lesson lookup falls back safely", getVerbLesson("missing-lesson").id === getVerbLessons()[0].id);
 }
