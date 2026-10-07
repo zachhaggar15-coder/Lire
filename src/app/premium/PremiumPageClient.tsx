@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import AppBar from "@/components/AppBar";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
@@ -35,15 +35,27 @@ export default function PremiumPageClient() {
   const { status, loading, refresh } = usePremiumStatus();
   const signedIn = activeIdentity().kind === "account";
   const [offer, setOffer] = useState<ProductOffer | null>(null);
+  // "loading" until Play answers; "missing" when it returned no product
+  // details, in which case checkout is not offered (we never charge against a
+  // price we could not show) and the reader can retry.
+  const [offerState, setOfferState] = useState<"loading" | "ready" | "missing">("loading");
   const [inApp, setInApp] = useState(false);
   const [purchase, setPurchase] = useState<PurchaseState>({ phase: "idle", message: null });
   const [signingIn, setSigningIn] = useState(false);
   const [signInError, setSignInError] = useState<string | null>(null);
 
+  const refreshOffer = useCallback(() => {
+    setOfferState("loading");
+    void loadOffer().then((next) => {
+      setOffer(next);
+      setOfferState(next ? "ready" : "missing");
+    });
+  }, []);
+
   useEffect(() => {
     setInApp(billingSupported());
-    void loadOffer().then(setOffer);
-  }, []);
+    refreshOffer();
+  }, [refreshOffer]);
 
   // Inside the app, quietly finish any purchase whose confirmation was still
   // outstanding (e.g. the app closed mid-verification), once per visit.
@@ -195,10 +207,18 @@ export default function PremiumPageClient() {
           </>
         ) : inApp ? (
           <>
+            {offerState === "missing" && (
+              <div role="alert" className="mb-3 rounded-2xl bg-cream px-3 py-2 text-sm text-ink">
+                Couldn&rsquo;t load the subscription from Google Play.{" "}
+                <button type="button" onClick={refreshOffer} className="font-semibold text-brand underline underline-offset-2">
+                  Try again
+                </button>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => void subscribe()}
-              disabled={busy}
+              disabled={busy || offerState !== "ready"}
               className="min-h-12 w-full rounded-full bg-brand px-5 py-3 font-semibold text-cream disabled:opacity-60"
             >
               {purchase.phase === "requesting" ? "Opening Google Play…" : purchase.phase === "verifying" ? "Confirming…" : offer ? `Subscribe for ${offer.price}${offer.period === "month" ? " a month" : ""}` : "Subscribe with Google Play"}
