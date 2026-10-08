@@ -5,10 +5,10 @@ import Link from "next/link";
 import type { SavedWord } from "@/types";
 import { addWordToReview, clearWords, deleteWord, getSavedWords, removeWordFromReview } from "@/lib/storage";
 import { isInReview, isMastered } from "@/lib/reviewMembership";
-import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
+import { deletePhrase, getSavedPhrases, isPhraseMastered, type SavedPhrase } from "@/lib/phrases";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { formatDate, toPercent } from "@/lib/format";
+import { formatDate } from "@/lib/format";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import AppBar from "@/components/AppBar";
 import PronounceButton from "@/components/PronounceButton";
@@ -92,12 +92,6 @@ export default function WordsPage() {
     }
   }
 
-  function handlePhraseKnown(phrase: string) {
-    const result = markPhraseKnown(phrase);
-    setPhrases(result.phrases);
-    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
-  }
-
   function handlePhraseDelete(phrase: string) {
     const result = deletePhrase(phrase);
     setPhrases(result.phrases);
@@ -113,8 +107,6 @@ export default function WordsPage() {
   const q = query.trim().toLowerCase();
   const filtered = words.filter((word) => matchesFilter(word, filter) && (!q || matchesQuery(word, q)));
   const queriedPhrases = q ? phrases.filter((phrase) => matchesPhraseQuery(phrase, q)) : phrases;
-  const learningPhrases = queriedPhrases.filter((phrase) => phrase.status !== "known");
-  const knownPhrases = queriedPhrases.filter((phrase) => phrase.status === "known");
 
   return (
     <div className="ligne-screen">
@@ -209,8 +201,7 @@ export default function WordsPage() {
             <p className="mt-10 text-center text-sm text-ink-muted">No phrases match &quot;{query}&quot;.</p>
           ) : (
             <>
-              <PhraseList title="Learning" phrases={learningPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
-              <PhraseList title="Known" phrases={knownPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
+              <PhraseList title="In review" phrases={queriedPhrases} onDelete={handlePhraseDelete} />
             </>
           )}
         </div>
@@ -378,13 +369,12 @@ function WordCard({
  * change. All the same numbers are still here, just condensed to one line.
  */
 function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
-  const known = phrases.filter((phrase) => phrase.status === "known").length;
+  const mastered = phrases.filter(isPhraseMastered).length;
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
-  const progress = phrases.length === 0 ? 0 : toPercent(known / phrases.length);
   return (
     <div className="flex items-center gap-2 rounded-full border border-cream-dark bg-cream-card py-1.5 pl-4 pr-1.5">
       <p className="min-w-0 flex-1 truncate text-sm text-ink-muted">
-        <span className="font-bold text-ink">{progress}% mastery</span> · {phrases.length} saved · {known} known
+        <span className="font-bold text-ink">{phrases.length} saved</span> · {mastered} mastered
         {contexts > 0 ? ` · ${contexts} ${contexts === 1 ? "context" : "contexts"}` : ""}
       </p>
       <Link href="/review" className="ligne-pill shrink-0 bg-brand-light px-3 py-1.5 text-xs text-brand">
@@ -397,12 +387,10 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
 function PhraseList({
   title,
   phrases,
-  onKnown,
   onDelete,
 }: {
   title: string;
   phrases: SavedPhrase[];
-  onKnown: (phrase: string) => void;
   onDelete: (phrase: string) => void;
 }) {
   if (phrases.length === 0) return null;
@@ -427,6 +415,7 @@ function PhraseList({
                     </span>
                   )}
                   <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
+                  {isPhraseMastered(phrase) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Mastered</span>}
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
@@ -438,11 +427,6 @@ function PhraseList({
                 >
                   <span aria-hidden="true">x</span>
                 </button>
-                {phrase.status !== "known" && (
-                  <button type="button" onClick={() => onKnown(phrase.phrase)} className="ligne-pill bg-brand-light text-brand">
-                    Known
-                  </button>
-                )}
               </div>
             </div>
           </li>

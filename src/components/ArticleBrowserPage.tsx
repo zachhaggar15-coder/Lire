@@ -7,10 +7,11 @@ import JourneyMap from "@/components/JourneyMap";
 import type { Category, Difficulty, ReadingText } from "@/types";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
-import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
+import { cacheDefaultLiveNewsPool, cacheRssTexts, getCachedDefaultLiveNewsPool, getCachedRssTextById, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { pruneStaleRssProgress } from "@/lib/progress";
 import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
-import { getCustomTexts } from "@/lib/customTexts";
+import { getCustomTextById, getCustomTexts } from "@/lib/customTexts";
+import { getBuiltInTextById } from "@/lib/publicDomainBank";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import {
   DAILY_BANK_ARTICLE_LIMIT,
@@ -29,6 +30,7 @@ import {
 } from "@/lib/recommendation";
 import {
   getHiddenSources,
+  hasHideableSource,
   getSavedLaterIds,
   subscribeToRecommendationPreferences,
 } from "@/lib/recommendation/preferences";
@@ -248,7 +250,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const hiddenSources = new Set(getHiddenSources());
       const knownWords = getEstimatedKnownVocabulary();
       const pool = (mode === "articles" ? [...importedTexts, ...extraReadingTexts] : rssTexts).filter(
-        (text) => (!text.sourceName || !hiddenSources.has(text.sourceName)) && (mode !== "articles" || isEligibleArticleModeText(text))
+        (text) => (!hasHideableSource(text) || !hiddenSources.has(text.sourceName!)) && (mode !== "articles" || isEligibleArticleModeText(text))
       );
       const importedIds = new Set(importedTexts.map((text) => text.id));
       const ranked = rankArticles(buildScorableArticles(pool, knownWords), buildScoringContext()).filter((article) => {
@@ -260,7 +262,17 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
 
       setSections(buildSections(ranked.filter((article) => mode === "live" || !importedIds.has(article.text.id))));
       setCustomArticles(mode === "articles" ? ranked.filter((article) => importedIds.has(article.text.id)).slice(0, 8) : []);
-      setSavedLaterArticles(mode === "articles" ? ranked.filter((article) => getSavedLaterIds().includes(article.text.id)) : []);
+      if (mode === "articles") {
+        // Saved items can come from anywhere (a News article, a lesson, an
+        // import), not only today's pool, so resolve each id directly.
+        const poolById = new Map(pool.map((text) => [text.id, text]));
+        const savedTexts = getSavedLaterIds()
+          .map((id) => poolById.get(id) ?? getCustomTextById(id) ?? getCachedRssTextById(id) ?? getBuiltInTextById(id))
+          .filter((text): text is ReadingText => !!text);
+        setSavedLaterArticles(rankArticles(buildScorableArticles(savedTexts, knownWords), buildScoringContext()));
+      } else {
+        setSavedLaterArticles([]);
+      }
       setState("success");
     }
 
@@ -479,7 +491,7 @@ function LessonsContent({
   selectedLevel: Difficulty;
   onLevelChange: (level: Difficulty) => void;
 }) {
-  const hasExtraReading = customArticles.length > 0 || sections.dailyBank.length > 0 || savedLaterArticles.length > 0;
+  const hasExtraReading = customArticles.length > 0 || sections.dailyBank.length > 0;
 
   return (
     <>
@@ -488,6 +500,8 @@ function LessonsContent({
       </div>
       <JourneyMap selectedLevel={selectedLevel} onLevelChange={onLevelChange} />
       <div className="px-[22px]">
+        {/* Things the reader chose to keep: visible, not inside a collapsed panel. Nothing when empty. */}
+        <ArticleSection title="Saved for later" articles={savedLaterArticles} variant="compact" />
         <details className="mb-6 rounded-card border border-cream-dark bg-cream-card p-4">
           <summary className="cursor-pointer font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             Extra reading
@@ -504,7 +518,6 @@ function LessonsContent({
                   articles={sections.dailyBank}
                   variant="compact"
                 />
-                <ArticleSection title="Saved For Later" subtitle="Read these when you are ready." articles={savedLaterArticles} variant="compact" />
               </>
             ) : (
               <p className="mb-4 rounded-2xl bg-cream-sunken px-3 py-3 text-sm font-semibold text-ink-muted">

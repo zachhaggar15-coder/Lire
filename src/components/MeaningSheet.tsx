@@ -33,6 +33,8 @@ export interface ActiveMeaningState {
   inReview: boolean;
   /** A card exists but is not in Review: adding it back is not a new save. */
   hasCard?: boolean;
+  /** The meanings already on the word's card in Review (to offer adding a new one). */
+  cardMeanings?: string[];
   pronounReference: PronounReference | null;
   /** True while a targeted AI lookup for this tap is still in flight. */
   resolving: boolean;
@@ -53,6 +55,8 @@ interface MeaningSheetProps {
    */
   onSave?: () => void;
   onUnsave?: () => void;
+  /** Adds the meaning shown here to the word's card in Review. */
+  onAddMeaning?: (meaning: string) => void;
   onAiRequested?: () => void;
   onExplainSentence?: (sentence: string) => void;
   /** Imported text: its sentences are private and never included in reports. */
@@ -74,6 +78,7 @@ export default function MeaningSheet({
   onClose,
   onSave,
   onUnsave,
+  onAddMeaning,
   onAiRequested,
   onExplainSentence,
   privateText = false,
@@ -96,6 +101,11 @@ export default function MeaningSheet({
   const open = state !== null;
   const meaning = state?.meaning;
   const saved = state?.inReview === true;
+  const meaningHere = meaning && !meaning.abstained ? meaning.displayEnglish.trim() : "";
+  const newMeaningHere =
+    saved && meaningHere && state?.cardMeanings && !state.cardMeanings.some((m) => m.trim().toLowerCase() === meaningHere.toLowerCase())
+      ? meaningHere
+      : null;
   const isProperNoun = (meaning?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
 
   const wordFamily = meaning ? getWordFamily(meaning.lemma ?? meaning.tappedText) : null;
@@ -256,6 +266,19 @@ export default function MeaningSheet({
       </div>
 
       {saved && <p className="mt-2 text-xs font-semibold text-brand">In your review</p>}
+      {/* One card per word, not per sense: when the word means something new
+          here, say so and let the reader keep it. Never "you already know this". */}
+      {saved && newMeaningHere && (
+        <div className="mt-2 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
+          <p>
+            Your card has: <span className="font-semibold text-ink">{state?.cardMeanings?.slice(0, 2).join(", ")}</span>. Here it means:{" "}
+            <span className="font-semibold text-ink">{newMeaningHere}</span>.
+          </p>
+          <button type="button" onClick={() => onAddMeaning?.(newMeaningHere)} className="mt-1 font-semibold text-brand underline underline-offset-2">
+            Add this meaning to your card
+          </button>
+        </div>
+      )}
       {control === "close" && noMeaning && !isProperNoun && (
         <p className="mt-2 text-xs text-ink-muted">Words without a meaning here can&rsquo;t be added to review.</p>
       )}

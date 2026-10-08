@@ -30,8 +30,7 @@ const REVIEW_FEEDBACK_DELAY_MS = 760;
  * in the reader with no way back. Now correct answers only lengthen the
  * interval (spacedRepetition.ts); reaching MASTERY_STREAK earns the review
  * XP that graduating used to, and the card stays until the reader removes it.
- * Phrases still graduate (PHRASE_GRADUATE_AFTER_CORRECT_STREAK): they have no
- * reader save path, so no reader control can disagree with them.
+ * Phrases follow the same model (phrases.ts: PHRASE_MASTERY_STREAK).
  */
 
 function promptLabel(direction: ReviewDirection): string {
@@ -128,7 +127,7 @@ function ReviewPageContent() {
     // before you start, for both words and phrases; the session-length cap
     // only applies once you actually start (see startWordReview/startPhraseReview).
     const initialWordQueue = buildReviewQueue(visibleSavedWords);
-    const initialPhraseQueue = visibleSavedPhrases.filter((phrase) => phrase.status !== "known");
+    const initialPhraseQueue = visibleSavedPhrases;
     setArticleFilter(article);
     setWords(visibleSavedWords);
     setPhrases(visibleSavedPhrases);
@@ -294,7 +293,7 @@ function ReviewPageContent() {
     const nextWords = visibleWords(getSavedWords());
     const nextPhrases = articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases();
     const nextWordQueue = capToSessionLength(buildReviewQueue(nextWords));
-    const nextPhraseQueue = capToSessionLength(nextPhrases.filter((phrase) => phrase.status !== "known"));
+    const nextPhraseQueue = capToSessionLength(nextPhrases);
     setWords(nextWords);
     setPhrases(nextPhrases);
     setWordQueue(nextWordQueue);
@@ -458,7 +457,8 @@ function ReviewPageContent() {
             ) : (
               <>
                 Reviewed: {wordSessionTotal}
-                {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
+                {wordSessionTotal > 0 && ` · ${Math.max(0, wordSessionTotal - missedCount)} remembered`}
+                {missedCount > 0 && ` · ${missedCount} needed another look`}
               </>
             )}
           </p>

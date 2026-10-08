@@ -50,6 +50,15 @@ export function subscribeToRecommendationPreferences(callback: () => void): () =
   return () => window.removeEventListener(PREF_EVENT, callback);
 }
 
+/**
+ * Only a real external publisher can be preferred or hidden. Imported texts,
+ * Sorlio's own lessons and classic extracts are not "sources": hiding
+ * "Imported text" would have hidden every text the reader imported.
+ */
+export function hasHideableSource(text: { id: string; sourceName?: string | null }): boolean {
+  return text.id.startsWith("rss-") && !!text.sourceName;
+}
+
 export function getHiddenSources(): string[] {
   return readStringList(HIDDEN_SOURCES_KEY);
 }

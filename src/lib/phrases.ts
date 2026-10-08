@@ -3,8 +3,17 @@ import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 export type SavedPhraseStatus = "learning" | "known";
 
-/** How many "Knew it" grades in a row (see review/page.tsx's GRADUATE_AFTER_CORRECT_STREAK) promote a phrase to known — same bar as words. */
-export const PHRASE_GRADUATE_AFTER_CORRECT_STREAK = 3;
+/**
+ * Phrases follow the word model: a phrase stays in Review, and three "Knew it"
+ * in a row makes it Mastered (shown as information only). It used to move to
+ * a "Known" state that left Review, and a "Known" button did the same at once.
+ * "known" survives only on old data, where it reads as mastered.
+ */
+export const PHRASE_MASTERY_STREAK = 3;
+
+export function isPhraseMastered(phrase: Pick<SavedPhrase, "status" | "correctStreak">): boolean {
+  return phrase.status === "known" || phrase.correctStreak >= PHRASE_MASTERY_STREAK;
+}
 
 export interface SavedPhrase {
   phrase: string;
@@ -103,20 +112,9 @@ export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "saved
   return persist([entry, ...existing], previous);
 }
 
-/** Manual override (e.g. a "Known" button on the Words/Phrases pages) — marks known immediately, bypassing the review streak. */
-export function markPhraseKnown(phrase: string): PhrasesMutation {
-  const key = clean(phrase);
-  const now = new Date().toISOString();
-  const previous = getSavedPhrases();
-  const next = previous.map((saved) => (saved.phrase === key ? { ...saved, status: "known" as const, correctStreak: 0, updatedAt: now } : saved));
-  return persist(next, previous);
-}
-
 /**
  * Records one Review-flow grade for a phrase: a correct grade extends the
- * streak (and promotes to known once it reaches
- * PHRASE_GRADUATE_AFTER_CORRECT_STREAK), an incorrect grade resets it to 0
- * — mirrors the word-side streak in review/page.tsx's GRADUATE_AFTER_CORRECT_STREAK.
+ * streak, an incorrect one resets it. The phrase stays in Review either way.
  */
 export function recordPhraseReview(phrase: string, correct: boolean): PhrasesMutation {
   const key = clean(phrase);
@@ -124,14 +122,7 @@ export function recordPhraseReview(phrase: string, correct: boolean): PhrasesMut
   const previous = getSavedPhrases();
   const next = previous.map((saved) => {
     if (saved.phrase !== key) return saved;
-    const correctStreak = correct ? saved.correctStreak + 1 : 0;
-    const graduated = correct && correctStreak >= PHRASE_GRADUATE_AFTER_CORRECT_STREAK;
-    return {
-      ...saved,
-      correctStreak: graduated ? 0 : correctStreak,
-      status: graduated ? ("known" as const) : saved.status,
-      updatedAt: now,
-    };
+    return { ...saved, correctStreak: correct ? saved.correctStreak + 1 : 0, updatedAt: now };
   });
   return persist(next, previous);
 }

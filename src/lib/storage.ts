@@ -2,7 +2,7 @@ import type { SavedWord, WordStatus } from "@/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { findVocabularyCards, isInReview } from "@/lib/reviewMembership";
+import { findVocabularyCards, isInReview, VocabularyIndex } from "@/lib/reviewMembership";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
@@ -306,6 +306,25 @@ export interface SaveWordResult {
   created: boolean;
   /** True when an existing card that was not in Review was put back (history kept). */
   reactivated: boolean;
+  /**
+   * The meaning this save added to an existing card, when the word was met
+   * again with a different meaning (e.g. "compte" as "account", then in "se
+   * rendre compte"). Sorlio keeps one card per word, not one per sense, so the
+   * new meaning is added to that card instead of being lost.
+   */
+  addedMeaning?: string | null;
+}
+
+/** The meaning shown when this entry was saved, if the card does not have it yet. */
+function newMeaningFor(card: SavedWord, entry: SavedWord): string | null {
+  const meaning = (entry.contextualMeaning ?? entry.primaryTranslation ?? "").trim();
+  if (!meaning || meaning === NOT_TRANSLATED_YET) return null;
+  const known = [card.primaryTranslation, ...card.translations].map((value) => value.trim().toLowerCase());
+  return known.includes(meaning.toLowerCase()) ? null : meaning;
+}
+
+function withMeaning(card: SavedWord, meaning: string | null): SavedWord {
+  return meaning ? { ...card, translations: [...card.translations, meaning] } : card;
 }
 
 /**
@@ -318,14 +337,23 @@ export interface SaveWordResult {
 export function addWordToReview(entry: SavedWord): SaveWordResult {
   const words = getSavedWords();
   const existing = findVocabularyCards(words, entry.word, entry.lemma);
-  if (existing.some(isInReview)) return { words, persisted: true, created: false, reactivated: false };
+  const active = existing.find((card) => isInReview(card) && card.word === entry.word) ?? existing.find(isInReview);
+  if (active) {
+    const meaning = newMeaningFor(active, entry);
+    if (!meaning) return { words, persisted: true, created: false, reactivated: false };
+    const next = words.map((card) => (card === active ? withMeaning(card, meaning) : card));
+    // Failing to add the extra meaning leaves the card as it was, still in Review.
+    if (persist(next)) return { words, persisted: true, created: false, reactivated: false };
+    return { words: next, persisted: true, created: false, reactivated: false, addedMeaning: meaning };
+  }
 
   if (existing.length > 0) {
     const target = existing.find((card) => card.word === entry.word) ?? existing[0];
-    const next = words.map((card) => (card === target ? inReviewCard(card) : card));
+    const meaning = newMeaningFor(target, entry);
+    const next = words.map((card) => (card === target ? withMeaning(inReviewCard(card), meaning) : card));
     if (persist(next)) return { words, persisted: false, created: false, reactivated: false };
     recordActivityToday();
-    return { words: next, persisted: true, created: false, reactivated: true };
+    return { words: next, persisted: true, created: false, reactivated: true, addedMeaning: meaning };
   }
 
   const next = [inReviewCard(entry), ...words];
@@ -334,6 +362,15 @@ export function addWordToReview(entry: SavedWord): SaveWordResult {
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
   return { words: next, persisted: true, created: true, reactivated: false };
+}
+
+/** Adds a meaning to the word's card in Review (the reader met it with a new meaning). */
+export function addMeaningToWord(word: string, lemma: string | null | undefined, meaning: string): WordsMutation {
+  const previous = getSavedWords();
+  const card = new VocabularyIndex(previous).activeCard(word, lemma);
+  const trimmed = meaning.trim();
+  if (!card || !trimmed || card.translations.some((t) => t.trim().toLowerCase() === trimmed.toLowerCase())) return { ok: true, words: previous };
+  return mutation(previous.map((item) => (item === card ? withMeaning(item, trimmed) : item)), previous);
 }
 
 /**

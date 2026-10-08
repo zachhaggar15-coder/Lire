@@ -8,7 +8,7 @@ import type { AppSettings, FontSize, ReadingText, SavedWord, TextStatus, WordSta
 import { isInReview, isMastered, VocabularyIndex } from "@/lib/reviewMembership";
 import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { tokenize, tokenizeParagraphsToSentences, type SentenceGroup, type Token } from "@/lib/words";
-import { getSavedWords, removeWordFromReview } from "@/lib/storage";
+import { addMeaningToWord, getSavedWords, removeWordFromReview } from "@/lib/storage";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { deletePhrase, getSavedPhrases } from "@/lib/phrases";
 import { lookupWord } from "@/lib/dictionary/lookup";
@@ -1087,6 +1087,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       surroundingSentence: previous,
       inReview,
       hasCard: vocabulary.cards(clean, lemma).length > 0,
+      cardMeanings: vocabulary.activeCard(clean, lemma)?.translations,
       pronounReference,
       resolving: false,
       aiSuggested: shouldEscalateToAi(meaning),
@@ -1124,7 +1125,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     // The resolved contextual meaning is what the reader actually saw and
     // agreed to save, so it leads the card — a flashcard that disagrees with
     // the sheet it was saved from is worse than no card.
-    const { words: nextWords, persisted, created, reactivated } = saved.result!;
+    const { words: nextWords, persisted, created, reactivated, addedMeaning } = saved.result!;
     if (!persisted) {
       // Nothing changed: the sheet keeps offering "Add to review".
       showToast("Couldn't save — device storage is full");
@@ -1135,11 +1136,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     const nowInReview = new VocabularyIndex(nextWords).inReview(meaning.tappedText, meaning.lemma);
     setActiveWord((prev) => (prev ? { ...prev, inReview: nowInReview, hasCard: true } : prev));
     if (reactivated) {
-      showToast("Added back to review");
+      showToast(addedMeaning ? `Added back to review, with “${addedMeaning}”` : "Added back to review");
       return;
     }
     if (!created) {
-      showToast("Already in review");
+      // The word (or another form of it) is already in Review. Say that, and
+      // never claim the learner knows this meaning: one card holds every meaning.
+      showToast(addedMeaning ? `This word is already in Review — added “${addedMeaning}” to its meanings` : "This word is already in Review");
       return;
     }
     recordLearningAction();
@@ -1152,6 +1155,20 @@ export default function Reader({ text }: { text: ReadingText }) {
     } else {
       showToast("Added to review");
     }
+  }
+
+  function handleAddMeaningToCard(meaningToAdd: string) {
+    if (!activeWord?.inReview) return;
+    const { tappedText, lemma } = activeWord.meaning;
+    const result = addMeaningToWord(tappedText, lemma, meaningToAdd);
+    if (!result.ok) {
+      showToast(persistenceFailureMessage(result.reason), 4200);
+      return;
+    }
+    setSavedWordsSnapshot(result.words);
+    const card = new VocabularyIndex(result.words).activeCard(tappedText, lemma);
+    setActiveWord((prev) => (prev ? { ...prev, cardMeanings: card?.translations } : prev));
+    showToast(`Added “${meaningToAdd}” to your card`);
   }
 
   function handleUnsaveActiveWord() {
@@ -1196,7 +1213,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     };
 
     getSavedPhrases()
-      .filter((phrase) => phrase.sourceTextTitle === text.title && phrase.status !== "known")
+      .filter((phrase) => phrase.sourceTextTitle === text.title)
       .slice(0, 2)
       .forEach((phrase) =>
         add({
@@ -2381,6 +2398,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           articleTitle={text.title}
           onClose={() => setActiveWord(null)}
           onSave={handleSaveActiveWord}
+          onAddMeaning={handleAddMeaningToCard}
           onUnsave={handleUnsaveActiveWord}
           onAiRequested={() => markAiSupportUsed("word")}
           privateText={isImportedText}

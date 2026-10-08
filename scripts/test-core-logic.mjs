@@ -56,7 +56,7 @@ import {
   translateSentencesWithDictionaryCache,
 } from "../src/lib/dictionary/articleTranslation.ts";
 import { recordDictionaryFeedback, getDictionaryFeedback } from "../src/lib/dictionary/feedback.ts";
-import { getSavedPhrases, markPhraseKnown, savePhrase } from "../src/lib/phrases.ts";
+import { getSavedPhrases, isPhraseMastered, recordPhraseReview, savePhrase } from "../src/lib/phrases.ts";
 import { getArticleFeedbackForText, saveArticleFeedback } from "../src/lib/articleFeedback.ts";
 import { buildGistQuestion, buildToneQuestions, findRelatedArticles } from "../src/lib/comprehension.ts";
 import {
@@ -1172,8 +1172,9 @@ console.log("\n--- Phrase bank and dictionary feedback ---");
     sourceTextTitle: "Test article",
   });
   check("savePhrase stores a phrase", getSavedPhrases().some((phrase) => phrase.phrase === "prendre en compte"));
-  markPhraseKnown("prendre en compte");
-  check("markPhraseKnown updates phrase status", getSavedPhrases().find((phrase) => phrase.phrase === "prendre en compte")?.status === "known");
+  for (let i = 0; i < 3; i++) recordPhraseReview("prendre en compte", true);
+  const reviewedPhrase = getSavedPhrases().find((phrase) => phrase.phrase === "prendre en compte");
+  check("three correct phrase reviews mark it mastered but keep it in review", !!reviewedPhrase && isPhraseMastered(reviewedPhrase) && reviewedPhrase.status === "learning");
 }
 {
   recordDictionaryFeedback({

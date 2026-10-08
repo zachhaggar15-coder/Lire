@@ -17,6 +17,8 @@ import {
   recordArticlePreference,
   removeFromSavedLater,
   saveForLater,
+  hasHideableSource,
+  unhideSource,
   unpreferSource,
 } from "@/lib/recommendation/preferences";
 
@@ -95,12 +97,15 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
   const [hidden, setHidden] = useState(false);
   const [savedLater, setSavedLater] = useState(false);
   const [preferred, setPreferred] = useState(false);
+  // Set when the reader hid this card's source just now, so the card can offer Undo.
+  const [justHid, setJustHid] = useState(false);
+  const [tuned, setTuned] = useState<"more" | "less" | null>(null);
   const difficulty = difficultyProp !== undefined ? difficultyProp : computedDifficulty;
   const reasons = recommendationReasons(text, difficulty, starRating, score);
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
-    setHidden(isSourceHidden(text.sourceName));
+    setHidden(hasHideableSource(text) && isSourceHidden(text.sourceName));
     setPreferred(isSourcePreferred(text.sourceName));
     setSavedLater(isSavedForLater(text.id));
     if (difficultyProp !== undefined) return;
@@ -110,6 +115,31 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
   }, [difficultyProp, text.body, text.id, text.language, text.sourceName]);
 
 
+  if (hidden && justHid && text.sourceName) {
+    return (
+      <div role="status" className="flex flex-wrap items-center justify-between gap-2 rounded-card border border-cream-dark bg-cream-card px-4 py-3 text-sm text-ink-muted">
+        <span>
+          Readings from <span className="font-semibold text-ink">{text.sourceName}</span> are hidden.
+        </span>
+        <span className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              unhideSource(text.sourceName!);
+              setHidden(false);
+              setJustHid(false);
+            }}
+            className="font-semibold text-brand underline underline-offset-2"
+          >
+            Undo
+          </button>
+          <Link href="/sources" className="text-xs underline underline-offset-2">
+            Manage hidden sources
+          </Link>
+        </span>
+      </div>
+    );
+  }
   if (hidden) return null;
 
   function handleSaveLater() {
@@ -126,6 +156,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     if (!text.sourceName) return;
     hideSource(text.sourceName);
     setHidden(true);
+    setJustHid(true);
   }
 
   function handlePreferSource() {
@@ -237,19 +268,27 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button
             type="button"
-            onClick={() => recordArticlePreference(text, "more")}
-            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand"
+            onClick={() => {
+              recordArticlePreference(text, "more");
+              setTuned("more");
+            }}
+            aria-pressed={tuned === "more"}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${tuned === "more" ? "bg-brand text-cream" : "bg-brand-light text-brand"}`}
           >
             More like this
           </button>
           <button
             type="button"
-            onClick={() => recordArticlePreference(text, "less")}
-            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted"
+            onClick={() => {
+              recordArticlePreference(text, "less");
+              setTuned("less");
+            }}
+            aria-pressed={tuned === "less"}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${tuned === "less" ? "bg-ink text-cream" : "bg-cream-fill text-ink-muted"}`}
           >
             Less like this
           </button>
-          {text.sourceName && (
+          {hasHideableSource(text) && (
             <>
               <button
                 type="button"
@@ -270,6 +309,14 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             </>
           )}
         </div>
+        {(tuned || preferred) && (
+          <p role="status" className="mt-2 text-xs text-ink-muted">
+            {tuned === "more" && `We'll show you more ${topicLabel(text)} readings like this.`}
+            {tuned === "less" && `We'll show you fewer ${topicLabel(text)} readings like this.`}
+            {tuned && preferred && " "}
+            {preferred && hasHideableSource(text) && `${text.sourceName} readings come first.`}
+          </p>
+        )}
       </details>
     </article>
   );

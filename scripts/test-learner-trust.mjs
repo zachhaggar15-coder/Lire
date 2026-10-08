@@ -177,4 +177,69 @@ await t.section("D1: phrases and summaries are refused at their limit, never evi
   t.check("the reader says when a summary was not saved", /summaryAtLimit && \(/.test(read("src/components/Reader.tsx")));
 });
 
+// ---------------------------------------------------------------------------
+// Review and recommendation UX.
+
+const prefs = await import("../src/lib/recommendation/preferences.ts");
+const { getBuiltInTextById } = await import("../src/lib/publicDomainBank.ts");
+
+await t.section("B1/B2: phrases stay in Review and never claim 'Known'", async () => {
+  localStore.setItem("lire.savedPhrases.v1", JSON.stringify([{ phrase: "tout de suite", lemma: "tout de suite", translation: "right away", contextSentence: "Il est parti tout de suite.", savedAt: "2026-07-01T00:00:00.000Z", status: "learning", updatedAt: "2026-07-01T00:00:00.000Z", correctStreak: 0 }]));
+  for (let i = 0; i < 3; i++) phrases.recordPhraseReview("tout de suite", true);
+  const after = phrases.getSavedPhrases()[0];
+  t.check("three correct answers keep the phrase in Review (no terminal state)", after.status === "learning" && after.correctStreak === 3);
+  t.check("it counts as mastered, as information", phrases.isPhraseMastered(after));
+  t.check("a legacy 'known' phrase reads as mastered", phrases.isPhraseMastered({ status: "known", correctStreak: 0 }));
+  const review = read("src/app/review/page.tsx");
+  const words = read("src/app/words/page.tsx");
+  t.check("the phrase review queue is not filtered by a 'known' status", !/phrase\.status !== "known"/.test(review));
+  t.check("no 'Known' button or 'known' count on the phrase list", !/>\s*Known\s*</.test(words) && !/markPhraseKnown/.test(words) && !/\{known\} known/.test(words));
+  t.check("no generic phrase example template remains (and no unaccented 'idee')", !/On peut \{|dans un autre article|\bidee\b/.test(review) && !/On peut \$\{/.test(read("src/lib/phrases.ts")));
+  t.check("phrase review shows the sentence it was saved from", /phrase\.contextSentence/.test(review));
+});
+
+await t.section("B3: review completion says what happened", async () => {
+  const review = read("src/app/review/page.tsx");
+  t.check("completion says Reviewed, remembered and needed another look — never 'Known: N'", /Reviewed: \{wordSessionTotal\}/.test(review) && /remembered/.test(review) && /needed another look/.test(review) && !/Known: \{/.test(review) && !/`Known: /.test(review));
+});
+
+await t.section("B4: the same word with a new meaning", async () => {
+  const card = (extra) => ({ word: "compte", lemma: "compte", translations: ["account"], primaryTranslation: "account", partOfSpeech: null, gender: null, cefr: null, frequencyRank: null, articleContextSentence: "Mon compte.", exampleSentenceFr: "", exampleSentenceEn: "", sourceTextTitle: "", savedAt: "2026-07-01T00:00:00.000Z", reviewCount: 0, lastReviewedAt: null, status: "learning", ...extra });
+  storage.clearWords();
+  storage.addWordToReview(card({}));
+  const again = storage.addWordToReview(card({ contextualMeaning: "realise", primaryTranslation: "realise", translations: ["realise"], articleContextSentence: "Il se rend compte." }));
+  const stored = storage.getSavedWords().find((w) => w.word === "compte");
+  t.check("one card is kept, not a duplicate", storage.getSavedWords().length === 1 && again.created === false);
+  t.check("the new meaning is added to that card", again.addedMeaning === "realise" && stored.translations.includes("realise") && stored.primaryTranslation === "account");
+  t.check("meeting the same meaning again adds nothing", storage.addWordToReview(card({ contextualMeaning: "account" })).addedMeaning == null);
+  const added = storage.addMeaningToWord("compte", "compte", "count");
+  t.check("the sheet's 'Add this meaning' adds to the card in Review", added.ok && storage.getSavedWords()[0].translations.includes("count"));
+  const reader = read("src/components/Reader.tsx");
+  t.check("the copy is 'This word is already in Review', never 'you already know this'", /This word is already in Review/.test(reader) && !/already know this|already saved this meaning/i.test(reader));
+});
+
+await t.section("C1/C2: hiding a source is limited, undoable and restorable", async () => {
+  t.check("only real news sources can be hidden", prefs.hasHideableSource({ id: "rss-lemonde-abc", sourceName: "Le Monde" }) && !prefs.hasHideableSource({ id: "custom-abc", sourceName: "Imported text" }) && !prefs.hasHideableSource({ id: "starter-a1-001", sourceName: "Sorlio" }) && !prefs.hasHideableSource({ id: "pd-b1-001", sourceName: "Project Gutenberg" }));
+  localStore.setItem("lire.recommendation.hiddenSources.v1", JSON.stringify(["Imported text"]));
+  const library = read("src/components/ArticleBrowserPage.tsx");
+  t.check("an old 'Imported text' hide no longer hides imports in the library", /!hasHideableSource\(text\) \|\| !hiddenSources\.has/.test(library));
+  prefs.hideSource("Le Monde");
+  t.check("hidden", prefs.isSourceHidden("Le Monde"));
+  prefs.unhideSource("Le Monde");
+  t.check("Undo restores it", !prefs.isSourceHidden("Le Monde"));
+  const card = read("src/components/ReadingCard.tsx");
+  t.check("the card offers Undo and a way to manage hidden sources", /are hidden\./.test(card) && />\s*Undo\s*</.test(card) && /href="\/sources"/.test(card));
+  t.check("source controls only render for real sources", /\{hasHideableSource\(text\) && \(/.test(card));
+  t.check("More/Less like this give visible feedback", /aria-pressed=\{tuned === "more"\}/.test(card) && /We'll show you fewer/.test(card));
+  t.check("the sources page lists hidden sources with Restore", /handleUnhideSource/.test(read("src/app/sources/page.tsx")));
+});
+
+await t.section("C3/F4: saved for later is easy to find; internal links are client-side", async () => {
+  t.check("a saved lesson resolves by id even outside today's pool", getBuiltInTextById("starter-a1-001")?.id === "starter-a1-001");
+  const library = read("src/components/ArticleBrowserPage.tsx");
+  const idx = library.indexOf('title="Saved for later"');
+  t.check("Saved for later renders outside the collapsed Extra reading panel", idx > -1 && idx < library.indexOf("Extra reading\n"));
+  t.check("compact reading cards use next/link", /<Link\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")) && !/<a\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")));
+});
+
 t.finish();

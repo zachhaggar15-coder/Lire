@@ -130,11 +130,9 @@ await t.section("phrases", async () => {
   const before = raw("lire.savedPhrases.v1");
   control.failAllWrites(true);
   const review = phrases.recordPhraseReview("tout de suite", true);
-  const knownP = phrases.markPhraseKnown("tout de suite");
   const del = phrases.deletePhrase("tout de suite");
   control.failAllWrites(false);
   t.check("phrase review reports failure", review.ok === false && review.reason === "quota");
-  t.check("phrase mark-known reports failure", knownP.ok === false);
   t.check("phrase delete reports failure, phrase kept", del.ok === false && del.phrases.length === 1);
   t.check("stored phrases unchanged", raw("lire.savedPhrases.v1") === before);
   t.check("phrase review succeeds after recovery", phrases.recordPhraseReview("tout de suite", true).ok === true);

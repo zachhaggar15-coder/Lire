@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ReadingCard from "@/components/ReadingCard";
 import { topicLabel } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
@@ -79,7 +80,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
   const { text } = article;
   const sourceLabel = compactSourceLabel(article);
   return (
-    <a
+    <Link
       href={`/reader/${encodeURIComponent(text.id)}`}
       className={`block min-w-0 rounded-card border border-cream-dark bg-cream-card p-3 shadow-card transition-shadow active:shadow-raised ${
         rail ? "w-64 shrink-0" : ""
@@ -104,6 +105,6 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
         {sourceLabel && <p className="truncate text-xs font-semibold text-ink-muted">{sourceLabel}</p>}
         <span className="shrink-0 text-xs font-bold text-brand">Start</span>
       </div>
-    </a>
+    </Link>
   );
 }
