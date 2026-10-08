@@ -1049,20 +1049,6 @@
   "words": 399,
   "bodySha256": "d8dd8b2e057fca5ee525bc623ff9f2cc2d28e0ed56c678f3c0fe9b0190877c29"
  },
- "pd-b1-240": {
-  "gutenbergId": 12949,
-  "firstParagraph": 5,
-  "lastParagraph": 5,
-  "words": 163,
-  "bodySha256": "0735927ff08aadfe5c00e52748544c3fe0597f0fdc37a048b589a45418b52acb"
- },
- "pd-b1-250": {
-  "gutenbergId": 12949,
-  "firstParagraph": 2462,
-  "lastParagraph": 2463,
-  "words": 210,
-  "bodySha256": "d664457ff77a623e95e92cfc948decbfe90eae1798908b57e7ee377c5c17d6b8"
- },
  "pd-b1-252": {
   "gutenbergId": 14155,
   "firstParagraph": 1109,

@@ -16,7 +16,7 @@ const coreTexts: ReadingText[] = [
     id: "metro-gratuit",
     title: "Le métro bientôt gratuit ?",
     category: "news-style",
-    difficulty: "A2",
+    difficulty: "B1",
     minutes: 3,
     preview:
       "Une grande ville française étudie la possibilité de rendre les transports gratuits pour tous les habitants.",
@@ -42,7 +42,7 @@ D'autres villes françaises suivent ce projet avec beaucoup d'attention. Si l'es
     id: "victoire-finale",
     title: "Une victoire au dernier moment",
     category: "sport",
-    difficulty: "A2",
+    difficulty: "B1",
     minutes: 3,
     preview:
       "L'équipe locale gagne le match dans les dernières secondes et le public explose de joie.",
@@ -122,7 +122,7 @@ Adopter une routine régulière, en se couchant et en se levant à des heures si
     id: "marche-dimanche",
     title: "Un dimanche au marché",
     category: "everyday life",
-    difficulty: "A1",
+    difficulty: "A2",
     minutes: 3,
     preview:
       "Le dimanche matin, beaucoup de gens font leurs courses au marché de leur quartier.",

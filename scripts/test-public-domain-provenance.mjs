@@ -21,6 +21,7 @@ const t = createRunner("public-domain provenance");
 const { publicDomainTexts } = await import("../src/data/publicDomainTexts.ts");
 const provenance = JSON.parse(readFileSync(new URL("../src/data/publicDomainProvenance.json", import.meta.url), "utf8"));
 const { CONTENT_EXCLUSIONS, WORD_TARGETS, countWords, isBarrier } = await import("./repair-public-domain-contiguity.mjs");
+const { LEVEL_RELABELS } = await import("../src/data/levelRelabels.ts");
 const online = process.env.VERIFY_GUTENBERG === "1" || process.argv.includes("--online");
 
 const sha = (text) => createHash("sha256").update(text).digest("hex");
@@ -43,8 +44,10 @@ for (const text of publicDomainTexts) {
   if (!record) continue;
   t.check(`${text.id} body matches its recorded hash`, sha(matchKey(text.body)) === record.bodySha256);
   const words = countWords(text.body);
-  const target = WORD_TARGETS[text.difficulty];
-  t.check(`${text.id} length fits ${text.difficulty}`, words >= target.min && words <= target.max, `${words} words`);
+  // A relabelled extract keeps the length it was cut to (data/levelRelabels.ts).
+  const cutFor = LEVEL_RELABELS[text.id]?.from ?? text.difficulty;
+  const target = WORD_TARGETS[cutFor];
+  t.check(`${text.id} length fits ${cutFor}`, words >= target.min && words <= target.max, `${words} words`);
   t.check(`${text.id} contains no editorial matter (illustration, note, synopsis, scene break)`, !text.body.split(/\n{2,}/).some(isBarrier), text.body.split(/\n{2,}/).find(isBarrier)?.slice(0, 80));
   t.check(`${text.id} keeps one paragraph per source paragraph`, text.body.split(/\n{2,}/).length === record.lastParagraph - record.firstParagraph + 1);
   t.check(`${text.id} source URL matches provenance`, text.sourceUrl.endsWith(`/${record.gutenbergId}`));

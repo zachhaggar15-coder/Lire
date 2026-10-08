@@ -1035,8 +1035,8 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-b1-226", // J'ai commencé à trier mes déchets sérieusement
       "starter-b1-227", // Le vrac, une habitude qui change tout
       "starter-b1-228", // Pourquoi j'ai arrêté d'acheter des bouteilles en plastique
-      "starter-b1-229", // Composter en appartement, un défi inattendu
-      "starter-b1-230", // Les petits gestes suffisent-ils vraiment ? (hardest)
+      "starter-b1-229", // Composter en appartement, un défi inattendu (hardest)
+      // starter-b1-230 is B2 now (see data/levelRelabels.ts) and reads on the B2 route.
     ],
   },
   {
@@ -1477,8 +1477,8 @@ export const JOURNEY_SECTIONS: JourneySection[] = [
       "starter-b2-206", // Pourquoi lit-on des romans qu'on sait irréalistes ?
       "starter-b2-207", // La lecture, un luxe menacé par la vitesse du monde moderne ?
       "starter-b2-208", // Ce que perdent les histoires en passant du livre à l'écran
-      "starter-b2-209", // Faut-il avoir honte de ne lire que des romans faciles ?
-      "starter-b2-210", // La lecture peut-elle encore nous transformer ? (hardest)
+      "starter-b2-209", // Faut-il avoir honte de ne lire que des romans faciles ? (hardest)
+      // starter-b2-210 is C1 now (see data/levelRelabels.ts) and reads on the C1 route.
     ],
   },
   {

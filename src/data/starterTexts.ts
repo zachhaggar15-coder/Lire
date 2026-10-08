@@ -22430,7 +22430,7 @@ Cette expérience, qui semblait impossible au départ dans mon petit appartement
     id: "starter-b1-230",
     title: "Les petits gestes suffisent-ils vraiment ?",
     category: "culture",
-    difficulty: "B1",
+    difficulty: "B2",
     minutes: 2,
     preview: "Depuis plusieurs années, je trie mes déchets, je réduis ma consommation de plastique, j'essaie de limiter le gaspillage.",
     blurbEn:
@@ -23080,7 +23080,7 @@ Peut-être conviendrait-il donc d'abandonner cette hiérarchie culpabilisante en
     id: "starter-b2-210",
     title: "La lecture peut-elle encore nous transformer ?",
     category: "culture",
-    difficulty: "B2",
+    difficulty: "C1",
     minutes: 2,
     preview: "On prête traditionnellement à la lecture un pouvoir presque mystique : celui de transformer durablement celui qui s'y adonne, d'élargir sa compréhension du monde et de lui-même.",
     blurbEn:

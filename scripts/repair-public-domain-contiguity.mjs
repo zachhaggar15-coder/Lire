@@ -83,6 +83,8 @@ export const CONTENT_EXCLUSIONS = {
   "pd-c1-543": "peoples ranked as more or less 'sauvages' (Cinq semaines en ballon)",
   "pd-c1-576": "people described as 'types foncièrement sauvages' (Face au drapeau)",
   "pd-c2-690": "wedding-night undressing scene (Contes de la Bécasse)",
+  "pd-b1-240": "English editor's preface, not French (Contes français, school edition)",
+  "pd-b1-250": "English editor's notes, not French (Contes français, school edition)",
 };
 
 export function countWords(text) {

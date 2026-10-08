@@ -1,4 +1,5 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
+import { LEVEL_RELABELS } from "@/data/levelRelabels";
 import { starterTexts } from "@/data/starterTexts";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { tokenize } from "@/lib/words";
@@ -159,7 +160,11 @@ function scoreBand(texts: ReadingText[]): Array<{ text: ReadingText; intrinsicDi
 export function computeIntrinsicDifficulties(): Record<string, number> {
   const out: Record<string, number> = {};
   for (const band of JOURNEY_BANDS) {
-    for (const scored of scoreBand(starterTexts.filter((text) => text.difficulty === band))) out[scored.text.id] = scored.intrinsicDifficulty;
+    // Scored within the band each text was written for, so relabelling one
+    // text (data/levelRelabels.ts) moves that text alone instead of
+    // renormalising, and reshuffling, every other route in both bands.
+    const scoredWith = starterTexts.filter((text) => (LEVEL_RELABELS[text.id]?.from ?? text.difficulty) === band);
+    for (const scored of scoreBand(scoredWith)) out[scored.text.id] = scored.intrinsicDifficulty;
   }
   return out;
 }
