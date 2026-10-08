@@ -41,7 +41,8 @@ export interface JourneyMoment {
 }
 
 interface LessonCompleteScreenProps {
-  level: Difficulty;
+  /** The text's assigned level; null for news, which has none. */
+  level: Difficulty | null;
   levelProgress: LireLevelChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
@@ -376,12 +377,14 @@ export default function LessonCompleteScreen({
           {/* Reading difficulty is shown separately and deliberately not as a
               progression bar: CEFR describes how hard the French was, and says
               nothing about how far along the reader is. */}
-          <div className="mt-4 flex items-center justify-between border-t border-cream-fill pt-3">
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">
-              Reading difficulty
-            </p>
-            <p className="text-sm font-extrabold text-ink">{level}</p>
-          </div>
+          {level && (
+            <div className="mt-4 flex items-center justify-between border-t border-cream-fill pt-3">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">
+                Reading difficulty
+              </p>
+              <p className="text-sm font-extrabold text-ink">{level}</p>
+            </div>
+          )}
 
           <details className="mt-3">
             <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline decoration-dotted underline-offset-2">

@@ -3,6 +3,7 @@ import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { estimateReadingMinutes, truncateAtSentence } from "@/lib/rss/cleanContent";
 import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
 import { localStore } from "@/lib/localData/store";
+import { settleFeedLevel } from "@/lib/rss/adaptReadingText";
 
 /**
  * Fast session cache plus a bounded localStorage offline cache for RSS
@@ -38,7 +39,8 @@ function readOfflineTexts(): ReadingText[] {
   }
 }
 
-function sanitizeRssText(text: ReadingText): ReadingText {
+function sanitizeRssText(cached: ReadingText): ReadingText {
+  const text = settleFeedLevel(cached);
   const body = stripSourceBoilerplate(text.body, text.sourceName, text.sourceUrl);
   if (body === text.body) return text;
   return {

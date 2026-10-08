@@ -36,6 +36,7 @@ import {
 } from "@/lib/recommendation/preferences";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
+import { editorialLevel } from "@/lib/readingLevel";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success" | "error";
@@ -254,7 +255,7 @@ export default function ArticleBrowserPage({ mode }: { mode: Mode }) {
       const importedIds = new Set(importedTexts.map((text) => text.id));
       const ranked = rankArticles(buildScorableArticles(pool, knownWords), buildScoringContext()).filter((article) => {
         if (categoryFilter !== "all" && article.text.category !== categoryFilter) return false;
-        if (difficultyFilter !== "all" && article.text.difficulty !== difficultyFilter) return false;
+        if (difficultyFilter !== "all" && editorialLevel(article.text) !== difficultyFilter) return false;
         if (languageFilter !== "all" && articleLanguage(article.text) !== languageFilter) return false;
         return true;
       });

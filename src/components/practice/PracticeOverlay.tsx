@@ -18,6 +18,8 @@ import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/ses
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import AppIcon from "@/components/AppIcon";
+import { editorialLevel } from "@/lib/readingLevel";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -93,7 +95,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
         setParaphraseChecked(true);
         return;
       }
-      buildParaphraseExercise(candidate, text.title, `${text.difficulty} French learner`)
+      buildParaphraseExercise(candidate, text.title, `${editorialLevel(text) ?? getSelectedReadingLevel()} French learner`)
         .then((exercise) => {
           if (!mountedRef.current) return;
           if (exercise) setActivities((prev) => [...prev, { kind: "paraphrase", exercise }]);

@@ -15,6 +15,7 @@ import { getCustomTextById } from "@/lib/customTexts";
 import { getCachedRssTextById } from "@/lib/rss/rssTextCache";
 import { getBuiltInTextById } from "@/lib/publicDomainBank";
 import { getJourneyText, JOURNEY_BANDS, NODES_PER_MAP, type Stage } from "@/lib/journey/ladder";
+import { editorialLevel } from "@/lib/readingLevel";
 import {
   getJourneyState,
   getJourneyStore,
@@ -349,7 +350,7 @@ function NextActionHero({
       <p className="text-sm font-semibold text-cream/80">{continuing ? "Continue reading" : `Next in your ${band} path`}</p>
       <p lang="fr" className="mt-2 font-french text-[26px] leading-tight">{text.title}</p>
       <p className="mt-1 text-sm text-cream/80">
-        {text.difficulty} · about {text.minutes} min
+        {editorialLevel(text) ? `${editorialLevel(text)} · ` : ""}about {text.minutes} min
       </p>
       <Link
         href={`/reader/${encodeURIComponent(text.id)}`}
@@ -824,7 +825,7 @@ function CompleteSectionNode({
       >
         <div className="rounded-card bg-brand px-5 py-7 text-center text-cream">
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-cream/70">
-            Ligne {band} · Map {page + 1} of {pageCount}
+            {band} path · Map {page + 1} of {pageCount}
           </p>
           <p className="mt-3 font-french text-[26px] leading-tight">Congratulations!</p>
           <p className="mt-2 text-sm leading-relaxed text-cream/85">

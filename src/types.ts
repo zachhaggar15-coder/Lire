@@ -54,6 +54,11 @@ export interface ReadingText {
    * topic stats and interest learning, so it cannot skew them.
    */
   topicUnset?: boolean;
+  /**
+   * Live news: no CEFR level was assigned, and `difficulty` holds a
+   * placeholder that is never shown or compared. See lib/readingLevel.ts.
+   */
+  levelUnrated?: boolean;
 }
 
 /**

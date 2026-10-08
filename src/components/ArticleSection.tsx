@@ -1,12 +1,13 @@
 import Link from "next/link";
 import ReadingCard from "@/components/ReadingCard";
 import { topicLabel } from "@/lib/format";
+import { editorialLevel } from "@/lib/readingLevel";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
 function compactSourceLabel(article: ScoredArticle): string | null {
   const { text } = article;
   if (text.id.startsWith("custom-")) return "Imported text";
-  if (text.id.startsWith("starter-")) return "Written for beginners";
+  if (text.id.startsWith("starter-")) return "Written for Sorlio";
   if (text.id.startsWith("pd-")) return "Classic story";
   return text.sourceName ?? null;
 }
@@ -52,7 +53,6 @@ export default function ArticleSection({
               key={article.text.id}
               text={article.text}
               difficulty={article.difficulty}
-              starRating={article.starRating}
               score={article.score}
             />
           ))}
@@ -90,7 +90,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
           tell the market lesson from the train one without reading titles. */}
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-brand">
-          {text.difficulty}
+          {editorialLevel(text) ?? "News"}
         </span>
         <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
           {topicLabel(text)}

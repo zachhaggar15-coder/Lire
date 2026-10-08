@@ -10,6 +10,7 @@ import { lireLevelFromXp, xpForLevel } from "@/lib/progression/lireLevel";
 import { localStore } from "@/lib/localData/store";
 import { isMastered } from "@/lib/reviewMembership";
 import { localDateKey, localDateKeyOf } from "@/lib/localDate";
+import { hasWordClass } from "@/lib/dictionary/partOfSpeech";
 
 export type XpEventType =
   | "article_completed"
@@ -821,7 +822,7 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
     { id: "sport", title: "Sport vocabulary", total: 30, match: (word: SavedWord) => word.sourceTextTitle.toLowerCase().includes("match") || word.partOfSpeech?.includes("sport"), description: "Competition, teams, results and form." },
     { id: "science", title: "Science vocabulary", total: 30, match: (word: SavedWord) => ["étude", "chercheur", "essai", "résultat", "risque"].includes(word.lemma ?? word.word), description: "Research, evidence and discovery." },
     { id: "opinion", title: "Opinion and argument", total: 30, match: (word: SavedWord) => ["critique", "soutenir", "dénoncer", "estimer"].includes(word.lemma ?? word.word), description: "Framing, stance and judgement." },
-    { id: "verbs", title: "Common verbs", total: 60, match: (word: SavedWord) => (word.partOfSpeech ?? "").toLowerCase().includes("verb"), description: "High-value verbs across topics." },
+    { id: "verbs", title: "Common verbs", total: 60, match: (word: SavedWord) => hasWordClass(word.partOfSpeech, "verb"), description: "High-value verbs across topics." },
     { id: "idioms", title: "Idioms and phrases", total: 25, match: (word: SavedWord) => (word.lemma ?? word.word).includes(" "), description: "Fixed expressions and reusable chunks." },
     { id: "culture", title: "Travel and culture", total: 35, match: (word: SavedWord) => word.sourceTextTitle.toLowerCase().includes("culture") || ["musée", "ville"].includes(word.lemma ?? word.word), description: "Places, culture and everyday movement." },
   ];
@@ -844,7 +845,9 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
 export function buildPersonalBests(completions = getArticleCompletions()): PersonalBest[] {
   const longest = [...completions].sort((a, b) => b.wordsRead - a.wordsRead)[0];
   const bestScore = [...completions].sort((a, b) => b.score - a.score)[0];
-  const strongestLevel = [...completions].sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
+  // Only readings with an assigned level count. News completions saved by
+  // earlier builds carry a blanket "B1" that was never a level.
+  const strongestLevel = [...completions].filter((item) => !item.articleId.startsWith("rss-") && /^[ABC][12]$/.test(item.difficulty)).sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
   const dayWords = new Map<string, number>();
   for (const completion of completions) {
     const day = localDateKeyOf(completion.completedAt);

@@ -22,7 +22,7 @@ import { getArticleTranslation } from "@/lib/ai/client";
 import { getPrecomputedTranslation } from "@/lib/ai/precomputedTranslations";
 import type { ArticleTranslationAlignmentSegment } from "@/lib/ai/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
+import { learnerExample } from "@/lib/dictionary/exampleGenerator";
 import {
   isMeaningUpgrade,
   resolveMeaning,
@@ -101,6 +101,7 @@ import { CompletionSummary } from "@/components/GamificationCards";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import AppIcon from "@/components/AppIcon";
 import CoachMark from "@/components/onboarding/CoachMark";
+import { editorialLevel, recordedLevel } from "@/lib/readingLevel";
 
 
 /**
@@ -1102,7 +1103,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       return;
     }
     if (meaning.abstained) {
-      showToast("Nothing to save until this word resolves");
+      showToast("Sorlio isn't sure what this word means here, so it can't be saved");
       return;
     }
     // Free accounts save a limited number of NEW words a day; putting back a
@@ -1369,17 +1370,13 @@ export default function Reader({ text }: { text: ReadingText }) {
     // reader tapped, so don't let it pick the example frame or get stored as
     // this word's part of speech.
     const reliablePartOfSpeech = meaning.partOfSpeechUncertain ? null : meaning.partOfSpeech;
-    // Deliberately the dictionary's own glosses rather than `translations`,
-    // which leads with the context-fitted meaning. The fallback example slots a
-    // gloss into a generic frame ("C'est très X."), so a context-fitted phrase
-    // produces nonsense — "mouillé" resolved as "was anchored" rendered "It's
-    // very was anchored." The dictionary entry matches the frame's word class.
-    const fallbackExample = generateFallbackExample({
-      word: meaning.tappedText,
-      lemma: lookup.lemma,
-      partOfSpeech: reliablePartOfSpeech,
-      gender: lookup.gender,
-      translations: lookup.translations.length > 0 ? lookup.translations : translations,
+    // A curated example, else the sentence the word was read in with its own
+    // translation — never a generated sentence, and never the sentence paired
+    // with a single-word gloss.
+    const example = learnerExample({
+      curated: firstExample,
+      contextSentence: meaning.contextSentence,
+      sentenceTranslation: meaning.sentenceTranslation?.english ?? null,
     });
     return {
       word: meaning.tappedText,
@@ -1395,8 +1392,8 @@ export default function Reader({ text }: { text: ReadingText }) {
       partOfExpression: meaning.partOfExpression,
       lemmaGloss: meaning.lemmaGloss,
       sentenceTranslation: meaning.sentenceTranslation?.english ?? null,
-      exampleSentenceFr: firstExample?.fr ?? meaning.contextSentence,
-      exampleSentenceEn: firstExample?.en ?? (contextual || fallbackExample.en),
+      exampleSentenceFr: example.fr,
+      exampleSentenceEn: example.en,
       sourceTextTitle: text.title,
       savedAt: new Date().toISOString(),
       reviewCount: 0,
@@ -1442,7 +1439,9 @@ export default function Reader({ text }: { text: ReadingText }) {
       sourceName: text.sourceName ?? null,
       completedAt,
       category: text.topicUnset ? null : text.category,
-      cefr: difficulty?.cefr ?? text.difficulty,
+      // The assigned level (none for news), not the content estimate, which
+      // is too compressed to describe a text (see lib/readingLevel.ts).
+      cefr: editorialLevel(text),
       minutes: text.minutes,
       wordCount: countFrenchWords(text),
       // Snapshots: history shows what was true at completion.
@@ -1466,7 +1465,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       // "highest level article reached," which need a stable value that
       // means the same thing for every article, not one that can drift with
       // a single reader's vocabulary at the moment they happened to finish it.
-      difficulty: text.difficulty,
+      difficulty: recordedLevel(text),
       activeMinutes,
       completedAt,
       wordsRead: countFrenchWords(text),
@@ -1530,7 +1529,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           textId: nextRecommendation.textId,
         }
       : null;
-    const band = text.difficulty;
+    const band = recordedLevel(text);
     // Only a guided starter/journey lesson was actually opened "from a map" —
     // a News/RSS or imported article has no map to return to, so the label
     // and destination need to say/do something that's actually true for it.
@@ -1564,7 +1563,7 @@ export default function Reader({ text }: { text: ReadingText }) {
     recordReadingSession({
       textId: text.id,
       sourceType: isImportedText ? "imported" : text.id.startsWith("rss-") ? "rss" : "curriculum",
-      estimatedLevel: difficulty?.cefr ?? text.difficulty,
+      estimatedLevel: editorialLevel(text) ?? difficulty?.cefr ?? text.difficulty,
       wordCount: wordTotal,
       totalLookupActions: wordLookupCount.current,
       uniqueWordsLookedUp: wordLookupLemmas.current.size,
@@ -1582,13 +1581,17 @@ export default function Reader({ text }: { text: ReadingText }) {
     // record straight back out of sessionRecord.ts so it reflects exactly
     // what was just persisted (including any practice stats merged in from
     // an earlier practice-page visit).
-    const estimatedLevel = difficulty?.cefr ?? text.difficulty;
+    const assignedLevel = editorialLevel(text);
     const allSessionRecords = getSessionRecords();
     const thisSessionRecord = allSessionRecords.find((r) => r.textId === text.id) ?? null;
     const diagnostics = (() => {
       if (!thisSessionRecord) return null;
       const performance = computeReadingPerformance(thisSessionRecord);
-      const levelBandHistory = getSessionRecordsForLevel(estimatedLevel);
+      // Compare with other readings at the same assigned level; news has none,
+      // so it is compared with the reader's own recent sessions instead.
+      const levelBandHistory = assignedLevel
+        ? getSessionRecordsForLevel(assignedLevel).filter((record) => record.sourceType !== "rss")
+        : [];
       const levelBandComparison = compareToLevelBand(thisSessionRecord, levelBandHistory);
       const baseline = levelBandComparison.minimumSampleMet
         ? levelBandComparison
@@ -1692,7 +1695,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   }
 
   function handleArticleFeedback(feedback: ArticleDifficultyFeedback) {
-    saveArticleFeedback(text, feedback, difficulty?.cefr ?? text.difficulty);
+    saveArticleFeedback(text, feedback, recordedLevel(text));
     setArticleFeedback(feedback);
     showToast(feedback === "good" ? "Saved as a good match" : feedback === "hard" ? "Saved as too hard" : "Saved as too easy");
   }
@@ -1923,11 +1926,10 @@ export default function Reader({ text }: { text: ReadingText }) {
             <h1 lang={text.language === "en" ? "en" : "fr"} className="break-words font-french text-[26px] leading-[1.12] text-ink">
               {text.title}
             </h1>
-      {/* The stored level, matching the card that led here — see the note in
-          ReadingCard. The estimate only ever speaks in the "Reading options"
-          note below, where it describes the fit rather than renaming it. */}
+      {/* The assigned level, matching the card that led here; news has none.
+          See lib/readingLevel.ts. */}
             <p className="ligne-meta mt-1.5 text-ink-muted">
-              {text.difficulty} - {text.minutes} min
+              {editorialLevel(text) ?? "News"} - {text.minutes} min
             </p>
           </div>
         </div>
@@ -1990,10 +1992,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           sentence, tap a word and choose &ldquo;Explain the whole sentence&rdquo;.
         </p>
         {difficulty && (
-          <p className="mt-1">
-            For you, this one looks {difficulty.label.toLowerCase()} — around{" "}
-            {toPercent(difficulty.unknownWordRatio)}% of the words may be new.
-          </p>
+          <p className="mt-1">About {toPercent(difficulty.unknownWordRatio)}% of the words may be new to you.</p>
         )}
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {canUseSpeech && (
@@ -2408,7 +2407,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         />
       {lessonComplete && (
         <LessonCompleteScreen
-          level={text.difficulty}
+          level={editorialLevel(text)}
           levelProgress={lessonComplete.levelProgress}
           stats={{
             percentRead: lessonComplete.percentRead,
@@ -2428,7 +2427,7 @@ export default function Reader({ text }: { text: ReadingText }) {
           practicePlan={lessonComplete.practicePlan}
           lookupRate={lessonComplete.lookupRate}
           diagnostics={lessonComplete.diagnostics}
-          levelLabel={text.difficulty}
+          levelLabel={editorialLevel(text) ?? undefined}
           dailyGoalOffer={
             !getOnboardingState()?.goalPreset && !hasSeenReaderTip("daily-goal-offer")
               ? {

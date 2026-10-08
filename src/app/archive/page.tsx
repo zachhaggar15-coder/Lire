@@ -4,6 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { getArchive, estimateTimeSpentMinutes, MAX_ARCHIVE_ENTRIES, type ArchiveEntry } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
+import { getTextById } from "@/data/texts";
+import { getCustomTextById } from "@/lib/customTexts";
+import { editorialLevel } from "@/lib/readingLevel";
 import { formatCategory, formatDate } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
 import AppBar from "@/components/AppBar";
@@ -96,7 +99,7 @@ export default function ArchivePage() {
         case "words":
           return (b.wordsSaved ?? -1) - (a.wordsSaved ?? -1);
         case "difficulty":
-          return (CEFR_ORDER[b.entry.cefr ?? ""] ?? 0) - (CEFR_ORDER[a.entry.cefr ?? ""] ?? 0);
+          return (CEFR_ORDER[historyLevel(b.entry) ?? ""] ?? 0) - (CEFR_ORDER[historyLevel(a.entry) ?? ""] ?? 0);
         case "date":
         default:
           return new Date(b.entry.completedAt).getTime() - new Date(a.entry.completedAt).getTime();
@@ -188,9 +191,9 @@ export default function ArchivePage() {
                         {entry.sourceName}
                       </span>
                     )}
-                    {entry.cefr && (
+                    {historyLevel(entry) && (
                       <span className="rounded-full bg-brand-light px-2 py-0.5 font-medium text-brand">
-                        {entry.cefr}
+                        {historyLevel(entry)}
                       </span>
                     )}
                     <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-medium text-emerald-700">
@@ -218,4 +221,15 @@ export default function ArchivePage() {
       )}
     </div>
   );
+}
+
+/**
+ * The reading's assigned level, looked up by id. Earlier builds stored the
+ * content estimate here, which is not a level (lib/readingLevel.ts), so the
+ * stored value is not shown; news, and readings no longer on this device,
+ * show none. The history record itself is left as it was.
+ */
+function historyLevel(entry: ArchiveEntry): string | null {
+  const text = getTextById(entry.textId) ?? getCustomTextById(entry.textId);
+  return text ? editorialLevel(text) : null;
 }

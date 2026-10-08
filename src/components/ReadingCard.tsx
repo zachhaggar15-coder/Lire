@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { ReadingText, TextStatus } from "@/types";
+import type { Difficulty, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
 import { formatDate, toPercent, topicLabel } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
-import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
+import { editorialLevel, levelFit } from "@/lib/readingLevel";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
+import type { ScoreBreakdown } from "@/lib/recommendation/types";
 import {
   hideSource,
   isSavedForLater,
@@ -22,14 +24,6 @@ import {
   unpreferSource,
 } from "@/lib/recommendation/preferences";
 
-// Fit, in plain words, from the existing personalised difficulty estimate.
-const FIT_LABELS: Record<DifficultyEstimate["label"], string> = {
-  Easy: "Easier",
-  "Good level": "Good fit",
-  Stretch: "Challenging",
-  Hard: "Hard",
-};
-
 const STATUS_LABELS: Record<TextStatus, string> = {
   unread: "Unread",
   "in-progress": "In progress",
@@ -39,14 +33,12 @@ const STATUS_LABELS: Record<TextStatus, string> = {
 interface ReadingCardProps {
   text: ReadingText;
   difficulty?: DifficultyEstimate | null;
-  starRating?: StarRating | null;
   score?: ScoreBreakdown | null;
 }
 
 function recommendationReasons(
   text: ReadingText,
   difficulty: DifficultyEstimate | null | undefined,
-  starRating: StarRating | null | undefined,
   score: ScoreBreakdown | null | undefined
 ): string[] {
   const reasons: string[] = [];
@@ -57,7 +49,6 @@ function recommendationReasons(
   if ((score?.unknownWordTarget ?? 0) >= 0.9) reasons.push("Good new-word range");
   if (text.minutes <= 3) reasons.push("Quick read");
   if (difficulty && difficulty.dictionaryCoverage >= 0.85) reasons.push("Strong dictionary coverage");
-  if (starRating?.stars === 5) reasons.push("Best fit today");
   return [...new Set(reasons)].slice(0, 3);
 }
 
@@ -78,7 +69,7 @@ function learnerSourceLabel(text: ReadingText): string {
   return "Practice text";
 }
 
-export default function ReadingCard({ text, difficulty: difficultyProp, starRating, score }: ReadingCardProps) {
+export default function ReadingCard({ text, difficulty: difficultyProp, score }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
   const [hidden, setHidden] = useState(false);
@@ -87,14 +78,16 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
   // Set when the reader hid this card's source just now, so the card can offer Undo.
   const [justHid, setJustHid] = useState(false);
   const [tuned, setTuned] = useState<"more" | "less" | null>(null);
+  const [readerLevel, setReaderLevel] = useState<Difficulty | null>(null);
   const difficulty = difficultyProp !== undefined ? difficultyProp : computedDifficulty;
-  const reasons = recommendationReasons(text, difficulty, starRating, score);
+  const reasons = recommendationReasons(text, difficulty, score);
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
     setHidden(hasHideableSource({ id: text.id, sourceName: text.sourceName }) && isSourceHidden(text.sourceName));
     setPreferred(isSourcePreferred(text.sourceName));
     setSavedLater(isSavedForLater(text.id));
+    setReaderLevel(getSelectedReadingLevel());
     if (difficultyProp !== undefined) return;
     if (text.language !== "en") {
       setComputedDifficulty(estimateDifficulty(text.body, getEstimatedKnownVocabulary()));
@@ -157,7 +150,10 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     setPreferred(true);
   }
 
-  const fit = difficulty ? FIT_LABELS[difficulty.label] : null;
+  // Level and fit are stated only from an assigned level, compared with the
+  // level the reader chose. News has no level, so it shows neither.
+  const level = editorialLevel(text);
+  const fit = level && readerLevel ? levelFit(level, readerLevel) : null;
   const preview = text.blurbEn ?? text.preview;
   return (
     <article className="rounded-card border border-cream-dark bg-cream-card p-4">
@@ -165,10 +161,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           the source. Everything else is one tap away under "•••". */}
       <Link href={`/reader/${text.id}`} className="block transition">
         <p className="text-xs font-semibold text-ink-muted">
-          {/* The stored level is the one source of truth for the CEFR code
-              (filters and section headings key off it); the estimate only
-              gives the personalised fit. */}
-          {text.difficulty} · {text.minutes} min
+          {level ?? "News"} · {text.minutes} min
           {fit && <span className="text-brand"> · {fit}</span>}
           {status !== "unread" && <span> · {STATUS_LABELS[status]}</span>}
         </p>
