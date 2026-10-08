@@ -6,7 +6,11 @@ import { localStore } from "@/lib/localData/store";
 const KEY = "lire.comprehensionQuestions.v1";
 // 3: bundles built before provenance was recognised and before automatic tone
 // questions were withdrawn are discarded, never shown again.
-const CACHE_VERSION = 3;
+// 4: an intermediate version-3 build also cached abstentions (no gist), which
+// then blocked a later, larger pool from building a fair question. Every
+// version-3 bundle is discarded. Only this generated cache is affected; it
+// is rebuilt on demand, and no learning data lives here.
+const CACHE_VERSION = 4;
 let memoryCache: CachedComprehensionQuestionBundle[] = [];
 
 export interface ComprehensionQuestionBundle {
@@ -113,7 +117,9 @@ export function getOrCreateComprehensionQuestionBundle(
   const signature = signatureFor(text);
   const cache = readCache();
   const cached = cache.find((bundle) => bundle.textId === text.id && bundle.signature === signature);
-  if (cached) {
+  // An abstention is never served from the cache, whatever wrote it: the next
+  // call may have the larger pool that can build the question.
+  if (cached && cached.gistQuestion) {
     return {
       gistQuestion: cached.gistQuestion,
       toneQuestions: cached.toneQuestions,

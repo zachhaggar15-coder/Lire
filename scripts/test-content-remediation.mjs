@@ -360,6 +360,56 @@ await t.section("Cache safety (36-37)", async () => {
   t.check("36. grammar notes, cloze and practice plans are never stored, so they are always current", !/localStore|localStorage/.test(read("src/lib/practice/grammarNotes.ts") + read("src/lib/practice/cloze.ts") + read("src/lib/practice/session.ts")));
 });
 
+await t.section("Comprehension cache versions (verifier)", async () => {
+  const KEY = "lire.comprehensionQuestions.v1";
+  // The signature exactly as each build computed it (comprehensionCache.ts).
+  const signature = (text, version) => {
+    const input = [text.id, text.title, text.preview, text.blurbEn ?? "", text.body].join("\n");
+    let hash = 5381;
+    for (let i = 0; i < input.length; i++) hash = ((hash << 5) + hash) ^ input.charCodeAt(i);
+    return `${version}:${input.length}:${hash >>> 0}`;
+  };
+  const withSummaries = starterTexts.filter((item) => item.blurbEn);
+  const text = withSummaries[5];
+  const pool = withSummaries.slice(300, 340);
+  const marker = { id: "marker", prompt: "?", choices: ["MARKER A", "MARKER B", "MARKER C"], answerIndex: 0 };
+  const entry = (version, gistQuestion) => ({ textId: text.id, signature: signature(text, version), version, createdAt: "", updatedAt: "", source: "local", gistQuestion, toneQuestions: [] });
+
+  // Learning data that must survive every cache operation below.
+  const learning = {
+    "lire.savedWords.v1": JSON.stringify([{ word: "maison", lemma: "maison", translations: ["house"], primaryTranslation: "house", status: "learning", savedAt: "2026-09-01T00:00:00.000Z", reviewCount: 3, exampleSentenceFr: "", exampleSentenceEn: "", articleContextSentence: "", sourceTextTitle: "" }]),
+    "lire.progress.v1": JSON.stringify({ [text.id]: { status: "completed" } }),
+    "lire.archive.v1": JSON.stringify([{ textId: text.id, title: text.title, completedAt: "2026-09-02T00:00:00.000Z" }]),
+    "lire.customTexts.v1": JSON.stringify([]),
+    "lire.settings.v1": JSON.stringify({ fontSize: "large" }),
+    "lire.onboarding.v1": JSON.stringify({ completed: true, level: "B1", topics: [] }),
+  };
+  for (const [key, value] of Object.entries(learning)) localStore.setItem(key, value);
+
+  localStore.setItem(KEY, JSON.stringify([entry(2, marker)]));
+  const fromV2 = getOrCreateComprehensionQuestionBundle(text, pool);
+  t.check("1. a version-2 cache entry is rejected and rebuilt", !!fromV2.gistQuestion && fromV2.gistQuestion.id !== "marker");
+
+  localStore.setItem(KEY, JSON.stringify([entry(3, null)]));
+  const fromV3 = getOrCreateComprehensionQuestionBundle(text, pool);
+  t.check("2. an unsafe version-3 abstention from the intermediate build is rejected", !!fromV3.gistQuestion);
+  t.check("2. and replaced in storage by a current-version bundle", JSON.parse(localStore.getItem(KEY)).every((bundle) => bundle.version === 4));
+
+  const stored = JSON.parse(localStore.getItem(KEY));
+  localStore.setItem(KEY, JSON.stringify(stored.map((bundle) => (bundle.textId === text.id ? { ...bundle, gistQuestion: marker } : bundle))));
+  t.check("3. a current-version entry is accepted from the cache", getOrCreateComprehensionQuestionBundle(text, pool).gistQuestion?.id === "marker");
+
+  localStore.setItem(KEY, JSON.stringify([entry(4, null)]));
+  t.check("4. a cached 'no gist' cannot block a later valid question, even at the current version", !!getOrCreateComprehensionQuestionBundle(text, pool).gistQuestion);
+
+  localStore.setItem(KEY, JSON.stringify([]));
+  const small = getOrCreateComprehensionQuestionBundle(text, [withSummaries[1]]);
+  const large = getOrCreateComprehensionQuestionBundle(text, pool);
+  t.check("5. a small-pool abstention followed by a larger pool builds the gist", small.gistQuestion === null && !!large.gistQuestion);
+
+  t.check("6/7. only the generated question cache changed; saved words, progress, history, imports, settings and onboarding are untouched", Object.entries(learning).every(([key, value]) => localStore.getItem(key) === value));
+});
+
 await t.section("UI from the previous pass is intact (38-45)", async () => {
   const picker = code("src/components/FirstRunOnboarding.tsx");
   t.check("38/39. two-screen onboarding opens the first reading directly", /Get started/.test(picker) && /Start first reading/.test(picker) && /router\.push\(`\/reader\//.test(picker));
