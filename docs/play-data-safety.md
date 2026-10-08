@@ -8,7 +8,7 @@ submission that changes what leaves the device.
 The earlier sheet described optional analytics, research prompts, an Android
 beta list and Sentry crash reporting. All four were removed from the app; this
 release collects none of them. Historical rows from the old build are being
-deleted separately (docs/release/analytics-purge-plan.md) — the form describes
+outside this release pass (docs/release/analytics-purge-plan.md) — the form describes
 what this version collects.
 
 ## Summary answers
@@ -57,10 +57,10 @@ a service provider acting for it. **Not shared.**
 - **Purposes:** App functionality / product improvement (fixing reported errors).
 - **Retention:** 12 months (`sorlio_maintenance`).
 
-### App activity → Other user-generated content (AI requests) — **processed ephemerally**
+### App activity → Other user-generated content (AI requests)
 - **Collected:** yes, only when a Premium reader taps an AI action.
 - **What:** the word and surrounding sentence, or the text the reader asked to translate (including an imported text, only if they ask), plus their reading level. No name, email or account ID is sent to OpenAI.
-- **Ephemeral:** tick "Data is processed ephemerally": Sorlio does not store the request or the answer (OpenAI `store: false`; OpenAI may keep API data up to 30 days for abuse monitoring under its terms).
+- **Ephemeral:** do not tick "Data is processed ephemerally" for the current setup. Sorlio does not store the request or the answer (`store: false`), but the provider may retain API data up to 30 days for abuse monitoring. Google Play's definition requires memory-only processing for the real-time request, including processors. Only change this answer after verified retention controls meet that definition. See [Google Play Data safety guidance](https://support.google.com/googleplay/android-developer/answer/10787469?hl=en).
 - **Purposes:** App functionality.
 - **Also stored:** a per-account daily count of AI requests (no content), 30 days, for cost/abuse limits — covered by "User IDs".
 

@@ -1,5 +1,10 @@
 # Sorlio 1.1.0 — final release report
 
+> Historical report from the previous pass. The current release pass is recorded
+> in [final-release-pass.md](final-release-pass.md). The operator identity is now
+> complete. Optional human content review, historical analytics cleanup and
+> historical profile cleanup are not blockers for this release.
+
 7 October 2026, updated 8 October after the teaching-correctness remediation. Candidate: branch `release/sorlio-production-hardening`.
 Row-by-row matrix evidence: [closure-reconciliation.md](closure-reconciliation.md).
 

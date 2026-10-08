@@ -11,6 +11,7 @@ import { MANAGE_SUBSCRIPTION_URL } from "@/lib/premium/types";
 import { billingSupported, loadOffer, purchasePremium, restorePurchases, type ProductOffer } from "@/lib/premium/playBilling";
 import type { PurchaseState } from "@/lib/premium/purchase";
 import { FEATURES, FREE_DAILY_NEW_SAVES } from "@/lib/access/features";
+import { LEGAL } from "@/lib/legal";
 
 /** UK launch price, used only for information outside the Android app. Checkout always shows Google Play's price. */
 const UK_LAUNCH_PRICE = "£3.99";
@@ -249,8 +250,8 @@ export default function PremiumPageClient() {
         {purchase.phase === "ownership-conflict" && (
           <p className="mt-2 text-sm text-ink-muted">
             Need help? Email{" "}
-            <a href="mailto:sorlio@proton.me" className="font-semibold text-brand underline underline-offset-2">
-              sorlio@proton.me
+            <a href={`mailto:${LEGAL.contactEmail}`} className="font-semibold text-brand underline underline-offset-2">
+              {LEGAL.contactEmail}
             </a>{" "}
             from either Google account. We&rsquo;ll never show one account&rsquo;s details to the other.
           </p>

@@ -49,8 +49,7 @@ your learning data so it syncs — not your name or photo. AI features send only
 the text you ask about. Delete your account at any time from Settings.
 
 For learners aged 13 and over. Sorlio's French content is reviewed by machine
-checks; [only add "reviewed by a French teacher" after the human sign-off in
-docs/review/french-human-review.md].
+checks.
 
 ## Claims checklist (must all hold on the submitted build)
 

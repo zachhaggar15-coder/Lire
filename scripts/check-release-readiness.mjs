@@ -4,7 +4,7 @@
  *
  *   - legal placeholders in src/lib/legal.ts (operator identity, region, dates);
  *   - Android build facts (versionCode, unused permissions);
- *   - content awaiting human review.
+ *   - optional content review progress (advisory, not a launch blocker).
  *
  * Exit code 1 while anything is outstanding. Not part of `npm test`: an
  * unfinished release is not a failing build.
@@ -18,6 +18,7 @@ const { LEGAL, isPlaceholder } = await import("../src/lib/legal.ts");
 
 const outstanding = [];
 const done = [];
+const advisory = [];
 
 for (const [key, value] of Object.entries(LEGAL)) {
   if (typeof value === "string" && isPlaceholder(value)) outstanding.push(`legal: set LEGAL.${key} in src/lib/legal.ts (currently ${value})`);
@@ -37,16 +38,17 @@ const reviewDocs = [
 for (const [path, label] of reviewDocs) {
   const url = new URL(`../${path}`, import.meta.url);
   if (!existsSync(url)) {
-    outstanding.push(`review: ${label} package missing (${path})`);
+    advisory.push(`review: ${label} package missing (${path})`);
     continue;
   }
   const text = readFileSync(url, "utf8");
   const unreviewed = (text.match(/\|\s*\|\s*$/gm) ?? []).length;
-  if (unreviewed) outstanding.push(`review: ${label} has ${unreviewed} row(s) without a verdict (${path})`);
+  if (unreviewed) advisory.push(`review: ${label} has ${unreviewed} row(s) without a verdict; optional future review (${path})`);
   else done.push(`review: ${label} complete`);
 }
 
 for (const line of done) console.log(`  done  ${line}`);
 for (const line of outstanding) console.log(`  TODO  ${line}`);
+for (const line of advisory) console.log(`  INFO  ${line}`);
 console.log(`\n${outstanding.length} outstanding, ${done.length} done`);
 process.exit(outstanding.length ? 1 : 0);

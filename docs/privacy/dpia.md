@@ -2,7 +2,8 @@
 
 **Status: DRAFT for the controller's approval. Not legal advice.**
 **[ADVICE]** marks questions for a qualified adviser. Controller identity:
-see src/lib/legal.ts (placeholders until supplied).
+Zachary Haggar, trading as Sorlio; 58 Ockford Road, Godalming, Surrey,
+GU7 1RF, United Kingdom. Contact: Sorlio@proton.me. Effective 8 October 2026.
 
 ## 1. Why a DPIA
 
@@ -16,7 +17,7 @@ be accessed by children.
 | Purpose | Data | Subjects | Lawful basis (UK GDPR) | Where | Retention |
 |---|---|---|---|---|---|
 | Reading, learning (no account) | Learning data | All users | Not processed by us (device only) | Device | Until cleared/uninstalled |
-| Account | Email, account ID, Google subject ID, sign-in records (Supabase) | Account holders | Contract (6(1)(b)) | Supabase ([region]) | Until deletion |
+| Account | Email, account ID, Google subject ID, sign-in records (Supabase) | Account holders | Contract (6(1)(b)) | Supabase (EU, Frankfurt, Germany) | Until deletion |
 | Sync | Learning data; imported texts only with opt-in | Account holders | Contract | Supabase | Until deletion / opt-out; deletion records 180 days |
 | Premium | Play purchase token, order ID, state, expiry | Subscribers | Contract; legal obligation where applicable | Supabase; Google Play | While account exists; notification log 90 days (hashed token) |
 | AI features | Word/sentence/text the reader asks about, reading level; daily request count | Premium subscribers | Contract | OpenAI (US); count in Supabase | Not stored by Sorlio; OpenAI up to 30 days (abuse); counts 30 days |

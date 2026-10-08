@@ -35,7 +35,7 @@ const sections: Section[] = [
     body: (
       <>
         <p>
-          Sorlio is provided by {LEGAL.operatorLegalName} ({LEGAL.operatorCountry}), referred to here as &ldquo;Sorlio&rdquo;, &ldquo;we&rdquo; or &ldquo;us&rdquo;. We are the controller of the personal data described below. This policy covers the Sorlio website, the installed web app and the Android app.
+          Sorlio is operated by {LEGAL.operatorLegalName} ({LEGAL.operatorCountry}), referred to here as &ldquo;Sorlio&rdquo;, &ldquo;we&rdquo; or &ldquo;us&rdquo;. The data controller for Sorlio is {LEGAL.operatorLegalName}. This policy covers the Sorlio website, the installed web app and the Android app.
         </p>
         <p className="mt-2">
           Questions, requests and complaints: <Mail />. Postal address: {LEGAL.operatorAddress}.

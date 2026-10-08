@@ -23,15 +23,21 @@ The asset-links endpoint intentionally returns an empty valid array until a fing
 
 ## Premium subscription setup
 
-Sorlio uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, create an auto-renewing monthly subscription with product ID `sorlio_premium_monthly`, a GBP base price of £3.99, and the required regional prices. Access has three levels, defined in `src/lib/access/limits.ts`: a guest gets one article and three word lookups per day, a free signed-in account gets three articles and ten lookups, and Premium removes both limits and unlocks the advanced study features. Reopening an already-claimed article on the same day stays free at every level.
+Sorlio uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, use an auto-renewing monthly subscription with product ID `sorlio_premium_monthly`, a GBP base price of £3.99, and the required regional prices. There is no trial, introductory offer, annual or lifetime plan. Reading, word lookup and Review are free without an account; free users can save five new words a day. Premium adds unlimited saving and the AI features. Purchases require Google sign-in for ownership and restore support.
 
-Run every file in `supabase/migrations/` once, in filename order (`0001` through `0007`). They are idempotent and create every table the app queries, including the server-only `sorlio_subscriptions` entitlement table. See `supabase/migrations/README.md`. Create a Google Play service account, grant it access to subscription information and purchase acknowledgement, and configure the following production variables:
+Production is already at schema version 12 with migrations `0001` through `0012` applied and aligned. Do not reapply migrations for this release. The Google Play verification service account needs access to subscription information and purchase acknowledgement. The production billing variables are:
 
 - `NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
 - `GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
 - `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON=<complete service-account JSON on one line>`
 
-Premium purchases require the existing passwordless Sorlio account. This is intentional: the account connects a verified Google Play purchase to an entitlement that can also be used on the website. The web version does not direct Play-app users to an external payment method.
+Premium purchases require the existing Google-sign-in Sorlio account. The account connects a verified Google Play purchase to an entitlement that can also be used on the website. The web version does not direct Play-app users to an external payment method.
+
+Authenticated RTDN uses a Google Cloud Pub/Sub push subscription to
+`https://sorlio.site/api/premium/rtdn`, with `RTDN_PUSH_AUDIENCE` set to that
+audience and `RTDN_PUSH_SERVICE_ACCOUNT` set to the actual push service account.
+Do not invent either value. Configure the topic in Play Console and send a test
+notification; unauthenticated requests must return 401.
 
 ## Temporary closed-test Premium access
 
