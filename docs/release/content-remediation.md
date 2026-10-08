@@ -66,7 +66,7 @@ The "% of words may be new to you" estimate stays behind •••, worded as an
 | Gist | The text has a real English summary, and at least two unrelated texts have one too | Provenance-only blurbs ("An unabridged extract (162 words) from…", i.e. all 490 classics); fewer than two genuine distractors | No question. There are no invented backup options; same-story articles are excluded as wrong answers; the answer position is stable per text and not fixed. |
 | Tone / stance / confidence | Never | Always: they were keyword counts that could not separate a character's or quoted speaker's feelings from the author's, missed negation, and were applied to classics filed as "news-style" | None. No curated tone questions existed. |
 | Grammar notes | Only on positive evidence | être + participle of a verb that does not take être (passive or description); "s'il"; "ne … plus rien que"; "il va cher"; si not right after demander/savoir | Pronominal verbs get a broad, accurate note; "Reciprocal" only with mutuellement / l'un l'autre / entre eux; "Reflexive" only for grooming verbs. The word card no longer gives a past tense for "nous sommes portés" or "elle est belle". |
-| Cloze | One content word with at least two options of the same class, same gender and number (nouns), same ending (verbs, adjectives) and same onset (elision), plus a dependable English clue | Proper nouns, numbers, elided forms, function or ambiguous words, too few fair options | No cloze for that sentence. The adjacent-two-word "phrase" cloze was removed. Options are in a stable order. |
+| Cloze (revised after independent verification) | The sentence establishes the word's role: noun after a determiner, finite verb after a subject pronoun, determiner + noun + adjective, or pronoun + verb + adverb. The dictionary must agree. There must be at least two options seen in the same role and agreement in the reading, excluding its repeated topic words. The word must have a single sense in a curated entry, read in this sentence (high confidence, or medium agreeing with that sense). The clue is shown with the question. | Role not established by position; auxiliaries, modals, infinitives; nous/vous without their endings; expression-scoped meanings; multi-sense or generated-only words; options that can mean the same | No cloze for that sentence; the session simply has fewer activities |
 
 ## 3. Content changes
 
@@ -194,6 +194,40 @@ Final gate on `a8408aa`:
 - public-domain-provenance (relabel length rule)
 
 **Performance.** The cloze gates first made a practice plan about 0.5 s slower (corpus sweep 647 s). Memoised word profiles and a lazy clue check brought cloze down to 25–45 ms per plan (sweep 154 s). The remaining 200–650 ms per plan is the meaning-inference step, which this pass didn't change.
+
+## 10b. Independent verification follow-up (two blockers)
+
+**Cloze.** The verifier reproduced four invalid items:
+- plural verbs after "On" (agreement read from "-ent");
+- "sens" taught as "to feel" in "au sens plein";
+- "sommes" clued with "être porté à";
+- "Il fait ___ ce matin" with both beau and chaud.
+
+The generator was rewritten to the rules in the table above. `contextualExerciseGloss` no longer returns an expression's meaning as a single word's clue.
+
+On a sample of 156 readings (25 per level, the six first readings, and classics), an independent checker looked at POS, agreement, span, expression-vs-token clues, duplicates and idiom slots:
+
+| Generator | Items | Items failing the checker |
+|---|---|---|
+| Previous | 2,783 | 627 |
+| Revised | 853 | 0 |
+
+Manual inspection also removed:
+- "maillot" = "bathing suit": generated-only dictionary sense;
+- "rapport" = "report" in "le rapport de la France à elle-même": multi-sense word.
+
+**Comprehension cache.** An intermediate version-3 build stored "no gist" abstentions that the next build accepted. The cache is now version 4, and an abstention is never served from the cache. Only generated questions are affected (tested), and reverting either change fails a test.
+
+Commits:
+- `1adf072` fix: make generated cloze fail closed
+- `aa2deb8` fix: invalidate stale comprehension abstentions
+- `af94736` test: align learner-meaning checks with word-scoped clues
+
+Final gate:
+- `node scripts/run-tests.mjs`: 54 suites, 10,712 checks, 0 failed.
+- `tsc` 0, `eslint` 0, `npm audit --omit=dev` 0.
+- `next build` passes.
+- Translation binding: 1,358 of 1,358.
 
 ## 11. Commits
 
