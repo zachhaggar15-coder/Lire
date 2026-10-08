@@ -4,6 +4,8 @@ import { lookupWord } from "@/lib/dictionary/lookup";
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import { hashString } from "@/lib/hash";
 import type { Token } from "@/lib/words";
+import { hasWordClass } from "@/lib/dictionary/partOfSpeech";
+import { isEtreAuxiliaryParticiple } from "@/lib/dictionary/etreAuxiliary";
 
 export type ContextualTranslationConfidence = "high" | "medium" | "low";
 
@@ -475,7 +477,32 @@ function inferGrammar(
   const previousAux = previous ? AUXILIARY_FORMS[previous] : undefined;
   let grammar: ContextualTranslationGrammar | null = null;
 
-  if (previousAux && (partOfSpeech.includes("participle") || looksLikePastParticiple(clean))) {
+  // After être, a participle is a compound past only for a verb that takes
+  // être ("elle est partie") or a pronominal verb ("elle s'est levée").
+  // Otherwise it is a passive or a description ("nous sommes portés à",
+  // "elle est fatiguée"), and an adjective after être ("elle est belle") is
+  // no participle at all, so no tense is claimed for either.
+  // "nous"/"vous" before the auxiliary is usually the subject ("nous sommes
+  // portés"); it is a pronominal clitic only when doubled ("nous nous sommes
+  // levés").
+  const beforeAux = nthWordBefore(tokens, tokenIndex, 2) ?? "";
+  const pronominalCompound =
+    ["s'", "se", "m'", "me", "t'", "te"].includes(beforeAux) ||
+    (["nous", "vous"].includes(beforeAux) && nthWordBefore(tokens, tokenIndex, 3) === beforeAux);
+  const etreCompound = previousAux?.lemma !== "etre" || isEtreAuxiliaryParticiple(token.clean) || pronominalCompound;
+  if (
+    previousAux &&
+    !etreCompound &&
+    !hasWordClass(lookup.partOfSpeech, "adjective") &&
+    (partOfSpeech.includes("participle") || isVerbLookup(lookup))
+  ) {
+    grammar = {
+      mood: "indicative",
+      person: previousAux.person,
+      number: previousAux.number,
+      form: "past participle after être (a passive or a description, not a past tense)",
+    };
+  } else if (previousAux && etreCompound && (partOfSpeech.includes("participle") || looksLikePastParticiple(clean))) {
     grammar = {
       tense: previousAux.tense ? `compound ${previousAux.tense}` : "passe compose",
       mood: "indicative",
@@ -3420,7 +3447,7 @@ function shouldPreferPronoun(clean: string, previous: string | null, next: strin
 function looksLikeNounContext(previous: string | null, next: string | null): boolean {
   if (!next) return true;
   const nextLookup = lookupWord(next);
-  if ((nextLookup.partOfSpeech ?? "").toLowerCase().includes("verb")) return false;
+  if (hasWordClass(nextLookup.partOfSpeech, "verb")) return false;
   return !previous || ["dans", "sur", "avec", "pour", "de", "a", "chez"].includes(previous);
 }
 
@@ -3460,7 +3487,7 @@ function toGerund(verb: string): string {
 }
 
 function isVerbLookup(lookup: DictionaryLookupResult): boolean {
-  return (lookup.partOfSpeech ?? "").toLowerCase().includes("verb");
+  return hasWordClass(lookup.partOfSpeech, "verb");
 }
 
 function isProperNounLookup(lookup: DictionaryLookupResult): boolean {
