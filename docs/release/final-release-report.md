@@ -1,11 +1,28 @@
 # Sorlio 1.1.0 — final release report
 
-7 October 2026. Candidate: branch `release/sorlio-production-hardening`.
+7 October 2026, updated 8 October after the teaching-correctness remediation. Candidate: branch `release/sorlio-production-hardening`.
 Row-by-row matrix evidence: [closure-reconciliation.md](closure-reconciliation.md).
 
 ## 1. Final verdict
 
 **CONDITIONAL GO**
+
+An independent editorial, CEFR and pedagogy audit (8 Oct) found confidently
+wrong teaching, which put the release at **NO-GO**. Examples:
+- malformed generated examples ("J'aime hier.");
+- provenance offered as a gist answer;
+- keyword-inferred tone questions;
+- wrong grammar notes;
+- weak cloze;
+- a fake "B1" on every news article;
+- local French and translation errors;
+- clear CEFR outliers.
+
+Every machine-fixable finding is now fixed and tested, and the walkthrough
+caught and fixed three more of the same kind
+([content-remediation.md](content-remediation.md)). What remains is human
+sign-off, so the verdict returns to CONDITIONAL GO on the criteria the
+developer set, not by default.
 
 The code is release-ready: every automatable finding is fixed and verified,
 and the fresh red-team pass found no new defect. The release still depends on
@@ -19,7 +36,7 @@ done, the honest answer to the closing question is no.
 | Item | Value |
 |---|---|
 | Branch | `release/sorlio-production-hardening` (41 commits ahead of `main`) |
-| Code commit | `a297814` (onboarding and hierarchy pass; preceded by the learner-trust pass `8d07282` and the vocabulary fix `a147d90`) |
+| Code commit | `a8408aa` (teaching-correctness remediation; preceded by the onboarding pass `a297814`, the learner-trust pass `8d07282` and the vocabulary fix `a147d90`) |
 | Production web deployment | **Not this build.** Vercel denied read access to deployments; the last local deploy worktree is `7ab5195` ("closed-test update 1"), an ancestor of this branch. Unconfirmed. |
 | Production database | `blumuxrepzzdwwzomffx`, schema version 12, migrations 0001–0012 aligned |
 | Android | Source 1.1.0, versionCode 9 |
@@ -27,6 +44,17 @@ done, the honest answer to the closing question is no.
 
 ## 3. What changed
 
+- **Teaching correctness (8 Oct, [content-remediation.md](content-remediation.md)):** generated teaching now abstains when it can't be right.
+  - Examples come from the reading or a curated dictionary entry, or are omitted.
+  - Gist questions need real summaries: never provenance, never same-story distractors, and the answer isn't fixed in first place.
+  - No inferred tone questions.
+  - Grammar notes are conservative (no passé composé for "nous sommes portés"; reciprocal only with an explicit marker).
+  - Cloze only with fair options.
+  - News has no fake level. The estimator was rejected after a 1,355-text benchmark (24% exact, never above B1 for C1/C2).
+  - 7 French and 8 translation fixes.
+  - 17 clear CEFR outliers relabelled, and two English-language "French" extracts removed.
+  - Review sessions default to 20 words.
+  - Stale generated content is invalidated without touching learning data.
 - **Onboarding and hierarchy (8 Oct, [onboarding-hierarchy-pass.md](onboarding-hierarchy-pass.md)):** first run is two screens and one decision, then straight into a reading (tester feedback); help appears when it matters; Lessons leads with the next action; "You" is a learner hub with Settings behind a gear; Review, completion and News cards show less by default with everything still one tap away.
 - **Learner trust (8 Oct, [learner-trust-pass.md](learner-trust-pass.md)):** progress shows activity, not invented proficiency; no data is "not measured yet", never 0%; reading time is active minutes or "about N min"; streaks use the local calendar day; imported texts can be edited, are General by default and are confirmed before deletion; phrases and summaries are never silently dropped; history is snapshotted; nothing rewards needing less help; phrases follow the word model; hide-source is limited to real news with Undo; Saved for later is visible; reader, listening, onboarding and rating copy match behaviour; the fourth tab is "You".
 - **Vocabulary/Review (V01, raised by the developer):** a word is in Review or not — the reader shows exactly "Add to review" or "Remove from review". Removed the "Already known" dead end, the CEFR seed of 500–8,000 "known" lemmas (the level is now an estimate computed on demand, used only for difficulty and recommendations), and automatic graduation out of Review. "Remove from review" keeps the card's history; adding it back is not a new save, locally or on the server.
@@ -56,9 +84,9 @@ All 82 matrix rows are reconciled in [closure-reconciliation.md](closure-reconci
 
 ## 5. Test results
 
-Final run on `a297814`:
+Final run on `a8408aa`:
 
-- `node scripts/run-tests.mjs`: **52 suites, 52 passed · 10,590 checks, 0 failed** (learner-trust `8d07282`: 51 / 10,549; vocabulary fix `a147d90`: 50 / 10,470; earlier candidate `02e1535`: 49 / 10,405).
+- `node scripts/run-tests.mjs`: **53 suites, 53 passed · 10,684 checks, 0 failed** (onboarding `a297814`: 52 / 10,590; learner-trust `8d07282`: 51 / 10,549; vocabulary fix `a147d90`: 50 / 10,470; earlier candidate `02e1535`: 49 / 10,405).
 - `tsc --noEmit`: 0 errors. `eslint src scripts`: 0 problems.
 - `next build`: succeeds (verified in a clean worktree, and driven in a browser).
 - `npm audit --omit=dev`: **0 vulnerabilities**. Full audit: 8 (6 high, 2 moderate), all build-time only (Tailwind 3's file watcher and the ESLint plugin). Accepted; fixing needs a Tailwind 4 migration.
@@ -155,8 +183,18 @@ The Children's Code assessment and DPIA are drafted but not approved (L01, L02).
 ## 12. Content quality
 
 - **Grammar:** orthography and 25 semantic issues corrected and guarded by 2279 checks. **Not human-reviewed:** 304 rows await a qualified reviewer (G15). No "teacher-reviewed" claim is made.
-- **Corpus:** 490 contiguous extracts from 15 works, provenance-checked against Project Gutenberg sources. Editorial matter, synopses and a racial slur are excluded. All 1360 translations are bound to their current text.
-- **Human review remaining:** French sign-off (304 rows); teen-suitability spot check (55 rows, plus a full read-through of the flagged works).
+- **Corpus:** 488 contiguous extracts from 14 works, provenance-checked against Project Gutenberg sources. Editorial matter, synopses, a racial slur and two English-language notes are excluded. All 1,358 translations are bound to their current text.
+- **Generated teaching:** fails closed (examples, gist, tone, grammar notes, cloze); see content-remediation.md. CEFR is approximate: 17 clear outliers relabelled, borderline cases left and listed.
+- **Human review remaining:**
+  - French sign-off (304 rows).
+  - Teen-suitability spot check (54 rows, plus a full read-through of the flagged works).
+  - The content review package ([content-human-review.md](../review/content-human-review.md)), covering:
+    - 17 relabels to confirm;
+    - 7 uncertain CEFR decisions, including the B1-classics policy;
+    - 8 French items;
+    - 8 translations;
+    - 2 suitability decisions;
+    - 3 grammar-wording questions.
 
 ## 13. Polish scorecard (1–10)
 
