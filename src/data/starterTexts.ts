@@ -1410,7 +1410,7 @@ Julie est ma sœur, mais c'est aussi ma meilleure amie.`,
     preview: "Le dimanche, nous allons chez mes grands-parents.",
     blurbEn:
       "A full Sunday at the grandparents' house in the country: grandpa's roast chicken, grandma's stories from her childhood, a walk to see the neighbour's horses, and cake before the drive home.",
-    body: `Le dimanche, nous allons chez mes grands-parents. Ils habitent à la campagne, dans une maison blanche. La route dure une heure.
+    body: `Le dimanche, nous allons chez mes grands-parents. Ils habitent à la campagne, dans une maison blanche. Le trajet dure une heure.
 
 Mon grand-père prépare le déjeuner : un poulet avec des légumes. Ça sent très bon. « À table ! » dit-il à midi.
 
@@ -1855,7 +1855,7 @@ P.S. : J'envoie une photo de la plage. Regarde bien la bouée jaune !`,
       "An autumn walk in the park: red and gold trees, children jumping in leaf piles, chestnuts in coat pockets, and a simple answer to why the leaves change colour.",
     body: `C'est l'automne, ma saison préférée. Les arbres changent de couleur.
 
-Cet après-midi, je marche dans le grand parc. Les feuilles ne sont plus vertes. Elles sont rouges, oranges, jaunes, marron. Le grand arbre près du lac est complètement doré.
+Cet après-midi, je marche dans le grand parc. Les feuilles ne sont plus vertes. Elles sont rouges, orange, jaunes et marron. Le grand arbre près du lac est complètement doré.
 
 Pourquoi les feuilles changent-elles de couleur ? Ma fille me pose la question. En été, les feuilles sont vertes. En automne, les jours deviennent courts et froids. L'arbre se prépare pour l'hiver. Avant de tomber, les feuilles montrent leurs autres couleurs.
 
@@ -2219,7 +2219,7 @@ Le samedi matin a été étrange. Au petit-déjeuner, ma main cherchait le tél�
 
 Le plus difficile ? Les petits moments vides, comme la file d'attente à la boulangerie. D'habitude, je remplis ces moments avec l'écran. Samedi, je les ai juste vécus. Au début, c'était inconfortable. Ensuite, c'est devenu reposant.
 
-L'après-midi, j'ai fait des choses oubliées. J'ai lu quarante pages d'un roman, d'un coup. J'ai appelé ma grand-mère depuis le vieux téléphone fixe ; nous avons parlé une heure, et elle était si contente.
+L'après-midi, j'ai fait des choses que je ne faisais plus. J'ai lu quarante pages d'un roman, d'un coup. J'ai appelé ma grand-mère depuis le vieux téléphone fixe ; nous avons parlé une heure, et elle était si contente.
 
 Le soir, j'ai remarqué une chose bizarre : la journée m'a semblé longue et pleine. D'habitude, mes samedis passent à toute vitesse.
 
@@ -5302,7 +5302,7 @@ Elle m'envoie un message : « Ma première nuit ! J'ai un peu peur. Mais ça va.
       "The first day back after the summer: new shoes, a new classroom, nervous stomachs, and finding out who's in your class. (Section: At school, 1/5.)",
     body: `C'est le jour de la rentrée. Après deux mois de vacances, l'école recommence.
 
-Hier soir, je prépare mon sac. Des cahiers neufs, des stylos. Tout est propre et neuf.
+Mon sac est prêt depuis hier soir. Des cahiers neufs, des stylos. Tout est propre et neuf.
 
 Ce matin, je me réveille tôt. J'ai un peu mal au ventre.
 
@@ -7335,7 +7335,7 @@ Les premières semaines, nous nous sommes écrit tous les jours. Puis les messag
 
 Il y a aussi le décalage horaire : six heures de différence. Quand je finis ma journée, il est encore au travail. Quand il est libre, je dors.
 
-Alors nous avons décidé quelque chose. Le dimanche matin, à dix heures pour moi et quatre heures pour lui, nous nous appelons pendant une heure.
+Alors nous avons décidé quelque chose. Le dimanche, à seize heures pour moi et dix heures du matin pour lui, nous nous appelons pendant une heure.
 
 Nous le faisons depuis huit mois, presque chaque dimanche.
 
@@ -19984,7 +19984,7 @@ Une amie m'a parlé des friperies de son quartier, où l'on trouve des vêtement
 
 La première fois, j'ai passé presque deux heures dans un petit magasin. Il fallait chercher, essayer, comparer.
 
-J'ai trouvé une veste en cuir magnifique, à un prix bien plus bas que dans un magasin neuf.
+J'ai trouvé une veste en cuir magnifique, bien moins chère qu'une veste neuve en magasin.
 
 Depuis, j'y retourne régulièrement. Chaque visite est différente : on ne sait jamais ce qu'on va trouver.
 
@@ -20635,7 +20635,7 @@ Après une heure, j'ai reculé pour regarder mon travail. La couleur était bien
 
 J'ai hésité un moment, un peu déçu. Puis j'ai décidé de continuer quand même, en me disant que ça sécherait peut-être plus clair.
 
-Une fois sec, la couleur était en effet plus douce que prévu, à mon grand soulagement.
+Une fois le mur sec, la couleur était en effet plus douce que prévu, à mon grand soulagement.
 
 Il m'a fallu tout le week-end pour finir les quatre murs.
 
