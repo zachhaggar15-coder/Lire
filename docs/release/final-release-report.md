@@ -19,7 +19,7 @@ done, the honest answer to the closing question is no.
 | Item | Value |
 |---|---|
 | Branch | `release/sorlio-production-hardening` (41 commits ahead of `main`) |
-| Code commit | `a147d90` (vocabulary/Review fix; later commits are documents only) |
+| Code commit | `8d07282` (learner-trust pass; preceded by the vocabulary/Review fix `a147d90`) |
 | Production web deployment | **Not this build.** Vercel denied read access to deployments; the last local deploy worktree is `7ab5195` ("closed-test update 1"), an ancestor of this branch. Unconfirmed. |
 | Production database | `blumuxrepzzdwwzomffx`, schema version 12, migrations 0001–0012 aligned |
 | Android | Source 1.1.0, versionCode 9 |
@@ -27,6 +27,7 @@ done, the honest answer to the closing question is no.
 
 ## 3. What changed
 
+- **Learner trust (8 Oct, [learner-trust-pass.md](learner-trust-pass.md)):** progress shows activity, not invented proficiency; no data is "not measured yet", never 0%; reading time is active minutes or "about N min"; streaks use the local calendar day; imported texts can be edited, are General by default and are confirmed before deletion; phrases and summaries are never silently dropped; history is snapshotted; nothing rewards needing less help; phrases follow the word model; hide-source is limited to real news with Undo; Saved for later is visible; reader, listening, onboarding and rating copy match behaviour; the fourth tab is "You".
 - **Vocabulary/Review (V01, raised by the developer):** a word is in Review or not — the reader shows exactly "Add to review" or "Remove from review". Removed the "Already known" dead end, the CEFR seed of 500–8,000 "known" lemmas (the level is now an estimate computed on demand, used only for difficulty and recommendations), and automatic graduation out of Review. "Remove from review" keeps the card's history; adding it back is not a new save, locally or on the server.
 - **Sync/data safety:** per-identity local partitions; item-level sync with revisions and tombstones (0010); honest per-item sync results; durable writes before UI advances; no silent import eviction; review grades stored before the animation.
 - **Billing/Premium:** server-authoritative entitlement; Play lifecycle (RTDN, re-verification, ownership); a device-cached status can never grant capability; checkout disabled without real Play product details.
@@ -54,10 +55,10 @@ All 82 matrix rows are reconciled in [closure-reconciliation.md](closure-reconci
 
 ## 5. Test results
 
-Final run on `a147d90`:
+Final run on `8d07282`:
 
-- `node scripts/run-tests.mjs`: **50 suites, 50 passed · 10,470 checks, 0 failed** (the previous candidate `02e1535`: 49 suites, 10,405 checks).
-- `tsc --noEmit`: 0 errors. `eslint`: 0 errors (1 warning in the untracked file `show-feedback.mjs`, which is not part of the app).
+- `node scripts/run-tests.mjs`: **51 suites, 51 passed · 10,549 checks, 0 failed** (after the vocabulary fix `a147d90`: 50 suites, 10,470; the earlier candidate `02e1535`: 49 suites, 10,405).
+- `tsc --noEmit`: 0 errors. `eslint src scripts`: 0 problems.
 - `next build`: succeeds (verified in a clean worktree, and driven in a browser).
 - `npm audit --omit=dev`: **0 vulnerabilities**. Full audit: 8 (6 high, 2 moderate), all build-time only (Tailwind 3's file watcher and the ESLint plugin). Accepted; fixing needs a Tailwind 4 migration.
 - Mutation checks this session: CSP weakened → 2 failures; journey difficulty tampered → failure; vocabulary membership: legacy "known" read as in Review → 2 failures, re-adds charged as new saves → 1, lemma matching removed → 4, reactivation removed → 10.
@@ -161,6 +162,7 @@ The Children's Code assessment and DPIA are drafted but not approved (L01, L02).
 | Area | Score |
 |---|---|
 | Reading experience | 8 |
+| Progress and history honesty | 8 (was ~4: invented coverage, 0% for no data, wall-clock minutes) |
 | Word lookup | 8 |
 | Grammar | 7 (pending human review) |
 | Onboarding | 8 |
