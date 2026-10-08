@@ -221,6 +221,8 @@ export const phraseBankDictionary: DictionaryEntry[] = [
   phrase("ouvrir une enquête", ["to open an investigation"], "verb phrase", "B1", ["ouvre une enquête", "ouvrent une enquête", "a ouvert une enquête"]),
   phrase("mener une enquête", ["to conduct an investigation"], "verb phrase", "B1", ["mène une enquête", "mènent une enquête", "a mené une enquête"]),
   phrase("être poursuivi", ["to be prosecuted", "to be sued"], "verb phrase", "B2", ["est poursuivi", "sont poursuivis", "était poursuivi"]),
+  // Not "to be carried": "nous sommes portés à croire" is "we tend to believe".
+  phrase("être porté à", ["to be inclined to", "to tend to"], "verb phrase", "C1", ["suis porté à", "suis portée à", "est porté à", "est portée à", "sommes portés à", "sommes portées à", "êtes portés à", "sont portés à", "sont portées à", "était porté à", "étaient portés à"]),
   phrase("faire l'objet de poursuites", ["to face legal proceedings"], "verb phrase", "B2", ["fait l'objet de poursuites", "font l'objet de poursuites"]),
 
   // High-value verb phrases and support-verb constructions

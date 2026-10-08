@@ -232,6 +232,10 @@ await t.section("Grammar notes (20-24)", async () => {
   };
   const portes = word("Nous sommes portés à tenir nos convictions pour évidentes.", "portés");
   t.check("20. the word card for 'portés' claims no past tense", !/passe compose|compound/.test(portes.grammar?.tense ?? ""), JSON.stringify(portes.grammar));
+  const { resolveMeaning } = await import("../src/lib/dictionary/resolveMeaning.ts");
+  const portesSentence = tokenizeParagraphsToSentences("Nous sommes portés à tenir nos convictions pour évidentes.")[0][0];
+  const portesMeaning = resolveMeaning({ tokens: portesSentence.tokens, tokenIndex: portesSentence.tokens.findIndex((tk) => tk.clean === "portés"), contextSentence: portesSentence.text });
+  t.check("20. and it reads 'être porté à' as 'to be inclined to', not 'to carry'", /inclined|tend/.test(portesMeaning.displayEnglish) && portesMeaning.partOfExpression === "être porté à", portesMeaning.displayEnglish);
   const partie = word("Elle est partie très tôt.", "partie");
   t.check("21. the word card for 'partie' after 'est' is a compound past", /passe compose|compound/.test(partie.grammar?.tense ?? ""), JSON.stringify(partie.grammar));
   const belle = word("Elle est belle ce soir.", "belle");
