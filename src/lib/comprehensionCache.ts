@@ -1,16 +1,12 @@
 import type { ReadingText } from "@/types";
-import {
-  buildGistQuestion,
-  buildToneQuestions,
-  canBuildGistQuestion,
-  type MultipleChoiceQuestion,
-  type ToneQuestion,
-} from "@/lib/comprehension";
+import { buildGistQuestion, type MultipleChoiceQuestion, type ToneQuestion } from "@/lib/comprehension";
 import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { localStore } from "@/lib/localData/store";
 
 const KEY = "lire.comprehensionQuestions.v1";
-const CACHE_VERSION = 2;
+// 3: bundles built before provenance was recognised and before automatic tone
+// questions were withdrawn are discarded, never shown again.
+const CACHE_VERSION = 3;
 let memoryCache: CachedComprehensionQuestionBundle[] = [];
 
 export interface ComprehensionQuestionBundle {
@@ -98,12 +94,13 @@ export function buildComprehensionQuestionBundle(
   candidates: ReadingText[]
 ): ComprehensionQuestionBundle {
   return {
-    gistQuestion: canBuildGistQuestion(text, candidates) ? buildGistQuestion(text, candidates) : null,
-    // Tone questions ask about journalistic framing ("sceptical or
-    // supportive?", "alarmist?"). They're meaningful on news, and nonsense on
-    // a Jules Verne excerpt, so they stay with the category they were written
-    // for.
-    toneQuestions: text.category === "news-style" ? buildToneQuestions(text) : [],
+    gistQuestion: buildGistQuestion(text, candidates),
+    // No tone or stance questions. They were inferred from keyword counts,
+    // which cannot tell the author's view from a quoted or described
+    // character's ("inquiet" in someone's mouth made the author "sceptical"),
+    // nor see negation. A scored answer has to be known, and none of these
+    // were, so Sorlio asks none.
+    toneQuestions: [],
   };
 }
 

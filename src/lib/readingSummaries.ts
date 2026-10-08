@@ -5,6 +5,11 @@ const METADATA_BLURB_PATTERNS = [
   /\bselected as \d+[\s-]word reading practice\b/i,
   /\bimported by you\b/i,
   /\bclose reading with (?:liree|sorlio)'?s\b/i,
+  // The classics' provenance line: "An unabridged extract (162 words) from
+  // Le Comte de Monte-Cristo by Alexandre Dumas, from the Project Gutenberg
+  // edition." It says where the text comes from, not what it says.
+  /\ban unabridged extract\b/i,
+  /\bfrom the project gutenberg edition\b/i,
 ];
 const GENERATED_EXCERPT_TITLE_SUFFIX = /:\s*(extrait\s+\d+)\s*$/i;
 

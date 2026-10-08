@@ -38,15 +38,6 @@ const STOPWORDS = new Set([
   "with",
 ]);
 
-const SIGNALS = {
-  alarmist: ["alerte", "catastrophe", "crise", "danger", "grave", "menace", "panique", "urgence"],
-  amused: ["amusant", "amuse", "drole", "humour", "sourire"],
-  critical: ["accuse", "conteste", "critique", "denonce", "difficile", "inquiet", "inquiete", "probleme", "risque"],
-  supportive: ["aide", "aider", "ameliore", "ameliorer", "apprecie", "encourage", "reussite", "salue", "succes"],
-  cautious: ["devrait", "essai", "estime", "etudie", "eventuel", "possible", "pourrait", "prudence", "selon", "semble"],
-  confident: ["affirme", "assure", "certain", "confirme", "demontre", "prouve", "sans doute"],
-} as const;
-
 function normalise(text: string): string {
   return text
     .toLowerCase()
@@ -103,140 +94,67 @@ function gist(text: ReadingText): string {
   return gistTextForReadingText(text);
 }
 
-function distractorFor(text: ReadingText, fallback: string): string {
-  const summary = gist(text);
-  return summary.length > 120 ? `${summary.slice(0, 117).trim()}...` : summary || fallback;
+/** A real English summary: present, and not provenance ("An unabridged extract … from …"). */
+function hasGenuineSummary(text: ReadingText): boolean {
+  return !!text.blurbEn?.trim() && !isMetadataOnlyBlurb(text.blurbEn);
 }
 
 /**
- * A gist question only works if every option is an English summary the reader
- * can actually weigh up. Texts without an English blurb (the public-domain
- * bank, imported texts) fall back to raw French sentences, which turned the
- * question into "pick which of these four French fragments is the gist" —
- * with the article's own opening line as one of the options. Better to ask
- * nothing than to ask that.
+ * Shared keywords at or above this mean the candidate is probably about the
+ * same story — another outlet's report of the same event, or the next part of
+ * a series — so its summary could also be a right answer.
  */
-export function canBuildGistQuestion(current: ReadingText, candidates: ReadingText[]): boolean {
-  const usable = (text: ReadingText) => !!text.blurbEn?.trim() && !isMetadataOnlyBlurb(text.blurbEn);
-  if (!usable(current)) return false;
-  return candidates.filter((candidate) => candidate.id !== current.id && usable(candidate)).length >= 2;
+const SAME_STORY_OVERLAP = 3;
+
+function sharedKeywords(a: ReadingText, b: ReadingText): number {
+  const bWords = keywordSet(b);
+  let shared = 0;
+  for (const word of keywordSet(a)) if (bWords.has(word)) shared++;
+  return shared;
 }
 
-export function buildGistQuestion(current: ReadingText, candidates: ReadingText[]): MultipleChoiceQuestion {
-  const correct = distractorFor(current, current.preview);
-  const distractors = candidates
-    .filter((candidate) => candidate.id !== current.id)
-    .sort((a, b) => overlapScore(current, b) - overlapScore(current, a))
-    .map((candidate) => distractorFor(candidate, candidate.preview))
-    .filter((choice) => choice && choice !== correct);
-  const backup = [
-    "The article mainly presents a personal travel story with no wider public issue.",
-    "The article mainly reports a sports result and reactions from fans.",
-    "The article mainly explains a scientific discovery and its health effects.",
-  ];
-  const choices = [correct, ...distractors, ...backup].filter((choice, index, arr) => arr.indexOf(choice) === index).slice(0, 4);
-  while (choices.length < 4) choices.push(backup[choices.length % backup.length]);
+function gistDistractors(current: ReadingText, candidates: ReadingText[]): string[] {
+  const correct = gist(current);
+  return candidates
+    .filter((candidate) => candidate.id !== current.id && hasGenuineSummary(candidate))
+    .filter((candidate) => sharedKeywords(current, candidate) < SAME_STORY_OVERLAP)
+    .map((candidate) => ({ candidate, overlap: overlapScore(current, candidate) }))
+    .sort((a, b) => b.overlap - a.overlap)
+    .map(({ candidate }) => gist(candidate))
+    .filter((choice, index, all) => choice && choice !== correct && all.indexOf(choice) === index)
+    .slice(0, 3);
+}
+
+/**
+ * A gist question needs a real summary of this text and at least two real
+ * summaries of other, unrelated texts to stand beside it. Without them Sorlio
+ * asks nothing: no invented options, no French fragments, and never
+ * provenance ("An unabridged extract (162 words) from …") presented as the
+ * meaning of the passage.
+ */
+export function canBuildGistQuestion(current: ReadingText, candidates: ReadingText[]): boolean {
+  return hasGenuineSummary(current) && gistDistractors(current, candidates).length >= 2;
+}
+
+/** Stable per text, so the right answer is not always in the same place and a re-render never moves it. */
+function answerPosition(seed: string, choiceCount: number): number {
+  let hash = 5381;
+  for (let i = 0; i < seed.length; i++) hash = ((hash << 5) + hash) ^ seed.charCodeAt(i);
+  return (hash >>> 0) % choiceCount;
+}
+
+/** Callers check canBuildGistQuestion first; this returns null when the question cannot be built honestly. */
+export function buildGistQuestion(current: ReadingText, candidates: ReadingText[]): MultipleChoiceQuestion | null {
+  if (!hasGenuineSummary(current)) return null;
+  const distractors = gistDistractors(current, candidates);
+  if (distractors.length < 2) return null;
+  const answerIndex = answerPosition(current.id, distractors.length + 1);
+  const choices = [...distractors];
+  choices.splice(answerIndex, 0, gist(current));
   return {
     id: `gist-${current.id}`,
     prompt: "What is the general gist of the article?",
     choices,
-    answerIndex: 0,
+    answerIndex,
   };
-}
-
-function matchSignals(text: string, words: readonly string[]): string[] {
-  const clean = normalise(text);
-  return words.filter((word) => clean.includes(normalise(word)));
-}
-
-function evidenceList(words: string[]): string {
-  const picked = words.slice(0, 3);
-  if (picked.length === 0) return "";
-  if (picked.length === 1) return picked[0];
-  if (picked.length === 2) return `${picked[0]} and ${picked[1]}`;
-  return `${picked[0]}, ${picked[1]}, and ${picked[2]}`;
-}
-
-function strongest(matches: Record<string, string[]>, orderedLabels: string[]): { label: string; words: string[] } {
-  let best = orderedLabels[0];
-  for (const label of orderedLabels) {
-    if ((matches[label]?.length ?? 0) > (matches[best]?.length ?? 0)) best = label;
-  }
-  return { label: best, words: matches[best] ?? [] };
-}
-
-export function buildToneQuestions(text: ReadingText): ToneQuestion[] {
-  const sample = `${text.title} ${text.preview} ${text.body.slice(0, 1200)}`;
-  const matches = {
-    alarmist: matchSignals(sample, SIGNALS.alarmist),
-    amused: matchSignals(sample, SIGNALS.amused),
-    critical: matchSignals(sample, SIGNALS.critical),
-    supportive: matchSignals(sample, SIGNALS.supportive),
-    cautious: matchSignals(sample, SIGNALS.cautious),
-    confident: matchSignals(sample, SIGNALS.confident),
-  };
-
-  const tone = strongest(matches, ["alarmist", "critical", "amused"]);
-  const toneAnswer = tone.words.length === 0 ? 0 : tone.label === "amused" ? 1 : tone.label === "critical" ? 2 : 3;
-  const toneExplanation =
-    tone.words.length === 0
-      ? "The article mostly reports facts without enough loaded language to make the tone amused, critical, or alarmist."
-      : tone.label === "alarmist"
-        ? `Words like ${evidenceList(tone.words)} make the article sound alarmist.`
-        : tone.label === "critical"
-          ? `Words like ${evidenceList(tone.words)} make the article sound critical.`
-          : `Words like ${evidenceList(tone.words)} make the article sound amused.`;
-
-  const stanceAnswer =
-    matches.critical.length > matches.supportive.length
-      ? 0
-      : matches.supportive.length > matches.critical.length
-        ? 1
-        : 2;
-  const stanceExplanation =
-    stanceAnswer === 0
-      ? `Critical markers such as ${evidenceList(matches.critical)} make the author sound sceptical.`
-      : stanceAnswer === 1
-        ? `Positive markers such as ${evidenceList(matches.supportive)} make the author sound supportive.`
-        : "The article does not show a strong sceptical or supportive stance; it mainly reports the situation.";
-
-  const confidenceAnswer =
-    matches.cautious.length > matches.confident.length
-      ? 1
-      : matches.confident.length > matches.cautious.length
-        ? 0
-        : 2;
-  const confidenceExplanation =
-    confidenceAnswer === 1
-      ? `Words like ${evidenceList(matches.cautious)} signal caution rather than certainty.`
-      : confidenceAnswer === 0
-        ? `Words like ${evidenceList(matches.confident)} signal confidence rather than caution.`
-        : "There are not enough clear confidence or caution markers in the article excerpt to choose one strongly.";
-
-  return [
-    {
-      id: `tone-${text.id}`,
-      kind: "tone",
-      prompt: "What tone does the article mostly use?",
-      choices: ["Neutral", "Amused", "Critical", "Alarmist"],
-      answerIndex: toneAnswer,
-      explanation: toneExplanation,
-    },
-    {
-      id: `stance-${text.id}`,
-      kind: "stance",
-      prompt: "Does the author sound sceptical or supportive?",
-      choices: ["Sceptical", "Supportive", "Mostly neutral"],
-      answerIndex: stanceAnswer,
-      explanation: stanceExplanation,
-    },
-    {
-      id: `confidence-${text.id}`,
-      kind: "confidence",
-      prompt: "Does the article sound certain or cautious?",
-      choices: ["Confident", "Cautious", "Not enough evidence"],
-      answerIndex: confidenceAnswer,
-      explanation: confidenceExplanation,
-    },
-  ];
 }
