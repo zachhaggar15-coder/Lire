@@ -393,28 +393,17 @@ function ReviewPageContent() {
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "A quiet place for the words you are learning."} />
-        <div className="flex items-center justify-center gap-10 border-y border-cream-dark/80 py-3 text-center">
-          <div className="min-w-16">
-            <p className="font-numeral text-2xl leading-none text-ink">0</p>
-            <p className="ligne-meta mt-1">Due</p>
-          </div>
-          <div className="h-8 w-px bg-cream-dark" aria-hidden="true" />
-          <div className="min-w-16">
-            <p className="font-numeral text-2xl leading-none text-ink">0</p>
-            <p className="ligne-meta mt-1">Saved</p>
-          </div>
-        </div>
         <div className="mx-auto flex min-h-[48vh] max-w-xs flex-col items-center justify-center pb-16 text-center">
           <div className="flex h-24 w-24 items-center justify-center rounded-full bg-brand-light text-brand" aria-hidden="true">
             <AppIcon name="book" active className="h-11 w-11" />
           </div>
           <h2 className="mt-5 text-xl font-semibold leading-tight text-ink">
-            {articleFilter ? "No words saved from this text" : "Your review deck is ready when you are"}
+            {articleFilter ? "No words saved from this text" : "No words in Review yet"}
           </h2>
           <p className="ligne-body mt-2 max-w-[17rem]">
             {articleFilter
               ? "Add words to review while reading, then come back here."
-              : "Words you add to review while reading show up here."}
+              : "Add useful words while reading and they’ll appear here."}
           </p>
           <Link
             href="/"
@@ -432,12 +421,14 @@ function ReviewPageContent() {
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle="Nothing due right now." />
-        {statsBar}
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
-          <p className="mt-2 text-ink-muted">All caught up — nothing due right now.</p>
-          <p className="mt-1 text-xs text-ink-muted">
+          <p className="text-lg font-semibold text-ink">You&rsquo;re caught up.</p>
+          <p className="mt-1 text-sm text-ink-muted">
             {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
           </p>
+          <Link href="/" className="ligne-pill mt-4 inline-flex bg-brand text-cream">
+            Keep reading
+          </Link>
         </div>
       </div>
     );
@@ -736,17 +727,13 @@ function PracticeHubCard({
 }) {
   const isPhrases = mode === "phrases";
   const focusCount = vocabularyStates.filter((item) => item.state === "fragile" || item.state === "forgotten").length;
-  const readyCopy =
-    dueToday > 0 && newWords > 0
-      ? `${dueToday} due and ${newWords} new`
-      : dueToday > 0
-        ? `${dueToday} due`
-        : `${newWords} new`;
+  const readyCopy = [newWords > 0 ? `${newWords} new` : null, dueToday > 0 ? `${dueToday} due` : null].filter(Boolean).join(" · ");
   const stats = [
     { label: "Due today", value: dueToday },
     { label: "New", value: newWords },
     { label: "Later", value: notDueYet },
     { label: "Total", value: totalLearning },
+    { label: "Need care", value: focusCount },
   ];
   const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
   // The actual session — what tapping "Review" below is about to start —
@@ -754,40 +741,28 @@ function PracticeHubCard({
   // chip intentionally stay uncapped: they're the true due count, giving
   // context for why the button says a smaller number.
   const readyCount = isPhrases ? phraseCount : wordCount;
-  const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
+  const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "word") : isPhrases ? "phrases" : "words";
   const sessionCount = sessionLength != null ? Math.min(readyCount, sessionLength) : readyCount;
   const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
 
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-5">
-      <p className="ligne-label text-brand">Practice hub</p>
-      <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">
+      <h2 className="text-2xl font-semibold leading-tight text-ink">
         {readyCount} {readyNoun} ready
       </h2>
-      <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        {isPhrases ? "Start a quick phrase review." : `Start with a quick ${directionCopy} review.`}
+      {/* About 10 seconds a card: an estimate, so whole minutes. */}
+      <p className="mt-1 text-sm text-ink-muted">
+        About {Math.max(1, Math.round((sessionCount * 10) / 60))} min
+        {!isPhrases && readyCopy ? ` · ${readyCopy}` : ""}
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {isPhrases ? (
-          <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{phraseCount} to review</span>
-        ) : (
-          <>
-            <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
-            {focusCount > 0 && (
-              <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
-                {focusCount} need care
-              </span>
-            )}
-          </>
-        )}
-      </div>
 
       <button
         type="button"
         onClick={onStart}
+        aria-label={`Start review: ${sessionCount} ${sessionNoun}, ${directionCopy}`}
         className="ligne-pill mt-4 min-h-12 w-full bg-brand text-cream"
       >
-        Review {sessionCount} {sessionNoun}
+        Start review
       </button>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
@@ -820,7 +795,7 @@ function PracticeHubCard({
           <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             Stats
           </summary>
-          <div className="mt-3 grid grid-cols-4 gap-2">
+          <div className="mt-3 grid grid-cols-5 gap-2">
             {stats.map((item) => (
               <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
                 <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>

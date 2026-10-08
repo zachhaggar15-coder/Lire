@@ -129,6 +129,18 @@ export function saveOnboarding(
   return next;
 }
 
+/**
+ * A daily goal, chosen after the first reading rather than at sign-up (it is
+ * offered once on the completion screen and can be declined).
+ */
+export function setGoalPreset(goal: OnboardingGoal): void {
+  const current = getOnboardingState();
+  if (!current || !hasStorage()) return;
+  localStore.writeItem(ONBOARDING_KEY, JSON.stringify({ ...current, goalPreset: goal, updatedAt: new Date().toISOString() }));
+  notifyStoreChanged(ONBOARDING_KEY);
+  saveGoals(GOAL_PRESETS[goal]);
+}
+
 export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
   const current = getOnboardingState();
   const next: OnboardingState = {

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
@@ -67,6 +68,10 @@ interface LessonCompleteScreenProps {
     trend: TrendLabel;
   } | null;
   levelLabel?: string;
+  /** Offered once, after a first reading: a small, skippable daily goal. */
+  dailyGoalOffer?: { onChoose: (minutes: 5 | 10 | null) => void } | null;
+  /** Link to Review when this reading saved words. */
+  reviewHref?: string;
 }
 
 /**
@@ -100,7 +105,10 @@ export default function LessonCompleteScreen({
   lookupRate,
   diagnostics,
   levelLabel,
+  dailyGoalOffer,
+  reviewHref = "/review",
 }: LessonCompleteScreenProps) {
+  const [goalAnswered, setGoalAnswered] = useState(false);
   const { context: access } = useAccess();
   const saveAllowed = canSaveNewWord(access).allowed;
   useModalPresence(true);
@@ -209,6 +217,39 @@ export default function LessonCompleteScreen({
           </div>
         )}
 
+        <p className="lesson-complete-card-enter mt-3 text-sm font-semibold text-ink">
+          {[
+            levelProgress.xpAwarded > 0 ? `+${levelProgress.xpAwarded} XP` : null,
+            stats.savedWords > 0 ? `${stats.savedWords} ${stats.savedWords === 1 ? "word" : "words"} saved` : null,
+            streak.count > 0 ? `${streak.count} day streak${streak.extended ? " (+1)" : ""}` : null,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+
+        {dailyGoalOffer && !goalAnswered && (
+          <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
+            <p className="font-semibold text-ink">Want a small daily target?</p>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {([5, 10, null] as const).map((minutes) => (
+                <button
+                  key={String(minutes)}
+                  type="button"
+                  onClick={() => {
+                    dailyGoalOffer.onChoose(minutes);
+                    setGoalAnswered(true);
+                  }}
+                  className={`ligne-pill min-h-11 ${minutes ? "bg-brand-light text-brand" : "bg-cream-fill text-ink-muted"}`}
+                >
+                  {minutes ? `${minutes} min` : "Not now"}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <details className="mt-5">
+          <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold text-ink-muted">Session details</summary>
         {diagnostics && (
           <ReadingDiagnosticsCard
             className="lesson-complete-card-enter mt-4"
@@ -361,6 +402,7 @@ export default function LessonCompleteScreen({
         <div className="mt-4">
           <RateSorlioCard source="lesson_complete" />
         </div>
+        </details>
 
         </div>
       </div>
@@ -377,6 +419,11 @@ export default function LessonCompleteScreen({
         >
           {primaryActionLabel}
         </button>
+        {stats.savedWords > 0 && (
+          <Link href={reviewHref} className="ligne-pill mt-1 flex min-h-11 w-full items-center justify-center bg-brand-light text-brand">
+            Review {stats.savedWords} saved {stats.savedWords === 1 ? "word" : "words"}
+          </Link>
+        )}
         {/* A non-lesson completion (no distinct next text queued) falls back
             to the same map/home label for both actions — showing it twice
             is redundant, not a real second choice. */}

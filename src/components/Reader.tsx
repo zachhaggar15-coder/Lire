@@ -41,6 +41,7 @@ import { getCustomTexts } from "@/lib/customTexts";
 import { canSpeak, speakFrenchParagraphs, stopSpeaking } from "@/lib/speech";
 import { markAudioTipSeen, recordAudioPlayAndCheckTip } from "@/lib/audioTip";
 import { hasSeenReaderTip, markReaderTipSeen } from "@/lib/readerTips";
+import { getOnboardingState, setGoalPreset } from "@/lib/onboarding";
 import { recordLessonCompletedForRating } from "@/lib/ratePrompt";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { getArticleSummary, MAX_SUMMARIES, saveArticleSummary } from "@/lib/articleSummaries";
@@ -2437,6 +2438,16 @@ export default function Reader({ text }: { text: ReadingText }) {
           lookupRate={lessonComplete.lookupRate}
           diagnostics={lessonComplete.diagnostics}
           levelLabel={text.difficulty}
+          dailyGoalOffer={
+            !getOnboardingState()?.goalPreset && !hasSeenReaderTip("daily-goal-offer")
+              ? {
+                  onChoose: (minutes) => {
+                    markReaderTipSeen("daily-goal-offer");
+                    if (minutes) setGoalPreset(minutes === 5 ? "light" : "steady");
+                  },
+                }
+              : null
+          }
         />
       )}
       {blocked && (

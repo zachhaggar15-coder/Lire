@@ -98,7 +98,7 @@ check("route skeletons are delayed and destination-shaped", files.css.includes("
 check("Library owns its route-specific loading state", files.settingsLoading.includes('variant="library"'));
 check("keyboard geometry is exposed to app chrome and sheets", files.viewportHeight.includes("--keyboard-inset") && files.css.includes("html.keyboard-open .bottom-nav") && files.bottomSheet.includes("var(--keyboard-inset)"));
 check("the reader uses aligned controls and a content boundary", files.reader.includes('canUseSpeech ? "grid-cols-2"') && files.reader.includes("border-t border-cream-dark/90 pt-5"));
-check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("Your review deck is ready when you are"));
+check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("No words in Review yet"));
 check("changing review counts retain a stable slot", files.review.includes("ligne-state-slot") && files.review.includes("ligne-value-change"));
 
 console.log("--- full-screen overlay contract ---");

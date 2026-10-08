@@ -8,7 +8,7 @@ import { localStore } from "@/lib/localData/store";
 
 export const READER_TIPS_KEY = "lire.readerTips.v1";
 
-export type ReaderTipId = "tap-word" | "first-save";
+export type ReaderTipId = "tap-word" | "first-save" | "daily-goal-offer";
 
 function readSeen(): Partial<Record<ReaderTipId, true>> {
   if (typeof window === "undefined" || !window.localStorage) return {};
