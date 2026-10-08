@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Category, ReadingText, TextStatus } from "@/types";
+import type { ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
 import { formatDate, toPercent, topicLabel } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
@@ -22,25 +22,12 @@ import {
   unpreferSource,
 } from "@/lib/recommendation/preferences";
 
-const LABEL_STYLES: Record<DifficultyEstimate["label"], string> = {
-  Easy: "bg-brand-light text-brand",
-  "Good level": "bg-accent-sky text-accent-skytext",
-  Stretch: "bg-yellow text-yellow-ink",
-  Hard: "bg-rose text-rose-ink",
-};
-
-const CATEGORY_STYLES: Record<Category, string> = {
-  "news-style": "bg-rose text-rose-ink",
-  sport: "bg-accent-gold text-accent-goldtext",
-  culture: "bg-accent-violet text-accent-violettext",
-  science: "bg-accent-sky text-accent-skytext",
-  "everyday life": "bg-brand-light text-brand",
-};
-
-const STATUS_STYLES: Record<TextStatus, string> = {
-  unread: "bg-cream-fill text-ink-muted",
-  "in-progress": "bg-accent-sky text-accent-skytext",
-  completed: "bg-brand-light text-brand",
+// Fit, in plain words, from the existing personalised difficulty estimate.
+const FIT_LABELS: Record<DifficultyEstimate["label"], string> = {
+  Easy: "Easier",
+  "Good level": "Good fit",
+  Stretch: "Challenging",
+  Hard: "Hard",
 };
 
 const STATUS_LABELS: Record<TextStatus, string> = {
@@ -170,102 +157,59 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     setPreferred(true);
   }
 
+  const fit = difficulty ? FIT_LABELS[difficulty.label] : null;
+  const preview = text.blurbEn ?? text.preview;
   return (
     <article className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <Link
-        href={`/reader/${text.id}`}
-        className="block transition"
-      >
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span
-            className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
-          >
-            {topicLabel(text)}
-          </span>
-          <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
-            {/* The stored level is the one source of truth for the CEFR code:
-                it's what the level filter, the reading bank and the section
-                headings ("A1 readings") all key off. The estimate below powers
-                the personalised label and unfamiliar-word figure instead —
-                showing a second, different CEFR code here meant a text listed
-                as A1 opened as A2. */}
-            {text.difficulty}
-          </span>
-          {difficulty && (
-            <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${LABEL_STYLES[difficulty.label]}`}>
-              {difficulty.label}
-            </span>
-          )}
-          <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
-        </div>
-
-        <h2 lang="fr" className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
-        {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
-        <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>
-
-        {starRating && (
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-brand">
-            {starRating.label}
-          </p>
-        )}
-
-        {difficulty && toPercent(difficulty.unknownWordRatio) >= 8 && (
-          <p className="mt-1 text-xs text-ink-muted">
-            ~{toPercent(difficulty.unknownWordRatio)}% of words may be unfamiliar
-          </p>
-        )}
-
+      {/* What a reader needs to decide: level, length, fit, title, a preview,
+          the source. Everything else is one tap away under "•••". */}
+      <Link href={`/reader/${text.id}`} className="block transition">
+        <p className="text-xs font-semibold text-ink-muted">
+          {/* The stored level is the one source of truth for the CEFR code
+              (filters and section headings key off it); the estimate only
+              gives the personalised fit. */}
+          {text.difficulty} · {text.minutes} min
+          {fit && <span className="text-brand"> · {fit}</span>}
+          {status !== "unread" && <span> · {STATUS_LABELS[status]}</span>}
+        </p>
+        <h2 lang="fr" className="mt-1 font-french text-[21px] leading-tight text-ink">{text.title}</h2>
+        <p lang={text.blurbEn ? "en" : "fr"} className="mt-1 line-clamp-2 text-sm text-ink-muted">{preview}</p>
       </Link>
 
-      <details className="mt-2 text-xs text-ink-muted">
-        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Article details
-        </summary>
-        <p className="mt-1">
-          {sourceTrustLabel(text)}
-          {difficulty ? ` - ${toPercent(difficulty.dictionaryCoverage)}% dictionary coverage` : ""}
+      <div className="mt-3 flex items-center justify-between gap-3">
+        <p className="min-w-0 truncate text-xs text-ink-muted">
+          {learnerSourceLabel(text)}
+          {text.publishedAt && hasHideableSource({ id: text.id, sourceName: text.sourceName }) && <> · {formatDate(text.publishedAt)}</>}
         </p>
-        {reasons.length > 0 && <p className="mt-1">Why: {reasons.join(" - ")}</p>}
-        {text.sourceName && (
-          <p className="mt-1">
-            {text.sourceName}
-            {text.publishedAt && <> {"\u00b7"} {formatDate(text.publishedAt)}</>}
-          </p>
-        )}
-        {text.attributionText && <p className="mt-1">{text.attributionText}</p>}
-        {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
-          <a
-            href={text.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 inline-block underline underline-offset-2"
-          >
-            Read the original source
-          </a>
-        )}
-      </details>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${STATUS_STYLES[status]}`}>
-          {STATUS_LABELS[status]}
-        </span>
         <button
           type="button"
           onClick={handleSaveLater}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-            savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
-          }`}
+          aria-pressed={savedLater}
+          className={`min-h-11 shrink-0 rounded-full px-3 text-xs font-semibold ${savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"}`}
         >
-          {savedLater ? "Saved for later" : "Save for later"}
+          {savedLater ? "Saved" : "Save"}
         </button>
       </div>
 
-      <details className="mt-2">
-        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Tune recommendations
+      <details className="mt-1 text-xs text-ink-muted">
+        <summary className="flex min-h-11 w-12 cursor-pointer list-none items-center text-lg font-bold leading-none text-ink-muted" aria-label="More about this reading">
+          •••
         </summary>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
+        <div className="space-y-1 pb-1">
+          <p>
+            {topicLabel(text)} · {sourceTrustLabel(text)}
+            {difficulty ? ` · ${toPercent(difficulty.dictionaryCoverage)}% dictionary coverage` : ""}
+          </p>
+          {difficulty && toPercent(difficulty.unknownWordRatio) >= 8 && <p>About {toPercent(difficulty.unknownWordRatio)}% of words may be new to you.</p>}
+          {reasons.length > 0 && <p>Why: {reasons.join(" · ")}</p>}
+          {text.attributionText && <p>{text.attributionText}</p>}
+          {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
+            <a href={text.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block underline underline-offset-2">
+              Read the original source
+            </a>
+          )}
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-2" aria-label="Tune recommendations">
           <button
             type="button"
             onClick={() => {
