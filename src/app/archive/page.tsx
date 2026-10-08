@@ -106,7 +106,7 @@ export default function ArchivePage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to You" />
+      <AppBar title="Reading history" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Your most recent completed readings (up to {MAX_ARCHIVE_ENTRIES}).</p>
 
       {summary && (
@@ -155,7 +155,7 @@ export default function ArchivePage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by title or source…"
-              aria-label="Search articles read"
+              aria-label="Search reading history"
               className="w-full rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink shadow-card"
             />
             <div className="flex flex-wrap gap-1.5">

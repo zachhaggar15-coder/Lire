@@ -106,6 +106,7 @@ await t.section("E2: rewards never depend on avoiding help", async () => {
   t.check("the replacements are offered", pool.has("second-pass") || pool.has("grammar-five"));
   const score = gamification.calculateArticleScore({ comprehensionCorrect: 2, comprehensionTotal: 2, inferenceCorrect: 0, inferenceAttempts: 0, translationsUsed: 40, translationBudget: 3, summaryCompleted: true });
   const sameWithoutLookups = gamification.calculateArticleScore({ comprehensionCorrect: 2, comprehensionTotal: 2, inferenceCorrect: 0, inferenceAttempts: 0, translationsUsed: 0, translationBudget: 3, summaryCompleted: true });
+  t.check("no personal best for using fewer translations", !gamification.buildPersonalBests([]).some((best) => /translation/i.test(best.title)));
   t.check("40 lookups score the same as none", score.total === sameWithoutLookups.total, `${score.total} vs ${sameWithoutLookups.total}`);
   const copy = ["src/app/progress/page.tsx", "src/components/diagnostics/ReadingDiagnosticsCard.tsx", "src/lib/practice/diagnosticMessaging.ts", "src/app/archive/page.tsx"].map(read).join("\n");
   t.check("learner-facing copy has no independence/restraint/budget judgement", !/Reading independence|Translation restraint|Translation budget|Independent reading|more independent/i.test(copy));

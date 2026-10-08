@@ -459,8 +459,6 @@ function personalBestIds(completion: Omit<ArticleCompletionRecord, "id" | "xpEar
   const bests: string[] = [];
   if (completion.wordsRead > Math.max(0, ...previous.map((item) => item.wordsRead))) bests.push("Most words read in one article");
   if (completion.score > Math.max(0, ...previous.map((item) => item.score))) bests.push("Highest article score");
-  const completedBudgets = previous.filter((item) => item.challengeCompleted).map((item) => item.translationsUsed);
-  if (completion.challengeCompleted && completion.translationsUsed <= Math.min(Infinity, ...completedBudgets)) bests.push("Fewest translations in a challenge");
   if (completion.comprehensionTotal > 0 && completion.comprehensionCorrect === completion.comprehensionTotal) bests.push("Perfect comprehension");
   return bests;
 }
@@ -847,7 +845,6 @@ export function buildPersonalBests(completions = getArticleCompletions()): Perso
   const longest = [...completions].sort((a, b) => b.wordsRead - a.wordsRead)[0];
   const bestScore = [...completions].sort((a, b) => b.score - a.score)[0];
   const strongestLevel = [...completions].sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
-  const fewestTranslations = [...completions].filter((item) => item.challengeCompleted).sort((a, b) => a.translationsUsed - b.translationsUsed)[0];
   const dayWords = new Map<string, number>();
   for (const completion of completions) {
     const day = localDateKeyOf(completion.completedAt);
@@ -858,7 +855,6 @@ export function buildPersonalBests(completions = getArticleCompletions()): Perso
     { id: "longest", title: "Longest article", value: longest ? `${longest.wordsRead} words` : "No record yet", detail: longest?.title ?? "Complete an article to set this." },
     { id: "highest-level", title: "Highest level article", value: strongestLevel?.difficulty ?? "No record yet", detail: strongestLevel?.title ?? "Try a stretch read." },
     { id: "best-score", title: "Highest article score", value: bestScore ? `${bestScore.score}/100` : "No record yet", detail: bestScore?.title ?? "Finish an article to score it." },
-    { id: "fewest-translations", title: "Fewest translations", value: fewestTranslations ? `${fewestTranslations.translationsUsed}` : "No record yet", detail: "Inside a completed challenge." },
     { id: "longest-streak", title: "Longest streak", value: `${longestStreak()} days`, detail: "Meaningful reading activity only." },
     { id: "most-words-day", title: "Most words in a day", value: mostWords ? `${mostWords[1]} words` : "No record yet", detail: mostWords?.[0] ?? "Read today to start." },
   ];
