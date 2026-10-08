@@ -34,7 +34,8 @@ const FREE_ROWS = [
 
 export default function PremiumPageClient() {
   const { status, loading, refresh } = usePremiumStatus();
-  const signedIn = activeIdentity().kind === "account";
+  // Match SSR during hydration; the account identity lives in browser storage.
+  const [signedIn, setSignedIn] = useState(false);
   const [offer, setOffer] = useState<ProductOffer | null>(null);
   // "loading" until Play answers; "missing" when it returned no product
   // details, in which case checkout is not offered (we never charge against a
@@ -54,6 +55,7 @@ export default function PremiumPageClient() {
   }, []);
 
   useEffect(() => {
+    setSignedIn(activeIdentity().kind === "account");
     setInApp(billingSupported());
     refreshOffer();
   }, [refreshOffer]);

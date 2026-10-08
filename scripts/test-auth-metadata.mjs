@@ -76,7 +76,7 @@ await t.section("the documented backfill cleans rows written before 0012", async
   await h.db.exec("alter table auth.users enable trigger sorlio_strip_user_metadata; alter table auth.identities enable trigger sorlio_strip_identity_data;");
 
   const doc = readFileSync(new URL("../docs/release/auth-metadata-backfill.md", import.meta.url), "utf8");
-  const blocks = [...doc.matchAll(/```sql\n([\s\S]*?)```/g)].map((match) => match[1]);
+  const blocks = [...doc.matchAll(/```sql\r?\n([\s\S]*?)```/g)].map((match) => match[1]);
   const count = async () => {
     const results = await h.db.exec(blocks[0]);
     return results.map((result) => Number(Object.values(result.rows[0])[0]));
