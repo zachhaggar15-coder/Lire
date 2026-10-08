@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Category, ReadingText, TextStatus } from "@/types";
+import type { Difficulty, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
-import { formatCategory, formatDate, toPercent } from "@/lib/format";
+import { formatDate, toPercent, topicLabel } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
-import { getKnownWords } from "@/lib/knownWords";
-import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
-import { trackEvent, trackOnce } from "@/lib/analytics/client";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
+import { editorialLevel, levelFit } from "@/lib/readingLevel";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
+import type { ScoreBreakdown } from "@/lib/recommendation/types";
 import {
   hideSource,
   isSavedForLater,
@@ -18,29 +19,10 @@ import {
   recordArticlePreference,
   removeFromSavedLater,
   saveForLater,
+  hasHideableSource,
+  unhideSource,
   unpreferSource,
 } from "@/lib/recommendation/preferences";
-
-const LABEL_STYLES: Record<DifficultyEstimate["label"], string> = {
-  Easy: "bg-brand-light text-brand",
-  "Good level": "bg-accent-sky text-accent-skytext",
-  Stretch: "bg-yellow text-yellow-ink",
-  Hard: "bg-rose text-rose-ink",
-};
-
-const CATEGORY_STYLES: Record<Category, string> = {
-  "news-style": "bg-rose text-rose-ink",
-  sport: "bg-accent-gold text-accent-goldtext",
-  culture: "bg-accent-violet text-accent-violettext",
-  science: "bg-accent-sky text-accent-skytext",
-  "everyday life": "bg-brand-light text-brand",
-};
-
-const STATUS_STYLES: Record<TextStatus, string> = {
-  unread: "bg-cream-fill text-ink-muted",
-  "in-progress": "bg-accent-sky text-accent-skytext",
-  completed: "bg-brand-light text-brand",
-};
 
 const STATUS_LABELS: Record<TextStatus, string> = {
   unread: "Unread",
@@ -51,14 +33,12 @@ const STATUS_LABELS: Record<TextStatus, string> = {
 interface ReadingCardProps {
   text: ReadingText;
   difficulty?: DifficultyEstimate | null;
-  starRating?: StarRating | null;
   score?: ScoreBreakdown | null;
 }
 
 function recommendationReasons(
   text: ReadingText,
   difficulty: DifficultyEstimate | null | undefined,
-  starRating: StarRating | null | undefined,
   score: ScoreBreakdown | null | undefined
 ): string[] {
   const reasons: string[] = [];
@@ -69,15 +49,17 @@ function recommendationReasons(
   if ((score?.unknownWordTarget ?? 0) >= 0.9) reasons.push("Good new-word range");
   if (text.minutes <= 3) reasons.push("Quick read");
   if (difficulty && difficulty.dictionaryCoverage >= 0.85) reasons.push("Strong dictionary coverage");
-  if (starRating?.stars === 5) reasons.push("Best fit today");
   return [...new Set(reasons)].slice(0, 3);
 }
 
 function sourceTrustLabel(text: ReadingText): string {
   if (text.id.startsWith("custom-")) return "Imported by you";
-  if (text.id.startsWith("pd-")) return "Public-domain bank";
-  if (text.sourceName) return "Live RSS source";
-  return "Built-in practice text";
+  if (text.id.startsWith("pd-")) return "Classic literature";
+  // Starter texts carry a source name ("Written for Sorlio"), so they must be
+  // recognised before the news case or they would be labelled as news.
+  if (text.id.startsWith("starter-")) return "Written for Sorlio";
+  if (text.sourceName) return "News";
+  return "Written for Sorlio";
 }
 
 function learnerSourceLabel(text: ReadingText): string {
@@ -87,36 +69,57 @@ function learnerSourceLabel(text: ReadingText): string {
   return "Practice text";
 }
 
-export default function ReadingCard({ text, difficulty: difficultyProp, starRating, score }: ReadingCardProps) {
+export default function ReadingCard({ text, difficulty: difficultyProp, score }: ReadingCardProps) {
   const [status, setStatus] = useState<TextStatus>("unread");
   const [computedDifficulty, setComputedDifficulty] = useState<DifficultyEstimate | null>(null);
   const [hidden, setHidden] = useState(false);
   const [savedLater, setSavedLater] = useState(false);
   const [preferred, setPreferred] = useState(false);
+  // Set when the reader hid this card's source just now, so the card can offer Undo.
+  const [justHid, setJustHid] = useState(false);
+  const [tuned, setTuned] = useState<"more" | "less" | null>(null);
+  const [readerLevel, setReaderLevel] = useState<Difficulty | null>(null);
   const difficulty = difficultyProp !== undefined ? difficultyProp : computedDifficulty;
-  const reasons = recommendationReasons(text, difficulty, starRating, score);
+  const reasons = recommendationReasons(text, difficulty, score);
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
-    setHidden(isSourceHidden(text.sourceName));
+    setHidden(hasHideableSource({ id: text.id, sourceName: text.sourceName }) && isSourceHidden(text.sourceName));
     setPreferred(isSourcePreferred(text.sourceName));
     setSavedLater(isSavedForLater(text.id));
+    setReaderLevel(getSelectedReadingLevel());
     if (difficultyProp !== undefined) return;
     if (text.language !== "en") {
-      setComputedDifficulty(estimateDifficulty(text.body, new Set(getKnownWords())));
+      setComputedDifficulty(estimateDifficulty(text.body, getEstimatedKnownVocabulary()));
     }
   }, [difficultyProp, text.body, text.id, text.language, text.sourceName]);
 
-  useEffect(() => {
-    trackOnce(`reading-card-viewed:${text.id}`, "reading_card_viewed", {
-      articleId: text.id,
-      articleSourceType: sourceTrustLabel(text),
-      articleCategory: text.category,
-      articleDifficulty: difficulty?.cefr ?? text.difficulty,
-      estimatedReadingTime: text.minutes,
-    });
-  }, [difficulty?.cefr, text]);
 
+  if (hidden && justHid && text.sourceName) {
+    return (
+      <div role="status" className="flex flex-wrap items-center justify-between gap-2 rounded-card border border-cream-dark bg-cream-card px-4 py-3 text-sm text-ink-muted">
+        <span>
+          Readings from <span className="font-semibold text-ink">{text.sourceName}</span> are hidden.
+        </span>
+        <span className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              unhideSource(text.sourceName!);
+              setHidden(false);
+              setJustHid(false);
+            }}
+            className="font-semibold text-brand underline underline-offset-2"
+          >
+            Undo
+          </button>
+          <Link href="/sources" className="text-xs underline underline-offset-2">
+            Manage hidden sources
+          </Link>
+        </span>
+      </div>
+    );
+  }
   if (hidden) return null;
 
   function handleSaveLater() {
@@ -133,6 +136,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     if (!text.sourceName) return;
     hideSource(text.sourceName);
     setHidden(true);
+    setJustHid(true);
   }
 
   function handlePreferSource() {
@@ -146,126 +150,82 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
     setPreferred(true);
   }
 
+  // Level and fit are stated only from an assigned level, compared with the
+  // level the reader chose. News has no level, so it shows neither.
+  const level = editorialLevel(text);
+  const fit = level && readerLevel ? levelFit(level, readerLevel) : null;
+  const preview = text.blurbEn ?? text.preview;
   return (
     <article className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <Link
-        href={`/reader/${text.id}`}
-        onClick={() =>
-          trackEvent("reading_card_selected", {
-            articleId: text.id,
-            articleSourceType: sourceTrustLabel(text),
-            articleCategory: text.category,
-            articleDifficulty: difficulty?.cefr ?? text.difficulty,
-            estimatedReadingTime: text.minutes,
-          })
-        }
-        className="block transition"
-      >
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span
-            className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
-          >
-            {formatCategory(text.category)}
-          </span>
-          <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
-            {/* The stored level is the one source of truth for the CEFR code:
-                it's what the level filter, the reading bank and the section
-                headings ("A1 readings") all key off. The estimate below powers
-                the personalised label and unfamiliar-word figure instead —
-                showing a second, different CEFR code here meant a text listed
-                as A1 opened as A2. */}
-            {text.difficulty}
-          </span>
-          {difficulty && (
-            <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${LABEL_STYLES[difficulty.label]}`}>
-              {difficulty.label}
-            </span>
-          )}
-          <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{text.minutes} min</span>
-        </div>
-
-        <h2 className="font-french text-[21px] leading-tight text-ink">{text.title}</h2>
-        {text.blurbEn && <p className="mt-1 line-clamp-3 text-sm text-ink">{text.blurbEn}</p>}
-        <p className="mt-1 line-clamp-2 text-sm text-ink-muted">{text.preview}</p>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{learnerSourceLabel(text)}</p>
-
-        {starRating && (
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-brand">
-            {starRating.label}
-          </p>
-        )}
-
-        {difficulty && toPercent(difficulty.unknownWordRatio) >= 8 && (
-          <p className="mt-1 text-xs text-ink-muted">
-            ~{toPercent(difficulty.unknownWordRatio)}% of words may be unfamiliar
-          </p>
-        )}
-
+      {/* What a reader needs to decide: level, length, fit, title, a preview,
+          the source. Everything else is one tap away under "•••". */}
+      <Link href={`/reader/${text.id}`} className="block transition">
+        <p className="text-xs font-semibold text-ink-muted">
+          {level ?? "News"} · {text.minutes} min
+          {fit && <span className="text-brand"> · {fit}</span>}
+          {status !== "unread" && <span> · {STATUS_LABELS[status]}</span>}
+        </p>
+        <h2 lang="fr" className="mt-1 font-french text-[21px] leading-tight text-ink">{text.title}</h2>
+        <p lang={text.blurbEn ? "en" : "fr"} className="mt-1 line-clamp-2 text-sm text-ink-muted">{preview}</p>
       </Link>
 
-      <details className="mt-2 text-xs text-ink-muted">
-        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Article details
-        </summary>
-        <p className="mt-1">
-          {sourceTrustLabel(text)}
-          {difficulty ? ` - ${toPercent(difficulty.dictionaryCoverage)}% dictionary coverage` : ""}
+      <div className="mt-3 flex items-center justify-between gap-3">
+        <p className="min-w-0 truncate text-xs text-ink-muted">
+          {learnerSourceLabel(text)}
+          {text.publishedAt && hasHideableSource({ id: text.id, sourceName: text.sourceName }) && <> · {formatDate(text.publishedAt)}</>}
         </p>
-        {reasons.length > 0 && <p className="mt-1">Why: {reasons.join(" - ")}</p>}
-        {text.sourceName && (
-          <p className="mt-1">
-            {text.sourceName}
-            {text.publishedAt && <> {"\u00b7"} {formatDate(text.publishedAt)}</>}
-          </p>
-        )}
-        {text.attributionText && <p className="mt-1">{text.attributionText}</p>}
-        {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
-          <a
-            href={text.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 inline-block underline underline-offset-2"
-          >
-            Read the original source
-          </a>
-        )}
-      </details>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${STATUS_STYLES[status]}`}>
-          {STATUS_LABELS[status]}
-        </span>
         <button
           type="button"
           onClick={handleSaveLater}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-            savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"
-          }`}
+          aria-pressed={savedLater}
+          className={`min-h-11 shrink-0 rounded-full px-3 text-xs font-semibold ${savedLater ? "bg-brand text-cream" : "bg-brand-light text-brand"}`}
         >
-          {savedLater ? "Saved for later" : "Save for later"}
+          {savedLater ? "Saved" : "Save"}
         </button>
       </div>
 
-      <details className="mt-2">
-        <summary className="flex min-h-12 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-          Tune recommendations
+      <details className="mt-1 text-xs text-ink-muted">
+        <summary className="flex min-h-11 w-12 cursor-pointer list-none items-center text-lg font-bold leading-none text-ink-muted" aria-label="More about this reading">
+          •••
         </summary>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
+        <div className="space-y-1 pb-1">
+          <p>
+            {topicLabel(text)} · {sourceTrustLabel(text)}
+            {difficulty ? ` · ${toPercent(difficulty.dictionaryCoverage)}% dictionary coverage` : ""}
+          </p>
+          {difficulty && toPercent(difficulty.unknownWordRatio) >= 8 && <p>About {toPercent(difficulty.unknownWordRatio)}% of words may be new to you.</p>}
+          {reasons.length > 0 && <p>Why: {reasons.join(" · ")}</p>}
+          {text.attributionText && <p>{text.attributionText}</p>}
+          {text.sourceUrl && /^https?:\/\//i.test(text.sourceUrl) && (
+            <a href={text.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block underline underline-offset-2">
+              Read the original source
+            </a>
+          )}
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-2" aria-label="Tune recommendations">
           <button
             type="button"
-            onClick={() => recordArticlePreference(text, "more")}
-            className="rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand"
+            onClick={() => {
+              recordArticlePreference(text, "more");
+              setTuned("more");
+            }}
+            aria-pressed={tuned === "more"}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${tuned === "more" ? "bg-brand text-cream" : "bg-brand-light text-brand"}`}
           >
             More like this
           </button>
           <button
             type="button"
-            onClick={() => recordArticlePreference(text, "less")}
-            className="rounded-full bg-cream-fill px-2.5 py-1 text-xs font-semibold text-ink-muted"
+            onClick={() => {
+              recordArticlePreference(text, "less");
+              setTuned("less");
+            }}
+            aria-pressed={tuned === "less"}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${tuned === "less" ? "bg-ink text-cream" : "bg-cream-fill text-ink-muted"}`}
           >
             Less like this
           </button>
-          {text.sourceName && (
+          {hasHideableSource(text) && (
             <>
               <button
                 type="button"
@@ -286,6 +246,14 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
             </>
           )}
         </div>
+        {(tuned || preferred) && (
+          <p role="status" className="mt-2 text-xs text-ink-muted">
+            {tuned === "more" && `We'll show you more ${topicLabel(text)} readings like this.`}
+            {tuned === "less" && `We'll show you fewer ${topicLabel(text)} readings like this.`}
+            {tuned && preferred && " "}
+            {preferred && hasHideableSource(text) && `${text.sourceName} readings come first.`}
+          </p>
+        )}
       </details>
     </article>
   );

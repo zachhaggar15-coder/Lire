@@ -14,7 +14,9 @@ const items = [
   { href: "/review", label: "Review", icon: "review" as const, activePaths: ["/review"] },
   {
     href: "/settings",
-    label: "Settings",
+    // "You", not "Settings": this tab holds progress, words, grammar, history
+    // and the account as well as the app's settings.
+    label: "You",
     icon: "library" as const,
     activePaths: [
       "/settings",
@@ -43,7 +45,8 @@ export default function BottomNav() {
   useEffect(() => {
     function syncOnboardingState() {
       const state = getOnboardingState();
-      setOnboardingComplete(state?.completed === true && state.walkthroughCompleted === true);
+      // Shown once a level is chosen; hidden only while the tour is being replayed.
+      setOnboardingComplete(state?.completed === true && state.walkthroughReplay !== true);
     }
 
     syncOnboardingState();

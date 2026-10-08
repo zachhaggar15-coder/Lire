@@ -98,7 +98,7 @@ check("route skeletons are delayed and destination-shaped", files.css.includes("
 check("Library owns its route-specific loading state", files.settingsLoading.includes('variant="library"'));
 check("keyboard geometry is exposed to app chrome and sheets", files.viewportHeight.includes("--keyboard-inset") && files.css.includes("html.keyboard-open .bottom-nav") && files.bottomSheet.includes("var(--keyboard-inset)"));
 check("the reader uses aligned controls and a content boundary", files.reader.includes('canUseSpeech ? "grid-cols-2"') && files.reader.includes("border-t border-cream-dark/90 pt-5"));
-check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("Your review deck is ready when you are"));
+check("Review has a composed empty state", files.review.includes('name="book" active') && files.review.includes("No words in Review yet"));
 check("changing review counts retain a stable slot", files.review.includes("ligne-state-slot") && files.review.includes("ligne-value-change"));
 
 console.log("--- full-screen overlay contract ---");
@@ -138,8 +138,8 @@ check(
 );
   check(
     "the real word card's review button toggles back off",
-    files.meaningSheet.includes("saved ? onUnsave?.() : onSave?.()") &&
-      files.meaningSheet.includes('saved ? "Remove from review"')
+    files.meaningSheet.includes('control === "remove" ? onUnsave?.() : onSave?.()') &&
+      files.meaningSheet.includes("REVIEW_CONTROL_LABEL[control]")
   );
 check("the real word card closes with an X, not a Done label", files.meaningSheet.includes('aria-label="Close"'));
 check(
@@ -177,7 +177,7 @@ console.log("--- hydration and modal isolation regressions ---");
 check("listening support starts hydration-safe", files.listening.includes("useState(false)") && !files.listening.includes("useState(canSpeak())"));
 check("full-screen practice declares modal semantics", files.practice.includes('aria-modal="true"'));
 check("modal focus isolation makes background branches inert", files.modalFocus.includes("sibling.inert = true") && files.modalFocus.includes("handleKeyDown"));
-check("bottom navigation stays hidden until the tutorial is complete", files.bottomNav.includes("state.walkthroughCompleted === true"));
+check("bottom navigation stays hidden until a level is chosen, and while the tour is replayed", files.bottomNav.includes("state?.completed === true && state.walkthroughReplay !== true"));
 check("bottom navigation is absent on dedicated practice/listen routes", files.bottomNav.includes("(practice|listen)"));
 
 console.log("--- offline and fresh-link regressions ---");

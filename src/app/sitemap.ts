@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { productionDomain } from "@/lib/validation/config";
+import { productionDomain } from "@/lib/config";
 
 /**
  * Sitemap for the stable, publicly meaningful routes.

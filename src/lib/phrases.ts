@@ -1,9 +1,19 @@
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 export type SavedPhraseStatus = "learning" | "known";
 
-/** How many "Knew it" grades in a row (see review/page.tsx's GRADUATE_AFTER_CORRECT_STREAK) promote a phrase to known — same bar as words. */
-export const PHRASE_GRADUATE_AFTER_CORRECT_STREAK = 3;
+/**
+ * Phrases follow the word model: a phrase stays in Review, and three "Knew it"
+ * in a row makes it Mastered (shown as information only). It used to move to
+ * a "Known" state that left Review, and a "Known" button did the same at once.
+ * "known" survives only on old data, where it reads as mastered.
+ */
+export const PHRASE_MASTERY_STREAK = 3;
+
+export function isPhraseMastered(phrase: Pick<SavedPhrase, "status" | "correctStreak">): boolean {
+  return phrase.status === "known" || phrase.correctStreak >= PHRASE_MASTERY_STREAK;
+}
 
 export interface SavedPhrase {
   phrase: string;
@@ -51,16 +61,25 @@ function normalize(entry: unknown): SavedPhrase | null {
   };
 }
 
-function persist(phrases: SavedPhrase[]): void {
-  if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(phrases.slice(0, MAX_PHRASES)));
-  void pushStore(KEY);
+/** The outcome of a change to saved phrases. `phrases` is always what is actually stored. */
+export type PhrasesMutation = { ok: true; phrases: SavedPhrase[] } | { ok: false; phrases: SavedPhrase[]; reason: WriteFailure };
+/** Adding can also be refused at the limit; nothing is ever dropped to make room. */
+export type SavePhraseResult = PhrasesMutation | { ok: false; phrases: SavedPhrase[]; reason: "limit" };
+
+// Never truncates: saved phrases are the reader's own. The limit is enforced
+// when adding (savePhrase), not by dropping the oldest on write, as it was.
+function persist(next: SavedPhrase[], previous: SavedPhrase[]): PhrasesMutation {
+  if (!hasStorage()) return { ok: false, phrases: previous, reason: "unavailable" };
+  const result = localStore.writeItem(KEY, JSON.stringify(next));
+  if (!result.ok) return { ok: false, phrases: previous, reason: result.reason };
+  notifyStoreChanged(KEY);
+  return { ok: true, phrases: next };
 }
 
 export function getSavedPhrases(): SavedPhrase[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((phrase): phrase is SavedPhrase => phrase !== null);
@@ -74,7 +93,7 @@ export function isPhraseSaved(phrase: string): boolean {
   return getSavedPhrases().some((saved) => saved.phrase === key);
 }
 
-export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): SavedPhrase[] {
+export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): SavePhraseResult {
   const now = new Date().toISOString();
   const entry: SavedPhrase = {
     ...phrase,
@@ -85,49 +104,31 @@ export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "saved
     updatedAt: now,
     correctStreak: 0,
   };
-  const existing = getSavedPhrases().filter((saved) => saved.phrase !== entry.phrase);
-  const next = [entry, ...existing];
-  persist(next);
-  return next;
-}
-
-/** Manual override (e.g. a "Known" button on the Words/Phrases pages) — marks known immediately, bypassing the review streak. */
-export function markPhraseKnown(phrase: string): SavedPhrase[] {
-  const key = clean(phrase);
-  const now = new Date().toISOString();
-  const next = getSavedPhrases().map((saved) => (saved.phrase === key ? { ...saved, status: "known" as const, correctStreak: 0, updatedAt: now } : saved));
-  persist(next);
-  return next;
+  const previous = getSavedPhrases();
+  const existing = previous.filter((saved) => saved.phrase !== entry.phrase);
+  if (existing.length === previous.length && previous.length >= MAX_PHRASES) {
+    return { ok: false, phrases: previous, reason: "limit" };
+  }
+  return persist([entry, ...existing], previous);
 }
 
 /**
  * Records one Review-flow grade for a phrase: a correct grade extends the
- * streak (and promotes to known once it reaches
- * PHRASE_GRADUATE_AFTER_CORRECT_STREAK), an incorrect grade resets it to 0
- * — mirrors the word-side streak in review/page.tsx's GRADUATE_AFTER_CORRECT_STREAK.
+ * streak, an incorrect one resets it. The phrase stays in Review either way.
  */
-export function recordPhraseReview(phrase: string, correct: boolean): SavedPhrase[] {
+export function recordPhraseReview(phrase: string, correct: boolean): PhrasesMutation {
   const key = clean(phrase);
   const now = new Date().toISOString();
-  const next = getSavedPhrases().map((saved) => {
+  const previous = getSavedPhrases();
+  const next = previous.map((saved) => {
     if (saved.phrase !== key) return saved;
-    const correctStreak = correct ? saved.correctStreak + 1 : 0;
-    const graduated = correct && correctStreak >= PHRASE_GRADUATE_AFTER_CORRECT_STREAK;
-    return {
-      ...saved,
-      correctStreak: graduated ? 0 : correctStreak,
-      status: graduated ? ("known" as const) : saved.status,
-      updatedAt: now,
-    };
+    return { ...saved, correctStreak: correct ? saved.correctStreak + 1 : 0, updatedAt: now };
   });
-  persist(next);
-  return next;
+  return persist(next, previous);
 }
 
-export function deletePhrase(phrase: string): SavedPhrase[] {
+export function deletePhrase(phrase: string): PhrasesMutation {
   const key = clean(phrase);
-  recordStoreDeletion(KEY, key);
-  const next = getSavedPhrases().filter((saved) => saved.phrase !== key);
-  persist(next);
-  return next;
+  const previous = getSavedPhrases();
+  return persist(previous.filter((saved) => saved.phrase !== key), previous);
 }

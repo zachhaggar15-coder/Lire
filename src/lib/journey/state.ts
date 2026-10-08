@@ -1,10 +1,10 @@
 import type { Difficulty, TextProgress } from "@/types";
 import { getArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
 import { estimateDifficulty } from "@/lib/difficulty";
-import { getKnownWords } from "@/lib/knownWords";
+import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import { getSelectedReadingLevel } from "@/lib/onboarding";
 import { getProgress } from "@/lib/progress";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import {
   buildLadder,
   getJourneyText,
@@ -12,6 +12,7 @@ import {
   JOURNEY_BANDS,
   type Stage,
 } from "@/lib/journey/ladder";
+import { localStore } from "@/lib/localData/store";
 
 export const JOURNEY_STORE_KEY = "lire.journey.v1";
 export const STAGE_CLEAR_RATIO = 0.8;
@@ -112,7 +113,7 @@ function readFeedbackMap(options?: JourneyStateOptions): Record<string, ArticleD
 export function getJourneyStore(): JourneyStore {
   if (!hasStorage()) return { ...EMPTY_STORE };
   try {
-    const raw = window.localStorage.getItem(JOURNEY_STORE_KEY);
+    const raw = localStore.getItem(JOURNEY_STORE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!parsed || typeof parsed !== "object") return { ...EMPTY_STORE };
     return {
@@ -129,8 +130,8 @@ export function getJourneyStore(): JourneyStore {
 
 function persistJourneyStore(next: JourneyStore): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(JOURNEY_STORE_KEY, JSON.stringify({ ...next, updatedAt: new Date().toISOString() }));
-  void pushStore(JOURNEY_STORE_KEY);
+  localStore.writeItem(JOURNEY_STORE_KEY, JSON.stringify({ ...next, updatedAt: new Date().toISOString() }));
+  notifyStoreChanged(JOURNEY_STORE_KEY);
 }
 
 export function markJourneyStageSeen(stageIndex: number | null): void {
@@ -219,7 +220,7 @@ function recentCompletedTextIds(options: JourneyStateOptions): string[] {
 
 function paceSignal(options: JourneyStateOptions): "flying" | "hold" | "normal" {
   const feedback = readFeedbackMap(options);
-  const knownWords = options.knownWords ?? new Set(getKnownWords());
+  const knownWords = options.knownWords ?? getEstimatedKnownVocabulary();
   const recent = recentCompletedTextIds(options);
   if (recent.length < 2) return "normal";
 
@@ -244,7 +245,7 @@ export function getNextTextForReader(options: JourneyStateOptions = {}): NextTex
 
   const stage = ladder.stages[state.currentStageIndex];
   const skippedIds = new Set(options.skippedTextIds ?? getJourneyStore().skippedTextIds);
-  const knownWords = options.knownWords ?? new Set(getKnownWords());
+  const knownWords = options.knownWords ?? getEstimatedKnownVocabulary();
   const pace = paceSignal(options);
 
   const candidates = stage.textIds

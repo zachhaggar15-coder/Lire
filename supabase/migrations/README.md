@@ -5,18 +5,27 @@ Supabase project and you have the complete Sorlio database.
 
 ## Running them
 
-**Dashboard (simplest):** SQL Editor → New query → paste one file → Run.
-Repeat in order, `0001` through `0008`.
+**Production (`blumuxrepzzdwwzomffx`) is at `0012`, and its migration history
+records exactly `0001`–`0012`** (reconciled 7 Oct 2026 with
+`supabase migration repair`). Keep it that way:
 
-**CLI, if you prefer:**
+1. Add the next file as `0013_<name>.sql` (four-digit prefix, the CLI accepts it).
+2. Test it locally: `npm test` runs every migration against PGlite, including
+   `test-legacy-build-compat.mjs` (the deployed build must keep working).
+3. Read-only check: `npx supabase@2.120.0 migration list --linked`.
+4. Apply it deliberately (reviewed SQL editor run or the Supabase MCP
+   `apply_migration`), then `migration repair --status applied 0013` if it was
+   not recorded, and confirm `migration list` shows local = remote.
+5. Bump `EXPECTED_SCHEMA_VERSION` (src/lib/server/schema.ts) and
+   `sorlio_schema_version()`; verify with `npm run verify:supabase`.
 
-```bash
-supabase db push
-```
+Do not use `supabase db push` against production: it applies everything it
+thinks is missing, without the review above.
 
-Every file is safe to re-run — `create table if not exists`, `create index if
-not exists`, and `drop policy if exists` before each `create policy`. Re-running
-never touches existing rows.
+Re-running a file is safe — tables, indexes and functions use `if not exists`
+/ `create or replace` — and never deletes or rewrites user data. Two files do
+write rows: `0009` backfills `verified_at` on existing subscriptions, and
+`0010` upserts the sync store registry (`sorlio_sync_stores`).
 
 ## What each one does
 
@@ -30,9 +39,23 @@ never touches existing rows.
 | `0006_android_beta_interest.sql` | `sorlio_android_beta_interest` — beta mailing list |
 | `0007_account_deletion_contract.sql` | Table comments recording the deletion rules |
 | `0008_ai_usage.sql` | `sorlio_ai_usage` + `sorlio_consume_ai_call()` — daily AI budget |
+| `0009_billing_lifecycle.sql` | Play subscription lifecycle columns, `sorlio_billing_events` (RTDN idempotency), server-only billing functions, `sorlio_has_premium()` |
+| `0010_item_sync.sql` | Item-level sync: `sorlio_sync_stores`, `sorlio_sync_state`, `sorlio_sync_items`, `sorlio_save_quota` and the `sorlio_sync_*` functions |
+| `0011_ops_and_retention.sql` | `sorlio_ops_counters` (identifier-free daily counts), `sorlio_maintenance()` retention, `sorlio_schema_version()` |
+| `0012_auth_metadata_minimisation.sql` | Triggers that strip the Google profile (name, photo) Supabase Auth copies on sign-in |
 
-Eight files, seven tables. That is the whole database — if a table is not
-listed here, the app does not query it.
+`0004` and `0006` (analytics, beta list) and the research-prompt table from
+`0005` are retired: the app no longer writes them. They are dropped only after
+the purge in `docs/release/analytics-purge-plan.md` is approved. If a table is
+not listed here, the app does not query it.
+
+## Release gate
+
+Each migration that changes what the app relies on redefines
+`sorlio_schema_version()` to return its own number, and the build expects
+`EXPECTED_SCHEMA_VERSION` in `src/lib/server/schema.ts`. `npm test` fails if
+those disagree with the newest file here; `npm run verify:supabase` and
+`GET /api/health` (503 on mismatch) fail if the live database is behind.
 
 ## Checking it worked
 
@@ -72,7 +95,7 @@ the keys inside it are the app's own history.
 
 ## Adding a table later
 
-Add `0009_*.sql`; never edit a migration that has been run. If the new table
+Add the next number; never edit a migration that has been run. If the new table
 has a `user_id`, decide its deletion behaviour deliberately — see
 `0007_account_deletion_contract.sql`. Getting this wrong leaves identifiable
 rows behind after a deletion the reader was told was complete.

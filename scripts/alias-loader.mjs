@@ -16,6 +16,11 @@ export async function resolve(specifier, context, nextResolve) {
   if (specifier === "next/server") {
     return nextResolve("next/server.js", context);
   }
+  // Next aliases `server-only` to a no-op for server code; tests run server
+  // modules directly, so give them the same no-op.
+  if (specifier === "server-only") {
+    return { url: "data:text/javascript,export {}", shortCircuit: true };
+  }
   if (specifier.startsWith("@/")) {
     const target = path.join(rootDir, "src", specifier.slice(2) + ".ts");
     return nextResolve(pathToFileURL(target).href, context);

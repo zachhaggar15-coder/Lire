@@ -1,4 +1,5 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Folding the retired CEFR-band scores into the XP total.
@@ -48,7 +49,7 @@ export interface LegacyProgressionMigration {
 export function readLegacyBandPoints(): number {
   if (!hasStorage()) return 0;
   try {
-    const raw = window.localStorage.getItem(LEGACY_LEVEL_SCORE_KEY);
+    const raw = localStore.getItem(LEGACY_LEVEL_SCORE_KEY);
     if (!raw) return 0;
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return 0;
@@ -62,7 +63,7 @@ export function readLegacyBandPoints(): number {
 
 export function hasRunLegacyMigration(): boolean {
   if (!hasStorage()) return false;
-  return window.localStorage.getItem(MIGRATION_KEY) !== null;
+  return localStore.getItem(MIGRATION_KEY) !== null;
 }
 
 /**
@@ -84,14 +85,14 @@ export function migrateLegacyProgression(
   if (awardedXp > 0) awardXp(awardedXp);
 
   try {
-    window.localStorage.setItem(
+    localStore.setItem(
       MIGRATION_KEY,
       JSON.stringify({ migratedAt: new Date().toISOString(), legacyPoints, awardedXp })
     );
     // The legacy store is left in place rather than deleted: it is no longer
     // read by anything, and keeping it means a bug in this conversion can be
     // investigated against the real data instead of a guess.
-    void pushStore(MIGRATION_KEY);
+    notifyStoreChanged(MIGRATION_KEY);
   } catch {
     // A failed marker write would only risk re-crediting on a later run, which
     // is better than failing the app start.

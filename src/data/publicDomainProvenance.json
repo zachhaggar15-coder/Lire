@@ -1,0 +1,3418 @@
+{
+ "pd-b1-297": {
+  "gutenbergId": 799,
+  "firstParagraph": 232,
+  "lastParagraph": 234,
+  "words": 133,
+  "bodySha256": "9099867cfe326833e9230ef83dcfa3a7c60e588ed6dd5b69ec6781fd71ba8140"
+ },
+ "pd-b1-299": {
+  "gutenbergId": 799,
+  "firstParagraph": 449,
+  "lastParagraph": 451,
+  "words": 142,
+  "bodySha256": "c0ae5e6bc8dc506813c4db1a86d0c4a56dfe4b13bfd743223ac59f41d67ec633"
+ },
+ "pd-b1-311": {
+  "gutenbergId": 799,
+  "firstParagraph": 1036,
+  "lastParagraph": 1038,
+  "words": 160,
+  "bodySha256": "7ea4bd365b278b3310b246e91dc3ef18c30106a378ecfaa5c6a0cb505b11441c"
+ },
+ "pd-b2-367": {
+  "gutenbergId": 799,
+  "firstParagraph": 904,
+  "lastParagraph": 920,
+  "words": 199,
+  "bodySha256": "3f5756590e68231bb18e90c778aa79b310f8eedada6e8fea302b032b4947362c"
+ },
+ "pd-b2-407": {
+  "gutenbergId": 799,
+  "firstParagraph": 207,
+  "lastParagraph": 210,
+  "words": 191,
+  "bodySha256": "65868dce9e38b24955231e75c242a0efdba1bc10c7b31b73a8e6f70689313637"
+ },
+ "pd-b2-461": {
+  "gutenbergId": 799,
+  "firstParagraph": 1052,
+  "lastParagraph": 1056,
+  "words": 219,
+  "bodySha256": "acc8f91c712a535a9e8ddd3d17763a0722422567d8a4ec7ffcc055f91ae3b3b6"
+ },
+ "pd-c1-502": {
+  "gutenbergId": 799,
+  "firstParagraph": 601,
+  "lastParagraph": 605,
+  "words": 262,
+  "bodySha256": "4f8ee38f41c56e427427f5db73fc8e2d7d91ca01691f4ad29491d3eaa1e68660"
+ },
+ "pd-c1-516": {
+  "gutenbergId": 799,
+  "firstParagraph": 588,
+  "lastParagraph": 597,
+  "words": 267,
+  "bodySha256": "4f23a414946efbc769ef18aebea7d8cfe72703c5ba1154f6465acf59d79e2a5e"
+ },
+ "pd-c1-536": {
+  "gutenbergId": 799,
+  "firstParagraph": 1108,
+  "lastParagraph": 1112,
+  "words": 292,
+  "bodySha256": "ee36b3e247815f2cc42ffe7e64906d6285e9213d67878171422dbeffadd6637a"
+ },
+ "pd-c1-561": {
+  "gutenbergId": 799,
+  "firstParagraph": 805,
+  "lastParagraph": 807,
+  "words": 416,
+  "bodySha256": "97164909c47b182ff248e702303d53482de914456b8a747f5b7ea9f077a54a49"
+ },
+ "pd-c2-634": {
+  "gutenbergId": 799,
+  "firstParagraph": 1152,
+  "lastParagraph": 1163,
+  "words": 372,
+  "bodySha256": "b70ea4a8fe28f66a1e3eeda31c84e73281e26f1598193336c61afe983ef61ec9"
+ },
+ "pd-c2-670": {
+  "gutenbergId": 799,
+  "firstParagraph": 1182,
+  "lastParagraph": 1194,
+  "words": 376,
+  "bodySha256": "b5a534ff0dfde18884a185d501ead0d9af2d96a82bfc60181cc7a7f4ba3f3216"
+ },
+ "pd-c2-706": {
+  "gutenbergId": 799,
+  "firstParagraph": 1127,
+  "lastParagraph": 1129,
+  "words": 412,
+  "bodySha256": "a57795d93700e9829ba827eb243903addb99e4f11759c84b9e13d6d9361c98eb"
+ },
+ "pd-c2-710": {
+  "gutenbergId": 799,
+  "firstParagraph": 836,
+  "lastParagraph": 847,
+  "words": 373,
+  "bodySha256": "1a5df441b64b7b161ad3a341f1ffcc5e44771a4584689cae5468ec3dfaa78816"
+ },
+ "pd-c2-719": {
+  "gutenbergId": 799,
+  "firstParagraph": 1210,
+  "lastParagraph": 1218,
+  "words": 399,
+  "bodySha256": "d8505bd854057af98dd2df0429c09d48d9e86bd92fb1d3d62e34b221f478bc5a"
+ },
+ "pd-b1-238": {
+  "gutenbergId": 800,
+  "firstParagraph": 571,
+  "lastParagraph": 573,
+  "words": 155,
+  "bodySha256": "a875d83cf79e58bd7a1ff3d824e4485bb66048a0ff70be08afaba56c4bedc8ec"
+ },
+ "pd-b1-247": {
+  "gutenbergId": 800,
+  "firstParagraph": 1131,
+  "lastParagraph": 1135,
+  "words": 150,
+  "bodySha256": "8673d178f333c7ba12eaf5be6e3981b3c2c390028b69f24eb989a42ceae1b5b8"
+ },
+ "pd-b1-278": {
+  "gutenbergId": 800,
+  "firstParagraph": 204,
+  "lastParagraph": 208,
+  "words": 141,
+  "bodySha256": "701e732aa0d7e654c3a5c6b9a0e06f977d6eed1fe576867c2845dc84a7a911cf"
+ },
+ "pd-b2-354": {
+  "gutenbergId": 800,
+  "firstParagraph": 966,
+  "lastParagraph": 967,
+  "words": 213,
+  "bodySha256": "08ac7a0a66ff38a761c4723c7946037b31592ca442bfa6d80a5a376c55a9921f"
+ },
+ "pd-b2-366": {
+  "gutenbergId": 800,
+  "firstParagraph": 1485,
+  "lastParagraph": 1488,
+  "words": 250,
+  "bodySha256": "983940b3e8f6c82c699a7fe7555e016ed7cb99a883cc4cc55197e0a819a03bc9"
+ },
+ "pd-b2-395": {
+  "gutenbergId": 800,
+  "firstParagraph": 1745,
+  "lastParagraph": 1747,
+  "words": 196,
+  "bodySha256": "bb25997be83aace9cea75392f1e8b85a850e78d682d29a68d48454208ee2ed51"
+ },
+ "pd-b2-457": {
+  "gutenbergId": 800,
+  "firstParagraph": 266,
+  "lastParagraph": 275,
+  "words": 231,
+  "bodySha256": "385b30a599b486bf828b0666ae9b68f187e5c74e7b54cd479391f7ebe9d2957e"
+ },
+ "pd-c1-484": {
+  "gutenbergId": 800,
+  "firstParagraph": 1471,
+  "lastParagraph": 1472,
+  "words": 261,
+  "bodySha256": "6f876a315d048b67a7b44f49a274fd3ab74d63bb54ffecd273ab9bd721e9c245"
+ },
+ "pd-c1-548": {
+  "gutenbergId": 800,
+  "firstParagraph": 1268,
+  "lastParagraph": 1273,
+  "words": 304,
+  "bodySha256": "aa2b2d736f16aa5da097d99a8d6c02880d80cdaa34881c78f61adec136407c84"
+ },
+ "pd-c1-550": {
+  "gutenbergId": 800,
+  "firstParagraph": 1378,
+  "lastParagraph": 1382,
+  "words": 270,
+  "bodySha256": "dc87386b9f523fec4477dfb4949a4e69e4bdd3c02f9750ac3152edfe12d4e42e"
+ },
+ "pd-c1-585": {
+  "gutenbergId": 800,
+  "firstParagraph": 1852,
+  "lastParagraph": 1865,
+  "words": 268,
+  "bodySha256": "d914c875b415a613c7d872a6f50f191e8325f7210995a3e800ef1571b2692e4f"
+ },
+ "pd-c1-590": {
+  "gutenbergId": 800,
+  "firstParagraph": 749,
+  "lastParagraph": 750,
+  "words": 306,
+  "bodySha256": "b90e6cd6ea37192af3acf3800297eeb79d746d6eb3a5450b18229479c2b6443e"
+ },
+ "pd-b1-227": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2043,
+  "lastParagraph": 2052,
+  "words": 167,
+  "bodySha256": "2487d600e91f73f6054fc02c6feacd2c8489fea371322ae9b2e1d6203f55f6dd"
+ },
+ "pd-b1-232": {
+  "gutenbergId": 4548,
+  "firstParagraph": 207,
+  "lastParagraph": 215,
+  "words": 133,
+  "bodySha256": "7de75853dae12b6204fc4794bb7a0738838086f839de26daea9a045e452e02ec"
+ },
+ "pd-b1-251": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1830,
+  "lastParagraph": 1834,
+  "words": 138,
+  "bodySha256": "3ae6e3cbb6ae592d5823d84789a52e3e00b54488f6f538f17b78edebdafecd7e"
+ },
+ "pd-b1-283": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2736,
+  "lastParagraph": 2747,
+  "words": 135,
+  "bodySha256": "74d56c2194cdc6a14d6c6c373f37caa15e55b294f65f40654e21bed331808019"
+ },
+ "pd-b1-285": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2572,
+  "lastParagraph": 2581,
+  "words": 131,
+  "bodySha256": "83fd261202625344d66333ed8eb4c441a5f6ea9831695872a38cf98f59ac0c49"
+ },
+ "pd-b1-290": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1775,
+  "lastParagraph": 1782,
+  "words": 181,
+  "bodySha256": "f5c772a797366525cb9daf001f77319b79d6f01e970044bd2f8992d97c609da1"
+ },
+ "pd-b1-326": {
+  "gutenbergId": 4548,
+  "firstParagraph": 119,
+  "lastParagraph": 125,
+  "words": 141,
+  "bodySha256": "d73bac07fab3c50fc3a947c6d52b8fade959100aa12b42081785ba0d54d55d41"
+ },
+ "pd-b1-327": {
+  "gutenbergId": 4548,
+  "firstParagraph": 513,
+  "lastParagraph": 518,
+  "words": 145,
+  "bodySha256": "2adf01f346f321d98309fa0b6d5e1c39c8e6bad7570668ddf111d646f052f847"
+ },
+ "pd-b2-359": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1514,
+  "lastParagraph": 1529,
+  "words": 200,
+  "bodySha256": "1bd46a022b06547fd109e00e06e4d2260008d208a37de4978e236bd916fb5bc4"
+ },
+ "pd-b2-365": {
+  "gutenbergId": 4548,
+  "firstParagraph": 483,
+  "lastParagraph": 486,
+  "words": 196,
+  "bodySha256": "b2bc2e59d05c39feea64046067f1028f257593c1e1cfdf76ce1e9e48b0e291f6"
+ },
+ "pd-b2-376": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1582,
+  "lastParagraph": 1587,
+  "words": 194,
+  "bodySha256": "354ce9253e49ea003b1d9349cd05ed9834eb3eb95c1a62c323cdd6f4e3517e79"
+ },
+ "pd-b2-381": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1050,
+  "lastParagraph": 1055,
+  "words": 261,
+  "bodySha256": "78867d6c2c628b899c7700e45401b519de2304f2747bdb5103d7af01ae479639"
+ },
+ "pd-b2-384": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1973,
+  "lastParagraph": 1982,
+  "words": 278,
+  "bodySha256": "4175171f6c76f06311b89281ddfcc6f1a6486b4567a12ace93fa9595c80804b9"
+ },
+ "pd-b2-413": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2091,
+  "lastParagraph": 2095,
+  "words": 212,
+  "bodySha256": "f6091bb7795dd6cc1853c31f02c7b3e3f66c7d7254c2ae7d77ff0482588c8a7c"
+ },
+ "pd-b2-435": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1161,
+  "lastParagraph": 1170,
+  "words": 206,
+  "bodySha256": "84dc9192eba07c502a7a8d4decf00c1c791d534da1856eea27522d58f7a64ec4"
+ },
+ "pd-b2-443": {
+  "gutenbergId": 4548,
+  "firstParagraph": 783,
+  "lastParagraph": 792,
+  "words": 218,
+  "bodySha256": "0db1d6384abf74260e223e8b60bf48ee6887db6bc47c490fd7d02f9f76acb882"
+ },
+ "pd-b2-460": {
+  "gutenbergId": 4548,
+  "firstParagraph": 369,
+  "lastParagraph": 376,
+  "words": 206,
+  "bodySha256": "bc4af2d175bac934f634b634d0c327684ef193e98d7a4b93fd7101669ab587a6"
+ },
+ "pd-b2-467": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2212,
+  "lastParagraph": 2217,
+  "words": 239,
+  "bodySha256": "956bb039e9de0aa35c614273e7aefdd7f03ec4a25e90984bbb7b0cc4cc1eb799"
+ },
+ "pd-b2-468": {
+  "gutenbergId": 4548,
+  "firstParagraph": 529,
+  "lastParagraph": 540,
+  "words": 236,
+  "bodySha256": "2d42173345a3943cc8f38088190444ac2ac9bcc8b72324366e903b930cf4f810"
+ },
+ "pd-b2-479": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2229,
+  "lastParagraph": 2233,
+  "words": 198,
+  "bodySha256": "7eddf0baaa76e43c02a65e7daea398e1b0bf56d71eab8823468fe2a1e3c09833"
+ },
+ "pd-c1-482": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2454,
+  "lastParagraph": 2463,
+  "words": 273,
+  "bodySha256": "e366b174859d6cf9a3a8666c70c0425844aa3cbb1fc7a078c82174ecdf9e5d74"
+ },
+ "pd-c1-485": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1202,
+  "lastParagraph": 1211,
+  "words": 283,
+  "bodySha256": "c7e05648ede458ce3ec6827350dce6e06b9f291f59d5c87f11ca9794f6040029"
+ },
+ "pd-c1-498": {
+  "gutenbergId": 4548,
+  "firstParagraph": 901,
+  "lastParagraph": 911,
+  "words": 295,
+  "bodySha256": "fa006b2f3967bdfd83948c554b8deefd3657ccdacf4234f7aca5fc432d7a295b"
+ },
+ "pd-c1-503": {
+  "gutenbergId": 4548,
+  "firstParagraph": 806,
+  "lastParagraph": 811,
+  "words": 301,
+  "bodySha256": "f22fd28b3eb4b17d6b9474185969266ecaeca619db049bb626baaae35fed0d90"
+ },
+ "pd-c1-524": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2127,
+  "lastParagraph": 2132,
+  "words": 271,
+  "bodySha256": "6e93b76d95d8530adccc96e1214fb30a3278c52c8f0be22688a4b2e21dfd5a42"
+ },
+ "pd-c1-531": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1550,
+  "lastParagraph": 1556,
+  "words": 284,
+  "bodySha256": "4d32202b12ee0eb8141d18d4f48930f92157d8accf0c8bec2cb247a54492575b"
+ },
+ "pd-c1-552": {
+  "gutenbergId": 4548,
+  "firstParagraph": 1542,
+  "lastParagraph": 1547,
+  "words": 284,
+  "bodySha256": "6b5b3777790a6df1131b855d8f360eb4348ba011638fcfed4fb3427897c7002d"
+ },
+ "pd-c1-570": {
+  "gutenbergId": 4548,
+  "firstParagraph": 879,
+  "lastParagraph": 889,
+  "words": 278,
+  "bodySha256": "7b884be965daf714699d4856216886e97d1c1dab7a9bf01b19d79ef059048f16"
+ },
+ "pd-c2-607": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2383,
+  "lastParagraph": 2391,
+  "words": 368,
+  "bodySha256": "21edea56bc27cba09640611e3deec0d4c6be369ed4346fbbe310bbaa09e3e6a3"
+ },
+ "pd-c2-610": {
+  "gutenbergId": 4548,
+  "firstParagraph": 454,
+  "lastParagraph": 461,
+  "words": 369,
+  "bodySha256": "9a29d50f07fa87b52e761d3fc1450d885f4a5aa6c385abc1073d90c3b30b9e69"
+ },
+ "pd-c2-629": {
+  "gutenbergId": 4548,
+  "firstParagraph": 2653,
+  "lastParagraph": 2669,
+  "words": 379,
+  "bodySha256": "859cccf19ab22edb038628095b8f641ecb683bdc1fe19839e861b99ab726bcfa"
+ },
+ "pd-c2-684": {
+  "gutenbergId": 4548,
+  "firstParagraph": 424,
+  "lastParagraph": 440,
+  "words": 365,
+  "bodySha256": "76f7d6e8e78663c222963ddb9204e3c1a6332ab12a1f8e91d171151e6a9a93cc"
+ },
+ "pd-b1-236": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1832,
+  "lastParagraph": 1836,
+  "words": 148,
+  "bodySha256": "48041de37e368df20b57d4619bf4558ec6d8be70795c68e4b34b2395ec2004c5"
+ },
+ "pd-b1-281": {
+  "gutenbergId": 4791,
+  "firstParagraph": 2160,
+  "lastParagraph": 2165,
+  "words": 177,
+  "bodySha256": "38e1bb0bd6c6ef69991ac32c3b6ec11fa94e409a03fd62d268c65cd28e1a61d0"
+ },
+ "pd-b1-284": {
+  "gutenbergId": 4791,
+  "firstParagraph": 366,
+  "lastParagraph": 369,
+  "words": 139,
+  "bodySha256": "ef75068a19cbe6d8285f73bc94a95b7ed4858559bb6d910196a66208a342dfd2"
+ },
+ "pd-b1-310": {
+  "gutenbergId": 4791,
+  "firstParagraph": 583,
+  "lastParagraph": 584,
+  "words": 143,
+  "bodySha256": "f80d919b9232e55429aaba0ce72fb3f2744b87a11162d0faf16ff4ad2e85172c"
+ },
+ "pd-b1-329": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1660,
+  "lastParagraph": 1664,
+  "words": 131,
+  "bodySha256": "86538cd24bf94d8ff5f8f79f62eaaf730c6afc276cba83b939618bff9023d0ce"
+ },
+ "pd-b1-344": {
+  "gutenbergId": 4791,
+  "firstParagraph": 2199,
+  "lastParagraph": 2199,
+  "words": 134,
+  "bodySha256": "0ed70d04abe4156c9591ae386c93383384f19869b6346d3f7b976a839c7e700f"
+ },
+ "pd-b1-349": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1980,
+  "lastParagraph": 1983,
+  "words": 195,
+  "bodySha256": "4e453a8e94a8f6f0e3ef9ac5f478d5f81930482ed2a5282de03d981a2202e13b"
+ },
+ "pd-b2-362": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1640,
+  "lastParagraph": 1642,
+  "words": 282,
+  "bodySha256": "707a46e443f716501c1147d1c306b7f23db3362307b8b0c0ec5c434aa4f6c4ce"
+ },
+ "pd-b2-364": {
+  "gutenbergId": 4791,
+  "firstParagraph": 276,
+  "lastParagraph": 288,
+  "words": 229,
+  "bodySha256": "242da02167c6083447c7444495297a88e90b906d3259fd3e1813ee53d8c7a7ec"
+ },
+ "pd-b2-372": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1077,
+  "lastParagraph": 1079,
+  "words": 200,
+  "bodySha256": "263b1a6ca6c6ba2e27be61bff9f9591df1f8292c299c8efc9559894c82a4de7e"
+ },
+ "pd-b2-394": {
+  "gutenbergId": 4791,
+  "firstParagraph": 428,
+  "lastParagraph": 431,
+  "words": 232,
+  "bodySha256": "1ac3371e706074d7e1f5902c7e4124ba0d1aae677edd3783b831dad2143d6c07"
+ },
+ "pd-b2-405": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1517,
+  "lastParagraph": 1521,
+  "words": 220,
+  "bodySha256": "12279fd65d1709d5bc5d0a46ee59847c6d66446916f106decf889613283fcd01"
+ },
+ "pd-b2-406": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1502,
+  "lastParagraph": 1507,
+  "words": 198,
+  "bodySha256": "b5d35937a5a1fa6dd349e936c49a6360e2c0c3cdd1d4224a3dbe978976d7f771"
+ },
+ "pd-b2-424": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1184,
+  "lastParagraph": 1191,
+  "words": 202,
+  "bodySha256": "4936d9c6cd44071206f23b82952df91ed77007699a07f8a57f67196f061089c7"
+ },
+ "pd-b2-425": {
+  "gutenbergId": 4791,
+  "firstParagraph": 864,
+  "lastParagraph": 869,
+  "words": 192,
+  "bodySha256": "f6a7a424d280023bde5d116b4aaba8cc200fe484099f3ff703723880ec0b820a"
+ },
+ "pd-b2-441": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1956,
+  "lastParagraph": 1958,
+  "words": 213,
+  "bodySha256": "3466740cab489f2c272b08ffec2bb90bde6a36c52b1ef4f1e99e21861dc78001"
+ },
+ "pd-b2-446": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1900,
+  "lastParagraph": 1904,
+  "words": 233,
+  "bodySha256": "f64c46fc708ff14917bd6669b86dc8d4219d60385509b770f4b03c9a3aefb643"
+ },
+ "pd-b2-453": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1963,
+  "lastParagraph": 1965,
+  "words": 198,
+  "bodySha256": "66f3fbe1bdcef7e1b24fc590d0190a355544346342a4cf4d17665412d60bf14c"
+ },
+ "pd-b2-473": {
+  "gutenbergId": 4791,
+  "firstParagraph": 263,
+  "lastParagraph": 270,
+  "words": 201,
+  "bodySha256": "edf86f731fcb2799b1393608d6a7d4538f543fff1b47bc839203686e668ebe51"
+ },
+ "pd-b2-480": {
+  "gutenbergId": 4791,
+  "firstParagraph": 59,
+  "lastParagraph": 67,
+  "words": 197,
+  "bodySha256": "51e3664cb61d1f9b8b78b2386941e5c7185eef1ac213ef7e0fb1f49b147500a4"
+ },
+ "pd-c1-481": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1338,
+  "lastParagraph": 1346,
+  "words": 261,
+  "bodySha256": "5974067e9c0f8785fbbe8a0ed8a6bb21c5abe41c7ea7e84251d7ca22b8704d3c"
+ },
+ "pd-c1-512": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1019,
+  "lastParagraph": 1022,
+  "words": 275,
+  "bodySha256": "87cf62f463f9006b39e54b5ed0e582e2fba3e3b21b2c3cbe0ff5e90edc9e93b2"
+ },
+ "pd-c1-522": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1911,
+  "lastParagraph": 1918,
+  "words": 378,
+  "bodySha256": "a3080c003da275fec5e663c3eb65d5550a206fd67ae3459a44c85ee051cee97a"
+ },
+ "pd-c1-545": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1584,
+  "lastParagraph": 1595,
+  "words": 277,
+  "bodySha256": "6263b0e5dcad35201e06700ec1e756fb38595d20bb9500efcb06376317e3c3c2"
+ },
+ "pd-c1-557": {
+  "gutenbergId": 4791,
+  "firstParagraph": 484,
+  "lastParagraph": 491,
+  "words": 343,
+  "bodySha256": "b4b5505e9a7a2f2da52f9163e68f0262154ce1a00be63fd252e67804df764b5c"
+ },
+ "pd-c1-562": {
+  "gutenbergId": 4791,
+  "firstParagraph": 629,
+  "lastParagraph": 634,
+  "words": 304,
+  "bodySha256": "e004cc1fd214c63429b97baed7aa319e492c0a91ae38bd44a45738d71fdacbf3"
+ },
+ "pd-c1-581": {
+  "gutenbergId": 4791,
+  "firstParagraph": 199,
+  "lastParagraph": 206,
+  "words": 327,
+  "bodySha256": "cd4a903a209b0af83e9c8260dd51f7481b0049c750edba21875c739aa7a25863"
+ },
+ "pd-c1-592": {
+  "gutenbergId": 4791,
+  "firstParagraph": 1421,
+  "lastParagraph": 1430,
+  "words": 271,
+  "bodySha256": "0ed36cbe82172a8d1509bb702c57d0db61ab5129eebe6d8215c5861cc9bded3c"
+ },
+ "pd-c2-601": {
+  "gutenbergId": 4791,
+  "firstParagraph": 673,
+  "lastParagraph": 681,
+  "words": 384,
+  "bodySha256": "d026f948a0bc3e928de961fc7cdd5592dffbc77862c67f8c12eef0bf278d2c3d"
+ },
+ "pd-c2-617": {
+  "gutenbergId": 4791,
+  "firstParagraph": 765,
+  "lastParagraph": 772,
+  "words": 413,
+  "bodySha256": "06bd5980590130e9ae359341e9be383b501ae59a9c4d155b51bbf7064ad530e0"
+ },
+ "pd-c2-688": {
+  "gutenbergId": 4791,
+  "firstParagraph": 23,
+  "lastParagraph": 28,
+  "words": 422,
+  "bodySha256": "1efc59769794b378e21a09414796df5a4bf847510d4796f7e3d568a7612c3714"
+ },
+ "pd-c2-717": {
+  "gutenbergId": 4791,
+  "firstParagraph": 790,
+  "lastParagraph": 794,
+  "words": 381,
+  "bodySha256": "1e43cb795d0bed8e9c85b1c8100543e96045d8ef40aec9083d41620d66b955e9"
+ },
+ "pd-b1-224": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1674,
+  "lastParagraph": 1683,
+  "words": 131,
+  "bodySha256": "e745bd9a65993a55e10c0028c58b4864cddbe45e03bcef50078280db564abab0"
+ },
+ "pd-b1-233": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1416,
+  "lastParagraph": 1420,
+  "words": 131,
+  "bodySha256": "6d26dac5acc85c0685f899e7ff47b9f5ce76afd704e19881de4dc8989b2f1f9b"
+ },
+ "pd-b1-239": {
+  "gutenbergId": 5097,
+  "firstParagraph": 915,
+  "lastParagraph": 921,
+  "words": 141,
+  "bodySha256": "ed53db51003616ce6b340319f1db6724929e2cbb652ca7cfeed139d2513ef715"
+ },
+ "pd-b1-242": {
+  "gutenbergId": 5097,
+  "firstParagraph": 249,
+  "lastParagraph": 257,
+  "words": 142,
+  "bodySha256": "70ea9813ec59574dd5efc135feb1db84a2ce4483883657b90160045d95d1bb78"
+ },
+ "pd-b1-256": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1855,
+  "lastParagraph": 1859,
+  "words": 150,
+  "bodySha256": "2967708d9a63726fda61702115abcae9ffd69acf1ef9f3f551b45b0e2f4d04ad"
+ },
+ "pd-b1-265": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1630,
+  "lastParagraph": 1633,
+  "words": 197,
+  "bodySha256": "aeee24d8d757c0eb0daf957b8e7fdf2e1b562123d69a6fe0fb0847b20a7c5fea"
+ },
+ "pd-b1-269": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2203,
+  "lastParagraph": 2204,
+  "words": 137,
+  "bodySha256": "71a7c0f08d80264ee1c85dab1f68320c0fbca863718edbff4cb845eca56c8d2f"
+ },
+ "pd-b1-273": {
+  "gutenbergId": 5097,
+  "firstParagraph": 242,
+  "lastParagraph": 244,
+  "words": 167,
+  "bodySha256": "2c5789fd4db74d85b13ff8fcedbc8ccabb8694b81b5a8d4c51359bff58d4e556"
+ },
+ "pd-b1-274": {
+  "gutenbergId": 5097,
+  "firstParagraph": 295,
+  "lastParagraph": 301,
+  "words": 177,
+  "bodySha256": "0770f204f42b9286fd7ab0def6ecccff1d60ffc6f56cd8e65b46743d55dc11cb"
+ },
+ "pd-b1-287": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1466,
+  "lastParagraph": 1475,
+  "words": 135,
+  "bodySha256": "817ea0e36c7f76a1b853e3936bde6f6809574b6510502c563c2e029467bfb620"
+ },
+ "pd-b1-308": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2012,
+  "lastParagraph": 2014,
+  "words": 133,
+  "bodySha256": "a4af2249ca10e9a1062ffa79c5ca0a2d64168fc6128f2b59d3e14d16647bc6c1"
+ },
+ "pd-b1-321": {
+  "gutenbergId": 5097,
+  "firstParagraph": 553,
+  "lastParagraph": 559,
+  "words": 200,
+  "bodySha256": "670f50fda227f3ed3e27e2cd87ce49297ddcfa46750f3ae05c20c4c01cf979b6"
+ },
+ "pd-b1-336": {
+  "gutenbergId": 5097,
+  "firstParagraph": 956,
+  "lastParagraph": 958,
+  "words": 152,
+  "bodySha256": "a6ac95f3781b507446d7a335976b1ae1c644ae20d4718a7e54a9af636aff5ad1"
+ },
+ "pd-b1-341": {
+  "gutenbergId": 5097,
+  "firstParagraph": 466,
+  "lastParagraph": 467,
+  "words": 139,
+  "bodySha256": "991b93b6966af27f3319b54a8aab1f6df759efbd25e91b6b15f60bdbf3bea466"
+ },
+ "pd-b1-342": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2766,
+  "lastParagraph": 2770,
+  "words": 130,
+  "bodySha256": "69db91379af2b2f9cc0e429b9d60cbd207e99fe8a2691f793bacf6aa3de36377"
+ },
+ "pd-b2-355": {
+  "gutenbergId": 5097,
+  "firstParagraph": 940,
+  "lastParagraph": 951,
+  "words": 191,
+  "bodySha256": "4742e12fea8ef52e25c09b7e0e2b9c55feb9b3a8ea2213939174e9791db0dc6f"
+ },
+ "pd-b2-375": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2626,
+  "lastParagraph": 2627,
+  "words": 195,
+  "bodySha256": "514b54a2a0831af25852e82bb1ab6f6894af91be156f89092bb4cf2f9f6fce14"
+ },
+ "pd-b2-378": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1315,
+  "lastParagraph": 1322,
+  "words": 197,
+  "bodySha256": "2ad110cb28dba04bc07922e393d7b9153f1901b9ff9200b625f49c1ee2d277f3"
+ },
+ "pd-b2-387": {
+  "gutenbergId": 5097,
+  "firstParagraph": 430,
+  "lastParagraph": 435,
+  "words": 237,
+  "bodySha256": "122f009d068a6f0ad5448574767f5a7dea5622cfc5bcc59c82078e68baf7019e"
+ },
+ "pd-b2-393": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2349,
+  "lastParagraph": 2352,
+  "words": 246,
+  "bodySha256": "06bd6d062d5c43c386a5837c1f8f26c7ccf57c1c221e4fecb13c17fb6f801796"
+ },
+ "pd-b2-445": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2380,
+  "lastParagraph": 2388,
+  "words": 191,
+  "bodySha256": "a88593bfa43869db49a7ad4621c615480a9383e7ddd6ef1eb6b21ec9cbc01c6b"
+ },
+ "pd-b2-475": {
+  "gutenbergId": 5097,
+  "firstParagraph": 3336,
+  "lastParagraph": 3338,
+  "words": 202,
+  "bodySha256": "60f6539bc563902485585fc6eb3531247dd9f59a97051d5faa38765f09bc405f"
+ },
+ "pd-b2-477": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2271,
+  "lastParagraph": 2278,
+  "words": 212,
+  "bodySha256": "0bff86824cdbbf98d0dbd696c1998854448bd6bc6fcac840b85dec9cd64af269"
+ },
+ "pd-c1-509": {
+  "gutenbergId": 5097,
+  "firstParagraph": 3259,
+  "lastParagraph": 3260,
+  "words": 347,
+  "bodySha256": "c2eb4c67a808282bdb5cf3e048a82cc38caa353715d955657138b881659674b7"
+ },
+ "pd-c1-513": {
+  "gutenbergId": 5097,
+  "firstParagraph": 665,
+  "lastParagraph": 672,
+  "words": 270,
+  "bodySha256": "baf0fd67a9f667e4c1aaf22357c415a051fa1832fbd67a0afaf0c7b0f5d63575"
+ },
+ "pd-c1-519": {
+  "gutenbergId": 5097,
+  "firstParagraph": 438,
+  "lastParagraph": 447,
+  "words": 338,
+  "bodySha256": "766860e023e9cf0cc386fe175888e1e73f9aa1a96a23e33beda4023039f26fe6"
+ },
+ "pd-c1-549": {
+  "gutenbergId": 5097,
+  "firstParagraph": 532,
+  "lastParagraph": 534,
+  "words": 301,
+  "bodySha256": "e71efea2b342de92cd58d0c9b5a5c3b67d35a6790f7a3141f23c6be738237949"
+ },
+ "pd-c1-555": {
+  "gutenbergId": 5097,
+  "firstParagraph": 3469,
+  "lastParagraph": 3471,
+  "words": 320,
+  "bodySha256": "ad78b3d6981a62926a77d9669c2a535d2e40d20d5ef1545c2c7931167dee3ae3"
+ },
+ "pd-c1-564": {
+  "gutenbergId": 5097,
+  "firstParagraph": 750,
+  "lastParagraph": 756,
+  "words": 264,
+  "bodySha256": "9b753e7fe0cc61b9c5d3f0babb3ceb41caf77a968854dd3d917c46078f5865f5"
+ },
+ "pd-c1-567": {
+  "gutenbergId": 5097,
+  "firstParagraph": 102,
+  "lastParagraph": 107,
+  "words": 312,
+  "bodySha256": "4823edd11fe51cdd2b11e64450d71ff5e068847ba71ff73ee2987a722f680c60"
+ },
+ "pd-c1-574": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1789,
+  "lastParagraph": 1789,
+  "words": 294,
+  "bodySha256": "6c686e20efb4c26f558fa8f01cbdb137be0877861795204c7c2d3e1cd0b8106e"
+ },
+ "pd-c1-580": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2600,
+  "lastParagraph": 2605,
+  "words": 268,
+  "bodySha256": "c2563ecee49e346c5cbb655898d7eaadc1d36eaa4282b820490b9c55d2256d57"
+ },
+ "pd-c2-618": {
+  "gutenbergId": 5097,
+  "firstParagraph": 922,
+  "lastParagraph": 939,
+  "words": 380,
+  "bodySha256": "185a1373ef17dabda3d7fffd940d3f88a8015ba5f3496e05d1126a3072003d18"
+ },
+ "pd-c2-622": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2081,
+  "lastParagraph": 2091,
+  "words": 371,
+  "bodySha256": "004165c47e78a1db272ded9b4bfc136d71427b264eb63786804abebafdbe732e"
+ },
+ "pd-c2-627": {
+  "gutenbergId": 5097,
+  "firstParagraph": 184,
+  "lastParagraph": 194,
+  "words": 365,
+  "bodySha256": "9b77cdf82f63d60a22dc57ae5f16f296f941faec582aaba49fae1101f917337d"
+ },
+ "pd-c2-636": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1986,
+  "lastParagraph": 1990,
+  "words": 389,
+  "bodySha256": "c4974651257748103ec76f77c120975cbce96dd1e155ddbc3d5859450580455d"
+ },
+ "pd-c2-640": {
+  "gutenbergId": 5097,
+  "firstParagraph": 81,
+  "lastParagraph": 86,
+  "words": 466,
+  "bodySha256": "cf2334dc87bafcb05bcc1d054a5e1f5a5ff3cf92a2f56edabaa1db1feaa52004"
+ },
+ "pd-c2-642": {
+  "gutenbergId": 5097,
+  "firstParagraph": 477,
+  "lastParagraph": 483,
+  "words": 370,
+  "bodySha256": "87a15369b286f0cf09c1734ddb1fe58e0f9d359c391b2e91b3c2a81c0d43f187"
+ },
+ "pd-c2-661": {
+  "gutenbergId": 5097,
+  "firstParagraph": 1254,
+  "lastParagraph": 1265,
+  "words": 374,
+  "bodySha256": "684bf0da44137e1d4ee4e86def57be7be0f7f0e8f0a07906f4788660bb85fdbd"
+ },
+ "pd-c2-707": {
+  "gutenbergId": 5097,
+  "firstParagraph": 2538,
+  "lastParagraph": 2544,
+  "words": 416,
+  "bodySha256": "6ed59f2e9f890bc8bd7a30215ed3fcae7609011a50f59c24993cacdb19610fd7"
+ },
+ "pd-b1-263": {
+  "gutenbergId": 11714,
+  "firstParagraph": 586,
+  "lastParagraph": 588,
+  "words": 143,
+  "bodySha256": "ac93cf2bee67dbc98c710908d27f80e009891b4c3c6ac0a7fa8195f2af871da3"
+ },
+ "pd-b1-292": {
+  "gutenbergId": 11714,
+  "firstParagraph": 114,
+  "lastParagraph": 120,
+  "words": 194,
+  "bodySha256": "4c9898b39e4b4199c0923df558e0b93f4926ebabf3611b6eaa61a9ae0504ab49"
+ },
+ "pd-b1-298": {
+  "gutenbergId": 11714,
+  "firstParagraph": 25,
+  "lastParagraph": 30,
+  "words": 134,
+  "bodySha256": "6c5203855badc1a910783a9c43aa63082cb5c677b447772518bd37decbd81f67"
+ },
+ "pd-b2-370": {
+  "gutenbergId": 11714,
+  "firstParagraph": 669,
+  "lastParagraph": 680,
+  "words": 305,
+  "bodySha256": "aba9c64945db858f7ec269793b6e818568e213c47f84916e77ed80d9fe84c8ce"
+ },
+ "pd-b2-385": {
+  "gutenbergId": 11714,
+  "firstParagraph": 256,
+  "lastParagraph": 259,
+  "words": 218,
+  "bodySha256": "10629e3437d435e7cc3fc1835ac91ee664ea6e62ea989dceb6f2c7a577c5dc74"
+ },
+ "pd-b2-389": {
+  "gutenbergId": 11714,
+  "firstParagraph": 123,
+  "lastParagraph": 128,
+  "words": 219,
+  "bodySha256": "544f0f1a60eec44ed21cbb2c262ecbd64226954479eef8ac033a94b01e92202a"
+ },
+ "pd-b2-390": {
+  "gutenbergId": 11714,
+  "firstParagraph": 1120,
+  "lastParagraph": 1128,
+  "words": 195,
+  "bodySha256": "e5768246ec57a77530d75f87b2cef653cc85d3b77e71c62b870ced1ba0c3bc90"
+ },
+ "pd-b2-421": {
+  "gutenbergId": 11714,
+  "firstParagraph": 935,
+  "lastParagraph": 940,
+  "words": 227,
+  "bodySha256": "657f9eed1cc31e65f39bd7730c9e36b86edaab79eff550fb7a21be174be75180"
+ },
+ "pd-b2-430": {
+  "gutenbergId": 11714,
+  "firstParagraph": 65,
+  "lastParagraph": 69,
+  "words": 204,
+  "bodySha256": "36df177656e99b79fa13b7e95dfba99a72946d5c78a8655ccc5454ce457a72bd"
+ },
+ "pd-b2-442": {
+  "gutenbergId": 11714,
+  "firstParagraph": 723,
+  "lastParagraph": 729,
+  "words": 231,
+  "bodySha256": "2654f3d8972717679210337c8a721ea643e1916d92835dff843f5c1ff25cf735"
+ },
+ "pd-c1-510": {
+  "gutenbergId": 11714,
+  "firstParagraph": 6,
+  "lastParagraph": 16,
+  "words": 297,
+  "bodySha256": "7df41b2e73f035ea99e74e07b23fa57ba4374b226115aee786141e3af3d67996"
+ },
+ "pd-c1-523": {
+  "gutenbergId": 11714,
+  "firstParagraph": 93,
+  "lastParagraph": 101,
+  "words": 278,
+  "bodySha256": "a43d2f140a6396852aeb842d60fe5851d20c65f49e57a5e3bd3450b26d72e649"
+ },
+ "pd-c1-554": {
+  "gutenbergId": 11714,
+  "firstParagraph": 922,
+  "lastParagraph": 927,
+  "words": 314,
+  "bodySha256": "ada7fa4f3434e6d47d10a2f7f01701eb2ef6f560b60c8c707428355cfe7b4977"
+ },
+ "pd-c1-556": {
+  "gutenbergId": 11714,
+  "firstParagraph": 185,
+  "lastParagraph": 191,
+  "words": 260,
+  "bodySha256": "0caba4da91c8930807ac1d1d42b06d348a711a237dc32fd9fcac69a53a563d57"
+ },
+ "pd-c1-599": {
+  "gutenbergId": 11714,
+  "firstParagraph": 336,
+  "lastParagraph": 339,
+  "words": 303,
+  "bodySha256": "e2c534ad912505b3c49d0d633f20602bea1cf221f6927a938c9ae64770fea234"
+ },
+ "pd-c2-609": {
+  "gutenbergId": 11714,
+  "firstParagraph": 1050,
+  "lastParagraph": 1057,
+  "words": 404,
+  "bodySha256": "4f662312c4244cf1fe2aee6d73de69aa54bf9c9ca6c76892fbc2f10316c07544"
+ },
+ "pd-c2-614": {
+  "gutenbergId": 11714,
+  "firstParagraph": 316,
+  "lastParagraph": 327,
+  "words": 434,
+  "bodySha256": "734d374fa893cee00074fe6e03bf29c0fbb277dbd07cb4b3b5c96c7ef16cdad2"
+ },
+ "pd-c2-615": {
+  "gutenbergId": 11714,
+  "firstParagraph": 451,
+  "lastParagraph": 475,
+  "words": 363,
+  "bodySha256": "3b2bdc873635429f4507afc224331f1a1ad3671a7ada7c5137af764c30a7cc81"
+ },
+ "pd-c2-638": {
+  "gutenbergId": 11714,
+  "firstParagraph": 410,
+  "lastParagraph": 420,
+  "words": 399,
+  "bodySha256": "d8dd8b2e057fca5ee525bc623ff9f2cc2d28e0ed56c678f3c0fe9b0190877c29"
+ },
+ "pd-b1-252": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1109,
+  "lastParagraph": 1116,
+  "words": 137,
+  "bodySha256": "fdfdeed5280f05a14809b262375e23e5a8a5d5221144bb4468133fc39db7cb56"
+ },
+ "pd-b1-257": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1142,
+  "lastParagraph": 1144,
+  "words": 179,
+  "bodySha256": "75789c00f205660de60550133a82f98789ff19481eccc596c1e810ba1ec1b4cd"
+ },
+ "pd-b1-258": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2890,
+  "lastParagraph": 2895,
+  "words": 143,
+  "bodySha256": "8e314190ecde8d27daebb2fbe1b786539fb270876b9ddc2ab7dfdc20a9504fea"
+ },
+ "pd-b1-282": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2941,
+  "lastParagraph": 2943,
+  "words": 155,
+  "bodySha256": "77018d7fe2caa6ca7b8d40f9b832ad911e3a7eb4dc774d0f7069288bd961dbe8"
+ },
+ "pd-b1-286": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2484,
+  "lastParagraph": 2489,
+  "words": 131,
+  "bodySha256": "d34daa35d6291cee957e525da3e6ba7c81baa86a841bf1f6bb83df1ec3cbbc28"
+ },
+ "pd-b1-302": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1501,
+  "lastParagraph": 1505,
+  "words": 201,
+  "bodySha256": "f6e2a1fc177b3bf2c1be8ec1fc7df45ff14001ce296747e0d8e22a33248df792"
+ },
+ "pd-b1-304": {
+  "gutenbergId": 14155,
+  "firstParagraph": 750,
+  "lastParagraph": 755,
+  "words": 140,
+  "bodySha256": "96a2525dfe62467cd442be5863c1d942595fe9c064abe5921d65d142ec9f4b41"
+ },
+ "pd-b1-314": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2037,
+  "lastParagraph": 2042,
+  "words": 137,
+  "bodySha256": "a566c306cbcd5cc4abe00b32a4775408f2b651bfa3daab7975b4968361e0df4f"
+ },
+ "pd-b1-316": {
+  "gutenbergId": 14155,
+  "firstParagraph": 539,
+  "lastParagraph": 543,
+  "words": 132,
+  "bodySha256": "6e6a857972ef6cc0f2dc7d69970755b92273572d01800a48d7781d314027f85c"
+ },
+ "pd-b1-330": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2001,
+  "lastParagraph": 2007,
+  "words": 153,
+  "bodySha256": "11b7938b9518634bb2b904d8d81fbd6df3f265cbc4b8813dd4c85c9b4193de3e"
+ },
+ "pd-b1-332": {
+  "gutenbergId": 14155,
+  "firstParagraph": 958,
+  "lastParagraph": 962,
+  "words": 133,
+  "bodySha256": "88a12ce6ab82570b8e0536b8729ef19aff88e1b781369a31a2868131f37bcb39"
+ },
+ "pd-b2-361": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1177,
+  "lastParagraph": 1183,
+  "words": 212,
+  "bodySha256": "fb63427c4f4cebdc8d1300c51d10e3f7ec47ac1ba6f595314305472961948d93"
+ },
+ "pd-b2-400": {
+  "gutenbergId": 14155,
+  "firstParagraph": 306,
+  "lastParagraph": 309,
+  "words": 271,
+  "bodySha256": "99ca40678bfc035a7082272b07a5855e9891db8c69902eb1ee9134b0749678d0"
+ },
+ "pd-b2-420": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1228,
+  "lastParagraph": 1231,
+  "words": 224,
+  "bodySha256": "8bb57a238304705c70c8e8eb308d5deb9be4b364caf436d9a5cc4e0e07ffd0f2"
+ },
+ "pd-c1-483": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2522,
+  "lastParagraph": 2530,
+  "words": 279,
+  "bodySha256": "b6903e948cf05033358812d844847df4ebd796ebef4b878f00f3fd30e6e0b2e8"
+ },
+ "pd-c1-487": {
+  "gutenbergId": 14155,
+  "firstParagraph": 37,
+  "lastParagraph": 41,
+  "words": 403,
+  "bodySha256": "3cfdb6b66b9acc559670e1882997e45e4b66693114006a3c0a8d1044665162e4"
+ },
+ "pd-c1-526": {
+  "gutenbergId": 14155,
+  "firstParagraph": 586,
+  "lastParagraph": 594,
+  "words": 260,
+  "bodySha256": "e72535557fbc030775020c7d8c7949d9845d93aacd1272314b5b7a11e5156a9d"
+ },
+ "pd-c1-527": {
+  "gutenbergId": 14155,
+  "firstParagraph": 657,
+  "lastParagraph": 662,
+  "words": 266,
+  "bodySha256": "d894f000957b3f996c82a4f969a4bf1a3e2728946b73c5d8515ed64654eddf2a"
+ },
+ "pd-c1-537": {
+  "gutenbergId": 14155,
+  "firstParagraph": 147,
+  "lastParagraph": 149,
+  "words": 277,
+  "bodySha256": "a891b0eeea2952ba2a5612de4f66514ec4af29c3c7bdd0c5354249e3ede3b1d7"
+ },
+ "pd-c1-547": {
+  "gutenbergId": 14155,
+  "firstParagraph": 281,
+  "lastParagraph": 283,
+  "words": 288,
+  "bodySha256": "6c78d978e80323ae092c7da88eeaed0032613139b1fe44cfee22a4e5c8609553"
+ },
+ "pd-c1-558": {
+  "gutenbergId": 14155,
+  "firstParagraph": 114,
+  "lastParagraph": 116,
+  "words": 370,
+  "bodySha256": "4fe3bbc3e08604582bee441cb75653c7ff60ef50f5ae4d2c5c11c35931e31e7e"
+ },
+ "pd-c1-586": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1926,
+  "lastParagraph": 1942,
+  "words": 281,
+  "bodySha256": "f42dda37f08aee3cae3b6c4e5bff23f1bbc97422dec13bbd6221d01d12b8cae7"
+ },
+ "pd-c1-591": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1199,
+  "lastParagraph": 1204,
+  "words": 323,
+  "bodySha256": "f53077ee08ae6ae9ff940883b9bb93c02c54114682e01586b33868cb9cbd150c"
+ },
+ "pd-c1-594": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1797,
+  "lastParagraph": 1804,
+  "words": 266,
+  "bodySha256": "e1da4e6ec09446abb4c5ddc670574c1168b7b2cbee68943cc9e762d447f2dc4e"
+ },
+ "pd-c2-616": {
+  "gutenbergId": 14155,
+  "firstParagraph": 897,
+  "lastParagraph": 902,
+  "words": 381,
+  "bodySha256": "5e2f3d419c9319005d8b91fa5ea1cb17f57a8a41e921bf1d8fcbeba9be682813"
+ },
+ "pd-c2-625": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1988,
+  "lastParagraph": 1995,
+  "words": 364,
+  "bodySha256": "d4af525cf0a6ee008cd4ed473277305519ef32c2eddcbbbe98255c1188975b46"
+ },
+ "pd-c2-643": {
+  "gutenbergId": 14155,
+  "firstParagraph": 322,
+  "lastParagraph": 326,
+  "words": 363,
+  "bodySha256": "37f21a40d15342bf7b8b82b85cdeb84bf821eb26f71a57fa59fb4c181eb61df1"
+ },
+ "pd-c2-650": {
+  "gutenbergId": 14155,
+  "firstParagraph": 222,
+  "lastParagraph": 225,
+  "words": 473,
+  "bodySha256": "838097c7df1d053213efbdf87943cfd4f79c2107052e9b66038423368d35542b"
+ },
+ "pd-c2-660": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1872,
+  "lastParagraph": 1881,
+  "words": 402,
+  "bodySha256": "48e02198994ef2a5c97ae505d9238d35d857a96b081d89192c1b215069a84970"
+ },
+ "pd-c2-666": {
+  "gutenbergId": 14155,
+  "firstParagraph": 914,
+  "lastParagraph": 925,
+  "words": 426,
+  "bodySha256": "ca8f92d7734876817c7df64f8ac0cfbd8f47c088928891467d611181eef59fab"
+ },
+ "pd-c2-687": {
+  "gutenbergId": 14155,
+  "firstParagraph": 19,
+  "lastParagraph": 32,
+  "words": 422,
+  "bodySha256": "d0e442aa3746f4129d31468c95c504290752301dfb7375489601f2c764527c9d"
+ },
+ "pd-c2-693": {
+  "gutenbergId": 14155,
+  "firstParagraph": 2793,
+  "lastParagraph": 2800,
+  "words": 396,
+  "bodySha256": "88df29a01cdfb38b480edd93c75abb5357433285bb0b39c11752152ccdf4f4b8"
+ },
+ "pd-c2-716": {
+  "gutenbergId": 14155,
+  "firstParagraph": 1241,
+  "lastParagraph": 1244,
+  "words": 368,
+  "bodySha256": "a66b992a06e11e7e8f6d8e47e29a2a82a5571e7b2e3d5f31ca9aeb01351ca92f"
+ },
+ "pd-c2-720": {
+  "gutenbergId": 14155,
+  "firstParagraph": 472,
+  "lastParagraph": 480,
+  "words": 366,
+  "bodySha256": "5bf0f02eecfc30b002ef903dd0c716ffb890be50bca99f16f263381b553753ee"
+ },
+ "pd-b1-235": {
+  "gutenbergId": 14790,
+  "firstParagraph": 609,
+  "lastParagraph": 611,
+  "words": 154,
+  "bodySha256": "f87d619d81b999c1808a907d5ebdb6659e7907c4019cce17a428861d4a7229e5"
+ },
+ "pd-b1-253": {
+  "gutenbergId": 14790,
+  "firstParagraph": 716,
+  "lastParagraph": 724,
+  "words": 146,
+  "bodySha256": "eca48c7d9f358857bc23456e54e41b916e1af12cd0a6de72d58901a3babe98fa"
+ },
+ "pd-b1-279": {
+  "gutenbergId": 14790,
+  "firstParagraph": 879,
+  "lastParagraph": 884,
+  "words": 164,
+  "bodySha256": "16b0e0a3a95deb718db491a856e765908d6ee92812d24e7e5324118cb481c9bf"
+ },
+ "pd-b1-319": {
+  "gutenbergId": 14790,
+  "firstParagraph": 460,
+  "lastParagraph": 466,
+  "words": 147,
+  "bodySha256": "3561011c83a4015bee023dce22dc697bb4d29094bb779d9ff85ce2b801234105"
+ },
+ "pd-b2-398": {
+  "gutenbergId": 14790,
+  "firstParagraph": 528,
+  "lastParagraph": 537,
+  "words": 267,
+  "bodySha256": "d3f7775bef1f8aed86688e4713867509ba789566b2649b518d7bcda42bc32653"
+ },
+ "pd-b2-426": {
+  "gutenbergId": 14790,
+  "firstParagraph": 1024,
+  "lastParagraph": 1028,
+  "words": 216,
+  "bodySha256": "04e58a210821126ebc53706afc8e35a1260bf9c633310092f234672213a32b26"
+ },
+ "pd-b2-434": {
+  "gutenbergId": 14790,
+  "firstParagraph": 1004,
+  "lastParagraph": 1012,
+  "words": 220,
+  "bodySha256": "c70cf72bc7efc4378bff7f08a839a741d2e924b8d01916e45aa13c391591696f"
+ },
+ "pd-b2-458": {
+  "gutenbergId": 14790,
+  "firstParagraph": 194,
+  "lastParagraph": 196,
+  "words": 190,
+  "bodySha256": "2b38e9dbdb97f3ac212c4dcfc93da0e72c87901e09f7e419e39331ed802635fd"
+ },
+ "pd-b2-469": {
+  "gutenbergId": 14790,
+  "firstParagraph": 1213,
+  "lastParagraph": 1222,
+  "words": 198,
+  "bodySha256": "3ce328464379a4c21b4c5bd5fb522913e480dbf3c720e00dd25fb15e9e03a57b"
+ },
+ "pd-c1-553": {
+  "gutenbergId": 14790,
+  "firstParagraph": 1060,
+  "lastParagraph": 1069,
+  "words": 280,
+  "bodySha256": "ceede227d7b06de7ab27bbb958ceb571253b8677b4e435f9f246a45ee5aa24fa"
+ },
+ "pd-c1-593": {
+  "gutenbergId": 14790,
+  "firstParagraph": 1693,
+  "lastParagraph": 1704,
+  "words": 264,
+  "bodySha256": "2188650ed359c6b15f2b1855b45729b0a4589a27f7276e1293161040abaacf22"
+ },
+ "pd-c2-603": {
+  "gutenbergId": 14790,
+  "firstParagraph": 666,
+  "lastParagraph": 677,
+  "words": 361,
+  "bodySha256": "37144e1e072836be6554b33300f6ac25a0bbbba4d219aa096a75508fb90b20fb"
+ },
+ "pd-c2-664": {
+  "gutenbergId": 14790,
+  "firstParagraph": 937,
+  "lastParagraph": 951,
+  "words": 362,
+  "bodySha256": "9d8fac4eec6d11ecf6487594ba114b610554f090a234ce207ab39885f17f0c02"
+ },
+ "pd-b1-243": {
+  "gutenbergId": 16826,
+  "firstParagraph": 723,
+  "lastParagraph": 724,
+  "words": 220,
+  "bodySha256": "70957730f75ce179de59b17bca05a51e10958a1f5b1160ef2a9b777ba556f533"
+ },
+ "pd-b1-309": {
+  "gutenbergId": 16826,
+  "firstParagraph": 534,
+  "lastParagraph": 540,
+  "words": 132,
+  "bodySha256": "f96efb9925a8e32a0a5f8ff66ca0ee831e5bcbe468bf3b48b45e4fcad06bda00"
+ },
+ "pd-b1-313": {
+  "gutenbergId": 16826,
+  "firstParagraph": 194,
+  "lastParagraph": 199,
+  "words": 142,
+  "bodySha256": "d33ce117b680ad96dd23b1c2c082ca53d8579422e0c58a310ee6df26105cf9ad"
+ },
+ "pd-b1-345": {
+  "gutenbergId": 16826,
+  "firstParagraph": 509,
+  "lastParagraph": 512,
+  "words": 133,
+  "bodySha256": "f2798c8de1e48bb8070ee4270cddfdf97a79c06e3ad5e564ffe6b3f2873b4c58"
+ },
+ "pd-b2-373": {
+  "gutenbergId": 16826,
+  "firstParagraph": 273,
+  "lastParagraph": 275,
+  "words": 197,
+  "bodySha256": "c187eb515abaad8add41dd4fd2c8e99bd951a9a1eec6b5fe38a311c396777ac7"
+ },
+ "pd-b2-383": {
+  "gutenbergId": 16826,
+  "firstParagraph": 913,
+  "lastParagraph": 914,
+  "words": 201,
+  "bodySha256": "a93b063b132d42011e142086f8da80b40db9f0824450385dd0c696825bc12f71"
+ },
+ "pd-b2-428": {
+  "gutenbergId": 16826,
+  "firstParagraph": 226,
+  "lastParagraph": 230,
+  "words": 213,
+  "bodySha256": "9ef21c9178053fdcd1ce984bb7d7d5ee214211c23bad0c26e13e058d8640d24a"
+ },
+ "pd-c1-533": {
+  "gutenbergId": 16826,
+  "firstParagraph": 526,
+  "lastParagraph": 532,
+  "words": 281,
+  "bodySha256": "7e3e215ebf27f21a2421ecd2efe62dc4b09a7fb072ad9816501ecfe0ced8af9b"
+ },
+ "pd-c1-542": {
+  "gutenbergId": 16826,
+  "firstParagraph": 903,
+  "lastParagraph": 910,
+  "words": 289,
+  "bodySha256": "16933dd2ce643fce0284e187d8a1204513c3e5fa49fbe65805da9d20e9ba6206"
+ },
+ "pd-c1-546": {
+  "gutenbergId": 16826,
+  "firstParagraph": 126,
+  "lastParagraph": 137,
+  "words": 335,
+  "bodySha256": "157d20a8415e3c86fbaf519c7e4fa0e3ce532c2fdf17cb1735375d9e120c2db8"
+ },
+ "pd-c2-628": {
+  "gutenbergId": 16826,
+  "firstParagraph": 18,
+  "lastParagraph": 24,
+  "words": 425,
+  "bodySha256": "9dada762f49ff2746d0353bf61eb6affa7fc4d717db5da2b216eecddf5ed6361"
+ },
+ "pd-c2-667": {
+  "gutenbergId": 16826,
+  "firstParagraph": 139,
+  "lastParagraph": 159,
+  "words": 360,
+  "bodySha256": "716bd6b34cf728db414daf245dfcb425a21524996d6abe69adccd52e8c73eede"
+ },
+ "pd-c2-704": {
+  "gutenbergId": 16826,
+  "firstParagraph": 73,
+  "lastParagraph": 80,
+  "words": 379,
+  "bodySha256": "e9f5ebe3d192cebaa6d94138bc22cc9a99e736dffd6144fb5e3642856b1ae825"
+ },
+ "pd-c2-709": {
+  "gutenbergId": 16826,
+  "firstParagraph": 546,
+  "lastParagraph": 551,
+  "words": 370,
+  "bodySha256": "25ff4b0641d00f67ce9560abccee4d17dcc2d9641c1984993e27d5662e186cb7"
+ },
+ "pd-c2-715": {
+  "gutenbergId": 16826,
+  "firstParagraph": 1226,
+  "lastParagraph": 1243,
+  "words": 369,
+  "bodySha256": "055140d52ec87f21798860db07f9345247efae418975afdd917937011ce186af"
+ },
+ "pd-b1-230": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2212,
+  "lastParagraph": 2217,
+  "words": 131,
+  "bodySha256": "f207704aaee521228385edd4ebeca48a743521d4726f60d917fcc8f2b5401ffc"
+ },
+ "pd-b1-241": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2407,
+  "lastParagraph": 2409,
+  "words": 140,
+  "bodySha256": "cad5cb188d28f1e50d64fb2c314c11d1a60463ec3b708201197525776fbe5fc7"
+ },
+ "pd-b1-244": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1093,
+  "lastParagraph": 1095,
+  "words": 161,
+  "bodySha256": "9015af6e787e95212142c81eb5be0b768dbb670d12e1dc10c3a1a6d9dc8a978f"
+ },
+ "pd-b1-249": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1647,
+  "lastParagraph": 1649,
+  "words": 136,
+  "bodySha256": "9a77d49de22f8fee1dda62332821c0adc7f31a12d231693e31fb7500f30cc270"
+ },
+ "pd-b1-262": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2046,
+  "lastParagraph": 2046,
+  "words": 141,
+  "bodySha256": "6ca8f7ddcf715642ff39a67ab9b176a9317d2d543fc908ef54119320985602a0"
+ },
+ "pd-b1-266": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1493,
+  "lastParagraph": 1495,
+  "words": 147,
+  "bodySha256": "8b301ef15e50e746dea0ae238c272ba0c4eba966d482f41551cf83fb5de2c5b4"
+ },
+ "pd-b1-271": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1326,
+  "lastParagraph": 1330,
+  "words": 132,
+  "bodySha256": "5803fb8dbf1f95127116f960ac7f43a02d42954ba2ea6e65feb2c4efa7de3c33"
+ },
+ "pd-b1-296": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1769,
+  "lastParagraph": 1771,
+  "words": 130,
+  "bodySha256": "95d98d4911b344b6ca447df2bdf466f329c7aadce659978b2565b78c8a079bb3"
+ },
+ "pd-b1-300": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2355,
+  "lastParagraph": 2358,
+  "words": 162,
+  "bodySha256": "adfd0323c93ea0fccdab70a42333940c0e865f5a123f5dfb102d4e1e3a873a27"
+ },
+ "pd-b1-305": {
+  "gutenbergId": 17796,
+  "firstParagraph": 993,
+  "lastParagraph": 995,
+  "words": 143,
+  "bodySha256": "434b41419b5f1fbe1a669b014ace40240ca87ce0e3101716882fd36323fde0bc"
+ },
+ "pd-b1-328": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1879,
+  "lastParagraph": 1886,
+  "words": 154,
+  "bodySha256": "e9c6827406bfa84e0d3e44e3f26477bd5da4863494a5b25b947107274d8f8b8d"
+ },
+ "pd-b1-335": {
+  "gutenbergId": 17796,
+  "firstParagraph": 183,
+  "lastParagraph": 183,
+  "words": 211,
+  "bodySha256": "d2477cdbf3c5930414b730a8510851c94a831706b480d1d7390b41f41d919430"
+ },
+ "pd-b2-356": {
+  "gutenbergId": 17796,
+  "firstParagraph": 361,
+  "lastParagraph": 362,
+  "words": 217,
+  "bodySha256": "8077ee1493733283837ddcdef8be24c8caba934108d9ef52f1fb46d4ac08597a"
+ },
+ "pd-b2-371": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2512,
+  "lastParagraph": 2522,
+  "words": 203,
+  "bodySha256": "07943ddbda63a28bfc5ae2b82a6cebd08c978164965873bcfe7aef858720239b"
+ },
+ "pd-b2-377": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1905,
+  "lastParagraph": 1906,
+  "words": 200,
+  "bodySha256": "dffc93b18384a71077f2ff0a99d38f4b080b66d0602a716f97816cd46f3d4f9f"
+ },
+ "pd-b2-379": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2226,
+  "lastParagraph": 2228,
+  "words": 208,
+  "bodySha256": "038f3c5e9304ee2065f8da56a4cc60841bc3e94eddc945b011b3971d7bd87e4e"
+ },
+ "pd-b2-388": {
+  "gutenbergId": 17796,
+  "firstParagraph": 54,
+  "lastParagraph": 58,
+  "words": 230,
+  "bodySha256": "4cb2c8399069c05e681251dc982b48fc230109ab318ff9ce4b47bc65f830b7a1"
+ },
+ "pd-b2-396": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2391,
+  "lastParagraph": 2397,
+  "words": 207,
+  "bodySha256": "27b6eb509e7100ae2d9398e5f4f6458756e2ee4eece29fb92fecc446d080683a"
+ },
+ "pd-b2-404": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2184,
+  "lastParagraph": 2189,
+  "words": 193,
+  "bodySha256": "49e12fd7ee6fce91d2f23c9b8108081d217f033deba857d0a35de75269e13c81"
+ },
+ "pd-b2-414": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1943,
+  "lastParagraph": 1946,
+  "words": 215,
+  "bodySha256": "8b1a5be1f0d7fc2762745dfce5c2811b956dfebf887b09e1908d60c19d5ae71a"
+ },
+ "pd-b2-418": {
+  "gutenbergId": 17796,
+  "firstParagraph": 105,
+  "lastParagraph": 108,
+  "words": 198,
+  "bodySha256": "27e6fbfc0ffde550184aa4f7e8b2077038e1abaffd3eb93ac9ed4ca8588bc7fa"
+ },
+ "pd-b2-423": {
+  "gutenbergId": 17796,
+  "firstParagraph": 302,
+  "lastParagraph": 308,
+  "words": 218,
+  "bodySha256": "3e52c03bda77584ea5400ed1fdab33ee2d76cbbd4f8b290726d71a54570284ef"
+ },
+ "pd-b2-427": {
+  "gutenbergId": 17796,
+  "firstParagraph": 501,
+  "lastParagraph": 507,
+  "words": 234,
+  "bodySha256": "fba752a2e42940fdf144465c8ab8537ba5565d5668600e72c7a4d1964ba4827a"
+ },
+ "pd-b2-432": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1426,
+  "lastParagraph": 1426,
+  "words": 200,
+  "bodySha256": "8fcfac5b28dafcc4c2de5e177efa0af8de9deacdb0a718db6108c2da05928151"
+ },
+ "pd-b2-436": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2343,
+  "lastParagraph": 2345,
+  "words": 194,
+  "bodySha256": "8309347b402d38910731ffd13d820ac1ddf42063416e5a4211eebde0c983c8dc"
+ },
+ "pd-b2-447": {
+  "gutenbergId": 17796,
+  "firstParagraph": 927,
+  "lastParagraph": 934,
+  "words": 212,
+  "bodySha256": "09ac473ba3d75cf2749c63940e943b7cfb5e762fcf6b2bd85f23bd8fcc723f33"
+ },
+ "pd-b2-450": {
+  "gutenbergId": 17796,
+  "firstParagraph": 695,
+  "lastParagraph": 699,
+  "words": 193,
+  "bodySha256": "a6e15cb14f7fbcd0abbbcd384b4c079cebc224ac35e31d9ed25b48c8430cf4b3"
+ },
+ "pd-b2-463": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1509,
+  "lastParagraph": 1511,
+  "words": 204,
+  "bodySha256": "4b3a0e33f6a881488ed20a761b1684eb7895832a9495f09e6e41776ce6b2e6c1"
+ },
+ "pd-b2-465": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1058,
+  "lastParagraph": 1063,
+  "words": 205,
+  "bodySha256": "826218f9cb809a2fee4dc259ae883415c48b88123731c3d14075e95ea87157ea"
+ },
+ "pd-c1-511": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1284,
+  "lastParagraph": 1288,
+  "words": 327,
+  "bodySha256": "4232b2e6ea8457fca05699b1c5f881df285411ee5113f80e398e4ce0879e0adb"
+ },
+ "pd-c1-540": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1361,
+  "lastParagraph": 1365,
+  "words": 373,
+  "bodySha256": "96c135c34e1c8a2e43ee3becb5c3fe2fca5cb40eea74690cc0f51e30a4cba128"
+ },
+ "pd-c1-569": {
+  "gutenbergId": 17796,
+  "firstParagraph": 743,
+  "lastParagraph": 748,
+  "words": 311,
+  "bodySha256": "33dbee5cfbfdd39f55f5f32d5cf551781792a601a8de5434b59226520ed4c85a"
+ },
+ "pd-c1-579": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1074,
+  "lastParagraph": 1077,
+  "words": 314,
+  "bodySha256": "9addbef28ce7bba623faab946b59e188db326be7babfc7dfb4fd60ca1b51d784"
+ },
+ "pd-c1-596": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1804,
+  "lastParagraph": 1807,
+  "words": 278,
+  "bodySha256": "43d57716fa15c5b67455598ea2e04af96f791b62ceb0db7992abbe9be9c40173"
+ },
+ "pd-c1-598": {
+  "gutenbergId": 17796,
+  "firstParagraph": 526,
+  "lastParagraph": 532,
+  "words": 266,
+  "bodySha256": "3be872df5d88c67f54df2004499f12b10aedacb74451da70ac287d7e9581cb76"
+ },
+ "pd-c2-645": {
+  "gutenbergId": 17796,
+  "firstParagraph": 589,
+  "lastParagraph": 593,
+  "words": 421,
+  "bodySha256": "96c7a48c2cc9c8c894ffb033e788ada159a10c35e5bdac26f7bfabd57638427b"
+ },
+ "pd-c2-649": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1987,
+  "lastParagraph": 1991,
+  "words": 406,
+  "bodySha256": "7f89f315deed6d4f609b9358e8be9ff97487ed31a850695ce97e6053150abf79"
+ },
+ "pd-c2-654": {
+  "gutenbergId": 17796,
+  "firstParagraph": 562,
+  "lastParagraph": 570,
+  "words": 360,
+  "bodySha256": "6937f163bf3b7090db6a5d8496f4fb1e82a50756021f72f44e2ade79e672766f"
+ },
+ "pd-c2-659": {
+  "gutenbergId": 17796,
+  "firstParagraph": 1927,
+  "lastParagraph": 1931,
+  "words": 451,
+  "bodySha256": "d21044be2988ffc1f29aea7708c827363b03d0d4638105fe77e8ee0483ac73cc"
+ },
+ "pd-c2-665": {
+  "gutenbergId": 17796,
+  "firstParagraph": 863,
+  "lastParagraph": 867,
+  "words": 398,
+  "bodySha256": "7190aa7153923841cc84854035c9462976f11ce8da6503c01d50c2be2ede58b3"
+ },
+ "pd-c2-673": {
+  "gutenbergId": 17796,
+  "firstParagraph": 473,
+  "lastParagraph": 480,
+  "words": 509,
+  "bodySha256": "56dc21c3397a0eb43ea9e401ee41e00a90cd3e3aaccd2c21d6176242055fd9d0"
+ },
+ "pd-c2-675": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2143,
+  "lastParagraph": 2149,
+  "words": 364,
+  "bodySha256": "e01d89bbb19cf48ded358a87eaa57ae235d5f4dd2f20ec35806d9a7235d1fc8c"
+ },
+ "pd-c2-679": {
+  "gutenbergId": 17796,
+  "firstParagraph": 18,
+  "lastParagraph": 20,
+  "words": 360,
+  "bodySha256": "9fa39dd10d0b47fbde47510e57a165607e2c66bf58ece668b2268522777a712a"
+ },
+ "pd-c2-685": {
+  "gutenbergId": 17796,
+  "firstParagraph": 965,
+  "lastParagraph": 975,
+  "words": 372,
+  "bodySha256": "87ae0f6c5852cb997c4c1614ce880c9a3a900258f67958c7223c0a56de6e4850"
+ },
+ "pd-c2-686": {
+  "gutenbergId": 17796,
+  "firstParagraph": 2333,
+  "lastParagraph": 2337,
+  "words": 380,
+  "bodySha256": "f12d96642b571175417b807218dbebfb5970cb050e8799b0d3d83ea2ca6b16da"
+ },
+ "pd-c2-695": {
+  "gutenbergId": 17796,
+  "firstParagraph": 489,
+  "lastParagraph": 492,
+  "words": 440,
+  "bodySha256": "95c098c926436cec10a2560d64d9d0513ae6614012c50ed83d4ad71bf1c3099a"
+ },
+ "pd-c2-699": {
+  "gutenbergId": 17796,
+  "firstParagraph": 539,
+  "lastParagraph": 544,
+  "words": 398,
+  "bodySha256": "f155c6e8f9005332a9c165bd3c08b8fed7306b03e7cc3d6637ad70d60bf847d6"
+ },
+ "pd-b1-237": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1446,
+  "lastParagraph": 1454,
+  "words": 130,
+  "bodySha256": "1eb3250c1b617c3b90ee4e36eba28e4b7c6c19798273ae80d2072344deca6ff8"
+ },
+ "pd-b1-267": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3871,
+  "lastParagraph": 3880,
+  "words": 134,
+  "bodySha256": "6ac7afbba1541b63b2122bcff67fa72da1e5730aa63c894dfef59da8b09e5c04"
+ },
+ "pd-b1-293": {
+  "gutenbergId": 17989,
+  "firstParagraph": 626,
+  "lastParagraph": 634,
+  "words": 147,
+  "bodySha256": "909e98d987e7c71f4f013530002e9647a6fcee731ad38b176f9d15cf5448ba11"
+ },
+ "pd-b1-306": {
+  "gutenbergId": 17989,
+  "firstParagraph": 553,
+  "lastParagraph": 558,
+  "words": 171,
+  "bodySha256": "a18eca19815cf11f5db35cb409707c8caccf0924454ee08e6570d04558c0042c"
+ },
+ "pd-b1-317": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3722,
+  "lastParagraph": 3726,
+  "words": 153,
+  "bodySha256": "61e6b6d1af3dd34c5f054d5a4cac9696a54b9b26837e5c0f6505c9b0e198cba5"
+ },
+ "pd-b1-320": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1789,
+  "lastParagraph": 1793,
+  "words": 135,
+  "bodySha256": "5f6f5233a218ba797eefeb713462c337553eae0eed8e4adc453bc1aaa29abf0c"
+ },
+ "pd-b1-322": {
+  "gutenbergId": 17989,
+  "firstParagraph": 393,
+  "lastParagraph": 398,
+  "words": 160,
+  "bodySha256": "55d3d1a8ce84185aab6e48a49d8e786163a8bf2e958d0d9113f3e81b026a3023"
+ },
+ "pd-b1-331": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3561,
+  "lastParagraph": 3574,
+  "words": 174,
+  "bodySha256": "8d7af5aac6cdc99e6d509856fcffb16f9f355d6679c6c5a9adb793ff88001ab6"
+ },
+ "pd-b2-353": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3382,
+  "lastParagraph": 3390,
+  "words": 210,
+  "bodySha256": "9ebfc7bfa0d8cd7c0aefaf3eb6ce251207a2e2c9d4f0fdb4623d5fa18ff330c8"
+ },
+ "pd-b2-374": {
+  "gutenbergId": 17989,
+  "firstParagraph": 687,
+  "lastParagraph": 690,
+  "words": 196,
+  "bodySha256": "8904b75fb9d7fa74d2df2e4d4d42f21c3fa3605831fcf9a18fc304300ec59305"
+ },
+ "pd-b2-402": {
+  "gutenbergId": 17989,
+  "firstParagraph": 254,
+  "lastParagraph": 266,
+  "words": 193,
+  "bodySha256": "f59202af7f73f87f04f8ebc5c5b5992685c756a56f6a3b38ee49366f9ec3fb35"
+ },
+ "pd-b2-449": {
+  "gutenbergId": 17989,
+  "firstParagraph": 2981,
+  "lastParagraph": 2991,
+  "words": 200,
+  "bodySha256": "bbdefd2ae84c4f42027b8e07a4ba441059f254c39164ad3eb4b73cb1a2c57130"
+ },
+ "pd-b2-456": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3138,
+  "lastParagraph": 3153,
+  "words": 207,
+  "bodySha256": "5e1231ca60a0d7f80184639ea8a071d35b3737f36d03fd0a4187798baa525869"
+ },
+ "pd-b2-462": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3088,
+  "lastParagraph": 3093,
+  "words": 193,
+  "bodySha256": "576f9b311ac4e8b16ae3cf9f3e872eb4ce39356660cf3411ecbc39a57cda9bf6"
+ },
+ "pd-c1-499": {
+  "gutenbergId": 17989,
+  "firstParagraph": 2505,
+  "lastParagraph": 2519,
+  "words": 279,
+  "bodySha256": "d091e83ca9f925141773c18e9461f59d6165e879c37711c5d60e219c3631d654"
+ },
+ "pd-c1-518": {
+  "gutenbergId": 17989,
+  "firstParagraph": 2668,
+  "lastParagraph": 2671,
+  "words": 279,
+  "bodySha256": "1da29456763f40d89180373c0bd6306b67ca1d1d3804511474702c9894b8ac54"
+ },
+ "pd-c1-525": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1136,
+  "lastParagraph": 1141,
+  "words": 324,
+  "bodySha256": "fe3cee389184cd394fe83d0d791d8d32ac85b4c88ee202d0d93f1acab212840f"
+ },
+ "pd-c1-535": {
+  "gutenbergId": 17989,
+  "firstParagraph": 362,
+  "lastParagraph": 370,
+  "words": 276,
+  "bodySha256": "338a781e4684dd8f2f39802402d7ce9f10c7d13ef38cfce26194f728f55e820e"
+ },
+ "pd-c1-566": {
+  "gutenbergId": 17989,
+  "firstParagraph": 2535,
+  "lastParagraph": 2545,
+  "words": 288,
+  "bodySha256": "a3e2d8c6f09aedc3770570e94876301c5e6ee22021e8eba79f2dde96642ba0f1"
+ },
+ "pd-c1-600": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1518,
+  "lastParagraph": 1527,
+  "words": 263,
+  "bodySha256": "6d9407c176928f65d829348acc46172563ffd835acc046299669621da2e5036f"
+ },
+ "pd-c2-619": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1241,
+  "lastParagraph": 1252,
+  "words": 471,
+  "bodySha256": "fe09d726ae07da67079048d42e361531f282205973e8ca51334e874a60e8ca26"
+ },
+ "pd-c2-631": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1611,
+  "lastParagraph": 1623,
+  "words": 379,
+  "bodySha256": "23aa9a98c29d450995605191826f61c0b6ed5002fd3847ead7f6609e4d8092ac"
+ },
+ "pd-c2-644": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1676,
+  "lastParagraph": 1691,
+  "words": 378,
+  "bodySha256": "cf63143dc8eca2dc58a0d88ca86c8f16547193f6b6ff86bc14e8746bdcd6bbde"
+ },
+ "pd-c2-656": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3949,
+  "lastParagraph": 3964,
+  "words": 384,
+  "bodySha256": "c42ff022e9c745e0cb302fffece9ec44c2ac379e09d83a191dc8dd95c0c70b25"
+ },
+ "pd-c2-672": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3118,
+  "lastParagraph": 3133,
+  "words": 364,
+  "bodySha256": "0d8b212fd7e004f961c129793aeb043c9775a3df1600aecd90ca6b7ff4e7112f"
+ },
+ "pd-c2-682": {
+  "gutenbergId": 17989,
+  "firstParagraph": 3418,
+  "lastParagraph": 3422,
+  "words": 366,
+  "bodySha256": "04d8c8db9ec78f5a71af87594af91ba7c8ec8fec6c52405f3ec1dcd8ffc2cb08"
+ },
+ "pd-c2-689": {
+  "gutenbergId": 17989,
+  "firstParagraph": 26,
+  "lastParagraph": 37,
+  "words": 401,
+  "bodySha256": "bf6fda24d3220aced27d91be4701bd982dde8e2ab24c60aafeb07ae36808dca7"
+ },
+ "pd-c2-692": {
+  "gutenbergId": 17989,
+  "firstParagraph": 4155,
+  "lastParagraph": 4169,
+  "words": 558,
+  "bodySha256": "6126108e01736d6cbff978f5a082bd64e2c072b0bfab568c9c29e88f027ce792"
+ },
+ "pd-c2-705": {
+  "gutenbergId": 17989,
+  "firstParagraph": 1974,
+  "lastParagraph": 1987,
+  "words": 550,
+  "bodySha256": "87b2a020c14cc5577a60e6bec47fe72b739c921334f668556fdf0d4fb190730f"
+ },
+ "pd-b1-225": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1285,
+  "lastParagraph": 1298,
+  "words": 138,
+  "bodySha256": "e3ce312b801144a7ce2698e9d318ba182eeaa5446f0000e01ab7c47f3f015a3b"
+ },
+ "pd-b1-226": {
+  "gutenbergId": 17990,
+  "firstParagraph": 93,
+  "lastParagraph": 98,
+  "words": 169,
+  "bodySha256": "ea8d5305cd3b7bdabdc93d906e3442369189791e55b7fe21cc65eb55834e8bdb"
+ },
+ "pd-b1-229": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2940,
+  "lastParagraph": 2945,
+  "words": 144,
+  "bodySha256": "128901ac00e42a33846245d5a7c324b33a77eb3aaafd5b3bbc7b4deb34fbaf8f"
+ },
+ "pd-b1-231": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3445,
+  "lastParagraph": 3448,
+  "words": 148,
+  "bodySha256": "ae30d1c4849f79f66573055322c9565d3506c1ba45b58a86eadc5ce8c7e2df6f"
+ },
+ "pd-b1-255": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2123,
+  "lastParagraph": 2130,
+  "words": 191,
+  "bodySha256": "a21f3f5280e502098e9bdf4ab9dc75c71cd0a1646a8db3b8149dfc7c02824e72"
+ },
+ "pd-b1-259": {
+  "gutenbergId": 17990,
+  "firstParagraph": 566,
+  "lastParagraph": 571,
+  "words": 144,
+  "bodySha256": "fdd3178231e45d973789cbfedc45edb45210e39c3590727bf1cea08df0c53f5b"
+ },
+ "pd-b1-270": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3461,
+  "lastParagraph": 3466,
+  "words": 171,
+  "bodySha256": "57a3cc1ae6a1a199c00b9aba3ca2ebc1febacb4baa93c732ef83982b56da3a5a"
+ },
+ "pd-b1-294": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1001,
+  "lastParagraph": 1008,
+  "words": 145,
+  "bodySha256": "80b75767c3cc082f47c44670c1da5c576d6557b535795df8e9451e27a08b0ffc"
+ },
+ "pd-b1-301": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2258,
+  "lastParagraph": 2267,
+  "words": 173,
+  "bodySha256": "728c07d304952d52b1cdcb05152bc72668f623a22d94511256d515aff2c849c8"
+ },
+ "pd-b1-303": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2580,
+  "lastParagraph": 2589,
+  "words": 143,
+  "bodySha256": "5b438469ce824458487851d7490972220da53e4b48562051a51c4e764cc5d984"
+ },
+ "pd-b1-307": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1974,
+  "lastParagraph": 1978,
+  "words": 141,
+  "bodySha256": "1db2578ee5cba8a543d0e9bc39e5334c38022e6b32e4f23fba98aaf10c388683"
+ },
+ "pd-b1-333": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2456,
+  "lastParagraph": 2463,
+  "words": 132,
+  "bodySha256": "31b64f90cdd5902e59bbdf7275b6c871f63ea5f4b0ea9e146bfd7834dd1d0eed"
+ },
+ "pd-b1-334": {
+  "gutenbergId": 17990,
+  "firstParagraph": 979,
+  "lastParagraph": 986,
+  "words": 134,
+  "bodySha256": "13d55fb3268525ed76e827c8a8a0268933366e697799383cbff46351c974687d"
+ },
+ "pd-b1-338": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2626,
+  "lastParagraph": 2633,
+  "words": 166,
+  "bodySha256": "531de1ab678eb9345794605198e606962532485d3ebe7e62c979d961628e8f8e"
+ },
+ "pd-b1-339": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2911,
+  "lastParagraph": 2923,
+  "words": 174,
+  "bodySha256": "7288af677a1d760b6679fb7cbcdda10efc8b1fc1ad78b44b99378b11311bf0b1"
+ },
+ "pd-b2-357": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3222,
+  "lastParagraph": 3224,
+  "words": 195,
+  "bodySha256": "5b0ecb12213ebfaaf8eac9fcc1206b61a35d74be5c5cf16ae8ab8ff154be7e2e"
+ },
+ "pd-b2-360": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3538,
+  "lastParagraph": 3541,
+  "words": 195,
+  "bodySha256": "1f1b9bb4c3ce287f83b51701b5eb9eba993bec64cdc9d69ee9f367da435decb4"
+ },
+ "pd-b2-363": {
+  "gutenbergId": 17990,
+  "firstParagraph": 437,
+  "lastParagraph": 447,
+  "words": 192,
+  "bodySha256": "265484df860a0cfe8caa6f750266492828538e2d66dc3d312967e2f392e9bed9"
+ },
+ "pd-b2-380": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3621,
+  "lastParagraph": 3632,
+  "words": 306,
+  "bodySha256": "d5182f47d0d1823c3eaf4b82c525d7ea6e9a3e11c8b912e2133bd8223982c1ce"
+ },
+ "pd-b2-397": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1513,
+  "lastParagraph": 1526,
+  "words": 211,
+  "bodySha256": "f1c0f2731e4241058463469f52214ad279586ecf8cab06a38bedf5c1cddaf40f"
+ },
+ "pd-b2-399": {
+  "gutenbergId": 17990,
+  "firstParagraph": 4056,
+  "lastParagraph": 4079,
+  "words": 199,
+  "bodySha256": "e34be1d649fc75e247b0ea64d0da93910cecf1e0f8780b61f5ee9c90245162ea"
+ },
+ "pd-b2-416": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1057,
+  "lastParagraph": 1064,
+  "words": 198,
+  "bodySha256": "3075b40f034653c3903a7ab6c312c1637ca66857486b2c1c602da754078b5e3d"
+ },
+ "pd-b2-419": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1031,
+  "lastParagraph": 1038,
+  "words": 218,
+  "bodySha256": "340c0907104ab00a521ef79b9b4e7bc9bb93426c0867e28a7e22713794bda918"
+ },
+ "pd-b2-429": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3111,
+  "lastParagraph": 3115,
+  "words": 197,
+  "bodySha256": "49455e8a7124aa3aedade3a9c4282c1cd817fae0f78dc58889ef151697265092"
+ },
+ "pd-b2-455": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3411,
+  "lastParagraph": 3416,
+  "words": 219,
+  "bodySha256": "a01b922815be1076517007fa4bcf487a3fdec54eedf45b22f84f46b2bb89d929"
+ },
+ "pd-b2-472": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1768,
+  "lastParagraph": 1776,
+  "words": 234,
+  "bodySha256": "0013d4984b1f6c61f12a6075d8461194eda315e53f5594878aaffe661b12b229"
+ },
+ "pd-c1-488": {
+  "gutenbergId": 17990,
+  "firstParagraph": 177,
+  "lastParagraph": 186,
+  "words": 273,
+  "bodySha256": "4e780f2a27569e7a313660f493f9916b0e3a904e05fca0c6f83e0cc88b879773"
+ },
+ "pd-c1-489": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2507,
+  "lastParagraph": 2514,
+  "words": 282,
+  "bodySha256": "9d1358280dbba2b513f48534a0a363fef505e25dae738a12671461808223d569"
+ },
+ "pd-c1-501": {
+  "gutenbergId": 17990,
+  "firstParagraph": 291,
+  "lastParagraph": 304,
+  "words": 290,
+  "bodySha256": "8bed24f0f33daeb1df7be3d7f107f437c3b331c2b6a5293c8a072575626f4089"
+ },
+ "pd-c1-505": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2079,
+  "lastParagraph": 2086,
+  "words": 268,
+  "bodySha256": "6c5a2613322eaf8fb9c0b6d53d5e45e079f94a109c369e9d55c59700e9b0c732"
+ },
+ "pd-c1-508": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2485,
+  "lastParagraph": 2490,
+  "words": 363,
+  "bodySha256": "36da5f2987f71abdf31c10a0e9f58682ed0df641147f6bc2b54738645bc67bfc"
+ },
+ "pd-c1-517": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3356,
+  "lastParagraph": 3358,
+  "words": 376,
+  "bodySha256": "5f7076e8ecb8e3e555ef80484c813154fcfffb0c126ba8b29cd1219b21fa8e80"
+ },
+ "pd-c1-532": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1069,
+  "lastParagraph": 1076,
+  "words": 276,
+  "bodySha256": "b07de5ba8b81930b1421e2c9dd2ba9234d5e7ba30c6dceaf33bad4fa174c7e15"
+ },
+ "pd-c1-560": {
+  "gutenbergId": 17990,
+  "firstParagraph": 895,
+  "lastParagraph": 902,
+  "words": 300,
+  "bodySha256": "04f57f3662daf58f7ad91e67b143013b6f970fd1ca8acb3f58683ab540839071"
+ },
+ "pd-c1-573": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1948,
+  "lastParagraph": 1953,
+  "words": 271,
+  "bodySha256": "79014034f4137feac5666c7f2f0ace580e0a5e6a3e0c0033c96a31ab77cac4d4"
+ },
+ "pd-c1-577": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2557,
+  "lastParagraph": 2565,
+  "words": 278,
+  "bodySha256": "2c1bc1cfd0808489c2eccf918c06dc7c5d3285fae9ac9278634b939fa6ce191f"
+ },
+ "pd-c1-578": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2009,
+  "lastParagraph": 2018,
+  "words": 280,
+  "bodySha256": "fbce7f6e25f23559619a58593a59a0bc61d8f18fbcc061546f9e0f7b9d87fd13"
+ },
+ "pd-c1-582": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2964,
+  "lastParagraph": 2975,
+  "words": 262,
+  "bodySha256": "d938b09bbc6c4030afabdcb686707e4901fae7d1be64d24f466de2bfd050a58a"
+ },
+ "pd-c1-588": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2833,
+  "lastParagraph": 2837,
+  "words": 287,
+  "bodySha256": "ca30d7518e5a98390619fec68779c42779a8c1b388e7cbe908740ec0b42620ea"
+ },
+ "pd-c2-602": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2225,
+  "lastParagraph": 2241,
+  "words": 374,
+  "bodySha256": "62a736e8500e229794979587bc506b2b94430a4a5e1cec77c4a586f0235d7eab"
+ },
+ "pd-c2-608": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1441,
+  "lastParagraph": 1454,
+  "words": 370,
+  "bodySha256": "89a0d27b452cc503bd1f48b9c18e9218b4c5c6a026f0eec93a19aee4d9aacf03"
+ },
+ "pd-c2-612": {
+  "gutenbergId": 17990,
+  "firstParagraph": 3267,
+  "lastParagraph": 3279,
+  "words": 415,
+  "bodySha256": "a0f26f573e97656c78d0f1b42237129ad870a98a5fc7ad2214ab84c79a39fe17"
+ },
+ "pd-c2-613": {
+  "gutenbergId": 17990,
+  "firstParagraph": 198,
+  "lastParagraph": 209,
+  "words": 385,
+  "bodySha256": "f58c03a65ef7b8d1750c6d87b5592f2e4522ad75aa25b8a720d6d91faae6c1f9"
+ },
+ "pd-c2-620": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1171,
+  "lastParagraph": 1178,
+  "words": 380,
+  "bodySha256": "65389112243ae3d7397f2fd61929a7bf1a07ea258d77e494d202df338411720e"
+ },
+ "pd-c2-678": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1205,
+  "lastParagraph": 1211,
+  "words": 400,
+  "bodySha256": "f46bf932da17c9b0180e40697eae8d87cc89f97f667fe94f0ac055a0e3c3f181"
+ },
+ "pd-c2-680": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1226,
+  "lastParagraph": 1238,
+  "words": 371,
+  "bodySha256": "29231047bd9311a81cbbcb1a05fe46e00b49f3cea2e7f26ccf0370fa9a19a6df"
+ },
+ "pd-c2-696": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2098,
+  "lastParagraph": 2109,
+  "words": 408,
+  "bodySha256": "a6c77d85e817ceddfdf8eb590412f99f5aa415620142b88c1a0e3dd281e03e78"
+ },
+ "pd-c2-700": {
+  "gutenbergId": 17990,
+  "firstParagraph": 2678,
+  "lastParagraph": 2694,
+  "words": 367,
+  "bodySha256": "37be51b634034522666ca961067b730dea700b2ce81fb511f799d90c873f41ae"
+ },
+ "pd-c2-712": {
+  "gutenbergId": 17990,
+  "firstParagraph": 1093,
+  "lastParagraph": 1116,
+  "words": 360,
+  "bodySha256": "3bf815dcd57e230ddacfb7078675c0e005ed9b28ab86e865c011d1a0ffaf8bde"
+ },
+ "pd-b1-228": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2780,
+  "lastParagraph": 2785,
+  "words": 160,
+  "bodySha256": "4405b7f7cea67a688c79db0d46fa10a39ffaea29891eacaf70cc0a491ddcf67a"
+ },
+ "pd-b1-245": {
+  "gutenbergId": 17991,
+  "firstParagraph": 936,
+  "lastParagraph": 945,
+  "words": 143,
+  "bodySha256": "29fd27a7dd82925c5213f035d093c09e7c149b09e6d328eaf4c471b1d1641559"
+ },
+ "pd-b1-246": {
+  "gutenbergId": 17991,
+  "firstParagraph": 1549,
+  "lastParagraph": 1555,
+  "words": 135,
+  "bodySha256": "307de2e7f1047deeca27c9f23224a9966f75848f5e39e693f93bc0103d762d7c"
+ },
+ "pd-b1-248": {
+  "gutenbergId": 17991,
+  "firstParagraph": 1281,
+  "lastParagraph": 1286,
+  "words": 138,
+  "bodySha256": "cf757129a21cdfdf94b9eef155bba3014d3b42e18efb85cbfcf9a357ec243581"
+ },
+ "pd-b1-280": {
+  "gutenbergId": 17991,
+  "firstParagraph": 5163,
+  "lastParagraph": 5170,
+  "words": 138,
+  "bodySha256": "f9843ca208e7715d8a061072e50b230ceda0335eb008101e88a738a860463472"
+ },
+ "pd-b1-291": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4924,
+  "lastParagraph": 4930,
+  "words": 137,
+  "bodySha256": "4f425e88ec6555040de4508194c13e4762feddd0de72ea1f39fdede4105296b6"
+ },
+ "pd-b1-315": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4203,
+  "lastParagraph": 4211,
+  "words": 134,
+  "bodySha256": "2932f48aab57ec83f9abae301d96d59792a6183e5ddabcf5e68a2a79025fb5f2"
+ },
+ "pd-b1-318": {
+  "gutenbergId": 17991,
+  "firstParagraph": 1784,
+  "lastParagraph": 1794,
+  "words": 136,
+  "bodySha256": "025761da73c30947f98f01788c241ba82ea0c6c06c57cce8de2a31e55c33fd70"
+ },
+ "pd-b1-323": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4066,
+  "lastParagraph": 4077,
+  "words": 143,
+  "bodySha256": "99017e19b8ecd04f17485da9c44d48a575de6ab449560407e8389f103501a882"
+ },
+ "pd-b1-324": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3339,
+  "lastParagraph": 3347,
+  "words": 152,
+  "bodySha256": "bd4da5a3996c281abe1780b3d956483dca03c4a11968b47d0f8aba497dd24314"
+ },
+ "pd-b1-343": {
+  "gutenbergId": 17991,
+  "firstParagraph": 453,
+  "lastParagraph": 467,
+  "words": 130,
+  "bodySha256": "da7c1ce15b42e8d70a14c18c53a9296025e3a983028463169d7692d0c314f60c"
+ },
+ "pd-b2-368": {
+  "gutenbergId": 17991,
+  "firstParagraph": 326,
+  "lastParagraph": 326,
+  "words": 308,
+  "bodySha256": "0b8ffcca9b9ac33b84848aab8139b8e483d8837cd61d2491fca9f291755e5735"
+ },
+ "pd-b2-386": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3221,
+  "lastParagraph": 3228,
+  "words": 190,
+  "bodySha256": "953c699041a87ec9ab88b62b7e68d0cf99f2280f5b3c19208943d2428dfd824a"
+ },
+ "pd-b2-431": {
+  "gutenbergId": 17991,
+  "firstParagraph": 1116,
+  "lastParagraph": 1124,
+  "words": 197,
+  "bodySha256": "07e8d5561b3b3864495297005c5f8b2514d6b6a7d1e3f67ff38f714930d16771"
+ },
+ "pd-b2-444": {
+  "gutenbergId": 17991,
+  "firstParagraph": 660,
+  "lastParagraph": 665,
+  "words": 202,
+  "bodySha256": "eb88ec12c2ddb4d95d460d51944a2f1e61e3089074c0dce030c88917fd4ae560"
+ },
+ "pd-b2-454": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3748,
+  "lastParagraph": 3756,
+  "words": 199,
+  "bodySha256": "c7b05a7cd4bf98c0eaab9bb7e28bb88c4925c920ca553870d7eed311ad862e9d"
+ },
+ "pd-b2-464": {
+  "gutenbergId": 17991,
+  "firstParagraph": 5145,
+  "lastParagraph": 5148,
+  "words": 191,
+  "bodySha256": "806be147f973b4daa2de1717b5ca915479be4c4e21ceeb7be6fc30c3c541d976"
+ },
+ "pd-c1-491": {
+  "gutenbergId": 17991,
+  "firstParagraph": 535,
+  "lastParagraph": 549,
+  "words": 262,
+  "bodySha256": "be823f61632100ff41f6370c7dc20149b6386296e6232e1c91a1705260f29ee3"
+ },
+ "pd-c1-492": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2713,
+  "lastParagraph": 2722,
+  "words": 268,
+  "bodySha256": "be97176724c26b3b5b2d8eae01c2733b22e3b7c96eac851066d314ef8e552387"
+ },
+ "pd-c1-494": {
+  "gutenbergId": 17991,
+  "firstParagraph": 600,
+  "lastParagraph": 624,
+  "words": 277,
+  "bodySha256": "3f8d196cd511a8f48d4a54b86a11a75e22de56b9f57dee375d98b4e2bc86ed14"
+ },
+ "pd-c1-500": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2921,
+  "lastParagraph": 2939,
+  "words": 274,
+  "bodySha256": "8ed02485536e158a7d494e09a55126a1aef46e1823a2599156499091694f8390"
+ },
+ "pd-c1-504": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4822,
+  "lastParagraph": 4840,
+  "words": 263,
+  "bodySha256": "c3d3a94d85d8b7b874fd0f4e88703d80e64a6e16ab080cb54b828acbe15a9a17"
+ },
+ "pd-c1-514": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3645,
+  "lastParagraph": 3655,
+  "words": 263,
+  "bodySha256": "7d4a35371a2186a614fc6c0ca6a9f4bc96636149bcf3521a4c794383152167b8"
+ },
+ "pd-c1-529": {
+  "gutenbergId": 17991,
+  "firstParagraph": 413,
+  "lastParagraph": 434,
+  "words": 260,
+  "bodySha256": "311ad2ed9b9ee53bf185285dba2b8edd26065c740ecdf94f018670b6c50ed8a3"
+ },
+ "pd-c1-530": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3421,
+  "lastParagraph": 3439,
+  "words": 279,
+  "bodySha256": "7e04c10048c4c25643c47319640004a089c4802e9bc37e50df9db78b54b5ba97"
+ },
+ "pd-c1-534": {
+  "gutenbergId": 17991,
+  "firstParagraph": 992,
+  "lastParagraph": 1000,
+  "words": 271,
+  "bodySha256": "c2694f8ba8cf253fb769b8aa720edf5127698ae652557b7ca360ee5f03f2e75f"
+ },
+ "pd-c1-538": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4545,
+  "lastParagraph": 4550,
+  "words": 261,
+  "bodySha256": "cffa18b168e9bbfe182b3c4359d0ab2881f5bb1d1612113374267e6fecc35b63"
+ },
+ "pd-c1-541": {
+  "gutenbergId": 17991,
+  "firstParagraph": 25,
+  "lastParagraph": 34,
+  "words": 261,
+  "bodySha256": "dacde7b0fde964bb9e757843c477579151d6b7a57055a7e0bd82e22b20647b7f"
+ },
+ "pd-c1-563": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2261,
+  "lastParagraph": 2273,
+  "words": 265,
+  "bodySha256": "2c4690e185315793ed505ad8ffad964f333cdd11c334c3865a6bb10eaa4165cc"
+ },
+ "pd-c1-565": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2948,
+  "lastParagraph": 2956,
+  "words": 262,
+  "bodySha256": "9c10ec4f7f36fc8374f43ec1d1dc1c385bbf1b6c20a0c62340005589368b36a7"
+ },
+ "pd-c1-584": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3966,
+  "lastParagraph": 3985,
+  "words": 260,
+  "bodySha256": "b151c77a6538356fd1523f6cf710b5d4cbee73179461fba1152db463f7ab4b6c"
+ },
+ "pd-c2-606": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3850,
+  "lastParagraph": 3867,
+  "words": 362,
+  "bodySha256": "48584c1261eb849419adc377b50627d808d1ec5b5d0ac80faeebaa2fb500bb38"
+ },
+ "pd-c2-626": {
+  "gutenbergId": 17991,
+  "firstParagraph": 1438,
+  "lastParagraph": 1446,
+  "words": 360,
+  "bodySha256": "71cbacdb0e3e43ed8a6c64d747733f8091399965d51a6717c6804eda1b449ec9"
+ },
+ "pd-c2-637": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3038,
+  "lastParagraph": 3055,
+  "words": 360,
+  "bodySha256": "c1dcc651acaa9602f5e3251a2000dbe1e063a32a6dd26a2d949d1a3b735e5ae4"
+ },
+ "pd-c2-646": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2081,
+  "lastParagraph": 2089,
+  "words": 360,
+  "bodySha256": "c289e50e5c8d75fb2829fe8a9ddad9e0ddd3405044b56c9c45975ed2a8054a67"
+ },
+ "pd-c2-651": {
+  "gutenbergId": 17991,
+  "firstParagraph": 2993,
+  "lastParagraph": 3002,
+  "words": 428,
+  "bodySha256": "2f6acc804faf5c61fc5ce9bfe4b5c1fdb5b98f480ddb2302e209e976b3787f2a"
+ },
+ "pd-c2-697": {
+  "gutenbergId": 17991,
+  "firstParagraph": 767,
+  "lastParagraph": 773,
+  "words": 372,
+  "bodySha256": "2a8f0ccf0dc26f647ac8ecd76821139f9837c792b676d3d6482d2392e167b00a"
+ },
+ "pd-c2-702": {
+  "gutenbergId": 17991,
+  "firstParagraph": 4482,
+  "lastParagraph": 4495,
+  "words": 384,
+  "bodySha256": "53b9620c77dd43ca17f409007b68a0d7fbdaab9986f8b97a6fa548d25a6115c5"
+ },
+ "pd-c2-708": {
+  "gutenbergId": 17991,
+  "firstParagraph": 3169,
+  "lastParagraph": 3181,
+  "words": 376,
+  "bodySha256": "6b195d3fde37d244886c3b62e574c56c40dfef5978e0034a72ed2ad3691e1de4"
+ },
+ "pd-b1-221": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1180,
+  "lastParagraph": 1183,
+  "words": 162,
+  "bodySha256": "3b9a21e394aa31f61afebb0b9703940a5f55c68baed83dc43dbb8ac0661ead10"
+ },
+ "pd-b1-234": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4844,
+  "lastParagraph": 4849,
+  "words": 140,
+  "bodySha256": "af4c74fa405dcfd07290ecd68505db269cf948a35277f6ab68549793cf9e32c3"
+ },
+ "pd-b1-276": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3173,
+  "lastParagraph": 3182,
+  "words": 130,
+  "bodySha256": "dd3b1149036c2f094d856d0ecdb858867c34745de94bf1cc20a8883acb46f26b"
+ },
+ "pd-b1-295": {
+  "gutenbergId": 17992,
+  "firstParagraph": 288,
+  "lastParagraph": 296,
+  "words": 190,
+  "bodySha256": "2d9a13363ee4d8f84a9058afd4bc5e8fea06f1927534e35b4a0fcb78555d1c30"
+ },
+ "pd-b1-312": {
+  "gutenbergId": 17992,
+  "firstParagraph": 470,
+  "lastParagraph": 475,
+  "words": 150,
+  "bodySha256": "c8b2270572ff81fab06160ad9cd85799f8386dedcb89f7d253e9c805a202ff61"
+ },
+ "pd-b1-346": {
+  "gutenbergId": 17992,
+  "firstParagraph": 192,
+  "lastParagraph": 199,
+  "words": 130,
+  "bodySha256": "d96f2332ab9e9ddc8b274dbd34ee13f1bded18068fc4efb35a0d88385b8febe7"
+ },
+ "pd-b1-347": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2681,
+  "lastParagraph": 2689,
+  "words": 135,
+  "bodySha256": "0e4f1e0fba51216b11eccb60253354a8c3173ec7844cedfd24774209fd15b530"
+ },
+ "pd-b1-348": {
+  "gutenbergId": 17992,
+  "firstParagraph": 640,
+  "lastParagraph": 643,
+  "words": 219,
+  "bodySha256": "f21067c63b0e529627ad8db2cde5efdc3b6c922814730b43dca23e09bcb811e4"
+ },
+ "pd-b2-352": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3690,
+  "lastParagraph": 3697,
+  "words": 203,
+  "bodySha256": "b8c819d41c22ccdebea8439a65b4659f70daf751b738de6e8fb747ba94e3ce22"
+ },
+ "pd-b2-369": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3893,
+  "lastParagraph": 3904,
+  "words": 245,
+  "bodySha256": "bf4176340f5d3d920232b1af1612e9fb83bc1d548c9c37a5ea2f246eb2506803"
+ },
+ "pd-b2-391": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2542,
+  "lastParagraph": 2552,
+  "words": 194,
+  "bodySha256": "17a941c967a259d6c193e22b3c9da7239dfa8a1320365216b47b15c5b64f0f3a"
+ },
+ "pd-b2-392": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4859,
+  "lastParagraph": 4868,
+  "words": 202,
+  "bodySha256": "a65f23e7040fa20260a72ba4be6651c7cb9102770796ca3333b23b823106c568"
+ },
+ "pd-b2-401": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1204,
+  "lastParagraph": 1214,
+  "words": 196,
+  "bodySha256": "10c8226e7df8a4bca9d33453b730acadfa720ec9f56cab197f976841f038793d"
+ },
+ "pd-b2-403": {
+  "gutenbergId": 17992,
+  "firstParagraph": 843,
+  "lastParagraph": 849,
+  "words": 196,
+  "bodySha256": "5b77de03ad66baac7a5fd1917b783626771f42e63fa10d7c3cf1ea77a9291753"
+ },
+ "pd-b2-410": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3469,
+  "lastParagraph": 3473,
+  "words": 241,
+  "bodySha256": "ab7beaee005d5a272c94c9dc07feae0913f62ba02ca0c8018db72c2b9d5944ec"
+ },
+ "pd-b2-411": {
+  "gutenbergId": 17992,
+  "firstParagraph": 960,
+  "lastParagraph": 969,
+  "words": 207,
+  "bodySha256": "6fd76966f535e74b383cd87fecdaa5601e0864aac2a8c5dc8b14a6bc7ab89256"
+ },
+ "pd-b2-412": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1916,
+  "lastParagraph": 1929,
+  "words": 241,
+  "bodySha256": "f40f9835db0f9315f3c681361f2d2bad66345275bc524c80d2da0e35889e803d"
+ },
+ "pd-b2-417": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3636,
+  "lastParagraph": 3646,
+  "words": 198,
+  "bodySha256": "74f3e383b875df95e5234391f106366361b4884172e49f2f428b2de5fcb8e5ef"
+ },
+ "pd-b2-433": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2165,
+  "lastParagraph": 2175,
+  "words": 194,
+  "bodySha256": "42652eceb2d1c153cf4b3c0d9c0236f66e46e7e9e3452bafdef59b97efc07f2f"
+ },
+ "pd-b2-439": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3787,
+  "lastParagraph": 3797,
+  "words": 220,
+  "bodySha256": "75ea34f29d4adab183d6a9161ab3718aab78f5771fc37e09168cbd5bbeef27ad"
+ },
+ "pd-b2-459": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4483,
+  "lastParagraph": 4492,
+  "words": 194,
+  "bodySha256": "aef02aa0eb2fd91158faada5470abceeef1d67c4d562364439df8c0b3818553f"
+ },
+ "pd-b2-466": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3700,
+  "lastParagraph": 3708,
+  "words": 205,
+  "bodySha256": "e9ac63c1dc2da8b77404eeadcf24a7fc24a7885a0fb8028d9eaf23865459c31c"
+ },
+ "pd-b2-470": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4249,
+  "lastParagraph": 4263,
+  "words": 190,
+  "bodySha256": "cdf378b8387507032c78f36c65fb587c492cea82538a14146d4a9d88850e4467"
+ },
+ "pd-c1-507": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4041,
+  "lastParagraph": 4051,
+  "words": 262,
+  "bodySha256": "7508fc3a2622537b02a4e033843a14bee38c119ea0623b48fb5b5b9c832ef941"
+ },
+ "pd-c1-520": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1803,
+  "lastParagraph": 1815,
+  "words": 273,
+  "bodySha256": "ec4b1e3e1e2f7bee91efcbfbb047c54400eaacc8251c7010aee26be81cfd7974"
+ },
+ "pd-c1-521": {
+  "gutenbergId": 17992,
+  "firstParagraph": 517,
+  "lastParagraph": 525,
+  "words": 293,
+  "bodySha256": "a6b761e8f2f222f140a419778ede797016b54ecffb6e8edb48d3280d1b3e9cd2"
+ },
+ "pd-c1-544": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1890,
+  "lastParagraph": 1901,
+  "words": 287,
+  "bodySha256": "58f9a369329ca0d4d5e00497ec99bea38163cdde6ee056b5819f1e51c01a5090"
+ },
+ "pd-c1-568": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2906,
+  "lastParagraph": 2919,
+  "words": 268,
+  "bodySha256": "8a440d02d2f6b200a40e81aecc6be75a459bfb208cf43dd34c564cbb36dc1f4f"
+ },
+ "pd-c1-572": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3946,
+  "lastParagraph": 3961,
+  "words": 275,
+  "bodySha256": "52ab469494c47f645f7f6cfc5b536b8213baed587a0c9035e5b346553d1c1252"
+ },
+ "pd-c1-589": {
+  "gutenbergId": 17992,
+  "firstParagraph": 108,
+  "lastParagraph": 114,
+  "words": 265,
+  "bodySha256": "bda05a917c7d8ae6fb8eb68d7ef0c747e15b6503269fbc1ee5f2da32ca1e3c86"
+ },
+ "pd-c2-605": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1758,
+  "lastParagraph": 1772,
+  "words": 363,
+  "bodySha256": "a6cd41c6e17c07c4551020a0aa85c134c51ba766f11858a3e1ecf7849e73471d"
+ },
+ "pd-c2-611": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4373,
+  "lastParagraph": 4387,
+  "words": 371,
+  "bodySha256": "ea867edbc46659793b2e0a0b3cc13006344d12dd49da9591f36eec5022da62a4"
+ },
+ "pd-c2-623": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1674,
+  "lastParagraph": 1683,
+  "words": 363,
+  "bodySha256": "4ece4e52e5e2c92adae61d8c5391638118827d07c36219349c8edf3966361edf"
+ },
+ "pd-c2-624": {
+  "gutenbergId": 17992,
+  "firstParagraph": 683,
+  "lastParagraph": 689,
+  "words": 376,
+  "bodySha256": "d0aff7fcb3e13d251f9faa75acd415ad0193ce7e3a1f6a8ebc5fbab5fc54df31"
+ },
+ "pd-c2-633": {
+  "gutenbergId": 17992,
+  "firstParagraph": 204,
+  "lastParagraph": 211,
+  "words": 383,
+  "bodySha256": "edab099eb91a3fe07dd7c596016540715c7f2b5b59823897dae7682db3d8f45d"
+ },
+ "pd-c2-663": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2577,
+  "lastParagraph": 2593,
+  "words": 385,
+  "bodySha256": "ae51ae130e3daf275a3d14cfe94a7a62b673db1cb8d248554ba1684875dcfa88"
+ },
+ "pd-c2-668": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3097,
+  "lastParagraph": 3112,
+  "words": 368,
+  "bodySha256": "45d0a9bea6285959d3cb606c7930d7fa42d7d7366d33e0f072fd0653a302cd1e"
+ },
+ "pd-c2-674": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2640,
+  "lastParagraph": 2656,
+  "words": 375,
+  "bodySha256": "c746bdc009e063b27ba7a4dd87ba1bcd3e9fc4cc126a1afdd0dff7554e4aab59"
+ },
+ "pd-c2-677": {
+  "gutenbergId": 17992,
+  "firstParagraph": 4345,
+  "lastParagraph": 4361,
+  "words": 366,
+  "bodySha256": "9484652f345fc7d3c2f39bf9c39a3d5406d981d90614399497ba92c619266fca"
+ },
+ "pd-c2-691": {
+  "gutenbergId": 17992,
+  "firstParagraph": 3860,
+  "lastParagraph": 3873,
+  "words": 365,
+  "bodySha256": "585a0512c142adc000c5a666d41fd3555e737532497aa8e6c936b2507c68f047"
+ },
+ "pd-c2-698": {
+  "gutenbergId": 17992,
+  "firstParagraph": 2434,
+  "lastParagraph": 2448,
+  "words": 417,
+  "bodySha256": "b51fe2cb6b33d7c2b97586896970c9d3b29dc53daa15935cc78c6c74775e6882"
+ },
+ "pd-c2-701": {
+  "gutenbergId": 17992,
+  "firstParagraph": 161,
+  "lastParagraph": 175,
+  "words": 369,
+  "bodySha256": "cba6075b4124b5ea0dcefec2a987dbcc69daa6c37856190cd42f43d56865a300"
+ },
+ "pd-c2-713": {
+  "gutenbergId": 17992,
+  "firstParagraph": 1447,
+  "lastParagraph": 1455,
+  "words": 373,
+  "bodySha256": "983fdcc8726544c929942aef6ac3686a73259a49a7f3260dcd23bfe295003c93"
+ },
+ "pd-c2-714": {
+  "gutenbergId": 17992,
+  "firstParagraph": 864,
+  "lastParagraph": 871,
+  "words": 440,
+  "bodySha256": "6bda5275da26af764ba54530567647367a95c5c6fedab569c99dd0e79c9e3af7"
+ },
+ "pd-c2-718": {
+  "gutenbergId": 17992,
+  "firstParagraph": 700,
+  "lastParagraph": 712,
+  "words": 361,
+  "bodySha256": "d05415991820440ed28af6343c2e0228ff230c061c56ac7d5ef9f5329e60a727"
+ },
+ "pd-b1-261": {
+  "gutenbergId": 30779,
+  "firstParagraph": 539,
+  "lastParagraph": 539,
+  "words": 138,
+  "bodySha256": "889ee7a30d0f51c6a1b22e3838890db5f15016fe800207d88cf9872ac7b47a8b"
+ },
+ "pd-b2-409": {
+  "gutenbergId": 30779,
+  "firstParagraph": 241,
+  "lastParagraph": 241,
+  "words": 201,
+  "bodySha256": "e0b864c7cc6dc086b9b579f0c70f94c854cf53b0c26d30925db537151dd0b1c7"
+ },
+ "pd-c1-490": {
+  "gutenbergId": 30779,
+  "firstParagraph": 282,
+  "lastParagraph": 282,
+  "words": 363,
+  "bodySha256": "f57e45e573845431ddc4034bb878c43d532f7aaa0ab2070c2b59a70fdeb45bb0"
+ },
+ "pd-c1-539": {
+  "gutenbergId": 30779,
+  "firstParagraph": 441,
+  "lastParagraph": 443,
+  "words": 379,
+  "bodySha256": "2de5cc202565b88d6188e16eca7aa7995d3915a1c99e596b5f609f6c73ab60d1"
+ },
+ "pd-c1-571": {
+  "gutenbergId": 30779,
+  "firstParagraph": 598,
+  "lastParagraph": 599,
+  "words": 314,
+  "bodySha256": "4425d4dd6efbd55e4393409ee1b6f55f206de061a31bfa00a2022ee226c2237a"
+ },
+ "pd-c1-575": {
+  "gutenbergId": 30779,
+  "firstParagraph": 159,
+  "lastParagraph": 159,
+  "words": 293,
+  "bodySha256": "fb232cae0417cc6a930aff6a94386bdbb74d381764652a821c41b9fd5ed7a5a4"
+ },
+ "pd-c1-587": {
+  "gutenbergId": 30779,
+  "firstParagraph": 435,
+  "lastParagraph": 436,
+  "words": 393,
+  "bodySha256": "3718622956b11966a562b361020d0520cc20810dd8b0270652e1c59af9bc4a0e"
+ },
+ "pd-c1-597": {
+  "gutenbergId": 30779,
+  "firstParagraph": 169,
+  "lastParagraph": 170,
+  "words": 278,
+  "bodySha256": "cba8c1429769cd552e136b288bc9d0dd9410b70c7b31064adfee51907a05100d"
+ },
+ "pd-c2-630": {
+  "gutenbergId": 30779,
+  "firstParagraph": 593,
+  "lastParagraph": 595,
+  "words": 432,
+  "bodySha256": "b51cd59fb44c5c9972e8ce0a623ef88a0195320fc622c09e4b0918253f4432d1"
+ },
+ "pd-c2-639": {
+  "gutenbergId": 30779,
+  "firstParagraph": 737,
+  "lastParagraph": 739,
+  "words": 471,
+  "bodySha256": "f79fee5ea7933a901efc0dbfeffc5a731cf423566abe62e53129bb94d2545c8f"
+ },
+ "pd-c2-647": {
+  "gutenbergId": 30779,
+  "firstParagraph": 327,
+  "lastParagraph": 329,
+  "words": 465,
+  "bodySha256": "f7256f1ac833306e148d172de9ebe0a871d1f448a2ad04a0f449b1dec0f56ad8"
+ },
+ "pd-c2-669": {
+  "gutenbergId": 30779,
+  "firstParagraph": 74,
+  "lastParagraph": 76,
+  "words": 412,
+  "bodySha256": "643f5f1351d35ae2983b1ae917c16f12f6ed435d1cead459b946157d63292b03"
+ },
+ "pd-c2-676": {
+  "gutenbergId": 30779,
+  "firstParagraph": 533,
+  "lastParagraph": 535,
+  "words": 458,
+  "bodySha256": "efff12480c242eea1eba3c219785dedbbfbccaae33e825931d22338a059c2bdf"
+ },
+ "pd-c2-681": {
+  "gutenbergId": 30779,
+  "firstParagraph": 487,
+  "lastParagraph": 489,
+  "words": 388,
+  "bodySha256": "1475d17d1918ce6a85cd5da3f1b9e294fca9d1ec191702c564aad57811706498"
+ },
+ "pd-b1-222": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1978,
+  "lastParagraph": 1983,
+  "words": 156,
+  "bodySha256": "5ff054d2ec6fc2d35f4c63f8f81949d730918e943c3e6fc4bbdb1c5925f4e527"
+ },
+ "pd-b1-260": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1053,
+  "lastParagraph": 1054,
+  "words": 194,
+  "bodySha256": "7f8908c2c75530be6fb7d33eb1b1338e3182478ef6480d0f12c36d556fb09aae"
+ },
+ "pd-b1-272": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2576,
+  "lastParagraph": 2582,
+  "words": 136,
+  "bodySha256": "6b46fdc8b62ec951fb5ee006925dc55da71f580bc9aa8ebbac22a7cf3753ebf3"
+ },
+ "pd-b1-289": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2610,
+  "lastParagraph": 2616,
+  "words": 156,
+  "bodySha256": "7a1d552ed076fc46f9c448100bd814ea32b1a06b81b98da6ae54e493c82bf182"
+ },
+ "pd-b1-350": {
+  "gutenbergId": 48359,
+  "firstParagraph": 622,
+  "lastParagraph": 628,
+  "words": 148,
+  "bodySha256": "1e724582c89d23201e34be2ece9d24e5e78a2032194cdee7ed6986dfc9ab4903"
+ },
+ "pd-b2-351": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2436,
+  "lastParagraph": 2445,
+  "words": 190,
+  "bodySha256": "0bfbc6ea5e7cf4c0b09f9830191fa2716724fb117cec3957b66d495f054c6bd1"
+ },
+ "pd-b2-358": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1235,
+  "lastParagraph": 1238,
+  "words": 215,
+  "bodySha256": "2dc33a03262ec6700e72736faae6b76fb5e5d05db908d2b43acb40e8ad6a6e19"
+ },
+ "pd-b2-382": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2234,
+  "lastParagraph": 2242,
+  "words": 191,
+  "bodySha256": "ffbcad2df405e1f9c7c1a9fa10c20e2cc238c8d2b1a17ee803f5e9525133c085"
+ },
+ "pd-b2-408": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1881,
+  "lastParagraph": 1884,
+  "words": 210,
+  "bodySha256": "0283382a4b9a8149e63b0818ec9bc55a4ecfa92a0e6c81c000bf7a52ec0e6241"
+ },
+ "pd-b2-415": {
+  "gutenbergId": 48359,
+  "firstParagraph": 238,
+  "lastParagraph": 240,
+  "words": 197,
+  "bodySha256": "a14b87499f453934aa1240014ae1a7a3c90bd4618b19ce21f51d08a89c947d3a"
+ },
+ "pd-b2-422": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2889,
+  "lastParagraph": 2890,
+  "words": 202,
+  "bodySha256": "041cb6525c812a58c0b0c41abaf4d63bda8875be634cace2d49c57cfbd4fd86b"
+ },
+ "pd-b2-437": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2950,
+  "lastParagraph": 2951,
+  "words": 208,
+  "bodySha256": "9eb6ba0ef6e1fa805f7e4ab677ce89dc15f832d39b510dae203cafd471b2ae49"
+ },
+ "pd-b2-438": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1126,
+  "lastParagraph": 1130,
+  "words": 207,
+  "bodySha256": "33c17a9a9cac91c9149876333d91466dbb1be5c4102827e9a907802900256b1d"
+ },
+ "pd-b2-452": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1898,
+  "lastParagraph": 1902,
+  "words": 234,
+  "bodySha256": "1acca68150b2e992d57269abd5f53b316f332bc7baaebd2f31d3a2e5cb58e4ab"
+ },
+ "pd-b2-471": {
+  "gutenbergId": 48359,
+  "firstParagraph": 3111,
+  "lastParagraph": 3112,
+  "words": 191,
+  "bodySha256": "2625bd0bb21504af6f3d730531a425523d03b5cac794e02f23e029f37077da10"
+ },
+ "pd-b2-478": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2583,
+  "lastParagraph": 2589,
+  "words": 194,
+  "bodySha256": "413ff9bbc966d1e3270ed29c49e7805ae0ce31f06e194d52c07a89084808896a"
+ },
+ "pd-c1-493": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1521,
+  "lastParagraph": 1526,
+  "words": 277,
+  "bodySha256": "1f6fc358bac521f626ceafcbbc427e3d0b32042a319a85d805dafe119ec5d47a"
+ },
+ "pd-c1-506": {
+  "gutenbergId": 48359,
+  "firstParagraph": 264,
+  "lastParagraph": 268,
+  "words": 285,
+  "bodySha256": "3801451a1df38e3b57e04dd2e31236d285d3f5f5266d4e30eaf074ae951a175a"
+ },
+ "pd-c1-551": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1940,
+  "lastParagraph": 1953,
+  "words": 302,
+  "bodySha256": "5154893790f01aeb909f34e0920c012995c74ccf9a86fecb09ee0d19541d2da8"
+ },
+ "pd-c1-583": {
+  "gutenbergId": 48359,
+  "firstParagraph": 302,
+  "lastParagraph": 305,
+  "words": 263,
+  "bodySha256": "c12780ec9a4a79c1aaf523e3051b2b13051049309be015ad3771b136d14a7c61"
+ },
+ "pd-c1-595": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1141,
+  "lastParagraph": 1147,
+  "words": 265,
+  "bodySha256": "47dcbc58c3b3d19256f1ac62a2e8b64ae271837d8badd2f7ff2663a42ef02707"
+ },
+ "pd-c2-632": {
+  "gutenbergId": 48359,
+  "firstParagraph": 859,
+  "lastParagraph": 862,
+  "words": 420,
+  "bodySha256": "a5ddfac9e56fa85ddb232c4c945a43fab21c375bf9c84345159978f0201f30e1"
+ },
+ "pd-c2-635": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2521,
+  "lastParagraph": 2526,
+  "words": 393,
+  "bodySha256": "9f67f05a0be1ff4c2e2f3cc6c9e69a37a8699751440b9a9cae350f944636f014"
+ },
+ "pd-c2-641": {
+  "gutenbergId": 48359,
+  "firstParagraph": 457,
+  "lastParagraph": 462,
+  "words": 405,
+  "bodySha256": "755181ecde51a2d77965ba2ec95c04a56bfa461a138dbd98e65a2a8d4c931809"
+ },
+ "pd-c2-652": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2487,
+  "lastParagraph": 2494,
+  "words": 385,
+  "bodySha256": "b31e0b68ce15a47d96130b2a860afe5d53fa568a91836bab31983de876bf5fda"
+ },
+ "pd-c2-662": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1095,
+  "lastParagraph": 1107,
+  "words": 367,
+  "bodySha256": "de560284ce6a541addb3ab0b901fe0901923ab725ef5a519df9780ca73954603"
+ },
+ "pd-c2-671": {
+  "gutenbergId": 48359,
+  "firstParagraph": 2955,
+  "lastParagraph": 2957,
+  "words": 462,
+  "bodySha256": "d780c27ea32d36b054a3fec1af1b87bf1f8ec1d5f7db598e9f813ac981ef49b1"
+ },
+ "pd-c2-694": {
+  "gutenbergId": 48359,
+  "firstParagraph": 3043,
+  "lastParagraph": 3044,
+  "words": 386,
+  "bodySha256": "eef1002b64180dd7b5049e8377833a3524b7335c3bfa97d3196669312ede0a30"
+ },
+ "pd-c2-711": {
+  "gutenbergId": 48359,
+  "firstParagraph": 1485,
+  "lastParagraph": 1500,
+  "words": 365,
+  "bodySha256": "9ef40a07faa6838d12c7756290f1d7210017e40f5e5e6aba9269e1448bda08e9"
+ },
+ "pd-b1-223": {
+  "gutenbergId": 51266,
+  "firstParagraph": 42,
+  "lastParagraph": 47,
+  "words": 134,
+  "bodySha256": "6c5203855badc1a910783a9c43aa63082cb5c677b447772518bd37decbd81f67"
+ },
+ "pd-b1-264": {
+  "gutenbergId": 51266,
+  "firstParagraph": 609,
+  "lastParagraph": 611,
+  "words": 139,
+  "bodySha256": "030d409562befcd8fdb24a83b833fdc34935b573c75897c2c357ef5f09c1f93c"
+ },
+ "pd-b1-268": {
+  "gutenbergId": 51266,
+  "firstParagraph": 476,
+  "lastParagraph": 486,
+  "words": 133,
+  "bodySha256": "703e53e3b7b0ad5ae0cab3790a000d734577c6f16fd71790340310f7aa3827c1"
+ },
+ "pd-b1-277": {
+  "gutenbergId": 51266,
+  "firstParagraph": 206,
+  "lastParagraph": 207,
+  "words": 157,
+  "bodySha256": "f85008cce055958e1686d83b4bf7c524b29983260957a5e5aef99a5117a5b8d3"
+ },
+ "pd-b1-288": {
+  "gutenbergId": 51266,
+  "firstParagraph": 613,
+  "lastParagraph": 618,
+  "words": 133,
+  "bodySha256": "d27e38a08186c6a985704b4a4dcb18e35b69dfea6da133ca0f9abdaa3fdfd36e"
+ },
+ "pd-b1-325": {
+  "gutenbergId": 51266,
+  "firstParagraph": 829,
+  "lastParagraph": 834,
+  "words": 134,
+  "bodySha256": "1703fefe4d8434e4c5bf08fe08350fc53f37ee2b7b46b31aa82760f17539651f"
+ },
+ "pd-b1-340": {
+  "gutenbergId": 51266,
+  "firstParagraph": 188,
+  "lastParagraph": 195,
+  "words": 161,
+  "bodySha256": "8836db60fa0eb07d9484311bcb5e8d3a47ac4aed4853bc32e8610780d011e4aa"
+ },
+ "pd-b2-440": {
+  "gutenbergId": 51266,
+  "firstParagraph": 386,
+  "lastParagraph": 392,
+  "words": 206,
+  "bodySha256": "bf3d2af24643437bca55ab44adf72853952fe0324370b21f7bd21a7018c4f674"
+ },
+ "pd-b2-448": {
+  "gutenbergId": 51266,
+  "firstParagraph": 1105,
+  "lastParagraph": 1111,
+  "words": 258,
+  "bodySha256": "4c54ca3b1f9790db375a22f26cb06bbd0a1af4aafd4fa86cac949c50bee0e287"
+ },
+ "pd-b2-451": {
+  "gutenbergId": 51266,
+  "firstParagraph": 158,
+  "lastParagraph": 166,
+  "words": 209,
+  "bodySha256": "ffb217bae0f67c934a099a5a07c281370cbd5655b3a096e0abb110ffdf362e19"
+ },
+ "pd-b2-474": {
+  "gutenbergId": 51266,
+  "firstParagraph": 1138,
+  "lastParagraph": 1148,
+  "words": 206,
+  "bodySha256": "819ca2dc971d1dd2f7dc9087085f5e935ca12f0d25ac190c1c2b75de35bddd11"
+ },
+ "pd-b2-476": {
+  "gutenbergId": 51266,
+  "firstParagraph": 743,
+  "lastParagraph": 749,
+  "words": 218,
+  "bodySha256": "14d876052b9d36c6e41efbab8c72237a9dd6fc3ac097483c8e5c15cd4b1a4053"
+ },
+ "pd-c1-528": {
+  "gutenbergId": 51266,
+  "firstParagraph": 686,
+  "lastParagraph": 698,
+  "words": 269,
+  "bodySha256": "d04d1bc7234c0e056454e03f6e638200e68d47a565a5bf062071a6d8b89a25d6"
+ },
+ "pd-c1-559": {
+  "gutenbergId": 51266,
+  "firstParagraph": 536,
+  "lastParagraph": 539,
+  "words": 300,
+  "bodySha256": "684ba8cfb06eee9aedb18c000be4b37c795d57c383ef6819b10a5160ef833110"
+ },
+ "pd-c2-648": {
+  "gutenbergId": 51266,
+  "firstParagraph": 1067,
+  "lastParagraph": 1072,
+  "words": 373,
+  "bodySha256": "e7fc0b5dcf84acedb7fb5c62792ff7a2aff08df48baf1b7bbf3fada0a28b83b4"
+ },
+ "pd-c2-653": {
+  "gutenbergId": 51266,
+  "firstParagraph": 332,
+  "lastParagraph": 337,
+  "words": 360,
+  "bodySha256": "9a0693b09613886e662e9282ff905c495c95db1ef6500984dc63c7df5a565b32"
+ },
+ "pd-c2-655": {
+  "gutenbergId": 51266,
+  "firstParagraph": 937,
+  "lastParagraph": 943,
+  "words": 374,
+  "bodySha256": "13321e66d7d772f65a72e26ab9d6b20218a56a394d1984e3f6685c56c164d98a"
+ },
+ "pd-c2-657": {
+  "gutenbergId": 51266,
+  "firstParagraph": 701,
+  "lastParagraph": 715,
+  "words": 364,
+  "bodySha256": "45abc4450d06fc53071a49a44726c3b17af696c3f9e75008c4cd3f88260716a8"
+ },
+ "pd-c2-658": {
+  "gutenbergId": 51266,
+  "firstParagraph": 113,
+  "lastParagraph": 124,
+  "words": 371,
+  "bodySha256": "36ea9ed1d355a35467485719b4c40aa855edfd497c7dea0183611050666eba4d"
+ },
+ "pd-c2-683": {
+  "gutenbergId": 51266,
+  "firstParagraph": 274,
+  "lastParagraph": 279,
+  "words": 412,
+  "bodySha256": "774a17a780440ea09b965b4ead700f5f5c6b0d3de5f02f4be41c9311c74aeb07"
+ },
+ "pd-b1-254": {
+  "gutenbergId": 55456,
+  "firstParagraph": 94,
+  "lastParagraph": 95,
+  "words": 202,
+  "bodySha256": "8e9b331d207720d4a34174e7cd8a8124101d4361911faf75eae155b8dfc9ddb2"
+ },
+ "pd-b1-337": {
+  "gutenbergId": 55456,
+  "firstParagraph": 484,
+  "lastParagraph": 487,
+  "words": 138,
+  "bodySha256": "6a6e52b6913d9a2926e8ca9e3e3d4b2683fe4a78a32e2ee852b2a41fd840cb05"
+ },
+ "pd-c1-496": {
+  "gutenbergId": 55456,
+  "firstParagraph": 502,
+  "lastParagraph": 507,
+  "words": 351,
+  "bodySha256": "0173c124b23125692fa9abc384c6011878c512ae2ea71408b22dfd5e4af1bbdf"
+ },
+ "pd-c2-703": {
+  "gutenbergId": 55456,
+  "firstParagraph": 51,
+  "lastParagraph": 53,
+  "words": 424,
+  "bodySha256": "8e945befc38d11a770fefcd7c50edf7d00c08bc6c9967763574c3775829cb30f"
+ }
+}

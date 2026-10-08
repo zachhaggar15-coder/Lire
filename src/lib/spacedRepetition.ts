@@ -1,4 +1,5 @@
-import type { SavedWord, WordStatus } from "@/types";
+import type { SavedWord } from "@/types";
+import { isInReview } from "@/lib/reviewMembership";
 
 /**
  * A simple, fixed interval ladder driven by a consecutive-correct streak —
@@ -12,6 +13,10 @@ import type { SavedWord, WordStatus } from "@/types";
  *   3rd correct in a row: +7 days
  *   4th correct in a row: +14 days
  *   5th+ correct in a row: +30 days
+ *
+ * Correct answers only ever lengthen the interval: a card stays in Review
+ * until the reader removes it (it used to leave Review for a "known" state
+ * after three in a row, with no way back from the reader).
  *
  * An incorrect answer resets the streak to 0 and brings the card back
  * immediately (due again right away, so it can resurface the same day).
@@ -27,11 +32,6 @@ const MAX_EASE = 2;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 export type ReviewResult = "correct" | "incorrect";
-
-/** Only these states are cards in Review. `known` stays as a vocabulary record. */
-export function isReviewableWordStatus(status: WordStatus | null | undefined): status is "learning" | "unsure" {
-  return status === "learning" || status === "unsure";
-}
 
 export interface SpacedRepetitionUpdate {
   ease: number;
@@ -55,7 +55,7 @@ export function isNewCard(word: SavedWord): boolean {
 
 /** True if a word is due for review right now (new cards are always due). */
 export function isDue(word: SavedWord, now: number = Date.now()): boolean {
-  if (!isReviewableWordStatus(word.status)) return false;
+  if (!isInReview(word)) return false;
   if (!word.nextReviewAt) return true;
   return new Date(word.nextReviewAt).getTime() <= now;
 }
@@ -100,9 +100,9 @@ export interface ReviewStats {
   totalLearning: number;
 }
 
-/** Counts for the Review page's header — only ever considers learning/unsure words, never known ones. */
+/** Counts for the Review page's header — only cards in Review (see reviewMembership.ts). */
 export function getReviewStats(words: SavedWord[], now: number = Date.now()): ReviewStats {
-  const reviewable = words.filter((w) => isReviewableWordStatus(w.status));
+  const reviewable = words.filter(isInReview);
   let dueToday = 0;
   let newWords = 0;
   let notDueYet = 0;
@@ -121,7 +121,7 @@ export function getReviewStats(words: SavedWord[], now: number = Date.now()): Re
 }
 
 /**
- * Builds today's review queue: every due-or-new learning/unsure word,
+ * Builds today's review queue: every due-or-new card in Review,
  * ordered by priority — due reviews before brand-new cards, most overdue
  * first, then unsure before learning, then least-reviewed, then most
  * recently saved. Not over-engineered: a single sort pass, no per-card
@@ -129,7 +129,7 @@ export function getReviewStats(words: SavedWord[], now: number = Date.now()): Re
  */
 export function buildReviewQueue(words: SavedWord[], now: number = Date.now()): SavedWord[] {
   return words
-    .filter((w) => isReviewableWordStatus(w.status) && isDue(w, now))
+    .filter((w) => isInReview(w) && isDue(w, now))
     .sort((a, b) => {
       const aNew = isNewCard(a);
       const bNew = isNewCard(b);

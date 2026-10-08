@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
 import { getRatePromptState, isEligibleForRatePrompt, markRatePromptShown, markRated } from "@/lib/ratePrompt";
-import { trackEvent } from "@/lib/analytics/client";
 import { FeedbackButton } from "@/components/FeedbackModal";
 
 /**
@@ -20,7 +19,6 @@ export default function RateSorlioCard({ source }: { source: string }) {
     if (!isEligibleForRatePrompt(getRatePromptState(), isAndroidApp())) return;
     markRatePromptShown();
     setVisible(true);
-    trackEvent("rate_prompt_shown", { source });
   }, [source]);
 
   if (!visible) return null;
@@ -42,7 +40,6 @@ export default function RateSorlioCard({ source }: { source: string }) {
           rel="noopener noreferrer"
           onClick={() => {
             markRated();
-            trackEvent("rate_app_opened", { source });
             setThanked(true);
           }}
           className="ligne-pill bg-brand text-cream"

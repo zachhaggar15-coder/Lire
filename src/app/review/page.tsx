@@ -1,11 +1,12 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { getSavedWords, markWordAsKnown, recordReviewResult } from "@/lib/storage";
+import { getSavedWords, recordReviewResult } from "@/lib/storage";
+import { MASTERY_STREAK } from "@/lib/reviewMembership";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
 import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
@@ -14,11 +15,10 @@ import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { canSpeak, speakFrench } from "@/lib/speech";
 import { classifyVocabularyStates, type VocabularyDecayState, type VocabularyStateItem } from "@/lib/readingAnalytics";
 import { recordReviewSuccessXp } from "@/lib/gamification";
-import { trackEvent } from "@/lib/analytics/client";
-import { updateValidationState } from "@/lib/validation/state";
 import { triggerHaptic } from "@/lib/haptics";
 import AppIcon from "@/components/AppIcon";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { isRetiredTemplateExample } from "@/lib/dictionary/exampleGenerator";
 
 type ReviewDirection = "fr-en" | "en-fr";
 type WordGrade = "knew" | "learning";
@@ -26,13 +26,13 @@ type CardFeedback = "correct" | "learning" | null;
 
 const REVIEW_FEEDBACK_DELAY_MS = 760;
 /**
- * A word graduates out of the active review deck once it's been graded
- * "Knew it" this many times in a row — an unprompted self-report of "I
- * knew it" three times running is a fair bar for calling a word learned,
- * without needing a separate typed-confirmation pass. Phrases use the
- * same threshold — see PHRASE_GRADUATE_AFTER_CORRECT_STREAK in phrases.ts.
+ * Words no longer graduate out of Review. Three "Knew it" in a row used to
+ * move a card to a "known" state that left Review and showed "Already known"
+ * in the reader with no way back. Now correct answers only lengthen the
+ * interval (spacedRepetition.ts); reaching MASTERY_STREAK earns the review
+ * XP that graduating used to, and the card stays until the reader removes it.
+ * Phrases follow the same model (phrases.ts: PHRASE_MASTERY_STREAK).
  */
-const GRADUATE_AFTER_CORRECT_STREAK = 3;
 
 function promptLabel(direction: ReviewDirection): string {
   return direction === "en-fr" ? "English to French" : "French to English";
@@ -95,6 +95,7 @@ function ReviewPageContent() {
   const [phraseReviewStarted, setPhraseReviewStarted] = useState(false);
   const [phraseRevealed, setPhraseRevealed] = useState(false);
   const [xpNotice, setXpNotice] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [cardFeedback, setCardFeedback] = useState<CardFeedback>(null);
   const reviewSessionStarted = useRef(false);
   const reviewSessionCompleted = useRef(false);
@@ -110,6 +111,7 @@ function ReviewPageContent() {
   // logic runs in an event handler); missedCount mirrors its size into state
   // since refs can't be read during render.
   const missedWordKeys = useRef<Set<string>>(new Set());
+  const missedBefore = useRef<Set<string>>(new Set());
   const [missedCount, setMissedCount] = useState(0);
   const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reviewCardRef = useRef<HTMLDivElement | null>(null);
@@ -126,7 +128,7 @@ function ReviewPageContent() {
     // before you start, for both words and phrases; the session-length cap
     // only applies once you actually start (see startWordReview/startPhraseReview).
     const initialWordQueue = buildReviewQueue(visibleSavedWords);
-    const initialPhraseQueue = visibleSavedPhrases.filter((phrase) => phrase.status !== "known");
+    const initialPhraseQueue = visibleSavedPhrases;
     setArticleFilter(article);
     setWords(visibleSavedWords);
     setPhrases(visibleSavedPhrases);
@@ -184,32 +186,15 @@ function ReviewPageContent() {
         : phraseSessionTotal || sessionPhraseQueue.length;
     if (cardCount <= 0) return;
     reviewSessionStarted.current = true;
-    trackEvent("review_session_started", {
-      mode: reviewMode,
-      cardCount,
-      articleFiltered: !!articleFilter,
-    });
   }, [articleFilter, phraseSessionTotal, ready, reviewMode, reviewStarted, sessionPhraseQueue.length, wordQueue.length, wordSessionTotal]);
 
   function visibleWords(allWords: SavedWord[]): SavedWord[] {
     return articleFilter ? allWords.filter((word) => word.sourceTextTitle === articleFilter) : allWords;
   }
 
-  function completeReviewSession(mode: "words" | "phrases", totalCards: number, correctCards: number) {
+  function completeReviewSession(_mode: "words" | "phrases", totalCards: number, _correctCards: number) {
     if (reviewSessionCompleted.current || totalCards <= 0) return;
     reviewSessionCompleted.current = true;
-    const completedAt = new Date().toISOString();
-    updateValidationState((state) => ({
-      ...state,
-      firstReviewCompletedAt: state.firstReviewCompletedAt ?? completedAt,
-      totalReviewsCompleted: state.totalReviewsCompleted + 1,
-    }));
-    trackEvent("review_session_completed", {
-      mode,
-      totalCards,
-      correctCards,
-      articleFiltered: !!articleFilter,
-    });
   }
 
   function startWordReview() {
@@ -245,6 +230,7 @@ function ReviewPageContent() {
     if (!current || cardFeedback) return;
     const correct = grade === "knew";
     triggerHaptic(correct ? "confirm" : "selection");
+    missedBefore.current = new Set(missedWordKeys.current);
     if (!correct) {
       missedWordKeys.current.add(current.word);
       setMissedCount(missedWordKeys.current.size);
@@ -253,30 +239,32 @@ function ReviewPageContent() {
       knew: score.knew + (correct ? 1 : 0),
       missed: score.missed + (correct ? 0 : 1),
     };
+    // Store the answer first, synchronously: the feedback delay below is
+    // only animation, and leaving the page during it (which cancels the
+    // timer) must not lose the grade.
+    const reviewed = recordReviewResult(current.word, correct ? "correct" : "incorrect");
+    if (!reviewed.ok) {
+      // Nothing was stored: keep the same card on screen, award nothing,
+      // and say why. The answer can simply be given again.
+      undoGradeFeedback(correct, current.word, score);
+      setSaveError(persistenceFailureMessage(reviewed.reason));
+      return;
+    }
+    setSaveError(null);
+    const updatedWord = reviewed.words.find((w) => w.word === current.word);
+    const reachedMastery = correct && (updatedWord?.correctCount ?? 0) === MASTERY_STREAK;
+    const nextWords = visibleWords(reviewed.words);
+    const xp = reachedMastery ? recordReviewSuccessXp(current.word) : 0;
+    const remainingQueue = wordQueue.slice(1);
+    const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
+
     setCardFeedback(correct ? "correct" : "learning");
-    trackEvent("review_answer_submitted", {
-      mode: "words",
-      correct,
-      grade,
-      cardIndex: Math.min(score.knew + score.missed + 1, Math.max(1, wordSessionTotal)),
-      totalCards: wordSessionTotal || wordQueue.length,
-      articleFiltered: !!articleFilter,
-    });
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const updatedWords = recordReviewResult(current.word, correct ? "correct" : "incorrect");
-      const updatedWord = updatedWords.find((w) => w.word === current.word);
-      const graduated = correct && (updatedWord?.correctCount ?? 0) >= GRADUATE_AFTER_CORRECT_STREAK;
-      const nextWords = visibleWords(graduated ? markWordAsKnown(current.word) : updatedWords);
-      if (graduated) {
-        const xp = recordReviewSuccessXp(current.word);
-        if (xp > 0) {
-          setXpNotice(`+${xp} XP`);
-          window.setTimeout(() => setXpNotice(null), 1600);
-        }
+      if (xp > 0) {
+        setXpNotice(`+${xp} XP`);
+        window.setTimeout(() => setXpNotice(null), 1600);
       }
-      const remainingQueue = wordQueue.slice(1);
-      const nextQueue = correct ? remainingQueue : [...remainingQueue, current];
       setWords(nextWords);
       setWordQueue(nextQueue);
       setScore(nextScore);
@@ -287,6 +275,17 @@ function ReviewPageContent() {
     }, REVIEW_FEEDBACK_DELAY_MS);
   }
 
+  /** Reverses the optimistic feedback for an answer whose result could not be stored. */
+  function undoGradeFeedback(correct: boolean, word: string, previousScore: { knew: number; missed: number }) {
+    if (!correct && !missedBefore.current.has(word)) {
+      missedWordKeys.current.delete(word);
+      setMissedCount(missedWordKeys.current.size);
+    }
+    setScore(previousScore);
+    setCardFeedback(null);
+    cardFeedbackTimeout.current = null;
+  }
+
   function restart() {
     if (cardFeedbackTimeout.current) {
       clearTimeout(cardFeedbackTimeout.current);
@@ -295,7 +294,7 @@ function ReviewPageContent() {
     const nextWords = visibleWords(getSavedWords());
     const nextPhrases = articleFilter ? getSavedPhrases().filter((phrase) => phrase.sourceTextTitle === articleFilter) : getSavedPhrases();
     const nextWordQueue = capToSessionLength(buildReviewQueue(nextWords));
-    const nextPhraseQueue = capToSessionLength(nextPhrases.filter((phrase) => phrase.status !== "known"));
+    const nextPhraseQueue = capToSessionLength(nextPhrases);
     setWords(nextWords);
     setPhrases(nextPhrases);
     setWordQueue(nextWordQueue);
@@ -323,25 +322,29 @@ function ReviewPageContent() {
       correct: phraseScore.current.correct + (correct ? 1 : 0),
       total: phraseScore.current.total + 1,
     };
-    setCardFeedback(correct ? "correct" : "learning");
-    trackEvent("review_answer_submitted", {
-      mode: "phrases",
-      correct,
-      grade,
-      cardIndex: Math.min(phraseScore.current.total, Math.max(1, phraseSessionTotal)),
-      totalCards: phraseSessionTotal || sessionPhraseQueue.length,
-      articleFiltered: !!articleFilter,
-    });
+    // Stored first; the delay is animation only (see gradeWord).
+    const reviewed = recordPhraseReview(currentPhrase.phrase, correct);
+    if (!reviewed.ok) {
+      phraseScore.current = {
+        correct: phraseScore.current.correct - (correct ? 1 : 0),
+        total: phraseScore.current.total - 1,
+      };
+      setSaveError(persistenceFailureMessage(reviewed.reason));
+      return;
+    }
+    setSaveError(null);
+    const updatedPhrases = reviewed.phrases;
+    const remainingQueue = sessionPhraseQueue.slice(1);
+    const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
+    const sessionCorrect = phraseScore.current.correct;
 
+    setCardFeedback(correct ? "correct" : "learning");
     if (cardFeedbackTimeout.current) clearTimeout(cardFeedbackTimeout.current);
     cardFeedbackTimeout.current = setTimeout(() => {
-      const updatedPhrases = recordPhraseReview(currentPhrase.phrase, correct);
       setPhrases(articleFilter ? updatedPhrases.filter((phrase) => phrase.sourceTextTitle === articleFilter) : updatedPhrases);
-      const remainingQueue = sessionPhraseQueue.slice(1);
-      const nextQueue = correct ? remainingQueue : [...remainingQueue, currentPhrase];
       setSessionPhraseQueue(nextQueue);
       setPhraseRevealed(false);
-      if (nextQueue.length === 0) completeReviewSession("phrases", phraseSessionTotal, phraseScore.current.correct);
+      if (nextQueue.length === 0) completeReviewSession("phrases", phraseSessionTotal, sessionCorrect);
       setCardFeedback(null);
       cardFeedbackTimeout.current = null;
     }, REVIEW_FEEDBACK_DELAY_MS);
@@ -379,11 +382,11 @@ function ReviewPageContent() {
           ? `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} left`
           : `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} to review`
         : reviewStarted
-          ? `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} left`
+          ? `${wordQueue.length} ${wordQueue.length === 1 ? "word" : "words"} left`
           // Not "due": the queue also includes never-reviewed new words, so
           // saying "3 cards due" directly above a "Due today: 0" tile read as
           // a contradiction.
-          : `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} to review`;
+          : `${wordQueue.length} ${wordQueue.length === 1 ? "word" : "words"} to review`;
   const wordCardIndex = wordSessionTotal > 0 ? wordSessionTotal - wordQueue.length + 1 : 1;
 
   // No learning/unsure words saved at all.
@@ -391,28 +394,17 @@ function ReviewPageContent() {
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle={articleFilter ? `From: ${articleFilter}` : "A quiet place for the words you are learning."} />
-        <div className="flex items-center justify-center gap-10 border-y border-cream-dark/80 py-3 text-center">
-          <div className="min-w-16">
-            <p className="font-numeral text-2xl leading-none text-ink">0</p>
-            <p className="ligne-meta mt-1">Due</p>
-          </div>
-          <div className="h-8 w-px bg-cream-dark" aria-hidden="true" />
-          <div className="min-w-16">
-            <p className="font-numeral text-2xl leading-none text-ink">0</p>
-            <p className="ligne-meta mt-1">Saved</p>
-          </div>
-        </div>
         <div className="mx-auto flex min-h-[48vh] max-w-xs flex-col items-center justify-center pb-16 text-center">
           <div className="flex h-24 w-24 items-center justify-center rounded-full bg-brand-light text-brand" aria-hidden="true">
             <AppIcon name="book" active className="h-11 w-11" />
           </div>
           <h2 className="mt-5 text-xl font-semibold leading-tight text-ink">
-            {articleFilter ? "No words saved from this text" : "Your review deck is ready when you are"}
+            {articleFilter ? "No words saved from this text" : "No words in Review yet"}
           </h2>
           <p className="ligne-body mt-2 max-w-[17rem]">
             {articleFilter
               ? "Add words to review while reading, then come back here."
-              : "Words you add to review while reading show up here."}
+              : "Add useful words while reading and they’ll appear here."}
           </p>
           <Link
             href="/"
@@ -430,12 +422,14 @@ function ReviewPageContent() {
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle="Nothing due right now." />
-        {statsBar}
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
-          <p className="mt-2 text-ink-muted">All caught up — nothing due right now.</p>
-          <p className="mt-1 text-xs text-ink-muted">
+          <p className="text-lg font-semibold text-ink">You&rsquo;re caught up.</p>
+          <p className="mt-1 text-sm text-ink-muted">
             {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
           </p>
+          <Link href="/" className="ligne-pill mt-4 inline-flex bg-brand text-cream">
+            Keep reading
+          </Link>
         </div>
       </div>
     );
@@ -443,28 +437,37 @@ function ReviewPageContent() {
 
   // Finished this session's queue.
   if (done) {
+    // A session can stop at its length cap with words still due; say so
+    // rather than "All done", and offer the rest.
+    const remainingDue = phrasesDone ? 0 : buildReviewQueue(visibleWords(getSavedWords())).length;
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle="Session complete." />
         {phrasesDone ? null : statsBar}
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
-          <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
+          <p className="mt-2 text-lg font-semibold text-ink">{remainingDue > 0 ? "Session done" : "All done!"}</p>
           <p className="mt-1 text-sm text-ink-muted">
             {phrasesDone ? (
-              `Known: ${phraseSessionTotal}`
+              `Reviewed: ${phraseSessionTotal}`
             ) : (
               <>
-                Known: {wordSessionTotal}
-                {missedCount > 0 && ` - Needed a retry: ${missedCount}`}
+                Reviewed: {wordSessionTotal}
+                {wordSessionTotal > 0 && ` · ${Math.max(0, wordSessionTotal - missedCount)} remembered`}
+                {missedCount > 0 && ` · ${missedCount} needed another look`}
               </>
             )}
           </p>
+          {remainingDue > 0 && (
+            <p className="mt-1 text-sm text-ink-muted">
+              {remainingDue} more {remainingDue === 1 ? "word is" : "words are"} ready whenever you are.
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             <button
               onClick={restart}
               className="ligne-pill bg-brand text-cream"
             >
-              Check for more
+              {remainingDue > 0 ? "Keep going" : "Check for more"}
             </button>
             <Link href={phrasesDone ? "/words?tab=phrases" : "/words"} className="ligne-pill bg-cream-fill text-ink-muted">
               {phrasesDone ? "Manage saved phrases" : "Manage saved words"}
@@ -487,6 +490,12 @@ function ReviewPageContent() {
           <span key={reviewProgressLabel} className="ligne-value-change inline-block">{reviewProgressLabel}</span>
         </span>
       </header>
+
+      {saveError && (
+        <div role="alert" className="mb-3 rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+          {saveError}
+        </div>
+      )}
 
       {xpNotice && (
         <div className="mb-3 rounded-2xl bg-brand-light px-3 py-2 text-sm font-bold text-brand">
@@ -587,13 +596,13 @@ function ReviewPageContent() {
                 {promptLabel(reviewDirection)}
               </p>
               <div className="mt-2 flex items-center justify-center gap-2">
-                <p className="text-3xl font-bold text-ink">
+                <p lang={reviewDirection === "en-fr" ? "en" : "fr"} className="text-3xl font-bold text-ink">
                   {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
                 </p>
                 {reviewDirection === "fr-en" && <SpeakButton text={current.word} />}
               </div>
             {reviewDirection === "fr-en" && current.lemma && current.lemma !== current.word && (
-              <p className="text-xs text-ink-muted">from "{current.lemma}"</p>
+              <p className="text-xs text-ink-muted">from "<span lang="fr">{current.lemma}</span>"</p>
             )}
 
             {!revealed ? (
@@ -614,7 +623,7 @@ function ReviewPageContent() {
                   {reviewDirection === "en-fr" && <SpeakButton text={current.word} />}
                 </div>
                 {reviewDirection === "en-fr" && current.lemma && current.lemma !== current.word && (
-                  <p className="mt-1 text-sm text-ink-muted">Lemma: {current.lemma}</p>
+                  <p className="mt-1 text-sm text-ink-muted">Lemma: <span lang="fr">{current.lemma}</span></p>
                 )}
                 {reviewDirection === "fr-en" && current.translations.length > 1 && (
                   <p className="mt-1 text-sm text-ink-muted">Also: {current.translations.slice(1).join(", ")}</p>
@@ -678,10 +687,7 @@ function ReviewPageContent() {
 function shouldShowReviewExample(word: SavedWord): boolean {
   if (!word.exampleSentenceFr || !word.exampleSentenceEn) return false;
   if (word.exampleSentenceFr === word.articleContextSentence) return false;
-  if (/^C'est très\s+(mon|ma|mes|ton|ta|tes|son|sa|ses|notre|nos|votre|vos|leur|leurs)\.?$/i.test(word.exampleSentenceFr)) {
-    return false;
-  }
-  return true;
+  return !isRetiredTemplateExample(word.exampleSentenceFr, word.exampleSentenceEn, [word.word, word.lemma]);
 }
 
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
@@ -727,17 +733,13 @@ function PracticeHubCard({
 }) {
   const isPhrases = mode === "phrases";
   const focusCount = vocabularyStates.filter((item) => item.state === "fragile" || item.state === "forgotten").length;
-  const readyCopy =
-    dueToday > 0 && newWords > 0
-      ? `${dueToday} due and ${newWords} new`
-      : dueToday > 0
-        ? `${dueToday} due`
-        : `${newWords} new`;
+  const readyCopy = [newWords > 0 ? `${newWords} new` : null, dueToday > 0 ? `${dueToday} due` : null].filter(Boolean).join(" · ");
   const stats = [
     { label: "Due today", value: dueToday },
     { label: "New", value: newWords },
     { label: "Later", value: notDueYet },
     { label: "Total", value: totalLearning },
+    { label: "To practise", value: focusCount },
   ];
   const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
   // The actual session — what tapping "Review" below is about to start —
@@ -745,40 +747,28 @@ function PracticeHubCard({
   // chip intentionally stay uncapped: they're the true due count, giving
   // context for why the button says a smaller number.
   const readyCount = isPhrases ? phraseCount : wordCount;
-  const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
+  const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "word") : isPhrases ? "phrases" : "words";
   const sessionCount = sessionLength != null ? Math.min(readyCount, sessionLength) : readyCount;
-  const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
+  const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "word") : isPhrases ? "phrases" : "words";
 
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-5">
-      <p className="ligne-label text-brand">Practice hub</p>
-      <h2 className="mt-1 text-xl font-semibold leading-tight text-ink">
+      <h2 className="text-2xl font-semibold leading-tight text-ink">
         {readyCount} {readyNoun} ready
       </h2>
-      <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-        {isPhrases ? "Start a quick phrase review." : `Start with a quick ${directionCopy} review.`}
+      {/* About 10 seconds a card: an estimate, so whole minutes. */}
+      <p className="mt-1 text-sm text-ink-muted">
+        About {Math.max(1, Math.round((sessionCount * 10) / 60))} min
+        {!isPhrases && readyCopy ? ` · ${readyCopy}` : ""}
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {isPhrases ? (
-          <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{phraseCount} to review</span>
-        ) : (
-          <>
-            <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand">{readyCopy}</span>
-            {focusCount > 0 && (
-              <span className="rounded-full bg-cream-fill px-3 py-1 text-xs font-semibold text-ink-muted">
-                {focusCount} need care
-              </span>
-            )}
-          </>
-        )}
-      </div>
 
       <button
         type="button"
         onClick={onStart}
+        aria-label={`Start review: ${sessionCount} ${sessionNoun}, ${directionCopy}`}
         className="ligne-pill mt-4 min-h-12 w-full bg-brand text-cream"
       >
-        Review {sessionCount} {sessionNoun}
+        Start review
       </button>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
@@ -811,7 +801,7 @@ function PracticeHubCard({
           <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             Stats
           </summary>
-          <div className="mt-3 grid grid-cols-4 gap-2">
+          <div className="mt-3 grid grid-cols-5 gap-2">
             {stats.map((item) => (
               <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
                 <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
@@ -826,10 +816,10 @@ function PracticeHubCard({
 }
 
 const STATE_LABELS: Record<VocabularyDecayState, string> = {
-  stable: "Stable",
-  emerging: "Emerging",
-  fragile: "Fragile",
-  forgotten: "Forgotten",
+  stable: "Strong",
+  emerging: "Learning",
+  fragile: "To practise",
+  forgotten: "Recently missed",
 };
 
 const STATE_STYLES: Record<VocabularyDecayState, string> = {
@@ -847,7 +837,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
-      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your words in Review</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -858,7 +848,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
       </div>
       {focus.length > 0 && (
         <div className="mt-3 space-y-1">
-          <p className="text-xs font-semibold text-ink-muted">Best isolated-review candidates</p>
+          <p className="text-xs font-semibold text-ink-muted">Words to practise</p>
           {focus.map((item) => (
             <p key={item.word.word} className="text-xs text-ink-muted">
               <span className="font-semibold text-ink">{item.word.lemma ?? item.word.word}</span> - {item.reason}
@@ -901,9 +891,9 @@ function ReviewDirectionToggle({
 }
 
 const SESSION_LENGTH_OPTIONS: { value: number | null; label: string }[] = [
-  { value: 10, label: "10 cards" },
-  { value: 20, label: "20 cards" },
-  { value: null, label: "All cards" },
+  { value: 10, label: "10" },
+  { value: 20, label: "20" },
+  { value: null, label: "All" },
 ];
 
 /** Optional cap on how many cards a sitting runs before stopping — lowers the barrier to starting on a day with a big due pile. Persisted via reviewPreferences.ts. */
@@ -982,7 +972,8 @@ function PhraseReviewCard({
   if (!phrase) {
     return (
       <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-6 text-center">
-        <p className="text-sm font-semibold text-ink">No phrase cards due.</p>
+        {/* Phrases have no schedule, so nothing is ever "due": there are just saved phrases to practise. */}
+        <p className="text-sm font-semibold text-ink">No saved phrases to practise.</p>
         <p className="mt-1 text-xs text-ink-muted">Saved phrases you are still learning will appear here.</p>
       </div>
     );
@@ -1009,7 +1000,7 @@ function PhraseReviewCard({
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
         <div className="mt-3 flex items-center gap-2">
-          <p className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
+          <p lang={direction === "fr-en" ? "fr" : "en"} className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
           {direction === "fr-en" && <SpeakButton text={phrase.phrase} />}
         </div>
 
@@ -1025,18 +1016,13 @@ function PhraseReviewCard({
           <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
             <div className="flex items-center gap-2">
               <p className="text-sm font-semibold text-ink">
-                {phrase.phrase} = {phrase.translation}
+                <span lang="fr">{phrase.phrase}</span> = {phrase.translation}
               </p>
               {direction === "en-fr" && <SpeakButton text={phrase.phrase} />}
             </div>
             <div className="rounded-2xl bg-cream p-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
-              <p className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
-            </div>
-            <div className="rounded-2xl bg-cream p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">New example</p>
-              <p className="mt-1 text-sm italic text-ink">On peut {phrase.phrase} cette idee dans un autre article.</p>
-              <p className="mt-0.5 text-sm text-ink-muted">You can use this phrase with the same idea in another article.</p>
+              <p lang="fr" className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
             </div>
             <p className="text-xs text-ink-muted">
               Register: <span className="font-semibold">{phrase.partOfSpeech?.includes("formal") ? "formal" : "neutral"}</span>
@@ -1069,9 +1055,5 @@ function PhraseReviewCard({
 }
 
 export default function ReviewPage() {
-  return (
-    <PremiumRouteGate feature="review" loadingVariant="review">
-      <ReviewPageContent />
-    </PremiumRouteGate>
-  );
+  return <ReviewPageContent />;
 }

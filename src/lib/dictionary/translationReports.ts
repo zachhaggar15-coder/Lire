@@ -1,4 +1,5 @@
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Reader-reported translation problems.
@@ -75,8 +76,8 @@ function normalise(entry: unknown): TranslationReport | null {
 function persist(reports: TranslationReport[]): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(reports.slice(0, MAX_REPORTS)));
-    void pushStore(KEY);
+    localStore.setItem(KEY, JSON.stringify(reports.slice(0, MAX_REPORTS)));
+    notifyStoreChanged(KEY);
   } catch {
     // Diagnostics must never cost a reader their saved vocabulary if storage
     // is full — drop the report rather than letting the write throw.
@@ -86,7 +87,7 @@ function persist(reports: TranslationReport[]): void {
 export function getTranslationReports(): TranslationReport[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalise).filter((report): report is TranslationReport => report !== null);
@@ -106,7 +107,6 @@ export function recordTranslationReport(
 }
 
 export function deleteTranslationReport(id: string): TranslationReport[] {
-  recordStoreDeletion(KEY, id);
   const next = getTranslationReports().filter((report) => report.id !== id);
   persist(next);
   return next;

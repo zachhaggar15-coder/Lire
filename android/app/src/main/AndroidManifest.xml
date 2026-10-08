@@ -23,7 +23,6 @@
     package="app.sorlio.reader">
 
     
-        <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     
 
     
@@ -174,15 +173,14 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <!-- Always enabled: besides notification delegation (which Sorlio does
+             not use), this service carries the Digital Goods API handler that
+             Play Billing needs. Bubblewrap ties it to enableNotifications; keep
+             this literal if the project is regenerated. -->
         <service
             android:name=".DelegationService"
-            android:enabled="@bool/enableNotification"
-            android:exported="@bool/enableNotification">
-
-            
-                <meta-data
-                    android:name="android.support.customtabs.trusted.SMALL_ICON"
-                    android:resource="@drawable/ic_notification_icon" />
+            android:enabled="true"
+            android:exported="true">
             
 
             <intent-filter>
@@ -190,9 +188,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
-
-        
-            <activity android:name="com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity" />
         
 
         

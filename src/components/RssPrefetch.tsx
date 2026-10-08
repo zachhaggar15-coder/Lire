@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import type { RssReadingText } from "@/lib/rss/rssToReadingText";
 import { rssReadingTextToReadingText } from "@/lib/rss/adaptReadingText";
 import { cacheDefaultLiveNewsPool, getCachedDefaultLiveNewsPool } from "@/lib/rss/rssTextCache";
-import { DAILY_RSS_ARTICLE_LIMIT } from "@/lib/publicDomainBank";
+import { DAILY_RSS_ARTICLE_LIMIT } from "@/lib/dailyLimits";
 
 /**
  * Mounted once at the root layout, so it fires exactly once per app open

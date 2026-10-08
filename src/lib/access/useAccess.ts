@@ -1,53 +1,44 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getCurrentUser, onAuthStateChange } from "@/lib/supabase/auth";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
-import { accessContext, accessTier, getDailyUsage, type AccessContext } from "@/lib/access/accessModel";
-import { recordArticleOpened, recordLookup } from "@/lib/access/dailyUsage";
-import { useClosedTestPremium } from "@/lib/access/useClosedTestPremium";
+import { accessContext, tierForStatus, type AccessContext } from "@/lib/access/accessModel";
+import { newSavesToday } from "@/lib/access/saveAllowance";
+import { activeIdentity } from "@/lib/localData/store";
+import { lastKnownSaveQuota } from "@/lib/sync/runtime";
+import { localDateKey } from "@/lib/access/saveAllowance";
 
 /**
- * The access context for the current reader, kept live.
+ * The access context for the current reader.
  *
- * Recomputes on sign-in and sign-out so entitlement can never lag the session:
- * signing out has to drop straight back to guest, or a signed-out device would
- * keep the allowance of the account that just left it.
+ * The tier comes from the identity partition this tab is using (identity
+ * changes reload the page) and the server-verified entitlement.
  *
- * `ready` matters for gating UI. Until auth and entitlement have both resolved
- * the tier is unknown, and rendering a lock in that window would flash a
- * paywall at a Premium subscriber every time they open the app.
+ * `ready` matters for gating UI: until entitlement is known, rendering a lock
+ * would flash a paywall at a subscriber on every cold start.
  */
 export function useAccess() {
-  const { status: premium, loading: premiumLoading } = usePremiumStatus();
-  const { active: closedTestPremium, loading: closedTestPremiumLoading } = useClosedTestPremium();
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-  const [usage, setUsage] = useState(() => getDailyUsage());
+  const { status: premium, loading } = usePremiumStatus();
+  const authenticated = activeIdentity().kind === "account";
+  const [saves, setSaves] = useState(0);
+
+  const refreshUsage = useCallback(() => {
+    const local = newSavesToday();
+    const server = lastKnownSaveQuota();
+    const serverToday = server && server.day === localDateKey() ? server.used : 0;
+    setSaves(Math.max(local, serverToday));
+  }, []);
 
   useEffect(() => {
-    getCurrentUser().then((user) => setAuthenticated(!!user));
-    return onAuthStateChange((user) => {
-      setAuthenticated(!!user);
-      // Usage is stored per device and per day, not per user, so it survives
-      // sign-in unchanged — which is the point. Re-reading keeps the in-memory
-      // copy honest if another tab moved it on.
-      setUsage(getDailyUsage());
-    });
-  }, []);
+    refreshUsage();
+    const onSync = () => refreshUsage();
+    window.addEventListener("sorlio-sync-complete", onSync);
+    return () => window.removeEventListener("sorlio-sync-complete", onSync);
+  }, [refreshUsage]);
 
-  const tier = accessTier(!!authenticated, premium.isPremium, closedTestPremium);
-  const context: AccessContext = accessContext(tier, usage);
-  const ready = authenticated !== null && !premiumLoading && !closedTestPremiumLoading;
+  const tier = tierForStatus(authenticated, premium);
+  const context: AccessContext = accessContext(tier, saves);
+  const ready = !authenticated || !loading;
 
-  const consumeArticle = useCallback((articleId: string) => {
-    setUsage(recordArticleOpened(articleId));
-  }, []);
-
-  const consumeLookup = useCallback(() => {
-    setUsage(recordLookup());
-  }, []);
-
-  const refreshUsage = useCallback(() => setUsage(getDailyUsage()), []);
-
-  return { tier, context, ready, authenticated: !!authenticated, premium, closedTestPremium, consumeArticle, consumeLookup, refreshUsage };
+  return { tier, context, ready, authenticated, premium, refreshUsage };
 }

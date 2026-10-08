@@ -59,5 +59,5 @@ export function selectDiagnosticMessage(ctx: DiagnosticContext): DiagnosticMessa
   if (!baseline.minimumSampleMet) {
     return { headline: "Not enough data yet to compare this reading with your usual pace.", detail: challenge.explanation };
   }
-  return { headline: "Independent reading.", detail: challenge.explanation };
+  return { headline: "Reading complete.", detail: challenge.explanation };
 }

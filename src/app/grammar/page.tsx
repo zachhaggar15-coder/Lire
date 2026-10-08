@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useRef, useState } from "react";
 import AppBar from "@/components/AppBar";
@@ -33,8 +32,6 @@ import {
   type VerbTense,
 } from "@/lib/grammar";
 import { recordGrammarPracticeXp, evaluateAndUnlockAchievements } from "@/lib/gamification";
-import { trackEvent } from "@/lib/analytics/client";
-import { updateValidationState } from "@/lib/validation/state";
 
 type Tab = "learn" | "practice" | "reference";
 
@@ -137,12 +134,6 @@ function GrammarPageContent() {
 
   function openPractice() {
     grammarSessionCompleted.current = false;
-    trackEvent("grammar_session_started", {
-      lessonId: currentLesson.id,
-      lessonLevel: currentLesson.level,
-      domain: currentLesson.domain,
-      questionCount: questions.length,
-    });
     setTab("practice");
   }
 
@@ -181,21 +172,7 @@ function GrammarPageContent() {
       // went (even 0/5 correct still read as 70% "mastery").
       markGrammarLessonComplete(currentQuestion.lessonId);
       evaluateAndUnlockAchievements();
-      if (!grammarSessionCompleted.current) {
-        grammarSessionCompleted.current = true;
-        const completedAt = new Date().toISOString();
-        updateValidationState((state) => ({
-          ...state,
-          totalGrammarSessions: state.totalGrammarSessions + 1,
-        }));
-        trackEvent("grammar_session_completed", {
-          lessonId: currentQuestion.lessonId,
-          domain: currentLesson.domain,
-          correctAnswers: sessionCorrect,
-          totalQuestions: sessionAnswered,
-          completedAt,
-        });
-      }
+      grammarSessionCompleted.current = true;
       setTab("learn");
       setQuestionIndex(0);
       setSelectedAnswer(null);
@@ -211,7 +188,7 @@ function GrammarPageContent() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
 
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
@@ -400,7 +377,7 @@ function LessonDetail({
 
       <div className="mt-4 rounded-2xl bg-cream px-3 py-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Example</p>
-        <p className="mt-1 text-sm font-semibold text-ink">{lesson.examples[0].french}</p>
+        <p lang="fr" className="mt-1 text-sm font-semibold text-ink">{lesson.examples[0].french}</p>
         <p className="mt-0.5 text-xs text-ink-muted">{lesson.examples[0].english}</p>
         <p className="mt-1 text-xs font-semibold text-brand">{lesson.examples[0].note}</p>
       </div>
@@ -460,6 +437,10 @@ function PracticeCard({
 }) {
   const answered = selectedAnswer !== null;
   const selectedCorrect = selectedAnswer ? isGrammarAnswerCorrect(question, selectedAnswer) : false;
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (answered) feedbackRef.current?.focus({ preventScroll: true });
+  }, [answered, question.id]);
   return (
     <section
       className={`rounded-card bg-cream-card p-4 shadow-card ${
@@ -482,7 +463,7 @@ function PracticeCard({
       </div>
 
       <p className="mt-4 text-sm font-bold text-ink">{question.prompt}</p>
-      <p className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{question.sentence}</p>
+      <p lang="fr" className="mt-3 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{question.sentence}</p>
 
       <div className="mt-4 space-y-2">
         {question.choices.map((choice) => {
@@ -492,6 +473,7 @@ function PracticeCard({
             <button
               key={choice}
               type="button"
+              lang="fr"
               onClick={() => onAnswer(question, choice)}
               disabled={answered}
               className={`w-full rounded-2xl px-3 py-3 text-left text-sm font-semibold ${
@@ -508,8 +490,10 @@ function PracticeCard({
         })}
       </div>
 
+      {/* Answering disables the choices (including the focused one), so
+          focus moves to the feedback, which is also announced. */}
       {answered && (
-        <div className="mt-4 rounded-2xl bg-cream px-3 py-3">
+        <div ref={feedbackRef} tabIndex={-1} role="status" aria-live="polite" className="mt-4 rounded-2xl bg-cream px-3 py-3 outline-none">
           <p className={`text-sm font-bold ${selectedCorrect ? "text-emerald-700" : "text-rose-700"}`}>
             {selectedCorrect ? "Correct" : "Not quite"}
           </p>
@@ -646,9 +630,5 @@ function StructureReferencePanel({
 }
 
 export default function GrammarPage() {
-  return (
-    <PremiumRouteGate feature="grammar">
-      <GrammarPageContent />
-    </PremiumRouteGate>
-  );
+  return <GrammarPageContent />;
 }

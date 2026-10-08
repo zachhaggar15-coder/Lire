@@ -90,7 +90,7 @@ console.log("--- old records without paraphrase data don't crash readingPerforma
       // paraphrase intentionally omitted
     },
   };
-  store.set("lire.sessionRecords.v1", JSON.stringify([legacyRecord]));
+  store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([legacyRecord]));
   const record = getSessionRecords().find((r) => r.textId === "t-legacy");
   let threw = false;
   let performance = null;

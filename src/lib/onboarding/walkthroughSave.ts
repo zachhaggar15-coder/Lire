@@ -1,14 +1,15 @@
 import type { SavedWord } from "@/types";
-import { canSaveWord, type AccessContext } from "@/lib/access/accessModel";
+import { canSaveNewWord, type AccessContext } from "@/lib/access/accessModel";
 import { saveWordForAccess } from "@/lib/access/saveWord";
+import { FREE_DAILY_NEW_SAVES } from "@/lib/access/features";
 
 /**
  * What the walkthrough's "save" step does for each kind of reader.
  *
- * The tour must describe the real product. Only a reader who is genuinely
- * entitled to save goes through the same guarded write path as the Reader; for
- * everyone else the step is a preview that never touches storage, so nothing
- * claims to be saved that will vanish — or never existed — after onboarding.
+ * The tour must describe the real product. Saving goes through the same
+ * guarded write path as the Reader (and counts towards the free daily
+ * allowance); when today's allowance is used up the step is a preview that
+ * never touches storage, so nothing claims to be saved that wasn't.
  */
 
 export type WalkthroughSaveOutcome =
@@ -22,26 +23,24 @@ export type WalkthroughSaveMode = "checking" | "save" | "preview";
 
 export function walkthroughSaveMode(ready: boolean, context: AccessContext): WalkthroughSaveMode {
   if (!ready) return "checking";
-  return canSaveWord(context).allowed ? "save" : "preview";
+  return canSaveNewWord(context).allowed ? "save" : "preview";
 }
 
-export function walkthroughAccessCopy(ready: boolean, context: AccessContext, authenticated: boolean): string {
+export function walkthroughAccessCopy(ready: boolean, context: AccessContext, _authenticated: boolean): string {
   switch (walkthroughSaveMode(ready, context)) {
     case "checking":
-      return "Checking available learning features…";
+      return "Checking…";
     case "save":
-      return "Your Premium access lets this tour save a real word to Review.";
+      return context.tier === "premium"
+        ? "Saving is unlimited with Premium. This saves a real word to Review."
+        : `You can save ${FREE_DAILY_NEW_SAVES} new words a day for free. This saves a real word to Review.`;
     case "preview":
-      return authenticated
-        ? "Your free account can look up words. Saving words and Review are Premium features."
-        : "Anyone can look up words. A free account adds more daily reading and lookups; saving words and Review require Premium.";
+      return `You've used today's ${FREE_DAILY_NEW_SAVES} free new saves, so this step is a preview. You can still review every word you've saved.`;
   }
 }
 
-export function walkthroughPreviewMessage(authenticated: boolean): string {
-  return authenticated
-    ? "Premium lets you save vocabulary and review it later. You're on a free account, so nothing was saved."
-    : "Premium lets you save vocabulary and review it later. You're not on Premium, so nothing was saved.";
+export function walkthroughPreviewMessage(_authenticated: boolean): string {
+  return `Nothing was saved this time — today's ${FREE_DAILY_NEW_SAVES} free new saves are used. Saving resets tomorrow, and Premium removes the limit.`;
 }
 
 export function runWalkthroughWordAction(

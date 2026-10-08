@@ -1,26 +1,18 @@
 import { NextResponse } from "next/server";
-import { AiNotConfiguredError, translateArticleSentences } from "@/lib/ai/openai";
-import { optionalText, requirePaidAiCaller, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS } from "@/lib/ai/guard";
+import { translateArticleSentences } from "@/lib/ai/openai";
+import { optionalText, readJsonBody, requirePaidAiCaller, validParagraphBreaks, MAX_ARTICLE_SENTENCES, MAX_ARTICLE_TOTAL_CHARS, MAX_TEXT_CHARS, MAX_TITLE_CHARS, aiFailureResponse, learnerLevel } from "@/lib/ai/guard";
 
 /** A whole-article translation can take longer than Vercel's default serverless timeout to come back from OpenAI, and translateArticleSentences now retries up to 3 times internally — sized to cover 3 back-to-back 45s attempts with headroom. */
 export const maxDuration = 150;
 
-const NOT_CONFIGURED_MESSAGE = "AI is not configured. Add OPENAI_API_KEY to enable fluent translation.";
-
-function isNumberArray(v: unknown): v is number[] {
-  return Array.isArray(v) && v.every((x) => typeof x === "number" && Number.isInteger(x));
-}
 
 export async function POST(request: Request) {
   const gate = await requirePaidAiCaller(request);
   if (!gate.ok) return gate.response;
 
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
-  }
+  const parsed = await readJsonBody(request);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.value;
 
   const { sentences, paragraphBreakBeforeIndex, articleTitle, level } = (body ?? {}) as Record<string, unknown>;
 
@@ -39,8 +31,8 @@ export async function POST(request: Request) {
   if (totalChars > MAX_ARTICLE_TOTAL_CHARS) {
     return NextResponse.json({ error: `Article is too long (max ${MAX_ARTICLE_TOTAL_CHARS} characters).` }, { status: 400 });
   }
-  if (!isNumberArray(paragraphBreakBeforeIndex)) {
-    return NextResponse.json({ error: "'paragraphBreakBeforeIndex' must be an array of integers." }, { status: 400 });
+  if (!validParagraphBreaks(paragraphBreakBeforeIndex, sentences.length)) {
+    return NextResponse.json({ error: "'paragraphBreakBeforeIndex' must list increasing sentence indices within the article." }, { status: 400 });
   }
 
   try {
@@ -48,16 +40,10 @@ export async function POST(request: Request) {
       sentences: sentences as string[],
       paragraphBreakBeforeIndex,
       articleTitle: optionalText(articleTitle, MAX_TITLE_CHARS),
-      level: optionalText(level, 80) ?? "A2/B1 French learner",
+      level: learnerLevel(level),
     });
     return NextResponse.json(result);
   } catch (err) {
-    if (err instanceof AiNotConfiguredError) {
-      return NextResponse.json({ error: NOT_CONFIGURED_MESSAGE, code: "not_configured" }, { status: 503 });
-    }
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : "AI article translation failed." },
-      { status: 502 }
-    );
+    return aiFailureResponse(err);
   }
 }

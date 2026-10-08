@@ -110,6 +110,11 @@ export function isGeneratedDictionaryReady(): boolean {
   return generatedByLemma.size > 0;
 }
 
+/** The broad dictionary's entries once loaded (empty until then), one per lemma. */
+export function loadedGeneratedEntries(): DictionaryEntry[] {
+  return [...generatedByLemma.values()];
+}
+
 /**
  * A gloss that is a bare abbreviation or code rather than a word: "NE", "SSE",
  * "RC", "DINK", "CoQ".

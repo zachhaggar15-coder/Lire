@@ -10,6 +10,27 @@ export interface ChangelogEntry {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    date: "2026-10-07",
+    title: "Free and Premium",
+    summary: "Reading, news, importing, listening, the dictionary, grammar and reviewing your words are free, with 5 new saved words a day. Premium (£3.99 a month, cancel any time in Google Play) adds unlimited saving and AI help.",
+    type: "new",
+    featureHref: "/premium",
+  },
+  {
+    date: "2026-10-07",
+    title: "More private",
+    summary: "Sorlio no longer collects any usage analytics or crash reports, and keeps only your email when you sign in — not your name or photo. Each account's data is kept separate on shared devices, and imported texts stay on your device unless you choose to sync them.",
+    type: "improved",
+    featureHref: "/privacy",
+  },
+  {
+    date: "2026-10-07",
+    title: "Better French and reading texts",
+    summary: "Corrected accents and grammar explanations throughout the lessons, and replaced the classic-literature extracts with unbroken passages from their original editions.",
+    type: "fixed",
+    featureHref: "/grammar",
+  },
+  {
     date: "2026-09-13",
     title: "Dark mode",
     summary: "Choose Light, Dark, or follow your phone's setting from Settings → Theme.",
@@ -28,13 +49,6 @@ export const changelogEntries: ChangelogEntry[] = [
     title: "Rate Sorlio and clearer offline mode",
     summary: "Rate the app and send feedback from the top of Settings. Sorlio now tells you when you're offline and what still works.",
     type: "improved",
-    featureHref: "/settings",
-  },
-  {
-    date: "2026-07-16",
-    title: "Product validation layer",
-    summary: "Added anonymous validation metrics, Android beta interest capture, feedback, research prompts, and an internal validation dashboard.",
-    type: "new",
     featureHref: "/settings",
   },
   {

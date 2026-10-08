@@ -64,6 +64,8 @@ begin
 end;
 $$;
 
--- Old rows have no value once the day is over. Not scheduled automatically —
--- run it whenever, or wire it to a cron job:
---   delete from public.sorlio_ai_usage where usage_date < current_date - 90;
+-- Old rows have no value once the day is over. sorlio_maintenance() (0011),
+-- called by the daily maintenance cron, deletes rows older than 30 days.
+--
+-- Privileges: 0009 revokes this function from public/anon/authenticated and
+-- grants it to service_role only. Apply 0008 and 0009 together.

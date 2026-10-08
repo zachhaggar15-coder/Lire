@@ -1,6 +1,7 @@
 import type { AppSettings } from "@/types";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { SETTINGS_CHANGED_EVENT } from "@/lib/theme";
+import { localStore } from "@/lib/localData/store";
 
 /** localStorage-backed app settings (display preferences only). */
 
@@ -9,7 +10,6 @@ const KEY = "lire.settings.v1";
 export const DEFAULT_SETTINGS: AppSettings = {
   theme: "system",
   showSavedHighlights: true,
-  showKnownWordStyling: true,
   fontSize: "medium",
   speechRate: 1,
   speechVoiceURI: null,
@@ -24,7 +24,7 @@ function hasStorage(): boolean {
 export function getSettings(): AppSettings {
   if (!hasStorage()) return DEFAULT_SETTINGS;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return DEFAULT_SETTINGS;
     const parsed = JSON.parse(raw);
     return { ...DEFAULT_SETTINGS, ...parsed };
@@ -36,8 +36,8 @@ export function getSettings(): AppSettings {
 export function saveSettings(patch: Partial<AppSettings>): AppSettings {
   const next = { ...getSettings(), ...patch };
   if (hasStorage()) {
-    window.localStorage.setItem(KEY, JSON.stringify(next));
-    void pushStore(KEY);
+    localStore.setItem(KEY, JSON.stringify(next));
+    notifyStoreChanged(KEY);
     window.dispatchEvent?.(new Event(SETTINGS_CHANGED_EVENT));
   }
   return next;

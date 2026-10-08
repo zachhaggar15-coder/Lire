@@ -1,5 +1,6 @@
 import type { DictionaryEntry } from "@/lib/dictionary/types";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Browser-only custom dictionary entries. These are created from explicit AI
@@ -53,7 +54,7 @@ function normalise(entry: unknown): DictionaryEntry | null {
 export function getCustomDictionaryEntries(): DictionaryEntry[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalise).filter((entry): entry is DictionaryEntry => entry !== null);
@@ -75,7 +76,7 @@ export function saveCustomDictionaryEntry(entry: DictionaryEntry): DictionaryEnt
 
   const existing = getCustomDictionaryEntries().filter((item) => item.lemma !== normalised.lemma);
   const next = [normalised, ...existing].slice(0, MAX_ENTRIES);
-  window.localStorage.setItem(KEY, JSON.stringify(next));
-  void pushStore(KEY);
+  localStore.writeItem(KEY, JSON.stringify(next));
+  notifyStoreChanged(KEY);
   return next;
 }

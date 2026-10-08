@@ -1,6 +1,7 @@
 import type { ReadingText } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const HIDDEN_SOURCES_KEY = "lire.recommendation.hiddenSources.v1";
 const PREFERRED_SOURCES_KEY = "lire.recommendation.preferredSources.v1";
@@ -28,7 +29,7 @@ export function notifyRecommendationPreferencesChanged(): void {
 function readStringList(key: string): string[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
   } catch {
@@ -38,8 +39,8 @@ function readStringList(key: string): string[] {
 
 function writeStringList(key: string, values: string[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify([...new Set(values)]));
-  void pushStore(key);
+  localStore.writeItem(key, JSON.stringify([...new Set(values)]));
+  notifyStoreChanged(key);
   notify();
 }
 
@@ -47,6 +48,15 @@ export function subscribeToRecommendationPreferences(callback: () => void): () =
   if (typeof window === "undefined") return () => {};
   window.addEventListener(PREF_EVENT, callback);
   return () => window.removeEventListener(PREF_EVENT, callback);
+}
+
+/**
+ * Only a real external publisher can be preferred or hidden. Imported texts,
+ * Sorlio's own lessons and classic extracts are not "sources": hiding
+ * "Imported text" would have hidden every text the reader imported.
+ */
+export function hasHideableSource(text: { id: string; sourceName?: string | null }): boolean {
+  return text.id.startsWith("rss-") && !!text.sourceName;
 }
 
 export function getHiddenSources(): string[] {
@@ -62,7 +72,6 @@ export function hideSource(sourceName: string): void {
 }
 
 export function unhideSource(sourceName: string): void {
-  recordStoreDeletion(HIDDEN_SOURCES_KEY, sourceName);
   writeStringList(
     HIDDEN_SOURCES_KEY,
     getHiddenSources().filter((savedSource) => savedSource !== sourceName)
@@ -82,7 +91,6 @@ export function preferSource(sourceName: string): void {
 }
 
 export function unpreferSource(sourceName: string): void {
-  recordStoreDeletion(PREFERRED_SOURCES_KEY, sourceName);
   writeStringList(
     PREFERRED_SOURCES_KEY,
     getPreferredSources().filter((savedSource) => savedSource !== sourceName)
@@ -102,7 +110,6 @@ export function saveForLater(id: string): void {
 }
 
 export function removeFromSavedLater(id: string): void {
-  recordStoreDeletion(SAVED_LATER_KEY, id);
   writeStringList(
     SAVED_LATER_KEY,
     getSavedLaterIds().filter((savedId) => savedId !== id)

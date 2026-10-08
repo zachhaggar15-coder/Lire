@@ -1,4 +1,5 @@
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const TRANSLATION_BUDGET_KEY = "lire.translationBudget.v1";
 const SECOND_PASS_KEY = "lire.secondPass.v1";
@@ -28,7 +29,7 @@ function hasStorage(): boolean {
 function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(guard) : [];
   } catch {
@@ -38,8 +39,8 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  void pushStore(key);
+  localStore.writeItem(key, JSON.stringify(value));
+  notifyStoreChanged(key);
 }
 
 function isTranslationBudgetRecord(value: unknown): value is TranslationBudgetRecord {
@@ -97,8 +98,6 @@ export function recordSecondPass(record: Omit<SecondPassRecord, "id">): SecondPa
 }
 
 export function clearReadingInsightStores(): void {
-  recordStoreClear(TRANSLATION_BUDGET_KEY);
-  recordStoreClear(SECOND_PASS_KEY);
   persist(TRANSLATION_BUDGET_KEY, []);
   persist(SECOND_PASS_KEY, []);
 }

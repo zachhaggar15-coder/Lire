@@ -7,7 +7,9 @@
  * answering a review), then count consecutive days backward from today.
  */
 
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
+import { addLocalDays, localDateKey } from "@/lib/localDate";
 
 const KEY = "lire.activityDates.v1";
 const GRACE_KEY = "lire.streakGrace.v1";
@@ -31,15 +33,12 @@ function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
 }
 
+/** The learner's local calendar day (see localDate.ts). */
 export function dateKey(date: Date = new Date()): string {
-  return date.toISOString().slice(0, 10);
+  return localDateKey(date);
 }
 
-function addDays(date: Date, days: number): Date {
-  const copy = new Date(date);
-  copy.setDate(copy.getDate() + days);
-  return copy;
-}
+const addDays = addLocalDays;
 
 function weekKey(date: Date = new Date()): string {
   const mondayOffset = (date.getDay() + 6) % 7;
@@ -51,7 +50,7 @@ function weekKey(date: Date = new Date()): string {
 export function getActivityDates(): string[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter((d): d is string => typeof d === "string") : [];
@@ -62,14 +61,14 @@ export function getActivityDates(): string[] {
 
 function persist(dates: string[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(dates.slice(-MAX_STORED_DATES)));
-  void pushStore(KEY);
+  localStore.writeItem(KEY, JSON.stringify(dates.slice(-MAX_STORED_DATES)));
+  notifyStoreChanged(KEY);
 }
 
 function getGraceRecord(): StreakGraceRecord | null {
   if (!hasStorage()) return null;
   try {
-    const raw = window.localStorage.getItem(GRACE_KEY);
+    const raw = localStore.getItem(GRACE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return null;
@@ -93,8 +92,8 @@ function getGraceRecord(): StreakGraceRecord | null {
 
 function persistGraceRecord(record: StreakGraceRecord): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(GRACE_KEY, JSON.stringify(record));
-  void pushStore(GRACE_KEY);
+  localStore.writeItem(GRACE_KEY, JSON.stringify(record));
+  notifyStoreChanged(GRACE_KEY);
 }
 
 /** Call this from any "meaningful action" (save a word, complete an article, answer a review). Idempotent per day. */

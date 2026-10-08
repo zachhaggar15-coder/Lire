@@ -1,12 +1,11 @@
-import type { Category, ReadingText, SavedWord } from "@/types";
-import type { ArchiveEntry } from "@/lib/archive";
+import type { ReadingText, SavedWord } from "@/types";
 import { estimateDifficulty } from "@/lib/difficulty";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { formatCategory, toPercent } from "@/lib/format";
+import { toPercent } from "@/lib/format";
 import type { StoredInference, StoredWordTap } from "@/lib/wordLearning";
-import type { TranslationBudgetRecord } from "@/lib/readingInsights";
 import { findRelatedArticles } from "@/lib/comprehension";
 import { tokenize, tokenizeParagraphsToSentences } from "@/lib/words";
+import { isMastered } from "@/lib/reviewMembership";
 
 export interface NewsWordExample {
   articleId: string;
@@ -39,29 +38,8 @@ export interface VocabularyStateItem {
   reason: string;
 }
 
-export interface WeeklyReadingReport {
-  articlesCompleted: number;
-  frenchWordsRead: number;
-  coverageStart: number;
-  coverageEnd: number;
-  movedToStable: number;
-  mostDifficultArea: string | null;
-  strongestTopic: string | null;
-  nextFocus: string | null;
-  translationBudgetMet: number;
-  translationBudgetTotal: number;
-}
-
-export interface CategoryProficiency {
-  category: Category;
-  label: string;
-  cefr: string;
-  articles: number;
-  coverage: number;
-}
 
 const CONNECTIVES = new Set(["selon", "pourtant", "cependant", "donc", "ainsi", "toutefois", "neanmoins", "car", "puisque"]);
-const PRONOUNS = new Set(["il", "elle", "ils", "elles", "ce", "cela", "dont", "qui", "que", "lequel", "laquelle", "lesquels"]);
 const DRAMATIC_WORDS = ["alerte", "crise", "choc", "menace", "urgence", "explose", "bouleverse", "colere"];
 const NEUTRAL_WORDS = ["annonce", "presente", "explique", "selon", "indique", "publie", "rapport", "resultat"];
 const CRITICAL_VERBS = ["accuse", "critique", "denonce", "conteste", "attaque", "alerte", "reproche"];
@@ -215,106 +193,19 @@ function failedInferenceCount(word: SavedWord, inferences: StoredInference[]): n
 
 export function classifyVocabularyStates(words: SavedWord[], taps: StoredWordTap[] = [], inferences: StoredInference[] = []): VocabularyStateItem[] {
   return words.map((word) => {
-    const tapsAfterKnown = word.status === "known" ? tapCountFor(word, taps) : 0;
+    const mastered = isMastered(word);
+    const tapsAfterMastered = mastered ? tapCountFor(word, taps) : 0;
     const failedInferences = failedInferenceCount(word, inferences);
-    if ((word.status === "known" && tapsAfterKnown >= 2) || (word.lastReviewResult === "incorrect" && (word.incorrectCount ?? 0) >= 2)) {
-      return { word, state: "forgotten", reason: "Previously known, but recent behaviour suggests it is slipping." };
+    if ((mastered && tapsAfterMastered >= 2) || (word.lastReviewResult === "incorrect" && (word.incorrectCount ?? 0) >= 2)) {
+      return { word, state: "forgotten", reason: "Missed again, or looked up again after being strong." };
     }
     if ((word.incorrectCount ?? 0) > 0 || failedInferences > 0 || tapCountFor(word, taps) >= 3) {
-      return { word, state: "fragile", reason: "Repeated lookups or missed answers make this worth isolating." };
+      return { word, state: "fragile", reason: "Missed in Review or looked up more than once." };
     }
-    if (word.status === "known" || (word.correctCount ?? 0) >= 3) {
-      return { word, state: "stable", reason: "Several successful reviews or an explicit known mark." };
+    if (mastered) {
+      return { word, state: "stable", reason: "Remembered several times in a row." };
     }
-    return { word, state: "emerging", reason: "Still building recognition; context review is useful." };
-  });
-}
-
-function weekStartMs(now = new Date()): number {
-  return now.getTime() - 7 * 24 * 60 * 60 * 1000;
-}
-
-function estimateArchiveWordCount(entry: ArchiveEntry): number {
-  return typeof entry.wordCount === "number" ? entry.wordCount : Math.max(120, (entry.minutes ?? 2) * 170);
-}
-
-function coveragePercent(knownCount: number, learningCount: number): number {
-  if (knownCount + learningCount === 0) return 0;
-  return toPercent(knownCount / (knownCount + learningCount));
-}
-
-export function buildWeeklyReadingReport(
-  archive: ArchiveEntry[],
-  words: SavedWord[],
-  knownWords: string[],
-  budgetRecords: TranslationBudgetRecord[] = [],
-  now = new Date()
-): WeeklyReadingReport {
-  const start = weekStartMs(now);
-  const weekEntries = archive.filter((entry) => new Date(entry.completedAt).getTime() >= start);
-  const weekWords = words.filter((word) => new Date(word.savedAt).getTime() >= start);
-  const states = classifyVocabularyStates(words);
-  const categoryCounts = new Map<string, number>();
-  for (const entry of weekEntries) {
-    if (entry.category) categoryCounts.set(entry.category, (categoryCounts.get(entry.category) ?? 0) + 1);
-  }
-  const strongestTopic = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
-  const difficultArea =
-    weekWords.length === 0
-      ? null
-      : weekWords.some((word) => PRONOUNS.has(normalise(word.lemma ?? word.word)))
-        ? "object pronouns"
-        : weekWords.some((word) => CONNECTIVES.has(normalise(word.lemma ?? word.word)))
-          ? "connective expressions"
-          : "new article vocabulary";
-  const nextFocus =
-    states.some((item) => item.state === "fragile" && CONNECTIVES.has(normalise(item.word.lemma ?? item.word.word)))
-      ? "connective expressions"
-      : states.some((item) => item.state === "fragile" && PRONOUNS.has(normalise(item.word.lemma ?? item.word.word)))
-        ? "pronoun references"
-        : weekEntries.length > 0 || weekWords.length > 0
-          ? "one short article with five deliberate lookups"
-          : null;
-  const stableThisWeek = states.filter((item) => item.state === "stable" && item.word.lastReviewedAt && new Date(item.word.lastReviewedAt).getTime() >= start).length;
-  const currentCoverage = coveragePercent(knownWords.length, words.filter((word) => word.status !== "known").length);
-  const startCoverage = Math.max(0, currentCoverage - Math.min(8, stableThisWeek + Math.floor(weekWords.length / 8)));
-  const weekBudgets = budgetRecords.filter((record) => new Date(record.completedAt).getTime() >= start);
-
-  return {
-    articlesCompleted: weekEntries.length,
-    frenchWordsRead: weekEntries.reduce((sum, entry) => sum + estimateArchiveWordCount(entry), 0),
-    coverageStart: startCoverage,
-    coverageEnd: currentCoverage,
-    movedToStable: stableThisWeek,
-    mostDifficultArea: difficultArea,
-    strongestTopic: strongestTopic ? formatCategory(strongestTopic) : null,
-    nextFocus,
-    translationBudgetMet: weekBudgets.filter((record) => record.metTarget).length,
-    translationBudgetTotal: weekBudgets.length,
-  };
-}
-
-const CEFR_BY_SCORE = ["A1", "A2", "A2+", "B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"];
-
-export function buildCategoryProficiency(archive: ArchiveEntry[], knownWords: string[]): CategoryProficiency[] {
-  const categories: Category[] = ["sport", "science", "culture", "news-style", "everyday life"];
-  return categories.flatMap((category) => {
-    const entries = archive.filter((entry) => entry.category === category);
-    if (entries.length === 0) return [];
-    const recent = entries.slice(-5);
-    const avgCefr =
-      recent.reduce((sum, entry) => sum + ({ A1: 1, A2: 2, B1: 3, B2: 4, C1: 5, C2: 6 }[entry.cefr ?? ""] ?? 2), 0) /
-      Math.max(1, recent.length);
-    const completionBonus = Math.min(1.5, entries.length / 4);
-    const knownBonus = Math.min(1, knownWords.length / 300);
-    const score = Math.max(0, Math.min(CEFR_BY_SCORE.length - 1, Math.round(avgCefr + completionBonus + knownBonus) - 1));
-    return [{
-      category,
-      label: formatCategory(category),
-      cefr: CEFR_BY_SCORE[score],
-      articles: entries.length,
-      coverage: Math.min(98, Math.round(72 + entries.length * 3 + knownWords.length / 25)),
-    }];
+    return { word, state: "emerging", reason: "Still new in Review." };
   });
 }
 

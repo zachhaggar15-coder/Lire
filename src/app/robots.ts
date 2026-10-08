@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { productionDomain } from "@/lib/validation/config";
+import { productionDomain } from "@/lib/config";
 
 /**
  * Crawler rules, pinned to the canonical origin.
@@ -20,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin/", "/api/", "/monitoring", "/account/", "/reader/rss-"],
+      disallow: ["/admin/", "/api/", "/account/", "/reader/rss-"],
     },
     sitemap: `${origin}/sitemap.xml`,
     host: origin,

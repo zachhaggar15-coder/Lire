@@ -105,7 +105,7 @@ console.log("--- Reaching a threshold does not advance CEFR ---");
 console.log("--- Migration preserves accumulated old progress ---");
 {
   store.clear();
-  store.set("lire.levelScore.v1", JSON.stringify({ A1: 100, A2: 47, B1: 0, B2: 0, C1: 0, C2: 0 }));
+  store.set("sorlio.v2:guest:lire.levelScore.v1", JSON.stringify({ A1: 100, A2: 47, B1: 0, B2: 0, C1: 0, C2: 0 }));
   check("legacy band points are read across all levels", readLegacyBandPoints() === 147, String(readLegacyBandPoints()));
 
   let awarded = 0;
@@ -134,13 +134,13 @@ console.log("--- Migration preserves accumulated old progress ---");
 }
 {
   store.clear();
-  store.set("lire.levelScore.v1", "not json");
+  store.set("sorlio.v2:guest:lire.levelScore.v1", "not json");
   check("corrupt legacy data reads as zero rather than throwing", readLegacyBandPoints() === 0);
 }
 {
   // A reader mid-way through the old ladder must not end up lower than before.
   store.clear();
-  store.set("lire.levelScore.v1", JSON.stringify({ A1: 100, A2: 100, B1: 60, B2: 0, C1: 0, C2: 0 }));
+  store.set("sorlio.v2:guest:lire.levelScore.v1", JSON.stringify({ A1: 100, A2: 100, B1: 60, B2: 0, C1: 0, C2: 0 }));
   let awarded = 0;
   migrateLegacyProgression((xp) => {
     awarded += xp;

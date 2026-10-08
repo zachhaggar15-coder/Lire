@@ -1,4 +1,5 @@
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const TAP_KEY = "lire.wordTapStats.v1";
 const INFERENCE_KEY = "lire.inferredWords.v1";
@@ -28,7 +29,7 @@ function hasStorage(): boolean {
 function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(guard) : [];
   } catch {
@@ -38,8 +39,8 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  void pushStore(key);
+  localStore.writeItem(key, JSON.stringify(value));
+  notifyStoreChanged(key);
 }
 
 function recordId(articleId: string, word: string): string {
@@ -103,8 +104,6 @@ export function getAllInferenceResults(): StoredInference[] {
 }
 
 export function clearWordLearningStores(): void {
-  recordStoreClear(TAP_KEY);
-  recordStoreClear(INFERENCE_KEY);
   persist(TAP_KEY, []);
   persist(INFERENCE_KEY, []);
 }

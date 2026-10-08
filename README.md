@@ -129,8 +129,9 @@ npm run lint
 
 **`npm test`** runs the dependency-free Node scripts in `scripts/` for RSS
 quality, learning/review logic, core recommendation/dictionary/journey logic,
-contextual translation, translation alignment, validation analytics, and
-dictionary accuracy. The larger scripts that import app modules run through
+contextual translation, translation alignment, sync and account isolation
+(against real Postgres), billing, privacy and French content, and dictionary
+accuracy. The larger scripts that import app modules run through
 `scripts/register-alias-loader.mjs`; use the npm script instead of calling
 those files directly unless you are debugging one suite.
 
@@ -1113,8 +1114,9 @@ first time Review sees it post-migration, which is the correct behaviour
 | `src/lib/archive.ts` | `recordArchiveEntry`, `getArchive`, `estimateTimeSpentMinutes` — completed-article history for `/archive` |
 | `src/lib/supabase/client.ts` | `getSupabaseClient`, `isSupabaseConfigured` — optional, no-ops if unset |
 | `src/lib/supabase/auth.ts` | `signInWithGoogle`, `signOut`, `getCurrentUser`, `getAccessToken`, `onAuthStateChange` |
-| `src/lib/supabase/sync.ts` | `pushStore`, `pullAndMergeAllStores` — the actual cross-device sync logic |
-| `src/components/AccountCard.tsx`, `AuthSync.tsx` | Settings sign-in/out UI, and the app-wide pull-on-sign-in listener |
+| `src/lib/sync/` | Item-level sync engine, transport and store registry (see "Cross-device sync") |
+| `src/lib/localData/` | Per-identity local storage partitions, guest adoption, deleted-account cleanup |
+| `src/components/AccountCard.tsx`, `IdentityController.tsx` | Settings account UI, and the app-wide identity/sync controller |
 | `src/lib/progress.ts` | Reading progress: `getProgress`, `markOpened`, `markCompleted`, `getLastOpenedTextId` |
 | `src/lib/goals.ts` | Reading goals: `getGoals`, `saveGoals`, `getGoalsProgress`, `DEFAULT_GOALS` |
 | `src/lib/rss/language.ts` | `analyseLanguage`, `isAcceptableFrenchText` — offline French/English language detection |
@@ -1237,64 +1239,43 @@ devices" card at all.
   the first time a Google identity authenticates and returns the same user
   afterwards. Sorlio stores only the user id and email; no password, username,
   phone number, or Google profile name/picture.
-- **`src/lib/supabase/sync.ts`** — the actual sync logic. `pushStore(key)`
-  uploads one store's current localStorage value (tagged with the
-  signed-in user's id) whenever it changes; `pullAndMergeAllStores()` pulls
-  every synced store down, **merges** it with whatever's already local
-  (never silently drops data that exists on only one side — see the
-  merge-by-id logic in `mergeStoreValue`), writes the merged result back to
-  localStorage, then pushes it back up so both sides end up in sync. Called
-  once, right after a successful sign-in (see `AuthSync.tsx` below).
-- **What's synced**: `lire.savedWords.v1`, `lire.knownWords.v1`,
-  `lire.settings.v1`, `lire.goals.v1`, `lire.archive.v1`, and
-  `lire.activityDates.v1` (the streak log) — the stores explicitly named in
-  this project's original sync goal ("auth + syncing saved/known words,
-  progress, streak, and settings"). Per-RSS-article reading *progress*
-  (`lire.progress.v1`) is deliberately **not** synced — RSS ids rotate out
-  of the daily pool and get pruned locally anyway (see
-  `pruneStaleRssProgress`), so there's little value in syncing something
-  this ephemeral.
-- **Where the actual push calls live**: each synced store's own `persist()`
-  function (in `storage.ts`, `knownWords.ts`, `settings.ts`, `goals.ts`,
-  `archive.ts`, `habit.ts`) calls `void pushStore(KEY)` right after writing
-  to localStorage. This means every existing call site — `saveWord`,
-  `markKnown`, `saveSettings`, `saveGoals`, `recordArchiveEntry`,
-  `recordActivityToday`, etc. — automatically syncs with zero changes to
-  any component; the sync hook lives at the one shared write point each
-  store already had.
-- **`src/components/AccountCard.tsx`** — the Settings-page account UI:
-  Continue with Google when signed out; email, sync state, sign out and a
-  destructive **Delete account** when signed in. Renders nothing if Supabase
-  isn't configured.
-- **`src/lib/account/deleteAccount.ts`** + **`src/app/api/account/delete/route.ts`**
-  — self-service deletion. The client never sends a user id; the endpoint
-  derives it from the bearer token and calls `auth.admin.deleteUser` with the
-  service-role key, server-side only. `sorlio_user_data` and
-  `sorlio_subscriptions` cascade; `sorlio_feedback`,
-  `sorlio_research_prompt_responses` and `sorlio_analytics_events` have no foreign
-  key and are deleted explicitly first. See the note at the end of
-  `supabase/migrations/`.
-- **`src/app/account/delete/`** — the same flow on a public web page, for
-  readers who have uninstalled the app or never had the Android build.
-- **`src/components/AuthSync.tsx`** — mounted once, app-wide, in
-  `layout.tsx`. Subscribes to Supabase auth state changes and calls
-  `pullAndMergeAllStores()` on sign-in, regardless of which page the OAuth
-  redirect lands on. Being the single app-wide listener also means exactly
-  one merge runs per sign-in; individual screens must not start their own or
-  the two race on the same stores.
-- **Merge semantics, spelled out**: list-shaped stores (saved words,
-  archive, known words, activity dates) are merged by union — an entry
-  that exists on only one device is always kept. For an entry that exists
-  on *both* devices with the same id (e.g. the same saved word), the
-  version being pulled down currently wins over the local one — a
-  deliberate v1 simplification (no field-by-field timestamp comparison),
-  not a guarantee of perfect conflict resolution. Object-shaped stores
-  (settings, goals) are shallow-merged the same way. In practice this means
-  signing in on a second device never silently deletes anything from
-  either side, but a genuinely conflicting edit (the same word's status
-  changed differently on two devices before ever syncing) resolves in an
-  simple, predictable, "the pulled-down side wins" way rather than a
-  smarter merge.
+- **Local data is partitioned per identity** (`src/lib/localData/`). Every
+  store lives under `sorlio.v2:<guest|acct.<id>>:<key>`, so one account's
+  words, imports and history can never appear in another account or in the
+  signed-out (guest) space on a shared device. Signing out keeps that
+  account's data on the device and switches to the guest partition. After
+  signing in, guest data is offered once ("Add to my account" / "Keep
+  separate"); nothing moves without that choice. Deleting an account erases
+  its local partition as well as its server data.
+- **Item-level sync** (`src/lib/sync/`, migration `0010_item_sync.sql`).
+  Each saved word, phrase, progress record and so on is its own row with a
+  server-assigned revision. Writes are compare-and-swap against the revision
+  the device last saw; deletions are durable tombstones that a stale device
+  cannot overwrite; every RPC checks that the session belongs to the account
+  the device thinks it is syncing, so work started as account A can never
+  land in account B. A failed or partial upload is reported as such and
+  retried; it never shows as "synced".
+- **What syncs:** the stores in `src/lib/sync/stores.ts` (kept identical to
+  the server registry `sorlio_sync_stores`). Imported texts are **opt-in**
+  (off by default, Settings → Account); turning it off deletes the cloud
+  copies without touching any device's local copy.
+- **Free save limit** is enforced by the server on sync (5 new words a day
+  without Premium), not just by the client.
+- **`src/components/IdentityController.tsx`** — mounted once in
+  `layout.tsx`: follows sign-in/sign-out (including in other tabs), runs sync,
+  offers guest adoption, and cleans up partitions of deleted accounts.
+- **`src/components/AccountCard.tsx`** — the Settings account UI: Continue
+  with Google when signed out; email, sync status, subscription summary,
+  imported-text sync option, sign out and **Delete account** when signed in.
+- **`src/app/api/account/delete/route.ts`** + **`src/app/account/delete/`**
+  — self-service deletion, in the app and on a public web page (Play's
+  account-deletion URL). The server derives the user from the bearer token;
+  all synced data, subscription and AI-usage rows cascade with the auth
+  user, and feedback linked to the account is deleted explicitly first.
+  A Google Play subscription is not cancelled by deletion; the dialog says so.
+- Tests: `test-account-isolation`, `test-sync-engine`,
+  `test-persistence-failures`, `test-account-deletion` (real Postgres via
+  PGlite with every migration applied).
 
 ## PWA
 
@@ -1571,8 +1552,8 @@ inside `useEffect` (a normal post-hydration update, which applies cleanly).
   a synced `sorlio_user_data` table for saved words, known words, settings,
   goals, and reading history. Entirely opt-in (see "Cross-device sync"
   above for exact setup steps); without it configured, the app is
-  unchanged. `src/lib/supabase/` (client, auth, sync), `AccountCard.tsx` /
-  `AuthSync.tsx`, and `supabase/migrations/`.
+  unchanged. `src/lib/supabase/` (client, auth), `src/lib/sync/`,
+  `AccountCard.tsx` / `IdentityController.tsx`, and `supabase/migrations/`.
 - **Generated-dictionary entries now carry a real (frequency-estimated)
   CEFR level** instead of one flat "mid-frequency" placeholder —
   `scripts/build-dictionary.mjs` buckets each of the ~92,000 entries by its

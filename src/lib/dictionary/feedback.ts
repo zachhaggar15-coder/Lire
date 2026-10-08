@@ -1,4 +1,5 @@
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 export type DictionaryFeedbackType = "correction" | "missing" | "phrase";
 
@@ -48,14 +49,14 @@ function normalize(entry: unknown): DictionaryFeedback | null {
 
 function persist(entries: DictionaryFeedback[]): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(entries.slice(0, MAX_FEEDBACK)));
-  void pushStore(KEY);
+  localStore.writeItem(KEY, JSON.stringify(entries.slice(0, MAX_FEEDBACK)));
+  notifyStoreChanged(KEY);
 }
 
 export function getDictionaryFeedback(): DictionaryFeedback[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((entry): entry is DictionaryFeedback => entry !== null);
@@ -80,7 +81,6 @@ export function recordDictionaryFeedback(entry: Omit<DictionaryFeedback, "id" | 
 }
 
 export function deleteDictionaryFeedback(id: string): DictionaryFeedback[] {
-  recordStoreDeletion(KEY, id);
   const next = getDictionaryFeedback().filter((entry) => entry.id !== id);
   persist(next);
   return next;

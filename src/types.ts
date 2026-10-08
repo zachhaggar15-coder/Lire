@@ -48,8 +48,26 @@ export interface ReadingText {
   language?: "fr" | "en" | "mixed";
   /** True for RSS items too short for the normal quality bar but kept as short-form reading practice — see the "Short Snippets" section. */
   isShortSnippet?: boolean;
+  /**
+   * An imported text whose topic the reader left as "General". `category`
+   * then holds a neutral placeholder; it is shown as General and kept out of
+   * topic stats and interest learning, so it cannot skew them.
+   */
+  topicUnset?: boolean;
+  /**
+   * Live news: no CEFR level was assigned, and `difficulty` holds a
+   * placeholder that is never shown or compared. See lib/readingLevel.ts.
+   */
+  levelUnrated?: boolean;
 }
 
+/**
+ * "learning" and "unsure" are cards in Review. "known" is legacy only: older
+ * builds moved a card there after three correct answers (or the retired "I
+ * know this" button), which took it out of Review with no way back. Nothing
+ * writes it any more; a "known" card reads as not in Review and "Add to
+ * review" reactivates it. See src/lib/reviewMembership.ts.
+ */
 export type WordStatus = "learning" | "unsure" | "known";
 
 export interface SavedWord {
@@ -97,13 +115,14 @@ export interface SavedWord {
   reviewCount: number;
   /** ISO timestamp of the last review, or null if never reviewed. */
   lastReviewedAt: string | null;
-  /**
-   * "learning" (saved via the "Save" action), "unsure" (saved via the
-   * "Unsure" action), or "known" (promoted by a correct typed review).
-   * Words marked known straight from the reader's "I know this" button
-   * never get a SavedWord at all — see src/lib/knownWords.ts.
-   */
+  /** How the card was saved ("learning" or "unsure"); "known" is legacy, see WordStatus. */
   status: WordStatus;
+  /**
+   * Set when the reader chose "Remove from review". The card and its review
+   * history stay (so "Add to review" restores it, and re-adding is not a new
+   * save); it is simply not in Review. Null or absent when it is in Review.
+   */
+  removedFromReviewAt?: string | null;
   /** True when the local dictionary had no entry for this word at save time. */
   missingFromDictionary?: boolean;
   /**
@@ -140,10 +159,8 @@ export type ThemePreference = "system" | "light" | "dark";
 export interface AppSettings {
   /** Colour theme. "system" follows the device's light/dark setting. See src/lib/theme.ts. */
   theme: ThemePreference;
-  /** Visually highlight saved (learning/unsure) words while reading. */
+  /** Visually highlight words that are in Review while reading. */
   showSavedHighlights: boolean;
-  /** De-emphasise words already marked "known" while reading. */
-  showKnownWordStyling: boolean;
   fontSize: FontSize;
   /**
    * Overall text-to-speech speed multiplier, applied on top of the

@@ -11,7 +11,7 @@ import type { ArticleTranslationResult } from "@/lib/ai/types";
  * and always go through the live AI path in ai/client.ts.
  *
  * Split into NUM_SHARDS files (src/data/precomputed/shard-N.json) rather than
- * one ~9MB blob — see scripts/shard-precomputed-translations.mjs. A reader
+ * one ~9MB blob — shard layout shared with scripts/lib/precomputedShards.mjs. A reader
  * only ever needs one article's translation, so sharding cuts what a single
  * article open has to fetch and JSON.parse from ~9MB to roughly 1/16th of
  * that. Each shard is still loaded via dynamic import, same reasoning as

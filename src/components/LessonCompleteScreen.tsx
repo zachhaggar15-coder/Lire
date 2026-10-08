@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Difficulty } from "@/types";
@@ -21,7 +22,7 @@ import { useModalPresence } from "@/lib/modalPresence";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { triggerHaptic } from "@/lib/haptics";
 import { useAccess } from "@/lib/access/useAccess";
-import { canSaveWord } from "@/lib/access/accessModel";
+import { canSaveNewWord } from "@/lib/access/accessModel";
 
 export interface LessonMiniReviewItem {
   kind: "word" | "phrase";
@@ -40,7 +41,8 @@ export interface JourneyMoment {
 }
 
 interface LessonCompleteScreenProps {
-  level: Difficulty;
+  /** The text's assigned level; null for news, which has none. */
+  level: Difficulty | null;
   levelProgress: LireLevelChange;
   stats: { percentRead: number; wordsTapped: number; savedWords: number };
   reviewItems: LessonMiniReviewItem[];
@@ -67,6 +69,10 @@ interface LessonCompleteScreenProps {
     trend: TrendLabel;
   } | null;
   levelLabel?: string;
+  /** Offered once, after a first reading: a small, skippable daily goal. */
+  dailyGoalOffer?: { onChoose: (minutes: 5 | 10 | null) => void } | null;
+  /** Link to Review when this reading saved words. */
+  reviewHref?: string;
 }
 
 /**
@@ -100,9 +106,12 @@ export default function LessonCompleteScreen({
   lookupRate,
   diagnostics,
   levelLabel,
+  dailyGoalOffer,
+  reviewHref = "/review",
 }: LessonCompleteScreenProps) {
+  const [goalAnswered, setGoalAnswered] = useState(false);
   const { context: access } = useAccess();
-  const saveAllowed = canSaveWord(access).allowed;
+  const saveAllowed = canSaveNewWord(access).allowed;
   useModalPresence(true);
   // This is the app's most-seen full-screen overlay — it needs the same
   // focus trap / background-inert / Escape-to-leave treatment every
@@ -209,6 +218,39 @@ export default function LessonCompleteScreen({
           </div>
         )}
 
+        <p className="lesson-complete-card-enter mt-3 text-sm font-semibold text-ink">
+          {[
+            levelProgress.xpAwarded > 0 ? `+${levelProgress.xpAwarded} XP` : null,
+            stats.savedWords > 0 ? `${stats.savedWords} ${stats.savedWords === 1 ? "word" : "words"} saved` : null,
+            streak.count > 0 ? `${streak.count} day streak${streak.extended ? " (+1)" : ""}` : null,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+
+        {dailyGoalOffer && !goalAnswered && (
+          <div className="lesson-complete-card-enter mt-4 rounded-card border border-cream-dark bg-cream-card p-4">
+            <p className="font-semibold text-ink">Want a small daily target?</p>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {([5, 10, null] as const).map((minutes) => (
+                <button
+                  key={String(minutes)}
+                  type="button"
+                  onClick={() => {
+                    dailyGoalOffer.onChoose(minutes);
+                    setGoalAnswered(true);
+                  }}
+                  className={`ligne-pill min-h-11 ${minutes ? "bg-brand-light text-brand" : "bg-cream-fill text-ink-muted"}`}
+                >
+                  {minutes ? `${minutes} min` : "Not now"}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <details className="mt-5">
+          <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold text-ink-muted">Session details</summary>
         {diagnostics && (
           <ReadingDiagnosticsCard
             className="lesson-complete-card-enter mt-4"
@@ -269,7 +311,7 @@ export default function LessonCompleteScreen({
                 <div key={`${item.kind}-${item.french}`} className="rounded-2xl bg-cream px-3 py-2">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-extrabold text-ink">{item.french}</p>
+                      <p lang="fr" className="truncate text-sm font-extrabold text-ink">{item.french}</p>
                       <p className="mt-0.5 text-xs font-semibold text-ink-muted">{item.english}</p>
                     </div>
                     <button
@@ -335,12 +377,14 @@ export default function LessonCompleteScreen({
           {/* Reading difficulty is shown separately and deliberately not as a
               progression bar: CEFR describes how hard the French was, and says
               nothing about how far along the reader is. */}
-          <div className="mt-4 flex items-center justify-between border-t border-cream-fill pt-3">
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">
-              Reading difficulty
-            </p>
-            <p className="text-sm font-extrabold text-ink">{level}</p>
-          </div>
+          {level && (
+            <div className="mt-4 flex items-center justify-between border-t border-cream-fill pt-3">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">
+                Reading difficulty
+              </p>
+              <p className="text-sm font-extrabold text-ink">{level}</p>
+            </div>
+          )}
 
           <details className="mt-3">
             <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline decoration-dotted underline-offset-2">
@@ -361,6 +405,7 @@ export default function LessonCompleteScreen({
         <div className="mt-4">
           <RateSorlioCard source="lesson_complete" />
         </div>
+        </details>
 
         </div>
       </div>
@@ -377,6 +422,11 @@ export default function LessonCompleteScreen({
         >
           {primaryActionLabel}
         </button>
+        {stats.savedWords > 0 && (
+          <Link href={reviewHref} className="ligne-pill mt-1 flex min-h-11 w-full items-center justify-center bg-brand-light text-brand">
+            Review {stats.savedWords} saved {stats.savedWords === 1 ? "word" : "words"}
+          </Link>
+        )}
         {/* A non-lesson completion (no distinct next text queued) falls back
             to the same map/home label for both actions — showing it twice
             is redundant, not a real second choice. */}

@@ -18,12 +18,9 @@ import {
 } from "@/components/GamificationCards";
 import AppBar from "@/components/AppBar";
 import ReadingGoalsCard from "@/components/ReadingGoalsCard";
-import { AndroidBetaButton } from "@/components/AndroidBetaModal";
-import { VALIDATION_FEATURES } from "@/lib/validation/config";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import { getSessionRecords } from "@/lib/sessionRecord";
 import { computeRollingLookupRate, computeTrend, BASELINE_THRESHOLDS } from "@/lib/practice/baselineComparison";
-import { trackEvent } from "@/lib/analytics/client";
 
 type Tab = "overview" | "missions" | "vocabulary" | "achievements" | "passport";
 
@@ -58,7 +55,6 @@ export default function ProgressPage() {
     const requested = params.get("tab");
     if (requested && TABS.some((item) => item.id === requested)) setTab(requested as Tab);
     refresh(true);
-    trackEvent("progress_page_viewed", {});
   }, []);
 
   const sessionRecords = useMemo(() => getSessionRecords(), []);
@@ -72,9 +68,6 @@ export default function ProgressPage() {
     [sessionRecords]
   );
   const hasEnoughForTrend = sessionRecords.length >= BASELINE_THRESHOLDS.minimumSampleForTrend;
-  useEffect(() => {
-    if (hasEnoughForTrend) trackEvent("progress_comparison_displayed", { trend: readingTrend });
-  }, [hasEnoughForTrend, readingTrend]);
 
   const weeklyArticles = useMemo(
     () => snapshot?.completions.filter((item) => weekStart !== null && new Date(item.completedAt).getTime() >= weekStart).length ?? 0,
@@ -98,7 +91,7 @@ export default function ProgressPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
 
       {rewardNotice && (
@@ -131,17 +124,6 @@ export default function ProgressPage() {
         <div className="space-y-5">
           <ReadingIndependenceTrendCard trend={readingTrend} rollingRates={rollingRates} hasEnoughData={hasEnoughForTrend} />
           <CurrentLevelCard level={snapshot.level} />
-          {VALIDATION_FEATURES.androidBetaCtaEnabled && (
-            <section className="rounded-card bg-cream-card p-4 shadow-card">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Android beta</h2>
-                  <p className="mt-1 text-sm text-ink-muted">Interested in testing Sorlio on Android when beta opens?</p>
-                </div>
-                <AndroidBetaButton source="progress" label="Join" />
-              </div>
-            </section>
-          )}
 
           <section className="rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Weekly overview</h2>
@@ -149,9 +131,9 @@ export default function ProgressPage() {
               {[
                 ["Articles", weeklyArticles],
                 ["Words read", snapshot.weeklyWords.toLocaleString()],
-                ["Comprehension", `${snapshot.weeklyComprehensionAverage}%`],
+                ["Comprehension", snapshot.weeklyComprehensionAverage === null ? "Not measured yet" : `${snapshot.weeklyComprehensionAverage}%`],
                 ["Vocabulary reviewed", snapshot.weeklyReviewed],
-                ["Translations / 100 words", snapshot.translationsPer100Words],
+                ["Lookups / 100 words", snapshot.translationsPer100Words],
                 ["Reading streak", `${snapshot.currentStreak} days`],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl bg-cream p-3">
@@ -261,7 +243,7 @@ export default function ProgressPage() {
         <section>
           <div className="mb-3 rounded-card bg-cream-card p-4 shadow-card">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Reading Passport</h2>
-            <p className="mt-1 text-sm text-ink-muted">A quiet record of topics, levels, sources and independence milestones you have explored.</p>
+            <p className="mt-1 text-sm text-ink-muted">A quiet record of the topics, levels and sources you have explored.</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {snapshot.passport.map((stamp) => (
@@ -283,7 +265,7 @@ export default function ProgressPage() {
 const TREND_HEADLINE: Record<string, string> = {
   Improving: "Your lookup rate is falling.",
   Stable: "Your lookup rate is holding steady.",
-  "Increasing support needed": "You've been leaning on lookups a bit more lately.",
+  "Increasing support needed": "You've used a few more lookups lately — often a sign of harder texts.",
   "Not enough data": "Not enough readings yet to show a trend.",
 };
 
@@ -305,7 +287,7 @@ function ReadingIndependenceTrendCard({
   if (!hasEnoughData) {
     return (
       <section className="rounded-card bg-cream-card p-4 shadow-card">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Lookup use</p>
         <p className="mt-1 text-base font-bold text-ink">Not enough readings yet to show a trend.</p>
         <p className="mt-1 text-xs text-ink-muted">Finish a few more texts and this will start comparing your lookup rate over time.</p>
       </section>
@@ -314,7 +296,7 @@ function ReadingIndependenceTrendCard({
 
   return (
     <section className="rounded-card bg-cream-card p-4 shadow-card">
-      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Reading independence</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Lookup use</p>
       <p className="mt-1 text-lg font-extrabold text-ink">{TREND_HEADLINE[trend] ?? TREND_HEADLINE["Not enough data"]}</p>
       {rollingRates.last5.rate != null && (
         <p className="mt-1 text-sm text-ink-muted">

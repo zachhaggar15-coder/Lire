@@ -1,15 +1,16 @@
 import type { ReadingText } from "@/types";
-import {
-  buildGistQuestion,
-  buildToneQuestions,
-  canBuildGistQuestion,
-  type MultipleChoiceQuestion,
-  type ToneQuestion,
-} from "@/lib/comprehension";
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { buildGistQuestion, type MultipleChoiceQuestion, type ToneQuestion } from "@/lib/comprehension";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 const KEY = "lire.comprehensionQuestions.v1";
-const CACHE_VERSION = 2;
+// 3: bundles built before provenance was recognised and before automatic tone
+// questions were withdrawn are discarded, never shown again.
+// 4: an intermediate version-3 build also cached abstentions (no gist), which
+// then blocked a later, larger pool from building a fair question. Every
+// version-3 bundle is discarded. Only this generated cache is affected; it
+// is rebuilt on demand, and no learning data lives here.
+const CACHE_VERSION = 4;
 let memoryCache: CachedComprehensionQuestionBundle[] = [];
 
 export interface ComprehensionQuestionBundle {
@@ -34,7 +35,7 @@ function hasStorage(): boolean {
 function readCache(): CachedComprehensionQuestionBundle[] {
   if (!hasStorage()) return memoryCache;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter(isCachedBundle) : [];
@@ -79,8 +80,8 @@ function persist(cache: CachedComprehensionQuestionBundle[]): void {
     memoryCache = cache;
     return;
   }
-  window.localStorage.setItem(KEY, JSON.stringify(cache));
-  void pushStore(KEY);
+  localStore.writeItem(KEY, JSON.stringify(cache));
+  notifyStoreChanged(KEY);
 }
 
 function signatureFor(text: ReadingText): string {
@@ -97,12 +98,13 @@ export function buildComprehensionQuestionBundle(
   candidates: ReadingText[]
 ): ComprehensionQuestionBundle {
   return {
-    gistQuestion: canBuildGistQuestion(text, candidates) ? buildGistQuestion(text, candidates) : null,
-    // Tone questions ask about journalistic framing ("sceptical or
-    // supportive?", "alarmist?"). They're meaningful on news, and nonsense on
-    // a Jules Verne excerpt, so they stay with the category they were written
-    // for.
-    toneQuestions: text.category === "news-style" ? buildToneQuestions(text) : [],
+    gistQuestion: buildGistQuestion(text, candidates),
+    // No tone or stance questions. They were inferred from keyword counts,
+    // which cannot tell the author's view from a quoted or described
+    // character's ("inquiet" in someone's mouth made the author "sceptical"),
+    // nor see negation. A scored answer has to be known, and none of these
+    // were, so Sorlio asks none.
+    toneQuestions: [],
   };
 }
 
@@ -115,7 +117,9 @@ export function getOrCreateComprehensionQuestionBundle(
   const signature = signatureFor(text);
   const cache = readCache();
   const cached = cache.find((bundle) => bundle.textId === text.id && bundle.signature === signature);
-  if (cached) {
+  // An abstention is never served from the cache, whatever wrote it: the next
+  // call may have the larger pool that can build the question.
+  if (cached && cached.gistQuestion) {
     return {
       gistQuestion: cached.gistQuestion,
       toneQuestions: cached.toneQuestions,
@@ -123,6 +127,10 @@ export function getOrCreateComprehensionQuestionBundle(
   }
 
   const created = buildComprehensionQuestionBundle(text, candidates);
+  // "No question" is not cached: the reader first asks with a small local
+  // pool and then again with the whole library, and an abstention from the
+  // small pool must not stop the larger one from building a fair question.
+  if (!created.gistQuestion) return created;
   const now = new Date().toISOString();
   persist([
     {
@@ -140,6 +148,5 @@ export function getOrCreateComprehensionQuestionBundle(
 }
 
 export function clearComprehensionQuestionCache(): void {
-  recordStoreClear(KEY);
   persist([]);
 }

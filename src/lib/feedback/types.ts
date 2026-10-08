@@ -7,10 +7,8 @@ export const FEEDBACK_CATEGORIES = [
   "article_issue",
   "confusing",
   "technical_problem",
+  "ai_output_issue",
   "other",
-  "return_reason",
-  "disappearance_survey",
-  "session_reaction",
 ] as const;
 
 export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
@@ -24,8 +22,6 @@ export interface FeedbackInput {
   articleId?: string | null;
   affectedTerm?: string | null;
   comment?: string | null;
-  sessionId?: string | null;
-  anonymousId?: string | null;
 }
 
 const CATEGORY_SET = new Set<string>(FEEDBACK_CATEGORIES);
@@ -50,8 +46,6 @@ export function normalizeFeedbackInput(input: unknown): { ok: true; value: Feedb
       articleId: clean(raw.articleId, 160),
       affectedTerm: clean(raw.affectedTerm, 160),
       comment: clean(raw.comment, 2000),
-      sessionId: clean(raw.sessionId, 160),
-      anonymousId: clean(raw.anonymousId, 160),
     },
   };
 }

@@ -1,11 +1,13 @@
+import Link from "next/link";
 import ReadingCard from "@/components/ReadingCard";
-import { formatCategory } from "@/lib/format";
+import { topicLabel } from "@/lib/format";
+import { editorialLevel } from "@/lib/readingLevel";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
 function compactSourceLabel(article: ScoredArticle): string | null {
   const { text } = article;
   if (text.id.startsWith("custom-")) return "Imported text";
-  if (text.id.startsWith("starter-")) return "Written for beginners";
+  if (text.id.startsWith("starter-")) return "Written for Sorlio";
   if (text.id.startsWith("pd-")) return "Classic story";
   return text.sourceName ?? null;
 }
@@ -51,7 +53,6 @@ export default function ArticleSection({
               key={article.text.id}
               text={article.text}
               difficulty={article.difficulty}
-              starRating={article.starRating}
               score={article.score}
             />
           ))}
@@ -79,7 +80,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
   const { text } = article;
   const sourceLabel = compactSourceLabel(article);
   return (
-    <a
+    <Link
       href={`/reader/${encodeURIComponent(text.id)}`}
       className={`block min-w-0 rounded-card border border-cream-dark bg-cream-card p-3 shadow-card transition-shadow active:shadow-raised ${
         rail ? "w-64 shrink-0" : ""
@@ -89,21 +90,21 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
           tell the market lesson from the train one without reading titles. */}
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <span className="rounded-full bg-brand-light px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-brand">
-          {text.difficulty}
+          {editorialLevel(text) ?? "News"}
         </span>
         <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
-          {formatCategory(text.category)}
+          {topicLabel(text)}
         </span>
         <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
           {text.minutes} min
         </span>
       </div>
-      <h3 className="line-clamp-2 min-w-0 break-words font-french text-[17px] leading-snug text-ink">{text.title}</h3>
+      <h3 lang="fr" className="line-clamp-2 min-w-0 break-words font-french text-[17px] leading-snug text-ink">{text.title}</h3>
       <p className="mt-2 line-clamp-2 min-w-0 break-words text-xs text-ink-muted">{text.preview}</p>
       <div className="mt-2 flex items-center justify-between gap-2">
         {sourceLabel && <p className="truncate text-xs font-semibold text-ink-muted">{sourceLabel}</p>}
         <span className="shrink-0 text-xs font-bold text-brand">Start</span>
       </div>
-    </a>
+    </Link>
   );
 }

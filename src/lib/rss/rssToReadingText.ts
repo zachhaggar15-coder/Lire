@@ -1,4 +1,4 @@
-import type { Category } from "@/types";
+import type { Category, Difficulty } from "@/types";
 import type { RssSource } from "@/data/rssSources";
 import type { RssItem } from "@/lib/rss/parseRss";
 import {
@@ -26,7 +26,11 @@ export interface RssReadingText {
   id: string;
   title: string;
   category: Category;
-  difficulty: "B1";
+  /**
+   * The assigned CEFR level, or null for live news, which has none (see
+   * lib/readingLevel.ts). Bundled readings served as a fallback keep theirs.
+   */
+  difficulty: Difficulty | null;
   readingTimeMinutes: number;
   /** The source feed's declared language — see RssSource.language. */
   language: "fr" | "en" | "mixed";
@@ -242,7 +246,7 @@ export async function itemToRssReadingText(
       id: `rss-${source.id}-${hashString(item.link || title)}`,
       title,
       category: mapToKnownCategory(item.categories, source.category),
-      difficulty: "B1",
+      difficulty: null,
       readingTimeMinutes: estimateReadingMinutes(originalText),
       language: source.language,
       originalText,

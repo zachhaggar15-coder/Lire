@@ -11,13 +11,23 @@ import {
   varietyScore,
 } from "@/lib/recommendation/signals";
 import { SIGNAL_WEIGHTS } from "@/lib/recommendation/weights";
+import { editorialLevel } from "@/lib/readingLevel";
+
+/**
+ * With no assigned level (live news) there is nothing to match against: the
+ * content estimator is too compressed to rank by (see lib/readingLevel.ts), so
+ * every unrated article gets the same neutral value and the other signals
+ * decide their order.
+ */
+const UNRATED_LEVEL_MATCH = 0.5;
 
 /** Deterministic: the same article + context always produces the same score — no randomness anywhere in this module. */
 export function scoreArticle(article: ScorableArticle, context: ScoringContext): ScoreBreakdown {
   const now = context.now ?? new Date();
 
   const freshness = freshnessScore(article.text.publishedAt, now);
-  const difficultyMatch = difficultyMatchScore(article.difficulty.cefr, context.userLevelNumeric);
+  const level = editorialLevel(article.text);
+  const difficultyMatch = level ? difficultyMatchScore(level, context.userLevelNumeric) : UNRATED_LEVEL_MATCH;
   const topicPreference = topicPreferenceScore(article.text.category, context);
   const sourcePreference = sourcePreferenceScore(article.text.sourceName, context);
   const unknownWordTarget = unknownWordTargetScore(article.difficulty.unknownWordRatio);

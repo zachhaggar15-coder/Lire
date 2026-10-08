@@ -1,13 +1,14 @@
 import type { SavedWord, WordStatus } from "@/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
+import { isRetiredTemplateExample, learnerExample } from "@/lib/dictionary/exampleGenerator";
 import { lookupWord } from "@/lib/dictionary/lookup";
-import { markKnown } from "@/lib/knownWords";
+import { findVocabularyCards, isInReview, VocabularyIndex } from "@/lib/reviewMembership";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
 import { recordActivityToday } from "@/lib/habit";
 import { recordWordSavedXp } from "@/lib/gamification";
-import { pushStore, recordStoreClear, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { isSourceFooterText } from "@/lib/rss/sourceNoise";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 /**
  * localStorage-backed store for saved words (version 1, no backend).
@@ -31,29 +32,14 @@ function isPlaceholderTranslation(value: string): boolean {
 
 function dictionaryBackfill(word: string) {
   const lookup = lookupWord(word);
-  const fallbackExample = generateFallbackExample({
-    word,
-    lemma: lookup.lemma,
-    partOfSpeech: lookup.partOfSpeech,
-    gender: lookup.gender,
-    translations: lookup.translations,
-  });
-  const firstExample = lookup.examples[0];
-
-  if (lookup.source !== "local" || lookup.translations.length === 0) {
-    return {
-      found: false,
-      lookup,
-      exampleSentenceFr: fallbackExample.fr,
-      exampleSentenceEn: fallbackExample.en,
-    };
-  }
-
+  const found = lookup.source === "local" && lookup.translations.length > 0;
+  // A curated example or none — never a generated one (see exampleGenerator).
+  const example = learnerExample({ curated: found ? lookup.examples[0] : null });
   return {
-    found: true,
+    found,
     lookup,
-    exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
-    exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
+    exampleSentenceFr: example.fr,
+    exampleSentenceEn: example.en,
   };
 }
 
@@ -145,25 +131,29 @@ function normalize(entry: unknown): SavedWord | null {
   const resolvedTranslations = resolvedLookup?.translations ?? translations;
   const resolvedPartOfSpeech = resolvedLookup?.partOfSpeech ?? partOfSpeech;
   const resolvedGender = resolvedLookup?.gender ?? gender;
-  const fallbackExample = generateFallbackExample({
-    word: e.word,
-    lemma: resolvedLookup?.lemma ?? (typeof e.lemma === "string" ? e.lemma : null),
-    partOfSpeech: resolvedPartOfSpeech,
-    gender: resolvedGender,
-    translations: resolvedTranslations,
-  });
-  const resolvedExampleFr =
-    backfill?.found
-      ? backfill.exampleSentenceFr
-      : typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr
-        ? e.exampleSentenceFr
-        : fallbackExample.fr;
-  const resolvedExampleEn =
-    backfill?.found
-      ? backfill.exampleSentenceEn
-      : typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn
-        ? e.exampleSentenceEn
-        : fallbackExample.en;
+  const storedExampleFr = typeof e.exampleSentenceFr === "string" ? e.exampleSentenceFr : "";
+  const storedExampleEn = typeof e.exampleSentenceEn === "string" ? e.exampleSentenceEn : "";
+  // An example made by the retired templates ("J'aime hier.") is dropped on
+  // read, whichever build or device saved it; the word, its translations and
+  // its Review history are untouched.
+  const storedIsTemplate = isRetiredTemplateExample(storedExampleFr, storedExampleEn, [
+    e.word,
+    typeof e.lemma === "string" ? e.lemma : null,
+    resolvedLookup?.lemma,
+  ]);
+  const resolvedExample = backfill?.found
+    ? { fr: backfill.exampleSentenceFr, en: backfill.exampleSentenceEn }
+    : storedExampleFr && !storedIsTemplate && storedExampleFr !== articleContextSentence
+      ? { fr: storedExampleFr, en: storedExampleEn }
+      : // Older builds stored the reading sentence beside a one-word gloss
+        // ("Hier, il pleuvait." - "yesterday"); pair it with its own
+        // translation, or with nothing.
+        learnerExample({
+          contextSentence: articleContextSentence,
+          sentenceTranslation: typeof e.sentenceTranslation === "string" ? e.sentenceTranslation : null,
+        });
+  const resolvedExampleFr = resolvedExample.fr;
+  const resolvedExampleEn = resolvedExample.en;
   const resolvedMissingFromDictionary = resolvedLookup ? false : missingFromDictionary;
 
   if (resolvedMissingFromDictionary && resolvedTranslations.length === 0 && isSourceFooterText(articleContextSentence)) {
@@ -205,7 +195,16 @@ function normalize(entry: unknown): SavedWord | null {
     incorrectCount: typeof e.incorrectCount === "number" ? e.incorrectCount : 0,
     lastReviewResult:
       e.lastReviewResult === "correct" || e.lastReviewResult === "incorrect" ? e.lastReviewResult : null,
+    // Present only on a removed card, so every other card stays byte-identical
+    // to what older builds wrote (no rewrite, and no sync churn, on upgrade).
+    ...(typeof e.removedFromReviewAt === "string" && e.removedFromReviewAt ? { removedFromReviewAt: e.removedFromReviewAt } : {}),
   };
+}
+
+/** The card as it is stored when in Review: the removal marker absent, not null. */
+function inReviewCard(card: SavedWord): SavedWord {
+  const { removedFromReviewAt: _removed, ...rest } = card;
+  return { ...rest, status: card.status === "known" ? "learning" : card.status };
 }
 
 /**
@@ -219,17 +218,27 @@ function normalize(entry: unknown): SavedWord | null {
  * Returns whether the write landed so callers can tell the user when it didn't,
  * rather than showing a success toast for a word that wasn't stored.
  */
-function persist(words: SavedWord[]): boolean {
-  if (!hasStorage()) return false;
-  try {
-    window.localStorage.setItem(KEY, JSON.stringify(words));
-  } catch {
-    return false;
-  }
-  // Best-effort, fire-and-forget — no-ops if sync isn't configured or no
-  // one's signed in. See src/lib/supabase/sync.ts.
-  void pushStore(KEY);
-  return true;
+function persist(words: SavedWord[]): WriteFailure | null {
+  if (!hasStorage()) return "unavailable";
+  // If the stored list could not be read, writing now would replace words we
+  // could not see. Refuse until it can be read again.
+  if (unreadable) return "error";
+  const result = localStore.writeItem(KEY, JSON.stringify(words));
+  if (!result.ok) return result.reason;
+  // Schedules a sync for signed-in accounts; a no-op for guests.
+  notifyStoreChanged(KEY);
+  return null;
+}
+
+/** Set when the stored list exists but cannot be read or parsed. */
+let unreadable = false;
+
+/** The outcome of a change to saved words. `words` is always what is actually stored. */
+export type WordsMutation = { ok: true; words: SavedWord[] } | { ok: false; words: SavedWord[]; reason: WriteFailure };
+
+function mutation(next: SavedWord[], previous: SavedWord[]): WordsMutation {
+  const failure = persist(next);
+  return failure ? { ok: false, words: previous, reason: failure } : { ok: true, words: next };
 }
 
 /**
@@ -238,11 +247,24 @@ function persist(words: SavedWord[]): boolean {
  */
 export function getSavedWords(): SavedWord[] {
   if (!hasStorage()) return [];
+  let raw: string | null;
   try {
-    const raw = window.localStorage.getItem(KEY);
-    if (!raw) return [];
+    raw = localStore.getItem(KEY);
+  } catch {
+    unreadable = true;
+    return [];
+  }
+  if (!raw) {
+    unreadable = false;
+    return [];
+  }
+  try {
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
+    if (!Array.isArray(parsed)) {
+      unreadable = true;
+      return [];
+    }
+    unreadable = false;
 
     const migrated = parsed
       .map(normalize)
@@ -252,41 +274,106 @@ export function getSavedWords(): SavedWord[] {
     if (JSON.stringify(migrated) !== raw) persist(migrated);
     return migrated;
   } catch {
+    unreadable = true;
     return [];
   }
 }
 
-export function isWordSaved(word: string): boolean {
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
-  return getSavedWords().some((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
+/**
+ * True when a card exists for this word, in Review or not. Reactivating an
+ * existing card is never a new save, so the free daily limit does not apply.
+ */
+export function hasVocabularyCard(word: string, lemma: string | null | undefined): boolean {
+  return findVocabularyCards(getSavedWords(), word, lemma).length > 0;
+}
+
+export interface SaveWordResult {
+  words: SavedWord[];
+  /** False when the write was rejected — the caller should say so rather than confirm a save that didn't happen. */
+  persisted: boolean;
+  /** True only when this action added a new card: the only case that is a new save. */
+  created: boolean;
+  /** True when an existing card that was not in Review was put back (history kept). */
+  reactivated: boolean;
+  /**
+   * The meaning this save added to an existing card, when the word was met
+   * again with a different meaning (e.g. "compte" as "account", then in "se
+   * rendre compte"). Sorlio keeps one card per word, not one per sense, so the
+   * new meaning is added to that card instead of being lost.
+   */
+  addedMeaning?: string | null;
+}
+
+/** The meaning shown when this entry was saved, if the card does not have it yet. */
+function newMeaningFor(card: SavedWord, entry: SavedWord): string | null {
+  const meaning = (entry.contextualMeaning ?? entry.primaryTranslation ?? "").trim();
+  if (!meaning || meaning === NOT_TRANSLATED_YET) return null;
+  const known = [card.primaryTranslation, ...card.translations].map((value) => value.trim().toLowerCase());
+  return known.includes(meaning.toLowerCase()) ? null : meaning;
+}
+
+function withMeaning(card: SavedWord, meaning: string | null): SavedWord {
+  return meaning ? { ...card, translations: [...card.translations, meaning] } : card;
 }
 
 /**
- * Save a word with status "learning" or "unsure". No-ops if the word is already saved — the
- * original saved context and status are kept, even if tapped again in a
- * new sentence later.
+ * "Add to review". Exactly one of three things happens:
+ *   - the word (or its lemma) already has a card in Review: nothing changes;
+ *   - it has a card that is not in Review (removed, or legacy "known"): that
+ *     card is put back, keeping its review history and schedule;
+ *   - it has no card: the new card is stored.
  */
-export interface SaveWordResult {
-  words: SavedWord[];
-  /** False when the write was rejected (quota) — the caller should say so rather than confirm a save that didn't happen. */
-  persisted: boolean;
-  /** True only when this action added a new card, rather than finding an existing canonical word. */
-  created: boolean;
-}
-
-export function saveWord(entry: SavedWord): SaveWordResult {
+export function addWordToReview(entry: SavedWord): SaveWordResult {
   const words = getSavedWords();
-  const entryLemma = entry.lemma?.toLowerCase();
-  if (words.some((w) => w.word === entry.word || (!!entryLemma && w.lemma?.toLowerCase() === entryLemma))) {
-    return { words, persisted: true, created: false };
+  const existing = findVocabularyCards(words, entry.word, entry.lemma);
+  const active = existing.find((card) => isInReview(card) && card.word === entry.word) ?? existing.find(isInReview);
+  if (active) {
+    const meaning = newMeaningFor(active, entry);
+    if (!meaning) return { words, persisted: true, created: false, reactivated: false };
+    const next = words.map((card) => (card === active ? withMeaning(card, meaning) : card));
+    // Failing to add the extra meaning leaves the card as it was, still in Review.
+    if (persist(next)) return { words, persisted: true, created: false, reactivated: false };
+    return { words: next, persisted: true, created: false, reactivated: false, addedMeaning: meaning };
   }
-  const next = [entry, ...words];
-  if (!persist(next)) return { words, persisted: false, created: false };
+
+  if (existing.length > 0) {
+    const target = existing.find((card) => card.word === entry.word) ?? existing[0];
+    const meaning = newMeaningFor(target, entry);
+    const next = words.map((card) => (card === target ? withMeaning(inReviewCard(card), meaning) : card));
+    if (persist(next)) return { words, persisted: false, created: false, reactivated: false };
+    recordActivityToday();
+    return { words: next, persisted: true, created: false, reactivated: true, addedMeaning: meaning };
+  }
+
+  const next = [inReviewCard(entry), ...words];
+  if (persist(next)) return { words, persisted: false, created: false, reactivated: false };
   // Only credit progress for a word that actually made it to storage.
   recordWordSavedXp(entry.lemma ?? entry.word);
   recordActivityToday();
-  return { words: next, persisted: true, created: true };
+  return { words: next, persisted: true, created: true, reactivated: false };
+}
+
+/** Adds a meaning to the word's card in Review (the reader met it with a new meaning). */
+export function addMeaningToWord(word: string, lemma: string | null | undefined, meaning: string): WordsMutation {
+  const previous = getSavedWords();
+  const card = new VocabularyIndex(previous).activeCard(word, lemma);
+  const trimmed = meaning.trim();
+  if (!card || !trimmed || card.translations.some((t) => t.trim().toLowerCase() === trimmed.toLowerCase())) return { ok: true, words: previous };
+  return mutation(previous.map((item) => (item === card ? withMeaning(item, trimmed) : item)), previous);
+}
+
+/**
+ * "Remove from review": every card for this word that is in Review is taken
+ * out of it. The card and its history stay, so the word can be added back
+ * (and doing so is not a new save). Deleting a card outright is deleteWord.
+ */
+export function removeWordFromReview(word: string, lemma: string | null | undefined): WordsMutation {
+  const previous = getSavedWords();
+  const targets = new Set(findVocabularyCards(previous, word, lemma).filter(isInReview));
+  if (targets.size === 0) return { ok: true, words: previous };
+  const removedAt = new Date().toISOString();
+  const next = previous.map((card) => (targets.has(card) ? { ...card, removedFromReviewAt: removedAt } : card));
+  return mutation(next, previous);
 }
 
 /**
@@ -296,8 +383,9 @@ export function saveWord(entry: SavedWord): SaveWordResult {
  * src/lib/spacedRepetition.ts for the actual scheduling logic. Returns the
  * updated list.
  */
-export function recordReviewResult(word: string, result: ReviewResult): SavedWord[] {
-  const next = getSavedWords().map((w) => {
+export function recordReviewResult(word: string, result: ReviewResult): WordsMutation {
+  const previous = getSavedWords();
+  const next = previous.map((w) => {
     if (w.word !== word) return w;
     const schedule = computeNextSchedule(w, result);
     return {
@@ -307,41 +395,22 @@ export function recordReviewResult(word: string, result: ReviewResult): SavedWor
       ...schedule,
     };
   });
-  persist(next);
-  recordActivityToday();
-  return next;
+  const outcome = mutation(next, previous);
+  // Activity only counts once the review is actually stored.
+  if (outcome.ok) recordActivityToday();
+  return outcome;
 }
 
 /**
- * Marks an already-saved word as known: flips its status (it stays in
- * storage as a record, visible on the Words page, but Review excludes it
- * from then on) and adds the word — and its lemma, if any — to the known-
- * words list, so reader highlighting/lookups have one source of truth.
+ * Deletes one card permanently, review history included (the Words page's
+ * delete). Only that exact card: a lemma guess must never delete another one.
  */
-export function markWordAsKnown(word: string): SavedWord[] {
-  const words = getSavedWords();
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
-  const target = words.find((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
-  const next = words.map((w) => (w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma) ? { ...w, status: "known" as const } : w));
-  persist(next);
-  markKnown(word);
-  if (target?.lemma) markKnown(target.lemma);
-  return next;
-}
-
-export function deleteWord(word: string): SavedWord[] {
-  const lookup = lookupWord(word);
-  const lemma = lookup.lemma?.toLowerCase();
+export function deleteWord(word: string): WordsMutation {
   const current = getSavedWords();
-  const removed = current.filter((w) => w.word === word || (!!lemma && w.lemma?.toLowerCase() === lemma));
-  for (const entry of removed) recordStoreDeletion(KEY, entry.word);
-  const next = current.filter((w) => w.word !== word && (!lemma || w.lemma?.toLowerCase() !== lemma));
-  persist(next);
-  return next;
+  const next = current.filter((w) => w.word !== word);
+  return mutation(next, current);
 }
 
-export function clearWords(): void {
-  recordStoreClear(KEY);
-  persist([]);
+export function clearWords(): WordsMutation {
+  return mutation([], getSavedWords());
 }

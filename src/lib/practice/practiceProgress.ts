@@ -1,4 +1,5 @@
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore } from "@/lib/localData/store";
 
 /** Which texts have had their "Practice this text" session completed at least once. Repeatable — this just tracks whether the "completed" badge should show. */
 
@@ -11,7 +12,7 @@ function hasStorage(): boolean {
 function readAll(): string[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(PRACTICE_KEY);
+    const raw = localStore.getItem(PRACTICE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
   } catch {
@@ -22,8 +23,8 @@ function readAll(): string[] {
 function persist(ids: string[]): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(PRACTICE_KEY, JSON.stringify(ids));
-    void pushStore(PRACTICE_KEY);
+    localStore.setItem(PRACTICE_KEY, JSON.stringify(ids));
+    notifyStoreChanged(PRACTICE_KEY);
   } catch {
     // non-critical
   }
@@ -46,7 +47,7 @@ const LISTENING_KEY = "lire.listeningPracticeCompleted.v1";
 export function isListeningPracticeCompleted(textId: string): boolean {
   if (!hasStorage()) return false;
   try {
-    const raw = window.localStorage.getItem(LISTENING_KEY);
+    const raw = localStore.getItem(LISTENING_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) && parsed.includes(textId);
   } catch {
@@ -57,12 +58,12 @@ export function isListeningPracticeCompleted(textId: string): boolean {
 export function markListeningPracticeCompleted(textId: string): void {
   if (!hasStorage()) return;
   try {
-    const raw = window.localStorage.getItem(LISTENING_KEY);
+    const raw = localStore.getItem(LISTENING_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     const ids: string[] = Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
     if (ids.includes(textId)) return;
-    window.localStorage.setItem(LISTENING_KEY, JSON.stringify([textId, ...ids].slice(0, 1000)));
-    void pushStore(LISTENING_KEY);
+    localStore.setItem(LISTENING_KEY, JSON.stringify([textId, ...ids].slice(0, 1000)));
+    notifyStoreChanged(LISTENING_KEY);
   } catch {
     // non-critical
   }

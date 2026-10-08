@@ -1,7 +1,9 @@
 import type { ReadingText } from "@/types";
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { estimateReadingMinutes, truncateAtSentence } from "@/lib/rss/cleanContent";
 import { stripSourceBoilerplate } from "@/lib/rss/sourceNoise";
+import { localStore } from "@/lib/localData/store";
+import { settleFeedLevel } from "@/lib/rss/adaptReadingText";
 
 /**
  * Fast session cache plus a bounded localStorage offline cache for RSS
@@ -29,7 +31,7 @@ function hasLocalStorage(): boolean {
 function readOfflineTexts(): ReadingText[] {
   if (!hasLocalStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(OFFLINE_KEY);
+    const raw = localStore.getItem(OFFLINE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed : [];
   } catch {
@@ -37,7 +39,8 @@ function readOfflineTexts(): ReadingText[] {
   }
 }
 
-function sanitizeRssText(text: ReadingText): ReadingText {
+function sanitizeRssText(cached: ReadingText): ReadingText {
+  const text = settleFeedLevel(cached);
   const body = stripSourceBoilerplate(text.body, text.sourceName, text.sourceUrl);
   if (body === text.body) return text;
   return {
@@ -63,8 +66,8 @@ function writeOfflineTexts(texts: ReadingText[]): void {
   if (!hasLocalStorage()) return;
   const sanitized = sanitizeRssTexts(texts);
   try {
-    window.localStorage.setItem(OFFLINE_KEY, JSON.stringify(sanitized.slice(0, MAX_OFFLINE_TEXTS)));
-    void pushStore(OFFLINE_KEY);
+    localStore.setItem(OFFLINE_KEY, JSON.stringify(sanitized.slice(0, MAX_OFFLINE_TEXTS)));
+    notifyStoreChanged(OFFLINE_KEY);
   } catch {
     // Offline caching is best-effort only.
   }
@@ -170,7 +173,6 @@ export function getOfflineRssTextCount(): number {
 
 export function clearOfflineRssTexts(): void {
   if (!hasLocalStorage()) return;
-  recordStoreClear(OFFLINE_KEY);
-  window.localStorage.setItem(OFFLINE_KEY, JSON.stringify([]));
-  void pushStore(OFFLINE_KEY);
+  localStore.writeItem(OFFLINE_KEY, JSON.stringify([]));
+  notifyStoreChanged(OFFLINE_KEY);
 }

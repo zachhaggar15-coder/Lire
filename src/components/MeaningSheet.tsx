@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import type { ResolvedMeaning } from "@/lib/dictionary/resolveMeaning";
 import type { WordExplanation } from "@/lib/ai/types";
-import type { WordStatus } from "@/types";
 import type { PronounReference } from "@/lib/pronounReferences";
 import { getWordExplanation } from "@/lib/ai/client";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
@@ -16,19 +15,31 @@ import {
 import PronounceButton from "@/components/PronounceButton";
 import BottomSheet from "@/components/BottomSheet";
 import AppIcon from "@/components/AppIcon";
-import { canSaveWord, canUseAIExplanation } from "@/lib/access/accessModel";
+import { canSaveNewWord, canUseAI } from "@/lib/access/accessModel";
+import Link from "next/link";
 import { useAccess } from "@/lib/access/useAccess";
-import { isReviewableWordStatus } from "@/lib/spacedRepetition";
+import { submitFeedback } from "@/lib/feedback/client";
+import { REVIEW_CONTROL_LABEL, reviewControlFor } from "@/lib/reviewMembership";
 
 export interface ActiveMeaningState {
   meaning: ResolvedMeaning;
   /** The sentence just before the context sentence — extra grounding for the AI explanation. */
   surroundingSentence: string | null;
-  /** The word's current saved status, or null when untouched. */
-  existingStatus: WordStatus | null;
+  /**
+   * Whether this word (or another form of its lemma) has a card in Review.
+   * The only state the sheet's review control reflects: it offers exactly
+   * "Add to review" or "Remove from review" (see reviewMembership.ts).
+   */
+  inReview: boolean;
+  /** A card exists but is not in Review: adding it back is not a new save. */
+  hasCard?: boolean;
+  /** The meanings already on the word's card in Review (to offer adding a new one). */
+  cardMeanings?: string[];
   pronounReference: PronounReference | null;
   /** True while a targeted AI lookup for this tap is still in flight. */
   resolving: boolean;
+  /** The offline answer is uncertain; AI help is worth offering (never run automatically). */
+  aiSuggested?: boolean;
 }
 
 type AiState = "idle" | "loading" | "ready" | "error";
@@ -44,15 +55,13 @@ interface MeaningSheetProps {
    */
   onSave?: () => void;
   onUnsave?: () => void;
+  /** Adds the meaning shown here to the word's card in Review. */
+  onAddMeaning?: (meaning: string) => void;
   onAiRequested?: () => void;
   onExplainSentence?: (sentence: string) => void;
+  /** Imported text: its sentences are private and never included in reports. */
+  privateText?: boolean;
 }
-
-const STATUS_LABEL: Record<WordStatus, string> = {
-  learning: "Saved to review",
-  unsure: "Saved as unsure",
-  known: "Marked as known",
-};
 
 /**
  * The single sheet behind every word tap.
@@ -69,8 +78,10 @@ export default function MeaningSheet({
   onClose,
   onSave,
   onUnsave,
+  onAddMeaning,
   onAiRequested,
   onExplainSentence,
+  privateText = false,
 }: MeaningSheetProps) {
   const [aiState, setAiState] = useState<AiState>("idle");
   const [aiResult, setAiResult] = useState<WordExplanation | null>(null);
@@ -78,18 +89,23 @@ export default function MeaningSheet({
   const [reportReason, setReportReason] = useState<TranslationReportReason | null>(null);
   const [reportSuggestion, setReportSuggestion] = useState("");
   const [reportSent, setReportSent] = useState(false);
-  // Only the reader-invoked explanation is gated. The resolver's own automatic
-  // escalation is left alone: it is how a hard word gets resolved at all, not
-  // a feature, and gating it would quietly degrade lookup accuracy for
-  // non-Premium readers rather than withhold something they can see.
-  const { context: access } = useAccess();
-  const aiAllowed = canUseAIExplanation(access).allowed;
-  const saveAllowed = canSaveWord(access).allowed;
+  // AI runs only when the reader asks, and only for Premium. Free readers see
+  // the built-in dictionary answer and are told AI help exists, quietly.
+  const { context: access, tier } = useAccess();
+  const aiAllowed = canUseAI(access).allowed;
+  const saveDecision = canSaveNewWord(access);
+  const [reportState, setReportState] = useState<"idle" | "sending" | "error">("idle");
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [aiReported, setAiReported] = useState(false);
 
   const open = state !== null;
   const meaning = state?.meaning;
-  const saved = isReviewableWordStatus(state?.existingStatus);
-  const known = state?.existingStatus === "known";
+  const saved = state?.inReview === true;
+  const meaningHere = meaning && !meaning.abstained ? meaning.displayEnglish.trim() : "";
+  const newMeaningHere =
+    saved && meaningHere && state?.cardMeanings && !state.cardMeanings.some((m) => m.trim().toLowerCase() === meaningHere.toLowerCase())
+      ? meaningHere
+      : null;
   const isProperNoun = (meaning?.partOfSpeech ?? "").toLowerCase().includes("proper noun");
 
   const wordFamily = meaning ? getWordFamily(meaning.lemma ?? meaning.tappedText) : null;
@@ -114,6 +130,9 @@ export default function MeaningSheet({
     setReportReason(null);
     setReportSuggestion("");
     setReportSent(false);
+    setReportState("idle");
+    setReportError(null);
+    setAiReported(false);
   }, [meaning?.cacheKey]);
 
   async function handleAskAi() {
@@ -139,35 +158,82 @@ export default function MeaningSheet({
     }
   }
 
-  function handleSendReport() {
+  async function handleSendReport() {
     if (!meaning || !reportReason) return;
+    setReportState("sending");
+    setReportError(null);
+    const suggestion = reportSuggestion.trim() || null;
+    const result = await submitFeedback({
+      category: "translation_issue",
+      sentiment: "negative",
+      page: typeof window !== "undefined" ? window.location.pathname.slice(0, 300) : "/reader",
+      feature: `meaning:${meaning.source}`.slice(0, 80),
+      affectedTerm: meaning.displayFrench,
+      // The sentence helps fix the meaning — but never for imported (private) text.
+      comment: [
+        `Reason: ${reportReason}`,
+        `Shown: ${meaning.displayEnglish}`,
+        suggestion ? `Suggested: ${suggestion}` : null,
+        privateText ? null : `Sentence: ${meaning.contextSentence}`,
+      ]
+        .filter(Boolean)
+        .join("\n")
+        .slice(0, 2000),
+    });
+    if (!result.ok) {
+      setReportState("error");
+      setReportError(result.error);
+      return;
+    }
     recordTranslationReport({
       french: meaning.displayFrench,
       shownEnglish: meaning.displayEnglish,
       shownSource: meaning.source,
       reason: reportReason,
-      suggestion: reportSuggestion.trim() || null,
-      contextSentence: meaning.contextSentence,
-      articleTitle,
+      suggestion,
+      contextSentence: privateText ? "" : meaning.contextSentence,
+      articleTitle: privateText ? "" : articleTitle,
     });
+    setReportState("idle");
     setReportSent(true);
   }
 
-  const footer = isProperNoun || known ? (
-    <button onClick={onClose} className="min-h-12 w-full rounded-2xl bg-brand py-3 text-sm font-semibold text-cream">
-      {known ? "Already known" : "Close"}
-    </button>
-  ) : (
+  async function handleReportAi() {
+    if (!meaning || !aiResult) return;
+    const result = await submitFeedback({
+      category: "ai_output_issue",
+      sentiment: "negative",
+      page: typeof window !== "undefined" ? window.location.pathname.slice(0, 300) : "/reader",
+      feature: "ai:explain-word",
+      affectedTerm: meaning.displayFrench,
+      comment: `AI said: ${aiResult.translation} — ${aiResult.meaningInContext}`.slice(0, 2000),
+    });
+    setAiReported(result.ok);
+    if (!result.ok) setAiError(result.error);
+  }
+
+  // Exactly "Add to review" or "Remove from review" for a normal word; a name
+  // or place only closes (reviewMembership.ts).
+  // A meaning still being worked out (AI in flight) is not "no meaning".
+  const noMeaning = !!meaning?.abstained && !state?.resolving;
+  const control = reviewControlFor({ inReview: saved, isProperNoun, noMeaning });
+  const footer = (
     <button
-      onClick={() => (saved ? onUnsave?.() : onSave?.())}
-      aria-pressed={saved}
+      onClick={() => (control === "close" ? onClose() : control === "remove" ? onUnsave?.() : onSave?.())}
+      aria-pressed={control === "close" ? undefined : saved}
       className={`min-h-12 w-full rounded-2xl py-3 text-sm font-semibold ${
-        saved ? "bg-brand-light text-brand" : "bg-brand text-cream"
+        control === "remove" ? "bg-brand-light text-brand" : "bg-brand text-cream"
       }`}
     >
-      {saved ? "Remove from review" : saveAllowed ? "Add to review" : "Premium · Add to review"}
+      {REVIEW_CONTROL_LABEL[control]}
     </button>
   );
+  const saveHint =
+    control === "add" && !state?.hasCard && tier !== "premium"
+      ? saveDecision.allowed
+        ? `${(saveDecision.remaining ?? 0) + 1} of 5 free new saves left today`
+        : "You've used today's 5 free new saves"
+      : null;
 
   return (
     <BottomSheet
@@ -179,7 +245,7 @@ export default function MeaningSheet({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-french text-2xl font-bold leading-tight text-ink">{meaning?.displayFrench}</h3>
+          <h3 lang="fr" className="font-french text-2xl font-bold leading-tight text-ink">{meaning?.displayFrench}</h3>
           {/* Only when the reader tapped something smaller than the unit being
               explained — tapping "compte" inside "se rendre compte". */}
           {meaning?.partOfExpression && (
@@ -199,11 +265,22 @@ export default function MeaningSheet({
         </button>
       </div>
 
-      {state?.existingStatus && (
-        <p className="mt-2 text-xs font-semibold text-brand">
-          {STATUS_LABEL[state.existingStatus]}
-          {known ? " Known words are not added to Review." : ""}
-        </p>
+      {saved && <p className="mt-2 text-xs font-semibold text-brand">In your review</p>}
+      {/* One card per word, not per sense: when the word means something new
+          here, say so and let the reader keep it. Never "you already know this". */}
+      {saved && newMeaningHere && (
+        <div className="mt-2 rounded-2xl bg-cream px-3 py-2 text-xs text-ink-muted">
+          <p>
+            Your card has: <span className="font-semibold text-ink">{state?.cardMeanings?.slice(0, 2).join(", ")}</span>. Here it means:{" "}
+            <span className="font-semibold text-ink">{newMeaningHere}</span>.
+          </p>
+          <button type="button" onClick={() => onAddMeaning?.(newMeaningHere)} className="mt-1 font-semibold text-brand underline underline-offset-2">
+            Add this meaning to your card
+          </button>
+        </div>
+      )}
+      {control === "close" && noMeaning && !isProperNoun && (
+        <p className="mt-2 text-xs text-ink-muted">Words without a meaning here can&rsquo;t be added to review.</p>
       )}
 
       {/* The one authoritative answer. */}
@@ -250,20 +327,35 @@ export default function MeaningSheet({
       {meaning?.sentenceTranslation && (
         <div className="mt-2.5 rounded-2xl bg-cream-card/75 p-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-accent-pinktext">In this sentence</p>
-          <p className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
+          <p lang="fr" className="mt-1 font-french text-sm text-ink">{meaning.sentenceTranslation.french}</p>
           <p className="mt-1 text-sm font-semibold text-ink">{meaning.sentenceTranslation.english}</p>
         </div>
       )}
 
-      {/* Escalation for the two states where the local answer isn't trusted. */}
-      {aiAllowed && meaning && (meaning.abstained || meaning.confidence === "low") && aiState !== "ready" && (
-        <button
-          onClick={handleAskAi}
-          disabled={aiState === "loading"}
-          className="mt-2.5 min-h-12 w-full rounded-2xl bg-cream-card/75 py-3 text-sm font-semibold text-ink disabled:opacity-60"
-        >
-          {aiState === "loading" ? "Working it out…" : "Explain in context"}
-        </button>
+      {saveHint && <p className="mt-2 text-xs text-ink-muted">{saveHint}</p>}
+
+      {/* Where the offline answer isn't trusted, offer AI — it never runs on its own. */}
+      {meaning && (meaning.abstained || meaning.confidence === "low" || state?.aiSuggested) && aiState !== "ready" && (
+        aiAllowed ? (
+          <>
+            <button
+              onClick={handleAskAi}
+              disabled={aiState === "loading"}
+              className="mt-2.5 min-h-12 w-full rounded-2xl bg-cream-card/75 py-3 text-sm font-semibold text-ink disabled:opacity-60"
+            >
+              {aiState === "loading" ? "Working it out…" : "Explain with AI"}
+            </button>
+            <p className="mt-1 text-[11px] leading-snug text-ink-muted">Sends this sentence to OpenAI to explain the word. AI can make mistakes.</p>
+          </>
+        ) : (
+          <p className="mt-2.5 rounded-2xl bg-cream-card/60 p-3 text-xs leading-relaxed text-ink-muted">
+            This is the built-in dictionary&rsquo;s best guess for this sentence.{" "}
+            <Link href="/premium" className="font-semibold text-brand underline underline-offset-2">
+              AI explanations are part of Premium
+            </Link>
+            .
+          </p>
+        )
       )}
       {aiState === "error" && (
         <p className="mt-2 text-xs text-rose-700">
@@ -275,9 +367,17 @@ export default function MeaningSheet({
       )}
       {aiState === "ready" && aiResult && (
         <div className="mt-2.5 rounded-2xl bg-cream-card/75 p-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand">In context</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand">In context · AI</p>
           <p className="mt-1 text-lg font-bold text-ink">{aiResult.translation}</p>
           <p className="mt-1 text-sm text-ink">{aiResult.meaningInContext}</p>
+          <button
+            type="button"
+            onClick={() => void handleReportAi()}
+            disabled={aiReported}
+            className="mt-2 min-h-11 text-xs font-semibold text-ink-muted underline underline-offset-2 disabled:no-underline"
+          >
+            {aiReported ? "Reported — thank you" : "Report this AI answer"}
+          </button>
         </div>
       )}
 
@@ -299,7 +399,7 @@ export default function MeaningSheet({
           {meaning?.lemma && meaning.lemma !== meaning.displayFrench && (
             <Panel label="Dictionary form">
               <p className="font-french text-sm font-semibold text-ink">
-                {meaning.lemma}
+                <span lang="fr">{meaning.lemma}</span>
                 {meaning.lemmaGloss && <span className="font-sans font-normal text-ink-muted"> — {meaning.lemmaGloss}</span>}
               </p>
             </Panel>
@@ -316,7 +416,7 @@ export default function MeaningSheet({
               both inside "More meanings" and again in its own section. */}
           {meaning?.examples[0] && (
             <Panel label="Example">
-              <p className="font-french text-sm italic text-ink">{meaning.examples[0].fr}</p>
+              <p lang="fr" className="font-french text-sm italic text-ink">{meaning.examples[0].fr}</p>
               <p className="mt-0.5 text-sm text-ink-muted">{meaning.examples[0].en}</p>
               <div className="mt-2">
                 <PronounceButton
@@ -331,7 +431,7 @@ export default function MeaningSheet({
 
           {meaning?.contextSentence && (
             <Panel label="This sentence">
-              <p className="font-french text-sm italic text-ink">“{meaning.contextSentence}”</p>
+              <p lang="fr" className="font-french text-sm italic text-ink">“{meaning.contextSentence}”</p>
             </Panel>
           )}
 
@@ -363,18 +463,21 @@ export default function MeaningSheet({
             </Panel>
           )}
 
-          {aiAllowed && aiState === "idle" && !meaning?.abstained && meaning?.confidence !== "low" && (
-            <button
-              onClick={handleAskAi}
-              className="min-h-12 w-full rounded-2xl bg-cream-card/70 py-3 text-sm font-semibold text-ink"
-            >
-              Explain in context
-            </button>
+          {aiAllowed && aiState === "idle" && !meaning?.abstained && meaning?.confidence !== "low" && !state?.aiSuggested && (
+            <>
+              <button
+                onClick={handleAskAi}
+                className="min-h-12 w-full rounded-2xl bg-cream-card/70 py-3 text-sm font-semibold text-ink"
+              >
+                Explain with AI
+              </button>
+              <p className="text-[11px] leading-snug text-ink-muted">Sends this sentence to OpenAI. AI can make mistakes.</p>
+            </>
           )}
           {aiState === "ready" && aiResult && (
             <Panel label="Usage notes">
               <div className="rounded-xl bg-cream p-2">
-                <p className="font-french text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
+                <p lang="fr" className="font-french text-sm italic text-ink">{aiResult.simpleExampleFr}</p>
                 <p className="text-xs text-ink-muted">{aiResult.simpleExampleEn}</p>
               </div>
               {aiResult.grammarOrUsageNote && <p className="mt-2 text-xs text-ink-muted">{aiResult.grammarOrUsageNote}</p>}
@@ -409,7 +512,7 @@ export default function MeaningSheet({
               Report translation
             </summary>
             {reportSent ? (
-              <p className="mt-1 text-sm font-semibold text-brand">Thanks — that helps us fix it.</p>
+              <p role="status" className="mt-1 text-sm font-semibold text-brand">Thanks — your report was sent.</p>
             ) : (
               <div className="mt-1 space-y-2">
                 <p className="text-xs text-ink-muted">What&rsquo;s wrong with this meaning?</p>
@@ -436,14 +539,22 @@ export default function MeaningSheet({
                   aria-label="Suggested meaning"
                   className="w-full rounded-xl bg-cream-card px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-brand/30"
                 />
+                {privateText && (
+                  <p className="text-[11px] leading-snug text-ink-muted">This is your imported text, so the sentence itself isn&rsquo;t included in the report.</p>
+                )}
                 <button
                   type="button"
-                  onClick={handleSendReport}
-                  disabled={!reportReason}
+                  onClick={() => void handleSendReport()}
+                  disabled={!reportReason || reportState === "sending"}
                   className="min-h-12 w-full rounded-xl bg-brand py-2 text-sm font-semibold text-cream disabled:opacity-40"
                 >
-                  Send report
+                  {reportState === "sending" ? "Sending…" : "Send report"}
                 </button>
+                {reportError && (
+                  <p role="alert" className="text-xs text-rose-700">
+                    {reportError}
+                  </p>
+                )}
               </div>
             )}
           </details>

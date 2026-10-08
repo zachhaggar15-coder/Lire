@@ -1,4 +1,5 @@
 import { hashString } from "@/lib/hash";
+import { localStore } from "@/lib/localData/store";
 
 /**
  * Storage-agnostic cache contract. `CacheStore` is the only thing the AI
@@ -21,7 +22,7 @@ class LocalStorageCacheStore implements CacheStore {
   get<T>(key: string): T | null {
     if (!this.hasStorage()) return null;
     try {
-      const raw = window.localStorage.getItem(PREFIX + key);
+      const raw = localStore.getItem(PREFIX + key);
       return raw ? (JSON.parse(raw) as T) : null;
     } catch {
       return null;
@@ -31,7 +32,7 @@ class LocalStorageCacheStore implements CacheStore {
   set<T>(key: string, value: T): void {
     if (!this.hasStorage()) return;
     try {
-      window.localStorage.setItem(PREFIX + key, JSON.stringify(value));
+      localStore.setItem(PREFIX + key, JSON.stringify(value));
     } catch {
       // Storage full or unavailable — caching is a nice-to-have, not fatal.
     }

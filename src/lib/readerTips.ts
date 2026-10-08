@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 /**
  * One-time contextual tips shown inside real lessons (not the tutorial), so a
  * learner who skipped the walkthrough still gets the two things that matter
@@ -7,12 +8,12 @@
 
 export const READER_TIPS_KEY = "lire.readerTips.v1";
 
-export type ReaderTipId = "tap-word" | "first-save";
+export type ReaderTipId = "tap-word" | "first-save" | "daily-goal-offer";
 
 function readSeen(): Partial<Record<ReaderTipId, true>> {
   if (typeof window === "undefined" || !window.localStorage) return {};
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(READER_TIPS_KEY) ?? "{}");
+    const parsed = JSON.parse(localStore.getItem(READER_TIPS_KEY) ?? "{}");
     return parsed && typeof parsed === "object" ? parsed : {};
   } catch {
     return {};
@@ -28,7 +29,7 @@ export function hasSeenReaderTip(id: ReaderTipId): boolean {
 export function markReaderTipSeen(id: ReaderTipId): void {
   if (typeof window === "undefined" || !window.localStorage) return;
   try {
-    window.localStorage.setItem(READER_TIPS_KEY, JSON.stringify({ ...readSeen(), [id]: true }));
+    localStore.setItem(READER_TIPS_KEY, JSON.stringify({ ...readSeen(), [id]: true }));
   } catch {
     // Best-effort — worst case the tip shows once more.
   }

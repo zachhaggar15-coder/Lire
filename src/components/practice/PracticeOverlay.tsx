@@ -6,16 +6,19 @@ import type { PracticeActivity, PracticePlan } from "@/lib/practice/session";
 import { shuffledChipsFor, buildPracticePlan } from "@/lib/practice/session";
 import { checkReconstruction, type ReconstructionChip, type SentenceReconstructionExercise } from "@/lib/practice/sentenceReconstruction";
 import type { ClozeExercise } from "@/lib/practice/cloze";
-import { exerciseGlossFor } from "@/lib/practice/exerciseGloss";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { naturalSentenceTranslation } from "@/lib/practice/sentenceTranslation";
+import { useAccess } from "@/lib/access/useAccess";
+import { canUse } from "@/lib/access/accessModel";
 import { buildParaphraseExercise, checkParaphraseAnswer, pickParaphraseCandidateSentence, type ParaphraseExercise, type ParaphraseOption } from "@/lib/practice/paraphrase";
 import type { MeaningInferenceExercise } from "@/lib/practice/meaningInference";
 import { updateSessionPracticeStats, type PracticeExerciseType } from "@/lib/sessionRecord";
 import { useModalFocus } from "@/lib/useModalFocus";
 import { useDismissibleHistory } from "@/lib/useDismissibleHistory";
 import AppIcon from "@/components/AppIcon";
+import { editorialLevel } from "@/lib/readingLevel";
+import { getSelectedReadingLevel } from "@/lib/onboarding";
 
 interface PracticeOverlayProps {
   text: ReadingText;
@@ -57,6 +60,10 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   const paraphraseStartedRef = useRef(false);
   const modalRef = useModalFocus<HTMLDivElement>(true, onClose);
   useDismissibleHistory(true, onClose);
+  // The AI paraphrase activity is Premium, and never generated from imported
+  // (private) text — opening practice must not send that text anywhere.
+  const { context: access, ready: accessReady } = useAccess();
+  const aiPracticeAllowed = accessReady && canUse(access, "aiPractice").allowed && !text.id.startsWith("custom-");
 
   useEffect(() => {
     mountedRef.current = true;
@@ -66,8 +73,13 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
   }, []);
 
   useEffect(() => {
+    if (!accessReady) return;
     if (paraphraseStartedRef.current) return;
     paraphraseStartedRef.current = true;
+    if (!aiPracticeAllowed) {
+      setParaphraseChecked(true);
+      return;
+    }
     // Paraphrase generation is explicitly a nice-to-have addition on top of
     // the reconstruction/cloze activities that are already ready and
     // showing — nothing here, sync or async, may ever be allowed to crash
@@ -82,7 +94,7 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
         setParaphraseChecked(true);
         return;
       }
-      buildParaphraseExercise(candidate, text.title, `${text.difficulty} French learner`)
+      buildParaphraseExercise(candidate, text.title, `${editorialLevel(text) ?? getSelectedReadingLevel()} French learner`)
         .then((exercise) => {
           if (!mountedRef.current) return;
           if (exercise) setActivities((prev) => [...prev, { kind: "paraphrase", exercise }]);
@@ -94,9 +106,9 @@ export default function PracticeOverlay({ text, plan: initialPlan, onClose, onRe
     } catch {
       setParaphraseChecked(true);
     }
-    // Deliberately mount-only: this is a one-shot addition per practice session, not something that re-runs as activities change.
+    // One-shot per practice session, once entitlement is known; not re-run as activities change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [accessReady]);
 
   const activity = activities[index];
 
@@ -289,7 +301,7 @@ function ReconstructionActivity({
             {result === "correct" ? "Correct." : answerRevealed ? "Answer revealed." : "Not quite. Try once more or reveal the answer."}
           </p>
           {(result === "correct" || answerRevealed) && (
-            <p className="mt-1 font-french italic">{exercise.canonicalText}</p>
+            <p lang="fr" className="mt-1 font-french italic">{exercise.canonicalText}</p>
           )}
           {/* Semantic closure: the learner assembled the French, so confirm
               what they built. Only after a correct answer, and only when a
@@ -345,23 +357,17 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
 
   const [before, after] = exercise.prompt.split("___");
 
-  // Single-word blanks only — a "phrase" blank needs phrase-lookup, not the
-  // word dictionary, and showing a wrong/partial gloss would be worse than
-  // showing none.
-  //
-  // Deliberately not lookupWord(...).translations[0]: that reached past the
-  // resolver into raw position one of a bulk import, which is how `oignons`
-  // was clued as "arse". exerciseGlossFor applies the stricter standard
-  // teaching material needs, and returns null rather than guessing — in which
-  // case the hint is simply omitted.
-  const answerTranslation =
-    exercise.kind === "word"
-      ? exerciseGlossFor({ french: exercise.answer, sentence: exercise.prompt.replace("___", exercise.answer) })?.english ?? null
-      : null;
+  // The clue is the answer's own meaning in this sentence, settled when the
+  // exercise was built (cloze.ts). It is shown with the question because it
+  // is what makes one option the only right one.
+  const answerTranslation = exercise.clue;
 
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <p className="ligne-label">{exercise.kind === "word" ? "Word completion" : "Phrase completion"}</p>
+      <p className="ligne-label">Word completion</p>
+      <p className="mt-2 text-sm text-ink-muted">
+        Missing word: <span className="font-semibold text-ink">&ldquo;{answerTranslation}&rdquo;</span>
+      </p>
       <p className="mt-3 text-lg leading-relaxed text-ink">
         {before}
         <span
@@ -549,9 +555,9 @@ function InferenceActivity({
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
       <p className="ligne-label">Meaning from context</p>
-      <p className="mt-3 font-french text-lg leading-relaxed text-ink">{exercise.contextSentence}</p>
+      <p lang="fr" className="mt-3 font-french text-lg leading-relaxed text-ink">{exercise.contextSentence}</p>
       <p className="mt-3 text-sm text-ink-muted">
-        What does <span className="font-french font-bold text-ink">{challenge.word}</span> mean here?
+        What does <span lang="fr" className="font-french font-bold text-ink">{challenge.word}</span> mean here?
       </p>
 
       <div className="mt-4 grid gap-2" role="radiogroup" aria-label="Possible meanings">
@@ -585,7 +591,7 @@ function InferenceActivity({
 
       {challenge.frenchSynonym && (
         <p className="mt-3 text-xs text-ink-muted">
-          French synonym: <span className="font-french font-semibold text-ink">{challenge.frenchSynonym}</span>
+          French synonym: <span lang="fr" className="font-french font-semibold text-ink">{challenge.frenchSynonym}</span>
         </p>
       )}
       {answered && (

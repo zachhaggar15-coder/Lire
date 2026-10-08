@@ -37,7 +37,7 @@ export default function DictionaryQualityPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Corrections and gaps from your reading.</p>
 
       <section className="mb-5 grid grid-cols-3 gap-2">
@@ -105,7 +105,7 @@ export default function DictionaryQualityPage() {
           <ul className="space-y-3">
             {missingWords.slice(0, 25).map((word) => (
               <li key={word.word} className="rounded-card bg-cream-card p-4 shadow-card">
-                <p className="text-lg font-bold text-ink">{word.word}</p>
+                <p lang="fr" className="text-lg font-bold text-ink">{word.word}</p>
                 <p className="text-sm text-ink-muted">{word.articleContextSentence || "Saved without article context."}</p>
                 {word.sourceTextTitle && (
                   <span className="mt-2 inline-flex rounded-full bg-cream-dark px-2 py-0.5 text-xs text-ink-muted">{word.sourceTextTitle}</span>

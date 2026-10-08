@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { canSpeak, speakFrench, type SpeechRate } from "@/lib/speech";
 import { markAudioTipSeen, recordAudioPlayAndCheckTip } from "@/lib/audioTip";
-import { trackEvent } from "@/lib/analytics/client";
 
 interface PronounceButtonProps {
   text: string;
@@ -19,7 +18,6 @@ export default function PronounceButton({
   label = "Play audio",
   rate = "normal",
   className = "",
-  scope = "word",
 }: PronounceButtonProps) {
   const [available, setAvailable] = useState(false);
   const [showTip, setShowTip] = useState(false);
@@ -33,7 +31,6 @@ export default function PronounceButton({
   function handleClick() {
     const started = speakFrench(text, rate);
     if (!started) return;
-    trackEvent("audio_played", { scope });
     if (recordAudioPlayAndCheckTip()) setShowTip(true);
   }
 

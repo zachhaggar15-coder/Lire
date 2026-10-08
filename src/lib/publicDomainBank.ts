@@ -4,16 +4,20 @@ import { starterTexts } from "@/data/starterTexts";
 import { seededShuffle, todayKey } from "@/lib/rss/seededShuffle";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
 
-export const DAILY_BANK_ARTICLE_LIMIT = 8;
-/**
- * Total RSS articles fetched from /api/rss-texts for the live-news page.
- * Deliberately generous — the candidate pool is built from 30+ enabled
- * feeds, and this number (not the pool size) is what determines whether
- * the page ever feels thin or empty on a given day.
- */
-export const DAILY_RSS_ARTICLE_LIMIT = 24;
+import { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT } from "@/lib/dailyLimits";
+
+export { DAILY_BANK_ARTICLE_LIMIT, DAILY_RSS_ARTICLE_LIMIT };
 
 const CEFR_ORDER: Difficulty[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+/**
+ * Any built-in reading (Sorlio lesson or classic extract) by id — so a saved-
+ * for-later item is found wherever it came from, not only in today's pool.
+ */
+export function getBuiltInTextById(id: string): ReadingText | null {
+  const text = starterTexts.find((item) => item.id === id) ?? publicDomainTexts.find((item) => item.id === id);
+  return text ? stripMetadataOnlyBlurb(text) : null;
+}
 
 export function isPublicDomainBankText(text: ReadingText): boolean {
   return text.id.startsWith("pd-");

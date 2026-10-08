@@ -3,27 +3,29 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SavedWord } from "@/types";
-import { clearWords, deleteWord, getSavedWords } from "@/lib/storage";
-import { deletePhrase, getSavedPhrases, markPhraseKnown, type SavedPhrase } from "@/lib/phrases";
+import { addWordToReview, clearWords, deleteWord, getSavedWords, removeWordFromReview } from "@/lib/storage";
+import { isInReview, isMastered } from "@/lib/reviewMembership";
+import { deletePhrase, getSavedPhrases, isPhraseMastered, type SavedPhrase } from "@/lib/phrases";
+import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { formatDate, toPercent } from "@/lib/format";
+import { formatDate } from "@/lib/format";
 import { getWordFamily } from "@/lib/dictionary/wordFamily";
 import AppBar from "@/components/AppBar";
 import PronounceButton from "@/components/PronounceButton";
 
-type WordsFilter = "learning" | "unsure" | "known" | "missing";
+type WordsFilter = "in-review" | "not-in-review" | "missing";
 type VocabTab = "words" | "phrases";
 
+// A word is in Review or it is not — the same two states the reader shows.
 const FILTERS: { value: WordsFilter; label: string }[] = [
-  { value: "learning", label: "Learning" },
-  { value: "unsure", label: "Unsure" },
-  { value: "known", label: "Known" },
+  { value: "in-review", label: "In review" },
+  { value: "not-in-review", label: "Not in review" },
   { value: "missing", label: "Untranslated" },
 ];
 
 function matchesFilter(word: SavedWord, filter: WordsFilter): boolean {
   if (filter === "missing") return !!word.missingFromDictionary;
-  return word.status === filter;
+  return filter === "in-review" ? isInReview(word) : !isInReview(word);
 }
 
 function matchesQuery(word: SavedWord, q: string): boolean {
@@ -48,9 +50,10 @@ export default function WordsPage() {
   const [words, setWords] = useState<SavedWord[]>([]);
   const [phrases, setPhrases] = useState<SavedPhrase[]>([]);
   const [ready, setReady] = useState(false);
-  const [filter, setFilter] = useState<WordsFilter>("learning");
+  const [filter, setFilter] = useState<WordsFilter>("in-review");
   const [tab, setTab] = useState<VocabTab>("words");
   const [query, setQuery] = useState("");
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     setWords(getSavedWords());
@@ -62,37 +65,48 @@ export default function WordsPage() {
   }, []);
 
   function handleDelete(word: string) {
-    setWords(deleteWord(word));
+    const result = deleteWord(word);
+    setWords(result.words);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
+  }
+
+  /** Same toggle as the reader. Adding back an existing card is never a new save. */
+  function handleToggleReview(word: SavedWord) {
+    if (isInReview(word)) {
+      const result = removeWordFromReview(word.word, word.lemma);
+      setWords(result.words);
+      setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
+      return;
+    }
+    const result = addWordToReview(word);
+    setWords(result.words);
+    setSaveError(result.persisted ? null : persistenceFailureMessage("error"));
   }
 
   function handleClear() {
     if (words.length === 0) return;
     if (confirm("Delete all saved words?")) {
-      clearWords();
-      setWords([]);
+      const result = clearWords();
+      setWords(result.words);
+      setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
     }
   }
 
-  function handlePhraseKnown(phrase: string) {
-    setPhrases(markPhraseKnown(phrase));
-  }
-
   function handlePhraseDelete(phrase: string) {
-    setPhrases(deletePhrase(phrase));
+    const result = deletePhrase(phrase);
+    setPhrases(result.phrases);
+    setSaveError(result.ok ? null : persistenceFailureMessage(result.reason));
   }
 
   const counts: Record<WordsFilter, number> = {
-    learning: words.filter((word) => word.status === "learning").length,
-    unsure: words.filter((word) => word.status === "unsure").length,
-    known: words.filter((word) => word.status === "known").length,
+    "in-review": words.filter(isInReview).length,
+    "not-in-review": words.filter((word) => !isInReview(word)).length,
     missing: words.filter((word) => word.missingFromDictionary).length,
   };
 
   const q = query.trim().toLowerCase();
   const filtered = words.filter((word) => matchesFilter(word, filter) && (!q || matchesQuery(word, q)));
   const queriedPhrases = q ? phrases.filter((phrase) => matchesPhraseQuery(phrase, q)) : phrases;
-  const learningPhrases = queriedPhrases.filter((phrase) => phrase.status !== "known");
-  const knownPhrases = queriedPhrases.filter((phrase) => phrase.status === "known");
 
   return (
     <div className="ligne-screen">
@@ -100,7 +114,7 @@ export default function WordsPage() {
         title="Vocabulary"
         kicker="Saved from your texts"
         backHref="/settings"
-        backLabel="Back to Settings"
+        backLabel="Back to You"
         action={tab === "words" && words.length > 0 ? (
           <button type="button" onClick={handleClear} className="min-h-12 rounded-full px-3 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-rose-ink">
             Clear all
@@ -110,6 +124,11 @@ export default function WordsPage() {
       <p className="-mt-3 mb-5 text-sm text-ink-muted">
         {words.length} {words.length === 1 ? "word" : "words"} / {phrases.length} {phrases.length === 1 ? "phrase" : "phrases"}
       </p>
+      {saveError && (
+        <p role="alert" className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+          {saveError}
+        </p>
+      )}
 
       {(words.length > 0 || phrases.length > 0) && (
         <input
@@ -166,7 +185,7 @@ export default function WordsPage() {
           ) : (
             <ul className="space-y-3">
               {filtered.map((word) => (
-                <WordCard key={word.word} word={word} onDelete={handleDelete} />
+                <WordCard key={word.word} word={word} onDelete={handleDelete} onToggleReview={handleToggleReview} />
               ))}
             </ul>
           )}
@@ -182,8 +201,7 @@ export default function WordsPage() {
             <p className="mt-10 text-center text-sm text-ink-muted">No phrases match &quot;{query}&quot;.</p>
           ) : (
             <>
-              <PhraseList title="Learning" phrases={learningPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
-              <PhraseList title="Known" phrases={knownPhrases} onKnown={handlePhraseKnown} onDelete={handlePhraseDelete} />
+              <PhraseList title="In review" phrases={queriedPhrases} onDelete={handlePhraseDelete} />
             </>
           )}
         </div>
@@ -211,7 +229,16 @@ function EmptyState({ copy }: { copy: string }) {
  * should be as short as possible; someone who has opened their vocabulary list
  * has chosen to study, so density is a feature here rather than a cost.
  */
-function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string) => void }) {
+function WordCard({
+  word,
+  onDelete,
+  onToggleReview,
+}: {
+  word: SavedWord;
+  onDelete: (word: string) => void;
+  onToggleReview: (word: SavedWord) => void;
+}) {
+  const inReview = isInReview(word);
   const wordFamily = getWordFamily(word.lemma ?? word.word);
   const familyRows: [string, string[]][] = wordFamily
     ? [
@@ -235,7 +262,7 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <p className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
+            <p lang="fr" className="font-french text-[24px] leading-tight text-ink">{word.word}</p>
             {word.lemma && word.lemma !== word.word && (
               <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">({word.lemma})</span>
             )}
@@ -267,15 +294,15 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
           )}
           {word.partOfExpression && (
             <p className="mt-0.5 text-xs text-ink-muted">
-              Part of <span className="font-french font-semibold text-ink">{word.partOfExpression}</span>
+              Part of <span lang="fr" className="font-french font-semibold text-ink">{word.partOfExpression}</span>
             </p>
           )}
           {otherMeanings.length > 0 && <p className="mt-1 text-xs text-ink-muted">Also: {otherMeanings.join(", ")}</p>}
 
           {word.exampleSentenceFr && (
-            <p className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
+            <p lang="fr" className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
               {word.exampleSentenceFr}
-              <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>
+              {word.exampleSentenceEn && <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>}
             </p>
           )}
           {word.articleContextSentence && (
@@ -294,7 +321,7 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
                 {familyRows.map(([label, values]) => (
                   <p key={label} className="text-xs text-ink-muted">
                     <span className="font-mono uppercase tracking-[0.08em] text-ink-faint">{label}: </span>
-                    <span className="font-french text-ink">{values.join(", ")}</span>
+                    <span lang="fr" className="font-french text-ink">{values.join(", ")}</span>
                   </p>
                 ))}
               </div>
@@ -309,13 +336,22 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
             )}
             {word.savedAt && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
             {word.reviewCount > 0 && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
+            {isMastered(word) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Strong in Review</span>}
           </div>
+          <button
+            type="button"
+            onClick={() => onToggleReview(word)}
+            aria-pressed={inReview}
+            className={`mt-3 min-h-11 rounded-full px-4 text-sm font-semibold ${inReview ? "bg-brand-light text-brand" : "bg-brand text-cream"}`}
+          >
+            {inReview ? "Remove from review" : "Add to review"}
+          </button>
         </div>
 
         <button
           type="button"
           onClick={() => onDelete(word.word)}
-          aria-label={`Delete ${word.word}`}
+          aria-label={`Delete ${word.word} permanently`}
           className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-cream-fill text-rose-ink"
         >
           <span aria-hidden="true">x</span>
@@ -333,13 +369,12 @@ function WordCard({ word, onDelete }: { word: SavedWord; onDelete: (word: string
  * change. All the same numbers are still here, just condensed to one line.
  */
 function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
-  const known = phrases.filter((phrase) => phrase.status === "known").length;
+  const mastered = phrases.filter(isPhraseMastered).length;
   const contexts = new Set(phrases.map((phrase) => phrase.sourceTextTitle).filter(Boolean)).size;
-  const progress = phrases.length === 0 ? 0 : toPercent(known / phrases.length);
   return (
     <div className="flex items-center gap-2 rounded-full border border-cream-dark bg-cream-card py-1.5 pl-4 pr-1.5">
       <p className="min-w-0 flex-1 truncate text-sm text-ink-muted">
-        <span className="font-bold text-ink">{progress}% mastery</span> · {phrases.length} saved · {known} known
+        <span className="font-bold text-ink">{phrases.length} saved</span> · {mastered} strong
         {contexts > 0 ? ` · ${contexts} ${contexts === 1 ? "context" : "contexts"}` : ""}
       </p>
       <Link href="/review" className="ligne-pill shrink-0 bg-brand-light px-3 py-1.5 text-xs text-brand">
@@ -352,12 +387,10 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
 function PhraseList({
   title,
   phrases,
-  onKnown,
   onDelete,
 }: {
   title: string;
   phrases: SavedPhrase[];
-  onKnown: (phrase: string) => void;
   onDelete: (phrase: string) => void;
 }) {
   if (phrases.length === 0) return null;
@@ -370,10 +403,10 @@ function PhraseList({
           <li key={phrase.phrase} className="rounded-card border border-cream-dark bg-cream-card p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="font-french text-[22px] leading-tight text-ink">{phrase.phrase}</p>
+                <p lang="fr" className="font-french text-[22px] leading-tight text-ink">{phrase.phrase}</p>
                 <p className="mt-1 text-sm font-semibold text-ink">{phrase.translation}</p>
                 {phrase.contextSentence && (
-                  <p className="mt-2 line-clamp-2 font-french text-[15px] italic leading-snug text-ink-muted">"{phrase.contextSentence}"</p>
+                  <p lang="fr" className="mt-2 line-clamp-2 font-french text-[15px] italic leading-snug text-ink-muted">"{phrase.contextSentence}"</p>
                 )}
                 <div className="mt-3 flex flex-wrap gap-2 border-t border-cream-fill pt-3 text-xs text-ink-muted">
                   {phrase.sourceTextTitle && (
@@ -382,6 +415,7 @@ function PhraseList({
                     </span>
                   )}
                   <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
+                  {isPhraseMastered(phrase) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Strong</span>}
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
@@ -393,11 +427,6 @@ function PhraseList({
                 >
                   <span aria-hidden="true">x</span>
                 </button>
-                {phrase.status !== "known" && (
-                  <button type="button" onClick={() => onKnown(phrase.phrase)} className="ligne-pill bg-brand-light text-brand">
-                    Known
-                  </button>
-                )}
               </div>
             </div>
           </li>

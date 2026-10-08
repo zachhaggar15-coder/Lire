@@ -2,18 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { getArchive, estimateTimeSpentMinutes, type ArchiveEntry } from "@/lib/archive";
+import { getArchive, estimateTimeSpentMinutes, MAX_ARCHIVE_ENTRIES, type ArchiveEntry } from "@/lib/archive";
 import { getSavedWords } from "@/lib/storage";
+import { getTextById } from "@/data/texts";
+import { getCustomTextById } from "@/lib/customTexts";
+import { editorialLevel } from "@/lib/readingLevel";
 import { formatCategory, formatDate } from "@/lib/format";
 import { getCurrentStreak, getLongestStreak } from "@/lib/habit";
-import { getKnownWords } from "@/lib/knownWords";
-import { getTranslationBudgetRecords } from "@/lib/readingInsights";
-import {
-  buildCategoryProficiency,
-  buildWeeklyReadingReport,
-  type CategoryProficiency,
-  type WeeklyReadingReport,
-} from "@/lib/readingAnalytics";
 import AppBar from "@/components/AppBar";
 
 type SortKey = "date" | "time" | "words" | "difficulty";
@@ -29,7 +24,9 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
 
 interface Row {
   entry: ArchiveEntry;
-  wordsSaved: number;
+  /** Snapshot from completion; null on entries recorded before snapshots existed. */
+  wordsSaved: number | null;
+  /** Active reading minutes; null when not recorded (older entries). */
   minutesSpent: number | null;
 }
 
@@ -49,18 +46,15 @@ export default function ArchivePage() {
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [summary, setSummary] = useState<ArchiveSummary | null>(null);
-  const [weeklyReport, setWeeklyReport] = useState<WeeklyReadingReport | null>(null);
-  const [categoryProficiency, setCategoryProficiency] = useState<CategoryProficiency[]>([]);
 
   useEffect(() => {
     const now = new Date();
     const weekAgoMs = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     const entries = getArchive();
     const words = getSavedWords();
-    const knownWords = getKnownWords();
     const built = entries.map((entry) => ({
       entry,
-      wordsSaved: words.filter((w) => w.sourceTextTitle === entry.title).length,
+      wordsSaved: typeof entry.savedWordCount === "number" ? entry.savedWordCount : null,
       minutesSpent: estimateTimeSpentMinutes(entry),
     }));
     const weekRows = built.filter(({ entry }) => new Date(entry.completedAt).getTime() >= weekAgoMs);
@@ -86,8 +80,6 @@ export default function ArchivePage() {
       longestStreak: getLongestStreak(),
       topCategory: topCategory ? formatCategory(topCategory) : null,
     });
-    setWeeklyReport(buildWeeklyReadingReport(entries, words, knownWords, getTranslationBudgetRecords(), now));
-    setCategoryProficiency(buildCategoryProficiency(entries, knownWords));
     setReady(true);
   }, []);
 
@@ -105,9 +97,9 @@ export default function ArchivePage() {
         case "time":
           return (b.minutesSpent ?? -1) - (a.minutesSpent ?? -1);
         case "words":
-          return b.wordsSaved - a.wordsSaved;
+          return (b.wordsSaved ?? -1) - (a.wordsSaved ?? -1);
         case "difficulty":
-          return (CEFR_ORDER[b.entry.cefr ?? ""] ?? 0) - (CEFR_ORDER[a.entry.cefr ?? ""] ?? 0);
+          return (CEFR_ORDER[historyLevel(b.entry) ?? ""] ?? 0) - (CEFR_ORDER[historyLevel(a.entry) ?? ""] ?? 0);
         case "date":
         default:
           return new Date(b.entry.completedAt).getTime() - new Date(a.entry.completedAt).getTime();
@@ -117,8 +109,8 @@ export default function ArchivePage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
-      <p className="-mt-3 mb-5 text-sm text-ink-muted">Every article you&apos;ve marked as completed.</p>
+      <AppBar title="Reading history" kicker="Library" backHref="/settings" backLabel="Back to You" />
+      <p className="-mt-3 mb-5 text-sm text-ink-muted">Your most recent completed readings (up to {MAX_ARCHIVE_ENTRIES}).</p>
 
       {summary && (
         <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
@@ -146,45 +138,6 @@ export default function ArchivePage() {
         </section>
       )}
 
-      {weeklyReport && (
-        <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">This week</h2>
-          <div className="mt-3 space-y-2 text-sm text-ink">
-            <p>{weeklyReport.articlesCompleted} articles completed</p>
-            <p>{weeklyReport.frenchWordsRead.toLocaleString()} French words read</p>
-            <p>
-              Vocabulary coverage increased from {weeklyReport.coverageStart}% to {weeklyReport.coverageEnd}%
-            </p>
-            <p>{weeklyReport.movedToStable} words moved to stable</p>
-            <p>Most difficult area: {weeklyReport.mostDifficultArea ?? "not enough data yet"}</p>
-            <p>Strongest topic: {weeklyReport.strongestTopic ?? "not enough data yet"}</p>
-            <p>Next focus: {weeklyReport.nextFocus ?? "complete one article to unlock a useful suggestion"}</p>
-            {weeklyReport.translationBudgetTotal > 0 && (
-              <p>
-                Translation budget met on {weeklyReport.translationBudgetMet}/{weeklyReport.translationBudgetTotal} completed articles
-              </p>
-            )}
-          </div>
-        </section>
-      )}
-
-      {categoryProficiency.length > 0 && (
-        <section className="mb-5 rounded-card bg-cream-card p-4 shadow-card">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Topic proficiency</h2>
-          <div className="mt-3 space-y-2">
-            {categoryProficiency.map((item) => (
-              <div key={item.category} className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2">
-                <div>
-                  <p className="text-sm font-semibold text-ink">{item.label}</p>
-                  <p className="text-xs text-ink-muted">{item.articles} completed - {item.coverage}% coverage</p>
-                </div>
-                <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-brand">{item.cefr}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       {ready && rows.length === 0 && (
         <div className="mt-16 text-center">
           <p className="text-ink-muted">No completed articles yet.</p>
@@ -205,7 +158,7 @@ export default function ArchivePage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by title or source…"
-              aria-label="Search articles read"
+              aria-label="Search reading history"
               className="w-full rounded-2xl bg-cream-card px-3 py-2 text-sm text-ink shadow-card"
             />
             <div className="flex flex-wrap gap-1.5">
@@ -238,9 +191,9 @@ export default function ArchivePage() {
                         {entry.sourceName}
                       </span>
                     )}
-                    {entry.cefr && (
+                    {historyLevel(entry) && (
                       <span className="rounded-full bg-brand-light px-2 py-0.5 font-medium text-brand">
-                        {entry.cefr}
+                        {historyLevel(entry)}
                       </span>
                     )}
                     <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-medium text-emerald-700">
@@ -249,8 +202,12 @@ export default function ArchivePage() {
                   </div>
                   <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-muted">
                     <span>Completed {formatDate(entry.completedAt)}</span>
-                    {minutesSpent !== null && <span>· {minutesSpent} min spent</span>}
-                    {wordsSaved > 0 && (
+                    {minutesSpent !== null ? (
+                      <span>· {minutesSpent} min reading</span>
+                    ) : entry.minutes ? (
+                      <span>· about {entry.minutes} min</span>
+                    ) : null}
+                    {!!wordsSaved && (
                       <span>
                         · {wordsSaved} {wordsSaved === 1 ? "word" : "words"} saved
                       </span>
@@ -264,4 +221,15 @@ export default function ArchivePage() {
       )}
     </div>
   );
+}
+
+/**
+ * The reading's assigned level, looked up by id. Earlier builds stored the
+ * content estimate here, which is not a level (lib/readingLevel.ts), so the
+ * stored value is not shown; news, and readings no longer on this device,
+ * show none. The history record itself is left as it was.
+ */
+function historyLevel(entry: ArchiveEntry): string | null {
+  const text = getTextById(entry.textId) ?? getCustomTextById(entry.textId);
+  return text ? editorialLevel(text) : null;
 }

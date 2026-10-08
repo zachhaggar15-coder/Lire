@@ -1,12 +1,16 @@
 import type { Category, ReadingText, SavedWord } from "@/types";
 import { toPercent } from "@/lib/format";
 import type { ArchiveEntry } from "@/lib/archive";
-import { pushStore, recordStoreClear } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { getAllInferenceResults, getAllWordTaps, type StoredInference, type StoredWordTap } from "@/lib/wordLearning";
-import { getTranslationBudgetRecords } from "@/lib/readingInsights";
+import { getSecondPassRecords, getTranslationBudgetRecords } from "@/lib/readingInsights";
 import { tokenize } from "@/lib/words";
-import { getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
+import { getGrammarPracticeEvents, getGrammarProgress, VERB_LESSONS, STRUCTURE_LESSONS } from "@/lib/grammar";
 import { lireLevelFromXp, xpForLevel } from "@/lib/progression/lireLevel";
+import { localStore } from "@/lib/localData/store";
+import { isMastered } from "@/lib/reviewMembership";
+import { localDateKey, localDateKeyOf } from "@/lib/localDate";
+import { hasWordClass } from "@/lib/dictionary/partOfSpeech";
 
 export type XpEventType =
   | "article_completed"
@@ -27,10 +31,10 @@ export type XpEventType =
 export type MissionKind =
   | "complete_article"
   | "read_words"
-  | "translation_budget"
+  | "second_pass"
   | "infer_words"
   | "review_words"
-  | "no_full_translation";
+  | "grammar_practice";
 
 export type TranslationChallengeMode = "none" | "relaxed" | "balanced" | "ambitious";
 export type MasteryStage = "discovered" | "learning" | "recognised" | "reliable" | "mastered";
@@ -60,6 +64,8 @@ export interface ArticleCompletionRecord {
   title: string;
   sourceName: string | null;
   category: Category;
+  /** An imported text with no topic chosen: kept out of topic stats. */
+  topicUnset?: boolean;
   difficulty: string;
   completedAt: string;
   wordsRead: number;
@@ -114,15 +120,30 @@ export interface ReaderLevel {
   recentXp: number;
 }
 
+/**
+ * What the learner has done in a topic — activity, not ability. It used to
+ * carry a level badge and a vocabulary percentage computed from reading
+ * counts alone, which read as an assessment Sorlio never made.
+ */
 export interface TopicProgress {
   category: Category;
   label: string;
-  level: number;
-  progress: number;
   articlesCompleted: number;
-  averageComprehension: number;
-  vocabularyCoverage: number;
-  nextMilestone: string;
+  wordsRead: number;
+  /** Share of comprehension answers right, or null when none were answered. */
+  comprehensionPercent: number | null;
+}
+
+/**
+ * Comprehension across readings that had questions: answers right over
+ * answers given. Null when no question was answered — "not measured" is not
+ * 0%, which a genuine 0 of N still is.
+ */
+export function comprehensionPercent(items: Array<{ comprehensionCorrect: number; comprehensionTotal: number }>): number | null {
+  const answered = items.filter((item) => item.comprehensionTotal > 0);
+  const total = answered.reduce((sum, item) => sum + item.comprehensionTotal, 0);
+  if (total === 0) return null;
+  return Math.round((answered.reduce((sum, item) => sum + item.comprehensionCorrect, 0) / total) * 100);
 }
 
 export interface PersonalBest {
@@ -186,7 +207,8 @@ export interface ProgressSnapshot {
   currentStreak: number;
   longestStreak: number;
   weeklyWords: number;
-  weeklyComprehensionAverage: number;
+  /** Null when no comprehension question was answered this week. */
+  weeklyComprehensionAverage: number | null;
   weeklyReviewed: number;
   translationsPer100Words: number;
   activityStrip: { date: string; words: number; completed: boolean }[];
@@ -243,7 +265,7 @@ const ACHIEVEMENTS = [
   { id: "all-topics", title: "Across the Map", description: "Complete articles in every topic.", icon: "5", requirement: 5, xp: 100 },
   { id: "perfect-comprehension", title: "Clear Reading", description: "Earn a perfect comprehension result.", icon: "100", requirement: 1, xp: 60 },
   { id: "master-ten", title: "Ten Mastered Words", description: "Reach mastered stage on ten words.", icon: "M10", requirement: 10, xp: 100 },
-  { id: "translation-restraint", title: "Translation Restraint", description: "Finish an article inside a translation budget.", icon: "T", requirement: 1, xp: 40 },
+  { id: "second-reading", title: "Second Reading", description: "Read an article a second time.", icon: "2", requirement: 1, xp: 40 },
   { id: "three-day-streak", title: "Three-Day Streak", description: "Complete meaningful activity on three consecutive days.", icon: "3", requirement: 3, xp: 50 },
   { id: "seven-day-streak", title: "Seven-Day Streak", description: "Complete meaningful activity on seven consecutive days.", icon: "7", requirement: 7, xp: 100 },
   { id: "subjunctive-unlocked", title: "Subjunctive Unlocked", description: "Complete the present subjunctive formation lesson.", icon: "SUB", requirement: 1, xp: 40 },
@@ -255,15 +277,12 @@ function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
 }
 
-function localDate(date = new Date()): string {
-  const offset = date.getTimezoneOffset();
-  return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10);
-}
+const localDate = localDateKey;
 
 function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw = localStore.getItem(key);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(guard) : [];
   } catch {
@@ -273,8 +292,8 @@ function readArray<T>(key: string, guard: (value: unknown) => value is T): T[] {
 
 function persist(key: string, value: unknown): void {
   if (!hasStorage()) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  void pushStore(key);
+  localStore.writeItem(key, JSON.stringify(value));
+  notifyStoreChanged(key);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -412,10 +431,7 @@ export function calculateArticleScore(input: {
   if (input.inferenceAttempts > 0) {
     parts.push({ key: "inference", earned: (input.inferenceCorrect / input.inferenceAttempts) * 15, possible: 15 });
   }
-  if (input.translationBudget !== null) {
-    const ratio = input.translationsUsed <= input.translationBudget ? 1 : Math.max(0.35, input.translationBudget / Math.max(1, input.translationsUsed));
-    parts.push({ key: "translationIndependence", earned: ratio * 15, possible: 15 });
-  }
+  // No part for using fewer translations: needing help is not a lower score.
   parts.push({ key: "summary", earned: input.summaryCompleted ? 10 : 0, possible: 10 });
   const earned = parts.reduce((sum, part) => sum + part.earned, 0);
   const possible = parts.reduce((sum, part) => sum + part.possible, 0);
@@ -444,8 +460,6 @@ function personalBestIds(completion: Omit<ArticleCompletionRecord, "id" | "xpEar
   const bests: string[] = [];
   if (completion.wordsRead > Math.max(0, ...previous.map((item) => item.wordsRead))) bests.push("Most words read in one article");
   if (completion.score > Math.max(0, ...previous.map((item) => item.score))) bests.push("Highest article score");
-  const completedBudgets = previous.filter((item) => item.challengeCompleted).map((item) => item.translationsUsed);
-  if (completion.challengeCompleted && completion.translationsUsed <= Math.min(Infinity, ...completedBudgets)) bests.push("Fewest translations in a challenge");
   if (completion.comprehensionTotal > 0 && completion.comprehensionCorrect === completion.comprehensionTotal) bests.push("Perfect comprehension");
   return bests;
 }
@@ -453,7 +467,8 @@ function personalBestIds(completion: Omit<ArticleCompletionRecord, "id" | "xpEar
 export function recordGamifiedArticleCompletion(input: {
   text: ReadingText;
   difficulty: string;
-  openedAt: string | null;
+  /** Active reading minutes (archive.activeMinutesFromMs), or null when not tracked. */
+  activeMinutes?: number | null;
   completedAt?: string;
   wordsRead?: number;
   translationsUsed: number;
@@ -502,20 +517,19 @@ export function recordGamifiedArticleCompletion(input: {
       xpEarned += XP_RULES.summaryCompleted;
     }
   }
-  if (challengeCompleted) {
-    if (addXpEvent({ type: "translation_challenge_completed", relatedId: input.text.id, xp: XP_RULES.translationChallengeCompleted, idempotencyKey: `translation_challenge:${input.text.id}`, createdAt: completedAt }).awarded) {
-      xpEarned += XP_RULES.translationChallengeCompleted;
-    }
-  }
+  // Staying under a lookup limit earns nothing extra (see calculateArticleScore).
   const draft = {
     articleId: input.text.id,
     title: input.text.title,
     sourceName: input.text.sourceName ?? null,
     category: input.text.category,
+    ...(input.text.topicUnset ? { topicUnset: true } : {}),
     difficulty: input.difficulty,
     completedAt,
     wordsRead,
-    readingMinutes: input.openedAt ? Math.max(1, Math.round((new Date(completedAt).getTime() - new Date(input.openedAt).getTime()) / 60000)) : input.text.minutes,
+    // Active time, or the text's own length estimate — never opened-to-finished
+    // wall-clock time, which counted hours an article sat open unread.
+    readingMinutes: input.activeMinutes ?? input.text.minutes,
     translationsUsed: input.translationsUsed,
     fullTranslationUsed: input.fullTranslationUsed,
     savedWords: input.savedWords,
@@ -549,7 +563,7 @@ export function recordGamifiedArticleCompletion(input: {
 export function recordReviewSuccessXp(word: string): number {
   const today = localDate();
   const todayReviewXp = getXpEvents()
-    .filter((event) => event.type === "word_review_success" && event.createdAt.slice(0, 10) === today)
+    .filter((event) => event.type === "word_review_success" && localDateKeyOf(event.createdAt) === today)
     .reduce((sum, event) => sum + event.xp, 0);
   if (todayReviewXp >= XP_RULES.wordReviewDailyCap) return 0;
   const xp = Math.min(XP_RULES.wordReviewSuccess, XP_RULES.wordReviewDailyCap - todayReviewXp);
@@ -565,7 +579,7 @@ export function recordReviewSuccessXp(word: string): number {
 export function recordGrammarPracticeXp(questionId: string): number {
   const today = localDate();
   const todayGrammarXp = getXpEvents()
-    .filter((event) => event.type === "grammar_answer_correct" && event.createdAt.slice(0, 10) === today)
+    .filter((event) => event.type === "grammar_answer_correct" && localDateKeyOf(event.createdAt) === today)
     .reduce((sum, event) => sum + event.xp, 0);
   if (todayGrammarXp >= XP_RULES.grammarAnswerDailyCap) return 0;
   const xp = Math.min(XP_RULES.grammarAnswerCorrect, XP_RULES.grammarAnswerDailyCap - todayGrammarXp);
@@ -603,10 +617,13 @@ export function getDailyMissions(date = localDate()): MissionDefinition[] {
   const pool: MissionDefinition[] = [
     { id: "complete-article", kind: "complete_article", title: "Finish one article", description: "Complete one French article today.", icon: "B", requirement: 1, xp: 30 },
     { id: "read-800", kind: "read_words", title: "Read 800 words", description: "Read 800 French words today.", icon: "W", requirement: 800, xp: 40 },
-    { id: "translation-restraint", kind: "translation_budget", title: "Translation restraint", description: "Finish an article inside a translation budget.", icon: "T", requirement: 1, xp: 40 },
+    // Missions reward doing more, never needing less help: a lookup or the
+    // English text is normal learning. (Replaced "Translation restraint" and
+    // "Stay in French".)
+    { id: "second-pass", kind: "second_pass", title: "Read it again", description: "Read an article a second time.", icon: "2", requirement: 1, xp: 40 },
     { id: "infer-two", kind: "infer_words", title: "Infer from context", description: "Infer two words correctly before revealing English.", icon: "I", requirement: 2, xp: 35 },
     { id: "review-five", kind: "review_words", title: "Review five words", description: "Review five vocabulary cards.", icon: "R", requirement: 5, xp: 25 },
-    { id: "no-full-translation", kind: "no_full_translation", title: "Stay in French", description: "Complete an article without full-article translation.", icon: "F", requirement: 1, xp: 45 },
+    { id: "grammar-five", kind: "grammar_practice", title: "Practise grammar", description: "Answer five grammar questions.", icon: "G", requirement: 5, xp: 35 },
   ];
   return [pool[seed % pool.length], pool[(seed + 2) % pool.length], pool[(seed + 4) % pool.length]].filter(
     (mission, index, arr) => arr.findIndex((item) => item.id === mission.id) === index
@@ -614,13 +631,13 @@ export function getDailyMissions(date = localDate()): MissionDefinition[] {
 }
 
 function missionProgress(mission: MissionDefinition, date: string, completions: ArticleCompletionRecord[], words: SavedWord[], inferences: StoredInference[]): number {
-  const todayCompletions = completions.filter((item) => item.completedAt.slice(0, 10) === date);
+  const todayCompletions = completions.filter((item) => localDateKeyOf(item.completedAt) === date);
   if (mission.kind === "complete_article") return todayCompletions.length;
   if (mission.kind === "read_words") return todayCompletions.reduce((sum, item) => sum + item.wordsRead, 0);
-  if (mission.kind === "translation_budget") return todayCompletions.filter((item) => item.challengeCompleted).length;
-  if (mission.kind === "infer_words") return inferences.filter((item) => item.correct && item.answeredAt.slice(0, 10) === date).length;
-  if (mission.kind === "review_words") return words.filter((word) => word.lastReviewedAt?.slice(0, 10) === date).length;
-  if (mission.kind === "no_full_translation") return todayCompletions.filter((item) => !item.fullTranslationUsed).length;
+  if (mission.kind === "second_pass") return getSecondPassRecords().filter((record) => localDateKeyOf(record.completedAt) === date).length;
+  if (mission.kind === "infer_words") return inferences.filter((item) => item.correct && localDateKeyOf(item.answeredAt) === date).length;
+  if (mission.kind === "review_words") return words.filter((word) => (word.lastReviewedAt ? localDateKeyOf(word.lastReviewedAt) : null) === date).length;
+  if (mission.kind === "grammar_practice") return getGrammarPracticeEvents().filter((event) => localDateKeyOf(event.answeredAt) === date).length;
   return 0;
 }
 
@@ -662,9 +679,9 @@ export function awardCompletedMissions(date = localDate(), words: SavedWord[] = 
 }
 
 function completionDays(completions = getArticleCompletions(), events = getXpEvents()): Set<string> {
-  const days = new Set(completions.map((item) => item.completedAt.slice(0, 10)));
+  const days = new Set(completions.map((item) => localDateKeyOf(item.completedAt)));
   for (const event of events) {
-    if (event.type === "word_review_success" || event.type === "mission_completed") days.add(event.createdAt.slice(0, 10));
+    if (event.type === "word_review_success" || event.type === "mission_completed") days.add(localDateKeyOf(event.createdAt));
   }
   return days;
 }
@@ -702,7 +719,7 @@ function achievementProgress(id: string, completions: ArticleCompletionRecord[],
   if (id === "all-topics") return new Set(completions.map((item) => item.category)).size;
   if (id === "perfect-comprehension") return completions.some((item) => item.comprehensionTotal > 0 && item.comprehensionCorrect === item.comprehensionTotal) ? 1 : 0;
   if (id === "master-ten") return mastery.filter((item) => item.stage === "mastered").length;
-  if (id === "translation-restraint") return completions.some((item) => item.challengeCompleted) ? 1 : 0;
+  if (id === "second-reading") return getSecondPassRecords().length > 0 ? 1 : 0;
   if (id === "three-day-streak") return streak;
   if (id === "seven-day-streak") return streak;
   if (id === "subjunctive-unlocked") return getGrammarProgress().some((record) => record.lessonId === "subjonctif-present-formation" && record.completed) ? 1 : 0;
@@ -731,7 +748,7 @@ export function buildMastery(words: SavedWord[], taps: StoredWordTap[] = getAllW
     if ((word.reviewCount ?? 0) > 0 || contexts >= 2) stageIndex = 1;
     if ((word.correctCount ?? 0) >= 1 && contexts >= 2) stageIndex = 2;
     if ((word.correctCount ?? 0) >= 2 && contexts >= 3 && inferenceWins >= 1) stageIndex = 3;
-    if ((word.correctCount ?? 0) >= 4 && contexts >= 4 && word.status === "known") stageIndex = 4;
+    if ((word.correctCount ?? 0) >= 4 && contexts >= 4 && isMastered(word)) stageIndex = 4;
     return {
       word,
       stage: stages[stageIndex],
@@ -786,23 +803,13 @@ export function evaluateAndUnlockAchievements(words: SavedWord[] = []): Achievem
 export function buildTopicProgress(completions = getArticleCompletions()): TopicProgress[] {
   const categories: Category[] = ["news-style", "sport", "culture", "science", "everyday life"];
   return categories.map((category) => {
-    const items = completions.filter((item) => item.category === category);
-    const articlesCompleted = items.length;
-    const words = items.reduce((sum, item) => sum + item.wordsRead, 0);
-    const averageComprehension = Math.round(
-      (items.reduce((sum, item) => sum + (item.comprehensionTotal ? item.comprehensionCorrect / item.comprehensionTotal : 0), 0) / Math.max(1, items.filter((item) => item.comprehensionTotal > 0).length)) * 100
-    );
-    const level = Math.max(1, Math.floor(words / 900) + Math.floor(articlesCompleted / 3) + 1);
-    const nextWords = level * 900;
+    const items = completions.filter((item) => item.category === category && !item.topicUnset);
     return {
       category,
       label: CATEGORY_LABELS[category],
-      level,
-      progress: Math.min(1, words / nextWords),
-      articlesCompleted,
-      averageComprehension: Number.isFinite(averageComprehension) ? averageComprehension : 0,
-      vocabularyCoverage: Math.min(98, 72 + articlesCompleted * 4),
-      nextMilestone: `${Math.max(0, nextWords - words)} more words in ${CATEGORY_LABELS[category]}`,
+      articlesCompleted: items.length,
+      wordsRead: items.reduce((sum, item) => sum + item.wordsRead, 0),
+      comprehensionPercent: comprehensionPercent(items),
     };
   });
 }
@@ -815,7 +822,7 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
     { id: "sport", title: "Sport vocabulary", total: 30, match: (word: SavedWord) => word.sourceTextTitle.toLowerCase().includes("match") || word.partOfSpeech?.includes("sport"), description: "Competition, teams, results and form." },
     { id: "science", title: "Science vocabulary", total: 30, match: (word: SavedWord) => ["étude", "chercheur", "essai", "résultat", "risque"].includes(word.lemma ?? word.word), description: "Research, evidence and discovery." },
     { id: "opinion", title: "Opinion and argument", total: 30, match: (word: SavedWord) => ["critique", "soutenir", "dénoncer", "estimer"].includes(word.lemma ?? word.word), description: "Framing, stance and judgement." },
-    { id: "verbs", title: "Common verbs", total: 60, match: (word: SavedWord) => (word.partOfSpeech ?? "").toLowerCase().includes("verb"), description: "High-value verbs across topics." },
+    { id: "verbs", title: "Common verbs", total: 60, match: (word: SavedWord) => hasWordClass(word.partOfSpeech, "verb"), description: "High-value verbs across topics." },
     { id: "idioms", title: "Idioms and phrases", total: 25, match: (word: SavedWord) => (word.lemma ?? word.word).includes(" "), description: "Fixed expressions and reusable chunks." },
     { id: "culture", title: "Travel and culture", total: 35, match: (word: SavedWord) => word.sourceTextTitle.toLowerCase().includes("culture") || ["musée", "ville"].includes(word.lemma ?? word.word), description: "Places, culture and everyday movement." },
   ];
@@ -838,11 +845,12 @@ export function buildCollections(words: SavedWord[], mastery = buildMastery(word
 export function buildPersonalBests(completions = getArticleCompletions()): PersonalBest[] {
   const longest = [...completions].sort((a, b) => b.wordsRead - a.wordsRead)[0];
   const bestScore = [...completions].sort((a, b) => b.score - a.score)[0];
-  const strongestLevel = [...completions].sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
-  const fewestTranslations = [...completions].filter((item) => item.challengeCompleted).sort((a, b) => a.translationsUsed - b.translationsUsed)[0];
+  // Only readings with an assigned level count. News completions saved by
+  // earlier builds carry a blanket "B1" that was never a level.
+  const strongestLevel = [...completions].filter((item) => !item.articleId.startsWith("rss-") && /^[ABC][12]$/.test(item.difficulty)).sort((a, b) => ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(b.difficulty) - ["A1", "A2", "B1", "B2", "C1", "C2"].indexOf(a.difficulty))[0];
   const dayWords = new Map<string, number>();
   for (const completion of completions) {
-    const day = completion.completedAt.slice(0, 10);
+    const day = localDateKeyOf(completion.completedAt);
     dayWords.set(day, (dayWords.get(day) ?? 0) + completion.wordsRead);
   }
   const mostWords = [...dayWords.entries()].sort((a, b) => b[1] - a[1])[0];
@@ -850,7 +858,6 @@ export function buildPersonalBests(completions = getArticleCompletions()): Perso
     { id: "longest", title: "Longest article", value: longest ? `${longest.wordsRead} words` : "No record yet", detail: longest?.title ?? "Complete an article to set this." },
     { id: "highest-level", title: "Highest level article", value: strongestLevel?.difficulty ?? "No record yet", detail: strongestLevel?.title ?? "Try a stretch read." },
     { id: "best-score", title: "Highest article score", value: bestScore ? `${bestScore.score}/100` : "No record yet", detail: bestScore?.title ?? "Finish an article to score it." },
-    { id: "fewest-translations", title: "Fewest translations", value: fewestTranslations ? `${fewestTranslations.translationsUsed}` : "No record yet", detail: "Inside a completed challenge." },
     { id: "longest-streak", title: "Longest streak", value: `${longestStreak()} days`, detail: "Meaningful reading activity only." },
     { id: "most-words-day", title: "Most words in a day", value: mostWords ? `${mostWords[1]} words` : "No record yet", detail: mostWords?.[0] ?? "Read today to start." },
   ];
@@ -888,7 +895,7 @@ export function buildActivityStrip(completions = getArticleCompletions()): { dat
   const now = new Date();
   for (let i = 6; i >= 0; i--) {
     const date = localDate(new Date(now.getTime() - i * 24 * 60 * 60 * 1000));
-    const items = completions.filter((completion) => completion.completedAt.slice(0, 10) === date);
+    const items = completions.filter((completion) => localDateKeyOf(completion.completedAt) === date);
     out.push({ date, words: items.reduce((sum, item) => sum + item.wordsRead, 0), completed: items.length > 0 });
   }
   return out;
@@ -904,9 +911,7 @@ export function buildProgressSnapshot(words: SavedWord[], archive: ArchiveEntry[
   const weekStart = Date.now() - 7 * 24 * 60 * 60 * 1000;
   const weekly = completions.filter((item) => new Date(item.completedAt).getTime() >= weekStart);
   const weeklyWords = weekly.reduce((sum, item) => sum + item.wordsRead, 0);
-  const weeklyComprehensionAverage = Math.round(
-    (weekly.reduce((sum, item) => sum + (item.comprehensionTotal ? item.comprehensionCorrect / item.comprehensionTotal : 0), 0) / Math.max(1, weekly.filter((item) => item.comprehensionTotal > 0).length)) * 100
-  );
+  const weeklyComprehensionAverage = comprehensionPercent(weekly);
   const weeklyReviewed = words.filter((word) => word.lastReviewedAt && new Date(word.lastReviewedAt).getTime() >= weekStart).length;
   const translationsPer100Words = weeklyWords === 0 ? 0 : Math.round((weekly.reduce((sum, item) => sum + item.translationsUsed, 0) / weeklyWords) * 1000) / 10;
   void archive;
@@ -945,13 +950,10 @@ export function readingWordsFromText(text: ReadingText): number {
 }
 
 export function translationRecordsForToday(): number {
-  return getTranslationBudgetRecords().filter((record) => record.completedAt.slice(0, 10) === localDate()).length;
+  return getTranslationBudgetRecords().filter((record) => localDateKeyOf(record.completedAt) === localDate()).length;
 }
 
 export function clearGamificationStores(): void {
-  for (const key of [XP_EVENTS_KEY, COMPLETIONS_KEY, ACHIEVEMENTS_KEY, PASSPORT_KEY, MASTERY_KEY]) {
-    recordStoreClear(key);
-  }
   persist(XP_EVENTS_KEY, []);
   persist(COMPLETIONS_KEY, []);
   persist(ACHIEVEMENTS_KEY, []);

@@ -1,6 +1,5 @@
 "use client";
 
-import PremiumRouteGate from "@/components/PremiumRouteGate";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -71,9 +70,5 @@ function PracticePageClientContent({ id, initialText }: PracticePageClientProps)
 }
 
 export default function PracticePageClient(props: PracticePageClientProps) {
-  return (
-    <PremiumRouteGate feature="practice" loadingVariant="reader">
-      <PracticePageClientContent {...props} />
-    </PremiumRouteGate>
-  );
+  return <PracticePageClientContent {...props} />;
 }

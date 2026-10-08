@@ -1,3 +1,5 @@
+import { localStore } from "@/lib/localData/store";
+import { localDateKey } from "@/lib/localDate";
 /**
  * When to invite a learner to rate Sorlio on Google Play.
  *
@@ -8,16 +10,24 @@
  */
 
 export const RATE_PROMPT_KEY = "lire.ratePrompt.v1";
-export const LESSONS_BEFORE_RATE_PROMPT = 3;
+/**
+ * Asked only once Sorlio has had a fair hearing: several completed lessons,
+ * on more than one day. (It used to ask after 3 lessons, possibly all in the
+ * first sitting.)
+ */
+export const LESSONS_BEFORE_RATE_PROMPT = 7;
+export const DAYS_BEFORE_RATE_PROMPT = 3;
 export const DAYS_BETWEEN_RATE_PROMPTS = 60;
 
 export interface RatePromptState {
   lessonsCompleted: number;
+  /** Local calendar days on which a lesson was completed (a few recent ones). */
+  activeDays: string[];
   lastShownAt: string | null;
   ratedAt: string | null;
 }
 
-const EMPTY: RatePromptState = { lessonsCompleted: 0, lastShownAt: null, ratedAt: null };
+const EMPTY: RatePromptState = { lessonsCompleted: 0, activeDays: [], lastShownAt: null, ratedAt: null };
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -26,10 +36,11 @@ function hasStorage(): boolean {
 export function getRatePromptState(): RatePromptState {
   if (!hasStorage()) return EMPTY;
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(RATE_PROMPT_KEY) ?? "null");
+    const parsed = JSON.parse(localStore.getItem(RATE_PROMPT_KEY) ?? "null");
     if (!parsed || typeof parsed !== "object") return EMPTY;
     return {
       lessonsCompleted: typeof parsed.lessonsCompleted === "number" ? parsed.lessonsCompleted : 0,
+      activeDays: Array.isArray(parsed.activeDays) ? parsed.activeDays.filter((day: unknown): day is string => typeof day === "string") : [],
       lastShownAt: typeof parsed.lastShownAt === "string" ? parsed.lastShownAt : null,
       ratedAt: typeof parsed.ratedAt === "string" ? parsed.ratedAt : null,
     };
@@ -41,7 +52,7 @@ export function getRatePromptState(): RatePromptState {
 function save(state: RatePromptState): void {
   if (!hasStorage()) return;
   try {
-    window.localStorage.setItem(RATE_PROMPT_KEY, JSON.stringify(state));
+    localStore.setItem(RATE_PROMPT_KEY, JSON.stringify(state));
   } catch {
     // Best-effort — worst case the prompt timing resets.
   }
@@ -52,14 +63,17 @@ export function isEligibleForRatePrompt(state: RatePromptState, isAndroidApp: bo
   if (!isAndroidApp) return false;
   if (state.ratedAt) return false;
   if (state.lessonsCompleted < LESSONS_BEFORE_RATE_PROMPT) return false;
+  if (new Set(state.activeDays).size < DAYS_BEFORE_RATE_PROMPT) return false;
   if (!state.lastShownAt) return true;
   const daysSinceShown = (now.getTime() - new Date(state.lastShownAt).getTime()) / (24 * 60 * 60 * 1000);
   return daysSinceShown >= DAYS_BETWEEN_RATE_PROMPTS;
 }
 
-export function recordLessonCompletedForRating(): RatePromptState {
+export function recordLessonCompletedForRating(now: Date = new Date()): RatePromptState {
   const next = { ...getRatePromptState() };
   next.lessonsCompleted += 1;
+  const today = localDateKey(now);
+  if (!next.activeDays.includes(today)) next.activeDays = [...next.activeDays, today].slice(-10);
   save(next);
   return next;
 }

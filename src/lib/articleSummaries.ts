@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 /**
  * Persistence for the reader's "Summarise it" box.
  *
@@ -8,13 +9,14 @@
  * boolean for the completion gamification. Keeping it means a second pass on
  * an article can show what you understood the first time.
  *
- * Stored per article id, oldest entries evicted past MAX_SUMMARIES so this
- * can't become the next unbounded consumer of the localStorage quota (see
- * the article translation cache in dictionary/articleTranslation.ts).
+ * Stored per article id, at most MAX_SUMMARIES so this can't become the next
+ * unbounded consumer of the localStorage quota. These are the reader's own
+ * words, so reaching the limit refuses a new summary (and says so) rather
+ * than silently dropping the oldest one, as it used to.
  */
 
 const KEY = "lire.articleSummaries.v1";
-const MAX_SUMMARIES = 200;
+export const MAX_SUMMARIES = 200;
 /** Longer than any reasonable summary; guards against a runaway paste filling storage. */
 const MAX_SUMMARY_LENGTH = 4000;
 
@@ -43,7 +45,7 @@ function normalize(entry: unknown): ArticleSummary | null {
 function readAll(): ArticleSummary[] {
   if (!hasStorage()) return [];
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(KEY) ?? "null");
+    const parsed = JSON.parse(localStore.getItem(KEY) ?? "null");
     if (!Array.isArray(parsed)) return [];
     return parsed.map(normalize).filter((entry): entry is ArticleSummary => entry !== null);
   } catch {
@@ -56,21 +58,31 @@ export function getArticleSummary(textId: string): string {
   return readAll().find((entry) => entry.textId === textId)?.summary ?? "";
 }
 
+export type SaveSummaryResult = "saved" | "cleared" | "limit" | "failed";
+
 /**
  * Saves (or clears, when blank) the summary for one article. Never throws —
- * a failed write costs the draft, not the reading session.
+ * a failed write costs the draft, not the reading session. A new summary when
+ * MAX_SUMMARIES are already kept is refused ("limit"); editing or clearing an
+ * existing one always works.
  */
-export function saveArticleSummary(textId: string, summary: string): void {
-  if (!hasStorage()) return;
+export function saveArticleSummary(textId: string, summary: string): SaveSummaryResult {
+  if (!hasStorage()) return "failed";
   const trimmed = summary.trim().slice(0, MAX_SUMMARY_LENGTH);
-  const others = readAll().filter((entry) => entry.textId !== textId);
+  const all = readAll();
+  const others = all.filter((entry) => entry.textId !== textId);
+  const isNew = others.length === all.length;
+  if (trimmed && isNew && all.length >= MAX_SUMMARIES) return "limit";
+  if (!trimmed && isNew) return "cleared";
   const next = trimmed
     ? [{ textId, summary: trimmed, updatedAt: new Date().toISOString() }, ...others]
     : others;
 
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(next.slice(0, MAX_SUMMARIES)));
+    localStore.setItem(KEY, JSON.stringify(next));
+    return trimmed ? "saved" : "cleared";
   } catch {
     // Storage full or unavailable — nothing useful to do here.
+    return "failed";
   }
 }

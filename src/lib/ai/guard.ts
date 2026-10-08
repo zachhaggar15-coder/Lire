@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { authenticatedUser } from "@/lib/premium/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
+import { AI_FRESH_MS, currentEntitlement } from "@/lib/premium/entitlement";
+import { googlePlayApi } from "@/lib/premium/googlePlay";
+import { recordOpsEvent } from "@/lib/server/ops";
+import { AiNotConfiguredError, AiProviderError } from "@/lib/ai/openai";
 
 /**
  * The gate in front of every AI route.
@@ -27,7 +31,7 @@ export function dailyAiCallLimit(): number {
 }
 
 export interface AiCaller {
-  entitlement: "subscription" | "closed-test";
+  entitlement: "subscription";
   userId: string | null;
   client: SupabaseClient | null;
 }
@@ -36,27 +40,14 @@ export interface AiCaller {
 export type AiGateResult = { ok: true; caller: AiCaller } | { ok: false; response: NextResponse };
 
 /**
- * Subscription state as this project already models it.
- *
- * Reads the stored entitlement rather than re-verifying against Google on
- * every AI call: /api/premium/status re-verifies whenever the client loads,
- * so the row is kept fresh there. Doing it here too would add a Google
- * round-trip to every explanation for no extra safety.
- *
- * "cancelled" still counts while unexpired — a reader who cancelled has paid
- * through the end of the period and should keep what they paid for.
+ * Premium, as decided by the server's entitlement authority. A stored
+ * subscription older than AI_FRESH_MS is re-verified with Google before it can
+ * spend money, so a refund or revocation is noticed within a day even if the
+ * Real-time Developer Notification was missed.
  */
 async function hasActivePremium(client: SupabaseClient, userId: string): Promise<boolean> {
-  const { data } = await client
-    .from("sorlio_subscriptions")
-    .select("status,expires_at")
-    .eq("user_id", userId)
-    .maybeSingle();
-  if (!data) return false;
-
-  const expiresAt = data.expires_at as string | null;
-  const withinPaidPeriod = !!expiresAt && new Date(expiresAt).getTime() > Date.now();
-  return ["active", "grace_period", "cancelled"].includes(data.status as string) && withinPaidPeriod;
+  const view = await currentEntitlement({ db: client, play: googlePlayApi, userId, freshMs: AI_FRESH_MS });
+  return view.isPremium;
 }
 
 /**
@@ -91,7 +82,20 @@ export async function requirePaidAiCaller(request: Request): Promise<AiGateResul
     };
   }
 
-  if (!(await hasActivePremium(client, user.id))) {
+  let premium: boolean;
+  try {
+    premium = await hasActivePremium(client, user.id);
+  } catch {
+    void recordOpsEvent("billing.verify_unavailable");
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { error: "AI help isn't available right now. Please try again shortly.", code: "entitlement_unavailable" },
+        { status: 503 }
+      ),
+    };
+  }
+  if (!premium) {
     return {
       ok: false,
       response: NextResponse.json(
@@ -109,16 +113,18 @@ export async function requirePaidAiCaller(request: Request): Promise<AiGateResul
   // A missing function means migration 0008 has not been applied. Fail closed:
   // an unmetered AI endpoint is the exact problem this file exists to prevent.
   if (error) {
+    void recordOpsEvent("ai.quota_unavailable");
     return {
       ok: false,
       response: NextResponse.json(
-        { error: "AI is temporarily unavailable.", code: "quota_unavailable" },
+        { error: "AI help isn't available right now. Please try again shortly.", code: "quota_unavailable" },
         { status: 503 }
       ),
     };
   }
 
   if (allowed !== true) {
+    void recordOpsEvent("ai.quota_exhausted");
     return {
       ok: false,
       response: NextResponse.json(
@@ -143,16 +149,54 @@ export const MAX_TEXT_CHARS = 2_000;
 export const MAX_TITLE_CHARS = 300;
 export const MAX_ARTICLE_SENTENCES = 200;
 export const MAX_ARTICLE_TOTAL_CHARS = 60_000;
+/** Largest request body any AI route will read (an article at the caps above is well under this). */
+export const MAX_AI_BODY_BYTES = 256 * 1024;
+
+/**
+ * Reads a JSON body without trusting its size: a declared or actual body over
+ * the limit is refused before parsing. Called after requirePaidAiCaller, so an
+ * unauthenticated caller never gets as far as the body.
+ */
+export async function readJsonBody(request: Request, maxBytes = MAX_AI_BODY_BYTES): Promise<{ ok: true; value: Record<string, unknown> } | { ok: false; response: NextResponse }> {
+  const tooLarge = () => ({ ok: false as const, response: NextResponse.json({ error: "That request is too large." }, { status: 413 }) });
+  const declared = Number(request.headers.get("content-length") ?? 0);
+  if (Number.isFinite(declared) && declared > maxBytes) return tooLarge();
+  let text: string;
+  try {
+    text = await request.text();
+  } catch {
+    return { ok: false, response: NextResponse.json({ error: "Invalid request." }, { status: 400 }) };
+  }
+  if (Buffer.byteLength(text) > maxBytes) return tooLarge();
+  try {
+    const value = JSON.parse(text);
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("not an object");
+    return { ok: true, value: value as Record<string, unknown> };
+  } catch {
+    return { ok: false, response: NextResponse.json({ error: "Invalid request." }, { status: 400 }) };
+  }
+}
+
+/** Paragraph starts as sentence indices: strictly increasing, each within the article. */
+export function validParagraphBreaks(value: unknown, sentenceCount: number): value is number[] {
+  if (!Array.isArray(value) || value.length > sentenceCount) return false;
+  let previous = -1;
+  for (const index of value) {
+    if (typeof index !== "number" || !Number.isInteger(index) || index <= previous || index >= sentenceCount) return false;
+    previous = index;
+  }
+  return true;
+}
 
 /** Rejects a field that is missing, empty, or implausibly long. */
 export function requireText(value: unknown, field: string, max = MAX_TEXT_CHARS): { ok: true; value: string } | { ok: false; response: NextResponse } {
   if (typeof value !== "string" || !value.trim()) {
-    return { ok: false, response: NextResponse.json({ error: `'${field}' is a required string.` }, { status: 400 }) };
+    return { ok: false, response: NextResponse.json({ error: "Something was missing from the request.", field }, { status: 400 }) };
   }
   if (value.length > max) {
     return {
       ok: false,
-      response: NextResponse.json({ error: `'${field}' is too long (max ${max} characters).` }, { status: 400 }),
+      response: NextResponse.json({ error: "That's too much text for AI help in one go.", field }, { status: 400 }),
     };
   }
   return { ok: true, value };
@@ -161,4 +205,29 @@ export function requireText(value: unknown, field: string, max = MAX_TEXT_CHARS)
 /** Truncates an optional field instead of rejecting it — context is nice to have, never worth a 400. */
 export function optionalText(value: unknown, max = MAX_TEXT_CHARS): string | null {
   return typeof value === "string" && value ? value.slice(0, max) : null;
+}
+
+/**
+ * The learner level put into prompts. Only the six CEFR codes are accepted;
+ * anything else (including free text a client might send to steer the model)
+ * falls back to the default. The level never reaches the prompt verbatim.
+ */
+const CEFR = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
+export function learnerLevel(value: unknown): string {
+  const code = typeof value === "string" ? value.trim().toUpperCase().slice(0, 2) : "";
+  return CEFR.has(code) ? `CEFR ${code} French learner` : "A2/B1 French learner";
+}
+
+/**
+ * Turns any AI failure into a short, honest message. Provider details are
+ * never returned to the client.
+ */
+export function aiFailureResponse(error: unknown): NextResponse {
+  if (error instanceof AiNotConfiguredError) {
+    void recordOpsEvent("ai.not_configured");
+    return NextResponse.json({ error: "AI help isn't available right now.", code: "not_configured" }, { status: 503 });
+  }
+  void recordOpsEvent("ai.provider_error");
+  if (error instanceof AiProviderError) console.warn(JSON.stringify({ sorlio_ai_provider_status: error.status }));
+  return NextResponse.json({ error: "AI help couldn't answer just now. Please try again.", code: "provider_error" }, { status: 502 });
 }

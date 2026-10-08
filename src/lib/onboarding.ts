@@ -1,9 +1,10 @@
 import type { Category, Difficulty } from "@/types";
 import { nudgeTopicPreference } from "@/lib/recommendation/interests";
 import { notifyRecommendationPreferencesChanged } from "@/lib/recommendation/preferences";
-import { pushStore } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
 import { saveGoals, type ReadingGoals } from "@/lib/goals";
-import { knownWordEstimateForLevel, seedKnownWordsForLevel } from "@/lib/knownWordBootstrap";
+import { vocabularyEstimateForLevel } from "@/lib/vocabulary/levelEstimates";
+import { localStore } from "@/lib/localData/store";
 
 export const ONBOARDING_KEY = "lire.onboarding.v1";
 
@@ -12,13 +13,21 @@ export interface OnboardingState {
   level: Difficulty;
   topics: Category[];
   goalPreset?: OnboardingGoal;
+  /** Typical vocabulary size for the level — an estimate, see vocabulary/estimatedVocabulary.ts. */
   estimatedKnownWords: number;
+  /** Legacy: how many lemmas older builds seeded into lire.knownWords.v1. Nothing seeds now. */
   seededKnownWords: number;
   updatedAt: string;
   /** Whether the interactive walkthrough (tap/save/audio/practice demo) has been finished or explicitly skipped — separate from `completed`, which only covers the level/topic/goal picker. */
   walkthroughCompleted: boolean;
   /** Which walkthrough step to resume at if the app was closed mid-walkthrough. Null once completed/skipped, or if never started. */
   walkthroughStep: number | null;
+  /**
+   * True only after "Replay the tutorial". First run no longer includes the
+   * tour: new learners go from choosing a level straight into a reading, and
+   * each interaction is explained the first time it matters.
+   */
+  walkthroughReplay?: boolean;
 }
 
 const DEFAULT_LEVEL: Difficulty = "A1";
@@ -46,7 +55,7 @@ function hasStorage(): boolean {
 export function getOnboardingState(): OnboardingState | null {
   if (!hasStorage()) return null;
   try {
-    const raw = window.localStorage.getItem(ONBOARDING_KEY);
+    const raw = localStore.getItem(ONBOARDING_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (!parsed || typeof parsed !== "object") return null;
     return {
@@ -60,11 +69,12 @@ export function getOnboardingState(): OnboardingState | null {
       estimatedKnownWords:
         typeof parsed.estimatedKnownWords === "number"
           ? parsed.estimatedKnownWords
-          : knownWordEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
+          : vocabularyEstimateForLevel(parsed.level ?? DEFAULT_LEVEL),
       seededKnownWords: typeof parsed.seededKnownWords === "number" ? parsed.seededKnownWords : 0,
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
       walkthroughCompleted: parsed.walkthroughCompleted === true,
       walkthroughStep: typeof parsed.walkthroughStep === "number" ? parsed.walkthroughStep : null,
+      walkthroughReplay: parsed.walkthroughReplay === true,
     };
   } catch {
     return null;
@@ -80,61 +90,34 @@ export function getSelectedReadingLevel(): Difficulty {
   return getOnboardingState()?.level ?? DEFAULT_LEVEL;
 }
 
-/** Writes back just the seeded-word count once background seeding finishes. */
-function recordSeededKnownWords(seededWords: number): void {
-  if (!hasStorage()) return;
-  const current = getOnboardingState();
-  if (!current) return;
-  try {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, seededKnownWords: seededWords }));
-    void pushStore(ONBOARDING_KEY);
-  } catch {
-    // The seeded count is informational; known words themselves are already saved.
-  }
-  // The dashboard rendered its counts before this finished, so it's still
-  // showing "0 known". Nudge subscribed screens to re-read.
-  notifyRecommendationPreferencesChanged();
-}
-
 /**
- * Stays synchronous even though known-word seeding is now async (the broad
- * dictionary it needs is fetched on demand rather than bundled — see
- * data/dictionaries/generated/fr-en-generated.ts). Onboarding finishes
- * immediately and the seeding lands in the background a moment later, which
- * is also the better interaction: "Save start point" shouldn't sit there
- * waiting on a multi-megabyte download before letting anyone read.
+ * Records the starting point. The level informs difficulty and
+ * recommendations through an estimate computed from it on demand
+ * (vocabulary/estimatedVocabulary.ts); it no longer seeds hundreds or
+ * thousands of "known" words, which the reader then treated as words the
+ * learner had individually marked.
  */
 export function saveOnboarding(
   level: Difficulty,
   topics: Category[],
-  goalPreset?: OnboardingGoal,
-  options: { seedKnownWords?: boolean } = {}
+  goalPreset?: OnboardingGoal
 ): OnboardingState {
-  const shouldSeedKnownWords = options.seedKnownWords ?? true;
   const next: OnboardingState = {
     completed: true,
     level,
     topics,
     goalPreset,
-    estimatedKnownWords: knownWordEstimateForLevel(level),
+    estimatedKnownWords: vocabularyEstimateForLevel(level),
     seededKnownWords: 0,
     updatedAt: new Date().toISOString(),
-    walkthroughCompleted: false,
+    walkthroughCompleted: true,
     walkthroughStep: null,
   };
 
   if (hasStorage()) {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
-    void pushStore(ONBOARDING_KEY);
+    localStore.setItem(ONBOARDING_KEY, JSON.stringify(next));
+    notifyStoreChanged(ONBOARDING_KEY);
     notifyRecommendationPreferencesChanged();
-  }
-
-  if (shouldSeedKnownWords) {
-    void seedKnownWordsForLevel(level)
-      .then((seed) => recordSeededKnownWords(seed.seededWords))
-      .catch(() => {
-        // Seeding is an optimisation for recommendations, not a hard requirement.
-      });
   }
 
   for (const topic of topics) {
@@ -146,6 +129,18 @@ export function saveOnboarding(
   return next;
 }
 
+/**
+ * A daily goal, chosen after the first reading rather than at sign-up (it is
+ * offered once on the completion screen and can be declined).
+ */
+export function setGoalPreset(goal: OnboardingGoal): void {
+  const current = getOnboardingState();
+  if (!current || !hasStorage()) return;
+  localStore.writeItem(ONBOARDING_KEY, JSON.stringify({ ...current, goalPreset: goal, updatedAt: new Date().toISOString() }));
+  notifyStoreChanged(ONBOARDING_KEY);
+  saveGoals(GOAL_PRESETS[goal]);
+}
+
 export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
   const current = getOnboardingState();
   const next: OnboardingState = {
@@ -153,7 +148,7 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
     level,
     topics: current?.topics ?? [],
     goalPreset: current?.goalPreset,
-    estimatedKnownWords: knownWordEstimateForLevel(level),
+    estimatedKnownWords: vocabularyEstimateForLevel(level),
     seededKnownWords: current?.seededKnownWords ?? 0,
     updatedAt: new Date().toISOString(),
     walkthroughCompleted: current?.walkthroughCompleted ?? false,
@@ -161,8 +156,8 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
   };
 
   if (hasStorage()) {
-    window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify(next));
-    void pushStore(ONBOARDING_KEY);
+    localStore.setItem(ONBOARDING_KEY, JSON.stringify(next));
+    notifyStoreChanged(ONBOARDING_KEY);
     notifyRecommendationPreferencesChanged();
   }
 
@@ -170,26 +165,26 @@ export function updateSelectedReadingLevel(level: Difficulty): OnboardingState {
 }
 
 export function skipOnboarding(): OnboardingState {
-  return saveOnboarding("A2", [], undefined, { seedKnownWords: false });
+  return saveOnboarding("A2", []);
 }
 
 /** Persists which walkthrough step to resume at — called on every step transition so closing the app mid-walkthrough resumes rather than restarting. Touches only the walkthrough fields. */
 export function saveWalkthroughStep(step: number | null): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
-  void pushStore(ONBOARDING_KEY);
+  localStore.writeItem(ONBOARDING_KEY, JSON.stringify({ ...current, walkthroughStep: step, updatedAt: new Date().toISOString() }));
+  notifyStoreChanged(ONBOARDING_KEY);
 }
 
 /** Marks the walkthrough finished (naturally, or via skip) — never shown again until resetWalkthrough is called. */
 export function completeWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(
+  localStore.writeItem(
     ONBOARDING_KEY,
-    JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
+    JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, walkthroughReplay: false, updatedAt: new Date().toISOString() })
   );
-  void pushStore(ONBOARDING_KEY);
+  notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();
 }
 
@@ -202,10 +197,10 @@ export function completeWalkthrough(): void {
 export function resetWalkthrough(): void {
   const current = getOnboardingState();
   if (!current || !hasStorage()) return;
-  window.localStorage.setItem(
+  localStore.writeItem(
     ONBOARDING_KEY,
-    JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
+    JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, walkthroughReplay: true, updatedAt: new Date().toISOString() })
   );
-  void pushStore(ONBOARDING_KEY);
+  notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();
 }

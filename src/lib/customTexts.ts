@@ -1,17 +1,26 @@
 import type { Category, Difficulty, ReadingText } from "@/types";
 import { hashString } from "@/lib/hash";
 import { stripMetadataOnlyBlurb } from "@/lib/readingSummaries";
-import { pushStore, recordStoreDeletion } from "@/lib/supabase/sync";
+import { notifyStoreChanged } from "@/lib/sync/runtime";
+import { localStore, type WriteFailure } from "@/lib/localData/store";
 
 const KEY = "lire.customTexts.v1";
-const MAX_CUSTOM_TEXTS = 80;
+/** Imported texts kept per account on a device. Reaching it blocks new imports; nothing is ever evicted. */
+export const MAX_CUSTOM_TEXTS = 80;
+/** Imported text limits. Far above a long article; keeps device storage and (opt-in) sync bounded. */
+export const MAX_IMPORT_CHARS = 50_000;
+export const MAX_IMPORT_TITLE_CHARS = 200;
 
 export interface CustomTextInput {
   title: string;
   body: string;
-  category: Category;
+  /** null = "General": the reader did not pick a topic. */
+  category: Category | null;
   difficulty: Difficulty;
 }
+
+/** Stored for a General import; never shown or counted (see ReadingText.topicUnset). */
+const GENERAL_PLACEHOLDER_CATEGORY: Category = "everyday life";
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -20,7 +29,7 @@ function hasStorage(): boolean {
 function read(): ReadingText[] {
   if (!hasStorage()) return [];
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = localStore.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return Array.isArray(parsed) ? parsed.filter(isReadingText).map(stripMetadataOnlyBlurb) : [];
   } catch {
@@ -28,11 +37,18 @@ function read(): ReadingText[] {
   }
 }
 
-function persist(texts: ReadingText[]): void {
-  if (!hasStorage()) return;
-  window.localStorage.setItem(KEY, JSON.stringify(texts.slice(0, MAX_CUSTOM_TEXTS)));
-  void pushStore(KEY);
+function persist(texts: ReadingText[]): WriteFailure | null {
+  if (!hasStorage()) return "unavailable";
+  // Never truncate: a reader's private texts are only removed when they
+  // delete them. (This used to keep the newest 80, silently dropping the
+  // oldest import, or texts merged in from another device.)
+  const result = localStore.writeItem(KEY, JSON.stringify(texts));
+  if (!result.ok) return result.reason;
+  notifyStoreChanged(KEY);
+  return null;
 }
+
+export type SaveCustomTextResult = { ok: true; text: ReadingText } | { ok: false; reason: WriteFailure | "too-long" | "empty" | "limit" };
 
 function isReadingText(value: unknown): value is ReadingText {
   if (!value || typeof value !== "object") return false;
@@ -63,15 +79,18 @@ export function getCustomTextById(id: string): ReadingText | undefined {
   return read().find((text) => text.id === id);
 }
 
-export function saveCustomText(input: CustomTextInput): ReadingText {
-  const title = input.title.trim() || "Imported French text";
+export function saveCustomText(input: CustomTextInput): SaveCustomTextResult {
+  const title = (input.title.trim() || "Imported French text").slice(0, MAX_IMPORT_TITLE_CHARS);
   const body = input.body.trim();
+  if (!body) return { ok: false, reason: "empty" };
+  if (body.length > MAX_IMPORT_CHARS) return { ok: false, reason: "too-long" };
   const createdAt = new Date().toISOString();
   const id = `custom-${hashString(`${title}\n${body}`).slice(0, 12)}`;
   const text: ReadingText = {
     id,
     title,
-    category: input.category,
+    category: input.category ?? GENERAL_PLACEHOLDER_CATEGORY,
+    ...(input.category ? {} : { topicUnset: true }),
     difficulty: input.difficulty,
     minutes: minutesFor(body),
     preview: previewFor(body),
@@ -81,14 +100,49 @@ export function saveCustomText(input: CustomTextInput): ReadingText {
     publishedAt: createdAt,
     language: "fr",
   };
-  const existing = read().filter((item) => item.id !== id);
-  persist([text, ...existing]);
-  return text;
+  const current = read();
+  const existing = current.filter((item) => item.id !== id);
+  // Re-importing the same text replaces it; a new one at the limit is refused.
+  if (existing.length === current.length && current.length >= MAX_CUSTOM_TEXTS) return { ok: false, reason: "limit" };
+  const failure = persist([text, ...existing]);
+  return failure ? { ok: false, reason: failure } : { ok: true, text };
 }
 
-export function deleteCustomText(id: string): ReadingText[] {
-  recordStoreDeletion(KEY, id);
-  const next = read().filter((text) => text.id !== id);
-  persist(next);
-  return next;
+export type DeleteCustomTextResult = { ok: true; texts: ReadingText[] } | { ok: false; texts: ReadingText[]; reason: WriteFailure };
+
+export function deleteCustomText(id: string): DeleteCustomTextResult {
+  const current = read();
+  const next = current.filter((text) => text.id !== id);
+  const failure = persist(next);
+  return failure ? { ok: false, texts: current, reason: failure } : { ok: true, texts: next };
+}
+
+export type UpdateCustomTextResult =
+  | { ok: true; text: ReadingText }
+  | { ok: false; reason: "missing" | "empty" | "too-long" | WriteFailure };
+
+/**
+ * Corrects an imported text in place. It keeps its id, so reading progress,
+ * saved words and history stay attached to it.
+ */
+export function updateCustomText(id: string, input: CustomTextInput): UpdateCustomTextResult {
+  const current = read();
+  const existing = current.find((text) => text.id === id);
+  if (!existing) return { ok: false, reason: "missing" };
+  const body = input.body.trim();
+  if (!body) return { ok: false, reason: "empty" };
+  if (body.length > MAX_IMPORT_CHARS) return { ok: false, reason: "too-long" };
+  const { topicUnset: _previousTopic, ...rest } = existing;
+  const text: ReadingText = {
+    ...rest,
+    title: (input.title.trim() || "Imported French text").slice(0, MAX_IMPORT_TITLE_CHARS),
+    body,
+    category: input.category ?? GENERAL_PLACEHOLDER_CATEGORY,
+    ...(input.category ? {} : { topicUnset: true }),
+    difficulty: input.difficulty,
+    minutes: minutesFor(body),
+    preview: previewFor(body),
+  };
+  const failure = persist(current.map((item) => (item.id === id ? text : item)));
+  return failure ? { ok: false, reason: failure } : { ok: true, text };
 }

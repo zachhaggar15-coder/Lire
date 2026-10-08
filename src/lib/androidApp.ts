@@ -1,3 +1,4 @@
+import { localStore } from "@/lib/localData/store";
 /**
  * Detects whether Sorlio is running inside the Play Store Android app (the
  * Trusted Web Activity) rather than a normal browser tab or installed PWA.
@@ -26,7 +27,7 @@ export function rememberAndroidAppLaunch(): void {
   if (typeof window === "undefined") return;
   if (!isAndroidAppReferrer(document.referrer)) return;
   try {
-    window.localStorage.setItem(ANDROID_APP_KEY, "1");
+    localStore.setItem(ANDROID_APP_KEY, "1");
   } catch {
     // Without storage we fall back to the referrer check alone.
   }
@@ -36,7 +37,7 @@ export function isAndroidApp(): boolean {
   if (typeof window === "undefined") return false;
   if (isAndroidAppReferrer(document.referrer)) return true;
   try {
-    return window.localStorage.getItem(ANDROID_APP_KEY) === "1";
+    return localStore.getItem(ANDROID_APP_KEY) === "1";
   } catch {
     return false;
   }

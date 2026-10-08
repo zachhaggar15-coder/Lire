@@ -1,6 +1,7 @@
 import type { DictionaryLookupResult } from "@/lib/dictionary/types";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { leadingLearnerSense } from "@/lib/dictionary/register";
+import { hasWordClass } from "@/lib/dictionary/partOfSpeech";
 
 export interface InferenceChallenge {
   word: string;
@@ -60,10 +61,10 @@ function directDefinition(lookup: DictionaryLookupResult): string {
 }
 
 function distractorsFor(lookup: DictionaryLookupResult): string[] {
-  const pos = lookup.partOfSpeech?.toLowerCase() ?? "";
-  if (pos.includes("verb")) return ["to describe", "to prevent", "to decide", "to increase", ...GENERIC_DISTRACTORS];
-  if (pos.includes("adverb")) return ["however", "therefore", "also", "often", ...GENERIC_DISTRACTORS];
-  if (pos.includes("adjective")) return ["important", "uncertain", "critical", "possible", ...GENERIC_DISTRACTORS];
+  const pos = lookup.partOfSpeech;
+  if (hasWordClass(pos, "verb")) return ["to describe", "to prevent", "to decide", "to increase", ...GENERIC_DISTRACTORS];
+  if (hasWordClass(pos, "adverb")) return ["however", "therefore", "also", "often", ...GENERIC_DISTRACTORS];
+  if (hasWordClass(pos, "adjective")) return ["important", "uncertain", "critical", "possible", ...GENERIC_DISTRACTORS];
   return GENERIC_DISTRACTORS;
 }
 

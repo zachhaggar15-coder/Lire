@@ -17,13 +17,15 @@ export default function LookupPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">
         Look up an English word to find its French translation — offline, same as reader lookups.
       </p>
 
       <div className="flex gap-2">
         <input
+          type="search"
+          aria-label="English word to look up"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -33,6 +35,7 @@ export default function LookupPage() {
           className="min-w-0 flex-1 rounded-2xl bg-cream-card px-4 py-3 text-base text-ink shadow-card"
         />
         <button
+          type="button"
           onClick={runSearch}
           className="min-h-12 shrink-0 rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-cream"
         >

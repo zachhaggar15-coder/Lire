@@ -264,7 +264,8 @@ export function bankTextToRssReadingText(text: ReadingText, builtAt: number): Rs
     id: text.id,
     title: text.title,
     category: text.category,
-    difficulty: "B1",
+    // A bundled reading keeps its own editorial level.
+    difficulty: text.difficulty,
     readingTimeMinutes: text.minutes,
     language: text.language ?? "fr",
     originalText: text.body,

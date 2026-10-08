@@ -42,11 +42,25 @@ import type { DictionaryEntry } from "@/lib/dictionary/types";
  */
 let cached: Promise<DictionaryEntry[]> | null = null;
 
+type Importer = () => Promise<{ default?: unknown }>;
+let importer: Importer = () => import("./fr-en-generated.json");
+
 export function loadGeneratedDictionary(): Promise<DictionaryEntry[]> {
   if (!cached) {
-    cached = import("./fr-en-generated.json").then(
-      (module) => (module.default ?? module) as unknown as DictionaryEntry[]
-    );
+    const attempt = importer().then((module) => (module.default ?? module) as unknown as DictionaryEntry[]);
+    cached = attempt;
+    // A failed chunk fetch (offline, flaky network) must not be remembered:
+    // forget it so the next call really tries again instead of replaying the
+    // same rejection until the page is reloaded.
+    attempt.catch(() => {
+      if (cached === attempt) cached = null;
+    });
   }
   return cached;
+}
+
+/** Test hook: replace how the chunk is fetched and forget any cached result. */
+export function __setGeneratedDictionaryImporterForTests(next: Importer): void {
+  importer = next;
+  cached = null;
 }

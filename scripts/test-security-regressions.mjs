@@ -1,6 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
-import { escapeFeedbackHtml, feedbackNotificationHtml } from "../src/lib/feedback/email.ts";
 import { localRateLimitFallbackAllowed } from "../src/lib/server/rateLimit.ts";
+
+/**
+ * Security and privacy regressions that are about the shape of the system
+ * (which endpoints exist, which headers are set). Behaviour is covered by the
+ * behavioural suites: billing, sync, isolation, deletion, persistence.
+ */
 
 let passed = 0;
 let failed = 0;
@@ -14,26 +19,48 @@ function check(label, condition) {
 function read(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 }
+const exists = (path) => existsSync(new URL(`../${path}`, import.meta.url));
 
-console.log("--- Closed-test grants are navigation-only ---");
-const closedTestClient = read("src/lib/access/useClosedTestPremium.ts");
-check("client code cannot call an activation endpoint", !/closed-test-premium\/activate/.test(closedTestClient));
-check("client code cannot request any temporary grant", !/fetch\(/.test(closedTestClient) && /active:\s*false/.test(closedTestClient));
+console.log("--- Retired data collection is gone ---");
+for (const path of [
+  "src/app/api/analytics/events/route.ts",
+  "src/app/api/research-prompts/route.ts",
+  "src/app/api/android-beta/route.ts",
+  "src/app/api/closed-test-premium/status/route.ts",
+  "src/app/api/admin/validation/route.ts",
+  "src/lib/analytics/client.ts",
+  "src/components/AnalyticsConsentBanner.tsx",
+  "src/components/PostSessionResearchPrompt.tsx",
+  "sentry.server.config.ts",
+  "instrumentation-client.ts",
+]) {
+  check(`${path} no longer exists`, !exists(path));
+}
+const pkg = JSON.parse(read("package.json"));
+check("no Sentry SDK dependency", !pkg.dependencies["@sentry/nextjs"]);
+check("no telemetry tunnel in next.config", !/tunnelRoute|withSentryConfig/.test(read("next.config.mjs")));
+
+console.log("--- Feedback: verified identity only, no side channels ---");
+const feedback = read("src/app/api/feedback/route.ts");
+check("feedback uses a verified bearer identity", /authenticatedUser\(request\)/.test(feedback) && /user_id: user\?\.id \?\? null/.test(feedback));
+check("feedback stores no device or session identifiers", !/anonymous_id|session_id/.test(feedback));
+check("feedback content is never e-mailed", !/resend|sendFeedbackNotification|proton/i.test(feedback));
+check("feedback request size is bounded", /MAX_BODY_BYTES/.test(feedback));
 
 console.log("--- Admin-only feedback operations require a token ---");
 const feedbackRoute = read("src/app/api/admin/feedback/route.ts");
 const feedbackDashboard = read("src/app/admin/feedback/page.tsx");
 const feedbackLayout = read("src/app/admin/feedback/layout.tsx");
 const adminSessionRoute = read("src/app/api/admin/session/route.ts");
-check("production test-email route has been removed", !existsSync(new URL("../src/app/api/feedback/test/route.ts", import.meta.url)));
-check("feedback reader requires admin authorization", /hasValidationAdminToken\(request\)/.test(feedbackRoute));
+check("production test-email route has been removed", !exists("src/app/api/feedback/test/route.ts"));
+check("feedback reader requires admin authorization", /await hasAdminAccess\(request\)/.test(feedbackRoute));
 check("feedback dashboard uses the protected route", /\/api\/admin\/feedback/.test(feedbackDashboard));
 check("feedback dashboard does not query Supabase from the browser", !/getSupabaseClient/.test(feedbackDashboard));
-check("feedback dashboard renders an empty result state", /feedback\?\.length === 0/.test(feedbackDashboard));
-check("feedback page is blocked by a server-validated session", /await cookies\(\)/.test(feedbackLayout) && /isValidationAdminSessionValue/.test(feedbackLayout));
+check("feedback page is blocked by a server-validated session", /await cookies\(\)/.test(feedbackLayout) && /await isAdminSessionCookie/.test(feedbackLayout));
 check(
-  "admin session cookie is hardened and does not contain the raw token",
-  /validationAdminSessionValue/.test(adminSessionRoute) &&
+  "admin session cookie is hardened, per-session and revocable (behaviour: test-admin-session.mjs)",
+  /createAdminSession\(/.test(adminSessionRoute) &&
+    /revokeAdminSession\(request\)/.test(adminSessionRoute) &&
     /httpOnly:\s*true/.test(adminSessionRoute) &&
     /secure:\s*true/.test(adminSessionRoute) &&
     /sameSite:\s*["']strict["']/.test(adminSessionRoute),
@@ -43,30 +70,8 @@ check(
   [feedbackRoute, adminSessionRoute].every((source) => /Cache-Control.*private, no-store/.test(source)),
 );
 
-console.log("--- Public submissions retain only verified identities ---");
-const feedback = read("src/app/api/feedback/route.ts");
-const analytics = read("src/app/api/analytics/events/route.ts");
-const research = read("src/app/api/research-prompts/route.ts");
-const analyticsClient = read("src/lib/analytics/client.ts");
-const feedbackClient = read("src/components/FeedbackModal.tsx");
-const researchClient = read("src/components/PostSessionResearchPrompt.tsx");
+console.log("--- Rate limiting ---");
 const rateLimit = read("src/lib/server/rateLimit.ts");
-const premiumStatus = read("src/app/api/premium/status/route.ts");
-check("feedback uses a verified bearer identity", /authenticatedUser\(request\)/.test(feedback) && /user_id: user\?\.id \?\? null/.test(feedback));
-check("analytics ignores a body-supplied user id", /authenticatedUser\(request\)/.test(analytics) && !/event\.authenticatedUserId/.test(analytics));
-check("research ignores a body-supplied user id", /authenticatedUser\(request\)/.test(research) && !/clean\(body\.userId/.test(research));
-check(
-  "signed-in clients attach optional bearer credentials",
-  [analyticsClient, feedbackClient, researchClient].every((source) => /getOptionalBearerHeaders/.test(source)),
-);
-check(
-  "analytics timestamps and environment are server-derived",
-  /deployment_environment: deploymentEnvironment\(\)/.test(analytics) &&
-    /created_at: new Date\(\)\.toISOString\(\)/.test(analytics) &&
-    !/event\.deploymentEnvironment/.test(analytics) &&
-    !/event\.createdAt/.test(analytics),
-);
-check("research context is allowlisted before storage", /sanitizeResearchContext\(body\.context\)/.test(research));
 check("rate limits use shared Redis when configured", /@upstash\/redis/.test(rateLimit) && /client\.eval/.test(rateLimit));
 check("rate-limit increment and expiry are atomic", /INCR/.test(rateLimit) && /PEXPIRE/.test(rateLimit) && /PTTL/.test(rateLimit));
 check(
@@ -81,36 +86,59 @@ check(
     !/headers\.get\(["']x-real-ip["']\)/.test(rateLimit) &&
     /headers\.get\(["']x-vercel-forwarded-for["']\)/.test(rateLimit),
 );
-check(
-  "real Premium entitlement responses are private and never cached",
-  /Cache-Control.*private, no-store, max-age=0/.test(premiumStatus) &&
-    /premiumStatusResponse/.test(premiumStatus),
-);
+check("purchase verification is rate-limited per account", /rateLimit\(`premium-verify:\$\{user\.id\}`/.test(read("src/app/api/premium/google-play/verify/route.ts")));
+check("status checks are rate-limited per account", /rateLimit\(`premium-status:\$\{user\.id\}`/.test(read("src/app/api/premium/status/route.ts")));
 
-console.log("--- Feedback emails escape supplied text ---");
-const hostile = '<img src=x onerror="alert(1)"> & text';
-check("HTML escaping encodes executable markup", escapeFeedbackHtml(hostile) === "&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; text");
-check("feedback notification contains escaped rather than raw markup", !feedbackNotificationHtml({ category: "other", comment: hostile }).includes(hostile));
+console.log("--- Entitlement responses are private ---");
+check("status responses are never cached", /private, no-store, max-age=0/.test(read("src/app/api/premium/status/route.ts")));
+check("verify responses are never cached", /private, no-store, max-age=0/.test(read("src/app/api/premium/google-play/verify/route.ts")));
 
-console.log("--- Sensitive admin responses are not cacheable ---");
-const adminValidation = read("src/app/api/admin/validation/route.ts");
-check("admin validation responses declare no-store", /Cache-Control.*private, no-store/.test(adminValidation));
-
-console.log("--- Android beta confirmation copy uses the current product name ---");
-const androidBeta = read("src/app/api/android-beta/route.ts");
-check("Android beta email does not refer to Lire", !/Lire is still evolving/.test(androidBeta));
+console.log("--- AI routes never leak provider errors or accept free-text levels ---");
+for (const name of ["explain-word", "explain-sentence", "paraphrase", "translate-article"]) {
+  const route = read(`src/app/api/ai/${name}/route.ts`);
+  check(`${name}: errors go through aiFailureResponse`, /aiFailureResponse\(err\)/.test(route) && !/err\.message/.test(route));
+  check(`${name}: level is allowlisted`, /learnerLevel\(level\)/.test(route) && !/optionalText\(level/.test(route));
+  check(`${name}: requires a paid caller`, /requirePaidAiCaller\(request\)/.test(route));
+}
+check("OpenAI error bodies are not propagated", !/body\.slice\(0, 300\)/.test(read("src/lib/ai/openai.ts")));
 
 console.log("--- RSS fallback honours the requested limit ---");
 const rssRoute = read("src/app/api/rss-texts/route.ts");
 check("every RSS response is clamped to the request limit", /clampRssSelectionToLimit\(selected, limit\)/.test(rssRoute));
 check("live responses cannot be padded with bundled fallback texts", !/backfillIfShort/.test(rssRoute));
-check("RSS response declares whether it is serving a fallback", /servingFallback: pool\.isFallback === true/.test(rssRoute));
 
-console.log("--- Premium save boundaries are visible before interaction ---");
-const meaningSheet = read("src/components/MeaningSheet.tsx");
-const lessonComplete = read("src/components/LessonCompleteScreen.tsx");
-check("word sheet labels an unavailable save as Premium", /Premium · Add to review/.test(meaningSheet) && /canSaveWord/.test(meaningSheet));
-check("completion mini-review labels an unavailable save as Premium", /Premium · Add to review/.test(lessonComplete) && /canSaveWord/.test(lessonComplete));
+console.log("--- Security headers ---");
+{
+  const previous = { env: process.env.NODE_ENV, supabase: process.env.NEXT_PUBLIC_SUPABASE_URL };
+  process.env.NODE_ENV = "production";
+  process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example-project.supabase.co";
+  const config = (await import("../next.config.mjs")).default;
+  const rules = await config.headers();
+  if (previous.env === undefined) delete process.env.NODE_ENV;
+  else process.env.NODE_ENV = previous.env;
+  if (previous.supabase === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+  else process.env.NEXT_PUBLIC_SUPABASE_URL = previous.supabase;
+  const all = rules.find((rule) => rule.source === "/:path*");
+  const header = (name) => all?.headers.find((h) => h.key.toLowerCase() === name)?.value ?? "";
+  const csp = Object.fromEntries(
+    header("content-security-policy")
+      .split(";")
+      .map((directive) => directive.trim().split(/\s+/))
+      .map(([name, ...values]) => [name, values.join(" ")])
+  );
+  check("headers apply to every path", Boolean(all));
+  check("scripts only from this origin, no eval in production", csp["script-src"] === "'self' 'unsafe-inline'");
+  check("browser connects only to this origin and the Supabase project", csp["connect-src"] === "'self' https://example-project.supabase.co");
+  check(
+    "no framing, plugins, or base/form hijacking",
+    csp["frame-ancestors"] === "'none'" && csp["object-src"] === "'none'" && csp["base-uri"] === "'self'" && csp["form-action"] === "'self'"
+  );
+  check(
+    "nosniff, DENY framing and HSTS are set",
+    header("x-content-type-options") === "nosniff" && header("x-frame-options") === "DENY" && /max-age=\d{8}/.test(header("strict-transport-security"))
+  );
+  check("payment stays allowed for Play Billing", /payment=\(self\)/.test(header("permissions-policy")));
+}
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exitCode = failed ? 1 : 0;

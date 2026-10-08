@@ -93,11 +93,43 @@ export function tokenize(text: string): Token[] {
  * mark together as one sentence.
  */
 export function splitSentences(paragraph: string): string[] {
-  return paragraph
-    .split(/(?<=[.!?…])\s+(?!["'»”])/)
+  const pieces = paragraph
+    // A sentence also ends after its closing quote: "... gagne. » Puis ..."
+    // (a dialogue tag that follows in lowercase is rejoined below).
+    .split(/(?<=[.!?…])\s+(?!["'»”])|(?<=[.!?…]\s?[»”"])\s+/)
     .map((s) => s.trim())
     .filter(Boolean);
+  // A full stop after a title or an initial does not end the sentence:
+  // "Et M. Omont la congédia." is one sentence, not "Et M." + "Omont...".
+  // Splitting there also made AI translation fail outright, because the
+  // model (correctly) returns one sentence where two were sent.
+  const merged: string[] = [];
+  for (const piece of pieces) {
+    const previous = merged[merged.length - 1];
+    const continues =
+      previous !== undefined &&
+      (ENDS_WITH_ABBREVIATION.test(previous) ||
+        // French dialogue tags continue the sentence after ! ? or …:
+        // « Viens ! » dit le sergent. / « Ah ! mon père, dit Franz… »
+        /^[a-zà-ÿœæ]/.test(piece) ||
+        // A bare list number ("1.") belongs to what follows it.
+        /^\d{1,3}\.$/.test(previous) ||
+        // A quotation that opens with a pause ("bonjour: «... Crés cochons")
+        // has not ended at the ellipsis.
+        /«\s*(?:\.{3}|…)$/.test(previous));
+    if (continues) merged[merged.length - 1] = `${previous} ${piece}`;
+    else merged.push(piece);
+  }
+  return merged;
 }
+
+/**
+ * Titles and hyphenated initials whose full stop is not a sentence end. A
+ * lone capital ("J.") is not listed: "... B qui cause A." ends sentences more
+ * often than initials start names in these texts. "etc." often ends a
+ * sentence too, so it is not listed either.
+ */
+const ENDS_WITH_ABBREVIATION = /(?:^|[\s(«"'’-])(?:M|MM|Mme|Mmes|Mlle|Mlles|Mr|Mrs|Ms|Dr|Pr|Me|Mgr|St|Ste|[A-ZÀ-Ý]\.-[A-ZÀ-Ý])\.$/u;
 
 /**
  * Tokenise body text into paragraphs of sentence groups, each sentence
