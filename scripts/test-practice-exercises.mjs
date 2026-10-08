@@ -10,7 +10,8 @@ import {
   checkReconstruction,
   shuffleChips,
 } from "../src/lib/practice/sentenceReconstruction.ts";
-import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody } from "../src/lib/practice/cloze.ts";
+import * as clozeModule from "../src/lib/practice/cloze.ts";
+const { buildWordCloze, distractorPoolFromBody } = clozeModule;
 import { buildGrammarNotes } from "../src/lib/practice/grammarNotes.ts";
 import { lookupRatePer100Words } from "../src/lib/practice/lookupStats.ts";
 import { allSentencesInText } from "../src/lib/practice/textSentences.ts";
@@ -138,7 +139,10 @@ test("removing a final full stop preserves an ellipsis inside closing dialogue p
 
 console.log("\n--- Cloze exercises ---");
 
-const clozeArticleBody = "Léa habite dans une grande maison avec ses parents.\n\nElle aime beaucoup lire des histoires le soir avant de dormir.";
+// Enough same-class words for fair options: a cloze is only built when at
+// least two wrong options fit the gap grammatically (see cloze.ts).
+const clozeArticleBody =
+  "Le matin, Léa prépare un café dans la cuisine.\n\nLe soir, son frère boit un thé et regarde un film.\n\nLe dimanche, leur père mange un gâteau et lit un livre.";
 const clozeSentences = allSentencesInText({ body: clozeArticleBody });
 
 test("word cloze blanks a real content word and offers the correct answer among options", () => {
@@ -152,13 +156,19 @@ test("word cloze blanks a real content word and offers the correct answer among 
   assert.equal(new Set(exercise.options.map((o) => o.toLowerCase())).size, exercise.options.length, "no duplicate options");
 });
 
-test("phrase cloze blanks a two-word span and preserves surrounding text", () => {
-  const sentence = clozeSentences[1];
-  const pool = distractorPoolFromBody(clozeArticleBody, sentence.index, clozeSentences);
-  const exercise = buildPhraseCloze(sentence, pool);
-  assert.ok(exercise, "expected a phrase cloze to be generated");
-  assert.ok(exercise.answer.trim().split(/\s+/).length >= 1, "answer should be a real span");
-  assert.ok(exercise.prompt.includes("___"));
+test("no phrase cloze: two adjacent words are not a unit and are never blanked together", () => {
+  assert.equal(clozeModule.buildPhraseCloze, undefined);
+  for (const sentence of clozeSentences) {
+    const exercise = buildWordCloze(sentence, distractorPoolFromBody(clozeArticleBody, sentence.index, clozeSentences));
+    if (exercise) assert.equal(exercise.answer.trim().split(/\s+/).length, 1, "a cloze answer is one word");
+  }
+});
+
+test("a sentence with too few fair options gets no cloze rather than a weak one", () => {
+  const body = "Léa habite dans une grande maison avec ses parents.\n\nElle aime beaucoup lire des histoires le soir avant de dormir.";
+  const sentences = allSentencesInText({ body });
+  const exercise = buildWordCloze(sentences[0], distractorPoolFromBody(body, sentences[0].index, sentences));
+  assert.equal(exercise, null);
 });
 
 test("cloze on a very short sentence with no eligible words returns null rather than crashing", () => {

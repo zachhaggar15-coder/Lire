@@ -58,7 +58,7 @@ import {
 import { recordDictionaryFeedback, getDictionaryFeedback } from "../src/lib/dictionary/feedback.ts";
 import { getSavedPhrases, isPhraseMastered, recordPhraseReview, savePhrase } from "../src/lib/phrases.ts";
 import { getArticleFeedbackForText, saveArticleFeedback } from "../src/lib/articleFeedback.ts";
-import { buildGistQuestion, buildToneQuestions, findRelatedArticles } from "../src/lib/comprehension.ts";
+import { buildGistQuestion, findRelatedArticles } from "../src/lib/comprehension.ts";
 import {
   clearComprehensionQuestionCache,
   getOrCreateComprehensionQuestionBundle,
@@ -963,9 +963,33 @@ console.log("\n--- Comprehension helpers ---");
     blurbEn: "A football team wins a match in the final minute.",
   };
   check("related-article helper finds a same-event article from another source", findRelatedArticles(current, [related, unrelated])[0]?.id === "b");
-  const gistQuestion = buildGistQuestion(current, [related, unrelated]);
-  check("gist question puts the real gist first as the answer", gistQuestion.answerIndex === 0 && gistQuestion.choices[0].includes("free public transport"));
-  check("gist question does not show a generic explanation", !gistQuestion.explanation);
+  const football = { ...unrelated, body: "Une équipe de football gagne un match à la dernière minute." };
+  const culture = {
+    ...current,
+    id: "d",
+    title: "Un festival de jazz en plein air",
+    category: "culture",
+    sourceName: "Source D",
+    preview: "Un festival de jazz commence ce soir.",
+    blurbEn: "A summer jazz festival opens in a city park with free concerts.",
+    body: "Un festival de jazz commence ce soir dans le parc.",
+  };
+  // The same-story article from another outlet is not a wrong answer — its
+  // summary is also true of this text — so it is never offered as one.
+  const gistQuestion = buildGistQuestion(current, [related, football, culture]);
+  check(
+    "gist question offers the real gist and only unrelated texts' summaries as wrong options",
+    !!gistQuestion &&
+      gistQuestion.choices[gistQuestion.answerIndex].includes("free public transport") &&
+      !gistQuestion.choices.some((choice) => choice.includes("same free public transport debate")) &&
+      gistQuestion.choices.length === 3,
+    JSON.stringify(gistQuestion)
+  );
+  check("gist question does not show a generic explanation", !gistQuestion?.explanation);
+  check(
+    "gist question asks nothing rather than invent options when there are too few real summaries",
+    buildGistQuestion(current, [related, football]) === null
+  );
   const metadataCurrent = {
     ...current,
     id: "pd-meta-a",
@@ -974,49 +998,21 @@ console.log("\n--- Comprehension helpers ---");
     blurbEn: "An exact public-domain French excerpt from Voyage au centre de la terre by Jules Verne, selected as 235-word reading practice.",
     body: "Le professeur entre dans la salle et explique son projet aux eleves. Ils ecoutent avec attention avant de poser des questions.",
   };
-  const metadataDistractor = {
-    ...related,
-    id: "pd-meta-b",
-    preview: "Une famille attend le train pendant une longue matinee.",
-    blurbEn: "An exact public-domain French excerpt from Madame Bovary by Gustave Flaubert, selected as 233-word reading practice.",
-    body: "Une famille attend le train pendant une longue matinee. Le quai reste calme sous la pluie.",
-  };
-  const metadataGistQuestion = buildGistQuestion(metadataCurrent, [metadataDistractor, unrelated]);
   check(
-    "gist question ignores public-domain word-count metadata",
-    metadataGistQuestion.choices.every((choice) => !/\b\d+[\s-]word\b|reading practice|public-domain french excerpt/i.test(choice)) &&
-      metadataGistQuestion.choices[0].includes("professeur"),
-    metadataGistQuestion.choices.join(" | ")
-  );
-  const toneQuestions = buildToneQuestions(current);
-  check("tone helper creates stance/tone/confidence questions", toneQuestions.length === 3 && toneQuestions.every((q) => q.choices.length >= 3));
-  const inference = buildInferenceChallenge("prudents", lookupWord("prudents"), "Certains habitants sont prudents.", "Some residents are cautious.");
-  check("inference challenge offers three choices", !!inference && inference.choices.length === 3);
-  const cautiousText = {
-    ...current,
-    id: "cautious",
-    title: "Une etude pourrait changer le projet",
-    preview: "Selon les chercheurs, un essai prudent reste possible.",
-    body: "Selon les chercheurs, le projet pourrait encore changer. Un essai est etudie avant toute decision.",
-  };
-  const confidenceQuestion = buildToneQuestions(cautiousText).find((q) => q.kind === "confidence");
-  check(
-    "confidence question marks cautious evidence as cautious",
-    confidenceQuestion?.choices[confidenceQuestion.answerIndex] === "Cautious",
-    `got ${confidenceQuestion?.choices[confidenceQuestion.answerIndex]}`
-  );
-  check(
-    "confidence explanation matches the cautious answer",
-    !!confidenceQuestion?.explanation?.toLowerCase().includes("caution")
+    "provenance is not a summary: a text whose only blurb is metadata gets no gist question",
+    buildGistQuestion(metadataCurrent, [football, culture, related]) === null
   );
   clearComprehensionQuestionCache();
-  const cachedFirst = getOrCreateComprehensionQuestionBundle(current, [related, unrelated]);
-  const cachedSecond = getOrCreateComprehensionQuestionBundle(current, [unrelated]);
+  const bundle = getOrCreateComprehensionQuestionBundle(current, [football, culture, related]);
+  check("no automatic tone, stance or confidence questions, even on news", bundle.toneQuestions.length === 0);
+  const inference = buildInferenceChallenge("prudents", lookupWord("prudents"), "Certains habitants sont prudents.", "Some residents are cautious.");
+  check("inference challenge offers three choices", !!inference && inference.choices.length === 3);
+  const cachedSecond = getOrCreateComprehensionQuestionBundle(current, [football]);
   check(
     "comprehension question cache reuses the article bundle",
     !!cachedSecond.gistQuestion &&
-      !!cachedFirst.gistQuestion &&
-      cachedSecond.gistQuestion.choices.join("|") === cachedFirst.gistQuestion.choices.join("|")
+      !!bundle.gistQuestion &&
+      cachedSecond.gistQuestion.choices.join("|") === bundle.gistQuestion.choices.join("|")
   );
   const candidates = rankLearningCandidates(current, new Set(), [], [{ word: "prudents", lemma: "prudent", count: 2 }], 3);
   check("learning candidates include repeatedly tapped useful words", candidates.some((candidate) => candidate.lemma === "prudent"));

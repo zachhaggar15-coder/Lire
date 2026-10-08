@@ -17,7 +17,7 @@ import { buildPracticePlan } from "../src/lib/practice/session.ts";
 import { allSentencesInText } from "../src/lib/practice/textSentences.ts";
 import { isEligibleForParaphrase, pickParaphraseCandidateSentence } from "../src/lib/practice/paraphrase.ts";
 import { isEligibleForReconstruction, buildReconstructionExercise, checkReconstruction } from "../src/lib/practice/sentenceReconstruction.ts";
-import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody } from "../src/lib/practice/cloze.ts";
+import { buildWordCloze, distractorPoolFromBody } from "../src/lib/practice/cloze.ts";
 
 let passed = 0;
 let failed = 0;
@@ -42,7 +42,6 @@ const throwsByStage = {
   checkReconstruction: [],
   distractorPoolFromBody: [],
   buildWordCloze: [],
-  buildPhraseCloze: [],
 };
 
 let plansBuilt = 0;
@@ -156,17 +155,6 @@ for (const text of texts) {
       }
     } catch (err) {
       throwsByStage.buildWordCloze.push({ id: text.id, sentence: sentence.text, error: String(err) });
-    }
-    try {
-      const phraseCloze = buildPhraseCloze(sentence, pool);
-      if (phraseCloze) {
-        clozeExercisesBuilt++;
-        if (!phraseCloze.options.includes(phraseCloze.answer)) {
-          throwsByStage.buildPhraseCloze.push({ id: text.id, sentence: sentence.text, error: "answer not present in its own options" });
-        }
-      }
-    } catch (err) {
-      throwsByStage.buildPhraseCloze.push({ id: text.id, sentence: sentence.text, error: String(err) });
     }
   }
 }

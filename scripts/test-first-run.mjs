@@ -102,7 +102,10 @@ await t.section("7. Review: one obvious start", async () => {
 
 await t.section("8. News: a card answers 'do I want to read this?'", async () => {
   const card = code("src/components/ReadingCard.tsx");
-  t.check("level · minutes · fit on one line", /\{text\.difficulty\} · \{text\.minutes\} min/.test(card) && /FIT_LABELS/.test(card) && /"Good fit"/.test(card));
+  t.check(
+    "level · minutes · fit on one line, from the assigned level only (news shows neither)",
+    /\{level \?\? "News"\} · \{text\.minutes\} min/.test(card) && /const level = editorialLevel\(text\)/.test(card) && /levelFit\(level, readerLevel\)/.test(card) && !/text\.difficulty/.test(card)
+  );
   t.check("no star label on the card", !/starRating\.label/.test(card));
   t.check("source and Save visible", /learnerSourceLabel\(text\)/.test(card) && /aria-pressed=\{savedLater\}/.test(card));
   t.check("advanced actions and Undo kept behind •••", /•••[\s\S]*More like this[\s\S]*Hide source/.test(card) && />\s*Undo\s*</.test(card));
