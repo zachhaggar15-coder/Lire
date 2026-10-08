@@ -189,6 +189,10 @@ await t.section("Gist questions (12-15)", async () => {
   const withSummary = starterTexts.filter((text) => text.blurbEn && !isMetadataOnlyBlurb(text.blurbEn));
   const q = buildGistQuestion(withSummary[0], withSummary.slice(100, 140));
   t.check("14. a reading with a real summary still gets a gist question", !!q && q.choices.length >= 3 && q.choices.every((choice) => !/unabridged extract|Project Gutenberg/i.test(choice)), JSON.stringify(q));
+  const metro = getTextById("metro-gratuit");
+  const otherOutlet = { ...starterTexts[0], id: "rss-other-outlet", title: "La ville teste les transports gratuits", body: "La ville teste la gratuité des transports pendant trois mois.", preview: "La ville teste la gratuité des transports.", blurbEn: "A city is testing free public transport while residents debate the cost." };
+  const metroQuestion = buildGistQuestion(metro, [otherOutlet, ...texts]);
+  t.check("another outlet's summary of the same story is never offered as a wrong answer", !!metroQuestion && !metroQuestion.choices.some((choice) => choice.startsWith("A city is testing free public transport")), JSON.stringify(metroQuestion?.choices));
   const positions = new Set();
   let allCorrect = true;
   for (const text of withSummary.slice(0, 40)) {

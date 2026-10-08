@@ -113,11 +113,40 @@ function sharedKeywords(a: ReadingText, b: ReadingText): number {
   return shared;
 }
 
+const SUMMARY_STOPWORDS = new Set(["about", "after", "also", "been", "from", "have", "into", "more", "over", "than", "that", "their", "them", "then", "they", "this", "what", "when", "which", "while", "with", "would", "were", "will", "your", "some", "most", "much", "many"]);
+
+/** Content words of an English summary, crudely singularised ("residents" = "resident"). */
+function summaryWords(text: ReadingText): Set<string> {
+  return new Set(
+    (text.blurbEn ?? "")
+      .toLowerCase()
+      .match(/[a-z]{4,}/g)
+      ?.filter((word) => !SUMMARY_STOPWORDS.has(word))
+      .map((word) => word.replace(/s$/, "")) ?? []
+  );
+}
+
+/**
+ * Two texts are probably the same story when their French keywords overlap
+ * or their English summaries share several content words ("free", "public",
+ * "transport", "resident"). French keywords alone missed reports of the same
+ * event worded differently ("transports gratuits" / "métro gratuit").
+ */
+function isSameStory(a: ReadingText, b: ReadingText): boolean {
+  if (sharedKeywords(a, b) >= SAME_STORY_OVERLAP) return true;
+  const bWords = summaryWords(b);
+  let shared = 0;
+  for (const word of summaryWords(a)) if (bWords.has(word)) shared++;
+  return shared >= SAME_STORY_SUMMARY_WORDS;
+}
+
+const SAME_STORY_SUMMARY_WORDS = 3;
+
 function gistDistractors(current: ReadingText, candidates: ReadingText[]): string[] {
   const correct = gist(current);
   return candidates
     .filter((candidate) => candidate.id !== current.id && hasGenuineSummary(candidate))
-    .filter((candidate) => sharedKeywords(current, candidate) < SAME_STORY_OVERLAP)
+    .filter((candidate) => !isSameStory(current, candidate))
     .map((candidate) => ({ candidate, overlap: overlapScore(current, candidate) }))
     .sort((a, b) => b.overlap - a.overlap)
     .map(({ candidate }) => gist(candidate))
