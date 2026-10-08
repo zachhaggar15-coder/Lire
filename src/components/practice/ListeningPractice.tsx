@@ -21,9 +21,9 @@ const MAX_RATE = 1.6;
 /**
  * Listening-only rereading mode: plays the article paragraph by paragraph,
  * with the transcript hidden by default. Browser speech synthesis has no
- * seek/duration API, so "back 10 seconds" and "skip to end" are honest
- * approximations at paragraph granularity (step back one paragraph / jump
- * straight to the last one) rather than a literal time seek.
+ * seek/duration API, so the controls move by paragraph and are labelled that
+ * way ("Previous paragraph", "Last paragraph"). They used to say "Back 10
+ * seconds" and "Skip to end", which they never did.
  */
 export default function ListeningPractice({ text, onClose }: ListeningPracticeProps) {
   const [revealed, setRevealed] = useState(false);
@@ -79,12 +79,11 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
     playFrom(0);
   }
 
-  function backTenSeconds() {
-    // Paragraph-granularity approximation — see file header.
+  function previousParagraph() {
     playFrom(Math.max(0, index - 1));
   }
 
-  function skipToEnd() {
+  function lastParagraph() {
     playFrom(paragraphs.length - 1);
   }
 
@@ -116,9 +115,10 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
           <div className="mt-4 flex items-center justify-center gap-2">
             <button
               type="button"
-              onClick={backTenSeconds}
+              onClick={previousParagraph}
               disabled={index === 0 && !playing && !finished}
-              aria-label="Back 10 seconds"
+              aria-label="Previous paragraph"
+              title="Previous paragraph"
               className="ligne-pill border border-cream-dark bg-cream-card px-3 py-2.5 text-ink disabled:opacity-40"
             >
               <BackIcon className="h-4 w-4" />
@@ -134,9 +134,10 @@ export default function ListeningPractice({ text, onClose }: ListeningPracticePr
             )}
             <button
               type="button"
-              onClick={skipToEnd}
+              onClick={lastParagraph}
               disabled={finished}
-              aria-label="Skip to end"
+              aria-label="Last paragraph"
+              title="Last paragraph"
               className="ligne-pill border border-cream-dark bg-cream-card px-3 py-2.5 text-ink disabled:opacity-40"
             >
               <SkipEndIcon className="h-4 w-4" />

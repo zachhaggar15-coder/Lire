@@ -37,7 +37,7 @@ export default function DictionaryQualityPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Dictionary quality" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Corrections and gaps from your reading.</p>
 
       <section className="mb-5 grid grid-cols-3 gap-2">

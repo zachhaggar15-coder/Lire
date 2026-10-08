@@ -3,7 +3,15 @@
 import { useEffect, useState } from "react";
 import type { Category, Difficulty } from "@/types";
 import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
-import { vocabularyEstimateForLevel } from "@/lib/vocabulary/levelEstimates";
+// Plain names, not vocabulary counts: choosing a level is a starting point, not a test.
+const LEVEL_NAMES: Record<Difficulty, string> = {
+  A1: "Beginner",
+  A2: "Elementary",
+  B1: "Intermediate",
+  B2: "Upper intermediate",
+  C1: "Advanced",
+  C2: "Very advanced",
+};
 import LessonScene, { type SceneName } from "@/components/LessonScene";
 
 const STARTING_POINTS: { value: Difficulty; label: string; detail: string; scene: SceneName; tone: string }[] = [
@@ -82,9 +90,9 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {[
-            "A guided path from your first words to fluent reading",
-            "A few minutes of daily practice and review",
-            "Real French news once you're ready for it",
+            "Short readings at your level, with help on every word",
+            "Save useful words and review them",
+            "Real French news when you're ready for it",
           ].map((line) => (
             <span key={line} className="rounded-full bg-cream/15 px-3 py-1.5 text-xs font-semibold leading-snug text-cream/90">
               {line}
@@ -135,7 +143,7 @@ export default function FirstRunOnboarding({ onComplete, variant = "embedded" }:
                   level === option ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
                 }`}
               >
-                {option} - vocabulary of roughly {vocabularyEstimateForLevel(option).toLocaleString()} words
+                {option} · {LEVEL_NAMES[option]}
               </button>
             ))}
           </div>

@@ -50,10 +50,14 @@ console.log("--- eligibility ---");
 store.clear();
 const fresh = getRatePromptState();
 check("new learners start at zero lessons", fresh.lessonsCompleted === 0 && fresh.lastShownAt === null && fresh.ratedAt === null);
-for (let i = 1; i < LESSONS_BEFORE_RATE_PROMPT; i++) recordLessonCompletedForRating();
-check("not eligible before enough lessons", !isEligibleForRatePrompt(getRatePromptState(), true, now));
-recordLessonCompletedForRating();
-check("eligible once the lesson threshold is reached", isEligibleForRatePrompt(getRatePromptState(), true, now));
+for (let i = 0; i < 3; i++) recordLessonCompletedForRating(now);
+check("not eligible after only three lessons", !isEligibleForRatePrompt(getRatePromptState(), true, now));
+for (let i = 3; i < LESSONS_BEFORE_RATE_PROMPT; i++) recordLessonCompletedForRating(now);
+check("not eligible after seven lessons all on one day", !isEligibleForRatePrompt(getRatePromptState(), true, now));
+recordLessonCompletedForRating(new Date(now.getTime() + DAY));
+check("not eligible on only two days", !isEligibleForRatePrompt(getRatePromptState(), true, now));
+recordLessonCompletedForRating(new Date(now.getTime() + 2 * DAY));
+check("eligible after enough lessons on three different days", isEligibleForRatePrompt(getRatePromptState(), true, now));
 check("never eligible outside the Android app", !isEligibleForRatePrompt(getRatePromptState(), false, now));
 
 console.log("--- cooldown ---");
@@ -71,7 +75,7 @@ check(
 console.log("--- rating ends the prompt for good ---");
 markRated(now);
 check("never eligible after rating", !isEligibleForRatePrompt(getRatePromptState(), true, new Date(now.getTime() + 400 * DAY)));
-check("rating keeps the lesson count", getRatePromptState().lessonsCompleted === LESSONS_BEFORE_RATE_PROMPT);
+check("rating keeps the lesson count", getRatePromptState().lessonsCompleted === LESSONS_BEFORE_RATE_PROMPT + 2);
 
 console.log("--- corrupt storage is tolerated ---");
 store.set("sorlio.v2:guest:lire.ratePrompt.v1", "{not json");

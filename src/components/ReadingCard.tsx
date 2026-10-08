@@ -105,7 +105,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
 
   useEffect(() => {
     setStatus(getProgress(text.id).status);
-    setHidden(hasHideableSource(text) && isSourceHidden(text.sourceName));
+    setHidden(hasHideableSource({ id: text.id, sourceName: text.sourceName }) && isSourceHidden(text.sourceName));
     setPreferred(isSourcePreferred(text.sourceName));
     setSavedLater(isSavedForLater(text.id));
     if (difficultyProp !== undefined) return;

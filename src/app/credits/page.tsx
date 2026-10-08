@@ -58,7 +58,7 @@ export default function CreditsPage() {
   const works = publicDomainWorks();
   return (
     <div className="ligne-screen">
-      <AppBar title="Credits and licences" kicker="Sorlio" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Credits and licences" kicker="Sorlio" backHref="/settings" backLabel="Back to You" />
       <div className="space-y-3 text-sm leading-relaxed text-ink-muted">
         <section className="rounded-card bg-cream-card p-4 shadow-card">
           <h2 className="text-sm font-bold uppercase tracking-wide text-ink">Sorlio texts and lessons</h2>

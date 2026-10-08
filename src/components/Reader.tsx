@@ -1993,8 +1993,8 @@ export default function Reader({ text }: { text: ReadingText }) {
           Reading options
         </summary>
         <p className="mt-2">
-          Tap a word for its meaning. Hold a word for its phrase. For a confusing line, tap a word and choose
-          &ldquo;Explain the whole sentence&rdquo;.
+          Tap a word for its meaning. Sorlio recognises common expressions automatically. For a difficult
+          sentence, tap a word and choose &ldquo;Explain the whole sentence&rdquo;.
         </p>
         {difficulty && (
           <p className="mt-1">

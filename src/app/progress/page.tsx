@@ -91,7 +91,7 @@ export default function ProgressPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Progress" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">A calm view of what your French reading is building toward.</p>
 
       {rewardNotice && (

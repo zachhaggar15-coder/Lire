@@ -14,7 +14,9 @@ const items = [
   { href: "/review", label: "Review", icon: "review" as const, activePaths: ["/review"] },
   {
     href: "/settings",
-    label: "Settings",
+    // "You", not "Settings": this tab holds progress, words, grammar, history
+    // and the account as well as the app's settings.
+    label: "You",
     icon: "library" as const,
     activePaths: [
       "/settings",

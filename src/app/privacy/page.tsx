@@ -242,7 +242,7 @@ const sections: Section[] = [
 export default function PrivacyPage() {
   return (
     <div className="ligne-screen">
-      <AppBar title="Privacy policy" kicker="Sorlio" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Privacy policy" kicker="Sorlio" backHref="/settings" backLabel="Back to You" />
       <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">Effective {LEGAL.privacyEffectiveDate}</p>
 
       <section aria-labelledby="privacy-short" className="mb-4 rounded-card bg-cream-card p-4 shadow-card">

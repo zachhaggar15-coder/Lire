@@ -242,4 +242,23 @@ await t.section("C3/F4: saved for later is easy to find; internal links are clie
   t.check("compact reading cards use next/link", /<Link\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")) && !/<a\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")));
 });
 
+// ---------------------------------------------------------------------------
+// Copy that matches what the app does.
+
+await t.section("F1/F2/F3/F5/G1: small honest copy fixes", async () => {
+  const reader = read("src/components/Reader.tsx");
+  t.check("reader help teaches the real gestures (no 'Hold a word')", !/Hold a word/i.test(reader) && /recognises common expressions automatically/.test(reader));
+  const listening = read("src/components/practice/ListeningPractice.tsx");
+  t.check("listening controls are labelled by paragraph, not seconds", /aria-label="Previous paragraph"/.test(listening) && /aria-label="Last paragraph"/.test(listening) && !/Back 10 seconds|Skip to end/.test(listening.replace(/\/\*[\s\S]*?\*\//g, "")));
+  const { isEligibleForRatePrompt, LESSONS_BEFORE_RATE_PROMPT } = await import("../src/lib/ratePrompt.ts");
+  const days = ["2026-07-13", "2026-07-14", "2026-07-15"];
+  t.check("no rating prompt after three lessons", !isEligibleForRatePrompt({ lessonsCompleted: 3, activeDays: days, lastShownAt: null, ratedAt: null }, true));
+  t.check("rating prompt needs 7+ lessons over 3+ days", LESSONS_BEFORE_RATE_PROMPT >= 7 && !isEligibleForRatePrompt({ lessonsCompleted: 9, activeDays: ["2026-07-13"], lastShownAt: null, ratedAt: null }, true) && isEligibleForRatePrompt({ lessonsCompleted: 7, activeDays: days, lastShownAt: null, ratedAt: null }, true));
+  t.check("no sentiment gate before the rating link", !/enjoying Sorlio\?/i.test(read("src/components/RateSorlioCard.tsx")));
+  const onboarding = read("src/components/FirstRunOnboarding.tsx");
+  t.check("onboarding makes no fluency promise and no level = word-count claim", !/fluent/i.test(onboarding) && !/known words|vocabulary of roughly/i.test(onboarding) && /Upper intermediate/.test(onboarding));
+  const nav = read("src/components/BottomNav.tsx");
+  t.check("the fourth tab is 'You', not 'Settings'", /label: "You"/.test(nav) && !/label: "Settings"/.test(nav));
+});
+
 t.finish();

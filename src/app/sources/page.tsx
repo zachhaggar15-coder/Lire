@@ -124,7 +124,7 @@ export default function SourcesPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="News sources" kicker="Settings" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="News sources" kicker="Settings" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Sources you hide never appear in News; preferred sources come first. Saved on this device.</p>
 
       <section className="mb-5 space-y-3">

@@ -126,7 +126,7 @@ const sections: Section[] = [
 export default function TermsPage() {
   return (
     <div className="ligne-screen">
-      <AppBar title="Terms of use" kicker="Sorlio" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Terms of use" kicker="Sorlio" backHref="/settings" backLabel="Back to You" />
       <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">Effective {LEGAL.termsEffectiveDate}</p>
       <div className="space-y-3 text-sm leading-relaxed text-ink-muted">
         {sections.map((section) => (

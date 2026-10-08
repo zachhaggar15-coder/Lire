@@ -106,7 +106,7 @@ export default function ArchivePage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Articles read" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">Your most recent completed readings (up to {MAX_ARCHIVE_ENTRIES}).</p>
 
       {summary && (

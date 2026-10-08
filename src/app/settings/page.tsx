@@ -145,7 +145,7 @@ function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse:
 }
 
 export default function SettingsPage() {
-  useDocumentTitle("Settings");
+  useDocumentTitle("You");
   const router = useRouter();
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
@@ -204,9 +204,8 @@ export default function SettingsPage() {
   return (
     <div className="ligne-screen">
       <header className="mb-5">
-        <p className="ligne-label">You</p>
-        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">Settings</h1>
-        <p className="mt-2 text-sm text-ink-muted">Learning setup, saved items, progress, and app settings.</p>
+        <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">You</h1>
+        <p className="mt-2 text-sm text-ink-muted">Your learning, your library, your account and the app&rsquo;s settings.</p>
       </header>
 
       <div className="space-y-6">
@@ -316,10 +315,10 @@ export default function SettingsPage() {
 
         <section className="space-y-3">
           <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <SettingsLink href="/words" title="Words" description="Your saved words: in review or not, and how well you know them." />
+          <SettingsLink href="/words" title="Words" description="Your saved words: in Review or not, and which you've mastered." />
           <SettingsLink href="/words?tab=phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
-          <SettingsLink href="/progress" title="Progress" description="See XP, missions, and topic coverage." />
-          <SettingsLink href="/archive" title="Lessons read" description="Review your reading history." />
+          <SettingsLink href="/progress" title="Progress" description="XP, missions, streaks and what you've read." />
+          <SettingsLink href="/archive" title="Reading history" description="Your recent completed readings." />
           <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
         </section>
 
@@ -354,7 +353,7 @@ export default function SettingsPage() {
         </section>
 
         <section className="space-y-3">
-          <SettingsSectionTitle title="App" subtitle="Account, install options, and privacy." />
+          <SettingsSectionTitle title="Account and settings" subtitle="Account, install options, privacy and app settings." />
           <PremiumPromoCard />
           <AccountCard />
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">

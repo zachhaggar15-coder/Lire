@@ -124,7 +124,7 @@ function ImportPageContent() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="Import text" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-2 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review and progress tools.</p>
       <p className="mb-5 text-xs leading-relaxed text-ink-muted">
         Imported texts stay private on this device. They&rsquo;re only copied to your account if you turn on{" "}

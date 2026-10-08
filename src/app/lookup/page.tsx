@@ -17,7 +17,7 @@ export default function LookupPage() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title="English → French" kicker="Library" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm text-ink-muted">
         Look up an English word to find its French translation — offline, same as reader lookups.
       </p>

@@ -188,7 +188,7 @@ function GrammarPageContent() {
 
   return (
     <div className="ligne-screen">
-      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to Settings" />
+      <AppBar title={meta.title} kicker="Grammar" backHref="/settings" backLabel="Back to You" />
       <p className="-mt-3 mb-5 text-sm leading-relaxed text-ink-muted">{meta.subtitle}</p>
 
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
