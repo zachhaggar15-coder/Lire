@@ -45,7 +45,8 @@ export default function BottomNav() {
   useEffect(() => {
     function syncOnboardingState() {
       const state = getOnboardingState();
-      setOnboardingComplete(state?.completed === true && state.walkthroughCompleted === true);
+      // Shown once a level is chosen; hidden only while the tour is being replayed.
+      setOnboardingComplete(state?.completed === true && state.walkthroughReplay !== true);
     }
 
     syncOnboardingState();

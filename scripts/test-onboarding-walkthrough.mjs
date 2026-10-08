@@ -37,20 +37,20 @@ console.log("--- brand-new user sees onboarding ---");
 store.clear();
 check("no stored state -> getOnboardingState is null", getOnboardingState() === null);
 
-console.log("--- completing the picker leaves the walkthrough pending ---");
-saveOnboarding("A2", [], "steady", { seedKnownWords: false });
+console.log("--- choosing a level completes first run: no tour before the first reading ---");
+saveOnboarding("A2", [], "steady");
 {
   const state = getOnboardingState();
   check("picker completion sets completed=true", state.completed === true);
-  check("walkthrough starts NOT completed (new user should see it next)", state.walkthroughCompleted === false, JSON.stringify(state));
+  check("first run does not queue the tour (learners go straight to reading)", state.walkthroughCompleted === true && state.walkthroughReplay !== true, JSON.stringify(state));
   check("walkthrough step starts at null (not yet begun)", state.walkthroughStep === null);
 }
 
-console.log("--- the level picker no longer silently completes the walkthrough ---");
+console.log("--- the home page shows the tour only when replay was asked for ---");
 {
   const { readFileSync } = await import("node:fs");
-  const picker = readFileSync(new URL("../src/components/FirstRunOnboarding.tsx", import.meta.url), "utf8");
-  check("FirstRunOnboarding does not call completeWalkthrough (new users are offered the tour)", !picker.includes("completeWalkthrough"));
+  const home = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
+  check("home routes to the tour only on walkthroughReplay", /state\.walkthroughReplay\)/.test(home) && !/!state\.walkthroughCompleted/.test(home));
   const tour = readFileSync(new URL("../src/components/onboarding/InteractiveWalkthrough.tsx", import.meta.url), "utf8");
   check("the tour's first screen offers a skip option", tour.includes("Skip, start reading"));
 }
@@ -84,7 +84,7 @@ store.set("sorlio.v2:guest:lire.sessionRecords.v1", JSON.stringify([{ textId: "s
 resetWalkthrough();
 {
   const state = getOnboardingState();
-  check("restart clears walkthroughCompleted so it shows again", state.walkthroughCompleted === false);
+  check("restart asks for the tour to be replayed", state.walkthroughCompleted === false && state.walkthroughReplay === true);
   check("restart clears any stale resume step", state.walkthroughStep === null);
   check("restart does NOT touch the picker's own completed flag", state.completed === true);
   check("restart does NOT change the previously-selected level", state.level === "A2");
@@ -96,7 +96,7 @@ console.log("--- skip is equivalent to completing (never shown again after skipp
 completeWalkthrough();
 {
   const state = getOnboardingState();
-  check("skip path (completeWalkthrough) marks the walkthrough done", state.walkthroughCompleted === true);
+  check("skip path (completeWalkthrough) marks the walkthrough done and ends the replay", state.walkthroughCompleted === true && state.walkthroughReplay === false);
 }
 
 console.log("--- updateSelectedReadingLevel preserves walkthrough progress ---");
@@ -115,7 +115,7 @@ store.clear();
 skipOnboarding();
 {
   const state = getOnboardingState();
-  check("skipping the picker still initialises walkthrough fields (not undefined/crashing)", state.walkthroughCompleted === false && state.walkthroughStep === null);
+  check("skipping the picker still initialises walkthrough fields (not undefined/crashing)", state.walkthroughCompleted === true && state.walkthroughStep === null);
 }
 
 console.log(`\n${passed} passed, ${failed} failed.`);

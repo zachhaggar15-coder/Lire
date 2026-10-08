@@ -1151,7 +1151,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     pulseSavedWords([meaning.tappedText, meaning.lemma]);
     if (!hasSeenReaderTip("first-save")) {
       markReaderTipSeen("first-save");
-      showToast("Saved — practise it later in the Review tab", 3200);
+      // The first save is the moment to say what Review is, once.
+      showToast("Added to Review. We'll bring this word back later.", 3600);
     } else {
       showToast("Added to review");
     }

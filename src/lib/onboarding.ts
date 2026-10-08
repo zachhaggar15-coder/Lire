@@ -22,6 +22,12 @@ export interface OnboardingState {
   walkthroughCompleted: boolean;
   /** Which walkthrough step to resume at if the app was closed mid-walkthrough. Null once completed/skipped, or if never started. */
   walkthroughStep: number | null;
+  /**
+   * True only after "Replay the tutorial". First run no longer includes the
+   * tour: new learners go from choosing a level straight into a reading, and
+   * each interaction is explained the first time it matters.
+   */
+  walkthroughReplay?: boolean;
 }
 
 const DEFAULT_LEVEL: Difficulty = "A1";
@@ -68,6 +74,7 @@ export function getOnboardingState(): OnboardingState | null {
       updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : new Date(0).toISOString(),
       walkthroughCompleted: parsed.walkthroughCompleted === true,
       walkthroughStep: typeof parsed.walkthroughStep === "number" ? parsed.walkthroughStep : null,
+      walkthroughReplay: parsed.walkthroughReplay === true,
     };
   } catch {
     return null;
@@ -103,7 +110,7 @@ export function saveOnboarding(
     estimatedKnownWords: vocabularyEstimateForLevel(level),
     seededKnownWords: 0,
     updatedAt: new Date().toISOString(),
-    walkthroughCompleted: false,
+    walkthroughCompleted: true,
     walkthroughStep: null,
   };
 
@@ -163,7 +170,7 @@ export function completeWalkthrough(): void {
   if (!current || !hasStorage()) return;
   localStore.writeItem(
     ONBOARDING_KEY,
-    JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, updatedAt: new Date().toISOString() })
+    JSON.stringify({ ...current, walkthroughCompleted: true, walkthroughStep: null, walkthroughReplay: false, updatedAt: new Date().toISOString() })
   );
   notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();
@@ -180,7 +187,7 @@ export function resetWalkthrough(): void {
   if (!current || !hasStorage()) return;
   localStore.writeItem(
     ONBOARDING_KEY,
-    JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, updatedAt: new Date().toISOString() })
+    JSON.stringify({ ...current, walkthroughCompleted: false, walkthroughStep: null, walkthroughReplay: true, updatedAt: new Date().toISOString() })
   );
   notifyStoreChanged(ONBOARDING_KEY);
   notifyRecommendationPreferencesChanged();

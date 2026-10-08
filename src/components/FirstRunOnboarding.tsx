@@ -1,211 +1,132 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { Category, Difficulty } from "@/types";
-import { getOnboardingState, saveOnboarding, type OnboardingGoal } from "@/lib/onboarding";
-// Plain names, not vocabulary counts: choosing a level is a starting point, not a test.
-const LEVEL_NAMES: Record<Difficulty, string> = {
-  A1: "Beginner",
-  A2: "Elementary",
-  B1: "Intermediate",
-  B2: "Upper intermediate",
-  C1: "Advanced",
-  C2: "Very advanced",
-};
-import LessonScene, { type SceneName } from "@/components/LessonScene";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import type { Difficulty } from "@/types";
+import { saveOnboarding } from "@/lib/onboarding";
+import { getNextTextForReader } from "@/lib/journey/state";
 
-const STARTING_POINTS: { value: Difficulty; label: string; detail: string; scene: SceneName; tone: string }[] = [
-  { value: "A1", label: "I'm brand new", detail: "Very short texts with lots of help.", scene: "coffee", tone: "bg-accent-mint" },
-  { value: "A2", label: "I know the basics", detail: "Simple stories and everyday language.", scene: "home", tone: "bg-accent-sky" },
-  { value: "B1", label: "I can read a little", detail: "Short articles with some challenge.", scene: "book", tone: "bg-accent-gold" },
-  { value: "B2", label: "I want a stretch", detail: "Richer texts and faster vocabulary growth.", scene: "train", tone: "bg-accent-violet" },
+/**
+ * First run: one decision, then French.
+ *
+ * Closed testers found the old onboarding too much: a level picker with
+ * optional topics and a daily goal, then a five-step tour, then a dashboard,
+ * and only then a lesson. Now the learner sees what Sorlio is, picks how
+ * comfortable they are reading French, and lands in a short reading. Each
+ * interaction is explained the first time it matters (tap a word, add it to
+ * Review, finish a reading), not before.
+ *
+ * Topics are learned from what they read; a daily goal is offered after the
+ * first reading; Premium and accounts never appear here.
+ */
+
+interface LevelOption {
+  value: Difficulty;
+  /** How it feels, first: most learners don't know CEFR codes. */
+  description: string;
+}
+
+const MAIN_LEVELS: LevelOption[] = [
+  { value: "A2", description: "I understand simple French" },
+  { value: "B1", description: "I can follow everyday French" },
+  { value: "B2", description: "I can read fairly comfortably" },
 ];
 
-const ADVANCED_LEVELS: Difficulty[] = ["C1", "C2"];
-
-const TOPICS: { value: Category; label: string }[] = [
-  { value: "news-style", label: "News" },
-  { value: "sport", label: "Sport" },
-  { value: "culture", label: "Culture" },
-  { value: "science", label: "Science" },
-  { value: "everyday life", label: "Life" },
-];
-
-const GOALS: { value: OnboardingGoal; label: string; detail: string }[] = [
-  { value: "light", label: "Light", detail: "5 min" },
-  { value: "steady", label: "Steady", detail: "10 min" },
-  { value: "serious", label: "Serious", detail: "20 min" },
+const MORE_LEVELS: LevelOption[] = [
+  { value: "A1", description: "I'm just starting" },
+  { value: "C1", description: "I read French well" },
+  { value: "C2", description: "I read French with ease" },
 ];
 
 interface FirstRunOnboardingProps {
   onComplete?: () => void;
-  variant?: "embedded" | "focus";
 }
 
-export default function FirstRunOnboarding({ onComplete, variant = "embedded" }: FirstRunOnboardingProps) {
-  const [visible, setVisible] = useState(false);
-  const [level, setLevel] = useState<Difficulty>("A1");
-  // Deliberately empty. Pre-ticking News and Science looked like a suggestion
-  // but behaved like a selection: tapping "Science" to choose it actually
-  // toggled it *off*, and anyone who picked nothing silently got News.
-  const [topics, setTopics] = useState<Category[]>([]);
-  const [goal, setGoal] = useState<OnboardingGoal>("steady");
+export default function FirstRunOnboarding({ onComplete }: FirstRunOnboardingProps) {
+  const router = useRouter();
+  const [screen, setScreen] = useState<"welcome" | "level">("welcome");
+  const [level, setLevel] = useState<Difficulty | null>(null);
+  const [showMore, setShowMore] = useState(false);
 
-  useEffect(() => {
-    const state = getOnboardingState();
-    const shouldShow = !state?.completed;
-    setVisible(shouldShow);
-    if (state?.level) setLevel(state.level);
-    if (state?.topics?.length) setTopics(state.topics);
-    if (state?.goalPreset) setGoal(state.goalPreset);
-  }, []);
+  function start() {
+    if (!level) return;
+    saveOnboarding(level, []);
+    onComplete?.();
+    // Straight into the first reading the journey would pick at this level.
+    const first = getNextTextForReader({ selectedLevel: level });
+    if (first) router.push(`/reader/${encodeURIComponent(first.textId)}`);
+  }
 
-  if (!visible) return null;
-
-  function toggleTopic(topic: Category) {
-    setTopics((current) =>
-      current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]
+  if (screen === "welcome") {
+    return (
+      <section className="flex min-h-[calc(100dvh-6rem)] flex-col justify-between" aria-labelledby="welcome-title">
+        <div className="pt-10">
+          <p className="font-french text-[40px] leading-none text-brand">Sorlio</p>
+          <h1 id="welcome-title" className="mt-6 text-[30px] font-semibold leading-tight text-ink">
+            Learn French by reading it.
+          </h1>
+          <p className="mt-3 text-base leading-relaxed text-ink-muted">
+            Read French at your level, tap anything you don&rsquo;t understand, and review useful words later.
+          </p>
+        </div>
+        <div style={{ paddingBottom: "calc(1rem + var(--safe-bottom))" }}>
+          <button type="button" onClick={() => setScreen("level")} className="ligne-pill min-h-12 w-full bg-brand text-cream">
+            Get started
+          </button>
+        </div>
+      </section>
     );
   }
 
-  function finish(nextLevel = level) {
-    // Leaves walkthroughCompleted false, so the home page offers the short
-    // interactive tour next. Its first screen has an equally prominent
-    // "Skip, start reading" so first use is still never gated on it.
-    saveOnboarding(nextLevel, topics, goal);
-    setVisible(false);
-    onComplete?.();
-  }
+  const options = showMore ? [MORE_LEVELS[0], ...MAIN_LEVELS, ...MORE_LEVELS.slice(1)] : MAIN_LEVELS;
 
   return (
-    <section className={variant === "focus" ? "rounded-card bg-cream-card shadow-card" : "mb-5 rounded-card bg-cream-card shadow-card"}>
-      <div className="rounded-t-card bg-brand p-5 text-cream">
-        <div className="flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-cream/75">Start here</h2>
-            <p className="mt-1 text-2xl font-extrabold leading-tight">Read your first tiny French scene.</p>
-            <p className="mt-2 text-sm leading-relaxed text-cream/80">Pick the closest starting point, then begin your first short lesson.</p>
-          </div>
-          <LessonScene name="coffee" size={104} className="lesson-scene-float rounded-[1.35rem] bg-cream/15 p-1 shadow-raised" />
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {[
-            "Short readings at your level, with help on every word",
-            "Save useful words and review them",
-            "Real French news when you're ready for it",
-          ].map((line) => (
-            <span key={line} className="rounded-full bg-cream/15 px-3 py-1.5 text-xs font-semibold leading-snug text-cream/90">
-              {line}
-            </span>
-          ))}
-        </div>
-      </div>
+    <section className="flex min-h-[calc(100dvh-6rem)] flex-col justify-between" aria-labelledby="level-title">
+      <div className="pt-6">
+        <button type="button" onClick={() => setScreen("welcome")} className="min-h-11 text-sm font-semibold text-ink-muted">
+          ‹ Back
+        </button>
+        <h1 id="level-title" className="mt-2 text-[26px] font-semibold leading-tight text-ink">
+          How comfortable are you reading French?
+        </h1>
+        <p className="mt-2 text-sm text-ink-muted">A starting point, not a test. You can change it any time.</p>
 
-      <div className="p-5">
-        <div className="grid gap-2">
-          {STARTING_POINTS.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => setLevel(option.value)}
-              aria-pressed={level === option.value}
-              className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-left ${
-                level === option.value ? "border-brand bg-brand text-cream shadow-raised" : `border-transparent ${option.tone} text-ink`
-              }`}
-            >
-              <LessonScene name={option.scene} size={44} className={level === option.value ? "rounded-2xl bg-cream/15 p-0.5" : ""} />
-              <span className="min-w-0 flex-1">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-bold">{option.label}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${level === option.value ? "bg-cream/20 text-cream" : "bg-cream-card/70 text-ink-muted"}`}>
-                    {option.value}
-                  </span>
-                </span>
-                <span className={`mt-0.5 block text-xs ${level === option.value ? "text-cream/80" : "text-ink-muted"}`}>
-                  {option.detail}
-                </span>
-              </span>
-            </button>
-          ))}
-        </div>
-        <details className="mt-2">
-          <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
-            I already know my CEFR level
-          </summary>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {[...STARTING_POINTS.map((option) => option.value), ...ADVANCED_LEVELS].map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setLevel(option)}
-                aria-pressed={level === option}
-                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                  level === option ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
-                }`}
-              >
-                {option} · {LEVEL_NAMES[option]}
-              </button>
-            ))}
-          </div>
-        </details>
-      <details className="mt-4 rounded-2xl bg-cream px-3 py-2">
-        <summary className="cursor-pointer text-xs font-semibold text-ink-muted underline underline-offset-2">
-          Optional: topics and daily goal
-        </summary>
-
-        <div className="mt-3">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Topics</p>
-          <div className="flex flex-wrap gap-2">
-            {TOPICS.map((topic) => (
-              <button
-                key={topic.value}
-                type="button"
-                onClick={() => toggleTopic(topic.value)}
-                aria-pressed={topics.includes(topic.value)}
-                className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                  topics.includes(topic.value) ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
-                }`}
-              >
-                {topic.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-3">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Goal</p>
-          <div className="grid grid-cols-3 gap-2">
-            {GOALS.map((option) => (
+        <div role="radiogroup" aria-labelledby="level-title" className="mt-5 grid gap-2">
+          {options.map((option) => {
+            const selected = level === option.value;
+            return (
               <button
                 key={option.value}
                 type="button"
-                onClick={() => setGoal(option.value)}
-                aria-pressed={goal === option.value}
-                className={`rounded-xl px-2 py-2 text-center ${
-                  goal === option.value ? "bg-brand text-cream" : "bg-cream-dark text-ink-muted"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => setLevel(option.value)}
+                className={`flex min-h-14 items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left ${
+                  selected ? "border-brand bg-brand text-cream" : "border-cream-dark bg-cream-card text-ink"
                 }`}
               >
-                <span className="block text-sm font-semibold">{option.label}</span>
-                <span className="block text-xs">{option.detail}</span>
+                <span className="text-base font-semibold">{option.description}</span>
+                <span className={`text-sm font-semibold ${selected ? "text-cream/80" : "text-ink-muted"}`}>{option.value}</span>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
-
-      </details>
-
-        <div
-          className="sticky bottom-0 -mx-5 mt-4 border-t border-cream-dark bg-cream-card/95 px-5 pt-3 backdrop-blur"
-          style={{ paddingBottom: "calc(0.75rem + var(--safe-bottom))" }}
-        >
-          <button
-            type="button"
-            onClick={() => finish()}
-            className="w-full rounded-full bg-brand py-3 text-sm font-semibold text-cream"
-          >
-            Start first lesson · {level}
+        {!showMore && (
+          <button type="button" onClick={() => setShowMore(true)} className="mt-3 min-h-11 text-sm font-semibold text-brand underline underline-offset-2">
+            More levels
           </button>
-        </div>
+        )}
+      </div>
+
+      <div className="pt-4" style={{ paddingBottom: "calc(1rem + var(--safe-bottom))" }}>
+        <button
+          type="button"
+          onClick={start}
+          disabled={!level}
+          className="ligne-pill min-h-12 w-full bg-brand text-cream disabled:bg-cream-dark disabled:text-ink-muted"
+        >
+          Start first reading
+        </button>
       </div>
     </section>
   );

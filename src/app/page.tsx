@@ -18,7 +18,10 @@ export default function HomePage() {
     const state = getOnboardingState();
     if (!state?.completed) {
       setStage("picker");
-    } else if (!state.walkthroughCompleted) {
+    } else if (state.walkthroughReplay) {
+      // The tour only runs when the learner asks to replay it. Learners who
+      // finished onboarding earlier but never the old tour go straight to
+      // their lessons rather than being sent through it now.
       setWalkthroughStartStep(state.walkthroughStep);
       setStage("walkthrough");
     } else {
@@ -41,13 +44,8 @@ export default function HomePage() {
 
   if (stage === "picker") {
     return (
-      <div className="min-h-[100dvh] px-4 pt-[calc(var(--safe-top)+1.5rem)]">
-        <header className="mb-5">
-          <h1 className="text-3xl font-extrabold text-ink">Sorlio</h1>
-          <p className="mt-1 text-sm text-ink-muted">Set your starting point, then follow your guided lesson path.</p>
-        </header>
+      <div className="mx-auto min-h-[100dvh] max-w-md px-[22px] pt-[calc(var(--safe-top)+1rem)]">
         <FirstRunOnboarding
-          variant="focus"
           onComplete={() => {
             refreshStage();
             window.dispatchEvent(new Event("storage"));
