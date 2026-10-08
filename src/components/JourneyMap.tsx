@@ -5,12 +5,15 @@ import Link from "next/link";
 import type { Difficulty, ReadingText } from "@/types";
 import { getLastOpenedTextId, getProgress } from "@/lib/progress";
 import { formatCategory, toPercent } from "@/lib/format";
-import { getSelectedReadingLevel } from "@/lib/onboarding";
+import { getOnboardingState, getSelectedReadingLevel } from "@/lib/onboarding";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import { getCurrentStreak, isActiveToday } from "@/lib/habit";
 import { getGoals, getGoalsProgress } from "@/lib/goals";
-import ContinueReadingBanner from "@/components/ContinueReadingBanner";
 import AppIcon from "@/components/AppIcon";
+import BottomSheet from "@/components/BottomSheet";
+import { getCustomTextById } from "@/lib/customTexts";
+import { getCachedRssTextById } from "@/lib/rss/rssTextCache";
+import { getBuiltInTextById } from "@/lib/publicDomainBank";
 import { getJourneyText, JOURNEY_BANDS, NODES_PER_MAP, type Stage } from "@/lib/journey/ladder";
 import {
   getJourneyState,
@@ -56,6 +59,7 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   const [openStageIndex, setOpenStageIndex] = useState<number | null>(null);
   const [pageState, setPage] = useState(0);
   const [capstoneOpen, setCapstoneOpen] = useState(false);
+  const [levelSheetOpen, setLevelSheetOpen] = useState(false);
   const currentRef = useRef<HTMLLIElement | null>(null);
 
   useGeneratedDictionary();
@@ -98,9 +102,19 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
   const goalProgress = mounted ? getGoalsProgress() : null;
   const dailyTextGoal = goals?.articlesPerDay ?? 1;
   const textsToday = goalProgress?.articlesToday ?? 0;
+  // A daily goal is offered after the first reading, not at sign-up; show
+  // progress towards it only once the learner has chosen one.
+  const goalChosen = mounted && !!getOnboardingState()?.goalPreset;
   const bandTone = BAND_TONES[visibleBand];
   const resumeTextId = mounted ? getLastOpenedTextId() : null;
   const hasInProgressReading = !!resumeTextId && getProgress(resumeTextId).status === "in-progress";
+  // An open reading wins over the next lesson, wherever it came from.
+  const resumeText =
+    hasInProgressReading && resumeTextId && resumeTextId !== nextVisible?.textId
+      ? getJourneyText(resumeTextId) ?? getCustomTextById(resumeTextId) ?? getBuiltInTextById(resumeTextId) ?? getCachedRssTextById(resumeTextId) ?? null
+      : null;
+  const nextInProgress = !!nextVisible && getProgress(nextVisible.textId).status === "in-progress";
+  const browsingAway = committedLevel !== null && visibleBand !== committedLevel;
 
   useEffect(() => {
     setMounted(true);
@@ -185,46 +199,59 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
 
   return (
     <section className="bg-cream px-[22px] pb-4 pt-[calc(var(--safe-top)+1.75rem)] text-ink">
-      <ContinueReadingBanner />
       <header>
         <div className="flex items-center justify-between gap-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">Today</p>
-          <div className="flex items-center gap-2">
-            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-brand">{streak} day streak</p>
-            <span className="flex gap-1" aria-hidden="true">
-              <span className={`h-1.5 w-1.5 rounded-full ${todayActive ? "bg-brand" : "bg-cream-strong"}`} />
-              <span className="h-1.5 w-1.5 rounded-full bg-cream-strong" />
-            </span>
-          </div>
+          <p className="text-sm font-semibold text-ink-muted">{mounted ? greeting() : "Hello"}</p>
+          {streak > 0 && (
+            <p className="text-sm font-semibold text-brand">
+              {streak} day streak
+              {todayActive ? "" : " · read today to keep it"}
+            </p>
+          )}
         </div>
 
-        <div className="mt-8 flex items-end justify-between gap-4">
+        {/* The one thing to do next, before anything else: resume what is
+            open, otherwise the next lesson on the path. */}
+        <NextActionHero resumeText={resumeText} nextText={nextVisible ? nextText : null} nextInProgress={nextInProgress} band={visibleBand} />
+
+        <div className="mt-6 flex items-end justify-between gap-4">
           <div className="min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-              Ligne {visibleBand}
-              {pageCount > 1 && ` · Map ${page + 1} of ${pageCount}`}
+            <p className="text-sm font-semibold text-ink">
+              {visibleBand} path
+              {pageCount > 1 && <span className="font-normal text-ink-muted"> · map {page + 1} of {pageCount}</span>}
             </p>
-            <h2 className="mt-1 text-[30px] font-semibold leading-none text-ink">{routeTitle(pageStages.length)}</h2>
-          </div>
-          <div className="shrink-0 text-right">
-            <p className="font-numeral text-[32px] leading-none text-ink">
-              {pageCleared}
-              <span className="text-ink-faint">/{pageStages.length || 0}</span>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              {pageCleared} of {pageStages.length || 0} stops finished
+              {goalChosen ? ` · today ${Math.min(textsToday, dailyTextGoal)} of ${dailyTextGoal} ${dailyTextGoal === 1 ? "text" : "texts"}` : ""}
+              {browsingAway && committedLevel ? ` · your level is ${committedLevel}` : ""}
             </p>
-            <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Stops clear</p>
           </div>
+          <button
+            type="button"
+            onClick={() => setLevelSheetOpen(true)}
+            className="min-h-11 shrink-0 text-sm font-semibold text-brand underline underline-offset-2"
+          >
+            Change level
+          </button>
+        </div>
+        <div className="mt-3 ligne-progress-track" aria-hidden="true">
+          <div className="ligne-progress-fill" style={{ width: `${toPercent(pageProgress)}%` }} />
         </div>
 
-        <div className="mt-5">
-          <div className="ligne-progress-track" aria-hidden="true">
-            <div className="ligne-progress-fill" style={{ width: `${toPercent(pageProgress)}%` }} />
-          </div>
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Goal today · {Math.min(textsToday, dailyTextGoal)} of {dailyTextGoal} texts
+        <BottomSheet open={levelSheetOpen} onClose={() => setLevelSheetOpen(false)} ariaLabel="Choose lesson level">
+          <h2 className="text-lg font-semibold text-ink">Lesson level</h2>
+          <p className="mt-1 text-sm text-ink-muted">
+            See the lessons for another level. Your reading level{committedLevel ? ` (${committedLevel})` : ""} stays as it is; change it in Settings.
           </p>
-        </div>
-
-        <LevelSwitcher selectedLevel={visibleBand} committedLevel={committedLevel} onChange={handleLevelChange} />
+          <LevelSwitcher
+            selectedLevel={visibleBand}
+            committedLevel={committedLevel}
+            onChange={(level) => {
+              handleLevelChange(level);
+              setLevelSheetOpen(false);
+            }}
+          />
+        </BottomSheet>
       </header>
 
       {hasVisibleStages ? (
@@ -282,6 +309,55 @@ export default function JourneyMap({ selectedLevel: selectedLevelProp, onLevelCh
         </div>
       )}
     </section>
+  );
+}
+
+function greeting(now: Date = new Date()): string {
+  const hour = now.getHours();
+  if (hour < 5 || hour >= 18) return "Good evening";
+  if (hour < 12) return "Good morning";
+  return "Good afternoon";
+}
+
+/**
+ * The next thing to do, made dominant: a reading left open, otherwise the
+ * journey's next lesson. Everything else on Lessons sits below it.
+ */
+function NextActionHero({
+  resumeText,
+  nextText,
+  nextInProgress,
+  band,
+}: {
+  resumeText: ReadingText | null;
+  nextText: ReadingText | null;
+  nextInProgress: boolean;
+  band: Difficulty;
+}) {
+  const text = resumeText ?? nextText;
+  if (!text) {
+    return (
+      <div className="mt-5 rounded-card bg-cream-card px-5 py-5 shadow-card">
+        <p className="text-sm font-semibold text-ink-muted">{band} path</p>
+        <p className="mt-1 text-lg font-semibold text-ink">You&rsquo;ve finished this map. Pick the next stop below.</p>
+      </div>
+    );
+  }
+  const continuing = !!resumeText || nextInProgress;
+  return (
+    <div className="mt-5 rounded-card bg-brand px-5 py-5 text-cream shadow-raised">
+      <p className="text-sm font-semibold text-cream/80">{continuing ? "Continue reading" : `Next in your ${band} path`}</p>
+      <p lang="fr" className="mt-2 font-french text-[26px] leading-tight">{text.title}</p>
+      <p className="mt-1 text-sm text-cream/80">
+        {text.difficulty} · about {text.minutes} min
+      </p>
+      <Link
+        href={`/reader/${encodeURIComponent(text.id)}`}
+        className="ligne-pill mt-4 flex min-h-12 items-center justify-center bg-cream text-brand"
+      >
+        {continuing ? "Continue" : "Start lesson"}
+      </Link>
+    </div>
   );
 }
 
@@ -402,7 +478,7 @@ function StageRouteStop({
             {stageNext ? (
               <Link
                 href={`/reader/${encodeURIComponent(stageNext.textId)}`}
-                className="ligne-pill flex min-h-11 items-center justify-center bg-brand text-cream"
+                className="ligne-pill flex min-h-11 items-center justify-center border border-yellow-muted/25 bg-cream-card/55 text-yellow-ink"
               >
                 {stageActionLabel}
               </Link>
@@ -500,13 +576,16 @@ function StageRouteStop({
             </div>
           ))}
           {current && canJump && (
-            <button
-              type="button"
-              onClick={() => onJump(stage)}
-              className="ligne-pill mt-2 w-full border border-cream-dark bg-cream-sunken text-brand transition-colors duration-200 active:bg-brand active:text-cream"
-            >
-              Jump ahead
-            </button>
+            <details className="mt-2 py-1">
+              <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold text-ink-muted">More options</summary>
+              <button
+                type="button"
+                onClick={() => onJump(stage)}
+                className="ligne-pill mt-1 w-full border border-cream-dark bg-cream-sunken text-brand transition-colors duration-200 active:bg-brand active:text-cream"
+              >
+                Jump ahead to the next stage
+              </button>
+            </details>
           )}
         </div>
       </div>
@@ -814,13 +893,6 @@ function LockIcon({ className }: { className?: string }) {
       <path d="M8 11V7a4 4 0 0 1 8 0v4" />
     </svg>
   );
-}
-
-function routeTitle(stopCount: number): string {
-  if (stopCount === 10) return "Ten stops";
-  if (stopCount === 0) return "Route";
-  if (stopCount === 1) return "One stop";
-  return `${stopCount} stops`;
 }
 
 function stageSubtitle(stage: Stage): string {

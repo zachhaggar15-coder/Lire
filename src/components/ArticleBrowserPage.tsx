@@ -36,7 +36,6 @@ import {
 } from "@/lib/recommendation/preferences";
 import { useGeneratedDictionary } from "@/lib/dictionary/useGeneratedDictionary";
 import ShortSnippetsBlock from "@/components/ShortSnippetsBlock";
-import PremiumPromoCard from "@/components/PremiumPromoCard";
 
 type Mode = "articles" | "live";
 type LoadState = "loading" | "success" | "error";
@@ -495,9 +494,6 @@ function LessonsContent({
 
   return (
     <>
-      <div className="px-[22px] pb-4">
-        <PremiumPromoCard />
-      </div>
       <JourneyMap selectedLevel={selectedLevel} onLevelChange={onLevelChange} />
       <div className="px-[22px]">
         {/* Things the reader chose to keep: visible, not inside a collapsed panel. Nothing when empty. */}
