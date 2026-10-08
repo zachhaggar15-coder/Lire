@@ -51,6 +51,7 @@ export const SUITES = [
   "test-learner-trust.mjs",
   "test-first-run.mjs",
   "test-content-remediation.mjs",
+  "test-cloze.mjs",
   "test-security-regressions.mjs",
   "test-admin-session.mjs",
   "test-account-auth.mjs",

@@ -262,13 +262,16 @@ await t.section("Cloze (25-27)", async () => {
       const answer = profile(exercise.answer);
       for (const option of exercise.options) {
         const p = profile(option);
-        if (p.classes !== answer.classes || (answer.classes === "noun" && p.gender !== answer.gender) || /['’\s]/.test(option) || /^\p{Lu}/u.test(option)) mismatched.push(`${exercise.prompt} :: ${exercise.answer} vs ${option}`);
+        if (!answer.classes.split(",").every((c) => p.classes.split(",").includes(c)) || (answer.classes === "noun" && p.gender && answer.gender && p.gender !== answer.gender) || /['’\s]/.test(option) || /^\p{Lu}/u.test(option)) mismatched.push(`${exercise.prompt} :: ${exercise.answer} vs ${option}`);
       }
       if (!exercise.options.includes(exercise.answer) || exercise.answer.trim().includes(" ")) mismatched.push(`bad answer ${exercise.answer}`);
     }
   }
   t.check("25/26. every option shares the answer's word class (and gender for nouns); no multi-word or elided spans", mismatched.length === 0, mismatched.slice(0, 3).join(" | "));
-  t.check("27. valid clozes are still generated across the corpus", built > 100, String(built));
+  // Gender also comes from the determiner in context ("du beurre"), so only a
+  // contradiction between two known genders counts. Volume is deliberately
+  // lower since clozes became fail-closed (see test-cloze.mjs).
+  t.check("27. valid clozes are still generated across the corpus", built > 40, String(built));
 });
 
 await t.section("Translations and French fixes (28-29)", async () => {

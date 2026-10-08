@@ -36,6 +36,8 @@ export interface ExerciseGloss {
   source: ExerciseGlossSource;
   register: SenseRegister;
   confidence: "high" | "medium";
+  /** The word class the meaning was resolved for, when known. */
+  partOfSpeech?: string | null;
   /** Senses deliberately rejected, with why. Development diagnostics only. */
   rejected: { gloss: string; reason: string }[];
 }
@@ -85,6 +87,10 @@ export function contextualExerciseGloss(input: {
 
   const meaning = resolveMeaning({ tokens, tokenIndex, contextSentence: input.sentence });
   if (meaning.abstained || meaning.confidence !== "high") return null;
+  // The meaning of an expression the word belongs to is not the word's own
+  // meaning: "sommes" in "nous sommes portés à" does not mean "to be
+  // inclined to". An exercise about the single word must not teach it.
+  if (meaning.partOfExpression) return null;
   const english = meaning.displayEnglish.trim();
   if (!english || !isTestableClue(english)) return null;
 
@@ -98,6 +104,7 @@ export function contextualExerciseGloss(input: {
     source: "contextual-resolver",
     register: classifyRegister(english),
     confidence: "high",
+    partOfSpeech: meaning.partOfSpeechUncertain ? null : meaning.partOfSpeech,
     rejected: [],
   };
 }
@@ -158,6 +165,12 @@ export function exerciseGlossFor(input: {
   tokenIndex?: number;
   /** Reject anything below this. Defaults to accepting medium. */
   minimumConfidence?: "high" | "medium";
+  /**
+   * Only the meaning resolved in this sentence; never the context-free
+   * dictionary sense, which can belong to another word class ("sens" as
+   * "to feel" in "au sens plein").
+   */
+  contextOnly?: boolean;
 }): ExerciseGloss | null {
   const minimum = input.minimumConfidence ?? "medium";
 
@@ -170,6 +183,7 @@ export function exerciseGlossFor(input: {
     });
     if (contextual) return contextual;
   }
+  if (input.contextOnly) return null;
 
   const canonical = canonicalExerciseGloss(input.french);
   if (!canonical) return null;

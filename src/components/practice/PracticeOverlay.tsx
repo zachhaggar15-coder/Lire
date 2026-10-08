@@ -6,7 +6,6 @@ import type { PracticeActivity, PracticePlan } from "@/lib/practice/session";
 import { shuffledChipsFor, buildPracticePlan } from "@/lib/practice/session";
 import { checkReconstruction, type ReconstructionChip, type SentenceReconstructionExercise } from "@/lib/practice/sentenceReconstruction";
 import type { ClozeExercise } from "@/lib/practice/cloze";
-import { exerciseGlossFor } from "@/lib/practice/exerciseGloss";
 import { markPracticeCompleted } from "@/lib/practice/practiceProgress";
 import { allSentencesInText } from "@/lib/practice/textSentences";
 import { naturalSentenceTranslation } from "@/lib/practice/sentenceTranslation";
@@ -358,23 +357,17 @@ function ClozeActivity({ exercise, onDone }: { exercise: ClozeExercise; onDone: 
 
   const [before, after] = exercise.prompt.split("___");
 
-  // Single-word blanks only — a "phrase" blank needs phrase-lookup, not the
-  // word dictionary, and showing a wrong/partial gloss would be worse than
-  // showing none.
-  //
-  // Deliberately not lookupWord(...).translations[0]: that reached past the
-  // resolver into raw position one of a bulk import, which is how `oignons`
-  // was clued as "arse". exerciseGlossFor applies the stricter standard
-  // teaching material needs, and returns null rather than guessing — in which
-  // case the hint is simply omitted.
-  const answerTranslation =
-    exercise.kind === "word"
-      ? exerciseGlossFor({ french: exercise.answer, sentence: exercise.prompt.replace("___", exercise.answer) })?.english ?? null
-      : null;
+  // The clue is the answer's own meaning in this sentence, settled when the
+  // exercise was built (cloze.ts). It is shown with the question because it
+  // is what makes one option the only right one.
+  const answerTranslation = exercise.clue;
 
   return (
     <section className="rounded-card border border-cream-dark bg-cream-card p-4">
-      <p className="ligne-label">{exercise.kind === "word" ? "Word completion" : "Phrase completion"}</p>
+      <p className="ligne-label">Word completion</p>
+      <p className="mt-2 text-sm text-ink-muted">
+        Missing word: <span className="font-semibold text-ink">&ldquo;{answerTranslation}&rdquo;</span>
+      </p>
       <p className="mt-3 text-lg leading-relaxed text-ink">
         {before}
         <span
