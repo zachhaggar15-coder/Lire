@@ -354,13 +354,18 @@ console.log("--- Exercise glosses are safe to teach ---");
   }
 }
 {
-  // Context wins over the canonical sense when the resolver is confident.
+  // Context wins over the canonical sense when the resolver is confident:
+  // "temps" is "time" in the dictionary but "weather" here.
   const contextual = contextualExerciseGloss({
-    french: "compte",
-    sentence: "Elle se rend compte de son erreur.",
+    french: "temps",
+    sentence: "Il fait beau temps aujourd'hui.",
   });
-  check("a confident contextual sense is used", !!contextual && /realiz|realis/i.test(contextual.english), String(contextual?.english));
+  check("a confident contextual sense is used", !!contextual && /weather/i.test(contextual.english), String(contextual?.english));
   check("the contextual clue is attributed to the resolver", contextual?.source === "contextual-resolver");
+  // But an expression's meaning is not the single word's: "compte" in "se
+  // rendre compte" does not mean "to realise", so no word-level clue is given.
+  const inExpression = contextualExerciseGloss({ french: "compte", sentence: "Elle se rend compte de son erreur." });
+  check("an expression's meaning is never given as a single word's clue", inExpression === null, String(inExpression?.english));
 
   const canonical = canonicalExerciseGloss("compte");
   check(
@@ -398,7 +403,10 @@ console.log("--- Exercise glosses are safe to teach ---");
 console.log("--- Practice no longer reads raw dictionary position one ---");
 {
   const overlay = readFileSync(new URL("../src/components/practice/PracticeOverlay.tsx", import.meta.url), "utf8");
-  check("the practice overlay uses the trusted gloss pathway", overlay.includes("exerciseGlossFor"));
+  // The clue is settled when the exercise is built, through exerciseGlossFor
+  // (cloze.ts), and the overlay shows that clue rather than looking one up.
+  const cloze = readFileSync(new URL("../src/lib/practice/cloze.ts", import.meta.url), "utf8");
+  check("the practice overlay uses the trusted gloss pathway", cloze.includes("exerciseGlossFor(") && overlay.includes("exercise.clue"));
   // Comments mention the old call by name, so compare against code only.
   const overlayCode = overlay.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
   check(
