@@ -19,7 +19,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
         <main style={{ maxWidth: 420, margin: "0 auto", padding: "64px 20px", textAlign: "center" }}>
           <h1 style={{ fontSize: 22 }}>Something went wrong</h1>
           <p style={{ lineHeight: 1.5, color: "#5b554a" }}>
-            Sorlio hit an unexpected problem. Your saved words and progress are stored on this device and are not affected.
+            Sorlio hit an unexpected problem. Reloading usually fixes it.
           </p>
           <button
             type="button"

@@ -197,15 +197,15 @@ export function classifyVocabularyStates(words: SavedWord[], taps: StoredWordTap
     const tapsAfterMastered = mastered ? tapCountFor(word, taps) : 0;
     const failedInferences = failedInferenceCount(word, inferences);
     if ((mastered && tapsAfterMastered >= 2) || (word.lastReviewResult === "incorrect" && (word.incorrectCount ?? 0) >= 2)) {
-      return { word, state: "forgotten", reason: "Previously mastered, but recent behaviour suggests it is slipping." };
+      return { word, state: "forgotten", reason: "Missed again, or looked up again after being strong." };
     }
     if ((word.incorrectCount ?? 0) > 0 || failedInferences > 0 || tapCountFor(word, taps) >= 3) {
-      return { word, state: "fragile", reason: "Repeated lookups or missed answers make this worth isolating." };
+      return { word, state: "fragile", reason: "Missed in Review or looked up more than once." };
     }
     if (mastered) {
-      return { word, state: "stable", reason: "Several successful reviews in a row." };
+      return { word, state: "stable", reason: "Remembered several times in a row." };
     }
-    return { word, state: "emerging", reason: "Still building recognition; context review is useful." };
+    return { word, state: "emerging", reason: "Still new in Review." };
   });
 }
 

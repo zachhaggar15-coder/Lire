@@ -150,7 +150,7 @@ export default function SettingsPage() {
 
           <div className="rounded-card border border-cream-dark bg-cream-card p-4">
             <p className="font-semibold text-ink">Reading level</p>
-            <p className="mt-0.5 text-sm text-ink-muted">Choose the starter bank that feels closest right now.</p>
+            <p className="mt-0.5 text-sm text-ink-muted">Choose the level that feels closest right now.</p>
             <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1 sm:grid-cols-6">
               {LEVEL_OPTIONS.map((level) => (
                 <button

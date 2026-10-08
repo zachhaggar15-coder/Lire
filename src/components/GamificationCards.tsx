@@ -308,7 +308,7 @@ export function AchievementBadge({ achievement }: { achievement: AchievementStat
 }
 
 export function MasteryIndicator({ mastery }: { mastery: MasteryInfo }) {
-  const labels = ["Discovered", "Learning", "Recognised", "Reliable", "Mastered"];
+  const labels = ["Discovered", "Learning", "Recognised", "Reliable", "Strong"];
   return (
     <div aria-label={`Mastery: ${labels[mastery.stageIndex]}`}>
       <div className="flex gap-1">
@@ -339,7 +339,7 @@ export function CollectionCard({ collection }: { collection: VocabularyCollectio
       </div>
       <XPProgressBar value={collection.percent / 100} label={`${collection.discovered} / ${collection.total} discovered`} className="mt-3" />
       <p className="mt-2 text-xs text-ink-muted">
-        {collection.mastered} mastered - Next: {collection.nextSuggestion}
+        {collection.mastered} strong - Next: {collection.nextSuggestion}
       </p>
     </article>
   );

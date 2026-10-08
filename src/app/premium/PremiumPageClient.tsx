@@ -114,7 +114,7 @@ export default function PremiumPageClient() {
         <h2 id="premium-adds" className="font-semibold text-ink">
           What Premium adds
         </h2>
-        <h3 className="mt-3 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink-faint">Unlimited learning</h3>
+        <h3 className="mt-3 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink-faint">Unlimited saving</h3>
         <ul className="mt-1.5 space-y-1.5 text-sm text-ink">
           <li>✓ {FEATURES.unlimitedSaves.label}</li>
           <li>✓ Build a review list with no daily cap</li>

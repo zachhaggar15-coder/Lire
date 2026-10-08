@@ -16,7 +16,11 @@ export interface ReviewPreferences {
 export const DEFAULT_REVIEW_PREFERENCES: ReviewPreferences = {
   direction: "fr-en",
   mode: "words",
-  sessionLength: null,
+  // A finite sitting by default, so a large due pile never makes Review feel
+  // endless. It only caps how many are asked now: the rest stay due and come
+  // up in the next session. Scheduling and due dates are untouched. A reader
+  // who chose "All" keeps that choice.
+  sessionLength: 20,
 };
 
 const KEY = "lire.reviewPrefs.v1";

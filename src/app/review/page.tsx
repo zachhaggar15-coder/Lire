@@ -18,6 +18,7 @@ import { recordReviewSuccessXp } from "@/lib/gamification";
 import { triggerHaptic } from "@/lib/haptics";
 import AppIcon from "@/components/AppIcon";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { isRetiredTemplateExample } from "@/lib/dictionary/exampleGenerator";
 
 type ReviewDirection = "fr-en" | "en-fr";
 type WordGrade = "knew" | "learning";
@@ -436,12 +437,15 @@ function ReviewPageContent() {
 
   // Finished this session's queue.
   if (done) {
+    // A session can stop at its length cap with words still due; say so
+    // rather than "All done", and offer the rest.
+    const remainingDue = phrasesDone ? 0 : buildReviewQueue(visibleWords(getSavedWords())).length;
     return (
       <div className="ligne-screen">
         <PageHeader title="Review" subtitle="Session complete." />
         {phrasesDone ? null : statsBar}
         <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-5 text-center">
-          <p className="mt-2 text-lg font-semibold text-ink">All done!</p>
+          <p className="mt-2 text-lg font-semibold text-ink">{remainingDue > 0 ? "Session done" : "All done!"}</p>
           <p className="mt-1 text-sm text-ink-muted">
             {phrasesDone ? (
               `Reviewed: ${phraseSessionTotal}`
@@ -453,12 +457,17 @@ function ReviewPageContent() {
               </>
             )}
           </p>
+          {remainingDue > 0 && (
+            <p className="mt-1 text-sm text-ink-muted">
+              {remainingDue} more {remainingDue === 1 ? "word is" : "words are"} ready whenever you are.
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             <button
               onClick={restart}
               className="ligne-pill bg-brand text-cream"
             >
-              Check for more
+              {remainingDue > 0 ? "Keep going" : "Check for more"}
             </button>
             <Link href={phrasesDone ? "/words?tab=phrases" : "/words"} className="ligne-pill bg-cream-fill text-ink-muted">
               {phrasesDone ? "Manage saved phrases" : "Manage saved words"}
@@ -678,10 +687,7 @@ function ReviewPageContent() {
 function shouldShowReviewExample(word: SavedWord): boolean {
   if (!word.exampleSentenceFr || !word.exampleSentenceEn) return false;
   if (word.exampleSentenceFr === word.articleContextSentence) return false;
-  if (/^C'est très\s+(mon|ma|mes|ton|ta|tes|son|sa|ses|notre|nos|votre|vos|leur|leurs)\.?$/i.test(word.exampleSentenceFr)) {
-    return false;
-  }
-  return true;
+  return !isRetiredTemplateExample(word.exampleSentenceFr, word.exampleSentenceEn, [word.word, word.lemma]);
 }
 
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
@@ -733,7 +739,7 @@ function PracticeHubCard({
     { label: "New", value: newWords },
     { label: "Later", value: notDueYet },
     { label: "Total", value: totalLearning },
-    { label: "Need care", value: focusCount },
+    { label: "To practise", value: focusCount },
   ];
   const directionCopy = direction === "fr-en" ? "French-to-English" : "English-to-French";
   // The actual session — what tapping "Review" below is about to start —
@@ -810,10 +816,10 @@ function PracticeHubCard({
 }
 
 const STATE_LABELS: Record<VocabularyDecayState, string> = {
-  stable: "Stable",
-  emerging: "Emerging",
-  fragile: "Fragile",
-  forgotten: "Forgotten",
+  stable: "Strong",
+  emerging: "Learning",
+  fragile: "To practise",
+  forgotten: "Recently missed",
 };
 
 const STATE_STYLES: Record<VocabularyDecayState, string> = {
@@ -831,7 +837,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
   const focus = items.filter((item) => item.state === "fragile" || item.state === "forgotten").slice(0, 3);
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-4">
-      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Vocabulary health</h2>
+      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">Your words in Review</h2>
       <div className="mt-3 grid grid-cols-4 gap-2 text-center">
         {(["stable", "emerging", "fragile", "forgotten"] as const).map((state) => (
           <div key={state} className={`rounded-2xl p-2 ${STATE_STYLES[state]}`}>
@@ -842,7 +848,7 @@ function VocabularyStateSummary({ items }: { items: VocabularyStateItem[] }) {
       </div>
       {focus.length > 0 && (
         <div className="mt-3 space-y-1">
-          <p className="text-xs font-semibold text-ink-muted">Best isolated-review candidates</p>
+          <p className="text-xs font-semibold text-ink-muted">Words to practise</p>
           {focus.map((item) => (
             <p key={item.word.word} className="text-xs text-ink-muted">
               <span className="font-semibold text-ink">{item.word.lemma ?? item.word.word}</span> - {item.reason}
@@ -885,9 +891,9 @@ function ReviewDirectionToggle({
 }
 
 const SESSION_LENGTH_OPTIONS: { value: number | null; label: string }[] = [
-  { value: 10, label: "10 cards" },
-  { value: 20, label: "20 cards" },
-  { value: null, label: "All cards" },
+  { value: 10, label: "10" },
+  { value: 20, label: "20" },
+  { value: null, label: "All" },
 ];
 
 /** Optional cap on how many cards a sitting runs before stopping — lowers the barrier to starting on a day with a big due pile. Persisted via reviewPreferences.ts. */
@@ -966,7 +972,8 @@ function PhraseReviewCard({
   if (!phrase) {
     return (
       <div className="mt-8 rounded-card border border-cream-dark bg-cream-card p-6 text-center">
-        <p className="text-sm font-semibold text-ink">No phrase cards due.</p>
+        {/* Phrases have no schedule, so nothing is ever "due": there are just saved phrases to practise. */}
+        <p className="text-sm font-semibold text-ink">No saved phrases to practise.</p>
         <p className="mt-1 text-xs text-ink-muted">Saved phrases you are still learning will appear here.</p>
       </div>
     );
