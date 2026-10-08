@@ -1,6 +1,6 @@
 import { tokenize, type Token } from "@/lib/words";
 import type { TextSentence } from "@/lib/practice/textSentences";
-import { lookupWord } from "@/lib/dictionary/lookup";
+import { isGeneratedDictionaryReady, lookupWord } from "@/lib/dictionary/lookup";
 import { hasWordClass, type WordClass } from "@/lib/dictionary/partOfSpeech";
 import { exerciseGlossFor } from "@/lib/practice/exerciseGloss";
 
@@ -61,7 +61,26 @@ function ending(clean: string, endings: string[]): string {
   return endings.find((suffix) => clean.endsWith(suffix)) ?? "";
 }
 
+/**
+ * Profiles are memoised: a practice plan rebuilds the distractor pool for
+ * every sentence, and looking every pool word up again made building one
+ * plan take about half a second. Keyed on whether the broad dictionary was
+ * loaded, since that can change a word's profile.
+ */
+const PROFILE_CACHE = new Map<string, WordProfile | null>();
+const PROFILE_CACHE_LIMIT = 20_000;
+
 function profile(token: Token): WordProfile | null {
+  const key = `${isGeneratedDictionaryReady() ? 1 : 0}:${token.text}:${token.clean}`;
+  const cached = PROFILE_CACHE.get(key);
+  if (cached !== undefined) return cached;
+  const computed = computeProfile(token);
+  if (PROFILE_CACHE.size >= PROFILE_CACHE_LIMIT) PROFILE_CACHE.clear();
+  PROFILE_CACHE.set(key, computed);
+  return computed;
+}
+
+function computeProfile(token: Token): WordProfile | null {
   if (!token.isWord || token.clean.length < 3 || STOPWORDS.has(token.clean)) return null;
   // An elided form ("d'environ") is two words; blanking or offering it breaks the sentence.
   if (/['’-]/.test(token.text)) return null;
@@ -133,20 +152,22 @@ export function buildWordCloze(sentence: TextSentence, distractorPool: string[])
     .map(profile)
     .filter((item): item is WordProfile => !!item);
 
-  let best: { index: number; answer: WordProfile; distractors: string[] } | null = null;
+  const sentenceText = sentence.tokens.map((t) => t.text).join("");
+  const candidates: { index: number; answer: WordProfile; distractors: string[] }[] = [];
   for (let position = 1; position < wordPositions.length - 1; position++) {
     // Positions 0 and last are skipped: keep a real word on each side of the gap.
     const { token, index } = wordPositions[position];
     const answer = profile(token);
     if (!answer) continue;
-    // The exercise shows the answer's English as its clue; that is what makes
-    // the right option the only right one. No dependable gloss, no question.
-    const sentenceText = sentence.tokens.map((t) => t.text).join("");
-    if (!exerciseGlossFor({ french: answer.text, sentence: sentenceText })) continue;
     const distractors = [...new Map(poolProfiles.filter((c) => fitsSameGap(answer, c)).map((c) => [c.text.toLowerCase(), c.text])).values()].slice(0, 3);
-    if (distractors.length < 2) continue;
-    if (!best || distractors.length > best.distractors.length) best = { index, answer, distractors };
+    if (distractors.length >= 2) candidates.push({ index, answer, distractors });
   }
+  // Most fair options first, then sentence order. The exercise shows the
+  // answer's English as its clue, which is what makes the right option the
+  // only right one: the first candidate with a dependable gloss is used, and
+  // the (costly) gloss is only checked until one passes.
+  candidates.sort((a, b) => b.distractors.length - a.distractors.length || a.index - b.index);
+  const best = candidates.find((candidate) => !!exerciseGlossFor({ french: candidate.answer.text, sentence: sentenceText })) ?? null;
   if (!best) return null;
   const { index, answer, distractors } = best;
   const prompt = rebuildFromTokens(sentence.tokens, index, "___");
