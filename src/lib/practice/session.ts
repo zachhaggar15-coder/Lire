@@ -6,7 +6,7 @@ import {
   shuffleChips,
   type SentenceReconstructionExercise,
 } from "@/lib/practice/sentenceReconstruction";
-import { buildWordCloze, buildPhraseCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
+import { buildWordCloze, distractorPoolFromBody, type ClozeExercise } from "@/lib/practice/cloze";
 import { buildGrammarNotes, type GrammarNote } from "@/lib/practice/grammarNotes";
 import { canSpeak } from "@/lib/speech";
 import { buildMeaningInferenceExercises, type MeaningInferenceExercise } from "@/lib/practice/meaningInference";
@@ -47,7 +47,7 @@ export function buildPracticePlan(text: ReadingText): PracticePlan {
   const activities: PracticeActivity[] = [];
   const used = new Set<number>();
 
-  // Round-robin between reconstruction, word cloze, and phrase cloze so a longer
+  // Round-robin between reconstruction and word cloze so a longer
   // article's practice set isn't dominated by one activity type, each drawn from a
   // sentence not already used elsewhere in this session.
   const builders: Array<(sentence: TextSentence) => PracticeActivity | null> = [
@@ -55,11 +55,6 @@ export function buildPracticePlan(text: ReadingText): PracticePlan {
     (sentence) => {
       const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
       const cloze = buildWordCloze(sentence, pool);
-      return cloze ? { kind: "cloze", exercise: cloze } : null;
-    },
-    (sentence) => {
-      const pool = distractorPoolFromBody(text.body, sentence.index, sentences);
-      const cloze = buildPhraseCloze(sentence, pool);
       return cloze ? { kind: "cloze", exercise: cloze } : null;
     },
   ];
