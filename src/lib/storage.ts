@@ -1,6 +1,6 @@
 import type { SavedWord, WordStatus } from "@/types";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { generateFallbackExample } from "@/lib/dictionary/exampleGenerator";
+import { isRetiredTemplateExample, learnerExample } from "@/lib/dictionary/exampleGenerator";
 import { lookupWord } from "@/lib/dictionary/lookup";
 import { findVocabularyCards, isInReview, VocabularyIndex } from "@/lib/reviewMembership";
 import { computeNextSchedule, defaultSpacedRepetitionFields, type ReviewResult } from "@/lib/spacedRepetition";
@@ -32,29 +32,14 @@ function isPlaceholderTranslation(value: string): boolean {
 
 function dictionaryBackfill(word: string) {
   const lookup = lookupWord(word);
-  const fallbackExample = generateFallbackExample({
-    word,
-    lemma: lookup.lemma,
-    partOfSpeech: lookup.partOfSpeech,
-    gender: lookup.gender,
-    translations: lookup.translations,
-  });
-  const firstExample = lookup.examples[0];
-
-  if (lookup.source !== "local" || lookup.translations.length === 0) {
-    return {
-      found: false,
-      lookup,
-      exampleSentenceFr: fallbackExample.fr,
-      exampleSentenceEn: fallbackExample.en,
-    };
-  }
-
+  const found = lookup.source === "local" && lookup.translations.length > 0;
+  // A curated example or none — never a generated one (see exampleGenerator).
+  const example = learnerExample({ curated: found ? lookup.examples[0] : null });
   return {
-    found: true,
+    found,
     lookup,
-    exampleSentenceFr: firstExample?.fr ?? fallbackExample.fr,
-    exampleSentenceEn: firstExample?.en ?? fallbackExample.en,
+    exampleSentenceFr: example.fr,
+    exampleSentenceEn: example.en,
   };
 }
 
@@ -146,25 +131,29 @@ function normalize(entry: unknown): SavedWord | null {
   const resolvedTranslations = resolvedLookup?.translations ?? translations;
   const resolvedPartOfSpeech = resolvedLookup?.partOfSpeech ?? partOfSpeech;
   const resolvedGender = resolvedLookup?.gender ?? gender;
-  const fallbackExample = generateFallbackExample({
-    word: e.word,
-    lemma: resolvedLookup?.lemma ?? (typeof e.lemma === "string" ? e.lemma : null),
-    partOfSpeech: resolvedPartOfSpeech,
-    gender: resolvedGender,
-    translations: resolvedTranslations,
-  });
-  const resolvedExampleFr =
-    backfill?.found
-      ? backfill.exampleSentenceFr
-      : typeof e.exampleSentenceFr === "string" && e.exampleSentenceFr
-        ? e.exampleSentenceFr
-        : fallbackExample.fr;
-  const resolvedExampleEn =
-    backfill?.found
-      ? backfill.exampleSentenceEn
-      : typeof e.exampleSentenceEn === "string" && e.exampleSentenceEn
-        ? e.exampleSentenceEn
-        : fallbackExample.en;
+  const storedExampleFr = typeof e.exampleSentenceFr === "string" ? e.exampleSentenceFr : "";
+  const storedExampleEn = typeof e.exampleSentenceEn === "string" ? e.exampleSentenceEn : "";
+  // An example made by the retired templates ("J'aime hier.") is dropped on
+  // read, whichever build or device saved it; the word, its translations and
+  // its Review history are untouched.
+  const storedIsTemplate = isRetiredTemplateExample(storedExampleFr, storedExampleEn, [
+    e.word,
+    typeof e.lemma === "string" ? e.lemma : null,
+    resolvedLookup?.lemma,
+  ]);
+  const resolvedExample = backfill?.found
+    ? { fr: backfill.exampleSentenceFr, en: backfill.exampleSentenceEn }
+    : storedExampleFr && !storedIsTemplate && storedExampleFr !== articleContextSentence
+      ? { fr: storedExampleFr, en: storedExampleEn }
+      : // Older builds stored the reading sentence beside a one-word gloss
+        // ("Hier, il pleuvait." - "yesterday"); pair it with its own
+        // translation, or with nothing.
+        learnerExample({
+          contextSentence: articleContextSentence,
+          sentenceTranslation: typeof e.sentenceTranslation === "string" ? e.sentenceTranslation : null,
+        });
+  const resolvedExampleFr = resolvedExample.fr;
+  const resolvedExampleEn = resolvedExample.en;
   const resolvedMissingFromDictionary = resolvedLookup ? false : missingFromDictionary;
 
   if (resolvedMissingFromDictionary && resolvedTranslations.length === 0 && isSourceFooterText(articleContextSentence)) {

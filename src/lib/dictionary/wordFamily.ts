@@ -2,6 +2,7 @@ import { frEnDictionary } from "@/data/dictionaries/fr-en";
 import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { lookupWord } from "@/lib/dictionary/lookup";
+import { hasWordClass } from "@/lib/dictionary/partOfSpeech";
 
 export interface WordFamily {
   noun: string[];
@@ -102,11 +103,10 @@ function rootFor(lemma: string): string {
 }
 
 function bucketFor(partOfSpeech?: string): keyof Pick<WordFamily, "noun" | "verb" | "adjective" | "adverb"> | null {
-  const pos = partOfSpeech?.toLowerCase() ?? "";
-  if (pos.includes("noun")) return "noun";
-  if (pos.includes("verb")) return "verb";
-  if (pos.includes("adjective")) return "adjective";
-  if (pos.includes("adverb")) return "adverb";
+  if (hasWordClass(partOfSpeech, "noun")) return "noun";
+  if (hasWordClass(partOfSpeech, "verb")) return "verb";
+  if (hasWordClass(partOfSpeech, "adjective")) return "adjective";
+  if (hasWordClass(partOfSpeech, "adverb")) return "adverb";
   return null;
 }
 

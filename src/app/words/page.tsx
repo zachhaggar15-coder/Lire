@@ -302,7 +302,7 @@ function WordCard({
           {word.exampleSentenceFr && (
             <p lang="fr" className="mt-2 font-french text-[15px] italic leading-snug text-ink-muted">
               {word.exampleSentenceFr}
-              <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>
+              {word.exampleSentenceEn && <span className="not-italic text-ink-muted"> - {word.exampleSentenceEn}</span>}
             </p>
           )}
           {word.articleContextSentence && (
@@ -336,7 +336,7 @@ function WordCard({
             )}
             {word.savedAt && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(word.savedAt)}</span>}
             {word.reviewCount > 0 && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Reviewed {word.reviewCount}x</span>}
-            {isMastered(word) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Mastered</span>}
+            {isMastered(word) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Strong in Review</span>}
           </div>
           <button
             type="button"
@@ -374,7 +374,7 @@ function PhraseMasterySummary({ phrases }: { phrases: SavedPhrase[] }) {
   return (
     <div className="flex items-center gap-2 rounded-full border border-cream-dark bg-cream-card py-1.5 pl-4 pr-1.5">
       <p className="min-w-0 flex-1 truncate text-sm text-ink-muted">
-        <span className="font-bold text-ink">{phrases.length} saved</span> · {mastered} mastered
+        <span className="font-bold text-ink">{phrases.length} saved</span> · {mastered} strong
         {contexts > 0 ? ` · ${contexts} ${contexts === 1 ? "context" : "contexts"}` : ""}
       </p>
       <Link href="/review" className="ligne-pill shrink-0 bg-brand-light px-3 py-1.5 text-xs text-brand">
@@ -415,7 +415,7 @@ function PhraseList({
                     </span>
                   )}
                   <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Saved {formatDate(phrase.savedAt)}</span>
-                  {isPhraseMastered(phrase) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Mastered</span>}
+                  {isPhraseMastered(phrase) && <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-brand">Strong</span>}
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
