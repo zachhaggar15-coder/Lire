@@ -346,6 +346,10 @@ await t.section("Cache safety (36-37)", async () => {
   );
   const bundle = getOrCreateComprehensionQuestionBundle(text, starterTexts.filter((item) => item.blurbEn).slice(300, 340));
   t.check("36. questions cached by an older build are discarded and rebuilt", bundle.toneQuestions.length === 0 && !JSON.stringify(bundle).includes("unabridged"));
+  const fresh = { ...text, id: "starter-cache-probe" };
+  const fromSmallPool = getOrCreateComprehensionQuestionBundle(fresh, [starterTexts[1]]);
+  const fromLibrary = getOrCreateComprehensionQuestionBundle(fresh, starterTexts.filter((item) => item.blurbEn).slice(300, 340));
+  t.check("an abstention from a small pool is not cached: the full library can still build the question", fromSmallPool.gistQuestion === null && !!fromLibrary.gistQuestion);
   t.check("36. grammar notes, cloze and practice plans are never stored, so they are always current", !/localStore|localStorage/.test(read("src/lib/practice/grammarNotes.ts") + read("src/lib/practice/cloze.ts") + read("src/lib/practice/session.ts")));
 });
 

@@ -121,6 +121,10 @@ export function getOrCreateComprehensionQuestionBundle(
   }
 
   const created = buildComprehensionQuestionBundle(text, candidates);
+  // "No question" is not cached: the reader first asks with a small local
+  // pool and then again with the whole library, and an abstention from the
+  // small pool must not stop the larger one from building a fair question.
+  if (!created.gistQuestion) return created;
   const now = new Date().toISOString();
   persist([
     {
