@@ -48,6 +48,12 @@ export interface ReadingText {
   language?: "fr" | "en" | "mixed";
   /** True for RSS items too short for the normal quality bar but kept as short-form reading practice — see the "Short Snippets" section. */
   isShortSnippet?: boolean;
+  /**
+   * An imported text whose topic the reader left as "General". `category`
+   * then holds a neutral placeholder; it is shown as General and kept out of
+   * topic stats and interest learning, so it cannot skew them.
+   */
+  topicUnset?: boolean;
 }
 
 /**

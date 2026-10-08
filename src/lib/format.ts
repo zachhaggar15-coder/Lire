@@ -23,6 +23,11 @@ const CATEGORY_LABELS: Record<Category, string> = {
   "everyday life": "Life",
 };
 
+/** A text's topic as shown: "General" for an imported text with no topic chosen. */
+export function topicLabel(text: { category: Category; topicUnset?: boolean }): string {
+  return text.topicUnset ? "General" : formatCategory(text.category);
+}
+
 export function formatCategory(category: Category | string | null | undefined): string {
   if (!category) return "Uncategorised";
   if (category in CATEGORY_LABELS) return CATEGORY_LABELS[category as Category];

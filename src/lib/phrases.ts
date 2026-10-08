@@ -54,14 +54,17 @@ function normalize(entry: unknown): SavedPhrase | null {
 
 /** The outcome of a change to saved phrases. `phrases` is always what is actually stored. */
 export type PhrasesMutation = { ok: true; phrases: SavedPhrase[] } | { ok: false; phrases: SavedPhrase[]; reason: WriteFailure };
+/** Adding can also be refused at the limit; nothing is ever dropped to make room. */
+export type SavePhraseResult = PhrasesMutation | { ok: false; phrases: SavedPhrase[]; reason: "limit" };
 
+// Never truncates: saved phrases are the reader's own. The limit is enforced
+// when adding (savePhrase), not by dropping the oldest on write, as it was.
 function persist(next: SavedPhrase[], previous: SavedPhrase[]): PhrasesMutation {
   if (!hasStorage()) return { ok: false, phrases: previous, reason: "unavailable" };
-  const capped = next.slice(0, MAX_PHRASES);
-  const result = localStore.writeItem(KEY, JSON.stringify(capped));
+  const result = localStore.writeItem(KEY, JSON.stringify(next));
   if (!result.ok) return { ok: false, phrases: previous, reason: result.reason };
   notifyStoreChanged(KEY);
-  return { ok: true, phrases: capped };
+  return { ok: true, phrases: next };
 }
 
 export function getSavedPhrases(): SavedPhrase[] {
@@ -81,7 +84,7 @@ export function isPhraseSaved(phrase: string): boolean {
   return getSavedPhrases().some((saved) => saved.phrase === key);
 }
 
-export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): PhrasesMutation {
+export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "savedAt" | "status" | "updatedAt" | "correctStreak"> & { phrase: string; lemma?: string }): SavePhraseResult {
   const now = new Date().toISOString();
   const entry: SavedPhrase = {
     ...phrase,
@@ -94,6 +97,9 @@ export function savePhrase(phrase: Omit<SavedPhrase, "phrase" | "lemma" | "saved
   };
   const previous = getSavedPhrases();
   const existing = previous.filter((saved) => saved.phrase !== entry.phrase);
+  if (existing.length === previous.length && previous.length >= MAX_PHRASES) {
+    return { ok: false, phrases: previous, reason: "limit" };
+  }
   return persist([entry, ...existing], previous);
 }
 

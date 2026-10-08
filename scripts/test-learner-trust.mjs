@@ -121,4 +121,60 @@ await t.section("D2: archive history is a snapshot", async () => {
   t.check("history is described as recent, with its limit", /most recent completed readings \(up to \{MAX_ARCHIVE_ENTRIES\}\)/.test(read("src/app/archive/page.tsx")));
 });
 
+// ---------------------------------------------------------------------------
+// User-authored data is never silently dropped.
+
+const customTexts = await import("../src/lib/customTexts.ts");
+const phrases = await import("../src/lib/phrases.ts");
+const summaries = await import("../src/lib/articleSummaries.ts");
+
+const frenchBody = (n) => `Texte numéro ${n}. Le matin, Paul prend son café avant de partir au travail et il pense à sa longue journée qui commence.`;
+
+await t.section("A5/D1: imported texts — the 81st is refused, the 1st survives", async () => {
+  localStore.setItem("lire.customTexts.v1", "[]");
+  let first = null;
+  for (let i = 1; i <= customTexts.MAX_CUSTOM_TEXTS; i++) {
+    const out = customTexts.saveCustomText({ title: `Texte ${i}`, body: frenchBody(i), category: "science", difficulty: "B1" });
+    if (i === 1) first = out.text?.id;
+  }
+  const extra = customTexts.saveCustomText({ title: "Texte 81", body: frenchBody(81), category: "science", difficulty: "B1" });
+  t.check("text 81 is refused with reason 'limit'", extra.ok === false && extra.reason === "limit");
+  t.check("text 1 is still there, and still 80 texts", customTexts.getCustomTexts().some((x) => x.id === first) && customTexts.getCustomTexts().length === 80);
+  const page = read("src/app/import/page.tsx");
+  t.check("the limit message says what to do", /You’ve reached the \$\{MAX_CUSTOM_TEXTS\}-text limit\. Delete an older imported text before adding another\./.test(page));
+  t.check("deleting an imported text asks for confirmation first", /function handleDelete\(text: ReadingText\) \{[\s\S]{0,200}window\.confirm\(/.test(page));
+});
+
+await t.section("C4/C5: imported texts start honest and can be corrected", async () => {
+  localStore.setItem("lire.customTexts.v1", "[]");
+  const saved = customTexts.saveCustomText({ title: "Mon journal", body: frenchBody(1), category: null, difficulty: "A2" });
+  t.check("a text with no topic chosen is General, not News", saved.ok && saved.text.topicUnset === true);
+  const { topicLabel } = await import("../src/lib/format.ts");
+  t.check("it is labelled General", topicLabel(saved.text) === "General");
+  const page = read("src/app/import/page.tsx");
+  t.check("the form defaults to General and the reader's own level", /useState<Category \| null>\(null\)/.test(page) && /setDifficulty\(level\)/.test(page) && !/useState<Category>\("news-style"\)/.test(page));
+  const edited = customTexts.updateCustomText(saved.text.id, { title: "Mon journal (corrigé)", body: frenchBody(2), category: "culture", difficulty: "B1" });
+  t.check("editing keeps the id (progress and words stay attached) and applies every field", edited.ok && edited.text.id === saved.text.id && edited.text.title === "Mon journal (corrigé)" && edited.text.category === "culture" && !edited.text.topicUnset && edited.text.difficulty === "B1" && edited.text.body === frenchBody(2));
+  t.check("an edit does not create a second text", customTexts.getCustomTexts().length === 1);
+  const topics = gamification.buildTopicProgress([
+    { category: "everyday life", topicUnset: true, wordsRead: 300, comprehensionCorrect: 0, comprehensionTotal: 0 },
+  ]);
+  t.check("a General import does not count towards any topic", topics.every((topic) => topic.articlesCompleted === 0));
+});
+
+await t.section("D1: phrases and summaries are refused at their limit, never evicted", async () => {
+  const list = Array.from({ length: 500 }, (_, i) => ({ phrase: `expression ${i}`, lemma: `expression ${i}`, translation: "x", savedAt: "2026-07-01T00:00:00.000Z", status: "learning", updatedAt: "2026-07-01T00:00:00.000Z", correctStreak: 0 }));
+  localStore.setItem("lire.savedPhrases.v1", JSON.stringify(list));
+  const extra = phrases.savePhrase({ phrase: "encore une", translation: "one more", contextSentence: "", sourceTextTitle: "" });
+  t.check("the 501st phrase is refused", extra.ok === false && extra.reason === "limit");
+  t.check("the oldest phrase is still there", phrases.getSavedPhrases().some((p) => p.phrase === "expression 499") && phrases.getSavedPhrases().length === 500);
+
+  localStore.setItem("lire.articleSummaries.v1", JSON.stringify(Array.from({ length: summaries.MAX_SUMMARIES }, (_, i) => ({ textId: `t${i}`, summary: `Résumé ${i}`, updatedAt: "2026-07-01T00:00:00.000Z" }))));
+  t.check("a new summary at the limit is refused", summaries.saveArticleSummary("new-article", "Mon résumé") === "limit");
+  t.check("no old summary was dropped", summaries.getArticleSummary(`t${summaries.MAX_SUMMARIES - 1}`) === `Résumé ${summaries.MAX_SUMMARIES - 1}`);
+  t.check("an existing summary can still be edited", summaries.saveArticleSummary("t0", "Résumé corrigé") === "saved" && summaries.getArticleSummary("t0") === "Résumé corrigé");
+  t.check("clearing one frees a space", summaries.saveArticleSummary("t1", "") === "cleared" && summaries.saveArticleSummary("new-article", "Mon résumé") === "saved");
+  t.check("the reader says when a summary was not saved", /summaryAtLimit && \(/.test(read("src/components/Reader.tsx")));
+});
+
 t.finish();

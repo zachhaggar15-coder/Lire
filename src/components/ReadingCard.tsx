@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Category, ReadingText, TextStatus } from "@/types";
 import { getProgress } from "@/lib/progress";
-import { formatCategory, formatDate, toPercent } from "@/lib/format";
+import { formatDate, toPercent, topicLabel } from "@/lib/format";
 import { estimateDifficulty, type DifficultyEstimate } from "@/lib/difficulty";
 import { getEstimatedKnownVocabulary } from "@/lib/vocabulary/estimatedVocabulary";
 import type { ScoreBreakdown, StarRating } from "@/lib/recommendation/types";
@@ -149,7 +149,7 @@ export default function ReadingCard({ text, difficulty: difficultyProp, starRati
           <span
             className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] ${CATEGORY_STYLES[text.category]}`}
           >
-            {formatCategory(text.category)}
+            {topicLabel(text)}
           </span>
           <span className="rounded-full bg-cream-fill px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
             {/* The stored level is the one source of truth for the CEFR code:

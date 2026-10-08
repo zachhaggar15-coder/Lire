@@ -43,7 +43,7 @@ import { markAudioTipSeen, recordAudioPlayAndCheckTip } from "@/lib/audioTip";
 import { hasSeenReaderTip, markReaderTipSeen } from "@/lib/readerTips";
 import { recordLessonCompletedForRating } from "@/lib/ratePrompt";
 import { getArticleFeedbackForText, saveArticleFeedback, type ArticleDifficultyFeedback } from "@/lib/articleFeedback";
-import { getArticleSummary, saveArticleSummary } from "@/lib/articleSummaries";
+import { getArticleSummary, MAX_SUMMARIES, saveArticleSummary } from "@/lib/articleSummaries";
 import { findPronounReference } from "@/lib/pronounReferences";
 import { getCachedRssTexts, getOfflineRssTexts } from "@/lib/rss/rssTextCache";
 import { isLikelySourceBoilerplateToken } from "@/lib/rss/sourceNoise";
@@ -51,7 +51,7 @@ import { rankLearningCandidates, type LearningCandidate, type WordTapRecord } fr
 import { getWordTapsForArticle, recordWordTap } from "@/lib/wordLearning";
 import { buildHeadlineComparison, countFrenchWords, isProperNounWord, type HeadlineComparison } from "@/lib/readingAnalytics";
 import { recordSecondPass, recordTranslationBudgetResult, suggestedTranslationAllowance } from "@/lib/readingInsights";
-import { formatCategory, toPercent } from "@/lib/format";
+import { toPercent, topicLabel } from "@/lib/format";
 import { createActiveTimeTracker, type ActiveTimeTracker } from "@/lib/readingTime";
 import { isStarterText } from "@/lib/publicDomainBank";
 import {
@@ -271,6 +271,7 @@ export default function Reader({ text }: { text: ReadingText }) {
   const [gistAnswer, setGistAnswer] = useState<number | null>(null);
   const [toneAnswers, setToneAnswers] = useState<Record<string, number>>({});
   const [summaryDraft, setSummaryDraft] = useState("");
+  const [summaryAtLimit, setSummaryAtLimit] = useState(false);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(false);
   const [translationUses, setTranslationUses] = useState(0);
   const [challengeMode, setChallengeMode] = useState<TranslationChallengeMode>("none");
@@ -468,7 +469,7 @@ export default function Reader({ text }: { text: ReadingText }) {
    */
   useEffect(() => {
     latestSummary.current = { articleId: text.id, draft: summaryDraft };
-    const handle = setTimeout(() => saveArticleSummary(text.id, summaryDraft), 600);
+    const handle = setTimeout(() => setSummaryAtLimit(saveArticleSummary(text.id, summaryDraft) === "limit"), 600);
     return () => clearTimeout(handle);
   }, [summaryDraft, text.id]);
 
@@ -1430,7 +1431,7 @@ export default function Reader({ text }: { text: ReadingText }) {
       title: text.title,
       sourceName: text.sourceName ?? null,
       completedAt,
-      category: text.category,
+      category: text.topicUnset ? null : text.category,
       cefr: difficulty?.cefr ?? text.difficulty,
       minutes: text.minutes,
       wordCount: countFrenchWords(text),
@@ -1441,7 +1442,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     });
     // Feeds the automatically-learned interest profile behind the home
     // page's recommendations — see src/lib/recommendation/interests.ts.
-    recordArticleCompleted(text.category);
+    // A General import says nothing about what the reader likes to read.
+    if (!text.topicUnset) recordArticleCompleted(text.category);
     if (!wasAlreadyCompleted) {
     }
     completedRef.current = true;
@@ -1906,7 +1908,7 @@ export default function Reader({ text }: { text: ReadingText }) {
         <div className={`px-4 py-3.5 ${headerTone}`}>
           <div className="min-w-0 flex-1">
             <span className="mb-1.5 inline-block rounded-full bg-cream-card/75 px-2.5 py-1 font-mono text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-brand">
-              {formatCategory(text.category)}
+              {topicLabel(text)}
             </span>
             <h1 lang={text.language === "en" ? "en" : "fr"} className="break-words font-french text-[26px] leading-[1.12] text-ink">
               {text.title}
@@ -2219,8 +2221,13 @@ export default function Reader({ text }: { text: ReadingText }) {
                 />
                 <p className="mt-2 text-xs text-ink-muted">
                   Aim for one sentence about what happened and one sentence about why it matters.
-                  {summaryDraft.trim() ? " Saved on this device — it'll be here next time you open the article." : ""}
+                  {summaryDraft.trim() && !summaryAtLimit ? " Saved on this device — it'll be here next time you open the article." : ""}
                 </p>
+                {summaryAtLimit && (
+                  <p role="status" className="mt-1 text-xs font-semibold text-rose-ink">
+                    Not saved: you have {MAX_SUMMARIES} saved summaries, the most Sorlio keeps. Clearing the summary of an earlier article frees a space.
+                  </p>
+                )}
               </div>
             )}
           </div>

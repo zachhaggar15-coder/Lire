@@ -1,5 +1,5 @@
 import ReadingCard from "@/components/ReadingCard";
-import { formatCategory } from "@/lib/format";
+import { topicLabel } from "@/lib/format";
 import type { ScoredArticle } from "@/lib/recommendation/types";
 
 function compactSourceLabel(article: ScoredArticle): string | null {
@@ -92,7 +92,7 @@ function CompactArticleCard({ article, rail }: { article: ScoredArticle; rail: b
           {text.difficulty}
         </span>
         <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
-          {formatCategory(text.category)}
+          {topicLabel(text)}
         </span>
         <span className="rounded-full bg-cream-fill px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">
           {text.minutes} min

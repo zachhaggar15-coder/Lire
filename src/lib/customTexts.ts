@@ -14,9 +14,13 @@ export const MAX_IMPORT_TITLE_CHARS = 200;
 export interface CustomTextInput {
   title: string;
   body: string;
-  category: Category;
+  /** null = "General": the reader did not pick a topic. */
+  category: Category | null;
   difficulty: Difficulty;
 }
+
+/** Stored for a General import; never shown or counted (see ReadingText.topicUnset). */
+const GENERAL_PLACEHOLDER_CATEGORY: Category = "everyday life";
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -85,7 +89,8 @@ export function saveCustomText(input: CustomTextInput): SaveCustomTextResult {
   const text: ReadingText = {
     id,
     title,
-    category: input.category,
+    category: input.category ?? GENERAL_PLACEHOLDER_CATEGORY,
+    ...(input.category ? {} : { topicUnset: true }),
     difficulty: input.difficulty,
     minutes: minutesFor(body),
     preview: previewFor(body),
@@ -110,4 +115,34 @@ export function deleteCustomText(id: string): DeleteCustomTextResult {
   const next = current.filter((text) => text.id !== id);
   const failure = persist(next);
   return failure ? { ok: false, texts: current, reason: failure } : { ok: true, texts: next };
+}
+
+export type UpdateCustomTextResult =
+  | { ok: true; text: ReadingText }
+  | { ok: false; reason: "missing" | "empty" | "too-long" | WriteFailure };
+
+/**
+ * Corrects an imported text in place. It keeps its id, so reading progress,
+ * saved words and history stay attached to it.
+ */
+export function updateCustomText(id: string, input: CustomTextInput): UpdateCustomTextResult {
+  const current = read();
+  const existing = current.find((text) => text.id === id);
+  if (!existing) return { ok: false, reason: "missing" };
+  const body = input.body.trim();
+  if (!body) return { ok: false, reason: "empty" };
+  if (body.length > MAX_IMPORT_CHARS) return { ok: false, reason: "too-long" };
+  const { topicUnset: _previousTopic, ...rest } = existing;
+  const text: ReadingText = {
+    ...rest,
+    title: (input.title.trim() || "Imported French text").slice(0, MAX_IMPORT_TITLE_CHARS),
+    body,
+    category: input.category ?? GENERAL_PLACEHOLDER_CATEGORY,
+    ...(input.category ? {} : { topicUnset: true }),
+    difficulty: input.difficulty,
+    minutes: minutesFor(body),
+    preview: previewFor(body),
+  };
+  const failure = persist(current.map((item) => (item.id === id ? text : item)));
+  return failure ? { ok: false, reason: failure } : { ok: true, text };
 }

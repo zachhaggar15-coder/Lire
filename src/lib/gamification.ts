@@ -63,6 +63,8 @@ export interface ArticleCompletionRecord {
   title: string;
   sourceName: string | null;
   category: Category;
+  /** An imported text with no topic chosen: kept out of topic stats. */
+  topicUnset?: boolean;
   difficulty: string;
   completedAt: string;
   wordsRead: number;
@@ -522,6 +524,7 @@ export function recordGamifiedArticleCompletion(input: {
     title: input.text.title,
     sourceName: input.text.sourceName ?? null,
     category: input.text.category,
+    ...(input.text.topicUnset ? { topicUnset: true } : {}),
     difficulty: input.difficulty,
     completedAt,
     wordsRead,
@@ -801,7 +804,7 @@ export function evaluateAndUnlockAchievements(words: SavedWord[] = []): Achievem
 export function buildTopicProgress(completions = getArticleCompletions()): TopicProgress[] {
   const categories: Category[] = ["news-style", "sport", "culture", "science", "everyday life"];
   return categories.map((category) => {
-    const items = completions.filter((item) => item.category === category);
+    const items = completions.filter((item) => item.category === category && !item.topicUnset);
     return {
       category,
       label: CATEGORY_LABELS[category],
