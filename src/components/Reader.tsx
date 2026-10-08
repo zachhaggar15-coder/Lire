@@ -101,9 +101,7 @@ import { CompletionSummary } from "@/components/GamificationCards";
 import { FeedbackButton } from "@/components/FeedbackModal";
 import AppIcon from "@/components/AppIcon";
 import CoachMark from "@/components/onboarding/CoachMark";
-import { localStore } from "@/lib/localData/store";
 
-const READING_HELP_SEEN_KEY = "lire.readingHelpSeen.v1";
 
 /**
  * The lesson-complete celebration screen is only ever needed once a reading
@@ -438,15 +436,8 @@ export default function Reader({ text }: { text: ReadingText }) {
     setShowTapTip(false);
   }
 
-  useEffect(() => {
-    try {
-      if (localStore.getItem(READING_HELP_SEEN_KEY)) return;
-      setReadingHelpOpen(true);
-      localStore.setItem(READING_HELP_SEEN_KEY, "1");
-    } catch {
-      // Best-effort — worst case the hint just doesn't auto-expand.
-    }
-  }, []);
+  // Reading options stay closed, even the first time: the tap coach mark
+  // teaches the one thing that matters, and the French stays in view.
 
   // Warms the lesson-complete screen's chunk during idle time so it's
   // already cached by the time a session actually finishes, instead of a

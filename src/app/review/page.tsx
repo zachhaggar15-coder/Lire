@@ -381,11 +381,11 @@ function ReviewPageContent() {
           ? `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} left`
           : `${remainingPhraseCount} ${remainingPhraseCount === 1 ? "phrase" : "phrases"} to review`
         : reviewStarted
-          ? `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} left`
+          ? `${wordQueue.length} ${wordQueue.length === 1 ? "word" : "words"} left`
           // Not "due": the queue also includes never-reviewed new words, so
           // saying "3 cards due" directly above a "Due today: 0" tile read as
           // a contradiction.
-          : `${wordQueue.length} ${wordQueue.length === 1 ? "card" : "cards"} to review`;
+          : `${wordQueue.length} ${wordQueue.length === 1 ? "word" : "words"} to review`;
   const wordCardIndex = wordSessionTotal > 0 ? wordSessionTotal - wordQueue.length + 1 : 1;
 
   // No learning/unsure words saved at all.
@@ -743,7 +743,7 @@ function PracticeHubCard({
   const readyCount = isPhrases ? phraseCount : wordCount;
   const readyNoun = readyCount === 1 ? (isPhrases ? "phrase" : "word") : isPhrases ? "phrases" : "words";
   const sessionCount = sessionLength != null ? Math.min(readyCount, sessionLength) : readyCount;
-  const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "card") : isPhrases ? "phrases" : "cards";
+  const sessionNoun = sessionCount === 1 ? (isPhrases ? "phrase" : "word") : isPhrases ? "phrases" : "words";
 
   return (
     <section className="mb-4 rounded-card border border-cream-dark bg-cream-card p-5">
