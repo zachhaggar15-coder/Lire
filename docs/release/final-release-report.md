@@ -19,7 +19,7 @@ done, the honest answer to the closing question is no.
 | Item | Value |
 |---|---|
 | Branch | `release/sorlio-production-hardening` (41 commits ahead of `main`) |
-| Code commit | `8d07282` (learner-trust pass; preceded by the vocabulary/Review fix `a147d90`) |
+| Code commit | `a297814` (onboarding and hierarchy pass; preceded by the learner-trust pass `8d07282` and the vocabulary fix `a147d90`) |
 | Production web deployment | **Not this build.** Vercel denied read access to deployments; the last local deploy worktree is `7ab5195` ("closed-test update 1"), an ancestor of this branch. Unconfirmed. |
 | Production database | `blumuxrepzzdwwzomffx`, schema version 12, migrations 0001–0012 aligned |
 | Android | Source 1.1.0, versionCode 9 |
@@ -27,6 +27,7 @@ done, the honest answer to the closing question is no.
 
 ## 3. What changed
 
+- **Onboarding and hierarchy (8 Oct, [onboarding-hierarchy-pass.md](onboarding-hierarchy-pass.md)):** first run is two screens and one decision, then straight into a reading (tester feedback); help appears when it matters; Lessons leads with the next action; "You" is a learner hub with Settings behind a gear; Review, completion and News cards show less by default with everything still one tap away.
 - **Learner trust (8 Oct, [learner-trust-pass.md](learner-trust-pass.md)):** progress shows activity, not invented proficiency; no data is "not measured yet", never 0%; reading time is active minutes or "about N min"; streaks use the local calendar day; imported texts can be edited, are General by default and are confirmed before deletion; phrases and summaries are never silently dropped; history is snapshotted; nothing rewards needing less help; phrases follow the word model; hide-source is limited to real news with Undo; Saved for later is visible; reader, listening, onboarding and rating copy match behaviour; the fourth tab is "You".
 - **Vocabulary/Review (V01, raised by the developer):** a word is in Review or not — the reader shows exactly "Add to review" or "Remove from review". Removed the "Already known" dead end, the CEFR seed of 500–8,000 "known" lemmas (the level is now an estimate computed on demand, used only for difficulty and recommendations), and automatic graduation out of Review. "Remove from review" keeps the card's history; adding it back is not a new save, locally or on the server.
 - **Sync/data safety:** per-identity local partitions; item-level sync with revisions and tombstones (0010); honest per-item sync results; durable writes before UI advances; no silent import eviction; review grades stored before the animation.
@@ -55,9 +56,9 @@ All 82 matrix rows are reconciled in [closure-reconciliation.md](closure-reconci
 
 ## 5. Test results
 
-Final run on `8d07282`:
+Final run on `a297814`:
 
-- `node scripts/run-tests.mjs`: **51 suites, 51 passed · 10,549 checks, 0 failed** (after the vocabulary fix `a147d90`: 50 suites, 10,470; the earlier candidate `02e1535`: 49 suites, 10,405).
+- `node scripts/run-tests.mjs`: **52 suites, 52 passed · 10,590 checks, 0 failed** (learner-trust `8d07282`: 51 / 10,549; vocabulary fix `a147d90`: 50 / 10,470; earlier candidate `02e1535`: 49 / 10,405).
 - `tsc --noEmit`: 0 errors. `eslint src scripts`: 0 problems.
 - `next build`: succeeds (verified in a clean worktree, and driven in a browser).
 - `npm audit --omit=dev`: **0 vulnerabilities**. Full audit: 8 (6 high, 2 moderate), all build-time only (Tailwind 3's file watcher and the ESLint plugin). Accepted; fixing needs a Tailwind 4 migration.
@@ -165,7 +166,7 @@ The Children's Code assessment and DPIA are drafted but not approved (L01, L02).
 | Progress and history honesty | 8 (was ~4: invented coverage, 0% for no data, wall-clock minutes) |
 | Word lookup | 8 |
 | Grammar | 7 (pending human review) |
-| Onboarding | 8 |
+| Onboarding | 8 (was 6 before the 8 Oct pass, per tester feedback) |
 | Premium/billing UX | 7 (unproven on device) |
 | Accessibility | 7 (no screen-reader device pass) |
 | Performance | 6 (heavy first load, below) |
