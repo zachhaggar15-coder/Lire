@@ -1,431 +1,136 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import type { AppSettings, Difficulty, FontSize, ThemePreference, TranslationMode } from "@/types";
-import { DEFAULT_SETTINGS, getSettings, saveSettings } from "@/lib/settings";
-import { getSelectedReadingLevel, resetWalkthrough, updateSelectedReadingLevel } from "@/lib/onboarding";
-import { clearOfflineRssTexts, getOfflineRssTextCount } from "@/lib/rss/rssTextCache";
-import {
-  getCurrentStreak,
-  getLongestStreak,
-  getStreakGraceStatus,
-  getStreakWeek,
-  isActiveToday,
-  applyStreakGraceDay,
-  type StreakDay,
-  type StreakGraceStatus,
-} from "@/lib/habit";
-import AccountCard from "@/components/AccountCard";
-import SpeechSettingsCard from "@/components/SpeechSettingsCard";
-import { FeedbackButton } from "@/components/FeedbackModal";
-import PwaInstallCard from "@/components/PwaInstallCard";
-import PremiumPromoCard from "@/components/PremiumPromoCard";
-import { StreakCard } from "@/components/GamificationCards";
+import { getArchive } from "@/lib/archive";
+import { getSavedWords } from "@/lib/storage";
+import { getCurrentStreak, getStreakGraceStatus, isActiveToday, applyStreakGraceDay, type StreakGraceStatus } from "@/lib/habit";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
-import { PLAY_STORE_URL, isAndroidApp } from "@/lib/androidApp";
-import { markRated } from "@/lib/ratePrompt";
-import { deploymentEnvironment } from "@/lib/config";
 
-const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
-  { value: "small", label: "Small" },
-  { value: "medium", label: "Medium" },
-  { value: "large", label: "Large" },
-];
+/**
+ * "You": the learner's hub, not a settings page. It leads with their week,
+ * then their library and learning tools, then account and Premium. The
+ * app's configuration is one tap away behind the gear (/settings/preferences).
+ */
 
-const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
-  { value: "system", label: "System" },
-  { value: "light", label: "Light" },
-  { value: "dark", label: "Dark" },
-];
+interface Week {
+  streak: number;
+  activeToday: boolean;
+  readings: number;
+  reviewed: number;
+}
 
-const LEVEL_OPTIONS: Difficulty[] =["A1", "A2", "B1", "B2", "C1", "C2"];
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
-const TRANSLATION_MODE_OPTIONS: { value: TranslationMode; label: string; description: string }[] = [
-  { value: "natural", label: "Natural", description: "Best for reading normally." },
-  { value: "phrase-aware", label: "Phrase-aware", description: "Offline help for phrases and idioms." },
-  { value: "literal", label: "Literal", description: "Word-by-word checking." },
-];
-
-function Toggle({
-  checked,
-  onChange,
-  label,
-  description,
-}: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label: string;
-  description: string;
-}) {
+function HubLink({ href, title, description }: { href: string; title: string; description: string }) {
   return (
-    <button
-      type="button"
-      onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4 text-left"
-      role="switch"
-      aria-checked={checked}
-    >
-      <div className="min-w-0">
-        <p className="font-semibold text-ink">{label}</p>
-        <p className="mt-0.5 text-sm text-ink-muted">{description}</p>
-      </div>
-      <span
-        className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
-          checked ? "bg-brand" : "bg-cream-fill"
-        }`}
-        aria-hidden="true"
-      >
-        <span
-          className={`inline-block h-5 w-5 transform rounded-full bg-cream transition-transform ${
-            checked ? "translate-x-6" : "translate-x-1"
-          }`}
-        />
+    <Link href={href} className="flex min-h-14 items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card px-4 py-3">
+      <span className="min-w-0">
+        <span className="block font-semibold text-ink">{title}</span>
+        <span className="mt-0.5 block text-sm text-ink-muted">{description}</span>
       </span>
-    </button>
-  );
-}
-
-function SettingsSectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <div>
-      <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-faint">{title}</h2>
-      <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>
-    </div>
-  );
-}
-
-function SettingsLink({ href, title, description }: { href: string; title: string; description: string }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4"
-    >
-      <div className="min-w-0">
-        <p className="font-semibold text-ink">{title}</p>
-        <p className="mt-0.5 text-sm text-ink-muted">{description}</p>
-      </div>
-      <svg
-        className="h-5 w-5 shrink-0 text-ink-muted"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M9 18l6-6-6-6" />
-      </svg>
+      <span aria-hidden="true" className="shrink-0 text-lg text-ink-muted">›</span>
     </Link>
   );
 }
 
-function StreakRecoveryCard({ grace, onUse }: { grace: StreakGraceStatus; onUse: () => void }) {
-  if (!grace.available) return null;
-
+function HubSection({ title, children }: { title: string; children: ReactNode }) {
+  const id = `you-${title.toLowerCase()}`;
   return (
-    <div className="rounded-card border border-cream-dark bg-brand-light p-4">
-      <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <p className="font-semibold text-brand">Streak save available</p>
-          <p className="mt-0.5 text-sm text-ink-muted">Use this week's grace day to cover yesterday.</p>
-        </div>
-        <button
-          type="button"
-          onClick={onUse}
-          className="ligne-pill shrink-0 bg-brand text-cream"
-        >
-          Save streak
-        </button>
-      </div>
-    </div>
+    <section className="space-y-2" aria-labelledby={id}>
+      <h2 id={id} className="text-sm font-semibold text-ink-muted">
+        {title}
+      </h2>
+      {children}
+    </section>
   );
 }
 
-export default function SettingsPage() {
+export default function YouPage() {
   useDocumentTitle("You");
-  const router = useRouter();
-  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
-  const [selectedLevel, setSelectedLevel] = useState<Difficulty>("A1");
-  const [offlineCount, setOfflineCount] = useState(0);
-  const [inAndroidApp, setInAndroidApp] = useState(false);
-  const [streak, setStreak] = useState<{ current: number; longest: number; activeToday: boolean; week: StreakDay[] }>({
-    current: 0,
-    longest: 0,
-    activeToday: false,
-    week: [],
-  });
-  const [grace, setGrace] = useState<StreakGraceStatus>({
-    available: false,
-    usedThisWeek: false,
-    eligibleDateKey: "",
-    recoveredDateKey: null,
-  });
+  const [week, setWeek] = useState<Week | null>(null);
+  const [grace, setGrace] = useState<StreakGraceStatus | null>(null);
 
-  const refreshStreakView = useCallback(() => {
-    setStreak({
-      current: getCurrentStreak(),
-      longest: getLongestStreak(),
+  const refresh = useCallback(() => {
+    const since = Date.now() - WEEK_MS;
+    setWeek({
+      streak: getCurrentStreak(),
       activeToday: isActiveToday(),
-      week: getStreakWeek(),
+      readings: getArchive().filter((entry) => new Date(entry.completedAt).getTime() >= since).length,
+      reviewed: getSavedWords().filter((word) => word.lastReviewedAt && new Date(word.lastReviewedAt).getTime() >= since).length,
     });
     setGrace(getStreakGraceStatus());
   }, []);
 
   useEffect(() => {
-    setSettings(getSettings());
-    setSelectedLevel(getSelectedReadingLevel());
-    setOfflineCount(getOfflineRssTextCount());
-    setInAndroidApp(isAndroidApp());
-    refreshStreakView();
-  }, [refreshStreakView]);
-
-  function update(patch: Partial<AppSettings>) {
-    setSettings(saveSettings(patch));
-  }
-
-  function changeLevel(level: Difficulty) {
-    updateSelectedReadingLevel(level);
-    setSelectedLevel(level);
-  }
-
-  function handleClearOffline() {
-    if (offlineCount === 0) return;
-    clearOfflineRssTexts();
-    setOfflineCount(0);
-  }
-
-  function handleUseGraceDay() {
-    if (applyStreakGraceDay()) refreshStreakView();
-  }
+    refresh();
+  }, [refresh]);
 
   return (
     <div className="ligne-screen">
-      <header className="mb-5">
+      <header className="mb-5 flex items-start justify-between gap-3">
         <h1 className="mt-1 text-[30px] font-semibold leading-none text-ink">You</h1>
-        <p className="mt-2 text-sm text-ink-muted">Your learning, your library, your account and the app&rsquo;s settings.</p>
+        <Link href="/settings/preferences" aria-label="Settings" className="ligne-icon-button bg-cream-card text-ink-muted">
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </Link>
       </header>
 
       <div className="space-y-6">
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Learning" subtitle="Streak, level, and reader preferences." />
-          <StreakCard streak={streak.current} longest={streak.longest} week={streak.week} activeToday={streak.activeToday} />
-          <StreakRecoveryCard grace={grace} onUse={handleUseGraceDay} />
-
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <p className="font-semibold text-ink">Reading level</p>
-            <p className="mt-0.5 text-sm text-ink-muted">Choose the starter bank that feels closest right now.</p>
-            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1 sm:grid-cols-6">
-              {LEVEL_OPTIONS.map((level) => (
-                <button
-                  key={level}
-                  type="button"
-                  onClick={() => changeLevel(level)}
-                  aria-label={`Set reading level to ${level}`}
-                  aria-pressed={selectedLevel === level}
-                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
-                    selectedLevel === level ? "bg-brand text-cream" : "text-ink-muted"
-                  }`}
-                >
-                  {level}
-                </button>
-              ))}
+        <section aria-label="Your week" className="rounded-card bg-cream-card p-4 shadow-card">
+          <p className="text-sm font-semibold text-ink-muted">Your week</p>
+          {week && (
+            <div className="mt-2 space-y-1 text-ink">
+              <p className="text-lg font-semibold">
+                {week.streak > 0 ? `${week.streak} day streak` : "No streak yet"}
+                {week.streak > 0 && !week.activeToday && <span className="text-sm font-normal text-ink-muted"> · read today to keep it</span>}
+              </p>
+              <p className="text-sm text-ink-muted">
+                {week.readings} {week.readings === 1 ? "reading" : "readings"} · {week.reviewed} {week.reviewed === 1 ? "word" : "words"} reviewed
+              </p>
             </div>
-          </div>
-
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <p className="font-semibold text-ink">Theme</p>
-            <p className="mt-0.5 text-sm text-ink-muted">Dark mode is easier on the eyes at night. System follows your phone.</p>
-            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1">
-              {THEME_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => update({ theme: opt.value })}
-                  aria-pressed={settings.theme === opt.value}
-                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
-                    settings.theme === opt.value ? "bg-brand text-cream" : "text-ink-muted"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <p className="font-semibold text-ink">Font size</p>
-            <div className="mt-3 grid grid-cols-3 gap-1.5 rounded-full bg-cream-fill p-1">
-              {FONT_SIZE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => update({ fontSize: opt.value })}
-                  aria-pressed={settings.fontSize === opt.value}
-                  className={`ligne-segmented-button min-h-11 rounded-full py-2.5 text-sm font-semibold ${
-                    settings.fontSize === opt.value ? "bg-brand text-cream" : "text-ink-muted"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <p className="font-semibold text-ink">English help</p>
-            <p className="mt-0.5 text-sm text-ink-muted">Natural is best for beginners. Literal is for word-by-word checking.</p>
-            <div className="mt-3 space-y-2">
-              {TRANSLATION_MODE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => update({ translationMode: opt.value })}
-                  aria-pressed={settings.translationMode === opt.value}
-                  className={`ligne-segmented-button w-full rounded-2xl px-3 py-2.5 text-left ${
-                    settings.translationMode === opt.value ? "bg-brand text-cream" : "bg-cream-fill text-ink"
-                  }`}
-                >
-                  <span className="block text-sm font-semibold">{opt.label}</span>
-                  <span className={`block text-xs ${settings.translationMode === opt.value ? "text-cream/80" : "text-ink-muted"}`}>
-                    {opt.description}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <details>
-            <summary className="cursor-pointer rounded-card border border-cream-dark bg-cream-card p-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-              Display and audio
-            </summary>
-            <div className="mt-3 space-y-3">
-              <Toggle
-                checked={settings.showSavedHighlights}
-                onChange={(v) => update({ showSavedHighlights: v })}
-                label="Saved word highlights"
-                description="Highlight words you saved for review."
-              />
-              <SpeechSettingsCard settings={settings} onChange={update} />
-            </div>
-          </details>
-        </section>
-
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Library" subtitle="Reading tools, saved items, and history." />
-          <SettingsLink href="/words" title="Words" description="Your saved words: in Review or not, and which you've mastered." />
-          <SettingsLink href="/words?tab=phrases" title="Phrase bank" description="Review saved idioms and multi-word expressions." />
-          <SettingsLink href="/progress" title="Progress" description="XP, missions, streaks and what you've read." />
-          <SettingsLink href="/archive" title="Reading history" description="Your recent completed readings." />
-          <SettingsLink href="/grammar" title="Grammar" description="Practice verbs and sentence patterns." />
-        </section>
-
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Support Sorlio" subtitle="Tell us what's working and what isn't." />
-          {inAndroidApp && (
-            <a
-              href={PLAY_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                markRated();
-              }}
-              className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4"
-            >
-              <div className="min-w-0">
-                <p className="font-semibold text-ink">Rate Sorlio</p>
-                <p className="mt-0.5 text-sm text-ink-muted">Leave a rating on Google Play. It helps other learners find the app.</p>
-              </div>
-              <span className="shrink-0 rounded-full bg-brand px-3.5 py-2 text-xs font-semibold text-cream">Rate</span>
-            </a>
           )}
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="font-semibold text-ink">Send feedback</p>
-                <p className="mt-0.5 text-sm text-ink-muted">Report a problem or suggest an improvement.</p>
-              </div>
-              <FeedbackButton feature="settings" label="Open" />
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-3">
-          <SettingsSectionTitle title="Account and settings" subtitle="Account, install options, privacy and app settings." />
-          <PremiumPromoCard />
-          <AccountCard />
-          <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="font-semibold text-ink">Replay the tutorial</p>
-                <p className="mt-0.5 text-sm text-ink-muted">Redo the short interactive walkthrough. Your saved words and progress stay exactly as they are.</p>
-              </div>
+          {grace?.available && (
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl bg-brand-light px-3 py-2">
+              <p className="text-sm text-brand">Use this week&rsquo;s grace day to cover yesterday.</p>
               <button
                 type="button"
                 onClick={() => {
-                  resetWalkthrough();
-                  router.push("/");
+                  if (applyStreakGraceDay()) refresh();
                 }}
-                className="shrink-0 rounded-full bg-cream-dark px-3.5 py-2 text-xs font-semibold text-ink"
+                className="ligne-pill shrink-0 bg-brand text-cream"
               >
-                Restart
+                Save streak
               </button>
             </div>
-          </div>
-          {!inAndroidApp && <PwaInstallCard />}
-          <SettingsLink href="/privacy" title="Privacy" description="What Sorlio stores, why, and your choices." />
-          <SettingsLink href="/terms" title="Terms of use" description="The rules for using Sorlio and Premium." />
-          <SettingsLink href="/credits" title="Credits and licences" description="Where Sorlio's texts, dictionary and news come from." />
-          <SettingsLink href="/changelog" title="What is new" description="See recent visible changes to Sorlio." />
+          )}
         </section>
 
-        <details>
-          <summary className="cursor-pointer rounded-card border border-cream-dark bg-cream-card p-4 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-            Advanced
-          </summary>
-          <div className="mt-3 space-y-3">
-            <Toggle
-              checked={settings.aiTranslationEnabled}
-              onChange={(v) => update({ aiTranslationEnabled: v })}
-              label="Preload natural translations"
-              description="Load one cached natural translation when you open a reading."
-            />
+        <HubSection title="Library">
+          <HubLink href="/words" title="Words" description="Your saved words, in Review or not." />
+          <HubLink href="/words?tab=phrases" title="Phrases" description="Saved expressions." />
+          <HubLink href="/archive" title="Reading history" description="Your recent completed readings." />
+          <HubLink href="/import" title="Import a text" description="Read your own French with the same help." />
+        </HubSection>
 
-            <div className="rounded-card border border-cream-dark bg-cream-card p-4">
-              <p className="font-semibold text-ink">AI explanations</p>
-              <p className="mt-0.5 text-sm text-ink-muted">Word and sentence AI help runs only when you ask for it.</p>
-            </div>
+        <HubSection title="Learn">
+          <HubLink href="/grammar" title="Grammar" description="Short lessons and practice." />
+          <HubLink href="/progress" title="Progress" description="XP, missions and what you've read." />
+        </HubSection>
 
-            <div className="flex items-center justify-between gap-4 rounded-card border border-cream-dark bg-cream-card p-4">
-              <div className="min-w-0">
-                <p className="font-semibold text-ink">Offline articles</p>
-                <p className="mt-0.5 text-sm text-ink-muted">
-                  {offlineCount} {offlineCount === 1 ? "article" : "articles"} cached on this device.
-                </p>
-              </div>
-              {offlineCount > 0 && (
-                <button
-                  type="button"
-                  onClick={handleClearOffline}
-                  className="ligne-pill shrink-0 bg-rose text-rose-ink"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+        <HubSection title="Account">
+          <HubLink href="/settings/preferences#account" title="Account and sync" description="Sign in to keep your progress on all your devices." />
+          <HubLink href="/premium" title="Premium" description="Unlimited saving and AI help." />
+        </HubSection>
 
-            <SettingsLink href="/lookup" title="English to French lookup" description="Look up an English word offline." />
-            <SettingsLink href="/sources" title="News sources" description="Unhide or prefer the sources you see in News." />
-            {/* Developer diagnostics: useful on preview builds, noise for readers. */}
-            {deploymentEnvironment() !== "production" && (
-              <>
-                <SettingsLink href="/dictionary" title="Dictionary quality" description="See missing entries, saved corrections, and phrase coverage." />
-              </>
-            )}
-          </div>
-        </details>
+        <p className="text-center text-sm text-ink-muted">
+          <Link href="/settings/preferences" className="font-semibold text-brand underline underline-offset-2">
+            Settings
+          </Link>{" "}
+          · reading level, display, audio, privacy
+        </p>
       </div>
     </div>
   );

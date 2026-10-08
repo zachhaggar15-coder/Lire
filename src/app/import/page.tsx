@@ -128,7 +128,7 @@ function ImportPageContent() {
       <p className="-mt-3 mb-2 text-sm text-ink-muted">Paste French you found elsewhere and read it with the same dictionary, audio, review and progress tools.</p>
       <p className="mb-5 text-xs leading-relaxed text-ink-muted">
         Imported texts stay private on this device. They&rsquo;re only copied to your account if you turn on{" "}
-        <Link href="/settings#sync-imported-texts" className="font-semibold text-brand underline underline-offset-2">
+        <Link href="/settings/preferences#sync-imported-texts" className="font-semibold text-brand underline underline-offset-2">
           Sync imported texts
         </Link>
         , and they&rsquo;re never sent for AI help unless you ask for it while reading.

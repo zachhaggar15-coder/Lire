@@ -257,7 +257,7 @@ await t.section("F1/F2/F3/F5/G1: small honest copy fixes", async () => {
   t.check("rating prompt needs 7+ lessons over 3+ days", LESSONS_BEFORE_RATE_PROMPT >= 7 && !isEligibleForRatePrompt({ lessonsCompleted: 9, activeDays: ["2026-07-13"], lastShownAt: null, ratedAt: null }, true) && isEligibleForRatePrompt({ lessonsCompleted: 7, activeDays: days, lastShownAt: null, ratedAt: null }, true));
   t.check("no sentiment gate before the rating link", !/enjoying Sorlio\?/i.test(read("src/components/RateSorlioCard.tsx")));
   const onboarding = read("src/components/FirstRunOnboarding.tsx");
-  t.check("onboarding makes no fluency promise and no level = word-count claim", !/fluent/i.test(onboarding) && !/known words|vocabulary of roughly/i.test(onboarding) && /Upper intermediate/.test(onboarding));
+  t.check("onboarding makes no fluency promise and no level = word-count claim", !/fluent/i.test(onboarding) && !/known words|vocabulary of roughly|\d,\d{3} words/i.test(onboarding) && /I can follow everyday French/.test(onboarding));
   const nav = read("src/components/BottomNav.tsx");
   t.check("the fourth tab is 'You', not 'Settings'", /label: "You"/.test(nav) && !/label: "Settings"/.test(nav));
 });

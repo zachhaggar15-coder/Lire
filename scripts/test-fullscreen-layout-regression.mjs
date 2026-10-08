@@ -177,7 +177,7 @@ console.log("--- hydration and modal isolation regressions ---");
 check("listening support starts hydration-safe", files.listening.includes("useState(false)") && !files.listening.includes("useState(canSpeak())"));
 check("full-screen practice declares modal semantics", files.practice.includes('aria-modal="true"'));
 check("modal focus isolation makes background branches inert", files.modalFocus.includes("sibling.inert = true") && files.modalFocus.includes("handleKeyDown"));
-check("bottom navigation stays hidden until the tutorial is complete", files.bottomNav.includes("state.walkthroughCompleted === true"));
+check("bottom navigation stays hidden until a level is chosen, and while the tour is replayed", files.bottomNav.includes("state?.completed === true && state.walkthroughReplay !== true"));
 check("bottom navigation is absent on dedicated practice/listen routes", files.bottomNav.includes("(practice|listen)"));
 
 console.log("--- offline and fresh-link regressions ---");
