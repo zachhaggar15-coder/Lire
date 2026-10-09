@@ -134,8 +134,10 @@ export async function runPurchase(deps: PurchaseDeps, sku = PREMIUM_PRODUCT_ID):
   try {
     response = await deps.requestPayment(sku);
   } catch (error) {
-    const name = (error as { name?: string } | null)?.name;
-    if (name === "AbortError") return emit({ phase: "cancelled", message: null });
+    const { name, message } = (error as { name?: string; message?: string } | null) ?? {};
+    // Chromium also raises AbortError("Invalid state") when the Play payment
+    // app fails to launch; that is a genuine failure, not the reader cancelling.
+    if (name === "AbortError" && !/invalid state/i.test(message ?? "")) return emit({ phase: "cancelled", message: null });
     return emit({ phase: "failed", message: "Google Play couldn't start the purchase. You haven't been charged." });
   }
 

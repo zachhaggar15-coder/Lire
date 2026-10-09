@@ -67,6 +67,7 @@ export const SUITES = [
   "test-import-capacity.mjs",
   "test-billing.mjs",
   "test-premium-cache-authority.mjs",
+  "test-purchase-abort.mjs",
   "test-premium-hydration.mjs",
   "test-account-deletion.mjs",
   "test-auth-metadata.mjs",

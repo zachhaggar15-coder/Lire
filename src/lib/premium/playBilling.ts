@@ -27,6 +27,25 @@ export interface ProductOffer {
   introductoryPrice: string | null;
 }
 
+/**
+ * TEMPORARY diagnostics for the "Subscribe fails before the Play sheet" bug.
+ * Records what happened on the last purchase attempt so it can be shown on an
+ * internal-test device. Remove once the cause is fixed.
+ */
+export interface BillingDiagnostic {
+  canMakePayment: string;
+  errorName: string | null;
+  errorMessage: string | null;
+  msToFailure: number | null;
+  userAgent: string;
+}
+
+let lastDiagnostic: BillingDiagnostic | null = null;
+
+export function getBillingDiagnostic(): BillingDiagnostic | null {
+  return lastDiagnostic;
+}
+
 const PENDING_KEY = "lire.premium.pendingTokens.v1";
 
 export function billingSupported(): boolean {
@@ -123,7 +142,32 @@ function browserDeps(onState: (state: PurchaseState) => void): PurchaseDeps {
         // price configured in Play Console, which the sheet shows.
         { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } },
       );
-      const response = await request.show();
+      const diagnostic: BillingDiagnostic = {
+        canMakePayment: "not run",
+        errorName: null,
+        errorMessage: null,
+        msToFailure: null,
+        userAgent: typeof navigator === "undefined" ? "" : navigator.userAgent,
+      };
+      lastDiagnostic = diagnostic;
+      // Diagnostic only: the result never gates show().
+      try {
+        diagnostic.canMakePayment = String(await request.canMakePayment());
+      } catch (error) {
+        const e = error as { name?: string; message?: string } | null;
+        diagnostic.canMakePayment = `threw ${e?.name ?? "Error"}: ${e?.message ?? ""}`;
+      }
+      const startedAt = Date.now();
+      let response: PaymentResponse;
+      try {
+        response = await request.show();
+      } catch (error) {
+        const e = error as { name?: string; message?: string } | null;
+        diagnostic.errorName = e?.name ?? "unknown";
+        diagnostic.errorMessage = e?.message ?? "";
+        diagnostic.msToFailure = Date.now() - startedAt;
+        throw error;
+      }
       const details = response.details as { purchaseToken?: unknown } | undefined;
       return {
         purchaseToken: typeof details?.purchaseToken === "string" ? details.purchaseToken : null,
