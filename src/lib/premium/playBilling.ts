@@ -46,6 +46,18 @@ export function getBillingDiagnostic(): BillingDiagnostic | null {
   return lastDiagnostic;
 }
 
+/** TEMPORARY: why the last loadOffer() found no product (shown on the Premium page). */
+let offerDiagnostic: string | null = null;
+
+export function getOfferDiagnostic(): string | null {
+  return offerDiagnostic;
+}
+
+function describeError(error: unknown): string {
+  const e = error as { name?: string; message?: string } | null;
+  return `${e?.name ?? "Error"}: ${e?.message ?? ""}`;
+}
+
 const PENDING_KEY = "lire.premium.pendingTokens.v1";
 
 export function billingSupported(): boolean {
@@ -56,7 +68,8 @@ async function service(): Promise<DigitalGoodsService | null> {
   if (!billingSupported()) return null;
   try {
     return await window.getDigitalGoodsService!(PLAY_BILLING_METHOD);
-  } catch {
+  } catch (error) {
+    offerDiagnostic = `getDigitalGoodsService threw ${describeError(error)}`;
     return null;
   }
 }
@@ -86,20 +99,25 @@ function describeDuration(iso: string | undefined): string | null {
 
 /** Product details from Google Play — the only source for prices shown at checkout. */
 export async function loadOffer(): Promise<ProductOffer | null> {
+  offerDiagnostic = null;
   const goods = await service();
   if (!goods) return null;
   try {
     const details = await goods.getDetails([PREMIUM_PRODUCT_ID]);
     const product = details.find((item) => item.itemId === PREMIUM_PRODUCT_ID);
     const price = formatPrice(product?.price);
-    if (!product || !price) return null;
+    if (!product || !price) {
+      offerDiagnostic = `getDetails returned ${details.length} item(s): ${JSON.stringify(details.map((d) => ({ id: d.itemId, price: d.price })))}`;
+      return null;
+    }
     return {
       price,
       period: product.subscriptionPeriod === "P1M" ? "month" : product.subscriptionPeriod === "P1Y" ? "year" : null,
       freeTrial: describeDuration(product.freeTrialPeriod),
       introductoryPrice: formatPrice(product.introductoryPrice),
     };
-  } catch {
+  } catch (error) {
+    offerDiagnostic = `getDetails threw ${describeError(error)}`;
     return null;
   }
 }

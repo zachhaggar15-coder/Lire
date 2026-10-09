@@ -8,7 +8,7 @@ import { signInWithGoogle } from "@/lib/supabase/auth";
 import { activeIdentity } from "@/lib/localData/store";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import { MANAGE_SUBSCRIPTION_URL } from "@/lib/premium/types";
-import { billingSupported, getBillingDiagnostic, loadOffer, purchasePremium, restorePurchases, type ProductOffer } from "@/lib/premium/playBilling";
+import { billingSupported, getBillingDiagnostic, getOfferDiagnostic, loadOffer, purchasePremium, restorePurchases, type ProductOffer } from "@/lib/premium/playBilling";
 import type { PurchaseState } from "@/lib/premium/purchase";
 import { FEATURES, FREE_DAILY_NEW_SAVES } from "@/lib/access/features";
 import { LEGAL } from "@/lib/legal";
@@ -216,6 +216,8 @@ export default function PremiumPageClient() {
                 <button type="button" onClick={refreshOffer} className="font-semibold text-brand underline underline-offset-2">
                   Try again
                 </button>
+                {/* TEMPORARY: billing diagnostics for the internal-test device. */}
+                <pre className="mt-2 whitespace-pre-wrap break-words text-xs text-ink-muted">{getOfferDiagnostic() ?? "no diagnostic recorded"}</pre>
               </div>
             )}
             <button
