@@ -27,37 +27,6 @@ export interface ProductOffer {
   introductoryPrice: string | null;
 }
 
-/**
- * TEMPORARY diagnostics for the "Subscribe fails before the Play sheet" bug.
- * Records what happened on the last purchase attempt so it can be shown on an
- * internal-test device. Remove once the cause is fixed.
- */
-export interface BillingDiagnostic {
-  canMakePayment: string;
-  errorName: string | null;
-  errorMessage: string | null;
-  msToFailure: number | null;
-  userAgent: string;
-}
-
-let lastDiagnostic: BillingDiagnostic | null = null;
-
-export function getBillingDiagnostic(): BillingDiagnostic | null {
-  return lastDiagnostic;
-}
-
-/** TEMPORARY: why the last loadOffer() found no product (shown on the Premium page). */
-let offerDiagnostic: string | null = null;
-
-export function getOfferDiagnostic(): string | null {
-  return offerDiagnostic;
-}
-
-function describeError(error: unknown): string {
-  const e = error as { name?: string; message?: string } | null;
-  return `${e?.name ?? "Error"}: ${e?.message ?? ""}`;
-}
-
 const PENDING_KEY = "lire.premium.pendingTokens.v1";
 
 export function billingSupported(): boolean {
@@ -68,8 +37,7 @@ async function service(): Promise<DigitalGoodsService | null> {
   if (!billingSupported()) return null;
   try {
     return await window.getDigitalGoodsService!(PLAY_BILLING_METHOD);
-  } catch (error) {
-    offerDiagnostic = `getDigitalGoodsService threw ${describeError(error)}`;
+  } catch {
     return null;
   }
 }
@@ -99,25 +67,20 @@ function describeDuration(iso: string | undefined): string | null {
 
 /** Product details from Google Play — the only source for prices shown at checkout. */
 export async function loadOffer(): Promise<ProductOffer | null> {
-  offerDiagnostic = null;
   const goods = await service();
   if (!goods) return null;
   try {
     const details = await goods.getDetails([PREMIUM_PRODUCT_ID]);
     const product = details.find((item) => item.itemId === PREMIUM_PRODUCT_ID);
     const price = formatPrice(product?.price);
-    if (!product || !price) {
-      offerDiagnostic = `getDetails returned ${details.length} item(s): ${JSON.stringify(details.map((d) => ({ id: d.itemId, price: d.price })))}`;
-      return null;
-    }
+    if (!product || !price) return null;
     return {
       price,
       period: product.subscriptionPeriod === "P1M" ? "month" : product.subscriptionPeriod === "P1Y" ? "year" : null,
       freeTrial: describeDuration(product.freeTrialPeriod),
       introductoryPrice: formatPrice(product.introductoryPrice),
     };
-  } catch (error) {
-    offerDiagnostic = `getDetails threw ${describeError(error)}`;
+  } catch {
     return null;
   }
 }
@@ -154,47 +117,13 @@ async function verifyToken(purchaseToken: string): Promise<VerifyResult> {
 function browserDeps(onState: (state: PurchaseState) => void): PurchaseDeps {
   return {
     async requestPayment(sku) {
-      const diagnostic: BillingDiagnostic = {
-        canMakePayment: "not run",
-        errorName: null,
-        errorMessage: null,
-        msToFailure: null,
-        userAgent: typeof navigator === "undefined" ? "" : navigator.userAgent,
-      };
-      lastDiagnostic = diagnostic;
-      let request: PaymentRequest;
-      try {
-        request = new PaymentRequest(
-          [{ supportedMethods: PLAY_BILLING_METHOD, data: { sku } }],
-          // Required by the API shape; Google Play ignores it and charges the
-          // price configured in Play Console, which the sheet shows.
-          { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } },
-        );
-      } catch (error) {
-        const e = error as { name?: string; message?: string } | null;
-        diagnostic.canMakePayment = "not run (PaymentRequest constructor threw)";
-        diagnostic.errorName = `constructor: ${e?.name ?? "unknown"}`;
-        diagnostic.errorMessage = e?.message ?? "";
-        throw error;
-      }
-      // Diagnostic only: the result never gates show().
-      try {
-        diagnostic.canMakePayment = String(await request.canMakePayment());
-      } catch (error) {
-        const e = error as { name?: string; message?: string } | null;
-        diagnostic.canMakePayment = `threw ${e?.name ?? "Error"}: ${e?.message ?? ""}`;
-      }
-      const startedAt = Date.now();
-      let response: PaymentResponse;
-      try {
-        response = await request.show();
-      } catch (error) {
-        const e = error as { name?: string; message?: string } | null;
-        diagnostic.errorName = e?.name ?? "unknown";
-        diagnostic.errorMessage = e?.message ?? "";
-        diagnostic.msToFailure = Date.now() - startedAt;
-        throw error;
-      }
+      const request = new PaymentRequest(
+        [{ supportedMethods: PLAY_BILLING_METHOD, data: { sku } }],
+        // Required by the API shape; Google Play ignores it and charges the
+        // price configured in Play Console, which the sheet shows.
+        { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } },
+      );
+      const response = await request.show();
       const details = response.details as { purchaseToken?: unknown } | undefined;
       return {
         purchaseToken: typeof details?.purchaseToken === "string" ? details.purchaseToken : null,

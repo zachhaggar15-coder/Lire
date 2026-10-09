@@ -8,7 +8,7 @@ import { signInWithGoogle } from "@/lib/supabase/auth";
 import { activeIdentity } from "@/lib/localData/store";
 import { usePremiumStatus } from "@/lib/premium/usePremiumStatus";
 import { MANAGE_SUBSCRIPTION_URL } from "@/lib/premium/types";
-import { billingSupported, getBillingDiagnostic, getOfferDiagnostic, loadOffer, purchasePremium, restorePurchases, type ProductOffer } from "@/lib/premium/playBilling";
+import { billingSupported, loadOffer, purchasePremium, restorePurchases, type ProductOffer } from "@/lib/premium/playBilling";
 import type { PurchaseState } from "@/lib/premium/purchase";
 import { FEATURES, FREE_DAILY_NEW_SAVES } from "@/lib/access/features";
 import { LEGAL } from "@/lib/legal";
@@ -216,8 +216,6 @@ export default function PremiumPageClient() {
                 <button type="button" onClick={refreshOffer} className="font-semibold text-brand underline underline-offset-2">
                   Try again
                 </button>
-                {/* TEMPORARY: billing diagnostics for the internal-test device. */}
-                <pre className="mt-2 whitespace-pre-wrap break-words text-xs text-ink-muted">{getOfferDiagnostic() ?? "no diagnostic recorded"}</pre>
               </div>
             )}
             <button
@@ -249,12 +247,6 @@ export default function PremiumPageClient() {
           >
             {purchase.message}
           </p>
-        )}
-        {inApp && purchase.phase === "failed" && getBillingDiagnostic() && (
-          // TEMPORARY: billing diagnostics for the internal-test device.
-          <pre className="mt-2 whitespace-pre-wrap break-words rounded border border-rose-200 p-2 text-xs text-ink-muted">
-            {`canMakePayment: ${getBillingDiagnostic()!.canMakePayment}\nerror.name: ${getBillingDiagnostic()!.errorName}\nerror.message: ${getBillingDiagnostic()!.errorMessage}\nms to failure: ${getBillingDiagnostic()!.msToFailure}\nUA: ${getBillingDiagnostic()!.userAgent}`}
-          </pre>
         )}
         {purchase.phase === "idle" && purchase.message && <p className="mt-3 text-sm text-ink-muted">{purchase.message}</p>}
         {purchase.phase === "ownership-conflict" && (
