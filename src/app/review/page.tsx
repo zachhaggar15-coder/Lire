@@ -801,11 +801,11 @@ function PracticeHubCard({
           <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
             Stats
           </summary>
-          <div className="mt-3 grid grid-cols-5 gap-2">
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
             {stats.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-cream-dark bg-cream-card p-2 text-center">
+              <div key={item.label} className="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-cream-dark bg-cream-card px-1 py-2.5 text-center">
                 <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
-                <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.08em] text-ink-faint">{item.label}</p>
+                <p className="mt-1.5 max-w-full break-words font-mono text-[9px] uppercase leading-tight tracking-[0.04em] text-ink-faint">{item.label}</p>
               </div>
             ))}
           </div>
