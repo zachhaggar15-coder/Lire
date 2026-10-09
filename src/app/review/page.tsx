@@ -9,7 +9,8 @@ import { MASTERY_STREAK } from "@/lib/reviewMembership";
 import { persistenceFailureMessage } from "@/lib/localData/messages";
 import { getSavedPhrases, recordPhraseReview, type SavedPhrase } from "@/lib/phrases";
 import { NOT_TRANSLATED_YET } from "@/lib/dictionary/constants";
-import { buildReviewQueue, getReviewStats } from "@/lib/spacedRepetition";
+import { buildReviewQueue, describeNextDue, getNextDueAt, getReviewStats } from "@/lib/spacedRepetition";
+import { getCurrentStreak } from "@/lib/habit";
 import { getReviewPreferences, saveReviewPreferences } from "@/lib/reviewPreferences";
 import { getAllInferenceResults, getAllWordTaps } from "@/lib/wordLearning";
 import { canSpeak, speakFrench } from "@/lib/speech";
@@ -63,6 +64,34 @@ function SpeakButton({ text }: { text: string }) {
   );
 }
 
+/**
+ * Swipe a revealed card right for "Knew it" or left for "Still learning".
+ * Only clearly horizontal swipes count, so scrolling a long card still works.
+ */
+function useSwipeGrade(enabled: boolean, onGrade: (grade: WordGrade) => void) {
+  const start = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onTouchStart: (event: React.TouchEvent) => {
+      const touch = event.touches[0];
+      start.current = enabled && touch ? { x: touch.clientX, y: touch.clientY } : null;
+    },
+    onTouchEnd: (event: React.TouchEvent) => {
+      const origin = start.current;
+      start.current = null;
+      const touch = event.changedTouches[0];
+      if (!enabled || !origin || !touch) return;
+      const dx = touch.clientX - origin.x;
+      const dy = touch.clientY - origin.y;
+      if (Math.abs(dx) < 80 || Math.abs(dx) < Math.abs(dy) * 2) return;
+      onGrade(dx > 0 ? "knew" : "learning");
+    },
+  };
+}
+
+function SwipeHint() {
+  return <p className="mt-3 text-center text-xs text-ink-faint">Swipe right if you knew it, left if not.</p>;
+}
+
 function ReviewPageContent() {
   useDocumentTitle("Review");
   const [words, setWords] = useState<SavedWord[]>([]);
@@ -91,6 +120,15 @@ function ReviewPageContent() {
     setSessionLengthState(value);
     saveReviewPreferences({ sessionLength: value });
   }
+  function setSpeakAnswers(value: boolean) {
+    setSpeakAnswersState(value);
+    saveReviewPreferences({ speakAnswers: value });
+  }
+
+  /** Show the answer, reading the French aloud first when that option is on (inside the tap so browsers allow the audio). */
+  function speakFor(text: string) {
+    if (speakAnswers && canSpeak()) speakFrench(text);
+  }
   const [reviewStarted, setReviewStarted] = useState(false);
   const [phraseReviewStarted, setPhraseReviewStarted] = useState(false);
   const [phraseRevealed, setPhraseRevealed] = useState(false);
@@ -113,6 +151,9 @@ function ReviewPageContent() {
   const missedWordKeys = useRef<Set<string>>(new Set());
   const missedBefore = useRef<Set<string>>(new Set());
   const [missedCount, setMissedCount] = useState(0);
+  const [missedWords, setMissedWords] = useState<string[]>([]);
+  const [speakAnswers, setSpeakAnswersState] = useState(() => getReviewPreferences().speakAnswers);
+  const [streak, setStreak] = useState(0);
   const cardFeedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reviewCardRef = useRef<HTMLDivElement | null>(null);
   const shouldScrollToReviewCard = useRef(false);
@@ -164,7 +205,12 @@ function ReviewPageContent() {
     reviewCardRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
   }, [reviewStarted]);
 
+  useEffect(() => {
+    if (ready) setStreak(getCurrentStreak());
+  }, [ready, wordQueue.length, sessionPhraseQueue.length]);
+
   const stats = useMemo(() => getReviewStats(words), [words]);
+  const nextDueAt = useMemo(() => getNextDueAt(words), [words]);
   const vocabularyStates = useMemo(
     () => classifyVocabularyStates(words, getAllWordTaps(), getAllInferenceResults()),
     [words]
@@ -234,6 +280,7 @@ function ReviewPageContent() {
     if (!correct) {
       missedWordKeys.current.add(current.word);
       setMissedCount(missedWordKeys.current.size);
+      setMissedWords(Array.from(missedWordKeys.current));
     }
     const nextScore = {
       knew: score.knew + (correct ? 1 : 0),
@@ -280,6 +327,7 @@ function ReviewPageContent() {
     if (!correct && !missedBefore.current.has(word)) {
       missedWordKeys.current.delete(word);
       setMissedCount(missedWordKeys.current.size);
+      setMissedWords(Array.from(missedWordKeys.current));
     }
     setScore(previousScore);
     setCardFeedback(null);
@@ -308,8 +356,33 @@ function ReviewPageContent() {
     setScore({ knew: 0, missed: 0 });
     missedWordKeys.current = new Set();
     setMissedCount(0);
+    setMissedWords([]);
     setCardFeedback(null);
     phraseScore.current = { correct: 0, total: 0 };
+    reviewSessionStarted.current = false;
+    reviewSessionCompleted.current = false;
+  }
+
+  /** Extra round on just the words missed this session (they already left the due queue once answered correctly). */
+  function practiseMissed() {
+    const keys = new Set(missedWords);
+    const queue = visibleWords(getSavedWords()).filter((word) => keys.has(word.word));
+    if (queue.length === 0) return;
+    if (cardFeedbackTimeout.current) {
+      clearTimeout(cardFeedbackTimeout.current);
+      cardFeedbackTimeout.current = null;
+    }
+    setWords(visibleWords(getSavedWords()));
+    setWordQueue(queue);
+    setWordSessionTotal(queue.length);
+    resetWordCard();
+    setReviewModeState("words");
+    setReviewStarted(true);
+    setScore({ knew: 0, missed: 0 });
+    missedWordKeys.current = new Set();
+    setMissedCount(0);
+    setMissedWords([]);
+    setCardFeedback(null);
     reviewSessionStarted.current = false;
     reviewSessionCompleted.current = false;
   }
@@ -387,6 +460,8 @@ function ReviewPageContent() {
           // saying "3 cards due" directly above a "Due today: 0" tile read as
           // a contradiction.
           : `${wordQueue.length} ${wordQueue.length === 1 ? "word" : "words"} to review`;
+  const wordSwipe = useSwipeGrade(reviewStarted && revealed && !cardFeedback, gradeWord);
+  const phraseSwipe = useSwipeGrade(phraseReviewStarted && phraseRevealed && !cardFeedback, gradePhrase);
   const wordCardIndex = wordSessionTotal > 0 ? wordSessionTotal - wordQueue.length + 1 : 1;
 
   // No learning/unsure words saved at all.
@@ -426,10 +501,17 @@ function ReviewPageContent() {
           <p className="text-lg font-semibold text-ink">You&rsquo;re caught up.</p>
           <p className="mt-1 text-sm text-ink-muted">
             {stats.notDueYet} {stats.notDueYet === 1 ? "word is" : "words are"} scheduled for later.
+            {nextDueAt && ` Your next review is ${describeNextDue(nextDueAt)}.`}
           </p>
-          <Link href="/" className="ligne-pill mt-4 inline-flex bg-brand text-cream">
-            Keep reading
-          </Link>
+          {streak > 0 && <p className="mt-2 text-sm font-semibold text-brand">{streak}-day streak. Nice work.</p>}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <Link href="/" className="ligne-pill bg-brand text-cream">
+              Keep reading
+            </Link>
+            <Link href="/live-news" className="ligne-pill bg-cream-fill text-ink-muted">
+              Read the news
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -457,12 +539,30 @@ function ReviewPageContent() {
               </>
             )}
           </p>
+          {streak > 0 && <p className="mt-2 text-sm font-semibold text-brand">{streak}-day streak</p>}
+          {!phrasesDone && missedWords.length > 0 && (
+            <div className="mt-4 text-left">
+              <p className="ligne-label">Needed another look</p>
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {missedWords.map((word) => (
+                  <li key={word} lang="fr" className="rounded-full bg-cream px-3 py-1.5 text-sm font-semibold text-ink">
+                    {word}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {remainingDue > 0 && (
             <p className="mt-1 text-sm text-ink-muted">
               {remainingDue} more {remainingDue === 1 ? "word is" : "words are"} ready whenever you are.
             </p>
           )}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            {!phrasesDone && missedWords.length > 0 && (
+              <button type="button" onClick={practiseMissed} className="ligne-pill bg-brand text-cream">
+                Practise the missed {missedWords.length === 1 ? "word" : "words"}
+              </button>
+            )}
             <button
               onClick={restart}
               className="ligne-pill bg-brand text-cream"
@@ -517,6 +617,9 @@ function ReviewPageContent() {
           totalLearning={stats.totalLearning}
           phraseCount={sessionPhraseQueue.length}
           vocabularyStates={vocabularyStates}
+          streak={streak}
+          speakAnswers={speakAnswers}
+          onSpeakAnswersChange={setSpeakAnswers}
           mode={reviewMode}
           direction={reviewDirection}
           sessionLength={sessionLength}
@@ -558,13 +661,17 @@ function ReviewPageContent() {
           direction={reviewDirection}
           revealed={phraseRevealed}
           feedback={cardFeedback}
-          onReveal={() => setPhraseRevealed(true)}
+          onReveal={() => {
+            setPhraseRevealed(true);
+            if (currentPhrase) speakFor(currentPhrase.phrase);
+          }}
+          swipeHandlers={phraseSwipe}
           onGrade={gradePhrase}
         />
       )}
 
       {shouldShowWordReview && current && (
-        <div ref={reviewCardRef} className="flex flex-1 flex-col pt-2">
+        <div ref={reviewCardRef} className="flex flex-1 flex-col pt-2" {...wordSwipe}>
           {/* Flashcard */}
           <div className="review-card-stack relative z-0">
             <div
@@ -608,7 +715,10 @@ function ReviewPageContent() {
             {!revealed ? (
               <button
                 type="button"
-                onClick={() => setRevealed(true)}
+                onClick={() => {
+                  setRevealed(true);
+                  speakFor(current.word);
+                }}
                 className="ligne-pill mt-6 w-full bg-brand text-cream"
               >
                 Show answer
@@ -659,12 +769,13 @@ function ReviewPageContent() {
 
           {/* Grade buttons */}
           <div className="mt-4 pb-6">
+            {revealed && <div className="-mt-1 mb-3"><SwipeHint /></div>}
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => gradeWord("learning")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
+                className="rounded-2xl border border-cream-dark bg-cream-fill min-h-12 px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
               >
                 Still learning
               </button>
@@ -672,7 +783,7 @@ function ReviewPageContent() {
                 type="button"
                 onClick={() => gradeWord("knew")}
                 disabled={!revealed || cardFeedback !== null}
-                className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
+                className="rounded-2xl border border-brand bg-brand-light min-h-12 px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
               >
                 Knew it
               </button>
@@ -708,6 +819,9 @@ function PracticeHubCard({
   totalLearning,
   phraseCount,
   vocabularyStates,
+  streak,
+  speakAnswers,
+  onSpeakAnswersChange,
   mode,
   direction,
   sessionLength,
@@ -723,6 +837,9 @@ function PracticeHubCard({
   totalLearning: number;
   phraseCount: number;
   vocabularyStates: VocabularyStateItem[];
+  streak: number;
+  speakAnswers: boolean;
+  onSpeakAnswersChange: (value: boolean) => void;
   mode: "words" | "phrases";
   direction: ReviewDirection;
   sessionLength: number | null;
@@ -760,6 +877,7 @@ function PracticeHubCard({
       <p className="mt-1 text-sm text-ink-muted">
         About {Math.max(1, Math.round((sessionCount * 10) / 60))} min
         {!isPhrases && readyCopy ? ` · ${readyCopy}` : ""}
+        {streak > 0 ? ` · ${streak}-day streak` : ""}
       </p>
 
       <button
@@ -772,7 +890,7 @@ function PracticeHubCard({
       </button>
 
       <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2.5">
-        <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+        <summary className="flex min-h-11 cursor-pointer items-center font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
           Review options
         </summary>
         <div className="pb-1">
@@ -790,6 +908,17 @@ function PracticeHubCard({
             <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">Session length</p>
             <SessionLengthToggle value={sessionLength} onChange={onSessionLengthChange} />
           </div>
+          {canSpeak() && (
+            <label className="mt-4 flex min-h-12 cursor-pointer items-center justify-between gap-3">
+              <span className="text-sm font-semibold text-ink">Read the French aloud when I show the answer</span>
+              <input
+                type="checkbox"
+                checked={speakAnswers}
+                onChange={(event) => onSpeakAnswersChange(event.target.checked)}
+                className="h-6 w-6 shrink-0 accent-brand"
+              />
+            </label>
+          )}
         </div>
       </details>
       <Link href={isPhrases ? "/words?tab=phrases" : "/words"} className="mt-2 block text-center text-xs font-semibold text-brand underline underline-offset-2">
@@ -797,19 +926,14 @@ function PracticeHubCard({
       </Link>
 
       {!isPhrases && (
-        <details className="mt-3 rounded-2xl bg-cream-sunken px-3 py-2">
-          <summary className="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-ink-muted">
-            Stats
-          </summary>
-          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
-            {stats.map((item) => (
-              <div key={item.label} className="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-cream-dark bg-cream-card px-1 py-2.5 text-center">
-                <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
-                <p className="mt-1.5 max-w-full break-words font-mono text-[9px] uppercase leading-tight tracking-[0.04em] text-ink-faint">{item.label}</p>
-              </div>
-            ))}
-          </div>
-        </details>
+        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5">
+          {stats.map((item) => (
+            <div key={item.label} className="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-cream-dark bg-cream px-1 py-2.5 text-center">
+              <p className="font-numeral text-xl leading-none text-ink">{item.value}</p>
+              <p className="mt-1.5 max-w-full break-words font-mono text-[10px] uppercase leading-tight tracking-[0.04em] text-ink-muted">{item.label}</p>
+            </div>
+          ))}
+        </div>
       )}
     </section>
   );
@@ -961,7 +1085,9 @@ function PhraseReviewCard({
   feedback,
   onReveal,
   onGrade,
+  swipeHandlers,
 }: {
+  swipeHandlers: ReturnType<typeof useSwipeGrade>;
   phrase: SavedPhrase | undefined;
   direction: ReviewDirection;
   revealed: boolean;
@@ -981,7 +1107,7 @@ function PhraseReviewCard({
 
   const prompt = direction === "en-fr" ? phrase.translation : phrase.phrase;
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col" {...swipeHandlers}>
       <div className="review-card-stack relative z-0">
         <div
           className={`review-card-smooth relative z-10 rounded-card border border-cream-dark bg-cream-card p-5 ${
@@ -1035,7 +1161,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("learning")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-cream-dark bg-cream-fill px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
+            className="rounded-2xl border border-cream-dark bg-cream-fill min-h-12 px-1 py-3 text-sm font-semibold text-ink-muted disabled:opacity-40"
           >
             Still learning
           </button>
@@ -1043,7 +1169,7 @@ function PhraseReviewCard({
             type="button"
             onClick={() => onGrade("knew")}
             disabled={!revealed || feedback !== null}
-            className="rounded-2xl border border-brand bg-brand-light px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
+            className="rounded-2xl border border-brand bg-brand-light min-h-12 px-1 py-3 text-sm font-semibold text-brand disabled:opacity-40"
           >
             Knew it
           </button>

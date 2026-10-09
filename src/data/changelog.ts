@@ -10,6 +10,13 @@ export interface ChangelogEntry {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    date: "2026-10-09",
+    title: "A smoother Review",
+    summary: "Review stats are always visible and fit small screens, the button says how many words you'll do, and your streak shows up. Swipe a card right for \u201cKnew it\u201d or left for \u201cStill learning\u201d, optionally hear the French read aloud, and finish with a list of the words you missed and a button to practise them. When you're caught up, you'll see when your next review is due.",
+    type: "improved",
+    featureHref: "/review",
+  },
+  {
     date: "2026-10-07",
     title: "Free and Premium",
     summary: "Reading, news, importing, listening, the dictionary, grammar and reviewing your words are free, with 5 new saved words a day. Premium (£3.99 a month, cancel any time in Google Play) adds unlimited saving and AI help.",
