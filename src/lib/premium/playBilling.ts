@@ -154,12 +154,6 @@ async function verifyToken(purchaseToken: string): Promise<VerifyResult> {
 function browserDeps(onState: (state: PurchaseState) => void): PurchaseDeps {
   return {
     async requestPayment(sku) {
-      const request = new PaymentRequest(
-        [{ supportedMethods: PLAY_BILLING_METHOD, data: { sku } }],
-        // Required by the API shape; Google Play ignores it and charges the
-        // price configured in Play Console, which the sheet shows.
-        { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } },
-      );
       const diagnostic: BillingDiagnostic = {
         canMakePayment: "not run",
         errorName: null,
@@ -168,6 +162,21 @@ function browserDeps(onState: (state: PurchaseState) => void): PurchaseDeps {
         userAgent: typeof navigator === "undefined" ? "" : navigator.userAgent,
       };
       lastDiagnostic = diagnostic;
+      let request: PaymentRequest;
+      try {
+        request = new PaymentRequest(
+          [{ supportedMethods: PLAY_BILLING_METHOD, data: { sku } }],
+          // Required by the API shape; Google Play ignores it and charges the
+          // price configured in Play Console, which the sheet shows.
+          { total: { label: "Sorlio Premium", amount: { currency: "GBP", value: "0" } } },
+        );
+      } catch (error) {
+        const e = error as { name?: string; message?: string } | null;
+        diagnostic.canMakePayment = "not run (PaymentRequest constructor threw)";
+        diagnostic.errorName = `constructor: ${e?.name ?? "unknown"}`;
+        diagnostic.errorMessage = e?.message ?? "";
+        throw error;
+      }
       // Diagnostic only: the result never gates show().
       try {
         diagnostic.canMakePayment = String(await request.canMakePayment());
