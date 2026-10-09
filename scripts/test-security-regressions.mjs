@@ -128,7 +128,25 @@ console.log("--- Security headers ---");
   );
   check("headers apply to every path", Boolean(all));
   check("scripts only from this origin, no eval in production", csp["script-src"] === "'self' 'unsafe-inline'");
-  check("browser connects only to this origin and the Supabase project", csp["connect-src"] === "'self' https://example-project.supabase.co");
+  // Chrome validates a PaymentRequest's payment-method identifier against
+  // connect-src (falling back to default-src); "payment-src" is not a CSP
+  // directive. Without the exact entry below, `new PaymentRequest(...)` throws
+  // RangeError ("payment method identifier violates Content Security Policy")
+  // and Play Billing in the Android app cannot start.
+  const PLAY_BILLING = "https://play.google.com/billing";
+  const connectSources = (csp["connect-src"] ?? "").split(/\s+/).filter(Boolean);
+  check("connect-src exists (no fallback to default-src for payment methods)", connectSources.length > 0);
+  check("connect-src permits the exact Play Billing payment method identifier", connectSources.includes(PLAY_BILLING), csp["connect-src"]);
+  check(
+    "Play Billing is allowed as one exact URL, not play.google.com or a wildcard/scheme",
+    !connectSources.some((source) => source === "https://play.google.com" || source === "https://*.google.com" || source === "https:" || source === "*" || /^https:\/\/play\.google\.com\/?$/.test(source))
+  );
+  check(
+    "browser connects only to this origin, the Supabase project and the Play Billing payment method id",
+    connectSources.join(" ") === `'self' ${PLAY_BILLING} https://example-project.supabase.co`,
+    csp["connect-src"]
+  );
+  check("default-src stays 'self' (no broad fallback)", csp["default-src"] === "'self'");
   check(
     "no framing, plugins, or base/form hijacking",
     csp["frame-ancestors"] === "'none'" && csp["object-src"] === "'none'" && csp["base-uri"] === "'self'" && csp["form-action"] === "'self'"
