@@ -8,6 +8,10 @@
  * plugins, no framing, no <base> or form hijacking, and network access only
  * to this site and the Supabase project (the only origin the browser talks
  * to; OpenAI, Upstash and Google Play verification are server-side).
+ *
+ * One exception: Chrome checks a PaymentRequest's payment-method identifier
+ * against connect-src, so Play Billing in the Android app needs exactly
+ * https://play.google.com/billing (no request is sent to it by the page).
  */
 function securityHeaders() {
   const isDev = process.env.NODE_ENV === "development";
@@ -24,7 +28,7 @@ function securityHeaders() {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
-    `connect-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ""}${isDev ? " ws: wss:" : ""}`,
+    `connect-src 'self' https://play.google.com/billing${supabaseOrigin ? ` ${supabaseOrigin}` : ""}${isDev ? " ws: wss:" : ""}`,
     "media-src 'self' blob:",
     "worker-src 'self'",
     "manifest-src 'self'",

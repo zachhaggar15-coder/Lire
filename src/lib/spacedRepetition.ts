@@ -148,3 +148,26 @@ export function buildReviewQueue(words: SavedWord[], now: number = Date.now()): 
       return new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime();
     });
 }
+
+/** When the next scheduled card comes due, or null if nothing is scheduled ahead (e.g. every card is new or already due). */
+export function getNextDueAt(words: SavedWord[], now: number = Date.now()): Date | null {
+  let next: number | null = null;
+  for (const word of words) {
+    if (!isInReview(word) || !word.nextReviewAt) continue;
+    const time = new Date(word.nextReviewAt).getTime();
+    if (Number.isNaN(time) || time <= now) continue;
+    if (next === null || time < next) next = time;
+  }
+  return next === null ? null : new Date(next);
+}
+
+/** "today at 18:30", "tomorrow", "on Friday" — a friendly phrase for when the next review is due. */
+export function describeNextDue(date: Date, now: Date = new Date()): string {
+  const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const dayDiff = Math.round((startOfDay(date) - startOfDay(now)) / 86_400_000);
+  const time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  if (dayDiff <= 0) return `today at ${time}`;
+  if (dayDiff === 1) return "tomorrow";
+  if (dayDiff < 7) return `on ${date.toLocaleDateString([], { weekday: "long" })}`;
+  return `on ${date.toLocaleDateString([], { day: "numeric", month: "short" })}`;
+}

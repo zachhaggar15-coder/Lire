@@ -11,6 +11,8 @@ export interface ReviewPreferences {
   mode: "words" | "phrases";
   /** Cards per sitting before stopping, or null for "review everything due." */
   sessionLength: number | null;
+  /** Read the French aloud when the answer is shown. Off by default so Review stays quiet. */
+  speakAnswers: boolean;
 }
 
 export const DEFAULT_REVIEW_PREFERENCES: ReviewPreferences = {
@@ -21,6 +23,7 @@ export const DEFAULT_REVIEW_PREFERENCES: ReviewPreferences = {
   // up in the next session. Scheduling and due dates are untouched. A reader
   // who chose "All" keeps that choice.
   sessionLength: 20,
+  speakAnswers: false,
 };
 
 const KEY = "lire.reviewPrefs.v1";
