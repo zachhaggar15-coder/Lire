@@ -22,6 +22,8 @@ export type SubscriptionStatus =
 export interface PremiumStatus {
   isPremium: boolean;
   status: SubscriptionStatus;
+  /** Complimentary account access is separate from Google Play billing. */
+  source?: "play" | "complimentary" | null;
   expiresAt: string | null;
   autoRenewing: boolean | null;
   /** True when this answer is not fresh from the server (offline / server unavailable). */
@@ -52,6 +54,7 @@ export function confersPremium(status: PremiumStatus): boolean {
 export const FREE_PREMIUM_STATUS: PremiumStatus = {
   isPremium: false,
   status: "none",
+  source: null,
   expiresAt: null,
   autoRenewing: null,
   stale: false,
@@ -70,12 +73,15 @@ export function parsePremiumStatus(body: unknown, now = Date.now()): PremiumStat
   if (!body || typeof body !== "object") return FREE_PREMIUM_STATUS;
   const value = body as Record<string, unknown>;
   const status = typeof value.status === "string" && STATUSES.has(value.status) ? (value.status as SubscriptionStatus) : "unknown";
+  const source = value.source === "complimentary" || value.source === "play" ? value.source : null;
   const expiresAt = typeof value.expiresAt === "string" && Number.isFinite(Date.parse(value.expiresAt)) ? value.expiresAt : null;
   const isPremium =
-    value.isPremium === true && ENTITLED.has(status) && expiresAt !== null && Date.parse(expiresAt) > now;
+    value.isPremium === true && ENTITLED.has(status) &&
+    (source === "complimentary" && status === "active" || expiresAt !== null && Date.parse(expiresAt) > now);
   return {
     isPremium,
     status,
+    source,
     expiresAt,
     autoRenewing: typeof value.autoRenewing === "boolean" ? value.autoRenewing : null,
     stale: value.stale === true,

@@ -4,7 +4,7 @@ import { newsSenseDictionary } from "@/data/dictionaries/news-senses";
 import { coreSenseDictionary } from "@/data/dictionaries/core-senses";
 import { phraseBankDictionary } from "@/data/dictionaries/phrase-bank";
 import { properNounDictionary } from "@/data/dictionaries/proper-nouns";
-import { articleCoverageDictionary } from "@/data/dictionaries/article-coverage";
+import { corpusGapDictionary } from "@/data/dictionaries/corpus-gaps";
 import { loadGeneratedDictionary } from "@/data/dictionaries/generated/fr-en-generated";
 import { enFrDictionary } from "@/data/dictionaries/en-fr";
 import { guessLemmas } from "@/lib/dictionary/lemmatize";
@@ -67,6 +67,8 @@ indexLayer(newsSenseDictionary, "news", byLemma, byForm);
 // they resolved through the generated layer's arbitrary sense order — "sur"
 // came back as "sour", "moi" as "ego", "ne" as "NE". See core-senses.ts.
 indexLayer(coreSenseDictionary, "core", byLemma, byForm);
+// Hand-checked meanings for frequent forms absent from the broad export.
+indexLayer(corpusGapDictionary, "core", byLemma, byForm);
 
 // Phrase-bank entries are intentionally high priority: if a reader long-presses
 // "mettre fin à" or "sur fond de", the phrase meaning should win before any
@@ -94,8 +96,6 @@ for (const entry of properNounDictionary) {
 
 const generatedByLemma = new Map<string, DictionaryEntry>();
 const generatedByForm = new Map<string, DictionaryEntry>();
-const articleCoverageByLemma = new Map<string, DictionaryEntry>();
-const articleCoverageByForm = new Map<string, DictionaryEntry>();
 
 /**
  * The generated layer is loaded on demand rather than bundled — see the note
@@ -204,8 +204,6 @@ function warmGeneratedDictionaryInBackground(): void {
   void ensureGeneratedDictionary();
 }
 
-indexLayer(articleCoverageDictionary, "article-coverage", articleCoverageByLemma, articleCoverageByForm);
-
 const enByLemma = new Map<string, DictionaryEntry>();
 const enByForm = new Map<string, DictionaryEntry>();
 
@@ -303,10 +301,16 @@ function lookupExact(key: string): LayeredEntry | null {
     layered(generatedByLemma.get(key), "generated") ??
     layered(generatedByForm.get(key), "generated") ??
     layered(getCustomDictionaryEntry(key), "custom") ??
-    layered(articleCoverageByLemma.get(key), "article-coverage") ??
-    layered(articleCoverageByForm.get(key), "article-coverage") ??
     null
   );
+}
+
+// Adjacent-word expansion is for editorially checked expressions. The broad
+// import contains many literal word combinations ("à la" -> "a la", "le
+// même" -> "same") that displaced the correct standalone meaning of a
+// tapped function word when it happened to sit next to them.
+function lookupCuratedPhrase(key: string): LayeredEntry | null {
+  return layered(byLemma.get(key)) ?? layered(byForm.get(key));
 }
 
 function looksLikeProperNoun(rawWord: string): boolean {
@@ -359,15 +363,15 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
   const next = context?.nextWord?.trim().toLowerCase();
 
   if (prev && next) {
-    const threeWord = lookupExact(`${prev} ${clean} ${next}`);
+    const threeWord = lookupCuratedPhrase(`${prev} ${clean} ${next}`);
     if (threeWord) return toResult(rawWord, threeWord.entry, threeWord.layer);
   }
   if (prev) {
-    const phrase = lookupExact(`${prev} ${clean}`);
+    const phrase = lookupCuratedPhrase(`${prev} ${clean}`);
     if (phrase) return toResult(rawWord, phrase.entry, phrase.layer);
   }
   if (next) {
-    const phrase = lookupExact(`${clean} ${next}`);
+    const phrase = lookupCuratedPhrase(`${clean} ${next}`);
     if (phrase) return toResult(rawWord, phrase.entry, phrase.layer);
   }
 
@@ -394,9 +398,6 @@ export function lookupWord(rawWord: string, context?: LookupContext): Dictionary
 
   const customExact = getCustomDictionaryEntry(clean);
   if (customExact) return toResult(rawWord, customExact, "custom");
-
-  const articleCoverageExact = articleCoverageByLemma.get(clean) ?? articleCoverageByForm.get(clean);
-  if (articleCoverageExact) return toResult(rawWord, articleCoverageExact, "article-coverage");
 
   // Tokenisation intentionally keeps common French elisions together so the
   // reader can select what it sees (d'épices, l'école, qu'il). If the whole

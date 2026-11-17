@@ -239,7 +239,8 @@ await t.section("C3/F4: saved for later is easy to find; internal links are clie
   t.check("a saved lesson resolves by id even outside today's pool", getBuiltInTextById("starter-a1-001")?.id === "starter-a1-001");
   const library = read("src/components/ArticleBrowserPage.tsx");
   const idx = library.indexOf('title="Saved for later"');
-  t.check("Saved for later renders outside the collapsed Extra reading panel", idx > -1 && idx < library.indexOf("Extra reading\n"));
+  const extraPanel = library.search(/<summary[^>]*>[\s\r\n]*Extra reading[\s\r\n]*<\/summary>/);
+  t.check("Saved for later renders outside the collapsed Extra reading panel", idx > -1 && extraPanel > idx);
   t.check("compact reading cards use next/link", /<Link\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")) && !/<a\s+href=\{`\/reader\//.test(read("src/components/ArticleSection.tsx")));
 });
 

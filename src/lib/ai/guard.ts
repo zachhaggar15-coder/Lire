@@ -31,7 +31,7 @@ export function dailyAiCallLimit(): number {
 }
 
 export interface AiCaller {
-  entitlement: "subscription";
+  entitlement: "premium";
   userId: string | null;
   client: SupabaseClient | null;
 }
@@ -51,7 +51,7 @@ async function hasActivePremium(client: SupabaseClient, userId: string): Promise
 }
 
 /**
- * Authenticates the request, requires an active subscription, and books one
+ * Authenticates the request, requires Premium access, and books one
  * call against today's budget.
  *
  * The budget is consumed before the OpenAI call rather than after, so a
@@ -134,7 +134,7 @@ export async function requirePaidAiCaller(request: Request): Promise<AiGateResul
     };
   }
 
-  return { ok: true, caller: { entitlement: "subscription", userId: user.id, client } };
+  return { ok: true, caller: { entitlement: "premium", userId: user.id, client } };
 }
 
 /**

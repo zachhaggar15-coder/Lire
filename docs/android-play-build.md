@@ -25,7 +25,7 @@ The asset-links endpoint intentionally returns an empty valid array until a fing
 
 Sorlio uses Google Play Billing for digital Premium access in the Play-distributed Android app. In Play Console, use an auto-renewing monthly subscription with product ID `sorlio_premium_monthly`, a GBP base price of £3.99, and the required regional prices. There is no trial, introductory offer, annual or lifetime plan. Reading, word lookup and Review are free without an account; free users can save five new words a day. Premium adds unlimited saving and the AI features. Purchases require Google sign-in for ownership and restore support.
 
-Production is already at schema version 12 with migrations `0001` through `0012` applied and aligned. Do not reapply migrations for this release. The Google Play verification service account needs access to subscription information and purchase acknowledgement. The production billing variables are:
+Production needs schema version 13, including `0013_complimentary_premium.sql`, before deploying the 1.2.0 web build. Apply each migration once. The Google Play verification service account needs access to subscription information and purchase acknowledgement. The production billing variables are:
 
 - `NEXT_PUBLIC_GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
 - `GOOGLE_PLAY_PREMIUM_PRODUCT_ID=sorlio_premium_monthly`
@@ -159,8 +159,8 @@ Signed bundles and keystores are excluded from source control.
 | Setting | Value | Where |
 | --- | --- | --- |
 | Package ID | `app.sorlio.reader` | `android/app/build.gradle`, `android/twa-manifest.json` |
-| Version code | `9` | `android/app/build.gradle`, `android/twa-manifest.json` |
-| Version name | `1.1.0` | `android/app/build.gradle`, `android/twa-manifest.json` |
+| Version code | `10` | `android/app/build.gradle`, `android/twa-manifest.json` |
+| Version name | `1.2.0` | `android/app/build.gradle`, `android/twa-manifest.json` |
 | Launcher name | `Sorlio` | `android/twa-manifest.json` |
 | Full name | `Sorlio — French Reader` | `android/twa-manifest.json`, `public/manifest.json` |
 | Signing alias | `sorlio-upload` | `android/twa-manifest.json` |

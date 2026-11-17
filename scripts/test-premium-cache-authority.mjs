@@ -67,6 +67,10 @@ await t.section("a body cannot smuggle the device-cache flag either way", async 
   t.check("parser ignores a fromDeviceCache claim in a body", forgedBody.fromDeviceCache === false);
   const outage = types.parsePremiumStatus({ isPremium: true, status: "active", expiresAt: "2027-01-01T00:00:00Z", stale: true }, NOW);
   t.check("server's own bounded outage answer still confers Premium", types.confersPremium(outage) === true);
+  const complimentary = types.parsePremiumStatus({ isPremium: true, status: "active", source: "complimentary", expiresAt: null, autoRenewing: false }, NOW);
+  t.check("server-confirmed complimentary access needs no Play expiry", types.confersPremium(complimentary) && complimentary.source === "complimentary");
+  const malformed = types.parsePremiumStatus({ isPremium: true, status: "cancelled", source: "complimentary", expiresAt: null }, NOW);
+  t.check("complimentary access cannot claim a billing status", !malformed.isPremium);
 });
 
 await t.section("server answers are never overridden by the cache", async () => {

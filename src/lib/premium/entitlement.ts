@@ -4,7 +4,8 @@ import { ENTITLED_STATUSES, PlayRejectedError, PlayUnavailableError, mapSubscrip
  * Server-side entitlement authority.
  *
  * Every Premium decision on the server goes through here. The rules:
- *   - Only Google Play's verified subscription state can grant Premium.
+ *   - A verified Google Play subscription or a service-only complimentary
+ *     account grant can grant Premium.
  *   - A stored row is trusted only while it is fresh; stale rows are
  *     re-verified with Google before granting anything that costs money.
  *   - If Google cannot be reached, a row verified recently (within
@@ -44,6 +45,7 @@ export type EntitlementStatus = PlayStatus | "none";
 export interface EntitlementView {
   isPremium: boolean;
   status: EntitlementStatus;
+  source: "play" | "complimentary" | null;
   expiresAt: string | null;
   autoRenewing: boolean | null;
   /** When Google last confirmed this. */
@@ -55,6 +57,7 @@ export interface EntitlementView {
 export const NO_ENTITLEMENT: EntitlementView = {
   isPremium: false,
   status: "none",
+  source: null,
   expiresAt: null,
   autoRenewing: null,
   verifiedAt: null,
@@ -89,6 +92,7 @@ export function viewFromRow(row: StoredSubscription | null, stale: boolean, maxA
   return {
     isPremium: grants,
     status,
+    source: "play",
     expiresAt: row.expires_at,
     autoRenewing: row.auto_renewing,
     verifiedAt: row.verified_at,
@@ -188,6 +192,19 @@ export async function currentEntitlement(params: {
   now?: number;
 }): Promise<EntitlementView> {
   const now = params.now ?? Date.now();
+  const grant = await params.db.rpc("sorlio_complimentary_premium", { p_user_id: params.userId });
+  if (grant.error) throw new Error("complimentary_grant_read_failed");
+  if (grant.data === true) {
+    return {
+      isPremium: true,
+      status: "active",
+      source: "complimentary",
+      expiresAt: null,
+      autoRenewing: false,
+      verifiedAt: null,
+      stale: false,
+    };
+  }
   const row = await loadSubscription(params.db, params.userId);
   if (!row) return NO_ENTITLEMENT;
   if (storedGrants(row, params.freshMs, now) || (!ENTITLED_STATUSES.has(row.status as PlayStatus) && (time(row.verified_at) ?? 0) > now - params.freshMs)) {

@@ -5,11 +5,10 @@ Supabase project and you have the complete Sorlio database.
 
 ## Running them
 
-**Production (`blumuxrepzzdwwzomffx`) is at `0012`, and its migration history
-records exactly `0001`–`0012`** (reconciled 7 Oct 2026 with
-`supabase migration repair`). Keep it that way:
+**Production (`blumuxrepzzdwwzomffx`) was at `0012` before the 1.2.0 release.**
+Apply the next migration once and keep the local and remote histories aligned:
 
-1. Add the next file as `0013_<name>.sql` (four-digit prefix, the CLI accepts it).
+1. Add the next file with a four-digit prefix (`0013` for this release).
 2. Test it locally: `npm test` runs every migration against PGlite, including
    `test-legacy-build-compat.mjs` (the deployed build must keep working).
 3. Read-only check: `npx supabase@2.120.0 migration list --linked`.
@@ -43,6 +42,7 @@ write rows: `0009` backfills `verified_at` on existing subscriptions, and
 | `0010_item_sync.sql` | Item-level sync: `sorlio_sync_stores`, `sorlio_sync_state`, `sorlio_sync_items`, `sorlio_save_quota` and the `sorlio_sync_*` functions |
 | `0011_ops_and_retention.sql` | `sorlio_ops_counters` (identifier-free daily counts), `sorlio_maintenance()` retention, `sorlio_schema_version()` |
 | `0012_auth_metadata_minimisation.sql` | Triggers that strip the Google profile (name, photo) Supabase Auth copies on sign-in |
+| `0013_complimentary_premium.sql` | Service-only complimentary account grants, shared Premium check, schema version 13 |
 
 `0004` and `0006` (analytics, beta list) and the research-prompt table from
 `0005` are retired: the app no longer writes them. They are dropped only after

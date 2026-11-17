@@ -32,7 +32,7 @@ export default function DeleteAccountDialog({ email, premium, onCancel, onDelete
   const [error, setError] = useState<string | null>(null);
   // A live subscription gets its own step first, so the warning cannot be
   // skipped past on the way to the destructive button.
-  const hasLiveSubscription = premium.isPremium && (premium.status === "active" || premium.status === "grace_period");
+  const hasLiveSubscription = premium.isPremium && premium.source !== "complimentary" && (premium.status === "active" || premium.status === "grace_period");
   const [acknowledgedSubscription, setAcknowledgedSubscription] = useState(!hasLiveSubscription);
 
   const dialogRef = useModalFocus<HTMLDivElement>(true, onCancel);

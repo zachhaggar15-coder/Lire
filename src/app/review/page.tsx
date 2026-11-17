@@ -176,6 +176,10 @@ function ReviewPageContent() {
   const phrasesDone = reviewMode === "phrases" && ready && phraseReviewStarted && phraseSessionTotal > 0 && sessionPhraseQueue.length === 0;
   const done = wordsDone || phrasesDone;
   const hasTranslation = current && current.primaryTranslation !== NOT_TRANSLATED_YET;
+  const promptText = current ? (reviewDirection === "en-fr" ? current.primaryTranslation : current.word) : "";
+  const answerText = current ? (reviewDirection === "en-fr" ? current.word : current.primaryTranslation) : "";
+  const longPrompt = promptText.split(/\s+/).some((part) => part.length > 16);
+  const longAnswer = answerText.split(/\s+/).some((part) => part.length > 20);
 
   useEffect(() => {
     if (!ready || reviewSessionStarted.current) return;
@@ -595,14 +599,15 @@ function ReviewPageContent() {
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                 {promptLabel(reviewDirection)}
               </p>
-              <div className="mt-2 flex items-center justify-center gap-2">
-                <p lang={reviewDirection === "en-fr" ? "en" : "fr"} className="text-3xl font-bold text-ink">
-                  {reviewDirection === "en-fr" ? current.primaryTranslation : current.word}
+              <div className={longPrompt ? "mt-2 flex w-full min-w-0 flex-col items-center gap-1" : "mt-2 grid w-full min-w-0 grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-center gap-2"}>
+                {!longPrompt && <span aria-hidden="true" />}
+                <p lang={reviewDirection === "en-fr" ? "en" : "fr"} className={`w-full min-w-0 font-bold leading-tight text-ink [hyphens:auto] [overflow-wrap:anywhere] ${longPrompt ? "text-2xl" : "text-3xl"}`}>
+                  {promptText}
                 </p>
                 {reviewDirection === "fr-en" && <SpeakButton text={current.word} />}
               </div>
             {reviewDirection === "fr-en" && current.lemma && current.lemma !== current.word && (
-              <p className="text-xs text-ink-muted">from "<span lang="fr">{current.lemma}</span>"</p>
+              <p className="max-w-full text-xs text-ink-muted [overflow-wrap:anywhere]">from "<span lang="fr">{current.lemma}</span>"</p>
             )}
 
             {!revealed ? (
@@ -616,17 +621,18 @@ function ReviewPageContent() {
             ) : (
               <div className="review-answer-reveal mt-5 w-full border-t border-cream-dark pt-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand">Answer</p>
-                <div className="mt-1 flex items-center justify-center gap-2">
-                  <p className={`text-xl ${hasTranslation ? "text-ink" : "italic text-ink-muted"}`}>
-                    {reviewDirection === "en-fr" ? current.word : current.primaryTranslation}
+                <div className={longAnswer ? "mt-1 flex w-full min-w-0 flex-col items-center gap-1" : "mt-1 grid w-full min-w-0 grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-center gap-2"}>
+                  {!longAnswer && <span aria-hidden="true" />}
+                  <p className={`w-full min-w-0 leading-tight [hyphens:auto] [overflow-wrap:anywhere] ${longAnswer ? "text-lg" : "text-xl"} ${hasTranslation ? "text-ink" : "italic text-ink-muted"}`}>
+                    {answerText}
                   </p>
                   {reviewDirection === "en-fr" && <SpeakButton text={current.word} />}
                 </div>
                 {reviewDirection === "en-fr" && current.lemma && current.lemma !== current.word && (
-                  <p className="mt-1 text-sm text-ink-muted">Lemma: <span lang="fr">{current.lemma}</span></p>
+                  <p className="mt-1 text-sm text-ink-muted [overflow-wrap:anywhere]">Lemma: <span lang="fr">{current.lemma}</span></p>
                 )}
                 {reviewDirection === "fr-en" && current.translations.length > 1 && (
-                  <p className="mt-1 text-sm text-ink-muted">Also: {current.translations.slice(1).join(", ")}</p>
+                  <p className="mt-1 text-sm text-ink-muted [overflow-wrap:anywhere]">Also: {current.translations.slice(1).join(", ")}</p>
                 )}
                 {(current.partOfSpeech || current.gender) && (
                   <p className="mt-1 text-xs text-ink-muted">
@@ -638,8 +644,8 @@ function ReviewPageContent() {
                 {shouldShowReviewExample(current) && (
                   <div className="mt-4 rounded-2xl bg-cream p-3 text-left">
                     <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Example</p>
-                    <p className="mt-1 text-sm italic text-ink">{current.exampleSentenceFr}</p>
-                    <p className="mt-0.5 text-sm text-ink-muted">{current.exampleSentenceEn}</p>
+                    <p className="mt-1 text-sm italic text-ink [overflow-wrap:anywhere]">{current.exampleSentenceFr}</p>
+                    <p className="mt-0.5 text-sm text-ink-muted [overflow-wrap:anywhere]">{current.exampleSentenceEn}</p>
                   </div>
                 )}
 
@@ -649,7 +655,7 @@ function ReviewPageContent() {
                   // persist across cards instead of resetting per word.
                   <details key={current.word} className="mt-3 text-left text-xs text-ink-muted">
                     <summary className="cursor-pointer font-semibold uppercase tracking-wide">Show original sentence</summary>
-                    <p className="mt-1">"{current.articleContextSentence}"</p>
+                    <p className="mt-1 [overflow-wrap:anywhere]">"{current.articleContextSentence}"</p>
                   </details>
                 )}
               </div>
@@ -999,8 +1005,8 @@ function PhraseReviewCard({
           </span>
         </div>
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{promptLabel(direction)}</p>
-        <div className="mt-3 flex items-center gap-2">
-          <p lang={direction === "fr-en" ? "fr" : "en"} className="flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink">{prompt}</p>
+        <div className="mt-3 flex min-w-0 items-center gap-2">
+          <p lang={direction === "fr-en" ? "fr" : "en"} className="min-w-0 flex-1 rounded-2xl bg-cream px-3 py-3 text-lg font-semibold leading-relaxed text-ink [overflow-wrap:anywhere]">{prompt}</p>
           {direction === "fr-en" && <SpeakButton text={phrase.phrase} />}
         </div>
 
@@ -1014,15 +1020,15 @@ function PhraseReviewCard({
           </button>
         ) : (
           <div className="review-answer-reveal mt-4 space-y-3 border-t border-cream-dark pt-4">
-            <div className="flex items-center gap-2">
-              <p className="text-sm font-semibold text-ink">
+            <div className="flex min-w-0 items-center gap-2">
+              <p className="min-w-0 flex-1 text-sm font-semibold text-ink [overflow-wrap:anywhere]">
                 <span lang="fr">{phrase.phrase}</span> = {phrase.translation}
               </p>
               {direction === "en-fr" && <SpeakButton text={phrase.phrase} />}
             </div>
             <div className="rounded-2xl bg-cream p-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Original sentence</p>
-              <p lang="fr" className="mt-1 text-sm italic text-ink">{phrase.contextSentence}</p>
+              <p lang="fr" className="mt-1 text-sm italic text-ink [overflow-wrap:anywhere]">{phrase.contextSentence}</p>
             </div>
             <p className="text-xs text-ink-muted">
               Register: <span className="font-semibold">{phrase.partOfSpeech?.includes("formal") ? "formal" : "neutral"}</span>

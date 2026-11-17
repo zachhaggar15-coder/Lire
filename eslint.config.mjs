@@ -27,6 +27,7 @@ const eslintConfig = [
       "**/build/**",
       "src/data/dictionaries/generated/**",
       "public/**",
+      "Website/**",
       ".claude/worktrees/**",
     ],
   },
