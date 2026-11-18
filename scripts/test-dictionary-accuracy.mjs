@@ -148,6 +148,94 @@ console.log("\n--- Corpus gaps have real meanings, not French placeholders ---")
     ["malheur", "misfortune"],
     ["prison", "prison"],
     ["sombre", "dark"],
+    ["récit", "narrative"],
+    ["conceptions", "conception"],
+    ["image", "image"],
+    ["rapidement", "quickly"],
+    ["vivant", "living"],
+    ["soi-même", "oneself"],
+    ["particulier", "particular"],
+    ["fatigue", "fatigue"],
+    ["volonté", "will"],
+    ["cesse", "to stop"],
+    ["lendemain", "next day"],
+    ["voyageurs", "traveller"],
+    ["génie", "genius"],
+    ["faute", "fault"],
+    ["sauver", "to save"],
+    ["grave", "serious"],
+    ["lutte", "struggle"],
+    ["liens", "link"],
+    ["évidemment", "obviously"],
+    ["rapidité", "speed"],
+    ["trace", "trace"],
+    ["durable", "lasting"],
+    ["solide", "solid"],
+    ["servitude", "servitude"],
+    ["défaut", "flaw"],
+    ["journal", "newspaper"],
+    ["nuire", "to harm"],
+    ["empêche", "to prevent"],
+    ["action", "action"],
+    ["échec", "failure"],
+    ["intuition", "intuition"],
+    ["récompense", "reward"],
+    ["haine", "hatred"],
+    ["discours", "speech"],
+    ["honte", "shame"],
+    ["corriger", "to correct"],
+    ["balcon", "balcony"],
+    ["méritent", "to deserve"],
+    ["médecine", "medicine"],
+    ["affaire", "matter"],
+    ["prudence", "caution"],
+    ["fonctionne", "to work"],
+    ["debout", "standing"],
+    ["appareil", "device"],
+    ["tri", "sorting"],
+    ["curé", "priest"],
+    ["pâtes", "pasta"],
+    ["gâteau", "cake"],
+    ["promesse", "promise"],
+    ["erreur", "mistake"],
+    ["libérer", "to free"],
+    ["patrimoine", "heritage"],
+    ["souffle", "breath"],
+    ["métier", "profession"],
+    ["particulièrement", "particularly"],
+    ["couche", "layer"],
+    ["exercice", "exercise"],
+    ["police", "police"],
+    ["profite", "to benefit from"],
+    ["procureur", "prosecutor"],
+    ["poulet", "chicken"],
+    ["extrêmement", "extremely"],
+    ["poutres", "beam"],
+    ["foot", "football"],
+    ["1er", "first"],
+    ["contrecœur", "reluctantly"],
+    ["s'assoit", "to sit down"],
+    ["sainement", "healthily"],
+    ["statistiquement", "statistically"],
+    ["stressante", "stressful"],
+    ["acquièrent", "to acquire"],
+    ["bénignes", "benign"],
+    ["bouleversement", "upheaval"],
+    ["complémentarité", "complementarity"],
+    ["conquiert", "to conquer"],
+    ["croît", "to grow"],
+    ["démobilisatrice", "demotivating"],
+    ["dévaloriser", "to devalue"],
+    ["diffus", "diffuse"],
+    ["émet", "to emit"],
+    ["exclut", "to exclude"],
+    ["fragmentée", "fragmented"],
+    ["imperturbable", "unflappable"],
+    ["méconnue", "little-known"],
+    ["mourrons", "to die"],
+    ["souvenu", "to remember"],
+    ["souviennent", "to remember"],
+    ["traduisent", "to translate"],
   ];
   for (const [word, want] of expected) {
     const got = lookupWord(word).translations[0];
@@ -161,6 +249,18 @@ console.log("\n--- Corpus gaps have real meanings, not French placeholders ---")
   }
   const richCurated = new Set(frEnDictionary.filter((entry) => (entry.examples ?? []).length > 0).map((entry) => entry.lemma));
   check("corpus corrections preserve curated entries with examples", corpusGapDictionary.every((entry) => !richCurated.has(entry.lemma)));
+  const lemmas = corpusGapDictionary.map((entry) => entry.lemma);
+  check("corpus corrections do not silently overwrite duplicate lemmas", new Set(lemmas).size === lemmas.length);
+  const formOwners = new Map();
+  const conflictingForms = [];
+  for (const entry of corpusGapDictionary) {
+    for (const form of [entry.lemma, ...(entry.forms ?? [])]) {
+      const owner = formOwners.get(form);
+      if (owner && owner !== entry.lemma) conflictingForms.push(`${form}: ${owner} / ${entry.lemma}`);
+      formOwners.set(form, entry.lemma);
+    }
+  }
+  check("corpus forms do not shadow another correction", conflictingForms.length === 0, conflictingForms.slice(0, 3).join("; "));
 }
 
 console.log("\n--- Broad imported phrases cannot displace common words ---");
