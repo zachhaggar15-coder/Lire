@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { FEEDBACK_CATEGORIES, type FeedbackCategory } from "@/lib/feedback/types";
 import { submitFeedback } from "@/lib/feedback/client";
 import BottomSheet from "@/components/BottomSheet";
+import { LEGAL } from "@/lib/legal";
 
 const LABELS: Record<FeedbackCategory, string> = {
   useful: "Useful",
@@ -26,12 +27,14 @@ export function FeedbackButton({
   affectedTerm,
   label = "Give feedback",
   className = "rounded-full bg-cream-dark px-3 py-2 text-xs font-semibold text-ink-muted",
+  delivery = "app",
 }: {
   feature: string;
   articleId?: string | null;
   affectedTerm?: string | null;
   label?: string;
   className?: string;
+  delivery?: "app" | "email";
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -45,7 +48,7 @@ export function FeedbackButton({
       >
         {label}
       </button>
-      <FeedbackModal feature={feature} articleId={articleId} affectedTerm={affectedTerm} open={open} onClose={() => setOpen(false)} />
+      <FeedbackModal feature={feature} articleId={articleId} affectedTerm={affectedTerm} delivery={delivery} open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
@@ -56,12 +59,14 @@ export default function FeedbackModal({
   feature,
   articleId,
   affectedTerm,
+  delivery = "app",
 }: {
   open: boolean;
   onClose: () => void;
   feature: string;
   articleId?: string | null;
   affectedTerm?: string | null;
+  delivery?: "app" | "email";
 }) {
   const [category, setCategory] = useState<FeedbackCategory>("useful");
   const [comment, setComment] = useState("");
@@ -71,6 +76,13 @@ export default function FeedbackModal({
     event.preventDefault();
     if (!comment.trim()) {
       setMessage("Please provide feedback before submitting.");
+      return;
+    }
+    if (delivery === "email") {
+      const subject = `Sorlio feedback: ${LABELS[category]}`;
+      const body = `Category: ${LABELS[category]}\nPage: ${window.location.pathname}\nFeature: ${feature}\n\n${comment.trim()}`;
+      window.location.href = `mailto:${LEGAL.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setMessage("Your email app should open with your feedback. Please press Send there to deliver it.");
       return;
     }
     setState("submitting");
@@ -104,7 +116,7 @@ export default function FeedbackModal({
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-brand">Feedback</p>
-            <h2 className="mt-1 text-xl font-extrabold text-ink">How was this session?</h2>
+            <h2 className="mt-1 text-xl font-extrabold text-ink">{delivery === "email" ? "Tell us what you think" : "How was this session?"}</h2>
           </div>
           <button type="button" onClick={onClose} className="min-h-12 rounded-full bg-cream-dark px-4 py-2 text-sm font-semibold text-ink">
             Close
@@ -148,7 +160,7 @@ export default function FeedbackModal({
           disabled={state === "submitting" || !comment.trim()}
           className="mt-3 w-full rounded-full bg-brand px-4 py-3 shadow-raised text-sm font-semibold text-cream disabled:opacity-50"
         >
-          {state === "submitting" ? "Sending..." : "Submit feedback"}
+          {delivery === "email" ? "Open email to send" : state === "submitting" ? "Sending..." : "Submit feedback"}
         </button>
       </form>
     </BottomSheet>
