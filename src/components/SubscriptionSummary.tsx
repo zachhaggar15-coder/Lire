@@ -25,6 +25,9 @@ export default function SubscriptionSummary() {
   if (loading) {
     title = "Subscription";
     detail = "Checking…";
+  } else if (status.isPremium && status.source === "complimentary") {
+    title = "Complimentary Premium";
+    detail = "Premium is active on this account without a Google Play charge or renewal.";
   } else if (status.isPremium && status.status === "cancelled") {
     title = "Premium — cancelled";
     detail = `You keep Premium until ${expiry ?? "the end of your paid period"}. It won't renew.`;
@@ -51,14 +54,16 @@ export default function SubscriptionSummary() {
       <p className="text-sm font-semibold text-ink">{title}</p>
       <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{detail}</p>
       <div className="mt-2 flex flex-wrap gap-2">
-        <a
-          href={MANAGE_SUBSCRIPTION_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center rounded-full bg-cream-dark px-4 text-sm font-semibold text-ink"
-        >
-          Manage or cancel subscription
-        </a>
+        {status.source !== "complimentary" && (
+          <a
+            href={MANAGE_SUBSCRIPTION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center rounded-full bg-cream-dark px-4 text-sm font-semibold text-ink"
+          >
+            Manage or cancel subscription
+          </a>
+        )}
         {!status.isPremium && !loading && (
           <Link href="/premium" className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-brand underline underline-offset-2">
             About Premium

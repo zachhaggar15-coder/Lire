@@ -27,6 +27,7 @@ import { EXPECTED_SCHEMA_VERSION } from "../src/lib/server/schema.ts";
 const EXPECTED_TABLES = [
   "sorlio_user_data",
   "sorlio_subscriptions",
+  "sorlio_premium_grants",
   "sorlio_feedback",
   "sorlio_ai_usage",
   "sorlio_billing_events",
@@ -52,6 +53,7 @@ const CLIENT_FUNCTIONS = [
 const SERVER_FUNCTIONS = [
   "sorlio_consume_ai_call",
   "sorlio_has_premium",
+  "sorlio_complimentary_premium",
   "sorlio_billing_record",
   "sorlio_billing_owner",
   "sorlio_billing_get",

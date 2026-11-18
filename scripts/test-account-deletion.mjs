@@ -51,6 +51,7 @@ await t.section("nothing of the account survives deletion; other accounts untouc
        values ($1, 'google_play', 'p', $2, 'active', now() + interval '5 days', now())`,
       [user, `tok-${user}`],
     );
+    await h.db.query("insert into public.sorlio_premium_grants (user_id, reason) values ($1, 'test grant')", [user]);
     await h.rpc(user, "sorlio_sync_push", { p_expected_user: user, p_ops: [{ store: "lire.knownWords.v1", id: "oui", op: "put", base_rev: null, data: true }], p_day: null });
   }
   // Route behaviour: explicit deletes, then the auth user.

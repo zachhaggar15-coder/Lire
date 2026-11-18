@@ -5,4 +5,4 @@
  * scripts/verify-supabase.mjs and /api/health compare against this, so a
  * deploy whose migrations were never applied is caught before readers are.
  */
-export const EXPECTED_SCHEMA_VERSION = 12;
+export const EXPECTED_SCHEMA_VERSION = 13;

@@ -2,9 +2,9 @@ import type { DictionaryEntry } from "@/lib/dictionary/types";
 
 /**
  * Local French → English dictionary. Hand-curated for now, covering the
- * function words every French sentence needs plus every content word used
- * in src/data/texts.ts, so offline lookup works reliably for the app's
- * built-in reading texts. Add entries here (or swap this file for a larger
+ * common function words and learner vocabulary. Other curated and generated
+ * layers provide wider coverage for the built-in reading texts. Add entries
+ * here (or swap this file for a larger
  * generated/downloaded one — see src/lib/dictionary/lookup.ts) to widen
  * coverage; nothing else needs to change.
  */
@@ -131,7 +131,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   },
   {
     lemma: "prendre",
-    forms: ["prends", "prend", "prenons", "prenez", "prennent", "prenait", "prendrai", "prendra"],
+    forms: ["prends", "prend", "prenons", "prenez", "prennent", "prenait", "prendrai", "prendra", "prenne"],
     translations: ["to take"],
     partOfSpeech: "verb (infinitive)",
     cefr: "A2",
@@ -153,13 +153,13 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "français", forms: ["française", "français", "françaises"], translations: ["French"], partOfSpeech: "adjective", cefr: "A1" },
   { lemma: "étudier", forms: ["étudie", "étudient"], translations: ["to study", "to look into"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "possibilité", translations: ["possibility"], partOfSpeech: "noun", gender: "feminine", cefr: "B1" },
-  { lemma: "rendre", forms: ["rend", "rendent"], translations: ["to make (something)", "to render", "to return"], partOfSpeech: "verb (infinitive)", cefr: "B1", examples: [{ fr: "Cela va rendre la ville plus verte.", en: "That will make the city greener." }] },
+  { lemma: "rendre", forms: ["rend", "rendent", "rendus", "rendues"], translations: ["to make (something)", "to render", "to return"], partOfSpeech: "verb (infinitive)", cefr: "B1", examples: [{ fr: "Cela va rendre la ville plus verte.", en: "That will make the city greener." }] },
   { lemma: "transport", forms: ["transports"], translations: ["transport", "transportation"], partOfSpeech: "noun", gender: "masculine", cefr: "A2" },
   { lemma: "gratuit", forms: ["gratuite", "gratuits", "gratuites"], translations: ["free (no cost)"], partOfSpeech: "adjective", cefr: "A2" },
   { lemma: "maire", translations: ["mayor"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
   { lemma: "penser", forms: ["pense", "penses", "pensons", "pensez", "pensent", "pensé"], translations: ["to think"], partOfSpeech: "verb (infinitive)", cefr: "A1", examples: [{ fr: "Je pense que c'est vrai.", en: "I think that it's true." }] },
   { lemma: "mesure", translations: ["measure", "step", "policy"], partOfSpeech: "noun", gender: "feminine", cefr: "B1" },
-  { lemma: "réduire", forms: ["réduit", "réduisent"], translations: ["to reduce"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
+  { lemma: "réduire", forms: ["réduit", "réduisent", "réduisait", "réduisant"], translations: ["to reduce"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "pollution", translations: ["pollution"], partOfSpeech: "noun", gender: "feminine", cefr: "A2" },
   { lemma: "aider", forms: ["aide", "aident"], translations: ["to help"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "famille", forms: ["familles"], translations: ["family"], partOfSpeech: "noun", gender: "feminine", cefr: "A1" },
@@ -242,7 +242,7 @@ export const frEnDictionary: DictionaryEntry[] = [
 
   // --- Text 4: sommeil-cerveau ---
   { lemma: "sommeil", translations: ["sleep"], partOfSpeech: "noun", gender: "masculine", cefr: "A2", examples: [{ fr: "J'ai besoin de sommeil.", en: "I need sleep." }] },
-  { lemma: "simple", translations: ["simple"], partOfSpeech: "adjective", cefr: "A1" },
+  { lemma: "simple", forms: ["simples"], translations: ["simple"], partOfSpeech: "adjective", cefr: "A1" },
   { lemma: "pause", translations: ["pause", "break"], partOfSpeech: "noun", gender: "feminine", cefr: "A1" },
   { lemma: "cerveau", forms: ["cerveaux"], translations: ["brain"], partOfSpeech: "noun", gender: "masculine", cefr: "B1" },
   { lemma: "trier", forms: ["trie", "trient"], translations: ["to sort", "to sort through"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
@@ -261,7 +261,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "réparer", forms: ["répare", "réparent"], translations: ["to repair", "to fix"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "scientifique", forms: ["scientifiques"], translations: ["scientist", "scientific"], partOfSpeech: "noun / adjective", cefr: "A2" },
   { lemma: "conseiller", forms: ["conseille", "conseillent"], translations: ["to advise", "to recommend"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
-  { lemma: "dormir", forms: ["dort", "dorment"], translations: ["to sleep"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
+  { lemma: "dormir", forms: ["dort", "dorment", "dormant"], translations: ["to sleep"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "heure", forms: ["heures"], translations: ["hour", "o'clock"], partOfSpeech: "noun", gender: "feminine", cefr: "A1" },
   { lemma: "régulier", forms: ["régulière", "réguliers", "régulières"], translations: ["regular"], partOfSpeech: "adjective", cefr: "B1" },
   { lemma: "meilleur", forms: ["meilleure", "meilleurs", "meilleures"], translations: ["better", "best"], partOfSpeech: "adjective", cefr: "A1" },
@@ -441,16 +441,16 @@ export const frEnDictionary: DictionaryEntry[] = [
   // --- Common irregular verbs ---
   { lemma: "voir", forms: ["vois", "voit", "voyons", "voyez", "voient", "voie", "voies", "voyions", "voyiez", "voient", "voyais", "voyait", "voyions", "voyiez", "voyaient", "verrai", "verras", "verra", "verrons", "verrez", "verront", "verrais", "verrait", "verrions", "verriez", "verraient", "vis", "vit", "vît", "vîmes", "vîtes", "virent", "vu"], translations: ["to see"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "savoir", forms: ["sais", "sait", "savons", "savez", "savent", "sache", "saches", "sachions", "sachiez", "sachent", "savais", "savait", "savions", "saviez", "savaient", "saurai", "sauras", "saura", "saurons", "saurez", "sauront", "saurais", "saurait", "saurions", "sauriez", "sauraient", "sus", "sut", "sût", "sûmes", "sûtes", "surent", "susse", "susses", "sussions", "sussiez", "sussent", "su"], translations: ["to know (a fact)"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
-  { lemma: "connaître", forms: ["connais", "connaît", "connaissons", "connaissez", "connaissent", "connaisse", "connaisses", "connaissions", "connaissiez", "connaissent", "connaissais", "connaissait", "connaissions", "connaissiez", "connaissaient", "connaîtrai", "connaîtras", "connaîtra", "connaîtrons", "connaîtrez", "connaîtront", "connaîtrais", "connaîtrait", "connaîtrions", "connaîtriez", "connaîtraient", "connus", "connut", "connût", "connûmes", "connûtes", "connurent", "connusse", "connusses", "connussions", "connussiez", "connussent", "connu"], translations: ["to know (a person/place)"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
+  { lemma: "connaître", forms: ["connais", "connaît", "connaissons", "connaissez", "connaissent", "connaissant", "connaisse", "connaisses", "connaissions", "connaissiez", "connaissent", "connaissais", "connaissait", "connaissions", "connaissiez", "connaissaient", "connaîtrai", "connaîtras", "connaîtra", "connaîtrons", "connaîtrez", "connaîtront", "connaîtrais", "connaîtrait", "connaîtrions", "connaîtriez", "connaîtraient", "connus", "connut", "connût", "connûmes", "connûtes", "connurent", "connusse", "connusses", "connussions", "connussiez", "connussent", "connu"], translations: ["to know (a person/place)"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "venir", forms: ["viens", "vient", "venons", "venez", "viennent", "vienne", "viennes", "venions", "veniez", "viennent", "venais", "venait", "venions", "veniez", "venaient", "viendrai", "viendras", "viendra", "viendrons", "viendrez", "viendront", "viendrais", "viendrait", "viendrions", "viendriez", "viendraient", "vins", "vint", "vînt", "vînmes", "vîntes", "vinrent", "venu"], translations: ["to come"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "boire", forms: ["bois", "boit", "buvons", "buvez", "boivent", "buvais", "buvait", "buvaient", "buvant", "bu"], translations: ["to drink"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "lire", forms: ["lis", "lit", "lisons", "lisez", "lisent", "lu"], translations: ["to read"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "écrire", forms: ["écris", "écrit", "écrivons", "écrivez", "écrivent"], translations: ["to write"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "mettre", forms: ["mets", "met", "mettons", "mettez", "mettent", "mis"], translations: ["to put", "to put on"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
-  { lemma: "comprendre", forms: ["comprends", "comprend", "comprenons", "comprenez", "comprennent", "compris"], translations: ["to understand"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
+  { lemma: "comprendre", forms: ["comprends", "comprend", "comprenons", "comprenez", "comprennent", "compris", "comprenant"], translations: ["to understand", "including"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "apprendre", forms: ["apprends", "apprend", "apprenons", "apprenez", "apprennent", "appris"], translations: ["to learn"], partOfSpeech: "verb (infinitive)", cefr: "A1" },
   { lemma: "recevoir", forms: ["reçois", "reçoit", "recevons", "recevez", "reçoivent", "recevait", "recevant", "reçu"], translations: ["to receive"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
-  { lemma: "croire", forms: ["crois", "croit", "croyons", "croyez", "croient", "cru"], translations: ["to believe"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
+  { lemma: "croire", forms: ["crois", "croit", "croyons", "croyez", "croient", "croyions", "cru"], translations: ["to believe"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "vivre", forms: ["vis", "vit", "vivons", "vivez", "vivent", "vivait", "vécurent", "vécu"], translations: ["to live"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "mourir", forms: ["meurs", "meurt", "mourons", "mourez", "meurent", "mort"], translations: ["to die"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "naître", forms: ["nais", "naît", "naissons", "naissez", "naissent", "né", "née"], translations: ["to be born"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
@@ -644,10 +644,10 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "se demander", forms: ["se demande", "se demandent", "se demandait", "se demandaient", "me demande", "te demandes", "nous demandons", "vous demandez", "s'est demandé", "s'est demandée"], translations: ["to wonder"], partOfSpeech: "verb (infinitive)", cefr: "A2", notes: "Different from plain \"demander\" (to ask someone something) — \"se demander\" is an inner question, not asked out loud.", examples: [{ fr: "Je me demande pourquoi.", en: "I wonder why." }] },
   { lemma: "se sentir", forms: ["se sent", "se sentent", "se sentait", "se sentaient", "me sens", "te sens", "nous sentons", "vous sentez", "s'est senti", "s'est sentie"], translations: ["to feel"], partOfSpeech: "verb (infinitive)", cefr: "A2", notes: "Different from plain \"sentir\" (to smell, or to feel a physical sensation) — \"se sentir\" describes an emotional/physical state.", examples: [{ fr: "Elle se sent fatiguée.", en: "She feels tired." }] },
   { lemma: "se tromper", forms: ["se trompe", "se trompent", "se trompait", "se trompaient", "me trompe", "te trompes", "nous trompons", "vous trompez", "s'est trompé", "s'est trompée"], translations: ["to be mistaken", "to be wrong"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"tromper\" (to deceive/cheat on someone) — \"se tromper\" is just an honest mistake.", examples: [{ fr: "Je me suis trompé de route.", en: "I took the wrong road." }] },
-  { lemma: "se souvenir", forms: ["se souvient", "se souviennent", "se souvenait", "se souvenaient", "me souviens", "te souviens", "nous souvenons", "vous souvenez", "s'est souvenu", "s'est souvenue"], translations: ["to remember"], partOfSpeech: "verb (infinitive)", cefr: "A2", examples: [{ fr: "Je me souviens de ce jour.", en: "I remember that day." }] },
+  { lemma: "se souvenir", forms: ["souvient", "souviens", "souvenez-vous", "se souvient", "se souviennent", "se souvenait", "se souvenaient", "se souvint", "me souviens", "te souviens", "nous souvenons", "vous souvenez", "s'est souvenu", "s'est souvenue"], translations: ["to remember"], partOfSpeech: "verb (infinitive)", cefr: "A2", examples: [{ fr: "Je me souviens de ce jour.", en: "I remember that day." }] },
   { lemma: "s'apercevoir", forms: ["s'aperçoit", "s'aperçoivent", "s'apercevait", "s'apercevaient", "m'aperçois", "t'aperçois", "nous apercevons", "vous apercevez", "s'est aperçu", "s'est aperçue"], translations: ["to notice", "to realize"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"apercevoir\" (to glimpse/spot something briefly) — \"s'apercevoir de\" is more about realizing a fact.", examples: [{ fr: "Il s'aperçoit de son erreur trop tard.", en: "He realizes his mistake too late." }] },
   { lemma: "s'entendre", forms: ["s'entend", "s'entendent", "s'entendait", "s'entendaient", "m'entends", "t'entends", "nous entendons", "vous entendez", "s'est entendu", "s'est entendue"], translations: ["to get along"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"entendre\" (to hear) — \"s'entendre (avec)\" is about a relationship.", examples: [{ fr: "Ils s'entendent bien.", en: "They get along well." }] },
-  { lemma: "se plaindre", forms: ["se plaint", "se plaignent", "se plaignait", "se plaignaient", "me plains", "te plains", "nous plaignons", "vous plaignez", "s'est plaint", "s'est plainte"], translations: ["to complain"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"plaindre\" (to pity someone) — \"se plaindre (de)\" is to complain.", examples: [{ fr: "Il se plaint du bruit.", en: "He is complaining about the noise." }] },
+  { lemma: "se plaindre", forms: ["plaignent", "se plaint", "se plaignent", "se plaignait", "se plaignaient", "me plains", "te plains", "nous plaignons", "vous plaignez", "s'est plaint", "s'est plainte"], translations: ["to complain"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"plaindre\" (to pity someone) — \"se plaindre (de)\" is to complain.", examples: [{ fr: "Il se plaint du bruit.", en: "He is complaining about the noise." }] },
   { lemma: "s'attendre", forms: ["s'attend", "s'attendent", "s'attendait", "s'attendaient", "m'attends", "t'attends", "nous attendons", "vous attendez", "s'est attendu", "s'est attendue"], translations: ["to expect"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"attendre\" (to wait) — \"s'attendre à\" is to expect something.", examples: [{ fr: "Je m'attends à une bonne nouvelle.", en: "I expect good news." }] },
   { lemma: "se douter", forms: ["se doute", "se doutent", "se doutait", "se doutaient", "me doute", "te doutes", "nous doutons", "vous doutez", "s'est douté", "s'est doutée"], translations: ["to suspect", "to have a feeling that"], partOfSpeech: "verb (infinitive)", cefr: "B1", notes: "Different from plain \"douter\" (to doubt, to be unsure) — \"se douter de\" is closer to strongly suspecting something is true.", examples: [{ fr: "Je m'en doutais.", en: "I suspected as much." }] },
   { lemma: "s'occuper", forms: ["s'occupe", "s'occupent", "s'occupait", "s'occupaient", "m'occupe", "t'occupes", "nous occupons", "vous occupez", "s'est occupé", "s'est occupée"], translations: ["to take care of", "to handle", "to deal with"], partOfSpeech: "verb (infinitive)", cefr: "A2", notes: "Different from plain \"occuper\" (to occupy a space/position) — \"s'occuper de\" is to take care of something/someone.", examples: [{ fr: "Elle s'occupe des enfants.", en: "She takes care of the children." }] },
@@ -894,7 +894,7 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "fricot", forms: ["fricots"], translations: ["stew", "meal"], partOfSpeech: "noun", gender: "masculine", cefr: "C1" },
   { lemma: "frôlement", forms: ["frôlements"], translations: ["brush", "rustle", "light touch"], partOfSpeech: "noun", gender: "masculine", cefr: "B2" },
   { lemma: "fucus", translations: ["seaweed", "wrack"], partOfSpeech: "noun", gender: "masculine", cefr: "C1" },
-  { lemma: "fuir", forms: ["fuis", "fuit", "fuient", "fuyait", "fuyaient", "fuyant", "fui"], translations: ["to flee", "to escape"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
+  { lemma: "fuir", forms: ["fuis", "fuit", "fuient", "fuyons", "fuyait", "fuyaient", "fuyant", "fui"], translations: ["to flee", "to escape"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "gésir", forms: ["gis", "gît", "gisait", "gisaient", "gisant"], translations: ["to lie", "to lie buried"], partOfSpeech: "verb (infinitive)", cefr: "C1" },
   { lemma: "goujat", forms: ["goujats"], translations: ["boor", "lout"], partOfSpeech: "noun", gender: "masculine", cefr: "C1" },
   { lemma: "gréer", forms: ["gréé", "gréée", "gréés", "gréées"], translations: ["to rig", "to equip a vessel"], partOfSpeech: "verb (infinitive)", cefr: "C1" },
@@ -937,7 +937,6 @@ export const frEnDictionary: DictionaryEntry[] = [
   { lemma: "séduire", forms: ["séduis", "séduit", "séduisent", "séduite", "séduits", "séduites"], translations: ["to seduce", "to charm"], partOfSpeech: "verb (infinitive)", cefr: "B2" },
   { lemma: "sentir", forms: ["sens", "sent", "sentent", "sentait", "senti", "sentie", "sentît"], translations: ["to feel", "to smell"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "souffrir", forms: ["souffre", "souffres", "souffrez", "souffrent", "souffert"], translations: ["to suffer"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
-  { lemma: "se souvenir", forms: ["souviens", "souvenez-vous", "se souvient", "se souviennent", "se souvint"], translations: ["to remember"], partOfSpeech: "verb (infinitive)", cefr: "B1" },
   { lemma: "suivre", forms: ["suit", "suivent", "suivait", "suivirent", "suivi", "suivie"], translations: ["to follow"], partOfSpeech: "verb (infinitive)", cefr: "A2" },
   { lemma: "taire", forms: ["tais", "tait", "taisent", "taisait", "tu"], translations: ["to keep quiet", "to silence"], partOfSpeech: "verb (infinitive)", cefr: "B2" },
   { lemma: "tenir", forms: ["tiens", "tient", "tenez", "teniez", "tiennent", "tinrent", "tenu", "tenue"], translations: ["to hold", "to keep"], partOfSpeech: "verb (infinitive)", cefr: "A2" },

@@ -17,7 +17,7 @@ const t = createRunner("billing");
 const PRODUCT = "sorlio_premium_monthly";
 const A = "aaaaaaaa-1111-4111-8111-00000000000a";
 const B = "bbbbbbbb-1111-4111-8111-00000000000b";
-const NOW = Date.parse("2026-10-06T12:00:00Z");
+const NOW = Date.now();
 const future = (days) => new Date(NOW + days * 86_400_000).toISOString();
 
 function sub(state, { expiry = future(20), ack = "ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED", product = PRODUCT, linked, autoRenew = true } = {}) {
@@ -108,6 +108,29 @@ await t.section("new purchase: verified, acknowledged, Premium", async () => {
   t.check("row stored as acknowledged/active with verified_at", rows[0].acknowledged === true && rows[0].status === "active" && rows[0].verified_at);
   const sqlPremium = await h.asService((tx) => tx.query("select public.sorlio_has_premium($1) as p", [A]));
   t.check("SQL entitlement agrees", sqlPremium.rows[0].p === true);
+});
+
+await t.section("complimentary account grant is separate from Play", async () => {
+  const { h, db } = await setup();
+  const play = fakePlay({});
+  await h.asService((tx) => tx.query(
+    "insert into public.sorlio_premium_grants (user_id, reason) values ($1, $2)",
+    [A, "owner access"],
+  ));
+  const view = await currentEntitlement({ db, play: play.api, userId: A, freshMs: AI_FRESH_MS });
+  t.check("grant confers Premium without an expiry or renewal", view.isPremium && view.source === "complimentary" && view.expiresAt === null && view.autoRenewing === false);
+  t.check("grant does not call Google Play", play.calls.get === 0);
+  const a = await h.asService((tx) => tx.query("select public.sorlio_has_premium($1) as p", [A]));
+  const b = await h.asService((tx) => tx.query("select public.sorlio_has_premium($1) as p", [B]));
+  t.check("database save quota recognises only the granted account", a.rows[0].p === true && b.rows[0].p === false);
+  const other = await currentEntitlement({ db, play: play.api, userId: B, freshMs: AI_FRESH_MS });
+  t.check("another account stays free", !other.isPremium);
+  let denied = false;
+  try { await h.as(A, (tx) => tx.query("select * from public.sorlio_premium_grants")); } catch { denied = true; }
+  t.check("client role cannot read grants", denied);
+  await h.asService((tx) => tx.query("update public.sorlio_premium_grants set revoked_at = now() where user_id = $1", [A]));
+  const revoked = await currentEntitlement({ db, play: play.api, userId: A, freshMs: AI_FRESH_MS });
+  t.check("revoking the grant removes Premium", !revoked.isPremium);
 });
 
 await t.section("pending purchase: not Premium, not acknowledged", async () => {

@@ -20,6 +20,7 @@ import { ensureGeneratedDictionary, lookupWord } from "../src/lib/dictionary/loo
 import { buildContextualTranslation } from "../src/lib/dictionary/contextualTranslation.ts";
 import { tokenizeParagraphsToSentences } from "../src/lib/words.ts";
 import { coreSenseDictionary } from "../src/data/dictionaries/core-senses.ts";
+import { corpusGapDictionary } from "../src/data/dictionaries/corpus-gaps.ts";
 import { frEnDictionary } from "../src/data/dictionaries/fr-en.ts";
 
 // The generated layer is fetched on demand rather than bundled, and these
@@ -93,6 +94,86 @@ console.log("--- First gloss for high-frequency words ---");
   // shown to learners — a basic household noun tagged B2 skews both.
   const gotCefr = lookupWord("réveil").cefr;
   check(`"réveil" is tagged a beginner CEFR level, not B2`, gotCefr === "A1" || gotCefr === "A2", `got "${gotCefr}"`);
+}
+
+console.log("\n--- Corpus gaps have real meanings, not French placeholders ---");
+{
+  const expected = [
+    ["pleinement", "fully"],
+    ["quotidienne", "daily"],
+    ["suffisent", "to be enough"],
+    ["transmet", "to pass on"],
+    ["concrètes", "concrete"],
+    ["rit", "to laugh"],
+    ["émeut", "to move emotionally"],
+    ["conçues", "to design"],
+    ["souvient", "to remember"],
+    ["téléphone", "phone"],
+    ["positions", "position"],
+    ["logique", "logic"],
+    ["souvenir", "memory"],
+    ["pression", "pressure"],
+    ["dîner", "dinner"],
+    ["britannique", "British"],
+    ["relations", "relationship"],
+    ["bonjour", "hello"],
+    ["refus", "refusal"],
+    ["source", "source"],
+    ["confiance", "trust"],
+    ["prétend", "to claim"],
+    ["soudain", "suddenly"],
+    ["modèle", "model"],
+    ["écran", "screen"],
+    ["exemple", "example"],
+    ["peuple", "people"],
+    ["rarement", "rarely"],
+    ["progressivement", "gradually"],
+    ["fleurs", "flower"],
+    ["objets", "object"],
+    ["compagnons", "companion"],
+    ["plantes", "plant"],
+    ["bénéfices", "benefit"],
+    ["unique", "unique"],
+    ["membres", "member"],
+    ["méthode", "method"],
+    ["départ", "departure"],
+    ["contrainte", "constraint"],
+    ["équilibre", "balance"],
+    ["facilité", "ease"],
+    ["cadeau", "gift"],
+    ["frontière", "border"],
+    ["fragile", "fragile"],
+    ["capacité", "ability"],
+    ["calme", "calm"],
+    ["malheur", "misfortune"],
+    ["prison", "prison"],
+    ["sombre", "dark"],
+  ];
+  for (const [word, want] of expected) {
+    const got = lookupWord(word).translations[0];
+    check(`"${word}" has an English gloss`, got === want, `got "${got}"`);
+  }
+  const unverified = lookupWord("surtarbrandur");
+  check("unverified corpus term is honestly unresolved", unverified.source === "missing", JSON.stringify(unverified));
+  for (const [word, want] of [["partie", "part"], ["règle", "rule"], ["véritable", "real"], ["problème", "problem"], ["présence", "presence"], ["repose", "to rest"], ["sol", "ground"]]) {
+    const got = lookupWord(word).translations[0];
+    check(`"${word}" leads with the learner sense`, got === want, `got "${got}"`);
+  }
+  const richCurated = new Set(frEnDictionary.filter((entry) => (entry.examples ?? []).length > 0).map((entry) => entry.lemma));
+  check("corpus corrections preserve curated entries with examples", corpusGapDictionary.every((entry) => !richCurated.has(entry.lemma)));
+}
+
+console.log("\n--- Broad imported phrases cannot displace common words ---");
+{
+  const cases = [
+    ["à", { nextWord: "la" }, "to"],
+    ["le", { nextWord: "même" }, "the"],
+    ["la", { previousWord: "à" }, "the"],
+  ];
+  for (const [word, context, want] of cases) {
+    const got = lookupWord(word, context).translations[0];
+    check(`"${word}" beside an imported phrase still means "${want}"`, got === want, `got "${got}"`);
+  }
 }
 
 console.log("\n--- Inflected forms reach the right entry ---");

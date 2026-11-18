@@ -1,17 +1,9 @@
-import type { DictionaryEntry } from "@/lib/dictionary/types";
-
 /**
- * Last-mile coverage for rare, archaic, foreign, technical, dialect, and
- * OCR-like terms that occur in the bundled article corpus but are absent
- * from the curated and generated dictionary layers.
- *
- * Keep this as an explicit corpus-tail list rather than a global fallback:
- * every entry here is a real audited token from src/data/texts.ts, so the
- * dictionary coverage audit can enforce 0% missing tokens without hiding
- * future gaps in newly added articles. Replace individual terms with richer
- * curated entries when a precise learner-facing gloss is needed.
+ * Historical corpus-tail backlog. These French words were previously returned
+ * as their own English translations, which made an unknown word look resolved.
+ * Keep the list for editorial work, but never index it as a dictionary layer.
  */
-const articleCoverageTerms = [
+export const untranslatedCorpusTerms = [
   "all",
   "bruissait",
   "devenant",
@@ -707,12 +699,3 @@ const articleCoverageTerms = [
   "wiskey",
   "wison"
 ] as const;
-
-export const articleCoverageDictionary: DictionaryEntry[] = articleCoverageTerms.map((lemma, index) => ({
-  lemma,
-  translations: [lemma.replace(/[\u2019']/g, "'").replace(/-/g, " ")],
-  partOfSpeech: "corpus coverage term",
-  frequencyRank: 200000 + index,
-  cefr: "C2",
-  notes: "Rare, archaic, foreign, technical, dialect, or OCR-like term from the bundled article corpus; included so offline lookup never reports this audited token as missing.",
-}));

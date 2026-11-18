@@ -99,6 +99,7 @@ export default function PremiumPageClient() {
 
   const priceLabel = offer ? `${offer.price}${offer.period === "month" ? " a month" : offer.period === "year" ? " a year" : ""}` : `${UK_LAUNCH_PRICE} a month in the UK`;
   const expiry = formatDate(status.expiresAt);
+  const complimentary = status.isPremium && status.source === "complimentary";
 
   return (
     <div className="ligne-screen">
@@ -107,10 +108,12 @@ export default function PremiumPageClient() {
       <section className="rounded-card bg-brand p-5 text-cream shadow-raised">
         <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-cream/80">Premium</p>
         <h2 className="mt-1 text-2xl font-semibold leading-tight">Unlimited saving and AI help when you need it</h2>
-        <p className="mt-2 text-sm text-cream/90">
-          {priceLabel}
-          {!offer && " · the exact price and any tax are shown by Google Play before you pay"}
-        </p>
+        {!complimentary && (
+          <p className="mt-2 text-sm text-cream/90">
+            {priceLabel}
+            {!offer && " · the exact price and any tax are shown by Google Play before you pay"}
+          </p>
+        )}
       </section>
 
       <section className="mt-4 rounded-card border border-cream-dark bg-cream-card p-5 shadow-card" aria-labelledby="premium-adds">
@@ -156,14 +159,18 @@ export default function PremiumPageClient() {
         ) : status.isPremium ? (
           <>
             <p className="font-semibold text-brand">
-              {status.status === "cancelled"
+              {complimentary
+                ? "Complimentary Premium is active"
+                : status.status === "cancelled"
                 ? `Premium is active until ${expiry ?? "the end of your paid period"}`
                 : status.status === "grace_period"
                   ? "Premium is active — Google Play couldn't take your last payment"
                   : "Premium is active"}
             </p>
             <p className="mt-1 text-sm text-ink-muted">
-              {status.status === "cancelled"
+              {complimentary
+                ? "This account has Premium access without a Google Play charge or renewal."
+                : status.status === "cancelled"
                 ? "You've cancelled, so it won't renew. You keep Premium until then."
                 : status.status === "grace_period"
                   ? "Update your payment method in Google Play to keep Premium."
@@ -259,7 +266,7 @@ export default function PremiumPageClient() {
           </p>
         )}
 
-        {signedIn && (
+        {signedIn && !complimentary && (
           <a
             href={MANAGE_SUBSCRIPTION_URL}
             target="_blank"
